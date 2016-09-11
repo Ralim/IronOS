@@ -18,9 +18,9 @@
 /******************************************************************************/
 #define ADC1_DR_Address    ((u32)0x4001244C)
 
-vu8 gSk = 0; //
 vu32 gTimeOut, gMs_timeout;
-volatile u32 gTime[8];
+volatile u32 gTime[8]; //times for timer storage
+//^-- gTime is automatically decremented on each firing of timer 2 if >0
 vu16 ADC1ConvertedValue[2];
 vu32 gHeat_cnt = 0;
 
@@ -105,10 +105,8 @@ void USB_Port(u8 state) {
 	}
 }
 /*******************************************************************************
- ������: RCC_Config
- ��������:ʱ�ӳ�ʼ��
- �������:NULL
- ���ز���:NULL
+ Function:RCC_Config
+ Description:Setup the system clocks to use internal HSE to run the system at 48Mhz
  *******************************************************************************/
 void RCC_Config(void) {
 	RCC_DeInit();
@@ -138,10 +136,9 @@ void RCC_Config(void) {
 	RCC_USBCLKConfig(RCC_USBCLKSource_PLLCLK_Div1);       // USBCLK = 48MHz
 }
 /*******************************************************************************
- ������: NVIC_Config
- ��������:�жϳ�ʼ��
- �������:tab_offset
- ���ز���:NULL
+ Function: NVIC_Config
+ Description: Configures the NVIC table in the hardware
+ Input: (tab_offset) the table offset for the NVIC
  *******************************************************************************/
 void NVIC_Config(u16 tab_offset) {
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -155,10 +152,8 @@ void NVIC_Config(u16 tab_offset) {
 	NVIC_Init(&NVIC_InitStructure);
 }
 /*******************************************************************************
- ������: GPIO_Config
- ��������:����GPIO
- �������:NULL
- ���ز���:NULL
+ Function:GPIO_Config
+ Description: Configures all the GPIO into required states
  *******************************************************************************/
 void GPIO_Config(void) {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -177,7 +172,7 @@ void GPIO_Config(void) {
 	GPIOB_H_DEF()
 	;
 
-//------ PA7��Ϊģ��ͨ��Ai7�������� ----------------------------------------//
+//------ PA7 TMP36 Analog input ----------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -188,15 +183,15 @@ void GPIO_Config(void) {
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-//------- ���ȿ���λ PB4--------------------------------------------------------//
-	GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE); // PB4=JNTRST
+//------- Heat_Pin - Iron enable output PB4--------------------------------------------------------//
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE); //Disable  PB4=JNTRST
 
 	GPIO_InitStructure.GPIO_Pin = HEAT_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-//------ PB0��Ϊģ��ͨ��Ai8�������� ---------------------------------------//
+//------ PB0 Iron temp input---------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
@@ -206,18 +201,16 @@ void GPIO_Config(void) {
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-//-------- K1 = PA8, K2 = PA6 ----------------------------------------------------------//
+//-------- K1 = PA9, K2 = PA6 ----------------------------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = KEY1_PIN | KEY2_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 /*******************************************************************************
- ������: Ad_Init
- ��������: ��ʼ�� AD
- �������:NULL
- ���ز���:NULL
+ Function: Adc_Init
+ Description:Enable the ADC's and setup the DMA as well to automatically read them to system ram.
  *******************************************************************************/
-void Ad_Init(void) {
+void Adc_Init(void) {
 	u32 timeout = 10 * 0x1000;
 	ADC_InitTypeDef ADC_InitStructure;
 	DMA_InitTypeDef DMA_InitStructure;
@@ -340,20 +333,20 @@ void Init_Timer3(void) {
 	NVIC_Init(&NVIC_InitStructure);
 }
 /*******************************************************************************
- ������: TIM2_ISR
- ��������: ��ʱ��2�жϺ���
- �������:NULL
- ���ز���:NULL
+ Function:TIM2_ISR
+ Description:Handles Timer 2 tick.
+ Automatically decrements all >0 values in gTime.
+ Also reads the buttons every 4 ticks
  *******************************************************************************/
 void TIM2_ISR(void) {
-	u8 i;
+	static u8 buttonReadDivider;
 
 	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);       // Clear interrupt flag
-	for (i = 0; i < 8; i++)
+	for (u8 i = 0; i < 8; i++)
 		if (gTime[i] > 0)
 			gTime[i]--;
 
-	if (++gSk % 4 == 0)
+	if (++buttonReadDivider % 4 == 0)
 		Scan_Key();
 }
 /*******************************************************************************
@@ -362,7 +355,7 @@ void TIM2_ISR(void) {
  If the Heat_cnt >0 then heater on, otherwise off.
  *******************************************************************************/
 void TIM3_ISR(void) {
-	static u8 heat_flag = 0;
+	volatile static u8 heat_flag = 0;
 
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);       // Clear interrupt flag
 

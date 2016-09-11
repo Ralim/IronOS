@@ -41,8 +41,8 @@ const DEVICE_INFO_SYS info_def = { "2.12",     //Ver
 struct _pid {
 	s16 settemp;        //Current ideal setpoint for the temp
 	s16 actualtemp;     //Actual current temp of the tip
-	s16 err;            //
-	s16 err_last;       //
+	s16 err;            //Error term
+	s16 err_last;       //last error term
 	s32 ht_time;        //
 	u16 kp, ki, kd;       //Constants for the PID Controller
 	s32 integral;       //
@@ -125,7 +125,7 @@ void Pid_Init(void) {
 
 /*******************************************************************************
  Function:Pid_Realize
- Description:
+ Description: Calculates the next heating value using the PID algorithum
  Input:Current temp from the tip
  Output:
  *******************************************************************************/
@@ -393,7 +393,7 @@ void Status_Tran(void) //
 			back_prestatus = 1;
 			break;
 			case KEY_CN|KEY_V3:
-			Zero_Calibration();
+			Zero_Calibration(); //Calibrate the temperature (i think??)
 			if(Get_CalFlag() == 1) {
 				Disk_BuffInit();
 				Config_Analysis();         // ��������U��
@@ -403,20 +403,20 @@ void Status_Tran(void) //
 			default:
 			break;
 		}
-		if(back_prestatus == 1) {
-			back_prestatus = 0;
-			Set_HeatingTime(0);
-			Set_CtrlStatus(IDLE);
-			gPre_status = THERMOMETER;
-			gIs_restartkey = 1;
-			Set_LongKeyFlag(0);
-			KD_TIMER = 50; //
+		if(back_prestatus == 1) { //we are exiting
+			back_prestatus = 0;//clear flag
+			Set_HeatingTime(0);//turn off heater? (not sure why this is done again)
+			Set_CtrlStatus(IDLE);//Goto IDLE state
+			gPre_status = THERMOMETER;//set previous state
+			gIs_restartkey = 1;//signal soft restart required as we may have done a calibration
+			Set_LongKeyFlag(0);//reset long key hold flag
+			KD_TIMER = 50;//
 		}
 		break;
-		case ALARM:
+		case ALARM: //An error has occured so we are in alarm state
 		switch(Get_AlarmType()) {
-			case HIGH_TEMP:
-			case SEN_ERR:
+			case HIGH_TEMP: //over temp condition
+			case SEN_ERR://sensor reading error
 			wk_temp = device_info.t_work;
 			gTemp_data = Get_Temp(wk_temp);
 			if(Get_AlarmType() == NORMAL_TEMP) {
@@ -424,20 +424,20 @@ void Status_Tran(void) //
 				Set_UpdataFlag(0);
 			}
 			break;
-			case HIGH_VOLTAGE:
-			case LOW_VOLTAGE:
+			case HIGH_VOLTAGE: //over voltage
+			case LOW_VOLTAGE://under voltage
 			if(Read_Vb(1) >= 1 && Read_Vb(1) <= 3) {
-				Set_HeatingTime(0);
-				Set_LongKeyFlag(0);
+				Set_HeatingTime(0); //turn off heater
+				Set_LongKeyFlag(0);//reset key flag
 				gIs_restartkey = 1;
-				UI_TIMER = 2; // 2��
+				UI_TIMER = 2;// 2��
 				gPre_status = THERMOMETER;
 				Set_CtrlStatus(IDLE);
 			}
 			break;
 		}
-
-		if(Get_HeatingTime() != 0) {
+//V-- No idea what this does yet.. At all.. since it will always be skipped..
+		if(Get_HeatingTime != 0) {
 			Set_HeatingTime(0);                          //����ֹͣ����
 			HEAT_OFF();
 		}

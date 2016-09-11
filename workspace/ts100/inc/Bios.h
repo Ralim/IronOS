@@ -50,7 +50,7 @@ void USB_Port(u8 state);
 void NVIC_Config(u16 tab_offset);
 void RCC_Config(void);
 void GPIO_Config(void);
-void Ad_Init(void);
+void Adc_Init(void);
 void Init_Timer2(void);
 void Init_Timer3(void);
 void TIM2_ISR(void);

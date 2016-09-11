@@ -1,6 +1,7 @@
 /********************* (C) COPYRIGHT 2015 e-Design Co.,Ltd. ********************
  Brief   : �ײ�Ӳ������                                          Author : bure
-*******************************************************************************/
+ Modified by Ben V. Brown into English
+ *******************************************************************************/
 #include "stm32f10x.h"
 
 #define PRODUCT_INFO       "TS100"
@@ -14,7 +15,7 @@
 
 #define SPIx                SPI1
 #define FLASH_PAGE          0x0400
-//--------------------------- key ��ؿ����ź� ------------------------------//
+//--------------------------- key Definitions ------------------------------//
 #define KEY1_PIN          GPIO_Pin_9    //PA8
 #define KEY2_PIN          GPIO_Pin_6    //PA6
 #define KEY_1             !(GPIOA->IDR & KEY1_PIN)
@@ -30,7 +31,6 @@
 
 #define I2C1_DR_Address               0x40005410
 #define I2C2_DR_Address               0x40005810
-
 
 #define SERIAL_NO1         (*(u32*)0x1FFFF7E8)
 #define SERIAL_NO2         (*(u32*)0x1FFFF7EC)
@@ -53,15 +53,14 @@
 #define   INT1_PIN            GPIO_Pin_5    //PB5  
 #define   INT2_PIN            GPIO_Pin_3    //PB3
 //------------------------------ GPIO �˿����� -------------------------------//
-  
+
 #define GPIOA_OUTPUT()      GPIOA->ODR  = 0xFFFF;
 #define GPIOA_L_DEF()       GPIOA->CRL  = 0x08888888; /* Ai7 K2 xxx xxx xxx xxx xxx xxx */
 #define GPIOA_H_DEF()       GPIOA->CRH  = 0x8BBBB883; /* xxx SWC SWD D+  D-  xxx K1 nCR  */
-    
+
 #define GPIOB_OUTPUT()      GPIOB->ODR  = 0xFFFF;
 #define GPIOB_L_DEF()       GPIOB->CRL  = 0x44838800; /* SDA SCL It1 Po It2 xxx Ai9 Ai8 */
 #define GPIOB_H_DEF()       GPIOB->CRH  = 0x88888888; /* xxx xxx xxx xxx xxx xxx xxx xxx */
-
 
 //--------------------------------- RCC ���� ---------------------------------//
 

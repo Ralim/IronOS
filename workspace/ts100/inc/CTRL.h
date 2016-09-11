@@ -21,6 +21,8 @@
 #define G6_TIMER                  gTime[5]/*SWITCH_SHOW_TIMER*/
 #define UI_TIMER                  gTime[6]/*UI_TIMER ͼ���������ʱ�����*/
 #define KD_TIMER                  gTime[7]/*������ʱ*/
+
+///^^-- All the times in gTime are decremented by 1 if >0 by timer2 tick <bottom of bios.c>
 //------------------------------ ��������------------------------------------//
 #define   KEY_ST(KEY_PIN)      GPIO_ReadInputDataBit(GPIOA, KEY_PIN)
 #define   NO_KEY    0x0	/*NO Keys pressed*/
