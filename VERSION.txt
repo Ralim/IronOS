@@ -1,0 +1,25 @@
+v2.11 update (2015/08/03)
+1, optimizing the key for delay;
+2, optimized display processing
+3, optimization of high-temperature alarm;
+4, to increase the maximum voltage alarm;
+5, the newly added screen protection, enter standby interface for some time, the screen will shut itself down, or move the iron screen button will automatically light up;
+6, optimizing the movement decision
+
+v2.10 update (2015/07/14)
+1, temperature calibration is not refresh bug;
+2, Cancel USB-powered thermometer into the function;
+
+---Original --
+v2.11 更新内容(20150803)
+1、	优化按键延时处理；
+2、	优化显示处理
+3、	优化高温报警；
+4、	提高报警的最高电压；
+5、	新加入屏幕保护功能，进入待机界面一段时间后，屏幕会自己关闭，按键或者移动烙铁屏幕会自动点亮；
+6、	优化移动判定
+
+v2.10 更新内容(20150714)
+1、	温度校准时没有刷新的bug；
+2、	取消USB供电时进入温度计的功能；
+
