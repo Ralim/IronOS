@@ -68,26 +68,28 @@ const uint8_t BOOT_SEC[512] = { 0xEB, 0x3C, 0x90, 0x4D, 0x53, 0x44, 0x4F, 0x53,
 		0x74, 0x6F, 0x20, 0x72, 0x65, 0x73, 0x74, 0x61, 0x72, 0x74, 0x0D, 0x0A,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xAC, 0xCB, 0xD8, 0x55, 0xAA };
 
-static u8 gDisk_buff[0x2600]; //Buffer used to implement the virtual disk
+static u8 gDisk_buff[0x2600]; //RAM Buffer used to implement the virtual disk
 static u32 gDisk_var[(512 + 32 + 28) / 4];     //
 static u32 *gV32 = (u32*) &gDisk_var[512 / 4];
 static u8 *gVar = (u8*) &gDisk_var[512 / 4 + 8];
 
 static u8 *gBuff = (u8*) &gDisk_var[0];
 const u8 gFat_data[] = { 0xF8, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }; //{0xF8,0XFF,0XFF,0xff,0X0f};//
-
+//The options
 const char *gKey_words[] = { "T_Standby", "T_Work", "Wait_Time", "Idle_Time",
 		"T_Step", "Turn_Off_v", "TempShowFlag", "ZeroP_Ad" };
+//default settings
 const char *gDef_set[] = { "T_Standby=200", "T_Work=300", "Wait_Time=180",
 		"Idle_Time=360", "T_Step=10", "Turn_Off_v=10", "TempShowFlag=0",
 		"ZeroP_Ad=239" };
+//comments for accepted range
 const char *gSet_range[] = { "   #(100~400)\r\n", "      #(100~400)\r\n",
 		"   #(60~9999)\r\n", "   #(300~9999)\r\n", "       #(5~25)\r\n",
 		"   #(9~12)\r\n", "  #(0,1)\r\n", "    #ReadOnly\r\n" };
 
-static u8 gFile_con[512];
-#define CONFIG_CONT 8
-u8 gRewriteflag[16];
+static u8 gFile_con[512]; //file contents buffer
+#define CONFIG_CONT 8 /*Number of variables in config.txt*/
+u8 gRewriteflag[16]; //This flags if this sector has changed and needs to be written to flash
 
 #define ROW_CONT 35
 #define FILE_CONT 254
@@ -289,8 +291,8 @@ void Upper(u8* str, u16 len) {
 /*******************************************************************************
  Function: SearchFile
  Description:
- Inputs: (pfilename) filename to look for, (pfilelen) length of the filename,(root_addr) root folder to search from
- Outputs: NULL (failed) or
+ Inputs: (pfilename) filename to look for, (pfilelen) length of the file,(root_addr) root folder to search from
+ Outputs: NULL (failed) or pointer to file start
  *******************************************************************************/
 u8* SearchFile(u8* pfilename, u16* pfilelen, u16* root_addr) {
 	u16 n, sector;
@@ -301,7 +303,7 @@ u8* SearchFile(u8* pfilename, u16* pfilelen, u16* root_addr) {
 
 	for (n = 0; n < 16; n++) {
 		memcpy(str_name, pdiraddr, 11);
-		Upper(str_name, 11);//ensure path is upper case
+		Upper(str_name, 11); //ensure path is upper case
 		if (memcmp(str_name, pfilename, 11) == 0) {
 			memcpy((u8*) pfilelen, pdiraddr + 0x1C, 2);
 			memcpy((u8*) &sector, pdiraddr + 0x1A, 2);
@@ -313,30 +315,6 @@ u8* SearchFile(u8* pfilename, u16* pfilelen, u16* root_addr) {
 	}
 	return NULL;
 }
-
-const u8 LOGO[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x7F, 0xC0, 0x00, 0x00,
-
-		0x00, 0x00, 0x00, 0x01, 0xC0, 0xFF, 0xFF, 0xFF, 0x80, 0x1F, 0xFF, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFD, 0x80, 0xFF, 0xFF, 0xFF, 0x80, 0x1F, 0xFF, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFD, 0xFF, 0x00, 0x00, 0x00,
-
-		0x7F, 0x9F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFD, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xCF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFD, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xF7, 0xFF, 0xFF, 0xF0, 0x00, 0x03, 0xFD,
-
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xF8, 0x00, 0x00, 0x07, 0xFF, 0xFC, 0x01,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFE, 0x07, 0x81, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x9F, 0xFF,
-
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFE, 0x07, 0xFF,
-		0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-
-		0xFF, 0xFF, 0x9F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xFF, 0x9F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-		0xFF, 0xFF, 0x9F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 
 /*******************************************************************************
  Function:Config_Analysis
@@ -355,8 +333,8 @@ u8 Config_Analysis(void) {
 	root_addr = 0;
 	m = 0;
 	j = 0;
-
-	if ((p_file = SearchFile("CONFIG  TXT", &file_len, &root_addr))) {
+	//read in the config.txt if it exists
+	if ((p_file = SearchFile((u8*) ("CONFIG  TXT"), &file_len, &root_addr))) {
 		memset(t_p, 0x00, CONFIG_CONT * ROW_CONT);
 		memcpy((u8*) gFile_con, p_file, 512);
 		for (k = 0; k < CONFIG_CONT; k++) {
@@ -373,11 +351,11 @@ u8 Config_Analysis(void) {
 			t_p[k][j] = '\0';
 			m = i + 2;
 		}
-		for (k = 0; k < CONFIG_CONT; k++) { //����CONFIG_CONT   ��
-			if (memcmp(t_p[k], gKey_words[k], strlen(gKey_words[k])) == 0) { //�ҵ��ؼ���
+		for (k = 0; k < CONFIG_CONT; k++) {
+			if (memcmp(t_p[k], gKey_words[k], strlen(gKey_words[k])) == 0) {
 				flag = 0;
 				for (i = strlen(gKey_words[k]); i < strlen((char *) t_p[k]);
-						i++) { //����ֵ�Ƿ�Ϸ�
+						i++) {
 					if (t_p[k][i] >= '0' && t_p[k][i] <= '9') {
 						if (t_p[k][i] == '0') {
 							if (k == 6) {
@@ -390,12 +368,12 @@ u8 Config_Analysis(void) {
 						}
 						flag = 1;
 						break;
-					} else if ((t_p[k][i] != 0x20) && (t_p[k][i] != 0x3d)) { //�ո�ϵȺ�
+					} else if ((t_p[k][i] != 0x20) && (t_p[k][i] != 0x3d)) {
 						flag = 0;
 						break;
 					}
 				}
-				if (flag && Cal_Val(t_p[k] + i, k, 0)) { //����ֵ�Ϸ�
+				if (flag && Cal_Val(t_p[k] + i, k, 0)) {
 					Set_Ver(t_p[k] + i, k);
 					if (k == 0)
 						sprintf((char *) t_p[k], "T_Standby=%d",
@@ -404,28 +382,28 @@ u8 Config_Analysis(void) {
 						sprintf((char *) t_p[k], "T_Work=%d",
 								device_info.t_work / 10);
 					else if (k == 2)
-						sprintf((char *) t_p[k], "Wait_Time=%d",
+						sprintf((char *) t_p[k], "Wait_Time=%ld",
 								device_info.wait_time / 100);
 					else if (k == 3)
-						sprintf((char *) t_p[k], "Idle_Time=%d",
+						sprintf((char *) t_p[k], "Idle_Time=%ld",
 								device_info.idle_time / 100);
 					else if (k == 4)
 						sprintf((char *) t_p[k], "T_Step=%d",
 								device_info.t_step / 10);
 					else if (k == 5)
-						sprintf((char *) t_p[k], "Turn_Off_v=%d",
+						sprintf((char *) t_p[k], "Turn_Off_v=%ld",
 								gTurn_offv / 10);
 					else if (k == 6)
 						sprintf((char *) t_p[k], "TempShowFlag=%d",
 								Get_TemperatureShowFlag());
 					else if (k == 7)
-						sprintf((char *) t_p[k], "ZeroP_Ad=%d", gZerop_ad);
-				} else { //����ֵ���Ϸ�
+						sprintf((char *) t_p[k], "ZeroP_Ad=%ld", gZerop_ad);
+				} else {
 					memset(t_p[k], 0, strlen((char *) t_p[k]));
 					memcpy(t_p[k], gDef_set[k], strlen((char *) gDef_set[k]));
 					is_illegality = 1;
 				}
-			} else { //ľ���ҵ��ؼ���
+			} else {
 				memcpy(t_p[k], gDef_set[k], strlen((char *) gDef_set[k]));
 				is_illegality = 1;
 			}
@@ -441,7 +419,7 @@ u8 Config_Analysis(void) {
 			m = strlen((char *) str);
 
 			if (m < 256) {
-				gDisk_buff[0x400 + root_addr * 32 + 0x1C] = m; //strlen((char *)str);//�ļ���С
+				gDisk_buff[0x400 + root_addr * 32 + 0x1C] = m; //strlen((char *)str);
 				gDisk_buff[0x400 + root_addr * 32 + 0x1D] = 0;
 			} else {
 				gDisk_buff[0x400 + root_addr * 32 + 0x1C] = m % 256;
@@ -453,7 +431,7 @@ u8 Config_Analysis(void) {
 			ReWriteFlsash();
 		}
 	} else {
-		if (p_file = SearchFile("LOGOIN  BMP", &file_len, &root_addr)) {
+		if ((p_file = SearchFile("LOGOIN  BMP", &file_len, &root_addr))) {
 			memcpy(str, p_file, 254);
 			memset(gDisk_buff, 0x00, 0x2600);
 			memcpy(ROOT_SECTOR + 32, "LOGOIN  BMP", 0xC);
@@ -479,10 +457,10 @@ u8 Config_Analysis(void) {
 			m += strlen((char *) gSet_range[k]);
 		}
 
-		gDisk_buff[0x40B] = 0x0; //����
+		gDisk_buff[0x40B] = 0x0;
 		*(u32*) VOLUME_BASE = VOLUME;
-		gDisk_buff[0x41A] = 0x02; //�غ�
-		gDisk_buff[0x41C] = m; //�ļ���С
+		gDisk_buff[0x41A] = 0x02;
+		gDisk_buff[0x41C] = m;
 		ReWrite_All();
 	}
 
@@ -496,60 +474,52 @@ u8 Config_Analysis(void) {
 	return 0;
 }
 /*******************************************************************************
- ������: Disk_SecWrite
- ��������:PC �����ļ�ʱд����
- �������:pbuffer �������� diskaddr ��ַ
- ���ز���:NULL
+ Function: Disk_SecWrite
+ Description:
+ Inputs:
  *******************************************************************************/
-void Disk_SecWrite(u8* pbuffer, u32 diskaddr) //PC �������ݵ���
-{
-	u8 is_illegality = 0;
+void Disk_SecWrite(u8* pbuffer, u32 diskaddr) {
 	u32 i, j, k, m, flag;
 	u8 t_p[CONFIG_CONT][ROW_CONT];
 	u8 str[FILE_CONT];
 	u8 ver[20];
 	static u16 Config_flag = 0;
-	static u8 Conf_TxtFlag = 0;
 
 	if (diskaddr == 0x1000) {                               // Write FAT1 sector
-		if (memcmp(pbuffer, (u8*) FAT1_SECTOR, 512)) {
+		if (memcmp(pbuffer, (u8*) FAT1_SECTOR, 512)) {         //check different
 			memcpy((u8*) FAT1_SECTOR, pbuffer, 512);
 			gRewriteflag[0] = 1;
-			Conf_TxtFlag = 0;
 		}
 	} else if (diskaddr == 0x2800) {                        // Write FAT2 sector
-		if (memcmp(pbuffer, (u8*) FAT2_SECTOR, 512)) {
+		if (memcmp(pbuffer, (u8*) FAT2_SECTOR, 512)) {         //check different
 			memcpy((u8*) FAT2_SECTOR, pbuffer, 512);
 			gRewriteflag[0] = 1;
-			Conf_TxtFlag = 0;
 		}
 	} else if (diskaddr == 0x4000) {                        // Write DIR sector
-		if (memcmp(pbuffer, (u8*) ROOT_SECTOR, 512)) {
+		if (memcmp(pbuffer, (u8*) ROOT_SECTOR, 512)) {         //check different
 			memcpy((u8*) ROOT_SECTOR, pbuffer, 512);
 			gRewriteflag[1] = 1;
 			for (i = 0; i < 16; i++) {
-				memcpy((u8*) ver, (u8*) (pbuffer), 12);
-				if (memcmp(ver, "CONFIG  TXT", 11) == 0) {
+				memcpy((u8*) ver, (u8*) (pbuffer), 12); //copy the filename out for comparison
+				if (memcmp(ver, "CONFIG  TXT", 11) == 0) { //if file name matches
 					Config_flag = pbuffer[0x1A];
-					Conf_TxtFlag = 1;
 					break;
 				}
-				pbuffer += 32;
+				pbuffer += 32; //move to the next chunk of the pbuffer
 			}
 		}
 	} else if (diskaddr >= 0x8000 && diskaddr <= 0xA000) {  // Write FILE sector
-		if (memcmp(pbuffer, (u8*) (FILE_SECTOR + (diskaddr - 0x8000)), 512)) {
+		if (memcmp(pbuffer, (u8*) (FILE_SECTOR + (diskaddr - 0x8000)), 512)) { //check if different
 			memcpy((u8*) (FILE_SECTOR + (diskaddr - 0x8000)), pbuffer, 512);
 		}
 		if ((((diskaddr - 0x8000) / 0x200) + 2) == Config_flag) {
-//        /*
 			m = 0;
 			memset(t_p, 0x00, CONFIG_CONT * ROW_CONT);
 			memcpy((u8*) (gFile_con), pbuffer, 512);
 
-			for (k = 0; k < CONFIG_CONT; k++) { //ȡ��4   ��
+			for (k = 0; k < CONFIG_CONT; k++) { //
 				j = 0;
-				for (i = m; i < strlen((char *) gFile_con); i++) { //����������ֵ�ַ�������λ��
+				for (i = m; i < strlen((char *) gFile_con); i++) { //
 					if (gFile_con[i] == 0x0D && gFile_con[i + 1] == 0x0A)
 						break;
 					else {
@@ -562,11 +532,11 @@ void Disk_SecWrite(u8* pbuffer, u32 diskaddr) //PC �������ݵ��
 				m = i + 2;
 			}
 
-			for (k = 0; k < CONFIG_CONT; k++) { //����k   ��
-				if (memcmp(t_p[k], gKey_words[k], strlen(gKey_words[k])) == 0) { //�ҵ��ؼ���
+			for (k = 0; k < CONFIG_CONT; k++) {
+				if (memcmp(t_p[k], gKey_words[k], strlen(gKey_words[k])) == 0) {
 					flag = 0;
 					for (i = strlen(gKey_words[k]); i < strlen((char *) t_p[k]);
-							i++) { //����ֵ�Ƿ�Ϸ�
+							i++) {
 						if (t_p[k][i] >= '0' && t_p[k][i] <= '9') {
 							if (t_p[k][i] == '0') {
 								if (k == 6) {
@@ -579,14 +549,12 @@ void Disk_SecWrite(u8* pbuffer, u32 diskaddr) //PC �������ݵ��
 							}
 							flag = 1;
 							break;
-						} else if ((t_p[k][i] != 0x20) && (t_p[k][i] != 0x3d)) { //�ո�ϵȺ�
+						} else if ((t_p[k][i] != 0x20) && (t_p[k][i] != 0x3d)) {
 							flag = 0;
 							break;
 						}
 					}
 					if ((!flag) || (!Cal_Val(t_p[k] + i, k, 1))) {
-
-						is_illegality = 1; //���Ϸ�
 						return;
 					} else {
 						Set_Ver(t_p[k] + i, k);
@@ -599,56 +567,44 @@ void Disk_SecWrite(u8* pbuffer, u32 diskaddr) //PC �������ݵ��
 							sprintf((char *) t_p[k], "T_Work=%d",
 									device_info.t_work / 10);
 						else if (k == 2)
-							sprintf((char *) t_p[k], "Wait_Time=%d",
+							sprintf((char *) t_p[k], "Wait_Time=%ld",
 									device_info.wait_time / 100);
 						else if (k == 3)
-							sprintf((char *) t_p[k], "Idle_Time=%d",
+							sprintf((char *) t_p[k], "Idle_Time=%ld",
 									device_info.idle_time / 100);
 						else if (k == 4)
 							sprintf((char *) t_p[k], "T_Step=%d",
 									device_info.t_step / 10);
 						else if (k == 5)
-							sprintf((char *) t_p[k], "Turn_Off_v=%d",
+							sprintf((char *) t_p[k], "Turn_Off_v=%ld",
 									gTurn_offv / 10);
 						else if (k == 6)
 							sprintf((char *) t_p[k], "TempShowFlag=%d",
 									Get_TemperatureShowFlag());
 						else if (k == 7)
-							sprintf((char *) t_p[k], "ZeroP_Ad=%d", gZerop_ad);
+							sprintf((char *) t_p[k], "ZeroP_Ad=%ld", gZerop_ad);
 					}
-				} else { //ľ���ҵ��ؼ���
+				} else {
 					memcpy(t_p[k], gDef_set[k], strlen((char *) gDef_set[k]));
-					is_illegality = 1;
 					return;
 				}
 			}
 
-			if (!is_illegality) {
-				memset(str, 0, FILE_CONT);
-				for (k = 0; k < CONFIG_CONT; k++) {
-					strcat((char *) str, (char *) t_p[k]);
-					strcat((char *) str, (char *) gSet_range[k]);
-				}
-				m = strlen((char *) str);
-
-				if (m < 256) {
-					gDisk_buff[0x400 + (Config_flag - 2) * 32 + 0x1C] = m; //strlen((char *)str);//�ļ���С
-					gDisk_buff[0x400 + (Config_flag - 2) * 32 + 0x1D] = 0;
-				} else {
-					gDisk_buff[0x400 + (Config_flag - 2) * 32 + 0x1C] = m % 256;
-					gDisk_buff[0x400 + (Config_flag - 2) * 32 + 0x1D] = m / 256;
-				}
-
-				memcpy((u8*) (FILE_SECTOR), (u8*) str, 512);
-				gRewriteflag[1] = 1;
-				gRewriteflag[((diskaddr - 0x8000 + 0x200) / 0x400) + 1] = 1;
-				ReWriteFlsash();
-				Conf_TxtFlag = 0;
-				return;
-			} else {
-				Conf_TxtFlag = 1;
-				return;
+			memset(str, 0, FILE_CONT);
+			for (k = 0; k < CONFIG_CONT; k++) {
+				strcat((char *) str, (char *) t_p[k]);
+				strcat((char *) str, (char *) gSet_range[k]);
 			}
+			m = strlen((char *) str);
+			gDisk_buff[0x400 + (Config_flag - 2) * 32 + 0x1C] = m % 256;
+			gDisk_buff[0x400 + (Config_flag - 2) * 32 + 0x1D] = m / 256;
+
+			memcpy((u8*) (FILE_SECTOR), (u8*) str, 512);
+			gRewriteflag[1] = 1;
+			gRewriteflag[((diskaddr - 0x8000 + 0x200) / 0x400) + 1] = 1;
+			ReWriteFlsash();
+			return;
+
 		}
 
 		gRewriteflag[1] = 1;
@@ -659,10 +615,8 @@ void Disk_SecWrite(u8* pbuffer, u32 diskaddr) //PC �������ݵ��
 }
 
 /*******************************************************************************
- ������: Disk_SecRead
- ��������:PC ��ȡ�ļ�ʱд����
- �������:pbuffer ��ȡ���� diskaddr ��ַ
- ���ز���:NULL
+ Function: Disk_SecRead
+ Description: Reads a sector from the virtual disk
  *******************************************************************************/
 void Disk_SecRead(u8* pbuffer, u32 disk_addr) {
 	Soft_Delay();
@@ -677,14 +631,13 @@ void Disk_SecRead(u8* pbuffer, u32 disk_addr) {
 	} else if (disk_addr >= 0x8000 && disk_addr <= 0xA000) { // Read FILE sector
 		memcpy(pbuffer, (u8*) (APP_BASE + 0x600 + (disk_addr - 0x8000)), 512);
 	} else {
-		memset(pbuffer, 0, 512);                        //
+		memset(pbuffer, 0, 512);                        //unknown, return 0's
 	}
 }
 /*******************************************************************************
- ������: ReWriteFlsash
- ��������:дFlash
- �������:NULL
- ���ز���:�Ƿ�д���־
+ Function:ReWriteFlsash
+ Description:
+ Output:RDY(all good) or ERR (error)
  *******************************************************************************/
 u8 ReWriteFlsash(void) {
 	u32 i, j;
@@ -697,12 +650,12 @@ u8 ReWriteFlsash(void) {
 			gRewriteflag[i] = 0;
 			FLASH_Erase(APP_BASE + i * 0x400);
 			f_buff = (u16*) &gDisk_buff[i * 0x400];
-			for (j = 0; j < 0x400; j += 2) {
-				result = FLASH_Prog((u32) (APP_BASE + i * 0x400 + j),
+			for (j = 0; j < 0x400; j += 2) {         //Loop through the 1k block
+				result = FLASH_Prog((u32) (APP_BASE + i * 0x400 + j), //program each 16 bit block
 						*f_buff++);
-				if (result != FLASH_COMPLETE) {
-					FLASH_Lock();
-					return ERR;
+				if (result != FLASH_COMPLETE) { //something went wrong
+					FLASH_Lock(); //make sure the flash is locked again
+					return ERR; //return ERR
 				}
 			}
 			break;
@@ -712,10 +665,9 @@ u8 ReWriteFlsash(void) {
 	return RDY;
 }
 /*******************************************************************************
- ������: ReWrite_All
- ��������:��������flash����д����
- �������:NULL
- ���ز���:�Ƿ�д���־
+ Function: ReWrite_All
+ Description:
+ Output:
  *******************************************************************************/
 u8 ReWrite_All(void) {
 	u16 i;
@@ -734,24 +686,20 @@ u8 ReWrite_All(void) {
 	return RDY;
 }
 /*******************************************************************************
- ������: Erase
- ��������:��ʽ��Flash
- �������:NULL
- ���ز���:NULL
+ Function:Erase
+ Description: Erase the first 9k from APP_BASE
  *******************************************************************************/
 void Erase(void) {
 	u16 i;
-	FLASH_Unlock();
+	FLASH_Unlock();                        //unlock the mcu flash controller
 	for (i = 0; i < 9; i++)
-		FLASH_Erase(APP_BASE + i * 0x400);
+		FLASH_Erase(APP_BASE + i * 0x400);                     //erase the flash
 
 	FLASH_Lock();
 }
 /*******************************************************************************
- ������: Read_Memory
- ��������:����microSD���Ķ�������
- �������:r_offset ƫ�� r_length����
- ���ز���:NULL
+ Function: Read_Memory
+ Description:
  *******************************************************************************/
 void Read_Memory(u32 r_offset, u32 r_length) {
 	static u32 offset, length, block_offset;
@@ -789,10 +737,8 @@ void Read_Memory(u32 r_offset, u32 r_length) {
 	}
 }
 /*******************************************************************************
- ������: Write_Memory
- ��������:����microSD����д������
- �������:r_offset ƫ�� r_length����
- ���ز���:NULL
+ Function: Write_Memory
+ Description:
  *******************************************************************************/
 void Write_Memory(u32 w_offset, u32 w_length) {
 	static u32 offset, length;

@@ -13,9 +13,9 @@
 #define PP         0x02   // Write to Memory instruction
 #define PW         0x0A   // Page write instruction
 
-#define OK         0      // �������
-#define SEC_ERR    1      // ������д����
-#define TMAX       100000 // ��ʱ����
+#define OK         0      //
+#define SEC_ERR    1      //
+#define TMAX       100000 //
 
 #define WIP_Flag   0x01   // Write In Progress (WIP) flag
 #define Dummy_Byte 0xA5

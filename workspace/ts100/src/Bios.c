@@ -52,10 +52,8 @@ u32 Get_HeatingTime(void) {
 	return gHeat_cnt;
 }
 /*******************************************************************************
- ������: Init_GTIME
- ��������:��ʼ����ʱ��
- �������:NULL
- ���ز���:NULL
+Function:
+Description: Init the global count down timers
  *******************************************************************************/
 void Init_Gtime(void) {
 	u8 i;
@@ -88,10 +86,9 @@ void Delay_HalfMs(u32 ms) {
 }
 
 /*******************************************************************************
- ������: USB_Port
- ��������:���� USB �豸 IO �˿�
- �������:State = ENABLE / DISABLE
- ���ز���:NULL
+ Function: USB_Port
+ Description: Enables or disables the usb pins
+ Input: state == ENABLE or DISABLE
  *******************************************************************************/
 void USB_Port(u8 state) {
 	USB_DN_LOW();
@@ -279,10 +276,8 @@ void Adc_Init(void) {
 }
 
 /*******************************************************************************
- ������: Init_Timer2
- ��������: ��ʼ�� ��ʱ��2
- �������:NULL
- ���ز���:NULL
+ Function:
+ Description: Setup Timer2 to fire every 10ms
  *******************************************************************************/
 void Init_Timer2(void) {
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -306,10 +301,8 @@ void Init_Timer2(void) {
 	NVIC_Init(&NVIC_InitStructure);
 }
 /*******************************************************************************
- ������: Init_Timer3
- ��������: ��ʼ�� ��ʱ��3
- �������:NULL
- ���ز���:NULL
+Function:
+Description: Init Timer3 to fire every 50us to be used to control the irons software PWM
  *******************************************************************************/
 void Init_Timer3(void) {
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -334,7 +327,7 @@ void Init_Timer3(void) {
 }
 /*******************************************************************************
  Function:TIM2_ISR
- Description:Handles Timer 2 tick.
+ Description:Handles Timer 2 tick. (10mS)
  Automatically decrements all >0 values in gTime.
  Also reads the buttons every 4 ticks
  *******************************************************************************/

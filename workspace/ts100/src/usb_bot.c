@@ -26,7 +26,7 @@ void Mass_Storage_In (void)
     case BOT_CSW_Send:
     case BOT_ERROR:
       Bot_State = BOT_IDLE;
-      SetEPRxStatus(ENDP2, EP_RX_VALID);/* enable the Endpoint to recive the next cmd*/
+      SetEPRxStatus(ENDP2, EP_RX_VALID);/* enable the Endpoint to receive the next cmd*/
       break;
     case BOT_DATA_IN:
       switch (CBW.CB[0])

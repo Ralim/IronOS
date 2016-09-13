@@ -5,6 +5,7 @@
  Author :         Celery
  Data:            2015/07/07
  History:
+ 2016/09/13	Ben V. Brown - English comments and fixing a few errors
  2015/07/07   ͳһ������
  *******************************************************************************/
 #include <stdio.h>
@@ -28,19 +29,15 @@ u8 gMmatxdata;
 typedef struct {
 	u8 hi;
 	u8 lo;
-} DRByte;
-typedef struct {
-	DRByte Byte;
 
 } DR_Value;
 
 DR_Value gX_value, gY_value, gZ_value;
 
 /*******************************************************************************
- ������: Get_MmaActive
- ��������:��ȡ���ٶȴ���������״̬
- �������:NULL
- ���ز���:���ٶȴ�����״̬
+ Function:
+ Description:Returns if the unit is actively being moved
+ Output: if the unit is active or not.
  *******************************************************************************/
 u16 Get_MmaActive(void) {
 	return gactive;
@@ -53,20 +50,19 @@ u16 Get_MmaShift(void) {
 	return gShift;
 }
 /*******************************************************************************
- ������: Get_MmaActive
- ��������:XXXXXXXXXXXXXXXXXXXXXX
- �������:XXXXXXXXXXXXXXXXXXXXXX
- ���ز���:XXXXXXXXXXXXXXXXXXXXXX
+ Function: Set_MmaShift
+ Description: Set the Shift Value
+ Input: shift value
  *******************************************************************************/
 void Set_MmaShift(u16 shift) {
 	gShift = shift;
 }
 
 /*******************************************************************************
- ������: IIC_RegWrite
- ��������:��Reg��ַд��Data
- �������:Reg �����еĵ�ַ��Data����
- ���ز���: �ɹ���
+ Function:IIC_RegWrite
+ Description:Writes a value to a register
+ Input:the register, the data
+ Output: 1 if the write succeeded
  *******************************************************************************/
 int IIC_RegWrite(u8 reg, u8 data) {
 	u8 tx_data[20];
@@ -77,10 +73,10 @@ int IIC_RegWrite(u8 reg, u8 data) {
 	return 1;
 }
 /*******************************************************************************
- ������: IIC_RegRead
- ��������:������Reg����������
- �������:Reg �����еĵ�ַ������gMmatxdata��
- ���ز���: �ɹ���
+ Function:IIC_RegRead
+ Description: Reads a register from I2C, using a single byte addressing scheme
+ Inputs: uint8_t register to read
+ Output: 1 if the read worked.
  *******************************************************************************/
 int IIC_RegRead(u8 reg) {
 	u8 tx_data[20];
@@ -91,10 +87,8 @@ int IIC_RegRead(u8 reg) {
 	return 1;
 }
 /*******************************************************************************
- ������: MMA865x_Standby
- ��������:�������״̬
- �������:NULL
- ���ز���:NULL
+ Function: MMA865x_Standby
+ Description: Put the MMA865 into standby mode
  *******************************************************************************/
 void MMA865x_Standby(void) {
 	//Put the sensor into Standby Mode by clearing
@@ -102,10 +96,8 @@ void MMA865x_Standby(void) {
 	IIC_RegWrite(CTRL_REG1, 0); //(IIC_RegRead(CTRL_REG1) & ~ ACTIVE_MASK)
 }
 /*******************************************************************************
- ������: MMA865x_Active
- ��������:��������ģʽ
- �������:NULL
- ���ز���:NULL
+ Function: MMA865x_Active
+ Description: Put the MMA865 into active mode
  *******************************************************************************/
 void MMA865x_Active(void) {
 	// Put the sensor into Active Mode by setting the
@@ -113,53 +105,50 @@ void MMA865x_Active(void) {
 	IIC_RegWrite(CTRL_REG1, ACTIVE_MASK); //(IIC_RegRead(CTRL_REG1) | ACTIVE_MASK)
 }
 /*******************************************************************************
- ������: IIC_RegRead
- ��������:������Reg����������
- �������:NULL
- ���ز���:NULL
+ Function: IIC_RegRead
+ Description:Setup the MMA865x IC settings
  *******************************************************************************/
 void StartUp_Accelerated(void) {
-	//------�������״̬-----------------------//
+	//Put the unit into standby state so we can edit its configuration registers
 	MMA865x_Standby();
-	//---- ���ò�����Χ4g----------------------//
+	//Set the unit to full scale measurement
 	IIC_RegWrite(XYZ_DATA_CFG_REG, FULL_SCALE_8G); //(IIC_RegRead(XYZ_DATA_CFG_REG) & ~FS_MASK)
-	//--- ������������ʱ��������100HZ------------------------------------//
+	//Set the unit to the required update rate (eg 100Hz)
 	IIC_RegWrite(CTRL_REG1, DataRateValue); //IIC_RegRead(CTRL_REG1)|
-	//----���ò�������ģʽ------------------------------------------------------//
-	IIC_RegWrite(CTRL_REG2, 0);    //(IIC_RegRead(CTRL_REG2) & ~MODS_MASK)
-	//---------��������ģʽ------------------------------------//
+
+	IIC_RegWrite(CTRL_REG2, 0); //Normal mode
+
+	//Change the unit back to active mode to exit setup and start the readings
 	MMA865x_Active();
 }
 
 /*******************************************************************************
- ������: Read_ZYXDr
- ��������:��ȡXYZ����
- �������:NULL
- ���ز���:x,y,z�ķ���
+ Function: Read_ZYXDr
+ Description:
+ Output: 1 if new data, 0 if not
  *******************************************************************************/
 int Read_ZYXDr(void) {
 	u8 reg_flag;
 	u8 ptr, i;
-	u8 value[6];
-
-	memset((u8*) &gX_value, 0, 6);
+	u8 value[6] = { 0, 0, 0, 0, 0, 0 };
 	//Poll the ZYXDR status bit and wait for it to set
-	if (IIC_RegRead(STATUS_REG)) {
+	if (IIC_RegRead(STATUS_REG)) {	//check we can read the status
 		reg_flag = gMmatxdata;
-		if ((reg_flag & ZYXDR_BIT) != 0) {
+		if ((reg_flag & ZYXDR_BIT) != 0) {	//if new measurement
 			//Read 12/10-bit XYZ results using a 6 byte IIC access
 			ptr = X_MSB_REG;
 			for (i = 0; i < 6; i++) {
 				if (IIC_RegRead(ptr++) == 0)
 					break;
+
 				value[i] = gMmatxdata;
 				//Copy and save each result as a 16-bit left-justified value
-				gX_value.Byte.hi = value[0];
-				gX_value.Byte.lo = value[1];
-				gY_value.Byte.hi = value[2];
-				gY_value.Byte.lo = value[3];
-				gZ_value.Byte.hi = value[4];
-				gZ_value.Byte.lo = value[5];
+				gX_value.hi = value[0];
+				gX_value.lo = value[1];
+				gY_value.hi = value[2];
+				gY_value.lo = value[3];
+				gZ_value.hi = value[4];
+				gZ_value.lo = value[5];
 				return 1;
 			}
 		} else
@@ -168,38 +157,37 @@ int Read_ZYXDr(void) {
 	return 0;
 }
 /*******************************************************************************
- ������: Cheak_XYData
- ��������:���x��y�ķ���仯
- �������:ǰһxy��������xy����Ա�
- ���ز���:�Ƿ��ƶ�
+ Function: Cheak_XYData
+ Description: Check the input X,Y for a large enough acceleration to wake the unit
+ Inputs:x0,y0,x1,y1 to check
+ Output: if the unit is active
  *******************************************************************************/
 u16 Cheak_XYData(u16 x0, u16 y0, u16 x1, u16 y1) {
 	u16 active = 0;
 	gShift = 0;
-
-	if ((x1 > (x0 + 16)) || (x1 < (x0 - 16)))
-		active = 1;
-	if ((y1 > (y0 + 16)) || (y1 < (y0 - 16)))
-		active = 1;
 
 	if ((x1 > (x0 + 32)) || (x1 < (x0 - 32)))
 		gShift = 1;
 	if ((y1 > (y0 + 32)) || (y1 < (y0 - 32)))
 		gShift = 1;
 
+	if ((x1 > (x0 + 16)) || (x1 < (x0 - 16)))
+		active = 1;
+	if ((y1 > (y0 + 16)) || (y1 < (y0 - 16)))
+		active = 1;
+
 	return active;
 }
 /*******************************************************************************
- ������: Update_X
- ��������:��������
- �������:����x
- ���ز���:NULL
+ Function: Update_X
+ Description: Converts the read value for x into an actual properly located value
+ Output: X
  *******************************************************************************/
 u16 Update_X(void) {
 	u16 value, x;
 
-	value = ((gX_value.Byte.hi << 8) | (gX_value.Byte.lo & 0xf0)) >> 4;
-	if (gX_value.Byte.hi > 0x7f)
+	value = ((gX_value.hi << 8) | (gX_value.lo & 0xf0)) >> 4;
+	if (gX_value.hi > 0x7f)
 		x = (~value + 1) & 0xfff;
 	else
 		x = value & 0xfff;
@@ -207,16 +195,15 @@ u16 Update_X(void) {
 	return x;
 }
 /*******************************************************************************
- ������: Update_Y
- ��������:��������
- �������:NULL
- ���ز���:����y
+ Function: Update_Y
+ Description: Converts the read value for y into an actual properly located value
+ Output: Y
  *******************************************************************************/
 u16 Update_Y(void) {
 	u16 value, y;
 
-	value = ((gY_value.Byte.hi << 8) | (gY_value.Byte.lo & 0xf0)) >> 4;
-	if (gY_value.Byte.hi > 0x7f)
+	value = ((gY_value.hi << 8) | (gY_value.lo & 0xf0)) >> 4;
+	if (gY_value.hi > 0x7f)
 		y = (~value + 1) & 0xfff;
 	else
 		y = value & 0xfff;
@@ -224,16 +211,15 @@ u16 Update_Y(void) {
 	return y;
 }
 /*******************************************************************************
- ������: Update_z
- ��������:��������
- �������:NULL
- ���ز���:����z
+ Function: Update_Z
+ Description: Converts the read value for z into an actual properly located value
+ Output: Z
  *******************************************************************************/
 u16 Update_Z(void) {
 	u16 value, z;
 
-	value = ((gZ_value.Byte.hi << 8) | (gZ_value.Byte.lo & 0xf0)) >> 4;
-	if (gZ_value.Byte.hi > 0x7f)
+	value = ((gZ_value.hi << 8) | (gZ_value.lo & 0xf0)) >> 4;
+	if (gZ_value.hi > 0x7f)
 		z = (~value + 1) & 0xfff;
 	else
 		z = value & 0xfff;
@@ -241,22 +227,24 @@ u16 Update_Z(void) {
 	return z;
 }
 /*******************************************************************************
- ������: Check_Accelerated
- ��������:�����ٶȴ������Ƿ��ƶ�
- �������:NULL
- ���ز���:NULL
+ Function: Check_Accelerated
+ Description:Check if the unit has moved
  *******************************************************************************/
 void Check_Accelerated(void) {
 	static u16 x0 = 0, y0 = 0;
 	u16 x1, y1;
 
-	if (Read_ZYXDr()) { /*�����ݣ���������*/
-		x1 = Update_X();
+	if (Read_ZYXDr()) { //Read the new values from the accelerometer
+		x1 = Update_X(); //convert the values into usable form
 		y1 = Update_Y();
-	} else
+	} else {
 		x1 = x0;
-	y1 = y0;
-	gactive = Cheak_XYData(x0, y0, x1, y1);/*����Ƿ��ƶ�*/
+		y1 = y0; //use old values
+		gactive = 0;
+		return;
+	}
+
+	gactive = Cheak_XYData(x0, y0, x1, y1); //gactive == If the unit is moving or not
 
 	x0 = x1;
 	y0 = y1;

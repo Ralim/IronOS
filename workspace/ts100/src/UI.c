@@ -21,11 +21,11 @@
 #include "MMA8652FC.h"
 /******************************************************************************/
 u8 gTemp_array[16 * 16 + 16];
-u8 gTemperatureshowflag = 0; /* 0 �����϶�,1�ǻ��϶�*/
+u8 gTemperatureshowflag = 0;
 u8 gUp_flag = 0, gDown_flag = 0, gLevel_flag = 0, gTempset_showctrl = 0;
 u16 gTemp_array_u16[208];
-u16 gSet_table[2] = { 4000, 1000 }; /*�¶�ѡ��*/
-u32 gCont = 0; /*gCont ��������״̬ת�����ˢ����ʶ*/
+u16 gSet_table[2] = { 4000, 1000 };
+u32 gCont = 0;
 
 static u8 Ver_s[] = { /*12*16*/0x04, 0x0C, 0x74, 0x80, 0x00, 0x00, 0x00, 0x80,
 		0x74, 0x0C, 0x04, 0x00, 0x00, 0x00, 0x00, 0x03, 0x1C, 0x60, 0x1C, 0x03,
@@ -51,48 +51,37 @@ static u8 Ver_s[] = { /*12*16*/0x04, 0x0C, 0x74, 0x80, 0x00, 0x00, 0x00, 0x80,
 /******************************************************************************/
 
 /*******************************************************************************
- ������: Get_UpdataFlag
- ��������:��ȡ��Ļˢ�±�־
- �������:NULL
- ���ز���:��Ļˢ�±�־
+ Function:
+ Description:
  *******************************************************************************/
 u32 Get_UpdataFlag(void) {
 	return gCont;
 }
 /*******************************************************************************
- ������: Set_UpdataFlag
- ��������:������Ļˢ�±�־
- �������:1 ˢ�£�0 ��ˢ��
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Set_UpdataFlag(u32 cont) {
 	gCont = cont;
 }
 /*******************************************************************************
- ������: Set_TemperatureShowFlag
- ��������:�����¶���ʾ��ʽ
- �������:flag ���϶�(0),���϶�(1)��־
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Set_TemperatureShowFlag(u8 flag) {
 	gTemperatureshowflag = flag;
 }
 /*******************************************************************************
- ������: Get_TemperatureShowFlag
- ��������:��ȡ�¶���ʾ��ʽ
- �������:NULL
- ���ز���:flag ���϶�(0),���϶�(1)��־
+ Function:
+ Description:־
  *******************************************************************************/
 u8 Get_TemperatureShowFlag(void) {
 	return gTemperatureshowflag;
 }
 /*******************************************************************************
- ������: TemperatureShow_Change
- ��������:���϶Ȼ��϶��໥ת��
- �������: flag 0,���϶�ת�����϶�
- flag 1,���϶�ת�����϶�
- tmp Ҫת�����¶�
- ���ز���:ת�����ֵ
+ Function:
+ Description: Converts F to C or C to F.
+ Input: flag = if flag==0 converts C to F
  *******************************************************************************/
 s16 TemperatureShow_Change(u8 flag, s16 tmp) {
 	if (flag == 0) {
@@ -102,10 +91,8 @@ s16 TemperatureShow_Change(u8 flag, s16 tmp) {
 	}
 }
 /*******************************************************************************
- ������: APP_Init
- ��������:���ݵ�ѹ��ʼ����ʼ״̬
- �������:NULL
- ���ز���:NULL
+ Function:APP_Init
+ Description:Init the operating mode by looking at input voltage to pick USB or normal
  *******************************************************************************/
 void APP_Init(void) {
 	int rev;
@@ -113,13 +100,13 @@ void APP_Init(void) {
 	HEATING_TIMER= 0;
 	UI_TIMER= 0;
 
-	rev = Read_Vb(0);
-	if (rev == 0)
+	rev = Read_Vb(0); //Read input voltage
+	if (rev == 0) //no input volatage == error state
 		Set_CtrlStatus(ALARM);
-	else if (rev >= 4) {
+	else if (rev >= 4) { //We are USB powered (5V approx at input)
 		Set_LongKeyFlag(1);
 		Set_CtrlStatus(CONFIG);
-	} else {
+	} else { //Normal mode > ~9V at input
 		Set_CtrlStatus(IDLE);
 		G6_TIMER= device_info.idle_time;
 	}
@@ -127,10 +114,8 @@ void APP_Init(void) {
 }
 
 /*******************************************************************************
- ������: Display_Temp
- ��������:��ʾ�¶�
- �������:x:��ʾλ�� Temp:�¶�
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Display_Temp(u8 x, s16 temp) {
 	char Str[8];
@@ -179,23 +164,21 @@ void Display_Temp(u8 x, s16 temp) {
 	TEMPSHOW_TIMER= 20; //200ms
 }
 /*******************************************************************************
- ������: Show_Notice
- ��������:��ʾ������ʾ��Ϣ
- �������:NULL
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Show_Notice(void) {
 	int j, k;
 	static u8* ptr0;
 	static u8 posi = 0, i = 0;
 
-	if (i == 0) { //��1  ��
+	if (i == 0) { //1
 		ptr0 = Oled_DrawArea(0, 0, 96, 16, (u8*) Maplib);
-	} else if (i == 1) { //��2  ��
+	} else if (i == 1) { //2
 		ptr0 = Oled_DrawArea(0, 0, 96, 16, ptr0);
-	} else if (i == 2) { //��3  ��
+	} else if (i == 2) { //3
 		ptr0 = Oled_DrawArea(0, 0, 96, 16, (u8*) Maplib);
-	} else if (i == 3) { //��4  ��
+	} else if (i == 3) { //4
 		for (j = 0; j < 6; j++) {
 			k = 84;
 			while (k >= posi) {
@@ -214,18 +197,16 @@ void Show_Notice(void) {
 		i = 0;
 }
 /*******************************************************************************
- ������: Show_Ver
- ��������:��ʾ�汾
- �������:ver �汾��flag (0 :������ʾ )(1������)
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Show_Ver(u8 ver[], u8 flag) {
 	u8 *ptr;
 	int k, i;
-	u8 temp0, temp1, temp2;
+	u8 temp0 = 0, temp1 = 0, temp2 = 0;
 
 	if (ver[2] >= 0x30 && ver[2] < 0x3a)
-		temp1 = ver[2] - 0x30;
+		temp1 = ver[2] - 0x30; //shift from ascii to the raw value
 	if (ver[3] >= 0x30 && ver[3] < 0x3a)
 		temp2 = ver[3] - 0x30;
 	if (ver[0] >= 0x30 && ver[0] < 0x3a)
@@ -256,10 +237,8 @@ void Show_Ver(u8 ver[], u8 flag) {
 }
 
 /*******************************************************************************
- ������: Show_Config
- ��������:��ʾCONFIG
- �������:NULL
- ���ز���:NULL
+ Function:
+ Description: Draws the word CONFIG to the screen
  *******************************************************************************/
 void Show_Config(void) {
 	u8* ptr;
@@ -272,10 +251,8 @@ void Show_Config(void) {
 }
 
 /*******************************************************************************
- ������: Show_TempDown
- ��������:��ʾ�¶��½�: ʵ���¶�>>>Ŀ���¶�
- �������:temp ʵ���¶�,dst_temp Ŀ���¶�
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Show_TempDown(s16 temp, s16 dst_temp) {
 	static u8 guide_ui = 0;
@@ -327,10 +304,8 @@ void Show_TempDown(s16 temp, s16 dst_temp) {
 	Display_Str10(56, str);
 }
 /*******************************************************************************
- ������: Show_Cal
- ��������:��ʾУ׼���
- �������:flag = 1 У׼�ɹ� flag = 2 У׼ʧ��
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Show_Cal(u8 flag) {
 	u8 i;
@@ -349,10 +324,8 @@ void Show_Cal(u8 flag) {
 	Clear_Watchdog();
 }
 /*******************************************************************************
- ������: Show_Warning
- ��������:��ʾ�������
- �������:NULL
- ���ز���:NULL
+ Function:
+ Description:
  *******************************************************************************/
 void Show_Warning(void) {
 	u8 i;

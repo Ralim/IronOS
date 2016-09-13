@@ -40,7 +40,7 @@ u32 Get_AvgAd(void);
 int Get_SensorTmp(void);
 u16 Get_ThermometerTemp(void);
 s16 Get_Temp(s16 wk_temp);
-u32 Clear_Watchdog(void);
+void Clear_Watchdog(void);
 u32 Start_Watchdog(u32 ms);
 u8 Get_AlarmType(void);
 void Set_AlarmType(u8 type);

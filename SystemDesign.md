@@ -10,3 +10,14 @@ This is implimented using a ram buffer for the disk.
 
 
 
+
+# Future improvements to be made
+These features are things I would like to add to the firmware
+
+* Use hardware PWM for driving the heating element.
+* Use the sysTick hardware for timing of events
+* Move all the settings to an on device menu system instead of usb link
+* Move error codes into a unified struct
+* Rewrite most of the OLED stack to not require hardcoded values
+* Rework the modes of the unit to be neater
+

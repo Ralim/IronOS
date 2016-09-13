@@ -5,7 +5,8 @@
  Author :         bure & Celery
  Data:            2015/08/03
  History:
- 2015/08/03   ͳһ������
+ 2016/09/13	Ben V. Brown -> English comments and cleaning up
+ 2015/08/03
  *******************************************************************************/
 #include <string.h>
 #include "FAT12.h"
@@ -16,11 +17,11 @@
 #define FAT2_BASE    0x00002800   // FAT2
 #define ROOT_BASE    0x00004000   //
 #define FILE_BASE    0x00008000   //
-#define SEC_LEN      0x200        //
-#define FAT1_SEC     0x0C         // FAT1
-#define FAT2_SEC     0x0C         // FAT2
+#define SEC_LEN      512          //length of a sector -> 512 Bytes
+#define FAT1_SEC     0x0C         // FAT1 Sector
+#define FAT2_SEC     0x0C         // FAT2 Sector
 
-#define OK           0            //
+#define OK           0            //Error codes
 #define SEC_ERR      1            //
 #define FAT_ERR      2            //
 #define OVER         3            //
@@ -31,7 +32,7 @@
 #define RW           1            //
 
 /*******************************************************************************
- Function:
+ Function: NextCluster
  Description:
  Input:
  *******************************************************************************/
@@ -49,25 +50,25 @@ u8 NextCluster(u16* pCluster) {
 	return OK;
 }
 /*******************************************************************************
- Function:
+ Function: ReadFileSec
  Description:
  Input:
  *******************************************************************************/
 u8 ReadFileSec(u8* pBuffer, u16* pCluster) {
 	u32 ReadAddr = FILE_BASE + SEC_LEN * (*pCluster - 2);
-
+	//This code appears to read the data in two chunks of 256 bytes...
 	if (ReadDiskData(pBuffer, ReadAddr, 256) != OK)
-		return SEC_ERR; // ��ǰ������
+		return SEC_ERR; //
 	pBuffer += 256;
 	ReadAddr += 256;
 	if (ReadDiskData(pBuffer, ReadAddr, 256) != OK)
 		return SEC_ERR; // Failed to read the sector
 	if (NextCluster(pCluster) != 0)
-		return FAT_ERR;                 // ȡ��һ���غ�
+		return FAT_ERR;                 //
 	return OK;
 }
 /*******************************************************************************
- Function:
+ Function: ProgFileSec
  Description:
  Input:
  *******************************************************************************/
@@ -76,30 +77,30 @@ u8 ProgFileSec(u8* pBuffer, u16* pCluster) {
 	u32 ProgAddr = FILE_BASE + SEC_LEN * (*pCluster - 2);
 
 	if (ProgDiskPage(pBuffer, ProgAddr) != OK)
-		return SEC_ERR; // дǰ������
+		return SEC_ERR; //
 	pBuffer += 256;
 	ProgAddr += 256;
 	if (ProgDiskPage(pBuffer, ProgAddr) != OK)
-		return SEC_ERR; // д�������
+		return SEC_ERR; //
 	Tmp = *pCluster;
 	switch (Tmp) {
-	case 0:                                                // ���дغ�
-	case 1:                                                // ���дغ�
+	case 0:
+	case 1:
 		if (SeekBlank(pBuffer, pCluster) != OK)
 			return OVER;
 		if (SetCluster(pBuffer, pCluster) != OK)
 			return SEC_ERR;
 		*(pCluster + 1) = Tmp;
 		return OK;
-	case END:                                              // ���ӽ���
+	case END:
 	default:
 		if (NextCluster(pCluster) != OK)
-			return FAT_ERR;       // ȡ��һ���غ�
+			return FAT_ERR;
 		return OK;
 	}
 }
 /*******************************************************************************
- Function:
+ Function: SeekBlank
  Description:
  Input:
  *******************************************************************************/

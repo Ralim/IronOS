@@ -56,17 +56,6 @@ void SysTick_Handler(void) {
 void USB_LP_CAN1_RX0_IRQHandler(void) {
 	USB_Istr();
 }
-/*
- void I2C1_EV_IRQHandler(void)
- {
- I2C1_EV_ISR();
- }
-
- void I2C1_ER_IRQHandler(void)
- {
- I2C1_ER_ISR();
- }
- */
 void TIM2_IRQHandler(void) {
 	TIM2_ISR();
 }
@@ -74,7 +63,7 @@ void TIM2_IRQHandler(void) {
 void TIM3_IRQHandler(void) {
 	TIM3_ISR();
 }
-
+/*This loop is used for un assigned IRQ's so that the debugger can catch them*/
 static void forever()
 
 {

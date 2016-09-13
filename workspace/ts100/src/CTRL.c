@@ -31,7 +31,7 @@ s16 gPrev_temp = 250; //
 u8 gIs_restartkey = 0; //
 u8 gPre_status = 1; //
 
-const DEVICE_INFO_SYS info_def = { "2.12",     //Ver
+const DEVICE_INFO_SYS info_def = { "2.13",     //Ver
 		2000,       //T_Standby;    // 200C=1800  2520
 		3000,       // T_Work;      // 350C=3362,
 		100,        //T_Step;
@@ -98,7 +98,7 @@ s16 Get_TempVal(void) {
 
 /*******************************************************************************
  Function:System_Init
- Description:Zeros out the device info to be a known start value (blank)
+ Description:Init the device info to be a known start value (as defined at top of CTRL.c)
  Input:Void
  Output:Void
  *******************************************************************************/

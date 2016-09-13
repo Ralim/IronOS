@@ -274,7 +274,7 @@ int Get_SensorTmp(void) {
 		if (gMeas_cnt == 1) {
 			ad_sum = ad_sum - max - min;
 			avg_data = ad_sum / 8;
-
+			//^ Removes the two outliers from the data spread
 			slide_data = Get_TempSlAvg(avg_data);
 			sensor_temp = (250 + (3300 * slide_data / 4096) - 750); //(25 + ((10*(33*gSlide_data)/4096)-75));
 			ad_sum = 0;
@@ -356,10 +356,8 @@ s16 Get_Temp(s16 wk_temp) {
 }
 
 /*******************************************************************************
- ������: Start_Watchdog
- ��������:��ʼ�����Ź�
- �������:ms ���Ź�����
- ���ز���:����1
+ Function:Start_Watchdog
+ Description: Starts the system watchdog timer
  *******************************************************************************/
 u32 Start_Watchdog(u32 ms) {
 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
@@ -378,13 +376,11 @@ u32 Start_Watchdog(u32 ms) {
 	return 1;
 }
 /*******************************************************************************
- ������: Clear_Watchdog
- ��������:���ÿ��Ź�����
- �������:NULL
- ���ز���:����1
+ Function:Clear_Watchdog
+ Description:Resets the watchdog timer
  *******************************************************************************/
-u32 Clear_Watchdog(void) {
+void Clear_Watchdog(void) {
 	IWDG_ReloadCounter();
-	return 1;
+
 }
 /******************************** END OF FILE *********************************/
