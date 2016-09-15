@@ -55,16 +55,16 @@ ENTRY(Reset_Handler)
 /* Highest address of the user mode stack */
 _estack = 0x20005000;    /* end of RAM */
 
-_Min_Heap_Size = 0;      /* required amount of heap  */
+_Min_Heap_Size = 0x200;      /* required amount of heap  */
 _Min_Stack_Size = 0x400; /* required amount of stack */
 
 /* Memories definition */
 MEMORY
 {
   RAM (xrw)		: ORIGIN = 0x20000000, LENGTH = 20K
-  ROM (rx)		: ORIGIN = 0x8000000, LENGTH = 64K
+  ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 36K
 }
-
+/*^ The rom is shortened as the last ~10K is used for storing the virtual USB Disk, and the offset at the beginning in the bootloader*/
 /* Sections */
 SECTIONS
 {

@@ -26,28 +26,6 @@ u8 gUp_flag = 0, gDown_flag = 0, gLevel_flag = 0, gTempset_showctrl = 0;
 u16 gTemp_array_u16[208];
 u16 gSet_table[2] = { 4000, 1000 };
 u32 gCont = 0;
-
-static u8 Ver_s[] = { /*12*16*/0x04, 0x0C, 0x74, 0x80, 0x00, 0x00, 0x00, 0x80,
-		0x74, 0x0C, 0x04, 0x00, 0x00, 0x00, 0x00, 0x03, 0x1C, 0x60, 0x1C, 0x03,
-		0x00, 0x00, 0x00, 0x00,/*"V",0*/
-		0x00, 0x00, 0x80, 0x40, 0x40, 0x40, 0x40, 0x80, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x1F, 0x22, 0x42, 0x42, 0x42, 0x42, 0x22, 0x13, 0x00, 0x00, 0x00,/*"e",1*/
-		0x00, 0x40, 0x40, 0xC0, 0x00, 0x80, 0x40, 0x40, 0x40, 0xC0, 0x00, 0x00,
-		0x00, 0x40, 0x40, 0x7F, 0x41, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00,/*"r",2*/
-		0x00, 0x00, 0x00, 0x00, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x00, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,/*":",3*/
-		0x00, 0x78, 0x04, 0x04, 0x04, 0x04, 0x04, 0x88, 0x78, 0x00, 0x00, 0x00,
-		0x00, 0x60, 0x50, 0x48, 0x44, 0x42, 0x41, 0x40, 0x70, 0x00, 0x00, 0x00,/*"2",4*/
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x60, 0x60, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,/*".",5*/
-		0x00, 0xE0, 0x18, 0x08, 0x04, 0x04, 0x04, 0x08, 0x18, 0xE0, 0x00, 0x00,
-		0x00, 0x0F, 0x30, 0x20, 0x40, 0x40, 0x40, 0x20, 0x30, 0x0F, 0x00, 0x00,/*"0",6*/
-		0x00, 0x00, 0x00, 0x08, 0x08, 0xFC, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x40, 0x40, 0x7F, 0x40, 0x40, 0x40, 0x00, 0x00, 0x00,/*"1",7*/
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /*" ",5*/
-};
-
 /******************************************************************************/
 
 /*******************************************************************************
@@ -196,45 +174,6 @@ void Show_Notice(void) {
 	if (i == 4)
 		i = 0;
 }
-/*******************************************************************************
- Function:
- Description:
- *******************************************************************************/
-void Show_Ver(u8 ver[], u8 flag) {
-	u8 *ptr;
-	int k, i;
-	u8 temp0 = 0, temp1 = 0, temp2 = 0;
-
-	if (ver[2] >= 0x30 && ver[2] < 0x3a)
-		temp1 = ver[2] - 0x30; //shift from ascii to the raw value
-	if (ver[3] >= 0x30 && ver[3] < 0x3a)
-		temp2 = ver[3] - 0x30;
-	if (ver[0] >= 0x30 && ver[0] < 0x3a)
-		temp0 = ver[0] - 0x30;
-
-	for (i = 0; i < 24; i++) {
-		Ver_s[4 * 24 + i] = Number12[temp0 * 24 + i];
-		Ver_s[6 * 24 + i] = Number12[temp1 * 24 + i];
-		Ver_s[7 * 24 + i] = Number12[temp2 * 24 + i];
-	}
-
-	for (k = 0; k < 16; k++) {
-		if (flag == 0) {
-			Show_ReverseChar((u8*) Ver_s, 8, 12, 2);
-			ptr = (u8*) gTemp_array;
-		} else {
-			ptr = (u8*) Ver_s;
-		}
-		for (i = 0; i < 8; i++) {
-			ptr = Oled_DrawArea(i * 12, 0, 12, 16, ptr);
-		}
-	}
-	if (flag == 0) {
-		Delay_Ms(1000);
-		Clear_Screen();
-		Clear_Watchdog();
-	}
-}
 
 /*******************************************************************************
  Function:
@@ -309,7 +248,7 @@ void Show_TempDown(s16 temp, s16 dst_temp) {
  *******************************************************************************/
 void Show_Cal(u8 flag) {
 	u8 i;
-	u8* ptr;
+	u8* ptr = 0;
 
 	if (flag == 1)
 		ptr = (u8*) Cal_Done;
@@ -329,7 +268,7 @@ void Show_Cal(u8 flag) {
  *******************************************************************************/
 void Show_Warning(void) {
 	u8 i;
-	u8* ptr;
+	u8* ptr = 0;
 	static u8 flag = 0;
 
 	switch (Get_AlarmType()) {
@@ -367,19 +306,11 @@ void Show_Warning(void) {
  fill_trgl:  0,1,2  ��ʵ��,��ʵ��,��ʵ��
  *******************************************************************/
 void Show_Triangle(u8 empty_trgl, u8 fill_trgl) {
-	int j;
 	u8* ptr;
-
 	ptr = (u8*) Triangle; //Get pointer to the pre-computed triangle array
-//#TODO Need to come clean this up later..
 	if ((empty_trgl == 0) && (fill_trgl == 0)) {
-		//V-- What is the mess.. im definitly cleaning this up later dont stress
-		for (j = 0; j < 2; j++) {
-			if (j == 0)
-				ptr = Oled_DrawArea(0, 0, 16, 16, (u8*) ptr);
-			else if (j == 1)
-				ptr = Oled_DrawArea(5 * 16, 0, 16, 16, (u8*) ptr);
-		}
+		ptr = Oled_DrawArea(0, 0, 16, 16, (u8*) ptr);
+		ptr = Oled_DrawArea(5 * 16, 0, 16, 16, (u8*) ptr);
 	} else if ((empty_trgl != 0) && (fill_trgl == 0)) {
 		if (empty_trgl == 1) {
 			ptr += 32;
@@ -933,7 +864,7 @@ void Temp_SetProc(void) {
 void OLed_Display(void) {
 	u16 ht_flag;
 	s16 temp_val, dst_temp;
-	static u8 td_flag = 0, ver_flag = 0, config_show = 0;
+	static u8 td_flag = 0, config_show = 0;
 	static u16 td_cnt = 0;
 	static u16 bk = 0x33, id_cnt = 0;
 
@@ -944,11 +875,7 @@ void OLed_Display(void) {
 			Clear_Screen();
 		}
 
-		if (ver_flag == 0) {
-			Display_BG();
-			Show_Ver(device_info.ver, 0);
-			ver_flag = 1;
-		} else if (UI_TIMER== 0 && G6_TIMER != 0) {
+		if (UI_TIMER== 0 && G6_TIMER != 0) {
 			Show_Notice();
 			UI_TIMER = 50;
 		}
@@ -958,7 +885,7 @@ void OLed_Display(void) {
 			if(bk == 0) Oled_DisplayOff();
 		}
 		if((Get_MmaShift() == 1) || (Get_gKey() != NO_KEY)) {
-			G6_TIMER = device_info.idle_time;
+			G6_TIMER = device_info.idle_time; //reset the idle timer
 			bk = 0x33;
 			Sc_Pt(bk);
 			Oled_DisplayOn();
@@ -970,9 +897,7 @@ void OLed_Display(void) {
 			Set_LongKeyFlag(1);
 			Clear_Screen();
 		}
-
 		ht_flag = Get_HtFlag();
-
 		if(ht_flag != 1) {
 			if(td_flag == 1) Clear_Screen();
 			td_cnt = 0;
@@ -1030,10 +955,6 @@ void OLed_Display(void) {
 		}
 		if(config_show == 0) {
 			Show_Config();
-		} else if(config_show == 1) {
-			Display_BG();
-		} else if(config_show == 2) {
-			Show_Ver(device_info.ver,1);
 		}
 		if(config_show != 3) {
 			Set_gKey(NO_KEY);

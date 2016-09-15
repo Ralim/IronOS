@@ -191,20 +191,23 @@ u32 Get_SlAvg(u32 avg_data) {
 }
 
 /*******************************************************************************
- ������: Get_AvgAd
- ��������:��ȡ�������ȶ�ADƽ��ֵ
- �������:NULL
- ���ز���:ADƽ��ֵ
+ Function:
+ Description: Read the thermocouple in the soldering iron head
+ Output:Soldering Iron temperature
  *******************************************************************************/
 u32 Get_AvgAd(void) {
+	/*The head has a thermocouple inline with the heater
+	 This is read by turning off the heater
+	 Then read the output of the op-amp that is connected across the connections
+	 */
 	static u32 ad_sum = 0;
 	static u32 max = 0, min = 5000;
-	u32 ad_value, avg_data, slide_data;
+	u32 ad_value, avg_data, slide_data = 0;
 
-	Set_HeatingTime(0);
-	HEAT_OFF();
-	Delay_HalfMs(25);
-	gMeas_cnt = 10;
+	Set_HeatingTime(0); //set the remaining time to zero
+	HEAT_OFF(); //heater must be off
+	Delay_HalfMs(25); //wait for the heater to time out
+	gMeas_cnt = 10; //how many measurements to make
 
 	while (gMeas_cnt > 0) {
 		ad_value = Get_AdcValue(0); //Read_Tmp();
@@ -214,9 +217,9 @@ u32 Get_AvgAd(void) {
 		if (ad_value < min)
 			min = ad_value;
 
-		if (gMeas_cnt == 1) {
-			ad_sum = ad_sum - max - min;
-			avg_data = ad_sum / 8;
+		if (gMeas_cnt == 1) { //We have just taken the last reading
+			ad_sum = ad_sum - max - min; //remove the two outliers
+			avg_data = ad_sum / 8; //take the average
 
 			slide_data = Get_SlAvg(avg_data);
 			ad_sum = 0;
@@ -229,16 +232,14 @@ u32 Get_AvgAd(void) {
 }
 
 /*******************************************************************************
- ������: Get_TempSlAvg
- ��������:����¶Ȼ���ƽ��ֵ
- �������:avg_data ����¶�ƽ��ֵ
- ���ز���:����¶Ȼ���ƽ��ֵ
+ Function:
+ Description:
  *******************************************************************************/
 int Get_TempSlAvg(int avg_data) {
 	static int sum_avg = 0;
 	static u8 init_flag = 0;
 
-	if (init_flag == 0) { /*��һ���ϵ�*/
+	if (init_flag == 0) {
 		sum_avg = 8 * avg_data;
 		init_flag = 1;
 		return sum_avg / 8;
@@ -250,14 +251,14 @@ int Get_TempSlAvg(int avg_data) {
 }
 
 /*******************************************************************************
- ������: Get_SensorTmp
- ��������:��ȡ����¶�
- �������:NULL
- ���ز���:��ȡ����¶�
+ Function:
+ Description:Reads the temperature of the on board temp sensor for calibration
+ http://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf
+ Output: The onboardTemp in C
  *******************************************************************************/
 int Get_SensorTmp(void) {
-	static u32 ad_sum = 0;
-	static u32 max = 0, min = 5000;
+	u32 ad_sum = 0;
+	u32 max = 0, min = 5000;
 	u32 ad_value, avg_data, slide_data;
 	int sensor_temp = 0;
 
@@ -277,6 +278,7 @@ int Get_SensorTmp(void) {
 			//^ Removes the two outliers from the data spread
 			slide_data = Get_TempSlAvg(avg_data);
 			sensor_temp = (250 + (3300 * slide_data / 4096) - 750); //(25 + ((10*(33*gSlide_data)/4096)-75));
+			//^ Convert the reading to C
 			ad_sum = 0;
 			min = 5000;
 			max = 0;
@@ -287,25 +289,23 @@ int Get_SensorTmp(void) {
 }
 
 /*******************************************************************************
- ������: Zero_Calibration
- ��������:У׼���AD
- �������:NULL
- ���ز���:NULL
+ Function:
+ Description: Reads the Zero Temp.. And does something..
  *******************************************************************************/
 void Zero_Calibration(void) {
 	u32 zerop;
 	int cool_tmp;
 
-	zerop = Get_AvgAd();
-	cool_tmp = Get_SensorTmp();
+	zerop = Get_AvgAd();			//get the current
+	cool_tmp = Get_SensorTmp();			//get the temp of the onboard sensor
 
-	if (zerop >= 400) {
+	if (zerop >= 400) {			//If the tip is too hot abort
 		gCalib_flag = 2;
 	} else {
-		if (cool_tmp < 300) {
-			gZerop_ad = zerop;
+		if (cool_tmp < 300) {			//If cool temp is cool enough continue
+			gZerop_ad = zerop;			//store the zero point
 			gCalib_flag = 1;
-		} else {
+		} else {			//abort if too warm
 			gCalib_flag = 2;
 		}
 	}
@@ -319,7 +319,6 @@ void Zero_Calibration(void) {
 s16 Get_Temp(s16 wk_temp) {
 	int ad_value, cool_tmp, compensation = 0;
 	static u16 cnt = 0, h_cnt = 0;
-	s16 rl_temp = 0;
 
 	ad_value = Get_AvgAd();
 	cool_tmp = Get_SensorTmp();
@@ -329,16 +328,16 @@ s16 Get_Temp(s16 wk_temp) {
 	else {
 		h_cnt = 0;
 		if (ad_value > 3800 && ad_value < 4095)
-			cnt++; //20150720�޸�
+			cnt++;
 		else
 			cnt = 0;
 	}
 	if (h_cnt >= 60 && cnt == 0)
-		gAlarm_type = SEN_ERR;   //Sen-err
+		gAlarm_type = SEN_ERR;   //Sensor error -- too many invalid readings
 	if (h_cnt == 0 && cnt >= 10)
-		gAlarm_type = HIGH_TEMP; //����
+		gAlarm_type = HIGH_TEMP; //Stuck at a really high temp -> Has mosfet failed
 	if (h_cnt < 60 && cnt < 10)
-		gAlarm_type = NORMAL_TEMP;
+		gAlarm_type = NORMAL_TEMP; //No errors so far
 
 	compensation = 80 + 150 * (wk_temp - 1000) / 3000;
 	if (wk_temp == 1000)
@@ -349,10 +348,9 @@ s16 Get_Temp(s16 wk_temp) {
 			ad_value -= compensation;
 	}
 	if (cool_tmp > 400)
-		cool_tmp = 400;
-	rl_temp = (ad_value * 1000 + 806 * cool_tmp - gZerop_ad * 1000) / 806;
+		cool_tmp = 400; //cap cool temp at 40C
 
-	return rl_temp;
+	return (ad_value * 1000 + 806 * cool_tmp - gZerop_ad * 1000) / 806;
 }
 
 /*******************************************************************************

@@ -271,7 +271,7 @@ u8 Cal_Val(u8 str[], u8 k, u8 flag) {
 }
 /*******************************************************************************
  Function:Disk_BuffInit
- Description: Initializes the buffer for the virtual disk.
+ Description: Initializes the buffer for the virtual disk. By loading from the chips flash
  *******************************************************************************/
 void Disk_BuffInit(void) {
 	memcpy(gDisk_buff, (u8*) APP_BASE, 0x2600);

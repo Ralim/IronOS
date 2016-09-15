@@ -14,7 +14,7 @@
 #define M_VER              'V','0'
 #define S_VER              '0','1'
 #define OEM_TYPE           "0"
-#define APP_BASE           0x0800C000
+#define APP_BASE           0x0800C000/*Start address of the virtual disk*/
 
 /*----------------------------------------------------------------------------*/
 #ifdef TYPE_DS201
