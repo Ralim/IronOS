@@ -14,7 +14,6 @@
 
 #include "Bios.h"
 #include "I2C.h"
-#include "Flash.h"
 #include "MMA8652FC.h"
 #include "UI.h"
 #include "Oled.h"

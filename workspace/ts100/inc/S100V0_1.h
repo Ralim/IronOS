@@ -6,15 +6,10 @@
 
 #define PRODUCT_INFO       "TS100"
 #define MCU_TYPE           "STM32F103T8"
-#define ADC_TYPE           "MCU's ADC"
-#define FPGA_TYPE          "None"
 #define SCH_VER            "2.46"
-//  #define SSD1316             1
-//  #define MFTSEEED           "Manufacturer"
-//  #define MFTMINI            "Manufacturer"
+
 
 #define SPIx                SPI1
-#define FLASH_PAGE          0x0400
 //--------------------------- key Definitions ------------------------------//
 #define KEY1_PIN          GPIO_Pin_9    //PA8
 #define KEY2_PIN          GPIO_Pin_6    //PA6
@@ -33,23 +28,23 @@
 #define I2C2_DR_Address               0x40005810
 
 
-//--------------------------- OLED ��ؿ����ź� ------------------------------//
+//--------------------------- OLED  ------------------------------//
 #define OLED_RST_PIN        GPIO_Pin_8      //PA9
 #define OLED_RST()          GPIO_ResetBits(GPIOA, OLED_RST_PIN)
 #define OLED_ACT()          GPIO_SetBits  (GPIOA, OLED_RST_PIN)
 
-//------------------------------ ���ȿ����ź� --------------------------------//
+//------------------------------  --------------------------------//
 #define HEAT_PIN            GPIO_Pin_4
 
 #define HEAT_OFF()          GPIOB->BRR = HEAT_PIN
 #define HEAT_ON()           GPIOB->BSRR = HEAT_PIN
 
-//---------------------�����ѹ���--VB---------------------------------------//
+//-----------------------VB---------------------------------------//
 #define   VB_PIN            GPIO_Pin_1      //PB1(Ai9)
 //----------------------------ADX345 INT1,INT2--------------------------------//
 #define   INT1_PIN            GPIO_Pin_5    //PB5  
 #define   INT2_PIN            GPIO_Pin_3    //PB3
-//------------------------------ GPIO �˿����� -------------------------------//
+//------------------------------ GPIO  -------------------------------//
 
 #define GPIOA_OUTPUT()      GPIOA->ODR  = 0xFFFF;
 #define GPIOA_L_DEF()       GPIOA->CRL  = 0x08888888; /* Ai7 K2 xxx xxx xxx xxx xxx xxx */
@@ -59,7 +54,7 @@
 #define GPIOB_L_DEF()       GPIOB->CRL  = 0x44838800; /* SDA SCL It1 Po It2 xxx Ai9 Ai8 */
 #define GPIOB_H_DEF()       GPIOB->CRH  = 0x88888888; /* xxx xxx xxx xxx xxx xxx xxx xxx */
 
-//--------------------------------- RCC ���� ---------------------------------//
+//--------------------------------- RCC Clock Config ---------------------------------//
 
 #define RCC_PLL_EN()        RCC->CR   |= 0x01000000;// PLL En
 

@@ -335,7 +335,9 @@ void TIM2_ISR(void) {
  *******************************************************************************/
 void TIM3_ISR(void) {
 	volatile static u8 heat_flag = 0; //heat flag == used to make the pin toggle
+
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);       // Clear interrupt flag
+
 	if (gTimeOut > 0)
 		gTimeOut--;
 	if (gMs_timeout > 0)

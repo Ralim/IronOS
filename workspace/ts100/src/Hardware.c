@@ -27,64 +27,38 @@ u32 gKey_in;
 u8 gLongkey_flag = 0;
 u8 gAlarm_type = 1;
 /*******************************************************************************
- ������: Get_CalFlag
- ��������:��ȡУ׼״̬
- �������:NULL
- ���ز���:У׼״̬��־
+
  *******************************************************************************/
 u32 Get_CalFlag(void) {
 	return gCalib_flag;
 }
 
 /*******************************************************************************
- ������: Get_gKey
- ��������:��ȡ����״̬
- �������:NULL
- ���ز���:����״̬
+
  *******************************************************************************/
 u32 Get_gKey(void) {
 	return gKey_in;
 }
 /*******************************************************************************
- ������: Set_gKey
- ��������:���ð���״̬
- �������:Ҫ���õİ���״̬
- ���ز���:NULL
+
  *******************************************************************************/
 void Set_gKey(u32 key) {
 	gKey_in = key;
 }
 /*******************************************************************************
- ������: Set_LongKeyFlag
- ��������:���ó�������־
- �������:0 :�����Գ����� 1: ���Գ���
- ���ز���:NULL
+
  *******************************************************************************/
 void Set_LongKeyFlag(u32 flag) {
 	gLongkey_flag = flag;
 }
 /*******************************************************************************
- ������: Get_AlarmType
- ��������:��ȡ��������
- �������:NULL
- ���ز���: ��������
- 0:����
- 1:sensor - err
- 2:����
- 3:��ѹ
+
  *******************************************************************************/
 u8 Get_AlarmType(void) {
 	return gAlarm_type;
 }
 /*******************************************************************************
- ������: Set_AlarmType
- ��������:���ñ�������
- �������: ��������
- 0:����
- 1:sen - err
- 2:����
- 3:��ѹ
- ���ز���:NULL
+
  *******************************************************************************/
 void Set_AlarmType(u8 type) {
 	gAlarm_type = type;
@@ -107,7 +81,7 @@ int Read_Vb(u8 flag) {
 		gAlarm_type = HIGH_VOLTAGE;
 		return H_ALARM;  //����3500
 	}
-	tmp = (tmp * 10 / 144);  //��ѹvb = 3.3 * 85 *ad / 40950
+	tmp = (tmp * 10 / 144); //��ѹvb = 3.3 * 85 *ad / 40950 -> In X10 voltage
 
 	for (i = 0; i < 4; i++) {
 		if (i == 2) {
@@ -126,10 +100,7 @@ int Read_Vb(u8 flag) {
 	return (i + 1);
 }
 /*******************************************************************************
- ������: Scan_Key
- ��������:ɨ�����(50msÿ��)
- �������:NULL
- ���ز���:NULL
+
  *******************************************************************************/
 void Scan_Key(void) {
 	static u32 p_cnt = 0, key_statuslast = 0;
@@ -143,11 +114,11 @@ void Scan_Key(void) {
 	if (key_state == 0)
 		return;
 
-	if (gLongkey_flag == 1) { //LongKey_flag :���Ƴ�������־
+	if (gLongkey_flag == 1) { //LongKey_flag -> we are looking for a long press or a quick press
 		if (key_statuslast == key_state) {
 			p_cnt++;
 			if (p_cnt > 21)
-				Set_gKey(KEY_CN | key_state); //������
+				Set_gKey(KEY_CN | key_state);
 		} else {
 			p_cnt = 0;
 			key_statuslast = key_state;
@@ -162,10 +133,7 @@ void Scan_Key(void) {
 }
 
 /*******************************************************************************
- ������: Get_SlAvg
- ��������:����ƽ��ֵ
- �������:avg_data ƽ����ADֵ
- ���ز���:����ƽ��ֵ
+
  *******************************************************************************/
 u32 Get_SlAvg(u32 avg_data) {
 	static u32 sum_avg = 0;
@@ -200,13 +168,13 @@ u32 Get_AvgAd(void) {
 	 This is read by turning off the heater
 	 Then read the output of the op-amp that is connected across the connections
 	 */
-	static u32 ad_sum = 0;
-	static u32 max = 0, min = 5000;
-	u32 ad_value, avg_data, slide_data = 0;
+	u32 ad_sum = 0;
+	u32 max = 0, min = 5000;
+	u32 ad_value, avg_data;
 
 	Set_HeatingTime(0); //set the remaining time to zero
 	HEAT_OFF(); //heater must be off
-	Delay_HalfMs(25); //wait for the heater to time out
+	Delay_HalfMs(50); //wait for the heater to time out
 	gMeas_cnt = 10; //how many measurements to make
 
 	while (gMeas_cnt > 0) {
@@ -221,14 +189,12 @@ u32 Get_AvgAd(void) {
 			ad_sum = ad_sum - max - min; //remove the two outliers
 			avg_data = ad_sum / 8; //take the average
 
-			slide_data = Get_SlAvg(avg_data);
-			ad_sum = 0;
-			min = 5000;
-			max = 0;
+			return Get_SlAvg(avg_data);
+
 		}
 		gMeas_cnt--;
 	}
-	return slide_data; //gSlide_data;
+	return 0; //should never ever hit here
 }
 
 /*******************************************************************************
@@ -311,10 +277,7 @@ void Zero_Calibration(void) {
 	}
 }
 /******************************************************************************* 
- ������: Get_Temp
- ��������:�������,�ȶ��¶�,����AD�����¶�
- �������:wk_temp �����¶�
- ���ز���:ʵ���¶�
+
  *******************************************************************************/
 s16 Get_Temp(s16 wk_temp) {
 	int ad_value, cool_tmp, compensation = 0;

@@ -720,7 +720,7 @@ void Print_Integer(s32 data, u8 posi) {
 	char str[8];
 
 	Clear_Screen();
-	sprintf(str, "%d", data);
+	sprintf(str, "%ld", data);
 	Display_Str(posi, str);
 }
 /*******************************************************************************

@@ -42,7 +42,7 @@ struct _pid {
 	s16 actualtemp;     //Actual current temp of the tip
 	s16 err;            //Error term
 	s16 err_last;       //last error term
-	u32 ht_time;        //
+	s32 ht_time;        //
 	u16 kp, ki, kd;       //Constants for the PID Controller
 	s32 integral;       //
 } pid;
@@ -135,7 +135,7 @@ u16 Pid_Realize(s16 temp) {
 	pid.actualtemp = temp;
 	pid.err = pid.settemp - pid.actualtemp;    //
 
-	if (pid.err >= 500)
+	if (pid.err >= 500)//error is > 50 degrees
 		index = 0;
 	else {
 		index = 1;
@@ -143,7 +143,7 @@ u16 Pid_Realize(s16 temp) {
 	}
 ////////////////////////////////////////////////////////////////////////////////
 //
-	if (pid.settemp < pid.actualtemp) {
+	if (pid.settemp < pid.actualtemp) {//cooling down
 		d_err = pid.actualtemp - pid.settemp;
 		if (d_err > 20) {
 			pid.integral = 0; //
