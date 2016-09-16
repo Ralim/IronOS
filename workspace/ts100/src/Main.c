@@ -11,9 +11,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "APP_Version.h"
-#include "Disk.h"
+
 #include "Bios.h"
-#include "usb_lib.h"
 #include "I2C.h"
 #include "Flash.h"
 #include "MMA8652FC.h"
@@ -23,32 +22,27 @@
 #include "Hardware.h"
 int main(void) {
 	RCC_Config(); //setup system clock
-	NVIC_Config(0x4000);
+	//NVIC_Config(0x4000);
+	NVIC_Config(0x0000);
 	Init_Timer2(); //init the timers
-	Init_Timer3();
-	GPIO_Config();//setup all the GPIO pins
 
-	USB_Port(DISABLE);//disable the USB hardware
-	Delay_Ms(200);//pause to let hardware stabilize
-	USB_Port(ENABLE);//enable the USB hardware
-	USB_Init();
+	GPIO_Config(); //setup all the GPIO pins
+	Init_Timer3();
 	I2C_Configuration(); //init the i2c bus
 
 	Adc_Init(); //init adc and dma
 	if (Get_CtrlStatus() != CONFIG)
-		StartUp_Accelerated();//start the accelerometer if not in config mode
+		StartUp_Accelerated(); //start the accelerometer if not in config mode
 
-	System_Init();//load known safe values
-	Init_Oled();//init the OLED display
-	Clear_Screen();//clear the display buffer to black
-	Init_Gtime();//init the count down timers
-	APP_Init();//pick operating mode via input voltage
+	System_Init(); //load known safe values
+	Init_Oled(); //init the OLED display
+	Clear_Screen(); //clear the display buffer to black
+	Init_Gtime(); //init the count down timers
+	APP_Init(); //pick operating mode via input voltage
 
-	Disk_BuffInit();//fill the buffer for the virtual disk
-	Config_Analysis(); //read in config from virtual disk
 	Pid_Init(); //init the pid to starting values
 	Set_gKey(NO_KEY); //reset keys to all off
-	Start_Watchdog(3000);//start the system watchdog as 3 seconds
+	Start_Watchdog(3000); //start the system watchdog as 3 seconds
 
 	while (1) {
 		Clear_Watchdog(); //reset the Watchdog

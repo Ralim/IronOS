@@ -2,7 +2,7 @@
 /* Brief : Interrupt Service Routines                           Author : bure */
 /******************************************************************************/
 #include "Interrupt.h"
-#include "usb_istr.h"
+
 #include "Bios.h"
 #include "I2C.h"
 
@@ -54,7 +54,7 @@ void SysTick_Handler(void) {
 /******************************************************************************/
 
 void USB_LP_CAN1_RX0_IRQHandler(void) {
-	USB_Istr();
+
 }
 void TIM2_IRQHandler(void) {
 	TIM2_ISR();

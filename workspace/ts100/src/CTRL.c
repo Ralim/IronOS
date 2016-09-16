@@ -15,7 +15,6 @@
 #include "UI.h"
 #include "Hardware.h"
 #include "S100V0_1.h"
-#include "Disk.h"
 #include "MMA8652FC.h"
 
 #define HEATINGCYCLE  30
@@ -32,8 +31,8 @@ u8 gIs_restartkey = 0; //
 u8 gPre_status = 1; //
 
 const DEVICE_INFO_SYS info_def = { "2.13",     //Ver
-		2000,       //T_Standby;    // 200C=1800  2520
-		3000,       // T_Work;      // 350C=3362,
+		1000,       //T_Standby;    // 200C=1800  2520
+		1000,       // T_Work;      // 350C=3362,
 		100,        //T_Step;
 		3 * 60 * 100,   //Wait_Time;    //3*60*100   3  minutes
 		6 * 60 * 100    // Idle_Time;   //6*60*100  6 minutes
@@ -43,7 +42,7 @@ struct _pid {
 	s16 actualtemp;     //Actual current temp of the tip
 	s16 err;            //Error term
 	s16 err_last;       //last error term
-	s32 ht_time;        //
+	u32 ht_time;        //
 	u16 kp, ki, kd;       //Constants for the PID Controller
 	s32 integral;       //
 } pid;
@@ -205,7 +204,7 @@ u32 Heating_Time(s16 temp, s16 wk_temp) {
  *******************************************************************************/
 void Status_Tran(void) //
 {
-	static u16 init_waitingtime = 0; //��ʼ����ʱ���־λ: 0=> δ��ʼ��,1=>�ѳ�ʼ��
+	static u16 init_waitingtime = 0;
 	static u8 back_prestatus = 0;
 	s16 heat_timecnt = 0, wk_temp;
 	u16 mma_active;
@@ -373,10 +372,9 @@ void Status_Tran(void) //
 		case TEMP_SET:   //We are in the setting soldering iron temp mode
 		if(EFFECTIVE_KEY_TIMER == 0) {
 			gCalib_flag = 1;
-			Disk_BuffInit();
-			Config_Analysis();         //
+
 			gCalib_flag = 0;
-			Set_CtrlStatus(TEMP_CTR);//return to soldering mode
+			Set_CtrlStatus(TEMP_CTR);   //return to soldering mode
 			TEMPSHOW_TIMER = 0;//turn off the timer
 		}
 		break;
@@ -395,8 +393,6 @@ void Status_Tran(void) //
 			case KEY_CN|KEY_V3:
 			Zero_Calibration(); //Calibrate the temperature (i think??)
 			if(Get_CalFlag() == 1) {
-				Disk_BuffInit();
-				Config_Analysis();         // ��������U��
 			}
 			KD_TIMER = 200; //20150717 �޸�
 			break;
@@ -435,11 +431,6 @@ void Status_Tran(void) //
 				Set_CtrlStatus(IDLE);
 			}
 			break;
-		}
-//V-- No idea what this does yet.. At all.. since it will always be skipped..
-		if(Get_HeatingTime != 0) {
-			Set_HeatingTime(0);                          //����ֹͣ����
-			HEAT_OFF();
 		}
 		break;
 		default:

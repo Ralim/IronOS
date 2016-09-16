@@ -62,8 +62,10 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
   RAM (xrw)		: ORIGIN = 0x20000000, LENGTH = 20K
-  ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 36K
+  ROM (rx)		: ORIGIN = 0x08000000, LENGTH = 64K
+  
 }
+/*ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 48K*/
 /*^ The rom is shortened as the last ~10K is used for storing the virtual USB Disk, and the offset at the beginning in the bootloader*/
 /* Sections */
 SECTIONS

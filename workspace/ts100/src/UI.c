@@ -17,7 +17,7 @@
 #include "Bios.h"
 #include "Oled.h"
 #include "Hardware.h"
-#include "Disk.h"
+
 #include "MMA8652FC.h"
 /******************************************************************************/
 u8 gTemp_array[16 * 16 + 16];
@@ -143,20 +143,20 @@ void Display_Temp(u8 x, s16 temp) {
 }
 /*******************************************************************************
  Function:
- Description:
+ Description: Shows the press the button to start screen
  *******************************************************************************/
 void Show_Notice(void) {
 	int j, k;
 	static u8* ptr0;
 	static u8 posi = 0, i = 0;
-
-	if (i == 0) { //1
+//This draws the soldering iron logo to prompt the user to press the button to wake
+	if (i == 0) { //1 Button up
 		ptr0 = Oled_DrawArea(0, 0, 96, 16, (u8*) Maplib);
-	} else if (i == 1) { //2
+	} else if (i == 1) { //2 Button down
 		ptr0 = Oled_DrawArea(0, 0, 96, 16, ptr0);
-	} else if (i == 2) { //3
+	} else if (i == 2) { //3 Button up
 		ptr0 = Oled_DrawArea(0, 0, 96, 16, (u8*) Maplib);
-	} else if (i == 3) { //4
+	} else if (i == 3) { //4 Draw sliding text in
 		for (j = 0; j < 6; j++) {
 			k = 84;
 			while (k >= posi) {

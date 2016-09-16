@@ -9,7 +9,7 @@
  *******************************************************************************/
 
 #include <Hardware.h>
-#include <usb_lib.h>
+
 #include "APP_Version.h"
 #include "Bios.h"
 #include "I2C.h"
@@ -52,8 +52,8 @@ u32 Get_HeatingTime(void) {
 	return gHeat_cnt;
 }
 /*******************************************************************************
-Function:
-Description: Init the global count down timers
+ Function:
+ Description: Init the global count down timers
  *******************************************************************************/
 void Init_Gtime(void) {
 	u8 i;
@@ -86,22 +86,6 @@ void Delay_HalfMs(u32 ms) {
 }
 
 /*******************************************************************************
- Function: USB_Port
- Description: Enables or disables the usb pins
- Input: state == ENABLE or DISABLE
- *******************************************************************************/
-void USB_Port(u8 state) {
-	USB_DN_LOW();
-	USB_DP_LOW();
-	if (state == DISABLE) {
-		USB_DN_OUT();
-		USB_DP_OUT();
-	} else {
-		USB_DN_EN();
-		USB_DP_EN();
-	}
-}
-/*******************************************************************************
  Function:RCC_Config
  Description:Setup the system clocks to use internal HSE to run the system at 48Mhz
  *******************************************************************************/
@@ -123,11 +107,9 @@ void RCC_Config(void) {
 
 	RCC_AHBPeriphClockCmd(
 	RCC_AHBPeriph_SRAM | RCC_AHBPeriph_DMA1 | RCC_AHBPeriph_DMA2 |
-	RCC_AHBPeriph_FLITF,          // Enable DMA1 clock ???
-			ENABLE);
+	RCC_AHBPeriph_FLITF, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB |
-	RCC_APB2Periph_ADC1 | RCC_APB2Periph_ADC2, //| RCC_APB2Periph_ADC3, //RCC_APB2Periph_TIM1,
-			ENABLE);
+	RCC_APB2Periph_ADC1 | RCC_APB2Periph_ADC2, ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM3, ENABLE);
 
 	RCC_USBCLKConfig(RCC_USBCLKSource_PLLCLK_Div1);       // USBCLK = 48MHz
@@ -145,8 +127,9 @@ void NVIC_Config(u16 tab_offset) {
 	NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
 	NVIC_Init(&NVIC_InitStructure);
+
 }
 /*******************************************************************************
  Function:GPIO_Config
@@ -178,7 +161,7 @@ void GPIO_Config(void) {
 	GPIO_InitStructure.GPIO_Pin = OLED_RST_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 //------- Heat_Pin - Iron enable output PB4--------------------------------------------------------//
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE); //Disable  PB4=JNTRST
@@ -301,8 +284,10 @@ void Init_Timer2(void) {
 	NVIC_Init(&NVIC_InitStructure);
 }
 /*******************************************************************************
-Function:
-Description: Init Timer3 to fire every 50us to be used to control the irons software PWM
+ Function:
+ Description: Init Timer3 to fire every 50us to be used to control the irons software PWM
+ This needs to be really fast as there is a cap used between this and the driver circuitry
+ That prevents astuck mcu heating the tip
  *******************************************************************************/
 void Init_Timer3(void) {
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -332,7 +317,7 @@ void Init_Timer3(void) {
  Also reads the buttons every 4 ticks
  *******************************************************************************/
 void TIM2_ISR(void) {
-	static u8 buttonReadDivider;
+	volatile static u8 buttonReadDivider;
 
 	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);       // Clear interrupt flag
 	for (u8 i = 0; i < 8; i++)
@@ -348,27 +333,24 @@ void TIM2_ISR(void) {
  If the Heat_cnt >0 then heater on, otherwise off.
  *******************************************************************************/
 void TIM3_ISR(void) {
-	volatile static u8 heat_flag = 0;
-
+	volatile static u8 heat_flag = 0; //heat flag == used to make the pin toggle
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);       // Clear interrupt flag
-
 	if (gTimeOut > 0)
 		gTimeOut--;
 	if (gMs_timeout > 0)
 		gMs_timeout--;
 
 	if (gHeat_cnt > 0) {
-		gHeat_cnt--;
+		--gHeat_cnt;
 		if (heat_flag)
 			HEAT_OFF();
 		else
 			HEAT_ON();
-
-		heat_flag = ~heat_flag;
-	}
-	if (gHeat_cnt == 0) {
+		heat_flag = !heat_flag;
+	} else {
 		HEAT_OFF();
 		heat_flag = 0;
 	}
+
 }
 /******************************** END OF FILE *********************************/

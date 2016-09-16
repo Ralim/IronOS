@@ -32,9 +32,6 @@
 #define I2C1_DR_Address               0x40005410
 #define I2C2_DR_Address               0x40005810
 
-#define SERIAL_NO1         (*(u32*)0x1FFFF7E8)
-#define SERIAL_NO2         (*(u32*)0x1FFFF7EC)
-#define SERIAL_NO3         (*(u32*)0x1FFFF7F0)
 
 //--------------------------- OLED ��ؿ����ź� ------------------------------//
 #define OLED_RST_PIN        GPIO_Pin_8      //PA9
@@ -42,10 +39,10 @@
 #define OLED_ACT()          GPIO_SetBits  (GPIOA, OLED_RST_PIN)
 
 //------------------------------ ���ȿ����ź� --------------------------------//
-#define HEAT_PIN            GPIO_Pin_4    //PA15(JTDI)
+#define HEAT_PIN            GPIO_Pin_4
 
-#define HEAT_OFF()          GPIOB->BRR = HEAT_PIN//GPIO_ResetBits(GPIOB, HEAT_PIN)
-#define HEAT_ON()           GPIOB->BSRR = HEAT_PIN//GPIO_SetBits  (GPIOB, HEAT_PIN)
+#define HEAT_OFF()          GPIOB->BRR = HEAT_PIN
+#define HEAT_ON()           GPIOB->BSRR = HEAT_PIN
 
 //---------------------�����ѹ���--VB---------------------------------------//
 #define   VB_PIN            GPIO_Pin_1      //PB1(Ai9)
