@@ -8,13 +8,11 @@
  2015/07/07   ͳһ������
  *******************************************************************************/
 
-#include <Hardware.h>
-
 #include "APP_Version.h"
 #include "Bios.h"
 #include "I2C.h"
 #include "CTRL.h"
-
+#include <Hardware.h>
 /******************************************************************************/
 #define ADC1_DR_Address    ((u32)0x4001244C)
 
@@ -137,6 +135,10 @@ void NVIC_Config(u16 tab_offset) {
  *******************************************************************************/
 void GPIO_Config(void) {
 	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE); // GPIOB & AFIO
+
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE);
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
 
 	GPIOA_OUTPUT()
 	;
@@ -164,7 +166,6 @@ void GPIO_Config(void) {
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 //------- Heat_Pin - Iron enable output PB4--------------------------------------------------------//
-	GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE); //Disable  PB4=JNTRST
 
 	GPIO_InitStructure.GPIO_Pin = HEAT_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
