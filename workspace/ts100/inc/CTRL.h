@@ -19,11 +19,11 @@
 #define EFFECTIVE_KEY_TIMER       gTime[3]/*EFFECTIVE_KEY_TIMER*/
 #define LEAVE_WAIT_TIMER          gTime[4]/*LEAVE_WAIT_TIMER*/
 #define G6_TIMER                  gTime[5]/*SWITCH_SHOW_TIMER*/
-#define UI_TIMER                  gTime[6]/*UI_TIMER ͼ���������ʱ�����*/
-#define KD_TIMER                  gTime[7]/*������ʱ*/
+#define UI_TIMER                  gTime[6]/*UI_TIMER */
+#define KD_TIMER                  gTime[7]/**/
 
 ///^^-- All the times in gTime are decremented by 1 if >0 by timer2 tick <bottom of bios.c>
-//------------------------------ ��������------------------------------------//
+//------------------------------ ------------------------------------//
 #define   KEY_ST(KEY_PIN)      GPIO_ReadInputDataBit(GPIOA, KEY_PIN)
 #define   NO_KEY    0x0	/*NO Keys pressed*/
 #define   KEY_V1    0x0100/*V1 key pressed*/
@@ -34,10 +34,11 @@
 typedef enum WORK_STATUS {
 	IDLE = 1, //System is idle
 	THERMOMETER, //Thermometer mode, basically reads sensor and shows temp
-	TEMP_CTR, //Soldering Mode (Temp Controlled)
+	SOLDERING_MODE, //Soldering Mode (Temp Controlled)
 	WAIT, //System in wait state
 	TEMP_SET, //Setting the soldering temp
-	CONFIG, //system config mode
+	SETTINGS_MENU, // Show the user the settings menu
+	USB_POWER, //USB Powered Mode
 	MODE_CNG, //DFU mode i think??
 	ALARM, //An alarm has been fired
 } WORK_STATUS;

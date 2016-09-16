@@ -215,7 +215,7 @@ void Status_Tran(void) //
 		case KEY_V1: //If V1 key is pressed
 			if (gIs_restartkey != 1) { //check we are not in a soft restart situation
 				if (Read_Vb(1) < 4) { //Read that the input voltage is acceptable??
-					Set_CtrlStatus(TEMP_CTR); //Set to temperature controlled mode (Aka soldering mode)
+					Set_CtrlStatus(SOLDERING_MODE); //Set to temperature controlled mode (Aka soldering mode)
 					init_waitingtime = 0; //Initialize the wait count to 0
 					TEMPSHOW_TIMER= 0; //Initialize the timer to 0
 					UI_TIMER= 0;
@@ -247,7 +247,7 @@ void Status_Tran(void) //
 			gPre_status = IDLE;
 		}
 		break;
-		case TEMP_CTR: //We are in soldering mode
+		case SOLDERING_MODE: //We are in soldering mode
 		switch(Get_gKey()) { //switch on the  pressed key
 			case KEY_CN|KEY_V1:
 			case KEY_CN|KEY_V2://if either key long pressed
@@ -260,7 +260,7 @@ void Status_Tran(void) //
 			Set_HeatingTime(0);//Stop the heater
 			Set_LongKeyFlag(0);//Reset the long key press flag
 			Set_CtrlStatus(IDLE);//Change the system back to IDLE state (stop soldering)
-			gPre_status = TEMP_CTR;//Set previous status
+			gPre_status = SOLDERING_MODE;//Set previous status
 			gIs_restartkey = 1;
 			KD_TIMER = 50;//
 			break;
@@ -270,7 +270,7 @@ void Status_Tran(void) //
 			Set_HeatingTime(0);//Turn of heater as we are out of range
 			Set_LongKeyFlag(0);//reset key flag
 			Set_CtrlStatus(IDLE);//reset to IDLE state
-			gPre_status = TEMP_CTR;//set previous state
+			gPre_status = SOLDERING_MODE;//set previous state
 			gIs_restartkey = 1;
 			KD_TIMER = 50;//
 		}
@@ -360,7 +360,7 @@ void Status_Tran(void) //
 			UI_TIMER = 0; //reset the un-needed timers
 			G6_TIMER = 0;
 			init_waitingtime = 0;
-			Set_CtrlStatus(TEMP_CTR);//Go back to soldering iron mode
+			Set_CtrlStatus(SOLDERING_MODE);//Go back to soldering iron mode
 		}
 
 		if(Get_AlarmType() > NORMAL_TEMP) {   //If an alarm has occurred??
@@ -374,7 +374,7 @@ void Status_Tran(void) //
 			gCalib_flag = 1;
 
 			gCalib_flag = 0;
-			Set_CtrlStatus(TEMP_CTR);   //return to soldering mode
+			Set_CtrlStatus(SOLDERING_MODE);   //return to soldering mode
 			TEMPSHOW_TIMER = 0;//turn off the timer
 		}
 		break;
@@ -416,7 +416,7 @@ void Status_Tran(void) //
 			wk_temp = device_info.t_work;
 			gTemp_data = Get_Temp(wk_temp);
 			if(Get_AlarmType() == NORMAL_TEMP) {
-				Set_CtrlStatus(TEMP_CTR);
+				Set_CtrlStatus(SOLDERING_MODE);
 				Set_UpdataFlag(0);
 			}
 			break;

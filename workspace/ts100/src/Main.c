@@ -30,7 +30,7 @@ int main(void) {
 	I2C_Configuration(); //init the i2c bus
 
 	Adc_Init(); //init adc and dma
-	if (Get_CtrlStatus() != CONFIG)
+	if (Get_CtrlStatus() != USB_POWER)
 		StartUp_Accelerated(); //start the accelerometer if not in config mode
 
 	System_Init(); //load known safe values
@@ -45,7 +45,7 @@ int main(void) {
 
 	while (1) {
 		Clear_Watchdog(); //reset the Watchdog
-		if (Get_CtrlStatus() != CONFIG && LEAVE_WAIT_TIMER== 0) {
+		if (Get_CtrlStatus() != USB_POWER && LEAVE_WAIT_TIMER== 0) {
 			Check_Accelerated(); //update readings from the accelerometer
 			LEAVE_WAIT_TIMER = 50;//reset timer so we dont poll accelerometer for another 500ms
 		}

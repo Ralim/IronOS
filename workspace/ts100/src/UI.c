@@ -83,7 +83,7 @@ void APP_Init(void) {
 		Set_CtrlStatus(ALARM);
 	else if (rev >= 4) { //We are USB powered (5V approx at input)
 		Set_LongKeyFlag(1);
-		Set_CtrlStatus(CONFIG);
+		Set_CtrlStatus(USB_POWER);
 	} else { //Normal mode > ~9V at input
 		Set_CtrlStatus(IDLE);
 		G6_TIMER= device_info.idle_time;
@@ -381,16 +381,10 @@ void Show_Set(void) {
 	Shift_Char((u8*) Triangle + 1 * 32, 5);
 }
 /*******************************************************************************
- ������: Show_OrderChar
- ��������:����̬��ʾ�ַ�
- �������: ptr:�ֽڿ�num:����width:���
- ���ز���:NULL
+
  *******************************************************************************/
 void Show_OrderChar(u8* ptr, u8 num, u8 width) {
 	static u8 i = 1, j = 0, k = 0, m = 10;
-	//i��Դ���鿪ʼλ
-	//j��Ŀ�����鿪ʼλ
-	//m�������ĳ���
 
 	if (gLevel_flag == 0) { //ǰһ״̬���Ǻ���
 		i = 1;
@@ -452,18 +446,14 @@ u8 Reverse_Bin8(u8 data) {
 	return result;
 }
 /*******************************************************************************
- ������: Show_ReverseChar
- ��������:����̬��ʾ�ַ�
- �������: ptr:�ֽڿ�   num:����
- width:���   direction :���� (0 up, 1 down)
- ���ز���:NULL
+
  *******************************************************************************/
 void Show_ReverseChar(u8* ptr, u8 num, u8 width, u8 direction) {
 	static u32 j = 0, m = 0, po_j[3] = { 0, 0, 0 }, po_m[3] = { 0, 0, 16 };
 	u32 i, k;
 
 	if (direction == 0) { //up
-		if (gUp_flag == 0) { //ǰһ״̬���Ǽ���
+		if (gUp_flag == 0) { //
 			j = 0;
 			m = 0;
 			gUp_flag = 1;
@@ -474,7 +464,7 @@ void Show_ReverseChar(u8* ptr, u8 num, u8 width, u8 direction) {
 			m = po_m[0];
 		}
 	} else if (direction == 1) {
-		if (gDown_flag == 0) { //ǰһ״̬���ǽ���
+		if (gDown_flag == 0) { //
 			j = 0;
 			m = 0;
 			gUp_flag = 0;
@@ -489,31 +479,31 @@ void Show_ReverseChar(u8* ptr, u8 num, u8 width, u8 direction) {
 		m = po_m[2];
 	}
 	for (i = 0; i < width * 2 * num; i++)
-		gTemp_array[i] = Reverse_Bin8(*(ptr + i)); //����8λ
+		gTemp_array[i] = Reverse_Bin8(*(ptr + i)); //
 
 	for (k = 0; k < width * 2 * num; k += width * 2)
 		for (i = 0; i < width; i++) {
 			gTemp_array_u16[i + k] = ((gTemp_array[i + k] & 0x00FF) << 8)
-					| gTemp_array[i + k + width]; //�ϰ벿�°벿���u16 ������λ
+					| gTemp_array[i + k + width]; //
 			if (direction == 1) {
 				if (j == 0)
-					gTemp_array_u16[i + k] <<= m; //����գ�������ʾ
+					gTemp_array_u16[i + k] <<= m; //
 				else
-					gTemp_array_u16[i + k] >>= j; //����գ�������ʾ
+					gTemp_array_u16[i + k] >>= j; //
 			} else { //��
 				if (m == 0)
-					gTemp_array_u16[i + k] <<= j; //����գ�������ʾ
+					gTemp_array_u16[i + k] <<= j; //
 				else
-					gTemp_array_u16[i + k] >>= m; //����գ�������ʾ
+					gTemp_array_u16[i + k] >>= m; //
 			}
 			gTemp_array[i + k] = (gTemp_array_u16[i + k] & 0xFF00) >> 8;
 			gTemp_array[i + k + width] = gTemp_array_u16[i + k] & 0x00FF;
 		}
 
 	for (i = 0; i < width * 2 * num; i++)
-		gTemp_array[i] = Reverse_Bin8(gTemp_array[i]); //��λ��������
+		gTemp_array[i] = Reverse_Bin8(gTemp_array[i]); //
 
-	if (m == 0 && j == 16) { //ȫ��ʾ������ʾ'ͷ��'
+	if (m == 0 && j == 16) {
 		j = 0;
 		m = 16;
 	}
@@ -535,9 +525,9 @@ void Show_ReverseChar(u8* ptr, u8 num, u8 width, u8 direction) {
 }
 
 /*******************************************************************************
- Show_TempReverse ����̬��ʾ�¶��ַ�
- word_num:     ����
- word_width:   ���
+ Show_TempReverse
+ word_num:
+ word_width:
  direction :   ���� (0 up, 1 down)
  *******************************************************************************/
 u8 Show_TempReverse(u8 num, u8 width, u8 direction) {
@@ -567,30 +557,30 @@ u8 Show_TempReverse(u8 num, u8 width, u8 direction) {
 		gTempset_showctrl = 0;
 	}
 	for (i = 0; i < width * 2; i++) {
-		gTemp_array[0 * 32 + i] = Reverse_Bin8(*(wordlib + b * 32 + i)); //����8λ
-		gTemp_array[1 * 32 + i] = Reverse_Bin8(*(wordlib + s * 32 + i)); //����8λ
-		gTemp_array[2 * 32 + i] = Reverse_Bin8(*(wordlib + g * 32 + i)); //����8λ
+		gTemp_array[0 * 32 + i] = Reverse_Bin8(*(wordlib + b * 32 + i));
+		gTemp_array[1 * 32 + i] = Reverse_Bin8(*(wordlib + s * 32 + i));
+		gTemp_array[2 * 32 + i] = Reverse_Bin8(*(wordlib + g * 32 + i));
 		if (Get_TemperatureShowFlag() == 1) {
-			gTemp_array[3 * 32 + i] = Reverse_Bin8(*(wordlib + 15 * 32 + i)); //����8λ
+			gTemp_array[3 * 32 + i] = Reverse_Bin8(*(wordlib + 15 * 32 + i));
 		} else {
-			gTemp_array[3 * 32 + i] = Reverse_Bin8(*(wordlib + 13 * 32 + i)); //����8λ
+			gTemp_array[3 * 32 + i] = Reverse_Bin8(*(wordlib + 13 * 32 + i));
 		}
 	}
-	//�޸�K �ĳ�ʼֵ�ܸı俪ʼ�������ַ�λ�ø�λ����ʮλ���ǰ�λ
+
 	for (k = (3 - num) * width * 2; k < width * 2 * 3; k += width * 2)
 		for (i = 0; i < width; i++) {
 			gTemp_array_u16[i + k] = ((gTemp_array[i + k] & 0x00FF) << 8)
-					| gTemp_array[i + k + width]; //�ϰ벿�°벿���u16 ������λ
-			if (direction == 0) { //��
+					| gTemp_array[i + k + width];
+			if (direction == 0) {
 				if (m == 0)
-					gTemp_array_u16[i + k] <<= j; //����գ�������ʾ
+					gTemp_array_u16[i + k] <<= j;
 				else
-					gTemp_array_u16[i + k] >>= m; //����գ�������ʾ
+					gTemp_array_u16[i + k] >>= m;
 			} else {
 				if (j == 0)
-					gTemp_array_u16[i + k] <<= m; //����գ�������ʾ
+					gTemp_array_u16[i + k] <<= m;
 				else
-					gTemp_array_u16[i + k] >>= j; //����գ�������ʾ
+					gTemp_array_u16[i + k] >>= j;
 			}
 			gTemp_array[i + k] = (gTemp_array_u16[i + k] & 0xFF00) >> 8;
 			gTemp_array[i + k + width] = gTemp_array_u16[i + k] & 0x00FF;
@@ -615,21 +605,19 @@ u8 Show_TempReverse(u8 num, u8 width, u8 direction) {
 }
 
 /*******************************************************************************
- ������: Show_HeatingIcon
- ��������:��̬ѡ����ȵ�״̬��ʶ
- �������: ht_flag ���±�ʾ  active �ƶ���ʶ
- ���ز���:NULL
+ Function: Show_HeatingIcon
+ Draws the heating iron icon on the screen
  *******************************************************************************/
 void Show_HeatingIcon(u32 ht_flag, u16 active) {
 	u8* ptr;
 
 	memset(gTemp_array, 0, 20);
 	if (ht_flag == 0)
-		Show_ReverseChar((u8*) TempIcon, 1, 10, 0);     //(5,ptr,16);//����//
+		Show_ReverseChar((u8*) TempIcon, 1, 10, 0); //(5,ptr,16);//����//
 	else if (ht_flag == 1)
 		Show_ReverseChar((u8*) TempIcon + 32, 1, 10, 1); //(5,ptr+32,16);//����//
 	else if (ht_flag == 2)
-		Show_OrderChar((u8*) TempIcon, 1, 10);       //(5,ptr+64,16);//����//
+		Show_OrderChar((u8*) TempIcon, 1, 10);  //(5,ptr+64,16);//����//
 
 	ptr = (u8*) gTemp_array;
 	Oled_DrawArea(86, 0, 10, 16, (u8*) ptr);
@@ -809,8 +797,7 @@ void Temp_SetProc(void) {
 		}
 		switch(Get_gKey()) {
 			case KEY_V1:
-			//����,���·�,��ǰ����ʾ��ʧ
-			//����ֵ����
+
 			if(device_info.t_work > gSet_table[1]) {
 				gTempset_showctrl = 1;
 				theRoll_num = Roll_Num(device_info.t_step,1);
@@ -824,8 +811,7 @@ void Temp_SetProc(void) {
 			if(device_info.t_work == gSet_table[1]) Show_Triangle(0,1);
 			break;
 			case KEY_V2:
-			//����,���Ϸ�,��ǰ����ʾ��ʧ
-			//����ֵ����
+
 			if(device_info.t_work < gSet_table[0]) {
 				gTempset_showctrl = 1;
 				theRoll_num = Roll_Num(device_info.t_step,0);
@@ -879,7 +865,7 @@ void OLed_Display(void) {
 			Show_Notice();
 			UI_TIMER = 50;
 		}
-		if(G6_TIMER == 0) { //����
+		if(G6_TIMER == 0) {
 			id_cnt++;
 			if(id_cnt == 50)Sc_Pt(bk--);
 			if(bk == 0) Oled_DisplayOff();
@@ -891,7 +877,7 @@ void OLed_Display(void) {
 			Oled_DisplayOn();
 		}
 		break;
-		case TEMP_CTR:
+		case SOLDERING_MODE:
 		if(gCont == 0) {
 			gCont = 1;
 			Set_LongKeyFlag(1);
@@ -935,7 +921,7 @@ void OLed_Display(void) {
 		case TEMP_SET:
 		Temp_SetProc();                             //����
 		break;
-		case CONFIG:
+		case USB_POWER:
 		if(gCont == 1) {
 			gCont = 0;
 			Clear_Screen();
@@ -1024,10 +1010,15 @@ void OLed_Display(void) {
 				temp_val = TemperatureShow_Change(0,temp_val);
 			}
 			Display_Temp(1,temp_val/10);
-			Show_HeatingIcon(ht_flag,Get_MmaActive());         //0����1����2����
+			Show_HeatingIcon(ht_flag,Get_MmaActive()); //0����1����2����
 			td_cnt++;
 		}
 		break;
+		case SETTINGS_MENU:
+			//We are in the menu structure.
+			//We need to move through the selected menu items, or if the user has hit the EOL then jump back to IDLE
+
+			break;
 		default:
 		break;
 	}
