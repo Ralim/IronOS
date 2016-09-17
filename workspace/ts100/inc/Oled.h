@@ -29,5 +29,9 @@ void Reg_Command(u8 posi,u8 flag);
 void Clear_Screen(void);
 void Write_InitCommand_data(u32 Com_len,u8* data);
 void  Display_BG(void);
+void OLED_DrawString(char* string, uint8_t length);
+
+
+
 #endif
 /******************************** END OF FILE *********************************/

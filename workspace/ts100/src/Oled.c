@@ -15,9 +15,8 @@
 #include "Bios.h"
 #include "I2C.h"
 #include "Hardware.h"
-
 #include "UI.h"
-
+#include "Font.h"
 
 //Setup params depending on oled model
 #ifdef SSD1316
@@ -37,8 +36,7 @@ u8 gOled_param[46] = { 0x80, 0xAE, 0x80, 0xD5, 0x80, 0x52, 0x80, 0xA8, 0x80,
 /*******************************************************************************
 
  *******************************************************************************/
-void Sc_Pt(u8 Co)
-{
+void Sc_Pt(u8 Co) {
 	u8 pt[4] = { 0x80, 0x81, 0x80, Co };
 
 	I2C_PageWrite(pt, 4, DEVICEADDR_OLED);
@@ -154,7 +152,7 @@ void Init_Oled(void) {
 	u8 param_len;
 
 	OLED_RST();
-	Delay_Ms(2);
+	Delay_Ms(2); //reset the oled
 	OLED_ACT();
 	Delay_Ms(2);
 
@@ -178,7 +176,7 @@ void Clear_Screen(void) {
 #ifdef SSD1316
 	wd = 32;
 #else
-	wd = 16;
+	wd = 16; //how many lines the display is
 #endif
 
 	memset(&tx_data[0], 0, 128);
@@ -186,7 +184,22 @@ void Clear_Screen(void) {
 		Oled_DrawArea(0, i * 8, 128, 8, tx_data);
 	}
 }
+void OLED_DrawString(char* string, uint8_t length) {
+	for (uint8_t i = 0; i < length; i++) {
+		OLED_DrawChar(string[i], i * 16);
+	}
+}
+void OLED_DrawChar(char c, uint8_t x) {
+	if ((x) > 112)
+		return; //Rudimentary clipping to not draw off screen
+	u8* ptr;
+	u8 temp;
 
-
+	if (c >= 'A' && c <= 'Z') {
+		ptr = (u8*) FONT;
+		ptr += (c - 'A') * 32;
+		Oled_DrawArea(x, 0, 16, 16, (u8*) ptr);
+	}
+}
 /******************************** END OF FILE *********************************/
 

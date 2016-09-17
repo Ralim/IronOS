@@ -632,10 +632,8 @@ void Show_HeatingIcon(u32 ht_flag, u16 active) {
 	}
 }
 /*******************************************************************************
- ������: Display_Str
- ��������:��ʾ16*16�ַ���
- �������:x: λ�� str :��ʾ�ַ���
- ���ز���:NULL
+ Function:Display_Str
+ Description: Draws certain chars to the screen at certain locations
  *******************************************************************************/
 void Display_Str(u8 x, char* str) {
 	u8* ptr;
@@ -655,7 +653,7 @@ void Display_Str(u8 x, char* str) {
 			if ((temp >= 0x30) && (temp < 0x3a))
 				temp = temp - 0x30; /* 0 --9 */
 			else {
-				if ((temp >= 0x41) && (temp <= 0x46))
+				if ((temp >= 0x41) && (temp <= 0x47))
 					temp = temp - 0x41 + 11;/*ABD*/
 				else
 					return;
@@ -914,12 +912,12 @@ void OLed_Display(void) {
 			}
 
 			Display_Temp(1,temp_val/10);
-			Show_HeatingIcon(ht_flag,Get_MmaActive()); //0����1����2����
+			Show_HeatingIcon(ht_flag,Get_MmaActive());
 			td_cnt++;
 		}
 		break;
 		case TEMP_SET:
-		Temp_SetProc();                             //����
+		Temp_SetProc();
 		break;
 		case USB_POWER:
 		if(gCont == 1) {
@@ -1015,10 +1013,10 @@ void OLed_Display(void) {
 		}
 		break;
 		case SETTINGS_MENU:
-			//We are in the menu structure.
-			//We need to move through the selected menu items, or if the user has hit the EOL then jump back to IDLE
+		//We are in the menu structure.
+		//We need to move through the selected menu items, or if the user has hit the EOL then jump back to IDLE
 
-			break;
+		break;
 		default:
 		break;
 	}
