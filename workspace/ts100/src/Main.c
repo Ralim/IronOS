@@ -46,7 +46,7 @@ int main(void) {
 
 	for (;;) {
 
-		OLED_DrawTwoNumber((millis() / 100) % 100, 0);
+		OLED_DrawTwoNumber((millis() / 100) % 100, (millis()/100)%80);
 	}
 
 	Start_Watchdog(3000); //start the system watchdog as 3 seconds
