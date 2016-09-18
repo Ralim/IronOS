@@ -212,7 +212,7 @@ void Status_Tran(void) //
 	switch (Get_CtrlStatus()) {
 	case IDLE:
 		switch (Get_gKey()) { //Read current switch positions
-		case KEY_V1: //If V1 key is pressed
+		case KEY_A: //If V1 key is pressed
 			if (gIs_restartkey != 1) { //check we are not in a soft restart situation
 				if (Read_Vb(1) < 4) { //Read that the input voltage is acceptable??
 					Set_CtrlStatus(SOLDERING_MODE); //Set to temperature controlled mode (Aka soldering mode)
@@ -223,7 +223,7 @@ void Status_Tran(void) //
 				}
 			}
 			break;
-			case KEY_V2: //check if V2 key is pressed
+			case KEY_B: //check if V2 key is pressed
 			if(gIs_restartkey != 1) { //check this is not a soft restart situation
 				Set_CtrlStatus(THERMOMETER);//Change system to Thermometer mode instead (ie reading temp only, no drive)
 				UI_TIMER = 0;
@@ -249,8 +249,8 @@ void Status_Tran(void) //
 		break;
 		case SOLDERING_MODE: //We are in soldering mode
 		switch(Get_gKey()) { //switch on the  pressed key
-			case KEY_CN|KEY_V1:
-			case KEY_CN|KEY_V2://if either key long pressed
+			case KEY_CN|KEY_A:
+			case KEY_CN|KEY_B://if either key long pressed
 			Set_HeatingTime(0);//turn off heater
 			Set_CtrlStatus(TEMP_SET);//Goto temperature set mode
 			HEATING_TIMER = 0;//reset heating timer
@@ -386,8 +386,8 @@ void Status_Tran(void) //
 		}
 
 		switch(Get_gKey()) {
-			case KEY_CN|KEY_V1:
-			case KEY_CN|KEY_V2:
+			case KEY_CN|KEY_A:
+			case KEY_CN|KEY_B:
 			back_prestatus = 1;
 			break;
 			case KEY_CN|KEY_V3:

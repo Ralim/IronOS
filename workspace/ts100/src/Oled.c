@@ -171,35 +171,36 @@ void Init_Oled(void) {
  *******************************************************************************/
 void Clear_Screen(void) {
 	u8 tx_data[128];
-	u8 i, wd;
-
-#ifdef SSD1316
-	wd = 32;
-#else
-	wd = 16; //how many lines the display is
-#endif
-
 	memset(&tx_data[0], 0, 128);
-	for (i = 0; i < wd / 8; i++) {
+	for (u8 i = 0; i < 2; i++) {
 		Oled_DrawArea(0, i * 8, 128, 8, tx_data);
 	}
 }
 void OLED_DrawString(char* string, uint8_t length) {
 	for (uint8_t i = 0; i < length; i++) {
-		OLED_DrawChar(string[i], i * 16);
+		OLED_DrawChar(string[i], i * 14);
 	}
 }
 void OLED_DrawChar(char c, uint8_t x) {
-	if ((x) > 112)
+	if ((x) > (128 - 14))
 		return; //Rudimentary clipping to not draw off screen
 	u8* ptr;
-	u8 temp;
-
+	ptr = (u8*) FONT;
 	if (c >= 'A' && c <= 'Z') {
-		ptr = (u8*) FONT;
-		ptr += (c - 'A') * 32;
-		Oled_DrawArea(x, 0, 16, 16, (u8*) ptr);
-	}
+		ptr += (c - 'A' + 10) * (14 * 2);
+	} else if (c >= '0' && c <= '9')
+		ptr += (c - '0') * (14 * 2);
+	else if (c < 10)
+		ptr += (c) * (14 * 2);
+	Oled_DrawArea(x, 0, 14, 16, (u8*) ptr);
+}
+/*
+ * Draw a 2 digit number to the display
+ * */
+void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
+	OLED_DrawChar(in / 10, x);
+	OLED_DrawChar(in % 10, x + 14);
+
 }
 /******************************** END OF FILE *********************************/
 

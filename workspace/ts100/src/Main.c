@@ -19,6 +19,8 @@
 #include "Oled.h"
 #include "CTRL.h"
 #include "Hardware.h"
+#include "Interrupt.h"
+
 int main(void) {
 	RCC_Config(); //setup system clock
 	//NVIC_Config(0x4000);
@@ -30,8 +32,7 @@ int main(void) {
 	I2C_Configuration(); //init the i2c bus
 
 	Adc_Init(); //init adc and dma
-	if (Get_CtrlStatus() != USB_POWER)
-		StartUp_Accelerated(); //start the accelerometer if not in config mode
+	StartUp_Accelerated(); //start the accelerometer
 
 	System_Init(); //load known safe values
 	Init_Oled(); //init the OLED display
@@ -41,6 +42,13 @@ int main(void) {
 
 	Pid_Init(); //init the pid to starting values
 	Set_gKey(NO_KEY); //reset keys to all off
+	//OLED_DrawString("TEST012",7);
+
+	for (;;) {
+
+		OLED_DrawTwoNumber((millis() / 100) % 100, 0);
+	}
+
 	Start_Watchdog(3000); //start the system watchdog as 3 seconds
 
 	while (1) {

@@ -26,10 +26,10 @@
 //------------------------------ ------------------------------------//
 #define   KEY_ST(KEY_PIN)      GPIO_ReadInputDataBit(GPIOA, KEY_PIN)
 #define   NO_KEY    0x0	/*NO Keys pressed*/
-#define   KEY_V1    0x0100/*V1 key pressed*/
-#define   KEY_V2    0x0040/*V2 Key pressed*/
-#define   KEY_CN    0X8000/*(Long key press i think)*/
-#define   KEY_V3    (KEY_V1|KEY_V2)/*Both Keys pressed*/
+#define   KEY_A    0x0100/*V1 key pressed*/
+#define   KEY_B    0x0040/*V2 Key pressed*/
+#define   KEY_CN    0X8000/*(Long key press)*/
+#define   KEY_V3    (KEY_A|KEY_B)/*Both Keys pressed*/
 
 typedef enum WORK_STATUS {
 	IDLE = 1, //System is idle

@@ -794,7 +794,7 @@ void Temp_SetProc(void) {
 			Show_Set();
 		}
 		switch(Get_gKey()) {
-			case KEY_V1:
+			case KEY_A:
 
 			if(device_info.t_work > gSet_table[1]) {
 				gTempset_showctrl = 1;
@@ -808,7 +808,7 @@ void Temp_SetProc(void) {
 			}
 			if(device_info.t_work == gSet_table[1]) Show_Triangle(0,1);
 			break;
-			case KEY_V2:
+			case KEY_B:
 
 			if(device_info.t_work < gSet_table[0]) {
 				gTempset_showctrl = 1;
@@ -925,10 +925,10 @@ void OLed_Display(void) {
 			Clear_Screen();
 		}
 		switch(Get_gKey()) {
-			case KEY_CN|KEY_V1:
+			case KEY_CN|KEY_A:
 			config_show = 1;
 			break;
-			case KEY_CN|KEY_V2:
+			case KEY_CN|KEY_B:
 			config_show = 2;
 			break;
 			case KEY_CN|KEY_V3:

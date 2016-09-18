@@ -111,6 +111,10 @@ void RCC_Config(void) {
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM3, ENABLE);
 
 	RCC_USBCLKConfig(RCC_USBCLKSource_PLLCLK_Div1);       // USBCLK = 48MHz
+
+	RCC_ClocksTypeDef RCC_Clocks;
+	RCC_GetClocksFreq(&RCC_Clocks);
+	SysTick_Config(RCC_Clocks.HCLK_Frequency / 1000);//Enable the systick timer
 }
 /*******************************************************************************
  Function: NVIC_Config
@@ -204,7 +208,8 @@ void Adc_Init(void) {
 	DMA_InitStructure.DMA_BufferSize = 2;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_PeripheralDataSize =
+	DMA_PeripheralDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
 	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
@@ -234,9 +239,12 @@ void Adc_Init(void) {
 	ADC_Init(ADC2, &ADC_InitStructure);
 
 	// ADC1,2 regular channel7  channel9 and channel8 configuration ----------//
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 2, ADC_SampleTime_239Cycles5); //28 or 55
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 1, ADC_SampleTime_239Cycles5); //28 or 55
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_9, 1, ADC_SampleTime_55Cycles5); //28 or 55
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_7, 2,
+	ADC_SampleTime_239Cycles5); //28 or 55
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 1,
+	ADC_SampleTime_239Cycles5); //28 or 55
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_9, 1,
+	ADC_SampleTime_55Cycles5); //28 or 55
 
 	/* Enable ADC1 DMA */
 	ADC_DMACmd(ADC1, ENABLE);
@@ -269,8 +277,8 @@ void Init_Timer2(void) {
 
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
 
-	TIM_TimeBaseStructure.TIM_Prescaler = 48 - 1;      // (48MHz)/48 = 1MHz
-	TIM_TimeBaseStructure.TIM_Period = 10000 - 1;    // Interrupt per 10mS
+	TIM_TimeBaseStructure.TIM_Prescaler = 48 - 1;   // (48MHz)/48 = 1MHz
+	TIM_TimeBaseStructure.TIM_Period = 10000 - 1;  // Interrupt per 10mS
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
@@ -296,8 +304,8 @@ void Init_Timer3(void) {
 
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
 
-	TIM_TimeBaseStructure.TIM_Prescaler = 48 - 1;      //(48MHz)/48 = 1MHz
-	TIM_TimeBaseStructure.TIM_Period = 50 - 1;      // Interrupt per 50us
+	TIM_TimeBaseStructure.TIM_Prescaler = 48 - 1;    //(48MHz)/48 = 1MHz
+	TIM_TimeBaseStructure.TIM_Period = 50 - 1;     // Interrupt per 50us
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV2;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
@@ -320,7 +328,7 @@ void Init_Timer3(void) {
 void TIM2_ISR(void) {
 	volatile static u8 buttonReadDivider;
 
-	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);       // Clear interrupt flag
+	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);  // Clear interrupt flag
 	for (u8 i = 0; i < 8; i++)
 		if (gTime[i] > 0)
 			gTime[i]--;
@@ -336,7 +344,7 @@ void TIM2_ISR(void) {
 void TIM3_ISR(void) {
 	volatile static u8 heat_flag = 0; //heat flag == used to make the pin toggle
 
-	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);       // Clear interrupt flag
+	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  // Clear interrupt flag
 
 	if (gTimeOut > 0)
 		gTimeOut--;

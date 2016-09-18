@@ -107,9 +107,9 @@ void Scan_Key(void) {
 	u32 key_state = 0;
 
 	if ((~GPIOA->IDR) & 0x0200)
-		key_state |= KEY_V1; //KEY_V1
+		key_state |= KEY_A; //KEY_V1
 	if ((~GPIOA->IDR) & 0x0040)
-		key_state |= KEY_V2; //KEY_V2
+		key_state |= KEY_B; //KEY_V2
 
 	if (key_state == 0)
 		return;
