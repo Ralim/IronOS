@@ -4,7 +4,7 @@
 *.obj
 *.elf
 *.d
-
+*.DS_Store
 # Precompiled Headers
 *.gch
 *.pch
@@ -34,3 +34,5 @@
 *.su
 workspace/ts100/Debug/*
 workspace/.metadata/*
+
+workspace/ts100/.settings/language.settings.xml

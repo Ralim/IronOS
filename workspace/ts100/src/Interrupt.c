@@ -7,9 +7,16 @@
 #include "I2C.h"
 volatile uint32_t system_Ticks;
 
+void delayMs(uint32_t ticks)
+{
+	uint32_t endtime = ticks+millis();
+	while(millis()<endtime);
+}
+
 /******************************************************************************/
 /*                      Processor Exceptions Handlers                         */
 /******************************************************************************/
+
 
 void NMI_Handler(void) {
 	;

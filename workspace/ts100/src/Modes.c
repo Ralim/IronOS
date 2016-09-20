@@ -9,8 +9,9 @@
 void ProcessUI() {
 	uint8_t Buttons = Get_gKey(); //read the buttons status
 
-	if (millis() - LastButtonPushTime < 50) //rough prevention for debouncing
+	if (millis() - LastButtonPushTime < 50)
 		Buttons = 0;
+	//rough prevention for debouncing and allocates settling time
 
 	switch (operatingMode) {
 	case STARTUP:
