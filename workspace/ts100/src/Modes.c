@@ -40,8 +40,15 @@ void ProcessUI() {
 					operatingMode = SLEEP; //Goto Sleep Mode
 					return;
 				}
-			//If no buttons pushed we need to read the current temperatures
-			// and then setup the drive signal time for the iron
+			/*if (millis() - getLastButtonPress()
+					> (systemSettings.SleepTime * 60000))
+				operatingMode = SLEEP;
+			return;*/
+			//If no buttons pushed we need to perform the PID loop for the iron temp
+			int32_t newOutput = computePID(systemSettings.SolderingTemp);
+			if (newOutput >= 0) {
+				setIronTimer(newOutput);
+			}
 		}
 		break;
 	case TEMP_ADJ:
@@ -99,15 +106,21 @@ void ProcessUI() {
 		if (Buttons & BUT_A) {
 			//A Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
+			return;
 		} else if (Buttons & BUT_B) {
 			//B Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
+			return;
 		} else if (systemSettings.movementEnabled)
 			if (millis() - getLastMovement() > 100) {
 				operatingMode = SOLDERING; //Goto active mode again
 				return;
 			}
-
+		//else if nothing has been pushed we need to compute the PID to keep the iron at the sleep temp
+		int32_t newOutput = computePID(systemSettings.SleepTemp);
+		if (newOutput >= 0) {
+			setIronTimer(newOutput);
+		}
 		break;
 	default:
 		break;
@@ -132,7 +145,7 @@ void DrawUI() {
 		//We draw in the current system temp and an indicator if the iron is heating or not
 		//First lets draw the current tip temp
 		//OLED_DrawString("SOLD  ", 6);
-		OLED_DrawThreeNumber(readIronTemp(0), 0);
+		OLED_DrawThreeNumber(readIronTemp(0)/10, 0);
 
 		break;
 	case TEMP_ADJ:

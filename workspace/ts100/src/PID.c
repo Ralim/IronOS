@@ -14,9 +14,9 @@ int32_t computePID(uint16_t setpoint) {
 	 int32_t ITerm = 0;
 	static int16_t lastReading = 0;
 	if (millis() - lastSample > 50) {
-		//only sample every 100 milliseconds
+		//only sample every 50 milliseconds
 		uint16_t currentReading = readIronTemp(0); //get the current temp of the iron
-		uint16_t error = setpoint - currentReading; //calculate the error term
+		int16_t error = (int16_t)setpoint - (int16_t)currentReading; //calculate the error term
 		ITerm += (pidSettings.ki * error);
 		if (ITerm > MAXPIDOUTPUT)
 			ITerm = MAXPIDOUTPUT;

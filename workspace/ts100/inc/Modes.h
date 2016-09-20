@@ -10,7 +10,7 @@
 #include "Interrupt.h"
 #include "S100V0_1.h"
 #include "Oled.h"
-
+#include "PID.h"
 enum {
 	STARTUP, //we are sitting on the prompt to push a button
 	SOLDERING,

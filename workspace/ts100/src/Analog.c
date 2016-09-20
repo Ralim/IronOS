@@ -103,8 +103,16 @@ uint16_t Get_ADC1Value(uint8_t i) {
 //This returns the calibrated temperature reading of the iron temp
 uint16_t readIronTemp(uint16_t calibration_temp) {
 	static uint16_t calTemp = 0;
+	static uint16_t lastVal = 0;
+	static uint32_t lastUpdate = 0;
 	if (calibration_temp != 0)
 		calTemp = calibration_temp;
-	return (readTipTemp() * 1000 + 806 * readSensorTemp() - calTemp * 1000)
-			/ 806;
+	if (millis() - lastUpdate > 50) {
+		lastVal = (readTipTemp() * 1000 + 806 * readSensorTemp()
+				- calTemp * 1000) / 806;
+		lastUpdate = millis();
+	}
+
+	return lastVal;
+
 }

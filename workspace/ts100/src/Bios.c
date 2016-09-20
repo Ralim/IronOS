@@ -258,7 +258,7 @@ void Init_EXTI(void) {
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,
-			GPIO_PinSource6 | GPIO_PinSource9);
+	GPIO_PinSource6 | GPIO_PinSource9);
 
 	/* Configure EXTI0 line */
 	EXTI_InitStructure.EXTI_Line = EXTI_Line6 | EXTI_Line9;
