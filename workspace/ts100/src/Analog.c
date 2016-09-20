@@ -32,7 +32,7 @@ int16_t readTipTemp() {
 	uint32_t max = 0, min;
 	uint32_t ad_value, avg_data;
 
-	Set_HeatingTime(0); //set the remaining time to zero
+	setIronTimer(0); //set the remaining time to zero
 	HEAT_OFF(); //heater must be off
 	delayMs(50); //wait for the heater to time out
 	uint8_t gMeas_cnt = 9; //how many measurements to make

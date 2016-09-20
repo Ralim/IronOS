@@ -1,40 +1,31 @@
 /********************* (C) COPYRIGHT 2015 e-Design Co.,Ltd. ********************                       
-File Name :      Bios.h
-Version :        S100 APP Ver 2.11   
-Description:
-Author :         bure & Celery
-Data:            2015/08/03
-History:
-2015/08/03   ͳһ������
-*******************************************************************************/
+ File Name :      Bios.h
+ Version :        S100 APP Ver 2.11
+ Description:
+ Author :         bure & Celery
+ Data:            2015/08/03
+ History:
+ 2015/08/03   ͳһ������
+ *******************************************************************************/
 
 #ifndef __BIOS_H
 #define __BIOS_H
 
 #include "stm32f10x.h"
 #include "S100V0_1.h"
+#include "Analog.h"
 extern volatile u32 gTime[];
+extern volatile uint32_t gHeat_cnt;
+inline void setIronTimer(uint32_t time) {
+	gHeat_cnt = time;
+}
 
-#define USB_DN_OUT()    GPIOA->CRH = (GPIOA->CRH & 0xFFFF3FFF) | 0x00003000
-#define USB_DP_OUT()    GPIOA->CRH = (GPIOA->CRH & 0xFFF3FFFF) | 0x00030000
-
-#define USB_DN_EN()     GPIOA->CRH = (GPIOA->CRH & 0xFFFFBFFF) | 0x0000B000
-#define USB_DP_EN()     GPIOA->CRH = (GPIOA->CRH & 0xFFFBFFFF) | 0x000B0000
-
-#define USB_DP_PD()     GPIOA->CRH = (GPIOA->CRH & 0xFFF3FFFF) | 0x00030000
-
-#define USB_DN_HIGH()   GPIOA->BSRR  = GPIO_Pin_11
-#define USB_DP_HIGH()   GPIOA->BSRR  = GPIO_Pin_12
-
-#define USB_DN_LOW()    GPIOA->BRR  = GPIO_Pin_11
-#define USB_DP_LOW()    GPIOA->BRR  = GPIO_Pin_12
 
 #define LOW		0
 #define HIGH		1
 
 #define BLINK           1        // Bit0 : 0/1 ��ʾ/��˸״̬��־
 #define WAIT_TIMES      100000
-
 
 #define SECTOR_SIZE     512
 #define SECTOR_CNT      4096

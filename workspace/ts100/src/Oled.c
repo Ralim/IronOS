@@ -14,25 +14,15 @@
 #include "Oled.h"
 #include "Bios.h"
 #include "I2C.h"
-#include "Hardware.h"
-#include "UI.h"
+
 #include "Font.h"
 
-//Setup params depending on oled model
-#ifdef SSD1316
-u8 gOled_param[50] = {0x80,0xAE,0x80,0x00,0x80,0x10,0x80,0x40,0x80,0xB0,0x80,
-	0x81,0x80,0xFF,0x80,0xA0,0x80,0xA6,0x80,0xA8,0x80,0x1F,
-	0x80,0xC8,0x80,0xD3,0x80,0x00,0x80,0xD5,0x80,0x80,0x80,
-	0xD9,0x80,0x22,0x80,0xDA,0x80,0x12,0x80,0xDB,0x80,0x40,
-	0x80,0x8D,0x80,0x14,0x80,0xAF,
-};
-#else
 u8 gOled_param[46] = { 0x80, 0xAE, 0x80, 0xD5, 0x80, 0x52, 0x80, 0xA8, 0x80,
 		0x0f, 0x80, 0xC0, 0x80, 0xD3, 0x80, 0x00, 0x80, 0x40, 0x80, 0xA0, 0x80,
 		0x8D, 0x80, 0x14, 0x80, 0xDA, 0x80, 0x02, 0x80, 0x81, 0x80, 0x33, 0x80,
 		0xD9, 0x80, 0xF1, 0x80, 0xDB, 0x80, 0x30, 0x80, 0xA4, 0x80, 0XA6, 0x80,
 		0xAF };
-#endif
+
 /*******************************************************************************
 
  *******************************************************************************/
@@ -152,16 +142,10 @@ void Init_Oled(void) {
 	u8 param_len;
 
 	OLED_RST();
-	Delay_Ms(2); //reset the oled
+	delayMs(2); //reset the oled
 	OLED_ACT();
-	Delay_Ms(2);
-
-#ifdef SSD1316
-	param_len = 50;
-#else
+	delayMs(2);
 	param_len = 46;
-#endif
-
 	I2C_PageWrite((u8 *) gOled_param, param_len, DEVICEADDR_OLED);
 }
 
@@ -187,11 +171,16 @@ void OLED_DrawChar(char c, uint8_t x) {
 	u8* ptr;
 	ptr = (u8*) FONT;
 	if (c >= 'A' && c <= 'Z') {
-		ptr += (c - 'A' + 10) * (14 * 2);
+		ptr += (c - 'A' + 10) * (14 * 2); //alpha is ofset 10 chars into the array
 	} else if (c >= '0' && c <= '9')
 		ptr += (c - '0') * (14 * 2);
 	else if (c < 10)
 		ptr += (c) * (14 * 2);
+	else if (c == ' ') {
+		//blank on space bar
+		ptr += (36) * (14 * 2);
+	}
+
 	Oled_DrawArea(x, 0, 14, 16, (u8*) ptr);
 }
 /*
@@ -200,7 +189,20 @@ void OLED_DrawChar(char c, uint8_t x) {
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
 	OLED_DrawChar(in / 10, x);
 	OLED_DrawChar(in % 10, x + 14);
-
 }
+void OLED_DrawThreeNumber(uint16_t in, uint8_t x) {
+
+	OLED_DrawChar((in / 100)%10, x);
+	OLED_DrawChar((in / 10)%10, x + 14);
+	OLED_DrawChar(in % 10, x + 28);
+}
+void OLED_DrawFourNumber(uint16_t in, uint8_t x) {
+
+	OLED_DrawChar((in / 1000)%10, x);
+	OLED_DrawChar((in / 100)%10, x+14);
+	OLED_DrawChar((in / 10)%10, x + 28);
+	OLED_DrawChar(in % 10, x + 32);
+}
+
 /******************************** END OF FILE *********************************/
 

@@ -11,54 +11,46 @@
 #include <string.h>
 #include <stdio.h>
 #include "APP_Version.h"
-
+#include "Modes.h"
 #include "Bios.h"
 #include "I2C.h"
 #include "MMA8652FC.h"
-#include "UI.h"
+
 #include "Oled.h"
-#include "CTRL.h"
-#include "Hardware.h"
 #include "Interrupt.h"
 
 int main(void) {
 	RCC_Config(); //setup system clock
-	//NVIC_Config(0x4000);
+	//NVIC_Config(0x4000);//this shifts the NVIC table to be offset
 	NVIC_Config(0x0000);
-	Init_Timer2(); //init the timers
-
 	GPIO_Config(); //setup all the GPIO pins
+	Init_EXTI();
+	//Init_Timer2(); //init the timers
+
 	Init_Timer3();
 	I2C_Configuration(); //init the i2c bus
 
 	Adc_Init(); //init adc and dma
 	StartUp_Accelerated(); //start the accelerometer
 
-	System_Init(); //load known safe values
 	Init_Oled(); //init the OLED display
 	Clear_Screen(); //clear the display buffer to black
-	Init_Gtime(); //init the count down timers
-	APP_Init(); //pick operating mode via input voltage
-
-	Pid_Init(); //init the pid to starting values
-	Set_gKey(NO_KEY); //reset keys to all off
+	systemSettings.SleepTemp = 200;
+	systemSettings.SleepTime = 1;
+	systemSettings.SolderingTemp = 320;
+	readIronTemp(239);//load the default calibration value
 	//OLED_DrawString("TEST012",7);
 
-	for (;;) {
+	/*for (;;) {
 
-		OLED_DrawTwoNumber((millis() / 100) % 100, (millis()/100)%80);
-	}
+	 OLED_DrawTwoNumber((millis() / 100) % 100, (millis() / 100) % 80);
+	 }*/
 
-	Start_Watchdog(3000); //start the system watchdog as 3 seconds
-
+	//Start_Watchdog(3000); //start the system watchdog as 3 seconds
 	while (1) {
-		Clear_Watchdog(); //reset the Watchdog
-		if (Get_CtrlStatus() != USB_POWER && LEAVE_WAIT_TIMER== 0) {
-			Check_Accelerated(); //update readings from the accelerometer
-			LEAVE_WAIT_TIMER = 50;//reset timer so we dont poll accelerometer for another 500ms
-		}
-		OLed_Display(); //Draw in the Oled display for this mode
-		Status_Tran();  //Handle user input and mode changing
+		//	Clear_Watchdog(); //reset the Watchdog
+		ProcessUI();
+		DrawUI();
 	}
 }
 /******************************** END OF FILE *********************************/

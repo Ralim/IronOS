@@ -12,6 +12,7 @@
 
 #define DEVICEADDR_OLED  0x3c
 #include "stm32f10x.h"
+#include "Interrupt.h"
 void Sc_Pt(u8 Co);
 void Oled_DisplayOn(void);
 void Oled_DisplayOff(void);
@@ -32,6 +33,7 @@ void Display_BG(void);
 void OLED_DrawString(char* string, uint8_t length);
 void OLED_DrawChar(char c, uint8_t x);
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x);
+void OLED_DrawThreeNumber(uint16_t in, uint8_t x);
 
 #endif
 /******************************** END OF FILE *********************************/

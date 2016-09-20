@@ -11,11 +11,10 @@
 #include "APP_Version.h"
 #include "Bios.h"
 #include "I2C.h"
-#include "CTRL.h"
-#include <Hardware.h>
+
 /******************************************************************************/
 #define ADC1_DR_Address    ((u32)0x4001244C)
-vu32 gHeat_cnt = 0;
+volatile uint32_t gHeat_cnt = 0;
 
 /*******************************************************************************
  Function:RCC_Config
@@ -48,7 +47,7 @@ void RCC_Config(void) {
 
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
-	SysTick_Config(RCC_Clocks.HCLK_Frequency / 1000);//Enable the systick timer
+	SysTick_Config(RCC_Clocks.HCLK_Frequency / 1000); //Enable the systick timer
 }
 /*******************************************************************************
  Function: NVIC_Config
@@ -253,6 +252,57 @@ void Init_Timer3(void) {
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 }
+//We want to enable the EXTI IRQ for the two buttons on PA6 and PA9
+void Init_EXTI(void) {
+	EXTI_InitTypeDef EXTI_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,
+			GPIO_PinSource6 | GPIO_PinSource9);
+
+	/* Configure EXTI0 line */
+	EXTI_InitStructure.EXTI_Line = EXTI_Line6 | EXTI_Line9;
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //trigger on up and down
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
+
+	/* Enable and set EXTI0 Interrupt to the lowest priority */
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+}
+/*******************************************************************************
+ Function:Start_Watchdog
+ Description: Starts the system watchdog timer
+ *******************************************************************************/
+u32 Start_Watchdog(u32 ms) {
+	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
+
+	/* IWDG counter clock: 40KHz(LSI) / 32 = 1.25 KHz (min:0.8ms -- max:3276.8ms */
+	IWDG_SetPrescaler(IWDG_Prescaler_32);
+
+	/* Set counter reload value to XXms */
+	IWDG_SetReload(ms * 10 / 8);
+
+	/* Reload IWDG counter */
+	IWDG_ReloadCounter();
+
+	/* Enable IWDG (the LSI oscillator will be enabled by hardware) */
+	IWDG_Enable();
+	return 1;
+}
+/*******************************************************************************
+ Function:Clear_Watchdog
+ Description:Resets the watchdog timer
+ *******************************************************************************/
+void Clear_Watchdog(void) {
+	IWDG_ReloadCounter();
+
+}
 /*******************************************************************************
  Function:TIM2_ISR
  Description:Handles Timer 2 tick. (10mS)
@@ -260,15 +310,9 @@ void Init_Timer3(void) {
  Also reads the buttons every 4 ticks
  *******************************************************************************/
 void TIM2_ISR(void) {
-	volatile static u8 buttonReadDivider;
 
 	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);  // Clear interrupt flag
-	for (u8 i = 0; i < 8; i++)
-		if (gTime[i] > 0)
-			gTime[i]--;
 
-	if (++buttonReadDivider % 4 == 0)
-		Scan_Key();
 }
 /*******************************************************************************
  Function: TIM3_ISR
@@ -279,11 +323,6 @@ void TIM3_ISR(void) {
 	volatile static u8 heat_flag = 0; //heat flag == used to make the pin toggle
 
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  // Clear interrupt flag
-
-	if (gTimeOut > 0)
-		gTimeOut--;
-	if (gMs_timeout > 0)
-		gMs_timeout--;
 
 	if (gHeat_cnt > 0) {
 		--gHeat_cnt;

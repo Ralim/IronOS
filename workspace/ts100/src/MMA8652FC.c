@@ -15,8 +15,7 @@
 #include "Oled.h"
 #include "MMA8652FC.h"
 #include "I2C.h"
-#include "CTRL.h"
-#include "UI.h"
+
 //------------------------------------------------------------------//
 
 static int IIC_RegWrite(u8 reg, u8 data);

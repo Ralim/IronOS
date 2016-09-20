@@ -30,10 +30,25 @@ void TIM2_IRQHandler(void);
 void TIM3_IRQHandler(void);
 
 extern volatile uint32_t system_Ticks;
+void delayMs(uint32_t ticks);
+volatile extern uint32_t lastKeyPress;
+volatile extern uint32_t lastMovement;
+
+volatile extern uint16_t keyState;
 inline uint32_t millis() {
 	return system_Ticks;
 }
 
+inline uint32_t getLastButtonPress() {
+	return lastKeyPress;
+}
+inline uint32_t getLastMovement(){
+return lastMovement;
+}
+
+inline uint16_t getButtons() {
+	return keyState;
+}
 void WWDG_IRQHandler(void);
 void PVD_IRQHandler(void);
 

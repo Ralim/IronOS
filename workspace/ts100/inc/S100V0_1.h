@@ -8,15 +8,19 @@
 #define MCU_TYPE           "STM32F103T8"
 #define SCH_VER            "2.46"
 
-
 #define SPIx                SPI1
 //--------------------------- key Definitions ------------------------------//
 #define KEY1_PIN          GPIO_Pin_9    //PA8
 #define KEY2_PIN          GPIO_Pin_6    //PA6
+
+#define KEY_A			  KEY1_PIN
+#define KEY_B			  KEY2_PIN
+#define BUT_A			  0x01
+#define BUT_B			  0x02
+#define BUT_AB			  BUT_A|BUT_B
 #define KEY_1             !(GPIOA->IDR & KEY1_PIN)
 #define KEY_2             !(GPIOA->IDR & KEY2_PIN)
 #define KEY_DFU           KEY_1
-#define KEY_ON            0
 
 #define I2C1_DMA_CHANNEL_TX           DMA1_Channel6
 #define I2C1_DMA_CHANNEL_RX           DMA1_Channel7
@@ -26,7 +30,6 @@
 
 #define I2C1_DR_Address               0x40005410
 #define I2C2_DR_Address               0x40005810
-
 
 //--------------------------- OLED  ------------------------------//
 #define OLED_RST_PIN        GPIO_Pin_8      //PA9
