@@ -38,8 +38,8 @@ int32_t computePID(uint16_t setpoint) {
 }
 
 void setupPID(void) {
-	pidSettings.kp = 15;
-	pidSettings.ki = 2;
-	pidSettings.kd = 1;
+	pidSettings.kp = 18;
+	pidSettings.ki = 3;
+	pidSettings.kd = 2;
 
 }

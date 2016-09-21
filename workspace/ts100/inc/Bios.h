@@ -19,7 +19,10 @@ extern volatile uint32_t gHeat_cnt;
 inline void setIronTimer(uint32_t time) {
 	gHeat_cnt = time;
 }
-
+inline uint32_t getIronTimer()
+{
+return gHeat_cnt;
+}
 
 #define LOW		0
 #define HIGH		1

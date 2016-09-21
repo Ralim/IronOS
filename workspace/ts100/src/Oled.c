@@ -187,7 +187,7 @@ void OLED_DrawChar(char c, uint8_t x) {
  * Draw a 2 digit number to the display
  * */
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
-	OLED_DrawChar(in / 10, x);
+	OLED_DrawChar((in / 10)%10, x);
 	OLED_DrawChar(in % 10, x + 14);
 }
 void OLED_DrawThreeNumber(uint16_t in, uint8_t x) {
