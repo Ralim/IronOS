@@ -158,20 +158,23 @@ void DrawUI() {
 		break;
 	case SOLDERING:
 		//The user is soldering
-		if (systemSettings.SolderingTemp < readIronTemp(0)) {
+	{
+		uint16_t temp = readIronTemp(0, 0);
+		if (systemSettings.SolderingTemp < temp) {
 			OLED_DrawChar('C', 14 * 4);
 		} else {
-			if (systemSettings.SolderingTemp - readIronTemp(0) < 20) {
+			if (systemSettings.SolderingTemp - temp < 20) {
 				OLED_DrawChar(' ', 14 * 4);
 			} else {		//we are heating
 				OLED_DrawChar('H', 14 * 4);
 			}
 
 		}
-		OLED_DrawThreeNumber(readIronTemp(0) / 10, 0);
+		OLED_DrawThreeNumber(temp / 10, 0);
 		OLED_DrawChar('C', 14 * 3);
 		OLED_DrawChar(' ', 14 * 4);
 		OLED_DrawChar(' ', 14 * 5);
+	}
 		break;
 	case TEMP_ADJ:
 		//We are prompting the user to change the temp so we draw the current setpoint temp

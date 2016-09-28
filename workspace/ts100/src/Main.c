@@ -35,10 +35,10 @@ int main(void) {
 
 	Init_Oled(); //init the OLED display
 	Clear_Screen(); //clear the display buffer to black
-	systemSettings.SleepTemp = 1000;
+	systemSettings.SleepTemp = 900;
 	systemSettings.SleepTime = 1;
-	systemSettings.SolderingTemp = 1200;
-	readIronTemp(239); //load the default calibration value
+	systemSettings.SolderingTemp = 1500;
+	readIronTemp(239,0); //load the default calibration value
 	setupPID(); //init the PID values
 	//OLED_DrawString("TEST012",7);
 
@@ -52,6 +52,7 @@ int main(void) {
 		//	Clear_Watchdog(); //reset the Watchdog
 		ProcessUI();
 		DrawUI();
+		delayMs(50);
 	}
 }
 /******************************** END OF FILE *********************************/

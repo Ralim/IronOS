@@ -38,8 +38,6 @@ u32 Get_HeatingTime(void);
 void Set_HeatingTime(u32 heating_time);
 u16 Get_AdcValue(u8 i);
 void Init_Gtime(void);
-void Delay_Ms(u32 ms);
-void Delay_HalfMs(u32 ms);
 void USB_Port(u8 state);
 void NVIC_Config(u16 tab_offset);
 void RCC_Config(void);

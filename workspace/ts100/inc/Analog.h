@@ -14,5 +14,5 @@
 extern volatile uint16_t ADC1ConvertedValue[2];
 
 uint16_t Get_ADC1Value(uint8_t i);
-uint16_t readIronTemp(uint16_t calibration);
+uint16_t readIronTemp(uint16_t calibration,uint8_t read);
 #endif /* ANALOG_H_ */

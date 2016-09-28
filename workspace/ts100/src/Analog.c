@@ -31,10 +31,10 @@ int16_t readTipTemp() {
 	uint32_t ad_sum = 0;
 	uint32_t max = 0, min;
 	uint32_t ad_value, avg_data;
-
+	uint32_t timer = getIronTimer();
 	setIronTimer(0); //set the remaining time to zero
 	HEAT_OFF(); //heater must be off
-	delayMs(50); //wait for the heater to time out
+	delayMs(5); //wait for the heater to time out
 	uint8_t gMeas_cnt = 9; //how many measurements to make
 	max = ad_sum = min = Get_ADC1Value(0);
 
@@ -48,6 +48,7 @@ int16_t readTipTemp() {
 
 		gMeas_cnt--;
 	}
+	setIronTimer(timer);
 	ad_sum = ad_sum - max - min; //remove the two outliers
 	avg_data = ad_sum / 8; //take the average
 	rollingAverage[rIndex] = avg_data;
@@ -101,16 +102,17 @@ uint16_t Get_ADC1Value(uint8_t i) {
 	return ADC1ConvertedValue[i];
 }
 //This returns the calibrated temperature reading of the iron temp
-uint16_t readIronTemp(uint16_t calibration_temp) {
+uint16_t readIronTemp(uint16_t calibration_temp, uint8_t read) {
 	static uint16_t calTemp = 0;
 	static uint16_t lastVal = 0;
-	static uint32_t lastUpdate = 0;
+
 	if (calibration_temp != 0)
 		calTemp = calibration_temp;
-	if (millis() - lastUpdate > 50) {
+
+	if (read) {
 		lastVal = (readTipTemp() * 1000 + 806 * readSensorTemp()
 				- calTemp * 1000) / 806;
-		lastUpdate = millis();
+
 	}
 
 	return lastVal;
