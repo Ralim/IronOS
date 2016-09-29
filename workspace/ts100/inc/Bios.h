@@ -1,5 +1,5 @@
 /*
- * Setup fuctions for the basic hardware present in the system
+ * Setup functions for the basic hardware present in the system
  */
 #ifndef __BIOS_H
 #define __BIOS_H

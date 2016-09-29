@@ -1,7 +1,21 @@
 # TS100
-Source code for the TS100 Soldering Iron
+This is a complete open source re-write of the software for the ts100 soldering iron sold by minidso
 
-This repository is my modifications for the source code for the ts100 soldering iron. 
-With the aim of removing the need to use usb for configuration and instead supporting an on-device menu system to allow in the field settings changes.
+This was started to remove the need for usb for changing system settings.
 
-Also plan is to add more features for battery support.
+The software has similar functionality to the original firmware.
+
+# Features Working
+* Soldering / Temperature control
+* Full PID Iron Temp
+* Adjusting temperature
+* Automatic sleep
+* Motion wake support
+* Basic settings menu
+
+# Features still to be implimented
+* Input voltage UVLO measurement
+* Saving settings to flash for persistance
+* Improved GUI
+* Manual Temp Calibration
+* Use hardware I2C

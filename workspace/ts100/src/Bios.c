@@ -1,13 +1,6 @@
-/********************* (C) COPYRIGHT 2015 e-Design Co.,Ltd. **********************
- File Name :      Bios.c
- Version :        S100 APP Ver 2.11
- Description:
- Author :         Celery
- Data:            2015/07/07
- History:
- 2015/07/07   ͳһ������
- *******************************************************************************/
-
+/*
+ * Setup all the basic hardware in the system and handle timer3 tick
+ */
 #include "APP_Version.h"
 #include "Bios.h"
 #include "I2C.h"
@@ -16,10 +9,9 @@
 #define ADC1_DR_Address    ((u32)0x4001244C)
 volatile uint32_t gHeat_cnt = 0;
 
-/*******************************************************************************
- Function:RCC_Config
- Description:Setup the system clocks to use internal HSE to run the system at 48Mhz
- *******************************************************************************/
+/*
+ * Setup system clocks to run off internal oscillator at 48Mhz
+ */
 void RCC_Config(void) {
 	RCC_DeInit();
 	FLASH_PrefetchBufferCmd(FLASH_PrefetchBuffer_Enable);
@@ -47,29 +39,18 @@ void RCC_Config(void) {
 
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
-	SysTick_Config(RCC_Clocks.HCLK_Frequency / 1000); //Enable the systick timer
+	SysTick_Config(RCC_Clocks.HCLK_Frequency / 1000); //Enable the systick timer at 1ms
 }
-/*******************************************************************************
- Function: NVIC_Config
- Description: Configures the NVIC table in the hardware
- Input: (tab_offset) the table offset for the NVIC
- *******************************************************************************/
+/*
+ * Shift the NVIC (Interrupt table) location relative to flash start
+ */
 void NVIC_Config(u16 tab_offset) {
-	NVIC_InitTypeDef NVIC_InitStructure;
-
 	NVIC_SetVectorTable(NVIC_VectTab_FLASH, tab_offset);
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-	NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
-	NVIC_Init(&NVIC_InitStructure);
-
 }
-/*******************************************************************************
- Function:GPIO_Config
- Description: Configures all the GPIO into required states
- *******************************************************************************/
+/*
+ * Setup the GPIO
+ */
 void GPIO_Config(void) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE); // GPIOB & AFIO
@@ -91,49 +72,49 @@ void GPIO_Config(void) {
 	GPIOB_H_DEF()
 	;
 
-//------ PA7 TMP36 Analog input ----------------------------------------//
+	//------ PA7 TMP36 Analog input ----------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-//------ OLED_RST_PIN(PB9) ------------------------------------------------------------//
+	//------ OLED_RST_PIN(PB9) ---------------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = OLED_RST_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-//------- Heat_Pin - Iron enable output PB4--------------------------------------------------------//
+	//------- Heat_Pin - Iron enable output PB4-----------------------------//
 
 	GPIO_InitStructure.GPIO_Pin = HEAT_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-//------ PB0 Iron temp input---------------------------------------//
+	//----------- PB0 Iron temp input---------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-//---------- INPUT Voltage Detection Pin VB PB1(Ai9) ---------------------------------------//
+	//---------- INPUT Voltage Detection Pin VB PB1(Ai9) -------------------//
 	GPIO_InitStructure.GPIO_Pin = VB_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	//-------- K1 = PA9, K2 = PA6 ----------------------------------------------------------//
+	//-------- K1 = PA9, K2 = PA6 ------------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = KEY1_PIN | KEY2_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	//--------INT 1 == PB5 ----------------------------------------------------------//
+	//--------INT 1 == PB5 -------------------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;//pullup just in case something resets the accel
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 }
-/*******************************************************************************
- Function: Adc_Init
- Description:Enable the ADC's and setup the DMA as well to automatically read them to system ram.
- *******************************************************************************/
+/*
+ * Init the ADC's
+ * Setup ADC1 to read via DMA to device ram automatically
+ */
 void Adc_Init(void) {
 	u32 timeout = 10 * 0x1000;
 	ADC_InitTypeDef ADC_InitStructure;
