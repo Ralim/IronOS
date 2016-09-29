@@ -48,15 +48,14 @@ void ProcessUI() {
 			//We need to check the timer for movement in case we need to goto idle
 			if (systemSettings.movementEnabled)
 				if (millis() - getLastMovement()
-						> (systemSettings.SleepTime * 60000)) {
-					operatingMode = SLEEP; //Goto Sleep Mode
-					return;
+						> (systemSettings.SleepTime * 10000)) {
+					if (millis() - getLastButtonPress()
+							> (systemSettings.SleepTime * 10000)) {
+						operatingMode = SLEEP;
+						return;
+					}
 				}
-			if (millis() - getLastButtonPress()
-					> (systemSettings.SleepTime * 60000)) {
-				operatingMode = SLEEP;
-				return;
-			}
+
 			//If no buttons pushed we need to perform the PID loop for the iron temp
 			int32_t newOutput = computePID(systemSettings.SolderingTemp);
 			if (newOutput >= 0) {
@@ -141,7 +140,7 @@ void ProcessUI() {
 			resetButtons();
 			return;
 		} else if (systemSettings.movementEnabled)
-			if (millis() - getLastMovement() > 100) {
+			if (millis() - getLastMovement() < 1000) {//moved in the last second
 				operatingMode = SOLDERING; //Goto active mode again
 				return;
 			}
@@ -185,7 +184,7 @@ void DrawUI() {
 
 		}
 		OLED_DrawThreeNumber(temp / 10, 0);
-		OLED_DrawChar('C', 14 * 3);
+		OLED_DrawChar(' ', 14 * 3);
 		OLED_DrawChar(' ', 14 * 5);
 		OLED_DrawChar(' ', 14 * 6);
 
@@ -227,7 +226,10 @@ void DrawUI() {
 	case SLEEP:
 		//The iron is in sleep temp mode
 		//Draw in temp and sleep
-		OLED_DrawString("SLEP  ", 6);
+		OLED_DrawString("SLP", 3);
+		uint16_t temp = readIronTemp(0, 0);
+		OLED_DrawThreeNumber(temp / 10, 14 * 3);
+
 		break;
 	default:
 		break;
