@@ -4,7 +4,7 @@
 *.obj
 *.elf
 *.d
-
+*.DS_Store
 # Precompiled Headers
 *.gch
 *.pch
@@ -27,10 +27,13 @@
 *.app
 *.i*86
 *.x86_64
-*.hex
+workspace/*.hex
 
 # Debug files
 *.dSYM/
 *.su
 workspace/ts100/Debug/*
 workspace/.metadata/*
+
+workspace/ts100/.settings/language.settings.xml
+workspace/ts100/.cproject

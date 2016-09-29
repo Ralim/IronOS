@@ -1,51 +1,25 @@
-/********************* (C) COPYRIGHT 2015 e-Design Co.,Ltd. **********************
- File Name :      Oled.c
- Version :        S100 APP Ver 2.11
- Description:
- Author :         Celery
- Data:            2015/07/07
- History:
- 2015/07/07   ͳһ������
- *******************************************************************************/
+/*
+ *
+ * OLED.c
+ * Functions for working with the oled screen.
+ * Writes to the screen using I2C
+ */
 
 #include <stdio.h>
 #include <string.h>
-#include "APP_Version.h"
+
 #include "Oled.h"
 #include "Bios.h"
 #include "I2C.h"
-#include "Hardware.h"
-#include "Disk.h"
-#include "UI.h"
 
+#include "Font.h"
+/*Setup params for the OLED screen*/
+u8 OLED_Setup_Array[46] = { 0x80, 0xAE, 0x80, 0xD5, 0x80, 0x52, 0x80, 0xA8,
+		0x80, 0x0f, 0x80, 0xC0, 0x80, 0xD3, 0x80, 0x00, 0x80, 0x40, 0x80, 0xA0,
+		0x80, 0x8D, 0x80, 0x14, 0x80, 0xDA, 0x80, 0x02, 0x80, 0x81, 0x80, 0x33,
+		0x80, 0xD9, 0x80, 0xF1, 0x80, 0xDB, 0x80, 0x30, 0x80, 0xA4, 0x80, 0XA6,
+		0x80, 0xAF };
 
-//Setup params depending on oled model
-#ifdef SSD1316
-u8 gOled_param[50] = {0x80,0xAE,0x80,0x00,0x80,0x10,0x80,0x40,0x80,0xB0,0x80,
-	0x81,0x80,0xFF,0x80,0xA0,0x80,0xA6,0x80,0xA8,0x80,0x1F,
-	0x80,0xC8,0x80,0xD3,0x80,0x00,0x80,0xD5,0x80,0x80,0x80,
-	0xD9,0x80,0x22,0x80,0xDA,0x80,0x12,0x80,0xDB,0x80,0x40,
-	0x80,0x8D,0x80,0x14,0x80,0xAF,
-};
-#else
-u8 gOled_param[46] = { 0x80, 0xAE, 0x80, 0xD5, 0x80, 0x52, 0x80, 0xA8, 0x80,
-		0x0f, 0x80, 0xC0, 0x80, 0xD3, 0x80, 0x00, 0x80, 0x40, 0x80, 0xA0, 0x80,
-		0x8D, 0x80, 0x14, 0x80, 0xDA, 0x80, 0x02, 0x80, 0x81, 0x80, 0x33, 0x80,
-		0xD9, 0x80, 0xF1, 0x80, 0xDB, 0x80, 0x30, 0x80, 0xA4, 0x80, 0XA6, 0x80,
-		0xAF };
-#endif
-/*******************************************************************************
- ������: Sc_Pt
- ��������:��Ļ�����ı���Ļ�Աȶ�
- �������:Co��Ļ�ԱȶȲ���
- ���ز���:NULL
- *******************************************************************************/
-void Sc_Pt(u8 Co) //��Ļ����
-{
-	u8 pt[4] = { 0x80, 0x81, 0x80, Co };
-
-	I2C_PageWrite(pt, 4, DEVICEADDR_OLED);
-}
 /*******************************************************************************
  Function: Oled_DisplayOn
  Description:Turn on the Oled display
@@ -71,16 +45,16 @@ void Oled_DisplayOff(void) {
  Input: number of bytes to write, array to write
  Output:
  *******************************************************************************/
-u8* Data_Command(u8 wide, u8* ptr) {
+u8* Data_Command(u8 length, u8* data) {
 	int i;
 	u8 tx_data[128];
 	//here are are inserting the data write command at the beginning
 	tx_data[0] = 0x40;
-	wide += 1;
-	for (i = 1; i < wide; i++) //Loop through the array of data
-		tx_data[i] = *ptr++;
-	I2C_PageWrite(tx_data, wide, DEVICEADDR_OLED); //write out the buffer
-	return ptr;
+	length += 1;
+	for (i = 1; i < length; i++) //Loop through the array of data
+		tx_data[i] = *data++;
+	I2C_PageWrite(tx_data, length, DEVICEADDR_OLED); //write out the buffer
+	return data;
 }
 /*******************************************************************************
  Function:Set_ShowPos
@@ -89,10 +63,8 @@ u8* Data_Command(u8 wide, u8* ptr) {
  *******************************************************************************/
 void Set_ShowPos(u8 x, u8 y) {
 	u8 pos_param[8] = { 0x80, 0xB0, 0x80, 0x21, 0x80, 0x20, 0x80, 0x7F };
-
 	pos_param[5] = x + 32;
 	pos_param[1] += y;
-
 	I2C_PageWrite(pos_param, 8, DEVICEADDR_OLED);
 }
 
@@ -124,20 +96,6 @@ u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, u8* ptr) {
 }
 
 /*******************************************************************************
- Function:Clean_Char
- Description:Overwries a square to off, used to overwrite a char
- Inputs:(k) input X position char starts at, (wide) how many pixels wide the char is
- *******************************************************************************/
-void Clean_Char(int k, u8 wide) {
-	int i;
-	u8 tx_data[128];
-
-	memset(&tx_data[0], 0, wide);
-	for (i = 0; i < 2; i++) {
-		Oled_DrawArea(k, i * 8, wide, 8, tx_data);
-	}
-}
-/*******************************************************************************
  Function:GPIO_Init_OLED
  Description:Init the outputs as needed for the OLED (in this case the RST line)
  *******************************************************************************/
@@ -157,17 +115,11 @@ void Init_Oled(void) {
 	u8 param_len;
 
 	OLED_RST();
-	Delay_Ms(2);
-	OLED_ACT();
-	Delay_Ms(2);
-
-#ifdef SSD1316
-	param_len = 50;
-#else
+	delayMs(2);
+	OLED_ACT(); //Toggling reset to reset the oled
+	delayMs(2);
 	param_len = 46;
-#endif
-
-	I2C_PageWrite((u8 *) gOled_param, param_len, DEVICEADDR_OLED);
+	I2C_PageWrite((u8 *) OLED_Setup_Array, param_len, DEVICEADDR_OLED);
 }
 
 /*******************************************************************************
@@ -176,20 +128,56 @@ void Init_Oled(void) {
  *******************************************************************************/
 void Clear_Screen(void) {
 	u8 tx_data[128];
-	u8 i, wd;
-
-#ifdef SSD1316
-	wd = 32;
-#else
-	wd = 16;
-#endif
-
 	memset(&tx_data[0], 0, 128);
-	for (i = 0; i < wd / 8; i++) {
+	for (u8 i = 0; i < 2; i++) {
 		Oled_DrawArea(0, i * 8, 128, 8, tx_data);
 	}
 }
 
+void OLED_DrawString(char* string, uint8_t length) {
+	for (uint8_t i = 0; i < length; i++) {
+		OLED_DrawChar(string[i], i * 14);
+	}
+}
+void OLED_DrawChar(char c, uint8_t x) {
+	if ((x) > (128 - 14))
+		return; //Rudimentary clipping to not draw off screen
+	u8* ptr;
+	ptr = (u8*) FONT;
+	if (c >= 'A' && c <= 'Z') {
+		ptr += (c - 'A' + 10) * (14 * 2); //alpha is ofset 10 chars into the array
+	} else if (c >= '0' && c <= '9')
+		ptr += (c - '0') * (14 * 2);
+	else if (c < 10)
+		ptr += (c) * (14 * 2);
+	else if (c == ' ') {
+		//blank on space bar
+		ptr += (36) * (14 * 2);
+	} else if (c == '<') {
+		ptr += (37) * (14 * 2);
+	} else if (c == '>') {
+		ptr += (38) * (14 * 2);
+	}
 
-/******************************** END OF FILE *********************************/
+	Oled_DrawArea(x, 0, 14, 16, (u8*) ptr);
+}
+/*
+ * Draw a 2 digit number to the display
+ * */
+void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
+	OLED_DrawChar((in / 10) % 10, x);
+	OLED_DrawChar(in % 10, x + 14);
+}
+void OLED_DrawThreeNumber(uint16_t in, uint8_t x) {
 
+	OLED_DrawChar((in / 100) % 10, x);
+	OLED_DrawChar((in / 10) % 10, x + 14);
+	OLED_DrawChar(in % 10, x + 28);
+}
+void OLED_DrawFourNumber(uint16_t in, uint8_t x) {
+
+	OLED_DrawChar((in / 1000) % 10, x);
+	OLED_DrawChar((in / 100) % 10, x + 14);
+	OLED_DrawChar((in / 10) % 10, x + 28);
+	OLED_DrawChar(in % 10, x + 42);
+}

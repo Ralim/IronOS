@@ -1,63 +1,41 @@
-/********************* (C) COPYRIGHT 2015 e-Design Co.,Ltd. **********************
- File Name :      main.c
- Version :        S100 APP Ver 2.11
- Description:
- Author :         Celery
- Data:            2015/07/07
- History:
- 2016/8/11	Updates by Ben V. Brown <ralim@ralimtek.com> - Cleanup and english comments
- 2015/07/07   ͳһ������
- *******************************************************************************/
-#include <string.h>
-#include <stdio.h>
-#include "APP_Version.h"
-#include "Disk.h"
+/*
+ * Created by Ben V. Brown
+ */
+
+#include "Modes.h"
 #include "Bios.h"
-#include "usb_lib.h"
-#include "I2C.h"
-#include "Flash.h"
 #include "MMA8652FC.h"
-#include "UI.h"
+#include "PID.h"
 #include "Oled.h"
-#include "CTRL.h"
-#include "Hardware.h"
+#include "Settings.h"
+#include "I2C.h"
+void setup();
+
 int main(void) {
-	RCC_Config(); //setup system clock
-	NVIC_Config(0x4000);
-	Init_Timer2(); //init the timers
-	Init_Timer3();
-	GPIO_Config();//setup all the GPIO pins
-
-	USB_Port(DISABLE);//disable the USB hardware
-	Delay_Ms(200);//pause to let hardware stabilize
-	USB_Port(ENABLE);//enable the USB hardware
-	USB_Init();
-	I2C_Configuration(); //init the i2c bus
-
-	Adc_Init(); //init adc and dma
-	if (Get_CtrlStatus() != CONFIG)
-		StartUp_Accelerated();//start the accelerometer if not in config mode
-
-	System_Init();//load known safe values
-	Init_Oled();//init the OLED display
-	Clear_Screen();//clear the display buffer to black
-	Init_Gtime();//init the count down timers
-	APP_Init();//pick operating mode via input voltage
-
-	Disk_BuffInit();//fill the buffer for the virtual disk
-	Config_Analysis(); //read in config from virtual disk
-	Pid_Init(); //init the pid to starting values
-	Set_gKey(NO_KEY); //reset keys to all off
-	Start_Watchdog(3000);//start the system watchdog as 3 seconds
-
+	setup();
 	while (1) {
 		Clear_Watchdog(); //reset the Watchdog
-		if (Get_CtrlStatus() != CONFIG && LEAVE_WAIT_TIMER== 0) {
-			Check_Accelerated(); //update readings from the accelerometer
-			LEAVE_WAIT_TIMER = 50;//reset timer so we dont poll accelerometer for another 500ms
-		}
-		OLed_Display(); //Draw in the Oled display for this mode
-		Status_Tran();  //Handle user input and mode changing
+		ProcessUI();
+		DrawUI();
+		delayMs(50);
 	}
 }
-/******************************** END OF FILE *********************************/
+void setup()
+{
+	RCC_Config(); 							//setup system clock
+		NVIC_Config(0x4000); 				//this shifts the NVIC table to be offset, for the usb bootloader's size
+		GPIO_Config(); 						//setup all the GPIO pins
+		Init_EXTI(); 						//init the EXTI inputs
+		Init_Timer3(); 						//Used for the soldering iron tip
+		Adc_Init(); 						//init adc and dma
+		I2C_Configuration();				//Start the I2C hardware
+		GPIO_Init_OLED();					//Init the GPIO ports for the OLED
+		StartUp_Accelerometer(); 			//start the accelerometer
+		Init_Oled(); 						//init the OLED display
+		Clear_Screen(); 					//clear the display buffer to black
+		setupPID(); 						//init the PID values
+		readIronTemp(239, 0); 				//load the default calibration value
+		restoreSettings();					//Load settings
+
+		Start_Watchdog(1000); //start the system watchdog as 1 seconds timeout
+}

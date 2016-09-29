@@ -1,12 +1,32 @@
 # TS100
-Source code for the TS100 Soldering Iron
+This is a complete open source re-write of the software for the ts100 soldering iron.
 
-## UNTESTED!
+This was started to remove the need for USB for changing system settings.
 
-This repository is my attempt (so far) at converting the source code for the TS100 soldering iron to the free System Workbench IDE and gcc based compilers.
+The software has similar functionality to the original firmware.
 
-I am also attempting to translate / comment as a go for a reference.
+## Features Working
+* Soldering / Temperature control
+* Full PID Iron Temp
+* Adjusting temperature
+* Automatic sleep
+* Motion wake support
+* Basic settings menu
+* Input voltage UVLO measurement
+* Saving settings to flash for persistence
+* Improved GUI
+* Use hardware I2C for communications
+* Can disable movement detection if desired
+## Features still to be implemented
+* Manual Temp Calibration
 
-Untested on actual hardware until noted otherwise.
+# Upgrading your ts100 iron
+This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware :)
 
-
+1. Hold the button closest to the tip, and plug in the USB to the computer.
+2. The unit will appear as a USB drive.
+3. Drag the .hex file onto the USB drive.
+4. The unit will disconnect and reconnect.
+5. The filename will have changed to end in .RDY or .ERR .
+6. If it ends with .RDY your done! Otherwise something went wrong.
+7. If it went wrong try on a windows computer, some Mac / Linux machines do not play well with their boot loader.
