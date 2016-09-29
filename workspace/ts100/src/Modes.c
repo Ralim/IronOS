@@ -48,9 +48,9 @@ void ProcessUI() {
 			//We need to check the timer for movement in case we need to goto idle
 			if (systemSettings.movementEnabled)
 				if (millis() - getLastMovement()
-						> (systemSettings.SleepTime * 10000)) {
+						> (systemSettings.SleepTime * 60000)) {
 					if (millis() - getLastButtonPress()
-							> (systemSettings.SleepTime * 10000)) {
+							> (systemSettings.SleepTime * 60000)) {
 						operatingMode = SLEEP;
 						return;
 					}
