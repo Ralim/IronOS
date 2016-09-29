@@ -9,20 +9,26 @@
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
 
-	if (millis() - getLastButtonPress() < 150)
+	if (millis() - getLastButtonPress() < 200)
 		Buttons = 0;
 	//rough prevention for debouncing and allocates settling time
 	//OLED_DrawThreeNumber(Buttons, 0);
 	switch (operatingMode) {
 	case STARTUP:
-		if (Buttons & BUT_A) {
-			//A key pressed so we are moving to soldering mode
-			operatingMode = SOLDERING;
-			resetLastButtonPress();
-		} else if (Buttons & BUT_B) {
-			//B Button was pressed so we are moving to the Settings menu
-			operatingMode = SETTINGS;
-			resetLastButtonPress();
+		if ((millis() - getLastButtonPress() > 1000)) {
+			if (Buttons & BUT_A) {
+				//A key pressed so we are moving to soldering mode
+				operatingMode = SOLDERING;
+				delayMs(500);
+				resetLastButtonPress();
+				resetButtons();
+			} else if (Buttons & BUT_B) {
+				//B Button was pressed so we are moving to the Settings menu
+				operatingMode = SETTINGS;
+				delayMs(500);
+				resetLastButtonPress();
+				resetButtons();
+			}
 		}
 		//Nothing else to check here
 		break;
@@ -32,10 +38,12 @@ void ProcessUI() {
 			//A key pressed so we are moving to temp set
 			operatingMode = TEMP_ADJ;
 			resetLastButtonPress();
+			resetButtons();
 		} else if (Buttons & BUT_B) {
 			//B Button was pressed so we are moving back to idle
 			operatingMode = STARTUP;
 			resetLastButtonPress();
+			resetButtons();
 		} else {
 			//We need to check the timer for movement in case we need to goto idle
 			if (systemSettings.movementEnabled)
@@ -44,10 +52,11 @@ void ProcessUI() {
 					operatingMode = SLEEP; //Goto Sleep Mode
 					return;
 				}
-			/*if (millis() - getLastButtonPress()
-			 > (systemSettings.SleepTime * 60000))
-			 operatingMode = SLEEP;
-			 return;*/
+			if (millis() - getLastButtonPress()
+					> (systemSettings.SleepTime * 60000)) {
+				operatingMode = SLEEP;
+				return;
+			}
 			//If no buttons pushed we need to perform the PID loop for the iron temp
 			int32_t newOutput = computePID(systemSettings.SolderingTemp);
 			if (newOutput >= 0) {
@@ -76,7 +85,7 @@ void ProcessUI() {
 	case SETTINGS:
 		//Settings is the mode with the most logic
 		//Here we are in the menu so we need to increment through the sub menus / increase the value
-		if (millis() - getLastButtonPress() < 300)
+		if (millis() - getLastButtonPress() < 400)
 			return;
 
 		if (Buttons & BUT_A) {
@@ -122,10 +131,14 @@ void ProcessUI() {
 		if (Buttons & BUT_A) {
 			//A Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
+			resetLastButtonPress();
+			resetButtons();
 			return;
 		} else if (Buttons & BUT_B) {
 			//B Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
+			resetLastButtonPress();
+			resetButtons();
 			return;
 		} else if (systemSettings.movementEnabled)
 			if (millis() - getLastMovement() > 100) {
@@ -148,7 +161,8 @@ void DrawUI() {
 	case STARTUP:
 		//We are chilling in the idle mode
 		//Check if movement in the last 5 minutes , if not sleep OLED
-		if (millis() - getLastMovement() > (5 * 60 * 1000)) {
+		if (millis() - getLastMovement() > (5 * 60 * 1000)
+				&& (millis() - getLastButtonPress() > (5 * 60 * 1000))) {
 			//OLED off
 			Oled_DisplayOff();
 		} else {
@@ -160,10 +174,10 @@ void DrawUI() {
 		//The user is soldering
 	{
 		uint16_t temp = readIronTemp(0, 0);
-		if (systemSettings.SolderingTemp < temp) {
+		if (systemSettings.SolderingTemp + 2 < temp) {
 			OLED_DrawChar('C', 14 * 4);
 		} else {
-			if (systemSettings.SolderingTemp - temp < 20) {
+			if (getIronTimer() < 500) {
 				OLED_DrawChar(' ', 14 * 4);
 			} else {		//we are heating
 				OLED_DrawChar('H', 14 * 4);
@@ -172,8 +186,9 @@ void DrawUI() {
 		}
 		OLED_DrawThreeNumber(temp / 10, 0);
 		OLED_DrawChar('C', 14 * 3);
-		OLED_DrawChar(' ', 14 * 4);
 		OLED_DrawChar(' ', 14 * 5);
+		OLED_DrawChar(' ', 14 * 6);
+
 	}
 		break;
 	case TEMP_ADJ:

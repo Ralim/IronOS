@@ -119,10 +119,16 @@ void GPIO_Config(void) {
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-//-------- K1 = PA9, K2 = PA6 ----------------------------------------------------------//
+	//-------- K1 = PA9, K2 = PA6 ----------------------------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = KEY1_PIN | KEY2_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+	//--------INT 1 == PB5 ----------------------------------------------------------//
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
 }
 /*******************************************************************************
  Function: Adc_Init
@@ -200,37 +206,11 @@ void Adc_Init(void) {
 	ADC_SoftwareStartConvCmd(ADC2, ENABLE);
 }
 
-/*******************************************************************************
- Function:
- Description: Setup Timer2 to fire every 10ms
- *******************************************************************************/
-void Init_Timer2(void) {
-	NVIC_InitTypeDef NVIC_InitStructure;
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
-
-	TIM_TimeBaseStructure.TIM_Prescaler = 48 - 1;   // (48MHz)/48 = 1MHz
-	TIM_TimeBaseStructure.TIM_Period = 10000 - 1;  // Interrupt per 10mS
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
-	TIM_ARRPreloadConfig(TIM2, ENABLE);
-	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-	TIM_Cmd(TIM2, ENABLE);
-
-	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-}
-/*******************************************************************************
- Function:
- Description: Init Timer3 to fire every 50us to be used to control the irons software PWM
- This needs to be really fast as there is a cap used between this and the driver circuitry
- That prevents astuck mcu heating the tip
- *******************************************************************************/
+/*
+ * Init Timer3 to fire every 50us to be used to control the irons software PWM
+ * This needs to be really fast as there is a cap used between this and the driver circuitry
+ * That prevents a stuck mcu heating the tip
+ */
 void Init_Timer3(void) {
 	NVIC_InitTypeDef NVIC_InitStructure;
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
@@ -260,14 +240,17 @@ void Init_EXTI(void) {
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,
 	GPIO_PinSource6 | GPIO_PinSource9);
 
-	/* Configure EXTI0 line */
-	EXTI_InitStructure.EXTI_Line = EXTI_Line6 | EXTI_Line9;
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB,
+	GPIO_PinSource5);     //PB5 == accelerometer
+
+	/* Configure EXTI5/6/9 line */
+	EXTI_InitStructure.EXTI_Line = EXTI_Line5 | EXTI_Line6 | EXTI_Line9;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //trigger on up and down
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 
-	/* Enable and set EXTI0 Interrupt to the lowest priority */
+	/* Enable and set EXTI9_5 Interrupt to the lowest priority */
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
@@ -275,11 +258,9 @@ void Init_EXTI(void) {
 	NVIC_Init(&NVIC_InitStructure);
 
 }
-/*******************************************************************************
- Function:Start_Watchdog
- Description: Starts the system watchdog timer
- *******************************************************************************/
-u32 Start_Watchdog(u32 ms) {
+//Start the system watchdog with a timeout specified
+//Note you cannot turn this off once you turn it on
+void Start_Watchdog(uint32_t ms) {
 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
 
 	/* IWDG counter clock: 40KHz(LSI) / 32 = 1.25 KHz (min:0.8ms -- max:3276.8ms */
@@ -293,48 +274,32 @@ u32 Start_Watchdog(u32 ms) {
 
 	/* Enable IWDG (the LSI oscillator will be enabled by hardware) */
 	IWDG_Enable();
-	return 1;
 }
-/*******************************************************************************
- Function:Clear_Watchdog
- Description:Resets the watchdog timer
- *******************************************************************************/
+
+//Reset the system watchdog
 void Clear_Watchdog(void) {
 	IWDG_ReloadCounter();
-
 }
-/*******************************************************************************
- Function:TIM2_ISR
- Description:Handles Timer 2 tick. (10mS)
- Automatically decrements all >0 values in gTime.
- Also reads the buttons every 4 ticks
- *******************************************************************************/
-void TIM2_ISR(void) {
 
-	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);  // Clear interrupt flag
-
-}
-/*******************************************************************************
- Function: TIM3_ISR
- Description:Sets the output pin as appropriate
- If the Heat_cnt >0 then heater on, otherwise off.
- *******************************************************************************/
+//TIM3_ISR handles the tick of the timer 3 IRQ
 void TIM3_ISR(void) {
-	volatile static u8 heat_flag = 0; //heat flag == used to make the pin toggle
+	volatile static u8 heat_flag = 0;
+	//heat flag == used to make the pin toggle
+	//As the output is passed through a cap, the iron is on whilever we provide a square wave drive output
 
-	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  // Clear interrupt flag
+	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+	// Clear interrupt flag
 
 	if (gHeat_cnt > 0) {
 		--gHeat_cnt;
 		if (heat_flag)
-			HEAT_OFF();
+			HEAT_OFF();	//write the pin off
 		else
-			HEAT_ON();
+			HEAT_ON();	//write the pin on
 		heat_flag = !heat_flag;
 	} else {
-		HEAT_OFF();
+		HEAT_OFF();	//set the pin low for measurements
 		heat_flag = 0;
 	}
 
 }
-/******************************** END OF FILE *********************************/

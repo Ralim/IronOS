@@ -42,8 +42,13 @@ inline uint32_t millis() {
 inline uint32_t getLastButtonPress() {
 	return lastKeyPress;
 }
-inline uint32_t resetLastButtonPress() {
+inline void resetLastButtonPress() {
 	lastKeyPress = millis();
+
+}
+inline void resetButtons() {
+	lastKeyPress = millis();
+	keyState = 0;
 }
 inline uint32_t getLastMovement() {
 	return lastMovement;

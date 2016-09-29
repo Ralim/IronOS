@@ -31,25 +31,20 @@ int main(void) {
 	I2C_Configuration(); //init the i2c bus
 
 	Adc_Init(); //init adc and dma
-	StartUp_Accelerated(); //start the accelerometer
+	StartUp_Acceleromter(); //start the accelerometer
 
 	Init_Oled(); //init the OLED display
 	Clear_Screen(); //clear the display buffer to black
 	systemSettings.SleepTemp = 900;
 	systemSettings.SleepTime = 1;
-	systemSettings.SolderingTemp = 1500;
-	readIronTemp(239,0); //load the default calibration value
+	systemSettings.SolderingTemp = 1000;
+	systemSettings.movementEnabled = 1; //we use movement detection
+	readIronTemp(239, 0); //load the default calibration value
 	setupPID(); //init the PID values
-	//OLED_DrawString("TEST012",7);
 
-	/*for (;;) {
-
-	 OLED_DrawTwoNumber((millis() / 100) % 100, (millis() / 100) % 80);
-	 }*/
-
-	//Start_Watchdog(3000); //start the system watchdog as 3 seconds
+	Start_Watchdog(3000); //start the system watchdog as 3 seconds
 	while (1) {
-		//	Clear_Watchdog(); //reset the Watchdog
+		Clear_Watchdog(); //reset the Watchdog
 		ProcessUI();
 		DrawUI();
 		delayMs(50);

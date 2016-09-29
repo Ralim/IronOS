@@ -1,21 +1,18 @@
-/********************* (C) COPYRIGHT 2015 e-Design Co.,Ltd. *******************/
-/* Brief : Interrupt Service Routines                           Author : bure */
-/******************************************************************************/
 #include "Interrupt.h"
-
 #include "Bios.h"
 #include "I2C.h"
-volatile uint32_t system_Ticks;
 
+volatile uint32_t system_Ticks;
+volatile uint32_t lastKeyPress; //millis() at the last button event
+volatile uint16_t keyState; //tracks the button status
+volatile uint32_t lastMovement; //millis() at last movement event
+
+//Delay in milliseconds using systemTick
 void delayMs(uint32_t ticks) {
 	uint32_t endtime = ticks + millis();
 	while (millis() < endtime)
 		;
 }
-
-/******************************************************************************/
-/*                      Processor Exceptions Handlers                         */
-/******************************************************************************/
 
 void NMI_Handler(void) {
 	;
@@ -41,56 +38,40 @@ void UsageFault_Handler(void) {
 		;
 }
 
-void SVC_Handler(void) {
-}
-
-void DebugMon_Handler(void) {
-}
-
-void PendSV_Handler(void) {
-}
-
+//Handles the tick of the sysTick events
 void SysTick_Handler(void) {
 	++system_Ticks;
 }
 
-/******************************************************************************/
-/*                     Peripherals Interrupt Handlers                         */
-/*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
-/*  available peripheral interrupt handler's name please refer to the startup */
-/*  file (startup_stm32f30x.s).                                               */
-/******************************************************************************/
-
-void USB_LP_CAN1_RX0_IRQHandler(void) {
-
-}
-void TIM2_IRQHandler(void) {
-	TIM2_ISR();
-}
+/*Peripheral Interrupts				*/
 
 void TIM3_IRQHandler(void) {
 	TIM3_ISR();
 }
-volatile uint32_t lastKeyPress;
-volatile uint16_t keyState;
-volatile uint32_t lastMovement;
-//EXTI IRQ
+
+//EXTI IRQ handler
+//used for buttons and movement
 void EXTI9_5_IRQHandler(void) {
-//we are interested in line 9 and line 6
+//we are interested in line 9 and line 6 for buttons
+	//Lien 5 == movement
 	if (EXTI_GetITStatus(EXTI_Line9) != RESET) {
 		if (GPIO_ReadInputDataBit(GPIOA, KEY_A) == SET)
 			keyState &= ~(BUT_A);
 		else
 			keyState |= BUT_A;
+		lastKeyPress = millis();
 		EXTI_ClearITPendingBit(EXTI_Line9);
 	} else if (EXTI_GetITStatus(EXTI_Line6) != RESET) {
 		if (GPIO_ReadInputDataBit(GPIOA, KEY_B) == SET)
 			keyState &= ~(BUT_B);
 		else
 			keyState |= BUT_B;
+		lastKeyPress = millis();
 		EXTI_ClearITPendingBit(EXTI_Line6);
+	} else if (EXTI_GetITStatus(EXTI_Line5) != RESET) {	//Movement Event
+		lastMovement = millis();
+		EXTI_ClearITPendingBit(EXTI_Line5);
 	}
-	lastKeyPress = millis();
 
 }
 
@@ -99,7 +80,6 @@ void WWDG_IRQHandler(void) {
 }
 void PVD_IRQHandler(void) {
 }
-
 void TAMPER_IRQHandler(void) {
 }
 void RTC_IRQHandler(void) {
@@ -208,6 +188,21 @@ void DMA2_Channel2_IRQHandler(void) {
 void DMA2_Channel3_IRQHandler(void) {
 }
 void DMA2_Channel4_5_IRQHandler(void) {
+}
+void TIM2_IRQHandler(void) {
+
+}
+void SVC_Handler(void) {
+}
+
+void DebugMon_Handler(void) {
+}
+
+void PendSV_Handler(void) {
+}
+
+void USB_LP_CAN1_RX0_IRQHandler(void) {
+
 }
 
 /*********************************  END OF FILE  ******************************/
