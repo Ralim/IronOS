@@ -13,38 +13,70 @@
 #include "I2C.h"
 
 #include "Font.h"
+u8 displayOffset = 32;
 /*Setup params for the OLED screen*/
-u8 OLED_Setup_Array[46] = { 0x80, 0xAE, 0x80, 0xD5, 0x80, 0x52, 0x80, 0xA8,
-		0x80, 0x0f, 0x80, 0xC0, 0x80, 0xD3, 0x80, 0x00, 0x80, 0x40, 0x80, 0xA0,
-		0x80, 0x8D, 0x80, 0x14, 0x80, 0xDA, 0x80, 0x02, 0x80, 0x81, 0x80, 0x33,
-		0x80, 0xD9, 0x80, 0xF1, 0x80, 0xDB, 0x80, 0x30, 0x80, 0xA4, 0x80, 0XA6,
-		0x80, 0xAF };
+/*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
+/*All commands are prefixed with 0x80*/
+u8 OLED_Setup_Array[46] = { 0x80, 0xAE,/*Display off*/
+0x80, 0xD5,/*Set display clock divide ratio / osc freq*/
+0x80, 0b01010001,/**/
+0x80, 0xA8,/*Set Multiplex Ratio*/
+0x80, 16,  /*16 == max brightness,39==dimmest*/
+0x80, 0xC0,/*Set COM Scan direction*/
+0x80, 0xD3,/*Set Display offset*/
+0x80, 0x00,/*0 Offset*/
+0x80, 0x40,/*Set Display start line to 0*/
+0x80, 0xA0,/*Set Segment remap to normal*/
+0x80, 0x8D,/*Unknown*/
+0x80, 0x14,/**/
+0x80, 0xDA,/*Set VCOM Pins hardware config*/
+0x80, 0x02,/*Combination 2*/
+0x80, 0x81,/*Contrast*/
+0x80, 0x33,/*51*/
+0x80, 0xD9,/*Set pre-charge period*/
+0x80, 0xF1,/**/
+0x80, 0xDB,/*Adjust VCOMH regulator ouput*/
+0x80, 0x30,/**/
+0x80, 0xA4,/*Enable the display GDDR*/
+0x80, 0XA6,/*Normal display*/
+0x80, 0xAF /*Dispaly on*/
+};
 
-/*******************************************************************************
+/*
  Function: Oled_DisplayOn
  Description:Turn on the Oled display
- *******************************************************************************/
+ */
 void Oled_DisplayOn(void) {
 	u8 data[6] = { 0x80, 0X8D, 0x80, 0X14, 0x80, 0XAF };
 
 	I2C_PageWrite(data, 6, DEVICEADDR_OLED);
 }
-/*******************************************************************************
+/*
  Function: Oled_DisplayOff
  Description:Turn off the Oled display
- *******************************************************************************/
+ */
 void Oled_DisplayOff(void) {
 	u8 data[6] = { 0x80, 0X8D, 0x80, 0X10, 0x80, 0XAE };
 
 	I2C_PageWrite(data, 6, DEVICEADDR_OLED);
 }
+/*
+ * This sets the OLED screen to invert the screen (flip it vertically)
+ * This is used if the unit is set to left hand mode
+ */
+void Oled_DisplayFlip() {
+	u8 data[2] = { 0x80, 0XC8 };
+	I2C_PageWrite(data, 2, DEVICEADDR_OLED);
+	data[1] = 0xA1;
+	I2C_PageWrite(data, 2, DEVICEADDR_OLED);
+	displayOffset=0;
 
-/*******************************************************************************
- Function: Data_Command
+}
+/*
  Description: write a command to the Oled display
  Input: number of bytes to write, array to write
  Output:
- *******************************************************************************/
+ */
 u8* Data_Command(u8 length, u8* data) {
 	int i;
 	u8 tx_data[128];
@@ -62,8 +94,9 @@ u8* Data_Command(u8 length, u8* data) {
  Input:x,y co-ordinates
  *******************************************************************************/
 void Set_ShowPos(u8 x, u8 y) {
-	u8 pos_param[8] = { 0x80, 0xB0, 0x80, 0x21, 0x80, 0x20, 0x80, 0x7F };
-	pos_param[5] = x + 32;
+	u8 pos_param[8] = { 0x80, 0xB0, 0x80, 0x21, 0x80, 0x00, 0x80, 0x7F };
+	//page 0, start add = x(below) through to 0x7F (aka 127)
+	pos_param[5] = x + displayOffset;/*Display offset ==0 for Lefty, == 32 fo righty*/
 	pos_param[1] += y;
 	I2C_PageWrite(pos_param, 8, DEVICEADDR_OLED);
 }
@@ -133,51 +166,67 @@ void Clear_Screen(void) {
 		Oled_DrawArea(0, i * 8, 128, 8, tx_data);
 	}
 }
-
+/*
+ * Draws a string onto the screen starting at the left
+ */
 void OLED_DrawString(char* string, uint8_t length) {
 	for (uint8_t i = 0; i < length; i++) {
-		OLED_DrawChar(string[i], i * 14);
+		OLED_DrawChar(string[i], i);
 	}
-}
-void OLED_DrawChar(char c, uint8_t x) {
-	if ((x) > (128 - 14))
-		return; //Rudimentary clipping to not draw off screen
-	u8* ptr;
-	ptr = (u8*) FONT;
-	if (c >= 'A' && c <= 'Z') {
-		ptr += (c - 'A' + 10) * (14 * 2); //alpha is ofset 10 chars into the array
-	} else if (c >= '0' && c <= '9')
-		ptr += (c - '0') * (14 * 2);
-	else if (c < 10)
-		ptr += (c) * (14 * 2);
-	else if (c == ' ') {
-		//blank on space bar
-		ptr += (36) * (14 * 2);
-	} else if (c == '<') {
-		ptr += (37) * (14 * 2);
-	} else if (c == '>') {
-		ptr += (38) * (14 * 2);
-	}
-
-	Oled_DrawArea(x, 0, 14, 16, (u8*) ptr);
 }
 /*
- * Draw a 2 digit number to the display
- * */
-void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
-	OLED_DrawChar((in / 10) % 10, x);
-	OLED_DrawChar(in % 10, x + 14);
+ * Draw a char onscreen at letter index x
+ */
+void OLED_DrawChar(char c, uint8_t x) {
+	if (x > 7)
+		return; //clipping
+	x *= FONT_WIDTH; //convert to a x coordinate
+
+	u8* ptr = (u8*) FONT;
+	if (c >= 'A' && c <= 'Z') {
+		ptr += (c - 'A' + 10) * (FONT_WIDTH * 2); //alpha is ofset 10 chars into the array
+	} else if (c >= '0' && c <= '9')
+		ptr += (c - '0') * (FONT_WIDTH * 2);
+	else if (c < 10)
+		ptr += (c) * (FONT_WIDTH * 2);
+	else if (c == ' ') {
+		//blank on space bar
+		ptr += (36) * (FONT_WIDTH * 2);
+	} else if (c == '<') {
+		ptr += (37) * (FONT_WIDTH * 2);
+	} else if (c == '>') {
+		ptr += (38) * (FONT_WIDTH * 2);
+	}else if (c=='.')
+	{
+		ptr += (39) * (FONT_WIDTH * 2);
+	}
+
+	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
 }
+/*
+ * Draw a 2 digit number to the display at letter slot x
+ */
+void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
+
+	OLED_DrawChar((in / 10) % 10, x);
+	OLED_DrawChar(in % 10, x + 1);
+}
+/*
+ * Draw a 3 digit number to the display at letter slot x
+ */
 void OLED_DrawThreeNumber(uint16_t in, uint8_t x) {
 
 	OLED_DrawChar((in / 100) % 10, x);
-	OLED_DrawChar((in / 10) % 10, x + 14);
-	OLED_DrawChar(in % 10, x + 28);
+	OLED_DrawChar((in / 10) % 10, x + 1);
+	OLED_DrawChar(in % 10, x + 2);
 }
+/*
+ * Draw a 4 digit number to the display at letter slot x
+ */
 void OLED_DrawFourNumber(uint16_t in, uint8_t x) {
 
 	OLED_DrawChar((in / 1000) % 10, x);
-	OLED_DrawChar((in / 100) % 10, x + 14);
-	OLED_DrawChar((in / 10) % 10, x + 28);
-	OLED_DrawChar(in % 10, x + 42);
+	OLED_DrawChar((in / 100) % 10, x + 1);
+	OLED_DrawChar((in / 10) % 10, x + 2);
+	OLED_DrawChar(in % 10, x + 3);
 }

@@ -63,7 +63,7 @@ void ProcessUI() {
 			//If no buttons pushed we need to perform the PID loop for the iron temp
 			int32_t newOutput = computePID(systemSettings.SolderingTemp);
 
-				setIronTimer(newOutput);
+			setIronTimer(newOutput);
 
 		}
 		break;
@@ -81,37 +81,37 @@ void ProcessUI() {
 		} else {
 			//we check the timeout for how long the buttons have not been pushed
 			//if idle for > 3 seconds then we return to soldering
-			if (millis() - getLastButtonPress() > 3000)
+			if (millis() - getLastButtonPress() > 3000) {
 				operatingMode = SOLDERING;
+				saveSettings();
+			}
 		}
 		break;
 	case SETTINGS:
 		//Settings is the mode with the most logic
 		//Here we are in the menu so we need to increment through the sub menus / increase the value
-		if (millis() - getLastButtonPress() < 400)
+		if (millis() - getLastButtonPress() < 300)
 			return;
 
 		if (Buttons & BUT_A) {
 			resetLastButtonPress();
 			//A key iterates through the menu
-			if (settingsPage == 3) {
+			if (settingsPage == SETTINGSOPTIONSCOUNT) {
 				//Roll off the end
-				settingsPage = 0;		//reset
-				operatingMode = STARTUP;
-				saveSettings();		//Save the settings
+				settingsPage = 0;				//reset
+				operatingMode = STARTUP;		//reset back to the startup
+				saveSettings();					//Save the settings
 			} else
-				++settingsPage;		//move to the next option
+				++settingsPage;					//move to the next option
 		} else if (Buttons & BUT_B) {
 			resetLastButtonPress();
 			//B changes the value selected
 			switch (settingsPage) {
-			case UVLO:
+			case UVCO:
 				//we are incrementing the cutout voltage
 				systemSettings.cutoutVoltage += 1;		//Go up 1V at a jump
 				if (systemSettings.cutoutVoltage > 24)
-					systemSettings.cutoutVoltage = 9;
-				else if (systemSettings.cutoutVoltage < 9)
-					systemSettings.cutoutVoltage = 9;	//cant set UVLO below 9V
+					systemSettings.cutoutVoltage = 10;
 				break;
 			case SLEEP_TEMP:
 				systemSettings.SleepTemp += 100;		//Go up 10c at a time
@@ -120,13 +120,19 @@ void ProcessUI() {
 				break;
 			case SLEEP_TIME:
 				++systemSettings.SleepTime;		//Go up 1 minute at a time
-				if (systemSettings.SleepTime > 60)
-					systemSettings.SleepTime = 2;	//cant set time over an hour
+				if (systemSettings.SleepTime > 30)
+					systemSettings.SleepTime = 1;	//cant set time over 30 mins
 				//Remember that ^ is the time of no movement
 				break;
 			case MOTIONDETECT:
 				systemSettings.movementEnabled =
 						!systemSettings.movementEnabled;
+				break;
+			case TEMPDISPLAY:
+				systemSettings.displayTempInF = !systemSettings.displayTempInF;
+				break;
+			case LEFTY:
+				systemSettings.flipDisplay = !systemSettings.flipDisplay;
 				break;
 			default:
 				break;
@@ -155,7 +161,7 @@ void ProcessUI() {
 		//else if nothing has been pushed we need to compute the PID to keep the iron at the sleep temp
 		int32_t newOutput = computePID(systemSettings.SleepTemp);
 
-			setIronTimer(newOutput);
+		setIronTimer(newOutput);
 
 		break;
 	case COOLING: {
@@ -190,9 +196,20 @@ void ProcessUI() {
 		break;
 	}
 }
+/*
+ * Draws the temp with temp conversion if needed
+ */
+void drawTemp(uint16_t temp, uint8_t x) {
+	if (systemSettings.displayTempInF)
+		temp = (temp * 9 + 1600) / 5;/*Convert to F -> T*(9/5)+32*/
+	OLED_DrawThreeNumber(temp / 10, x);
+}
 
+/*
+ * Performs all the OLED drawing for the current operating mode
+ */
 void DrawUI() {
-	uint16_t temp = readIronTemp(0, 0) / 10;
+	uint16_t temp = readIronTemp(0, 0);
 	switch (operatingMode) {
 	case STARTUP:
 		//We are chilling in the idle mode
@@ -203,60 +220,77 @@ void DrawUI() {
 			Oled_DisplayOff();
 		} else {
 			Oled_DisplayOn();
-			OLED_DrawString("IDLE   ", 7);		//write the word IDLE
+			OLED_DrawString("  IDLE  ", 8);		//write the word IDLE
 		}
 		break;
 	case SOLDERING:
 		//The user is soldering
 	{
 		if (getIronTimer() == 0) {
-			OLED_DrawChar('C', 14 * 4);
+			OLED_DrawChar('C', 5);
 		} else {
 			if (getIronTimer() < 500) {
-				OLED_DrawChar(' ', 14 * 4);
+				OLED_DrawChar(' ', 5);
 			} else {		//we are heating
-				OLED_DrawChar('H', 14 * 4);
+				OLED_DrawChar('H', 5);
 			}
 		}
-		OLED_DrawThreeNumber(temp, 0);
-		OLED_DrawChar(' ', 14 * 3);
-		OLED_DrawChar(' ', 14 * 5);
-		OLED_DrawChar(' ', 14 * 6);
+		drawTemp(temp, 0);
+		OLED_DrawChar(' ', 3);
+		OLED_DrawChar(' ', 4);
+		OLED_DrawChar(' ', 6);
+		OLED_DrawChar(' ', 7);
+
 	}
 		break;
 	case TEMP_ADJ:
 		//We are prompting the user to change the temp so we draw the current setpoint temp
 		//With the nifty arrows
-		OLED_DrawChar('<', 0);
-		OLED_DrawThreeNumber(systemSettings.SolderingTemp / 10, 14 * 1);
-		OLED_DrawChar(' ', 14 * 4);
-		OLED_DrawChar('>', 14 * 5);
+
+		OLED_DrawChar(' ', 0);
+		OLED_DrawChar('<', 1);
+		drawTemp(systemSettings.SolderingTemp, 2);
+		OLED_DrawChar(' ', 5);
+		OLED_DrawChar(' ', 6);
+		OLED_DrawChar('>', 7);
+
 		break;
 	case SETTINGS:
 		//We are prompting the user the setting name
 
 		switch (settingsPage) {
-		case UVLO:
-			OLED_DrawString("UVLO", 4);
-			OLED_DrawTwoNumber(systemSettings.cutoutVoltage, 14 * 4);
-			//OLED_DrawChar('V', 14 * 5);
-
+		case UVCO:
+			OLED_DrawString("UVCO ", 5);
+			OLED_DrawTwoNumber(systemSettings.cutoutVoltage, 5);
+			OLED_DrawChar('V', 7);
 			break;
 		case SLEEP_TEMP:
-			OLED_DrawString("STMP", 4);
-			OLED_DrawThreeNumber(systemSettings.SleepTemp / 10, 14 * 4);
-			//OLED_DrawChar('V', 14 * 5);
-
+			OLED_DrawString("STMP ", 5);
+			OLED_DrawThreeNumber(systemSettings.SleepTemp / 10, 5);
 			break;
 		case SLEEP_TIME:
-			OLED_DrawString("STME ", 5);
-			OLED_DrawTwoNumber(systemSettings.SleepTime, 14 * 5);
+			OLED_DrawString("STIME ", 6);
+			OLED_DrawTwoNumber(systemSettings.SleepTime, 6);
 			break;
 		case MOTIONDETECT:/*Toggle the mode*/
 			if (systemSettings.movementEnabled)
-				OLED_DrawString("MOTN  T", 7);
+				OLED_DrawString("MOTION T", 8);
 			else
-				OLED_DrawString("MOTN  F", 7);
+				OLED_DrawString("MOTION F", 8);
+			break;
+		case TEMPDISPLAY:/*Are we showing in C or F ?*/
+			if (systemSettings.displayTempInF)
+				OLED_DrawString("TMPUNT F", 8);
+			else
+				OLED_DrawString("TMPUNT C", 8);
+			break;
+
+		case LEFTY:
+
+			if (systemSettings.flipDisplay)
+				OLED_DrawString("FLPDSP T", 8);
+			else
+				OLED_DrawString("FLPDSP F", 8);
 			break;
 		default:
 			break;
@@ -266,15 +300,15 @@ void DrawUI() {
 		//The iron is in sleep temp mode
 		//Draw in temp and sleep
 		OLED_DrawString("SLP", 3);
-		OLED_DrawThreeNumber(temp, 14 * 3);
+		drawTemp(temp, 3);
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling
-		OLED_DrawString("COL", 3);
-		OLED_DrawThreeNumber(temp, 14 * 3);
+		OLED_DrawString("COOL", 3);
+		drawTemp(temp, 4);
 		break;
 	case UVLOWARN:
-		OLED_DrawString("UND VL", 6);
+		OLED_DrawString("LOW VOLT", 8);
 		break;
 	default:
 		break;

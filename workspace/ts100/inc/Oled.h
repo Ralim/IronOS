@@ -16,7 +16,7 @@ void Oled_DisplayOff(void);
 
 u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, u8* ptr);
 void Set_ShowPos(u8 x, u8 y);
-
+void Oled_DisplayFlip();
 void GPIO_Init_OLED(void);
 void Init_Oled(void);
 u8* Data_Command(u8 len, u8* ptr);

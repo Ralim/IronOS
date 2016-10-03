@@ -22,7 +22,7 @@ void I2C_Configuration(void) {
 	I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;
 	I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
 	I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
-	I2C_InitStructure.I2C_ClockSpeed = 100000; //100k
+	I2C_InitStructure.I2C_ClockSpeed = 400000; //400k
 	I2C_Init(I2C1, &I2C_InitStructure);
 	I2C_Cmd(I2C1, ENABLE);
 }

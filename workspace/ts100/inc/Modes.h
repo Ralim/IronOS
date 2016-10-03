@@ -27,7 +27,7 @@ enum {
 } operatingMode;
 
 enum {
-	UVLO = 0, SLEEP_TEMP, SLEEP_TIME,MOTIONDETECT,
+	UVCO = 0, SLEEP_TEMP, SLEEP_TIME, MOTIONDETECT, TEMPDISPLAY,LEFTY
 
 } settingsPage;
 
