@@ -32,16 +32,18 @@ void ProcessUI() {
 		break;
 	case SOLDERING:
 		//We need to check the buttons if we need to jump out
-		if (Buttons & BUT_A) {
-			//A key pressed so we are moving to temp set
+		if (Buttons == BUT_A || Buttons == BUT_B) {
+			//A or B key pressed so we are moving to temp set
 			operatingMode = TEMP_ADJ;
 			resetLastButtonPress();
 			resetButtons();
-		} else if (Buttons & BUT_B) {
-			//B Button was pressed so we are moving back to idle
-			operatingMode = COOLING;
-			resetLastButtonPress();
-			resetButtons();
+		} else if (Buttons == (BUT_A | BUT_B)) {
+			if (millis() - getLastButtonPress() > 1000) {
+				//Both buttons were pressed, exit back to the cooling screen
+				operatingMode = COOLING;
+				resetLastButtonPress();
+				resetButtons();
+			}
 		} else {
 			//We need to check the timer for movement in case we need to goto idle
 			if (systemSettings.movementEnabled)
@@ -168,15 +170,15 @@ void ProcessUI() {
 		setIronTimer(0); //turn off heating
 		//This mode warns the user the iron is still cooling down
 		uint16_t temp = readIronTemp(0, 1); //take a new reading as the heater code is not taking new readings
-		if (temp < 500) { //if the temp is < 50C then we can go back to IDLE
+		if (temp < 400) { //if the temp is < 40C then we can go back to IDLE
 			operatingMode = STARTUP;
 			resetLastButtonPress();
 			resetButtons();
 		} else { //we check if the user has pushed a button to ack
-			if ((millis() - getLastButtonPress() > 200)
-					&& (millis() - getLastButtonPress() < 2000)) {
-				if (getButtons() && (BUT_A | BUT_B)) {
-					//A button was pushed
+			if ((millis() - getLastButtonPress() > 800)
+					&& (millis() - getLastButtonPress() < 5000)) {
+				if (getButtons() & (BUT_A | BUT_B)) {
+					//Either button was pushed
 					operatingMode = STARTUP;
 					resetLastButtonPress();
 					resetButtons();
@@ -304,7 +306,7 @@ void DrawUI() {
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling
-		OLED_DrawString("COOL", 3);
+		OLED_DrawString("COOL", 4);
 		drawTemp(temp, 4);
 		break;
 	case UVLOWARN:

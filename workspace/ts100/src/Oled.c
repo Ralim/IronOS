@@ -13,7 +13,7 @@
 #include "I2C.h"
 
 #include "Font.h"
-u8 displayOffset = 32;
+int8_t displayOffset = 32;
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
@@ -96,7 +96,7 @@ u8* Data_Command(u8 length, u8* data) {
 void Set_ShowPos(u8 x, u8 y) {
 	u8 pos_param[8] = { 0x80, 0xB0, 0x80, 0x21, 0x80, 0x00, 0x80, 0x7F };
 	//page 0, start add = x(below) through to 0x7F (aka 127)
-	pos_param[5] = x + displayOffset;/*Display offset ==0 for Lefty, == 32 fo righty*/
+	pos_param[5] = x + displayOffset;/*Display offset ==0 for Lefty, == 32 for righty*/
 	pos_param[1] += y;
 	I2C_PageWrite(pos_param, 8, DEVICEADDR_OLED);
 }
@@ -161,7 +161,7 @@ void Init_Oled(void) {
  *******************************************************************************/
 void Clear_Screen(void) {
 	u8 tx_data[128];
-	memset(&tx_data[0], 0, 128);
+	memset(tx_data, 0, 128);
 	for (u8 i = 0; i < 2; i++) {
 		Oled_DrawArea(0, i * 8, 128, 8, tx_data);
 	}
