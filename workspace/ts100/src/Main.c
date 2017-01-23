@@ -30,13 +30,13 @@ void setup() {
 	I2C_Configuration();				//Start the I2C hardware
 	GPIO_Init_OLED();					//Init the GPIO ports for the OLED
 	StartUp_Accelerometer(); 			//start the accelerometer
-	Init_Oled(); 						//init the OLED display
+
 	setupPID(); 						//init the PID values
 	readIronTemp(239, 0); 				//load the default calibration value
 	restoreSettings();					//Load settings
-	if (systemSettings.flipDisplay)
-		Oled_DisplayFlip();
-	OLED_DrawString("VER 1.02",8);
+	Init_Oled(systemSettings.flipDisplay);//init the OLED display
+
+	OLED_DrawString("VER 1.03",8);
 	delayMs(800);
 	Start_Watchdog(1000); 		//start the system watchdog as 1 seconds timeout
 }

@@ -18,7 +18,7 @@ u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, u8* ptr);
 void Set_ShowPos(u8 x, u8 y);
 void Oled_DisplayFlip();
 void GPIO_Init_OLED(void);
-void Init_Oled(void);
+void Init_Oled(uint8_t leftHanded);
 u8* Data_Command(u8 len, u8* ptr);
 void Clear_Screen(void);//Clear the screen
 /*Functions for writing to the screen*/

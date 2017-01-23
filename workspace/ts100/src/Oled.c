@@ -19,9 +19,9 @@ int8_t displayOffset = 32;
 /*All commands are prefixed with 0x80*/
 u8 OLED_Setup_Array[46] = { 0x80, 0xAE,/*Display off*/
 0x80, 0xD5,/*Set display clock divide ratio / osc freq*/
-0x80, 0b01010001,/**/
+0x80, 0x52,/**/
 0x80, 0xA8,/*Set Multiplex Ratio*/
-0x80, 16,  /*16 == max brightness,39==dimmest*/
+0x80, 0x0F, /*16 == max brightness,39==dimmest*/
 0x80, 0xC0,/*Set COM Scan direction*/
 0x80, 0xD3,/*Set Display offset*/
 0x80, 0x00,/*0 Offset*/
@@ -69,7 +69,7 @@ void Oled_DisplayFlip() {
 	I2C_PageWrite(data, 2, DEVICEADDR_OLED);
 	data[1] = 0xA1;
 	I2C_PageWrite(data, 2, DEVICEADDR_OLED);
-	displayOffset=0;
+	displayOffset = 0;
 
 }
 /*
@@ -79,10 +79,10 @@ void Oled_DisplayFlip() {
  */
 u8* Data_Command(u8 length, u8* data) {
 	int i;
-	u8 tx_data[128];
+	u8 tx_data[129];
 	//here are are inserting the data write command at the beginning
 	tx_data[0] = 0x40;
-	length += 1;
+	length++;
 	for (i = 1; i < length; i++) //Loop through the array of data
 		tx_data[i] = *data++;
 	I2C_PageWrite(tx_data, length, DEVICEADDR_OLED); //write out the buffer
@@ -144,14 +144,19 @@ void GPIO_Init_OLED(void) {
  Function: Init_Oled
  Description: Initalizes the Oled screen
  *******************************************************************************/
-void Init_Oled(void) {
+void Init_Oled(uint8_t leftHanded) {
 	u8 param_len;
 
 	OLED_RST();
-	delayMs(2);
+	delayMs(5);
 	OLED_ACT(); //Toggling reset to reset the oled
-	delayMs(2);
+	delayMs(5);
 	param_len = 46;
+	if (leftHanded) {
+		OLED_Setup_Array[11] = 0xC8;
+		OLED_Setup_Array[19] = 0xA1;
+		displayOffset = 0;
+	}
 	I2C_PageWrite((u8 *) OLED_Setup_Array, param_len, DEVICEADDR_OLED);
 }
 
@@ -196,8 +201,7 @@ void OLED_DrawChar(char c, uint8_t x) {
 		ptr += (37) * (FONT_WIDTH * 2);
 	} else if (c == '>') {
 		ptr += (38) * (FONT_WIDTH * 2);
-	}else if (c=='.')
-	{
+	} else if (c == '.') {
 		ptr += (39) * (FONT_WIDTH * 2);
 	}
 
