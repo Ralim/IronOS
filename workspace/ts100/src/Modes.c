@@ -16,12 +16,16 @@ void ProcessUI() {
 	switch (operatingMode) {
 	case STARTUP:
 		if ((millis() - getLastButtonPress() > 1000)) {
-			if (Buttons & BUT_A) {
+			if (Buttons == (BUT_A | BUT_B)) {
+				operatingMode = THERMOMETER;
+				resetLastButtonPress();
+				resetButtons();
+			} else if (Buttons == BUT_A) {
 				//A key pressed so we are moving to soldering mode
 				operatingMode = SOLDERING;
 				resetLastButtonPress();
 				resetButtons();
-			} else if (Buttons & BUT_B) {
+			} else if (Buttons == BUT_B) {
 				//B Button was pressed so we are moving to the Settings menu
 				operatingMode = SETTINGS;
 				resetLastButtonPress();
@@ -174,16 +178,11 @@ void ProcessUI() {
 			operatingMode = STARTUP;
 			resetLastButtonPress();
 			resetButtons();
-		} else { //we check if the user has pushed a button to ack
-			if ((millis() - getLastButtonPress() > 800)
-					&& (millis() - getLastButtonPress() < 5000)) {
-				if (getButtons() & (BUT_A | BUT_B)) {
-					//Either button was pushed
-					operatingMode = STARTUP;
-					resetLastButtonPress();
-					resetButtons();
-				}
-			}
+		} else if (Buttons & (BUT_A | BUT_B)) { //we check if the user has pushed a button to ack
+			//Either button was pushed
+			operatingMode = STARTUP;
+			resetLastButtonPress();
+			resetButtons();
 		}
 	}
 		break;
@@ -193,6 +192,17 @@ void ProcessUI() {
 		if (millis() - lastModeChange > 3000) {		//its been 3 seconds
 			operatingMode = STARTUP;		//jump back to idle mode
 		}
+		break;
+	case THERMOMETER: {
+		//This lets the user check the tip temp without heating the iron.. And eventually calibration will be added here
+		if ((millis() - getLastButtonPress() > 1000))
+			if (Buttons == (BUT_A | BUT_B)) {
+				//If the user is holding both button, exit the temp screen
+				operatingMode = STARTUP;
+				resetLastButtonPress();
+				resetButtons();
+			}
+	}
 		break;
 	default:
 		break;
@@ -231,7 +241,7 @@ void DrawUI() {
 		if (getIronTimer() == 0) {
 			OLED_DrawChar('C', 5);
 		} else {
-			if (getIronTimer() < 500) {
+			if (getIronTimer() < 900) {
 				OLED_DrawChar(' ', 5);
 			} else {		//we are heating
 				OLED_DrawChar('H', 5);
@@ -302,15 +312,19 @@ void DrawUI() {
 		//The iron is in sleep temp mode
 		//Draw in temp and sleep
 		OLED_DrawString("SLP", 3);
-		drawTemp(temp, 3);
+		drawTemp(temp, 4);
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling
 		OLED_DrawString("COOL", 4);
-		drawTemp(temp, 4);
+		drawTemp(temp, 5);
 		break;
 	case UVLOWARN:
 		OLED_DrawString("LOW VOLT", 8);
+		break;
+	case THERMOMETER:
+		OLED_DrawString("TEMP ", 5);//extra one to it clears the leftover 'L' from IDLE
+		drawTemp(temp, 5);
 		break;
 	default:
 		break;
