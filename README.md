@@ -31,8 +31,15 @@ This is completely safe, if it goes wrong just put the .hex file from the offici
 6. If it ends with .RDY your done! Otherwise something went wrong.
 7. If it went wrong try on a windows computer, some Mac / Linux machines do not play well with their boot loader.
 
+There is also a complete device flash backup included in this repository. (Note this includes the bootloader, so will need a SWD programmer to load onto the unit).
 
 # New Menu System
 This new firmware uses a new menu system to allow access to the settings on the device.
 This menu can be accessed as shown in following flow chart, in the settings numbers roll over from top to bottom.
-![TS100: Software Menu](http://ralimtek.com/images/TS100.png "Fairly easy to learn")
+![TS100: Software Menu](TS100.png "Fairly easy to learn")
+
+
+# Version Changes:
+V1.02
+	- Adds hold both buttons on IDLE to access the therometer mode.
+	- Changes the exit soldering mode to be holding both buttons (Like original firmware).
