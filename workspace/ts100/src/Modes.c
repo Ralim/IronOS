@@ -323,6 +323,7 @@ void DrawUI() {
 		OLED_DrawString("LOW VOLT", 8);
 		break;
 	case THERMOMETER:
+		temp = readIronTemp(0, 1);//Force a reading as heater is off
 		OLED_DrawString("TEMP ", 5);//extra one to it clears the leftover 'L' from IDLE
 		drawTemp(temp, 5);
 		break;
