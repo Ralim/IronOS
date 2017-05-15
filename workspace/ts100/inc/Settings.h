@@ -21,7 +21,7 @@ struct {
 	uint32_t SleepTemp; 			//temp to drop to in sleep
 	uint8_t version;				//Used to track if a reset is needed on firmware upgrade
 	uint8_t SleepTime; 				//minutes timeout to sleep
-	uint8_t cutoutVoltage:1; 		//The voltage we cutout at for undervoltage
+	uint8_t cutoutVoltage:5; 		//The voltage we cutout at for undervoltage
 	uint8_t movementEnabled:1;		//If movement is enabled
 	uint8_t displayTempInF:1;		//If we need to convert the C reading to F
 	uint8_t flipDisplay:1;			//If true we want to invert the display for lefties

@@ -9,7 +9,7 @@
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
 	static uint32_t lastModeChange = 0;
-	if (millis() - getLastButtonPress() < 200)
+	if (millis() - getLastButtonPress() < 100)
 		Buttons = 0;
 	//rough prevention for de-bouncing and allocates settling time
 
@@ -42,7 +42,7 @@ void ProcessUI() {
 			resetLastButtonPress();
 			resetButtons();
 		} else if (Buttons == (BUT_A | BUT_B)) {
-			if (millis() - getLastButtonPress() > 1000) {
+			if (millis() - getLastButtonPress() > 500) {
 				//Both buttons were pressed, exit back to the cooling screen
 				operatingMode = COOLING;
 				resetLastButtonPress();
@@ -66,7 +66,7 @@ void ProcessUI() {
 				resetButtons();
 				lastModeChange = millis();
 			}
-			//If no buttons pushed we need to perform the PID loop for the iron temp
+			//Update the PID Loop
 			int32_t newOutput = computePID(systemSettings.SolderingTemp);
 
 			setIronTimer(newOutput);
@@ -87,7 +87,7 @@ void ProcessUI() {
 		} else {
 			//we check the timeout for how long the buttons have not been pushed
 			//if idle for > 3 seconds then we return to soldering
-			if (millis() - getLastButtonPress() > 3000) {
+			if (millis() - getLastButtonPress() > 2000) {
 				operatingMode = SOLDERING;
 				saveSettings();
 			}
@@ -96,8 +96,6 @@ void ProcessUI() {
 	case SETTINGS:
 		//Settings is the mode with the most logic
 		//Here we are in the menu so we need to increment through the sub menus / increase the value
-		if (millis() - getLastButtonPress() < 300)
-			return;
 
 		if (Buttons & BUT_A) {
 			resetLastButtonPress();
