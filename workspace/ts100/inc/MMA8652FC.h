@@ -15,7 +15,7 @@
 #define __MMA8652FC__H
 
 
-void StartUp_Accelerometer(void);//This is the only function we expose
+void StartUp_Accelerometer(uint8_t sensitivity);//This is the only function we expose
 
 //--------------MMA8652 Device ID----------------------------------------------//
 

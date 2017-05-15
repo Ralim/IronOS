@@ -53,7 +53,7 @@ void TIM3_IRQHandler(void) {
 //used for buttons and movement
 void EXTI9_5_IRQHandler(void) {
 //we are interested in line 9 and line 6 for buttons
-	//Lien 5 == movement
+	//Line 5 == movement
 	if (EXTI_GetITStatus(EXTI_Line9) != RESET) {
 		if (GPIO_ReadInputDataBit(GPIOA, KEY_A) == SET)
 			keyState &= ~(BUT_A);

@@ -29,12 +29,12 @@ uint8_t I2C_RegisterRead(uint8_t reg) {
 	return tx_data[0];
 }
 
-void StartUp_Accelerometer(void) {
+void StartUp_Accelerometer(uint8_t sensitivity) {
 	I2C_RegisterWrite(CTRL_REG2, 0); //Normal mode
 	I2C_RegisterWrite( CTRL_REG2, 0x40);	// Reset all registers to POR values
 	delayMs(2);		// ~1ms delay
 	I2C_RegisterWrite(FF_MT_CFG_REG, 0x78);	// Enable motion detection for X and Y axis, latch enabled
-	I2C_RegisterWrite(FF_MT_THS_REG, 0x0F);		// Set threshold
+	I2C_RegisterWrite(FF_MT_THS_REG, sensitivity);		// Set threshold
 	I2C_RegisterWrite(FF_MT_COUNT_REG, 0x01);	// Set debounce to 100ms
 
 	I2C_RegisterWrite( CTRL_REG4, 0x04);		// Enable motion interrupt

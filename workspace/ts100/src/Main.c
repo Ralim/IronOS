@@ -14,29 +14,30 @@ void setup();
 int main(void) {
 	setup();/*Setup the system*/
 	while (1) {
-		Clear_Watchdog(); //reset the Watchdog timer
+		Clear_Watchdog(); //reset the Watch dog timer
 		ProcessUI();
 		DrawUI();
 		delayMs(50); //Slow the system down a little bit
 	}
 }
 void setup() {
-	RCC_Config(); 						//setup system clock
-	NVIC_Config(0x4000); //this shifts the NVIC table to be offset, for the usb bootloader's size
-	GPIO_Config(); 						//setup all the GPIO pins
-	Init_EXTI(); 						//init the EXTI inputs
-	Init_Timer3(); 						//Used for the soldering iron tip
-	Adc_Init(); 						//init adc and dma
-	I2C_Configuration();				//Start the I2C hardware
-	GPIO_Init_OLED();					//Init the GPIO ports for the OLED
-	StartUp_Accelerometer(); 			//start the accelerometer
+	RCC_Config(); 										//setup system clock
+	NVIC_Config(0x4000); 								//this shifts the NVIC table to be offset, for the usb bootloader's size
+	GPIO_Config(); 										//setup all the GPIO pins
+	Init_EXTI(); 										//init the EXTI inputs
+	Init_Timer3(); 										//Used for the soldering iron tip
+	Adc_Init(); 										//init adc and dma
+	I2C_Configuration();								//Start the I2C hardware
+	GPIO_Init_OLED();									//Init the GPIO ports for the OLED
+	restoreSettings();									//Load settings
 
-	setupPID(); 						//init the PID values
-	readIronTemp(239, 0); 				//load the default calibration value
-	restoreSettings();					//Load settings
-	Init_Oled(systemSettings.flipDisplay);//init the OLED display
+	StartUp_Accelerometer(systemSettings.sensitivity); 	//start the accelerometer
 
-	OLED_DrawString("VER 1.03",8);
-	delayMs(800);
-	Start_Watchdog(1000); 		//start the system watchdog as 1 seconds timeout
+	setupPID(); 										//init the PID values
+	readIronTemp(239, 0); 								//load the default calibration value
+	Init_Oled(systemSettings.flipDisplay); 				//init the OLED display
+
+	OLED_DrawString("VER 1.03", 8); 					//1.settings version as of current
+	delayMs(800);										//Pause to show version number
+	Start_Watchdog(1000); 								//start the system watch dog as 1 second timeout
 }

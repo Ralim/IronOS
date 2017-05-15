@@ -142,7 +142,7 @@ void GPIO_Init_OLED(void) {
 }
 /*******************************************************************************
  Function: Init_Oled
- Description: Initalizes the Oled screen
+ Description: Initializes the Oled screen
  *******************************************************************************/
 void Init_Oled(uint8_t leftHanded) {
 	u8 param_len;
