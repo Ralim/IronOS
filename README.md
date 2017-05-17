@@ -21,6 +21,8 @@ In the latest official firmware they have also added a settings menu system, so 
 
 # Upgrading your ts100 iron
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases)
+**You will need a windows computer (7,8,10 tested), using the normal windows explorer to load the firmware.
+The bootloader does not appear to work under mac or linux at the moment.**
 
 1. Hold the button closest to the tip, and plug in the USB to the computer.
 2. The unit will appear as a USB drive.
@@ -28,9 +30,11 @@ This is completely safe, if it goes wrong just put the .hex file from the offici
 4. The unit will disconnect and reconnect.
 5. The filename will have changed to end in .RDY or .ERR .
 6. If it ends with .RDY your done! Otherwise something went wrong.
-7. If it went wrong try on a windows computer, some Mac / Linux machines do not play well with their boot loader.
+7. Disconnect the USB and power up the iron. You're good to go.
 
-There is also a complete device flash backup included in this repository. (Note this includes the bootloader, so will need a SWD programmer to load onto the unit).
+For the more adventurerous out there, you can also load this firmware onto the device using a SWD programmer.
+On the bottom of the MCU riser pcb, there are 4 pads for programming.
+There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need a SWD programmer to load onto the unit). Please do not use the backup of the bootloader for anything malicious, its only saved here for those who are tinkering with their iron and decide to replace it.
 
 # New Menu System
 This new firmware uses a new menu system to allow access to the settings on the device.
