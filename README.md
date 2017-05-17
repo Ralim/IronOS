@@ -1,27 +1,26 @@
 # TS100
 This is a complete open source re-write of the software for the ts100 soldering iron.
+This project is feature complete for use as a soldering iron, but is still open to ideas and suggestions.
 
-This was started to remove the need for USB for changing system settings.
 
-The software has similar functionality to the original firmware.
+This project was started to remove the need for USB for changing system settings.
+In the latest official firmware they have also added a settings menu system, so it is still worth comparing the two firmwares to select your preferred option.
 
 ## Features Working
 * Soldering / Temperature control
-* Full PID Iron Temp
+* Full PID iron temperature control
 * Adjusting temperature
 * Automatic sleep
 * Motion wake support
-* Basic settings menu
+* Settings menu
 * Input voltage UVLO measurement
 * Saving settings to flash for persistence
-* Improved GUI
+* Improved GUI Fonts
 * Use hardware I2C for communications
 * Can disable movement detection if desired
-## Features still to be implemented
-* Manual Temp Calibration
 
 # Upgrading your ts100 iron
-This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware :)
+This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases)
 
 1. Hold the button closest to the tip, and plug in the USB to the computer.
 2. The unit will appear as a USB drive.
