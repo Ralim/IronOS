@@ -9,45 +9,36 @@
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
 	static uint32_t lastModeChange = 0;
-	if (millis() - getLastButtonPress() < 100)
+	if (millis() - getLastButtonPress() < 30)
 		Buttons = 0;
+	else if (Buttons != 0) {
+		resetLastButtonPress();
+		resetButtons();
+	}
 	//rough prevention for de-bouncing and allocates settling time
 
 	switch (operatingMode) {
 	case STARTUP:
-		if ((millis() - getLastButtonPress() > 1000)) {
-			if (Buttons == (BUT_A | BUT_B)) {
-				operatingMode = THERMOMETER;
-				resetLastButtonPress();
-				resetButtons();
-			} else if (Buttons == BUT_A) {
-				//A key pressed so we are moving to soldering mode
-				operatingMode = SOLDERING;
-				resetLastButtonPress();
-				resetButtons();
-			} else if (Buttons == BUT_B) {
-				//B Button was pressed so we are moving to the Settings menu
-				operatingMode = SETTINGS;
-				resetLastButtonPress();
-				resetButtons();
-			}
+		if (Buttons == (BUT_A | BUT_B)) {
+			operatingMode = THERMOMETER;
+		} else if (Buttons == BUT_A) {
+			//A key pressed so we are moving to soldering mode
+			operatingMode = SOLDERING;
+		} else if (Buttons == BUT_B) {
+			//B Button was pressed so we are moving to the Settings menu
+			operatingMode = SETTINGS;
 		}
-		//Nothing else to check here
 		break;
 	case SOLDERING:
 		//We need to check the buttons if we need to jump out
 		if (Buttons == BUT_A || Buttons == BUT_B) {
 			//A or B key pressed so we are moving to temp set
 			operatingMode = TEMP_ADJ;
-			resetLastButtonPress();
-			resetButtons();
 		} else if (Buttons == (BUT_A | BUT_B)) {
-			if (millis() - getLastButtonPress() > 500) {
-				//Both buttons were pressed, exit back to the cooling screen
-				operatingMode = COOLING;
-				resetLastButtonPress();
-				resetButtons();
-			}
+
+			//Both buttons were pressed, exit back to the cooling screen
+			operatingMode = COOLING;
+
 		} else {
 			//We need to check the timer for movement in case we need to goto idle
 			if (systemSettings.movementEnabled)
@@ -62,32 +53,29 @@ void ProcessUI() {
 			uint16_t voltage = readDCVoltage(); //get X10 voltage
 			if ((voltage / 10) < systemSettings.cutoutVoltage) {
 				operatingMode = UVLOWARN;
-				resetLastButtonPress();
-				resetButtons();
 				lastModeChange = millis();
 			}
 			//Update the PID Loop
 			int32_t newOutput = computePID(systemSettings.SolderingTemp);
-
 			setIronTimer(newOutput);
-
 		}
 		break;
 	case TEMP_ADJ:
-		if (Buttons & BUT_A) {
+		if (Buttons == BUT_A) {
 			//A key pressed so we are moving down in temp
-			resetLastButtonPress();
+
 			if (systemSettings.SolderingTemp > 1000)
 				systemSettings.SolderingTemp -= 100;
-		} else if (Buttons & BUT_B) {
+		} else if (Buttons == BUT_B) {
 			//B key pressed so we are moving up in temp
-			resetLastButtonPress();
 			if (systemSettings.SolderingTemp < 4500)
 				systemSettings.SolderingTemp += 100;
 		} else {
 			//we check the timeout for how long the buttons have not been pushed
 			//if idle for > 3 seconds then we return to soldering
-			if (millis() - getLastButtonPress() > 2000) {
+			//Or if both buttons pressed
+			if ((millis() - getLastButtonPress() > 2000)
+					|| Buttons == (BUT_A | BUT_B)) {
 				operatingMode = SOLDERING;
 				saveSettings();
 			}
@@ -98,7 +86,6 @@ void ProcessUI() {
 		//Here we are in the menu so we need to increment through the sub menus / increase the value
 
 		if (Buttons & BUT_A) {
-			resetLastButtonPress();
 			//A key iterates through the menu
 			if (settingsPage == SETTINGSOPTIONSCOUNT) {
 				//Roll off the end
@@ -140,8 +127,8 @@ void ProcessUI() {
 				break;
 			case MOTIONSENSITIVITY:
 				systemSettings.sensitivity += 0x10;
-				if(systemSettings.sensitivity>0x20)
-					systemSettings.sensitivity=0;//reset to high on wrap
+				if (systemSettings.sensitivity > 0x20)
+					systemSettings.sensitivity = 0;		//reset to high on wrap
 
 				break;
 			default:
@@ -154,14 +141,10 @@ void ProcessUI() {
 		if (Buttons & BUT_A) {
 			//A Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
-			resetLastButtonPress();
-			resetButtons();
 			return;
 		} else if (Buttons & BUT_B) {
 			//B Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
-			resetLastButtonPress();
-			resetButtons();
 			return;
 		} else if (systemSettings.movementEnabled)
 			if (millis() - getLastMovement() < 1000) {//moved in the last second
@@ -170,9 +153,7 @@ void ProcessUI() {
 			}
 		//else if nothing has been pushed we need to compute the PID to keep the iron at the sleep temp
 		int32_t newOutput = computePID(systemSettings.SleepTemp);
-
 		setIronTimer(newOutput);
-
 		break;
 	case COOLING: {
 		setIronTimer(0); //turn off heating
@@ -180,13 +161,9 @@ void ProcessUI() {
 		uint16_t temp = readIronTemp(0, 1); //take a new reading as the heater code is not taking new readings
 		if (temp < 400) { //if the temp is < 40C then we can go back to IDLE
 			operatingMode = STARTUP;
-			resetLastButtonPress();
-			resetButtons();
 		} else if (Buttons & (BUT_A | BUT_B)) { //we check if the user has pushed a button to ack
 			//Either button was pushed
 			operatingMode = STARTUP;
-			resetLastButtonPress();
-			resetButtons();
 		}
 	}
 		break;
@@ -199,36 +176,28 @@ void ProcessUI() {
 		break;
 	case THERMOMETER: {
 		//This lets the user check the tip temp without heating the iron.. And eventually calibration will be added here
-		if ((millis() - getLastButtonPress() > 1000)) {
-			if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
-				//Single button press, cycle over to the DC display
-				operatingMode = DCINDISP;
-				resetLastButtonPress();
-				resetButtons();
-			} else if (Buttons == (BUT_A | BUT_B)) {
-				//If the user is holding both button, exit the  screen
-				operatingMode = STARTUP;
-				resetLastButtonPress();
-				resetButtons();
-			}
+
+		if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
+			//Single button press, cycle over to the DC display
+			operatingMode = DCINDISP;
+		} else if (Buttons == (BUT_A | BUT_B)) {
+			//If the user is holding both button, exit the  screen
+			operatingMode = STARTUP;
 		}
+
 	}
 		break;
 	case DCINDISP: {
 		//This lets the user check the input voltage
-		if ((millis() - getLastButtonPress() > 1000)) {
-			if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
-				//Single button press, cycle over to the temp display
-				operatingMode = THERMOMETER;
-				resetLastButtonPress();
-				resetButtons();
-			} else if (Buttons == (BUT_A | BUT_B)) {
-				//If the user is holding both button, exit the  screen
-				operatingMode = STARTUP;
-				resetLastButtonPress();
-				resetButtons();
-			}
+
+		if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
+			//Single button press, cycle over to the temp display
+			operatingMode = THERMOMETER;
+		} else if (Buttons == (BUT_A | BUT_B)) {
+			//If the user is holding both button, exit the  screen
+			operatingMode = STARTUP;
 		}
+
 	}
 		break;
 	default:
