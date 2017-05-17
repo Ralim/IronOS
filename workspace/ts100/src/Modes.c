@@ -138,6 +138,12 @@ void ProcessUI() {
 			case LEFTY:
 				systemSettings.flipDisplay = !systemSettings.flipDisplay;
 				break;
+			case MOTIONSENSITIVITY:
+				systemSettings.sensitivity += 0x10;
+				if(systemSettings.sensitivity>0x20)
+					systemSettings.sensitivity=0;//reset to high on wrap
+
+				break;
 			default:
 				break;
 			}
@@ -193,13 +199,36 @@ void ProcessUI() {
 		break;
 	case THERMOMETER: {
 		//This lets the user check the tip temp without heating the iron.. And eventually calibration will be added here
-		if ((millis() - getLastButtonPress() > 1000))
-			if (Buttons == (BUT_A | BUT_B)) {
-				//If the user is holding both button, exit the temp screen
+		if ((millis() - getLastButtonPress() > 1000)) {
+			if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
+				//Single button press, cycle over to the DC display
+				operatingMode = DCINDISP;
+				resetLastButtonPress();
+				resetButtons();
+			} else if (Buttons == (BUT_A | BUT_B)) {
+				//If the user is holding both button, exit the  screen
 				operatingMode = STARTUP;
 				resetLastButtonPress();
 				resetButtons();
 			}
+		}
+	}
+		break;
+	case DCINDISP: {
+		//This lets the user check the input voltage
+		if ((millis() - getLastButtonPress() > 1000)) {
+			if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
+				//Single button press, cycle over to the temp display
+				operatingMode = THERMOMETER;
+				resetLastButtonPress();
+				resetButtons();
+			} else if (Buttons == (BUT_A | BUT_B)) {
+				//If the user is holding both button, exit the  screen
+				operatingMode = STARTUP;
+				resetLastButtonPress();
+				resetButtons();
+			}
+		}
 	}
 		break;
 	default:
@@ -302,6 +331,23 @@ void DrawUI() {
 			else
 				OLED_DrawString("FLPDSP F", 8);
 			break;
+		case MOTIONSENSITIVITY:
+			switch (systemSettings.sensitivity) {
+			case MOTION_HIGH:
+				OLED_DrawString("SENSE H ", 8);
+				break;
+			case MOTION_MED:
+				OLED_DrawString("SENSE M ", 8);
+				break;
+			case MOTION_LOW:
+				OLED_DrawString("SENSE L ", 8);
+				break;
+			default:
+				OLED_DrawString("SENSE   ", 8);
+				break;
+			}
+
+			break;
 		default:
 			break;
 		}
@@ -321,9 +367,23 @@ void DrawUI() {
 		OLED_DrawString("LOW VOLT", 8);
 		break;
 	case THERMOMETER:
-		temp = readIronTemp(0, 1);//Force a reading as heater is off
+		temp = readIronTemp(0, 1);		//Force a reading as heater is off
 		OLED_DrawString("TEMP ", 5);//extra one to it clears the leftover 'L' from IDLE
 		drawTemp(temp, 5);
+		break;
+	case DCINDISP: {
+		uint16_t voltage = readDCVoltage(); //get X10 voltage
+		OLED_DrawString("IN", 2);
+		OLED_DrawChar((voltage / 100) % 10, 2);
+		voltage -= (voltage / 100) * 100;
+		OLED_DrawChar((voltage / 10) % 10, 3);
+		voltage -= (voltage / 10) * 10;
+		OLED_DrawChar('.', 4);
+		OLED_DrawChar(voltage % 10, 5);
+		OLED_DrawChar('V', 6);
+		OLED_DrawChar(' ', 7);
+
+	}
 		break;
 	default:
 		break;

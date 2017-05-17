@@ -12,7 +12,10 @@
 #include <stdint.h>
 #include "stm32f10x_flash.h"
 #define SETTINGSVERSION 0x03 /*Change this if you change the struct below to prevent people getting out of sync*/
-#define SETTINGSOPTIONSCOUNT 5 /*Number of settings in the settings menu*/
+#define SETTINGSOPTIONSCOUNT 6 /*Number of settings in the settings menu*/
+#define MOTION_HIGH (0x00)
+#define MOTION_MED  (0x10)
+#define MOTION_LOW  (0x20)
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from flash in uint16_t chunks
  */
@@ -26,7 +29,7 @@ struct {
 	uint8_t displayTempInF:1;		//If we need to convert the C reading to F
 	uint8_t flipDisplay:1;			//If true we want to invert the display for lefties
 	uint8_t sensitivity:7;			//Sensitivity of accelerometer
-	uint16_t tempCalibration;		// Temperature calibration value
+	uint16_t tempCalibration;		//Temperature calibration value
 } systemSettings;
 
 void saveSettings();
