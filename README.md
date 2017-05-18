@@ -58,9 +58,14 @@ The button near the tip cycles through the options, and the one near the usb cha
 * SENSE -> Motion Sensitivity, H is more sensitive. L is lowest sensitivity (ie takes more movement to trigger)
 
 ## Extras Menu
-This menu defaults to showing the current temperature on the tip. Pressing the button near the iron tip will show the current input voltage. Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
+This menu defaults to showing the current temperature on the tip. 
+Pressing the button near the iron tip will show the current input voltage. Pressing the other button while this is show will allow you to calibrate the reading if your iron is like mine and is not overly accurate out of the factory. (Press buttons to change measurement up and down, press both to exit and save). 
+
+Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
 
 # Version Changes:
+V1.05
+	- Adds ability to calibrate the input voltage measurement
 V1.04
 	- Increased accuracy of the temperature control
 	- Improved PID response slightly
