@@ -5,7 +5,7 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
-uint8_t tempCalStatus = 0;
+uint8_t CalStatus = 0;
 //This does the required processing and state changes
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
@@ -51,7 +51,7 @@ void ProcessUI() {
 						return;
 					}
 				}
-			uint16_t voltage = readDCVoltage(); //get X10 voltage
+			uint16_t voltage = readDCVoltage(systemSettings.voltageDiv); //get X10 voltage
 			if ((voltage / 10) < systemSettings.cutoutVoltage) {
 				operatingMode = UVLOWARN;
 				lastModeChange = millis();
@@ -180,9 +180,10 @@ void ProcessUI() {
 
 		if (Buttons == BUT_A) {
 			//Single button press, cycle over to the DC display
+			CalStatus = 0;
 			operatingMode = DCINDISP;
 		} else if (Buttons == BUT_B) {
-			tempCalStatus = 0;
+			CalStatus = 0;
 			operatingMode = TEMPCAL;
 		} else if (Buttons == (BUT_A | BUT_B)) {
 			//If the user is holding both button, exit the  screen
@@ -193,13 +194,37 @@ void ProcessUI() {
 		break;
 	case DCINDISP: {
 		//This lets the user check the input voltage
-
-		if (Buttons == BUT_A) {
-			//Single button press, cycle over to the temp display
-			operatingMode = THERMOMETER;
-		} else if (Buttons == (BUT_A | BUT_B)) {
-			//If the user is holding both button, exit the  screen
-			operatingMode = STARTUP;
+		if (CalStatus == 0) {
+			if (Buttons == BUT_A) {
+				//Single button press, cycle over to the temp display
+				operatingMode = THERMOMETER;
+			} else if (Buttons == BUT_B) {
+				//dc cal mode
+				CalStatus = 1;
+			} else if (Buttons == (BUT_A | BUT_B)) {
+				//If the user is holding both button, exit the  screen
+				operatingMode = STARTUP;
+			}
+		} else {
+			//User is calibrating the dc input
+			if (Buttons == BUT_A) {
+				if (!systemSettings.flipDisplay)
+					systemSettings.voltageDiv++;
+				else
+					systemSettings.voltageDiv--;
+			} else if (Buttons == BUT_B) {
+				if (!systemSettings.flipDisplay)
+					systemSettings.voltageDiv--;
+				else
+					systemSettings.voltageDiv++;
+			} else if (Buttons == (BUT_A | BUT_B)) {
+				CalStatus = 0;
+				saveSettings();
+			}
+			if (systemSettings.voltageDiv < 120)
+				systemSettings.voltageDiv = 160;
+			else if (systemSettings.voltageDiv > 160)
+				systemSettings.voltageDiv = 120;
 		}
 
 	}
@@ -210,13 +235,13 @@ void ProcessUI() {
 			operatingMode = THERMOMETER;
 		} else if (Buttons == BUT_A) {
 			//Try and calibrate
-			if (tempCalStatus == 0) {
+			if (CalStatus == 0) {
 				if ((readTipTemp() < 300) && (readSensorTemp() < 300)) {
-					tempCalStatus = 1;
+					CalStatus = 1;
 					systemSettings.tempCalibration = readTipTemp();
 					saveSettings();
 				} else {
-					tempCalStatus = 2;
+					CalStatus = 2;
 				}
 			}
 		} else if (Buttons == (BUT_A | BUT_B)) {
@@ -237,7 +262,7 @@ void drawTemp(uint16_t temp, uint8_t x) {
 	if (systemSettings.displayTempInF)
 		temp = (temp * 9 + 1600) / 5;/*Convert to F -> T*(9/5)+32*/
 	if (temp % 10 > 5)
-		temp += 10;//round up
+		temp += 10;		//round up
 	OLED_DrawThreeNumber(temp / 10, x);
 }
 
@@ -370,26 +395,30 @@ void DrawUI() {
 		drawTemp(temp, 5);
 		break;
 	case DCINDISP: {
-		uint16_t voltage = readDCVoltage(); //get X10 voltage
-		OLED_DrawString("IN", 2);
-		OLED_DrawChar((voltage / 100) % 10, 2);
-		voltage -= (voltage / 100) * 100;
-		OLED_DrawChar((voltage / 10) % 10, 3);
-		voltage -= (voltage / 10) * 10;
-		OLED_DrawChar('.', 4);
-		OLED_DrawChar(voltage % 10, 5);
-		OLED_DrawChar('V', 6);
-		OLED_DrawChar(' ', 7);
+		uint16_t voltage = readDCVoltage(systemSettings.voltageDiv); //get X10 voltage
 
+		if (CalStatus == 0 || ((millis() % 1000) > 500)) {
+			OLED_DrawString("IN", 2);
+			OLED_DrawChar((voltage / 100) % 10, 2);
+			voltage -= (voltage / 100) * 100;
+			OLED_DrawChar((voltage / 10) % 10, 3);
+			voltage -= (voltage / 10) * 10;
+			OLED_DrawChar('.', 4);
+			OLED_DrawChar(voltage % 10, 5);
+			OLED_DrawChar('V', 6);
+			OLED_DrawChar(' ', 7);
+		} else {
+			OLED_DrawString("IN      ", 8);
+		}
 	}
 		break;
 	case TEMPCAL: {
 
-		if (tempCalStatus == 0) {
+		if (CalStatus == 0) {
 			OLED_DrawString("CAL TEMP", 8);
-		} else if (tempCalStatus == 1) {
+		} else if (CalStatus == 1) {
 			OLED_DrawString("CAL OK  ", 8);
-		} else if (tempCalStatus == 2) {
+		} else if (CalStatus == 2) {
 			OLED_DrawString("CAL FAIL", 8);
 		}
 	}

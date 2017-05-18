@@ -10,12 +10,12 @@
 
 //Reads the dc input and returns it as X10 voltage (ie 236 = 23.6V)
 //Seems unstable below 9.5V input
-uint16_t readDCVoltage() {
+uint16_t readDCVoltage(uint16_t divFactor) {
 	uint16_t reading = 0;
 	for (u8 i = 0; i < 10; i++) {
 		reading += ADC_GetConversionValue(ADC2);
 	}
-	reading /= 144; //take the average and convert to X10 voltage
+	reading /= divFactor; //take the average and convert to X10 voltage
 	return reading; //return the read voltage
 }
 

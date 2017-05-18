@@ -17,16 +17,17 @@
 #include "Settings.h"
 #include "Analog.h"
 enum {
-	STARTUP, //we are sitting on the prompt to push a button
-	SOLDERING,
-	TEMP_ADJ,
-	SETTINGS,
-	SLEEP,
-	COOLING,
-	UVLOWARN,
-	THERMOMETER,
-	DCINDISP,
-	TEMPCAL,
+	STARTUP, 		//we are sitting on the prompt to push a button
+	SOLDERING, 		//Normal operating mode
+	TEMP_ADJ,		//Adjust the set temperature
+	SETTINGS,		//Settings menu
+	SLEEP,			//Iron is snoozing due to lack of use
+	COOLING,		//Iron is cooling down -> Warning screen
+	UVLOWARN,		//Unit tripped low voltage
+	THERMOMETER,	//Read the tip temp
+	DCINDISP,		//Disp the input voltage && Cal the DCin voltage divider
+	TEMPCAL,		//Cal tip temp offset
+
 } operatingMode;
 
 enum {

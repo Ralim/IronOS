@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f10x_flash.h"
-#define SETTINGSVERSION 0x03 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define SETTINGSVERSION 0x04 /*Change this if you change the struct below to prevent people getting out of sync*/
 #define SETTINGSOPTIONSCOUNT 6 /*Number of settings in the settings menu*/
 #define MOTION_HIGH (0x00)
 #define MOTION_MED  (0x10)
@@ -30,6 +30,7 @@ struct {
 	uint8_t flipDisplay:1;			//If true we want to invert the display for lefties
 	uint8_t sensitivity:7;			//Sensitivity of accelerometer
 	uint16_t tempCalibration;		//Temperature calibration value
+	uint16_t voltageDiv;			//Voltage divisor factor
 } systemSettings;
 
 void saveSettings();
