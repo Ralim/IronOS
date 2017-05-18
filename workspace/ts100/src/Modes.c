@@ -5,6 +5,7 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
+uint8_t tempCalStatus = 0;
 //This does the required processing and state changes
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
@@ -158,7 +159,7 @@ void ProcessUI() {
 	case COOLING: {
 		setIronTimer(0); //turn off heating
 		//This mode warns the user the iron is still cooling down
-		uint16_t temp = readIronTemp(0, 1); //take a new reading as the heater code is not taking new readings
+		uint16_t temp = readIronTemp(0, 1, 0xFFFF); //take a new reading as the heater code is not taking new readings
 		if (temp < 400) { //if the temp is < 40C then we can go back to IDLE
 			operatingMode = STARTUP;
 		} else if (Buttons & (BUT_A | BUT_B)) { //we check if the user has pushed a button to ack
@@ -177,9 +178,12 @@ void ProcessUI() {
 	case THERMOMETER: {
 		//This lets the user check the tip temp without heating the iron.. And eventually calibration will be added here
 
-		if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
+		if (Buttons == BUT_A) {
 			//Single button press, cycle over to the DC display
 			operatingMode = DCINDISP;
+		} else if (Buttons == BUT_B) {
+			tempCalStatus = 0;
+			operatingMode = TEMPCAL;
 		} else if (Buttons == (BUT_A | BUT_B)) {
 			//If the user is holding both button, exit the  screen
 			operatingMode = STARTUP;
@@ -190,9 +194,31 @@ void ProcessUI() {
 	case DCINDISP: {
 		//This lets the user check the input voltage
 
-		if ((Buttons == BUT_A) | (Buttons == BUT_B)) {
+		if (Buttons == BUT_A) {
 			//Single button press, cycle over to the temp display
 			operatingMode = THERMOMETER;
+		} else if (Buttons == (BUT_A | BUT_B)) {
+			//If the user is holding both button, exit the  screen
+			operatingMode = STARTUP;
+		}
+
+	}
+		break;
+	case TEMPCAL: {
+		if (Buttons == BUT_B) {
+			//Single button press, cycle over to the DC IN
+			operatingMode = THERMOMETER;
+		} else if (Buttons == BUT_A) {
+			//Try and calibrate
+			if (tempCalStatus == 0) {
+				if (readTipTemp() < 300 && readSensorTemp() < 300) {
+					tempCalStatus = 1;
+					systemSettings.tempCalibration = readTipTemp();
+					saveSettings();
+				} else {
+					tempCalStatus = 2;
+				}
+			}
 		} else if (Buttons == (BUT_A | BUT_B)) {
 			//If the user is holding both button, exit the  screen
 			operatingMode = STARTUP;
@@ -210,6 +236,8 @@ void ProcessUI() {
 void drawTemp(uint16_t temp, uint8_t x) {
 	if (systemSettings.displayTempInF)
 		temp = (temp * 9 + 1600) / 5;/*Convert to F -> T*(9/5)+32*/
+	if (temp % 10 > 5)
+		temp += 10;//round up
 	OLED_DrawThreeNumber(temp / 10, x);
 }
 
@@ -217,7 +245,7 @@ void drawTemp(uint16_t temp, uint8_t x) {
  * Performs all the OLED drawing for the current operating mode
  */
 void DrawUI() {
-	uint16_t temp = readIronTemp(0, 0);
+	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
 	switch (operatingMode) {
 	case STARTUP:
 		//We are chilling in the idle mode
@@ -336,7 +364,7 @@ void DrawUI() {
 		OLED_DrawString("LOW VOLT", 8);
 		break;
 	case THERMOMETER:
-		temp = readIronTemp(0, 1);		//Force a reading as heater is off
+		temp = readIronTemp(0, 1, 0xFFFF);	//Force a reading as heater is off
 		OLED_DrawString("TEMP ", 5);//extra one to it clears the leftover 'L' from IDLE
 		drawTemp(temp, 5);
 		break;
@@ -353,6 +381,18 @@ void DrawUI() {
 		OLED_DrawChar(' ', 7);
 
 	}
+		break;
+	case TEMPCAL: {
+
+		if (tempCalStatus == 0) {
+			OLED_DrawString("CAL TEMP", 8);
+		} else if (tempCalStatus == 1) {
+			OLED_DrawString("CAL OK  ", 8);
+		} else if (tempCalStatus == 2) {
+			OLED_DrawString("CAL FAIL", 8);
+		}
+	}
+
 		break;
 	default:
 		break;

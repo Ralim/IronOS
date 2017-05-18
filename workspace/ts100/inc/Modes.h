@@ -26,6 +26,7 @@ enum {
 	UVLOWARN,
 	THERMOMETER,
 	DCINDISP,
+	TEMPCAL,
 } operatingMode;
 
 enum {

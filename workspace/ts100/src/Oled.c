@@ -19,7 +19,7 @@ int8_t displayOffset = 32;
 /*All commands are prefixed with 0x80*/
 u8 OLED_Setup_Array[46] = { 0x80, 0xAE,/*Display off*/
 0x80, 0xD5,/*Set display clock divide ratio / osc freq*/
-0x80, 0x52,/**/
+0x80, 0x52,/*Unknown*/
 0x80, 0xA8,/*Set Multiplex Ratio*/
 0x80, 0x0F, /*16 == max brightness,39==dimmest*/
 0x80, 0xC0,/*Set COM Scan direction*/
@@ -28,7 +28,7 @@ u8 OLED_Setup_Array[46] = { 0x80, 0xAE,/*Display off*/
 0x80, 0x40,/*Set Display start line to 0*/
 0x80, 0xA0,/*Set Segment remap to normal*/
 0x80, 0x8D,/*Unknown*/
-0x80, 0x14,/**/
+0x80, 0x14,/*Unknown*/
 0x80, 0xDA,/*Set VCOM Pins hardware config*/
 0x80, 0x02,/*Combination 2*/
 0x80, 0x81,/*Contrast*/
@@ -36,7 +36,7 @@ u8 OLED_Setup_Array[46] = { 0x80, 0xAE,/*Display off*/
 0x80, 0xD9,/*Set pre-charge period*/
 0x80, 0xF1,/**/
 0x80, 0xDB,/*Adjust VCOMH regulator ouput*/
-0x80, 0x30,/**/
+0x80, 0x30,/*Unknown*/
 0x80, 0xA4,/*Enable the display GDDR*/
 0x80, 0XA6,/*Normal display*/
 0x80, 0xAF /*Dispaly on*/

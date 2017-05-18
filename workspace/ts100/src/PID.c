@@ -12,7 +12,7 @@
 int32_t computePID(uint16_t setpoint) {
 	int32_t ITerm = 0;
 	static int16_t lastReading = 0;
-	uint16_t currentReading = readIronTemp(0, 1); //get the current temp of the iron
+	uint16_t currentReading = readIronTemp(0, 1,setpoint); //get the current temp of the iron
 	int16_t error = (int16_t) setpoint - (int16_t) currentReading; //calculate the error term
 	ITerm += (pidSettings.ki * error);
 	if (ITerm > MAXPIDOUTPUT)
@@ -34,7 +34,7 @@ int32_t computePID(uint16_t setpoint) {
 }
 /*Sets up the pid values*/
 void setupPID(void) {
-	pidSettings.kp = 22;
+	pidSettings.kp = 25;
 	pidSettings.ki = 7;
 	pidSettings.kd = 2;
 
