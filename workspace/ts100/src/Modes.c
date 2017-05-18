@@ -211,7 +211,7 @@ void ProcessUI() {
 		} else if (Buttons == BUT_A) {
 			//Try and calibrate
 			if (tempCalStatus == 0) {
-				if (readTipTemp() < 300 && readSensorTemp() < 300) {
+				if ((readTipTemp() < 300) && (readSensorTemp() < 300)) {
 					tempCalStatus = 1;
 					systemSettings.tempCalibration = readTipTemp();
 					saveSettings();
@@ -256,7 +256,8 @@ void DrawUI() {
 			Oled_DisplayOff();
 		} else {
 			Oled_DisplayOn();
-			OLED_DrawString("  IDLE  ", 8);		//write the word IDLE
+			//OLED_DrawString("  IDLE  ", 8);		//write the word IDLE
+			OLED_DrawIDLELogo();
 		}
 		break;
 	case SOLDERING:

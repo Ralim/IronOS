@@ -105,7 +105,7 @@ void Set_ShowPos(u8 x, u8 y) {
  Function:Oled_DrawArea
  Description:
  Inputs:(x,y) start point, (width,height) of enclosing rect, pointer to data
- Output: last byte written out
+ Output: pointer to the last byte written out
  *******************************************************************************/
 u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, u8* ptr) {
 	u8 m, n, y;
@@ -233,4 +233,24 @@ void OLED_DrawFourNumber(uint16_t in, uint8_t x) {
 	OLED_DrawChar((in / 100) % 10, x + 1);
 	OLED_DrawChar((in / 10) % 10, x + 2);
 	OLED_DrawChar(in % 10, x + 3);
+}
+
+void OLED_DrawIDLELogo() {
+	static uint8_t drawAttempt = 0;
+	drawAttempt++;
+	if (drawAttempt & 0x80) {
+		if (drawAttempt & 0x08)
+			Oled_DrawArea(0, 0, 96, 8, (u8*) Iron_RightArrow_UP);
+		else
+			Oled_DrawArea(0, 0, 96, 8, (u8*) Iron_RightArrow_DOWN);
+
+		Oled_DrawArea(0, 8, 96, 8, (u8*) Iron_Base);
+	} else {
+		if (drawAttempt & 0x08)
+			Oled_DrawArea(0, 0, 96, 8, (u8*) Iron_LeftArrow_UP);
+		else
+			Oled_DrawArea(0, 0, 96, 8, (u8*) Iron_LeftArrow_DOWN);
+		Oled_DrawArea(0, 8, 96, 8, (u8*) Iron_Base);
+	}
+
 }
