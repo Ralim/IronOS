@@ -64,17 +64,21 @@ Pressing the button near the iron tip will show the current input voltage. Press
 Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
 
 # Version Changes:
+
 V1.05
-	- Adds ability to calibrate the input voltage measurement
+- Adds ability to calibrate the input voltage measurement
+
 V1.04
-	- Increased accuracy of the temperature control
-	- Improved PID response slightly
-	- Allows temperature offset calibration
-	- Nicer idle screen
+- Increased accuracy of the temperature control
+- Improved PID response slightly
+- Allows temperature offset calibration
+- Nicer idle screen
+
 V1.03 
-	- Improved Button handling
-	- Ability to set motion sensitivity
-	- DC voltmeter page shows input voltage
+- Improved Button handling
+- Ability to set motion sensitivity
+- DC voltmeter page shows input voltage
+
 V1.02
-	- Adds hold both buttons on IDLE to access the therometer mode.
-	- Changes the exit soldering mode to be holding both buttons (Like original firmware).
+- Adds hold both buttons on IDLE to access the therometer mode.
+- Changes the exit soldering mode to be holding both buttons (Like original firmware).
