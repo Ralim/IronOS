@@ -25,7 +25,9 @@ void Clear_Screen(void);//Clear the screen
 void OLED_DrawString(char* string, uint8_t length);
 void OLED_DrawChar(char c, uint8_t x);
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x);
+void OLED_BlankSlot(uint8_t xStart,uint8_t width);
 void OLED_DrawThreeNumber(uint16_t in, uint8_t x);
 void OLED_DrawIDLELogo();
+void OLED_DrawSymbol(uint8_t x,uint8_t symbol);
 #endif
 /******************************** END OF FILE *********************************/

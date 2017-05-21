@@ -207,6 +207,14 @@ void OLED_DrawChar(char c, uint8_t x) {
 
 	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
 }
+
+void OLED_BlankSlot(uint8_t xStart, uint8_t width) {
+	u8* ptr = (u8*) FONT;
+	ptr += (36) * (FONT_WIDTH * 2);
+
+	Oled_DrawArea(xStart, 0, width, 16, (u8*) ptr);
+}
+
 /*
  * Draw a 2 digit number to the display at letter slot x
  */
@@ -253,4 +261,8 @@ void OLED_DrawIDLELogo() {
 		Oled_DrawArea(0, 8, 96, 8, (u8*) Iron_Base);
 	}
 
+}
+
+void OLED_DrawSymbol(uint8_t x, uint8_t symbol) {
+	Oled_DrawArea(x * FONT_WIDTH, 0, 16, 16, SymbolTable + (symbol * 32));
 }

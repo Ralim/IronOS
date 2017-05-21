@@ -281,41 +281,43 @@ void DrawUI() {
 			Oled_DisplayOff();
 		} else {
 			Oled_DisplayOn();
-			//OLED_DrawString("  IDLE  ", 8);		//write the word IDLE
-			OLED_DrawIDLELogo();
+			OLED_DrawIDLELogo();		//Draw the icons for prompting the user
 		}
 		break;
 	case SOLDERING:
 		//The user is soldering
 	{
-		if (getIronTimer() == 0) {
-			OLED_DrawChar('C', 5);
-		} else {
-			if (getIronTimer() < 900) {
-				OLED_DrawChar(' ', 5);
-			} else {		//we are heating
-				OLED_DrawChar('H', 5);
-			}
-		}
 		drawTemp(temp, 0);
 		OLED_DrawChar(' ', 3);
-		OLED_DrawChar(' ', 4);
-		OLED_DrawChar(' ', 6);
-		OLED_DrawChar(' ', 7);
 
+		OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
+		OLED_BlankSlot(4 * 12 + 16, 24 - 16);//blank out the tail after the temp
+		if (getIronTimer() == 0) {
+			OLED_DrawSymbol(6, 5);
+		} else {
+			if (getIronTimer() < 900) {
+				OLED_DrawSymbol(6, 7);
+			} else {		//we are heating
+				//OLED_DrawChar('H', 5);
+				OLED_DrawSymbol(6, 6);
+			}
+		}
+		if (systemSettings.displayTempInF) {
+			OLED_DrawSymbol(4, 1);
+		} else {
+			OLED_DrawSymbol(4, 0);
+		}
 	}
 		break;
 	case TEMP_ADJ:
 		//We are prompting the user to change the temp so we draw the current setpoint temp
 		//With the nifty arrows
-
 		OLED_DrawChar(' ', 0);
 		OLED_DrawChar('<', 1);
 		drawTemp(systemSettings.SolderingTemp, 2);
 		OLED_DrawChar(' ', 5);
-		OLED_DrawChar(' ', 6);
-		OLED_DrawChar('>', 7);
-
+		OLED_DrawChar(' ', 7);
+		OLED_DrawChar('>', 6);
 		break;
 	case SETTINGS:
 		//We are prompting the user the setting name
@@ -383,7 +385,7 @@ void DrawUI() {
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling
-		OLED_DrawString("COOL", 4);
+		OLED_DrawString("COOL ", 5);
 		drawTemp(temp, 5);
 		break;
 	case UVLOWARN:
