@@ -65,6 +65,8 @@ Pressing the button near the iron tip will show the current input voltage. Press
 Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
 
 # Version Changes:
+V1.06
+- Changes H and C when the iron is heating to the minidso chevron like images
 
 V1.05
 - Adds ability to calibrate the input voltage measurement
