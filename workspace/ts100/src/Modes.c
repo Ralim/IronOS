@@ -116,6 +116,11 @@ void ProcessUI() {
 					systemSettings.SleepTime = 1;	//cant set time over 30 mins
 				//Remember that ^ is the time of no movement
 				break;
+			case SHUTDOWN_TIME:
+				++systemSettings.ShutdownTime;
+				if (systemSettings.ShutdownTime > 60)
+					systemSettings.ShutdownTime = 0;			//wrap to off
+				break;
 			case MOTIONDETECT:
 				systemSettings.movementEnabled =
 						!systemSettings.movementEnabled;
@@ -142,16 +147,29 @@ void ProcessUI() {
 		if (Buttons & BUT_A) {
 			//A Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
+			Oled_DisplayOn();
 			return;
 		} else if (Buttons & BUT_B) {
 			//B Button was pressed so we are moving back to soldering
 			operatingMode = SOLDERING;
+			Oled_DisplayOn();
 			return;
 		} else if (systemSettings.movementEnabled)
 			if (millis() - getLastMovement() < 1000) {//moved in the last second
 				operatingMode = SOLDERING; //Goto active mode again
+				Oled_DisplayOn();
 				return;
 			}
+		if (systemSettings.movementEnabled) {
+			//Check if we should shutdown
+			if ((millis() - getLastMovement()
+					> (systemSettings.ShutdownTime * 60000))
+					|| (millis() - getLastButtonPress()
+							> systemSettings.ShutdownTime * 60000)) {
+				operatingMode = COOLING; //shutdown the tip
+				Oled_DisplayOn();
+			}
+		}
 		//else if nothing has been pushed we need to compute the PID to keep the iron at the sleep temp
 		int32_t newOutput = computePID(systemSettings.SleepTemp);
 		setIronTimer(newOutput);
@@ -333,8 +351,12 @@ void DrawUI() {
 			OLED_DrawThreeNumber(systemSettings.SleepTemp / 10, 5);
 			break;
 		case SLEEP_TIME:
-			OLED_DrawString("STIME ", 6);
+			OLED_DrawString("SLTME ", 6);
 			OLED_DrawTwoNumber(systemSettings.SleepTime, 6);
+			break;
+		case SHUTDOWN_TIME:
+			OLED_DrawString("SHTME ", 6);
+			OLED_DrawTwoNumber(systemSettings.ShutdownTime, 6);
 			break;
 		case MOTIONDETECT:/*Toggle the mode*/
 			if (systemSettings.movementEnabled)
@@ -373,6 +395,7 @@ void DrawUI() {
 			}
 
 			break;
+
 		default:
 			break;
 		}
@@ -382,6 +405,15 @@ void DrawUI() {
 		//Draw in temp and sleep
 		OLED_DrawString("SLP", 3);
 		drawTemp(temp, 4);
+
+		if (millis() - getLastMovement() > (10 * 60 * 1000)
+				&& (millis() - getLastButtonPress() > (10 * 60 * 1000))) {
+			//OLED off
+			Oled_DisplayOff();
+		} else {
+			Oled_DisplayOn();
+		}
+
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling

@@ -51,8 +51,9 @@ The button near the tip cycles through the options, and the one near the usb cha
 Note that settings are not saved until you exit the menu, and some settings such as screen flip do not apply until a power cycle is applied.
 
 * UVCO -> Undervoltage cut out level, settable in 1V increments from 10-24V
-* STIME -> Sleep time, how long it takes before the unit goes to sleep
+* SLTME -> Sleep time, how long it takes before the unit goes to sleep
 * STMP -> The temperature the unit drops to in sleep mode
+* SHTME -> Shutdown Time, how long the unit will wait after movement before shutting down completely
 * MOTION -> Wether motion detection is enabled or not
 * TMPUNIT -> Temperature unit, C or F
 * FLPDSP -> Flip display for left handed users
