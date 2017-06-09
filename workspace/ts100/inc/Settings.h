@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "stm32f10x_flash.h"
 #define SETTINGSVERSION 0x05 /*Change this if you change the struct below to prevent people getting out of sync*/
-#define SETTINGSOPTIONSCOUNT 6 /*Number of settings in the settings menu*/
+#define SETTINGSOPTIONSCOUNT 7 /*Number of settings in the settings menu*/
 #define MOTION_HIGH (0x00)
 #define MOTION_MED  (0x10)
 #define MOTION_LOW  (0x20)
