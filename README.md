@@ -20,15 +20,14 @@ In the latest official firmware they have also added a settings menu system, so 
 
 # Upgrading your ts100 iron
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases)
-**You will need a windows computer (7,8,10 tested), using the normal windows explorer to load the firmware.
-The bootloader does not appear to work under mac or linux at the moment.**
+Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac, and can be made to work under Linux. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
 1. Hold the button closest to the tip, and plug in the USB to the computer.
 2. The unit will appear as a USB drive.
 3. Drag the .hex file onto the USB drive.
 4. The unit will disconnect and reconnect.
-5. The filename will have changed to end in .RDY or .ERR .
-6. If it ends with .RDY your done! Otherwise something went wrong.
+5. The filename will have changed to end in .RDY or .ERR 
+6. If it ends with .RDY you're done! Otherwise something went wrong.
 7. Disconnect the USB and power up the iron. You're good to go.
 
 For the more adventurerous out there, you can also load this firmware onto the device using a SWD programmer.
