@@ -48,6 +48,7 @@ Pressing both buttons will also exit the soldering mode.
 This menu allows you to cycle through all the options and set their values.
 The button near the tip cycles through the options, and the one near the usb changes the selected option.
 Note that settings are not saved until you exit the menu, and some settings such as screen flip do not apply until a power cycle is applied.
+If you leave the unit alone (ie don't press any buttons) on a setting, after 3 seconds the screen will scroll a longer version of the name
 
 * UVCO -> Undervoltage cut out level, settable in 1V increments from 10-24V
 * STMP -> The temperature the unit drops to in sleep mode
@@ -56,9 +57,11 @@ Note that settings are not saved until you exit the menu, and some settings such
 * MOTION -> Wether motion detection is enabled or not
 * SENSE -> Motion Sensitivity, H is more sensitive. L is lowest sensitivity (ie takes more movement to trigger)
 * TMPUNIT -> Temperature unit, C or F
-* DISPMD -> Display mode : {Fast,Slow,Rounded,None}
+* TMPRND -> Temperature Rounding, {1,5,10}
+* TMPSPD -> How fast the temperature should update in the soldering status screen.
 * FLPDSP -> Flip display for left handed users
 
+Temperature rounding means that the unit will round off the temperature before displaying. This can helpt to reduce the flickering of the temperature when the unit oscillates between two temperatures.
 ## Extras Menu
 This menu defaults to showing the current temperature on the tip. 
 Pressing the button near the iron tip will show the current input voltage. Pressing the other button while this is show will allow you to calibrate the reading if your iron is like mine and is not overly accurate out of the factory. (Press buttons to change measurement up and down, press both to exit and save). 
@@ -66,6 +69,9 @@ Pressing the button near the iron tip will show the current input voltage. Press
 Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
 
 # Version Changes:
+V1.10
+-Adds help text to settings
+- Improves settings for the display update rate
 
 V1.09
 - Adds display modes, for slowing down or simplifying the display
