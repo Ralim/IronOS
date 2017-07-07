@@ -53,6 +53,8 @@ void resetSettings() {
 	systemSettings.tempCalibration=239;			//Default to their calibration value
 	systemSettings.voltageDiv=144;				//Default divider from schematic
 	systemSettings.ShutdownTime=30;				//How many minutes until the unit turns itself off
-	systemSettings.displayUpdateMode=0;			//How fast the LCD updates
+	systemSettings.displayUpdateSpeed=0;		//How fast the LCD updates
+	systemSettings.temperatureRounding=0;		//How the temperature is rounded off
+
 }
 
