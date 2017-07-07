@@ -315,11 +315,16 @@ void DrawUI() {
 	case SOLDERING:
 		//The user is soldering
 	{
+		if (systemSettings.displayUpdateMode == DISPLAYMODE_SLOW
+				&& (millis() - lastSolderingDrawTime < 1000))
+			return;
+
 		if (systemSettings.displayUpdateMode == DISPLAYMODE_FAST
-				|| (systemSettings.displayUpdateMode == DISPLAYMODE_SLOW
-						&& (millis() - lastSolderingDrawTime > 1000))) {
+				|| systemSettings.displayUpdateMode == DISPLAYMODE_SLOW) {
 			drawTemp(temp, 0);
-		} else if (systemSettings.displayUpdateMode == DISPLAYMODE_ROUND) {
+			lastSolderingDrawTime = millis();
+		}
+		if (systemSettings.displayUpdateMode == DISPLAYMODE_ROUND) {
 			drawTemp((temp / 100) * 100, 0);
 
 		} else if (systemSettings.displayUpdateMode == DISPLAYMODE_NONE) {

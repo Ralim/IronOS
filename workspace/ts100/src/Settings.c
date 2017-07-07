@@ -52,6 +52,7 @@ void resetSettings() {
 	systemSettings.sensitivity=0x00;			//Default high sensitivity
 	systemSettings.tempCalibration=239;			//Default to their calibration value
 	systemSettings.voltageDiv=144;				//Default divider from schematic
-	systemSettings.ShutdownTime=30;
+	systemSettings.ShutdownTime=30;				//How many minutes until the unit turns itself off
+	systemSettings.displayUpdateMode=0;			//How fast the LCD updates
 }
 
