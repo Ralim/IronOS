@@ -5,14 +5,14 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
-const char *SettingsLongNames[] = { "      Undervoltage Cutout",
-		"      Sleep Temperature", "      Sleep Timeout",
-		"      Shutdown Timeout", "      Motion Detection",
+const char *SettingsLongNames[] = { "      Undervoltage Cutout (V)",
+		"      Sleep Temperature (C)", "      Sleep Timeout (Minutes)",
+		"      Shutdown Timeout (Minutes)", "      Motion Detection",
 		"      Motion Sensitivity", "      Temperature Unit",
 		"      Temperature Rounding Amount",
 		"      Temperature Display Update Rate",
 		"      Flip Display for Left Hand" };
-const uint8_t SettingsLongNamesLengths[] = { 25, 23, 19, 22, 22, 24, 22, 33, 37,
+const uint8_t SettingsLongNamesLengths[] = { 29, 27, 29, 32, 22, 24, 22, 33, 37,
 		25 };
 uint8_t CalStatus = 0;
 //This does the required processing and state changes
@@ -141,9 +141,8 @@ void ProcessUI() {
 				systemSettings.flipDisplay = !systemSettings.flipDisplay;
 				break;
 			case MOTIONSENSITIVITY:
-				systemSettings.sensitivity += 0x10;
-				if (systemSettings.sensitivity > 0x20)
-					systemSettings.sensitivity = 0;		//reset to high on wrap
+				systemSettings.sensitivity++;
+				systemSettings.sensitivity = systemSettings.sensitivity % 3;
 
 				break;
 			case TEMPROUNDING:
@@ -320,6 +319,9 @@ void drawTemp(uint16_t temp, uint8_t x, uint8_t roundingMode) {
  */
 void DrawUI() {
 	static uint32_t lastOLEDDrawTime = 0;
+	static uint16_t lastSolderingDrawnTemp1 = 0;
+	static uint16_t lastSolderingDrawnTemp2 = 0;
+
 	static uint8_t settingsLongTestScrollPos = 0;
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
 	switch (operatingMode) {
@@ -348,17 +350,24 @@ void DrawUI() {
 				&& (millis() - lastOLEDDrawTime < 50))
 			return;
 
-		drawTemp(temp, 0, systemSettings.temperatureRounding);
-
+		uint32_t tempavg = (temp + lastSolderingDrawnTemp1
+				+ lastSolderingDrawnTemp2);
+		tempavg /= 3;
+		drawTemp(tempavg, 0, systemSettings.temperatureRounding);
+		lastSolderingDrawnTemp1 = temp;
+		lastSolderingDrawnTemp2 = lastSolderingDrawnTemp1;
 		lastOLEDDrawTime = millis();
 		//Now draw symbols
 		OLED_DrawChar(' ', 3);
 		OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
 		OLED_BlankSlot(4 * 12 + 16, 24 - 16);//blank out the tail after the temp
-		if (getIronTimer() == 0) {
+		if (getIronTimer() == 0
+				&& (temp / 10) > (systemSettings.SolderingTemp / 10)) {
+			//Cooling
 			OLED_DrawSymbol(6, 5);
 		} else {
-			if (getIronTimer() < 1000) {
+			if (getIronTimer() < 1500) {
+				//Maintaining
 				OLED_DrawSymbol(6, 7);
 			} else {		//we are heating
 				OLED_DrawSymbol(6, 6);
@@ -507,6 +516,7 @@ void DrawUI() {
 		//Draw in temp and sleep
 		OLED_DrawString("SLP", 3);
 		drawTemp(temp, 4, systemSettings.temperatureRounding);
+		OLED_BlankSlot(84, 96 - 85);		//blank out after the temp
 
 		if (millis() - getLastMovement() > (10 * 60 * 1000)
 				&& (millis() - getLastButtonPress() > (10 * 60 * 1000))) {

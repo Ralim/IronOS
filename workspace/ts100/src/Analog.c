@@ -23,7 +23,7 @@ uint16_t readDCVoltage(uint16_t divFactor) {
 //This allows us to read it in X10 mode
 //Returns temperature in C X10 mode
 int16_t readTipTemp() {
-	static uint32_t rollingAverage[4];
+	static uint32_t rollingAverage[16];
 	static uint8_t rIndex = 0;
 
 	/*The head has a thermocouple inline with the heater
@@ -54,9 +54,13 @@ int16_t readTipTemp() {
 	ad_sum = ad_sum - max - min; //remove the two outliers
 	avg_data = ad_sum / 8; //take the average
 	rollingAverage[rIndex] = avg_data;
-	rIndex = (rIndex + 1) % 4;
+	rIndex = (rIndex + 1) % 16;
 	return (rollingAverage[0] + rollingAverage[1] + rollingAverage[2]
-			+ rollingAverage[3]) / 4; //get the average
+			+ rollingAverage[3] + rollingAverage[4] + rollingAverage[5]
+			+ rollingAverage[6] + rollingAverage[7] + rollingAverage[8]
+			+ rollingAverage[9] + rollingAverage[10] + rollingAverage[11]
+			+ rollingAverage[12] + rollingAverage[13] + rollingAverage[14]
+			+ rollingAverage[15]) / 16; //get the average
 
 }
 
@@ -110,7 +114,7 @@ uint16_t readIronTemp(uint16_t calibration_temp, uint8_t read,
 	static uint16_t calTemp = 0;
 	static uint16_t lastVal = 0;
 	static uint16_t lastSetTemp;
-	if(setPointTemp!=0xFFFF)
+	if (setPointTemp != 0xFFFF)
 		lastSetTemp = setPointTemp;
 	if (calibration_temp != 0)
 		calTemp = calibration_temp;

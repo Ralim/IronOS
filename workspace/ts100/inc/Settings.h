@@ -14,8 +14,8 @@
 #define SETTINGSVERSION 0x08 /*Change this if you change the struct below to prevent people getting out of sync*/
 //Motion Sensitivity
 #define MOTION_HIGH 		(0x00)
-#define MOTION_MED  		(0x10)
-#define MOTION_LOW  		(0x20)
+#define MOTION_MED  		(0x01)
+#define MOTION_LOW  		(0x02)
 //Display Speeds
 #define DISPLAYMODE_FAST 	(0x00)
 #define DISPLAYMODE_MEDIUM 	(0x01)
