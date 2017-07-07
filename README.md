@@ -50,13 +50,14 @@ The button near the tip cycles through the options, and the one near the usb cha
 Note that settings are not saved until you exit the menu, and some settings such as screen flip do not apply until a power cycle is applied.
 
 * UVCO -> Undervoltage cut out level, settable in 1V increments from 10-24V
-* SLTME -> Sleep time, how long it takes before the unit goes to sleep
 * STMP -> The temperature the unit drops to in sleep mode
+* SLTME -> Sleep time, how long it takes before the unit goes to sleep
 * SHTME -> Shutdown Time, how long the unit will wait after movement before shutting down completely
 * MOTION -> Wether motion detection is enabled or not
-* TMPUNIT -> Temperature unit, C or F
-* FLPDSP -> Flip display for left handed users
 * SENSE -> Motion Sensitivity, H is more sensitive. L is lowest sensitivity (ie takes more movement to trigger)
+* TMPUNIT -> Temperature unit, C or F
+* DISPMD -> Display mode : {Fast,Slow,Rounded,None}
+* FLPDSP -> Flip display for left handed users
 
 ## Extras Menu
 This menu defaults to showing the current temperature on the tip. 
@@ -65,6 +66,16 @@ Pressing the button near the iron tip will show the current input voltage. Press
 Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
 
 # Version Changes:
+
+V1.09
+- Adds display modes, for slowing down or simplifying the display
+
+V1.08
+- Fix settings menu not showing flip display
+
+V1.07
+- Adds shutdown time to automatically shutdown the iron after inactivity
+
 V1.06
 - Changes H and C when the iron is heating to the minidso chevron like images
 
