@@ -29,6 +29,7 @@ enum {
 	TEMPCAL,		//Cal tip temp offset
 
 } operatingMode;
+#define SETTINGSOPTIONSCOUNT 8 /*Number of settings in the settings menu*/
 
 enum {
 	UVCO = 0,
@@ -38,6 +39,7 @@ enum {
 	MOTIONDETECT,
 	MOTIONSENSITIVITY,
 	TEMPDISPLAY,
+	DISPLAYMODE,
 	LEFTY,
 } settingsPage;
 

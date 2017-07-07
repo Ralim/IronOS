@@ -11,11 +11,14 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f10x_flash.h"
-#define SETTINGSVERSION 0x05 /*Change this if you change the struct below to prevent people getting out of sync*/
-#define SETTINGSOPTIONSCOUNT 7 /*Number of settings in the settings menu*/
-#define MOTION_HIGH (0x00)
-#define MOTION_MED  (0x10)
-#define MOTION_LOW  (0x20)
+#define SETTINGSVERSION 0x06 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define MOTION_HIGH 		(0x00)
+#define MOTION_MED  		(0x10)
+#define MOTION_LOW  		(0x20)
+#define DISPLAYMODE_FAST 	(0x00)
+#define DISPLAYMODE_SLOW 	(0x01)
+#define DISPLAYMODE_ROUND 	(0x02)
+#define DISPLAYMODE_NONE	(0x03)
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from flash in uint16_t chunks
  */
@@ -30,6 +33,7 @@ struct {
 	uint8_t flipDisplay:1;			//If true we want to invert the display for lefties
 	uint8_t sensitivity:7;			//Sensitivity of accelerometer
 	uint8_t ShutdownTime:7;			//Time until unit shuts down if left alone
+	uint8_t displayUpdateMode:2;	//How fast the display updates / temp showing mode
 	uint16_t tempCalibration;		//Temperature calibration value
 	uint16_t voltageDiv;			//Voltage divisor factor
 } systemSettings;

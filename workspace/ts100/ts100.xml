@@ -4,6 +4,6 @@
     <name>ts100</name>
     <mcuId>stm32f103t8ux</mcuId>
     <dbgIF>SWD</dbgIF>
-    <dbgDEV>ST-LinkV2</dbgDEV>
+    <dbgDEV>ST-Link</dbgDEV>
   </board>
 </targetDefinitions>

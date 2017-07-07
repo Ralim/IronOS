@@ -93,8 +93,10 @@ void ProcessUI() {
 				settingsPage = 0;				//reset
 				operatingMode = STARTUP;		//reset back to the startup
 				saveSettings();					//Save the settings
-			} else
+			} else {
 				++settingsPage;					//move to the next option
+
+			}
 		} else if (Buttons & BUT_B) {
 			resetLastButtonPress();
 			//B changes the value selected
@@ -124,6 +126,7 @@ void ProcessUI() {
 			case MOTIONDETECT:
 				systemSettings.movementEnabled =
 						!systemSettings.movementEnabled;
+
 				break;
 			case TEMPDISPLAY:
 				systemSettings.displayTempInF = !systemSettings.displayTempInF;
@@ -132,10 +135,16 @@ void ProcessUI() {
 				systemSettings.flipDisplay = !systemSettings.flipDisplay;
 				break;
 			case MOTIONSENSITIVITY:
+
 				systemSettings.sensitivity += 0x10;
 				if (systemSettings.sensitivity > 0x20)
 					systemSettings.sensitivity = 0;		//reset to high on wrap
 
+				break;
+			case DISPLAYMODE:
+				systemSettings.displayUpdateMode++;
+				systemSettings.displayUpdateMode =
+						systemSettings.displayUpdateMode % 4;
 				break;
 			default:
 				break;
@@ -288,6 +297,7 @@ void drawTemp(uint16_t temp, uint8_t x) {
  * Performs all the OLED drawing for the current operating mode
  */
 void DrawUI() {
+	static uint32_t lastSolderingDrawTime = 0;
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
 	switch (operatingMode) {
 	case STARTUP:
@@ -305,26 +315,42 @@ void DrawUI() {
 	case SOLDERING:
 		//The user is soldering
 	{
-		drawTemp(temp, 0);
-		OLED_DrawChar(' ', 3);
+		if (systemSettings.displayUpdateMode == DISPLAYMODE_FAST
+				|| (systemSettings.displayUpdateMode == DISPLAYMODE_SLOW
+						&& (millis() - lastSolderingDrawTime > 1000))) {
+			drawTemp(temp, 0);
+		} else if (systemSettings.displayUpdateMode == DISPLAYMODE_ROUND) {
+			drawTemp((temp / 100) * 100, 0);
 
+		} else if (systemSettings.displayUpdateMode == DISPLAYMODE_NONE) {
+			OLED_DrawChar(' ', 0);
+			OLED_DrawChar(' ', 1);
+			OLED_DrawChar(' ', 2);
+		}
+		//Now draw symbols
+		OLED_DrawChar(' ', 3);
 		OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
 		OLED_BlankSlot(4 * 12 + 16, 24 - 16);//blank out the tail after the temp
 		if (getIronTimer() == 0) {
 			OLED_DrawSymbol(6, 5);
 		} else {
-			if (getIronTimer() < 900) {
+			if (getIronTimer() < 1000) {
 				OLED_DrawSymbol(6, 7);
 			} else {		//we are heating
-				//OLED_DrawChar('H', 5);
 				OLED_DrawSymbol(6, 6);
 			}
 		}
-		if (systemSettings.displayTempInF) {
-			OLED_DrawSymbol(4, 1);
+		if (!(systemSettings.displayUpdateMode == DISPLAYMODE_NONE)) {
+			if (systemSettings.displayTempInF) {
+				OLED_DrawSymbol(4, 1);
+			} else {
+				OLED_DrawSymbol(4, 0);
+			}
 		} else {
-			OLED_DrawSymbol(4, 0);
+			OLED_DrawChar(' ', 4);
+			OLED_DrawChar(' ', 5);
 		}
+
 	}
 		break;
 	case TEMP_ADJ:
@@ -395,7 +421,25 @@ void DrawUI() {
 			}
 
 			break;
-
+		case DISPLAYMODE:
+			//We are prompting the user about their display mode preferences
+		{
+			switch (systemSettings.displayUpdateMode) {
+			case DISPLAYMODE_FAST:
+				OLED_DrawString("DISPMD F", 8);
+				break;
+			case DISPLAYMODE_SLOW:
+				OLED_DrawString("DISPMD S", 8);
+				break;
+			case DISPLAYMODE_ROUND:
+				OLED_DrawString("DISPMD R", 8);
+				break;
+			case DISPLAYMODE_NONE:
+				OLED_DrawString("DISPMD N", 8);
+				break;
+			}
+		}
+			break;
 		default:
 			break;
 		}
