@@ -188,7 +188,9 @@ void OLED_DrawChar(char c, uint8_t x) {
 	x *= FONT_WIDTH; //convert to a x coordinate
 
 	u8* ptr = (u8*) FONT;
-	if (c >= 'A' && c <= 'Z') {
+	if (c >= 'a' && c <= 'z') {
+		ptr += (c - 'a' + 10) * (FONT_WIDTH * 2); //alpha is ofset 10 chars into the array
+	} else if (c >= 'A' && c <= 'Z') {
 		ptr += (c - 'A' + 10) * (FONT_WIDTH * 2); //alpha is ofset 10 chars into the array
 	} else if (c >= '0' && c <= '9')
 		ptr += (c - '0') * (FONT_WIDTH * 2);

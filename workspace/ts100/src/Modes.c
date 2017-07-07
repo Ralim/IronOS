@@ -5,6 +5,13 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
+const char *SettingsLongNames[] = { "      Undervoltage Cutout",
+		"      Sleep Temperature", "      Sleep Timeout", "      Shutdown Timeout",
+		"      Motion Detection", "      Motion Sensitivity",
+		"      Temperature Unit", "      Display Update Rate",
+		"      Left Handed Display" };
+const uint8_t SettingsLongNamesLengths[] =
+		{ 25, 23, 19, 22, 22, 24, 22, 25, 25 };
 uint8_t CalStatus = 0;
 //This does the required processing and state changes
 void ProcessUI() {
@@ -297,7 +304,8 @@ void drawTemp(uint16_t temp, uint8_t x) {
  * Performs all the OLED drawing for the current operating mode
  */
 void DrawUI() {
-	static uint32_t lastSolderingDrawTime = 0;
+	static uint32_t lastOLEDDrawTime = 0;
+	static uint8_t settingsLongTestScrollPos = 0;
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
 	switch (operatingMode) {
 	case STARTUP:
@@ -316,13 +324,13 @@ void DrawUI() {
 		//The user is soldering
 	{
 		if (systemSettings.displayUpdateMode == DISPLAYMODE_SLOW
-				&& (millis() - lastSolderingDrawTime < 1000))
+				&& (millis() - lastOLEDDrawTime < 1000))
 			return;
 
 		if (systemSettings.displayUpdateMode == DISPLAYMODE_FAST
 				|| systemSettings.displayUpdateMode == DISPLAYMODE_SLOW) {
 			drawTemp(temp, 0);
-			lastSolderingDrawTime = millis();
+			lastOLEDDrawTime = millis();
 		}
 		if (systemSettings.displayUpdateMode == DISPLAYMODE_ROUND) {
 			drawTemp((temp / 100) * 100, 0);
@@ -370,83 +378,105 @@ void DrawUI() {
 		break;
 	case SETTINGS:
 		//We are prompting the user the setting name
-
-		switch (settingsPage) {
-		case UVCO:
-			OLED_DrawString("UVCO ", 5);
-			OLED_DrawTwoNumber(systemSettings.cutoutVoltage, 5);
-			OLED_DrawChar('V', 7);
-			break;
-		case SLEEP_TEMP:
-			OLED_DrawString("STMP ", 5);
-			OLED_DrawThreeNumber(systemSettings.SleepTemp / 10, 5);
-			break;
-		case SLEEP_TIME:
-			OLED_DrawString("SLTME ", 6);
-			OLED_DrawTwoNumber(systemSettings.SleepTime, 6);
-			break;
-		case SHUTDOWN_TIME:
-			OLED_DrawString("SHTME ", 6);
-			OLED_DrawTwoNumber(systemSettings.ShutdownTime, 6);
-			break;
-		case MOTIONDETECT:/*Toggle the mode*/
-			if (systemSettings.movementEnabled)
-				OLED_DrawString("MOTION T", 8);
-			else
-				OLED_DrawString("MOTION F", 8);
-			break;
-		case TEMPDISPLAY:/*Are we showing in C or F ?*/
-			if (systemSettings.displayTempInF)
-				OLED_DrawString("TMPUNT F", 8);
-			else
-				OLED_DrawString("TMPUNT C", 8);
-			break;
-
-		case LEFTY:
-
-			if (systemSettings.flipDisplay)
-				OLED_DrawString("FLPDSP T", 8);
-			else
-				OLED_DrawString("FLPDSP F", 8);
-			break;
-		case MOTIONSENSITIVITY:
-			switch (systemSettings.sensitivity) {
-			case MOTION_HIGH:
-				OLED_DrawString("SENSE H ", 8);
+		if (millis() - getLastButtonPress() > 3000) {
+			//If the user has idled for > 3 seconds, show the long name for the selected setting instead
+			//draw from settingsLongTestScrollPos through to end of screen
+			uint8_t lengthLeft = SettingsLongNamesLengths[settingsPage]
+					- settingsLongTestScrollPos;
+			if (lengthLeft < 1)
+				settingsLongTestScrollPos = 0;
+			//^ Reset once not much left
+			if (lengthLeft > 8)
+				lengthLeft = 8;
+			OLED_DrawString(
+					SettingsLongNames[(uint8_t) settingsPage]
+							+ settingsLongTestScrollPos, lengthLeft);
+			if (lengthLeft < 8)
+				for (uint8_t i = lengthLeft; i < 8; i++)
+					OLED_DrawChar(' ', i);
+			if (millis() - lastOLEDDrawTime > 120) {
+				settingsLongTestScrollPos++;
+				lastOLEDDrawTime = millis();
+			}
+		} else {
+			settingsLongTestScrollPos = 0;
+			switch (settingsPage) {
+			case UVCO:
+				OLED_DrawString("UVCO ", 5);
+				OLED_DrawTwoNumber(systemSettings.cutoutVoltage, 5);
+				OLED_DrawChar('V', 7);
 				break;
-			case MOTION_MED:
-				OLED_DrawString("SENSE M ", 8);
+			case SLEEP_TEMP:
+				OLED_DrawString("STMP ", 5);
+				OLED_DrawThreeNumber(systemSettings.SleepTemp / 10, 5);
 				break;
-			case MOTION_LOW:
-				OLED_DrawString("SENSE L ", 8);
+			case SLEEP_TIME:
+				OLED_DrawString("SLTME ", 6);
+				OLED_DrawTwoNumber(systemSettings.SleepTime, 6);
+				break;
+			case SHUTDOWN_TIME:
+				OLED_DrawString("SHTME ", 6);
+				OLED_DrawTwoNumber(systemSettings.ShutdownTime, 6);
+				break;
+			case MOTIONDETECT:/*Toggle the mode*/
+				if (systemSettings.movementEnabled)
+					OLED_DrawString("MOTION T", 8);
+				else
+					OLED_DrawString("MOTION F", 8);
+				break;
+			case TEMPDISPLAY:/*Are we showing in C or F ?*/
+				if (systemSettings.displayTempInF)
+					OLED_DrawString("TMPUNT F", 8);
+				else
+					OLED_DrawString("TMPUNT C", 8);
+				break;
+
+			case LEFTY:
+
+				if (systemSettings.flipDisplay)
+					OLED_DrawString("FLPDSP T", 8);
+				else
+					OLED_DrawString("FLPDSP F", 8);
+				break;
+			case MOTIONSENSITIVITY:
+				switch (systemSettings.sensitivity) {
+				case MOTION_HIGH:
+					OLED_DrawString("SENSE H ", 8);
+					break;
+				case MOTION_MED:
+					OLED_DrawString("SENSE M ", 8);
+					break;
+				case MOTION_LOW:
+					OLED_DrawString("SENSE L ", 8);
+					break;
+				default:
+					OLED_DrawString("SENSE   ", 8);
+					break;
+				}
+
+				break;
+			case DISPLAYMODE:
+				//We are prompting the user about their display mode preferences
+			{
+				switch (systemSettings.displayUpdateMode) {
+				case DISPLAYMODE_FAST:
+					OLED_DrawString("DISPMD F", 8);
+					break;
+				case DISPLAYMODE_SLOW:
+					OLED_DrawString("DISPMD S", 8);
+					break;
+				case DISPLAYMODE_ROUND:
+					OLED_DrawString("DISPMD R", 8);
+					break;
+				case DISPLAYMODE_NONE:
+					OLED_DrawString("DISPMD N", 8);
+					break;
+				}
+			}
 				break;
 			default:
-				OLED_DrawString("SENSE   ", 8);
 				break;
 			}
-
-			break;
-		case DISPLAYMODE:
-			//We are prompting the user about their display mode preferences
-		{
-			switch (systemSettings.displayUpdateMode) {
-			case DISPLAYMODE_FAST:
-				OLED_DrawString("DISPMD F", 8);
-				break;
-			case DISPLAYMODE_SLOW:
-				OLED_DrawString("DISPMD S", 8);
-				break;
-			case DISPLAYMODE_ROUND:
-				OLED_DrawString("DISPMD R", 8);
-				break;
-			case DISPLAYMODE_NONE:
-				OLED_DrawString("DISPMD N", 8);
-				break;
-			}
-		}
-			break;
-		default:
-			break;
 		}
 		break;
 	case SLEEP:
@@ -510,4 +540,5 @@ void DrawUI() {
 	default:
 		break;
 	}
+
 }
