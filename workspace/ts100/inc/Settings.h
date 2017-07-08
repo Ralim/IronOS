@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f10x_flash.h"
-#define SETTINGSVERSION 0x08 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define SETTINGSVERSION 0x09 /*Change this if you change the struct below to prevent people getting out of sync*/
 //Motion Sensitivity
 #define MOTION_HIGH 		(0x00)
 #define MOTION_MED  		(0x01)
@@ -25,23 +25,23 @@
 #define ROUNDING_FIVE			(0x01)
 #define ROUNDING_TEN			(0x02)
 
-
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from flash in uint16_t chunks
  */
 struct {
 	uint32_t SolderingTemp; 		//current set point for the iron
 	uint32_t SleepTemp; 			//temp to drop to in sleep
-	uint8_t version;				//Used to track if a reset is needed on firmware upgrade
+	uint8_t version;	//Used to track if a reset is needed on firmware upgrade
 	uint8_t SleepTime; 				//minutes timeout to sleep
-	uint8_t cutoutVoltage:5; 		//The voltage we cut out at for under voltage
-	uint8_t movementEnabled:1;		//If movement is enabled
-	uint8_t displayTempInF:1;		//If we need to convert the C reading to F
-	uint8_t flipDisplay:1;			//If true we want to invert the display for lefties
-	uint8_t sensitivity:6;			//Sensitivity of accelerometer
-	uint8_t ShutdownTime:6;			//Time until unit shuts down if left alone
-	uint8_t displayUpdateSpeed:2;	//How fast the display updates / temp showing mode
-	uint8_t temperatureRounding:2;	//Rounding mode for the temperature
+	uint8_t cutoutVoltage :5; 	//The voltage we cut out at for under voltage
+	uint8_t movementEnabled :1;		//If movement is enabled
+	uint8_t displayTempInF :1;		//If we need to convert the C reading to F
+	uint8_t flipDisplay :1;	//If true we want to invert the display for lefties
+	uint8_t sensitivity :5;			//Sensitivity of accelerometer
+	uint8_t ShutdownTime :6;		//Time until unit shuts down if left alone
+	uint8_t displayUpdateSpeed :2;//How fast the display updates / temp showing mode
+	uint8_t temperatureRounding :2;	//Rounding mode for the temperature
+	uint8_t boostModeEnabled :1;//Boost mode swaps BUT_A in soldering mode to temporary soldering temp over-ride
 	uint16_t tempCalibration;		//Temperature calibration value
 	uint16_t voltageDiv;			//Voltage divisor factor
 } systemSettings;

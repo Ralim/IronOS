@@ -41,7 +41,7 @@ void ProcessUI() {
 		break;
 	case SOLDERING:
 		//We need to check the buttons if we need to jump out
-		if (Buttons == BUT_A || Buttons == BUT_B) {
+		if ((Buttons == BUT_A && !systemSettings.boostModeEnabled)|| Buttons == BUT_B) {
 			//A or B key pressed so we are moving to temp set
 			operatingMode = TEMP_ADJ;
 		} else if (Buttons == (BUT_A | BUT_B)) {
@@ -49,7 +49,12 @@ void ProcessUI() {
 			//Both buttons were pressed, exit back to the cooling screen
 			operatingMode = COOLING;
 
-		} else {
+		}
+		else if (Buttons == BUT_A && systemSettings.boostModeEnabled)
+		{
+
+		}
+		else {
 			//We need to check the timer for movement in case we need to goto idle
 			if (systemSettings.movementEnabled)
 				if (millis() - getLastMovement()
