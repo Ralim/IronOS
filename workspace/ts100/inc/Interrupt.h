@@ -11,7 +11,9 @@ void delayMs(uint32_t ticks);
 volatile extern uint32_t lastKeyPress;
 volatile extern uint32_t lastMovement;
 
-volatile extern uint16_t keyState;
+volatile extern uint8_t keyState;
+volatile extern uint8_t rawKeys;
+
 inline uint32_t millis() {
 	return system_Ticks;
 }
@@ -34,6 +36,10 @@ inline uint32_t getLastMovement() {
 inline uint16_t getButtons() {
 	return keyState;
 }
+inline uint16_t getRawButtons() {
+	return rawKeys;
+}
+
 
 /*IRQ prototypes*/
 void NMI_Handler(void);

@@ -29,7 +29,7 @@ enum {
 	TEMPCAL,		//Cal tip temp offset
 
 } operatingMode;
-#define SETTINGSOPTIONSCOUNT 10 /*Number of settings in the settings menu*/
+#define SETTINGSOPTIONSCOUNT 11 /*Number of settings in the settings menu*/
 
 enum {
 	UVCO = 0,
@@ -43,6 +43,7 @@ enum {
 	DISPUPDATERATE,
 	LEFTY,
 	BOOSTMODE,
+	BOOSTTEMP,
 } settingsPage;
 
 void ProcessUI();

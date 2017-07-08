@@ -5,16 +5,19 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
-const char *SettingsLongNames[] = { "      Undervoltage Cutout (V)",
-		"      Sleep Temperature (C)", "      Sleep Timeout (Minutes)",
-		"      Shutdown Timeout (Minutes)", "      Motion Detection",
+const char *SettingsLongNames[] = { "      Undervoltage Cutout <V>",
+		"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
+		"      Shutdown Timeout <Minutes>", "      Motion Detection",
 		"      Motion Sensitivity", "      Temperature Unit",
 		"      Temperature Rounding Amount",
 		"      Temperature Display Update Rate",
-		"      Flip Display for Left Hand" };
+		"      Flip Display for Left Hand",
+		"      Enable front key boost 450C mode when soldering",
+		"      Temperature when in boost mode" };
 const uint8_t SettingsLongNamesLengths[] = { 29, 27, 29, 32, 22, 24, 22, 33, 37,
-		25 };
-uint8_t CalStatus = 0;
+		32, 53, 36 };
+uint8_t StatusFlags = 0;
+uint32_t temporaryTempStorage = 0;
 //This does the required processing and state changes
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
@@ -41,20 +44,43 @@ void ProcessUI() {
 		break;
 	case SOLDERING:
 		//We need to check the buttons if we need to jump out
-		if ((Buttons == BUT_A && !systemSettings.boostModeEnabled)|| Buttons == BUT_B) {
+		if ((Buttons == BUT_A && !systemSettings.boostModeEnabled)
+				|| Buttons == BUT_B) {
 			//A or B key pressed so we are moving to temp set
 			operatingMode = TEMP_ADJ;
+			if (StatusFlags == 8) {
+				//Boost mode was enabled before
+				//We need to cancel the temp
+				systemSettings.SolderingTemp = temporaryTempStorage;
+				StatusFlags = 0;
+			}
 		} else if (Buttons == (BUT_A | BUT_B)) {
 
 			//Both buttons were pressed, exit back to the cooling screen
 			operatingMode = COOLING;
+			if (StatusFlags == 8) {
+				//Boost mode was enabled before
+				//We need to cancel the temp
+				systemSettings.SolderingTemp = temporaryTempStorage;
+				StatusFlags = 0;
+			}
 
-		}
-		else if (Buttons == BUT_A && systemSettings.boostModeEnabled)
-		{
-
-		}
-		else {
+		} else if ((getRawButtons() == BUT_A && systemSettings.boostModeEnabled)) {
+			if (StatusFlags != 8) {
+				StatusFlags = 8;
+				temporaryTempStorage = systemSettings.SolderingTemp;
+				systemSettings.SolderingTemp = systemSettings.BoostTemp;
+			}
+			//Update the PID Loop
+			int32_t newOutput = computePID(systemSettings.SolderingTemp);
+			setIronTimer(newOutput);
+		} else {
+			if (StatusFlags == 8) {
+				//Boost mode was enabled before
+				//We need to cancel the temp
+				systemSettings.SolderingTemp = temporaryTempStorage;
+				StatusFlags = 0;
+			}
 			//We need to check the timer for movement in case we need to goto idle
 			if (systemSettings.movementEnabled)
 				if (millis() - getLastMovement()
@@ -99,70 +125,83 @@ void ProcessUI() {
 	case SETTINGS:
 		//Settings is the mode with the most logic
 		//Here we are in the menu so we need to increment through the sub menus / increase the value
+		if (StatusFlags == 4 && Buttons != 0) {
+			//The user pressed the button to breakout of the settings help prompt
+			StatusFlags = 0;
+		} else {
+			if (Buttons & BUT_A) {
+				//A key iterates through the menu
+				if (settingsPage == SETTINGSOPTIONSCOUNT) {
+					//Roll off the end
+					settingsPage = 0;				//reset
+					operatingMode = STARTUP;		//reset back to the startup
+					saveSettings();					//Save the settings
+				} else {
+					++settingsPage;					//move to the next option
+				}
+			} else if (Buttons & BUT_B) {
+				//B changes the value selected
+				switch (settingsPage) {
+				case UVCO:
+					//we are incrementing the cutout voltage
+					systemSettings.cutoutVoltage += 1;		//Go up 1V at a jump
+					if (systemSettings.cutoutVoltage > 24)
+						systemSettings.cutoutVoltage = 10;
+					break;
+				case SLEEP_TEMP:
+					systemSettings.SleepTemp += 100;	//Go up 10C at a time
+					if (systemSettings.SleepTemp > 3000)
+						systemSettings.SleepTemp = 1000;//cant sleep higher than 300
+					break;
+				case SLEEP_TIME:
+					++systemSettings.SleepTime;		//Go up 1 minute at a time
+					if (systemSettings.SleepTime > 30)
+						systemSettings.SleepTime = 1;//cant set time over 30 mins
+					//Remember that ^ is the time of no movement
+					break;
+				case SHUTDOWN_TIME:
+					++systemSettings.ShutdownTime;
+					if (systemSettings.ShutdownTime > 60)
+						systemSettings.ShutdownTime = 0;		//wrap to off
+					break;
+				case MOTIONDETECT:
+					systemSettings.movementEnabled =
+							!systemSettings.movementEnabled;
+					break;
+				case TEMPDISPLAY:
+					systemSettings.displayTempInF =
+							!systemSettings.displayTempInF;
+					break;
+				case LEFTY:
+					systemSettings.flipDisplay = !systemSettings.flipDisplay;
+					break;
+				case MOTIONSENSITIVITY:
+					systemSettings.sensitivity++;
+					systemSettings.sensitivity = systemSettings.sensitivity % 3;
 
-		if (Buttons & BUT_A) {
-			//A key iterates through the menu
-			if (settingsPage == SETTINGSOPTIONSCOUNT) {
-				//Roll off the end
-				settingsPage = 0;				//reset
-				operatingMode = STARTUP;		//reset back to the startup
-				saveSettings();					//Save the settings
-			} else {
-				++settingsPage;					//move to the next option
-			}
-		} else if (Buttons & BUT_B) {
-			//B changes the value selected
-			switch (settingsPage) {
-			case UVCO:
-				//we are incrementing the cutout voltage
-				systemSettings.cutoutVoltage += 1;		//Go up 1V at a jump
-				if (systemSettings.cutoutVoltage > 24)
-					systemSettings.cutoutVoltage = 10;
-				break;
-			case SLEEP_TEMP:
-				systemSettings.SleepTemp += 100;		//Go up 10C at a time
-				if (systemSettings.SleepTemp > 3000)
-					systemSettings.SleepTemp = 1000;//cant sleep higher than 300
-				break;
-			case SLEEP_TIME:
-				++systemSettings.SleepTime;		//Go up 1 minute at a time
-				if (systemSettings.SleepTime > 30)
-					systemSettings.SleepTime = 1;	//cant set time over 30 mins
-				//Remember that ^ is the time of no movement
-				break;
-			case SHUTDOWN_TIME:
-				++systemSettings.ShutdownTime;
-				if (systemSettings.ShutdownTime > 60)
-					systemSettings.ShutdownTime = 0;			//wrap to off
-				break;
-			case MOTIONDETECT:
-				systemSettings.movementEnabled =
-						!systemSettings.movementEnabled;
-				break;
-			case TEMPDISPLAY:
-				systemSettings.displayTempInF = !systemSettings.displayTempInF;
-				break;
-			case LEFTY:
-				systemSettings.flipDisplay = !systemSettings.flipDisplay;
-				break;
-			case MOTIONSENSITIVITY:
-				systemSettings.sensitivity++;
-				systemSettings.sensitivity = systemSettings.sensitivity % 3;
-
-				break;
-			case TEMPROUNDING:
-				systemSettings.temperatureRounding++;
-				systemSettings.temperatureRounding =
-						systemSettings.temperatureRounding % 3;
-				break;
-			case DISPUPDATERATE:
-				systemSettings.displayUpdateSpeed++;
-				systemSettings.displayUpdateSpeed =
-						systemSettings.displayUpdateSpeed % 3;
-				break;
-
-			default:
-				break;
+					break;
+				case TEMPROUNDING:
+					systemSettings.temperatureRounding++;
+					systemSettings.temperatureRounding =
+							systemSettings.temperatureRounding % 3;
+					break;
+				case DISPUPDATERATE:
+					systemSettings.displayUpdateSpeed++;
+					systemSettings.displayUpdateSpeed =
+							systemSettings.displayUpdateSpeed % 3;
+					break;
+				case BOOSTMODE:
+					systemSettings.boostModeEnabled =
+							!systemSettings.boostModeEnabled;
+					break;
+				case BOOSTTEMP:
+					systemSettings.BoostTemp += 100;	//Go up 10C at a time
+					if (systemSettings.BoostTemp > 4500)
+						systemSettings.BoostTemp = 2500;	//loop back at 250
+					break;
+				default:
+					break;
+				}
 			}
 		}
 		break;
@@ -222,10 +261,10 @@ void ProcessUI() {
 
 		if (Buttons == BUT_A) {
 			//Single button press, cycle over to the DC display
-			CalStatus = 0;
+			StatusFlags = 0;
 			operatingMode = DCINDISP;
 		} else if (Buttons == BUT_B) {
-			CalStatus = 0;
+			StatusFlags = 0;
 			operatingMode = TEMPCAL;
 		} else if (Buttons == (BUT_A | BUT_B)) {
 			//If the user is holding both button, exit the  screen
@@ -236,13 +275,13 @@ void ProcessUI() {
 		break;
 	case DCINDISP: {
 		//This lets the user check the input voltage
-		if (CalStatus == 0) {
+		if (StatusFlags == 0) {
 			if (Buttons == BUT_A) {
 				//Single button press, cycle over to the temp display
 				operatingMode = THERMOMETER;
 			} else if (Buttons == BUT_B) {
 				//dc cal mode
-				CalStatus = 1;
+				StatusFlags = 1;
 			} else if (Buttons == (BUT_A | BUT_B)) {
 				//If the user is holding both button, exit the  screen
 				operatingMode = STARTUP;
@@ -260,7 +299,7 @@ void ProcessUI() {
 				else
 					systemSettings.voltageDiv++;
 			} else if (Buttons == (BUT_A | BUT_B)) {
-				CalStatus = 0;
+				StatusFlags = 0;
 				saveSettings();
 			}
 			if (systemSettings.voltageDiv < 120)
@@ -277,13 +316,13 @@ void ProcessUI() {
 			operatingMode = THERMOMETER;
 		} else if (Buttons == BUT_A) {
 			//Try and calibrate
-			if (CalStatus == 0) {
+			if (StatusFlags == 0) {
 				if ((readTipTemp() < 300) && (readSensorTemp() < 300)) {
-					CalStatus = 1;
+					StatusFlags = 1;
 					systemSettings.tempCalibration = readTipTemp();
 					saveSettings();
 				} else {
-					CalStatus = 2;
+					StatusFlags = 2;
 				}
 			}
 		} else if (Buttons == (BUT_A | BUT_B)) {
@@ -363,7 +402,11 @@ void DrawUI() {
 		lastSolderingDrawnTemp2 = lastSolderingDrawnTemp1;
 		lastOLEDDrawTime = millis();
 		//Now draw symbols
-		OLED_DrawChar(' ', 3);
+		if (StatusFlags == 8)
+			OLED_DrawChar('B', 3);
+		else
+			OLED_DrawChar(' ', 3);
+
 		OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
 		OLED_BlankSlot(4 * 12 + 16, 24 - 16);//blank out the tail after the temp
 		if (getIronTimer() == 0
@@ -399,6 +442,7 @@ void DrawUI() {
 	case SETTINGS:
 		//We are prompting the user the setting name
 		if (millis() - getLastButtonPress() > 3000) {
+			StatusFlags = 4;
 			//If the user has idled for > 3 seconds, show the long name for the selected setting instead
 			//draw from settingsLongTestScrollPos through to end of screen
 			uint8_t lengthLeft = SettingsLongNamesLengths[settingsPage]
@@ -511,6 +555,20 @@ void DrawUI() {
 				}
 			}
 				break;
+			case BOOSTMODE:
+				switch (systemSettings.boostModeEnabled) {
+				case 1:
+					OLED_DrawString("BOOST  T", 8);
+					break;
+				case 0:
+					OLED_DrawString("BOOST  F", 8);
+					break;
+				}
+				break;
+			case BOOSTTEMP:
+				OLED_DrawString("BTMP ", 5);
+				OLED_DrawThreeNumber(systemSettings.BoostTemp / 10, 5);
+				break;
 			default:
 				break;
 			}
@@ -548,7 +606,7 @@ void DrawUI() {
 	case DCINDISP: {
 		uint16_t voltage = readDCVoltage(systemSettings.voltageDiv); //get X10 voltage
 
-		if (CalStatus == 0 || ((millis() % 1000) > 500)) {
+		if (StatusFlags == 0 || ((millis() % 1000) > 500)) {
 			OLED_DrawString("IN", 2);
 			OLED_DrawChar((voltage / 100) % 10, 2);
 			voltage -= (voltage / 100) * 100;
@@ -565,11 +623,11 @@ void DrawUI() {
 		break;
 	case TEMPCAL: {
 
-		if (CalStatus == 0) {
+		if (StatusFlags == 0) {
 			OLED_DrawString("CAL TEMP", 8);
-		} else if (CalStatus == 1) {
+		} else if (StatusFlags == 1) {
 			OLED_DrawString("CAL OK  ", 8);
-		} else if (CalStatus == 2) {
+		} else if (StatusFlags == 2) {
 			OLED_DrawString("CAL FAIL", 8);
 		}
 	}

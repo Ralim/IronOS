@@ -4,7 +4,8 @@
 
 volatile uint32_t system_Ticks;
 volatile uint32_t lastKeyPress; //millis() at the last button event
-volatile uint16_t keyState; //tracks the button status
+volatile uint8_t keyState; //tracks the button status
+volatile uint8_t rawKeys;
 volatile uint32_t lastMovement; //millis() at last movement event
 
 //Delay in milliseconds using systemTick
@@ -55,18 +56,24 @@ void EXTI9_5_IRQHandler(void) {
 //we are interested in line 9 and line 6 for buttons
 	//Line 5 == movement
 	if (EXTI_GetITStatus(EXTI_Line9) != RESET) {
-		if (GPIO_ReadInputDataBit(GPIOA, KEY_A) == SET)
+		if (GPIO_ReadInputDataBit(GPIOA, KEY_A) == SET) {
 			keyState &= ~(BUT_A);
-		else
+			rawKeys &= ~BUT_A;
+		} else {
 			keyState |= BUT_A;
-		lastKeyPress = millis();
+			rawKeys |= BUT_A;
+			lastKeyPress = millis();
+		}
 		EXTI_ClearITPendingBit(EXTI_Line9);
 	} else if (EXTI_GetITStatus(EXTI_Line6) != RESET) {
-		if (GPIO_ReadInputDataBit(GPIOA, KEY_B) == SET)
+		if (GPIO_ReadInputDataBit(GPIOA, KEY_B) == SET) {
 			keyState &= ~(BUT_B);
-		else
+			rawKeys &= ~BUT_B;
+		} else {
 			keyState |= BUT_B;
-		lastKeyPress = millis();
+			rawKeys |= BUT_B;
+			lastKeyPress = millis();
+		}
 		EXTI_ClearITPendingBit(EXTI_Line6);
 	} else if (EXTI_GetITStatus(EXTI_Line5) != RESET) {	//Movement Event
 		lastMovement = millis();
@@ -204,5 +211,4 @@ void PendSV_Handler(void) {
 void USB_LP_CAN1_RX0_IRQHandler(void) {
 
 }
-
 

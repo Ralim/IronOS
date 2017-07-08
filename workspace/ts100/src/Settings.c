@@ -55,6 +55,7 @@ void resetSettings() {
 	systemSettings.ShutdownTime=30;				//How many minutes until the unit turns itself off
 	systemSettings.displayUpdateSpeed=1;		//How fast the LCD updates
 	systemSettings.temperatureRounding=0;		//How the temperature is rounded off
-	systemSettings.boostModeEnabled=0;
+	systemSettings.boostModeEnabled=0;			//Default to safe, with no boost mode
+	systemSettings.BoostTemp=4000;				//default to 400C
 }
 
