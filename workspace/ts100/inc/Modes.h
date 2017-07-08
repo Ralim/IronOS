@@ -29,7 +29,7 @@ enum {
 	TEMPCAL,		//Cal tip temp offset
 
 } operatingMode;
-#define SETTINGSOPTIONSCOUNT 9 /*Number of settings in the settings menu*/
+#define SETTINGSOPTIONSCOUNT 9 /*Number of settings in the settings menu-1*/
 
 enum {
 	UVCO = 0,
