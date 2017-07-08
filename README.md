@@ -17,6 +17,7 @@ In the latest official firmware they have also added a settings menu system, so 
 * Use hardware features to improve reliability
 * Can disable movement detection if desired
 * Calibration of the temperature offset
+* Boost mode lets you temporarily change the temperature when soldering
 
 # Upgrading your ts100 iron
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases)
@@ -60,6 +61,8 @@ If you leave the unit alone (ie don't press any buttons) on a setting, after 3 s
 * TMPRND -> Temperature Rounding, {1,5,10}
 * TMPSPD -> How fast the temperature should update in the soldering status screen.
 * FLPDSP -> Flip display for left handed users
+* BOOST -> Enable boost mode
+* BTMP -> Set the temperature for the boost mode
 
 Temperature rounding means that the unit will round off the temperature before displaying. This can helpt to reduce the flickering of the temperature when the unit oscillates between two temperatures.
 ## Extras Menu
@@ -67,10 +70,16 @@ This menu defaults to showing the current temperature on the tip.
 Pressing the button near the iron tip will show the current input voltage. Pressing the other button while this is show will allow you to calibrate the reading if your iron is like mine and is not overly accurate out of the factory. (Press buttons to change measurement up and down, press both to exit and save). 
 
 Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
+## Boost mode
+This allows you to change the front key (one near the tip) to become a boost button instead of going to temperature editing when in soldering mode. This allows you to set this button to change the soldering temperature for short periods. For example when soldering a big joint and you want to boost the temperature a bit.
 
+The boost temperature is set in the settings menu.
 # Version Changes:
+V1.11
+- Boost mode
+
 V1.10
--Adds help text to settings
+- Adds help text to settings
 - Improves settings for the display update rate
 
 V1.09
