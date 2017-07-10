@@ -56,7 +56,7 @@ If you leave the unit alone (ie don't press any buttons) on a setting, after 3 s
 * SLTME -> Sleep time, how long it takes before the unit goes to sleep
 * SHTME -> Shutdown Time, how long the unit will wait after movement before shutting down completely
 * MOTION -> Wether motion detection is enabled or not
-* SENSE -> Motion Sensitivity, H is more sensitive. L is lowest sensitivity (ie takes more movement to trigger)
+* MSENSE -> Motion Sensitivity,1-8, 8 is most sensitive, 1 is least sensitive (ie takes more movement to trigger)
 * TMPUNIT -> Temperature unit, C or F
 * TMPRND -> Temperature Rounding, {1,5,10}
 * TMPSPD -> How fast the temperature should update in the soldering status screen.
@@ -77,6 +77,7 @@ The boost temperature is set in the settings menu.
 # Version Changes:
 V1.11
 - Boost mode
+- Change sensitivity options to be 1-8
 
 V1.10
 - Adds help text to settings
