@@ -1,6 +1,6 @@
 # TS100
 This is a complete re-write of the open source software for the ts100 soldering iron.
-This project is feature complete for use as a soldering iron, but is still open to ideas and suggestions.
+This project is feature complete for use as a soldering iron, *but is still open to ideas and suggestions.*
 
 This project was started to remove the need for USB for changing system settings.
 In the latest official firmware they have also added a settings menu system, so it is still worth comparing the two firmwares to select your preferred option.
@@ -112,3 +112,5 @@ V1.03
 V1.02
 - Adds hold both buttons on IDLE to access the therometer mode.
 - Changes the exit soldering mode to be holding both buttons (Like original firmware).
+
+If you _really_ loved this firmware and want to continue my caffine addiction, you can do so here (or email me) : https://paypal.me/RalimTek
