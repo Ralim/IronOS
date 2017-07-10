@@ -8,13 +8,13 @@
 const char *SettingsLongNames[] = { "      Undervoltage Cutout <V>",
 		"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
 		"      Shutdown Timeout <Minutes>", "      Motion Detection",
-		"      Motion Sensitivity", "      Temperature Unit",
-		"      Temperature Rounding Amount",
+		"      Motion Sensitivity <1.least sensitive 8.most sensitive>",
+		"      Temperature Unit", "      Temperature Rounding Amount",
 		"      Temperature Display Update Rate",
 		"      Flip Display for Left Hand",
 		"      Enable front key boost 450C mode when soldering",
 		"      Temperature when in boost mode" };
-const uint8_t SettingsLongNamesLengths[] = { 29, 27, 29, 32, 22, 24, 22, 33, 37,
+const uint8_t SettingsLongNamesLengths[] = { 29, 27, 29, 32, 22, 61, 22, 33, 37,
 		32, 53, 36 };
 uint8_t StatusFlags = 0;
 uint32_t temporaryTempStorage = 0;
@@ -177,7 +177,7 @@ void ProcessUI() {
 					break;
 				case MOTIONSENSITIVITY:
 					systemSettings.sensitivity++;
-					systemSettings.sensitivity = systemSettings.sensitivity % 3;
+					systemSettings.sensitivity = systemSettings.sensitivity % 8;
 
 					break;
 				case TEMPROUNDING:
@@ -503,21 +503,8 @@ void DrawUI() {
 					OLED_DrawString("FLPDSP F", 8);
 				break;
 			case MOTIONSENSITIVITY:
-				switch (systemSettings.sensitivity) {
-				case MOTION_HIGH:
-					OLED_DrawString("SENSE H ", 8);
-					break;
-				case MOTION_MED:
-					OLED_DrawString("SENSE M ", 8);
-					break;
-				case MOTION_LOW:
-					OLED_DrawString("SENSE L ", 8);
-					break;
-				default:
-					OLED_DrawString("SENSE   ", 8);
-					break;
-				}
-
+				OLED_DrawString("MSENSE ", 7);
+				OLED_DrawChar('1' + systemSettings.sensitivity, 7);
 				break;
 			case TEMPROUNDING:
 				//We are prompting the user about their display mode preferences
