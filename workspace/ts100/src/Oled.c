@@ -174,7 +174,7 @@ void Clear_Screen(void) {
 /*
  * Draws a string onto the screen starting at the left
  */
-void OLED_DrawString(char* string, uint8_t length) {
+void OLED_DrawString(const char* string,const  uint8_t length) {
 	for (uint8_t i = 0; i < length; i++) {
 		OLED_DrawChar(string[i], i);
 	}

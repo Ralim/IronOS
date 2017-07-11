@@ -49,7 +49,7 @@ void resetSettings() {
 	systemSettings.version = SETTINGSVERSION;	//Store the version number to allow for easier upgrades
 	systemSettings.displayTempInF =0;			//default to C
 	systemSettings.flipDisplay=0;				//Default to right handed mode
-	systemSettings.sensitivity=5;				//Default high sensitivity
+	systemSettings.sensitivity=6;				//Default high sensitivity
 	systemSettings.tempCalibration=239;			//Default to their calibration value
 	systemSettings.voltageDiv=144;				//Default divider from schematic
 	systemSettings.ShutdownTime=30;				//How many minutes until the unit turns itself off

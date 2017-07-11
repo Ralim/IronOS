@@ -37,9 +37,11 @@ void ProcessUI() {
 		} else if (Buttons == BUT_A) {
 			//A key pressed so we are moving to soldering mode
 			operatingMode = SOLDERING;
+			Oled_DisplayOn();
 		} else if (Buttons == BUT_B) {
 			//B Button was pressed so we are moving to the Settings menu
 			operatingMode = SETTINGS;
+			Oled_DisplayOn();
 		}
 		break;
 	case SOLDERING:
@@ -217,12 +219,13 @@ void ProcessUI() {
 			operatingMode = SOLDERING;
 			Oled_DisplayOn();
 			return;
-		} else if (systemSettings.movementEnabled)
+		} else if (systemSettings.movementEnabled) {
 			if (millis() - getLastMovement() < 1000) {//moved in the last second
 				operatingMode = SOLDERING; //Goto active mode again
 				Oled_DisplayOn();
 				return;
 			}
+		}
 		if (systemSettings.movementEnabled) {
 			//Check if we should shutdown
 			if ((millis() - getLastMovement()
@@ -240,13 +243,23 @@ void ProcessUI() {
 	case COOLING: {
 		setIronTimer(0); //turn off heating
 		//This mode warns the user the iron is still cooling down
-		uint16_t temp = readIronTemp(0, 1, 0xFFFF); //take a new reading as the heater code is not taking new readings
-		if (temp < 400) { //if the temp is < 40C then we can go back to IDLE
-			operatingMode = STARTUP;
-		} else if (Buttons & (BUT_A | BUT_B)) { //we check if the user has pushed a button to ack
+		if (Buttons & (BUT_A | BUT_B)) { //we check if the user has pushed a button to exit
 			//Either button was pushed
 			operatingMode = STARTUP;
 		}
+		if (systemSettings.movementEnabled) {
+			if (millis() - getLastMovement()
+					> (systemSettings.ShutdownTime * 60000)) {
+				if ((millis() - getLastButtonPress()
+						> systemSettings.ShutdownTime * 60000)) {
+					Oled_DisplayOff();
+				}
+			} else {
+				Oled_DisplayOn();
+			}
+		}
+		else
+			Oled_DisplayOn();
 	}
 		break;
 	case UVLOWARN:
@@ -580,6 +593,7 @@ void DrawUI() {
 	case COOLING:
 		//We are warning the user the tip is cooling
 		OLED_DrawString("COOL ", 5);
+		temp = readIronTemp(0, 1, 0xFFFF);//force temp re-reading
 		drawTemp(temp, 5, systemSettings.temperatureRounding);
 		break;
 	case UVLOWARN:
