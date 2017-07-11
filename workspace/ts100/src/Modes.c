@@ -7,15 +7,15 @@
 #include "Modes.h"
 const char *SettingsLongNames[] = { "      Undervoltage Cutout <V>",
 		"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
-		"      Shutdown Timeout <Minutes>", "      Motion Detection",
-		"      Motion Sensitivity <1.least sensitive 8.most sensitive>",
+		"      Shutdown Timeout <Minutes>",
+		"      Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",
 		"      Temperature Unit", "      Temperature Rounding Amount",
 		"      Temperature Display Update Rate",
 		"      Flip Display for Left Hand",
 		"      Enable front key boost 450C mode when soldering",
 		"      Temperature when in boost mode" };
-const uint8_t SettingsLongNamesLengths[] = { 29, 27, 29, 32, 22, 61, 22, 33, 37,
-		32, 53, 36 };
+const uint8_t SettingsLongNamesLengths[] = { 29, 27, 29, 32, 67, 22, 33, 37, 32,
+		53, 36 };
 uint8_t StatusFlags = 0;
 uint32_t temporaryTempStorage = 0;
 //This does the required processing and state changes
@@ -84,7 +84,7 @@ void ProcessUI() {
 				StatusFlags = 0;
 			}
 			//We need to check the timer for movement in case we need to goto idle
-			if (systemSettings.movementEnabled)
+			if (systemSettings.sensitivity)
 				if (millis() - getLastMovement()
 						> (systemSettings.SleepTime * 60000)) {
 					if (millis() - getLastButtonPress()
@@ -166,10 +166,6 @@ void ProcessUI() {
 					if (systemSettings.ShutdownTime > 60)
 						systemSettings.ShutdownTime = 0;		//wrap to off
 					break;
-				case MOTIONDETECT:
-					systemSettings.movementEnabled =
-							!systemSettings.movementEnabled;
-					break;
 				case TEMPDISPLAY:
 					systemSettings.displayTempInF =
 							!systemSettings.displayTempInF;
@@ -179,7 +175,8 @@ void ProcessUI() {
 					break;
 				case MOTIONSENSITIVITY:
 					systemSettings.sensitivity++;
-					systemSettings.sensitivity = systemSettings.sensitivity % 8;
+					systemSettings.sensitivity = systemSettings.sensitivity
+							% 10;
 
 					break;
 				case TEMPROUNDING:
@@ -219,14 +216,14 @@ void ProcessUI() {
 			operatingMode = SOLDERING;
 			Oled_DisplayOn();
 			return;
-		} else if (systemSettings.movementEnabled) {
+		} else if (systemSettings.sensitivity) {
 			if (millis() - getLastMovement() < 1000) {//moved in the last second
 				operatingMode = SOLDERING; //Goto active mode again
 				Oled_DisplayOn();
 				return;
 			}
 		}
-		if (systemSettings.movementEnabled) {
+		if (systemSettings.sensitivity) {
 			//Check if we should shutdown
 			if ((millis() - getLastMovement()
 					> (systemSettings.ShutdownTime * 60000))
@@ -247,7 +244,7 @@ void ProcessUI() {
 			//Either button was pushed
 			operatingMode = STARTUP;
 		}
-		if (systemSettings.movementEnabled) {
+		if (systemSettings.sensitivity) {
 			if (millis() - getLastMovement()
 					> (systemSettings.ShutdownTime * 60000)) {
 				if ((millis() - getLastButtonPress()
@@ -257,8 +254,7 @@ void ProcessUI() {
 			} else {
 				Oled_DisplayOn();
 			}
-		}
-		else
+		} else
 			Oled_DisplayOn();
 	}
 		break;
@@ -495,19 +491,12 @@ void DrawUI() {
 				OLED_DrawString("SHTME ", 6);
 				OLED_DrawTwoNumber(systemSettings.ShutdownTime, 6);
 				break;
-			case MOTIONDETECT:/*Toggle the mode*/
-				if (systemSettings.movementEnabled)
-					OLED_DrawString("MOTION T", 8);
-				else
-					OLED_DrawString("MOTION F", 8);
-				break;
 			case TEMPDISPLAY:/*Are we showing in C or F ?*/
 				if (systemSettings.displayTempInF)
 					OLED_DrawString("TMPUNT F", 8);
 				else
 					OLED_DrawString("TMPUNT C", 8);
 				break;
-
 			case LEFTY:
 
 				if (systemSettings.flipDisplay)
@@ -517,7 +506,7 @@ void DrawUI() {
 				break;
 			case MOTIONSENSITIVITY:
 				OLED_DrawString("MSENSE ", 7);
-				OLED_DrawChar('1' + systemSettings.sensitivity, 7);
+				OLED_DrawChar('0' + systemSettings.sensitivity, 7);
 				break;
 			case TEMPROUNDING:
 				//We are prompting the user about their display mode preferences
@@ -593,7 +582,7 @@ void DrawUI() {
 	case COOLING:
 		//We are warning the user the tip is cooling
 		OLED_DrawString("COOL ", 5);
-		temp = readIronTemp(0, 1, 0xFFFF);//force temp re-reading
+		temp = readIronTemp(0, 1, 0xFFFF);		//force temp re-reading
 		drawTemp(temp, 5, systemSettings.temperatureRounding);
 		break;
 	case UVLOWARN:

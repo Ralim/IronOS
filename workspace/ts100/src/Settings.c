@@ -44,7 +44,6 @@ void resetSettings() {
 	systemSettings.SleepTemp = 1500;			//Temperature the iron sleeps at - default 150.0 C
 	systemSettings.SleepTime = 1;				//How many minutes we wait until going to sleep - default 1 min
 	systemSettings.SolderingTemp = 3200;		//Default soldering temp is 320.0 C
-	systemSettings.movementEnabled = 1; 		//we use movement detection by default
 	systemSettings.cutoutVoltage = 10;			//10V is the minium cutout voltage as the unit V measurement is unstable below 9.5V
 	systemSettings.version = SETTINGSVERSION;	//Store the version number to allow for easier upgrades
 	systemSettings.displayTempInF =0;			//default to C
