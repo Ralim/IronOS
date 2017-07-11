@@ -55,8 +55,7 @@ If you leave the unit alone (ie don't press any buttons) on a setting, after 3 s
 * STMP -> The temperature the unit drops to in sleep mode
 * SLTME -> Sleep time, how long it takes before the unit goes to sleep
 * SHTME -> Shutdown Time, how long the unit will wait after movement before shutting down completely
-* MOTION -> Wether motion detection is enabled or not
-* MSENSE -> Motion Sensitivity,1-8, 8 is most sensitive, 1 is least sensitive (ie takes more movement to trigger)
+* MSENSE -> Motion Sensitivity,0-9,0 means motion sensing is turned off, 9 is most sensitive, 1 is least sensitive (ie takes more movement to trigger)
 * TMPUNIT -> Temperature unit, C or F
 * TMPRND -> Temperature Rounding, {1,5,10}
 * TMPSPD -> How fast the temperature should update in the soldering status screen.
@@ -75,6 +74,10 @@ This allows you to change the front key (one near the tip) to become a boost but
 
 The boost temperature is set in the settings menu.
 # Version Changes:
+V1.12
+- Increases sensitivity options to be 1-9 with 0 off state
+- Fixes issue where going from COOL -> soldering can leave screen off.
+
 V1.11
 - Boost mode
 - Change sensitivity options to be 1-8
