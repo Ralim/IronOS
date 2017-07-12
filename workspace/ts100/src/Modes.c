@@ -131,7 +131,7 @@ void ProcessUI() {
 			//The user pressed the button to breakout of the settings help prompt
 			StatusFlags = 0;
 		} else {
-			if (Buttons & BUT_A) {
+			if (Buttons & BUT_B) {
 				//A key iterates through the menu
 				if (settingsPage == SETTINGSOPTIONSCOUNT) {
 					//Roll off the end
@@ -141,7 +141,7 @@ void ProcessUI() {
 				} else {
 					++settingsPage;					//move to the next option
 				}
-			} else if (Buttons & BUT_B) {
+			} else if (Buttons & BUT_A) {
 				//B changes the value selected
 				switch (settingsPage) {
 				case UVCO:

@@ -34,13 +34,13 @@ void StartUp_Accelerometer(uint8_t sensitivity) {
 	I2C_RegisterWrite( CTRL_REG2, 0x40);	// Reset all registers to POR values
 	delayMs(2);		// ~1ms delay
 	I2C_RegisterWrite(FF_MT_CFG_REG, 0x78);	// Enable motion detection for X and Y axis, latch enabled
-	uint8_t sens = 9*7+1;
+	uint8_t sens = 9 * 7 + 5;
 	sens -= 7 * sensitivity;
 
-	I2C_RegisterWrite(FF_MT_THS_REG, sens);		// Set threshold
-	I2C_RegisterWrite(FF_MT_COUNT_REG, 0x01);	// Set debounce to 100ms
+	I2C_RegisterWrite(FF_MT_THS_REG, 0x80 | sens);		// Set threshold
+	I2C_RegisterWrite(FF_MT_COUNT_REG, 0x02);	// Set debounce to 100ms
 
 	I2C_RegisterWrite( CTRL_REG4, 0x04);		// Enable motion interrupt
 	I2C_RegisterWrite( CTRL_REG5, 0x04);// Route motion interrupts to INT1 ->PB5 ->EXTI5
-	I2C_RegisterWrite( CTRL_REG1, 0x19);		// ODR=100 Hz, Active mode
+	I2C_RegisterWrite( CTRL_REG1, 0x11);		// ODR=800 Hz, Active mode
 }

@@ -18,6 +18,10 @@ int main(void) {
 		ProcessUI();
 		DrawUI();
 		delayMs(50); //Slow the system down a little bit
+		if(GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_5)==Bit_RESET)
+		{
+			lastMovement = millis();
+		}
 	}
 }
 void setup() {
@@ -37,7 +41,7 @@ void setup() {
 	readIronTemp(systemSettings.tempCalibration, 0,0); 	//load the default calibration value
 	Init_Oled(systemSettings.flipDisplay); 				//Init the OLED display
 
-	OLED_DrawString("VER 1.12", 8); 					//Version Number
+	OLED_DrawString("VER 1.13", 8); 					//Version Number
 	delayMs(500);										//Pause to show version number
 	Start_Watchdog(1000); 								//start the system watch dog as 1 second timeout
 }
