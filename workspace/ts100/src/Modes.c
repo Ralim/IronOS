@@ -22,13 +22,14 @@ uint32_t temporaryTempStorage = 0;
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
 	static uint32_t lastModeChange = 0;
-	if (millis() - getLastButtonPress() < 30)
+	if (getRawButtons() && ((millis() - getLastButtonPress()) > 1000)) {
+		lastKeyPress = millis() - 600;
+		Buttons = getRawButtons();
+	} else if (millis() - getLastButtonPress() < 80) {
 		Buttons = 0;
-	else if (Buttons != 0) {
-		resetLastButtonPress();
+	} else if (Buttons != 0) {
 		resetButtons();
 	}
-	//rough prevention for de-bouncing and allocates settling time
 
 	switch (operatingMode) {
 	case STARTUP:

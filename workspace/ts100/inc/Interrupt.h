@@ -26,9 +26,9 @@ inline void resetLastButtonPress() {
 
 }
 inline void resetButtons() {
-	lastKeyPress = millis();
 	keyState = 0;
 }
+
 inline uint32_t getLastMovement() {
 	return lastMovement;
 }
@@ -39,7 +39,10 @@ inline uint16_t getButtons() {
 inline uint16_t getRawButtons() {
 	return rawKeys;
 }
-
+inline void restoreButtons()
+{
+	keyState=getRawButtons();
+}
 
 /*IRQ prototypes*/
 void NMI_Handler(void);
