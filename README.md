@@ -1,9 +1,11 @@
 # TS100
 This is a complete re-write of the open source software for the ts100 soldering iron.
-This project is feature complete for use as a soldering iron, *but is still open to ideas and suggestions.*
+This project is feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
 
 This project was started to remove the need for USB for changing system settings.
 In the latest official firmware they have also added a settings menu system, so it is still worth comparing the two firmwares to select your preferred option.
+
+**Please note that when running the iron off a Lithium battery pack, the Iron is only rated to 24V input. So using a fully charged 6S battery exceeds this rating, and is done so at your own risk. Please calibrate your irons voltage reading when you are using a lithium battery after any firmware upgrades.**
 
 ## Features
 * Soldering / Temperature control
@@ -18,6 +20,7 @@ In the latest official firmware they have also added a settings menu system, so 
 * Can disable movement detection if desired
 * Calibration of the temperature offset
 * Boost mode lets you temporarily change the temperature when soldering
+* Battery charge level indicatior if power source set to a lipo cell count.
 
 # Upgrading your ts100 iron
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases)
