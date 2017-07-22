@@ -11,7 +11,7 @@ In the latest official firmware they have also added a settings menu system, so 
 * Automatic sleep with selectable sensitivity
 * Motion wake support
 * Settings menu
-* Input voltage UVLO measurement for battery powered use
+* Set a voltage lower limit for Lithium batteries so you dont kill your battery pack. Please calibrate your input voltage first!
 * All settings saved
 * Improved readability Fonts
 * Use hardware features to improve reliability
