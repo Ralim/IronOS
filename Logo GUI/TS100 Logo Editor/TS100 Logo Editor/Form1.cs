@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IntelHex;
 
 namespace TS100_Logo_Editor
 {
@@ -135,7 +136,21 @@ namespace TS100_Logo_Editor
                 }
                 data[i] = b;
             }
-
+            //We should now have the byte array that represents the image in the LCD format.
+            //We now send this off to be encoded by the Intel Encoder
+            string outputHexFile = IntelHex.encode(data,0x08000800,16);//16 bytes is the only format the DFU seems to support
+            //^ This string now just needs to be written out to a text file :)
+            FileSaveDialog dlg = new FileSaveDialog();
+            dlg.Title="Save DFU File";
+            if(dlg.ShowDialog() == DialogResult.OK)
+            {
+                //The user has selected where they want to save the file
+                using(var fs = new System.IO.StreamWriter(dlg.FileName))
+                {
+                    fs.write(outputHexFile);
+                }
+            }
+            
         }
     }
 }
