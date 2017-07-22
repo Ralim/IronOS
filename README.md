@@ -51,7 +51,7 @@ The button near the tip cycles through the options, and the one near the usb cha
 Note that settings are not saved until you exit the menu, and some settings such as screen flip do not apply until a power cycle is applied.
 If you leave the unit alone (ie don't press any buttons) on a setting, after 3 seconds the screen will scroll a longer version of the name
 
-* UVCO -> Undervoltage cut out level, settable in 1V increments from 10-24V
+* PWRSC -> Power source, select a cell count if using a LiPo, or DC to disable the shutdown. (Sets it to minimum of 10V).
 * STMP -> The temperature the unit drops to in sleep mode
 * SLTME -> Sleep time, how long it takes before the unit goes to sleep
 * SHTME -> Shutdown Time, how long the unit will wait after movement before shutting down completely
@@ -69,11 +69,56 @@ This menu defaults to showing the current temperature on the tip.
 Pressing the button near the iron tip will show the current input voltage. Pressing the other button while this is show will allow you to calibrate the reading if your iron is like mine and is not overly accurate out of the factory. (Press buttons to change measurement up and down, press both to exit and save). 
 
 Pressing the button near the usb enters the temperature offset setting menu, when the iron is cold, pressing the other button will start the unit calibrating for any offset in the tip temperature.
+
+## Calibrating input voltage
+Due to the tolerance on the resistors used for the input voltage divider, some irons can be up to 0.6V out on the voltage measurement.
+Please, Please, calibrate your iron if you have any issues with the cutoff voltage. This is more critical than before with the new cell count based cutout voltage.
+
+To calibrate your Iron:
+
+1. Measure the input voltage with a multimeter and note it down.
+2. Connect the input to your iron.
+3. On the home screen (showing iron symbol), press both buttons simultainiously.
+4. The iron will now show the tip temperature.
+5. Press the button near the soldering iron tip.
+6. The screen will display the measured input voltage.
+7. If this is the same as what you measured before skip to step 13
+8. Otherwise, press the button near the USB end of the iron
+9. The voltage will now slowly blink.
+10. Use the buttons to adjust the reading up and down until it reads as close as possible to the voltage you measured earlier.
+11. When it is reading as close as possible, press both buttons at once.
+12. The screen will go back to just showing the input voltage.
+13. Press the button near the tip of the iron to exit back to the live temperature display.
+14. Press both buttons at once to exit back to the idle screen.
+15. You're done. Enjoy your iron.
+
+## Calibrating tip offset
+Some tips will have an offset on their readings, to calibrate this out perform the following steps:
+
+1. Connect power to your iron
+2. Make sure the tip is at room temperature (ie. wait for a fair while after using the iron before calibration)
+3. Press both buttons on the idle screen (showing the logo for the iron. The screen you see after power is applied).
+4. The iron will now show the current tip temperature.
+5. Press the button near the USB port.
+6. The display will change to "CAL TEMP"
+7. Press the button near the tip of the iron to confirm.
+8. The display should change to "CAL OK". If you recieve "CAL FAIL" let your tip cool down for longer, its too hot.
+9. Press the button near the USB port to exit back to live temperature display
+10. Press both buttons at the same time to return to the idle screen.
+11. You're done. Enjoy your iorn.
+
 ## Boost mode
 This allows you to change the front key (one near the tip) to become a boost button instead of going to temperature editing when in soldering mode. This allows you to set this button to change the soldering temperature for short periods. For example when soldering a big joint and you want to boost the temperature a bit.
 
 The boost temperature is set in the settings menu.
 # Version Changes:
+V1.14
+- Changed input voltage cutoff to be based on cell count rather than voltage.
+
+V1.13
+- Swapped buttons for menu to prevent accidentally changing first menu item
+- Added auto key repeat.
+
 V1.12
 - Increases sensitivity options to be 1-9 with 0 off state
 - Fixes issue where going from COOL -> soldering can leave screen off.
