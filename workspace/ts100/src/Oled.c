@@ -77,7 +77,7 @@ void Oled_DisplayFlip() {
  Input: number of bytes to write, array to write
  Output:
  */
-u8* Data_Command(u8 length, u8* data) {
+const u8* Data_Command(u8 length,const u8* data) {
 	int i;
 	u8 tx_data[129];
 	//here are are inserting the data write command at the beginning
@@ -107,7 +107,7 @@ void Set_ShowPos(u8 x, u8 y) {
  Inputs:(x,y) start point, (width,height) of enclosing rect, pointer to data
  Output: pointer to the last byte written out
  *******************************************************************************/
-u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, u8* ptr) {
+const u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high,const u8* ptr) {
 	u8 m, n, y;
 
 	n = y0 + high;
@@ -174,7 +174,7 @@ void Clear_Screen(void) {
 /*
  * Draws a string onto the screen starting at the left
  */
-void OLED_DrawString(const char* string,const  uint8_t length) {
+void OLED_DrawString(const char* string, const uint8_t length) {
 	for (uint8_t i = 0; i < length; i++) {
 		OLED_DrawChar(string[i], i);
 	}
@@ -209,7 +209,13 @@ void OLED_DrawChar(char c, uint8_t x) {
 
 	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
 }
+void OLED_DrawExtendedChar(uint8_t id, uint8_t x) {
+	u8* ptr = (u8*) extendedFont;
+	ptr += (id) * (FONT_WIDTH * 2);
+	x *= FONT_WIDTH; //convert to a x coordinate
 
+	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
+}
 void OLED_BlankSlot(uint8_t xStart, uint8_t width) {
 	u8* ptr = (u8*) FONT;
 	ptr += (36) * (FONT_WIDTH * 2);

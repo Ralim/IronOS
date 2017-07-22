@@ -6,7 +6,7 @@
  */
 #include "Modes.h"
 const char *SettingsLongNames[] = {
-		"      Power source. Sets cutoff voltage. <DC 10V> <S 3.5V per cell>",
+		"      Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
 		"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
 		"      Shutdown Timeout <Minutes>",
 		"      Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",
@@ -157,7 +157,7 @@ void ProcessUI() {
 				case SLEEP_TIME:
 					++systemSettings.SleepTime;		//Go up 1 minute at a time
 					if (systemSettings.SleepTime > 30)
-						systemSettings.SleepTime = 1;//cant set time over 30 mins
+						systemSettings.SleepTime = 1;//can't set time over 30 mins
 					//Remember that ^ is the time of no movement
 					break;
 				case SHUTDOWN_TIME:
@@ -411,12 +411,27 @@ void DrawUI() {
 		lastOLEDDrawTime = millis();
 		//Now draw symbols
 		if (StatusFlags == 8)
-			OLED_DrawChar('B', 3);
-		else
-			OLED_DrawChar(' ', 3);
-
+			OLED_DrawChar('B', 4);
+		else {
+			OLED_DrawChar(' ', 4);
+		}
+		//Draw in battery symbol if desired
+		if (systemSettings.cutoutSetting) {
+			//User is on a lithium battery
+			//we need to calculate which of the 10 levels they are on
+			uint8_t cellCount = systemSettings.cutoutSetting + 2;
+			uint16_t cellV = readDCVoltage(systemSettings.voltageDiv)
+					/ cellCount;
+			//Should give us approx cell voltage X10
+			//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
+			if (cellV < 33)
+				cellV = 33;
+			cellV -= 33;			//Should leave us a number of 0-9
+			OLED_DrawExtendedChar(cellV + 1, 5);
+		} else {
+			OLED_DrawChar(' ', 5);
+		}
 		OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
-		OLED_BlankSlot(4 * 12 + 16, 24 - 16);//blank out the tail after the temp
 		if (getIronTimer() == 0
 				&& (temp / 10) > (systemSettings.SolderingTemp / 10)) {
 			//Cooling
@@ -430,9 +445,9 @@ void DrawUI() {
 			}
 		}
 		if (systemSettings.displayTempInF) {
-			OLED_DrawSymbol(4, 1);
+			OLED_DrawChar('F', 3);
 		} else {
-			OLED_DrawSymbol(4, 0);
+			OLED_DrawChar('C', 3);
 		}
 
 	}

@@ -14,16 +14,17 @@
 void Oled_DisplayOn(void);
 void Oled_DisplayOff(void);
 
-u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, u8* ptr);
+const u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high,const u8* ptr);
 void Set_ShowPos(u8 x, u8 y);
 void Oled_DisplayFlip();
 void GPIO_Init_OLED(void);
 void Init_Oled(uint8_t leftHanded);
-u8* Data_Command(u8 len, u8* ptr);
+const u8* Data_Command(u8 len,const u8* ptr);
 void Clear_Screen(void);//Clear the screen
 /*Functions for writing to the screen*/
 void OLED_DrawString(const char* string, const uint8_t length);
 void OLED_DrawChar(char c, uint8_t x);
+void OLED_DrawExtendedChar(uint8_t id, uint8_t x);
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x);
 void OLED_BlankSlot(uint8_t xStart,uint8_t width);
 void OLED_DrawThreeNumber(uint16_t in, uint8_t x);
