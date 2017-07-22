@@ -16,6 +16,7 @@
 #include "PID.h"
 #include "Settings.h"
 #include "Analog.h"
+#include <string.h>
 enum {
 	STARTUP, 		//we are sitting on the prompt to push a button
 	SOLDERING, 		//Normal operating mode

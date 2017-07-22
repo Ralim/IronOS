@@ -38,23 +38,36 @@ void restoreSettings() {
 	}
 
 }
-
+//Lookup function for cutoff setting -> X10 voltage
+/*
+ * 0=DC
+ * 1=3S
+ * 2=4S
+ * 3=5S
+ * 4=6S
+ */
+uint8_t lookupVoltageLevel(uint8_t level) {
+	if (level == 0)
+		return 100;	//10V since iron does not function below this
+	else
+		return (level * 35) + (35 * 2);
+}
 void resetSettings() {
 
-	systemSettings.SleepTemp = 1500;			//Temperature the iron sleeps at - default 150.0 C
-	systemSettings.SleepTime = 1;				//How many minutes we wait until going to sleep - default 1 min
-	systemSettings.SolderingTemp = 3200;		//Default soldering temp is 320.0 C
-	systemSettings.cutoutVoltage = 10;			//10V is the minium cutout voltage as the unit V measurement is unstable below 9.5V
-	systemSettings.version = SETTINGSVERSION;	//Store the version number to allow for easier upgrades
-	systemSettings.displayTempInF =0;			//default to C
-	systemSettings.flipDisplay=0;				//Default to right handed mode
-	systemSettings.sensitivity=6;				//Default high sensitivity
-	systemSettings.tempCalibration=239;			//Default to their calibration value
-	systemSettings.voltageDiv=144;				//Default divider from schematic
-	systemSettings.ShutdownTime=30;				//How many minutes until the unit turns itself off
-	systemSettings.displayUpdateSpeed=1;		//How fast the LCD updates
-	systemSettings.temperatureRounding=0;		//How the temperature is rounded off
-	systemSettings.boostModeEnabled=0;			//Default to safe, with no boost mode
-	systemSettings.BoostTemp=4000;				//default to 400C
+	systemSettings.SleepTemp = 1500;//Temperature the iron sleeps at - default 150.0 C
+	systemSettings.SleepTime = 1;//How many minutes we wait until going to sleep - default 1 min
+	systemSettings.SolderingTemp = 3200;	//Default soldering temp is 320.0 C
+	systemSettings.cutoutSetting = 0;			//default to no cut-off voltage
+	systemSettings.version = SETTINGSVERSION;//Store the version number to allow for easier upgrades
+	systemSettings.displayTempInF = 0;			//default to C
+	systemSettings.flipDisplay = 0;				//Default to right handed mode
+	systemSettings.sensitivity = 6;				//Default high sensitivity
+	systemSettings.tempCalibration = 239;	//Default to their calibration value
+	systemSettings.voltageDiv = 144;			//Default divider from schematic
+	systemSettings.ShutdownTime = 30;//How many minutes until the unit turns itself off
+	systemSettings.displayUpdateSpeed = 1;		//How fast the LCD updates
+	systemSettings.temperatureRounding = 0;	//How the temperature is rounded off
+	systemSettings.boostModeEnabled = 0;//Default to safe, with no boost mode
+	systemSettings.BoostTemp = 4000;				//default to 400C
 }
 

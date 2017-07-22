@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f10x_flash.h"
-#define SETTINGSVERSION 12 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define SETTINGSVERSION 13 /*Change this if you change the struct below to prevent people getting out of sync*/
 //Display Speeds
 #define DISPLAYMODE_FAST 	(0x00)
 #define DISPLAYMODE_MEDIUM 	(0x01)
@@ -29,7 +29,7 @@ struct {
 	uint32_t SleepTemp; 			//temp to drop to in sleep
 	uint8_t version;				//Used to track if a reset is needed on firmware upgrade
 	uint8_t SleepTime; 				//minutes timeout to sleep
-	uint8_t cutoutVoltage:5; 		//The voltage we cut out at for under voltage
+	uint8_t cutoutSetting:5; 		//(3 bits) The voltage we cut out at for under voltage
 	uint8_t displayTempInF:1;		//If we need to convert the C reading to F
 	uint8_t flipDisplay:1;			//If true we want to invert the display for lefties
 	uint8_t sensitivity:6;			//Sensitivity of accelerometer (5 bits)
@@ -44,5 +44,6 @@ struct {
 
 void saveSettings();
 void restoreSettings();
+uint8_t lookupVoltageLevel(uint8_t level);
 void resetSettings();
 #endif /* SETTINGS_H_ */

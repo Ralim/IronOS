@@ -5,7 +5,8 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
-const char *SettingsLongNames[] = { "      Undervoltage Cutout <V>",
+const char *SettingsLongNames[] = {
+		"      Power source. Sets cutoff voltage. <DC 10V> <S 3.5V per cell>",
 		"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
 		"      Shutdown Timeout <Minutes>",
 		"      Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",
@@ -14,8 +15,6 @@ const char *SettingsLongNames[] = { "      Undervoltage Cutout <V>",
 		"      Flip Display for Left Hand",
 		"      Enable front key boost 450C mode when soldering",
 		"      Temperature when in boost mode" };
-const uint8_t SettingsLongNamesLengths[] = { 29, 27, 29, 32, 67, 22, 33, 37, 32,
-		53, 36 };
 uint8_t StatusFlags = 0;
 uint32_t temporaryTempStorage = 0;
 //This does the required processing and state changes
@@ -95,7 +94,7 @@ void ProcessUI() {
 					}
 				}
 			uint16_t voltage = readDCVoltage(systemSettings.voltageDiv); //get X10 voltage
-			if ((voltage / 10) < systemSettings.cutoutVoltage) {
+			if ((voltage) < lookupVoltageLevel(systemSettings.cutoutSetting)) {
 				operatingMode = UVLOWARN;
 				lastModeChange = millis();
 			}
@@ -147,9 +146,8 @@ void ProcessUI() {
 				switch (settingsPage) {
 				case UVCO:
 					//we are incrementing the cutout voltage
-					systemSettings.cutoutVoltage += 1;		//Go up 1V at a jump
-					if (systemSettings.cutoutVoltage > 24)
-						systemSettings.cutoutVoltage = 10;
+					systemSettings.cutoutSetting += 1;		//Go up 1V at a jump
+					systemSettings.cutoutSetting %= 5;		//wrap 0->4
 					break;
 				case SLEEP_TEMP:
 					systemSettings.SleepTemp += 100;	//Go up 10C at a time
@@ -455,7 +453,7 @@ void DrawUI() {
 			StatusFlags = 4;
 			//If the user has idled for > 3 seconds, show the long name for the selected setting instead
 			//draw from settingsLongTestScrollPos through to end of screen
-			uint8_t lengthLeft = SettingsLongNamesLengths[settingsPage]
+			uint8_t lengthLeft = strlen(SettingsLongNames[settingsPage])
 					- settingsLongTestScrollPos;
 			if (lengthLeft < 1)
 				settingsLongTestScrollPos = 0;
@@ -476,9 +474,16 @@ void DrawUI() {
 			settingsLongTestScrollPos = 0;
 			switch (settingsPage) {
 			case UVCO:
-				OLED_DrawString("UVCO ", 5);
-				OLED_DrawTwoNumber(systemSettings.cutoutVoltage, 5);
-				OLED_DrawChar('V', 7);
+				OLED_DrawString("PWRSC ", 6);
+				if (systemSettings.cutoutSetting == 0) {
+					//DC
+					OLED_DrawChar('D', 6);
+					OLED_DrawChar('C', 7);
+				} else {
+					//S count
+					OLED_DrawChar('2' + systemSettings.cutoutSetting, 6);
+					OLED_DrawChar('S', 7);
+				}
 				break;
 			case SLEEP_TEMP:
 				OLED_DrawString("STMP ", 5);
