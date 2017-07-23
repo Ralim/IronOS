@@ -427,6 +427,8 @@ void DrawUI() {
 			if (cellV < 33)
 				cellV = 33;
 			cellV -= 33;			//Should leave us a number of 0-9
+			if (cellV > 9)
+				cellV = 9;
 			OLED_DrawExtendedChar(cellV + 1, 5);
 		} else {
 			OLED_DrawChar(' ', 5);

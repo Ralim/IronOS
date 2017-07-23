@@ -186,4 +186,5 @@
 			<resource resourceType="PROJECT" workspacePath="/ts100"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
