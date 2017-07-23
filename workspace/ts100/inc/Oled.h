@@ -2,7 +2,7 @@
  * Oled.h
  * Functions for writing to the OLED screen
  * Basically wraps drawing text and numbers to the OLED
- * Uses font.h -> 14 pixel wide fixed width
+ * Uses font.h -> 12 pixel wide fixed width
  */
 #ifndef _OLED_SSD1306_H
 #define _OLED_SSD1306_H

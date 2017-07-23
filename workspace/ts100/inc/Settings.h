@@ -46,4 +46,5 @@ void saveSettings();
 void restoreSettings();
 uint8_t lookupVoltageLevel(uint8_t level);
 void resetSettings();
+void showBootLogoIfavailable();
 #endif /* SETTINGS_H_ */
