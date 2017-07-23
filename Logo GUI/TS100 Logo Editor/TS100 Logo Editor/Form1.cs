@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,11 +19,14 @@ namespace TS100_Logo_Editor
             InitializeComponent();
         }
         Image sourceImage;
+        const int LCDWidth = 96;
+        Bitmap PureBMP;
         private void btnLoadImage_Click(object sender, EventArgs e)
         {
             //load in an image
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Title = "Select Image";
+            dlg.Filter = "Image files (*.jpg, *.jpeg, *.bmp, *.png) | *.jpg; *.jpeg; *.bmp; *.png";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 //user has selected an image
@@ -35,13 +39,13 @@ namespace TS100_Logo_Editor
 
         private void reDrawPreview()
         {
-            Bitmap b = new Bitmap(96, 16);
+            PureBMP = new Bitmap(LCDWidth, 16);
             //scale mode
             if (rbScaleFit.Checked)
             {
                 //fit
-                float scalefactor = Math.Min((float)b.Width / (float)sourceImage.Width, (float)b.Height / (float)sourceImage.Height);
-                using (Graphics g = Graphics.FromImage(b))
+                float scalefactor = Math.Min((float)PureBMP.Width / (float)sourceImage.Width, (float)PureBMP.Height / (float)sourceImage.Height);
+                using (Graphics g = Graphics.FromImage(PureBMP))
                 {
                     g.DrawImage(sourceImage, new RectangleF(0, 0, sourceImage.Width * scalefactor, sourceImage.Height * scalefactor));
                 }
@@ -49,33 +53,33 @@ namespace TS100_Logo_Editor
             else
             {
                 //draw image stretched
-                using (Graphics g = Graphics.FromImage(b))
+                using (Graphics g = Graphics.FromImage(PureBMP))
                 {
-                    g.DrawImage(sourceImage, new RectangleF(0, 0, 96, 16));
+                    g.DrawImage(sourceImage, new RectangleF(0, 0, LCDWidth, 16));
                 }
             }
             //We now have our downsampled colour image
             //apply inversion
             if (cbInvertImage.Checked)
             {
-                for (int y = 0; (y <= (b.Height - 1)); y++)
+                for (int y = 0; (y <= (PureBMP.Height - 1)); y++)
                 {
-                    for (int x = 0; (x <= (b.Width - 1)); x++)
+                    for (int x = 0; (x <= (PureBMP.Width - 1)); x++)
                     {
-                        Color inv = b.GetPixel(x, y);
+                        Color inv = PureBMP.GetPixel(x, y);
                         inv = Color.FromArgb(255, (255 - inv.R), (255 - inv.G), (255 - inv.B));
-                        b.SetPixel(x, y, inv);
+                        PureBMP.SetPixel(x, y, inv);
                     }
                 }
             }
 
             //Threshold image
-            b = GrayScale(b);
+            PureBMP = GrayScale(PureBMP);
             //draw image at 2x scale
-            Bitmap bBig = new Bitmap(96 * 2, 16 * 2);
+            Bitmap bBig = new Bitmap(pbImage.Width, pbImage.Height);
             using (Graphics g = Graphics.FromImage(bBig))
             {
-                g.DrawImage(b, new RectangleF(0, 0, bBig.Width, bBig.Height));
+                g.DrawImage(PureBMP, new RectangleF(0, 0, pbImage.Width, pbImage.Height));
             }
             pbImage.Image = bBig;
         }
@@ -115,17 +119,22 @@ namespace TS100_Logo_Editor
 
         private void btnSaveHex_Click(object sender, EventArgs e)
         {
-            Bitmap bmp = (Bitmap)pbImage.Image;
+            Bitmap bmp = PureBMP;
             //convert image to byte array
-            byte[] data = new byte[96 * 16 / 8];
-            for (int i = 0; i < data.Length; i++)
+            byte[] data = new byte[1024];
+            data[0] = 0xAA;
+            data[1] = 0x55;
+            data[2] = 0xF0;
+            data[3] = 0x0D;
+
+            for (int i = 0; i < (LCDWidth * 16 / 8); i++)
             {
                 //loop through all the bytes
                 byte b = 0;//local byte
                 //i sets the starting column
                 for (int y = 0; y < 8; y++)
                 {
-                    var px = bmp.GetPixel(i % 96, (i / 96) == 1 ? 8 + y : y);
+                    var px = bmp.GetPixel(i % LCDWidth, (i / LCDWidth) == 1 ? 8 + y : y);
                     //we loop down the picture
                     //LSB is the top, MSB is the bottom
                     if (px.R >= 128)
@@ -134,23 +143,34 @@ namespace TS100_Logo_Editor
                         b |= (byte)(1 << y);
                     }
                 }
-                data[i] = b;
+                data[i + 4] = b;
             }
             //We should now have the byte array that represents the image in the LCD format.
             //We now send this off to be encoded by the Intel Encoder
-            string outputHexFile = IntelHex.encode(data,0x08000800,16);//16 bytes is the only format the DFU seems to support
+            //Flip all uint16_t pairs
+            for (int i = 0; i < data.Length; i += 2)
+            {
+                //we need to swap each pair
+                byte temp = data[i];
+                data[i] = data[i + 1];
+                data[i + 1] = temp;
+            }
+            string outputHexFile = IntelHex.IntelHex.encode(data, 0x0800B800, 16, true, true);//16 bytes is the only format the DFU seems to support //0x0800B800
             //^ This string now just needs to be written out to a text file :)
-            FileSaveDialog dlg = new FileSaveDialog();
-            dlg.Title="Save DFU File";
-            if(dlg.ShowDialog() == DialogResult.OK)
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save DFU File";
+            dlg.AddExtension = true;
+            dlg.DefaultExt = ".hex";
+            dlg.Filter = "Hex Files(*.hex)|*.hex";
+            if (dlg.ShowDialog() == DialogResult.OK)
             {
                 //The user has selected where they want to save the file
-                using(var fs = new System.IO.StreamWriter(dlg.FileName))
+                using (var fs = new System.IO.StreamWriter(dlg.FileName))
                 {
-                    fs.write(outputHexFile);
+                    fs.Write(outputHexFile);
                 }
             }
-            
+
         }
     }
 }
