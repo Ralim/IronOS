@@ -46,8 +46,9 @@ There is a complete device flash backup included in this repository. (Note this 
 This firmware uses a different method of updating the bootup image.
 This removes the need for emulating a USB drive on the iron just to allow for a bootup image to be setup.
 At this point in time you will need a windows machine to make the required .hex file for you image.
+*If you know what your doing, this program will run fine through mono on other systems*
 
-1. On the [releases page](https://github.com/Ralim/ts100/releases) you will need to download the latest copy of the GUI Tool (*TS100 Logo Editor.exe*).
+1. On the [releases page](https://github.com/Ralim/ts100/releases) you will need to download the latest copy of the GUI Tool (*TS100.Logo.Editor.exe*).
 2. Launch the TS100 Logo Editor, you will need to have .NET 4.0 installed on your machine
 3. On the tool open the source image that you would like to use as your bootup screen. A resolution of 96x16 is ideal, but you can fill or stretch your logo to fit
 4. Colour images are okay, the software will convert them to B&W for you.
