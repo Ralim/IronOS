@@ -104,23 +104,47 @@ void ProcessUI() {
 		}
 		break;
 	case TEMP_ADJ:
-		if (Buttons == BUT_A) {
-			//A key pressed so we are moving down in temp
+		if (systemSettings.flipDisplay) {
+			if (Buttons == BUT_B) {
+				//A key pressed so we are moving down in temp
 
-			if (systemSettings.SolderingTemp > 1000)
-				systemSettings.SolderingTemp -= 100;
-		} else if (Buttons == BUT_B) {
-			//B key pressed so we are moving up in temp
-			if (systemSettings.SolderingTemp < 4500)
-				systemSettings.SolderingTemp += 100;
+				if (systemSettings.SolderingTemp > 1000)
+					systemSettings.SolderingTemp -= 100;
+			} else if (Buttons == BUT_A) {
+				//B key pressed so we are moving up in temp
+				if (systemSettings.SolderingTemp < 4500)
+					systemSettings.SolderingTemp += 100;
+			} else {
+				//we check the timeout for how long the buttons have not been pushed
+				//if idle for > 3 seconds then we return to soldering
+				//Or if both buttons pressed
+				if (Buttons == (BUT_A | BUT_B)) {
+					operatingMode = STARTUP;
+					saveSettings();
+				} else if ((millis() - getLastButtonPress() > 2000)) {
+					operatingMode = SOLDERING;
+				}
+
+			}
 		} else {
-			//we check the timeout for how long the buttons have not been pushed
-			//if idle for > 3 seconds then we return to soldering
-			//Or if both buttons pressed
-			if ((millis() - getLastButtonPress() > 2000)
-					|| Buttons == (BUT_A | BUT_B)) {
-				operatingMode = SOLDERING;
-				saveSettings();
+			if (Buttons == BUT_A) {
+				//A key pressed so we are moving down in temp
+
+				if (systemSettings.SolderingTemp > 1000)
+					systemSettings.SolderingTemp -= 100;
+			} else if (Buttons == BUT_B) {
+				//B key pressed so we are moving up in temp
+				if (systemSettings.SolderingTemp < 4500)
+					systemSettings.SolderingTemp += 100;
+			} else {
+				//we check the timeout for how long the buttons have not been pushed
+				//if idle for > 3 seconds then we return to soldering
+				//Or if both buttons pressed
+				if ((millis() - getLastButtonPress() > 2000)
+						|| Buttons == (BUT_A | BUT_B)) {
+					operatingMode = SOLDERING;
+					saveSettings();
+				}
 			}
 		}
 		break;
@@ -589,7 +613,7 @@ void DrawUI() {
 	case SLEEP:
 		//The iron is in sleep temp mode
 		//Draw in temp and sleep
-		OLED_DrawString("SLP", 3);
+		OLED_DrawString("SLP ", 4);
 		drawTemp(temp, 4, systemSettings.temperatureRounding);
 		OLED_BlankSlot(84, 96 - 85);		//blank out after the temp
 
