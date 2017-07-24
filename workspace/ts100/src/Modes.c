@@ -17,6 +17,10 @@ const char *SettingsLongNames[] = {
 		"      Temperature when in boost mode" };
 uint8_t StatusFlags = 0;
 uint32_t temporaryTempStorage = 0;
+
+operatingModeEnum operatingMode;
+settingsPageEnum settingsPage;
+
 //This does the required processing and state changes
 void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status

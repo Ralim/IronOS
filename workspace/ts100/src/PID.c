@@ -7,6 +7,9 @@
 
 #include "PID.h"
 #define MAXPIDOUTPUT 50000
+
+pidSettingsType pidSettings;
+
 //This function computes the new value for the ON time of the system
 //This is the return value from this function
 int32_t computePID(uint16_t setpoint) {

@@ -17,7 +17,7 @@
 #include "Settings.h"
 #include "Analog.h"
 #include <string.h>
-enum {
+typedef enum {
 	STARTUP, 		//we are sitting on the prompt to push a button
 	SOLDERING, 		//Normal operating mode
 	TEMP_ADJ,		//Adjust the set temperature
@@ -29,10 +29,10 @@ enum {
 	DCINDISP,		//Disp the input voltage && Cal the DCin voltage divider
 	TEMPCAL,		//Cal tip temp offset
 
-} operatingMode;
+} operatingModeEnum;
 #define SETTINGSOPTIONSCOUNT 10 /*Number of settings in the settings menu*/
 
-enum {
+typedef enum {
 	UVCO = 0,
 	SLEEP_TEMP,
 	SLEEP_TIME,
@@ -44,7 +44,7 @@ enum {
 	LEFTY,
 	BOOSTMODE,
 	BOOSTTEMP,
-} settingsPage;
+} settingsPageEnum;
 
 void ProcessUI();
 void DrawUI();

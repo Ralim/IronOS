@@ -12,9 +12,9 @@
 #include "Analog.h"
 #include "Interrupt.h"
 
-struct {
+typedef struct {
 	uint32_t kp, ki, kd; //PID values
-} pidSettings;
+} pidSettingsType;
 
 int32_t computePID(uint16_t setpoint);
 void setupPID(void);
