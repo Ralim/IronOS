@@ -40,7 +40,7 @@ void setup() {
 	readIronTemp(systemSettings.tempCalibration, 0, 0); //load the default calibration value
 	Init_Oled(systemSettings.flipDisplay); 				//Init the OLED display
 
-	OLED_DrawString("VER 1.15", 8); 					//Version Number
+	OLED_DrawString("VER 1.16", 8); 					//Version Number
 	delayMs(300);								//Pause to show version number
 	showBootLogoIfavailable();
 	Start_Watchdog(1000); 		//start the system watch dog as 1 second timeout

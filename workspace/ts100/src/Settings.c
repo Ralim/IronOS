@@ -70,6 +70,7 @@ void resetSettings() {
 	systemSettings.temperatureRounding = 0;	//How the temperature is rounded off
 	systemSettings.boostModeEnabled = 0;//Default to safe, with no boost mode
 	systemSettings.BoostTemp = 4000;				//default to 400C
+	systemSettings.powerDisplay = 0;		//default to power display being off
 }
 
 void showBootLogoIfavailable() {
@@ -87,16 +88,16 @@ void showBootLogoIfavailable() {
 
 	}
 	/*char hex[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B',
-			'C', 'D', 'E', 'F' };
+	 'C', 'D', 'E', 'F' };
 
-	OLED_DrawChar(hex[(temp8[0] >> 4) & 0x0F], 0);
-	OLED_DrawChar(hex[(temp8[0] >> 0) & 0x0F], 1);
-	OLED_DrawChar(hex[(temp8[1] >> 4) & 0x0F], 2);
-	OLED_DrawChar(hex[(temp8[1] >> 0) & 0x0F], 3);
-	OLED_DrawChar(hex[(temp8[2] >> 4) & 0x0F], 4);
-	OLED_DrawChar(hex[(temp8[2] >> 0) & 0x0F], 5);
-	OLED_DrawChar(hex[(temp8[3] >> 4) & 0x0F], 6);
-	OLED_DrawChar(hex[(temp8[3] >> 0) & 0x0F], 7);*/
+	 OLED_DrawChar(hex[(temp8[0] >> 4) & 0x0F], 0);
+	 OLED_DrawChar(hex[(temp8[0] >> 0) & 0x0F], 1);
+	 OLED_DrawChar(hex[(temp8[1] >> 4) & 0x0F], 2);
+	 OLED_DrawChar(hex[(temp8[1] >> 0) & 0x0F], 3);
+	 OLED_DrawChar(hex[(temp8[2] >> 4) & 0x0F], 4);
+	 OLED_DrawChar(hex[(temp8[2] >> 0) & 0x0F], 5);
+	 OLED_DrawChar(hex[(temp8[3] >> 4) & 0x0F], 6);
+	 OLED_DrawChar(hex[(temp8[3] >> 0) & 0x0F], 7);*/
 	if (temp8[0] != 0xAA)
 		return;
 	if (temp8[1] != 0x55)
@@ -105,7 +106,6 @@ void showBootLogoIfavailable() {
 		return;
 	if (temp8[3] != 0x0D)
 		return;
-
 
 	Oled_DrawArea(0, 0, 96, 16, (uint8_t*) (temp8 + 4));
 

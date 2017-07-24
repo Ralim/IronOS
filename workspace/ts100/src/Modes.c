@@ -22,9 +22,9 @@ void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
 	static uint32_t lastModeChange = 0;
 	if (getRawButtons() && ((millis() - getLastButtonPress()) > 1000)) {
-		lastKeyPress = millis() - 600;
+		lastKeyPress = millis() - 700;
 		Buttons = getRawButtons();
-	} else if (millis() - getLastButtonPress() < 80) {
+	} else if (millis() - getLastButtonPress() < 100) {
 		Buttons = 0;
 	} else if (Buttons != 0) {
 		resetButtons();

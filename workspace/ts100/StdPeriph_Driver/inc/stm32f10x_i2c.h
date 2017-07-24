@@ -406,12 +406,12 @@ typedef struct
   * 1) In normal case (only one address managed by the slave), when the address 
   *   sent by the master matches the own address of the peripheral (configured by 
   *   I2C_OwnAddress1 field) the I2C_EVENT_SLAVE_XXX_ADDRESS_MATCHED event is set 
-  *   (where XXX could be TRANSMITTER or RECEIVER).
+  *   (where XX could be TRANSMITTER or RECEIVER).
   *    
   * 2) In case the address sent by the master matches the second address of the 
   *   peripheral (configured by the function I2C_OwnAddress2Config() and enabled 
   *   by the function I2C_DualAddressCmd()) the events I2C_EVENT_SLAVE_XXX_SECONDADDRESS_MATCHED 
-  *   (where XXX could be TRANSMITTER or RECEIVER) are set.
+  *   (where XX could be TRANSMITTER or RECEIVER) are set.
   *   
   * 3) In case the address sent by the master is General Call (address 0x00) and 
   *   if the General Call is enabled for the peripheral (using function I2C_GeneralCallCmd()) 
