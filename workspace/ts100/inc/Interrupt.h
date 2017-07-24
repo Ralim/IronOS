@@ -8,11 +8,11 @@
 /* Functions for access to data */
 extern volatile uint32_t system_Ticks;
 void delayMs(uint32_t ticks);
-volatile extern uint32_t lastKeyPress;
-volatile extern uint32_t lastMovement;
+extern volatile uint32_t lastKeyPress;
+extern volatile uint32_t lastMovement;
 
-volatile extern uint8_t keyState;
-volatile extern uint8_t rawKeys;
+extern volatile uint8_t keyState;
+extern volatile uint8_t rawKeys;
 
 inline uint32_t millis() {
 	return system_Ticks;
@@ -39,9 +39,8 @@ inline uint16_t getButtons() {
 inline uint16_t getRawButtons() {
 	return rawKeys;
 }
-inline void restoreButtons()
-{
-	keyState=getRawButtons();
+inline void restoreButtons() {
+	keyState = getRawButtons();
 }
 
 /*IRQ prototypes*/

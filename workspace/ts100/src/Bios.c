@@ -250,7 +250,7 @@ void Clear_Watchdog(void) {
 
 //TIM3_ISR handles the tick of the timer 3 IRQ
 void TIM3_ISR(void) {
-	volatile static u8 heat_flag = 0;
+	static volatile u8 heat_flag = 0;
 	//heat flag == used to make the pin toggle
 	//As the output is passed through a cap, the iron is on whilever we provide a square wave drive output
 
