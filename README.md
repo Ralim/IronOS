@@ -145,6 +145,11 @@ This allows you to change the front key (one near the tip) to become a boost but
 
 The boost temperature is set in the settings menu.
 
+## Commercial Use
+
+This software is provided as-is, so I cannot provide any commercial support for the firmware. However you are more than welcome to distribute links to the firmware, or provide irons with this software on them. 
+Please do not re-host the files, but rather link to this page, so that there are not old versions of the firmware hanging around. If this firmware does make you money, it would be nice to recieve a donation, however I dont enforce this.
+
 ## Version Changes
 
 V1.15
@@ -213,4 +218,4 @@ V1.02
 * Adds hold both buttons on IDLE to access the therometer mode.
 * Changes the exit soldering mode to be holding both buttons (Like original firmware).
 
-If you love this firmware and want to continue my caffine addiction, you can do so here (or email me) : https://paypal.me/RalimTek
+If you love this firmware and want to continue my caffine addiction, you can do so here (or email me for other options) : https://paypal.me/RalimTek
