@@ -1,5 +1,5 @@
 # TS100
-This is a complete re*write of the open source software for the ts100 soldering iron.
+This is a complete rewrite of the open source software for the ts100 soldering iron.
 This project is feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
 
 This project was started to remove the need for USB for changing system settings.

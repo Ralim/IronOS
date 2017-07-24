@@ -457,6 +457,12 @@ void DrawUI() {
 		} else {
 			OLED_DrawChar(' ', 5);
 		}
+		if (systemSettings.displayTempInF) {
+			OLED_DrawChar('F', 3);
+		} else {
+			OLED_DrawChar('C', 3);
+		}
+		//Optionally draw the arrows, or draw the power instead
 		OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
 		if (getIronTimer() == 0
 				&& (temp / 10) > (systemSettings.SolderingTemp / 10)) {
@@ -469,11 +475,6 @@ void DrawUI() {
 			} else {		//we are heating
 				OLED_DrawSymbol(6, 6);
 			}
-		}
-		if (systemSettings.displayTempInF) {
-			OLED_DrawChar('F', 3);
-		} else {
-			OLED_DrawChar('C', 3);
 		}
 
 	}
