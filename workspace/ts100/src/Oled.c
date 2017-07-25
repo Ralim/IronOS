@@ -77,14 +77,19 @@ void Oled_DisplayFlip() {
  Input: number of bytes to write, array to write
  Output:
  */
-const u8* Data_Command(u8 length,const u8* data) {
+const u8* Data_Command(u8 length, const u8* data) {
 	int i;
 	u8 tx_data[129];
 	//here are are inserting the data write command at the beginning
 	tx_data[0] = 0x40;
 	length++;
 	for (i = 1; i < length; i++) //Loop through the array of data
-		tx_data[i] = *data++;
+			{
+		if (data == 0)
+			tx_data[i] = 0;
+		else
+			tx_data[i] = *data++;
+	}
 	I2C_PageWrite(tx_data, length, DEVICEADDR_OLED); //write out the buffer
 	return data;
 }
@@ -107,7 +112,7 @@ void Set_ShowPos(u8 x, u8 y) {
  Inputs:(x,y) start point, (width,height) of enclosing rect, pointer to data
  Output: pointer to the last byte written out
  *******************************************************************************/
-const u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high,const u8* ptr) {
+const u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, const u8* ptr) {
 	u8 m, n, y;
 
 	n = y0 + high;

@@ -463,17 +463,23 @@ void DrawUI() {
 			OLED_DrawChar('C', 3);
 		}
 		//Optionally draw the arrows, or draw the power instead
-		OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
-		if (getIronTimer() == 0
-				&& (temp / 10) > (systemSettings.SolderingTemp / 10)) {
-			//Cooling
-			OLED_DrawSymbol(6, 5);
+		if (systemSettings.powerDisplay) {
+			//We want to draw in a neat little bar graph of power being pushed to the tip
+			Oled_DrawArea(6 * 12, 0, 12, 8, 0);
 		} else {
-			if (getIronTimer() < 1500) {
-				//Maintaining
-				OLED_DrawSymbol(6, 7);
-			} else {		//we are heating
-				OLED_DrawSymbol(6, 6);
+			//Draw in the arrows if the user has the power display turned off
+			OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
+			if (getIronTimer() == 0
+					&& (temp / 10) > (systemSettings.SolderingTemp / 10)) {
+				//Cooling
+				OLED_DrawSymbol(6, 5);
+			} else {
+				if (getIronTimer() < 1500) {
+					//Maintaining
+					OLED_DrawSymbol(6, 7);
+				} else {		//we are heating
+					OLED_DrawSymbol(6, 6);
+				}
 			}
 		}
 
