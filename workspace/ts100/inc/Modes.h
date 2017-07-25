@@ -30,7 +30,7 @@ typedef enum {
 	TEMPCAL,		//Cal tip temp offset
 
 } operatingModeEnum;
-#define SETTINGSOPTIONSCOUNT 10 /*Number of settings in the settings menu*/
+#define SETTINGSOPTIONSCOUNT 11 /*Number of settings in the settings menu*/
 
 typedef enum {
 	UVCO = 0,
@@ -44,6 +44,7 @@ typedef enum {
 	LEFTY,
 	BOOSTMODE,
 	BOOSTTEMP,
+	POWERDISPLAY,
 } settingsPageEnum;
 
 void ProcessUI();

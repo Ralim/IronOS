@@ -14,7 +14,8 @@ const char *SettingsLongNames[] = {
 		"      Temperature Display Update Rate",
 		"      Flip Display for Left Hand",
 		"      Enable front key boost 450C mode when soldering",
-		"      Temperature when in boost mode" };
+		"      Temperature when in boost mode",
+		"      Changes the arrows to a power display when soldering" };
 uint8_t StatusFlags = 0;
 uint32_t temporaryTempStorage = 0;
 
@@ -224,6 +225,9 @@ void ProcessUI() {
 					systemSettings.BoostTemp += 100;	//Go up 10C at a time
 					if (systemSettings.BoostTemp > 4500)
 						systemSettings.BoostTemp = 2500;	//loop back at 250
+					break;
+				case POWERDISPLAY:
+					systemSettings.powerDisplay = !systemSettings.powerDisplay;
 					break;
 				default:
 					break;
@@ -469,7 +473,7 @@ void DrawUI() {
 		//Optionally draw the arrows, or draw the power instead
 		if (systemSettings.powerDisplay) {
 			//We want to draw in a neat little bar graph of power being pushed to the tip
-			Oled_DrawArea(6 * 12, 0, 12, 8, 0);
+
 		} else {
 			//Draw in the arrows if the user has the power display turned off
 			OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
@@ -615,6 +619,16 @@ void DrawUI() {
 			case BOOSTTEMP:
 				OLED_DrawString("BTMP ", 5);
 				OLED_DrawThreeNumber(systemSettings.BoostTemp / 10, 5);
+				break;
+			case POWERDISPLAY:
+				switch (systemSettings.powerDisplay) {
+				case 1:
+					OLED_DrawString("PWRDSP T", 8);
+					break;
+				case 0:
+					OLED_DrawString("PWRDSP F", 8);
+					break;
+				}
 				break;
 			default:
 				break;
