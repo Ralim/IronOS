@@ -1,6 +1,7 @@
 # TS100
 This is a complete rewrite of the open source software for the ts100 soldering iron.
 This project is feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
+A short(ish) video that goes through every single menu option in the firmware is available [over here](https://www.youtube.com/watch?v=WlnpboYfxNk)
 
 This project was started to remove the need for USB for changing system settings.
 In the latest official firmware they have also added a settings menu system, so it is still worth comparing the two firmwares to select your preferred option.
