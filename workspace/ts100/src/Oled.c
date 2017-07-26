@@ -221,6 +221,14 @@ void OLED_DrawExtendedChar(uint8_t id, uint8_t x) {
 
 	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
 }
+
+void OLED_DrawWideChar(uint8_t id, uint8_t x) {
+	u8* ptr = (u8*) DoubleWidthChars;
+	ptr += (id) * (FONT_WIDTH * 4);
+	x *= FONT_WIDTH; //convert to a x coordinate
+
+	Oled_DrawArea(x, 0, FONT_WIDTH * 2, 16, (u8*) ptr);
+}
 void OLED_BlankSlot(uint8_t xStart, uint8_t width) {
 	u8* ptr = (u8*) FONT;
 	ptr += (36) * (FONT_WIDTH * 2);

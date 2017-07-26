@@ -473,7 +473,11 @@ void DrawUI() {
 		//Optionally draw the arrows, or draw the power instead
 		if (systemSettings.powerDisplay) {
 			//We want to draw in a neat little bar graph of power being pushed to the tip
-
+			//ofset 11
+			uint16_t count = getIronTimer() / (40000 / 28);
+			if (count > 28)
+				count = 28;
+			OLED_DrawWideChar((count), 6);
 		} else {
 			//Draw in the arrows if the user has the power display turned off
 			OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
