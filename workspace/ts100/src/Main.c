@@ -38,10 +38,14 @@ void setup() {
 	StartUp_Accelerometer(systemSettings.sensitivity); //Start the accelerometer
 	setupPID(); 										//Init the PID values
 	readIronTemp(systemSettings.tempCalibration, 0, 0); //load the default calibration value
-	Init_Oled(systemSettings.flipDisplay); 				//Init the OLED display
+	if (systemSettings.OrientationMode == 2)
+		Init_Oled(!getOrientation()); 				//Init the OLED display
+	else
+		Init_Oled(systemSettings.OrientationMode); 			//Init the OLED display
 
 	OLED_DrawString("VER 1.16", 8); 					//Version Number
-	delayMs(300);								//Pause to show version number
+	delayMs(400);								//Pause to show version number
 	showBootLogoIfavailable();
-	Start_Watchdog(1000); 		//start the system watch dog as 1 second timeout
+	Start_Watchdog(5000); 		//start the system watch dog as 5 second timeout
+
 }

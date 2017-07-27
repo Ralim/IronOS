@@ -14,10 +14,12 @@
 
 #include "Font.h"
 int8_t displayOffset = 32;
+uint8_t currentOrientation = 0;
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
-u8 OLED_Setup_Array[46] = { 0x80, 0xAE,/*Display off*/
+u8 OLED_Setup_Array[46] = { /**/
+0x80, 0xAE,/*Display off*/
 0x80, 0xD5,/*Set display clock divide ratio / osc freq*/
 0x80, 0x52,/*Unknown*/
 0x80, 0xA8,/*Set Multiplex Ratio*/
@@ -60,18 +62,7 @@ void Oled_DisplayOff(void) {
 
 	I2C_PageWrite(data, 6, DEVICEADDR_OLED);
 }
-/*
- * This sets the OLED screen to invert the screen (flip it vertically)
- * This is used if the unit is set to left hand mode
- */
-void Oled_DisplayFlip() {
-	u8 data[2] = { 0x80, 0XC8 };
-	I2C_PageWrite(data, 2, DEVICEADDR_OLED);
-	data[1] = 0xA1;
-	I2C_PageWrite(data, 2, DEVICEADDR_OLED);
-	displayOffset = 0;
 
-}
 /*
  Description: write a command to the Oled display
  Input: number of bytes to write, array to write
@@ -150,8 +141,8 @@ void GPIO_Init_OLED(void) {
  Description: Initializes the Oled screen
  *******************************************************************************/
 void Init_Oled(uint8_t leftHanded) {
+	currentOrientation = leftHanded;
 	u8 param_len;
-
 	OLED_RST();
 	delayMs(5);
 	OLED_ACT(); //Toggling reset to reset the oled
@@ -161,6 +152,10 @@ void Init_Oled(uint8_t leftHanded) {
 		OLED_Setup_Array[11] = 0xC8;
 		OLED_Setup_Array[19] = 0xA1;
 		displayOffset = 0;
+	} else {
+		OLED_Setup_Array[11] = 0xC0;
+		OLED_Setup_Array[19] = 0x40;
+		displayOffset = 32;
 	}
 	I2C_PageWrite((u8 *) OLED_Setup_Array, param_len, DEVICEADDR_OLED);
 }
@@ -286,4 +281,14 @@ void OLED_DrawIDLELogo() {
 
 void OLED_DrawSymbol(uint8_t x, uint8_t symbol) {
 	Oled_DrawArea(x * FONT_WIDTH, 0, 16, 16, SymbolTable + (symbol * 32));
+}
+
+void OLED_SetOrientation(uint8_t ori) {
+	if (ori != currentOrientation) {
+		Init_Oled(ori);
+	}
+}
+
+uint8_t OLED_GetOrientation() {
+	return currentOrientation;
 }

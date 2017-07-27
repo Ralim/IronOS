@@ -32,5 +32,6 @@ void OLED_DrawThreeNumber(uint16_t in, uint8_t x);
 void OLED_DrawIDLELogo();
 void OLED_DrawSymbol(uint8_t x, uint8_t symbol);
 const u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, const u8* ptr);
+void OLED_SetOrientation(uint8_t ori);
+uint8_t OLED_GetOrientation();
 #endif
-/******************************** END OF FILE *********************************/

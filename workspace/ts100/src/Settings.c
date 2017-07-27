@@ -64,7 +64,7 @@ void resetSettings() {
 	systemSettings.cutoutSetting = 0;			//default to no cut-off voltage
 	systemSettings.version = SETTINGSVERSION;//Store the version number to allow for easier upgrades
 	systemSettings.displayTempInF = 0;			//default to C
-	systemSettings.flipDisplay = 0;				//Default to right handed mode
+	systemSettings.OrientationMode = 2;				//Default to automatic
 	systemSettings.sensitivity = 6;				//Default high sensitivity
 	systemSettings.tempCalibration = 239;	//Default to their calibration value
 	systemSettings.voltageDiv = 144;			//Default divider from schematic

@@ -16,6 +16,7 @@
 #include "PID.h"
 #include "Settings.h"
 #include "Analog.h"
+#include "MMA8652FC.h"
 #include <string.h>
 typedef enum {
 	STARTUP, 		//we are sitting on the prompt to push a button
@@ -41,7 +42,7 @@ typedef enum {
 	TEMPDISPLAY,
 	TEMPROUNDING,
 	DISPUPDATERATE,
-	LEFTY,
+	SCREENROTATION,
 	BOOSTMODE,
 	BOOSTTEMP,
 	POWERDISPLAY,

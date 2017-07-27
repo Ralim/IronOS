@@ -4,6 +4,19 @@
  */
 #include "I2C.h"
 
+/* I2C STOP mask */
+#define CR1_STOP_Set            ((uint16_t)0x0200)
+#define CR1_STOP_Reset          ((uint16_t)0xFDFF)
+
+/* I2C ACK mask */
+#define CR1_ACK_Set             ((uint16_t)0x0400)
+#define CR1_ACK_Reset           ((uint16_t)0xFBFF)
+
+/* I2C POS mask */
+#define CR1_POS_Set             ((uint16_t)0x0800)
+#define CR1_POS_Reset           ((uint16_t)0xF7FF)
+
+#define NULL ((void *)0)
 /*
  * Configure the I2C port hardware
  */
@@ -60,89 +73,222 @@ void I2C_PageWrite(u8* buf, u8 nbyte, u8 deviceaddr) {
 	}
 
 }
+//Based on code from http://iamjustinwang.blogspot.com.au/2016/03/stm32f103-i2c-master-driver.html
+int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
+		uint16_t numByteToRead) {
 
-/*
- * Read Page of data using I2C1 peripheral
- */
+	__IO uint32_t temp = 0;
+	volatile int I2C_TimeOut = 0;
 
-void I2C_PageRead(u8* buf, u8 nbyte, u8 deviceaddr, u8 readaddr) {
-	I2C_GenerateSTART(I2C1, ENABLE);
-	while (I2C_GetFlagStatus(I2C1, I2C_FLAG_SB) == RESET)
-		;
-	I2C_Send7bitAddress(I2C1, deviceaddr << 1, I2C_Direction_Transmitter);
-	while (I2C_GetFlagStatus(I2C1, I2C_FLAG_ADDR) == RESET)
-		;
-	I2C_GetFlagStatus(I2C1, I2C_FLAG_MSL);
-	while (I2C_GetFlagStatus(I2C1, I2C_FLAG_TXE) == RESET)
-		;
-	// Send an 8bit byte address
-	I2C_SendData(I2C1, readaddr);
+	// /* While the bus is busy * /
+	I2C_TimeOut = 3000;
 	while (I2C_GetFlagStatus(I2C1, I2C_FLAG_BUSY)) {
-	}
-	I2C_AcknowledgeConfig(I2C1, DISABLE);
-	I2C_NACKPositionConfig(I2C1, I2C_NACKPosition_Current);
-	I2C_GenerateSTART(I2C1, ENABLE);
-	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT)) {
-	}
-	I2C_Send7bitAddress(I2C1, deviceaddr << 1, I2C_Direction_Receiver);
-	while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_ADDR)) {
-	}
-	if (nbyte == 1) {
-		// Clear Ack bit
-		I2C_AcknowledgeConfig(I2C1, DISABLE);
-		// EV6_1 -- must be atomic -- Clear ADDR, generate STOP
-		__disable_irq();
-		(void) I2C1->SR2;
-		I2C_GenerateSTOP(I2C1, ENABLE);
-		__enable_irq();
-		// Receive data   EV7
-		while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_RXNE)) {
+		if (I2C_TimeOut-- <= 0) {
+			return 1;
 		}
-		*buf++ = I2C_ReceiveData(I2C1);
-	} else if (nbyte == 2) {
-		// Set POS flag
-		I2C_NACKPositionConfig(I2C1, I2C_NACKPosition_Next);
-		// EV6_1 -- must be atomic and in this order
-		__disable_irq();
-		(void) I2C1->SR2;                           // Clear ADDR flag
-		I2C_AcknowledgeConfig(I2C1, DISABLE);       // Clear Ack bit
-		__enable_irq();
-		// EV7_3  -- Wait for BTF, program stop, read data twice
-		while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_BTF)) {
-		}
-		__disable_irq();
-		I2C_GenerateSTOP(I2C1, ENABLE);
-		*buf++ = I2C1->DR;
-		__enable_irq();
-		*buf++ = I2C1->DR;
-	} else {
-		(void) I2C1->SR2;                           // Clear ADDR flag
-		while (nbyte-- != 3) {
-			// EV7 -- cannot guarantee 1 transfer completion time, wait for BTF
-			//        instead of RXNE
-			while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_BTF)) {
-			}
-			*buf++ = I2C_ReceiveData(I2C1);
-		}
+	}
 
-		while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_BTF)) {
+	// * Send START condition * /
+	I2C_GenerateSTART(I2C1, ENABLE);
+
+	// / * Test on EV5 and clear it * /
+	I2C_TimeOut = 3000;
+	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT)) {
+		if (I2C_TimeOut-- <= 0) {
+			return 1;
 		}
-		// EV7_2 -- Figure 1 has an error, doesn't read N-2 !
-		I2C_AcknowledgeConfig(I2C1, DISABLE);           // clear ack bit
+	}
+
+	// / * Send  address for write  * /
+	I2C_Send7bitAddress(I2C1, deviceAddr, I2C_Direction_Transmitter);
+
+	// / * Test on EV6 and clear it * /
+	I2C_TimeOut = 3000;
+	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED)) {
+		if (I2C_TimeOut-- <= 0) {
+			return 1;
+		}
+	}
+
+	// / * Send the internal address to read from: Only one byte address  * /
+	I2C_SendData(I2C1, readAddr);
+
+	/// * Test on EV8 and clear it * /
+	I2C_TimeOut = 3000;
+	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED)) {
+		if (I2C_TimeOut-- <= 0) {
+			return 1;
+		}
+	}
+
+	/// * Send STRAT condition a second time * /
+	I2C_GenerateSTART(I2C1, ENABLE);
+
+	/// * Test on EV5 and clear it * /
+	I2C_TimeOut = 3000;
+	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT)) {
+		if (I2C_TimeOut-- <= 0) {
+			return 1;
+		}
+	}
+
+	// * Send  address for read * /
+	I2C_Send7bitAddress(I2C1, deviceAddr, I2C_Direction_Receiver);
+
+	if (numByteToRead == 1) {
+		/* Wait until ADDR is set */
+		I2C_TimeOut = 3000;
+		while ((I2C1->SR1 & 0x0002) != 0x0002) {
+			if (I2C_TimeOut-- <= 0) {
+				return 1;
+			}
+		}
+		/* Clear ACK bit */
+		I2C1->CR1 &= CR1_ACK_Reset;
+		/* Disable all active IRQs around ADDR clearing and STOP programming because the EV6_3
+		 software sequence must complete before the current byte end of transfer */
 		__disable_irq();
-		*buf++ = I2C_ReceiveData(I2C1);             // receive byte N-2
-		I2C_GenerateSTOP(I2C1, ENABLE);                  // program stop
+		/* Clear ADDR flag */
+		temp = I2C1->SR2;
+		/* Program the STOP */
+		I2C_GenerateSTOP(I2C1, ENABLE);
+		/* Re-enable IRQs */
 		__enable_irq();
-		*buf++ = I2C_ReceiveData(I2C1);             // receive byte N-1
-		// wait for byte N
-		while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED)) {
+		/* Wait until a data is received in DR register (RXNE = 1) EV7 */
+		I2C_TimeOut = 3000;
+		while ((I2C1->SR1 & 0x00040) != 0x000040) {
+			if (I2C_TimeOut-- <= 0) {
+				return 1;
+			}
 		}
-		*buf++ = I2C_ReceiveData(I2C1);
-		nbyte = 0;
+		/* Read the data */
+		*pBuffer = I2C1->DR;
+
+	} else if (numByteToRead == 2) {
+
+		/* Set POS bit */
+		I2C1->CR1 |= CR1_POS_Set;
+		/* Wait until ADDR is set: EV6 */
+		I2C_TimeOut = 3000;
+		while ((I2C1->SR1 & 0x0002) != 0x0002) {
+			if (I2C_TimeOut-- <= 0) {
+				return 1;
+			}
+		}
+		/* EV6_1: The acknowledge disable should be done just after EV6,
+		 that is after ADDR is cleared, so disable all active IRQs around ADDR clearing and
+		 ACK clearing */
+		__disable_irq();
+		/* Clear ADDR by reading SR2 register  */
+		temp = I2C1->SR2;
+		/* Clear ACK */
+		I2C1->CR1 &= CR1_ACK_Reset;
+		/*Re-enable IRQs */
+		__enable_irq();
+		/* Wait until BTF is set */
+		I2C_TimeOut = 3000;
+		while ((I2C1->SR1 & 0x00004) != 0x000004) {
+			if (I2C_TimeOut-- <= 0) {
+				return 1;
+			}
+		}
+		/* Disable IRQs around STOP programming and data reading */
+		__disable_irq();
+		/* Program the STOP */
+		I2C_GenerateSTOP(I2C1, ENABLE);
+		/* Read first data */
+		*pBuffer = I2C1->DR;
+		/* Re-enable IRQs */
+		__enable_irq();
+		/**/
+		pBuffer++;
+		/* Read second data */
+		*pBuffer = I2C1->DR;
+		/* Clear POS bit */
+		I2C1->CR1 &= CR1_POS_Reset;
 	}
-	// Wait for stop
-	while (I2C_GetFlagStatus(I2C1, I2C_FLAG_STOPF)) {
+
+	else { //numByteToRead > 2
+		   // * Test on EV6 and clear it * /
+		I2C_TimeOut = 3000;
+		while (!I2C_CheckEvent(I2C1,
+		I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED)) {
+			if (I2C_TimeOut-- <= 0) {
+				return 1;
+			}
+		}
+		// * While there is data to be read * /
+		while (numByteToRead) {
+			/* Receive bytes from first byte until byte N-3 */
+			if (numByteToRead != 3) {
+				/* Poll on BTF to receive data because in polling mode we can not guarantee the
+				 EV7 software sequence is managed before the current byte transfer completes */
+				I2C_TimeOut = 3000;
+				while ((I2C1->SR1 & 0x00004) != 0x000004) {
+					if (I2C_TimeOut-- <= 0) {
+						return 1;
+					}
+				}
+				/* Read data */
+				*pBuffer = I2C1->DR;
+				pBuffer++;
+				/* Decrement the read bytes counter */
+				numByteToRead--;
+			}
+
+			/* it remains to read three data: data N-2, data N-1, Data N */
+			if (numByteToRead == 3) {
+				/* Wait until BTF is set: Data N-2 in DR and data N -1 in shift register */
+				I2C_TimeOut = 3000;
+				while ((I2C1->SR1 & 0x00004) != 0x000004) {
+					if (I2C_TimeOut-- <= 0) {
+						return 1;
+					}
+				}
+				/* Clear ACK */
+				I2C1->CR1 &= CR1_ACK_Reset;
+
+				/* Disable IRQs around data reading and STOP programming */
+				__disable_irq();
+				/* Read Data N-2 */
+				*pBuffer = I2C1->DR;
+				/* Increment */
+				pBuffer++;
+				/* Program the STOP */
+				I2C1->CR1 |= CR1_STOP_Set;
+				/* Read DataN-1 */
+				*pBuffer = I2C1->DR;
+				/* Re-enable IRQs */
+				__enable_irq();
+				/* Increment */
+				pBuffer++;
+				/* Wait until RXNE is set (DR contains the last data) */
+				I2C_TimeOut = 3000;
+				while ((I2C1->SR1 & 0x00040) != 0x000040) {
+					if (I2C_TimeOut-- <= 0) {
+						return 1;
+					}
+				}
+				/* Read DataN */
+				*pBuffer = I2C1->DR;
+				/* Reset the number of bytes to be read by master */
+				numByteToRead = 0;
+			}
+		}
 	}
-	return;
+
+	/* Make sure that the STOP bit is cleared by Hardware before CR1 write access */
+	I2C_TimeOut = 3000;
+	while ((I2C1->CR1 & 0x200) == 0x200) {
+		if (I2C_TimeOut-- <= 0) {
+			return 1;
+		}
+	}
+
+	// * Enable Acknowledgment to be ready for another reception * /
+	I2C_AcknowledgeConfig(I2C1, ENABLE);
+
+	return 0;
+
 }
 

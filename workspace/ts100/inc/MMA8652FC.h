@@ -14,9 +14,8 @@
 #ifndef __MMA8652FC__H
 #define __MMA8652FC__H
 
-
-void StartUp_Accelerometer(uint8_t sensitivity);//This is the only function we expose
-
+void StartUp_Accelerometer(uint8_t sensitivity); //This is the only function we expose
+uint8_t getOrientation();
 //--------------MMA8652 Device ID----------------------------------------------//
 
 #define DEVICE_ADDR     0X1D        
@@ -99,8 +98,6 @@ void StartUp_Accelerometer(uint8_t sensitivity);//This is the only function we e
 #define INT_SOURCE    0X0C
 #define DEVICE_ID     0X0D
 
-
-
 //-----STATUS_REG(0X00)-----Bit Define----------------------------------------//
 #define ZYXDR_BIT     0X08
 //----XYZ_DATA_CFG_REG(0xE)-Bit Define----------------------------------------//
@@ -123,7 +120,7 @@ void StartUp_Accelerometer(uint8_t sensitivity);//This is the only function we e
 //---------CTRL_REG2(0X2B)Bit Define------------------------------------------// 
 #define MODS_MASK     0x03     //Oversampling Mode 4 
 #define Normal_Mode   0x0      //Normal=0,Low Noise Low Power MODS=1,
-                               //HI RESOLUTION=2,LOW POWER MODS = 11 
+//HI RESOLUTION=2,LOW POWER MODS = 11
 //----CTRL_REG4---Interrupt Enable BIT ---------------------------------------//   
 //0 interrupt is disabled (default) 
 //1 interrupt is enabled     

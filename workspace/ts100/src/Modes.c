@@ -5,17 +5,17 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
-const char *SettingsLongNames[] = {
-		"      Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
-		"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
-		"      Shutdown Timeout <Minutes>",
-		"      Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",
-		"      Temperature Unit", "      Temperature Rounding Amount",
-		"      Temperature Display Update Rate",
-		"      Flip Display for Left Hand",
-		"      Enable front key boost 450C mode when soldering",
-		"      Temperature when in boost mode",
-		"      Changes the arrows to a power display when soldering" };
+const char *SettingsLongNames[] =
+		{ "      Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
+				"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
+				"      Shutdown Timeout <Minutes>",
+				"      Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",
+				"      Temperature Unit", "      Temperature Rounding Amount",
+				"      Temperature Display Update Rate",
+				"      Display Orientation <A. Automatic L. Left Handed R. Right Handed>",
+				"      Enable front key boost 450C mode when soldering",
+				"      Temperature when in boost mode",
+				"      Changes the arrows to a power display when soldering" };
 uint8_t StatusFlags = 0;
 uint32_t temporaryTempStorage = 0;
 
@@ -37,6 +37,7 @@ void ProcessUI() {
 
 	switch (operatingMode) {
 	case STARTUP:
+
 		if (Buttons == (BUT_A | BUT_B)) {
 			operatingMode = THERMOMETER;
 		} else if (Buttons == BUT_A) {
@@ -109,7 +110,7 @@ void ProcessUI() {
 		}
 		break;
 	case TEMP_ADJ:
-		if (systemSettings.flipDisplay) {
+		if (OLED_GetOrientation() == 1) {
 			if (Buttons == BUT_B) {
 				//A key pressed so we are moving down in temp
 
@@ -198,8 +199,10 @@ void ProcessUI() {
 					systemSettings.displayTempInF =
 							!systemSettings.displayTempInF;
 					break;
-				case LEFTY:
-					systemSettings.flipDisplay = !systemSettings.flipDisplay;
+				case SCREENROTATION:
+					systemSettings.OrientationMode++;
+					systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
+
 					break;
 				case MOTIONSENSITIVITY:
 					systemSettings.sensitivity++;
@@ -329,12 +332,12 @@ void ProcessUI() {
 		} else {
 			//User is calibrating the dc input
 			if (Buttons == BUT_A) {
-				if (!systemSettings.flipDisplay)
+				if (!systemSettings.OrientationMode)
 					systemSettings.voltageDiv++;
 				else
 					systemSettings.voltageDiv--;
 			} else if (Buttons == BUT_B) {
-				if (!systemSettings.flipDisplay)
+				if (!systemSettings.OrientationMode)
 					systemSettings.voltageDiv--;
 				else
 					systemSettings.voltageDiv++;
@@ -403,11 +406,15 @@ void drawTemp(uint16_t temp, uint8_t x, uint8_t roundingMode) {
  */
 void DrawUI() {
 	static uint32_t lastOLEDDrawTime = 0;
+
 	static uint16_t lastSolderingDrawnTemp1 = 0;
 	static uint16_t lastSolderingDrawnTemp2 = 0;
-
 	static uint8_t settingsLongTestScrollPos = 0;
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
+	if (systemSettings.OrientationMode == 2) {
+		//Automatic mode
+		OLED_SetOrientation(!getOrientation());
+	}
 	switch (operatingMode) {
 	case STARTUP:
 		//We are chilling in the idle mode
@@ -474,7 +481,7 @@ void DrawUI() {
 		if (systemSettings.powerDisplay) {
 			//We want to draw in a neat little bar graph of power being pushed to the tip
 			//ofset 11
-			uint16_t count = getIronTimer() / (40000 / 28);
+			uint16_t count = getIronTimer() / (30000 / 28);
 			if (count > 28)
 				count = 28;
 			OLED_DrawWideChar((count), 6);
@@ -563,12 +570,19 @@ void DrawUI() {
 				else
 					OLED_DrawString("TMPUNT C", 8);
 				break;
-			case LEFTY:
+			case SCREENROTATION:
 
-				if (systemSettings.flipDisplay)
-					OLED_DrawString("FLPDSP T", 8);
-				else
-					OLED_DrawString("FLPDSP F", 8);
+				switch (systemSettings.OrientationMode) {
+				case 0:
+					OLED_DrawString("DSPROT R", 8);
+					break;
+				case 1:
+					OLED_DrawString("DSPROT L", 8);
+					break;
+				case 2:
+					OLED_DrawString("DSPROT A", 8);
+					break;
+				}
 				break;
 			case MOTIONSENSITIVITY:
 				OLED_DrawString("MSENSE ", 7);

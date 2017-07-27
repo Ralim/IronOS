@@ -23,10 +23,20 @@ void I2C_RegisterWrite(uint8_t reg, uint8_t data) {
 }
 
 uint8_t I2C_RegisterRead(uint8_t reg) {
-	u8 tx_data[3];
-	tx_data[0] = reg;
-	I2C_PageRead(tx_data, 1, DEVICE_ADDR, reg);
+	u8 tx_data[1];
+	I2C_Master_Read(DEVICE_ADDR << 1, reg, tx_data, 1);
 	return tx_data[0];
+}
+
+uint8_t getOrientation() {
+//First read the PL_STATUS register
+	uint8_t plStatus = I2C_RegisterRead(PL_STATUS_REG);
+	plStatus >>= 1; //We dont need the up/down bit
+	plStatus &= 0x03; //mask to the two lower bits
+	//0 == left handed
+	//1 == right handed
+
+	return plStatus;
 }
 
 void StartUp_Accelerometer(uint8_t sensitivity) {
@@ -39,8 +49,9 @@ void StartUp_Accelerometer(uint8_t sensitivity) {
 
 	I2C_RegisterWrite(FF_MT_THS_REG, 0x80 | sens);		// Set threshold
 	I2C_RegisterWrite(FF_MT_COUNT_REG, 0x02);	// Set debounce to 100ms
-
+	I2C_RegisterWrite(PL_CFG_REG, 0x40);	//Enable the orientation detection
 	I2C_RegisterWrite( CTRL_REG4, 0x04);		// Enable motion interrupt
 	I2C_RegisterWrite( CTRL_REG5, 0x04);// Route motion interrupts to INT1 ->PB5 ->EXTI5
 	I2C_RegisterWrite( CTRL_REG1, 0x11);		// ODR=800 Hz, Active mode
+
 }
