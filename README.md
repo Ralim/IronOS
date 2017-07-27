@@ -24,6 +24,7 @@ Please calibrate your irons voltage reading when you are using a lithium battery
 * Boost mode lets you temporarily change the temperature when soldering
 * Battery charge level indicatior if power source set to a lipo cell count.
 * Custom bootup logo support
+* Automatic LCD rotation based on orientation
 
 # Upgrading your ts100 iron
 
@@ -88,7 +89,7 @@ If you leave the unit alone (ie don't press any buttons) on a setting, after 3 s
 * TMPUNIT -> Temperature unit, C or F
 * TMPRND -> Temperature Rounding, {1,5,10}
 * TMPSPD -> How fast the temperature should update in the soldering status screen.
-* FLPDSP -> Flip display for left handed users
+* DSPROT -> Display rotation mode, Automatic, Left handed or Right handed
 * BOOST -> Enable boost mode
 * BTMP -> Set the temperature for the boost mode
 
@@ -152,6 +153,11 @@ This software is provided as-is, so I cannot provide any commercial support for 
 Please do not re-host the files, but rather link to this page, so that there are not old versions of the firmware hanging around. If this firmware does make you money, it would be nice to recieve a donation, however I dont enforce this.
 
 ## Version Changes
+
+V1.16
+
+* Added automatic rotation support
+* Added power display graph
 
 V1.15
 
