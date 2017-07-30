@@ -141,6 +141,7 @@ void GPIO_Init_OLED(void) {
  Description: Initializes the Oled screen
  *******************************************************************************/
 void Init_Oled(uint8_t leftHanded) {
+
 	currentOrientation = leftHanded;
 	u8 param_len;
 	OLED_RST();
@@ -148,11 +149,11 @@ void Init_Oled(uint8_t leftHanded) {
 	OLED_ACT(); //Toggling reset to reset the oled
 	delayMs(5);
 	param_len = 46;
-	if (leftHanded) {
+	if (leftHanded == 1) {
 		OLED_Setup_Array[11] = 0xC8;
 		OLED_Setup_Array[19] = 0xA1;
 		displayOffset = 0;
-	} else {
+	} else if (leftHanded == 0) {
 		OLED_Setup_Array[11] = 0xC0;
 		OLED_Setup_Array[19] = 0x40;
 		displayOffset = 32;
@@ -284,6 +285,8 @@ void OLED_DrawSymbol(uint8_t x, uint8_t symbol) {
 }
 
 void OLED_SetOrientation(uint8_t ori) {
+	if (ori > 1)
+		return;
 	if (ori != currentOrientation) {
 		Init_Oled(ori);
 	}
