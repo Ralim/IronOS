@@ -3,9 +3,10 @@
 #include "I2C.h"
 
 volatile uint32_t system_Ticks;
-volatile uint32_t lastKeyPress; //millis() at the last button event
-volatile uint8_t keyState; //tracks the button status
+volatile uint32_t BkeyChange; //millis() at the last button event
+volatile uint32_t AkeyChange;
 volatile uint8_t rawKeys;
+volatile uint8_t LongKeys;
 volatile uint32_t lastMovement; //millis() at last movement event
 
 //Delay in milliseconds using systemTick
@@ -13,6 +14,89 @@ void delayMs(uint32_t ticks) {
 	uint32_t endtime = ticks + millis();
 	while (millis() < endtime)
 		;
+}
+uint32_t getLastButtonPress() {
+	if (BkeyChange > AkeyChange)
+		return BkeyChange;
+	return AkeyChange;
+}
+uint8_t getButtons() {
+	//We want to check the times for the lat buttons & also the rawKeys state
+	//If a key has just gone down, rawKeys & KEY ==1
+	uint8_t out = 0;
+	if (millis() - AkeyChange > 30) {
+		if (LongKeys & BUT_A) {
+			if (rawKeys & BUT_A) {
+				if (millis() - AkeyChange > 800) {
+					out |= BUT_A;
+					AkeyChange = millis();
+					LongKeys &= ~BUT_A;
+
+					LongKeys |= (BUT_A << 2);
+				}
+			} else {
+				LongKeys &= ~BUT_A;
+				LongKeys &= ~(BUT_A << 2);
+			}
+
+		} else if (LongKeys & (BUT_A << 2)) {
+			if (rawKeys & BUT_A) {
+				if (millis() - AkeyChange > 300) {
+					out |= BUT_A;
+					AkeyChange = millis();
+				}
+			} else {
+				LongKeys &= ~BUT_A;
+				LongKeys &= ~(BUT_A << 2);
+			}
+		} else {
+			if (rawKeys & BUT_A) {
+				//The key is down
+				out |= BUT_A;
+				LongKeys |= BUT_A;
+			} else {
+				//The key has been lifted
+				LongKeys &= ~BUT_A;
+				LongKeys &= ~(BUT_A << 2);
+			}
+		}
+	}
+	if (millis() - BkeyChange > 30) {
+		if (LongKeys & BUT_B) {
+			if (rawKeys & BUT_B) {
+				if (millis() - BkeyChange > 800) {
+					out |= BUT_B;
+					BkeyChange = millis();
+					LongKeys |= (BUT_B << 2);
+					LongKeys &= ~BUT_B;
+				}
+			} else {
+				LongKeys &= ~BUT_B;
+				LongKeys &= ~(BUT_B << 2);
+			}
+		} else if (LongKeys & (BUT_B << 2)) {
+			if (rawKeys & BUT_B) {
+				if (millis() - BkeyChange > 300) {
+					out |= BUT_B;
+					BkeyChange = millis();
+				}
+			} else {
+				LongKeys &= ~BUT_B;
+				LongKeys &= ~(BUT_B << 2);
+			}
+		} else {
+			if (rawKeys & BUT_B) {
+				//The key is down
+				out |= BUT_B;
+				LongKeys |= BUT_B;
+			} else {
+				//The key has been lifted
+				LongKeys &= ~BUT_B;
+				LongKeys &= ~(BUT_B << 2);
+			}
+		}
+	}
+	return out;
 }
 
 void NMI_Handler(void) {
@@ -57,23 +141,19 @@ void EXTI9_5_IRQHandler(void) {
 	//Line 5 == movement
 	if (EXTI_GetITStatus(EXTI_Line9) != RESET) {
 		if (GPIO_ReadInputDataBit(GPIOA, KEY_A) == SET) {
-			keyState &= ~(BUT_A);
 			rawKeys &= ~BUT_A;
 		} else {
-			keyState |= BUT_A;
 			rawKeys |= BUT_A;
-			lastKeyPress = millis();
 		}
+		AkeyChange = millis();
 		EXTI_ClearITPendingBit(EXTI_Line9);
 	} else if (EXTI_GetITStatus(EXTI_Line6) != RESET) {
 		if (GPIO_ReadInputDataBit(GPIOA, KEY_B) == SET) {
-			keyState &= ~(BUT_B);
 			rawKeys &= ~BUT_B;
 		} else {
-			keyState |= BUT_B;
 			rawKeys |= BUT_B;
-			lastKeyPress = millis();
 		}
+		BkeyChange = millis();
 		EXTI_ClearITPendingBit(EXTI_Line6);
 	} else if (EXTI_GetITStatus(EXTI_Line5) != RESET) {	//Movement Event
 		lastMovement = millis();
