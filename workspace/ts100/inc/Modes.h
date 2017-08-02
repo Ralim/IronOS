@@ -18,6 +18,7 @@
 #include "Analog.h"
 #include "MMA8652FC.h"
 #include <string.h>
+
 typedef enum {
 	STARTUP, 		//we are sitting on the prompt to push a button
 	SOLDERING, 		//Normal operating mode
@@ -31,8 +32,12 @@ typedef enum {
 	TEMPCAL,		//Cal tip temp offset
 
 } operatingModeEnum;
-#define SETTINGSOPTIONSCOUNT 11 /*Number of settings in the settings menu*/
-
+//#define PIDTUNING
+#ifdef PIDTUNING
+#define SETTINGSOPTIONSCOUNT (11+3) /*Number of settings in the settings menu*/
+#else
+#define SETTINGSOPTIONSCOUNT (11) /*Number of settings in the settings menu*/
+#endif
 typedef enum {
 	UVCO = 0,
 	SLEEP_TEMP,
@@ -46,6 +51,11 @@ typedef enum {
 	BOOSTMODE,
 	BOOSTTEMP,
 	POWERDISPLAY,
+#ifdef PIDTUNING
+	PIDP,
+	PIDI,
+	PIDD,
+#endif
 } settingsPageEnum;
 
 void ProcessUI();

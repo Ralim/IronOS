@@ -27,7 +27,6 @@ void ProcessUI() {
 	uint8_t Buttons = getButtons(); //read the buttons status
 	static uint32_t lastModeChange = 0;
 
-
 	switch (operatingMode) {
 	case STARTUP:
 
@@ -175,7 +174,7 @@ void ProcessUI() {
 				case SLEEP_TEMP:
 					systemSettings.SleepTemp += 100;	//Go up 10C at a time
 					if (systemSettings.SleepTemp > 3000)
-						systemSettings.SleepTemp = 1000;//cant sleep higher than 300
+						systemSettings.SleepTemp = 500;	//cant sleep higher than 300 or less than 50
 					break;
 				case SLEEP_TIME:
 					++systemSettings.SleepTime;		//Go up 1 minute at a time
@@ -194,7 +193,8 @@ void ProcessUI() {
 					break;
 				case SCREENROTATION:
 					systemSettings.OrientationMode++;
-					systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
+					systemSettings.OrientationMode =
+							systemSettings.OrientationMode % 3;
 
 					break;
 				case MOTIONSENSITIVITY:
@@ -225,6 +225,20 @@ void ProcessUI() {
 				case POWERDISPLAY:
 					systemSettings.powerDisplay = !systemSettings.powerDisplay;
 					break;
+#ifdef PIDTUNING
+					case PIDP:
+					pidSettings.kp++;
+					pidSettings.kp %= 20;
+					break;
+					case PIDI:
+					pidSettings.ki++;
+					pidSettings.ki %= 10;
+					break;
+					case PIDD:
+					pidSettings.kd++;
+					pidSettings.kd %= 30;
+					break;
+#endif
 				default:
 					break;
 				}
@@ -474,7 +488,7 @@ void DrawUI() {
 		if (systemSettings.powerDisplay) {
 			//We want to draw in a neat little bar graph of power being pushed to the tip
 			//ofset 11
-			uint16_t count = getIronTimer() / (30000 / 28);
+			uint16_t count = getIronTimer() / (1000 / 28);
 			if (count > 28)
 				count = 28;
 			OLED_DrawWideChar((count), 6);
@@ -641,7 +655,22 @@ void DrawUI() {
 					break;
 				}
 				break;
+#ifdef PIDTUNING
+				case PIDP:
+				OLED_DrawString("PIDP ", 5);
+				OLED_DrawThreeNumber(pidSettings.kp, 5);
+				break;
+				case PIDI:
+				OLED_DrawString("PIDI ", 5);
+				OLED_DrawThreeNumber(pidSettings.ki, 5);
+				break;
+				case PIDD:
+				OLED_DrawString("PIDD ", 5);
+				OLED_DrawThreeNumber(pidSettings.kd, 5);
+				break;
+#endif
 			default:
+
 				break;
 			}
 		}

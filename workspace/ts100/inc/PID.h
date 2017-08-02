@@ -18,4 +18,5 @@ typedef struct {
 
 int32_t computePID(uint16_t setpoint);
 void setupPID(void);
+extern pidSettingsType pidSettings;
 #endif /* PID_H_ */

@@ -18,7 +18,7 @@ int main(void) {
 		Clear_Watchdog(); //reset the Watch dog timer
 		ProcessUI();
 		DrawUI();
-		delayMs(50); //Slow the system down a little bit
+		delayMs(30); //Slow the system down a little bit
 		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_5) == Bit_RESET) {
 			lastMovement = millis();
 			//This is a workaround for the line staying low as the user is still moving. (ie sensitivity is too high for their amount of movement)
@@ -39,13 +39,13 @@ void setup() {
 	setupPID(); 										//Init the PID values
 	readIronTemp(systemSettings.tempCalibration, 0, 0); //load the default calibration value
 	if (systemSettings.OrientationMode == 2)
-		Init_Oled(!getOrientation()); 				//Init the OLED display
+		Init_Oled(0); 									//Init the OLED display in RH mode, since accel wont have started up yet
 	else
-		Init_Oled(systemSettings.OrientationMode); 			//Init the OLED display
+		Init_Oled(systemSettings.OrientationMode); 		//Init the OLED display
 
 	OLED_DrawString("VER 1.16", 8); 					//Version Number
-	delayMs(400);								//Pause to show version number
+	delayMs(400);						//Pause to show version number
 	showBootLogoIfavailable();
-	Start_Watchdog(5000); 		//start the system watch dog as 5 second timeout
+	Start_Watchdog(5000); //start the system watch dog as 5 second timeout
 
 }

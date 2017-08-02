@@ -81,7 +81,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 	volatile int I2C_TimeOut = 0;
 
 	// /* While the bus is busy * /
-	I2C_TimeOut = 3000;
+	I2C_TimeOut = 1000;
 	while (I2C_GetFlagStatus(I2C1, I2C_FLAG_BUSY)) {
 		if (I2C_TimeOut-- <= 0) {
 			return 1;
@@ -92,7 +92,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 	I2C_GenerateSTART(I2C1, ENABLE);
 
 	// / * Test on EV5 and clear it * /
-	I2C_TimeOut = 3000;
+	I2C_TimeOut = 1000;
 	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT)) {
 		if (I2C_TimeOut-- <= 0) {
 			return 1;
@@ -103,7 +103,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 	I2C_Send7bitAddress(I2C1, deviceAddr, I2C_Direction_Transmitter);
 
 	// / * Test on EV6 and clear it * /
-	I2C_TimeOut = 3000;
+	I2C_TimeOut = 1000;
 	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED)) {
 		if (I2C_TimeOut-- <= 0) {
 			return 1;
@@ -114,7 +114,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 	I2C_SendData(I2C1, readAddr);
 
 	/// * Test on EV8 and clear it * /
-	I2C_TimeOut = 3000;
+	I2C_TimeOut = 1000;
 	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED)) {
 		if (I2C_TimeOut-- <= 0) {
 			return 1;
@@ -125,7 +125,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 	I2C_GenerateSTART(I2C1, ENABLE);
 
 	/// * Test on EV5 and clear it * /
-	I2C_TimeOut = 3000;
+	I2C_TimeOut = 1000;
 	while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT)) {
 		if (I2C_TimeOut-- <= 0) {
 			return 1;
@@ -137,7 +137,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 
 	if (numByteToRead == 1) {
 		/* Wait until ADDR is set */
-		I2C_TimeOut = 3000;
+		I2C_TimeOut = 1000;
 		while ((I2C1->SR1 & 0x0002) != 0x0002) {
 			if (I2C_TimeOut-- <= 0) {
 				return 1;
@@ -155,7 +155,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 		/* Re-enable IRQs */
 		__enable_irq();
 		/* Wait until a data is received in DR register (RXNE = 1) EV7 */
-		I2C_TimeOut = 3000;
+		I2C_TimeOut = 1000;
 		while ((I2C1->SR1 & 0x00040) != 0x000040) {
 			if (I2C_TimeOut-- <= 0) {
 				return 1;
@@ -169,7 +169,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 		/* Set POS bit */
 		I2C1->CR1 |= CR1_POS_Set;
 		/* Wait until ADDR is set: EV6 */
-		I2C_TimeOut = 3000;
+		I2C_TimeOut = 1000;
 		while ((I2C1->SR1 & 0x0002) != 0x0002) {
 			if (I2C_TimeOut-- <= 0) {
 				return 1;
@@ -186,7 +186,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 		/*Re-enable IRQs */
 		__enable_irq();
 		/* Wait until BTF is set */
-		I2C_TimeOut = 3000;
+		I2C_TimeOut = 1000;
 		while ((I2C1->SR1 & 0x00004) != 0x000004) {
 			if (I2C_TimeOut-- <= 0) {
 				return 1;
@@ -210,7 +210,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 
 	else { //numByteToRead > 2
 		   // * Test on EV6 and clear it * /
-		I2C_TimeOut = 3000;
+		I2C_TimeOut = 1000;
 		while (!I2C_CheckEvent(I2C1,
 		I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED)) {
 			if (I2C_TimeOut-- <= 0) {
@@ -223,7 +223,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 			if (numByteToRead != 3) {
 				/* Poll on BTF to receive data because in polling mode we can not guarantee the
 				 EV7 software sequence is managed before the current byte transfer completes */
-				I2C_TimeOut = 3000;
+				I2C_TimeOut = 1000;
 				while ((I2C1->SR1 & 0x00004) != 0x000004) {
 					if (I2C_TimeOut-- <= 0) {
 						return 1;
@@ -239,7 +239,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 			/* it remains to read three data: data N-2, data N-1, Data N */
 			if (numByteToRead == 3) {
 				/* Wait until BTF is set: Data N-2 in DR and data N -1 in shift register */
-				I2C_TimeOut = 3000;
+				I2C_TimeOut = 1000;
 				while ((I2C1->SR1 & 0x00004) != 0x000004) {
 					if (I2C_TimeOut-- <= 0) {
 						return 1;
@@ -263,7 +263,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 				/* Increment */
 				pBuffer++;
 				/* Wait until RXNE is set (DR contains the last data) */
-				I2C_TimeOut = 3000;
+				I2C_TimeOut = 1000;
 				while ((I2C1->SR1 & 0x00040) != 0x000040) {
 					if (I2C_TimeOut-- <= 0) {
 						return 1;
@@ -278,7 +278,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 	}
 
 	/* Make sure that the STOP bit is cleared by Hardware before CR1 write access */
-	I2C_TimeOut = 3000;
+	I2C_TimeOut = 1000;
 	while ((I2C1->CR1 & 0x200) == 0x200) {
 		if (I2C_TimeOut-- <= 0) {
 			return 1;
