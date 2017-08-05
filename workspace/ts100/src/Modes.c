@@ -5,17 +5,7 @@
  *      Author: Ralim <ralim@ralimtek.com>
  */
 #include "Modes.h"
-const char *SettingsLongNames[] =
-		{ "      Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
-				"      Sleep Temperature <C>", "      Sleep Timeout <Minutes>",
-				"      Shutdown Timeout <Minutes>",
-				"      Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",
-				"      Temperature Unit", "      Temperature Rounding Amount",
-				"      Temperature Display Update Rate",
-				"      Display Orientation <A. Automatic L. Left Handed R. Right Handed>",
-				"      Enable front key boost 450C mode when soldering",
-				"      Temperature when in boost mode",
-				"      Changes the arrows to a power display when soldering" };
+
 uint8_t StatusFlags = 0;
 uint32_t temporaryTempStorage = 0;
 

@@ -10,6 +10,7 @@
 
 #ifndef MODES_H_
 #define MODES_H_
+
 #include "Interrupt.h"
 #include "S100V0_1.h"
 #include "Oled.h"
@@ -18,6 +19,7 @@
 #include "Analog.h"
 #include "MMA8652FC.h"
 #include <string.h>
+#include "Strings.h"
 
 typedef enum {
 	STARTUP, 		//we are sitting on the prompt to push a button
