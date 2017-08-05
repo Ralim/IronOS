@@ -1,5 +1,5 @@
 #!/bin/bash
-# TS100 Flasher for Linux
+# TS100 Flasher for Linux by Alex Wigen (https://github.com/awigen)
 
 DIR_TMP="/tmp/ts100"
 
@@ -8,7 +8,12 @@ function usage() {
     echo "#################"
     echo "# TS100 Flasher #"
     echo "#################"
+    echo
     echo " Usage: $0 <HEXFILE>"
+    echo
+    echo "This script has been tested to work on Fedora."
+    echo "If you experience any issues please open a ticket at:"
+    echo "https://github.com/Ralim/ts100/issues/new"
     echo
 }
 
