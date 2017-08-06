@@ -538,7 +538,7 @@ void DrawUI() {
 			settingsLongTestScrollPos = 0;
 			switch (settingsPage) {
 			case UVCO:
-				OLED_DrawString("PWRSC ", 6);
+				OLED_DrawString(SettingsShortNames[UVCO], 6);
 				if (systemSettings.cutoutSetting == 0) {
 					//DC
 					OLED_DrawChar('D', 6);
@@ -550,15 +550,15 @@ void DrawUI() {
 				}
 				break;
 			case SLEEP_TEMP:
-				OLED_DrawString("STMP ", 5);
+				OLED_DrawString(SettingsShortNames[SLEEP_TEMP], 5);
 				OLED_DrawThreeNumber(systemSettings.SleepTemp / 10, 5);
 				break;
 			case SLEEP_TIME:
-				OLED_DrawString("SLTME ", 6);
+				OLED_DrawString(SettingsShortNames[SLEEP_TIME], 6);
 				OLED_DrawTwoNumber(systemSettings.SleepTime, 6);
 				break;
 			case SHUTDOWN_TIME:
-				OLED_DrawString("SHTME ", 6);
+				OLED_DrawString(SettingsShortNames[SHUTDOWN_TIME], 6);
 				OLED_DrawTwoNumber(systemSettings.ShutdownTime, 6);
 				break;
 			case TEMPDISPLAY:/*Are we showing in C or F ?*/
@@ -568,38 +568,39 @@ void DrawUI() {
 					OLED_DrawString("TMPUNT C", 8);
 				break;
 			case SCREENROTATION:
+				OLED_DrawString(SettingsShortNames[SCREENROTATION], 7);
 
 				switch (systemSettings.OrientationMode) {
 				case 0:
-					OLED_DrawString("DSPROT R", 8);
+					OLED_DrawChar('R', 7);
 					break;
 				case 1:
-					OLED_DrawString("DSPROT L", 8);
+					OLED_DrawChar('L', 7);
 					break;
 				case 2:
-					OLED_DrawString("DSPROT A", 8);
+					OLED_DrawChar('A', 7);
 					break;
 				}
 				break;
 			case MOTIONSENSITIVITY:
-				OLED_DrawString("MSENSE ", 7);
+				OLED_DrawString(SettingsShortNames[MOTIONSENSITIVITY], 7);
+
 				OLED_DrawChar('0' + systemSettings.sensitivity, 7);
 				break;
 			case TEMPROUNDING:
 				//We are prompting the user about their display mode preferences
 			{
+				OLED_DrawString(SettingsShortNames[TEMPROUNDING], 7);
+
 				switch (systemSettings.temperatureRounding) {
 				case ROUNDING_NONE:
-					OLED_DrawString("TMPRND 1", 8);
+					OLED_DrawChar('1', 7);
 					break;
 				case ROUNDING_FIVE:
-					OLED_DrawString("TMPRND 5", 8);
+					OLED_DrawChar('5', 7);
 					break;
 				case ROUNDING_TEN:
-					OLED_DrawString("TMPRND10", 8);
-					break;
-				default:
-					OLED_DrawString("TMPRND 1", 8);
+					OLED_DrawChar('X', 7);
 					break;
 				}
 			}
@@ -607,41 +608,45 @@ void DrawUI() {
 			case DISPUPDATERATE:
 				//We are prompting the user about their display mode preferences
 			{
+				OLED_DrawString(SettingsShortNames[DISPUPDATERATE], 7);
 				switch (systemSettings.displayUpdateSpeed) {
 				case DISPLAYMODE_FAST:
-					OLED_DrawString("TMPSPD F", 8);
+					OLED_DrawChar('F', 7);
 					break;
 				case DISPLAYMODE_SLOW:
-					OLED_DrawString("TMPSPD S", 8);
+					OLED_DrawChar('S', 7);
 					break;
 				case DISPLAYMODE_MEDIUM:
-					OLED_DrawString("TMPSPD M", 8);
+					OLED_DrawChar('M', 7);
 					break;
 
 				}
 			}
 				break;
 			case BOOSTMODE:
+				OLED_DrawString(SettingsShortNames[BOOSTMODE], 7);
+
 				switch (systemSettings.boostModeEnabled) {
 				case 1:
-					OLED_DrawString("BOOST  T", 8);
+					OLED_DrawChar('T', 7);
 					break;
 				case 0:
-					OLED_DrawString("BOOST  F", 8);
+					OLED_DrawChar('F', 7);
 					break;
 				}
 				break;
 			case BOOSTTEMP:
-				OLED_DrawString("BTMP ", 5);
+				OLED_DrawString(SettingsShortNames[BOOSTTEMP], 5);
 				OLED_DrawThreeNumber(systemSettings.BoostTemp / 10, 5);
 				break;
 			case POWERDISPLAY:
+				OLED_DrawString(SettingsShortNames[POWERDISPLAY], 7);
 				switch (systemSettings.powerDisplay) {
 				case 1:
-					OLED_DrawString("PWRDSP T", 8);
+					OLED_DrawChar('T', 7);
 					break;
 				case 0:
-					OLED_DrawString("PWRDSP F", 8);
+					OLED_DrawChar('F', 7);
 					break;
 				}
 				break;

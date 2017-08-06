@@ -22,16 +22,16 @@ const char* SettingsLongNames[12] =
 
 const char* SettingsShortNames[12]=
 {
-		"PWRSC",
-		"STMP",
-		"SLTME",
-		"SHTME",
-		"MSENSE",
-		"TMPUNT",
-		"TMPRND",
-		"TMPSPD",
-		"DSPROT",
-		"BOOST ",
-		"BTMP",
-		"PWRDSP",
+		"PWRSC ",
+		"STMP ",
+		"SLTME ",
+		"SHTME ",
+		"MSENSE ",
+		"TMPUNT ",
+		"TMPRND ",
+		"TMPSPD ",
+		"DSPROT ",
+		"BOOST  ",
+		"BTMP ",
+		"PWRDSP ",
 };
