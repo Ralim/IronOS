@@ -65,7 +65,7 @@ void resetSettings() {
 	systemSettings.version = SETTINGSVERSION;//Store the version number to allow for easier upgrades
 	systemSettings.displayTempInF = 0;			//default to C
 	systemSettings.OrientationMode = 2;				//Default to automatic
-	systemSettings.sensitivity = 6;				//Default high sensitivity
+	systemSettings.sensitivity = 7;				//Default high sensitivity
 	systemSettings.tempCalibration = 239;	//Default to their calibration value
 	systemSettings.voltageDiv = 144;			//Default divider from schematic
 	systemSettings.ShutdownTime = 30;//How many minutes until the unit turns itself off
@@ -74,6 +74,7 @@ void resetSettings() {
 	systemSettings.boostModeEnabled = 0;//Default to safe, with no boost mode
 	systemSettings.BoostTemp = 4000;				//default to 400C
 	systemSettings.powerDisplay = 0;		//default to power display being off
+	systemSettings.autoStart=0;				//Auto start off for safety
 }
 
 void showBootLogoIfavailable() {

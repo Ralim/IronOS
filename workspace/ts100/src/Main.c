@@ -14,6 +14,8 @@ void setup();
 
 int main(void) {
 	setup();/*Setup the system*/
+	if(systemSettings.autoStart)
+		operatingMode = SOLDERING;
 	while (1) {
 		Clear_Watchdog(); //reset the Watch dog timer
 		ProcessUI();

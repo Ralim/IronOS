@@ -215,6 +215,9 @@ void ProcessUI() {
 				case POWERDISPLAY:
 					systemSettings.powerDisplay = !systemSettings.powerDisplay;
 					break;
+				case AUTOSTART:
+					systemSettings.autoStart = !systemSettings.autoStart;
+					break;
 #ifdef PIDTUNING
 					case PIDP:
 					pidSettings.kp++;
@@ -642,6 +645,17 @@ void DrawUI() {
 			case POWERDISPLAY:
 				OLED_DrawString(SettingsShortNames[POWERDISPLAY], 7);
 				switch (systemSettings.powerDisplay) {
+				case 1:
+					OLED_DrawChar('T', 7);
+					break;
+				case 0:
+					OLED_DrawChar('F', 7);
+					break;
+				}
+				break;
+			case AUTOSTART:
+				OLED_DrawString(SettingsShortNames[AUTOSTART], 7);
+				switch (systemSettings.autoStart) {
 				case 1:
 					OLED_DrawChar('T', 7);
 					break;
