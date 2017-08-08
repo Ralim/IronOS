@@ -33,6 +33,9 @@ void ProcessUI() {
 		}
 		break;
 	case SOLDERING:
+		if ((millis() - getLastButtonPress()) < 250)
+			Buttons = 0;
+		//^ This is to make the button more delayed in timing for people to find A+B easier
 		//We need to check the buttons if we need to jump out
 		if ((Buttons == BUT_A && !systemSettings.boostModeEnabled)
 				|| Buttons == BUT_B) {
@@ -151,7 +154,7 @@ void ProcessUI() {
 					operatingMode = STARTUP;		//reset back to the startup
 					saveSettings();					//Save the settings
 				} else {
-					++settingsPage;					//move to the next option
+					++settingsPage;			//move to the next option
 				}
 			} else if (Buttons & BUT_A) {
 				//B changes the value selected
@@ -167,7 +170,7 @@ void ProcessUI() {
 						systemSettings.SleepTemp = 500;	//cant sleep higher than 300 or less than 50
 					break;
 				case SLEEP_TIME:
-					++systemSettings.SleepTime;		//Go up 1 minute at a time
+					++systemSettings.SleepTime;	//Go up 1 minute at a time
 					if (systemSettings.SleepTime > 30)
 						systemSettings.SleepTime = 1;//can't set time over 30 mins
 					//Remember that ^ is the time of no movement
@@ -473,9 +476,9 @@ void DrawUI() {
 			OLED_DrawChar(' ', 5);
 		}
 		if (systemSettings.displayTempInF) {
-			OLED_DrawChar('F', 3);
+			OLED_DrawChar(SettingTempFChar, 3);
 		} else {
-			OLED_DrawChar('C', 3);
+			OLED_DrawChar(SettingTempCChar, 3);
 		}
 		//Optionally draw the arrows, or draw the power instead
 		if (systemSettings.powerDisplay) {
@@ -565,23 +568,24 @@ void DrawUI() {
 				OLED_DrawTwoNumber(systemSettings.ShutdownTime, 6);
 				break;
 			case TEMPDISPLAY:/*Are we showing in C or F ?*/
+				OLED_DrawString(SettingsShortNames[TEMPDISPLAY], 7);
 				if (systemSettings.displayTempInF)
-					OLED_DrawString("TMPUNT F", 8);
+					OLED_DrawChar(SettingTempFChar, 7);
 				else
-					OLED_DrawString("TMPUNT C", 8);
+					OLED_DrawChar(SettingTempCChar, 7);
 				break;
 			case SCREENROTATION:
 				OLED_DrawString(SettingsShortNames[SCREENROTATION], 7);
 
 				switch (systemSettings.OrientationMode) {
 				case 0:
-					OLED_DrawChar('R', 7);
+					OLED_DrawChar(SettingRightChar, 7);
 					break;
 				case 1:
-					OLED_DrawChar('L', 7);
+					OLED_DrawChar(SettingLeftChar, 7);
 					break;
 				case 2:
-					OLED_DrawChar('A', 7);
+					OLED_DrawChar(SettingAutoChar, 7);
 					break;
 				}
 				break;
@@ -614,13 +618,13 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[DISPUPDATERATE], 7);
 				switch (systemSettings.displayUpdateSpeed) {
 				case DISPLAYMODE_FAST:
-					OLED_DrawChar('F', 7);
+					OLED_DrawChar(SettingFastChar, 7);
 					break;
 				case DISPLAYMODE_SLOW:
-					OLED_DrawChar('S', 7);
+					OLED_DrawChar(SettingSlowChar, 7);
 					break;
 				case DISPLAYMODE_MEDIUM:
-					OLED_DrawChar('M', 7);
+					OLED_DrawChar(SettingMediumChar, 7);
 					break;
 
 				}
@@ -631,10 +635,10 @@ void DrawUI() {
 
 				switch (systemSettings.boostModeEnabled) {
 				case 1:
-					OLED_DrawChar('T', 7);
+					OLED_DrawChar(SettingTrueChar, 7);
 					break;
 				case 0:
-					OLED_DrawChar('F', 7);
+					OLED_DrawChar(SettingFalseChar, 7);
 					break;
 				}
 				break;
@@ -646,10 +650,10 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[POWERDISPLAY], 7);
 				switch (systemSettings.powerDisplay) {
 				case 1:
-					OLED_DrawChar('T', 7);
+					OLED_DrawChar(SettingTrueChar, 7);
 					break;
 				case 0:
-					OLED_DrawChar('F', 7);
+					OLED_DrawChar(SettingFalseChar, 7);
 					break;
 				}
 				break;
@@ -657,10 +661,10 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[AUTOSTART], 7);
 				switch (systemSettings.autoStart) {
 				case 1:
-					OLED_DrawChar('T', 7);
+					OLED_DrawChar(SettingTrueChar, 7);
 					break;
 				case 0:
-					OLED_DrawChar('F', 7);
+					OLED_DrawChar(SettingFalseChar, 7);
 					break;
 				}
 				break;
@@ -702,12 +706,12 @@ void DrawUI() {
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling
-		OLED_DrawString("COOL ", 5);
+		OLED_DrawString(CoolingPromptString, 5);
 		temp = readIronTemp(0, 1, 0xFFFF);		//force temp re-reading
 		drawTemp(temp, 5, systemSettings.temperatureRounding);
 		break;
 	case UVLOWARN:
-		OLED_DrawString("LOW VOLT", 8);
+		OLED_DrawString(UVLOWarningString, 8);
 		break;
 	case THERMOMETER:
 		temp = readIronTemp(0, 1, 0xFFFF);	//Force a reading as heater is off
@@ -733,14 +737,7 @@ void DrawUI() {
 	}
 		break;
 	case TEMPCAL: {
-
-		if (StatusFlags == 0) {
-			OLED_DrawString("CAL TEMP", 8);
-		} else if (StatusFlags == 1) {
-			OLED_DrawString("CAL OK  ", 8);
-		} else if (StatusFlags == 2) {
-			OLED_DrawString("CAL FAIL", 8);
-		}
+		OLED_DrawString(TempCalStatus[StatusFlags], 8);
 	}
 
 		break;

@@ -14,5 +14,17 @@
 
 extern const char* SettingsLongNames[13];
 extern const char* SettingsShortNames[13];
-
+extern const char* TempCalStatus[3]; //All fixed 8 chars
+extern const char* UVLOWarningString; //Fixed width 8 chars
+extern const char* CoolingPromptString; //Fixed width 5 chars
+extern const char SettingTrueChar;
+extern const char SettingFalseChar;
+extern const char SettingFastChar;
+extern const char SettingMediumChar;
+extern const char SettingSlowChar;
+extern const char SettingRightChar;
+extern const char SettingLeftChar;
+extern const char SettingAutoChar;
+extern const char SettingTempCChar;
+extern const char SettingTempFChar;
 #endif /* STRINGS_H_ */

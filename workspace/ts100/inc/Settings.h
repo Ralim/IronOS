@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "stm32f10x_flash.h"
 #include "Oled.h"
-#define SETTINGSVERSION 15 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define SETTINGSVERSION 16 /*Change this if you change the struct below to prevent people getting out of sync*/
 //Display Speeds
 #define DISPLAYMODE_FAST 	(0x00)
 #define DISPLAYMODE_MEDIUM 	(0x01)

@@ -23,6 +23,20 @@ const char* SettingsLongNames[13] =
 				"      Changes the arrows to a power display when soldering",
 				"      Automatically starts the iron into soldering on power up." };
 
+const char* TempCalStatus[3] = { "CAL TEMP", "CAL OK  ", "CAL FAIL" }; //All fixed 8 chars
+const char* UVLOWarningString = "LOW VOLT"; //Fixed width 8 chars
+const char* CoolingPromptString = "COOL "; //Fixed width 5 chars
+const char SettingTrueChar = 'T';
+const char SettingFalseChar = 'F';
+const char SettingFastChar = 'F';
+const char SettingMediumChar = 'F';
+const char SettingSlowChar = 'F';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingTempCChar = 'C';
+const char SettingTempFChar = 'F';
+
 #endif
 #ifdef LANG_ES
 const char* SettingsLongNames[13] =
@@ -39,8 +53,21 @@ const char* SettingsLongNames[13] =
 	"      Activar el boton <Boost> en modo soldadura.",
 	"      Temperatura en modo <Boost>.",
 	"      Cambiar las flechas en pantalla por indicador de potencia en modo soldadura.",
-	"      Automatically starts the iron into soldering on power up."};
+	"      Iniciar directamente modo soldadura en el encendido."};
 
+const char* TempCalStatus[3] = {"CAL TEMP", "CAL OK  ", "CAL FAIL"}; //All fixed 8 chars
+const char* UVLOWarningString = "LOW VOLT";//Fixed width 8 chars
+const char* CoolingPromptString = "COOL ";//Fixed width 5 chars
+const char SettingTrueChar = 'T';
+const char SettingFalseChar = 'F';
+const char SettingFastChar = 'F';
+const char SettingMediumChar = 'F';
+const char SettingSlowChar = 'F';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingTempCChar = 'C';
+const char SettingTempFChar = 'F';
 #endif
 
 const char* SettingsShortNames[13] = { "PWRSC ", "STMP ", "SLTME ", "SHTME ",

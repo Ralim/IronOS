@@ -24,7 +24,7 @@ uint8_t getButtons() {
 	//We want to check the times for the lat buttons & also the rawKeys state
 	//If a key has just gone down, rawKeys & KEY ==1
 	uint8_t out = 0;
-	if (millis() - AkeyChange > 100) {
+	if (millis() - AkeyChange > 50) {
 		if (LongKeys & BUT_A) {
 			if (rawKeys & BUT_A) {
 				if (millis() - AkeyChange > 800) {
@@ -61,7 +61,7 @@ uint8_t getButtons() {
 			}
 		}
 	}
-	if (millis() - BkeyChange > 100) {
+	if (millis() - BkeyChange > 50) {
 		if (LongKeys & BUT_B) {
 			if (rawKeys & BUT_B) {
 				if (millis() - BkeyChange > 800) {
