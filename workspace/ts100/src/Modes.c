@@ -414,10 +414,7 @@ void DrawUI() {
 	static uint16_t lastSolderingDrawnTemp2 = 0;
 	static uint8_t settingsLongTestScrollPos = 0;
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
-	if (systemSettings.OrientationMode == 2) {
-		//Automatic mode
-		OLED_SetOrientation(!getOrientation());
-	}
+
 	switch (operatingMode) {
 	case STARTUP:
 		//We are chilling in the idle mode

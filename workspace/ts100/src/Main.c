@@ -14,17 +14,33 @@ void setup();
 
 int main(void) {
 	setup();/*Setup the system*/
-	if(systemSettings.autoStart)
+	if (systemSettings.autoStart)
 		operatingMode = SOLDERING;
 	while (1) {
 		Clear_Watchdog(); //reset the Watch dog timer
 		ProcessUI();
 		DrawUI();
-		delayMs(30); //Slow the system down a little bit
+		delayMs(15); //Slow the system down waiting for the iron.
+
+		if (systemSettings.OrientationMode == 2) {
+			//Automatic mode
+			if (RotationChangedFlag) {
+				OLED_SetOrientation(!getOrientation());
+				RotationChangedFlag = 0;
+			}
+
+			if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_3) == Bit_RESET) {
+				OLED_SetOrientation(!getOrientation());
+				RotationChangedFlag = 0;
+				//^ This is a workaround for the IRQ being set off before we have the handler setup and enabled.
+			}
+		}
 		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_5) == Bit_RESET) {
 			lastMovement = millis();
 			//This is a workaround for the line staying low as the user is still moving. (ie sensitivity is too high for their amount of movement)
 		}
+		delayMs(15); //Slow the system down waiting for the iron.
+
 	}
 }
 void setup() {
@@ -41,7 +57,7 @@ void setup() {
 	setupPID(); 										//Init the PID values
 	readIronTemp(systemSettings.tempCalibration, 0, 0); //load the default calibration value
 	if (systemSettings.OrientationMode == 2)
-		Init_Oled(0); 									//Init the OLED display in RH mode, since accel wont have started up yet
+		Init_Oled(0); //Init the OLED display in RH mode, since accel wont have started up yet
 	else
 		Init_Oled(systemSettings.OrientationMode); 		//Init the OLED display
 

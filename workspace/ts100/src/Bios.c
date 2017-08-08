@@ -5,7 +5,6 @@
 #include "Bios.h"
 #include "I2C.h"
 
-
 #define ADC1_DR_Address    ((u32)0x4001244C)
 volatile uint32_t gHeat_cnt = 0;
 
@@ -92,8 +91,13 @@ void GPIO_Config(void) {
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	//--------INT 1 == PB5 -------------------------------------------------//
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;//pullup just in case something resets the accel
+	GPIO_InitStructure.GPIO_Pin = INT1_PIN;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //pullup just in case something resets the accel
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	//--------INT 2 == PB3 -------------------------------------------------//
+	GPIO_InitStructure.GPIO_Pin = INT2_PIN;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //pullup just in case something resets the accel
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 }
@@ -211,7 +215,8 @@ void Init_EXTI(void) {
 	GPIO_PinSource5);     //PB5 == accelerometer
 
 	/* Configure EXTI5/6/9 line */
-	EXTI_InitStructure.EXTI_Line = EXTI_Line5 | EXTI_Line6 | EXTI_Line9;
+	EXTI_InitStructure.EXTI_Line = EXTI_Line5 | EXTI_Line6 | EXTI_Line9
+			| EXTI_Line3;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //trigger on up and down
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
@@ -219,6 +224,13 @@ void Init_EXTI(void) {
 
 	/* Enable and set EXTI9_5 Interrupt to the lowest priority */
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	/* Enable and set EXTI9_5 Interrupt to the lowest priority */
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI3_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;

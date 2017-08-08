@@ -25,6 +25,10 @@ inline uint16_t getRawButtons() {
 	return rawKeys;
 }
 
+extern volatile uint8_t RotationChangedFlag;
+
+
+
 /*IRQ prototypes*/
 void NMI_Handler(void);
 void HardFault_Handler(void);

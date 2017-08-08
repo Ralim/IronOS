@@ -8,6 +8,7 @@ volatile uint32_t AkeyChange;
 volatile uint8_t rawKeys;
 volatile uint8_t LongKeys;
 volatile uint32_t lastMovement; //millis() at last movement event
+volatile uint8_t RotationChangedFlag;
 
 //Delay in milliseconds using systemTick
 void delayMs(uint32_t ticks) {
@@ -161,6 +162,12 @@ void EXTI9_5_IRQHandler(void) {
 	}
 
 }
+void EXTI3_IRQHandler(void) {
+	if (EXTI_GetITStatus(EXTI_Line3) != RESET) {	//Orientation Change
+		RotationChangedFlag = 1;
+		EXTI_ClearITPendingBit(EXTI_Line3);
+	}
+}
 
 /*********************** UNUSED IRQ *****************************************/
 void WWDG_IRQHandler(void) {
@@ -181,8 +188,7 @@ void EXTI1_IRQHandler(void) {
 }
 void EXTI2_IRQHandler(void) {
 }
-void EXTI3_IRQHandler(void) {
-}
+
 void EXTI4_IRQHandler(void) {
 }
 void DMA1_Channel1_IRQHandler(void) {
