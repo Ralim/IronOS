@@ -12,8 +12,8 @@
 #ifndef STRINGS_H_
 #define STRINGS_H_
 
-extern const char* SettingsLongNames[13];
-extern const char* SettingsShortNames[13];
+extern const char* SettingsLongNames[14];
+extern const char* SettingsShortNames[14];
 extern const char* TempCalStatus[3]; //All fixed 8 chars
 extern const char* UVLOWarningString; //Fixed width 8 chars
 extern const char* CoolingPromptString; //Fixed width 5 chars

@@ -40,6 +40,7 @@ typedef struct {
 	uint8_t displayUpdateSpeed:2;	//How fast the display updates / temp showing mode
 	uint8_t temperatureRounding:2;	//Rounding mode for the temperature
 	uint8_t boostModeEnabled:1;		//Boost mode swaps BUT_A in soldering mode to temporary soldering temp over-ride
+	uint8_t coolingTempBlink:1;		//Should the temperature blink on the cool down screen until its <50C
 	uint16_t tempCalibration;		//Temperature calibration value
 	uint16_t voltageDiv;			//Voltage divisor factor
 	uint16_t BoostTemp; 			//Boost mode set point for the iron

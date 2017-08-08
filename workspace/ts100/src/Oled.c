@@ -15,6 +15,9 @@
 #include "Font.h"
 int8_t displayOffset = 32;
 uint8_t currentOrientation = 0;
+
+uint8_t displayBuffer[2 * 96]; //This is used to allow us to draw locally before sync'ing to the screen.
+
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
@@ -74,7 +77,7 @@ const u8* Data_Command(u8 length, const u8* data) {
 	//here are are inserting the data write command at the beginning
 	tx_data[0] = 0x40;
 	length++;
-	for (i = 1; i < length; i++) //Loop through the array of data
+	for (i = 1; i <= length; i++) //Loop through the array of data
 			{
 		if (data == 0)
 			tx_data[i] = 0;
@@ -83,6 +86,14 @@ const u8* Data_Command(u8 length, const u8* data) {
 	}
 	I2C_PageWrite(tx_data, length, DEVICEADDR_OLED); //write out the buffer
 	return data;
+}
+//This causes us to write out the buffered screen data to the display
+void OLED_Sync() {
+	Set_ShowPos(0,0);
+	Data_Command(96, displayBuffer);
+	Set_ShowPos(0,1);
+	Data_Command(96, displayBuffer + 96);
+
 }
 /*******************************************************************************
  Function:Set_ShowPos
@@ -103,25 +114,21 @@ void Set_ShowPos(u8 x, u8 y) {
  Inputs:(x,y) start point, (width,height) of enclosing rect, pointer to data
  Output: pointer to the last byte written out
  *******************************************************************************/
-const u8* Oled_DrawArea(u8 x0, u8 y0, u8 wide, u8 high, const u8* ptr) {
-	u8 m, n, y;
-
-	n = y0 + high;
-	if (y0 % 8 == 0)
-		m = y0 / 8;
-	else
-		m = y0 / 8 + 1;
-
-	if (n % 8 == 0)
-		y = n / 8;
-	else
-		y = n / 8 + 1;
-
-	for (; m < y; m++) {
-		Set_ShowPos(x0, m);
-		ptr = Data_Command(wide, ptr);
+void Oled_DrawArea(u8 x, u8 y, u8 wide, u8 height, const u8* ptr) {
+	//We want to blat the given data over the buffer
+	//X is the left right position (index's through the display buffer)
+	//Y is the height value (affects the bits)
+	//Y is either 0 or 8, we dont do smaller bit blatting
+	u8 lines = height / 8;
+	//We draw the 1 or two stripes seperately
+	for (u8 i = 0; i < (wide * lines); i++) {
+		u8 xp = x + (i % wide);
+		u8 yoffset = i < wide ? 0 : 96;
+		if (y == 8)
+			yoffset = 96;
+		displayBuffer[xp + yoffset] = ptr[i];
 	}
-	return ptr;
+
 }
 
 /*******************************************************************************
@@ -159,6 +166,8 @@ void Init_Oled(uint8_t leftHanded) {
 		displayOffset = 32;
 	}
 	I2C_PageWrite((u8 *) OLED_Setup_Array, param_len, DEVICEADDR_OLED);
+	for (uint8_t i = 0; i < 2 * 96; i++)
+		displayBuffer[i] = 0; //turn off screen
 }
 
 /*******************************************************************************
@@ -166,11 +175,8 @@ void Init_Oled(uint8_t leftHanded) {
  Description:Clear the entire screen to off (black)
  *******************************************************************************/
 void Clear_Screen(void) {
-	u8 tx_data[128];
-	memset(tx_data, 0, 128);
-	for (u8 i = 0; i < 2; i++) {
-		Oled_DrawArea(0, i * 8, 128, 8, tx_data);
-	}
+	memset(displayBuffer, 0, 96 * 2);
+
 }
 /*
  * Draws a string onto the screen starting at the left

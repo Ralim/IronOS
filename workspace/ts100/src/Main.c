@@ -20,6 +20,7 @@ int main(void) {
 		Clear_Watchdog(); //reset the Watch dog timer
 		ProcessUI();
 		DrawUI();
+		OLED_Sync();//Write out the screen buffer
 		delayMs(15); //Slow the system down waiting for the iron.
 
 		if (systemSettings.OrientationMode == 2) {
@@ -60,7 +61,8 @@ void setup() {
 	else
 		Init_Oled(systemSettings.OrientationMode); 		//Init the OLED display
 
-	OLED_DrawString("VER 1.16", 8); 					//Version Number
+	OLED_DrawString("Ver 1.17", 8); 					//Version Number
+	OLED_Sync();
 	delayMs(400);						//Pause to show version number
 	showBootLogoIfavailable();
 	//RESETs settings

@@ -78,7 +78,7 @@ int I2C_Master_Read(uint8_t deviceAddr, uint8_t readAddr, uint8_t* pBuffer,
 		uint16_t numByteToRead) {
 
 	__IO uint32_t temp = 0;
-	volatile int I2C_TimeOut = 0;
+	volatile int I2C_TimeOut = temp;
 
 	// /* While the bus is busy * /
 	I2C_TimeOut = 1000;

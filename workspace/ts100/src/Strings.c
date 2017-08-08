@@ -7,7 +7,7 @@
 #include "Strings.h"
 #define LANG_EN
 #ifdef LANG_EN
-const char* SettingsLongNames[13] =
+const char* SettingsLongNames[14] =
 		{
 		/*These are all the help text for all the settings.*/
 		/*All must start with 6 spaces so they come on screen nicely.*/
@@ -21,10 +21,11 @@ const char* SettingsLongNames[13] =
 				"      Enable front key boost 450C mode when soldering",
 				"      Temperature when in boost mode",
 				"      Changes the arrows to a power display when soldering",
-				"      Automatically starts the iron into soldering on power up." };
+				"      Automatically starts the iron into soldering on power up.",
+				"      Blink the temperature on the cooling screen while the tip is still hot." };
 
-const char* TempCalStatus[3] = { "CAL TEMP", "CAL OK  ", "CAL FAIL" }; //All fixed 8 chars
-const char* UVLOWarningString = "LOW VOLT"; //Fixed width 8 chars
+const char* TempCalStatus[3] = { "Cal Temp", "Cal OK  ", "Cal Fail" }; //All fixed 8 chars
+const char* UVLOWarningString = "Low Volt"; //Fixed width 8 chars
 const char* CoolingPromptString = "COOL "; //Fixed width 5 chars
 const char SettingTrueChar = 'T';
 const char SettingFalseChar = 'F';
@@ -39,7 +40,7 @@ const char SettingTempFChar = 'F';
 
 #endif
 #ifdef LANG_ES
-const char* SettingsLongNames[13] =
+const char* SettingsLongNames[14] =
 {
 	/*These are all the help text for all the settings.*/
 	/*All must start with 6 spaces so they come on screen nicely.*/
@@ -53,7 +54,8 @@ const char* SettingsLongNames[13] =
 	"      Activar el boton <Boost> en modo soldadura.",
 	"      Temperatura en modo <Boost>.",
 	"      Cambiar las flechas en pantalla por indicador de potencia en modo soldadura.",
-	"      Iniciar directamente modo soldadura en el encendido."};
+	"      Iniciar directamente modo soldadura en el encendido.",
+	"      Blink the temperature on the cooling screen while the tip is still hot."};/*Needs translation*/
 
 const char* TempCalStatus[3] = {"CAL TEMP", "CAL OK  ", "CAL FAIL"}; //All fixed 8 chars
 const char* UVLOWarningString = "LOW VOLT";//Fixed width 8 chars
@@ -70,6 +72,6 @@ const char SettingTempCChar = 'C';
 const char SettingTempFChar = 'F';
 #endif
 
-const char* SettingsShortNames[13] = { "PWRSC ", "STMP ", "SLTME ", "SHTME ",
+const char* SettingsShortNames[14] = { "PWRSC ", "STMP ", "SLTME ", "SHTME ",
 		"MSENSE ", "TMPUNT ", "TMPRND ", "TMPSPD ", "DSPROT ", "BOOST  ",
-		"BTMP ", "PWRDSP ", "ASTART " };
+		"BTMP ", "PWRDSP ", "ASTART ", "CLBLNK " };

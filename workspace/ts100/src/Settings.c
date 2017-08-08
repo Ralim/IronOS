@@ -74,6 +74,7 @@ void resetSettings() {
 	systemSettings.BoostTemp = 4000;				//default to 400C
 	systemSettings.powerDisplay = 0;		//default to power display being off
 	systemSettings.autoStart = 0;				//Auto start off for safety
+	systemSettings.coolingTempBlink = 0;		//Blink the temperature on the cooling screen when its > 50C
 	saveSettings();
 }
 
@@ -112,6 +113,6 @@ void showBootLogoIfavailable() {
 		return;
 
 	Oled_DrawArea(0, 0, 96, 16, (uint8_t*) (temp8 + 4));
-
+	OLED_Sync();
 	delayMs(1000);
 }

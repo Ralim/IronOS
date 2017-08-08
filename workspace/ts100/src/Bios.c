@@ -55,7 +55,7 @@ void GPIO_Config(void) {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE); // GPIOB & AFIO
 
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST, ENABLE);
-	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);//disables jtag and maps pins for SWD
 
 	//------ PA7 TMP36 Analog input ----------------------------------------//
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
@@ -63,7 +63,7 @@ void GPIO_Config(void) {
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	//------ OLED_RST_PIN(PB9) ---------------------------------------------//
-	GPIO_InitStructure.GPIO_Pin = OLED_RST_PIN;
+	GPIO_InitStructure.GPIO_Pin = OLED_RST_PIN|GPIO_Pin_12;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -100,6 +100,7 @@ void GPIO_Config(void) {
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //pullup just in case something resets the accel
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
+	GPIO_ResetBits(GPIOA, GPIO_Pin_12);//Write PA12 low so USB does not enumerate
 }
 /*
  * Init the ADC's

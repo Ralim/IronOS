@@ -33,8 +33,7 @@ void ProcessUI() {
 		}
 		break;
 	case SOLDERING:
-		if ((millis() - getLastButtonPress()) < 250)
-			Buttons = 0;
+
 		//^ This is to make the button more delayed in timing for people to find A+B easier
 		//We need to check the buttons if we need to jump out
 		if ((Buttons == BUT_A && !systemSettings.boostModeEnabled)
@@ -220,6 +219,10 @@ void ProcessUI() {
 					break;
 				case AUTOSTART:
 					systemSettings.autoStart = !systemSettings.autoStart;
+					break;
+				case COOLINGBLINK:
+					systemSettings.coolingTempBlink =
+							!systemSettings.coolingTempBlink;
 					break;
 #ifdef PIDTUNING
 					case PIDP:
@@ -437,17 +440,18 @@ void DrawUI() {
 		else if (systemSettings.displayUpdateSpeed == DISPLAYMODE_MEDIUM
 				&& (millis() - lastOLEDDrawTime < 100))
 			return;
-		else if (systemSettings.displayUpdateSpeed == DISPLAYMODE_FAST
-				&& (millis() - lastOLEDDrawTime < 50))
-			return;
+
+		Clear_Screen();
 
 		uint32_t tempavg = (temp + lastSolderingDrawnTemp1
 				+ lastSolderingDrawnTemp2);
 		tempavg /= 3;
+
 		drawTemp(tempavg, 0, systemSettings.temperatureRounding);
 		lastSolderingDrawnTemp1 = temp;
 		lastSolderingDrawnTemp2 = lastSolderingDrawnTemp1;
 		lastOLEDDrawTime = millis();
+
 		//Now draw symbols
 		if (StatusFlags == 8)
 			OLED_DrawChar('B', 4);
@@ -469,9 +473,8 @@ void DrawUI() {
 			if (cellV > 9)
 				cellV = 9;
 			OLED_DrawExtendedChar(cellV + 1, 5);
-		} else {
-			OLED_DrawChar(' ', 5);
 		}
+
 		if (systemSettings.displayTempInF) {
 			OLED_DrawChar(SettingTempFChar, 3);
 		} else {
@@ -487,7 +490,6 @@ void DrawUI() {
 			OLED_DrawWideChar((count), 6);
 		} else {
 			//Draw in the arrows if the user has the power display turned off
-			OLED_BlankSlot(6 * 12 + 16, 24 - 16);//blank out the tail after the arrows
 			if (getIronTimer() == 0
 					&& (temp / 10) > (systemSettings.SolderingTemp / 10)) {
 				//Cooling
@@ -665,6 +667,17 @@ void DrawUI() {
 					break;
 				}
 				break;
+			case COOLINGBLINK:
+				OLED_DrawString(SettingsShortNames[COOLINGBLINK], 7);
+				switch (systemSettings.coolingTempBlink) {
+				case 1:
+					OLED_DrawChar(SettingTrueChar, 7);
+					break;
+				case 0:
+					OLED_DrawChar(SettingFalseChar, 7);
+					break;
+				}
+				break;
 #ifdef PIDTUNING
 				case PIDP:
 				OLED_DrawString("PIDP ", 5);
@@ -688,9 +701,9 @@ void DrawUI() {
 	case SLEEP:
 		//The iron is in sleep temp mode
 		//Draw in temp and sleep
+		Clear_Screen();
 		OLED_DrawString("SLP ", 4);
 		drawTemp(temp, 4, systemSettings.temperatureRounding);
-		OLED_BlankSlot(84, 96 - 85);		//blank out after the temp
 
 		if (millis() - getLastMovement() > (10 * 60 * 1000)
 				&& (millis() - getLastButtonPress() > (10 * 60 * 1000))) {
@@ -703,9 +716,12 @@ void DrawUI() {
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling
+		Clear_Screen();
 		OLED_DrawString(CoolingPromptString, 5);
 		temp = readIronTemp(0, 1, 0xFFFF);		//force temp re-reading
-		drawTemp(temp, 5, systemSettings.temperatureRounding);
+		if (temp < 500 || ((millis() % 1000) > 500))
+			drawTemp(temp, 5, systemSettings.temperatureRounding);
+
 		break;
 	case UVLOWARN:
 		OLED_DrawString(UVLOWarningString, 8);
@@ -721,12 +737,12 @@ void DrawUI() {
 		if (StatusFlags == 0 || ((millis() % 1000) > 500)) {
 
 			OLED_DrawString("IN", 2);
-			OLED_DrawChar(48+((voltage / 100) % 10), 2);
+			OLED_DrawChar(48 + ((voltage / 100) % 10), 2);
 			voltage -= (voltage / 100) * 100;
-			OLED_DrawChar(48+((voltage / 10) % 10), 3);
+			OLED_DrawChar(48 + ((voltage / 10) % 10), 3);
 			voltage -= (voltage / 10) * 10;
 			OLED_DrawChar('.', 4);
-			OLED_DrawChar(48+(voltage % 10), 5);
+			OLED_DrawChar(48 + (voltage % 10), 5);
 			OLED_DrawChar('V', 6);
 			OLED_DrawChar(' ', 7);
 		} else {

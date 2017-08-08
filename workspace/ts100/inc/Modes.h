@@ -36,9 +36,9 @@ typedef enum {
 } operatingModeEnum;
 //#define PIDTUNING
 #ifdef PIDTUNING
-#define SETTINGSOPTIONSCOUNT (12+3) /*Number of settings in the settings menu*/
+#define SETTINGSOPTIONSCOUNT (13+3) /*Number of settings in the settings menu*/
 #else
-#define SETTINGSOPTIONSCOUNT (12) /*Number of settings in the settings menu*/
+#define SETTINGSOPTIONSCOUNT (13) /*Number of settings in the settings menu*/
 #endif
 typedef enum {
 	UVCO = 0,
@@ -54,6 +54,7 @@ typedef enum {
 	BOOSTTEMP,
 	POWERDISPLAY,
 	AUTOSTART,
+	COOLINGBLINK,
 #ifdef PIDTUNING
 PIDP,
 PIDI,
