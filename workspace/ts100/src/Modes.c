@@ -719,13 +719,14 @@ void DrawUI() {
 		uint16_t voltage = readDCVoltage(systemSettings.voltageDiv); //get X10 voltage
 
 		if (StatusFlags == 0 || ((millis() % 1000) > 500)) {
+
 			OLED_DrawString("IN", 2);
-			OLED_DrawChar((voltage / 100) % 10, 2);
+			OLED_DrawChar(48+((voltage / 100) % 10), 2);
 			voltage -= (voltage / 100) * 100;
-			OLED_DrawChar((voltage / 10) % 10, 3);
+			OLED_DrawChar(48+((voltage / 10) % 10), 3);
 			voltage -= (voltage / 10) * 10;
 			OLED_DrawChar('.', 4);
-			OLED_DrawChar(voltage % 10, 5);
+			OLED_DrawChar(48+(voltage % 10), 5);
 			OLED_DrawChar('V', 6);
 			OLED_DrawChar(' ', 7);
 		} else {

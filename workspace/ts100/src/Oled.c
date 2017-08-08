@@ -186,27 +186,14 @@ void OLED_DrawString(const char* string, const uint8_t length) {
 void OLED_DrawChar(char c, uint8_t x) {
 	if (x > 7)
 		return; //clipping
+	if (c > 127)
+		return; //Not in this font
 	x *= FONT_WIDTH; //convert to a x coordinate
 
 	u8* ptr = (u8*) FONT;
-	if (c >= 'a' && c <= 'z') {
-		ptr += (c - 'a' + 10) * (FONT_WIDTH * 2); //alpha is ofset 10 chars into the array
-	} else if (c >= 'A' && c <= 'Z') {
-		ptr += (c - 'A' + 10) * (FONT_WIDTH * 2); //alpha is ofset 10 chars into the array
-	} else if (c >= '0' && c <= '9')
-		ptr += (c - '0') * (FONT_WIDTH * 2);
-	else if (c < 10)
-		ptr += (c) * (FONT_WIDTH * 2);
-	else if (c == ' ') {
-		//blank on space bar
-		ptr += (36) * (FONT_WIDTH * 2);
-	} else if (c == '<') {
-		ptr += (37) * (FONT_WIDTH * 2);
-	} else if (c == '>') {
-		ptr += (38) * (FONT_WIDTH * 2);
-	} else if (c == '.') {
-		ptr += (39) * (FONT_WIDTH * 2);
-	}
+	u16 offset = c - ' ';
+	offset *= (2 * FONT_WIDTH);
+	ptr += offset;
 
 	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
 }
@@ -237,27 +224,27 @@ void OLED_BlankSlot(uint8_t xStart, uint8_t width) {
  */
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
 
-	OLED_DrawChar((in / 10) % 10, x);
-	OLED_DrawChar(in % 10, x + 1);
+	OLED_DrawChar(48 + (in / 10) % 10, x);
+	OLED_DrawChar(48 + in % 10, x + 1);
 }
 /*
  * Draw a 3 digit number to the display at letter slot x
  */
 void OLED_DrawThreeNumber(uint16_t in, uint8_t x) {
 
-	OLED_DrawChar((in / 100) % 10, x);
-	OLED_DrawChar((in / 10) % 10, x + 1);
-	OLED_DrawChar(in % 10, x + 2);
+	OLED_DrawChar(48 + (in / 100) % 10, x);
+	OLED_DrawChar(48 + (in / 10) % 10, x + 1);
+	OLED_DrawChar(48 + in % 10, x + 2);
 }
 /*
  * Draw a 4 digit number to the display at letter slot x
  */
 void OLED_DrawFourNumber(uint16_t in, uint8_t x) {
 
-	OLED_DrawChar((in / 1000) % 10, x);
-	OLED_DrawChar((in / 100) % 10, x + 1);
-	OLED_DrawChar((in / 10) % 10, x + 2);
-	OLED_DrawChar(in % 10, x + 3);
+	OLED_DrawChar(48 + (in / 1000) % 10, x);
+	OLED_DrawChar(48 + (in / 100) % 10, x + 1);
+	OLED_DrawChar(48 + (in / 10) % 10, x + 2);
+	OLED_DrawChar(48 + (in % 10), x + 3);
 }
 
 void OLED_DrawIDLELogo() {

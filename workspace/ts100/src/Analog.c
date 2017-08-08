@@ -14,6 +14,7 @@ uint16_t readDCVoltage(uint16_t divFactor) {
 	uint16_t reading = 0;
 	for (u8 i = 0; i < 10; i++) {
 		reading += ADC_GetConversionValue(ADC2);
+		delayMs(5);
 	}
 	reading /= divFactor; //take the average and convert to X10 voltage
 	return reading; //return the read voltage

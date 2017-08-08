@@ -28,8 +28,7 @@ int main(void) {
 				OLED_SetOrientation(!getOrientation());
 				RotationChangedFlag = 0;
 			}
-
-			if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_3) == Bit_RESET) {
+			else if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_3) == Bit_RESET) {
 				OLED_SetOrientation(!getOrientation());
 				RotationChangedFlag = 0;
 				//^ This is a workaround for the IRQ being set off before we have the handler setup and enabled.
@@ -64,6 +63,16 @@ void setup() {
 	OLED_DrawString("VER 1.16", 8); 					//Version Number
 	delayMs(400);						//Pause to show version number
 	showBootLogoIfavailable();
+	//RESETs settings
+	if (GPIO_ReadInputDataBit(GPIOA, KEY_B) == Bit_RESET) {
+		OLED_DrawString("Reset  ?", 8);
+		delayMs(1000);
+		if (GPIO_ReadInputDataBit(GPIOA, KEY_B) == Bit_RESET) {
+			OLED_DrawString("   OK   ", 8);
+			delayMs(1000);
+			resetSettings();
+		}
+	}
 	Start_Watchdog(5000); //start the system watch dog as 5 second timeout
 
 }

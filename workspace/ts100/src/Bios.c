@@ -154,7 +154,7 @@ void Adc_Init(void) {
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 1,
 	ADC_SampleTime_239Cycles5); //28 or 55
 	ADC_RegularChannelConfig(ADC2, ADC_Channel_9, 1,
-	ADC_SampleTime_55Cycles5); //28 or 55
+	ADC_SampleTime_239Cycles5); //28 or 55
 
 	/* Enable ADC1 DMA */
 	ADC_DMACmd(ADC1, ENABLE);

@@ -43,6 +43,7 @@ typedef struct {
 	uint16_t tempCalibration;		//Temperature calibration value
 	uint16_t voltageDiv;			//Voltage divisor factor
 	uint16_t BoostTemp; 			//Boost mode set point for the iron
+	uint32_t padding;//This is here for in case we are not an even divisor so that nothing gets cut off
 } systemSettingsType;
 
 extern systemSettingsType systemSettings;

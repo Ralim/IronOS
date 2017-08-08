@@ -38,7 +38,6 @@ void restoreSettings() {
 	if (systemSettings.version != SETTINGSVERSION) {
 		//probably not setup
 		resetSettings();
-		saveSettings();
 	}
 
 }
@@ -74,7 +73,8 @@ void resetSettings() {
 	systemSettings.boostModeEnabled = 0;//Default to safe, with no boost mode
 	systemSettings.BoostTemp = 4000;				//default to 400C
 	systemSettings.powerDisplay = 0;		//default to power display being off
-	systemSettings.autoStart=0;				//Auto start off for safety
+	systemSettings.autoStart = 0;				//Auto start off for safety
+	saveSettings();
 }
 
 void showBootLogoIfavailable() {
