@@ -45,30 +45,30 @@ const char* SettingsLongNames[14] =
 {
 	/*These are all the help text for all the settings.*/
 	/*All must start with 6 spaces so they come on screen nicely.*/
-	"      Fuente de energia. Ajusta el limite inferior de voltaje. <DC 10V> <S 3.3V por celda>",
+	"      Fuente de energía. Ajusta el límite inferior de voltaje. <DC 10V> <S 3.3V por celda>",
 	"      Temperatura en reposo. <C>", "      Tiempo hasta activar reposo. <Minutos>",
 	"      Tiempo hasta apagado. <Minutos>",
-	"      Sensibilidad del movimiento. <0.Apagado 1.El menos sensible 9.El mas sensible>",
-	"      Unidad de temperatura.", "      Cantidad de redondeo de la temperatura.",
+	"      Sensibilidad del movimiento. <0. Apagado, 1. El menos sensible, 9. El más sensible>",
+	"      Unidad de temperatura.", "      Redondeo de la temperatura.",
 	"      Tasa de actualización de la temperatura.",
-	"      Orientacion de la pantalla <A. Automatico L. Mano izquierda R. Mano derecha>",
-	"      Activar el boton <Boost> en modo soldadura.",
-	"      Temperatura en modo <Boost>.",
+	"      Orientación de la pantalla <A. Automático, I. Mano izquierda, D. Mano derecha>",
+	"      Activar el botón \"Boost\" en modo soldadura.",
+	"      Temperatura en modo \"Boost\".",
 	"      Cambiar las flechas en pantalla por indicador de potencia en modo soldadura.",
-	"      Iniciar directamente modo soldadura en el encendido.",
-	"      Blink the temperature on the cooling screen while the tip is still hot."};/*Needs translation*/
+	"      Iniciar modo soldadura en el encendido. <V. Sí, S. Modo reposo, F. No ",
+	"      Parpadea la temperatura en el enfriamiento si la punta sigue caliente."};
 
 const char* TempCalStatus[3] = {"CAL TEMP", "CAL OK  ", "CAL FAIL"}; //All fixed 8 chars
 const char* UVLOWarningString = "LOW VOLT";//Fixed width 8 chars
 const char* CoolingPromptString = "COOL ";//Fixed width 5 chars
-const char SettingTrueChar = 'T';
+const char SettingTrueChar = 'V';
 const char SettingFalseChar = 'F';
 const char SettingSleepChar = 'S';
-const char SettingFastChar = 'F';
+const char SettingFastChar = 'R';
 const char SettingMediumChar = 'M';
-const char SettingSlowChar = 'S';
-const char SettingRightChar = 'R';
-const char SettingLeftChar = 'L';
+const char SettingSlowChar = 'L';
+const char SettingRightChar = 'D';
+const char SettingLeftChar = 'I';
 const char SettingAutoChar = 'A';
 const char SettingTempCChar = 'C';
 const char SettingTempFChar = 'F';
