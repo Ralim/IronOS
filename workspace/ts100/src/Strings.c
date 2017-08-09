@@ -30,7 +30,6 @@ const char* CoolingPromptString = "Cool "; //Fixed width 5 chars
 const char SettingTrueChar = 'T';
 const char SettingFalseChar = 'F';
 const char SettingSleepChar = 'S';
-
 const char SettingFastChar = 'F';
 const char SettingMediumChar = 'M';
 const char SettingSlowChar = 'S';
@@ -64,6 +63,7 @@ const char* UVLOWarningString = "LOW VOLT";//Fixed width 8 chars
 const char* CoolingPromptString = "COOL ";//Fixed width 5 chars
 const char SettingTrueChar = 'T';
 const char SettingFalseChar = 'F';
+const char SettingSleepChar = 'S';
 const char SettingFastChar = 'F';
 const char SettingMediumChar = 'M';
 const char SettingSlowChar = 'S';
@@ -74,6 +74,6 @@ const char SettingTempCChar = 'C';
 const char SettingTempFChar = 'F';
 #endif
 
-const char* SettingsShortNames[14] = { "PWRSC ", "STMP ", "SLTME ", "SHTME ",
+const char* SettingsShortNames[14] = { "PWRSC ", "STMP ", "STME ", "SHTME ",
 		"MSENSE ", "TMPUNT ", "TMPRND ", "TMPSPD ", "DSPROT ", "BOOST  ",
 		"BTMP ", "PWRDSP ", "ASTART ", "CLBLNK " };

@@ -74,15 +74,20 @@ void ProcessUI() {
 				StatusFlags = 0;
 			}
 			//We need to check the timer for movement in case we need to goto idle
-			if (systemSettings.sensitivity)
-				if (millis() - getLastMovement()
-						> (systemSettings.SleepTime * 60000)) {
-					if (millis() - getLastButtonPress()
-							> (systemSettings.SleepTime * 60000)) {
+			if (systemSettings.sensitivity) {
+				uint32_t timeout = 0;
+				if (systemSettings.SleepTime < 6)
+					timeout = 1000 * 10 * systemSettings.SleepTime;
+				else
+					timeout = 60 * 1000 * (systemSettings.SleepTime - 5);
+
+				if (millis() - getLastMovement() > (timeout)) {
+					if (millis() - getLastButtonPress() > (timeout)) {
 						operatingMode = SLEEP;
 						return;
 					}
 				}
+			}
 			uint16_t voltage = readDCVoltage(systemSettings.voltageDiv); //get X10 voltage
 			if ((voltage) < lookupVoltageLevel(systemSettings.cutoutSetting)) {
 				operatingMode = UVLOWARN;
@@ -170,7 +175,7 @@ void ProcessUI() {
 					break;
 				case SLEEP_TIME:
 					++systemSettings.SleepTime;	//Go up 1 minute at a time
-					if (systemSettings.SleepTime > 30)
+					if (systemSettings.SleepTime > 16)
 						systemSettings.SleepTime = 1;//can't set time over 30 mins
 					//Remember that ^ is the time of no movement
 					break;
@@ -219,7 +224,7 @@ void ProcessUI() {
 					break;
 				case AUTOSTART:
 					systemSettings.autoStart++;
-					systemSettings.autoStart %=3;
+					systemSettings.autoStart %= 3;
 					break;
 				case COOLINGBLINK:
 					systemSettings.coolingTempBlink =
@@ -566,8 +571,17 @@ void DrawUI() {
 				OLED_DrawThreeNumber(systemSettings.SleepTemp / 10, 5);
 				break;
 			case SLEEP_TIME:
-				OLED_DrawString(SettingsShortNames[SLEEP_TIME], 6);
-				OLED_DrawTwoNumber(systemSettings.SleepTime, 6);
+				Clear_Screen();
+				OLED_DrawString(SettingsShortNames[SLEEP_TIME], 5);
+				//Draw in the timescale
+				if (systemSettings.SleepTime < 6) {
+					OLED_DrawChar('S', 7);
+					OLED_DrawTwoNumber(systemSettings.SleepTime * 10, 5);
+
+				} else {
+					OLED_DrawChar('M', 7);
+					OLED_DrawTwoNumber(systemSettings.SleepTime - 5, 5);
+				}
 				break;
 			case SHUTDOWN_TIME:
 				OLED_DrawString(SettingsShortNames[SHUTDOWN_TIME], 6);
