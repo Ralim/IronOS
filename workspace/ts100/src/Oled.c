@@ -46,24 +46,30 @@ u8 OLED_Setup_Array[46] = { /**/
 0x80, 0XA6,/*Normal display*/
 0x80, 0xAF /*Dispaly on*/
 };
-
+uint8_t OLEDOnOffState = 0;//Used to lock out so we dont send it too often
 /*
  Function: Oled_DisplayOn
  Description:Turn on the Oled display
  */
 void Oled_DisplayOn(void) {
-	u8 data[6] = { 0x80, 0X8D, 0x80, 0X14, 0x80, 0XAF };
+	if (OLEDOnOffState != 1) {
+		u8 data[6] = { 0x80, 0X8D, 0x80, 0X14, 0x80, 0XAF };
 
-	I2C_PageWrite(data, 6, DEVICEADDR_OLED);
+		I2C_PageWrite(data, 6, DEVICEADDR_OLED);
+		OLEDOnOffState = 1;
+	}
 }
 /*
  Function: Oled_DisplayOff
  Description:Turn off the Oled display
  */
 void Oled_DisplayOff(void) {
-	u8 data[6] = { 0x80, 0X8D, 0x80, 0X10, 0x80, 0XAE };
+	if (OLEDOnOffState != 2) {
+		u8 data[6] = { 0x80, 0X8D, 0x80, 0X10, 0x80, 0XAE };
 
-	I2C_PageWrite(data, 6, DEVICEADDR_OLED);
+		I2C_PageWrite(data, 6, DEVICEADDR_OLED);
+		OLEDOnOffState = 2;
+	}
 }
 
 /*
@@ -89,9 +95,9 @@ const u8* Data_Command(u8 length, const u8* data) {
 }
 //This causes us to write out the buffered screen data to the display
 void OLED_Sync() {
-	Set_ShowPos(0,0);
+	Set_ShowPos(0, 0);
 	Data_Command(96, displayBuffer);
-	Set_ShowPos(0,1);
+	Set_ShowPos(0, 1);
 	Data_Command(96, displayBuffer + 96);
 
 }

@@ -417,7 +417,13 @@ void DrawUI() {
 	static uint16_t lastSolderingDrawnTemp2 = 0;
 	static uint8_t settingsLongTestScrollPos = 0;
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
-
+	if (millis() - getLastMovement() > (5 * 60 * 1000)
+			&& (millis() - getLastButtonPress() > (5 * 60 * 1000))) {
+		//OLED off
+		Oled_DisplayOff();
+	} else {
+		Oled_DisplayOn();
+	}
 	switch (operatingMode) {
 	case STARTUP:
 		//We are chilling in the idle mode
@@ -719,7 +725,8 @@ void DrawUI() {
 		Clear_Screen();
 		OLED_DrawString(CoolingPromptString, 5);
 		temp = readIronTemp(0, 1, 0xFFFF);		//force temp re-reading
-		if (temp < 500 || ((millis() % 1000) > 500))
+		if (temp < 500 || ((millis() % 1000) > 500)
+				|| (!systemSettings.coolingTempBlink))
 			drawTemp(temp, 5, systemSettings.temperatureRounding);
 
 		break;
@@ -728,7 +735,7 @@ void DrawUI() {
 		break;
 	case THERMOMETER:
 		temp = readIronTemp(0, 1, 0xFFFF);	//Force a reading as heater is off
-		OLED_DrawString("TEMP ", 5);//extra one to it clears the leftover 'L' from IDLE
+		OLED_DrawString("Temp ", 5);//extra one to it clears the leftover 'L' from IDLE
 		drawTemp(temp, 5, 0);
 		break;
 	case DCINDISP: {

@@ -24,76 +24,91 @@ uint32_t getLastButtonPress() {
 uint8_t getButtons() {
 	//We want to check the times for the lat buttons & also the rawKeys state
 	//If a key has just gone down, rawKeys & KEY ==1
+	//This is effectively just a big switch statement to handle a small delay on triggering to stop bounce, and also handle key repeat
 	uint8_t out = 0;
-	if (millis() - AkeyChange > 50) {
-		if (LongKeys & BUT_A) {
-			if (rawKeys & BUT_A) {
-				if (millis() - AkeyChange > 800) {
-					out |= BUT_A;
-					AkeyChange = millis();
+	//Special handling case for two keys down at once
+	//This is here to allow for people who do not manage to get both keys down within 50ms of each other.
+	if ((rawKeys & (BUT_A | BUT_B)) == (BUT_A | BUT_B)) {
+		//both keys are probably down
+		if (millis() - AkeyChange > 50)
+			if (millis() - BkeyChange > 50) {
+				out = (BUT_A | BUT_B);
+				AkeyChange = millis();
+				BkeyChange = millis();
+				rawKeys=0;
+			}
+		LongKeys = 0;
+	} else {
+		if (millis() - AkeyChange > 80) {
+			if (LongKeys & BUT_A) {
+				if (rawKeys & BUT_A) {
+					if (millis() - AkeyChange > 800) {
+						out |= BUT_A;
+						AkeyChange = millis();
+						LongKeys &= ~BUT_A;
+
+						LongKeys |= (BUT_A << 2);
+					}
+				} else {
 					LongKeys &= ~BUT_A;
+					LongKeys &= ~(BUT_A << 2);
+				}
 
-					LongKeys |= (BUT_A << 2);
+			} else if (LongKeys & (BUT_A << 2)) {
+				if (rawKeys & BUT_A) {
+					if (millis() - AkeyChange > 100) {
+						out |= BUT_A;
+						AkeyChange = millis();
+					}
+				} else {
+					LongKeys &= ~BUT_A;
+					LongKeys &= ~(BUT_A << 2);
 				}
 			} else {
-				LongKeys &= ~BUT_A;
-				LongKeys &= ~(BUT_A << 2);
-			}
-
-		} else if (LongKeys & (BUT_A << 2)) {
-			if (rawKeys & BUT_A) {
-				if (millis() - AkeyChange > 100) {
+				if (rawKeys & BUT_A) {
+					//The key is down
 					out |= BUT_A;
-					AkeyChange = millis();
+					LongKeys |= BUT_A;
+				} else {
+					//The key has been lifted
+					LongKeys &= ~BUT_A;
+					LongKeys &= ~(BUT_A << 2);
 				}
-			} else {
-				LongKeys &= ~BUT_A;
-				LongKeys &= ~(BUT_A << 2);
-			}
-		} else {
-			if (rawKeys & BUT_A) {
-				//The key is down
-				out |= BUT_A;
-				LongKeys |= BUT_A;
-			} else {
-				//The key has been lifted
-				LongKeys &= ~BUT_A;
-				LongKeys &= ~(BUT_A << 2);
 			}
 		}
-	}
-	if (millis() - BkeyChange > 50) {
-		if (LongKeys & BUT_B) {
-			if (rawKeys & BUT_B) {
-				if (millis() - BkeyChange > 800) {
-					out |= BUT_B;
-					BkeyChange = millis();
-					LongKeys |= (BUT_B << 2);
+		if (millis() - BkeyChange > 80) {
+			if (LongKeys & BUT_B) {
+				if (rawKeys & BUT_B) {
+					if (millis() - BkeyChange > 800) {
+						out |= BUT_B;
+						BkeyChange = millis();
+						LongKeys |= (BUT_B << 2);
+						LongKeys &= ~BUT_B;
+					}
+				} else {
 					LongKeys &= ~BUT_B;
+					LongKeys &= ~(BUT_B << 2);
+				}
+			} else if (LongKeys & (BUT_B << 2)) {
+				if (rawKeys & BUT_B) {
+					if (millis() - BkeyChange > 100) {
+						out |= BUT_B;
+						BkeyChange = millis();
+					}
+				} else {
+					LongKeys &= ~BUT_B;
+					LongKeys &= ~(BUT_B << 2);
 				}
 			} else {
-				LongKeys &= ~BUT_B;
-				LongKeys &= ~(BUT_B << 2);
-			}
-		} else if (LongKeys & (BUT_B << 2)) {
-			if (rawKeys & BUT_B) {
-				if (millis() - BkeyChange > 100) {
+				if (rawKeys & BUT_B) {
+					//The key is down
 					out |= BUT_B;
-					BkeyChange = millis();
+					LongKeys |= BUT_B;
+				} else {
+					//The key has been lifted
+					LongKeys &= ~BUT_B;
+					LongKeys &= ~(BUT_B << 2);
 				}
-			} else {
-				LongKeys &= ~BUT_B;
-				LongKeys &= ~(BUT_B << 2);
-			}
-		} else {
-			if (rawKeys & BUT_B) {
-				//The key is down
-				out |= BUT_B;
-				LongKeys |= BUT_B;
-			} else {
-				//The key has been lifted
-				LongKeys &= ~BUT_B;
-				LongKeys &= ~(BUT_B << 2);
 			}
 		}
 	}
