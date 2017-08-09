@@ -29,7 +29,7 @@ Please calibrate your irons voltage reading when you are using a lithium battery
 # Upgrading your ts100 iron
 
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases)
-Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading*Firmware).
+Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac OSX and Linux. For Linux use the script in the flash folder: (https://github.com/Ralim/ts100/tree/master/flash).
 
 1. Hold the button closest to the tip, and plug in the USB to the computer.
 2. The unit will appear as a USB drive.
