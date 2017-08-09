@@ -150,12 +150,19 @@ void ProcessUI() {
 			//The user pressed the button to breakout of the settings help prompt
 			StatusFlags = 0;
 		} else {
-			if (Buttons & BUT_B) {
+			if (Buttons == (BUT_A | BUT_B)) {
+
+				//Both buttons were pressed, exit back to the startup screen
+				settingsPage = 0;				//reset
+				operatingMode = STARTUP;	//reset back to the startup
+				saveSettings();					//Save the settings
+
+			} else if (Buttons & BUT_B) {
 				//A key iterates through the menu
 				if (settingsPage == SETTINGSOPTIONSCOUNT) {
 					//Roll off the end
 					settingsPage = 0;				//reset
-					operatingMode = STARTUP;		//reset back to the startup
+					operatingMode = STARTUP;	//reset back to the startup
 					saveSettings();					//Save the settings
 				} else {
 					++settingsPage;			//move to the next option
@@ -165,7 +172,7 @@ void ProcessUI() {
 				switch (settingsPage) {
 				case UVCO:
 					//we are incrementing the cutout voltage
-					systemSettings.cutoutSetting += 1;		//Go up 1V at a jump
+					systemSettings.cutoutSetting += 1;	//Go up 1V at a jump
 					systemSettings.cutoutSetting %= 5;		//wrap 0->4
 					break;
 				case SLEEP_TEMP:
@@ -182,7 +189,7 @@ void ProcessUI() {
 				case SHUTDOWN_TIME:
 					++systemSettings.ShutdownTime;
 					if (systemSettings.ShutdownTime > 60)
-						systemSettings.ShutdownTime = 0;		//wrap to off
+						systemSettings.ShutdownTime = 0;	//wrap to off
 					break;
 				case TEMPDISPLAY:
 					systemSettings.displayTempInF =
@@ -440,7 +447,7 @@ void DrawUI() {
 			Oled_DisplayOff();
 		} else {
 			Oled_DisplayOn();
-			OLED_DrawIDLELogo();		//Draw the icons for prompting the user
+			OLED_DrawIDLELogo();	//Draw the icons for prompting the user
 		}
 		break;
 	case SOLDERING:
