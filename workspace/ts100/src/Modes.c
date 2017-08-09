@@ -218,7 +218,8 @@ void ProcessUI() {
 					systemSettings.powerDisplay = !systemSettings.powerDisplay;
 					break;
 				case AUTOSTART:
-					systemSettings.autoStart = !systemSettings.autoStart;
+					systemSettings.autoStart++;
+					systemSettings.autoStart %=3;
 					break;
 				case COOLINGBLINK:
 					systemSettings.coolingTempBlink =
@@ -660,6 +661,7 @@ void DrawUI() {
 				case 0:
 					OLED_DrawChar(SettingFalseChar, 7);
 					break;
+
 				}
 				break;
 			case AUTOSTART:
@@ -670,6 +672,9 @@ void DrawUI() {
 					break;
 				case 0:
 					OLED_DrawChar(SettingFalseChar, 7);
+					break;
+				case 2:
+					OLED_DrawChar(SettingSleepChar, 7);
 					break;
 				}
 				break;

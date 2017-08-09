@@ -18,10 +18,10 @@ const char* SettingsLongNames[14] =
 				"      Temperature Unit", "      Temperature Rounding Amount",
 				"      Temperature Display Update Rate",
 				"      Display Orientation <A. Automatic L. Left Handed R. Right Handed>",
-				"      Enable front key boost 450C mode when soldering",
-				"      Temperature when in boost mode",
+				"      Enable front key enters boost mode 450C mode when soldering",
+				"      Temperature when in \"boost\" mode",
 				"      Changes the arrows to a power display when soldering",
-				"      Automatically starts the iron into soldering on power up.",
+				"      Automatically starts the iron into soldering on power up.T=Soldering, S= Sleep mode,F=Off",
 				"      Blink the temperature on the cooling screen while the tip is still hot." };
 
 const char* TempCalStatus[3] = { "Cal Temp", "Cal OK  ", "Cal Fail" }; //All fixed 8 chars
@@ -29,6 +29,8 @@ const char* UVLOWarningString = "Low Volt"; //Fixed width 8 chars
 const char* CoolingPromptString = "Cool "; //Fixed width 5 chars
 const char SettingTrueChar = 'T';
 const char SettingFalseChar = 'F';
+const char SettingSleepChar = 'S';
+
 const char SettingFastChar = 'F';
 const char SettingMediumChar = 'M';
 const char SettingSlowChar = 'S';

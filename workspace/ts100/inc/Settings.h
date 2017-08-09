@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "stm32f10x_flash.h"
 #include "Oled.h"
-#define SETTINGSVERSION 16 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define SETTINGSVERSION 17 /*Change this if you change the struct below to prevent people getting out of sync*/
 //Display Speeds
 #define DISPLAYMODE_FAST 	(0x00)
 #define DISPLAYMODE_MEDIUM 	(0x01)
@@ -35,7 +35,7 @@ typedef struct {
 	uint8_t displayTempInF:1;		//If we need to convert the C reading to F
 	uint8_t OrientationMode:2;		//If true we want to invert the display for lefties
 	uint8_t sensitivity:5;			//Sensitivity of accelerometer (5 bits)
-	uint8_t autoStart:1;			//Should the unit automatically jump straight into soldering mode when power is applied
+	uint8_t autoStart:2;			//Should the unit automatically jump straight into soldering mode when power is applied
 	uint8_t ShutdownTime:6;			//Time until unit shuts down if left alone
 	uint8_t displayUpdateSpeed:2;	//How fast the display updates / temp showing mode
 	uint8_t temperatureRounding:2;	//Rounding mode for the temperature

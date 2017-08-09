@@ -19,6 +19,7 @@ extern const char* UVLOWarningString; //Fixed width 8 chars
 extern const char* CoolingPromptString; //Fixed width 5 chars
 extern const char SettingTrueChar;
 extern const char SettingFalseChar;
+extern const char SettingSleepChar;
 extern const char SettingFastChar;
 extern const char SettingMediumChar;
 extern const char SettingSlowChar;

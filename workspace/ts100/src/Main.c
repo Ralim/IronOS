@@ -14,13 +14,15 @@ void setup();
 
 int main(void) {
 	setup();/*Setup the system*/
-	if (systemSettings.autoStart)
+	if (systemSettings.autoStart == 1)
 		operatingMode = SOLDERING;
+	else if (systemSettings.autoStart == 2)
+		operatingMode = SLEEP;
 	while (1) {
 		Clear_Watchdog(); //reset the Watch dog timer
 		ProcessUI();
 		DrawUI();
-		OLED_Sync();//Write out the screen buffer
+		OLED_Sync(); //Write out the screen buffer
 		delayMs(15); //Slow the system down waiting for the iron.
 
 		if (systemSettings.OrientationMode == 2) {
@@ -28,8 +30,7 @@ int main(void) {
 			if (RotationChangedFlag) {
 				OLED_SetOrientation(!getOrientation());
 				RotationChangedFlag = 0;
-			}
-			else if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_3) == Bit_RESET) {
+			} else if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_3) == Bit_RESET) {
 				OLED_SetOrientation(!getOrientation());
 				RotationChangedFlag = 0;
 				//^ This is a workaround for the IRQ being set off before we have the handler setup and enabled.
