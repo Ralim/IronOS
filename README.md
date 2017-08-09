@@ -28,7 +28,8 @@ Please calibrate your irons voltage reading when you are using a lithium battery
 
 # Upgrading your ts100 iron
 
-This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases)
+This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *ts100.hex* unless you want the translations, they are ts100_*language short name*.hex.
+
 Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading*Firmware).
 
 1. Hold the button closest to the tip, and plug in the USB to the computer.
@@ -152,77 +153,6 @@ The boost temperature is set in the settings menu.
 This software is provided as-is, so I cannot provide any commercial support for the firmware. However you are more than welcome to distribute links to the firmware, or provide irons with this software on them. 
 Please do not re-host the files, but rather link to this page, so that there are not old versions of the firmware hanging around. If this firmware does make you money, it would be nice to recieve a donation, however I dont enforce this.
 
-## Version Changes
-
-V1.16
-
-* Added automatic rotation support
-* Added power display graph
-
-V1.15
-
-* Added support for a custom bootup logo to be programmed via the DFU bootloader.
-
-V1.14
-
-* Changed input voltage cutoff to be based on cell count rather than voltage.
-
-V1.13
-
-* Swapped buttons for menu to prevent accidentally changing first menu item
-* Added auto key repeat.
-
-V1.12
-
-* Increases sensitivity options to be 1*9 with 0 off state
-* Fixes issue where going from COOL *> soldering can leave screen off.
-
-V1.11
-
-* Boost mode
-* Change sensitivity options to be 1*8
-
-V1.10
-
-* Adds help text to settings
-* Improves settings for the display update rate
-
-V1.09
-
-* Adds display modes, for slowing down or simplifying the display
-
-V1.08
-
-* Fix settings menu not showing flip display
-
-V1.07
-
-* Adds shutdown time to automatically shutdown the iron after inactivity
-
-V1.06
-
-* Changes H and C when the iron is heating to the minidso chevron like images
-
-V1.05
-
-* Adds ability to calibrate the input voltage measurement
-
-V1.04
-
-* Increased accuracy of the temperature control
-* Improved PID response slightly
-* Allows temperature offset calibration
-* Nicer idle screen
-
-V1.03 
-
-* Improved Button handling
-* Ability to set motion sensitivity
-* DC voltmeter page shows input voltage
-
-V1.02
-
-* Adds hold both buttons on IDLE to access the therometer mode.
-* Changes the exit soldering mode to be holding both buttons (Like original firmware).
+## Thanks
 
 If you love this firmware and want to continue my caffine addiction, you can do so here (or email me for other options) : https://paypal.me/RalimTek
