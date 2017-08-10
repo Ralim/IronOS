@@ -76,6 +76,7 @@ void setup() {
 			resetSettings();
 		}
 	}
+
 	Start_Watchdog(5000); //start the system watch dog as 5 second timeout
 
 }

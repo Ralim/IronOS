@@ -46,10 +46,12 @@ const char* SettingsLongNames[14] =
 	/*These are all the help text for all the settings.*/
 	/*All must start with 6 spaces so they come on screen nicely.*/
 	"      Fuente de energía. Ajusta el límite inferior de voltaje. <DC 10V> <S 3.3V por celda>",
-	"      Temperatura en reposo. <C>", "      Tiempo hasta activar reposo. <Minutos>",
+	"      Temperatura en reposo. <C>",
+	"      Tiempo hasta activar reposo. <Minutos>",
 	"      Tiempo hasta apagado. <Minutos>",
 	"      Sensibilidad del movimiento. <0. Apagado, 1. El menos sensible, 9. El más sensible>",
-	"      Unidad de temperatura.", "      Redondeo de la temperatura.",
+	"      Unidad de temperatura.",
+	"      Redondeo de la temperatura.",
 	"      Tasa de actualización de la temperatura.",
 	"      Orientación de la pantalla <A. Automático, I. Mano izquierda, D. Mano derecha>",
 	"      Activar el botón \"Boost\" en modo soldadura.",

@@ -297,18 +297,7 @@ void ProcessUI() {
 			//Either button was pushed
 			operatingMode = STARTUP;
 		}
-		if (systemSettings.sensitivity) {
-			if (millis() - getLastMovement()
-					> (systemSettings.ShutdownTime * 60000)) {
-				if ((millis() - getLastButtonPress()
-						> systemSettings.ShutdownTime * 60000)) {
-					Oled_DisplayOff();
-				}
-			} else {
-				Oled_DisplayOn();
-			}
-		} else
-			Oled_DisplayOn();
+
 	}
 		break;
 	case UVLOWARN:
@@ -430,25 +419,22 @@ void DrawUI() {
 	static uint16_t lastSolderingDrawnTemp2 = 0;
 	static uint8_t settingsLongTestScrollPos = 0;
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
-	if (millis() - getLastMovement() > (5 * 60 * 1000)
-			&& (millis() - getLastButtonPress() > (5 * 60 * 1000))) {
-		//OLED off
-		Oled_DisplayOff();
-	} else {
-		Oled_DisplayOn();
-	}
-	switch (operatingMode) {
-	case STARTUP:
-		//We are chilling in the idle mode
-		//Check if movement in the last 5 minutes , if not sleep OLED
+	if (systemSettings.sensitivity) {
 		if (millis() - getLastMovement() > (5 * 60 * 1000)
 				&& (millis() - getLastButtonPress() > (5 * 60 * 1000))) {
 			//OLED off
 			Oled_DisplayOff();
 		} else {
 			Oled_DisplayOn();
-			OLED_DrawIDLELogo();	//Draw the icons for prompting the user
 		}
+	}
+	switch (operatingMode) {
+	case STARTUP:
+		//We are chilling in the idle mode
+		//Check if movement in the last 5 minutes , if not sleep OLED
+
+		OLED_DrawIDLELogo();	//Draw the icons for prompting the user
+
 		break;
 	case SOLDERING:
 		//The user is soldering
@@ -736,14 +722,6 @@ void DrawUI() {
 		Clear_Screen();
 		OLED_DrawString("SLP ", 4);
 		drawTemp(temp, 4, systemSettings.temperatureRounding);
-
-		if (millis() - getLastMovement() > (10 * 60 * 1000)
-				&& (millis() - getLastButtonPress() > (10 * 60 * 1000))) {
-			//OLED off
-			Oled_DisplayOff();
-		} else {
-			Oled_DisplayOn();
-		}
 
 		break;
 	case COOLING:
