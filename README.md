@@ -30,7 +30,7 @@ Please calibrate your irons voltage reading when you are using a lithium battery
 
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *ts100.hex* unless you want the translations, they are ts100_*language short name*.hex.
 
-Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading*Firmware).
+Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
 1. Hold the button closest to the tip, and plug in the USB to the computer.
 2. The unit will appear as a USB drive.
@@ -48,19 +48,7 @@ There is a complete device flash backup included in this repository. (Note this 
 
 This firmware uses a different method of updating the bootup image.
 This removes the need for emulating a USB drive on the iron just to allow for a bootup image to be setup.
-At this point in time you will need a windows machine to make the required .hex file for you image.
-*If you know what your doing, this program will run fine through mono on other systems*
-
-1. On the [releases page](https://github.com/Ralim/ts100/releases) you will need to download the latest copy of the GUI Tool (*TS100.Logo.Editor.exe*).
-2. Launch the TS100 Logo Editor, you will need to have .NET 4.0 installed on your machine
-3. On the tool open the source image that you would like to use as your bootup screen. A resolution of 96x16 is ideal, but you can fill or stretch your logo to fit
-4. Colour images are okay, the software will convert them to B&W for you.
-5. You can also invert colours if you would prefer.
-6. Save the created file as a *.hex* file somewhere.
-7. Connect your iron to your computer in DFU mode (same as you would to upgrade firmware).
-8. Drag the created .hex file for the logo onto the iron to update it with the file.
-9. You should be good to go.
-10. The image will stay through future updates, but if it ever wont I will put a warning in the update download on the releases page.
+There are further instructions on the [wiki](https://github.com/Ralim/ts100/wiki/Logo-Editor). Instructions are kept on the wiki so that users can update the information if they find extra helpful information.
 
 ## New Menu System
 
