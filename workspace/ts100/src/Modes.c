@@ -269,14 +269,14 @@ void ProcessUI() {
 			operatingMode = SOLDERING;
 			Oled_DisplayOn();
 			return;
-		} else if (systemSettings.sensitivity) {
+		} else if (systemSettings.sensitivity&& !InterruptMask) {
 			if (millis() - getLastMovement() < 1000) {//moved in the last second
 				operatingMode = SOLDERING; //Goto active mode again
 				Oled_DisplayOn();
 				return;
 			}
 		}
-		if (systemSettings.sensitivity) {
+		if (systemSettings.sensitivity ) {
 			//Check if we should shutdown
 			if ((millis() - getLastMovement()
 					> (systemSettings.ShutdownTime * 60000))

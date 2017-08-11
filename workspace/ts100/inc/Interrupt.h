@@ -10,6 +10,8 @@ extern volatile uint32_t system_Ticks;
 void delayMs(uint32_t ticks);
 extern volatile uint32_t lastMovement;
 
+extern volatile uint8_t InterruptMask;//Used to mask interrupts
+
 extern volatile uint8_t rawKeys;
 inline uint32_t millis() {
 	return system_Ticks;

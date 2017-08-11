@@ -9,6 +9,7 @@ volatile uint8_t rawKeys;
 volatile uint8_t LongKeys;
 volatile uint32_t lastMovement; //millis() at last movement event
 volatile uint8_t RotationChangedFlag;
+volatile uint8_t InterruptMask;
 
 //Delay in milliseconds using systemTick
 void delayMs(uint32_t ticks) {
@@ -35,7 +36,7 @@ uint8_t getButtons() {
 				out = (BUT_A | BUT_B);
 				AkeyChange = millis();
 				BkeyChange = millis();
-				rawKeys=0;
+				rawKeys = 0;
 			}
 		LongKeys = 0;
 	} else {
@@ -172,7 +173,8 @@ void EXTI9_5_IRQHandler(void) {
 		BkeyChange = millis();
 		EXTI_ClearITPendingBit(EXTI_Line6);
 	} else if (EXTI_GetITStatus(EXTI_Line5) != RESET) {	//Movement Event
-		lastMovement = millis();
+		if (!InterruptMask)
+			lastMovement = millis();
 		EXTI_ClearITPendingBit(EXTI_Line5);
 	}
 
