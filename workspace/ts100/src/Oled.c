@@ -46,7 +46,7 @@ u8 OLED_Setup_Array[46] = { /**/
 0x80, 0XA6,/*Normal display*/
 0x80, 0xAF /*Dispaly on*/
 };
-uint8_t OLEDOnOffState = 0;//Used to lock out so we dont send it too often
+uint8_t OLEDOnOffState = 0; //Used to lock out so we dont send it too often
 /*
  Function: Oled_DisplayOn
  Description:Turn on the Oled display
@@ -198,12 +198,19 @@ void OLED_DrawString(const char* string, const uint8_t length) {
 void OLED_DrawChar(char c, uint8_t x) {
 	if (x > 7)
 		return; //clipping
-	if (c > 127)
-		return; //Not in this font
-	x *= FONT_WIDTH; //convert to a x coordinate
 
-	u8* ptr = (u8*) FONT;
-	u16 offset = c - ' ';
+	x *= FONT_WIDTH; //convert to a x coordinate
+	u8* ptr;
+	u16 offset = 0;
+	if (c < 0x80) {
+		ptr = (u8*) FONT;
+		offset = c - ' ';
+	} else if (c >= 0xA0) {
+		ptr = (u8*) FontLatin2;
+		offset = c-0xA0;//this table starts at 0xA0
+	} else
+		return; //not in font
+
 	offset *= (2 * FONT_WIDTH);
 	ptr += offset;
 
