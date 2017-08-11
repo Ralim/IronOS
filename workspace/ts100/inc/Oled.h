@@ -24,7 +24,8 @@ void Clear_Screen(void); //Clear the screen
 /*Functions for writing to the screen*/
 void OLED_DrawString(const char* string, const uint8_t length);
 void OLED_DrawChar(char c, uint8_t x);
-void OLED_DrawExtendedChar(uint8_t id, uint8_t x);
+void OLED_DrawExtraFontChars(uint8_t id, uint8_t x);
+void OLED_DrawSymbolChar(uint8_t id, uint8_t x);
 void OLED_DrawWideChar(uint8_t id, uint8_t x);
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x);
 void OLED_DrawThreeNumber(uint16_t in, uint8_t x);

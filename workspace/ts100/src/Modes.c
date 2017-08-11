@@ -459,7 +459,7 @@ void DrawUI() {
 
 		//Now draw symbols
 		if (StatusFlags == 8)
-			OLED_DrawChar('B', 4);
+			OLED_DrawExtraFontChars(2,4);
 		else {
 			OLED_DrawChar(' ', 4);
 		}
@@ -477,13 +477,15 @@ void DrawUI() {
 			cellV -= 33;			//Should leave us a number of 0-9
 			if (cellV > 9)
 				cellV = 9;
-			OLED_DrawExtendedChar(cellV + 1, 5);
+			OLED_DrawSymbolChar(cellV + 1, 5);
 		}
 
 		if (systemSettings.displayTempInF) {
-			OLED_DrawChar(SettingTempFChar, 3);
+			//OLED_DrawChar(SettingTempFChar, 3);
+			OLED_DrawExtraFontChars(0,3);
 		} else {
-			OLED_DrawChar(SettingTempCChar, 3);
+			//OLED_DrawChar(SettingTempCChar, 3);
+			OLED_DrawExtraFontChars(1,3);
 		}
 		//Optionally draw the arrows, or draw the power instead
 		if (systemSettings.powerDisplay) {

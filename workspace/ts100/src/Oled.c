@@ -207,7 +207,7 @@ void OLED_DrawChar(char c, uint8_t x) {
 		offset = c - ' ';
 	} else if (c >= 0xA0) {
 		ptr = (u8*) FontLatin2;
-		offset = c-0xA0;//this table starts at 0xA0
+		offset = c - 0xA0; //this table starts at 0xA0
 	} else
 		return; //not in font
 
@@ -216,8 +216,14 @@ void OLED_DrawChar(char c, uint8_t x) {
 
 	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
 }
-void OLED_DrawExtendedChar(uint8_t id, uint8_t x) {
-	u8* ptr = (u8*) extendedFont;
+void OLED_DrawExtraFontChars(uint8_t id, uint8_t x) {
+	u8* ptr = (u8*) ExtraFontChars;
+	ptr += (id) * (FONT_WIDTH * 2);
+	x *= FONT_WIDTH; //convert to a x coordinate
+	Oled_DrawArea(x, 0, FONT_WIDTH, 16, (u8*) ptr);
+}
+void OLED_DrawSymbolChar(uint8_t id, uint8_t x) {
+	u8* ptr = (u8*) FontSymbols;
 	ptr += (id) * (FONT_WIDTH * 2);
 	x *= FONT_WIDTH; //convert to a x coordinate
 
