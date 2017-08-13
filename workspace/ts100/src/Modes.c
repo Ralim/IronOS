@@ -269,14 +269,14 @@ void ProcessUI() {
 			operatingMode = SOLDERING;
 			Oled_DisplayOn();
 			return;
-		} else if (systemSettings.sensitivity&& !InterruptMask) {
+		} else if (systemSettings.sensitivity && !InterruptMask) {
 			if (millis() - getLastMovement() < 1000) {//moved in the last second
 				operatingMode = SOLDERING; //Goto active mode again
 				Oled_DisplayOn();
 				return;
 			}
 		}
-		if (systemSettings.sensitivity ) {
+		if (systemSettings.sensitivity) {
 			//Check if we should shutdown
 			if ((millis() - getLastMovement()
 					> (systemSettings.ShutdownTime * 60000))
@@ -459,7 +459,7 @@ void DrawUI() {
 
 		//Now draw symbols
 		if (StatusFlags == 8)
-			OLED_DrawExtraFontChars(2,4);
+			OLED_DrawExtraFontChars(2, 4);
 		else {
 			OLED_DrawChar(' ', 4);
 		}
@@ -482,10 +482,10 @@ void DrawUI() {
 
 		if (systemSettings.displayTempInF) {
 			//OLED_DrawChar(SettingTempFChar, 3);
-			OLED_DrawExtraFontChars(0,3);
+			OLED_DrawExtraFontChars(0, 3);
 		} else {
 			//OLED_DrawChar(SettingTempCChar, 3);
-			OLED_DrawExtraFontChars(1,3);
+			OLED_DrawExtraFontChars(1, 3);
 		}
 		//Optionally draw the arrows, or draw the power instead
 		if (systemSettings.powerDisplay) {
@@ -731,11 +731,13 @@ void DrawUI() {
 		Clear_Screen();
 		OLED_DrawString(CoolingPromptString, 5);
 		temp = readIronTemp(0, 1, 0xFFFF);		//force temp re-reading
-		if (temp < 500 || ((millis() % 1000) > 500)
-				|| (!systemSettings.coolingTempBlink))
-			drawTemp(temp, 5, systemSettings.temperatureRounding);
-		if(temp>300)
+
+		drawTemp(temp, 5, systemSettings.temperatureRounding);
+		if (temp > 300)
 			Oled_DisplayOn();
+		if (temp > 500 && systemSettings.coolingTempBlink
+				&& (millis() % 600) > 300)
+			OLED_InvertBuffer();
 		break;
 	case UVLOWARN:
 		OLED_DrawString(UVLOWarningString, 8);

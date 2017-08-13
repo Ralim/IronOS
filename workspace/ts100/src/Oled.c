@@ -136,7 +136,10 @@ void Oled_DrawArea(u8 x, u8 y, u8 wide, u8 height, const u8* ptr) {
 	}
 
 }
-
+void OLED_InvertBuffer() {
+	for (uint16_t i = 0; i < (2 * 96); i++)
+		displayBuffer[i] = ~displayBuffer[i];
+}
 /*******************************************************************************
  Function:GPIO_Init_OLED
  Description:Init the outputs as needed for the OLED (in this case the RST line)
