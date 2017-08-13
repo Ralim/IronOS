@@ -447,7 +447,7 @@ void DrawUI() {
 			return;
 
 		Clear_Screen();
-
+		Oled_DisplayOn();
 		uint32_t tempavg = (temp + lastSolderingDrawnTemp1
 				+ lastSolderingDrawnTemp2);
 		tempavg /= 3;
@@ -724,7 +724,7 @@ void DrawUI() {
 		Clear_Screen();
 		OLED_DrawString("SLP ", 4);
 		drawTemp(temp, 4, systemSettings.temperatureRounding);
-
+		Oled_DisplayOn();
 		break;
 	case COOLING:
 		//We are warning the user the tip is cooling
@@ -734,7 +734,8 @@ void DrawUI() {
 		if (temp < 500 || ((millis() % 1000) > 500)
 				|| (!systemSettings.coolingTempBlink))
 			drawTemp(temp, 5, systemSettings.temperatureRounding);
-
+		if(temp>300)
+			Oled_DisplayOn();
 		break;
 	case UVLOWARN:
 		OLED_DrawString(UVLOWarningString, 8);
