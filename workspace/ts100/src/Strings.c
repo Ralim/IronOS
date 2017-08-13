@@ -75,7 +75,40 @@ const char SettingAutoChar = 'A';
 const char SettingTempCChar = 'C';
 const char SettingTempFChar = 'F';
 #endif
+#ifdef LANG_DE
+const char* SettingsLongNames[14] =
+		{
+		/*These are all the help text for all the settings.*/
+		/*All must start with 6 spaces so they come on screen nicely.*/
+		"      Stromversorgung. Setzt Abschaltspannung <DC 10V> <S 3.3V per cell>",
+				"      Ruhetemperatur <C>", "      Ruhemodus nach <Minuten>",
+				"      Abschaltzeit <Minuten>",
+				"      Bewegungsempfindlichkeit <0.Aus 1.Minimal 9.Maximal>",
+				"      Temperatur Einheit", "      Temperatur Runden",
+				"      Temperaturanzeige Updaterate",
+				"      Anzeigerichtung <A. Automatisch L. Linkshändig R. Rechtshändig>",
+				"      Fronttaste für Temperaturboost einschalten",
+				"      Temperatur im \"boost\"-Modus",
+				"      Ändert \"Temperaturpfeile\" in Leistungsbalken",
+				"      Automatischer Start beim Einschalten. J=Löttemp., R=Ruhemodus,N=Aus",
+				"      Temperatur blinkt beim Abkühlen, solange noch heiß." };
 
+const char* TempCalStatus[3] = { "Cal Temp", "Cal OK  ", "Cal Fehl" }; //All fixed 8 chars
+const char* UVLOWarningString = "V gering"; //Fixed width 8 chars
+const char* CoolingPromptString = "Kalt "; //Fixed width 5 chars
+const char SettingTrueChar = 'J';
+const char SettingFalseChar = 'N';
+const char SettingSleepChar = 'R';
+const char SettingFastChar = 'S';
+const char SettingMediumChar = 'M';
+const char SettingSlowChar = 'L';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingTempCChar = 'C';
+const char SettingTempFChar = 'F';
+
+#endif
 const char* SettingsShortNames[14] = { "PWRSC ", "STMP ", "STME ", "SHTME ",
 		"MSENSE ", "TMPUNT ", "TMPRND ", "TMPSPD ", "DSPROT ", "BOOST  ",
 		"BTMP ", "PWRDSP ", "ASTART ", "CLBLNK " };
