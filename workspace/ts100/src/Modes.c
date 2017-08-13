@@ -421,7 +421,8 @@ void DrawUI() {
 	uint16_t temp = readIronTemp(0, 0, 0xFFFF);
 	if (systemSettings.sensitivity) {
 		if (millis() - getLastMovement() > (5 * 60 * 1000)
-				&& (millis() - getLastButtonPress() > (5 * 60 * 1000))) {
+				&& (millis() - getLastButtonPress() > (5 * 60 * 1000))
+				&& (temp < 400)) {
 			//OLED off
 			Oled_DisplayOff();
 		} else {
@@ -434,7 +435,7 @@ void DrawUI() {
 		//Check if movement in the last 5 minutes , if not sleep OLED
 
 		OLED_DrawIDLELogo();	//Draw the icons for prompting the user
-
+		temp = readIronTemp(0, 1, 0xFFFF);//to update the internal filter buffer
 		break;
 	case SOLDERING:
 		//The user is soldering
@@ -733,10 +734,8 @@ void DrawUI() {
 		temp = readIronTemp(0, 1, 0xFFFF);		//force temp re-reading
 
 		drawTemp(temp, 5, systemSettings.temperatureRounding);
-		if (temp > 300)
-			Oled_DisplayOn();
 		if (temp > 500 && systemSettings.coolingTempBlink
-				&& (millis() % 600) > 300)
+				&& (millis() % 1000) > 500)
 			OLED_InvertBuffer();
 		break;
 	case UVLOWARN:
