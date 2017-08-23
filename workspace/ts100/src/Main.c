@@ -21,7 +21,11 @@ int main(void) {
 	if (systemSettings.autoStart) {
 		InterruptMask = 1; //set the mask
 		lastMovement = 0;
-	}
+	} else
+		InterruptMask = 0;
+	if (readIronTemp(0, 1, 0xFFFF) > 500)
+		operatingMode = COOLING;
+
 	while (1) {
 		Clear_Watchdog(); //reset the Watch dog timer
 		ProcessUI();
@@ -40,7 +44,8 @@ int main(void) {
 				//^ This is a workaround for the IRQ being set off before we have the handler setup and enabled.
 			}
 		}
-		if ((GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_5) == Bit_RESET)&&!InterruptMask) {
+		if ((GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_5) == Bit_RESET)
+				&& (!InterruptMask)) {
 			lastMovement = millis();
 			//This is a workaround for the line staying low as the user is still moving. (ie sensitivity is too high for their amount of movement)
 		}

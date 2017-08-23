@@ -156,6 +156,7 @@ void ProcessUI() {
 				settingsPage = 0;				//reset
 				operatingMode = STARTUP;	//reset back to the startup
 				saveSettings();					//Save the settings
+				StartUp_Accelerometer(systemSettings.sensitivity); //Start the accelerometer
 
 			} else if (Buttons & BUT_B) {
 				//A key iterates through the menu
@@ -164,6 +165,8 @@ void ProcessUI() {
 					settingsPage = 0;				//reset
 					operatingMode = STARTUP;	//reset back to the startup
 					saveSettings();					//Save the settings
+					StartUp_Accelerometer(systemSettings.sensitivity); //Start the accelerometer
+
 				} else {
 					++settingsPage;			//move to the next option
 				}
@@ -436,6 +439,7 @@ void DrawUI() {
 
 		OLED_DrawIDLELogo();	//Draw the icons for prompting the user
 		temp = readIronTemp(0, 1, 0xFFFF);//to update the internal filter buffer
+
 		break;
 	case SOLDERING:
 		//The user is soldering
@@ -733,10 +737,14 @@ void DrawUI() {
 		OLED_DrawString(CoolingPromptString, 5);
 		temp = readIronTemp(0, 1, 0xFFFF);		//force temp re-reading
 
-		drawTemp(temp, 5, systemSettings.temperatureRounding);
 		if (temp > 500 && systemSettings.coolingTempBlink
-				&& (millis() % 1000) > 500)
-			OLED_InvertBuffer();
+				&& (millis() % 1000) > 500) {
+
+		} else {
+			drawTemp(temp, 5, systemSettings.temperatureRounding);
+
+		}
+
 		break;
 	case UVLOWARN:
 		OLED_DrawString(UVLOWarningString, 8);
