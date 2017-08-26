@@ -14,6 +14,8 @@ void setup();
 
 int main(void) {
 	setup();/*Setup the system*/
+	for(uint8_t i=0;i<100;i++)
+		readIronTemp(0, 1, 0xFFFF);
 	if (systemSettings.autoStart == 1)
 		operatingMode = SOLDERING;
 	else if (systemSettings.autoStart == 2)

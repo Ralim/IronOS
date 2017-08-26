@@ -742,7 +742,6 @@ void DrawUI() {
 
 		} else {
 			drawTemp(temp, 5, systemSettings.temperatureRounding);
-
 		}
 
 		break;
