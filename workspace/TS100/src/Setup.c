@@ -1,0 +1,364 @@
+/*
+ * Setup.c
+ *
+ *  Created on: 29Aug.,2017
+ *      Author: Ben V. Brown
+ */
+#include "Setup.h"
+ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
+
+I2C_HandleTypeDef hi2c1;
+DMA_HandleTypeDef hdma_i2c1_rx;
+DMA_HandleTypeDef hdma_i2c1_tx;
+
+IWDG_HandleTypeDef hiwdg;
+TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim3;
+
+uint16_t ADCReadings[64];    //room for 32 lots of the pair of readings
+
+//Functions
+void SystemClock_Config(void);
+static void MX_ADC1_Init(void);
+static void MX_I2C1_Init(void);
+static void MX_IWDG_Init(void);
+static void MX_TIM3_Init(void);
+static void MX_TIM2_Init(void);
+static void MX_DMA_Init(void);
+static void MX_GPIO_Init(void);
+
+void Setup_HAL() {
+
+	MX_GPIO_Init();
+	MX_DMA_Init();
+	MX_I2C1_Init();
+	MX_ADC1_Init();
+	MX_TIM3_Init();
+	MX_TIM2_Init();
+	MX_IWDG_Init();
+
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADCReadings, 64);
+	HAL_ADCEx_InjectedStart(&hadc1);    //enable injected  readings
+}
+
+//channel 0 -> temperature sensor, 1-> VIN
+uint16_t getADC(uint8_t channel) {
+	uint32_t sum = 0;
+	for (uint8_t i = 0; i < 32; i++)
+		sum += ADCReadings[channel + (i * 2)];
+	return sum >> 3;
+}
+
+/** System Clock Configuration
+ */
+void SystemClock_Config(void) {
+
+	RCC_OscInitTypeDef RCC_OscInitStruct;
+	RCC_ClkInitTypeDef RCC_ClkInitStruct;
+	RCC_PeriphCLKInitTypeDef PeriphClkInit;
+
+	/**Initializes the CPU, AHB and APB busses clocks
+	 */
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI;
+	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+	RCC_OscInitStruct.HSICalibrationValue = 16;
+	RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
+	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
+	HAL_RCC_OscConfig(&RCC_OscInitStruct);
+
+	/**Initializes the CPU, AHB and APB busses clocks
+	 */
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV16;
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+	HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
+
+	PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+	PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
+	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit);
+
+	/**Configure the Systick interrupt time
+	 */
+	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / 1000);
+
+	/**Configure the Systick
+	 */
+	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+
+	/* SysTick_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+}
+
+/* ADC1 init function */
+static void MX_ADC1_Init(void) {
+
+	ADC_ChannelConfTypeDef sConfig;
+	ADC_InjectionConfTypeDef sConfigInjected;
+
+	/**Common config
+	 */
+	hadc1.Instance = ADC1;
+	hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
+	hadc1.Init.ContinuousConvMode = ENABLE;
+	hadc1.Init.DiscontinuousConvMode = DISABLE;
+	hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+	hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+	hadc1.Init.NbrOfConversion = 2;
+	HAL_ADC_Init(&hadc1);
+
+	/**Configure Regular Channel
+	 */
+	sConfig.Channel = ADC_CHANNEL_7;
+	sConfig.Rank = 1;
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
+	/**Configure Regular Channel
+	 */
+	sConfig.Channel = ADC_CHANNEL_9;
+	sConfig.Rank = 2;
+	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
+	/**Configure Injected Channel
+	 */
+	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
+	sConfigInjected.InjectedRank = 1;
+	sConfigInjected.InjectedNbrOfConversion = 4;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
+	sConfigInjected.AutoInjectedConv = DISABLE;
+	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
+	sConfigInjected.InjectedOffset = 0;
+	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+	sConfigInjected.InjectedRank = 2;
+	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+	sConfigInjected.InjectedRank = 3;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_55CYCLES_5;
+	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+	sConfigInjected.InjectedRank = 4;
+	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+
+}
+
+/* I2C1 init function */
+static void MX_I2C1_Init(void) {
+
+	hi2c1.Instance = I2C1;
+	hi2c1.Init.ClockSpeed = 100000;
+	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+	hi2c1.Init.OwnAddress1 = 0;
+	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+	hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+	hi2c1.Init.OwnAddress2 = 0;
+	hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+	hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+	HAL_I2C_Init(&hi2c1);
+	HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
+	HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
+
+}
+
+/* IWDG init function */
+static void MX_IWDG_Init(void) {
+
+	hiwdg.Instance = IWDG;
+	hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
+	hiwdg.Init.Reload = 4095;
+	HAL_IWDG_Init(&hiwdg);
+
+}
+
+/* TIM3 init function */
+static void MX_TIM3_Init(void) {
+
+	TIM_ClockConfigTypeDef sClockSourceConfig;
+	TIM_MasterConfigTypeDef sMasterConfig;
+	TIM_OC_InitTypeDef sConfigOC;
+
+	htim3.Instance = TIM3;
+	htim3.Init.Prescaler = 1;
+	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim3.Init.Period = 100;
+	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //2mhz
+	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	HAL_TIM_Base_Init(&htim3);
+
+	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+	HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig);
+
+	HAL_TIM_PWM_Init(&htim3);
+
+	HAL_TIM_OC_Init(&htim3);
+
+	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+	HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig);
+
+	sConfigOC.OCMode = TIM_OCMODE_PWM1;
+	sConfigOC.Pulse = 50;
+	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
+	HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1);
+
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	/**TIM3 GPIO Configuration
+	 PB4     ------> TIM3_CH1
+	 */
+	GPIO_InitStruct.Pin = PWM_Out_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
+
+	__HAL_AFIO_REMAP_TIM3_PARTIAL()
+	;
+	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+
+}
+/* TIM3 init function */
+static void MX_TIM2_Init(void) {
+	/*
+	 * We use the channel 1 to trigger the ADC at end of PWM period
+	 * And we use the channel 4 as the PWM modulation source using Interrupts
+	 * */
+	TIM_ClockConfigTypeDef sClockSourceConfig;
+	TIM_MasterConfigTypeDef sMasterConfig;
+	TIM_OC_InitTypeDef sConfigOC;
+
+	//Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC in the PWM off time.
+	htim2.Instance = TIM2;
+	htim2.Init.Prescaler = 2000;
+	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim2.Init.Period = 120;
+	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //2mhz
+	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	HAL_TIM_Base_Init(&htim2);
+
+	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+	HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig);
+
+	HAL_TIM_PWM_Init(&htim2);
+	HAL_TIM_OC_Init(&htim2);
+
+	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+	HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
+
+	sConfigOC.OCMode = TIM_OCMODE_PWM1;
+	sConfigOC.Pulse = 110;
+	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
+	HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
+
+	sConfigOC.OCMode = TIM_OCMODE_PWM1;
+	sConfigOC.Pulse = 0;
+	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
+	HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4);
+
+	HAL_TIM_Base_Start_IT(&htim2);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_4);
+	HAL_NVIC_EnableIRQ(TIM2_IRQn);
+
+}
+
+/**
+ * Enable DMA controller clock
+ */
+static void MX_DMA_Init(void) {
+	/* DMA controller clock enable */
+	__HAL_RCC_DMA1_CLK_ENABLE()
+	;
+
+	/* DMA interrupt init */
+	/* DMA1_Channel1_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+	/* DMA1_Channel6_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
+	/* DMA1_Channel7_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
+
+}
+
+/** Configure pins as
+ * Analog
+ * Input
+ * Output
+ * EVENT_OUT
+ * EXTI
+ * Free pins are configured automatically as Analog
+ PB0   ------> ADCx_IN8
+ PB1   ------> ADCx_IN9
+ */
+static void MX_GPIO_Init(void) {
+
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOD_CLK_ENABLE()
+	;
+	__HAL_RCC_GPIOA_CLK_ENABLE()
+	;
+	__HAL_RCC_GPIOB_CLK_ENABLE()
+	;
+
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_RESET);
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	/*Configure GPIO pins : PD0 PD1 */
+	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : PA0 PA1 PA2 PA3
+	 PA4 PA5 PA10 PA15 */
+	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_10
+			| GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_15;
+	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	//Set PA 11 and PA 12 to GND to stop usb detection
+	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+
+	/*Configure GPIO pins : KEY_B_Pin KEY_A_Pin */
+	GPIO_InitStruct.Pin = KEY_B_Pin | KEY_A_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : TIP_TEMP_Pin VIN_Pin PB2 */
+	GPIO_InitStruct.Pin = TIP_TEMP_Pin | VIN_Pin | GPIO_PIN_2;
+	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/*Configure GPIO pin : OLED_RESET_Pin */
+	GPIO_InitStruct.Pin = OLED_RESET_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(OLED_RESET_GPIO_Port, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : INT_Orientation_Pin INT_Movement_Pin */
+	GPIO_InitStruct.Pin = INT_Orientation_Pin | INT_Movement_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;    //Technically the IMU is P-P but safer to pullup (very tiny current cost)
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/*Configure peripheral I/O remapping */
+	__HAL_AFIO_REMAP_PD01_ENABLE();
+	//^ remap XTAL so that pins can be analog (all input buffers off).
+	// reduces power consumption
+
+}

@@ -1,0 +1,81 @@
+/*
+ * Settings.c
+ *
+ *  Created on: 29 Sep 2016
+ *      Author: Ralim
+ *
+ *      This file holds the users settings and saves / restores them to the devices flash
+ */
+
+#include "Settings.h"
+#define FLASH_ADDR 		(0x8000000|0xBC00)/*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
+
+systemSettingsType systemSettings;
+
+void saveSettings() {
+	//First we erase the flash
+	FLASH_EraseInitTypeDef pEraseInit;
+	pEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
+	pEraseInit.Banks = FLASH_BANK_1;
+	pEraseInit.NbPages = 1;
+	pEraseInit.PageAddress = FLASH_ADDR;
+	uint32_t failingAddress = 0;
+	HAL_FLASH_Unlock();
+	HAL_FLASHEx_Erase(&pEraseInit, &failingAddress);
+	//^ Erase the page of flash (1024 bytes on this platform)
+	//erased the chunk
+	//now we program it
+	uint16_t *data = (uint16_t*) &systemSettings;
+	for (uint8_t i = 0; i < (sizeof(systemSettings) / 2); i++) {
+		HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, FLASH_ADDR + (i * 2), data[i]);
+	}
+}
+
+void restoreSettings() {
+	//We read the flash
+	uint16_t *data = (uint16_t*) &systemSettings;
+	for (uint8_t i = 0; i < (sizeof(systemSettings) / 2); i++) {
+		data[i] = *(uint16_t *) (FLASH_ADDR + (i * 2));
+	}
+	//if the version is correct were done
+	//if not we reset and save
+	if (systemSettings.version != SETTINGSVERSION) {
+		//probably not setup
+		resetSettings();
+	}
+
+}
+//Lookup function for cutoff setting -> X10 voltage
+/*
+ * 0=DC
+ * 1=3S
+ * 2=4S
+ * 3=5S
+ * 4=6S
+ */
+uint8_t lookupVoltageLevel(uint8_t level) {
+	if (level == 0)
+		return 100;    //10V since iron does not function effectively below this
+	else
+		return (level * 33) + (33 * 2);
+}
+void resetSettings() {
+
+	systemSettings.SleepTemp = 150;    //Temperature the iron sleeps at - default 150.0 C
+	systemSettings.SleepTime = 6;    //How many seconds/minutes we wait until going to sleep - default 1 min
+	systemSettings.SolderingTemp = 320;    //Default soldering temp is 320.0 C
+	systemSettings.cutoutSetting = 0;			//default to no cut-off voltage
+	systemSettings.version = SETTINGSVERSION;			//Store the version number to allow for easier upgrades
+	systemSettings.advancedScreens = 1;			//Do we show detailed screens?
+	systemSettings.OrientationMode = 2;				//Default to automatic
+	systemSettings.sensitivity = 8;				//Default high sensitivity
+	systemSettings.voltageDiv = 144;			//Default divider from schematic
+	systemSettings.ShutdownTime = 30;			//How many minutes until the unit turns itself off
+	systemSettings.boostModeEnabled = 0;		//Default to safe, with no boost mode
+	systemSettings.BoostTemp = 420;				//default to 400C
+	systemSettings.powerDisplay = 0;		//default to power display being off
+	systemSettings.autoStartMode = 0;				//Auto start off for safety
+	systemSettings.coolingTempBlink = 0;				//Blink the temperature on the cooling screen when its > 50C
+	saveSettings();
+}
+

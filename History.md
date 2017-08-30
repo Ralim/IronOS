@@ -1,4 +1,14 @@
 # Version Changes
+V2.00
+
+* Complete re-write of the low layer system to use the STM32 HAL for easier development
+* This allowed easier setup for the new ADC auto measuring system
+* Better tip PWM control
+* Moved to FreeRTOS for scheduling
+* Complete re-write from blank
+* Added detailed screen views
+* Added smaller font for said screen views
+
 
 V1.17
 
