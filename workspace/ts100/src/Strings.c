@@ -45,19 +45,19 @@ const char* SettingsLongNames[14] =
 {
 	/*These are all the help text for all the settings.*/
 	/*All must start with 6 spaces so they come on screen nicely.*/
-	"      Fuente de energía. Ajusta el límite inferior de voltaje. <DC 10V> <S 3.3V por celda>",
+	"      Fuente de energÃ­a. Ajusta el lÃ­mite inferior de voltaje. <DC 10V> <S 3.3V por celda>",
 	"      Temperatura en reposo. <C>",
 	"      Tiempo hasta activar reposo. <Minutos>",
 	"      Tiempo hasta apagado. <Minutos>",
-	"      Sensibilidad del movimiento. <0. Apagado, 1. El menos sensible, 9. El más sensible>",
+	"      Sensibilidad del movimiento. <0. Apagado, 1. El menos sensible, 9. El mÃ¡s sensible>",
 	"      Unidad de temperatura.",
 	"      Redondeo de la temperatura.",
-	"      Tasa de actualización de la temperatura.",
-	"      Orientación de la pantalla <A. Automático, I. Mano izquierda, D. Mano derecha>",
-	"      Activar el botón \"Boost\" en modo soldadura.",
+	"      Tasa de actualizaciÃ³n de la temperatura.",
+	"      OrientaciÃ³n de la pantalla <A. AutomÃ¡tico, I. Mano izquierda, D. Mano derecha>",
+	"      Activar el botÃ³n \"Boost\" en modo soldadura.",
 	"      Temperatura en modo \"Boost\".",
 	"      Cambiar las flechas en pantalla por indicador de potencia en modo soldadura.",
-	"      Iniciar modo soldadura en el encendido. <V. Sí, S. Modo reposo, F. No ",
+	"      Iniciar modo soldadura en el encendido. <V. SÃ­, S. Modo reposo, F. No ",
 	"      Parpadea la temperatura en el enfriamiento si la punta sigue caliente."};
 
 const char* TempCalStatus[3] = {"CAL TEMP", "CAL OK  ", "CAL FAIL"}; //All fixed 8 chars
@@ -86,12 +86,12 @@ const char* SettingsLongNames[14] =
 				"      Bewegungsempfindlichkeit <0.Aus 1.Minimal 9.Maximal>",
 				"      Temperatur Einheit", "      Temperatur Runden",
 				"      Temperaturanzeige Updaterate",
-				"      Anzeigerichtung <A. Auto L. Linkshändig R. Rechtshändig>",
-				"      Fronttaste für Temperaturboost einschalten",
+				"      Anzeigerichtung <A. Auto L. LinkshÃ¤ndig R. RechtshÃ¤ndig>",
+				"      Fronttaste fÃ¼r Temperaturboost einschalten",
 				"      Temperatur im \"boost\"-Modus",
-				"      Ändert \"Temperaturpfeile\" in Leistungsbalken",
-				"      Automatischer Start beim Einschalten. J=Löttemp., R=Ruhemodus,N=Aus",
-				"      Temperatur blinkt beim Abkühlen, solange noch heiß." };
+				"      Ã„ndert \"Temperaturpfeile\" in Leistungsbalken",
+				"      Automatischer Start beim Einschalten. J=LÃ¶ttemp., R=Ruhemodus,N=Aus",
+				"      Temperatur blinkt beim AbkÃ¼hlen, solange noch heiÃŸ." };
 
 const char* TempCalStatus[3] = { "Cal Temp", "Cal OK  ", "Cal Fehl" }; //All fixed 8 chars
 const char* UVLOWarningString = "V gering"; //Fixed width 8 chars
@@ -104,6 +104,42 @@ const char SettingMediumChar = 'M';
 const char SettingSlowChar = 'L';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingTempCChar = 'C';
+const char SettingTempFChar = 'F';
+
+#endif
+#ifdef LANG_FR
+const char* SettingsLongNames[14] =
+		{
+		/*These are all the help text for all the settings.*/
+		/*All must start with 6 spaces so they come on screen nicely.*/
+				"      Type d\'alimentation. Regle la tension de coupure. <DC 10V> <S 3.3V par cellules>",
+				"      Temperature en veille. <C>",
+				"      Temps avant mise en veille. <Minutes>",
+				"      Temps avant extinction. <Minutes>",
+				"      Sensibilitee du capteur de mouvement. <0.Inactif 1.peu sensible 9.tres sensible>",
+				"      Unitee de temperature.",
+				"      Arrondissement de la temperature.",
+				"      Taux de raffraichissement de la temperature.",
+				"      Orientation de l\'affichage. <A. Automatique G. Gaucher D. Droitier>",
+				"      Active le mode \Boost\" 450C sur le bouton de devant pendant la soudure.",
+				"      Temperature du mode \"boost\".",
+				"      Change les fleches en affichage de la tension pendant la soudure.",
+				"      Demarre automatiquement la soudure a l\'allumage. <A=Active, V= Mode Veille, D=Desactive>",
+				"      Fait clignotter la temperature pendant la phase de refroidissement quand la panne est chaude." };
+
+const char* TempCalStatus[3] = { "Cal Temp", "Cal OK  ", "Cal Err " }; //All fixed 8 chars
+const char* UVLOWarningString = "Batt Bas"; //Fixed width 8 chars
+const char* CoolingPromptString = "Etein"; //Fixed width 5 chars
+const char SettingTrueChar = 'A';
+const char SettingFalseChar = 'D';
+const char SettingSleepChar = 'V';
+const char SettingFastChar = 'R';
+const char SettingMediumChar = 'M';
+const char SettingSlowChar = 'L';
+const char SettingRightChar = 'D';
+const char SettingLeftChar = 'G';
 const char SettingAutoChar = 'A';
 const char SettingTempCChar = 'C';
 const char SettingTempFChar = 'F';
