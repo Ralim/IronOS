@@ -123,8 +123,8 @@ const char* SettingsLongNames[14] =
 				"      Arrondissement de la temperature.",
 				"      Taux de raffraichissement de la temperature.",
 				"      Orientation de l\'affichage. <A. Automatique G. Gaucher D. Droitier>",
-				"      Active le mode \Boost\" 450C sur le bouton de devant pendant la soudure.",
-				"      Temperature du mode \"boost\".",
+				"      Active le mode \"Boost\" 450C sur le bouton de devant pendant la soudure.",
+				"      Temperature du mode \"Boost\".",
 				"      Change les fleches en affichage de la tension pendant la soudure.",
 				"      Demarre automatiquement la soudure a l\'allumage. <A=Active, V= Mode Veille, D=Desactive>",
 				"      Fait clignotter la temperature pendant la phase de refroidissement quand la panne est chaude." };
