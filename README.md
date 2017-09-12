@@ -1,3 +1,17 @@
+# Version 2 development branch
+
+This firmware is not complete, it is missing some features such as :
+
+* PID needs more work (moving to fixed point)
+* Doesnt have cold junction calibration
+* Needs UI work
+* Needs some polish on information screens
+* Motion sensitivity needs more polish for sensitivity levels
+* Auto tuning PID
+
+While it most likely will work, It is not meant for production use just yet!
+
+
 # TS100
 This is a complete rewrite of the open source software for the ts100 soldering iron.
 This project is feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
@@ -132,15 +146,21 @@ Some tips will have an offset on their readings, to calibrate this out perform t
 
 ### Boost mode
 
-This allows you to change the front key (one near the tip) to become a boost button instead of going to temperature editing when in soldering mode. This allows you to set this button to change the soldering temperature for short periods. For example when soldering a big joint and you want to boost the temperature a bit.
+This allows you to change the front key (one near the tip) to become a boost button when you hold it for > 2 seconds. This allows you to set this button to change the soldering temperature for short periods. For example when soldering a big joint and you want to boost the temperature a bit.
 
 The boost temperature is set in the settings menu.
 
 ## Commercial Use
 
 This software is provided as-is, so I cannot provide any commercial support for the firmware. However you are more than welcome to distribute links to the firmware, or provide irons with this software on them. 
-Please do not re-host the files, but rather link to this page, so that there are not old versions of the firmware hanging around. If this firmware does make you money, it would be nice to recieve a donation, however I dont enforce this.
+Please do not re-host the files, but rather link to this page, so that there are not old versions of the firmware hanging around. If this firmware does make you money, it would be nice to recieve a donation, however there is no enforcement.
 
 ## Thanks
 
 If you love this firmware and want to continue my caffine addiction, you can do so here (or email me for other options) : https://paypal.me/RalimTek
+
+## Licence
+
+The code in this repository that is based on the STM tools is under a BSD like licence.
+The code created by the communitiy is GNU GPLv3.
+The FreeRToS is under its own licence.
