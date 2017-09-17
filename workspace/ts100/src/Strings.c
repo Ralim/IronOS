@@ -181,6 +181,41 @@
   const char SettingTempCChar = 'C';
   const char SettingTempFChar = 'F';
 #endif
+	
+#ifdef LANG_SE
+  const char* SettingsLongNames[14] = {
+    /*These are all the help text for all the settings.*/
+    /*All must start with 6 spaces so they come on screen nicely.*/
+    "      Stromforsorjning. Satt avstagningsvolt. <VX=10V S=3.3V per cell>",
+    "      Vilolage Temperatur <C>",
+    "      Vilolage Timeout <Minuter>",
+    "      Avstagningstimeout <Minuter>",
+    "      Rorelsekanslighet <0=Av 1=Minsta kanslighet 9=Hogsta kanslighet>",
+    "      Temperaturenhet <C=Celsius F=Farnheit>",
+    "      Temperaturavrundning <Units>",
+    "      Temperatur skarmuppdateringsfrekvens <L=Langsam M=Medium S=Snabb>",
+    "      Skarmorientation <A=Automatisk V=Vansterhant H=Hogerhant>",
+    "      Aktivera boost-lage med framre knappen <P=Pa A=Av>",
+    "      Temperatur i \"boostlage\" <C>",
+    "      Andrar pilarna till effektindikering nar man loder <P=Pa A=Av>",
+    "      Startar i lodningslage direkt <L=Lodning V=Vilolage A=Av>",
+    "      Blinka temperaturen medans jarnet fortfarande ar varmt. <P=Pa A=Av>"
+  };
+  const char* TempCalStatus[3] = { "Kal.Temp", "Kal. OK ", "Kal.Fel" }; //All fixed 8 chars
+  const char* UVLOWarningString = "Lag Volt"; //Fixed width 8 chars
+  const char* CoolingPromptString = "Sval "; //Fixed width 5 chars
+  const char SettingTrueChar = 'P';
+  const char SettingFalseChar = 'A';
+  const char SettingSleepChar = 'S';
+  const char SettingFastChar = 'F';
+  const char SettingMediumChar = 'M';
+  const char SettingSlowChar = 'S';
+  const char SettingRightChar = 'H';
+  const char SettingLeftChar = 'V';
+  const char SettingAutoChar = 'A';
+  const char SettingTempCChar = 'C';
+  const char SettingTempFChar = 'F';
+#endif
 const char* SettingsShortNames[14] = { "PWRSC ", "STMP ", "STME ", "SHTME ",
 		"MSENSE ", "TMPUNT ", "TMPRND ", "TMPSPD ", "DSPROT ", "BOOST  ",
 		"BTMP ", "PWRDSP ", "ASTART ", "CLBLNK " };
