@@ -206,10 +206,10 @@
   const char* CoolingPromptString = "Sval "; //Fixed width 5 chars
   const char SettingTrueChar = 'P';
   const char SettingFalseChar = 'A';
-  const char SettingSleepChar = 'S';
-  const char SettingFastChar = 'F';
+  const char SettingSleepChar = 'V';
+  const char SettingFastChar = 'S';
   const char SettingMediumChar = 'M';
-  const char SettingSlowChar = 'S';
+  const char SettingSlowChar = 'L';
   const char SettingRightChar = 'H';
   const char SettingLeftChar = 'V';
   const char SettingAutoChar = 'A';
