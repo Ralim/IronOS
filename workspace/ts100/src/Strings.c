@@ -5,7 +5,7 @@
  *      Author: Ben V. Brown
  */
 #include "Strings.h"
-#define LANG_EN
+#define LANG_IT
 #ifdef LANG_EN
   const char* SettingsLongNames[14] = {
     /*These are all the help text for all the settings.*/

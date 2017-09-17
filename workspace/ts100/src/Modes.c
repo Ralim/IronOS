@@ -466,7 +466,7 @@ void DrawUI() {
 		if (StatusFlags == 8)
 			OLED_DrawExtraFontChars(2, 4);
 		else {
-			OLED_DrawChar(' ', 4);
+			OLED_DrawChar(' ', 4, 0);
 		}
 		//Draw in battery symbol if desired
 		if (systemSettings.cutoutSetting) {
@@ -521,12 +521,12 @@ void DrawUI() {
 	case TEMP_ADJ:
 		//We are prompting the user to change the temp so we draw the current setpoint temp
 		//With the nifty arrows
-		OLED_DrawChar(' ', 0);
-		OLED_DrawChar('<', 1);
+		OLED_DrawChar(' ', 0,0);
+		OLED_DrawChar('<', 1,0);
 		drawTemp(systemSettings.SolderingTemp, 2, 0);
-		OLED_DrawChar(' ', 5);
-		OLED_DrawChar(' ', 7);
-		OLED_DrawChar('>', 6);
+		OLED_DrawChar(' ', 5,0);
+		OLED_DrawChar(' ', 7,0);
+		OLED_DrawChar('>', 6,0);
 		break;
 	case SETTINGS:
 		//We are prompting the user the setting name
@@ -546,7 +546,7 @@ void DrawUI() {
 							+ settingsLongTestScrollPos, lengthLeft);
 			if (lengthLeft < 8)
 				for (uint8_t i = lengthLeft; i < 8; i++)
-					OLED_DrawChar(' ', i);
+					OLED_DrawChar(' ', i, 0);
 			if (millis() - lastOLEDDrawTime > 120) {
 				settingsLongTestScrollPos++;
 				lastOLEDDrawTime = millis();
@@ -558,12 +558,12 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[UVCO], 6);
 				if (systemSettings.cutoutSetting == 0) {
 					//DC
-					OLED_DrawChar('D', 6);
-					OLED_DrawChar('C', 7);
+					OLED_DrawChar('D', 6, 0);
+					OLED_DrawChar('C', 7, 0);
 				} else {
 					//S count
-					OLED_DrawChar('2' + systemSettings.cutoutSetting, 6);
-					OLED_DrawChar('S', 7);
+					OLED_DrawChar('2' + systemSettings.cutoutSetting, 6, 0);
+					OLED_DrawChar('S', 7, 0);
 				}
 				break;
 			case SLEEP_TEMP:
@@ -575,11 +575,11 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[SLEEP_TIME], 5);
 				//Draw in the timescale
 				if (systemSettings.SleepTime < 6) {
-					OLED_DrawChar('S', 7);
+					OLED_DrawChar('S', 7, 0);
 					OLED_DrawTwoNumber(systemSettings.SleepTime * 10, 5);
 
 				} else {
-					OLED_DrawChar('M', 7);
+					OLED_DrawChar('M', 7, 0);
 					OLED_DrawTwoNumber(systemSettings.SleepTime - 5, 5);
 				}
 				break;
@@ -590,29 +590,29 @@ void DrawUI() {
 			case TEMPDISPLAY:/*Are we showing in C or F ?*/
 				OLED_DrawString(SettingsShortNames[TEMPDISPLAY], 7);
 				if (systemSettings.displayTempInF)
-					OLED_DrawChar(SettingTempFChar, 7);
+					OLED_DrawChar(SettingTempFChar, 7, 0);
 				else
-					OLED_DrawChar(SettingTempCChar, 7);
+					OLED_DrawChar(SettingTempCChar, 7, 0);
 				break;
 			case SCREENROTATION:
 				OLED_DrawString(SettingsShortNames[SCREENROTATION], 7);
 
 				switch (systemSettings.OrientationMode) {
 				case 0:
-					OLED_DrawChar(SettingRightChar, 7);
+					OLED_DrawChar(SettingRightChar, 7, 0);
 					break;
 				case 1:
-					OLED_DrawChar(SettingLeftChar, 7);
+					OLED_DrawChar(SettingLeftChar, 7, 0);
 					break;
 				case 2:
-					OLED_DrawChar(SettingAutoChar, 7);
+					OLED_DrawChar(SettingAutoChar, 7, 0);
 					break;
 				}
 				break;
 			case MOTIONSENSITIVITY:
 				OLED_DrawString(SettingsShortNames[MOTIONSENSITIVITY], 7);
 
-				OLED_DrawChar('0' + systemSettings.sensitivity, 7);
+				OLED_DrawChar('0' + systemSettings.sensitivity, 7,0);
 				break;
 			case TEMPROUNDING:
 				//We are prompting the user about their display mode preferences
@@ -621,13 +621,13 @@ void DrawUI() {
 
 				switch (systemSettings.temperatureRounding) {
 				case ROUNDING_NONE:
-					OLED_DrawChar('1', 7);
+					OLED_DrawChar('1', 7,0);
 					break;
 				case ROUNDING_FIVE:
-					OLED_DrawChar('5', 7);
+					OLED_DrawChar('5', 7,0);
 					break;
 				case ROUNDING_TEN:
-					OLED_DrawChar('X', 7);
+					OLED_DrawChar('X', 7,0);
 					break;
 				}
 			}
@@ -638,13 +638,13 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[DISPUPDATERATE], 7);
 				switch (systemSettings.displayUpdateSpeed) {
 				case DISPLAYMODE_FAST:
-					OLED_DrawChar(SettingFastChar, 7);
+					OLED_DrawChar(SettingFastChar, 7,0);
 					break;
 				case DISPLAYMODE_SLOW:
-					OLED_DrawChar(SettingSlowChar, 7);
+					OLED_DrawChar(SettingSlowChar, 7,0);
 					break;
 				case DISPLAYMODE_MEDIUM:
-					OLED_DrawChar(SettingMediumChar, 7);
+					OLED_DrawChar(SettingMediumChar, 7,0);
 					break;
 
 				}
@@ -655,10 +655,10 @@ void DrawUI() {
 
 				switch (systemSettings.boostModeEnabled) {
 				case 1:
-					OLED_DrawChar(SettingTrueChar, 7);
+					OLED_DrawChar(SettingTrueChar, 7,0);
 					break;
 				case 0:
-					OLED_DrawChar(SettingFalseChar, 7);
+					OLED_DrawChar(SettingFalseChar, 7,0);
 					break;
 				}
 				break;
@@ -670,10 +670,10 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[POWERDISPLAY], 7);
 				switch (systemSettings.powerDisplay) {
 				case 1:
-					OLED_DrawChar(SettingTrueChar, 7);
+					OLED_DrawChar(SettingTrueChar, 7,0);
 					break;
 				case 0:
-					OLED_DrawChar(SettingFalseChar, 7);
+					OLED_DrawChar(SettingFalseChar, 7,0);
 					break;
 
 				}
@@ -682,13 +682,13 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[AUTOSTART], 7);
 				switch (systemSettings.autoStart) {
 				case 1:
-					OLED_DrawChar(SettingTrueChar, 7);
+					OLED_DrawChar(SettingTrueChar, 7,0);
 					break;
 				case 0:
-					OLED_DrawChar(SettingFalseChar, 7);
+					OLED_DrawChar(SettingFalseChar, 7,0);
 					break;
 				case 2:
-					OLED_DrawChar(SettingSleepChar, 7);
+					OLED_DrawChar(SettingSleepChar, 7,0);
 					break;
 				}
 				break;
@@ -696,10 +696,10 @@ void DrawUI() {
 				OLED_DrawString(SettingsShortNames[COOLINGBLINK], 7);
 				switch (systemSettings.coolingTempBlink) {
 				case 1:
-					OLED_DrawChar(SettingTrueChar, 7);
+					OLED_DrawChar(SettingTrueChar, 7,0);
 					break;
 				case 0:
-					OLED_DrawChar(SettingFalseChar, 7);
+					OLED_DrawChar(SettingFalseChar, 7,0);
 					break;
 				}
 				break;
@@ -759,14 +759,14 @@ void DrawUI() {
 		if (StatusFlags == 0 || ((millis() % 1000) > 500)) {
 
 			OLED_DrawString("IN", 2);
-			OLED_DrawChar(48 + ((voltage / 100) % 10), 2);
+			OLED_DrawChar(48 + ((voltage / 100) % 10), 2,0);
 			voltage -= (voltage / 100) * 100;
-			OLED_DrawChar(48 + ((voltage / 10) % 10), 3);
+			OLED_DrawChar(48 + ((voltage / 10) % 10), 3,0);
 			voltage -= (voltage / 10) * 10;
-			OLED_DrawChar('.', 4);
-			OLED_DrawChar(48 + (voltage % 10), 5);
-			OLED_DrawChar('V', 6);
-			OLED_DrawChar(' ', 7);
+			OLED_DrawChar('.', 4,0);
+			OLED_DrawChar(48 + (voltage % 10), 5,0);
+			OLED_DrawChar('V', 6,0);
+			OLED_DrawChar(' ', 7,0);
 		} else {
 			OLED_DrawString("IN      ", 8);
 		}

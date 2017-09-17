@@ -192,13 +192,19 @@ void Clear_Screen(void) {
  */
 void OLED_DrawString(const char* string, const uint8_t length) {
 	for (uint8_t i = 0; i < length; i++) {
-		OLED_DrawChar(string[i], i);
+		if (string[i] >= 0x80) {
+			OLED_DrawChar(string[i + 1], i, string[i]);
+			i++;
+			OLED_DrawChar(' ', i,0);
+		} else
+			OLED_DrawChar(string[i], i, '\0');
+
 	}
 }
 /*
  * Draw a char onscreen at letter index x
  */
-void OLED_DrawChar(char c, uint8_t x) {
+void OLED_DrawChar(char c, uint8_t x, char preCursor) {
 	if (x > 7)
 		return; //clipping
 
@@ -208,9 +214,9 @@ void OLED_DrawChar(char c, uint8_t x) {
 	if (c < 0x80) {
 		ptr = (u8*) FONT;
 		offset = c - ' ';
-	} else if (c >= 0xA0) {
+	} else if (preCursor>0) {
 		ptr = (u8*) FontLatin2;
-		offset = c - 0xA0; //this table starts at 0xA0
+		offset = c - 0xA0+0x40; //this table starts at 0xA0
 	} else
 		return; //not in font
 
@@ -252,27 +258,27 @@ void OLED_BlankSlot(uint8_t xStart, uint8_t width) {
  */
 void OLED_DrawTwoNumber(uint8_t in, uint8_t x) {
 
-	OLED_DrawChar(48 + (in / 10) % 10, x);
-	OLED_DrawChar(48 + in % 10, x + 1);
+	OLED_DrawChar(48 + (in / 10) % 10, x,0);
+	OLED_DrawChar(48 + in % 10, x + 1,0);
 }
 /*
  * Draw a 3 digit number to the display at letter slot x
  */
 void OLED_DrawThreeNumber(uint16_t in, uint8_t x) {
 
-	OLED_DrawChar(48 + (in / 100) % 10, x);
-	OLED_DrawChar(48 + (in / 10) % 10, x + 1);
-	OLED_DrawChar(48 + in % 10, x + 2);
+	OLED_DrawChar(48 + (in / 100) % 10, x,0);
+	OLED_DrawChar(48 + (in / 10) % 10, x + 1,0);
+	OLED_DrawChar(48 + in % 10, x + 2,0);
 }
 /*
  * Draw a 4 digit number to the display at letter slot x
  */
 void OLED_DrawFourNumber(uint16_t in, uint8_t x) {
 
-	OLED_DrawChar(48 + (in / 1000) % 10, x);
-	OLED_DrawChar(48 + (in / 100) % 10, x + 1);
-	OLED_DrawChar(48 + (in / 10) % 10, x + 2);
-	OLED_DrawChar(48 + (in % 10), x + 3);
+	OLED_DrawChar(48 + (in / 1000) % 10, x,0);
+	OLED_DrawChar(48 + (in / 100) % 10, x + 1,0);
+	OLED_DrawChar(48 + (in / 10) % 10, x + 2,0);
+	OLED_DrawChar(48 + (in % 10), x + 3,0);
 }
 
 void OLED_DrawIDLELogo() {
