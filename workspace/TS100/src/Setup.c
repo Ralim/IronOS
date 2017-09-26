@@ -29,7 +29,7 @@ static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
 
 void Setup_HAL() {
-
+	SystemClock_Config();
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();
@@ -130,7 +130,7 @@ static void MX_ADC1_Init(void) {
 	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
 	sConfigInjected.InjectedRank = 1;
 	sConfigInjected.InjectedNbrOfConversion = 4;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_55CYCLES_5;
 	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
 	sConfigInjected.AutoInjectedConv = DISABLE;
 	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
@@ -139,7 +139,6 @@ static void MX_ADC1_Init(void) {
 	sConfigInjected.InjectedRank = 2;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	sConfigInjected.InjectedRank = 3;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_55CYCLES_5;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	sConfigInjected.InjectedRank = 4;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
@@ -233,7 +232,7 @@ static void MX_TIM2_Init(void) {
 
 	//Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC in the PWM off time.
 	htim2.Instance = TIM2;
-	htim2.Init.Prescaler = 2000;
+	htim2.Init.Prescaler = 1500;
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim2.Init.Period = 120;
 	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //2mhz

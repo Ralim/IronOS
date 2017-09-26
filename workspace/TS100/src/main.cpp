@@ -716,7 +716,7 @@ void startPIDTask(void const * argument) {
 		}
 		derivativeLastValue = rawTemp;			//store for next loop
 		HAL_IWDG_Refresh(&hiwdg);
-		osDelay(10);    // 100 Hz temp loop
+		osDelay(100);    // 10 Hz temp loop
 	}
 }
 #define MOVFilter 4

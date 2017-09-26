@@ -5,10 +5,16 @@
  *      Author: Ben V. Brown
  */
 
+
+#ifndef LANG_EN
+#define LANG_EN
+#endif
+
+#ifdef LANG_EN
 const char* SettingsLongNames[12] =
 		{
 		/*These are all the help text for all the settings.*/
-		/*All must start with 6 spaces so they come on screen nicely.*/
+		/*No requirements on spacing or length*/
 		"Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
 		"Sleep Temperature <C>",
 		"Sleep Timeout <Minutes>",
@@ -37,3 +43,4 @@ const char* SettingsShortNames[12] = {
 		"CLBLNK ",
 		"RESET? "
 		};
+#endif
