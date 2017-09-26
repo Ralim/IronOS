@@ -722,8 +722,8 @@ void startMOVTask(void const * argument) {
 	int32_t avgx, avgy, avgz;
 
 	for (;;) {
-		int32_t threshold = 550 + (9 * 50);
-		threshold -= systemSettings.sensitivity * 50;
+		int32_t threshold = 600 + (9 * 120);
+		threshold -= systemSettings.sensitivity * 120;
 		accel.getAxisReadings(&tx, &ty, &tz);
 
 		datax[currentPointer] = tx;

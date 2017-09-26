@@ -3,11 +3,10 @@
 This firmware is not complete, it is missing some features such as :
 
 * PID needs more work (moving to fixed point)
-* Doesnt have cold junction calibration
 * Needs UI work
 * Needs some polish on information screens
 * Motion sensitivity needs more polish for sensitivity levels
-* Auto tuning PID
+* Auto tuning PID?
 
 While it most likely will work, It is not meant for production use just yet!
 
