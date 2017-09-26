@@ -11,7 +11,7 @@
 #endif
 
 #ifdef LANG_EN
-const char* SettingsLongNames[12] =
+const char* SettingsLongNames[13] =
 		{
 		/*These are all the help text for all the settings.*/
 		/*No requirements on spacing or length*/
@@ -26,10 +26,11 @@ const char* SettingsLongNames[12] =
 		"Temperature when in \"boost\" mode",
 		"Automatically starts the iron into soldering on power up. T=Soldering, S= Sleep mode,F=Off",
 		"Blink the temperature on the cooling screen while the tip is still hot.",
+		"Calibrate tip offset.",
 		"Reset all settings",
 		};
 
-const char* SettingsShortNames[12] = {
+const char* SettingsShortNames[13] = {
 		"PWRSC ",
 		"STMP ",
 		"STME ",
@@ -41,6 +42,9 @@ const char* SettingsShortNames[12] = {
 		"BTMP ",
 		"ASTART ",
 		"CLBLNK ",
+		"TMP CAL?",
 		"RESET? "
 		};
+const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+
 #endif

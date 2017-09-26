@@ -51,8 +51,9 @@ int main(void) {
 	HAL_IWDG_Refresh(&hiwdg);
 	HAL_Delay(500);
 	restoreSettings();    //load the settings from flash
-	showBootLogoIfavailable();
 
+	showBootLogoIfavailable();
+	setCalibrationOffset(systemSettings.CalibrationOffset);
 	HAL_IWDG_Refresh(&hiwdg);
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
@@ -80,20 +81,7 @@ int main(void) {
 	while (1) {
 	}
 }
-enum ButtonState {
-	BUTTON_NONE = 0, /* No buttons pressed / < filter time*/
-	BUTTON_F_SHORT = 1, /* User has pressed the front button*/
-	BUTTON_B_SHORT = 2, /* User has pressed the back  button*/
-	BUTTON_F_LONG = 4, /* User is  holding the front button*/
-	BUTTON_B_LONG = 8, /* User is  holding the back button*/
-	BUTTON_BOTH = 16, /* User has pressed both buttons*/
 
-/*
- * Note:
- * Pressed means press + release, we trigger on a full \__/ pulse
- * holding means it has gone low, and been low for longer than filter time
- */
-};
 ButtonState getButtonState() {
 	/*
 	 * Read in the buttons and then determine if a state change needs to occur
@@ -316,8 +304,7 @@ static void gui_settingsMenu() {
 	}
 	if (settingsResetRequest)
 		resetSettings();
-	else
-		saveSettings();
+	saveSettings();
 }
 static void gui_showTipTempWarning() {
 	for (;;) {
@@ -582,6 +569,8 @@ void startGUITask(void const * argument) {
 				lcd.setFont(0);
 				lcd.displayOnOff(true);    //turn lcd on
 				gui_settingsMenu();    //enter the settings menu
+				saveSettings();
+				setCalibrationOffset(systemSettings.CalibrationOffset);
 				HAL_IWDG_Refresh(&hiwdg);
 				osDelay(500);
 				//tempWarningState=0;//make sure warning can show

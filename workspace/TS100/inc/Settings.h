@@ -11,35 +11,28 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION 2 /*Change this if you change the struct below to prevent people getting out of sync*/
-//Display Speeds
-#define DISPLAYMODE_FAST 	(0x00)
-#define DISPLAYMODE_MEDIUM 	(0x01)
-#define DISPLAYMODE_SLOW	(0x02)
-//Rounding Modes
-#define ROUNDING_NONE			(0x00)
-#define ROUNDING_FIVE			(0x01)
-#define ROUNDING_TEN			(0x02)
+#define SETTINGSVERSION 0x10 /*Change this if you change the struct below to prevent people getting out of sync*/
 
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from flash in uint16_t chunks
  */
 typedef struct {
 	uint16_t SolderingTemp; 		//current set point for the iron
-	uint32_t SleepTemp; 			//temp to drop to in sleep
-	uint8_t version;				//Used to track if a reset is needed on firmware upgrade
+	uint16_t SleepTemp; 			//temp to drop to in sleep
 	uint8_t SleepTime; 				//minutes timeout to sleep
-	uint8_t cutoutSetting :3;    	//(3 bits) The voltage we cut out at for under voltage
-	uint8_t powerDisplay :1;    	//Toggle to swap the arrows with a power readout instead
-	uint8_t OrientationMode :2;    	//If true we want to invert the display for lefties
-	uint8_t sensitivity :5;			//Sensitivity of accelerometer (5 bits)
-	uint8_t autoStartMode :2;	//Should the unit automatically jump straight into soldering mode when power is applied
-	uint8_t ShutdownTime :6;		//Time until unit shuts down if left alone
-	uint8_t boostModeEnabled :1;    //Boost mode swaps BUT_A in soldering mode to temporary soldering temp over-ride
-	uint8_t coolingTempBlink :1;    //Should the temperature blink on the cool down screen until its <50C
-	uint8_t advancedScreens :1;		//If enabled we draw more detailed screens with smaller fonts
+	uint8_t cutoutSetting;    	// The voltage we cut out at for under voltage
+	uint8_t powerDisplay;    	//Toggle to swap the arrows with a power readout instead
+	uint8_t OrientationMode;    	//If true we want to invert the display for lefties
+	uint8_t sensitivity;			//Sensitivity of accelerometer (5 bits)
+	uint8_t autoStartMode;    //Should the unit automatically jump straight into soldering mode when power is applied
+	uint8_t ShutdownTime;		//Time until unit shuts down if left alone
+	uint8_t boostModeEnabled;    //Boost mode swaps BUT_A in soldering mode to temporary soldering temp over-ride
+	uint8_t coolingTempBlink;    //Should the temperature blink on the cool down screen until its <50C
+	uint8_t advancedScreens;		//If enabled we draw more detailed screens with smaller fonts
 	uint16_t voltageDiv;			//Voltage divisor factor
 	uint16_t BoostTemp; 			//Boost mode set point for the iron
+	int16_t CalibrationOffset;		//This stores the temperature offset for this tip in the iron.
+	uint8_t version;				//Used to track if a reset is needed on firmware upgrade
 	uint32_t padding;    			//This is here for in case we are not an even divisor so that nothing gets cut off
 } systemSettingsType;
 

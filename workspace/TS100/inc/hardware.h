@@ -45,7 +45,7 @@ uint16_t getTipInstantTemperature();
 void setTipPWM(uint8_t pulse);
 uint16_t ctoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToC(uint16_t raw);
-
+void setCalibrationOffset(int16_t offSet);
 #ifdef __cplusplus
 }
 #endif

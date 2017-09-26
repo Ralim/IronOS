@@ -9,7 +9,11 @@
 
 #include "hardware.h"
 volatile uint16_t PWMSafetyTimer = 0;
-
+volatile int16_t CalibrationTempOffset = 0;
+void setCalibrationOffset(int16_t offSet)
+{
+	CalibrationTempOffset=offSet;
+}
 uint16_t getHandleTemperature() {
 	// We return the current handle temperature in X10 C
 	// TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for example)
@@ -27,11 +31,12 @@ uint16_t getHandleTemperature() {
 
 }
 uint16_t tipMeasurementToC(uint16_t raw) {
-	return (raw / 33) - 16;
+	return ((raw-532) / 33) + (getHandleTemperature()/10) - CalibrationTempOffset;
 	//Surprisingly that appears to be a fairly good linear best fit
 }
 uint16_t ctoTipMeasurement(uint16_t temp) {
-	return (temp + 16) * 33;
+	//We need to compensate for cold junction temp
+	return ((temp-(getHandleTemperature()/10) + CalibrationTempOffset) * 33)+532;
 }
 uint16_t getTipInstantTemperature() {
 	uint16_t sum = 0;

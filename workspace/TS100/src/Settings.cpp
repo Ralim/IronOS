@@ -8,8 +8,9 @@
  */
 
 #include "Settings.h"
+#include "Setup.h"
 #define FLASH_ADDR 		(0x8000000|0xBC00)/*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
-
+#include "string.h"
 systemSettingsType systemSettings;
 
 void saveSettings() {
@@ -20,23 +21,33 @@ void saveSettings() {
 	pEraseInit.NbPages = 1;
 	pEraseInit.PageAddress = FLASH_ADDR;
 	uint32_t failingAddress = 0;
+	HAL_IWDG_Refresh(&hiwdg);
+	__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGERR | FLASH_FLAG_BSY);
 	HAL_FLASH_Unlock();
+	HAL_Delay(10);
+	HAL_IWDG_Refresh(&hiwdg);
 	HAL_FLASHEx_Erase(&pEraseInit, &failingAddress);
-	//^ Erase the page of flash (1024 bytes on this platform)
+	//^ Erase the page of flash (1024 bytes on this stm32)
 	//erased the chunk
 	//now we program it
 	uint16_t *data = (uint16_t*) &systemSettings;
-	for (uint8_t i = 0; i < (sizeof(systemSettings) / 2); i++) {
+	HAL_FLASH_Unlock();
+
+	for (uint8_t i = 0; i < (sizeof(systemSettingsType) / 2); i++) {
+		HAL_IWDG_Refresh(&hiwdg);
 		HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, FLASH_ADDR + (i * 2), data[i]);
 	}
+	HAL_FLASH_Lock();
+
 }
 
 void restoreSettings() {
 	//We read the flash
 	uint16_t *data = (uint16_t*) &systemSettings;
-	for (uint8_t i = 0; i < (sizeof(systemSettings) / 2); i++) {
-		data[i] = *(uint16_t *) (FLASH_ADDR + (i * 2));
+	for (uint8_t i = 0; i < (sizeof(systemSettingsType) / 2); i++) {
+		data[i] = *((uint16_t*) (FLASH_ADDR + (i * 2)));
 	}
+
 	//if the version is correct were done
 	//if not we reset and save
 	if (systemSettings.version != SETTINGSVERSION) {
@@ -66,7 +77,7 @@ void resetSettings() {
 	systemSettings.SolderingTemp = 320;    //Default soldering temp is 320.0 C
 	systemSettings.cutoutSetting = 0;			//default to no cut-off voltage
 	systemSettings.version = SETTINGSVERSION;			//Store the version number to allow for easier upgrades
-	systemSettings.advancedScreens = 1;			//Do we show detailed screens?
+	systemSettings.advancedScreens = 0;			//Do we show detailed screens?
 	systemSettings.OrientationMode = 2;				//Default to automatic
 	systemSettings.sensitivity = 8;				//Default high sensitivity
 	systemSettings.voltageDiv = 144;			//Default divider from schematic
@@ -76,6 +87,7 @@ void resetSettings() {
 	systemSettings.powerDisplay = 0;		//default to power display being off
 	systemSettings.autoStartMode = 0;				//Auto start off for safety
 	systemSettings.coolingTempBlink = 0;				//Blink the temperature on the cooling screen when its > 50C
+	systemSettings.CalibrationOffset = 10;
 	saveSettings();
 }
 

@@ -10,6 +10,7 @@
 
 
 
-extern const char* SettingsLongNames[12];
-extern const char* SettingsShortNames[12];
+extern const char* SettingsLongNames[13];
+extern const char* SettingsShortNames[13];
+extern const char* SettingsCalibrationWarning;
 #endif /* TRANSLATION_H_ */
