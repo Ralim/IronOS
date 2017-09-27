@@ -27,7 +27,7 @@ public:
 	OLED(I2C_HandleTypeDef* i2cHandle);		// Initialize Driver and store I2C pointer
 	void initialize(); 						// Startup the I2C coms (brings screen out of reset etc)
 	void refresh(); 						// Draw the buffer out to the LCD using the DMA Channel
-	void drawChar(char c);					// Draw a character to a specific location
+	void drawChar(char c, char preCursorCommand = '\0');					// Draw a character to a specific location
 	void displayOnOff(bool on);				// Turn the screen on or not
 	void setRotation(bool leftHanded);  	// Set the rotation for the screen
 	bool getRotation();						// Get the current rotation of the LCD

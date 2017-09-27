@@ -71,7 +71,7 @@ void OLED::initialize() {
 	screenBuffer[4] = 0x80;
 	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F;
 
-	screenBuffer[6] = 0x80;//Set pages to rollover after 2
+	screenBuffer[6] = 0x80;    //Set pages to rollover after 2
 	screenBuffer[7] = 0x22;
 	screenBuffer[8] = 0x80;
 	screenBuffer[9] = 0x00;
@@ -91,16 +91,42 @@ void OLED::refresh() {
 
 }
 
-void OLED::drawChar(char c) {
+void OLED::drawChar(char c, char PrecursorCommand) {
 //prints a char to the screen
 	if (c == '\n')
 		cursor_y += fontHeight;
 	if (c < ' ')
 		return;
+	//We are left with
 	uint8_t* charPointer;
-	c -= ' ';
 	//Fonts are offset to start at the space char.
-	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * c);
+	/*
+	 * UTF font handling is done using the two input chars
+	 * Precursor is the command char that is used to select the table
+	 *
+	 */
+	uint16_t index = 0;
+	if (!PrecursorCommand)
+		index = (c - ' ');
+	else {
+
+		//This is for extended range
+		//We decode the precursor command to find the offset
+		//Latin stats at 96
+		c -= 0x80;
+		if (PrecursorCommand == 0xC3)
+			index = (96 + 32) + (c);
+		else if (PrecursorCommand == 0xC2)
+			index = (96) + (c);
+		else if (PrecursorCommand == 0xD0)
+			index = (208) + (c);
+		else if (PrecursorCommand == 0xD1)
+			index = (272) + (c);
+		else
+			return;
+		index -=0x10;//offset removal
+	}
+	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
 	if (cursor_x >= 0)
 		drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 	cursor_x += fontWidth;
@@ -137,7 +163,11 @@ void OLED::setRotation(bool leftHanded) {
 //print a string to the current cursor location
 void OLED::print(const char* str) {
 	while (str[0]) {
-		drawChar(str[0]);
+		if (str[0] >= 0x80) {
+			drawChar(str[1], str[0]);
+			str++;    //skip this marker
+		} else
+			drawChar(str[0]);
 		str++;
 	}
 }
