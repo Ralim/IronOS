@@ -82,7 +82,7 @@ void resetSettings() {
 	systemSettings.sensitivity = 8;				//Default high sensitivity
 	systemSettings.voltageDiv = 144;			//Default divider from schematic
 	systemSettings.ShutdownTime = 30;			//How many minutes until the unit turns itself off
-	systemSettings.boostModeEnabled = 0;		//Default to safe, with no boost mode
+	systemSettings.boostModeEnabled = 1;		//Default to safe, with no boost mode
 	systemSettings.BoostTemp = 420;				//default to 400C
 	systemSettings.powerDisplay = 0;		//default to power display being off
 	systemSettings.autoStartMode = 0;				//Auto start off for safety

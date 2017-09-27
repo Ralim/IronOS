@@ -202,6 +202,8 @@ static void settings_setCalibrate(void) {
 	uint8_t maxOffset = strlen(SettingsCalibrationWarning);
 	uint32_t descriptionStart = HAL_GetTick();
 	lcd.setFont(0);
+	lcd.clearScreen();
+	lcd.setCursor(0, 0);
 	for (;;) {
 
 		int16_t descriptionOffset = ((HAL_GetTick() - descriptionStart) / 150) % maxOffset;
@@ -214,6 +216,7 @@ static void settings_setCalibrate(void) {
 				//User confirmed
 				//So we now perform the actual calculation
 				lcd.clearScreen();
+				lcd.setCursor(0, 0);
 				lcd.print(".....");
 				lcd.refresh();
 				setCalibrationOffset(0);				//turn off the current offset
