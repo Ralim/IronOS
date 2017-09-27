@@ -447,31 +447,78 @@ static void gui_solderingMode() {
 			waitForButtonPress();
 			return;
 		} else {
-			lcd.printNumber(tipMeasurementToC(tipTemp), 3);
-			lcd.drawSymbol(1);
-			if (boostModeOn)
-				lcd.drawSymbol(2);
-			//6 gap
-			lcd.drawChar(' ');
-			//7 battery
-			if (systemSettings.cutoutSetting) {
-				//User is on a lithium battery
-				//we need to calculate which of the 10 levels they are on
-				uint8_t cellCount = systemSettings.cutoutSetting + 2;
-				uint16_t cellV = getInputVoltageX10() / cellCount;
-				//Should give us approx cell voltage X10
-				//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
-				if (cellV < 33)
-					cellV = 33;
-				cellV -= 33;			//Should leave us a number of 0-9
-				if (cellV > 9)
-					cellV = 9;
-				lcd.drawBattery(cellV + 1);
-			}
-			//8 ^V indicators
+			//We switch the layout direction depending on the orientation of the lcd.
+			if (lcd.getRotation()) {
+				// battery
+				if (systemSettings.cutoutSetting) {
+					//User is on a lithium battery
+					//we need to calculate which of the 10 levels they are on
+					uint8_t cellCount = systemSettings.cutoutSetting + 2;
+					uint16_t cellV = getInputVoltageX10() / cellCount;
+					//Should give us approx cell voltage X10
+					//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
+					if (cellV < 33)
+						cellV = 33;
+					cellV -= 33;			//Should leave us a number of 0-9
+					if (cellV > 9)
+						cellV = 9;
+					lcd.drawBattery(cellV + 1);
+				} else
+					lcd.drawChar(' ');			//print a blank spot if there is no battery symbol
 
+				lcd.drawChar(' ');    // Space out gap between battery <-> temp
+
+				lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
+				lcd.drawSymbol(1);    //deg C
+
+				//We draw boost arrow if boosting, or else gap temp <-> heat indicator
+				if (boostModeOn)
+					lcd.drawSymbol(2);
+				else
+					lcd.drawChar(' ');
+
+				// Draw heating/cooling symbols
+				//If tip PWM > 25% then we are 'heating'
+				if (getTipPWM() > 25)
+					lcd.drawSymbol(14);
+				else
+					lcd.drawSymbol(15);
+			} else {
+
+				// Draw heating/cooling symbols
+				//If tip PWM > 25% then we are 'heating'
+				if (getTipPWM() > 25)
+					lcd.drawSymbol(14);
+				else
+					lcd.drawSymbol(15);
+				//We draw boost arrow if boosting, or else gap temp <-> heat indicator
+				if (boostModeOn)
+					lcd.drawSymbol(2);
+				else
+					lcd.drawChar(' ');
+
+				lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
+				lcd.drawSymbol(1);    //deg C
+
+				lcd.drawChar(' ');    // Space out gap between battery <-> temp
+
+				if (systemSettings.cutoutSetting) {
+					//User is on a lithium battery
+					//we need to calculate which of the 10 levels they are on
+					uint8_t cellCount = systemSettings.cutoutSetting + 2;
+					uint16_t cellV = getInputVoltageX10() / cellCount;
+					//Should give us approx cell voltage X10
+					//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
+					if (cellV < 33)
+						cellV = 33;
+					cellV -= 33;			//Should leave us a number of 0-9
+					if (cellV > 9)
+						cellV = 9;
+					lcd.drawBattery(cellV + 1);
+				} else
+					lcd.drawChar(' ');			//print a blank spot if there is no battery symbol
+			}
 		}
-		// Draw heating/cooling symbols
 
 		//Update the setpoints for the temperature
 		if (boostModeOn)
@@ -548,7 +595,7 @@ void startGUITask(void const * argument) {
 				//Do nothing
 				break;
 			case BUTTON_BOTH:
-				//pressing both is ignored for now
+				//Not used yet
 				break;
 				//Long presses are ignored for now
 			case BUTTON_B_LONG:

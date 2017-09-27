@@ -83,6 +83,10 @@ uint16_t getInputVoltageX10() {
 	//Ideal term is 57.69.... 58 is quite close
 	return getADC(1) / 58;
 }
+uint8_t getTipPWM()
+{
+	return htim2.Instance->CCR4;
+}
 void setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 100;    //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)

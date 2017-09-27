@@ -42,6 +42,7 @@ uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t instant);
 uint16_t getInputVoltageX10();
 uint16_t getTipInstantTemperature();
+uint8_t getTipPWM();
 void setTipPWM(uint8_t pulse);
 uint16_t ctoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToC(uint16_t raw);
