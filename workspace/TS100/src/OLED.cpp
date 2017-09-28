@@ -93,8 +93,6 @@ void OLED::refresh() {
 
 void OLED::drawChar(char c, char PrecursorCommand) {
 //prints a char to the screen
-	if (c == '\n')
-		cursor_y += fontHeight;
 	if (c < ' ')
 		return;
 	//We are left with
@@ -115,19 +113,18 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 		//Latin stats at 96
 		c -= 0x80;
 		if (PrecursorCommand == 0xC3)
-			index = (96 + 32) + (c);
+			index = (128) + (c);
 		else if (PrecursorCommand == 0xC2)
 			index = (96) + (c);
 		else if (PrecursorCommand == 0xD0)
-			index = (208) + (c);
+			index = (192) + (c);
 		else if (PrecursorCommand == 0xD1)
-			index = (272) + (c);
+			index = (256) + (c);
 		else
 			return;
-		index -=0x10;//offset removal
 	}
 	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
-	if (cursor_x >= 0)
+	if (cursor_x >= 0 && cursor_x < 96)
 		drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 	cursor_x += fontWidth;
 }

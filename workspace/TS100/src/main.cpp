@@ -41,18 +41,8 @@ int main(void) {
 	lcd.initialize();    //start up the LCD
 	lcd.setFont(0);    //default to bigger font
 	accel.initalize();    //this sets up the I2C registers and loads up the default settings
-	lcd.clearScreen();			//Ensure the buffer starts clean
-	lcd.setCursor(0, 0);		//Position the cursor at the 0,0 (top left)
-	lcd.setFont(1);		//small font
-	lcd.print((char*) "V2.00");    //Print version number
-	lcd.setCursor(0, 8);    //second line
-	lcd.print(__DATE__);    //print the compile date
-	lcd.refresh();
 	HAL_IWDG_Refresh(&hiwdg);
-	HAL_Delay(500);
 	restoreSettings();    //load the settings from flash
-
-	showBootLogoIfavailable();
 	setCalibrationOffset(systemSettings.CalibrationOffset);
 	HAL_IWDG_Refresh(&hiwdg);
 	/* Create the thread(s) */
@@ -146,11 +136,31 @@ ButtonState getButtonState() {
 static void waitForButtonPress() {
 	//we are just lazy and sleep until user confirms button press
 	//This also eats the button press event!
+	ButtonState buttons = getButtonState();
+	while (buttons) {
+		buttons = getButtonState();
+		osDelay(100);
+		HAL_IWDG_Refresh(&hiwdg);
+		lcd.refresh();
+	}
+	while (!buttons) {
+		buttons = getButtonState();
+
+		osDelay(100);
+		HAL_IWDG_Refresh(&hiwdg);
+		lcd.refresh();
+	}
+}
+static void waitForButtonPressOrTimeout(uint32_t timeout) {
+	timeout += HAL_GetTick();
+	//Make timeout our exit value
 	for (;;) {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return;
-		osDelay(100);
+		if (HAL_GetTick() > timeout)
+			return;
+		osDelay(50);
 		HAL_IWDG_Refresh(&hiwdg);
 
 	}
@@ -251,6 +261,7 @@ static void gui_settingsMenu() {
 	bool earlyExit = false;
 	uint32_t descriptionStart = 0;
 	while ((settingsMenu[currentScreen].description != NULL) && earlyExit == false) {
+		lcd.setFont(0);
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 		if (HAL_GetTick() - lastButtonTime < 4000) {
@@ -259,7 +270,7 @@ static void gui_settingsMenu() {
 		} else {
 			//Draw description
 			//draw string starting from descriptionOffset
-			lcd.setFont(0);
+
 			int16_t maxOffset = strlen(settingsMenu[currentScreen].description);
 			if (!descriptionStart)
 				descriptionStart = HAL_GetTick();
@@ -573,15 +584,16 @@ void startGUITask(void const * argument) {
 			gui_solderingMode();
 	}
 	HAL_IWDG_Refresh(&hiwdg);
-	osDelay(1000);
+	if (showBootLogoIfavailable())
+		waitForButtonPressOrTimeout(1000);
 	HAL_IWDG_Refresh(&hiwdg);
-
-	/*for (;;) {
+	/*
+	 for (;;) {
 	 HAL_IWDG_Refresh(&hiwdg);
 	 lcd.clearScreen();
 	 lcd.setCursor(0, 0);
-	 lcd.setFont(1);
-	 lcd.printNumber(lastMovementTime, 5);
+	 lcd.setFont(0);
+	 lcd.print("");
 	 lcd.refresh();
 	 osDelay(100);
 	 HAL_IWDG_Refresh(&hiwdg);
@@ -597,8 +609,19 @@ void startGUITask(void const * argument) {
 			case BUTTON_BOTH:
 				//Not used yet
 				break;
-				//Long presses are ignored for now
+
 			case BUTTON_B_LONG:
+				//Show the version information
+			{
+				lcd.clearScreen();			//Ensure the buffer starts clean
+				lcd.setCursor(0, 0);		//Position the cursor at the 0,0 (top left)
+				lcd.setFont(1);					//small font
+				lcd.print((char*) "V2.00");    //Print version number
+				lcd.setCursor(0, 8);    //second line
+				lcd.print(__DATE__);    //print the compile date
+				lcd.refresh();
+				waitForButtonPress();
+			}
 				break;
 			case BUTTON_F_LONG:
 				gui_solderingTempAdjust();
@@ -855,9 +878,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 #define FLASH_LOGOADDR 	(0x8000000|0xB800) /*second last page of flash set aside for logo image*/
 
-void showBootLogoIfavailable() {
-	//check if the header is there (0xAA,0x55,0xF0,0x0D)
-	//If so display logo
+bool showBootLogoIfavailable() {
+//check if the header is there (0xAA,0x55,0xF0,0x0D)
+//If so display logo
 	uint16_t temp[98];
 
 	for (uint8_t i = 0; i < (98); i++) {
@@ -871,15 +894,16 @@ void showBootLogoIfavailable() {
 	}
 
 	if (temp8[0] != 0xAA)
-		return;
+		return false;
 	if (temp8[1] != 0x55)
-		return;
+		return false;
 	if (temp8[2] != 0xF0)
-		return;
+		return false;
 	if (temp8[3] != 0x0D)
-		return;
+		return false;
 
 	lcd.drawArea(0, 0, 96, 16, (uint8_t*) (temp8 + 4));
 	lcd.refresh();
+	return true;
 
 }

@@ -5,6 +5,10 @@
  *      Author: Ben V. Brown
  */
 #include "Translation.h"
+
+#define LANG_RU
+#define LANG
+
 #ifndef LANG
 #define LANG_EN
 #define LANG
@@ -215,6 +219,42 @@ const char SettingTempCChar = 'C';
 const char SettingTempFChar = 'F';
 #endif
 
+#ifdef LANG_RU
+const char* SettingsLongNames[13] =
+{
+//These are all the help text for all the settings./
+	"Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
+	"Температура Сна <С>",
+	"Переход в режим Сна <Минуты>",
+	"Переходит в режим ожидания <Минуты>",
+	"Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>",
+	"В чем измерять температуру",
+	"Шаг измерения температуры",
+	"Скорость обновления дисплея температуры",
+	"Ориентация Дисплея <A. Автоматический L. Левая Рука R. Правая Рука>",
+	"Активация кнопки A для Турбо режима до 450С при пайке ",
+	"Установка температуры для Турбо режима",
+	"Изменяет стрелки на дисплей питания при пайке",
+	"Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим Сна,F=Выкл.",
+	"Мигает температура на экране охлаждения, пока жало остается горячим."};
+
+const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+
+const char* UVLOWarningString = "Low Volt";//Fixed width 8 chars
+const char* CoolingPromptString = "Выкл. ";//Fixed width 5 chars
+const char SettingTrueChar = 'T';
+const char SettingFalseChar = 'F';
+const char SettingSleepChar = 'S';
+const char SettingFastChar = 'F';
+const char SettingMediumChar = 'M';
+const char SettingSlowChar = 'S';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingTempCChar = 'C';
+const char SettingTempFChar = 'F';
+
+#endif
 const char* SettingsShortNames[13] = { /**/
 "PWRSC ",    // Power Source (DC or batt)
 		"STMP ", 	// Sleep Temperature

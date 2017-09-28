@@ -43,7 +43,7 @@ const menuitem settingsMenu[] = { /*Struct used for all settings options in the 
 { (const char*) SettingsLongNames[2], { settings_setSleepTime }, { settings_displaySleepTime } }, /*Sleep Time*/
 { (const char*) SettingsLongNames[3], { settings_setShutdownTime }, { settings_displayShutdownTime } }, /*Shutdown Time*/
 { (const char*) SettingsLongNames[4], { settings_setSensitivity }, { settings_displaySensitivity } },/* Motion Sensitivity*/
-{ (const char*) SettingsLongNames[4], { settings_setAdvancedScreens }, { settings_displayAdvancedScreens } },/* Advanced screens*/
+{ (const char*) SettingsLongNames[5], { settings_setAdvancedScreens }, { settings_displayAdvancedScreens } },/* Advanced screens*/
 { (const char*) SettingsLongNames[6], { settings_setDisplayRotation }, { settings_displayDisplayRotation } }, /**/
 { (const char*) SettingsLongNames[7], { settings_setBoostModeEnabled }, { settings_displayBoostModeEnabled } }, /**/
 { (const char*) SettingsLongNames[8], { settings_setBoostTemp }, { settings_displayBoostTemp } }, /**/
