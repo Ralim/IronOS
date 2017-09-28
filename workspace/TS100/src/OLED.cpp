@@ -124,6 +124,8 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 			return;
 	}
 	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
+	if ((charPointer - currentFont) > fontTableLength)
+		return;
 	if (cursor_x >= 0 && cursor_x < 96)
 		drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 	cursor_x += fontWidth;
@@ -180,14 +182,17 @@ void OLED::setFont(uint8_t fontNumber) {
 		currentFont = ASCII6x8;
 		fontHeight = 8;
 		fontWidth = 6;
+		fontTableLength = sizeof(ASCII6x8);
 	} else if (fontNumber == 2) {
 		currentFont = ExtraFontChars;
 		fontHeight = 16;
 		fontWidth = 12;
+		fontTableLength = sizeof(ExtraFontChars);
 	} else {
 		currentFont = FONT_12;
 		fontHeight = 16;
 		fontWidth = 12;
+		fontTableLength = sizeof(FONT_12);
 	}
 }
 

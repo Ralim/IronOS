@@ -54,6 +54,7 @@ private:
 	bool inLeftHandedMode;    // Whether the screen is in left or not (used for offsets in GRAM)
 	bool displayOnOffState;					// If the display is on or not
 	uint8_t fontWidth, fontHeight;
+	uint16_t fontTableLength;
 	int16_t cursor_x, cursor_y;
 	uint8_t displayOffset;
 };

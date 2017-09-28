@@ -272,42 +272,43 @@ static void gui_settingsMenu() {
 			//draw string starting from descriptionOffset
 
 			int16_t maxOffset = strlen(settingsMenu[currentScreen].description);
-			if (!descriptionStart)
+			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 			int16_t descriptionOffset = ((HAL_GetTick() - descriptionStart) / 150) % maxOffset;
 			lcd.setCursor(12 * (7 - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
 		}
 		ButtonState buttons = getButtonState();
-		if (descriptionStart)
+		if (descriptionStart | (HAL_GetTick() - descriptionStart < 500))
 			buttons = BUTTON_NONE;
-		switch (buttons) {
-			case BUTTON_BOTH:
-				earlyExit = true;    //will make us exit next loop
-				break;
-			case BUTTON_F_SHORT:
-				//increment
-				settingsMenu[currentScreen].incrementHandler.func();
-				break;
-			case BUTTON_B_SHORT:
-				currentScreen++;
-				break;
-			case BUTTON_F_LONG:
-				if (HAL_GetTick() - autoRepeatTimer > 200) {
+		else {
+			switch (buttons) {
+				case BUTTON_BOTH:
+					earlyExit = true;    //will make us exit next loop
+					break;
+				case BUTTON_F_SHORT:
+					//increment
 					settingsMenu[currentScreen].incrementHandler.func();
-					autoRepeatTimer = HAL_GetTick();
-				}
-				break;
-			case BUTTON_B_LONG:
-				if (HAL_GetTick() - autoRepeatTimer > 200) {
+					break;
+				case BUTTON_B_SHORT:
 					currentScreen++;
-					autoRepeatTimer = HAL_GetTick();
-				}
-				break;
-			case BUTTON_NONE:
-				break;
+					break;
+				case BUTTON_F_LONG:
+					if (HAL_GetTick() - autoRepeatTimer > 200) {
+						settingsMenu[currentScreen].incrementHandler.func();
+						autoRepeatTimer = HAL_GetTick();
+					}
+					break;
+				case BUTTON_B_LONG:
+					if (HAL_GetTick() - autoRepeatTimer > 200) {
+						currentScreen++;
+						autoRepeatTimer = HAL_GetTick();
+					}
+					break;
+				case BUTTON_NONE:
+					break;
+			}
 		}
-
 		lcd.refresh();    //update the LCD
 		osDelay(20);    //pause for a sec
 		HAL_IWDG_Refresh(&hiwdg);

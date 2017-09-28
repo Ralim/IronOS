@@ -8,6 +8,7 @@ This firmware is not complete, it is missing some features such as :
 * Motion sensitivity needs more polish for sensitivity levels
 * Auto tuning PID?
 * Input voltage calibration
+* Russian font has issues atm
 
 While it most likely will work, It is not meant for production use just yet!
 
@@ -20,7 +21,7 @@ This project is concidered feature complete for use as a soldering iron, *so ple
 A short(ish) video that goes through every single menu option in the firmware is available [over here](https://www.youtube.com/watch?v=WlnpboYfxNk). 
 This video was created on an earlier 1.x version of the firmware, so alot has changed and a new video will be coming soon for the 2.x fork.
 
-*This firmware does **NOT** support the usb port while running for changing settings. This is done through the onscreen menu only. Logos are editing using the tool or python script and uploaded in DFU mode.*
+*This firmware does **NOT** support the usb port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode.*
 
 *Please note that when running the iron off a Lithium battery pack, the Iron is only rated to 24V input. So using a fully charged 6S battery *slightly* exceeds this rating, and is done so at your own risk.
 Please calibrate your irons voltage reading when you are using a lithium battery after any firmware upgrades.*
