@@ -29,6 +29,7 @@ typedef struct {
 	uint8_t boostModeEnabled;    //Boost mode swaps BUT_A in soldering mode to temporary soldering temp over-ride
 	uint8_t coolingTempBlink;    //Should the temperature blink on the cool down screen until its <50C
 	uint8_t advancedScreens;		//If enabled we draw more detailed screens with smaller fonts
+	uint8_t temperatureInF;			//Should the temp be in F or C (true is F)
 	uint16_t voltageDiv;			//Voltage divisor factor
 	uint16_t BoostTemp; 			//Boost mode set point for the iron
 	int16_t CalibrationOffset;		//This stores the temperature offset for this tip in the iron.

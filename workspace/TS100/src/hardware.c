@@ -6,13 +6,11 @@
  */
 
 //These are all the functions for interacting with the hardware
-
 #include "hardware.h"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
-void setCalibrationOffset(int16_t offSet)
-{
-	CalibrationTempOffset=offSet;
+void setCalibrationOffset(int16_t offSet) {
+	CalibrationTempOffset = offSet;
 }
 uint16_t getHandleTemperature() {
 	// We return the current handle temperature in X10 C
@@ -31,16 +29,26 @@ uint16_t getHandleTemperature() {
 
 }
 uint16_t tipMeasurementToC(uint16_t raw) {
-	return ((raw-532) / 33) + (getHandleTemperature()/10) - CalibrationTempOffset;
+	return ((raw - 532) / 33) + (getHandleTemperature() / 10) - CalibrationTempOffset;
 	//Surprisingly that appears to be a fairly good linear best fit
 }
 uint16_t ctoTipMeasurement(uint16_t temp) {
 	//We need to compensate for cold junction temp
-	return ((temp-(getHandleTemperature()/10) + CalibrationTempOffset) * 33)+532;
+	return ((temp - (getHandleTemperature() / 10) + CalibrationTempOffset) * 33) + 532;
 }
+
+uint16_t tipMeasurementToF(uint16_t raw) {
+	return ((((raw - 532) / 33) + (getHandleTemperature() / 10) - CalibrationTempOffset) * 9) / 5 + 32;
+
+}
+uint16_t ftoTipMeasurement(uint16_t temp) {
+
+	return (((((temp - 32) * 5) / 9) - (getHandleTemperature() / 10) + CalibrationTempOffset) * 33) + 532;
+}
+
 uint16_t getTipInstantTemperature() {
-	uint16_t sum = 0;
-	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
+	uint16_t sum;
+	sum = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_4);
@@ -48,8 +56,10 @@ uint16_t getTipInstantTemperature() {
 
 }
 uint16_t getTipRawTemp(uint8_t instant) {
-#define  filterDepth1 2
-#define filterDepth2 8
+#define  filterDepth1 1
+	/*Pre filter used before PID*/
+#define  filterDepth2 8
+	/*Post filter used for UI display*/
 	static uint16_t filterLayer1[filterDepth1];
 	static uint16_t filterLayer2[filterDepth2];
 	static uint8_t index = 0;
@@ -83,8 +93,7 @@ uint16_t getInputVoltageX10() {
 	//Ideal term is 57.69.... 58 is quite close
 	return getADC(1) / 58;
 }
-uint8_t getTipPWM()
-{
+uint8_t getTipPWM() {
 	return htim2.Instance->CCR4;
 }
 void setTipPWM(uint8_t pulse) {

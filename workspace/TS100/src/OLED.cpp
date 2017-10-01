@@ -17,7 +17,7 @@ uint8_t OLED_Setup_Array[] = { /**/
 0x80, 0xD5,/*Set display clock divide ratio / osc freq*/
 0x80, 0x52,/*Divide ratios*/
 0x80, 0xA8,/*Set Multiplex Ratio*/
-0x80, 0x0E, /*16 == max brightness,39==dimmest*/
+0x80, 0x0E,/*16 == max brightness,39==dimmest*/
 0x80, 0xC0,/*Set COM Scan direction*/
 0x80, 0xD3,/*Set vertical Display offset*/
 0x80, 0x00,/*0 Offset*/
@@ -64,6 +64,10 @@ void OLED::initialize() {
 	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, configLength, 0xFFFF);
 	//displayOnOff(true);
 
+}
+
+//Write out the buffer to the OLEd & call any rendering objects
+void OLED::refresh() {
 	screenBuffer[0] = 0x80;
 	screenBuffer[1] = 0x21;
 	screenBuffer[2] = 0x80;
@@ -78,15 +82,8 @@ void OLED::initialize() {
 	screenBuffer[10] = 0x80;
 	screenBuffer[11] = 0x01;
 
-	screenBuffer[12] = 0x40;
+	screenBuffer[12] = 0x40;    //start of data marker
 
-}
-
-//Write out the buffer to the OLEd & call any rendering objects
-void OLED::refresh() {
-	screenBuffer[12] = 0x40;    // Ensure it never gets overwritten
-	screenBuffer[3] = inLeftHandedMode ? 0 : 32;
-	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F;    // It rolls over when it exceeds this number (this is last writable column)
 	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1, 0xFFFF);
 
 }
@@ -104,7 +101,7 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 	 *
 	 */
 	uint16_t index = 0;
-	if (!PrecursorCommand)
+	if (PrecursorCommand == 0)
 		index = (c - ' ');
 	else {
 

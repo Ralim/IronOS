@@ -194,7 +194,24 @@ static bool checkVoltageForExit() {
 	}
 	return false;
 }
+static void gui_drawBatteryIcon() {
+	if (systemSettings.cutoutSetting) {
+		//User is on a lithium battery
+		//we need to calculate which of the 10 levels they are on
+		uint8_t cellCount = systemSettings.cutoutSetting + 2;
+		uint16_t cellV = getInputVoltageX10() / cellCount;
+		//Should give us approx cell voltage X10
+		//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
+		if (cellV < 33)
+			cellV = 33;
+		cellV -= 33;			//Should leave us a number of 0-9
+		if (cellV > 9)
+			cellV = 9;
+		lcd.drawBattery(cellV + 1);
+	} else
+		lcd.drawChar(' ');			//print a blank spot if there is no battery symbol
 
+}
 static void gui_solderingTempAdjust() {
 	uint32_t lastChange = HAL_GetTick();
 	currentlyActiveTemperatureTarget = 0;
@@ -221,33 +238,46 @@ static void gui_solderingTempAdjust() {
 				break;
 			case BUTTON_F_SHORT:
 				if (lcd.getRotation()) {
-					systemSettings.SolderingTemp += 10;    //add 10C
-					if (systemSettings.SolderingTemp > 450)
-						systemSettings.SolderingTemp = 450;
+					systemSettings.SolderingTemp += 10;    //add 10
 				} else {
-					systemSettings.SolderingTemp -= 10;    //sub 10C
-					if (systemSettings.SolderingTemp <= 50)
-						systemSettings.SolderingTemp = 50;
+					systemSettings.SolderingTemp -= 10;    //sub 10
 				}
 				break;
 			case BUTTON_B_SHORT:
 				if (!lcd.getRotation()) {
-					systemSettings.SolderingTemp += 10;    //add 10C
-					if (systemSettings.SolderingTemp > 450)
-						systemSettings.SolderingTemp = 450;
+					systemSettings.SolderingTemp += 10;    //add 10
 				} else {
-					systemSettings.SolderingTemp -= 10;    //sub 10C
-					if (systemSettings.SolderingTemp <= 50)
-						systemSettings.SolderingTemp = 50;
+					systemSettings.SolderingTemp -= 10;    //sub 10
 				}
 				break;
 		}
+		// constrain between 50-450 C
+		if (systemSettings.temperatureInF) {
+			if (systemSettings.SolderingTemp > 850)
+				systemSettings.SolderingTemp = 850;
+		} else {
+			if (systemSettings.SolderingTemp > 450)
+				systemSettings.SolderingTemp = 450;
+		}
+
+		if (systemSettings.temperatureInF) {
+			if (systemSettings.SolderingTemp < 120)
+				systemSettings.SolderingTemp = 120;
+		} else {
+			if (systemSettings.SolderingTemp < 50)
+				systemSettings.SolderingTemp = 50;
+		}
+
 		if (HAL_GetTick() - lastChange > 1500)
 			return;    // exit if user just doesn't press anything for a bit
 		lcd.drawChar('<');
 		lcd.drawChar(' ');
 		lcd.printNumber(systemSettings.SolderingTemp, 3);
-		lcd.drawSymbol(1);
+		if (systemSettings.temperatureInF)
+			lcd.drawSymbol(0);
+		else
+			lcd.drawSymbol(1);
+		lcd.drawChar(' ');
 		lcd.drawChar('>');
 		lcd.refresh();
 		osDelay(10);
@@ -270,11 +300,12 @@ static void gui_settingsMenu() {
 		} else {
 			//Draw description
 			//draw string starting from descriptionOffset
-
 			int16_t maxOffset = strlen(settingsMenu[currentScreen].description);
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
+
 			int16_t descriptionOffset = ((HAL_GetTick() - descriptionStart) / 150) % maxOffset;
+			//^ Rolling offset based on time
 			lcd.setCursor(12 * (7 - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
 		}
@@ -320,7 +351,12 @@ static void gui_settingsMenu() {
 }
 static void gui_showTipTempWarning() {
 	for (;;) {
-		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
+
+		uint16_t tipTemp;
+		if (systemSettings.temperatureInF)
+			tipTemp = tipMeasurementToF(getTipRawTemp(0));
+		else
+			tipTemp = tipMeasurementToC(getTipRawTemp(0));
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 		if (systemSettings.advancedScreens) {
@@ -363,9 +399,16 @@ static int gui_SolderingSleepingMode() {
 		if (checkVoltageForExit())
 			return 1;    //return non-zero on error
 
-		currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.SleepTemp);
+		if (systemSettings.temperatureInF)
+			currentlyActiveTemperatureTarget = ftoTipMeasurement(systemSettings.SleepTemp);
+		else
+			currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.SleepTemp);
 		//draw the lcd
-		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
+		uint16_t tipTemp;
+		if (systemSettings.temperatureInF)
+			tipTemp = tipMeasurementToF(getTipRawTemp(0));
+		else
+			tipTemp = tipMeasurementToC(getTipRawTemp(0));
 
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
@@ -462,26 +505,16 @@ static void gui_solderingMode() {
 			//We switch the layout direction depending on the orientation of the lcd.
 			if (lcd.getRotation()) {
 				// battery
-				if (systemSettings.cutoutSetting) {
-					//User is on a lithium battery
-					//we need to calculate which of the 10 levels they are on
-					uint8_t cellCount = systemSettings.cutoutSetting + 2;
-					uint16_t cellV = getInputVoltageX10() / cellCount;
-					//Should give us approx cell voltage X10
-					//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
-					if (cellV < 33)
-						cellV = 33;
-					cellV -= 33;			//Should leave us a number of 0-9
-					if (cellV > 9)
-						cellV = 9;
-					lcd.drawBattery(cellV + 1);
-				} else
-					lcd.drawChar(' ');			//print a blank spot if there is no battery symbol
+				gui_drawBatteryIcon();
 
 				lcd.drawChar(' ');    // Space out gap between battery <-> temp
-
-				lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
-				lcd.drawSymbol(1);    //deg C
+				if (systemSettings.temperatureInF) {
+					lcd.printNumber(tipMeasurementToF(tipTemp), 3);    //Draw current tip temp
+					lcd.drawSymbol(0);    //deg F
+				} else {
+					lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
+					lcd.drawSymbol(1);    //deg C
+				}
 
 				//We draw boost arrow if boosting, or else gap temp <-> heat indicator
 				if (boostModeOn)
@@ -490,16 +523,16 @@ static void gui_solderingMode() {
 					lcd.drawChar(' ');
 
 				// Draw heating/cooling symbols
-				//If tip PWM > 25% then we are 'heating'
-				if (getTipPWM() > 25)
+				//If tip PWM > 10% then we are 'heating'
+				if (getTipPWM() > 10)
 					lcd.drawSymbol(14);
 				else
 					lcd.drawSymbol(15);
 			} else {
 
 				// Draw heating/cooling symbols
-				//If tip PWM > 25% then we are 'heating'
-				if (getTipPWM() > 25)
+				//If tip PWM > 10% then we are 'heating'
+				if (getTipPWM() > 10)
 					lcd.drawSymbol(14);
 				else
 					lcd.drawSymbol(15);
@@ -509,34 +542,33 @@ static void gui_solderingMode() {
 				else
 					lcd.drawChar(' ');
 
-				lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
-				lcd.drawSymbol(1);    //deg C
+				if (systemSettings.temperatureInF) {
+					lcd.printNumber(tipMeasurementToF(tipTemp), 3);    //Draw current tip temp
+					lcd.drawSymbol(0);    //deg F
+				} else {
+					lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
+					lcd.drawSymbol(1);    //deg C
+				}
 
 				lcd.drawChar(' ');    // Space out gap between battery <-> temp
 
-				if (systemSettings.cutoutSetting) {
-					//User is on a lithium battery
-					//we need to calculate which of the 10 levels they are on
-					uint8_t cellCount = systemSettings.cutoutSetting + 2;
-					uint16_t cellV = getInputVoltageX10() / cellCount;
-					//Should give us approx cell voltage X10
-					//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
-					if (cellV < 33)
-						cellV = 33;
-					cellV -= 33;			//Should leave us a number of 0-9
-					if (cellV > 9)
-						cellV = 9;
-					lcd.drawBattery(cellV + 1);
-				} else
-					lcd.drawChar(' ');			//print a blank spot if there is no battery symbol
+				gui_drawBatteryIcon();
 			}
 		}
 
 		//Update the setpoints for the temperature
-		if (boostModeOn)
-			currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.BoostTemp);
-		else
-			currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.SolderingTemp);
+		if (boostModeOn) {
+			if (systemSettings.temperatureInF)
+				currentlyActiveTemperatureTarget = ftoTipMeasurement(systemSettings.BoostTemp);
+			else
+				currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.BoostTemp);
+
+		} else {
+			if (systemSettings.temperatureInF)
+				currentlyActiveTemperatureTarget = ftoTipMeasurement(systemSettings.SolderingTemp);
+			else
+				currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.SolderingTemp);
+		}
 
 		//Undervoltage test
 		if (checkVoltageForExit()) {
@@ -676,7 +708,10 @@ void startGUITask(void const * argument) {
 				lcd.print("Tip Disconnected!");
 			} else {
 				lcd.print("Tip:");
-				lcd.printNumber(tipTemp, 3);
+				if (systemSettings.temperatureInF)
+					lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
+				else
+					lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
 				lcd.print(" ");
 				lcd.print("Set:");
 				lcd.printNumber(systemSettings.SolderingTemp, 3);
@@ -691,20 +726,14 @@ void startGUITask(void const * argument) {
 		} else {
 			lcd.setFont(0);
 
-			if (animationStep & 0x80) {
-				if (animationStep & 0x08)
-					lcd.drawArea(0, 0, 96, 8, Iron_RightArrow_UP);
-				else
-					lcd.drawArea(0, 0, 96, 8, Iron_RightArrow_DOWN);
+			if (lcd.getRotation())
+				lcd.drawArea(0, 0, 96, 16, idleScreenBG);
+			else
+				lcd.drawArea(0, 0, 96, 16, idleScreenBGF);
 
-				lcd.drawArea(0, 8, 96, 8, Iron_Base);
-			} else {
-				if (animationStep & 0x08)
-					lcd.drawArea(0, 0, 96, 8, Iron_LeftArrow_UP);
-				else
-					lcd.drawArea(0, 0, 96, 8, Iron_LeftArrow_DOWN);
-				lcd.drawArea(0, 8, 96, 8, Iron_Base);
-			}
+			lcd.setCursor(0, 0);
+			gui_drawBatteryIcon();
+
 		}
 
 		lcd.refresh();

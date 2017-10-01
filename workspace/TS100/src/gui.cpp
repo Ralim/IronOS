@@ -19,6 +19,8 @@ static void settings_setShutdownTime(void);
 static void settings_displayShutdownTime(void);
 static void settings_setSensitivity(void);
 static void settings_displaySensitivity(void);
+static void settings_setTempF(void);
+static void settings_displayTempF(void);
 static void settings_setAdvancedScreens(void);
 static void settings_displayAdvancedScreens(void);
 static void settings_setDisplayRotation(void);
@@ -43,14 +45,15 @@ const menuitem settingsMenu[] = { /*Struct used for all settings options in the 
 { (const char*) SettingsLongNames[2], { settings_setSleepTime }, { settings_displaySleepTime } }, /*Sleep Time*/
 { (const char*) SettingsLongNames[3], { settings_setShutdownTime }, { settings_displayShutdownTime } }, /*Shutdown Time*/
 { (const char*) SettingsLongNames[4], { settings_setSensitivity }, { settings_displaySensitivity } },/* Motion Sensitivity*/
-{ (const char*) SettingsLongNames[5], { settings_setAdvancedScreens }, { settings_displayAdvancedScreens } },/* Advanced screens*/
-{ (const char*) SettingsLongNames[6], { settings_setDisplayRotation }, { settings_displayDisplayRotation } }, /**/
-{ (const char*) SettingsLongNames[7], { settings_setBoostModeEnabled }, { settings_displayBoostModeEnabled } }, /**/
-{ (const char*) SettingsLongNames[8], { settings_setBoostTemp }, { settings_displayBoostTemp } }, /**/
-{ (const char*) SettingsLongNames[9], { settings_setAutomaticStartMode }, { settings_displayAutomaticStartMode } },/**/
-{ (const char*) SettingsLongNames[10], { settings_setCoolingBlinkEnabled }, { settings_displayCoolingBlinkEnabled } }, /**/
-{ (const char*) SettingsLongNames[11], { settings_setCalibrate }, { settings_displayCalibrate } }, /**/
-{ (const char*) SettingsLongNames[12], { settings_setResetSettings }, { settings_displayResetSettings } }, /**/
+{ (const char*) SettingsLongNames[5], { settings_setTempF }, { settings_displayTempF } },/* Motion Sensitivity*/
+{ (const char*) SettingsLongNames[6], { settings_setAdvancedScreens }, { settings_displayAdvancedScreens } },/* Advanced screens*/
+{ (const char*) SettingsLongNames[7], { settings_setDisplayRotation }, { settings_displayDisplayRotation } }, /**/
+{ (const char*) SettingsLongNames[8], { settings_setBoostModeEnabled }, { settings_displayBoostModeEnabled } }, /**/
+{ (const char*) SettingsLongNames[9], { settings_setBoostTemp }, { settings_displayBoostTemp } }, /**/
+{ (const char*) SettingsLongNames[10], { settings_setAutomaticStartMode }, { settings_displayAutomaticStartMode } },/**/
+{ (const char*) SettingsLongNames[11], { settings_setCoolingBlinkEnabled }, { settings_displayCoolingBlinkEnabled } }, /**/
+{ (const char*) SettingsLongNames[12], { settings_setCalibrate }, { settings_displayCalibrate } }, /**/
+{ (const char*) SettingsLongNames[13], { settings_setResetSettings }, { settings_displayResetSettings } }, /**/
 { NULL, { NULL }, { NULL } }    //end of menu marker. DO NOT REMOVE
 };
 
@@ -101,6 +104,19 @@ static void settings_displayShutdownTime(void) {
 	lcd.print(SettingsShortNames[3]);
 	lcd.printNumber(systemSettings.ShutdownTime, 2);
 }
+
+static void settings_setTempF(void) {
+	systemSettings.temperatureInF = !systemSettings.temperatureInF;
+}
+static void settings_displayTempF(void) {
+	lcd.print(SettingsShortNames[5]);
+
+	if (systemSettings.temperatureInF)
+		lcd.drawChar('F');
+	else
+		lcd.drawChar('C');
+}
+
 static void settings_setSensitivity(void) {
 	systemSettings.sensitivity++;
 	systemSettings.sensitivity = systemSettings.sensitivity % 10;
@@ -114,7 +130,7 @@ static void settings_setAdvancedScreens(void) {
 	systemSettings.advancedScreens = !systemSettings.advancedScreens;
 }
 static void settings_displayAdvancedScreens(void) {
-	lcd.print(SettingsShortNames[5]);
+	lcd.print(SettingsShortNames[6]);
 	if (systemSettings.advancedScreens)
 		lcd.drawChar('T');
 	else
@@ -125,7 +141,7 @@ static void settings_setDisplayRotation(void) {
 	systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
 }
 static void settings_displayDisplayRotation(void) {
-	lcd.print(SettingsShortNames[6]);
+	lcd.print(SettingsShortNames[7]);
 	switch (systemSettings.OrientationMode) {
 		case 0:
 			lcd.drawChar('R');
@@ -143,7 +159,7 @@ static void settings_setBoostModeEnabled(void) {
 	systemSettings.boostModeEnabled = !systemSettings.boostModeEnabled;
 }
 static void settings_displayBoostModeEnabled(void) {
-	lcd.print(SettingsShortNames[7]);
+	lcd.print(SettingsShortNames[8]);
 	if (systemSettings.boostModeEnabled)
 		lcd.drawChar('T');
 	else
@@ -155,7 +171,7 @@ static void settings_setBoostTemp(void) {
 		systemSettings.BoostTemp = 250;    //loop back at 250
 }
 static void settings_displayBoostTemp(void) {
-	lcd.print(SettingsShortNames[8]);
+	lcd.print(SettingsShortNames[9]);
 	lcd.printNumber(systemSettings.BoostTemp, 3);
 }
 static void settings_setAutomaticStartMode(void) {
@@ -163,7 +179,7 @@ static void settings_setAutomaticStartMode(void) {
 	systemSettings.autoStartMode %= 2;
 }
 static void settings_displayAutomaticStartMode(void) {
-	lcd.print(SettingsShortNames[9]);
+	lcd.print(SettingsShortNames[10]);
 	switch (systemSettings.autoStartMode) {
 		case 0:
 			lcd.drawChar('F');
@@ -179,7 +195,7 @@ static void settings_setCoolingBlinkEnabled(void) {
 	systemSettings.coolingTempBlink = !systemSettings.coolingTempBlink;
 }
 static void settings_displayCoolingBlinkEnabled(void) {
-	lcd.print(SettingsShortNames[10]);
+	lcd.print(SettingsShortNames[11]);
 	if (systemSettings.coolingTempBlink)
 		lcd.drawChar('T');
 	else
@@ -189,7 +205,7 @@ static void settings_setResetSettings(void) {
 	settingsResetRequest = !settingsResetRequest;
 }
 static void settings_displayResetSettings(void) {
-	lcd.print(SettingsShortNames[12]);
+	lcd.print(SettingsShortNames[13]);
 	if (settingsResetRequest)
 		lcd.drawChar('T');
 	else
@@ -251,5 +267,5 @@ static void settings_setCalibrate(void) {
 
 }
 static void settings_displayCalibrate(void) {
-	lcd.print(SettingsShortNames[11]);
+	lcd.print(SettingsShortNames[12]);
 }

@@ -6,7 +6,7 @@
  */
 #include "Translation.h"
 
-#define LANG_RU
+#define LANG_EN
 #define LANG
 
 #ifndef LANG
@@ -18,22 +18,23 @@
 #error NO LANGUAGE DEFINED
 #endif
 #ifdef LANG_EN
-const char* SettingsLongNames[13] = {
-	/*These are all the help text for all the settings.*/
-	/*No requirements on spacing or length*/
-	"Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",    //
-	"Sleep Temperature <C>",//
-	"Sleep Timeout <Minutes>",//
-	"Shutdown Timeout <Minutes>",//
-	"Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",//
-	"Display detailed information in a smaller font.",//
-	"Display Orientation <A. Automatic L. Left Handed R. Right Handed>",//
-	"Enable front key enters boost mode 450C mode when soldering",//
-	"Temperature when in \"boost\" mode",//
-	"Automatically starts the iron into soldering on power up. T=Soldering, S= Sleep mode,F=Off",//
-	"Blink the temperature on the cooling screen while the tip is still hot.",//
-	"Calibrate tip offset.",//s
-	"Reset all settings",};
+const char* SettingsLongNames[14] = {
+/*These are all the help text for all the settings.*/
+/*No requirements on spacing or length*/
+"Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",    //
+		"Sleep Temperature <C>",    //
+		"Sleep Timeout <Minutes>",    //
+		"Shutdown Timeout <Minutes>",    //
+		"Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>",    //
+		"Temperature Unit <C=Celsius F=Fahrenheit>",    //
+		"Display detailed information in a smaller font.",    //
+		"Display Orientation <A. Automatic L. Left Handed R. Right Handed>",    //
+		"Enable front key enters boost mode 450C mode when soldering",    //
+		"Temperature when in \"boost\" mode",    //
+		"Automatically starts the iron into soldering on power up. T=Soldering, S= Sleep mode,F=Off",    //
+		"Blink the temperature on the cooling screen while the tip is still hot.",    //
+		"Calibrate tip offset.",    //s
+		"Reset all settings", };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
@@ -51,7 +52,7 @@ const char SettingTempFChar = 'F';
 #endif
 
 #ifdef LANG_ES
-const char* SettingsLongNames[13] = {
+const char* SettingsLongNames[14] = {
 	/*These are all the help text for all the settings.*/
 	/*All must start with 6 spaces so they come on screen nicely.*/
 	"Fuente de energía. Ajusta el límite inferior de voltaje. <DC=10V S=3.3V por celda>",    //
@@ -84,7 +85,7 @@ const char SettingTempFChar = 'F';
 #endif
 
 #ifdef LANG_DE
-const char* SettingsLongNames[13] = {
+const char* SettingsLongNames[14] = {
 	/*These are all the help text for all the settings.*/
 	/*All must start with 6 spaces so they come on screen nicely.*/
 	"Stromversorgung. Setzt Abschaltspannung <DC=10V S=3.3V pro Zelle>",
@@ -117,7 +118,7 @@ const char SettingTempFChar = 'F';
 #endif
 
 #ifdef LANG_FR
-const char* SettingsLongNames[13] = {
+const char* SettingsLongNames[14] = {
 	/*These are all the help text for all the settings.*/
 	/*All must start with 6 spaces so they come on screen nicely.*/
 	"Type d\'alimentation. Regle la tension de coupure. <DC=10V S=3.3V par cellules>",
@@ -152,7 +153,7 @@ const char SettingTempFChar = 'F';
 #endif
 
 #ifdef LANG_IT
-const char* SettingsLongNames[13] = {
+const char* SettingsLongNames[14] = {
 	/*These are all the help text for all the settings.*/
 	"Sorgente di alimentazione. Imposta il limite inferiore di tensione. <DC=10V S=3.3V per cella>",
 	"Temperatura modalità riposo <C>",
@@ -186,7 +187,7 @@ const char SettingTempFChar = 'F';
 #endif
 
 #ifdef LANG_SE
-const char* SettingsLongNames[13] = {
+const char* SettingsLongNames[14] = {
 	/*These are all the help text for all the settings.*/
 	"Stromforsorjning. Satt avstagningsvolt. <VX=10V S=3.3V per cell>",
 	"Vilolage Temperatur <C>",
@@ -220,23 +221,23 @@ const char SettingTempFChar = 'F';
 #endif
 
 #ifdef LANG_RU
-const char* SettingsLongNames[13] = {
+const char* SettingsLongNames[14] = {
 //These are all the help text for all the settings./
-		"ЀИстЀочник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>", "Температура Сна <С>",
-		"Переход в режим Сна <Минуты>", "Переходит в режим ожидания <Минуты>",
-		"Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>",
-		"Display detailed information in a smaller font.",    //
-		"Ориентация Дисплея <A. Автоматический L. Левая Рука R. Правая Рука>",
-		"Активация кнопки A для Турбо режима до 450С при пайке ", "Установка температуры для Турбо режима",
-		"Изменяет стрелки на дисплей питания при пайке",
-		"Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим Сна,F=Выкл.",
-		"Мигает температура на экране охлаждения, пока жало остается горячим.", "Calibrate tip offset.",    //s
-		"Reset all settings", };
+	"Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>", "Температура Сна <С>",
+	"Переход в режим Сна <Минуты>", "Переходит в режим ожидания <Минуты>",
+	"Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>",
+	"Display detailed information in a smaller font.",//
+	"Ориентация Дисплея <A. Автоматический L. Левая Рука R. Правая Рука>",
+	"Активация кнопки A для Турбо режима до 450С при пайке ", "Установка температуры для Турбо режима",
+	"Изменяет стрелки на дисплей питания при пайке",
+	"Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим Сна,F=Выкл.",
+	"Мигает температура на экране охлаждения, пока жало остается горячим.", "Calibrate tip offset.",//s
+	"Reset all settings",};
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 
 const char* UVLOWarningString = "Low Volt";    //Fixed width 8 chars
-const char* CoolingPromptString = "Выкл. ";    //Fixed width 5 chars
+const char* CoolingPromptString = "Выкл. ";//Fixed width 5 chars
 const char SettingTrueChar = 'T';
 const char SettingFalseChar = 'F';
 const char SettingSleepChar = 'S';
@@ -250,12 +251,13 @@ const char SettingTempCChar = 'C';
 const char SettingTempFChar = 'F';
 
 #endif
-const char* SettingsShortNames[13] = { /**/
+const char* SettingsShortNames[14] = { /**/
 "PWRSC ",    // Power Source (DC or batt)
 		"STMP ", 	// Sleep Temperature
 		"STME ", 	// Sleep Timeout
 		"SHTME ",    // Shutdown Temperature
 		"MSENSE ",    // Motion sensitivity level
+		"TMPUNT ",			//Temp in F and C
 		"ADVDSP ",    // Advanced display mode enable
 		"DSPROT ",    // Display rotation mode
 		"BOOST  ",    // Boost enabled

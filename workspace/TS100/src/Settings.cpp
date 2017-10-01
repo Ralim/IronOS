@@ -88,6 +88,7 @@ void resetSettings() {
 	systemSettings.autoStartMode = 0;				//Auto start off for safety
 	systemSettings.coolingTempBlink = 0;				//Blink the temperature on the cooling screen when its > 50C
 	systemSettings.CalibrationOffset = 10;
+	systemSettings.temperatureInF = 0;			//default to 0
 	saveSettings();
 }
 

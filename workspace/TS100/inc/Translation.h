@@ -8,8 +8,8 @@
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
 
-extern const char* SettingsLongNames[13];
-extern const char* SettingsShortNames[13];
+extern const char* SettingsLongNames[14];
+extern const char* SettingsShortNames[14];
 extern const char* SettingsCalibrationWarning;
 extern const char* UVLOWarningString;
 extern const char SettingTrueChar;

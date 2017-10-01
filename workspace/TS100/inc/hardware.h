@@ -36,8 +36,6 @@ extern "C" {
 #define SDA_Pin GPIO_PIN_7
 #define SDA_GPIO_Port GPIOB
 
-
-
 uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t instant);
 uint16_t getInputVoltageX10();
@@ -46,6 +44,9 @@ uint8_t getTipPWM();
 void setTipPWM(uint8_t pulse);
 uint16_t ctoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToC(uint16_t raw);
+uint16_t ftoTipMeasurement(uint16_t temp);
+uint16_t tipMeasurementToF(uint16_t raw);
+
 void setCalibrationOffset(int16_t offSet);
 #ifdef __cplusplus
 }
