@@ -12,6 +12,11 @@ extern const char* SettingsLongNames[14];
 extern const char* SettingsShortNames[14];
 extern const char* SettingsCalibrationWarning;
 extern const char* UVLOWarningString;
+extern const char* SleepingSimpleString;
+extern const char* SleepingAdvancedString;
+extern const char* WarningSimpleString;
+extern const char* WarningAdvancedString;
+
 extern const char SettingTrueChar;
 extern const char SettingFalseChar;
 extern const char SettingSleepChar;

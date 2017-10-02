@@ -361,16 +361,22 @@ static void gui_showTipTempWarning() {
 		lcd.setCursor(0, 0);
 		if (systemSettings.advancedScreens) {
 			lcd.setFont(1);
-			lcd.print("WARNING! TIP HOT!");
+			lcd.print(WarningAdvancedString);
 			lcd.setCursor(0, 8);
 			lcd.print("Tip Temp: ");
 			lcd.printNumber(tipTemp, 3);
-			lcd.print("C");
+			if (systemSettings.temperatureInF)
+				lcd.print("F");
+			else
+				lcd.print("C");
 		} else {
 			lcd.setFont(0);
-
-			lcd.print("WARN!");
+			lcd.print(WarningSimpleString);
 			lcd.printNumber(tipTemp, 3);
+			if (systemSettings.temperatureInF)
+				lcd.drawSymbol(0);
+			else
+				lcd.drawSymbol(1);
 		}
 		if (systemSettings.coolingTempBlink) {
 			if (HAL_GetTick() % 500 < 250)
@@ -380,8 +386,13 @@ static void gui_showTipTempWarning() {
 		ButtonState buttons = getButtonState();
 		if (buttons == BUTTON_B_SHORT || buttons == BUTTON_F_SHORT || buttons == BUTTON_BOTH)
 			return;
-		if (tipTemp < 30)
-			return;
+		if (systemSettings.temperatureInF) {
+			if (tipTemp < 86)
+				return;
+		} else {
+			if (tipTemp < 30)
+				return;
+		}
 		HAL_IWDG_Refresh(&hiwdg);
 		osDelay(200);
 	}
@@ -414,19 +425,27 @@ static int gui_SolderingSleepingMode() {
 		lcd.setCursor(0, 0);
 		if (systemSettings.advancedScreens) {
 			lcd.setFont(1);
-			lcd.print("Sleeping...");
+			lcd.print(SleepingAdvancedString);
 			lcd.setCursor(0, 8);
 			lcd.print("Tip:");
 			lcd.printNumber(tipTemp, 3);
+			if (systemSettings.temperatureInF)
+				lcd.print("F");
+			else
+				lcd.print("C");
+
 			lcd.print(" VIN:");
 			lcd.printNumber(getInputVoltageX10() / 10, 2);
 			lcd.drawChar('.');
 			lcd.printNumber(getInputVoltageX10() % 10, 1);
-			lcd.print("V");
 		} else {
 			lcd.setFont(0);
-			lcd.print("SLEEP");
+			lcd.print(SleepingSimpleString);
 			lcd.printNumber(tipTemp, 3);
+			if (systemSettings.temperatureInF)
+				lcd.drawSymbol(0);
+			else
+				lcd.drawSymbol(1);
 		}
 		if (lastMovementTime)
 			if (((uint32_t) (HAL_GetTick() - lastMovementTime))
