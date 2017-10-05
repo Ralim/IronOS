@@ -17,7 +17,7 @@ uint8_t OLED_Setup_Array[] = { /**/
 0x80, 0xD5,/*Set display clock divide ratio / osc freq*/
 0x80, 0x52,/*Divide ratios*/
 0x80, 0xA8,/*Set Multiplex Ratio*/
-0x80, 0x0E,/*16 == max brightness,39==dimmest*/
+0x80, 0x0F,/*16 == max brightness,39==dimmest*/
 0x80, 0xC0,/*Set COM Scan direction*/
 0x80, 0xD3,/*Set vertical Display offset*/
 0x80, 0x00,/*0 Offset*/
@@ -53,6 +53,7 @@ OLED::OLED(I2C_HandleTypeDef* i2cHandle) {
 	fontWidth = 12;
 	displayOffset = 0;
 	displayOnOffState = true;
+	fontTableLength=sizeof(FONT_12);
 
 }
 
@@ -71,14 +72,14 @@ void OLED::refresh() {
 	screenBuffer[0] = 0x80;
 	screenBuffer[1] = 0x21;
 	screenBuffer[2] = 0x80;
-	screenBuffer[3] = inLeftHandedMode ? 0 : 32;
+	screenBuffer[3] = inLeftHandedMode ? 0 : 32;//display is shifted by 32 in left handed mode as driver ram is 128 wide
 	screenBuffer[4] = 0x80;
-	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F;
+	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F;//End address of the ram segment we are writing to (96 wide)
 
 	screenBuffer[6] = 0x80;    //Set pages to rollover after 2
 	screenBuffer[7] = 0x22;
 	screenBuffer[8] = 0x80;
-	screenBuffer[9] = 0x00;
+	screenBuffer[9] = 0x00;//start page 0
 	screenBuffer[10] = 0x80;
 	screenBuffer[11] = 0x01;
 

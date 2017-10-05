@@ -2,15 +2,12 @@
 
 This firmware is not complete, it is missing some features such as :
 
-* PID needs more work (moving to fixed point)
 * Needs UI work
 * Needs some polish on information screens
-* Motion sensitivity needs more polish for sensitivity levels
-* Auto tuning PID?
 * Input voltage calibration
 * Russian font has issues atm
 
-While it most likely will work, It is not meant for production use just yet!
+While it most likely will work, It is not meant for production use *just* yet!
 
 
 # TS100
@@ -42,7 +39,7 @@ Please calibrate your irons voltage reading when you are using a lithium battery
 * Custom bootup logo support
 * Automatic LCD rotation based on orientation
 
-# Upgrading your ts100 iron
+## Upgrading your ts100 iron
 
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *ts100.hex* unless you want the translations, they are ts100_*language short name*.hex.
 

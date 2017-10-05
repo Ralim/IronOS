@@ -694,8 +694,7 @@ void startGUITask(void const * argument) {
 				saveSettings();
 				setCalibrationOffset(systemSettings.CalibrationOffset);
 				HAL_IWDG_Refresh(&hiwdg);
-				osDelay(500);
-				//tempWarningState=0;//make sure warning can show
+				osDelay(250);
 				break;
 		}
 		currentlyActiveTemperatureTarget = 0;    //ensure tip is off
@@ -746,9 +745,9 @@ void startGUITask(void const * argument) {
 			lcd.setFont(0);
 
 			if (lcd.getRotation())
-				lcd.drawArea(0, 0, 96, 16, idleScreenBG);
+				lcd.drawArea(12, 0, 84, 16, idleScreenBG);
 			else
-				lcd.drawArea(0, 0, 96, 16, idleScreenBGF);
+				lcd.drawArea(12, 0, 84, 16, idleScreenBGF);//Needs to be flipped
 
 			lcd.setCursor(0, 0);
 			gui_drawBatteryIcon();
