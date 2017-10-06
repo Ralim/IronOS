@@ -352,11 +352,7 @@ static void gui_settingsMenu() {
 static void gui_showTipTempWarning() {
 	for (;;) {
 
-		uint16_t tipTemp;
-		if (systemSettings.temperatureInF)
-			tipTemp = tipMeasurementToF(getTipRawTemp(0));
-		else
-			tipTemp = tipMeasurementToC(getTipRawTemp(0));
+		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 		if (systemSettings.advancedScreens) {
@@ -364,21 +360,26 @@ static void gui_showTipTempWarning() {
 			lcd.print(WarningAdvancedString);
 			lcd.setCursor(0, 8);
 			lcd.print("Tip Temp: ");
-			lcd.printNumber(tipTemp, 3);
-			if (systemSettings.temperatureInF)
+
+			if (systemSettings.temperatureInF) {
+				lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
 				lcd.print("F");
-			else
+			} else {
+				lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
 				lcd.print("C");
+			}
 		} else {
 			lcd.setFont(0);
 			lcd.print(WarningSimpleString);
-			lcd.printNumber(tipTemp, 3);
-			if (systemSettings.temperatureInF)
+			if (systemSettings.temperatureInF) {
+				lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
 				lcd.drawSymbol(0);
-			else
+			} else {
+				lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
 				lcd.drawSymbol(1);
+			}
 		}
-		if (systemSettings.coolingTempBlink) {
+		if (systemSettings.coolingTempBlink && tipTemp > 50) {
 			if (HAL_GetTick() % 500 < 250)
 				lcd.clearScreen();
 		}
@@ -386,17 +387,13 @@ static void gui_showTipTempWarning() {
 		ButtonState buttons = getButtonState();
 		if (buttons == BUTTON_B_SHORT || buttons == BUTTON_F_SHORT || buttons == BUTTON_BOTH)
 			return;
-		if (systemSettings.temperatureInF) {
-			if (tipTemp < 86)
-				return;
-		} else {
-			if (tipTemp < 30)
-				return;
-		}
+
+		if (tipTemp < 30)
+			return;
+
 		HAL_IWDG_Refresh(&hiwdg);
 		osDelay(200);
 	}
-
 }
 static int gui_SolderingSleepingMode() {
 //Drop to sleep temperature and display until movement or button press
@@ -651,7 +648,7 @@ void startGUITask(void const * argument) {
 	 HAL_IWDG_Refresh(&hiwdg);
 
 	 }*/
-	//^ Kept here for a way to block this thread
+//^ Kept here for a way to block this thread
 	for (;;) {
 		ButtonState buttons = getButtonState();
 		switch (buttons) {
@@ -747,7 +744,7 @@ void startGUITask(void const * argument) {
 			if (lcd.getRotation())
 				lcd.drawArea(12, 0, 84, 16, idleScreenBG);
 			else
-				lcd.drawArea(12, 0, 84, 16, idleScreenBGF);//Needs to be flipped
+				lcd.drawArea(12, 0, 84, 16, idleScreenBGF);    //Needs to be flipped
 
 			lcd.setCursor(0, 0);
 			gui_drawBatteryIcon();
