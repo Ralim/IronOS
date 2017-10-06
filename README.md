@@ -2,11 +2,8 @@
 
 This firmware is not complete, it is missing some features such as :
 
-* Needs UI work
-* Needs some polish on information screens
-* Input voltage calibration
 * Russian font has issues atm
-
+* Soldering detailed view coming
 While it most likely will work, It is not meant for production use *just* yet!
 
 
@@ -68,9 +65,9 @@ There are further instructions on the [wiki](https://github.com/Ralim/ts100/wiki
 This new firmware uses a new menu system to allow access to the settings on the device.
 When on the main screen, the unit shows prompts for the two most common operations.
 * Pressing the button near the tip enters soldering mode
-* Pressing the button near the power input enters the settings menu.
+* Pressing the button near the USB enters the settings menu.
 * Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up).
-
+* Holding the button near the USB end will show the firmware version details.
 ## Soldering mode
 
 In this mode the iron works as you would expect, pressing either button will take you to a temperature change screen. 

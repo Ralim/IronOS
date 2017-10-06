@@ -190,9 +190,7 @@ static void settings_displayAutomaticStartMode(void) {
 		case 1:
 			lcd.drawChar('T');
 			break;
-
 	}
-
 }
 static void settings_setCoolingBlinkEnabled(void) {
 	systemSettings.coolingTempBlink = !systemSettings.coolingTempBlink;
