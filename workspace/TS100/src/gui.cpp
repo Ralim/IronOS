@@ -37,6 +37,8 @@ static void settings_setResetSettings(void);
 static void settings_displayResetSettings(void);
 static void settings_setCalibrate(void);
 static void settings_displayCalibrate(void);
+static void settings_setCalibrateVIN(void);
+static void settings_displayCalibrateVIN(void);
 
 bool settingsResetRequest = false;
 const menuitem settingsMenu[] = { /*Struct used for all settings options in the settings menu*/
@@ -47,13 +49,14 @@ const menuitem settingsMenu[] = { /*Struct used for all settings options in the 
 { (const char*) SettingsLongNames[4], { settings_setSensitivity }, { settings_displaySensitivity } },/* Motion Sensitivity*/
 { (const char*) SettingsLongNames[5], { settings_setTempF }, { settings_displayTempF } },/* Motion Sensitivity*/
 { (const char*) SettingsLongNames[6], { settings_setAdvancedScreens }, { settings_displayAdvancedScreens } },/* Advanced screens*/
-{ (const char*) SettingsLongNames[7], { settings_setDisplayRotation }, { settings_displayDisplayRotation } }, /**/
-{ (const char*) SettingsLongNames[8], { settings_setBoostModeEnabled }, { settings_displayBoostModeEnabled } }, /**/
-{ (const char*) SettingsLongNames[9], { settings_setBoostTemp }, { settings_displayBoostTemp } }, /**/
-{ (const char*) SettingsLongNames[10], { settings_setAutomaticStartMode }, { settings_displayAutomaticStartMode } },/**/
-{ (const char*) SettingsLongNames[11], { settings_setCoolingBlinkEnabled }, { settings_displayCoolingBlinkEnabled } }, /**/
-{ (const char*) SettingsLongNames[12], { settings_setCalibrate }, { settings_displayCalibrate } }, /**/
-{ (const char*) SettingsLongNames[13], { settings_setResetSettings }, { settings_displayResetSettings } }, /**/
+{ (const char*) SettingsLongNames[7], { settings_setDisplayRotation }, { settings_displayDisplayRotation } }, /*Display Rotation*/
+{ (const char*) SettingsLongNames[8], { settings_setBoostModeEnabled }, { settings_displayBoostModeEnabled } }, /*Enable Boost*/
+{ (const char*) SettingsLongNames[9], { settings_setBoostTemp }, { settings_displayBoostTemp } }, /*Boost Temp*/
+{ (const char*) SettingsLongNames[10], { settings_setAutomaticStartMode }, { settings_displayAutomaticStartMode } },/*Auto start*/
+{ (const char*) SettingsLongNames[11], { settings_setCoolingBlinkEnabled }, { settings_displayCoolingBlinkEnabled } }, /*Cooling blink warning*/
+{ (const char*) SettingsLongNames[12], { settings_setCalibrate }, { settings_displayCalibrate } }, /*Calibrate tip*/
+{ (const char*) SettingsLongNames[13], { settings_setResetSettings }, { settings_displayResetSettings } }, /*Resets settings*/
+{ (const char*) SettingsLongNames[14], { settings_setCalibrateVIN }, { settings_displayCalibrateVIN } }, /*Voltage input cal*/
 { NULL, { NULL }, { NULL } }    //end of menu marker. DO NOT REMOVE
 };
 
@@ -268,4 +271,49 @@ static void settings_setCalibrate(void) {
 }
 static void settings_displayCalibrate(void) {
 	lcd.print(SettingsShortNames[12]);
+}
+
+static void settings_setCalibrateVIN(void) {
+//Jump to the voltage calibration subscreen
+		lcd.setFont(0);
+		lcd.clearScreen();
+		lcd.setCursor(0, 0);
+		for (;;) {
+			lcd.setCursor(0, 0);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv)/10,2);
+			lcd.print(".");
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv)%10,1);
+			lcd.print("V");
+
+			ButtonState buttons = getButtonState();
+			switch (buttons) {
+				case BUTTON_F_SHORT:
+					systemSettings.voltageDiv++;
+					break;
+				case BUTTON_B_SHORT:
+					systemSettings.voltageDiv--;
+					break;
+				case BUTTON_BOTH:
+				case BUTTON_F_LONG:
+				case BUTTON_B_LONG:
+					saveSettings();
+					return;
+					break;
+				case BUTTON_NONE:
+					break;
+			}
+			lcd.refresh();
+			osDelay(50);
+			if(systemSettings.voltageDiv<90)
+				systemSettings.voltageDiv=90;
+			else if (systemSettings.voltageDiv>130)
+				systemSettings.voltageDiv=130;
+			//Cap to sensible values
+		}
+}
+static void settings_displayCalibrateVIN(void) {
+	lcd.clearScreen();
+	lcd.setCursor(0, 0);
+	lcd.print("CAL VIN?");
+
 }

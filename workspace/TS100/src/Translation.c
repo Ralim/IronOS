@@ -33,14 +33,16 @@ const char* SettingsLongNames[14] = {
 		"Temperature when in \"boost\" mode",    //
 		"Automatically starts the iron into soldering on power up. T=Soldering, S= Sleep mode,F=Off",    //
 		"Blink the temperature on the cooling screen while the tip is still hot.",    //
-		"Calibrate tip offset.",    //s
-		"Reset all settings", };
+		"Calibrate tip offset.",    //
+		"Reset all settings",    //
+		"VIN Calibration. Buttons adjust, long press to exit",    //
+		};
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
 const char* SleepingSimpleString = "ZZzz";    // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";    // <=17 chars
-const char* WarningSimpleString = "WARN";    //Must be <= 4 chars
+const char* WarningSimpleString = "HOT!";    //Must be <= 4 chars
 const char* WarningAdvancedString = "WARNING! TIP HOT!";
 
 const char SettingTrueChar = 'V';

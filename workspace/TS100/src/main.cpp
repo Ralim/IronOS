@@ -71,7 +71,10 @@ int main(void) {
 	while (1) {
 	}
 }
-
+void GUIDelay()
+{
+	osDelay(50);
+}
 ButtonState getButtonState() {
 	/*
 	 * Read in the buttons and then determine if a state change needs to occur
@@ -139,14 +142,13 @@ static void waitForButtonPress() {
 	ButtonState buttons = getButtonState();
 	while (buttons) {
 		buttons = getButtonState();
-		osDelay(100);
+		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
 		lcd.refresh();
 	}
 	while (!buttons) {
 		buttons = getButtonState();
-
-		osDelay(100);
+		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
 		lcd.refresh();
 	}
@@ -160,7 +162,7 @@ static void waitForButtonPressOrTimeout(uint32_t timeout) {
 			return;
 		if (HAL_GetTick() > timeout)
 			return;
-		osDelay(50);
+		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
 
 	}
@@ -168,7 +170,7 @@ static void waitForButtonPressOrTimeout(uint32_t timeout) {
 
 //returns true if undervoltage has occured
 static bool checkVoltageForExit() {
-	uint16_t v = getInputVoltageX10();
+	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv);
 	if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
@@ -177,9 +179,9 @@ static bool checkVoltageForExit() {
 			lcd.print("Undervoltage");
 			lcd.setCursor(0, 8);
 			lcd.print("Input V: ");
-			lcd.printNumber(getInputVoltageX10() / 10, 2);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
 			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10() % 10, 1);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
 			lcd.print("V");
 
 		} else {
@@ -199,7 +201,7 @@ static void gui_drawBatteryIcon() {
 		//User is on a lithium battery
 		//we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
-		uint16_t cellV = getInputVoltageX10() / cellCount;
+		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv) / cellCount;
 		//Should give us approx cell voltage X10
 		//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
@@ -280,7 +282,7 @@ static void gui_solderingTempAdjust() {
 		lcd.drawChar(' ');
 		lcd.drawChar('>');
 		lcd.refresh();
-		osDelay(10);
+		GUIDelay();
 	}
 }
 static void gui_settingsMenu() {
@@ -341,7 +343,7 @@ static void gui_settingsMenu() {
 			}
 		}
 		lcd.refresh();    //update the LCD
-		osDelay(20);    //pause for a sec
+		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
 
 	}
@@ -392,7 +394,7 @@ static void gui_showTipTempWarning() {
 			return;
 
 		HAL_IWDG_Refresh(&hiwdg);
-		osDelay(200);
+		GUIDelay();
 	}
 }
 static int gui_SolderingSleepingMode() {
@@ -432,9 +434,9 @@ static int gui_SolderingSleepingMode() {
 				lcd.print("C");
 
 			lcd.print(" VIN:");
-			lcd.printNumber(getInputVoltageX10() / 10, 2);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
 			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10() % 10, 1);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
 		} else {
 			lcd.setFont(0);
 			lcd.print(SleepingSimpleString);
@@ -452,7 +454,7 @@ static int gui_SolderingSleepingMode() {
 				return 1;    //we want to exit soldering mode
 			}
 		lcd.refresh();
-		osDelay(100);
+		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
 
 	}
@@ -597,7 +599,7 @@ static void gui_solderingMode() {
 				if (gui_SolderingSleepingMode())
 					return;    //If the function returns non-0 then exit
 			}
-		osDelay(100);
+		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
 	}
 
@@ -682,7 +684,6 @@ void startGUITask(void const * argument) {
 				gui_solderingMode();    //enter soldering mode
 				tempWarningState = 0;    //make sure warning can show
 				HAL_IWDG_Refresh(&hiwdg);
-				osDelay(500);
 				break;
 			case BUTTON_B_SHORT:
 				lcd.setFont(0);
@@ -691,7 +692,6 @@ void startGUITask(void const * argument) {
 				saveSettings();
 				setCalibrationOffset(systemSettings.CalibrationOffset);
 				HAL_IWDG_Refresh(&hiwdg);
-				osDelay(250);
 				break;
 		}
 		currentlyActiveTemperatureTarget = 0;    //ensure tip is off
@@ -733,9 +733,9 @@ void startGUITask(void const * argument) {
 			}
 			lcd.setCursor(0, 8);
 			lcd.print("Input V: ");
-			lcd.printNumber(getInputVoltageX10() / 10, 2);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
 			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10() % 10, 1);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
 			lcd.print("V");
 
 		} else {
@@ -754,7 +754,7 @@ void startGUITask(void const * argument) {
 		lcd.refresh();
 		animationStep++;
 		HAL_IWDG_Refresh(&hiwdg);
-		osDelay(80);
+		GUIDelay();
 
 	}
 }
@@ -869,7 +869,7 @@ void startMOVTask(void const * argument) {
 
 		}
 
-		osDelay(10);
+		osDelay(20);//Slow down update rate
 
 	}
 }

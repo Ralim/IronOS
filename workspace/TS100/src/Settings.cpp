@@ -80,8 +80,8 @@ void resetSettings() {
 	systemSettings.advancedScreens = 0;			//Do we show detailed screens?
 	systemSettings.OrientationMode = 2;				//Default to automatic
 	systemSettings.sensitivity = 8;				//Default high sensitivity
-	systemSettings.voltageDiv = 144;			//Default divider from schematic
-	systemSettings.ShutdownTime = 30;			//How many minutes until the unit turns itself off
+	systemSettings.voltageDiv = 117;			//Default divider from schematic
+	systemSettings.ShutdownTime = 15;			//How many minutes until the unit turns itself off
 	systemSettings.boostModeEnabled = 1;		//Default to safe, with no boost mode
 	systemSettings.BoostTemp = 420;				//default to 400C
 	systemSettings.powerDisplay = 0;		//default to power display being off

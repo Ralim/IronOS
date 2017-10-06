@@ -16,15 +16,15 @@ uint16_t getHandleTemperature() {
 	// We return the current handle temperature in X10 C
 	// TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for example)
 	// STM32 = 4096 count @ 3.3V input -> But
-	// We oversample by 32/(2^3) = 4 times oversampling
-	// Therefore 16384 is the 3.3V input, so 0.201416015625 mV per count
+	// We oversample by 32/(2^2) = 8 times oversampling
+	// Therefore 32768 is the 3.3V input, so 0.201416015625 mV per count
 	// So we need to subtract an offset of 0.5V to center on 0C (2482 counts)
 	//
 	uint16_t result = getADC(0);
-	if (result < 2482)
+	if (result < 4964)
 		return 0;
-	result -= 2482;
-	result /= 5;    //convert to X10 C
+	result -= 4964;//remove 0.5V offset
+	result /= 10;    //convert to X10 C
 	return result;
 
 }
@@ -87,11 +87,12 @@ uint16_t getTipRawTemp(uint8_t instant) {
 		return total / filterDepth2;
 	}
 }
-uint16_t getInputVoltageX10() {
+uint16_t getInputVoltageX10(uint8_t divisor) {
 	//ADC maximum is 16384 == 3.3V at input == 28V at VIN
 	//Therefore we can divide down from there
-	//Ideal term is 57.69.... 58 is quite close
-	return getADC(1) / 58;
+	//Ideal term is 117
+
+	return getADC(1) / divisor;
 }
 uint8_t getTipPWM() {
 	return htim2.Instance->CCR4;

@@ -47,7 +47,7 @@ uint16_t getADC(uint8_t channel) {
 	uint32_t sum = 0;
 	for (uint8_t i = 0; i < 32; i++)
 		sum += ADCReadings[channel + (i * 2)];
-	return sum >> 3;
+	return sum >> 2;
 }
 
 /** System Clock Configuration
