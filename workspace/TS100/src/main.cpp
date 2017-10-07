@@ -71,8 +71,7 @@ int main(void) {
 	while (1) {
 	}
 }
-void GUIDelay()
-{
+void GUIDelay() {
 	osDelay(50);
 }
 ButtonState getButtonState() {
@@ -211,7 +210,7 @@ static void gui_drawBatteryIcon() {
 			cellV = 9;
 		lcd.drawBattery(cellV + 1);
 	} else
-		lcd.drawChar(' ');			//print a blank spot if there is no battery symbol
+		lcd.drawSymbol(16);			//Draw the DC Logo
 
 }
 static void gui_solderingTempAdjust() {
@@ -302,11 +301,11 @@ static void gui_settingsMenu() {
 		} else {
 			//Draw description
 			//draw string starting from descriptionOffset
-			int16_t maxOffset = strlen(settingsMenu[currentScreen].description);
+			int16_t maxOffset = strlen(settingsMenu[currentScreen].description)+5;
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
-			int16_t descriptionOffset = ((HAL_GetTick() - descriptionStart) / 150) % maxOffset;
+			int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart) / 150) % maxOffset);
 			//^ Rolling offset based on time
 			lcd.setCursor(12 * (7 - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
@@ -372,7 +371,10 @@ static void gui_showTipTempWarning() {
 			}
 		} else {
 			lcd.setFont(0);
-			lcd.print(WarningSimpleString);
+			lcd.drawArea(0, 0, 24, 16, WarningBlock24);
+			lcd.setCursor(24, 0);
+			//lcd.print(WarningSimpleString);
+			lcd.print(" ");
 			if (systemSettings.temperatureInF) {
 				lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
 				lcd.drawSymbol(0);
@@ -433,10 +435,11 @@ static int gui_SolderingSleepingMode() {
 			else
 				lcd.print("C");
 
-			lcd.print(" VIN:");
+			lcd.print(" |");
 			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
 			lcd.drawChar('.');
 			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+			lcd.drawChar('V');
 		} else {
 			lcd.setFont(0);
 			lcd.print(SleepingSimpleString);
@@ -446,13 +449,14 @@ static int gui_SolderingSleepingMode() {
 			else
 				lcd.drawSymbol(1);
 		}
-		if (lastMovementTime)
-			if (((uint32_t) (HAL_GetTick() - lastMovementTime))
-					> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
-				//shutdown
-				currentlyActiveTemperatureTarget = 0;
-				return 1;    //we want to exit soldering mode
-			}
+		if (systemSettings.ShutdownTime)//only allow shutdown exit if time > 0
+			if (lastMovementTime)
+				if (((uint32_t) (HAL_GetTick() - lastMovementTime))
+						> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
+					//shutdown
+					currentlyActiveTemperatureTarget = 0;
+					return 1;    //we want to exit soldering mode
+				}
 		lcd.refresh();
 		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
@@ -596,8 +600,9 @@ static void gui_solderingMode() {
 		lcd.refresh();
 		if (systemSettings.sensitivity)
 			if (HAL_GetTick() - lastMovementTime > sleepThres && HAL_GetTick() - lastButtonTime > sleepThres) {
-				if (gui_SolderingSleepingMode())
+				if (gui_SolderingSleepingMode()) {
 					return;    //If the function returns non-0 then exit
+				}
 			}
 		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
@@ -672,6 +677,8 @@ void startGUITask(void const * argument) {
 				lcd.print(__DATE__);    //print the compile date
 				lcd.refresh();
 				waitForButtonPress();
+				lcd.setFont(0);					//reset font
+
 			}
 				break;
 			case BUTTON_F_LONG:
@@ -709,6 +716,7 @@ void startGUITask(void const * argument) {
 		if (tipTemp > 50) {
 			if (tempWarningState == 0) {
 				currentlyActiveTemperatureTarget = 0;    //ensure tip is off
+				lcd.displayOnOff(true);    //force LCD on
 				gui_showTipTempWarning();
 				tempWarningState = 1;
 			}
@@ -869,7 +877,7 @@ void startMOVTask(void const * argument) {
 
 		}
 
-		osDelay(20);//Slow down update rate
+		osDelay(20);    //Slow down update rate
 
 	}
 }

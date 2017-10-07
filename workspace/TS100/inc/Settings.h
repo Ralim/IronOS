@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION 0x10 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define SETTINGSVERSION 0x11 /*Change this if you change the struct below to prevent people getting out of sync*/
 
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from flash in uint16_t chunks
@@ -21,7 +21,6 @@ typedef struct {
 	uint16_t SleepTemp; 			//temp to drop to in sleep
 	uint8_t SleepTime; 				//minutes timeout to sleep
 	uint8_t cutoutSetting;    	// The voltage we cut out at for under voltage
-	uint8_t powerDisplay;    	//Toggle to swap the arrows with a power readout instead
 	uint8_t OrientationMode;    	//If true we want to invert the display for lefties
 	uint8_t sensitivity;			//Sensitivity of accelerometer (5 bits)
 	uint8_t autoStartMode;    //Should the unit automatically jump straight into soldering mode when power is applied

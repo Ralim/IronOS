@@ -7,6 +7,7 @@
 
 #include <OLED.hpp>
 #include <string.h>
+#include "Translation.h"
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
@@ -53,7 +54,7 @@ OLED::OLED(I2C_HandleTypeDef* i2cHandle) {
 	fontWidth = 12;
 	displayOffset = 0;
 	displayOnOffState = true;
-	fontTableLength=sizeof(FONT_12);
+	fontTableLength = sizeof(FONT_12);
 
 }
 
@@ -72,14 +73,14 @@ void OLED::refresh() {
 	screenBuffer[0] = 0x80;
 	screenBuffer[1] = 0x21;
 	screenBuffer[2] = 0x80;
-	screenBuffer[3] = inLeftHandedMode ? 0 : 32;//display is shifted by 32 in left handed mode as driver ram is 128 wide
+	screenBuffer[3] = inLeftHandedMode ? 0 : 32;    //display is shifted by 32 in left handed mode as driver ram is 128 wide
 	screenBuffer[4] = 0x80;
-	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F;//End address of the ram segment we are writing to (96 wide)
+	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F;    //End address of the ram segment we are writing to (96 wide)
 
 	screenBuffer[6] = 0x80;    //Set pages to rollover after 2
 	screenBuffer[7] = 0x22;
 	screenBuffer[8] = 0x80;
-	screenBuffer[9] = 0x00;//start page 0
+	screenBuffer[9] = 0x00;    //start page 0
 	screenBuffer[10] = 0x80;
 	screenBuffer[11] = 0x01;
 
@@ -94,38 +95,39 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 	if (c < ' ')
 		return;
 	//We are left with
-	uint8_t* charPointer;
+	uint8_t* charPointer = 0;
 	//Fonts are offset to start at the space char.
 	/*
 	 * UTF font handling is done using the two input chars
 	 * Precursor is the command char that is used to select the table
 	 *
 	 */
-	uint16_t index = 0;
+
 	if (PrecursorCommand == 0)
-		index = (c - ' ');
+		charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * (c - ' '));
 	else {
 
 		//This is for extended range
 		//We decode the precursor command to find the offset
-		//Latin stats at 96
 		c -= 0x80;
+#ifdef INCLUDE_FONT_LATIN
 		if (PrecursorCommand == 0xC3)
-			index = (128) + (c);
+		charPointer = ((uint8_t*) FONT_12_LATIN) + ((fontWidth * (fontHeight / 8)) * (32 + c));
 		else if (PrecursorCommand == 0xC2)
-			index = (96) + (c);
-		else if (PrecursorCommand == 0xD0)
-			index = (192) + (c);
+		charPointer = ((uint8_t*) FONT_12_LATIN) + ((fontWidth * (fontHeight / 8)) * (c));
+#endif
+#ifdef INCLUDE_FONT_CYRILLIC
+		if (PrecursorCommand == 0xD0)
+		charPointer = ((uint8_t*) FONT_12_Cyrillic) + ((fontWidth * (fontHeight / 8)) * (c));
 		else if (PrecursorCommand == 0xD1)
-			index = (256) + (c);
-		else
-			return;
+		charPointer = ((uint8_t*) FONT_12_Cyrillic) + ((fontWidth * (fontHeight / 8)) * (64 + c));
+#endif
+
 	}
-	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
-	if ((charPointer - currentFont) > fontTableLength)
-		return;
-	if (cursor_x >= 0 && cursor_x < 96)
-		drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
+
+	if (charPointer)
+		if (cursor_x >= 0 && cursor_x < 96)
+			drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 	cursor_x += fontWidth;
 }
 

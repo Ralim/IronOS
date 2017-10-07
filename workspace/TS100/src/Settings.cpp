@@ -79,12 +79,11 @@ void resetSettings() {
 	systemSettings.version = SETTINGSVERSION;			//Store the version number to allow for easier upgrades
 	systemSettings.advancedScreens = 0;			//Do we show detailed screens?
 	systemSettings.OrientationMode = 2;				//Default to automatic
-	systemSettings.sensitivity = 8;				//Default high sensitivity
+	systemSettings.sensitivity = 7;				//Default high sensitivity
 	systemSettings.voltageDiv = 117;			//Default divider from schematic
-	systemSettings.ShutdownTime = 15;			//How many minutes until the unit turns itself off
+	systemSettings.ShutdownTime = 10;			//How many minutes until the unit turns itself off
 	systemSettings.boostModeEnabled = 1;		//Default to safe, with no boost mode
 	systemSettings.BoostTemp = 420;				//default to 400C
-	systemSettings.powerDisplay = 0;		//default to power display being off
 	systemSettings.autoStartMode = 0;				//Auto start off for safety
 	systemSettings.coolingTempBlink = 0;				//Blink the temperature on the cooling screen when its > 50C
 	systemSettings.CalibrationOffset = 10;

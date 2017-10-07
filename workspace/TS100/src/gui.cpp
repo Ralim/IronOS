@@ -84,8 +84,8 @@ static void settings_displaySleepTemp(void) {
 }
 static void settings_setSleepTime(void) {
 	++systemSettings.SleepTime;    //Go up 1 minute at a time
-	if (systemSettings.SleepTime > 16)
-		systemSettings.SleepTime = 1;    //can't set time over 30 mins
+	if (systemSettings.SleepTime >= 16)
+		systemSettings.SleepTime = 1;    //can't set time over 10 mins
 //Remember that ^ is the time of no movement
 }
 static void settings_displaySleepTime(void) {
@@ -135,9 +135,9 @@ static void settings_setAdvancedScreens(void) {
 static void settings_displayAdvancedScreens(void) {
 	lcd.print(SettingsShortNames[6]);
 	if (systemSettings.advancedScreens)
-		lcd.drawChar('T');
+		lcd.drawChar(SettingTrueChar);
 	else
-		lcd.drawChar('F');
+		lcd.drawChar(SettingFalseChar);
 }
 static void settings_setDisplayRotation(void) {
 	systemSettings.OrientationMode++;
@@ -147,13 +147,13 @@ static void settings_displayDisplayRotation(void) {
 	lcd.print(SettingsShortNames[7]);
 	switch (systemSettings.OrientationMode) {
 		case 0:
-			lcd.drawChar('R');
+			lcd.drawChar(SettingRightChar);
 			break;
 		case 1:
-			lcd.drawChar('L');
+			lcd.drawChar(SettingLeftChar);
 			break;
 		case 2:
-			lcd.drawChar('A');
+			lcd.drawChar(SettingAutoChar);
 			break;
 	}
 
@@ -164,9 +164,9 @@ static void settings_setBoostModeEnabled(void) {
 static void settings_displayBoostModeEnabled(void) {
 	lcd.print(SettingsShortNames[8]);
 	if (systemSettings.boostModeEnabled)
-		lcd.drawChar('T');
+		lcd.drawChar(SettingTrueChar);
 	else
-		lcd.drawChar('F');
+		lcd.drawChar(SettingFalseChar);
 }
 static void settings_setBoostTemp(void) {
 	systemSettings.BoostTemp += 10;    //Go up 10C at a time
@@ -185,10 +185,10 @@ static void settings_displayAutomaticStartMode(void) {
 	lcd.print(SettingsShortNames[10]);
 	switch (systemSettings.autoStartMode) {
 		case 0:
-			lcd.drawChar('F');
+			lcd.drawChar(SettingFalseChar);
 			break;
 		case 1:
-			lcd.drawChar('T');
+			lcd.drawChar(SettingTrueChar);
 			break;
 	}
 }
@@ -198,9 +198,9 @@ static void settings_setCoolingBlinkEnabled(void) {
 static void settings_displayCoolingBlinkEnabled(void) {
 	lcd.print(SettingsShortNames[11]);
 	if (systemSettings.coolingTempBlink)
-		lcd.drawChar('T');
+		lcd.drawChar(SettingTrueChar);
 	else
-		lcd.drawChar('F');
+		lcd.drawChar(SettingFalseChar);
 }
 static void settings_setResetSettings(void) {
 	settingsResetRequest = !settingsResetRequest;
@@ -208,22 +208,22 @@ static void settings_setResetSettings(void) {
 static void settings_displayResetSettings(void) {
 	lcd.print(SettingsShortNames[13]);
 	if (settingsResetRequest)
-		lcd.drawChar('T');
+		lcd.drawChar(SettingTrueChar);
 	else
-		lcd.drawChar('F');
+		lcd.drawChar(SettingFalseChar);
 }
 
 static void settings_setCalibrate(void) {
 	//Calibrate the offset
 	//We split off here to confirm with the user
-	uint8_t maxOffset = strlen(SettingsCalibrationWarning);
+	uint8_t maxOffset = strlen(SettingsCalibrationWarning) + 5;
 	uint32_t descriptionStart = HAL_GetTick();
 	lcd.setFont(0);
 	lcd.clearScreen();
 	lcd.setCursor(0, 0);
 	for (;;) {
 
-		int16_t descriptionOffset = ((HAL_GetTick() - descriptionStart) / 150) % maxOffset;
+		int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart) / 150) % maxOffset);
 		lcd.setCursor(12 * (7 - descriptionOffset), 0);
 		lcd.print(SettingsCalibrationWarning);
 		ButtonState buttons = getButtonState();
@@ -273,45 +273,45 @@ static void settings_displayCalibrate(void) {
 
 static void settings_setCalibrateVIN(void) {
 //Jump to the voltage calibration subscreen
-		lcd.setFont(0);
-		lcd.clearScreen();
+	lcd.setFont(0);
+	lcd.clearScreen();
+	lcd.setCursor(0, 0);
+	for (;;) {
 		lcd.setCursor(0, 0);
-		for (;;) {
-			lcd.setCursor(0, 0);
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv)/10,2);
-			lcd.print(".");
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv)%10,1);
-			lcd.print("V");
+		lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+		lcd.print(".");
+		lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+		lcd.print("V");
 
-			ButtonState buttons = getButtonState();
-			switch (buttons) {
-				case BUTTON_F_SHORT:
-					systemSettings.voltageDiv++;
-					break;
-				case BUTTON_B_SHORT:
-					systemSettings.voltageDiv--;
-					break;
-				case BUTTON_BOTH:
-				case BUTTON_F_LONG:
-				case BUTTON_B_LONG:
-					saveSettings();
-					return;
-					break;
-				case BUTTON_NONE:
-					break;
-			}
-			lcd.refresh();
-			osDelay(50);
-			if(systemSettings.voltageDiv<90)
-				systemSettings.voltageDiv=90;
-			else if (systemSettings.voltageDiv>130)
-				systemSettings.voltageDiv=130;
-			//Cap to sensible values
+		ButtonState buttons = getButtonState();
+		switch (buttons) {
+			case BUTTON_F_SHORT:
+				systemSettings.voltageDiv++;
+				break;
+			case BUTTON_B_SHORT:
+				systemSettings.voltageDiv--;
+				break;
+			case BUTTON_BOTH:
+			case BUTTON_F_LONG:
+			case BUTTON_B_LONG:
+				saveSettings();
+				return;
+				break;
+			case BUTTON_NONE:
+				break;
 		}
+		lcd.refresh();
+		osDelay(50);
+		if (systemSettings.voltageDiv < 90)
+			systemSettings.voltageDiv = 90;
+		else if (systemSettings.voltageDiv > 130)
+			systemSettings.voltageDiv = 130;
+		//Cap to sensible values
+	}
 }
 static void settings_displayCalibrateVIN(void) {
 	lcd.clearScreen();
 	lcd.setCursor(0, 0);
-	lcd.print("CAL VIN?");
+	lcd.print(SettingsShortNames[14]);
 
 }
