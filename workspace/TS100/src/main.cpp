@@ -435,7 +435,7 @@ static int gui_SolderingSleepingMode() {
 			else
 				lcd.print("C");
 
-			lcd.print(" |");
+			lcd.print(" ");
 			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
 			lcd.drawChar('.');
 			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);

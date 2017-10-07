@@ -54,7 +54,6 @@ OLED::OLED(I2C_HandleTypeDef* i2cHandle) {
 	fontWidth = 12;
 	displayOffset = 0;
 	displayOnOffState = true;
-	fontTableLength = sizeof(FONT_12);
 
 }
 
@@ -95,39 +94,37 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 	if (c < ' ')
 		return;
 	//We are left with
-	uint8_t* charPointer = 0;
+	uint8_t* charPointer;
 	//Fonts are offset to start at the space char.
 	/*
 	 * UTF font handling is done using the two input chars
 	 * Precursor is the command char that is used to select the table
 	 *
 	 */
-
+	uint16_t index = 0;
 	if (PrecursorCommand == 0)
-		charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * (c - ' '));
+		index = (c - ' ');
 	else {
 
 		//This is for extended range
 		//We decode the precursor command to find the offset
+		//Latin stats at 96
 		c -= 0x80;
-#ifdef INCLUDE_FONT_LATIN
 		if (PrecursorCommand == 0xC3)
-		charPointer = ((uint8_t*) FONT_12_LATIN) + ((fontWidth * (fontHeight / 8)) * (32 + c));
+			index = (128) + (c);
 		else if (PrecursorCommand == 0xC2)
-		charPointer = ((uint8_t*) FONT_12_LATIN) + ((fontWidth * (fontHeight / 8)) * (c));
-#endif
-#ifdef INCLUDE_FONT_CYRILLIC
-		if (PrecursorCommand == 0xD0)
-		charPointer = ((uint8_t*) FONT_12_Cyrillic) + ((fontWidth * (fontHeight / 8)) * (c));
+			index = (96) + (c);
+		else if (PrecursorCommand == 0xD0)
+			index = (192) + (c);
 		else if (PrecursorCommand == 0xD1)
-		charPointer = ((uint8_t*) FONT_12_Cyrillic) + ((fontWidth * (fontHeight / 8)) * (64 + c));
-#endif
-
+			index = (256) + (c);
+		else
+			return;
 	}
+	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
 
-	if (charPointer)
-		if (cursor_x >= 0 && cursor_x < 96)
-			drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
+	if (cursor_x >= 0 && cursor_x < 96)
+		drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 	cursor_x += fontWidth;
 }
 
@@ -182,17 +179,14 @@ void OLED::setFont(uint8_t fontNumber) {
 		currentFont = ASCII6x8;
 		fontHeight = 8;
 		fontWidth = 6;
-		fontTableLength = sizeof(ASCII6x8);
 	} else if (fontNumber == 2) {
 		currentFont = ExtraFontChars;
 		fontHeight = 16;
 		fontWidth = 12;
-		fontTableLength = sizeof(ExtraFontChars);
 	} else {
 		currentFont = FONT_12;
 		fontHeight = 16;
 		fontWidth = 12;
-		fontTableLength = sizeof(FONT_12);
 	}
 }
 
