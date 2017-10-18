@@ -296,11 +296,28 @@ static void gui_settingsMenu() {
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 
+		if (HAL_GetTick() - lastButtonTime < 4000) {
+			settingsMenu[currentScreen].draw.func();
+
+		} else {
+			//Draw description
+			//draw string starting from descriptionOffset
+			int16_t maxOffset = strlen(settingsMenu[currentScreen].description) + 5;
+			if (descriptionStart == 0)
+				descriptionStart = HAL_GetTick();
+
+			int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart) / 150) % maxOffset);
+			//^ Rolling offset based on time
+			lcd.setCursor(12 * (7 - descriptionOffset), 0);
+			lcd.print(settingsMenu[currentScreen].description);
+		}
+
 		ButtonState buttons = getButtonState();
 
 		switch (buttons) {
 			case BUTTON_BOTH:
 				earlyExit = true;    //will make us exit next loop
+				descriptionStart = 0;
 				break;
 			case BUTTON_F_SHORT:
 				//increment
@@ -319,32 +336,18 @@ static void gui_settingsMenu() {
 				if (HAL_GetTick() - autoRepeatTimer > 200) {
 					settingsMenu[currentScreen].incrementHandler.func();
 					autoRepeatTimer = HAL_GetTick();
+					descriptionStart = 0;
 				}
 				break;
 			case BUTTON_B_LONG:
 				if (HAL_GetTick() - autoRepeatTimer > 200) {
 					currentScreen++;
 					autoRepeatTimer = HAL_GetTick();
+					descriptionStart = 0;
 				}
 				break;
 			case BUTTON_NONE:
 				break;
-		}
-
-		if (HAL_GetTick() - lastButtonTime < 4000) {
-			settingsMenu[currentScreen].draw.func();
-
-		} else {
-			//Draw description
-			//draw string starting from descriptionOffset
-			int16_t maxOffset = strlen(settingsMenu[currentScreen].description) + 5;
-			if (descriptionStart == 0)
-				descriptionStart = HAL_GetTick();
-
-			int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart) / 150) % maxOffset);
-			//^ Rolling offset based on time
-			lcd.setCursor(12 * (7 - descriptionOffset), 0);
-			lcd.print(settingsMenu[currentScreen].description);
 		}
 
 		lcd.refresh();    //update the LCD
