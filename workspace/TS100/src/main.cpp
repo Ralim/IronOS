@@ -173,7 +173,7 @@ static bool checkVoltageForExit() {
 	if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
-		if (systemSettings.advancedScreens) {
+		if (systemSettings.detailedSoldering) {
 			lcd.setFont(1);
 			lcd.print("Undervoltage");
 			lcd.setCursor(0, 8);
@@ -295,13 +295,49 @@ static void gui_settingsMenu() {
 		lcd.setFont(0);
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
+
+		ButtonState buttons = getButtonState();
+
+		switch (buttons) {
+			case BUTTON_BOTH:
+				earlyExit = true;    //will make us exit next loop
+				break;
+			case BUTTON_F_SHORT:
+				//increment
+				if (descriptionStart == 0)
+					settingsMenu[currentScreen].incrementHandler.func();
+				else
+					descriptionStart = 0;
+				break;
+			case BUTTON_B_SHORT:
+				if (descriptionStart == 0)
+					currentScreen++;
+				else
+					descriptionStart = 0;
+				break;
+			case BUTTON_F_LONG:
+				if (HAL_GetTick() - autoRepeatTimer > 200) {
+					settingsMenu[currentScreen].incrementHandler.func();
+					autoRepeatTimer = HAL_GetTick();
+				}
+				break;
+			case BUTTON_B_LONG:
+				if (HAL_GetTick() - autoRepeatTimer > 200) {
+					currentScreen++;
+					autoRepeatTimer = HAL_GetTick();
+				}
+				break;
+			case BUTTON_NONE:
+				break;
+		}
+
 		if (HAL_GetTick() - lastButtonTime < 4000) {
 			settingsMenu[currentScreen].draw.func();
-			descriptionStart = 0;
+
 		} else {
 			//Draw description
 			//draw string starting from descriptionOffset
-			int16_t maxOffset = strlen(settingsMenu[currentScreen].description)+5;
+			int16_t maxOffset = strlen(settingsMenu[currentScreen].description) + 5;
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
@@ -310,37 +346,7 @@ static void gui_settingsMenu() {
 			lcd.setCursor(12 * (7 - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
 		}
-		ButtonState buttons = getButtonState();
-		if (descriptionStart | (HAL_GetTick() - descriptionStart < 500))
-			buttons = BUTTON_NONE;
-		else {
-			switch (buttons) {
-				case BUTTON_BOTH:
-					earlyExit = true;    //will make us exit next loop
-					break;
-				case BUTTON_F_SHORT:
-					//increment
-					settingsMenu[currentScreen].incrementHandler.func();
-					break;
-				case BUTTON_B_SHORT:
-					currentScreen++;
-					break;
-				case BUTTON_F_LONG:
-					if (HAL_GetTick() - autoRepeatTimer > 200) {
-						settingsMenu[currentScreen].incrementHandler.func();
-						autoRepeatTimer = HAL_GetTick();
-					}
-					break;
-				case BUTTON_B_LONG:
-					if (HAL_GetTick() - autoRepeatTimer > 200) {
-						currentScreen++;
-						autoRepeatTimer = HAL_GetTick();
-					}
-					break;
-				case BUTTON_NONE:
-					break;
-			}
-		}
+
 		lcd.refresh();    //update the LCD
 		GUIDelay();
 		HAL_IWDG_Refresh(&hiwdg);
@@ -350,13 +356,13 @@ static void gui_settingsMenu() {
 		resetSettings();
 	saveSettings();
 }
-static void gui_showTipTempWarning() {
+static int gui_showTipTempWarning() {
 	for (;;) {
 
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
-		if (systemSettings.advancedScreens) {
+		if (systemSettings.detailedSoldering) {
 			lcd.setFont(1);
 			lcd.print(WarningAdvancedString);
 			lcd.setCursor(0, 8);
@@ -389,11 +395,13 @@ static void gui_showTipTempWarning() {
 		}
 		lcd.refresh();
 		ButtonState buttons = getButtonState();
-		if (buttons == BUTTON_B_SHORT || buttons == BUTTON_F_SHORT || buttons == BUTTON_BOTH)
-			return;
+		if (buttons == BUTTON_F_SHORT)
+			return 1;
+		else if (buttons == BUTTON_B_SHORT || buttons == BUTTON_BOTH)
+			return 0;
 
 		if (tipTemp < 30)
-			return;
+			return 0;
 
 		HAL_IWDG_Refresh(&hiwdg);
 		GUIDelay();
@@ -424,7 +432,7 @@ static int gui_SolderingSleepingMode() {
 
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
-		if (systemSettings.advancedScreens) {
+		if (systemSettings.detailedSoldering) {
 			lcd.setFont(1);
 			lcd.print(SleepingAdvancedString);
 			lcd.setCursor(0, 8);
@@ -449,7 +457,7 @@ static int gui_SolderingSleepingMode() {
 			else
 				lcd.drawSymbol(1);
 		}
-		if (systemSettings.ShutdownTime)//only allow shutdown exit if time > 0
+		if (systemSettings.ShutdownTime)    //only allow shutdown exit if time > 0
 			if (lastMovementTime)
 				if (((uint32_t) (HAL_GetTick() - lastMovementTime))
 						> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
@@ -646,15 +654,9 @@ void startGUITask(void const * argument) {
 	/*
 	 for (;;) {
 	 HAL_IWDG_Refresh(&hiwdg);
-	 lcd.clearScreen();
-	 lcd.setCursor(0, 0);
-	 lcd.setFont(0);
-	 lcd.print("");
-	 lcd.refresh();
 	 osDelay(100);
-	 HAL_IWDG_Refresh(&hiwdg);
-
-	 }*/
+	 }
+	 */
 //^ Kept here for a way to block this thread
 	for (;;) {
 		ButtonState buttons = getButtonState();
@@ -717,7 +719,8 @@ void startGUITask(void const * argument) {
 			if (tempWarningState == 0) {
 				currentlyActiveTemperatureTarget = 0;    //ensure tip is off
 				lcd.displayOnOff(true);    //force LCD on
-				gui_showTipTempWarning();
+				if (gui_showTipTempWarning() == 1)
+					gui_solderingMode();    //re-enter into soldering mode if user pressed the front button
 				tempWarningState = 1;
 			}
 		} else
@@ -725,7 +728,7 @@ void startGUITask(void const * argument) {
 		// Clear the lcd buffer
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
-		if (systemSettings.advancedScreens) {
+		if (systemSettings.detailedIDLE) {
 			lcd.setFont(1);
 			if (tipTemp > 470) {
 				lcd.print("Tip Disconnected!");
@@ -853,7 +856,28 @@ void startMOVTask(void const * argument) {
 		datay[currentPointer] = ty;
 		dataz[currentPointer] = tz;
 		currentPointer = (currentPointer + 1) % MOVFilter;
+#if ACCELDEBUG
+		//Debug for Accel
 
+		avgx = avgy = avgz = 0;
+		for (uint8_t i = 0; i < MOVFilter; i++) {
+			avgx += datax[i];
+			avgy += datay[i];
+			avgz += dataz[i];
+		}
+		avgx /= MOVFilter;
+		avgy /= MOVFilter;
+		avgz /= MOVFilter;
+		lcd.setFont(1);
+		lcd.setCursor(0,0);
+		lcd.printNumber(abs(avgx - tx), 5);
+		lcd.print(" ");
+		lcd.printNumber(abs(avgy - ty), 5);
+		lcd.setCursor(0, 8);
+		lcd.printNumber(abs(avgz - tz), 5);
+		lcd.refresh();
+
+#endif
 		//Only run the actual processing if the sensitivity is set (aka we are enabled)
 		if (systemSettings.sensitivity) {
 			//calculate averages
@@ -874,7 +898,6 @@ void startMOVTask(void const * argument) {
 				lastMovementTime = HAL_GetTick();
 
 			}
-
 		}
 
 		osDelay(20);    //Slow down update rate

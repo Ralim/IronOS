@@ -21,13 +21,14 @@ typedef struct {
 	uint16_t SleepTemp; 			//temp to drop to in sleep
 	uint8_t SleepTime; 				//minutes timeout to sleep
 	uint8_t cutoutSetting;    	// The voltage we cut out at for under voltage
-	uint8_t OrientationMode;    	//If true we want to invert the display for lefties
-	uint8_t sensitivity;			//Sensitivity of accelerometer (5 bits)
-	uint8_t autoStartMode;    //Should the unit automatically jump straight into soldering mode when power is applied
+	uint8_t OrientationMode:2;    	//If true we want to invert the display for lefties
+	uint8_t sensitivity :4;			//Sensitivity of accelerometer (5 bits)
+	uint8_t autoStartMode :2;    //Should the unit automatically jump straight into soldering mode when power is applied
 	uint8_t ShutdownTime;		//Time until unit shuts down if left alone
-	uint8_t boostModeEnabled;    //Boost mode swaps BUT_A in soldering mode to temporary soldering temp over-ride
-	uint8_t coolingTempBlink;    //Should the temperature blink on the cool down screen until its <50C
-	uint8_t advancedScreens;		//If enabled we draw more detailed screens with smaller fonts
+	uint8_t boostModeEnabled :1;    //Boost mode swaps BUT_A in soldering mode to temporary soldering temp over-ride
+	uint8_t coolingTempBlink :1;    //Should the temperature blink on the cool down screen until its <50C
+	uint8_t detailedIDLE :1;			//Detailed idle screen
+	uint8_t detailedSoldering :1;		//Detailed soldering screens
 	uint8_t temperatureInF;			//Should the temp be in F or C (true is F)
 	uint16_t voltageDiv;			//Voltage divisor factor
 	uint16_t BoostTemp; 			//Boost mode set point for the iron

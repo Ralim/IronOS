@@ -21,8 +21,11 @@ static void settings_setSensitivity(void);
 static void settings_displaySensitivity(void);
 static void settings_setTempF(void);
 static void settings_displayTempF(void);
-static void settings_setAdvancedScreens(void);
-static void settings_displayAdvancedScreens(void);
+static void settings_setAdvancedSolderingScreens(void);
+static void settings_displayAdvancedSolderingScreens(void);
+static void settings_setAdvancedIDLEScreens(void);
+static void settings_displayAdvancedIDLEScreens(void);
+
 static void settings_setDisplayRotation(void);
 static void settings_displayDisplayRotation(void);
 static void settings_setBoostModeEnabled(void);
@@ -48,7 +51,8 @@ const menuitem settingsMenu[] = { /*Struct used for all settings options in the 
 { (const char*) SettingsLongNames[3], { settings_setShutdownTime }, { settings_displayShutdownTime } }, /*Shutdown Time*/
 { (const char*) SettingsLongNames[4], { settings_setSensitivity }, { settings_displaySensitivity } },/* Motion Sensitivity*/
 { (const char*) SettingsLongNames[5], { settings_setTempF }, { settings_displayTempF } },/* Motion Sensitivity*/
-{ (const char*) SettingsLongNames[6], { settings_setAdvancedScreens }, { settings_displayAdvancedScreens } },/* Advanced screens*/
+{ (const char*) SettingsLongNames[6], { settings_setAdvancedIDLEScreens }, { settings_displayAdvancedIDLEScreens } },/* Advanced screens*/
+{ (const char*) SettingsLongNames[15], { settings_setAdvancedSolderingScreens }, { settings_displayAdvancedSolderingScreens } },/* Advanced screens*/
 { (const char*) SettingsLongNames[7], { settings_setDisplayRotation }, { settings_displayDisplayRotation } }, /*Display Rotation*/
 { (const char*) SettingsLongNames[8], { settings_setBoostModeEnabled }, { settings_displayBoostModeEnabled } }, /*Enable Boost*/
 { (const char*) SettingsLongNames[9], { settings_setBoostTemp }, { settings_displayBoostTemp } }, /*Boost Temp*/
@@ -129,16 +133,29 @@ static void settings_displaySensitivity(void) {
 	lcd.printNumber(systemSettings.sensitivity, 1);
 }
 
-static void settings_setAdvancedScreens(void) {
-	systemSettings.advancedScreens = !systemSettings.advancedScreens;
+static void settings_setAdvancedSolderingScreens(void) {
+	systemSettings.detailedSoldering = !systemSettings.detailedSoldering;
 }
-static void settings_displayAdvancedScreens(void) {
-	lcd.print(SettingsShortNames[6]);
-	if (systemSettings.advancedScreens)
+static void settings_displayAdvancedSolderingScreens(void) {
+	lcd.print(SettingsShortNames[15]);
+	if (systemSettings.detailedSoldering)
 		lcd.drawChar(SettingTrueChar);
 	else
 		lcd.drawChar(SettingFalseChar);
 }
+
+static void settings_setAdvancedIDLEScreens(void) {
+	systemSettings.detailedIDLE = !systemSettings.detailedIDLE;
+}
+static void settings_displayAdvancedIDLEScreens(void) {
+	lcd.print(SettingsShortNames[6]);
+	if (systemSettings.detailedIDLE)
+		lcd.drawChar(SettingTrueChar);
+	else
+		lcd.drawChar(SettingFalseChar);
+}
+
+
 static void settings_setDisplayRotation(void) {
 	systemSettings.OrientationMode++;
 	systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
@@ -169,9 +186,14 @@ static void settings_displayBoostModeEnabled(void) {
 		lcd.drawChar(SettingFalseChar);
 }
 static void settings_setBoostTemp(void) {
-	systemSettings.BoostTemp += 10;    //Go up 10C at a time
-	if (systemSettings.BoostTemp > 450)
-		systemSettings.BoostTemp = 250;    //loop back at 250
+	systemSettings.BoostTemp += 10;    //Go up 10 at a time
+	if (systemSettings.temperatureInF) {
+		if (systemSettings.BoostTemp > 850)
+			systemSettings.BoostTemp = 480;    //loop back at 250
+	} else {
+		if (systemSettings.BoostTemp > 450)
+			systemSettings.BoostTemp = 250;    //loop back at 250
+	}
 }
 static void settings_displayBoostTemp(void) {
 	lcd.print(SettingsShortNames[9]);

@@ -77,7 +77,8 @@ void resetSettings() {
 	systemSettings.SolderingTemp = 320;    //Default soldering temp is 320.0 C
 	systemSettings.cutoutSetting = 0;			//default to no cut-off voltage
 	systemSettings.version = SETTINGSVERSION;			//Store the version number to allow for easier upgrades
-	systemSettings.advancedScreens = 0;			//Do we show detailed screens?
+	systemSettings.detailedSoldering = 0;			// Detailed soldering screen
+	systemSettings.detailedIDLE=0;					// Detailed idle screen (off for first time users)
 	systemSettings.OrientationMode = 2;				//Default to automatic
 	systemSettings.sensitivity = 7;				//Default high sensitivity
 	systemSettings.voltageDiv = 117;			//Default divider from schematic
