@@ -663,6 +663,8 @@ void startGUITask(void const * argument) {
 //^ Kept here for a way to block this thread
 	for (;;) {
 		ButtonState buttons = getButtonState();
+		if (tempWarningState == 2)
+			buttons = BUTTON_F_SHORT;
 		switch (buttons) {
 			case BUTTON_NONE:
 				//Do nothing
@@ -677,7 +679,7 @@ void startGUITask(void const * argument) {
 				lcd.clearScreen();			//Ensure the buffer starts clean
 				lcd.setCursor(0, 0);		//Position the cursor at the 0,0 (top left)
 				lcd.setFont(1);					//small font
-				lcd.print((char*) "V2.00a4");    //Print version number
+				lcd.print((char*) "V2.00a5");    //Print version number
 				lcd.setCursor(0, 8);    //second line
 				lcd.print(__DATE__);    //print the compile date
 				lcd.refresh();
@@ -695,15 +697,13 @@ void startGUITask(void const * argument) {
 				lcd.displayOnOff(true);    //turn lcd on
 				gui_solderingMode();    //enter soldering mode
 				tempWarningState = 0;    //make sure warning can show
-				HAL_IWDG_Refresh(&hiwdg);
 				break;
 			case BUTTON_B_SHORT:
 				lcd.setFont(0);
 				lcd.displayOnOff(true);    //turn lcd on
 				gui_settingsMenu();    //enter the settings menu
 				saveSettings();
-				setCalibrationOffset(systemSettings.CalibrationOffset);
-				HAL_IWDG_Refresh(&hiwdg);
+				setCalibrationOffset(systemSettings.CalibrationOffset);    //ensure cal offset is applied
 				break;
 		}
 		currentlyActiveTemperatureTarget = 0;    //ensure tip is off
@@ -722,9 +722,10 @@ void startGUITask(void const * argument) {
 			if (tempWarningState == 0) {
 				currentlyActiveTemperatureTarget = 0;    //ensure tip is off
 				lcd.displayOnOff(true);    //force LCD on
-				if (gui_showTipTempWarning() == 1)
-					gui_solderingMode();    //re-enter into soldering mode if user pressed the front button
-				tempWarningState = 1;
+				if (gui_showTipTempWarning() == 1) {
+					tempWarningState = 2;    //we can re-enter the warning
+				} else
+					tempWarningState = 1;
 			}
 		} else
 			tempWarningState = 0;
@@ -754,14 +755,15 @@ void startGUITask(void const * argument) {
 
 		} else {
 			lcd.setFont(0);
-
-			if (lcd.getRotation())
+			if (lcd.getRotation()) {
 				lcd.drawArea(12, 0, 84, 16, idleScreenBG);
-			else
-				lcd.drawArea(12, 0, 84, 16, idleScreenBGF);    //Needs to be flipped
-
-			lcd.setCursor(0, 0);
-			gui_drawBatteryIcon();
+				lcd.setCursor(0, 0);
+				gui_drawBatteryIcon();
+			} else {
+				lcd.drawArea(0, 0, 84, 16, idleScreenBGF);    //Needs to be flipped
+				lcd.setCursor(84, 0);
+				gui_drawBatteryIcon();
+			}
 
 		}
 

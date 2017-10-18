@@ -87,7 +87,7 @@ void resetSettings() {
 	systemSettings.BoostTemp = 420;				//default to 400C
 	systemSettings.autoStartMode = 0;				//Auto start off for safety
 	systemSettings.coolingTempBlink = 0;				//Blink the temperature on the cooling screen when its > 50C
-	systemSettings.CalibrationOffset = 10;
+	systemSettings.CalibrationOffset = 10;		//This appears to be quite close for both of my tips, in both of my handles
 	systemSettings.temperatureInF = 0;			//default to 0
 	saveSettings();
 }
