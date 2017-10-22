@@ -23,7 +23,7 @@ uint16_t getHandleTemperature() {
 	uint16_t result = getADC(0);
 	if (result < 4964)
 		return 0;
-	result -= 4964;//remove 0.5V offset
+	result -= 4964;    //remove 0.5V offset
 	result /= 10;    //convert to X10 C
 	return result;
 
@@ -58,7 +58,7 @@ uint16_t getTipInstantTemperature() {
 uint16_t getTipRawTemp(uint8_t instant) {
 #define  filterDepth1 1
 	/*Pre filter used before PID*/
-#define  filterDepth2 8
+#define  filterDepth2 16
 	/*Post filter used for UI display*/
 	static uint16_t filterLayer1[filterDepth1];
 	static uint16_t filterLayer2[filterDepth2];
@@ -91,8 +91,19 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 	//ADC maximum is 16384 == 3.3V at input == 28V at VIN
 	//Therefore we can divide down from there
 	//Ideal term is 117
+#define BATTFILTERDEPTH 64
+	static uint32_t samples[BATTFILTERDEPTH];
+	static uint8_t index = 0;
+	samples[index] = getADC(1);
+	index = (index + 1) % BATTFILTERDEPTH;
+	uint32_t sum = 0;
 
-	return getADC(1) / divisor;
+	for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
+		sum += samples[i];
+
+	sum /= BATTFILTERDEPTH;
+
+	return sum / divisor;
 }
 uint8_t getTipPWM() {
 	return htim2.Instance->CCR4;
