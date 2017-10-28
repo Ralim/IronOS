@@ -52,7 +52,7 @@ int main(void) {
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
 	/* definition and creation of PIDTask */
-	osThreadDef(PIDTask, startPIDTask, osPriorityHigh, 0, 256);
+	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 256);
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 
 	/* definition and creation of ROTTask */
@@ -73,7 +73,7 @@ int main(void) {
 	}
 }
 void GUIDelay() {
-	osDelay(60);
+	osDelay(50);//20Hz
 }
 ButtonState getButtonState() {
 	/*
@@ -681,7 +681,7 @@ void startGUITask(void const * argument) {
 				lcd.clearScreen();			//Ensure the buffer starts clean
 				lcd.setCursor(0, 0);		//Position the cursor at the 0,0 (top left)
 				lcd.setFont(1);					//small font
-				lcd.print((char*) "V2.00a5");    //Print version number
+				lcd.print((char*) "V2.00a6");    //Print version number
 				lcd.setCursor(0, 8);    //second line
 				lcd.print(__DATE__);    //print the compile date
 				lcd.refresh();
@@ -791,8 +791,8 @@ void startPIDTask(void const * argument) {
 	int32_t kp, ki, kd, kb;
 	int32_t backoffOverflow = 0;
 	kp = 20;
-	ki = 50;
-	kd = 40;
+	ki = 40;
+	kd = 30;
 	kb = 0;
 	const int32_t itermMax = 40;
 	for (;;) {

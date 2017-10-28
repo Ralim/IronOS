@@ -58,7 +58,7 @@ uint16_t getTipInstantTemperature() {
 uint16_t getTipRawTemp(uint8_t instant) {
 #define  filterDepth1 1
 	/*Pre filter used before PID*/
-#define  filterDepth2 16
+#define  filterDepth2 32
 	/*Post filter used for UI display*/
 	static uint16_t filterLayer1[filterDepth1];
 	static uint16_t filterLayer2[filterDepth2];
@@ -92,8 +92,14 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 	//Therefore we can divide down from there
 	//Ideal term is 117
 #define BATTFILTERDEPTH 64
+	static uint8_t preFillneeded = 1;
 	static uint32_t samples[BATTFILTERDEPTH];
 	static uint8_t index = 0;
+	if (preFillneeded) {
+		for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
+			samples[i] = getADC(1);
+		preFillneeded = 0;
+	}
 	samples[index] = getADC(1);
 	index = (index + 1) % BATTFILTERDEPTH;
 	uint32_t sum = 0;
@@ -102,7 +108,8 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 		sum += samples[i];
 
 	sum /= BATTFILTERDEPTH;
-
+	if (sum < 50)
+		preFillneeded = 1;
 	return sum / divisor;
 }
 uint8_t getTipPWM() {
