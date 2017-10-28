@@ -9,6 +9,7 @@
 #include "string.h"
 #include "gui.h"
 #include "stdlib.h"
+
 //C++ objects
 OLED lcd(&hi2c1);
 MMA8652FC accel(&hi2c1);
@@ -72,7 +73,7 @@ int main(void) {
 	}
 }
 void GUIDelay() {
-	osDelay(50);
+	osDelay(60);
 }
 ButtonState getButtonState() {
 	/*
@@ -620,7 +621,7 @@ static void gui_solderingMode() {
 	}
 
 }
-
+#define ACCELDEBUG 0
 /* StartGUITask function */
 void startGUITask(void const * argument) {
 	/*
@@ -654,12 +655,13 @@ void startGUITask(void const * argument) {
 	if (showBootLogoIfavailable())
 		waitForButtonPressOrTimeout(1000);
 	HAL_IWDG_Refresh(&hiwdg);
-	/*
-	 for (;;) {
-	 HAL_IWDG_Refresh(&hiwdg);
-	 osDelay(100);
-	 }
-	 */
+#if ACCELDEBUG
+
+	for (;;) {
+		HAL_IWDG_Refresh(&hiwdg);
+		osDelay(100);
+	}
+#endif
 //^ Kept here for a way to block this thread
 	for (;;) {
 		ButtonState buttons = getButtonState();
@@ -839,27 +841,32 @@ void startPIDTask(void const * argument) {
 		osDelay(100);    // 10 Hz temp loop
 	}
 }
-#define MOVFilter 4
+#define MOVFilter 8
 void startMOVTask(void const * argument) {
 	osDelay(4000);    //wait for accel to stabilize
 	int16_t datax[MOVFilter];
 	int16_t datay[MOVFilter];
 	int16_t dataz[MOVFilter];
 	uint8_t currentPointer = 0;
-	memset(datax, 0, MOVFilter);
-	memset(datay, 0, MOVFilter);
-	memset(dataz, 0, MOVFilter);
+	memset(datax, 0, MOVFilter * sizeof(int16_t));
+	memset(datay, 0, MOVFilter * sizeof(int16_t));
+	memset(dataz, 0, MOVFilter * sizeof(int16_t));
 	int16_t tx, ty, tz;
 	int32_t avgx, avgy, avgz;
+	if (systemSettings.sensitivity > 9)
+		systemSettings.sensitivity = 9;
+#if ACCELDEBUG
+	uint32_t max = 0;
+#endif
 
 	for (;;) {
-		int32_t threshold = 600 + (9 * 120);
-		threshold -= systemSettings.sensitivity * 120;
+		int32_t threshold = 800 + (9 * 200);
+		threshold -= systemSettings.sensitivity * 200;    // 200 is the step size
 		accel.getAxisReadings(&tx, &ty, &tz);
 
-		datax[currentPointer] = tx;
-		datay[currentPointer] = ty;
-		dataz[currentPointer] = tz;
+		datax[currentPointer] = (int32_t) tx;
+		datay[currentPointer] = (int32_t) ty;
+		dataz[currentPointer] = (int32_t) tz;
 		currentPointer = (currentPointer + 1) % MOVFilter;
 #if ACCELDEBUG
 		//Debug for Accel
@@ -874,14 +881,20 @@ void startMOVTask(void const * argument) {
 		avgy /= MOVFilter;
 		avgz /= MOVFilter;
 		lcd.setFont(1);
-		lcd.setCursor(0,0);
-		lcd.printNumber(abs(avgx - tx), 5);
+		lcd.setCursor(0, 0);
+		lcd.printNumber(abs(avgx - (int32_t) tx), 5);
 		lcd.print(" ");
-		lcd.printNumber(abs(avgy - ty), 5);
+		lcd.printNumber(abs(avgy - (int32_t) ty), 5);
+		if ((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)) > max)
+			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 		lcd.setCursor(0, 8);
-		lcd.printNumber(abs(avgz - tz), 5);
-		lcd.refresh();
+		lcd.printNumber(max, 5);
+		lcd.print(" ");
 
+		lcd.printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
+		lcd.refresh();
+		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET)
+			max = 0;
 #endif
 		//Only run the actual processing if the sensitivity is set (aka we are enabled)
 		if (systemSettings.sensitivity) {
@@ -898,14 +911,13 @@ void startMOVTask(void const * argument) {
 
 			//So now we have averages, we want to look if these are different by more than the threshold
 			int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
-
+			//If error has occured then we update the tick timer
 			if (error > threshold) {
 				lastMovementTime = HAL_GetTick();
-
 			}
 		}
 
-		osDelay(20);    //Slow down update rate
+		osDelay(100);    //Slow down update rate
 
 	}
 }

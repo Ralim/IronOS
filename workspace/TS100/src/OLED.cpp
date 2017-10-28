@@ -8,6 +8,7 @@
 #include <OLED.hpp>
 #include <string.h>
 #include "Translation.h"
+#include "cmsis_os.h"
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
@@ -84,8 +85,10 @@ void OLED::refresh() {
 	screenBuffer[11] = 0x01;
 
 	screenBuffer[12] = 0x40;    //start of data marker
+	taskENTER_CRITICAL();
 
 	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1, 0xFFFF);
+	taskEXIT_CRITICAL();
 
 }
 
@@ -136,7 +139,10 @@ void OLED::displayOnOff(bool on) {
 			data[3] = 0x10;
 			data[5] = 0xAE;
 		}
+		taskENTER_CRITICAL();
+
 		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, data, 6, 0xFFFF);
+		taskEXIT_CRITICAL();
 		displayOnOffState = on;
 	}
 }
@@ -151,7 +157,10 @@ void OLED::setRotation(bool leftHanded) {
 			OLED_Setup_Array[11] = 0xC0;
 			OLED_Setup_Array[19] = 0xA0;
 		}
+		taskENTER_CRITICAL();
+
 		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, 50, 0xFFFF);
+		taskEXIT_CRITICAL();
 		inLeftHandedMode = leftHanded;
 	}
 }

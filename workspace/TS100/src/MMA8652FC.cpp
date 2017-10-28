@@ -6,6 +6,7 @@
  */
 
 #include <MMA8652FC.hpp>
+#include "cmsis_os.h"
 
 MMA8652FC::MMA8652FC(I2C_HandleTypeDef* i2cHandle) {
 	i2c = i2cHandle;
@@ -54,8 +55,10 @@ void MMA8652FC::setSensitivity(uint8_t threshold, uint8_t filterTime) {
 }
 
 bool MMA8652FC::getOrientation() {
-	//First read the PL_STATUS register
+	//First read the PL_STATUS registertaskENTER_CRITICAL();
+	taskENTER_CRITICAL();
 	uint8_t plStatus = I2C_RegisterRead(PL_STATUS_REG);
+	taskEXIT_CRITICAL();
 	plStatus >>= 1;    //We don't need the up/down bit
 	plStatus &= 0x03;    //mask to the two lower bits
 	//0 == left handed
@@ -64,23 +67,14 @@ bool MMA8652FC::getOrientation() {
 	return !plStatus;
 }
 void MMA8652FC::getAxisReadings(int16_t *x, int16_t *y, int16_t *z) {
-	uint8_t temp = 0;
-	HAL_I2C_Mem_Read(i2c, MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &temp, 1, 0xFFFF);
-	(*x) = temp;
-	(*x) <<= 8;
-	HAL_I2C_Mem_Read(i2c, MMA8652FC_I2C_ADDRESS, OUT_X_LSB_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &temp, 1, 0xFFFF);
-	(*x) |= temp;
-
-	HAL_I2C_Mem_Read(i2c, MMA8652FC_I2C_ADDRESS, OUT_Y_MSB_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &temp, 1, 0xFFFF);
-	(*y) = temp;
-	(*y) <<= 8;
-	HAL_I2C_Mem_Read(i2c, MMA8652FC_I2C_ADDRESS, OUT_Y_LSB_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &temp, 1, 0xFFFF);
-	(*y) |= temp;
-
-	HAL_I2C_Mem_Read(i2c, MMA8652FC_I2C_ADDRESS, OUT_Z_MSB_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &temp, 1, 0xFFFF);
-	(*z) = temp;
-	(*z) <<= 8;
-	HAL_I2C_Mem_Read(i2c, MMA8652FC_I2C_ADDRESS, OUT_Z_LSB_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &temp, 1, 0xFFFF);
-	(*z) |= temp;
-
+	uint8_t tempArr[6];
+	taskENTER_CRITICAL();
+	while (HAL_I2C_Mem_Read(i2c, MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) tempArr, 6,
+			0xFFFF) != HAL_OK) {
+		HAL_Delay(5);
+	}
+	taskEXIT_CRITICAL();
+	(*x) = tempArr[0] << 8 | tempArr[1];
+	(*y) = tempArr[2] << 8 | tempArr[3];
+	(*z) = tempArr[4] << 8 | tempArr[5];
 }
