@@ -75,6 +75,21 @@ int main(void) {
 void GUIDelay() {
 	osDelay(50);    //20Hz
 }
+void gui_drawTipTemp() {
+	//Draw tip temp handling unit conversion & tolerance near setpoint
+	uint16_t Temp = getTipRawTemp(0);
+
+	if (systemSettings.temperatureInF)
+		Temp = tipMeasurementToF(Temp);
+	else
+		Temp = tipMeasurementToC(Temp);
+	//Round if nearby
+	if (abs(Temp - systemSettings.SolderingTemp) < 3)
+		Temp = systemSettings.SolderingTemp;
+
+	lcd.printNumber(Temp, 3);    //Draw the tip temp out finally
+
+}
 ButtonState getButtonState() {
 	/*
 	 * Read in the buttons and then determine if a state change needs to occur
@@ -551,10 +566,10 @@ static void gui_solderingMode() {
 
 				lcd.drawChar(' ');    // Space out gap between battery <-> temp
 				if (systemSettings.temperatureInF) {
-					lcd.printNumber(tipMeasurementToF(tipTemp), 3);    //Draw current tip temp
+					gui_drawTipTemp();    //Draw current tip temp
 					lcd.drawSymbol(0);    //deg F
 				} else {
-					lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
+					gui_drawTipTemp();    //Draw current tip temp
 					lcd.drawSymbol(1);    //deg C
 				}
 
@@ -585,10 +600,10 @@ static void gui_solderingMode() {
 					lcd.drawChar(' ');
 
 				if (systemSettings.temperatureInF) {
-					lcd.printNumber(tipMeasurementToF(tipTemp), 3);    //Draw current tip temp
+					gui_drawTipTemp();    //Draw current tip temp
 					lcd.drawSymbol(0);    //deg F
 				} else {
-					lcd.printNumber(tipMeasurementToC(tipTemp), 3);    //Draw current tip temp
+					gui_drawTipTemp();    //Draw current tip temp
 					lcd.drawSymbol(1);    //deg C
 				}
 
@@ -689,7 +704,7 @@ void startGUITask(void const * argument) {
 				lcd.clearScreen();			//Ensure the buffer starts clean
 				lcd.setCursor(0, 0);		//Position the cursor at the 0,0 (top left)
 				lcd.setFont(1);					//small font
-				lcd.print((char*) "V2.00a6");    //Print version number
+				lcd.print((char*) "V2.00");    //Print version number
 				lcd.setCursor(0, 8);    //second line
 				lcd.print(__DATE__);    //print the compile date
 				lcd.refresh();
@@ -870,7 +885,7 @@ void startMOVTask(void const * argument) {
 #endif
 
 	for (;;) {
-		int32_t threshold = 800 + (9 * 200);
+		int32_t threshold = 1200 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;    // 200 is the step size
 		accel.getAxisReadings(&tx, &ty, &tz);
 

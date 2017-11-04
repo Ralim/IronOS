@@ -24,6 +24,11 @@ extern const char SettingLeftChar;
 extern const char SettingAutoChar;
 
 #define LANG_EN
-
+//#define LANG_RU
+//#define LANG_ES
+//#define LANG_SE
+//#define LANG_IT
+//#define LANG_FR
+//#define LANG_DE
 
 #endif /* TRANSLATION_H_ */
