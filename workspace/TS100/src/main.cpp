@@ -411,6 +411,12 @@ static int gui_showTipTempWarning() {
 		GUIDelay();
 	}
 }
+static uint16_t min(uint16_t a,uint16_t b)
+{
+	if(a>b)
+		return b;
+	else return a;
+}
 static int gui_SolderingSleepingMode() {
 //Drop to sleep temperature and display until movement or button press
 
@@ -424,9 +430,9 @@ static int gui_SolderingSleepingMode() {
 			return 1;    //return non-zero on error
 
 		if (systemSettings.temperatureInF)
-			currentlyActiveTemperatureTarget = ftoTipMeasurement(systemSettings.SleepTemp);
+			currentlyActiveTemperatureTarget = ftoTipMeasurement(min(systemSettings.SleepTemp,systemSettings.SolderingTemp));
 		else
-			currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.SleepTemp);
+			currentlyActiveTemperatureTarget = ctoTipMeasurement(min(systemSettings.SleepTemp,systemSettings.SolderingTemp));
 		//draw the lcd
 		uint16_t tipTemp;
 		if (systemSettings.temperatureInF)
