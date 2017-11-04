@@ -86,6 +86,7 @@ void OLED::refresh() {
 
 	screenBuffer[12] = 0x40;    //start of data marker
 	taskENTER_CRITICAL();
+	//Because I2C is shared, we cant task switch in the middle of the xfer
 
 	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1, 0xFFFF);
 	taskEXIT_CRITICAL();

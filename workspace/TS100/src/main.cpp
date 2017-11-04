@@ -73,7 +73,7 @@ int main(void) {
 	}
 }
 void GUIDelay() {
-	osDelay(50);//20Hz
+	osDelay(50);    //20Hz
 }
 ButtonState getButtonState() {
 	/*
@@ -411,11 +411,11 @@ static int gui_showTipTempWarning() {
 		GUIDelay();
 	}
 }
-static uint16_t min(uint16_t a,uint16_t b)
-{
-	if(a>b)
+static uint16_t min(uint16_t a, uint16_t b) {
+	if (a > b)
 		return b;
-	else return a;
+	else
+		return a;
 }
 static int gui_SolderingSleepingMode() {
 //Drop to sleep temperature and display until movement or button press
@@ -430,9 +430,11 @@ static int gui_SolderingSleepingMode() {
 			return 1;    //return non-zero on error
 
 		if (systemSettings.temperatureInF)
-			currentlyActiveTemperatureTarget = ftoTipMeasurement(min(systemSettings.SleepTemp,systemSettings.SolderingTemp));
+			currentlyActiveTemperatureTarget = ftoTipMeasurement(
+					min(systemSettings.SleepTemp, systemSettings.SolderingTemp));
 		else
-			currentlyActiveTemperatureTarget = ctoTipMeasurement(min(systemSettings.SleepTemp,systemSettings.SolderingTemp));
+			currentlyActiveTemperatureTarget = ctoTipMeasurement(
+					min(systemSettings.SleepTemp, systemSettings.SolderingTemp));
 		//draw the lcd
 		uint16_t tipTemp;
 		if (systemSettings.temperatureInF)
@@ -797,9 +799,11 @@ void startPIDTask(void const * argument) {
 	int32_t kp, ki, kd, kb;
 	int32_t backoffOverflow = 0;
 	kp = 20;
-	ki = 40;
-	kd = 30;
+	ki = 50;
+	kd = 40;
 	kb = 0;
+	// REMEBER ^^^^ These constants are backwards
+	// They act as dividers, so to 'increase' a P term, you make the number smaller.
 	const int32_t itermMax = 40;
 	for (;;) {
 		uint16_t rawTemp = getTipRawTemp(1);    //get instantaneous reading
@@ -892,7 +896,7 @@ void startMOVTask(void const * argument) {
 		lcd.print(" ");
 		lcd.printNumber(abs(avgy - (int32_t) ty), 5);
 		if ((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)) > max)
-			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+		max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 		lcd.setCursor(0, 8);
 		lcd.printNumber(max, 5);
 		lcd.print(" ");
@@ -900,7 +904,7 @@ void startMOVTask(void const * argument) {
 		lcd.printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
 		lcd.refresh();
 		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET)
-			max = 0;
+		max = 0;
 #endif
 		//Only run the actual processing if the sensitivity is set (aka we are enabled)
 		if (systemSettings.sensitivity) {
