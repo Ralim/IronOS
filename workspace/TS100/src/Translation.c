@@ -220,30 +220,30 @@ const char SettingAutoChar = 'A';
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
 	/*No requirements on spacing or length*/
-	"Stromversorgung. Setzt Abschaltspannung <DC=10V S=3.3V pro Zelle>",
-	"Ruhetemperatur <C>",
-	"Ruhemodus nach <Minuten>",
+	"Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>",
+	"Ruhetemperatur (In der eingestellten Einheit)",
+	"Ruhemodus nach <Sekunden/Minuten>",
 	"Abschaltzeit <Minuten>",
-	"Bewegungsempfindlichkeit <0=Aus 1=Minimal 9=Maximal>",
-	"Temperatur Einheit",
-	"Display detailed information in a smaller font on the idle screen.",    //Detailed Information
-	"Anzeigerichtung <A=Auto L=Linkshändig R=Rechtshändig>",
-	"Fronttaste für Temperaturboost einschalten",
-	"Temperatur im \"boost\"-Modus <C>",
-	"Automatischer Start beim Einschalten. <J=Löttemp R=Ruhemodus N=Aus>",
-	"Temperatur blinkt beim Abkühlen, solange noch heiß."
-	"Calibrate tip offset.",//Calibrate Tip
-	"Reset all settings",//Reset Settings
-	"VIN Calibration. Buttons adjust, long press to exit",//VIN Cal
-	"Display detailed information while soldering",//ADV SLD
+	"Bewegungsempfindlichkeit <0=Aus, 1=Minimal ... 9=Maximal>",
+	"Temperatureinheit <C=Celsius, F=Fahrenheit>",
+	"Detaillierte Anzeige im Ruhemodus <T=An, F=Aus>",    //Detailed Information
+	"Ausrichtung der Anzeige <A=Auto, L=Linkshändig, R=Rechtshändig>",
+	"Vordere Taste für Temperaturboost verwenden <T=An, F=Aus>",
+	"Temperatur im Boostmodus  (In der eingestellten Einheit)",
+	"Automatischer Start des Lötmodus beim Einschalten der Spannungsversorgung. <T=An, F=Aus>",
+	"Blinkende Temperaturanzeige beim Abkühlen, solange heiß. <T=An, F=Aus>"
+	"Kalibrierung der Lötspitzentemperatur",//Calibrate Tip
+	"Alle Einstellungen zurücksetzen",//Reset Settings
+	"Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen.",//VIN Cal
+	"Detaillierte Anzeige im Lötmodus <T=An, F=Aus>",//ADV SLD
 };
 
-const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
-const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
-const char* SleepingSimpleString = "Zzzz";// Must be <= 4 chars
-const char* SleepingAdvancedString = "Sleeping...";// <=17 chars
-const char* WarningSimpleString = "HOT!";//Must be <= 4 chars
-const char* WarningAdvancedString = "WARNING! TIP HOT!";
+const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
+const char* UVLOWarningString = "LOW VOLT";//Fixed width 8 chars
+const char* SleepingSimpleString = "Zzz ";// Must be <= 4 chars
+const char* SleepingAdvancedString = "Ruhemodus...";// <=17 chars
+const char* WarningSimpleString = "HEIß";//Must be <= 4 chars
+const char* WarningAdvancedString = "Achtung! Spitze Heiß!";
 
 const char SettingTrueChar = 'T';
 const char SettingFalseChar = 'F';
