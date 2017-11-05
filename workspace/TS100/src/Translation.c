@@ -191,16 +191,16 @@ const char* SettingsLongNames[16] = {
 	"Temps avant extinction. <Minutes>",
 	"Sensibilitee du capteur de mouvement. <0=Inactif 1=Peu sensible 9=Tres sensible>",
 	"Unitee de temperature.",
-	"Display detailed information in a smaller font on the idle screen.",    //Detailed Information
+	"Afficher des informations detaillees en petit lors de la veille",    //Detailed Information
 	"Orientation de l\'affichage. <A=Automatique G=Gaucher D=Droitier>",
 	"Active le mode \"Boost\" 450C sur le bouton de devant pendant la soudure.",
 	"Temperature du mode \"Boost\". <C>",
 	"Demarre automatiquement la soudure a l\'allumage. <A=Active, V=Mode Veille, D=Desactive>",
-	"Fait clignotter la temperature pendant la phase de refroidissement quand la panne est chaude."
-	"Calibrate tip offset.",//Calibrate Tip
-	"Reset all settings",//Reset Settings
-	"VIN Calibration. Buttons adjust, long press to exit",//VIN Cal
-	"Display detailed information while soldering",//ADV SLD
+	"Fait clignotter la temperature lors du refroidissement pendant que la panne est chaude."
+	"Compenser l\'erreur de la panne",//Calibrate Tip
+	"Reinitialiser tout les reglages",//Reset Settings
+	"Calibration VIN. Boutons pour ajuster, appui long pour quitter",//VIN Cal
+	"Afficher des informations detaillees pendant la soudure",//ADV SLD
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
