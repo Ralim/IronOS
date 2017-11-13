@@ -41,41 +41,44 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_RU
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
 	/*No requirements on spacing or length*/
 	"Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",    //Cell count
-	"Температура Сна  <С>",//Sleep Temp
-	"Переход в режим Сна <Минуты>",//Sleep timeout
-	"Переходит в режим ожидания <Минуты>",//Shutdown timeout
+	"Температура режима ожидания <С>",//Sleep Temp
+	"Время до перехода в режим ожидания <Минуты>",//Sleep timeout
+	"Время до отключения <Минуты>",//Shutdown timeout
 	"Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>",//Sensitivity
 	"В чем измерять температуру",//Temp Unit
-	"Display detailed information in a smaller font on the idle screen.",//Detailed Information
-	"Ориентация Дисплея <A. Автоматический L. Левая Рука R. Правая Рука>",//Orientation
-	"Активация  кнопки A для Турбо режима до  450С при пайке ",//Boost enable
-	"Установка температуры для Турбо режима",//Boost temp
-	"Автоматический запуск паяльника при включении питания. T=Нагрев, S= Режим Сна,F=Выкл.",//Auto start
-	"Мигает температура на экране охлаждения, пока жало остается горячим."//Cooling blink
-	"Calibrate tip offset.",//Calibrate Tip
-	"Reset all settings",//Reset Settings
-	"VIN Calibration. Buttons adjust, long press to exit",//VIN Cal
-	"Display detailed information while soldering",//ADV SLD
+	"Показывать детальную информацию маленьким шрифтом на домашнем экране",//Detailed Information
+	"Ориентация дисплея <A. Автоматический, Л. Левая рука, П. Правая рука>",//Orientation
+	"Турбо-режим при удержании кнопки А при пайке ",//Boost enable
+	"Температура в турбо-режиме",//Boost temp
+	"Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим ожидания,F=Выкл.",//Auto start
+	"Показывать температуру на экране охлаждения, пока жало остается горячим."//Cooling blink
+	"Калибровка термодатчика.",//Calibrate Tip
+	"Сброс всех настроек.",//Reset Settings
+	"Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",//VIN Cal
+	"Показывать детальную информацию при пайке.",//ADV SLD
 };
 
-const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
-const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
-const char* SleepingSimpleString = "Zzzz";// Must be <= 4 chars
-const char* SleepingAdvancedString = "Sleeping...";// <=17 chars
-const char* WarningSimpleString = "HOT!";//Must be <= 4 chars
-const char* WarningAdvancedString = "WARNING! TIP HOT!";
+const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
+const char* UVLOWarningString = "БАТ РАЗР";    //Fixed width 8 chars
+const char* SleepingSimpleString = "Хррр";// Must be <= 4 chars
+const char* SleepingAdvancedString = "Ожидание...";// <=17 chars	  
+const char* WarningSimpleString = " АЙ!";//Must be <= 4 chars
+const char* WarningAdvancedString = "ОСТОРОЖНО! ГОРЯЧО";
+							 
+const char SettingTrueChar = '+';
+const char SettingFalseChar = '-';
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
-const char SettingRightChar = 'R';
-const char SettingLeftChar = 'L';
+const char SettingRightChar = 'П';
+const char SettingLeftChar = 'Л';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_ES
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
