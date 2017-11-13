@@ -77,6 +77,48 @@ const char SettingFalseChar = '-';
 const char SettingRightChar = 'П';
 const char SettingLeftChar = 'Л';
 const char SettingAutoChar = 'A';
+
+const char* SettingsShortNames[16] = { /**/
+		"ИстП  ",    // Power Source (DC or batt)
+		"Тожд ", 	// Sleep Temperature
+		"Вожд ", 	// Sleep Timeout
+		"Тоткл ",    // Shutdown Temperature
+		"ЧувсДв ",    // Motion sensitivity level
+		"ЕдТемп ",			//Temp in F and C
+		"ИнфОжд ",    // Advanced idle display mode enable
+		"ПовЭкр ",    // Display rotation mode
+		"Турбо  ",    // Boost enabled
+		"Ттур ", 	// Boost temperature
+		"Астарт ",    // Automatic Start mode
+		"Охлажд ",    // Cooldown blink
+		"КалибрТ?",    // Temperature calibration enter menu
+		"СБРОС? ",    // Settings reset command
+		"КалибрU?", 
+		"ИнфПай ",    //advanced soldering screens
+		};
+
+#else
+
+const char* SettingsShortNames[16] = { /**/
+		"PWRSC ",    // Power Source (DC or batt)
+		"STMP ", 	// Sleep Temperature
+		"STME ", 	// Sleep Timeout
+		"SHTME ",    // Shutdown Temperature
+		"MSENSE ",    // Motion sensitivity level
+		"TMPUNT ",			//Temp in F and C
+		"ADVIDL ",    // Advanced idle display mode enable
+		"DSPROT ",    // Display rotation mode
+		"BOOST  ",    // Boost enabled
+		"BTMP ", 	// Boost temperature
+		"ASTART ",    // Automatic Start mode
+		"CLBLNK ",    // Cooldown blink
+		"TMP CAL?",    // Temperature calibration enter menu
+		"RESET? ",    // Settings reset command
+		"CAL VIN?", "ADVSLD ",    //advanced soldering screens
+		};
+
+#endif
+
 #endif
 
 #ifdef LANG_ES
@@ -148,7 +190,8 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
-#endif
+
+
 #ifdef LANG_IT
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -255,20 +298,4 @@ const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
 //Currently the settings names are not translated
-const char* SettingsShortNames[16] = { /**/
-"PWRSC ",    // Power Source (DC or batt)
-		"STMP ", 	// Sleep Temperature
-		"STME ", 	// Sleep Timeout
-		"SHTME ",    // Shutdown Temperature
-		"MSENSE ",    // Motion sensitivity level
-		"TMPUNT ",			//Temp in F and C
-		"ADVIDL ",    // Advanced idle display mode enable
-		"DSPROT ",    // Display rotation mode
-		"BOOST  ",    // Boost enabled
-		"BTMP ", 	// Boost temperature
-		"ASTART ",    // Automatic Start mode
-		"CLBLNK ",    // Cooldown blink
-		"TMP CAL?",    // Temperature calibration enter menu
-		"RESET? ",    // Settings reset command
-		"CAL VIN?", "ADVSLD ",    //advanced soldering screens
-		};
+
