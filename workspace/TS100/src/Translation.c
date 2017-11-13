@@ -150,35 +150,35 @@ const char SettingAutoChar = 'A';
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
 	/*No requirements on spacing or length*/
-	"Sorgente di alimentazione. Imposta il limite inferiore di tensione. <DC=10V S=3.3V per cella>",
-	"Temperatura modalità riposo <C>",
-	"Timeout per passaggio a modalità riposo <Minuti>",
-	"Timeout spegnimento <Minuti>",
-	"Sensibilità al movimento <0=Spento 1=Sensibilità minima 9=Sensibilità massima>",
-	"Unità di temperatura",
-	"Display detailed information in a smaller font on the idle screen.",    //Detailed Information
-	"Orientamento del display <A=Automatico S=Sinistrorso D=Destrorso>",
-	"Il tasto anteriore abilita modalità \"boost\" fino a 450C durante la saldatura",
-	"Temperatura in modalità \"boost\" <C>",
-	"Avvia automaticamente il saldatore quando viene alimentato. <S=Modalità saldatura R=Modalità riposo N=Spento>",
-	"Durante lo spegnimento la temperatura lampeggia sul display finché la punta è calda."
-	"Calibrate tip offset.",//Calibrate Tip
-	"Reset all settings",//Reset Settings
-	"VIN Calibration. Buttons adjust, long press to exit",//VIN Cal
-	"Display detailed information while soldering",//ADV SLD
+	"Sorgente di alimentazione; imposta il limite minimo di tensione <DC: 10V; S: 3.3V per cella>",
+	"Temperatura standby <°C>",
+	"Timeout standby <minuti/secondi>",
+	"Timeout spegnimento <minuti>",
+	"Sensibilità al movimento <0: nessuna; 1: minima; 9: massima>",
+	"Unità di misura della temperatura <C: Celsius; F: Farenheit>",
+	"Mostra informazioni dettagliate con un carattere più piccolo sulla schermata di inattività",
+	"Orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
+	"Il tasto anteriore attiva la modalità \"boost\" durante la saldatura",
+	"Temperatura in modalità \"boost\"",
+	"Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
+	"Durante il raffreddamento mostra la temperatura sul display se la punta è ancora calda"
+	"Calibra l'offset della punta",//Calibrate Tip
+	"Ripristina tutte le impostazioni",//Reset Settings
+	"Calibra la tensione in entrata; regola con i bottoni, tieni permuto per uscire",//VIN Cal
+	"Mostra informazioni dettagliate mentre stai saldando",//ADV SLD
 };
 
-const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
 const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";// Must be <= 4 chars
-const char* SleepingAdvancedString = "Sleeping...";// <=17 chars
+const char* SleepingAdvancedString = "Standby";// <=17 chars
 const char* WarningSimpleString = "HOT!";//Must be <= 4 chars
-const char* WarningAdvancedString = "WARNING! TIP HOT!";
+const char* WarningAdvancedString = "ATTENZIONE! PUNTA CALDA!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
-const char SettingRightChar = 'R';
-const char SettingLeftChar = 'L';
+const char SettingTrueChar = 'A';
+const char SettingFalseChar = 'D';
+const char SettingRightChar = 'D';
+const char SettingLeftChar = 'S';
 const char SettingAutoChar = 'A';
 #endif
 #ifdef LANG_FR
