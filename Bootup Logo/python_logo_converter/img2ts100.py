@@ -1,24 +1,23 @@
 #!/usr/bin/env python
-
-VERSION_STRING = '0.01'
-
-
+# coding=utf-8
+from __future__ import division
 import os
 import sys
 
+
 try:
-    import PIL, PIL.Image, PIL.ImageOps
-except ImportError,error:
-    raise ImportError,   "%s: %s requres Python Imaging Library (PIL). " \
-                         "Install with `pip` or OS-specific package " \
-                         "management tool." \
-                       % (error, sys.argv[0])
+    from PIL import Image, ImageOps
+except ImportError as error:
+    raise ImportError("{}: {} requres Python Imaging Library (PIL). " 
+                      "Install with `pip` or OS-specific package "
+                      "management tool."
+                      .format(error, sys.argv[0]))
 
-
+VERSION_STRING = '0.01'
 
 LCD_WIDTH       = 96
 LCD_HEIGHT      = 16
-LCD_NUM_BYTES   = LCD_WIDTH * LCD_HEIGHT / 8
+LCD_NUM_BYTES   = LCD_WIDTH * LCD_HEIGHT // 8
 LCD_PADDED_SIZE = 1024
 
 INTELHEX_DATA_RECORD                    = 0x00
@@ -28,40 +27,36 @@ INTELHEX_BYTES_PER_LINE                 = 16
 INTELHEX_MINIMUM_SIZE                   = 4096
 
 
-
 def split16(word):
-    '''return high and low byte of 16-bit word value as tuple'''
-    return ((word >> 8) & 0xff, word & 0xff)
-
+    """return high and low byte of 16-bit word value as tuple"""
+    return (word >> 8) & 0xff, word & 0xff
 
 
 def intel_hex_line(file, record_type, offset, data):
-    '''write a line of data in Intel hex format'''
+    """write a line of data in Intel hex format"""
     # length, address offset, record type
     record_length = len(data)
-    file.write(':%02X%04X%02X' % (record_length, offset, record_type))
+    file.write(':{:02X}{:04X}{:02X}'.format(record_length, offset, record_type))
 
     # data
-    map(lambda byte: file.write("%02X" % byte), data)
+    map(lambda byte: file.write("{:02X}".format(byte)), data)
 
     # compute and write checksum (with DOS line ending for compatibility/safety)
-    file.write(   "%02X\r\n"
-                % (  (  (  sum(data,                    # sum data ...
-                                 record_length          # ... and other ...
-                               + sum(split16(offset))   # ... fields ...
-                               + record_type)           # ... on line
-                         & 0xff)                        # low 8 bits
-                      ^ 0xff)                           # two's ...
-                   + 1))                                # ... complement
+    file.write("{:02X}\r\n"
+               .format(((sum(data,                   # sum data ...
+                             record_length           # ... and other ...
+                             + sum(split16(offset))  # ... fields ...
+                             + record_type)          # ... on line
+                         & 0xff)                     # low 8 bits
+                        ^ 0xff)                      # two's ...
+                       + 1))                         # ... complement
 
 
-
-def intel_hex(file, bytes, start_address = 0x0):
-    '''write block of data in Intel hex format'''
-    if len(bytes) % INTELHEX_BYTES_PER_LINE != 0:
-        raise ValueError, \
-                "Program error: Size of LCD data is not evenly divisible by %s" \
-              % INTELHEX_BYTES_PER_LINE
+def intel_hex(file, bytes_, start_address=0x0):
+    """write block of data in Intel hex format"""
+    if len(bytes_) % INTELHEX_BYTES_PER_LINE != 0:
+        raise ValueError("Program error: Size of LCD data is not evenly divisible by {}"
+                         .format(INTELHEX_BYTES_PER_LINE))
 
     address_lo =  start_address        & 0xffff
     address_hi = (start_address >> 16) & 0xffff
@@ -74,11 +69,11 @@ def intel_hex(file, bytes, start_address = 0x0):
     size_written = 0
     while size_written < INTELHEX_MINIMUM_SIZE:
         offset = address_lo
-        for line_start in range(0, len(bytes), INTELHEX_BYTES_PER_LINE):
+        for line_start in range(0, len(bytes_), INTELHEX_BYTES_PER_LINE):
             intel_hex_line(file,
                            INTELHEX_DATA_RECORD,
                            offset,
-                           bytes[line_start:line_start+INTELHEX_BYTES_PER_LINE])
+                           bytes_[line_start:line_start + INTELHEX_BYTES_PER_LINE])
             size_written += INTELHEX_BYTES_PER_LINE
             if size_written >= INTELHEX_MINIMUM_SIZE:
                 break
@@ -87,14 +82,13 @@ def intel_hex(file, bytes, start_address = 0x0):
     intel_hex_line(file, INTELHEX_END_OF_FILE_RECORD, 0, ())
 
 
-
 def img2hex(input_filename,
             output_file,
             preview_filename=None,
             threshold=128,
             dither=False,
             negative=False):
-    '''
+    """
     Convert 'input_filename' image file into Intel hex format with data
         formatted for display on TS100 LCD and file object.
     Input image is converted from color or grayscale to black-and-white,
@@ -107,13 +101,12 @@ def img2hex(input_filename,
         dithering algorithm used.
     Optional `negative' inverts black/white regardless of input image type
         or other options.
-    '''
+    """
 
     try:
-        image = PIL.Image.open(input_filename)
-    except BaseException,error:
-        raise IOError, \
-              "error reading image file \"%s\": %s" % (input_filename, error)
+        image = Image.open(input_filename)
+    except BaseException as e:
+        raise IOError("error reading image file \"{}\": {}".format(input_filename, e))
 
     # convert to luminance
     # do even if already black/white because PIL can't invert 1-bit so
@@ -124,10 +117,10 @@ def img2hex(input_filename,
         image = image.convert('L')
 
     if image.size != (LCD_WIDTH, LCD_HEIGHT):
-        image = image.resize((LCD_WIDTH, LCD_HEIGHT), PIL.Image.BICUBIC)
+        image = image.resize((LCD_WIDTH, LCD_HEIGHT), Image.BICUBIC)
 
     if negative:
-        image = PIL.ImageOps.invert(image)
+        image = ImageOps.invert(image)
         threshold = 255 - threshold  # have to invert threshold
 
     if dither:
@@ -135,7 +128,8 @@ def img2hex(input_filename,
     else:
         image = image.point(lambda pixel: 0 if pixel < threshold else 1, '1')
 
-    if preview_filename: image.save(preview_filename)
+    if preview_filename:
+        image.save(preview_filename)
 
     ''' DEBUG
     for row in range(LCD_HEIGHT):
@@ -155,7 +149,7 @@ def img2hex(input_filename,
     data[3] = 0xF0
 
     # convert to TS100 LCD format
-    for ndx in range(LCD_WIDTH * 16 / 8):
+    for ndx in range(LCD_WIDTH * 16 // 8):
         bottom_half_offset = 0 if ndx < LCD_WIDTH else 8
         byte = 0
         for y in range(8):
@@ -167,7 +161,6 @@ def img2hex(input_filename,
     intel_hex(output_file, data, 0x0800B800)
 
 
-
 def parse_commandline():
     parser = argparse.ArgumentParser(
                 formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -175,10 +168,8 @@ def parse_commandline():
                             "at startup")
 
     def zero_to_255(text):
-        try:
-            value = int(text)
-            assert(value >= 0 and value <= 255)
-        except:
+        value = int(text)
+        if not 0 <= value <= 255:
             raise argparse.ArgumentTypeError("must be integer from 0 to 255 ")
         return value
 
@@ -215,11 +206,10 @@ def parse_commandline():
 
     parser.add_argument('-v', '--version',
                         action='version',
-                        version="%(prog)s version " +  VERSION_STRING,
+                        version="%(prog)s version " + VERSION_STRING,
                         help="print version info")
 
     return parser.parse_args()
-
 
 
 if __name__ == "__main__":
@@ -227,25 +217,25 @@ if __name__ == "__main__":
     args = parse_commandline()
 
     if os.path.exists(args.output_filename) and not args.force:
-        sys.stderr.write(  "Won't overwrite existing file \"%s\" (use --force "
-                           "option to override)\n"
-                         % args.output_filename)
+        sys.stderr.write("Won't overwrite existing file \"{}\" (use --force "
+                         "option to override)\n"
+                         .format(args.output_filename))
         sys.exit(1)
 
     if args.preview and os.path.exists(args.preview) and not args.force:
-        sys.stderr.write(  "Won't overwrite existing file \"%s\" (use --force "
-                           "option to override)\n"
-                         % args.preview)
+        sys.stderr.write("Won't overwrite existing file \"{}\" (use --force "
+                         "option to override)\n"
+                         .format(args.preview))
         sys.exit(1)
 
     try:
-        with open(args.output_filename, 'w') as output_file:
+        with open(args.output_filename, 'w') as output:
             img2hex(args.input_filename,
-                    output_file,
+                    output,
                     args.preview,
                     args.threshold,
                     args.dither,
                     args.negative)
-    except BaseException,error:
-        sys.stderr.write("Error converting file: %s\n" % error)
+    except BaseException as error:
+        sys.stderr.write("Error converting file: {}\n".format(error))
         sys.exit(1)
