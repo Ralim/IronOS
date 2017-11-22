@@ -251,6 +251,41 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+#ifdef LANG_SK
+const char* SettingsLongNames[16] = {
+	/*These are all the help text for all the settings.*/
+	/*No requirements on spacing or length*/
+	"Zdroj napatia. Nastavit napatie pre vypnutie (cutoff)  <DC=10V, nS=n*3.3V pre LiIon clanky>",
+	"Kludova teplota (v nastavenych jednotkach)",
+	"Kludovy rezim po <sekundach/minutach>",
+	"Cas na vypnutie <minuty>",
+	"Citlivost detekcie pohybu <0=Vyp, 1=Min ... 9=Max>",
+	"Jednotky merania teploty <C=stupne Celzia, F=stupne Fahrenheita>",
+	"Zobrazit detailne informacie v kludovom rezime <T=Zap, F=Vyp>",    //Detailed Information
+	"Orientacia displeja <A=Auto, L=Lavak, R=Pravak>",
+	"Povolit tlacidlo pre prudky nahrev <T=Zap, F=Vyp>",
+	"Cielova teplota pre prudky nahrev (v nastavenych jednotkach)",
+	"Pri starte spustit rezim spajkovania <T=Zap, F=Vyp, S=Spanok>",
+	"Blikanie ukazovatela teploty pocas chladnutia hrotu <T=Zap, F=Vyp>"
+	"Kalibracia posunu hrotu",//Calibrate Tip
+	"Tovarenske nastavenia",//Reset Settings
+	"Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat",//VIN Cal
+	"Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>",//ADV SLD
+};
+
+const char* SettingsCalibrationWarning = "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!";
+const char* UVLOWarningString = "LOW VOLT";//Fixed width 8 chars
+const char* SleepingSimpleString = "Chrr";// Must be <= 4 chars
+const char* SleepingAdvancedString = "Kludovy rezim...";// <=17 chars
+const char* WarningSimpleString = "HOT!";//Must be <= 4 chars
+const char* WarningAdvancedString = "Pozor! Hrot je horuci!";
+
+const char SettingTrueChar = 'T';
+const char SettingFalseChar = 'F';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+#endif
 //Currently the settings names are not translated
 const char* SettingsShortNames[16] = { /**/
 "PWRSC ",    // Power Source (DC or batt)
