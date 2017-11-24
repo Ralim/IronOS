@@ -83,9 +83,9 @@ void gui_drawTipTemp() {
 		Temp = tipMeasurementToF(Temp);
 	else
 		Temp = tipMeasurementToC(Temp);
-	//Round if nearby
-	if (abs(Temp - systemSettings.SolderingTemp) < 3)
-		Temp = systemSettings.SolderingTemp;
+	//[Disabled 24/11/2017] Round if nearby
+	//if (abs(Temp - systemSettings.SolderingTemp) < 3)
+	//	Temp = systemSettings.SolderingTemp;
 
 	lcd.printNumber(Temp, 3);    //Draw the tip temp out finally
 

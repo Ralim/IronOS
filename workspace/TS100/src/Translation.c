@@ -286,6 +286,76 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+#ifdef LANG_TR
+const char* SettingsLongNames[16] = {
+/*These are all the help text for all the settings.*/
+/*No requirements on spacing or length*/
+"Güç Kaynağı. kesim geriliminı ayarlar. <DC 10V> <S 3.3V hücre başına>",    //Power Source
+		"Uyku Sıcaklığı <C>",    //Sleep Temp
+		"Uyku Zaman Aşımı <Dakika/Saniye>",    //Sleep Timeout
+		"Kapatma Zaman Aşımı <Dakika>",    //Shutdown Time
+		"Hareket Hassasiyeti <0.Kapalı 1.En az duyarlı 9.En duyarlı>",    //Motion Sensitivity
+		"Sıcaklık Ünitesi <C=Celsius F=Fahrenheit>",    //Temp Unit
+		"Boş ekranda ayrıntılı bilgileri daha küçük bir yazı tipi ile göster.",    //Detailed Information
+		"Görüntü Yönlendirme <A. Otomatik L. Solak R. Sağlak>",    //Orientation
+		"Lehimleme yaparken ön tuşa basmak Boost moduna sokar(450C)",    //Boost enable
+		"\"boost\" Modu Derecesi",    //Boost Temp
+		"Güç verildiğinde otomatik olarak lehimleme modunda başlat. T=Lehimleme Modu, S= Uyku Modu,F=Kapalı",    //Auto start
+		"Soğutma ekranında uç hala sıcakken derece yanıp sönsün.",    //Cooling Blink
+		"Ucu kalibre et.",    //Calibrate Tip
+		"Bütün ayarları sıfırla",    //Reset Settings
+		"VIN Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas.",    //VIN Cal
+		"Lehimleme yaparken detaylı bilgi göster",    //ADV SLD
+		};
+
+const char* SettingsCalibrationWarning = "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!";
+const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
+const char* SleepingSimpleString = "Zzzz";    // Must be <= 4 chars
+const char* SleepingAdvancedString = "Uyuyor...";    // <=17 chars
+const char* WarningSimpleString = "HOT!";    //Must be <= 4 chars
+const char* WarningAdvancedString = "UYARI! UÇ SICAK!";
+
+const char SettingTrueChar = 'T';
+const char SettingFalseChar = 'F';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+#endif
+#ifdef LANG_HR
+const char* SettingsLongNames[16] = {
+/*These are all the help text for all the settings.*/
+/*No requirements on spacing or length*/
+"Izvor napajanja. Postavlja napon iskljucivanja. <DC 10V> <S 3.3V po celiji>",    //Power Source
+		"Temperatura spavanja. <C>",    //Sleep Temp
+		"Vrijeme spavanja. <Minute/Sekunde>",    //Sleep Timeout
+		"Vrijeme gasenja. <Minutes>",    //Shutdown Time
+		"Osjetljivost prepoznavanja pokreta. <0=Ugaseno, 1=Najmanje osjetljivo, 9=Najosjetljivije>",    //Motion Sensitivity
+		"Jedinica temperature. <C=Celzij, F=Fahrenheit>",    //Temp Unit
+		"Prikazivanje detaljnih informacija manjim fontom tijekom cekanja.",    //Detailed Information
+		"Orijentacija ekrana. <A=Automatski, L=Ljevoruki, D=Desnoruki>",    //Orientation
+		"Prednji gumb prilikom lemljenja aktivira pojacani (Boost) nacin.",    //Boost enable
+		"Temperatura u pojacanom (Boost) nacinu.",    //Boost Temp
+		"Nacin u kojemu se lemilica pokrece po ukljucivanju napajanja. <+=Lemljenje, S=Spavanje, -=Ugaseno>",    //Auto start
+		"Bljeskanje temperature prilikom hladjenja, ako je lemilica vruca.",    //Cooling Blink
+		"Kalibriranje temperature vrha.",    //Calibrate Tip
+		"Vracanje svih postavki.",    //Reset Settings
+		"Kalibracija ulaznog napona. Podesavanje gumbima, dugacki pritisak za kraj.",    //VIN Cal
+		"Prikazivanje detaljnih informacija tijekom lemljenja.",    //ADV SLD
+		};
+
+const char* SettingsCalibrationWarning = "Provjerite da je vrh ohladjen na sobnu temperaturu prije nego sto nastavite!";
+const char* UVLOWarningString = "NAPON!!!";    //Fixed width 8 chars
+const char* SleepingSimpleString = "Zzzz";    // Must be <= 4 chars
+const char* SleepingAdvancedString = "Spavanje...";    // <=17 chars
+const char* WarningSimpleString = "VRUC";    //Must be <= 4 chars
+const char* WarningAdvancedString = "OPREZ! Vrsak je vruc!";
+
+const char SettingTrueChar = '+';
+const char SettingFalseChar = '-';
+const char SettingRightChar = 'D';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+#endif
 //Currently the settings names are not translated
 const char* SettingsShortNames[16] = { /**/
 "PWRSC ",    // Power Source (DC or batt)
