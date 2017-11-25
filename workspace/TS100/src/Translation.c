@@ -381,7 +381,7 @@ const char* SettingsLongNames[16] = {
 
 const char* SettingsCalibrationWarning = "Ujistete se, ze hrot ma pokojovou teplotu! "; //ending space needed
 const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
-const char* SleepingSimpleString = "Zzzz";    // Must be <= 4 chars
+const char* SleepingSimpleString = "Zzz ";    // Must be <= 4 chars
 const char* SleepingAdvancedString = "Rezim spanku...";    // <=17 chars
 const char* WarningSimpleString = "HOT!";    //Must be <= 4 chars
 const char* WarningAdvancedString = "!!!HORKY HROT!!!";   // <= 16 chars
