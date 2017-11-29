@@ -86,29 +86,29 @@ const char* SettingsLongNames[16] = {
 	"Tiempo hasta apagado. <Minutos>",
 	"Sensibilidad del movimiento. <0=Apagado 1=El menos sensible 9=El más sensible>",
 	"Unidad de temperatura.",
-	"Display detailed information in a smaller font on the idle screen.",    //Detailed Information
+	"Mostrar información detallada en el reposo.",    //Detailed Information
 	"Orientación de la pantalla <A=Automático I=Mano izquierda D=Mano derecha>",
 	"Activar el botón \"Boost\" en modo soldadura.",
 	"Temperatura en modo \"Boost\". <C>",
 	"Iniciar modo soldadura en el encendido. <V=Sí S=Modo reposo F=No>",
 	"Parpadea la temperatura en el enfriamiento si la punta sigue caliente."
-	"Calibrate tip offset.",//Calibrate Tip
-	"Reset all settings",//Reset Settings
-	"VIN Calibration. Buttons adjust, long press to exit",//VIN Cal
-	"Display detailed information while soldering",//ADV SLD
+	"Calibrar punta.",//Calibrate Tip
+	"Resetear ajustes.",//Reset Settings
+	"Calibración VIN. Los botones lo ajustan. Pulsación larga para salir.",//VIN Cal
+	"Mostrar información detallada mientras suelda.",//ADV SLD
 };
 
-const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsCalibrationWarning = "¡Por favor, asegúrese que la punta está a temperatura ambiente antes de continuar!";
 const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";// Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";// <=17 chars
 const char* WarningSimpleString = "HOT!";//Must be <= 4 chars
-const char* WarningAdvancedString = "WARNING! TIP HOT!";
+const char* WarningAdvancedString = "WARNING! TIP HOT!"; 
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
-const char SettingRightChar = 'R';
-const char SettingLeftChar = 'L';
+const char SettingTrueChar = 'V'; // True in Spanish is "Verdadero"
+const char SettingFalseChar = 'F'; 
+const char SettingRightChar = 'D'; // Right is "Derecha"
+const char SettingLeftChar = 'I'; // Left is "Izquierda"
 const char SettingAutoChar = 'A';
 #endif
 #ifdef LANG_SE
