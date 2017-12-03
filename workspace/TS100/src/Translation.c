@@ -41,6 +41,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_RU
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -76,6 +77,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_ES
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -111,6 +113,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_SE
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -146,6 +149,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_IT
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -181,6 +185,7 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_FR
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -216,6 +221,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_DE
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -251,6 +257,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_SK
 const char* SettingsLongNames[16] = {
 	/*These are all the help text for all the settings.*/
@@ -286,6 +293,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_TR
 const char* SettingsLongNames[16] = {
 /*These are all the help text for all the settings.*/
@@ -321,6 +329,7 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 #ifdef LANG_HR
 const char* SettingsLongNames[16] = {
 /*These are all the help text for all the settings.*/
@@ -356,21 +365,23 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
 //Currently the settings names are not translated
-const char* SettingsShortNames[16] = { /**/
-"PWRSC ",    // Power Source (DC or batt)
-		"STMP ", 	// Sleep Temperature
-		"STME ", 	// Sleep Timeout
-		"SHTME ",    // Shutdown Temperature
-		"MSENSE ",    // Motion sensitivity level
-		"TMPUNT ",			//Temp in F and C
-		"ADVIDL ",    // Advanced idle display mode enable
-		"DSPROT ",    // Display rotation mode
-		"BOOST  ",    // Boost enabled
-		"BTMP ", 	// Boost temperature
-		"ASTART ",    // Automatic Start mode
-		"CLBLNK ",    // Cooldown blink
-		"TMP CAL?",    // Temperature calibration enter menu
-		"RESET? ",    // Settings reset command
-		"CAL VIN?", "ADVSLD ",    //advanced soldering screens
-		};
+const char* SettingsShortNames[16][2] = {
+    /* (<= 11) Power Source (DC or batt) */          {"Power", "source"},
+    /* (<=  9) Sleep Temperature */                  {"Sleep", "temp"},
+    /* (<=  9) Sleep Timeout */                      {"Sleep", "timeout"},
+    /* (<= 11) Shutdown Timeout */                   {"Shutdown", "timeout"},
+    /* (<= 13) Motion sensitivity level */           {"Motion", "sensitivity"},
+    /* (<= 13) Temp in F and C */                    {"Temperature", "units"},
+    /* (<= 13) Advanced idle display mode enable */  {"Detailed", "idle screen"},
+    /* (<= 13) Display rotation mode */              {"Display", "orientation"},
+    /* (<= 13) Boost enabled */                      {"Boost mode", "enabled"},
+    /* (<=  9) Boost temperature */                  {"Boost", "temp"},
+    /* (<= 13) Automatic Start mode */               {"Auto", "start"},
+    /* (<= 13) Cooldown blink */                     {"Cooldown", "blink"},
+    /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
+    /* (<= 16) Settings reset command */             {"Factory", "Reset?"},
+    /* (<= 16) Calibrate input voltage */            {"Calibrate", "input voltage?"},
+    /* (<= 13) Advanced soldering screens */         {"Detailed", "solder screen"},
+    };

@@ -183,6 +183,11 @@ void OLED::setCursor(int16_t x, int16_t y) {
 	cursor_y = y;
 }
 
+void OLED::setCharCursor(int16_t x, int16_t y) {
+  cursor_x = x * fontWidth;
+  cursor_y = y * fontHeight;
+}
+
 void OLED::setFont(uint8_t fontNumber) {
 	if (fontNumber == 1) {
 		//small font

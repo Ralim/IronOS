@@ -9,7 +9,7 @@
 #define TRANSLATION_H_
 
 extern const char* SettingsLongNames[16];
-extern const char* SettingsShortNames[16];
+extern const char* SettingsShortNames[16][2];
 extern const char* SettingsCalibrationWarning;
 extern const char* UVLOWarningString;
 extern const char* SleepingSimpleString;
