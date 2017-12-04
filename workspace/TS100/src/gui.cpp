@@ -65,6 +65,20 @@ const menuitem settingsMenu[] = { /*Struct used for all settings options in the 
 };
 
 
+static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
+  lcd.setFont(0);
+  lcd.setCharCursor(0, 0);
+  lcd.print(SettingsShortNames[shortDescIndex][0]);
+}
+
+static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
+  lcd.setFont(1);
+  lcd.setCharCursor(0, 0);
+  lcd.print(SettingsShortNames[shortDescIndex][0]);
+  lcd.setCharCursor(0, 1);
+  lcd.print(SettingsShortNames[shortDescIndex][1]);
+}
+
 /**
  * Prints two small lines of short description
  * and prepares cursor in big font after it.
@@ -72,12 +86,15 @@ const menuitem settingsMenu[] = { /*Struct used for all settings options in the 
  * @param cursorCharPosition Custom cursor char position to set after printing description.
  */
 static void printShortDescription(uint32_t shortDescIndex, uint16_t cursorCharPosition) {
-  lcd.setFont(1);
-  lcd.setCharCursor(0, 0);
-  lcd.print(SettingsShortNames[shortDescIndex][0]);
-  lcd.setCharCursor(0, 1);
-  lcd.print(SettingsShortNames[shortDescIndex][1]);
+  //print short description (default single line, explicit double line)
+  if(SettingsShortNameType == SHORT_NAME_DOUBLE_LINE) {
+    printShortDescriptionDoubleLine(shortDescIndex);
+  }
+  else {
+    printShortDescriptionSingleLine(shortDescIndex);
+  }
 
+  //prepare cursor for value
   lcd.setFont(0);
   lcd.setCharCursor(cursorCharPosition, 0);
 }

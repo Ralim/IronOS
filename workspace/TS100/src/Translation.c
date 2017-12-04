@@ -6,6 +6,50 @@
  */
 #include "Translation.h"
 
+// TEMPLATES for short names - choose one and use it as base for your translation:
+
+//const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+//const char* SettingsShortNames[16][2] = {
+//    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+//    /* (<= 4) Sleep temperature                  */ {"STMP"},
+//    /* (<= 4) Sleep timeout                      */ {"STME"},
+//    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+//    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+//    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+//    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+//    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+//    /* (<= 6) Boost enabled                      */ {"BOOST"},
+//    /* (<= 4) Boost temperature                  */ {"BTMP"},
+//    /* (<= 6) Automatic start mode               */ {"ASTART"},
+//    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+//    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+//    /* (<= 8) Settings reset command             */ {"RESET?"},
+//    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+//    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+//};
+
+//const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+//const char* SettingsShortNames[16][2] = {
+//    /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
+//    /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
+//    /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
+//    /* (<= 11) Shutdown timeout                   */ {"Shutdown", "timeout"},
+//    /* (<= 13) Motion sensitivity level           */ {"Motion", "sensitivity"},
+//    /* (<= 13) Temperature in F and C             */ {"Temperature", "units"},
+//    /* (<= 13) Advanced idle display mode enabled */ {"Detailed", "idle screen"},
+//    /* (<= 13) Display rotation mode              */ {"Display", "orientation"},
+//    /* (<= 13) Boost enabled                      */ {"Boost mode", "enabled"},
+//    /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
+//    /* (<= 13) Automatic start mode               */ {"Auto", "start"},
+//    /* (<= 13) Cooldown blink                     */ {"Cooldown", "blink"},
+//    /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
+//    /* (<= 16) Settings reset command             */ {"Factory", "Reset?"},
+//    /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
+//    /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
+//};
+
+
+
 #ifdef LANG_EN
 const char* SettingsLongNames[16] = {
 /*These are all the help text for all the settings.*/
@@ -40,7 +84,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
+    /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
+    /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
+    /* (<= 11) Shutdown timeout                   */ {"Shutdown", "timeout"},
+    /* (<= 13) Motion sensitivity level           */ {"Motion", "sensitivity"},
+    /* (<= 13) Temperature in F and C             */ {"Temperature", "units"},
+    /* (<= 13) Advanced idle display mode enabled */ {"Detailed", "idle screen"},
+    /* (<= 13) Display rotation mode              */ {"Display", "orientation"},
+    /* (<= 13) Boost enabled                      */ {"Boost mode", "enabled"},
+    /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
+    /* (<= 13) Automatic start mode               */ {"Auto", "start"},
+    /* (<= 13) Cooldown blink                     */ {"Cooldown", "blink"},
+    /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
+    /* (<= 16) Settings reset command             */ {"Factory", "Reset?"},
+    /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
+    /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
+};
 #endif
+
+
 
 #ifdef LANG_RU
 const char* SettingsLongNames[16] = {
@@ -76,7 +142,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_ES
 const char* SettingsLongNames[16] = {
@@ -112,7 +200,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_SE
 const char* SettingsLongNames[16] = {
@@ -148,7 +258,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_IT
 const char* SettingsLongNames[16] = {
@@ -184,7 +316,29 @@ const char SettingFalseChar = 'D';
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_FR
 const char* SettingsLongNames[16] = {
@@ -220,7 +374,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_DE
 const char* SettingsLongNames[16] = {
@@ -256,7 +432,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_SK
 const char* SettingsLongNames[16] = {
@@ -292,7 +490,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_TR
 const char* SettingsLongNames[16] = {
@@ -328,7 +548,29 @@ const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[16][2] = {
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
 #endif
+
+
 
 #ifdef LANG_HR
 const char* SettingsLongNames[16] = {
@@ -364,24 +606,24 @@ const char SettingFalseChar = '-';
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
-#endif
 
-//Currently the settings names are not translated
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
 const char* SettingsShortNames[16][2] = {
-    /* (<= 11) Power Source (DC or batt) */          {"Power", "source"},
-    /* (<=  9) Sleep Temperature */                  {"Sleep", "temp"},
-    /* (<=  9) Sleep Timeout */                      {"Sleep", "timeout"},
-    /* (<= 11) Shutdown Timeout */                   {"Shutdown", "timeout"},
-    /* (<= 13) Motion sensitivity level */           {"Motion", "sensitivity"},
-    /* (<= 13) Temp in F and C */                    {"Temperature", "units"},
-    /* (<= 13) Advanced idle display mode enable */  {"Detailed", "idle screen"},
-    /* (<= 13) Display rotation mode */              {"Display", "orientation"},
-    /* (<= 13) Boost enabled */                      {"Boost mode", "enabled"},
-    /* (<=  9) Boost temperature */                  {"Boost", "temp"},
-    /* (<= 13) Automatic Start mode */               {"Auto", "start"},
-    /* (<= 13) Cooldown blink */                     {"Cooldown", "blink"},
-    /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
-    /* (<= 16) Settings reset command */             {"Factory", "Reset?"},
-    /* (<= 16) Calibrate input voltage */            {"Calibrate", "input voltage?"},
-    /* (<= 13) Advanced soldering screens */         {"Detailed", "solder screen"},
-    };
+    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
+    /* (<= 4) Sleep temperature                  */ {"STMP"},
+    /* (<= 4) Sleep timeout                      */ {"STME"},
+    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
+    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
+    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
+    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
+    /* (<= 6) Display rotation mode              */ {"DSPROT"},
+    /* (<= 6) Boost enabled                      */ {"BOOST"},
+    /* (<= 4) Boost temperature                  */ {"BTMP"},
+    /* (<= 6) Automatic start mode               */ {"ASTART"},
+    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
+    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
+    /* (<= 8) Settings reset command             */ {"RESET?"},
+    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
+    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+};
+#endif
