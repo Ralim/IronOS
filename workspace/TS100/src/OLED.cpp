@@ -99,42 +99,42 @@ void OLED::refresh() {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(char c, char PrecursorCommand) {
-	if (c < ' ') {
-	  return;
-	}
+  if (c < ' ') {
+    return;
+  }
 
-	//We are left with
-	uint8_t* charPointer;
+  //We are left with
+  uint8_t* charPointer;
 
-	uint16_t index = 0;
-	if (PrecursorCommand == 0) {
+  uint16_t index = 0;
+  if (PrecursorCommand == 0) {
     //Fonts are offset to start at the space char
-	  index = (c - ' ');
-	}
-	else {
-		//This is for extended range
-		//We decode the precursor command to find the offset
-		//Latin starts at 96
-		c -= 0x80;
+    index = (c - ' ');
+  }
+  else {
+    //This is for extended range
+    //We decode the precursor command to find the offset
+    //Latin starts at 96
+    c -= 0x80;
 
-		switch (PrecursorCommand) {
+    switch (PrecursorCommand) {
 
-		  case 0xC2: index = (96 - 32) + (c); break;
+      case 0xC2: index = (96 - 32) + (c); break;  //-32 compensate for chars excluded from font C2 section
       case 0xC3: index = (128) + (c); break;
       case 0xD0: index = (192) + (c); break;
       case 0xD1: index = (256) + (c); break;
 
       default: return;
     }
-	}
+  }
 
-	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
+  charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
 
-	if (cursor_x >= 0 && cursor_x < 96) {
-	  drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
-	}
+  if (cursor_x >= 0 && cursor_x < 96) {
+    drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
+  }
 
-	cursor_x += fontWidth;
+  cursor_x += fontWidth;
 }
 
 void OLED::displayOnOff(bool on) {
