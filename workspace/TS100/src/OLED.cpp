@@ -119,7 +119,7 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 
 		switch (PrecursorCommand) {
 
-		  case 0xC2: index = (96) + (c); break;
+		  case 0xC2: index = (96 - 32) + (c); break;
       case 0xC3: index = (128) + (c); break;
       case 0xD0: index = (192) + (c); break;
       case 0xD1: index = (256) + (c); break;
