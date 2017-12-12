@@ -41,7 +41,7 @@ int main(void) {
 	setTipPWM(0);
 	lcd.initialize();    //start up the LCD
 	lcd.setFont(0);    //default to bigger font
-	accel.initalize();    //this sets up the I2C registers and loads up the default settings
+	accel.initalize(); //this sets up the I2C registers and loads up the default settings
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();    //load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
@@ -63,8 +63,8 @@ int main(void) {
 	MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
 
 	/* Create the objects*/
-	rotationChangedSemaphore = xSemaphoreCreateBinary();    // Used to unlock rotation thread
-	accelDataAvailableSemaphore = xSemaphoreCreateBinary();    // Used to unlock the movement thread
+	rotationChangedSemaphore = xSemaphoreCreateBinary(); // Used to unlock rotation thread
+	accelDataAvailableSemaphore = xSemaphoreCreateBinary(); // Used to unlock the movement thread
 	/* Start scheduler */
 	osKernelStart();
 
@@ -103,8 +103,12 @@ ButtonState getButtonState() {
 	static uint32_t previousStateChange = 0;
 	const uint16_t timeout = 400;
 	uint8_t currentState;
-	currentState = (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0) << 0;
-	currentState |= (HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ? 1 : 0) << 1;
+	currentState = (
+			HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ?
+					1 : 0) << 0;
+	currentState |= (
+			HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ?
+					1 : 0) << 1;
 
 	if (currentState)
 		lastButtonTime = HAL_GetTick();
@@ -119,7 +123,7 @@ ButtonState getButtonState() {
 			else if (currentState == 0x02)
 				return BUTTON_B_LONG;
 			else
-				return BUTTON_NONE;    // Both being held case, we dont long hold this
+				return BUTTON_NONE; // Both being held case, we dont long hold this
 		} else
 			return BUTTON_NONE;
 	} else {
@@ -194,9 +198,11 @@ static bool checkVoltageForExit() {
 			lcd.print("Undervoltage");
 			lcd.setCursor(0, 8);
 			lcd.print("Input V: ");
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10,
+					2);
 			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10,
+					1);
 			lcd.print("V");
 
 		} else {
@@ -216,7 +222,8 @@ static void gui_drawBatteryIcon() {
 		//User is on a lithium battery
 		//we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
-		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv) / cellCount;
+		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv)
+				/ cellCount;
 		//Should give us approx cell voltage X10
 		//Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
@@ -240,33 +247,33 @@ static void gui_solderingTempAdjust() {
 		if (buttons)
 			lastChange = HAL_GetTick();
 		switch (buttons) {
-			case BUTTON_NONE:
-				//stay
-				break;
-			case BUTTON_BOTH:
-				//exit
-				return;
-				break;
-			case BUTTON_B_LONG:
+		case BUTTON_NONE:
+			//stay
+			break;
+		case BUTTON_BOTH:
+			//exit
+			return;
+			break;
+		case BUTTON_B_LONG:
 
-				break;
-			case BUTTON_F_LONG:
+			break;
+		case BUTTON_F_LONG:
 
-				break;
-			case BUTTON_F_SHORT:
-				if (lcd.getRotation()) {
-					systemSettings.SolderingTemp += 10;    //add 10
-				} else {
-					systemSettings.SolderingTemp -= 10;    //sub 10
-				}
-				break;
-			case BUTTON_B_SHORT:
-				if (!lcd.getRotation()) {
-					systemSettings.SolderingTemp += 10;    //add 10
-				} else {
-					systemSettings.SolderingTemp -= 10;    //sub 10
-				}
-				break;
+			break;
+		case BUTTON_F_SHORT:
+			if (lcd.getRotation()) {
+				systemSettings.SolderingTemp += 10;    //add 10
+			} else {
+				systemSettings.SolderingTemp -= 10;    //sub 10
+			}
+			break;
+		case BUTTON_B_SHORT:
+			if (!lcd.getRotation()) {
+				systemSettings.SolderingTemp += 10;    //add 10
+			} else {
+				systemSettings.SolderingTemp -= 10;    //sub 10
+			}
+			break;
 		}
 		// constrain between 50-450 C
 		if (systemSettings.temperatureInF) {
@@ -307,7 +314,8 @@ static void gui_settingsMenu() {
 	settingsResetRequest = false;
 	bool earlyExit = false;
 	uint32_t descriptionStart = 0;
-	while ((settingsMenu[currentScreen].description != NULL) && earlyExit == false) {
+	while ((settingsMenu[currentScreen].description != NULL)
+			&& earlyExit == false) {
 		lcd.setFont(0);
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
@@ -318,11 +326,13 @@ static void gui_settingsMenu() {
 		} else {
 			//Draw description
 			//draw string starting from descriptionOffset
-			int16_t maxOffset = strlen(settingsMenu[currentScreen].description) + 5;
+			int16_t maxOffset = strlen(settingsMenu[currentScreen].description)
+					+ 5;
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
-			int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart) / 150) % maxOffset);
+			int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart)
+					/ 150) % maxOffset);
 			//^ Rolling offset based on time
 			lcd.setCursor(12 * (7 - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
@@ -331,39 +341,39 @@ static void gui_settingsMenu() {
 		ButtonState buttons = getButtonState();
 
 		switch (buttons) {
-			case BUTTON_BOTH:
-				earlyExit = true;    //will make us exit next loop
+		case BUTTON_BOTH:
+			earlyExit = true;    //will make us exit next loop
+			descriptionStart = 0;
+			break;
+		case BUTTON_F_SHORT:
+			//increment
+			if (descriptionStart == 0)
+				settingsMenu[currentScreen].incrementHandler.func();
+			else
 				descriptionStart = 0;
-				break;
-			case BUTTON_F_SHORT:
-				//increment
-				if (descriptionStart == 0)
-					settingsMenu[currentScreen].incrementHandler.func();
-				else
-					descriptionStart = 0;
-				break;
-			case BUTTON_B_SHORT:
-				if (descriptionStart == 0)
-					currentScreen++;
-				else
-					descriptionStart = 0;
-				break;
-			case BUTTON_F_LONG:
-				if (HAL_GetTick() - autoRepeatTimer > 200) {
-					settingsMenu[currentScreen].incrementHandler.func();
-					autoRepeatTimer = HAL_GetTick();
-					descriptionStart = 0;
-				}
-				break;
-			case BUTTON_B_LONG:
-				if (HAL_GetTick() - autoRepeatTimer > 200) {
-					currentScreen++;
-					autoRepeatTimer = HAL_GetTick();
-					descriptionStart = 0;
-				}
-				break;
-			case BUTTON_NONE:
-				break;
+			break;
+		case BUTTON_B_SHORT:
+			if (descriptionStart == 0)
+				currentScreen++;
+			else
+				descriptionStart = 0;
+			break;
+		case BUTTON_F_LONG:
+			if (HAL_GetTick() - autoRepeatTimer > 200) {
+				settingsMenu[currentScreen].incrementHandler.func();
+				autoRepeatTimer = HAL_GetTick();
+				descriptionStart = 0;
+			}
+			break;
+		case BUTTON_B_LONG:
+			if (HAL_GetTick() - autoRepeatTimer > 200) {
+				currentScreen++;
+				autoRepeatTimer = HAL_GetTick();
+				descriptionStart = 0;
+			}
+			break;
+		case BUTTON_NONE:
+			break;
 		}
 
 		lcd.refresh();    //update the LCD
@@ -439,17 +449,20 @@ static int gui_SolderingSleepingMode() {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return 0;
-		if ((HAL_GetTick() - lastMovementTime < 1000) || (HAL_GetTick() - lastButtonTime < 1000))
+		if ((HAL_GetTick() - lastMovementTime < 1000)
+				|| (HAL_GetTick() - lastButtonTime < 1000))
 			return 0;    //user moved or pressed a button, go back to soldering
 		if (checkVoltageForExit())
 			return 1;    //return non-zero on error
 
 		if (systemSettings.temperatureInF)
 			currentlyActiveTemperatureTarget = ftoTipMeasurement(
-					min(systemSettings.SleepTemp, systemSettings.SolderingTemp));
+					min(systemSettings.SleepTemp,
+							systemSettings.SolderingTemp));
 		else
 			currentlyActiveTemperatureTarget = ctoTipMeasurement(
-					min(systemSettings.SleepTemp, systemSettings.SolderingTemp));
+					min(systemSettings.SleepTemp,
+							systemSettings.SolderingTemp));
 		//draw the lcd
 		uint16_t tipTemp;
 		if (systemSettings.temperatureInF)
@@ -471,9 +484,11 @@ static int gui_SolderingSleepingMode() {
 				lcd.print("C");
 
 			lcd.print(" ");
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10,
+					2);
 			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10,
+					1);
 			lcd.drawChar('V');
 		} else {
 			lcd.setFont(0);
@@ -484,7 +499,7 @@ static int gui_SolderingSleepingMode() {
 			else
 				lcd.drawSymbol(1);
 		}
-		if (systemSettings.ShutdownTime)    //only allow shutdown exit if time > 0
+		if (systemSettings.ShutdownTime)  //only allow shutdown exit if time > 0
 			if (lastMovementTime)
 				if (((uint32_t) (HAL_GetTick() - lastMovementTime))
 						> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
@@ -522,31 +537,31 @@ static void gui_solderingMode() {
 
 		ButtonState buttons = getButtonState();
 		switch (buttons) {
-			case BUTTON_NONE:
-				//stay
-				boostModeOn = false;
-				break;
-			case BUTTON_BOTH:
-				//exit
-				return;
-				break;
-			case BUTTON_B_LONG:
-				return;    //exit on back long hold
-				break;
-			case BUTTON_F_LONG:
-				//if boost mode is enabled turn it on
-				if (systemSettings.boostModeEnabled)
-					boostModeOn = true;
-				break;
-			case BUTTON_F_SHORT:
-			case BUTTON_B_SHORT: {
-				uint16_t oldTemp = systemSettings.SolderingTemp;
-				gui_solderingTempAdjust();    //goto adjust temp mode
-				if (oldTemp != systemSettings.SolderingTemp) {
-					saveSettings();    //only save on change
-				}
+		case BUTTON_NONE:
+			//stay
+			boostModeOn = false;
+			break;
+		case BUTTON_BOTH:
+			//exit
+			return;
+			break;
+		case BUTTON_B_LONG:
+			return;    //exit on back long hold
+			break;
+		case BUTTON_F_LONG:
+			//if boost mode is enabled turn it on
+			if (systemSettings.boostModeEnabled)
+				boostModeOn = true;
+			break;
+		case BUTTON_F_SHORT:
+		case BUTTON_B_SHORT: {
+			uint16_t oldTemp = systemSettings.SolderingTemp;
+			gui_solderingTempAdjust();    //goto adjust temp mode
+			if (oldTemp != systemSettings.SolderingTemp) {
+				saveSettings();    //only save on change
 			}
-				break;
+		}
+			break;
 		}
 		//else we update the screen information
 		lcd.setCursor(0, 0);
@@ -616,15 +631,19 @@ static void gui_solderingMode() {
 		//Update the setpoints for the temperature
 		if (boostModeOn) {
 			if (systemSettings.temperatureInF)
-				currentlyActiveTemperatureTarget = ftoTipMeasurement(systemSettings.BoostTemp);
+				currentlyActiveTemperatureTarget = ftoTipMeasurement(
+						systemSettings.BoostTemp);
 			else
-				currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.BoostTemp);
+				currentlyActiveTemperatureTarget = ctoTipMeasurement(
+						systemSettings.BoostTemp);
 
 		} else {
 			if (systemSettings.temperatureInF)
-				currentlyActiveTemperatureTarget = ftoTipMeasurement(systemSettings.SolderingTemp);
+				currentlyActiveTemperatureTarget = ftoTipMeasurement(
+						systemSettings.SolderingTemp);
 			else
-				currentlyActiveTemperatureTarget = ctoTipMeasurement(systemSettings.SolderingTemp);
+				currentlyActiveTemperatureTarget = ctoTipMeasurement(
+						systemSettings.SolderingTemp);
 		}
 
 		//Undervoltage test
@@ -634,7 +653,8 @@ static void gui_solderingMode() {
 
 		lcd.refresh();
 		if (systemSettings.sensitivity)
-			if (HAL_GetTick() - lastMovementTime > sleepThres && HAL_GetTick() - lastButtonTime > sleepThres) {
+			if (HAL_GetTick() - lastMovementTime > sleepThres
+					&& HAL_GetTick() - lastButtonTime > sleepThres) {
 				if (gui_SolderingSleepingMode()) {
 					return;    //If the function returns non-0 then exit
 				}
@@ -669,74 +689,78 @@ void startGUITask(void const * argument) {
 
 	uint8_t animationStep = 0;
 	uint8_t tempWarningState = 0;
+
+	HAL_IWDG_Refresh(&hiwdg);
+	if (showBootLogoIfavailable())
+		waitForButtonPressOrTimeout(2000);
+	HAL_IWDG_Refresh(&hiwdg);
 	if (systemSettings.autoStartMode) {
 		//jump directly to the autostart mode
 		if (systemSettings.autoStartMode == 1)
 			gui_solderingMode();
 	}
-	HAL_IWDG_Refresh(&hiwdg);
-	if (showBootLogoIfavailable())
-		waitForButtonPressOrTimeout(1000);
-	HAL_IWDG_Refresh(&hiwdg);
 #if ACCELDEBUG
 
 	for (;;) {
 		HAL_IWDG_Refresh(&hiwdg);
 		osDelay(100);
 	}
+	//^ Kept here for a way to block this thread
 #endif
-//^ Kept here for a way to block this thread
+
 	for (;;) {
 		ButtonState buttons = getButtonState();
 		if (tempWarningState == 2)
 			buttons = BUTTON_F_SHORT;
 		switch (buttons) {
-			case BUTTON_NONE:
-				//Do nothing
-				break;
-			case BUTTON_BOTH:
-				//Not used yet
-				break;
+		case BUTTON_NONE:
+			//Do nothing
+			break;
+		case BUTTON_BOTH:
+			//Not used yet
+			break;
 
-			case BUTTON_B_LONG:
-				//Show the version information
-			{
-				lcd.clearScreen();			//Ensure the buffer starts clean
-				lcd.setCursor(0, 0);		//Position the cursor at the 0,0 (top left)
-				lcd.setFont(1);					//small font
-				lcd.print((char*) "V2.00");    //Print version number
-				lcd.setCursor(0, 8);    //second line
-				lcd.print(__DATE__);    //print the compile date
-				lcd.refresh();
-				waitForButtonPress();
-				lcd.setFont(0);					//reset font
+		case BUTTON_B_LONG:
+			//Show the version information
+		{
+			lcd.clearScreen();			//Ensure the buffer starts clean
+			lcd.setCursor(0, 0);	//Position the cursor at the 0,0 (top left)
+			lcd.setFont(1);					//small font
+			lcd.print((char*) "V2.00");    //Print version number
+			lcd.setCursor(0, 8);    //second line
+			lcd.print(__DATE__);    //print the compile date
+			lcd.refresh();
+			waitForButtonPress();
+			lcd.setFont(0);					//reset font
 
-			}
-				break;
-			case BUTTON_F_LONG:
-				gui_solderingTempAdjust();
-				saveSettings();
-				break;
-			case BUTTON_F_SHORT:
-				lcd.setFont(0);
-				lcd.displayOnOff(true);    //turn lcd on
-				gui_solderingMode();    //enter soldering mode
-				tempWarningState = 0;    //make sure warning can show
-				break;
-			case BUTTON_B_SHORT:
-				lcd.setFont(0);
-				lcd.displayOnOff(true);    //turn lcd on
-				gui_settingsMenu();    //enter the settings menu
-				saveSettings();
-				setCalibrationOffset(systemSettings.CalibrationOffset);    //ensure cal offset is applied
-				break;
+		}
+			break;
+		case BUTTON_F_LONG:
+			gui_solderingTempAdjust();
+			saveSettings();
+			break;
+		case BUTTON_F_SHORT:
+			lcd.setFont(0);
+			lcd.displayOnOff(true);    //turn lcd on
+			gui_solderingMode();    //enter soldering mode
+			tempWarningState = 0;    //make sure warning can show
+			break;
+		case BUTTON_B_SHORT:
+			lcd.setFont(0);
+			lcd.displayOnOff(true);    //turn lcd on
+			gui_settingsMenu();    //enter the settings menu
+			saveSettings();
+			setCalibrationOffset(systemSettings.CalibrationOffset); //ensure cal offset is applied
+			break;
 		}
 		currentlyActiveTemperatureTarget = 0;    //ensure tip is off
 
 		if (systemSettings.sensitivity) {
-			if ((HAL_GetTick() - lastMovementTime) > 60000 && (HAL_GetTick() - lastButtonTime) > 60000)
+			if ((HAL_GetTick() - lastMovementTime) > 60000
+					&& (HAL_GetTick() - lastButtonTime) > 60000)
 				lcd.displayOnOff(false);    // turn lcd off when no movement
-			else if (HAL_GetTick() - lastMovementTime < 1000 || HAL_GetTick() - lastButtonTime < 1000) /*Use short time for test, and prevent lots of I2C writes for no need*/
+			else if (HAL_GetTick() - lastMovementTime < 1000
+					|| HAL_GetTick() - lastButtonTime < 1000) /*Use short time for test, and prevent lots of I2C writes for no need*/
 				lcd.displayOnOff(true);    //turn lcd back on
 
 		}
@@ -773,9 +797,11 @@ void startGUITask(void const * argument) {
 			}
 			lcd.setCursor(0, 8);
 			lcd.print("Input V: ");
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10,
+					2);
 			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10,
+					1);
 			lcd.print("V");
 
 		} else {
@@ -785,7 +811,7 @@ void startGUITask(void const * argument) {
 				lcd.setCursor(0, 0);
 				gui_drawBatteryIcon();
 			} else {
-				lcd.drawArea(0, 0, 84, 16, idleScreenBGF);    //Needs to be flipped
+				lcd.drawArea(0, 0, 84, 16, idleScreenBGF); //Needs to be flipped
 				lcd.setCursor(84, 0);
 				gui_drawBatteryIcon();
 			}
@@ -857,7 +883,7 @@ void startPIDTask(void const * argument) {
 
 			setTipPWM(output);
 		} else {
-			setTipPWM(0);    //disable the output driver if the output is set to be off elsewhere
+			setTipPWM(0); //disable the output driver if the output is set to be off elsewhere
 			integralCount = 0;
 			backoffOverflow = 0;
 		}
@@ -886,7 +912,7 @@ void startMOVTask(void const * argument) {
 
 	for (;;) {
 		int32_t threshold = 1200 + (9 * 200);
-		threshold -= systemSettings.sensitivity * 200;    // 200 is the step size
+		threshold -= systemSettings.sensitivity * 200;   // 200 is the step size
 		accel.getAxisReadings(&tx, &ty, &tz);
 
 		datax[currentPointer] = (int32_t) tx;
@@ -959,19 +985,20 @@ void startRotationTask(void const * argument) {
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 //^ We hold off enabling these until now to ensure the semaphore is available to be used first
 	switch (systemSettings.OrientationMode) {
-		case 0:
-			lcd.setRotation(false);
-			break;
-		case 1:
-			lcd.setRotation(true);
-			break;
-		case 2:
-			lcd.setRotation(false);
-			break;
+	case 0:
+		lcd.setRotation(false);
+		break;
+	case 1:
+		lcd.setRotation(true);
+		break;
+	case 2:
+		lcd.setRotation(false);
+		break;
 	}
 	for (;;) {
 		if ( xSemaphoreTake( rotationChangedSemaphore, portMAX_DELAY ) == pdTRUE
-				|| (HAL_GPIO_ReadPin(INT_Orientation_GPIO_Port, INT_Orientation_Pin) == GPIO_PIN_RESET)) {
+				|| (HAL_GPIO_ReadPin(INT_Orientation_GPIO_Port,
+				INT_Orientation_Pin) == GPIO_PIN_RESET)) {
 			// a rotation event has occured
 			bool rotation = accel.getOrientation();
 			if (systemSettings.OrientationMode == 2)
@@ -986,7 +1013,8 @@ void startRotationTask(void const * argument) {
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	static signed long xHigherPriorityTaskWoken;
 	if (GPIO_Pin == INT_Orientation_Pin) {
-		xSemaphoreGiveFromISR(rotationChangedSemaphore, &xHigherPriorityTaskWoken);
+		xSemaphoreGiveFromISR(rotationChangedSemaphore,
+				&xHigherPriorityTaskWoken);
 	} else if (GPIO_Pin == INT_Movement_Pin) {
 		//New data is available for reading from the unit
 		//xSemaphoreGiveFromISR(accelDataAvailableSemaphore, &xHigherPriorityTaskWoken);

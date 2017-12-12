@@ -392,7 +392,41 @@ const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+#ifdef LANG_HUN
+const char* SettingsLongNames[16] = {
+/*These are all the help text for all the settings.*/
+/*No requirements on spacing or length*/
+"Áramforrás. Beállítja a lekapcsolási feszültséget. <DC 10V> <S 3.3V cellánként>",    //Power Source
+		"Alvási hőmérséklet <C>",    //Sleep Temp
+		"Elalvási időzítő <Perc/Másodperc>",    //Sleep Timeout
+		"Kikapcsolási időzítő <Minutes>",    //Shutdown Time
+		"Mozgás érzékenység beállítása. <0.Ki 1.kevésbé érzékeny 9.legérzékenyebb>",    //Motion Sensitivity
+		"Hőmérsékleti egység <C=Celsius F=Fahrenheit>",    //Temp Unit
+		"Részletes információ megjelenítése kisebb betűméretben a készenléti képernyőn.",    //Detailed Information
+		"Megjelenítési tájolás <A. Automatikus L. Balkezes R. Jobbkezes>",    //Orientation
+		"Elülső gombbal lépjen boost módba, 450C forrasztás közben",    //Boost enable
+		"Hőmérséklet \"boost\" módban",    //Boost Temp
+		"Bekapcsolás után automatikusan lépjen forrasztás módba. T=Forrasztás, S=Alvó mód,F=Ki",    //Auto start
+		"Villogjon a hőmérséklet hűlés közben, amíg a hegy forró.",    //Cooling Blink
+		"Hegy hőmérsékletének kalibrálása",    //Calibrate Tip
+		"Beállítások alaphelyzetbe állítása",    //Reset Settings
+		"A bemeneti feszültség kalibrálása. Röviden megnyomva állítsa be, hosszan nyomja meg a kilépéshez.",    //VIN Cal
+		"Részletes információk megjelenítése forrasztás közben",    //ADV SLD
+		};
 
+const char* SettingsCalibrationWarning = "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
+const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
+const char* SleepingSimpleString = "Zzzz";    // Must be <= 4 chars
+const char* SleepingAdvancedString = "Alvás...";    // <=17 chars
+const char* WarningSimpleString = "HOT!";    //Must be <= 4 chars
+const char* WarningAdvancedString = "FIGYELEM! FORRÓ HEGY!";
+
+const char SettingTrueChar = 'T';
+const char SettingFalseChar = 'F';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+#endif
 //Currently the settings names are not translated
 const char* SettingsShortNames[16] = { /**/
 "PWRSC ",    // Power Source (DC or batt)
