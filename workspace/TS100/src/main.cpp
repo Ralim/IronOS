@@ -880,12 +880,18 @@ void startPIDTask(void const * argument) {
 				output = 0;
 			} else
 				backoffOverflow = 0;
-
+			if (currentlyActiveTemperatureTarget < rawTemp) {
+				output = 0;
+				integralCount = 0;
+				backoffOverflow = 0;
+				derivativeLastValue = 0;
+			}
 			setTipPWM(output);
 		} else {
 			setTipPWM(0); //disable the output driver if the output is set to be off elsewhere
 			integralCount = 0;
 			backoffOverflow = 0;
+			derivativeLastValue = 0;
 		}
 		derivativeLastValue = rawTemp;			//store for next loop
 		HAL_IWDG_Refresh(&hiwdg);
