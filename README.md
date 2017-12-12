@@ -1,12 +1,3 @@
-# Version 2 development branch
-
-This firmware is not complete, it is missing some features such as :
-
-* Russian font has issues atm
-* Soldering detailed view coming
-While it most likely will work, It is not meant for production use *just* yet!
-
-
 # TS100
 This is a complete rewrite of the open source software for the ts100 soldering iron.
 The version two fork of this code has no shared code with the original firmware from Miniware (E-design) group.
@@ -78,7 +69,7 @@ Holding the button at the front of the iron will enter boost mode (if enabled).
 ## Settings Menu
 
 This menu allows you to cycle through all the options and set their values.
-The button near the tip cycles through the options, and the one near the usb changes the selected option.
+The button near the USB cycles through the options, and the one near the tip changes the selected option.
 Note that settings are not saved until you exit the menu, and some settings such as screen flip do not apply until a power cycle is applied.
 If you leave the unit alone (ie don't press any buttons) on a setting, after 3 seconds the screen will scroll a longer version of the name
 
