@@ -100,10 +100,9 @@ const char* SettingsShortNames[16][2] = {
 /* (<= 13) Cooldown blink                     */{ "Cooldown", "blink" },
 /* (<= 16) Temperature calibration enter menu */{ "Calibrate", "temperature?" },
 /* (<= 16) Settings reset command             */{ "Factory", "Reset?" },
-		/* (<= 16) Calibrate input voltage            */{ "Calibrate",
-				"input voltage?" },
-		/* (<= 13) Advanced soldering screen enabled  */{ "Detailed",
-				"solder screen" }, };
+/* (<= 16) Calibrate input voltage            */{ "Calibrate", "input voltage?" },
+/* (<= 13) Advanced soldering screen enabled  */{ "Detailed", "solder screen" },
+};
 #endif
 
 #ifdef LANG_RU
@@ -651,25 +650,25 @@ const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[16][2] = {
-	/* (<= 5) Power source (DC or batt)          */{"PWRSC"},
-	/* (<= 4) Sleep temperature                  */{"STMP"},
-	/* (<= 4) Sleep timeout                      */{"STME"},
-	/* (<= 5) Shutdown timeout                   */{"SHTME"},
-	/* (<= 6) Motion sensitivity level           */{"MSENSE"},
-	/* (<= 6) Temperature in F and C             */{"TMPUNT"},
-	/* (<= 6) Advanced idle display mode enabled */{"ADVIDL"},
-	/* (<= 6) Display rotation mode              */{"DSPROT"},
-	/* (<= 6) Boost enabled                      */{"BOOST"},
-	/* (<= 4) Boost temperature                  */{"BTMP"},
-	/* (<= 6) Automatic start mode               */{"ASTART"},
-	/* (<= 6) Cooldown blink                     */{"CLBLNK"},
-	/* (<= 8) Temperature calibration enter menu */{"TMP CAL?"},
-	/* (<= 8) Settings reset command             */{"RESET?"},
-	/* (<= 8) Calibrate input voltage            */{"CAL VIN?"},
-	/* (<= 6) Advanced soldering screen enabled  */{"ADVSLD"},
-};
+    /* (<= 11) Power source (DC or batt)          */ {"Zdroj", "napeti"},
+    /* (<=  9) Sleep temperature                  */ {"Teplota v", "r. spanku"},
+    /* (<=  9) Sleep timeout                      */ {"Cas do", "r. spanku"},
+    /* (<= 11) Shutdown timeout                   */ {"Cas do", "vypnuti"},
+    /* (<= 13) Motion sensitivity level           */ {"Citlivost", "det. pohybu"},
+    /* (<= 13) Temperature in F and C             */ {"Jednotky", "teploty"},
+    /* (<= 13) Advanced idle display mode enabled */ {"Podrobnosti", "na vych. obr."},
+    /* (<= 13) Display rotation mode              */ {"Otoceni", "obrazovky"},
+    /* (<= 13) Boost enabled                      */ {"Povolit", "boost"},
+    /* (<=  9) Boost temperature                  */ {"Teplota v", "r. boost"},
+    /* (<= 13) Automatic start mode               */ {"Auto", "start"},
+    /* (<= 13) Cooldown blink                     */ {"Blikani pri", "chladnuti"},
+    /* (<= 16) Temperature calibration enter menu */ {"Kalibrovat", "teplotu?"},
+    /* (<= 16) Settings reset command             */ {"Tovarni", "nastaveni?"},
+    /* (<= 16) Calibrate input voltage            */ {"Kalibrovat", "vstupni napeti?"},
+    /* (<= 13) Advanced soldering screen enabled  */ {"Podrobnosti", "pri pajeni"},
+    };
 #endif
 
 #ifdef LANG_HUN
