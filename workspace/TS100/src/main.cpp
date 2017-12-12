@@ -314,8 +314,7 @@ static void gui_settingsMenu() {
 	settingsResetRequest = false;
 	bool earlyExit = false;
 	uint32_t descriptionStart = 0;
-	while ((settingsMenu[currentScreen].description != NULL)
-			&& earlyExit == false) {
+	while ((settingsMenu[currentScreen].incrementHandler.func != NULL) && earlyExit == false) {
 		lcd.setFont(0);
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
