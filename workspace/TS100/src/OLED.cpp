@@ -120,14 +120,23 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 			index = (96 - 32) + (c);
 			break;  //-32 compensate for chars excluded from font C2 section
 		case 0xC3:
-			index = (128) + (c);
+			index = (128-32) + (c);
 			break;
-		case 0xD0:
+#if defined(LANG_RU) || defined(LANG_UK) || defined(LANG_SR) || defined(LANG_BG) || defined(LANG_MK)
+			case 0xD0:
 			index = (192) + (c);
 			break;
-		case 0xD1:
+			case 0xD1:
 			index = (256) + (c);
 			break;
+#else
+		case 0xC4:
+			index = (192) + (c);
+			break;
+		case 0xC5:
+			index = (256) + (c);
+			break;
+#endif
 
 		default:
 			return;
