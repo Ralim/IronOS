@@ -34,7 +34,7 @@ extern const char SettingLeftChar;
 extern const char SettingAutoChar;
 
 
-//#define LANG_EN
+#define LANG_EN
 //#define LANG_RU
 //#define LANG_ES
 //#define LANG_SE
@@ -44,6 +44,7 @@ extern const char SettingAutoChar;
 //#define LANG_CS_CZ
 //#define LANG_TR
 //#define LANG_HR
-#define LANG_DK
+//#define LANG_PL
+//#define LANG_DK
 
 #endif /* TRANSLATION_H_ */
