@@ -726,7 +726,7 @@ void startGUITask(void const * argument) {
 			lcd.clearScreen();			//Ensure the buffer starts clean
 			lcd.setCursor(0, 0);	//Position the cursor at the 0,0 (top left)
 			lcd.setFont(1);					//small font
-			lcd.print((char*) "V2.00");    //Print version number
+			lcd.print((char*) "V2.01");    //Print version number
 			lcd.setCursor(0, 8);    //second line
 			lcd.print(__DATE__);    //print the compile date
 			lcd.refresh();
