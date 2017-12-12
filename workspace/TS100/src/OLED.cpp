@@ -63,7 +63,8 @@ void OLED::initialize() {
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(5);
 	//Send the setup settings
-	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, configLength, 0xFFFF);
+	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
+			configLength, 0xFFFF);
 	//displayOnOff(true);
 
 }
@@ -73,9 +74,9 @@ void OLED::refresh() {
 	screenBuffer[0] = 0x80;
 	screenBuffer[1] = 0x21;
 	screenBuffer[2] = 0x80;
-	screenBuffer[3] = inLeftHandedMode ? 0 : 32;    //display is shifted by 32 in left handed mode as driver ram is 128 wide
+	screenBuffer[3] = inLeftHandedMode ? 0 : 32; //display is shifted by 32 in left handed mode as driver ram is 128 wide
 	screenBuffer[4] = 0x80;
-	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F;    //End address of the ram segment we are writing to (96 wide)
+	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F; //End address of the ram segment we are writing to (96 wide)
 
 	screenBuffer[6] = 0x80;    //Set pages to rollover after 2
 	screenBuffer[7] = 0x22;
@@ -88,7 +89,8 @@ void OLED::refresh() {
 	taskENTER_CRITICAL();
 	//Because I2C is shared, we cant task switch in the middle of the xfer
 
-	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1, 0xFFFF);
+	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1,
+			0xFFFF);
 	taskEXIT_CRITICAL();
 
 }
@@ -99,42 +101,49 @@ void OLED::refresh() {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(char c, char PrecursorCommand) {
-  if (c < ' ') {
-    return;
-  }
+	if (c < ' ') {
+		return;
+	}
 
-  //We are left with
-  uint8_t* charPointer;
+	//We are left with
+	uint8_t* charPointer;
 
-  uint16_t index = 0;
-  if (PrecursorCommand == 0) {
-    //Fonts are offset to start at the space char
-    index = (c - ' ');
-  }
-  else {
-    //This is for extended range
-    //We decode the precursor command to find the offset
-    //Latin starts at 96
-    c -= 0x80;
+	uint16_t index = 0;
+	if (PrecursorCommand == 0) {
+		//Fonts are offset to start at the space char
+		index = (c - ' ');
+	} else {
+		//This is for extended range
+		//We decode the precursor command to find the offset
+		//Latin starts at 96
+		c -= 0x80;
 
-    switch (PrecursorCommand) {
+		switch (PrecursorCommand) {
 
-      case 0xC2: index = (96 - 32) + (c); break;  //-32 compensate for chars excluded from font C2 section
-      case 0xC3: index = (128) + (c); break;
-      case 0xD0: index = (192) + (c); break;
-      case 0xD1: index = (256) + (c); break;
+		case 0xC2:
+			index = (96 - 32) + (c);
+			break;  //-32 compensate for chars excluded from font C2 section
+		case 0xC3:
+			index = (128) + (c);
+			break;
+		case 0xD0:
+			index = (192) + (c);
+			break;
+		case 0xD1:
+			index = (256) + (c);
+			break;
 
-      default: return;
-    }
-  }
+		default:
+			return;
+		}
+	}
 
-  charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
+	charPointer = ((uint8_t*) currentFont)
+			+ ((fontWidth * (fontHeight / 8)) * index);
 
-  if (cursor_x >= 0 && cursor_x < 96) {
-    drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
-  }
+	drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 
-  cursor_x += fontWidth;
+	cursor_x += fontWidth;
 }
 
 void OLED::displayOnOff(bool on) {
@@ -165,7 +174,8 @@ void OLED::setRotation(bool leftHanded) {
 		}
 		taskENTER_CRITICAL();
 
-		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, 50, 0xFFFF);
+		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED,
+				(uint8_t*) OLED_Setup_Array, 50, 0xFFFF);
 		taskEXIT_CRITICAL();
 		inLeftHandedMode = leftHanded;
 	}
@@ -257,26 +267,31 @@ void OLED::drawBattery(uint8_t state) {
 void OLED::drawSymbol(uint8_t symbolID) {
 	//draw a symbol to the current cursor location
 	setFont(2);
-	drawChar(' ' + symbolID);    // space offset is in all fonts, so we pad it here and remove it later
+	drawChar(' ' + symbolID); // space offset is in all fonts, so we pad it here and remove it later
 	setFont(0);
 }
 
 //Draw an area, but y must be aligned on 0/8 offset
-void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t* ptr) {
+void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
+		const uint8_t* ptr) {
 	// Splat this from x->x+wide in two strides
 	if (x < 0)
 		return;    //cutoffleft
-	if ((x + wide) > 96)
+	if ((x) > 96)
 		return;    //cutoff right
+	uint8_t width = wide;
+	if ((x + wide) > 96)
+		width = 96 - x; // trimming to draw partials
+
 	if (y == 0) {
 		//Splat first line of data
-		for (uint8_t xx = 0; xx < (wide); xx++) {
+		for (uint8_t xx = 0; xx < (width); xx++) {
 			firstStripPtr[xx + x] = ptr[xx];
 		}
 	}
 	if (y == 8 || height == 16) {
 		// Splat the second line
-		for (uint8_t xx = 0; xx < wide; xx++) {
+		for (uint8_t xx = 0; xx < width; xx++) {
 			secondStripPtr[x + xx] = ptr[xx + (height == 16 ? wide : 0)];
 
 		}

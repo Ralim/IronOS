@@ -314,7 +314,8 @@ static void gui_settingsMenu() {
 	settingsResetRequest = false;
 	bool earlyExit = false;
 	uint32_t descriptionStart = 0;
-	while ((settingsMenu[currentScreen].incrementHandler.func != NULL) && earlyExit == false) {
+	while ((settingsMenu[currentScreen].incrementHandler.func != NULL)
+			&& earlyExit == false) {
 		lcd.setFont(0);
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
@@ -331,9 +332,9 @@ static void gui_settingsMenu() {
 				descriptionStart = HAL_GetTick();
 
 			int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart)
-					/ 150) % maxOffset);
+					/ 10) % (maxOffset * 12));
 			//^ Rolling offset based on time
-			lcd.setCursor(12 * (7 - descriptionOffset), 0);
+			lcd.setCursor(((7 * 12) - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
 		}
 
@@ -376,7 +377,7 @@ static void gui_settingsMenu() {
 		}
 
 		lcd.refresh();    //update the LCD
-		GUIDelay();
+		osDelay(20);
 		HAL_IWDG_Refresh(&hiwdg);
 
 	}
