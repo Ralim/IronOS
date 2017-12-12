@@ -356,6 +356,43 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
+#ifdef LANG_CS_CZ
+const char* SettingsLongNames[16] = {
+		/*These are all the help text for all the settings.*/
+		/*No requirements on spacing or length*/
+		"Zdroj napajeni. Pri nizsim napeti se odpoji <DC=10V, xS=x*3.3V pro LiPo,LiIon...>",    //Power Source
+		"Teplota v rezimu spanku",    //Sleep Temp
+		"Cas do rezimu spanku <Minut/Sekund>",    //Sleep Timeout
+		"Cas do automatickeho vypnuti <Minut>",    //Shutdown Time
+		"Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>",    //Motion Sensitivity
+		"Jednotky mereni teploty <C=Celsius, F=Fahrenheit>",    //Temp Unit
+		"Zobrazit podrobnosti na vychozi obrazovce <Z=Zap, V=Vyp>",    //Detailed Information
+		"Otoceni displaye <A=Auto, L=Levak, P=Pravak>",    //Orientation
+		"Povolit boost drzenim leveho tlacitka pri pajeni <Z=Zap, V=Vyp>",    //Boost enable
+		"Teplota pri boostu",    //Boost Temp
+		"Pri startu ihned nahrivat hrot <Z=Zap, V=Vyp, S=Rezim spanku>",    //Auto start
+		"Blikani teploty pri chladnuti, dokud je hrot horky <Z=Zap, V=Vyp>",    //Cooling Blink
+		"Kalibrovat mereni teploty",    //Calibrate Tip
+		"Obnovit tovarni nastaveni",    //Reset Settings
+		"Kalibrovat vstupni napeti. Tlacitky upravte, podrzenim potvrdte.",    //VIN Cal
+		"Zobrazit podrobnosti pri pajeni <Z=Zap, V=Vyp>",    //ADV SLD
+		};
+
+const char* SettingsCalibrationWarning = "Ujistete se, ze hrot ma pokojovou teplotu! "; //ending space needed
+const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
+const char* SleepingSimpleString = "Zzz ";    // Must be <= 4 chars
+const char* SleepingAdvancedString = "Rezim spanku...";    // <=17 chars
+const char* WarningSimpleString = "HOT!";    //Must be <= 4 chars
+const char* WarningAdvancedString = "!! HORKY HROT !!";   // <= 16 chars
+
+const char SettingTrueChar = 'Z';
+const char SettingFalseChar = 'V';
+const char SettingRightChar = 'P';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+#endif
+
 //Currently the settings names are not translated
 const char* SettingsShortNames[16] = { /**/
 "PWRSC ",    // Power Source (DC or batt)

@@ -30,5 +30,6 @@ extern const char SettingAutoChar;
 //#define LANG_IT
 //#define LANG_FR
 //#define LANG_DE
+//#define LANG_CS_CZ
 
 #endif /* TRANSLATION_H_ */
