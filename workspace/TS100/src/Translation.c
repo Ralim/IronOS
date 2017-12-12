@@ -429,6 +429,42 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 #endif
+
+#ifdef LANG_TR
+const char* SettingsLongNames[16] = {
+/*These are all the help text for all the settings.*/
+/*No requirements on spacing or length*/
+"Güç Kaynağı. kesim geriliminı ayarlar. <DC 10V> <S 3.3V hücre başına>",    //Power Source
+		"Uyku Sıcaklığı <C>",    //Sleep Temp
+		"Uyku Zaman Aşımı <Dakika/Saniye>",    //Sleep Timeout
+		"Kapatma Zaman Aşımı <Dakika>",    //Shutdown Time
+		"Hareket Hassasiyeti <0.Kapalı 1.En az duyarlı 9.En duyarlı>",    //Motion Sensitivity
+		"Sıcaklık Ünitesi <C=Celsius F=Fahrenheit>",    //Temp Unit
+		"Boş ekranda ayrıntılı bilgileri daha küçük bir yazı tipi ile göster.",    //Detailed Information
+		"Görüntü Yönlendirme <A. Otomatik L. Solak R. Sağlak>",    //Orientation
+		"Lehimleme yaparken ön tuşa basmak Boost moduna sokar(450C)",    //Boost enable
+		"\"boost\" Modu Derecesi",    //Boost Temp
+		"Güç verildiğinde otomatik olarak lehimleme modunda başlat. T=Lehimleme Modu, S= Uyku Modu,F=Kapalı",    //Auto start
+		"Soğutma ekranında uç hala sıcakken derece yanıp sönsün.",    //Cooling Blink
+		"Ucu kalibre et.",    //Calibrate Tip
+		"Bütün ayarları sıfırla",    //Reset Settings
+		"VIN Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas.",    //VIN Cal
+		"Lehimleme yaparken detaylı bilgi göster",    //ADV SLD
+		};
+
+const char* SettingsCalibrationWarning = "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!";
+const char* UVLOWarningString = "LOW VOLT";    //Fixed width 8 chars
+const char* SleepingSimpleString = "Zzzz";    // Must be <= 4 chars
+const char* SleepingAdvancedString = "Uyuyor...";    // <=17 chars
+const char* WarningSimpleString = "HOT!";    //Must be <= 4 chars
+const char* WarningAdvancedString = "UYARI! UÇ SICAK!";
+
+const char SettingTrueChar = 'T';
+const char SettingFalseChar = 'F';
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+#endif
 //Currently the settings names are not translated
 const char* SettingsShortNames[16] = { /**/
 "PWRSC ",    // Power Source (DC or batt)

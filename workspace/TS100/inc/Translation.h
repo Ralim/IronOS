@@ -28,8 +28,10 @@ extern const char SettingAutoChar;
 //#define LANG_ES
 //#define LANG_SE
 //#define LANG_IT
-#define LANG_FR
+//#define LANG_FR
 //#define LANG_DE
 //#define LANG_CS_CZ
+//#define LANG_TR
+
 
 #endif /* TRANSLATION_H_ */
