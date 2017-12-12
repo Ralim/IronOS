@@ -64,95 +64,159 @@ const menuitem settingsMenu[] = { /*Struct used for all settings options in the 
 { NULL, { NULL }, { NULL } }    //end of menu marker. DO NOT REMOVE
 };
 
+
+static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
+  lcd.setFont(0);
+  lcd.setCharCursor(0, 0);
+  lcd.print(SettingsShortNames[shortDescIndex][0]);
+}
+
+static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
+  lcd.setFont(1);
+  lcd.setCharCursor(0, 0);
+  lcd.print(SettingsShortNames[shortDescIndex][0]);
+  lcd.setCharCursor(0, 1);
+  lcd.print(SettingsShortNames[shortDescIndex][1]);
+}
+
+/**
+ * Prints two small lines of short description
+ * and prepares cursor in big font after it.
+ * @param shortDescIndex Index to of short description.
+ * @param cursorCharPosition Custom cursor char position to set after printing description.
+ */
+static void printShortDescription(uint32_t shortDescIndex, uint16_t cursorCharPosition) {
+  //print short description (default single line, explicit double line)
+  if(SettingsShortNameType == SHORT_NAME_DOUBLE_LINE) {
+    printShortDescriptionDoubleLine(shortDescIndex);
+  }
+  else {
+    printShortDescriptionSingleLine(shortDescIndex);
+  }
+
+  //prepare cursor for value
+  lcd.setFont(0);
+  lcd.setCharCursor(cursorCharPosition, 0);
+}
+
+
 static void settings_setInputVRange(void) {
 	systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 5;
 }
+
 static void settings_displayInputVRange(void) {
-	lcd.print(SettingsShortNames[0]);
-	if (systemSettings.cutoutSetting) {
-		lcd.drawChar('0' + 2 + systemSettings.cutoutSetting);
-		lcd.drawChar('S');
-	} else {
-		lcd.print("DC");
-	}
+  printShortDescription(0, 6);
+
+  if (systemSettings.cutoutSetting) {
+    lcd.drawChar('0' + 2 + systemSettings.cutoutSetting);
+    lcd.drawChar('S');
+  }
+  else {
+    lcd.print("DC");
+  }
 }
+
 
 static void settings_setSleepTemp(void) {
 	systemSettings.SleepTemp += 10;
 	if (systemSettings.SleepTemp > 300)
 		systemSettings.SleepTemp = 50;
 }
+
 static void settings_displaySleepTemp(void) {
-	lcd.print(SettingsShortNames[1]);
+  printShortDescription(1, 5);
 	lcd.printNumber(systemSettings.SleepTemp, 3);
 }
+
+
 static void settings_setSleepTime(void) {
-	++systemSettings.SleepTime;    //Go up 1 minute at a time
-	if (systemSettings.SleepTime >= 16)
-		systemSettings.SleepTime = 1;    //can't set time over 10 mins
-//Remember that ^ is the time of no movement
+	systemSettings.SleepTime++;             //Go up 1 minute at a time
+	if (systemSettings.SleepTime >= 16) {
+	  systemSettings.SleepTime = 1;         //can't set time over 10 mins
+	}
+	//Remember that ^ is the time of no movement
 }
+
 static void settings_displaySleepTime(void) {
-	lcd.print(SettingsShortNames[2]);
-	if (systemSettings.SleepTime < 6) {
+  printShortDescription(2, 5);
+
+  if (systemSettings.SleepTime < 6) {
 		lcd.printNumber(systemSettings.SleepTime * 10, 2);
 		lcd.drawChar('S');
-	} else {
+	}
+  else {
 		lcd.printNumber(systemSettings.SleepTime - 5, 2);
 		lcd.drawChar('M');
 	}
 }
+
+
 static void settings_setShutdownTime(void) {
-	++systemSettings.ShutdownTime;
-	if (systemSettings.ShutdownTime > 60)
-		systemSettings.ShutdownTime = 0;    //wrap to off
+	systemSettings.ShutdownTime++;
+	if (systemSettings.ShutdownTime > 60) {
+	  systemSettings.ShutdownTime = 0;    //wrap to off
+	}
 }
+
 static void settings_displayShutdownTime(void) {
-	lcd.print(SettingsShortNames[3]);
+  printShortDescription(3, 6);
 	lcd.printNumber(systemSettings.ShutdownTime, 2);
 }
+
 
 static void settings_setTempF(void) {
 	systemSettings.temperatureInF = !systemSettings.temperatureInF;
 }
-static void settings_displayTempF(void) {
-	lcd.print(SettingsShortNames[5]);
 
-	if (systemSettings.temperatureInF)
-		lcd.drawChar('F');
-	else
-		lcd.drawChar('C');
+static void settings_displayTempF(void) {
+  printShortDescription(5, 7);
+
+  lcd.drawChar(
+      (systemSettings.temperatureInF)
+      ? 'F'
+      : 'C'
+  );
 }
+
 
 static void settings_setSensitivity(void) {
 	systemSettings.sensitivity++;
 	systemSettings.sensitivity = systemSettings.sensitivity % 10;
 }
+
 static void settings_displaySensitivity(void) {
-	lcd.print(SettingsShortNames[4]);
+  printShortDescription(4, 7);
 	lcd.printNumber(systemSettings.sensitivity, 1);
 }
+
 
 static void settings_setAdvancedSolderingScreens(void) {
 	systemSettings.detailedSoldering = !systemSettings.detailedSoldering;
 }
+
 static void settings_displayAdvancedSolderingScreens(void) {
-	lcd.print(SettingsShortNames[15]);
-	if (systemSettings.detailedSoldering)
-		lcd.drawChar(SettingTrueChar);
-	else
-		lcd.drawChar(SettingFalseChar);
+  printShortDescription(15, 7);
+
+  lcd.drawChar(
+      (systemSettings.detailedSoldering)
+      ? SettingTrueChar
+      : SettingFalseChar
+  );
 }
+
 
 static void settings_setAdvancedIDLEScreens(void) {
 	systemSettings.detailedIDLE = !systemSettings.detailedIDLE;
 }
+
 static void settings_displayAdvancedIDLEScreens(void) {
-	lcd.print(SettingsShortNames[6]);
-	if (systemSettings.detailedIDLE)
-		lcd.drawChar(SettingTrueChar);
-	else
-		lcd.drawChar(SettingFalseChar);
+  printShortDescription(6, 7);
+
+  lcd.drawChar(
+      (systemSettings.detailedIDLE)
+      ? SettingTrueChar
+      : SettingFalseChar
+  );
 }
 
 
@@ -160,9 +224,11 @@ static void settings_setDisplayRotation(void) {
 	systemSettings.OrientationMode++;
 	systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
 }
+
 static void settings_displayDisplayRotation(void) {
-	lcd.print(SettingsShortNames[7]);
-	switch (systemSettings.OrientationMode) {
+  printShortDescription(7, 7);
+
+  switch (systemSettings.OrientationMode) {
 		case 0:
 			lcd.drawChar(SettingRightChar);
 			break;
@@ -173,66 +239,87 @@ static void settings_displayDisplayRotation(void) {
 			lcd.drawChar(SettingAutoChar);
 			break;
 	}
-
 }
+
+
 static void settings_setBoostModeEnabled(void) {
 	systemSettings.boostModeEnabled = !systemSettings.boostModeEnabled;
 }
+
 static void settings_displayBoostModeEnabled(void) {
-	lcd.print(SettingsShortNames[8]);
-	if (systemSettings.boostModeEnabled)
-		lcd.drawChar(SettingTrueChar);
-	else
-		lcd.drawChar(SettingFalseChar);
+  printShortDescription(8, 7);
+
+  lcd.drawChar(
+      (systemSettings.boostModeEnabled)
+      ? SettingTrueChar
+      : SettingFalseChar
+  );
 }
+
+
 static void settings_setBoostTemp(void) {
-	systemSettings.BoostTemp += 10;    //Go up 10 at a time
+	systemSettings.BoostTemp += 10;         //Go up 10 at a time
 	if (systemSettings.temperatureInF) {
-		if (systemSettings.BoostTemp > 850)
-			systemSettings.BoostTemp = 480;    //loop back at 250
-	} else {
-		if (systemSettings.BoostTemp > 450)
-			systemSettings.BoostTemp = 250;    //loop back at 250
+		if (systemSettings.BoostTemp > 850) {
+		  systemSettings.BoostTemp = 480;     //loop back at 250
+		}
+	}
+	else {
+		if (systemSettings.BoostTemp > 450) {
+		  systemSettings.BoostTemp = 250;     //loop back at 250
+		}
 	}
 }
+
 static void settings_displayBoostTemp(void) {
-	lcd.print(SettingsShortNames[9]);
+  printShortDescription(9, 5);
 	lcd.printNumber(systemSettings.BoostTemp, 3);
 }
+
+
 static void settings_setAutomaticStartMode(void) {
 	systemSettings.autoStartMode++;
 	systemSettings.autoStartMode %= 2;
 }
+
 static void settings_displayAutomaticStartMode(void) {
-	lcd.print(SettingsShortNames[10]);
-	switch (systemSettings.autoStartMode) {
-		case 0:
-			lcd.drawChar(SettingFalseChar);
-			break;
-		case 1:
-			lcd.drawChar(SettingTrueChar);
-			break;
-	}
+  printShortDescription(10, 7);
+
+  lcd.drawChar(
+      (systemSettings.autoStartMode)
+      ? SettingTrueChar
+      : SettingFalseChar
+  );
 }
+
+
 static void settings_setCoolingBlinkEnabled(void) {
 	systemSettings.coolingTempBlink = !systemSettings.coolingTempBlink;
 }
+
 static void settings_displayCoolingBlinkEnabled(void) {
-	lcd.print(SettingsShortNames[11]);
-	if (systemSettings.coolingTempBlink)
-		lcd.drawChar(SettingTrueChar);
-	else
-		lcd.drawChar(SettingFalseChar);
+  printShortDescription(11, 7);
+
+  lcd.drawChar(
+      (systemSettings.coolingTempBlink)
+      ? SettingTrueChar
+      : SettingFalseChar
+  );
 }
+
+
 static void settings_setResetSettings(void) {
 	settingsResetRequest = !settingsResetRequest;
 }
+
 static void settings_displayResetSettings(void) {
-	lcd.print(SettingsShortNames[13]);
-	if (settingsResetRequest)
-		lcd.drawChar(SettingTrueChar);
-	else
-		lcd.drawChar(SettingFalseChar);
+  printShortDescription(13, 7);
+
+  lcd.drawChar(
+      (settingsResetRequest)
+      ? SettingTrueChar
+      : SettingFalseChar
+  );
 }
 
 static void settings_setCalibrate(void) {
@@ -240,16 +327,18 @@ static void settings_setCalibrate(void) {
 	//We split off here to confirm with the user
 	uint8_t maxOffset = strlen(SettingsCalibrationWarning) + 5;
 	uint32_t descriptionStart = HAL_GetTick();
+
 	lcd.setFont(0);
 	lcd.clearScreen();
 	lcd.setCursor(0, 0);
-	for (;;) {
 
+	for (;;) {
 		int16_t descriptionOffset = (((HAL_GetTick() - descriptionStart) / 150) % maxOffset);
+
 		lcd.setCursor(12 * (7 - descriptionOffset), 0);
 		lcd.print(SettingsCalibrationWarning);
-		ButtonState buttons = getButtonState();
 
+		ButtonState buttons = getButtonState();
 		switch (buttons) {
 			case BUTTON_F_SHORT: {
 				//User confirmed
@@ -258,12 +347,14 @@ static void settings_setCalibrate(void) {
 				lcd.setCursor(0, 0);
 				lcd.print(".....");
 				lcd.refresh();
-				setCalibrationOffset(0);				//turn off the current offset
+
+				setCalibrationOffset(0);				    //turn off the current offset
 				for (uint8_t i = 0; i < 20; i++) {
-					getTipRawTemp(1);				//cycle through the filter a fair bit to ensure were stable.
+					getTipRawTemp(1);				          //cycle through the filter a fair bit to ensure we're stable.
 					osDelay(20);
 				}
 				osDelay(100);
+
 				uint16_t rawTempC = tipMeasurementToC(getTipRawTemp(0));
 				//We now measure the current reported tip temperature
 				uint16_t handleTempC = getHandleTemperature() / 10;
@@ -274,30 +365,33 @@ static void settings_setCalibrate(void) {
 				osDelay(100);
 				return;
 			}
-				break;
+
 			case BUTTON_BOTH:
 			case BUTTON_B_SHORT:
 			case BUTTON_F_LONG:
 			case BUTTON_B_LONG:
 				return;
-				break;
+
 			case BUTTON_NONE:
 				break;
 		}
+
 		lcd.refresh();
 		osDelay(50);
 	}
+}
 
-}
 static void settings_displayCalibrate(void) {
-	lcd.print(SettingsShortNames[12]);
+  printShortDescription(12, 5);
 }
+
 
 static void settings_setCalibrateVIN(void) {
-//Jump to the voltage calibration subscreen
+  //Jump to the voltage calibration subscreen
 	lcd.setFont(0);
 	lcd.clearScreen();
 	lcd.setCursor(0, 0);
+
 	for (;;) {
 		lcd.setCursor(0, 0);
 		lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
@@ -310,30 +404,34 @@ static void settings_setCalibrateVIN(void) {
 			case BUTTON_F_SHORT:
 				systemSettings.voltageDiv++;
 				break;
+
 			case BUTTON_B_SHORT:
 				systemSettings.voltageDiv--;
 				break;
+
 			case BUTTON_BOTH:
 			case BUTTON_F_LONG:
 			case BUTTON_B_LONG:
 				saveSettings();
 				return;
-				break;
+
 			case BUTTON_NONE:
 				break;
 		}
+
 		lcd.refresh();
 		osDelay(50);
-		if (systemSettings.voltageDiv < 90)
-			systemSettings.voltageDiv = 90;
-		else if (systemSettings.voltageDiv > 130)
-			systemSettings.voltageDiv = 130;
+
 		//Cap to sensible values
+		if (systemSettings.voltageDiv < 90) {
+		  systemSettings.voltageDiv = 90;
+		}
+		else if (systemSettings.voltageDiv > 130) {
+		  systemSettings.voltageDiv = 130;
+		}
 	}
 }
-static void settings_displayCalibrateVIN(void) {
-	lcd.clearScreen();
-	lcd.setCursor(0, 0);
-	lcd.print(SettingsShortNames[14]);
 
+static void settings_displayCalibrateVIN(void) {
+  printShortDescription(14, 5);
 }

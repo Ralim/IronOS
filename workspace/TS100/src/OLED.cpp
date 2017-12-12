@@ -104,10 +104,6 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 	if (c < ' ') {
 		return;
 	}
-
-	//We are left with
-	uint8_t* charPointer;
-
 	uint16_t index = 0;
 	if (PrecursorCommand == 0) {
 		//Fonts are offset to start at the space char
@@ -137,7 +133,7 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 			return;
 		}
 	}
-
+	uint8_t* charPointer;
 	charPointer = ((uint8_t*) currentFont)
 			+ ((fontWidth * (fontHeight / 8)) * index);
 
@@ -197,7 +193,10 @@ void OLED::setCursor(int16_t x, int16_t y) {
 	cursor_x = x;
 	cursor_y = y;
 }
-
+void OLED::setCharCursor(int16_t x, int16_t y) {
+	cursor_x = x * fontWidth;
+	cursor_y = y * fontHeight;
+}
 void OLED::setFont(uint8_t fontNumber) {
 	if (fontNumber == 1) {
 		//small font
