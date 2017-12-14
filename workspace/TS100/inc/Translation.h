@@ -32,17 +32,5 @@ extern const char SettingRightChar;
 extern const char SettingLeftChar;
 extern const char SettingAutoChar;
 
-#define LANG_EN
-//#define LANG_RU
-//#define LANG_ES
-//#define LANG_SE
-//#define LANG_IT
-//#define LANG_FR
-//#define LANG_DE
-//#define LANG_CS_CZ
-//#define LANG_TR
-//#define LANG_HR
-//#define LANG_PL
-//#define LANG_DK
 
 #endif /* TRANSLATION_H_ */

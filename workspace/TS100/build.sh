@@ -1,0 +1,25 @@
+make clean
+make -j16 lang=EN
+rm -rf Objects/src
+make -j16 lang=CS_CZ
+rm -rf Objects/src
+make -j16 lang=DE
+rm -rf Objects/src
+make -j16 lang=DK
+rm -rf Objects/src
+make -j16 lang=ES
+rm -rf Objects/src
+make -j16 lang=FR
+rm -rf Objects/src
+make -j16 lang=HR
+rm -rf Objects/src
+make -j16 lang=IT
+rm -rf Objects/src
+make -j16 lang=PL
+rm -rf Objects/src
+make -j16 lang=RU
+rm -rf Objects/src
+make -j16 lang=SE
+rm -rf Objects/src
+make -j16 lang=TR
+rm -rf Objects/src

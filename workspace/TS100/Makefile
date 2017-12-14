@@ -1,3 +1,9 @@
+
+OUTPUT_EXE=TS100_$(lang)
+ifndef lang
+lang:= EN
+endif
+
 # Discover the source files to build
 SOURCE := $(shell find . -type f -name '*.c')
 SOURCE_CPP := $(shell find . -type f -name '*.cpp')
@@ -29,12 +35,7 @@ OPTIM=-O2 -finline-small-functions -findirect-inlining -fdiagnostics-color
 
 
 # global defines ---------------------------------------------------------------
-# Enable ROM library
-#GLOBAL_DEFINES=-DTARGET_IS_BLIZZARD_RB1 -DUART_BUFFERED
-# Without ROM library
-#GLOBAL_DEFINES=-D DEPRECATED
-#GLOBAL_DEFINES += -D SIMULATION_BOARD
-GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK
+GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang)
 
 # Enable debug code generation
 DEBUG=-g
@@ -165,22 +166,22 @@ OBJS_CPP = $(SOURCE_CPP:.cpp=.o)
 OBJS_S = $(S_SRCS:.s=.o)
 
 
-OUTPUT_EXE=TS100
+
 OUT_OBJS=$(addprefix $(OUTPUT_DIR)/,$(OBJS))
 OUT_OBJS_CPP=$(addprefix $(OUTPUT_DIR)/,$(OBJS_CPP))
 OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 OUT_HEXFILE=$(addprefix $(HEXFILE_DIR)/,$(OUTPUT_EXE))
 
 all: $(OUT_HEXFILE).hex
-
+	
 #
 # The rule to create the target directory
 #
 
 # Create hexfile
-$(OUT_HEXFILE).hex : $(OUT_HEXFILE).elf
-		$(SIZE) -x $(OUT_HEXFILE).elf
-		$(OBJCOPY) $(OUT_HEXFILE).elf -O ihex $(OUT_HEXFILE).hex
+%.hex : %.elf
+	$(SIZE) -x $^
+	$(OBJCOPY) $^ -O ihex $@
 
 $(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
