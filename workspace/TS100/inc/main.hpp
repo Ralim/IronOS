@@ -1,11 +1,13 @@
 #ifndef __MAIN_H
 #define __MAIN_H
+
 #include <MMA8652FC.hpp>
 #include "Setup.h"
 #include "OLED.hpp"
 
 extern OLED lcd;
 extern MMA8652FC accel;
+
 enum ButtonState {
 	BUTTON_NONE = 0, /* No buttons pressed / < filter time*/
 	BUTTON_F_SHORT = 1, /* User has pressed the front button*/
@@ -20,6 +22,8 @@ enum ButtonState {
  * holding means it has gone low, and been low for longer than filter time
  */
 };
+
 ButtonState getButtonState();
+void waitForButtonPressOrTimeout(uint32_t timeout);
 
 #endif /* __MAIN_H */
