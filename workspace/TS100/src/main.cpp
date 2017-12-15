@@ -176,7 +176,8 @@ static void waitForButtonPress() {
     lcd.refresh();
   }
 }
-static void waitForButtonPressOrTimeout(uint32_t timeout) {
+
+void waitForButtonPressOrTimeout(uint32_t timeout) {
   timeout += HAL_GetTick();
   // Make timeout our exit value
   for (;;) {
@@ -306,7 +307,6 @@ static void gui_settingsMenu() {
   // Draw the settings menu and provide iteration support etc
   uint8_t currentScreen = 0;
   uint32_t autoRepeatTimer = 0;
-  settingsResetRequest = false;
   bool earlyExit = false;
   uint32_t descriptionStart = 0;
   while ((settingsMenu[currentScreen].incrementHandler.func != NULL) &&
@@ -321,7 +321,7 @@ static void gui_settingsMenu() {
     } else {
       // Draw description
       // draw string starting from descriptionOffset
-      int16_t maxOffset = strlen(settingsMenu[currentScreen].description) + 5;
+      int16_t maxOffset = strlen(settingsMenu[currentScreen].description) + 7;
       if (descriptionStart == 0) descriptionStart = HAL_GetTick();
 
       int16_t descriptionOffset =
@@ -374,9 +374,10 @@ static void gui_settingsMenu() {
     osDelay(20);
     HAL_IWDG_Refresh(&hiwdg);
   }
-  if (settingsResetRequest) resetSettings();
+
   saveSettings();
 }
+
 static int gui_showTipTempWarning() {
   for (;;) {
     uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));

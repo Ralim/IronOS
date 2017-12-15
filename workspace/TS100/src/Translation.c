@@ -78,8 +78,8 @@ const char* SettingsLongNames[16] =
 				/* Calibrate input voltage            */"VIN Calibration. Buttons adjust, long press to exit",
 				/* Advanced soldering screen enabled  */"Display detailed information while soldering", };
 
-const char* SettingsCalibrationWarning =
-    "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";  // <=17 chars
@@ -139,9 +139,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Показывать детальную информацию при пайке.",
 };
 
-const char* SettingsCalibrationWarning =
-    "Убедитесь, что жало остыло до комнатной температуры, прежде чем "
-    "продолжать!";
+const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "БАТ РАЗР";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Хррр";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ожидание...";  // <=17 chars
@@ -203,8 +202,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Display detailed information while soldering",
 };
 
-const char* SettingsCalibrationWarning =
-    "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";  // <=17 chars
@@ -260,8 +259,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Display detailed information while soldering",
 };
 
-const char* SettingsCalibrationWarning =
-    "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";  // <=17 chars
@@ -317,9 +316,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Mostra informazioni dettagliate mentre stai saldando",
 };
 
-const char* SettingsCalibrationWarning =
-    "Assicurati che la punta si trovi a temperatura ambiente prima di "
-    "continuare!";
+const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";      // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";       // Must be <= 4 chars
 const char* SleepingAdvancedString = "Standby";  // <=17 chars
@@ -375,8 +373,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Afficher des informations detaillees pendant la soudure",
 };
 
-const char* SettingsCalibrationWarning =
-    "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";  // <=17 chars
@@ -432,8 +430,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Detaillierte Anzeige im Lötmodus <T=An, F=Aus>",
 };
 
-const char* SettingsCalibrationWarning =
-    "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
+const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";           // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzz ";            // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ruhemodus...";  // <=17 chars
@@ -489,8 +487,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>",
 };
 
-const char* SettingsCalibrationWarning =
-    "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!";
+const char* SettingsCalibrationWarning = "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";               // Fixed width 8 chars
 const char* SleepingSimpleString = "Chrr";                // Must be <= 4 chars
 const char* SleepingAdvancedString = "Kludovy rezim...";  // <=17 chars
@@ -546,8 +544,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Lehimleme yaparken detaylı bilgi göster",
 };
 
-const char* SettingsCalibrationWarning =
-    "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!";
+const char* SettingsCalibrationWarning = "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";        // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";         // Must be <= 4 chars
 const char* SleepingAdvancedString = "Uyuyor...";  // <=17 chars
@@ -603,9 +601,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Prikazivanje detaljnih informacija tijekom lemljenja.",
 };
 
-const char* SettingsCalibrationWarning =
-    "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što "
-    "nastavite!";
+const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "NAPON!!!";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Spavanje...";  // <=17 chars
@@ -650,16 +647,13 @@ const char* SettingsLongNames[16] = {
     "Cas do automatickeho vypnuti <Minut>",                // Shutdown Time
     "Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>",  // Motion Sensitivity
     "Jednotky mereni teploty <C=Celsius, F=Fahrenheit>",   // Temp Unit
-    "Zobrazit podrobnosti na vychozi obrazovce <Z=Zap, V=Vyp>",  // Detailed
-                                                                 // Information
+    "Zobrazit podrobnosti na vychozi obrazovce <Z=Zap, V=Vyp>",  // Detailed Information
     "Otoceni displaye <A=Auto, L=Levak, P=Pravak>",  // Orientation
     "Povolit boost drzenim leveho tlacitka pri pajeni <Z=Zap, V=Vyp>",  // Boost
                                                                         // enable
     "Teplota pri boostu",  // Boost Temp
-    "Pri startu ihned nahrivat hrot <Z=Zap, V=Vyp, S=Rezim spanku>",  // Auto
-                                                                      // start
-    "Blikani teploty pri chladnuti, dokud je hrot horky <Z=Zap, V=Vyp>",  // Cooling
-                                                                          // Blink
+    "Pri startu ihned nahrivat hrot <Z=Zap, V=Vyp, S=Rezim spanku>",  // Auto start
+    "Blikani teploty pri chladnuti, dokud je hrot horky <Z=Zap, V=Vyp>",  // Cooling Blink
     "Kalibrovat mereni teploty",  // Calibrate Tip
     "Obnovit tovarni nastaveni",  // Reset Settings
     "Kalibrovat vstupni napeti. Tlacitky upravte, podrzenim potvrdte.",  // VIN
@@ -667,8 +661,8 @@ const char* SettingsLongNames[16] = {
     "Zobrazit podrobnosti pri pajeni <Z=Zap, V=Vyp>",  // ADV SLD
 };
 
-const char* SettingsCalibrationWarning =
-    "Ujistete se, ze hrot ma pokojovou teplotu! ";       // ending space needed
+const char* SettingsCalibrationWarning = "Ujistete se, ze hrot ma pokojovou teplotu! ";          // ending space needed
+const char* SettingsResetWarning = "Opravdu chcete resetovat zarizeni do tovarniho nastaveni?";
 const char* UVLOWarningString = "LOW VOLT";              // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzz ";               // Must be <= 4 chars
 const char* SleepingAdvancedString = "Rezim spanku...";  // <=17 chars
@@ -687,23 +681,18 @@ const char* SettingsShortNames[16][2] = {
     /* (<=  9) Sleep temperature                  */ {"Teplota v", "r. spanku"},
     /* (<=  9) Sleep timeout                      */ {"Cas do", "r. spanku"},
     /* (<= 11) Shutdown timeout                   */ {"Cas do", "vypnuti"},
-    /* (<= 13) Motion sensitivity level           */ {"Citlivost",
-                                                      "det. pohybu"},
+    /* (<= 13) Motion sensitivity level           */ {"Citlivost", "det. pohybu"},
     /* (<= 13) Temperature in F and C             */ {"Jednotky", "teploty"},
-    /* (<= 13) Advanced idle display mode enabled */ {"Podrobnosti",
-                                                      "na vych. obr."},
+    /* (<= 13) Advanced idle display mode enabled */ {"Podrobnosti", "na vych. obr."},
     /* (<= 13) Display rotation mode              */ {"Otoceni", "obrazovky"},
     /* (<= 13) Boost enabled                      */ {"Povolit", "boost"},
     /* (<=  9) Boost temperature                  */ {"Teplota v", "r. boost"},
     /* (<= 13) Automatic start mode               */ {"Auto", "start"},
-    /* (<= 13) Cooldown blink                     */ {"Blikani pri",
-                                                      "chladnuti"},
+    /* (<= 13) Cooldown blink                     */ {"Blikani pri", "chladnuti"},
     /* (<= 16) Temperature calibration enter menu */ {"Kalibrovat", "teplotu?"},
     /* (<= 16) Settings reset command             */ {"Tovarni", "nastaveni?"},
-    /* (<= 16) Calibrate input voltage            */ {"Kalibrovat",
-                                                      "vstupni napeti?"},
-    /* (<= 13) Advanced soldering screen enabled  */ {"Podrobnosti",
-                                                      "pri pajeni"},
+    /* (<= 16) Calibrate input voltage            */ {"Kalibrovat", "vstupni napeti?"},
+    /* (<= 13) Advanced soldering screen enabled  */ {"Podrobnosti", "pri pajeni"},
 };
 #endif
 
@@ -737,8 +726,8 @@ const char* SettingsLongNames[16] =
         "Részletes információk megjelenítése forrasztás közben",  // ADV SLD
 };
 
-const char* SettingsCalibrationWarning =
-    "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
+const char* SettingsCalibrationWarning = "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";       // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";        // Must be <= 4 chars
 const char* SleepingAdvancedString = "Alvás...";  // <=17 chars
@@ -799,8 +788,8 @@ const char* SettingsLongNames[16] = {
     "Vis detialieret information mens der loddes",                 // ADV SLD
 };
 
-const char* SettingsCalibrationWarning =
-    "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!";
+const char* SettingsCalibrationWarning = "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "Lav Volt";       // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";        // Must be <= 4 chars
 const char* SleepingAdvancedString = "Dvale...";  // <=17 chars
@@ -866,9 +855,8 @@ const char*
             "wył.>",  // ADV SLD
 };
 
-const char* SettingsCalibrationWarning =
-    "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature "
-    "pokojowa!";
+const char* SettingsCalibrationWarning = "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "LOW VOLT";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzz!";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Uspienie...";  // <=17 chars
