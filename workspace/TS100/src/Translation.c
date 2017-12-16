@@ -312,12 +312,12 @@ const char* SettingsLongNames[16] = {
 	/* Cooldown blink                     */"Mostra la temperatura durante il raffreddamento se la punta è ancora calda"
 	/* Temperature calibration enter menu */"Calibra la differenza di temperatura rilevata da quella presente sulla punta",
 	/* Settings reset command             */"Ripristina tutte le impostazioni",
-	/* Calibrate input voltage            */"Calibra la tensione in ingresso; regola con i bottoni, tieni permuto per uscire",
+	/* Calibrate input voltage            */"Calibra la tensione in ingresso; regola con i bottoni, tieni premuto per uscire",
 	/* Advanced soldering screen enabled  */"Mostra informazioni dettagliate in modalità saldatura",
 };
 
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsResetWarning = "Ripristinare le impostazioni iniziali?";
 const char* UVLOWarningString = "LOW VOLT";      // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";       // Must be <= 4 chars
 const char* SleepingAdvancedString = "Standby";  // <=17 chars
@@ -343,7 +343,7 @@ const char SettingAutoChar = 'A';
     /* (<= 13) Boost enabled                      */ {"Funzione", "\"boost\""},
     /* (<=  9) Boost temperature                  */ {"Temp", "\"boost\""},
     /* (<= 13) Automatic start mode               */ {"Avvio", "automatico"},
-    /* (<= 13) Cooldown blink                     */ {"Lampeggio", "schermo"},
+    /* (<= 13) Cooldown blink                     */ {"Lampeggio", "display"},
     /* (<= 16) Temperature calibration enter menu */ {"Calibrazione", "temperatura"},
     /* (<= 16) Settings reset command             */ {"Ripristino", "impostazioni"},
     /* (<= 16) Calibrate input voltage            */ {"Calibrazione", "tensione"},
