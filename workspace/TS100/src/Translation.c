@@ -629,16 +629,16 @@ const char* SettingsShortNames[16][2] = {
 const char* SettingsLongNames[16] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length
-  /* Power source (DC or batt)          */ "Zdroj napajeni. Pri nizsim napeti se odpoji <DC=10V, xS=x*3.3V pro LiPo,LiIon...>",
+  /* Power source (DC or batt)          */ "Pri nizsim napeti se odpoji <DC=10V, xS=x*3.3V pro LiPo,LiIon...>",
   /* Sleep temperature                  */ "Teplota v rezimu spanku",
   /* Sleep timeout                      */ "Cas do rezimu spanku <Minut/Sekund>",
   /* Shutdown timeout                   */ "Cas do automatickeho vypnuti <Minut>",
   /* Motion sensitivity level           */ "Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>",
   /* Temperature in F and C             */ "Jednotky mereni teploty <C=Celsius, F=Fahrenheit>",
   /* Advanced idle display mode enabled */ "Zobrazit podrobnosti na vychozi obrazovce <Z=Zap, V=Vyp>",
-  /* Display rotation mode              */ "Otoceni displaye <A=Auto, L=Levak, P=Pravak>",
+  /* Display rotation mode              */ "Orientace obrazovky <A=Auto, L=Levak, P=Pravak>",
   /* Boost enabled                      */ "Povolit boost drzenim leveho tlacitka pri pajeni <Z=Zap, V=Vyp>",
-  /* Boost temperature                  */ "Teplota pri boostu",
+  /* Boost temperature                  */ "Teplota v rezimu boost",
   /* Automatic start mode               */ "Pri startu ihned nahrivat hrot <Z=Zap, V=Vyp, S=Rezim spanku>",
   /* Cooldown blink                     */ "Blikani teploty pri chladnuti, dokud je hrot horky <Z=Zap, V=Vyp>",
   /* Temperature calibration enter menu */ "Kalibrovat mereni teploty",
@@ -663,14 +663,14 @@ const char SettingAutoChar = 'A';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[16][2] = {
-  /* (<= 11) Power source (DC or batt)          */ {"Zdroj", "napeti"},
+  /* (<= 11) Power source (DC or batt)          */ {"Zdroj", "napajeni"},
   /* (<=  9) Sleep temperature                  */ {"Teplota v", "r. spanku"},
   /* (<=  9) Sleep timeout                      */ {"Cas do", "r. spanku"},
   /* (<= 11) Shutdown timeout                   */ {"Cas do", "vypnuti"},
   /* (<= 13) Motion sensitivity level           */ {"Citlivost", "det. pohybu"},
   /* (<= 13) Temperature in F and C             */ {"Jednotky", "teploty"},
   /* (<= 13) Advanced idle display mode enabled */ {"Podrobnosti", "na vych. obr."},
-  /* (<= 13) Display rotation mode              */ {"Otoceni", "obrazovky"},
+  /* (<= 13) Display rotation mode              */ {"Orientace", "obrazovky"},
   /* (<= 13) Boost enabled                      */ {"Povolit", "boost"},
   /* (<=  9) Boost temperature                  */ {"Teplota v", "r. boost"},
   /* (<= 13) Automatic start mode               */ {"Auto", "start"},
