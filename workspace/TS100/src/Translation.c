@@ -418,16 +418,16 @@ const char* SettingsLongNames[16] = {
 	/* Shutdown timeout                   */"Abschaltzeit <Minuten>",
 	/* Motion sensitivity level           */"Bewegungsempfindlichkeit <0=Aus, 1=Minimal ... 9=Maximal>",
 	/* Temperature in F and C             */"Temperatureinheit <C=Celsius, F=Fahrenheit>",
-	/* Advanced idle display mode enabled */"Detaillierte Anzeige im Ruhemodus <T=An, F=Aus>",
-	/* Display rotation mode              */"Ausrichtung der Anzeige <A=Auto, L=Linkshändig, R=Rechtshändig>",
-	/* Boost enabled                      */"Vordere Taste für Temperaturboost verwenden <T=An, F=Aus>",
+	/* Advanced idle display mode enabled */"Detaillierte Anzeige im Ruhemodus <J=An, N=Aus>",
+	/* Display rotation mode              */"Ausrichtung der Anzeige <A=Automatisch, L=Linkshändig, R=Rechtshändig>",
+	/* Boost enabled                      */"Vordere Taste für Temperaturboost verwenden <J=An, N=Aus>",
 	/* Boost temperature                  */"Temperatur im Boostmodus  (In der eingestellten Einheit)",
-	/* Automatic start mode               */"Automatischer Start des Lötmodus beim Einschalten der Spannungsversorgung. <T=An, F=Aus>",
-	/* Cooldown blink                     */"Blinkende Temperaturanzeige beim Abkühlen, solange heiß. <T=An, F=Aus>"
+	/* Automatic start mode               */"Automatischer Start des Lötmodus beim Einschalten der Spannungsversorgung. <J=An, N=Aus>",
+	/* Cooldown blink                     */"Blinkende Temperaturanzeige beim Abkühlen, solange heiß. <J=An, N=Aus>",
 	/* Temperature calibration enter menu */"Kalibrierung der Lötspitzentemperatur",
 	/* Settings reset command             */"Alle Einstellungen zurücksetzen",
 	/* Calibrate input voltage            */"Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen.",
-	/* Advanced soldering screen enabled  */"Detaillierte Anzeige im Lötmodus <T=An, F=Aus>",
+	/* Advanced soldering screen enabled  */"Detaillierte Anzeige im Lötmodus <J=An, N=Aus>",
 };
 
 const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
@@ -438,30 +438,30 @@ const char* SleepingAdvancedString = "Ruhemodus...";  // <=17 chars
 const char* WarningSimpleString = "HEIß";             // Must be <= 4 chars
 const char* WarningAdvancedString = "Achtung! Spitze Heiß!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
+const char SettingTrueChar = 'J';
+const char SettingFalseChar = 'N';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[16][2] = {
-    /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
-    /* (<= 4) Sleep temperature                  */ {"STMP"},
-    /* (<= 4) Sleep timeout                      */ {"STME"},
-    /* (<= 5) Shutdown timeout                   */ {"SHTME"},
-    /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
-    /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
-    /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
-    /* (<= 6) Display rotation mode              */ {"DSPROT"},
-    /* (<= 6) Boost enabled                      */ {"BOOST"},
-    /* (<= 4) Boost temperature                  */ {"BTMP"},
-    /* (<= 6) Automatic start mode               */ {"ASTART"},
-    /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
-    /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
-    /* (<= 8) Settings reset command             */ {"RESET?"},
-    /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
-    /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+    /* (<= 11) Power source (DC or batt)          */ {"Spannungs-", "quelle"},
+    /* (<=  9) Sleep temperature                  */ {"Ruhetemp-", "eratur"},
+    /* (<=  9) Sleep timeout                      */ {"Ruhever-", "zoegerung"},
+    /* (<= 11) Shutdown timeout                   */ {"Abschalt-", "zeit"},
+    /* (<= 13) Motion sensitivity level           */ {"Bewegungs-", "empfindlichk."},
+    /* (<= 13) Temperature in F and C             */ {"Temperatur-", "einheit"},
+    /* (<= 13) Advanced idle display mode enabled */ {"Detaillierte", "Ruheansicht"},
+    /* (<= 13) Display rotation mode              */ {"Anzeige-", "ausrichtung"},
+    /* (<= 13) Boost enabled                      */ {"Boosttaste", "aktiv?"},
+    /* (<=  9) Boost temperature                  */ {"Boosttemp-", "eratur"},
+    /* (<= 13) Automatic start mode               */ {"Auto-", "start"},
+    /* (<= 13) Cooldown blink                     */ {"Abkuehl-", "blinken"},
+    /* (<= 16) Temperature calibration enter menu */ {"Temperatur", "kalibrieren?"},
+    /* (<= 16) Settings reset command             */ {"Werks-", "reset?"},
+    /* (<= 16) Calibrate input voltage            */ {"Eingangsspannung", "kalibrieren?"},
+    /* (<= 13) Advanced soldering screen enabled  */ {"Detaillierte", "Loetansicht"},
 };
 #endif
 
