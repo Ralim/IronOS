@@ -309,7 +309,7 @@ const char* SettingsLongNames[16] = {
   /* Boost enabled                      */"Il tasto anteriore attiva la funzione \"boost\" durante la saldatura",
   /* Boost temperature                  */"Imposta la temperatura in funzione \"boost\"",
   /* Automatic start mode               */"Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
-  /* Cooldown blink                     */"Mostra la temperatura durante il raffreddamento se la punta è ancora calda"
+  /* Cooldown blink                     */"Mostra la temperatura durante il raffreddamento se la punta è ancora calda",
   /* Temperature calibration enter menu */"Calibra la differenza di temperatura rilevata da quella presente sulla punta",
   /* Settings reset command             */"Ripristina tutte le impostazioni",
   /* Calibrate input voltage            */"Calibra la tensione in entrata; regola con i bottoni, tieni premuto per uscire",
