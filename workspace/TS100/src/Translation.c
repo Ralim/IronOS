@@ -459,7 +459,7 @@ const char* SettingsShortNames[16][2] = {
     /* (<= 13) Automatic start mode               */ {"Auto-", "start"},
     /* (<= 13) Cooldown blink                     */ {"Abkuehl-", "blinken"},
     /* (<= 16) Temperature calibration enter menu */ {"Temperatur", "kalibrieren?"},
-    /* (<= 16) Settings reset command             */ {"Werks-", "reset?"},
+    /* (<= 16) Settings reset command             */ {"Einstellungen", "zuruecksetzen?"},
     /* (<= 16) Calibrate input voltage            */ {"Eingangsspannung", "kalibrieren?"},
     /* (<= 13) Advanced soldering screen enabled  */ {"Detaillierte", "Loetansicht"},
 };
