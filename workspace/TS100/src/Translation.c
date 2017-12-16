@@ -184,7 +184,7 @@ const char* SettingsLongNames[16] = {
   /* Boost enabled                      */ "Activar el botón \"Boost\" en modo soldadura.",
   /* Boost temperature                  */ "Temperatura en modo \"Boost\". <C>",
   /* Automatic start mode               */ "Iniciar modo soldadura en el encendido. <V=Sí S=Modo reposo F=No>",
-  /* Cooldown blink                     */ "Parpadea la temperatura en el enfriamiento si la punta sigue caliente."
+  /* Cooldown blink                     */ "Parpadea la temperatura en el enfriamiento si la punta sigue caliente.",
   /* Temperature calibration enter menu */ "Calibrate tip offset.",
   /* Settings reset command             */ "Reset all settings",
   /* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
@@ -241,7 +241,7 @@ const char* SettingsLongNames[16] = {
 	/* Boost enabled                      */ "Активация  кнопки A для Турбо режима до  450С при пайке ",
 	/* Boost temperature                  */ "Установка температуры для Турбо режима",
 	/* Automatic start mode               */ "Автоматический запуск паяльника при включении питания. T=Нагрев, S= Режим Сна,F=Выкл.",
-	/* Cooldown blink                     */ "Мигает температура на экране охлаждения, пока жало остается горячим."
+	/* Cooldown blink                     */ "Мигает температура на экране охлаждения, пока жало остается горячим.",
 	/* Temperature calibration enter menu */ "Calibrate tip offset.",
 	/* Settings reset command             */ "Reset all settings",
 	/* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
@@ -298,7 +298,7 @@ const char* SettingsLongNames[16] = {
 	/* Boost enabled                      */ "Il tasto anteriore attiva la modalità \"boost\" durante la saldatura",
 	/* Boost temperature                  */ "Temperatura in modalità \"boost\"",
 	/* Automatic start mode               */ "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
-	/* Cooldown blink                     */ "Durante il raffreddamento mostra la temperatura sul display se la punta è ancora calda"
+	/* Cooldown blink                     */ "Durante il raffreddamento mostra la temperatura sul display se la punta è ancora calda",
 	/* Temperature calibration enter menu */ "Calibra l'offset della punta",
 	/* Settings reset command             */ "Ripristina tutte le impostazioni",
 	/* Calibrate input voltage            */ "Calibra la tensione in entrata; regola con i bottoni, tieni permuto per uscire",
@@ -355,7 +355,7 @@ const char* SettingsLongNames[16] = {
 	/* Boost enabled                      */ "Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure",
 	/* Boost temperature                  */ "Température du mode \"Boost\" <C>",
 	/* Automatic start mode               */ "Démarrer automatiquement la soudure a l'allumage <A=Activé, V=Mode Veille, D=Désactivé>",
-	/* Cooldown blink                     */ "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
+	/* Cooldown blink                     */ "Faire clignoter la température lors du refroidissement tant que la panne est chaude",
 	/* Temperature calibration enter menu */ "Etalonner température de la panne",
 	/* Settings reset command             */ "Réinitialiser tous les réglages",
 	/* Calibrate input voltage            */ "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
@@ -469,7 +469,7 @@ const char* SettingsLongNames[16] = {
 	/* Boost enabled                      */ "Povolit tlacidlo pre prudky nahrev <T=Zap, F=Vyp>",
 	/* Boost temperature                  */ "Cielova teplota pre prudky nahrev (v nastavenych jednotkach)",
 	/* Automatic start mode               */ "Pri starte spustit rezim spajkovania <T=Zap, F=Vyp, S=Spanok>",
-	/* Cooldown blink                     */ "Blikanie ukazovatela teploty pocas chladnutia hrotu <T=Zap, F=Vyp>"
+	/* Cooldown blink                     */ "Blikanie ukazovatela teploty pocas chladnutia hrotu <T=Zap, F=Vyp>",
 	/* Temperature calibration enter menu */ "Kalibracia posunu hrotu",
 	/* Settings reset command             */ "Tovarenske nastavenia",
 	/* Calibrate input voltage            */ "Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat",
