@@ -430,8 +430,8 @@ const char* SettingsLongNames[16] = {
 	/* Advanced soldering screen enabled  */"Detaillierte Anzeige im Lötmodus <J=An, N=Aus>",
 };
 
-const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsCalibrationWarning = "Das Gerät muss vor dem Kalibrieren vollständig abgekühlt sein!";
+const char* SettingsResetWarning = "Sollen die Einstellung wirklich zurückgesetzt werden?";
 const char* UVLOWarningString = "LOW VOLT";           // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzz ";            // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ruhemodus...";  // <=17 chars
@@ -822,6 +822,7 @@ const char* SettingsShortNames[16][2] = {
     /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
 };
 #endif
+
 #ifdef LANG_PL
 const char*
     SettingsLongNames[16] =
