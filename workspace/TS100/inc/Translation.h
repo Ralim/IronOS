@@ -20,6 +20,7 @@ extern const enum ShortNameType SettingsShortNameType;
 extern const char* SettingsShortNames[16][2];
 extern const char* SettingsLongNames[16];
 extern const char* SettingsCalibrationWarning;
+extern const char* SettingsResetWarning;
 extern const char* UVLOWarningString;
 extern const char* SleepingSimpleString;
 extern const char* SleepingAdvancedString;
@@ -32,5 +33,6 @@ extern const char SettingRightChar;
 extern const char SettingLeftChar;
 extern const char SettingAutoChar;
 
+#define LANG_CS_CZ
 
 #endif /* TRANSLATION_H_ */

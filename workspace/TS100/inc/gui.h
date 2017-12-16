@@ -28,6 +28,6 @@ typedef struct {
 	const state_func draw;
 } menuitem;
 
-extern bool settingsResetRequest;
 extern const menuitem settingsMenu[];
+
 #endif /* GUI_H_ */
