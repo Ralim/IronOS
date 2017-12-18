@@ -852,3 +852,60 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
 };
 #endif
+
+#ifdef LANG_PTBR
+const char* SettingsLongNames[16] = {
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length.
+  /* Power source (DC or batt)          */ "Fonte de energia. Ajusta o limite minimo de tensao. <DC 10V> <S 3,3V por celula>",
+  /* Sleep temperature                  */ "Temperatura de repouso <C>",
+  /* Sleep timeout                      */ "Tempo para ativar o repouso <Minutos/Segundos>",
+  /* Shutdown timeout                   */ "Tempo para desligar <Minutos>",
+  /* Motion sensitivity level           */ "Sensibilidade de movimento <0.Desligado 1.Menos sensivel 9.Mais sensivel>",
+  /* Temperature in F and C             */ "Unidade de temperatura <C=Celsius F=Fahrenheit>",
+  /* Advanced idle display mode enabled */ "Mostrar informacoes mais detalhadas em uma fonte menor na tela de espera.",
+  /* Display rotation mode              */ "Orientacao da tela <A. Automatico C. Canhoto D. Destro>",
+  /* Boost enabled                      */ "Ativar tecla frontal inferior para entrar no modo \"Turbo\"",
+  /* Boost temperature                  */ "Temperatura do modo \"Turbo\"",
+  /* Automatic start mode               */ "Inicializar o ferro de solda automaticamente ao ser conetado a energia. V=Soldar, S= Modo Repouso,F=Desligado",
+  /* Cooldown blink                     */ "Piscar a temperatura na tela de resfriamento enquanto a ponta do ferro ainda estiver quente.",
+  /* Temperature calibration enter menu */ "Calibrar offset do sensor de temperatura.",
+  /* Settings reset command             */ "Ressetar todas as configuracoes",
+  /* Calibrate input voltage            */ "Calibrar tensao de entrada. Ajustar pelos botoes, Clique longo para sair",
+  /* Advanced soldering screen enabled  */ "Mostrar informacoes detalhadas enquanto solda",
+};
+
+const char* SettingsCalibrationWarning = "Por favor verifique que a ponta do ferro encontra-se em temperatura ambiente antes de continuar!";
+const char* SettingsResetWarning = "Voce realmente quer ressetar as configuracoes para os valores padrao?";
+const char* UVLOWarningString = "LOW VOLT";          // Fixed width 8 chars
+const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
+const char* SleepingAdvancedString = "Repouso...";  // <=17 chars
+const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
+const char* WarningAdvancedString = "CUIDADO! FERRO QUENTE!";
+
+const char SettingTrueChar = 'V';
+const char SettingFalseChar = 'F';
+const char SettingRightChar = 'D';
+const char SettingLeftChar = 'C';
+const char SettingAutoChar = 'A';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[16][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Fonte", "energia"},
+  /* (<=  9) Sleep temperature                  */ {"Temperatura", "repouso"},
+  /* (<=  9) Sleep timeout                      */ {"Tempo", "repouso"},
+  /* (<= 11) Shutdown timeout                   */ {"Tempo", "desligamento"},
+  /* (<= 13) Motion sensitivity level           */ {"Sensibilidade", "movimento"},
+  /* (<= 13) Temperature in F and C             */ {"Unidades", "temperatura"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Detalhes", "Tela de repouso"},
+  /* (<= 13) Display rotation mode              */ {"Orientacao", "tela"},
+  /* (<= 13) Boost enabled                      */ {"Modo Turbo", "ativado"},
+  /* (<=  9) Boost temperature                  */ {"Temperatura", "Modo Turbo"},
+  /* (<= 13) Automatic start mode               */ {"Inicializar", "automaticamente"},
+  /* (<= 13) Cooldown blink                     */ {"Piscar", "resfriamento"},
+  /* (<= 16) Temperature calibration enter menu */ {"Calibrar", "temperatura?"},
+  /* (<= 16) Settings reset command             */ {"Ressetar", "padrao?"},
+  /* (<= 16) Calibrate input voltage            */ {"Calibrar", "tensao de entrada?"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Detalhes", "tela de solda"},
+};
+#endif
