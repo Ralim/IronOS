@@ -33,6 +33,4 @@ extern const char SettingRightChar;
 extern const char SettingLeftChar;
 extern const char SettingAutoChar;
 
-#define LANG_CS_CZ
-
 #endif /* TRANSLATION_H_ */
