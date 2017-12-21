@@ -9,7 +9,7 @@
 
 #include "Settings.h"
 #include "Setup.h"
-#define FLASH_ADDR 		(0x8000000|0xBC00)/*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
+#define FLASH_ADDR 		(0x8000000|0xFC00)/*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
 #include "string.h"
 systemSettingsType systemSettings;
 
