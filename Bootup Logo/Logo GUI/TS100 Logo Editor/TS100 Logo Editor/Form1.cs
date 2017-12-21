@@ -148,7 +148,7 @@ namespace TS100_Logo_Editor
                 data[i] = data[i + 1];
                 data[i + 1] = temp;
             }
-            string outputHexFile = IntelHex.IntelHex.encode(data, 0x0800B800, 16, true, true);//16 bytes is the only format the DFU seems to support //0x0800B800
+            string outputHexFile = IntelHex.IntelHex.encode(data, 0x0800F800, 16, true, true);//16 bytes is the only format the DFU seems to support //0x0800B800
             //^ This string now just needs to be written out to a text file :)
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Title = "Save DFU File";
