@@ -123,10 +123,10 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 			index = (128-32) + (c);
 			break;
 #if defined(LANG_RU) || defined(LANG_UK) || defined(LANG_SR) || defined(LANG_BG) || defined(LANG_MK)
-			case 0xD0:
+		case 0xD0:
 			index = (192) + (c);
 			break;
-			case 0xD1:
+		case 0xD1:
 			index = (256) + (c);
 			break;
 #else
@@ -209,7 +209,7 @@ void OLED::setCharCursor(int16_t x, int16_t y) {
 void OLED::setFont(uint8_t fontNumber) {
 	if (fontNumber == 1) {
 		//small font
-		currentFont = ASCII6x8;
+		currentFont = FONT_6x8;
 		fontHeight = 8;
 		fontWidth = 6;
 	} else if (fontNumber == 2) {
