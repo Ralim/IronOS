@@ -158,7 +158,7 @@ def img2hex(input_filename,
         # store in endian-reversed byte order
         data[4 + ndx + (1 if ndx % 2 == 0 else -1)] = byte
 
-    intel_hex(output_file, data, 0x0800B800)
+    intel_hex(output_file, data, 0x0800F800)
 
 
 def parse_commandline():

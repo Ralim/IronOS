@@ -1010,7 +1010,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 #define FLASH_LOGOADDR \
-  (0x8000000 | 0xB800) /*second last page of flash set aside for logo image*/
+  (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
 
 bool showBootLogoIfavailable() {
   // check if the header is there (0xAA,0x55,0xF0,0x0D)
