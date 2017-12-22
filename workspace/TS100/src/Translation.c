@@ -344,34 +344,34 @@ const char* SettingsShortNames[16][2] = {
 const char* SettingsLongNames[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
-	/* Power source (DC or batt)          */"Source d'alimentation. Regle la tension de coupure <DC=10V S=3.3V par cellules>",
-	/* Sleep temperature                  */"Temperature en veille <C>",
-	/* Sleep timeout                      */"Delai avant mise en veille <Minutes>",
-	/* Shutdown timeout                   */"Delai avant extinction <Minutes>",
-	/* Motion sensitivity level           */"Sensibilite du capteur de mouvement <0=Inactif 1=Peu sensible 9=Tres sensible>",
-	/* Temperature in F and C             */"Unite de temperature",
-	/* Advanced idle display mode enabled */"Afficher des informations detaillees lors de la veille",
-	/* Display rotation mode              */"Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>",
-	/* Boost enabled                      */"Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure",
-	/* Boost temperature                  */"Temperature du mode \"Boost\" <C>",
-	/* Automatic start mode               */"Demarrer automatiquement la soudure a l'allumage",
-	/* Cooldown blink                     */"Faire clignoter la temperature lors du refroidissement tant que la panne est chaude",
-	/* Temperature calibration enter menu */"Etalonner temperature de la panne",
-	/* Settings reset command             */"Reinitialiser tous les reglages",
-	/* Calibrate input voltage            */"Etalonner tension d'entree. Boutons pour ajuster, appui long pour quitter",
-	/* Advanced soldering screen enabled  */"Afficher des informations detaillees pendant la soudure",
+	/* Power source (DC or batt)          */ "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>",
+	/* Sleep temperature                  */ "Température lors de la mise en veille <C>",
+	/* Sleep timeout                      */ "Délai avant la mise en veille <Minutes>",
+	/* Shutdown timeout                   */ "Délai avant l'extinction <Minutes>",
+	/* Motion sensitivity level           */ "Sensibilité du capteur de mouvement <0=Inactif 1=Peu sensible 9=Très sensible>",
+	/* Temperature in F and C             */ "Unité de température",
+	/* Advanced idle display mode enabled */ "Afficher des informations détaillées lors de la veille",
+	/* Display rotation mode              */ "Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>",
+	/* Boost enabled                      */ "Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure",
+	/* Boost temperature                  */ "Température du mode \"Boost\" <C>",
+	/* Automatic start mode               */ "Démarrer automatiquement la soudure à l'allumage",
+	/* Cooldown blink                     */ "Faire clignoter la température lors du refroidissement tant que la panne est chaude",
+	/* Temperature calibration enter menu */ "Étalonner température de la panne",
+	/* Settings reset command             */ "Réinitialiser tous les réglages",
+	/* Calibrate input voltage            */ "Étalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
+	/* Advanced soldering screen enabled  */ "Afficher des informations détaillées pendant la soudure",
 };
 
-const char* SettingsCalibrationWarning = "Assurez-vous que la panne est a temperature ambiante avant de continuer!";
-const char* SettingsResetWarning = "Voulez-vous vraiment reinitialiser les parametres aux valeurs d'usine?";
+const char* SettingsCalibrationWarning = "Assurez-vous que la panne est à température ambiante avant de continuer!";
+const char* SettingsResetWarning = "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?";
 const char* UVLOWarningString = "LOW VOLT";             // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
 const char* SleepingAdvancedString = "En veille...";    // <=17 chars
 const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
 const char* WarningAdvancedString = "ATTENTION! CHAUD"; // Must be <= 16 chars
 
-const char SettingTrueChar = 'V';
-const char SettingFalseChar = 'F';
+const char SettingTrueChar = 'O';
+const char SettingFalseChar = 'N';
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
 const char SettingAutoChar = 'A';
