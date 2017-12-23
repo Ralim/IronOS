@@ -345,33 +345,33 @@ const char* SettingsLongNames[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>",
-	/* Sleep temperature                  */ "Température en veille <C>",
-	/* Sleep timeout                      */ "Délai avant mise en veille <Minutes>",
-	/* Shutdown timeout                   */ "Délai avant extinction <Minutes>",
-	/* Motion sensitivity level           */ "Sensibilité du capteur de mouvement <0=Inactif 1=Peu sensible 9=Tres sensible>",
-	/* Temperature in F and C             */ "Unité de temperature",
+	/* Sleep temperature                  */ "Température lors de la mise en veille <C>",
+	/* Sleep timeout                      */ "Délai avant la mise en veille <Minutes>",
+	/* Shutdown timeout                   */ "Délai avant l'extinction <Minutes>",
+	/* Motion sensitivity level           */ "Sensibilité du capteur de mouvement <0=Inactif 1=Peu sensible 9=Très sensible>",
+	/* Temperature in F and C             */ "Unité de température",
 	/* Advanced idle display mode enabled */ "Afficher des informations détaillées lors de la veille",
 	/* Display rotation mode              */ "Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>",
 	/* Boost enabled                      */ "Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure",
 	/* Boost temperature                  */ "Température du mode \"Boost\" <C>",
-	/* Automatic start mode               */ "Démarrer automatiquement la soudure a l'allumage <A=Activé, V=Mode Veille, D=Désactivé>",
+	/* Automatic start mode               */ "Démarrer automatiquement la soudure à l'allumage",
 	/* Cooldown blink                     */ "Faire clignoter la température lors du refroidissement tant que la panne est chaude",
-	/* Temperature calibration enter menu */ "Etalonner température de la panne",
+	/* Temperature calibration enter menu */ "Étalonner température de la panne",
 	/* Settings reset command             */ "Réinitialiser tous les réglages",
-	/* Calibrate input voltage            */ "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
+	/* Calibrate input voltage            */ "Étalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
 	/* Advanced soldering screen enabled  */ "Afficher des informations détaillées pendant la soudure",
 };
 
 const char* SettingsCalibrationWarning = "Assurez-vous que la panne est à température ambiante avant de continuer!";
 const char* SettingsResetWarning = "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?";
-const char* UVLOWarningString = "LOW VOLT";          // Fixed width 8 chars
-const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "En veille...";  // <=17 chars
-const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
-const char* WarningAdvancedString = "ATTENTION! PANNE CHAUDE!";
+const char* UVLOWarningString = "LOW VOLT";             // Fixed width 8 chars
+const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "En veille...";    // <=17 chars
+const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
+const char* WarningAdvancedString = "ATTENTION! CHAUD"; // Must be <= 16 chars
 
-const char SettingTrueChar = 'V';
-const char SettingFalseChar = 'F';
+const char SettingTrueChar = 'O';
+const char SettingFalseChar = 'N';
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
 const char SettingAutoChar = 'A';
@@ -380,20 +380,20 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[16][2] = {
 	/* (<= 11) Power source (DC or batt)          */ {"Source", "d'alim"},
 	/* (<=  9) Sleep temperature                  */ {"Temp.", "veille"},
-	/* (<=  9) Sleep timeout                      */ {"Délai", "veille"},
-	/* (<= 11) Shutdown timeout                   */ {"Délai", "extinction"},
-	/* (<= 13) Motion sensitivity level           */ {"Sensibilité", "au mouvement"},
-	/* (<= 13) Temperature in F and C             */ {"Unité de", "température"},
-	/* (<= 13) Advanced idle display mode enabled */ {"Ecran veille", "détaillé"},
-	/* (<= 13) Display rotation mode              */ {"Orientation", "de l'écran"},
+	/* (<=  9) Sleep timeout                      */ {"Delai", "veille"},
+	/* (<= 11) Shutdown timeout                   */ {"Delai", "extinction"},
+	/* (<= 13) Motion sensitivity level           */ {"Sensibilite", "au mouvement"},
+	/* (<= 13) Temperature in F and C             */ {"Unite de", "temperature"},
+	/* (<= 13) Advanced idle display mode enabled */ {"Ecran veille", "detaille"},
+	/* (<= 13) Display rotation mode              */ {"Orientation", "de l'ecran"},
 	/* (<= 13) Boost enabled                      */ {"Activation du", "mode Boost"},
 	/* (<=  9) Boost temperature                  */ {"Temp.", "Boost"},
-	/* (<= 13) Automatic start mode               */ {"Démarrage", "automatique"},
+	/* (<= 13) Automatic start mode               */ {"Demarrage", "automatique"},
 	/* (<= 13) Cooldown blink                     */ {"Refroidir en", "clignottant"},
-	/* (<= 16) Temperature calibration enter menu */ {"Etalonner", "température"},
-	/* (<= 16) Settings reset command             */ {"Réinitialisation", "d'usine"},
-	/* (<= 16) Calibrate input voltage            */ {"Etalonner", "tension d'entrée"},
-	/* (<= 13) Advanced soldering screen enabled  */ {"Ecran soudure", "détaillé"},
+	/* (<= 16) Temperature calibration enter menu */ {"Etalonner", "temperature"},
+	/* (<= 16) Settings reset command             */ {"Reinitialisation", "d'usine"},
+	/* (<= 16) Calibrate input voltage            */ {"Etalonner", "tension d'entree"},
+	/* (<= 13) Advanced soldering screen enabled  */ {"Ecran soudure", "detaille"},
 };
 #endif
 
