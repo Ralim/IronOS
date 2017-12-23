@@ -79,8 +79,6 @@ const char* SleepingAdvancedString = "Sleeping...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
 const char* WarningAdvancedString = "WARNING! TIP HOT!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -136,8 +134,6 @@ const char* SleepingAdvancedString = "Ожидание...";  // <=17 chars
 const char* WarningSimpleString = " АЙ!";            // Must be <= 4 chars
 const char* WarningAdvancedString = "ОСТОРОЖНО! ГОРЯЧО";
 
-const char SettingTrueChar = '+';
-const char SettingFalseChar = '-';
 /*
  * #TODO change support for multibyte constants here
  const char SettingRightChar = 'П';
@@ -199,8 +195,6 @@ const char* SleepingAdvancedString = "Sleeping...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
 const char* WarningAdvancedString = "WARNING! TIP HOT!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -256,8 +250,6 @@ const char* SleepingAdvancedString = "Sleeping...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
 const char* WarningAdvancedString = "WARNING! TIP HOT!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -313,8 +305,6 @@ const char* SleepingAdvancedString = "Standby";  // <=17 chars
 const char* WarningSimpleString = "HOT!";        // Must be <= 4 chars
 const char* WarningAdvancedString = "ATTENZIONE! PUNTA CALDA!";
 
-const char SettingTrueChar = 'A';
-const char SettingFalseChar = 'D';
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
 const char SettingAutoChar = 'A';
@@ -370,8 +360,6 @@ const char* SleepingAdvancedString = "En veille...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
 const char* WarningAdvancedString = "ATTENTION! PANNE CHAUDE!";
 
-const char SettingTrueChar = 'V';
-const char SettingFalseChar = 'F';
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
 const char SettingAutoChar = 'A';
@@ -427,8 +415,6 @@ const char* SleepingAdvancedString = "Ruhemodus...";  // <=17 chars
 const char* WarningSimpleString = "HEIß";             // Must be <= 4 chars
 const char* WarningAdvancedString = "Achtung! Spitze Heiß!";
 
-const char SettingTrueChar = 'J';
-const char SettingFalseChar = 'N';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -484,8 +470,6 @@ const char* SleepingAdvancedString = "Kludovy rezim...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";                 // Must be <= 4 chars
 const char* WarningAdvancedString = "Pozor! Hrot je horuci!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -541,8 +525,6 @@ const char* SleepingAdvancedString = "Uyuyor...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";          // Must be <= 4 chars
 const char* WarningAdvancedString = "UYARI! UÇ SICAK!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -598,8 +580,6 @@ const char* SleepingAdvancedString = "Spavanje...";  // <=17 chars
 const char* WarningSimpleString = "VRUĆ";            // Must be <= 4 chars
 const char* WarningAdvancedString = "OPREZ! Vršak je vruć!";
 
-const char SettingTrueChar = '+';
-const char SettingFalseChar = '-';
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -655,8 +635,6 @@ const char* SleepingAdvancedString = "Rezim spanku...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";                // Must be <= 4 chars
 const char* WarningAdvancedString = "!! HORKY HROT !!";  // <= 16 chars
 
-const char SettingTrueChar = 'Z';
-const char SettingFalseChar = 'V';
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -712,8 +690,6 @@ const char* SleepingAdvancedString = "Alvás...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";         // Must be <= 4 chars
 const char* WarningAdvancedString = "FIGYELEM! FORRÓ HEGY!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'F';
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
@@ -769,8 +745,6 @@ const char* SleepingAdvancedString = "Dvale...";  // <=17 chars
 const char* WarningSimpleString = "Varm";         // Must be <= 4 chars
 const char* WarningAdvancedString = "ADVARSEL! VARM LODDESPIDS!";
 
-const char SettingTrueChar = 'j';
-const char SettingFalseChar = 'N';
 const char SettingRightChar = 'H';
 const char SettingLeftChar = 'V';
 const char SettingAutoChar = 'A';
@@ -826,8 +800,6 @@ const char* SleepingAdvancedString = "Uspienie...";  // <=17 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
 const char* WarningAdvancedString = "UWAGA! GORĄCA KOŃCÓWKA!";
 
-const char SettingTrueChar = 'T';
-const char SettingFalseChar = 'N';
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
