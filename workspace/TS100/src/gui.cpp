@@ -258,8 +258,7 @@ static void settings_setAdvancedSolderingScreens(void) {
 static void settings_displayAdvancedSolderingScreens(void) {
   printShortDescription(15, 7);
 
-  lcd.drawChar((systemSettings.detailedSoldering) ? SettingTrueChar
-                                                  : SettingFalseChar);
+  lcd.drawCheckbox(systemSettings.detailedSoldering);
 }
 
 
@@ -270,8 +269,7 @@ static void settings_setAdvancedIDLEScreens(void) {
 static void settings_displayAdvancedIDLEScreens(void) {
   printShortDescription(6, 7);
 
-  lcd.drawChar((systemSettings.detailedIDLE) ? SettingTrueChar
-                                             : SettingFalseChar);
+  lcd.drawCheckbox(systemSettings.detailedIDLE);
 }
 
 
@@ -307,8 +305,7 @@ static void settings_setBoostModeEnabled(void) {
 static void settings_displayBoostModeEnabled(void) {
   printShortDescription(8, 7);
 
-  lcd.drawChar((systemSettings.boostModeEnabled) ? SettingTrueChar
-                                                 : SettingFalseChar);
+  lcd.drawCheckbox(systemSettings.boostModeEnabled);
 }
 
 
@@ -339,8 +336,7 @@ static void settings_setAutomaticStartMode(void) {
 static void settings_displayAutomaticStartMode(void) {
   printShortDescription(10, 7);
 
-  lcd.drawChar((systemSettings.autoStartMode) ? SettingTrueChar
-                                              : SettingFalseChar);
+  lcd.drawCheckbox(systemSettings.autoStartMode);
 }
 
 
@@ -351,8 +347,7 @@ static void settings_setCoolingBlinkEnabled(void) {
 static void settings_displayCoolingBlinkEnabled(void) {
   printShortDescription(11, 7);
 
-  lcd.drawChar((systemSettings.coolingTempBlink) ? SettingTrueChar
-                                                 : SettingFalseChar);
+  lcd.drawCheckbox(systemSettings.coolingTempBlink);
 }
 
 

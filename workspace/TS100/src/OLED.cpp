@@ -272,6 +272,9 @@ void OLED::drawBattery(uint8_t state) {
 		state = 10;
 	drawSymbol(3 + state);
 }
+void OLED::drawCheckbox(bool state) {
+	drawSymbol((state) ? 17 : 18);
+}
 void OLED::drawSymbol(uint8_t symbolID) {
 	//draw a symbol to the current cursor location
 	setFont(2);
