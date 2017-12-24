@@ -42,6 +42,7 @@ public:
 	void clearScreen();						// Clears the buffer
 	void drawBattery(uint8_t state);		// Draws the battery level symbol
 	void drawCheckbox(bool state);		// Draws a checkbox
+	void drawTemperatureSymbol(bool inFahrenheit); // Draw Temperature symbol
 	void drawSymbol(uint8_t symbolID);//Used for drawing symbols of a predictable width
 	void drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 			const uint8_t* ptr);

@@ -245,7 +245,7 @@ static void settings_setTempF(void) {
 static void settings_displayTempF(void) {
   printShortDescription(5, 7);
 
-  lcd.drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
+  lcd.drawTemperatureSymbol(systemSettings.temperatureInF);
 }
 
 
