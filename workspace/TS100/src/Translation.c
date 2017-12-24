@@ -277,28 +277,28 @@ const char* SettingsShortNames[16][2] = {
 
 #ifdef LANG_IT
 const char* SettingsLongNames[16] = {
-	// These are all the help text for all the settings.
-	// No requirements on spacing or length.
-	/* Power source (DC or batt)          */ "Sorgente di alimentazione; imposta il limite minimo di tensione <DC: 10V; S: 3.3V per cella>",
-	/* Sleep temperature                  */ "Temperatura standby <°C>",
-	/* Sleep timeout                      */ "Timeout standby <minuti/secondi>",
-	/* Shutdown timeout                   */ "Timeout spegnimento <minuti>",
-	/* Motion sensitivity level           */ "Sensibilità al movimento <0: nessuna; 1: minima; 9: massima>",
-	/* Temperature in F and C             */ "Unità di misura della temperatura <C: Celsius; F: Farenheit>",
-	/* Advanced idle display mode enabled */ "Mostra informazioni dettagliate con un carattere più piccolo sulla schermata di inattività",
-	/* Display rotation mode              */ "Orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
-	/* Boost enabled                      */ "Il tasto anteriore attiva la modalità \"boost\" durante la saldatura",
-	/* Boost temperature                  */ "Temperatura in modalità \"boost\"",
-	/* Automatic start mode               */ "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
-	/* Cooldown blink                     */ "Durante il raffreddamento mostra la temperatura sul display se la punta è ancora calda",
-	/* Temperature calibration enter menu */ "Calibra l'offset della punta",
-	/* Settings reset command             */ "Ripristina tutte le impostazioni",
-	/* Calibrate input voltage            */ "Calibra la tensione in entrata; regola con i bottoni, tieni permuto per uscire",
-	/* Advanced soldering screen enabled  */ "Mostra informazioni dettagliate mentre stai saldando",
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length.
+  /* Power source (DC or batt)          */"Scegli la sorgente di alimentazione; imposta la soglia di scaricamento per alimentazione Li-Po <DC: 10V; S: 3.3V per cella>",
+  /* Sleep temperature                  */"Imposta temperatura in modalità standby <°C>",
+  /* Sleep timeout                      */"Imposta timer per entrare in modalità standby <minuti/secondi>",
+  /* Shutdown timeout                   */"Imposta timer per lo spegnimento <minuti>",
+  /* Motion sensitivity level           */"Imposta sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>",
+  /* Temperature in F and C             */"Scegli l'unità di misura per la temperatura <C: Celsius; F: Farenheit>",
+  /* Advanced idle display mode enabled */"Mostra informazioni dettagliate con un carattere più piccolo nella schermata principale",
+  /* Display rotation mode              */"Imposta orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
+  /* Boost enabled                      */"Il tasto anteriore attiva la funzione \"boost\" durante la saldatura",
+  /* Boost temperature                  */"Imposta la temperatura in funzione \"boost\"",
+  /* Automatic start mode               */"Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
+  /* Cooldown blink                     */"Mostra la temperatura durante il raffreddamento se la punta è ancora calda",
+  /* Temperature calibration enter menu */"Calibra la differenza di temperatura rilevata da quella presente sulla punta",
+  /* Settings reset command             */"Ripristina tutte le impostazioni",
+  /* Calibrate input voltage            */"Calibra la tensione in ingresso; regola con i bottoni, tieni premuto per uscire",
+  /* Advanced soldering screen enabled  */"Mostra informazioni dettagliate in modalità saldatura",
 };
 
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsResetWarning = "Ripristinare le impostazioni iniziali?";
 const char* UVLOWarningString = "LOW VOLT";      // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";       // Must be <= 4 chars
 const char* SleepingAdvancedString = "Standby";  // <=17 chars
@@ -309,24 +309,24 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
 const char SettingAutoChar = 'A';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
-  /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
-  /* (<= 4) Sleep temperature                  */ {"STMP"},
-  /* (<= 4) Sleep timeout                      */ {"STME"},
-  /* (<= 5) Shutdown timeout                   */ {"SHTME"},
-  /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
-  /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
-  /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
-  /* (<= 6) Display rotation mode              */ {"DSPROT"},
-  /* (<= 6) Boost enabled                      */ {"BOOST"},
-  /* (<= 4) Boost temperature                  */ {"BTMP"},
-  /* (<= 6) Automatic start mode               */ {"ASTART"},
-  /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
-  /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
-  /* (<= 8) Settings reset command             */ {"RESET?"},
-  /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
-  /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+ const char* SettingsShortNames[16][2] = {
+    /* (<= 11) Power source (DC or batt)          */ {"Sorgente", "alimentaz"},
+    /* (<=  9) Sleep temperature                  */ {"Temp", "standby"},
+    /* (<=  9) Sleep timeout                      */ {"Timer", "standby"},
+    /* (<= 11) Shutdown timeout                   */ {"Timer", "spegnimento"},
+    /* (<= 13) Motion sensitivity level           */ {"Sensibilità", "al movimento"},
+    /* (<= 13) Temperature in F and C             */ {"Unità di", "temperatura"},
+    /* (<= 13) Advanced idle display mode enabled */ {"Mostra", "dettagli"},
+    /* (<= 13) Display rotation mode              */ {"Orientamento", "display"},
+    /* (<= 13) Boost enabled                      */ {"Funzione", "\"boost\""},
+    /* (<=  9) Boost temperature                  */ {"Temp", "\"boost\""},
+    /* (<= 13) Automatic start mode               */ {"Avvio", "automatico"},
+    /* (<= 13) Cooldown blink                     */ {"Avviso", "punta calda"},
+    /* (<= 16) Temperature calibration enter menu */ {"Calibrazione", "temperatura"},
+    /* (<= 16) Settings reset command             */ {"Ripristino", "impostazioni"},
+    /* (<= 16) Calibrate input voltage            */ {"Calibrazione", "tensione"},
+    /* (<= 13) Advanced soldering screen enabled  */ {"Dettagli", "saldatura"},
 };
 #endif
 
