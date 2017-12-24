@@ -185,8 +185,17 @@ static void settings_displayInputVRange(void) {
 
 
 static void settings_setSleepTemp(void) {
-  systemSettings.SleepTemp += 10;
-  if (systemSettings.SleepTemp > 300) systemSettings.SleepTemp = 50;
+  if (systemSettings.temperatureInF) {
+	  systemSettings.SleepTemp += 20;
+      if (systemSettings.SleepTemp < 120 || systemSettings.SleepTemp > 580) {
+        systemSettings.SleepTemp = 120;  // loop back at 120
+      }
+  } else {
+	  systemSettings.SleepTemp += 10;
+      if (systemSettings.SleepTemp < 50 || systemSettings.SleepTemp > 300) {
+        systemSettings.SleepTemp = 50;  // loop back at 250
+      }
+  }
 }
 
 static void settings_displaySleepTemp(void) {
@@ -310,13 +319,14 @@ static void settings_displayBoostModeEnabled(void) {
 
 
 static void settings_setBoostTemp(void) {
-  systemSettings.BoostTemp += 10;  // Go up 10 at a time
   if (systemSettings.temperatureInF) {
-    if (systemSettings.BoostTemp > 850) {
-      systemSettings.BoostTemp = 480;  // loop back at 250
+	systemSettings.BoostTemp += 20;  // Go up 20 at a time
+	if (systemSettings.BoostTemp < 480 || systemSettings.BoostTemp > 840) {
+      systemSettings.BoostTemp = 480;  // loop back at 480
     }
   } else {
-    if (systemSettings.BoostTemp > 450) {
+	systemSettings.BoostTemp += 10;  // Go up 10 at a time
+    if (systemSettings.BoostTemp < 250 || systemSettings.BoostTemp > 450) {
       systemSettings.BoostTemp = 250;  // loop back at 250
     }
   }
