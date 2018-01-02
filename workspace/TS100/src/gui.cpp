@@ -46,54 +46,23 @@ static void settings_displayCalibrateVIN(void);
 
 const menuitem settingsMenu[] = {
     /*Struct used for all settings options in the settings menu*/
-    {(const char*)SettingsLongNames[0],
-     {settings_setInputVRange},
-     {settings_displayInputVRange}}, /*Voltage input*/
-    {(const char*)SettingsLongNames[1],
-     {settings_setSleepTemp},
-     {settings_displaySleepTemp}}, /*Sleep Temp*/
-    {(const char*)SettingsLongNames[2],
-     {settings_setSleepTime},
-     {settings_displaySleepTime}}, /*Sleep Time*/
-    {(const char*)SettingsLongNames[3],
-     {settings_setShutdownTime},
-     {settings_displayShutdownTime}}, /*Shutdown Time*/
-    {(const char*)SettingsLongNames[4],
-     {settings_setSensitivity},
-     {settings_displaySensitivity}}, /* Motion Sensitivity*/
-    {(const char*)SettingsLongNames[5],
-     {settings_setTempF},
-     {settings_displayTempF}}, /* Motion Sensitivity*/
-    {(const char*)SettingsLongNames[6],
-     {settings_setAdvancedIDLEScreens},
-     {settings_displayAdvancedIDLEScreens}}, /* Advanced screens*/
-    {(const char*)SettingsLongNames[15],
-     {settings_setAdvancedSolderingScreens},
-     {settings_displayAdvancedSolderingScreens}}, /* Advanced screens*/
-    {(const char*)SettingsLongNames[7],
-     {settings_setDisplayRotation},
-     {settings_displayDisplayRotation}}, /*Display Rotation*/
-    {(const char*)SettingsLongNames[8],
-     {settings_setBoostModeEnabled},
-     {settings_displayBoostModeEnabled}}, /*Enable Boost*/
-    {(const char*)SettingsLongNames[9],
-     {settings_setBoostTemp},
-     {settings_displayBoostTemp}}, /*Boost Temp*/
-    {(const char*)SettingsLongNames[10],
-     {settings_setAutomaticStartMode},
-     {settings_displayAutomaticStartMode}}, /*Auto start*/
-    {(const char*)SettingsLongNames[11],
-     {settings_setCoolingBlinkEnabled},
-     {settings_displayCoolingBlinkEnabled}}, /*Cooling blink warning*/
-    {(const char*)SettingsLongNames[12],
-     {settings_setCalibrate},
-     {settings_displayCalibrate}}, /*Calibrate tip*/
-    {(const char*)SettingsLongNames[13],
-     {settings_setResetSettings},
-     {settings_displayResetSettings}}, /*Resets settings*/
-    {(const char*)SettingsLongNames[14],
-     {settings_setCalibrateVIN},
-     {settings_displayCalibrateVIN}}, /*Voltage input cal*/
+    {(const char*)SettingsLongNames[0], {settings_setInputVRange}, {settings_displayInputVRange}}, /*Voltage input*/
+    {(const char*)SettingsLongNames[1], {settings_setSleepTemp}, {settings_displaySleepTemp}}, /*Sleep Temp*/
+    {(const char*)SettingsLongNames[2], {settings_setSleepTime}, {settings_displaySleepTime}}, /*Sleep Time*/
+    {(const char*)SettingsLongNames[3], {settings_setShutdownTime}, {settings_displayShutdownTime}}, /*Shutdown Time*/
+    {(const char*)SettingsLongNames[4], {settings_setSensitivity}, {settings_displaySensitivity}}, /* Motion Sensitivity*/
+    {(const char*)SettingsLongNames[5], {settings_setTempF}, {settings_displayTempF}}, /* Motion Sensitivity*/
+    {(const char*)SettingsLongNames[6], {settings_setAdvancedIDLEScreens}, {settings_displayAdvancedIDLEScreens}}, /* Advanced screens*/
+    {(const char*)SettingsLongNames[15], {settings_setAdvancedSolderingScreens}, {settings_displayAdvancedSolderingScreens}}, /* Advanced screens*/
+    {(const char*)SettingsLongNames[7], {settings_setDisplayRotation}, {settings_displayDisplayRotation}}, /*Display Rotation*/
+    {(const char*)SettingsLongNames[8], {settings_setBoostModeEnabled}, {settings_displayBoostModeEnabled}}, /*Enable Boost*/
+    {(const char*)SettingsLongNames[9], {settings_setBoostTemp}, {settings_displayBoostTemp}}, /*Boost Temp*/
+    {(const char*)SettingsLongNames[10], {settings_setAutomaticStartMode}, {settings_displayAutomaticStartMode}}, /*Auto start*/
+    {(const char*)SettingsLongNames[11], {settings_setCoolingBlinkEnabled}, {settings_displayCoolingBlinkEnabled}}, /*Cooling blink warning*/
+    {(const char*)SettingsLongNames[12], {settings_setCalibrate}, {settings_displayCalibrate}}, /*Calibrate tip*/
+    {(const char*)SettingsLongNames[14], {settings_setCalibrateVIN}, {settings_displayCalibrateVIN}}, /*Voltage input cal*/
+    //reset is last menu item
+    {(const char*)SettingsLongNames[13], {settings_setResetSettings}, {settings_displayResetSettings}}, /*Resets settings*/
     {NULL, {NULL}, {NULL}}            // end of menu marker. DO NOT REMOVE
 };
 
