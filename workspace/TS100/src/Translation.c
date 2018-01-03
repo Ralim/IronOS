@@ -555,53 +555,53 @@ const char* SettingsLongNames[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>",
-	/* Sleep temperature                  */ "Temperatura spavanja. <C>",
+	/* Sleep temperature                  */ "Temperatura spavanja.",
 	/* Sleep timeout                      */ "Vrijeme spavanja. <Minute/Sekunde>",
-	/* Shutdown timeout                   */ "Vrijeme gašenja. <Minutes>",
+	/* Shutdown timeout                   */ "Vrijeme gašenja. <Minute>",
 	/* Motion sensitivity level           */ "Osjetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osjetljivo, 9=Najosjetljivije>",
 	/* Temperature in F and C             */ "Jedinica temperature. <C=Celzij, F=Fahrenheit>",
 	/* Advanced idle display mode enabled */ "Prikazivanje detaljnih informacija manjim fontom tijekom čekanja.",
 	/* Display rotation mode              */ "Orijentacija ekrana. <A=Automatski, L=Ljevoruki, D=Desnoruki>",
-	/* Boost enabled                      */ "Držanjem prednjeg gumba prilikom lemljenja aktivira se pojačani (Boost) način.",
-	/* Boost temperature                  */ "Temperatura u pojačanom (Boost) načinu.",
-	/* Automatic start mode               */ "Početno stanje lemilice po uključivanju napajanja. <+=Lemljenje, S=Spavanje, -=Ugašeno>",
-	/* Cooldown blink                     */ "Bljeskanje temperature prilikom hlađenja, ako je lemilica vruća.",
-	/* Temperature calibration enter menu */ "Kalibriranje temperature mjeri razliku temperature vška i temperature drške, dok je lemilica hladna.",
+	/* Boost enabled                      */ "Držanjem prednjeg gumba prilikom lemljenja aktivira se pojačani način.",
+	/* Boost temperature                  */ "Temperatura u pojačanom načinu.",
+	/* Automatic start mode               */ "Početno stanje lemilice po uključivanju napajanja.",
+	/* Cooldown blink                     */ "Bljeskajući prikaz temperature prilikom hlađenja, ako je lemilica vruća.",
+	/* Temperature calibration enter menu */ "Pri kalibraciji se mjeri razlika očitanja temperature vrška i temperature drške, dok je lemilica hladna.",
 	/* Settings reset command             */ "Vraćanje svih postavki.",
 	/* Calibrate input voltage            */ "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj.",
 	/* Advanced soldering screen enabled  */ "Prikazivanje detaljnih informacija tijekom lemljenja.",
 };
 
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsResetWarning = "Želite li vratiti sve postavke na tvorničke vrijednosti?";
 const char* UVLOWarningString = "NAPON!!!";          // Fixed width 8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Spavanje...";  // <=17 chars
 const char* WarningSimpleString = "VRUĆ";            // Must be <= 4 chars
-const char* WarningAdvancedString = "OPREZ! Vršak je vruć!";
+const char* WarningAdvancedString = "OPREZ, VRUĆE!";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[16][2] = {
-  /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
-  /* (<= 4) Sleep temperature                  */ {"STMP"},
-  /* (<= 4) Sleep timeout                      */ {"STME"},
-  /* (<= 5) Shutdown timeout                   */ {"SHTME"},
-  /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
-  /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
-  /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
-  /* (<= 6) Display rotation mode              */ {"DSPROT"},
-  /* (<= 6) Boost enabled                      */ {"BOOST"},
-  /* (<= 4) Boost temperature                  */ {"BTMP"},
-  /* (<= 6) Automatic start mode               */ {"ASTART"},
-  /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
-  /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
-  /* (<= 8) Settings reset command             */ {"RESET?"},
-  /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
-  /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 11) Power source (DC or batt)          */ {"Izvor", "napajanja"},
+  /* (<=  9) Sleep temperature                  */ {"Temp", "spavanja"},
+  /* (<=  9) Sleep timeout                      */ {"Vrijeme", "spavanja"},
+  /* (<= 11) Shutdown timeout                   */ {"Vrijeme", "gašenja"},
+  /* (<= 13) Motion sensitivity level           */ {"Osjetljivost", "pokreta"},
+  /* (<= 13) Temperature in F and C             */ {"Jedinica", "temperature"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Informacije", "kod čekanja"},
+  /* (<= 13) Display rotation mode              */ {"Orijentacija", "ekrana"},
+  /* (<= 13) Boost enabled                      */ {"Pojačani", "način"},
+  /* (<=  9) Boost temperature                  */ {"Pojačana", "temp"},
+  /* (<= 13) Automatic start mode               */ {"Automatski", "start"},
+  /* (<= 13) Cooldown blink                     */ {"Bljeskanje", "pri hlađenju"},
+  /* (<= 16) Temperature calibration enter menu */ {"Kalibracija", "temperature"},
+  /* (<= 16) Settings reset command             */ {"Tvorničke", "postavke"},
+  /* (<= 16) Calibrate input voltage            */ {"Kalibracija", "napona napajanja"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Informacije", "pri lemljenju"},
 };
 #endif
 
