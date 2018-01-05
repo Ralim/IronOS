@@ -22,10 +22,19 @@ extern const char* SettingsLongNames[16];
 extern const char* SettingsCalibrationWarning;
 extern const char* SettingsResetWarning;
 extern const char* UVLOWarningString;
+extern const char* UndervoltageString;
+extern const char* InputVoltageString;
+extern const char* WarningTipTempString;
+extern const char* BadTipString;
+
 extern const char* SleepingSimpleString;
 extern const char* SleepingAdvancedString;
 extern const char* WarningSimpleString;
 extern const char* WarningAdvancedString;
+extern const char* SleepingTipAdvancedString;
+extern const char* IdleTipString;
+extern const char* IdleSetString;
+extern const char* TipDisconnectedString;
 
 extern const char SettingTrueChar;
 extern const char SettingFalseChar;
