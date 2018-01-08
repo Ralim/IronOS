@@ -197,9 +197,9 @@ static bool checkVoltageForExit() {
     lcd.setCursor(0, 0);
     if (systemSettings.detailedSoldering) {
       lcd.setFont(1);
-      lcd.print("Undervoltage");
+      lcd.print(UndervoltageString);
       lcd.setCursor(0, 8);
-      lcd.print("Input V: ");
+      lcd.print(InputVoltageString);
       lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
       lcd.drawChar('.');
       lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
@@ -207,7 +207,7 @@ static bool checkVoltageForExit() {
 
     } else {
       lcd.setFont(0);
-      lcd.print("DC LOW");
+      lcd.print(UVLOWarningString);
     }
 
     lcd.refresh();
@@ -387,7 +387,7 @@ static int gui_showTipTempWarning() {
       lcd.setFont(1);
       lcd.print(WarningAdvancedString);
       lcd.setCursor(0, 8);
-      lcd.print("Tip Temp: ");
+      lcd.print(WarningTipTempString);
 
       if (systemSettings.temperatureInF) {
         lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
@@ -462,7 +462,7 @@ static int gui_SolderingSleepingMode() {
       lcd.setFont(1);
       lcd.print(SleepingAdvancedString);
       lcd.setCursor(0, 8);
-      lcd.print("Tip:");
+      lcd.print(SleepingTipAdvancedString);
       lcd.printNumber(tipTemp, 3);
       if (systemSettings.temperatureInF)
         lcd.print("F");
@@ -552,7 +552,7 @@ static void gui_solderingMode() {
     lcd.clearScreen();
     lcd.setFont(0);
     if (tipTemp > 16300) {
-      lcd.print("BAD TIP");
+      lcd.print(BadTipString);
       lcd.refresh();
       currentlyActiveTemperatureTarget = 0;
       waitForButtonPress();
@@ -766,19 +766,18 @@ void startGUITask(void const *argument) {
     if (systemSettings.detailedIDLE) {
       lcd.setFont(1);
       if (tipTemp > 470) {
-        lcd.print("Tip Disconnected!");
+        lcd.print(TipDisconnectedString);
       } else {
-        lcd.print("Tip:");
+        lcd.print(IdleTipString);
         if (systemSettings.temperatureInF)
           lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
         else
           lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
-        lcd.print(" ");
-        lcd.print("Set:");
+        lcd.print(IdleSetString);
         lcd.printNumber(systemSettings.SolderingTemp, 3);
       }
       lcd.setCursor(0, 8);
-      lcd.print("Input V: ");
+      lcd.print(InputVoltageString);
       lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
       lcd.drawChar('.');
       lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
