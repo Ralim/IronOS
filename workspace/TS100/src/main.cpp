@@ -391,10 +391,10 @@ static int gui_showTipTempWarning() {
 
       if (systemSettings.temperatureInF) {
         lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
-        lcd.print("F");
+        lcd.print("°F");
       } else {
         lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
-        lcd.print("C");
+        lcd.print("°C");
       }
     } else {
       lcd.setFont(0);
