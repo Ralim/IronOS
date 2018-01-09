@@ -76,8 +76,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
@@ -139,8 +139,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "БАТ РАЗР";          // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Хррр";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ожидание...";  // <=16 chars
 const char* WarningSimpleString = " АЙ!";            // Must be <= 4 chars
@@ -208,8 +208,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
@@ -271,8 +271,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Sleeping...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
@@ -331,19 +331,19 @@ const char* SettingsLongNames[16] = {
 
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
 const char* SettingsResetWarning = "Ripristinare le impostazioni iniziali?";
-const char* UVLOWarningString = "DC BASSA";			// <=8 chars
-const char* UndervoltageString = "DC INSUFFICIENTE";		// <=16 chars
-const char* InputVoltageString = "V ingresso:"; 		// <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Temp punta:";		// <=11 chars, preferably end with a space
-const char* BadTipString = "Sostituire punta"; 			// <=16 chars
-const char* SleepingSimpleString = "Zzz ";			// Must be <= 4 chars
-const char* SleepingAdvancedString = "Standby";			// <=16 chars
-const char* WarningSimpleString = "HOT!";			// Must be <= 4 chars
-const char* WarningAdvancedString = "PUNTA CALDA!";		// <=16 chars
-const char* SleepingTipAdvancedString = "Punta:";		// <=6 chars
-const char* IdleTipString = "Pun:";				// IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Prev:";				// preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "PUNTA ASSENTE"; 		// <=16 chars
+const char* UVLOWarningString = "DC BASSA";            // <=8 chars
+const char* UndervoltageString = "DC INSUFFICIENTE";     // <=16 chars
+const char* InputVoltageString = "V ingresso:";        // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Temp punta:";     // <=12 chars, preferably end with a space
+const char* BadTipString = "PUNTA NO";                // <=8 chars
+const char* SleepingSimpleString = "Zzz";       // Must be <= 4 chars
+const char* SleepingAdvancedString = "Standby";  // <=16 chars
+const char* WarningSimpleString = "HOT!";        // Must be <= 4 chars
+const char* WarningAdvancedString = "PUNTA CALDA!";  // <=16 chars
+const char* SleepingTipAdvancedString = "Punta:";      // <=6 chars
+const char* IdleTipString = "Pun:";     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Prev:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "PUNTA ASSENTE"; // <=16 chars
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
@@ -397,8 +397,8 @@ const char* SettingsResetWarning = "Voulez-vous vraiment réinitialiser les para
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
 const char* SleepingAdvancedString = "En veille...";    // <=16 chars
 const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
@@ -460,8 +460,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzz ";            // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ruhemodus...";  // <=16 chars
 const char* WarningSimpleString = "HEIß";             // Must be <= 4 chars
@@ -523,8 +523,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Chrr";                // Must be <= 4 chars
 const char* SleepingAdvancedString = "Kludovy rezim...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";                 // Must be <= 4 chars
@@ -586,8 +586,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";          // <=8 chars
 const char* UndervoltageString = "Undervoltage";   // <=16 chars
 const char* InputVoltageString = "Input V: ";      // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";   // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";              // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";   // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";              // <=8 chars
 const char* SleepingSimpleString = "Zzzz";         // Must be <= 4 chars
 const char* SleepingAdvancedString = "Uyuyor...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";          // Must be <= 4 chars
@@ -649,8 +649,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "BATERIJA";           // <=8 chars
 const char* UndervoltageString = "PRENIZAK NAPON";    // <=16 chars
 const char* InputVoltageString = "Napajanje: ";       // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Temp vrha: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "NEISPRAVAN VRH";          // <=16 chars
+const char* WarningTipTempString = "Temp vrha: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "NEISPRAVAN VRH";          // <=8 chars
 const char* SleepingSimpleString = "Zzz ";            // Must be <= 4 chars
 const char* SleepingAdvancedString = "SPAVANJE...";   // <=16 chars
 const char* WarningSimpleString = "VRUĆ";             // Must be <= 4 chars
@@ -712,8 +712,8 @@ const char* SettingsResetWarning = "Opravdu chcete resetovat zařízení do tov�
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzz ";               // Must be <= 4 chars
 const char* SleepingAdvancedString = "Režim spánku...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";                // Must be <= 4 chars
@@ -775,8 +775,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Alvás...";     // <=16 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
@@ -838,8 +838,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "Lav Volt";          // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzzz";        // Must be <= 4 chars
 const char* SleepingAdvancedString = "Dvale...";  // <=16 chars
 const char* WarningSimpleString = "Varm";         // Must be <= 4 chars
@@ -901,8 +901,8 @@ const char* SettingsResetWarning = "Are you sure to reset settings to default va
 const char* UVLOWarningString = "DC LOW";            // <=8 chars
 const char* UndervoltageString = "Undervoltage";     // <=16 chars
 const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=11 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=16 chars
+const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                // <=8 chars
 const char* SleepingSimpleString = "Zzz!";           // Must be <= 4 chars
 const char* SleepingAdvancedString = "Uspienie...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars

@@ -51,9 +51,9 @@ const menuitem settingsMenu[] = {
     {(const char*)SettingsLongNames[2], {settings_setSleepTime}, {settings_displaySleepTime}}, /*Sleep Time*/
     {(const char*)SettingsLongNames[3], {settings_setShutdownTime}, {settings_displayShutdownTime}}, /*Shutdown Time*/
     {(const char*)SettingsLongNames[4], {settings_setSensitivity}, {settings_displaySensitivity}}, /* Motion Sensitivity*/
-    {(const char*)SettingsLongNames[5], {settings_setTempF}, {settings_displayTempF}}, /* Motion Sensitivity*/
-    {(const char*)SettingsLongNames[6], {settings_setAdvancedIDLEScreens}, {settings_displayAdvancedIDLEScreens}}, /* Advanced screens*/
-    {(const char*)SettingsLongNames[15], {settings_setAdvancedSolderingScreens}, {settings_displayAdvancedSolderingScreens}}, /* Advanced screens*/
+    {(const char*)SettingsLongNames[5], {settings_setTempF}, {settings_displayTempF}}, /* Temperature units*/
+    {(const char*)SettingsLongNames[6], {settings_setAdvancedIDLEScreens}, {settings_displayAdvancedIDLEScreens}}, /* Advanced idle screen*/
+    {(const char*)SettingsLongNames[15], {settings_setAdvancedSolderingScreens}, {settings_displayAdvancedSolderingScreens}}, /* Advanced soldering screen*/
     {(const char*)SettingsLongNames[7], {settings_setDisplayRotation}, {settings_displayDisplayRotation}}, /*Display Rotation*/
     {(const char*)SettingsLongNames[8], {settings_setBoostModeEnabled}, {settings_displayBoostModeEnabled}}, /*Enable Boost*/
     {(const char*)SettingsLongNames[9], {settings_setBoostTemp}, {settings_displayBoostTemp}}, /*Boost Temp*/
