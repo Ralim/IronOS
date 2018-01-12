@@ -92,6 +92,7 @@ void gui_drawTipTemp() {
   //	Temp = systemSettings.SolderingTemp;
 
   lcd.printNumber(Temp, 3);  // Draw the tip temp out finally
+  lcd.drawTemperatureSymbol(systemSettings.temperatureInF);
 }
 ButtonState getButtonState() {
   /*
@@ -274,8 +275,8 @@ static void gui_solderingTempAdjust() {
     }
     // constrain between 50-450 C
     if (systemSettings.temperatureInF) {
-      if (systemSettings.SolderingTemp > 850)
-        systemSettings.SolderingTemp = 850;
+      if (systemSettings.SolderingTemp > 840)
+        systemSettings.SolderingTemp = 840;
     } else {
       if (systemSettings.SolderingTemp > 450)
         systemSettings.SolderingTemp = 450;
@@ -564,13 +565,8 @@ static void gui_solderingMode() {
         gui_drawBatteryIcon();
 
         lcd.drawChar(' ');  // Space out gap between battery <-> temp
-        if (systemSettings.temperatureInF) {
-          gui_drawTipTemp();  // Draw current tip temp
-          lcd.drawSymbol(0);  // deg F
-        } else {
-          gui_drawTipTemp();  // Draw current tip temp
-          lcd.drawSymbol(1);  // deg C
-        }
+
+        gui_drawTipTemp();  // Draw current tip temp
 
         // We draw boost arrow if boosting, or else gap temp <-> heat indicator
         if (boostModeOn)
@@ -597,13 +593,7 @@ static void gui_solderingMode() {
         else
           lcd.drawChar(' ');
 
-        if (systemSettings.temperatureInF) {
-          gui_drawTipTemp();  // Draw current tip temp
-          lcd.drawSymbol(0);  // deg F
-        } else {
-          gui_drawTipTemp();  // Draw current tip temp
-          lcd.drawSymbol(1);  // deg C
-        }
+        gui_drawTipTemp();  // Draw current tip temp
 
         lcd.drawChar(' ');  // Space out gap between battery <-> temp
 
