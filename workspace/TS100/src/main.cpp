@@ -166,13 +166,11 @@ static void waitForButtonPress() {
   while (buttons) {
     buttons = getButtonState();
     GUIDelay();
-    HAL_IWDG_Refresh(&hiwdg);
-    lcd.refresh();
+     lcd.refresh();
   }
   while (!buttons) {
     buttons = getButtonState();
     GUIDelay();
-    HAL_IWDG_Refresh(&hiwdg);
     lcd.refresh();
   }
 }
@@ -185,7 +183,6 @@ void waitForButtonPressOrTimeout(uint32_t timeout) {
     if (buttons) return;
     if (HAL_GetTick() > timeout) return;
     GUIDelay();
-    HAL_IWDG_Refresh(&hiwdg);
   }
 }
 
@@ -372,7 +369,6 @@ static void gui_settingsMenu() {
 
     lcd.refresh();  // update the LCD
     osDelay(20);
-    HAL_IWDG_Refresh(&hiwdg);
   }
 
   saveSettings();
@@ -410,7 +406,7 @@ static int gui_showTipTempWarning() {
         lcd.drawSymbol(1);
       }
     }
-    if (systemSettings.coolingTempBlink && tipTemp > 50) {
+    if (systemSettings.coolingTempBlink && tipTemp > 70) {
       if (HAL_GetTick() % 500 < 250) lcd.clearScreen();
     }
     lcd.refresh();
@@ -420,9 +416,8 @@ static int gui_showTipTempWarning() {
     else if (buttons == BUTTON_B_SHORT || buttons == BUTTON_BOTH)
       return 0;
 
-    if (tipTemp < 30) return 0;
+    if (tipTemp < 50) return 0;//Exit the warning screen
 
-    HAL_IWDG_Refresh(&hiwdg);
     GUIDelay();
   }
 }
@@ -493,7 +488,6 @@ static int gui_SolderingSleepingMode() {
         }
     lcd.refresh();
     GUIDelay();
-    HAL_IWDG_Refresh(&hiwdg);
   }
 }
 static void gui_solderingMode() {
@@ -643,7 +637,6 @@ static void gui_solderingMode() {
         }
       }
     GUIDelay();
-    HAL_IWDG_Refresh(&hiwdg);
   }
 }
 #define ACCELDEBUG 0
@@ -798,7 +791,6 @@ void startGUITask(void const *argument) {
 
     lcd.refresh();
     animationStep++;
-    HAL_IWDG_Refresh(&hiwdg);
     GUIDelay();
   }
 }
