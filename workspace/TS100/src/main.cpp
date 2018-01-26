@@ -692,6 +692,19 @@ void startGUITask(void const *argument) {
 	uint8_t tempWarningState = 0;
 
 	HAL_IWDG_Refresh(&hiwdg);
+	switch (systemSettings.OrientationMode) {
+	case 0:
+		lcd.setRotation(false);
+		break;
+	case 1:
+		lcd.setRotation(true);
+		break;
+	case 2:
+		lcd.setRotation(false);
+		break;
+	default:
+		break;
+	}
 	if (showBootLogoIfavailable())
 		waitForButtonPressOrTimeout(2000);
 	HAL_IWDG_Refresh(&hiwdg);
@@ -756,17 +769,17 @@ void startGUITask(void const *argument) {
 			break;
 		}
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
-
-		if (systemSettings.sensitivity) {
-			if ((HAL_GetTick() - lastMovementTime) > 60000
-					&& (HAL_GetTick() - lastButtonTime) > 60000)
-				lcd.displayOnOff(false);  // turn lcd off when no movement
-			else if (HAL_GetTick() - lastMovementTime < 1000
-					|| HAL_GetTick() - lastButtonTime < 1000) /*Use short time for test, and prevent lots of I2C
-					 writes for no need*/
-				lcd.displayOnOff(true);  // turn lcd back on
-		}
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
+		if (tipTemp > 50)
+			if (systemSettings.sensitivity) {
+				if ((HAL_GetTick() - lastMovementTime) > 60000
+						&& (HAL_GetTick() - lastButtonTime) > 60000)
+					lcd.displayOnOff(false);  // turn lcd off when no movement
+				else if (HAL_GetTick() - lastMovementTime < 1000
+						|| HAL_GetTick() - lastButtonTime < 1000) /*Use short time for test, and prevent lots of I2C
+						 writes for no need*/
+					lcd.displayOnOff(true);  // turn lcd back on
+			}
 		if (tipTemp > 600)
 			tipTemp = 0;
 		if (tipTemp > 50) {
