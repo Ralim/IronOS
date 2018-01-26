@@ -63,16 +63,6 @@ void DMA1_Channel1_IRQHandler(void) {
 	HAL_DMA_IRQHandler(&hdma_adc1);
 }
 
-// DMA used for transmitting I2C packets
-void DMA1_Channel6_IRQHandler(void) {
-	HAL_DMA_IRQHandler(&hdma_i2c1_tx);
-}
-
-//DMA used for receiving I2C packets
-void DMA1_Channel7_IRQHandler(void) {
-	HAL_DMA_IRQHandler(&hdma_i2c1_rx);
-}
-
 //ADC interrupt used for DMA
 void ADC1_2_IRQHandler(void) {
 	HAL_ADC_IRQHandler(&hadc1);

@@ -9,8 +9,7 @@ ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
-DMA_HandleTypeDef hdma_i2c1_rx;
-DMA_HandleTypeDef hdma_i2c1_tx;
+
 
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef htim2;
@@ -130,7 +129,7 @@ static void MX_ADC1_Init(void) {
 	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
 	sConfigInjected.InjectedRank = 1;
 	sConfigInjected.InjectedNbrOfConversion = 4;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_55CYCLES_5;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_71CYCLES_5;
 	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
 	sConfigInjected.AutoInjectedConv = DISABLE;
 	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
@@ -149,7 +148,7 @@ static void MX_ADC1_Init(void) {
 static void MX_I2C1_Init(void) {
 
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.ClockSpeed = 20000;
+	hi2c1.Init.ClockSpeed = 50000;
 	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -158,8 +157,6 @@ static void MX_I2C1_Init(void) {
 	hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
 	hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
 	HAL_I2C_Init(&hi2c1);
-	HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
-	HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
 
 }
 

@@ -58,7 +58,7 @@ uint16_t getTipInstantTemperature() {
 uint16_t getTipRawTemp(uint8_t instant) {
 #define  filterDepth1 1
 	/*Pre filter used before PID*/
-#define  filterDepth2 64
+#define  filterDepth2 32
 	/*Post filter used for UI display*/
 	static uint16_t filterLayer1[filterDepth1];
 	static uint16_t filterLayer2[filterDepth2];
