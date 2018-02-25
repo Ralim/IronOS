@@ -10,10 +10,12 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 
+//#define I2CTest
+#define ACCELDEBUG 0
 // C++ objects
 OLED lcd(&hi2c1);
 MMA8652FC accel(&hi2c1);
-
+uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
 uint32_t lastMovementTime = 0;
@@ -33,7 +35,7 @@ void startMOVTask(void const *argument);
 void startRotationTask(void const *argument);
 // End FreeRTOS
 
-// Main inits hardware then hands over to the FreeRTOS kernel
+// Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
 	 */
@@ -42,12 +44,40 @@ int main(void) {
 	setTipPWM(0);
 	lcd.initialize();   // start up the LCD
 	lcd.setFont(0);     // default to bigger font
-	accel.initalize(); // this sets up the I2C registers and loads up the default
-					   // settings
+	//Testing for new weird board version
+	uint8_t buffer[1];
+	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0, 0, buffer, 1, 1000) == HAL_OK) {
+		PCBVersion = 1;
+		accel.initalize(); // this sets up the I2C registers and loads up the default
+						   // settings
+	} else
+		PCBVersion = 2;
+
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
 	HAL_IWDG_Refresh(&hiwdg);
+
+#ifdef I2CTest
+	for (;;) {
+		//We dont load the RTOS here, and test stuff instead
+		//Scan all of the I2C address space and see who answers
+		lcd.setFont(1);
+		lcd.clearScreen();
+		if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x00, 0, buffer, 1, 1000)
+				== HAL_OK) {
+			//this ID was okay
+			lcd.printNumber(buffer[0], 3);
+			lcd.print(".");
+			lcd.refresh();
+		}
+		for (;;) {
+			//hang out here
+		}
+	}
+
+#endif
+
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
 	osThreadDef(GUITask, startGUITask, osPriorityBelowNormal, 0, 512);
@@ -664,7 +694,7 @@ static void gui_solderingMode() {
 		GUIDelay();
 	}
 }
-#define ACCELDEBUG 0
+
 /* StartGUITask function */
 void startGUITask(void const *argument) {
 	/*
@@ -721,6 +751,7 @@ void startGUITask(void const *argument) {
 	}
 //^ Kept here for a way to block this thread
 #endif
+//Show warning : No accel
 
 	for (;;) {
 		ButtonState buttons = getButtonState();
@@ -740,7 +771,8 @@ void startGUITask(void const *argument) {
 			lcd.clearScreen();    // Ensure the buffer starts clean
 			lcd.setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 			lcd.setFont(1);       // small font
-			lcd.print((char *) "V2.03");  // Print version number
+			lcd.print((char *) "V2.03 PCB");  // Print version number
+			lcd.printNumber(PCBVersion, 1);
 			lcd.setCursor(0, 8);         // second line
 			lcd.print(__DATE__);         // print the compile date
 			lcd.refresh();
@@ -918,6 +950,15 @@ void startPIDTask(void const *argument) {
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
 	osDelay(4000);  // wait for accel to stabilize
+	if (PCBVersion == 2) {
+		//on PCB rev 2, accel does not work yet.
+		//So trigger wakeup timer events so the iron doesnt randomly sleep on people
+		for (;;) {
+			osDelay(1000);
+			lastMovementTime = HAL_GetTick();
+		}
+
+	}
 	int16_t datax[MOVFilter];
 	int16_t datay[MOVFilter];
 	int16_t dataz[MOVFilter];
@@ -1001,13 +1042,6 @@ void startRotationTask(void const *argument) {
 	 * This task is used to manage rotation of the LCD screen & button re-mapping
 	 *
 	 */
-	osDelay(1000);  // wait for accel to stabilize
-	HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
-	HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-	//^ We hold off enabling these until now to ensure the semaphore is available
-	// to be used first
 	switch (systemSettings.OrientationMode) {
 	case 0:
 		lcd.setRotation(false);
@@ -1021,6 +1055,21 @@ void startRotationTask(void const *argument) {
 	default:
 		break;
 	}
+	osDelay(500);  // wait for accel to stabilize
+	if (PCBVersion == 2) {
+		//Accelerometer not supported yet
+		//Disable this feature for now :(
+		for (;;) {
+			osDelay(1000);
+		}
+	}
+	HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	//^ We hold off enabling these until now to ensure the semaphore is available
+	// to be used first
+
 	for (;;) {
 		if (xSemaphoreTake(rotationChangedSemaphore, portMAX_DELAY) == pdTRUE
 				|| (HAL_GPIO_ReadPin(INT_Orientation_GPIO_Port,
