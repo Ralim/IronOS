@@ -18,7 +18,7 @@
 #define LIS_CTRL_REG5 0x24|0x80
 #define LIS_INT1_CFG  0xB0|0x80
 #define LIS_INT2_CFG  0xB4|0x80
-
-
+#define LIS_INT1_DURATION 0x33|0x80
+#define LIS_INT1_THS 0x32|0x80
 
 #endif /* LIS2DH12_DEFINES_HPP_ */

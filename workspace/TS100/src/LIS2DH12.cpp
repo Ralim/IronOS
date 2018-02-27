@@ -12,14 +12,15 @@ LIS2DH12::LIS2DH12(I2C_HandleTypeDef* i2cHandle) {
 }
 
 void LIS2DH12::initalize() {
-	I2C_RegisterWrite(LIS_CTRL_REG1, 0x37); //25Hz
+	I2C_RegisterWrite(LIS_CTRL_REG1, 0x17); //25Hz
 	I2C_RegisterWrite(LIS_CTRL_REG2, 0x00); //Highpass filter off
 	I2C_RegisterWrite(LIS_CTRL_REG3, 0b01000000); //Setup interrupt pins
-	I2C_RegisterWrite(LIS_CTRL_REG4, 0x00); //Block update mode
+	I2C_RegisterWrite(LIS_CTRL_REG4, 0b00001000); //Block update mode off
 	I2C_RegisterWrite(LIS_CTRL_REG5, 0x00);
 	//Basically setup the unit to run, and enable 4D orientation detection
-	I2C_RegisterWrite(LIS_INT1_CFG, 0b01001010); //setup for movement detection
-	I2C_RegisterWrite(LIS_INT2_CFG, 0b00000000); //disable int2
+	I2C_RegisterWrite(LIS_INT1_CFG, 0b01111110); //setup for movement detection
+	I2C_RegisterWrite(LIS_INT1_THS, 0x20); //disable int2
+	I2C_RegisterWrite(LIS_INT1_DURATION, 0x0A); //disable int2
 
 }
 
