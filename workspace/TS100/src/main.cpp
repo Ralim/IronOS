@@ -9,12 +9,13 @@
 #include "stdlib.h"
 #include "stm32f1xx_hal.h"
 #include "string.h"
-
-//#define I2CTest
+#include "LIS2DH12.hpp"
+#define I2CTest
 #define ACCELDEBUG 0
 // C++ objects
 OLED lcd(&hi2c1);
 MMA8652FC accel(&hi2c1);
+LIS2DH12 accel2(&hi2c1);
 uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
@@ -46,13 +47,16 @@ int main(void) {
 	lcd.setFont(0);     // default to bigger font
 	//Testing for new weird board version
 	uint8_t buffer[1];
-	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0, 0, buffer, 1, 1000) == HAL_OK) {
+	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
+			1000) == HAL_OK) {
 		PCBVersion = 1;
 		accel.initalize(); // this sets up the I2C registers and loads up the default
 						   // settings
-	} else
+	} else {
 		PCBVersion = 2;
-
+		//Setup the ST Accelerometer
+		accel2.initalize();						   //startup the accelerometer
+	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
@@ -62,18 +66,26 @@ int main(void) {
 	for (;;) {
 		//We dont load the RTOS here, and test stuff instead
 		//Scan all of the I2C address space and see who answers
+		HAL_IWDG_Refresh(&hiwdg);
+
 		lcd.setFont(1);
 		lcd.clearScreen();
-		if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x00, 0, buffer, 1, 1000)
-				== HAL_OK) {
-			//this ID was okay
-			lcd.printNumber(buffer[0], 3);
-			lcd.print(".");
-			lcd.refresh();
+		lcd.setCursor(0, 0);
+		uint8_t tx_data[1];
+		HAL_I2C_Mem_Read(&hi2c1, LIS2DH_I2C_ADDRESS, 0x31|0x80, I2C_MEMADD_SIZE_8BIT,
+				tx_data, 1, 2000);
+
+		lcd.printNumber(tx_data[0], 5);
+
+		lcd.refresh();
+
+		volatile uint32_t d, b = 0;
+		for (d = 0; d < 300; d++) {
+			for (b = 0; b < 0xFFF; b++) {
+			}
 		}
-		for (;;) {
-			//hang out here
-		}
+		HAL_IWDG_Refresh(&hiwdg);
+
 	}
 
 #endif
