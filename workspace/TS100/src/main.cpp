@@ -71,13 +71,8 @@ int main(void) {
 		lcd.setFont(1);
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
-		uint8_t tx_data[2];
-		HAL_I2C_Mem_Read(&hi2c1, LIS2DH_I2C_ADDRESS, 0xB0 | 0x80,
-				I2C_MEMADD_SIZE_8BIT, tx_data, 2, 2000);
 
-		lcd.printNumber(tx_data[0], 5);
-		lcd.print("-");
-		lcd.printNumber(tx_data[1], 5);
+		lcd.printNumber(accel2.getOrientation(), 5);
 
 		lcd.refresh();
 

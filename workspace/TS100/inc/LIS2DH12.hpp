@@ -13,7 +13,7 @@ class LIS2DH12 {
 public:
 	LIS2DH12(I2C_HandleTypeDef* i2cHandle);
 	void initalize();
-	bool getOrientation();
+	uint8_t getOrientation();
 	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:

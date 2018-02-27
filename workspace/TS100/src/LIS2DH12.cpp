@@ -19,13 +19,22 @@ void LIS2DH12::initalize() {
 	I2C_RegisterWrite(LIS_CTRL_REG5, 0x00);
 	//Basically setup the unit to run, and enable 4D orientation detection
 	I2C_RegisterWrite(LIS_INT1_CFG, 0b01111110); //setup for movement detection
-	I2C_RegisterWrite(LIS_INT1_THS, 0x20); //disable int2
-	I2C_RegisterWrite(LIS_INT1_DURATION, 0x0A); //disable int2
+	I2C_RegisterWrite(LIS_INT1_THS, 0x28); //disable int2
+	I2C_RegisterWrite(LIS_INT1_DURATION, 5); //disable int2
 
 }
 
-bool LIS2DH12::getOrientation() {
-
+//0=no change, 1= right handed, 2= left handed
+uint8_t LIS2DH12::getOrientation() {
+	// 8=right handed,4=left,16=flat
+	//So we ignore if not 8/4
+	uint8_t pos = I2C_RegisterRead(LIS_INT1_SRC);
+	if (pos == 8)
+		return 1;
+	else if (pos == 4)
+		return 2;
+	else
+		return 0;
 }
 
 void LIS2DH12::getAxisReadings(int16_t* x, int16_t* y, int16_t* z) {
