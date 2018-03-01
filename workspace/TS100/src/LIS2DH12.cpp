@@ -14,13 +14,18 @@ LIS2DH12::LIS2DH12(I2C_HandleTypeDef* i2cHandle) {
 void LIS2DH12::initalize() {
 	I2C_RegisterWrite(LIS_CTRL_REG1, 0x17); //25Hz
 	I2C_RegisterWrite(LIS_CTRL_REG2, 0x00); //Highpass filter off
-	I2C_RegisterWrite(LIS_CTRL_REG3, 0b01000000); //Setup interrupt pins
-	I2C_RegisterWrite(LIS_CTRL_REG4, 0b00001000); //Block update mode off
-	I2C_RegisterWrite(LIS_CTRL_REG5, 0x00);
+	I2C_RegisterWrite(LIS_CTRL_REG3, 0b01100000); //Setup interrupt pins
+	I2C_RegisterWrite(LIS_CTRL_REG4, 0b00001000); //Block update mode off,HR on
+	I2C_RegisterWrite(LIS_CTRL_REG5, 0b00000010);
+	I2C_RegisterWrite(LIS_CTRL_REG6, 0b01100010);
+
 	//Basically setup the unit to run, and enable 4D orientation detection
+	I2C_RegisterWrite(LIS_INT2_CFG, 0b01111110); //setup for movement detection
+	I2C_RegisterWrite(LIS_INT2_THS, 0x28);
+	I2C_RegisterWrite(LIS_INT2_DURATION, 64);
 	I2C_RegisterWrite(LIS_INT1_CFG, 0b01111110); //setup for movement detection
-	I2C_RegisterWrite(LIS_INT1_THS, 0x28); //disable int2
-	I2C_RegisterWrite(LIS_INT1_DURATION, 5); //disable int2
+	I2C_RegisterWrite(LIS_INT1_THS, 0x28);
+	I2C_RegisterWrite(LIS_INT1_DURATION, 64);
 
 }
 
@@ -28,7 +33,7 @@ void LIS2DH12::initalize() {
 uint8_t LIS2DH12::getOrientation() {
 	// 8=right handed,4=left,16=flat
 	//So we ignore if not 8/4
-	uint8_t pos = I2C_RegisterRead(LIS_INT1_SRC);
+	uint8_t pos = I2C_RegisterRead(LIS_INT2_SRC);
 	if (pos == 8)
 		return 1;
 	else if (pos == 4)
@@ -45,9 +50,9 @@ void LIS2DH12::getAxisReadings(int16_t* x, int16_t* y, int16_t* z) {
 		HAL_Delay(5);
 	}
 	taskEXIT_CRITICAL();
-	(*x) = tempArr[1] << 8 | tempArr[0];
-	(*y) = tempArr[3] << 8 | tempArr[2];
-	(*z) = tempArr[5] << 8 | tempArr[4];
+	(*x) = ((uint16_t) (tempArr[1] << 8 | tempArr[0])) / 6;
+	(*y) = ((uint16_t) (tempArr[3] << 8 | tempArr[2])) / 6;
+	(*z) = ((uint16_t) (tempArr[5] << 8 | tempArr[4])) / 6;
 }
 
 void LIS2DH12::setSensitivity(uint8_t threshold, uint8_t filterTime) {

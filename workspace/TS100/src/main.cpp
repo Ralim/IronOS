@@ -10,7 +10,7 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 #include "LIS2DH12.hpp"
-#define I2CTest
+//#define I2CTest
 #define ACCELDEBUG 0
 // C++ objects
 OLED lcd(&hi2c1);
@@ -72,7 +72,8 @@ int main(void) {
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 
-		lcd.printNumber(accel2.getOrientation(), 5);
+		lcd.printNumber(, 5);
+
 
 		lcd.refresh();
 
@@ -744,14 +745,32 @@ void startGUITask(void const *argument) {
 	default:
 		break;
 	}
-	if (showBootLogoIfavailable())
-		waitForButtonPressOrTimeout(2000);
+	uint32_t ticks = HAL_GetTick();
+	while (HAL_GetTick() < ticks) {
+		showBootLogoIfavailable();
+		ButtonState buttons = getButtonState();
+		if (buttons)
+			ticks = HAL_GetTick();
+		GUIDelay();
+	}
+
 	HAL_IWDG_Refresh(&hiwdg);
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
 		if (systemSettings.autoStartMode == 1)
 			gui_solderingMode();
 	}
+	/*
+	for(;;)
+	{
+		HAL_IWDG_Refresh(&hiwdg);
+		lcd.clearScreen();
+		lcd.setCursor(0,0);
+		lcd.printNumber(HAL_GetTick(),5);
+		lcd.refresh();
+		osDelay(10);
+	}
+	*/
 #if ACCELDEBUG
 
 	for (;;) {
@@ -760,7 +779,6 @@ void startGUITask(void const *argument) {
 	}
 //^ Kept here for a way to block this thread
 #endif
-//Show warning : No accel
 
 	for (;;) {
 		ButtonState buttons = getButtonState();
@@ -959,15 +977,7 @@ void startPIDTask(void const *argument) {
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
 	osDelay(4000);  // wait for accel to stabilize
-	if (PCBVersion == 2) {
-		//on PCB rev 2, accel does not work yet.
-		//So trigger wakeup timer events so the iron doesnt randomly sleep on people
-		for (;;) {
-			osDelay(1000);
-			lastMovementTime = HAL_GetTick();
-		}
 
-	}
 	int16_t datax[MOVFilter];
 	int16_t datay[MOVFilter];
 	int16_t dataz[MOVFilter];
@@ -986,7 +996,10 @@ void startMOVTask(void const *argument) {
 	for (;;) {
 		int32_t threshold = 1200 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
-		accel.getAxisReadings(&tx, &ty, &tz);
+		if (PCBVersion == 2)
+			accel2.getAxisReadings(&tx, &ty, &tz);
+		else
+			accel.getAxisReadings(&tx, &ty, &tz);
 
 		datax[currentPointer] = (int32_t) tx;
 		datay[currentPointer] = (int32_t) ty;
@@ -1065,33 +1078,33 @@ void startRotationTask(void const *argument) {
 		break;
 	}
 	osDelay(500);  // wait for accel to stabilize
-	if (PCBVersion == 2) {
-		//Accelerometer not supported yet
-		//Disable this feature for now :(
-		for (;;) {
-			osDelay(1000);
-		}
-	}
-	HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
-	HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	/*
+	 HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+	 HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+	 HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+	 HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	 */
 	//^ We hold off enabling these until now to ensure the semaphore is available
 	// to be used first
-
 	for (;;) {
-		if (xSemaphoreTake(rotationChangedSemaphore, portMAX_DELAY) == pdTRUE
-				|| (HAL_GPIO_ReadPin(INT_Orientation_GPIO_Port,
-				INT_Orientation_Pin) == GPIO_PIN_RESET)) {
-			// a rotation event has occured
-			bool rotation = accel.getOrientation();
-			if (systemSettings.OrientationMode == 2)
-				lcd.setRotation(rotation);  // link the data through
+
+		// a rotation event has occured
+		uint8_t rotation;
+		if (PCBVersion == 2) {
+			rotation = accel2.getOrientation();
+		} else {
+			rotation = accel.getOrientation();
 		}
-		osDelay(300);
+		if (systemSettings.OrientationMode == 2) {
+			if (rotation != 0) {
+				lcd.setRotation(rotation == 2);  // link the data through
+			}
+		}
+
+		osDelay(500);
 	}
 }
-
+/*
 // Handler called by HAL when a EXTI occurs, but after IRQ bit is cleared
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	static signed long xHigherPriorityTaskWoken;
@@ -1104,7 +1117,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		// &xHigherPriorityTaskWoken);
 	}
 }
-
+*/
 #define FLASH_LOGOADDR \
   (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
 
