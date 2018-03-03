@@ -74,7 +74,6 @@ int main(void) {
 
 		lcd.printNumber(, 5);
 
-
 		lcd.refresh();
 
 		volatile uint32_t d, b = 0;
@@ -147,7 +146,7 @@ ButtonState getButtonState() {
 	 */
 	static uint8_t previousState = 0;
 	static uint32_t previousStateChange = 0;
-	const uint16_t timeout = 400;
+	const uint16_t timeout = 40;
 	uint8_t currentState;
 	currentState = (
 			HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ?
@@ -157,11 +156,11 @@ ButtonState getButtonState() {
 					1 : 0) << 1;
 
 	if (currentState)
-		lastButtonTime = HAL_GetTick();
+		lastButtonTime = xTaskGetTickCount();
 	if (currentState == previousState) {
 		if (currentState == 0)
 			return BUTTON_NONE;
-		if ((HAL_GetTick() - previousStateChange) > timeout) {
+		if ((xTaskGetTickCount() - previousStateChange) > timeout) {
 			// User has been holding the button down
 			// We want to send a buttong is held message
 			if (currentState == 0x01)
@@ -182,7 +181,7 @@ ButtonState getButtonState() {
 			// User has released buttons
 			// If they previously had the buttons down we want to check if they were <
 			// long hold and trigger a press
-			if ((HAL_GetTick() - previousStateChange) < timeout) {
+			if ((xTaskGetTickCount() - previousStateChange) < timeout) {
 				// The user didn't hold the button for long
 				// So we send button press
 
@@ -195,7 +194,7 @@ ButtonState getButtonState() {
 			}
 		}
 		previousState = currentState;
-		previousStateChange = HAL_GetTick();
+		previousStateChange = xTaskGetTickCount();
 		return retVal;
 	}
 	return BUTTON_NONE;
@@ -218,13 +217,13 @@ static void waitForButtonPress() {
 }
 
 void waitForButtonPressOrTimeout(uint32_t timeout) {
-	timeout += HAL_GetTick();
+	timeout += xTaskGetTickCount();
 	// Make timeout our exit value
 	for (;;) {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return;
-		if (HAL_GetTick() > timeout)
+		if (xTaskGetTickCount() > timeout)
 			return;
 		GUIDelay();
 	}
@@ -279,7 +278,7 @@ static void gui_drawBatteryIcon() {
 		lcd.drawSymbol(16);  // Draw the DC Logo
 }
 static void gui_solderingTempAdjust() {
-	uint32_t lastChange = HAL_GetTick();
+	uint32_t lastChange = xTaskGetTickCount();
 	currentlyActiveTemperatureTarget = 0;
 	for (;;) {
 		lcd.setCursor(0, 0);
@@ -287,7 +286,7 @@ static void gui_solderingTempAdjust() {
 		lcd.setFont(0);
 		ButtonState buttons = getButtonState();
 		if (buttons)
-			lastChange = HAL_GetTick();
+			lastChange = xTaskGetTickCount();
 		switch (buttons) {
 		case BUTTON_NONE:
 			// stay
@@ -336,7 +335,7 @@ static void gui_solderingTempAdjust() {
 				systemSettings.SolderingTemp = 50;
 		}
 
-		if (HAL_GetTick() - lastChange > 1500)
+		if (xTaskGetTickCount() - lastChange > 200)
 			return;  // exit if user just doesn't press anything for a bit
 		lcd.drawChar('<');
 		lcd.drawChar(' ');
@@ -363,7 +362,7 @@ static void gui_settingsMenu() {
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 
-		if (HAL_GetTick() - lastButtonTime < 4000) {
+		if (xTaskGetTickCount() - lastButtonTime < 400) {
 			settingsMenu[currentScreen].draw.func();
 
 		} else {
@@ -374,11 +373,12 @@ static void gui_settingsMenu() {
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
-			int16_t descriptionOffset =
-					(((HAL_GetTick() - descriptionStart) / 3) % (maxOffset * 12));
+			int16_t descriptionOffset =(
+					(((HAL_GetTick() - descriptionStart) / 10) % (maxOffset * 3)))*4;
 			//^ Rolling offset based on time
 			lcd.setCursor(((7 * 12) - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
+
 		}
 
 		ButtonState buttons = getButtonState();
@@ -402,16 +402,16 @@ static void gui_settingsMenu() {
 				descriptionStart = 0;
 			break;
 		case BUTTON_F_LONG:
-			if (HAL_GetTick() - autoRepeatTimer > 200) {
+			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
 				settingsMenu[currentScreen].incrementHandler.func();
-				autoRepeatTimer = HAL_GetTick();
+				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
 			}
 			break;
 		case BUTTON_B_LONG:
-			if (HAL_GetTick() - autoRepeatTimer > 200) {
+			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
 				currentScreen++;
-				autoRepeatTimer = HAL_GetTick();
+				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
 			}
 			break;
@@ -460,7 +460,7 @@ static int gui_showTipTempWarning() {
 			}
 		}
 		if (systemSettings.coolingTempBlink && tipTemp > 70) {
-			if (HAL_GetTick() % 500 < 250)
+			if (xTaskGetTickCount() % 50 < 25)
 				lcd.clearScreen();
 		}
 		lcd.refresh();
@@ -490,8 +490,8 @@ static int gui_SolderingSleepingMode() {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return 0;
-		if ((HAL_GetTick() - lastMovementTime < 1000)
-				|| (HAL_GetTick() - lastButtonTime < 1000))
+		if ((xTaskGetTickCount() - lastMovementTime < 100)
+				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 		if (checkVoltageForExit())
 			return 1;  // return non-zero on error
@@ -542,8 +542,8 @@ static int gui_SolderingSleepingMode() {
 		}
 		if (systemSettings.ShutdownTime) // only allow shutdown exit if time > 0
 			if (lastMovementTime)
-				if (((uint32_t) (HAL_GetTick() - lastMovementTime))
-						> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
+				if (((uint32_t) (xTaskGetTickCount() - lastMovementTime))
+						> (uint32_t) (systemSettings.ShutdownTime * 60 * 100)) {
 					// shutdown
 					currentlyActiveTemperatureTarget = 0;
 					return 1;  // we want to exit soldering mode
@@ -570,9 +570,9 @@ static void gui_solderingMode() {
 	bool boostModeOn = false;
 	uint32_t sleepThres = 0;
 	if (systemSettings.SleepTime < 6)
-		sleepThres = systemSettings.SleepTime * 10 * 1000;
+		sleepThres = systemSettings.SleepTime * 10 * 100;
 	else
-		sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
+		sleepThres = (systemSettings.SleepTime - 5) * 60 * 100;
 	for (;;) {
 		uint16_t tipTemp = getTipRawTemp(0);
 
@@ -695,8 +695,8 @@ static void gui_solderingMode() {
 
 		lcd.refresh();
 		if (systemSettings.sensitivity)
-			if (HAL_GetTick() - lastMovementTime > sleepThres
-					&& HAL_GetTick() - lastButtonTime > sleepThres) {
+			if (xTaskGetTickCount() - lastMovementTime > sleepThres
+					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
 				if (gui_SolderingSleepingMode()) {
 					return;  // If the function returns non-0 then exit
 				}
@@ -745,12 +745,14 @@ void startGUITask(void const *argument) {
 	default:
 		break;
 	}
-	uint32_t ticks = HAL_GetTick();
-	while (HAL_GetTick() < ticks) {
-		showBootLogoIfavailable();
+	uint32_t ticks = xTaskGetTickCount();
+	ticks += 400;  //4 seconds
+	while (xTaskGetTickCount() < ticks) {
+		if (showBootLogoIfavailable() == false)
+			ticks = xTaskGetTickCount();
 		ButtonState buttons = getButtonState();
 		if (buttons)
-			ticks = HAL_GetTick();
+			ticks = xTaskGetTickCount();
 		GUIDelay();
 	}
 
@@ -760,17 +762,7 @@ void startGUITask(void const *argument) {
 		if (systemSettings.autoStartMode == 1)
 			gui_solderingMode();
 	}
-	/*
-	for(;;)
-	{
-		HAL_IWDG_Refresh(&hiwdg);
-		lcd.clearScreen();
-		lcd.setCursor(0,0);
-		lcd.printNumber(HAL_GetTick(),5);
-		lcd.refresh();
-		osDelay(10);
-	}
-	*/
+
 #if ACCELDEBUG
 
 	for (;;) {
@@ -831,11 +823,11 @@ void startGUITask(void const *argument) {
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
 		if (tipTemp > 50)
 			if (systemSettings.sensitivity) {
-				if ((HAL_GetTick() - lastMovementTime) > 60000
-						&& (HAL_GetTick() - lastButtonTime) > 60000)
+				if ((xTaskGetTickCount() - lastMovementTime) > 6000
+						&& (xTaskGetTickCount() - lastButtonTime) > 6000)
 					lcd.displayOnOff(false);  // turn lcd off when no movement
-				else if (HAL_GetTick() - lastMovementTime < 1000
-						|| HAL_GetTick() - lastButtonTime < 1000) /*Use short time for test, and prevent lots of I2C
+				else if (xTaskGetTickCount() - lastMovementTime < 100
+						|| xTaskGetTickCount() - lastButtonTime < 100) /*Use short time for test, and prevent lots of I2C
 						 writes for no need*/
 					lcd.displayOnOff(true);  // turn lcd back on
 			}
@@ -1051,7 +1043,7 @@ void startMOVTask(void const *argument) {
 			int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 			// If error has occured then we update the tick timer
 			if (error > threshold) {
-				lastMovementTime = HAL_GetTick();
+				lastMovementTime = xTaskGetTickCount();
 			}
 		}
 
@@ -1105,19 +1097,19 @@ void startRotationTask(void const *argument) {
 	}
 }
 /*
-// Handler called by HAL when a EXTI occurs, but after IRQ bit is cleared
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	static signed long xHigherPriorityTaskWoken;
-	if (GPIO_Pin == INT_Orientation_Pin) {
-		xSemaphoreGiveFromISR(rotationChangedSemaphore,
-				&xHigherPriorityTaskWoken);
-	} else if (GPIO_Pin == INT_Movement_Pin) {
-		// New data is available for reading from the unit
-		// xSemaphoreGiveFromISR(accelDataAvailableSemaphore,
-		// &xHigherPriorityTaskWoken);
-	}
-}
-*/
+ // Handler called by HAL when a EXTI occurs, but after IRQ bit is cleared
+ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+ static signed long xHigherPriorityTaskWoken;
+ if (GPIO_Pin == INT_Orientation_Pin) {
+ xSemaphoreGiveFromISR(rotationChangedSemaphore,
+ &xHigherPriorityTaskWoken);
+ } else if (GPIO_Pin == INT_Movement_Pin) {
+ // New data is available for reading from the unit
+ // xSemaphoreGiveFromISR(accelDataAvailableSemaphore,
+ // &xHigherPriorityTaskWoken);
+ }
+ }
+ */
 #define FLASH_LOGOADDR \
   (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
 
