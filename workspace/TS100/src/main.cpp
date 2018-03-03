@@ -9,12 +9,13 @@
 #include "stdlib.h"
 #include "stm32f1xx_hal.h"
 #include "string.h"
+#include "LIS2DH12.hpp"
 
-//#define I2CTest
 #define ACCELDEBUG 0
 // C++ objects
 OLED lcd(&hi2c1);
 MMA8652FC accel(&hi2c1);
+LIS2DH12 accel2(&hi2c1);
 uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
@@ -46,37 +47,20 @@ int main(void) {
 	lcd.setFont(0);     // default to bigger font
 	//Testing for new weird board version
 	uint8_t buffer[1];
-	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0, 0, buffer, 1, 1000) == HAL_OK) {
+	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
+			1000) == HAL_OK) {
 		PCBVersion = 1;
 		accel.initalize(); // this sets up the I2C registers and loads up the default
 						   // settings
-	} else
+	} else {
 		PCBVersion = 2;
-
+		//Setup the ST Accelerometer
+		accel2.initalize();						   //startup the accelerometer
+	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
 	HAL_IWDG_Refresh(&hiwdg);
-
-#ifdef I2CTest
-	for (;;) {
-		//We dont load the RTOS here, and test stuff instead
-		//Scan all of the I2C address space and see who answers
-		lcd.setFont(1);
-		lcd.clearScreen();
-		if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x00, 0, buffer, 1, 1000)
-				== HAL_OK) {
-			//this ID was okay
-			lcd.printNumber(buffer[0], 3);
-			lcd.print(".");
-			lcd.refresh();
-		}
-		for (;;) {
-			//hang out here
-		}
-	}
-
-#endif
 
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
@@ -137,7 +121,7 @@ ButtonState getButtonState() {
 	 */
 	static uint8_t previousState = 0;
 	static uint32_t previousStateChange = 0;
-	const uint16_t timeout = 400;
+	const uint16_t timeout = 40;
 	uint8_t currentState;
 	currentState = (
 			HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ?
@@ -147,11 +131,11 @@ ButtonState getButtonState() {
 					1 : 0) << 1;
 
 	if (currentState)
-		lastButtonTime = HAL_GetTick();
+		lastButtonTime = xTaskGetTickCount();
 	if (currentState == previousState) {
 		if (currentState == 0)
 			return BUTTON_NONE;
-		if ((HAL_GetTick() - previousStateChange) > timeout) {
+		if ((xTaskGetTickCount() - previousStateChange) > timeout) {
 			// User has been holding the button down
 			// We want to send a buttong is held message
 			if (currentState == 0x01)
@@ -172,7 +156,7 @@ ButtonState getButtonState() {
 			// User has released buttons
 			// If they previously had the buttons down we want to check if they were <
 			// long hold and trigger a press
-			if ((HAL_GetTick() - previousStateChange) < timeout) {
+			if ((xTaskGetTickCount() - previousStateChange) < timeout) {
 				// The user didn't hold the button for long
 				// So we send button press
 
@@ -185,7 +169,7 @@ ButtonState getButtonState() {
 			}
 		}
 		previousState = currentState;
-		previousStateChange = HAL_GetTick();
+		previousStateChange = xTaskGetTickCount();
 		return retVal;
 	}
 	return BUTTON_NONE;
@@ -208,13 +192,13 @@ static void waitForButtonPress() {
 }
 
 void waitForButtonPressOrTimeout(uint32_t timeout) {
-	timeout += HAL_GetTick();
+	timeout += xTaskGetTickCount();
 	// Make timeout our exit value
 	for (;;) {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return;
-		if (HAL_GetTick() > timeout)
+		if (xTaskGetTickCount() > timeout)
 			return;
 		GUIDelay();
 	}
@@ -269,7 +253,7 @@ static void gui_drawBatteryIcon() {
 		lcd.drawSymbol(16);  // Draw the DC Logo
 }
 static void gui_solderingTempAdjust() {
-	uint32_t lastChange = HAL_GetTick();
+	uint32_t lastChange = xTaskGetTickCount();
 	currentlyActiveTemperatureTarget = 0;
 	for (;;) {
 		lcd.setCursor(0, 0);
@@ -277,7 +261,7 @@ static void gui_solderingTempAdjust() {
 		lcd.setFont(0);
 		ButtonState buttons = getButtonState();
 		if (buttons)
-			lastChange = HAL_GetTick();
+			lastChange = xTaskGetTickCount();
 		switch (buttons) {
 		case BUTTON_NONE:
 			// stay
@@ -326,7 +310,7 @@ static void gui_solderingTempAdjust() {
 				systemSettings.SolderingTemp = 50;
 		}
 
-		if (HAL_GetTick() - lastChange > 1500)
+		if (xTaskGetTickCount() - lastChange > 200)
 			return;  // exit if user just doesn't press anything for a bit
 		lcd.drawChar('<');
 		lcd.drawChar(' ');
@@ -353,7 +337,7 @@ static void gui_settingsMenu() {
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 
-		if (HAL_GetTick() - lastButtonTime < 4000) {
+		if (xTaskGetTickCount() - lastButtonTime < 400) {
 			settingsMenu[currentScreen].draw.func();
 
 		} else {
@@ -364,11 +348,12 @@ static void gui_settingsMenu() {
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
-			int16_t descriptionOffset =
-					(((HAL_GetTick() - descriptionStart) / 3) % (maxOffset * 12));
+			int16_t descriptionOffset = ((((HAL_GetTick() - descriptionStart)
+					/ 10) % (maxOffset * 3))) * 4;
 			//^ Rolling offset based on time
 			lcd.setCursor(((7 * 12) - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
+
 		}
 
 		ButtonState buttons = getButtonState();
@@ -392,16 +377,16 @@ static void gui_settingsMenu() {
 				descriptionStart = 0;
 			break;
 		case BUTTON_F_LONG:
-			if (HAL_GetTick() - autoRepeatTimer > 200) {
+			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
 				settingsMenu[currentScreen].incrementHandler.func();
-				autoRepeatTimer = HAL_GetTick();
+				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
 			}
 			break;
 		case BUTTON_B_LONG:
-			if (HAL_GetTick() - autoRepeatTimer > 200) {
+			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
 				currentScreen++;
-				autoRepeatTimer = HAL_GetTick();
+				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
 			}
 			break;
@@ -450,7 +435,7 @@ static int gui_showTipTempWarning() {
 			}
 		}
 		if (systemSettings.coolingTempBlink && tipTemp > 70) {
-			if (HAL_GetTick() % 500 < 250)
+			if (xTaskGetTickCount() % 50 < 25)
 				lcd.clearScreen();
 		}
 		lcd.refresh();
@@ -480,8 +465,8 @@ static int gui_SolderingSleepingMode() {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return 0;
-		if ((HAL_GetTick() - lastMovementTime < 1000)
-				|| (HAL_GetTick() - lastButtonTime < 1000))
+		if ((xTaskGetTickCount() - lastMovementTime < 100)
+				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 		if (checkVoltageForExit())
 			return 1;  // return non-zero on error
@@ -532,8 +517,8 @@ static int gui_SolderingSleepingMode() {
 		}
 		if (systemSettings.ShutdownTime) // only allow shutdown exit if time > 0
 			if (lastMovementTime)
-				if (((uint32_t) (HAL_GetTick() - lastMovementTime))
-						> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
+				if (((uint32_t) (xTaskGetTickCount() - lastMovementTime))
+						> (uint32_t) (systemSettings.ShutdownTime * 60 * 100)) {
 					// shutdown
 					currentlyActiveTemperatureTarget = 0;
 					return 1;  // we want to exit soldering mode
@@ -560,9 +545,9 @@ static void gui_solderingMode() {
 	bool boostModeOn = false;
 	uint32_t sleepThres = 0;
 	if (systemSettings.SleepTime < 6)
-		sleepThres = systemSettings.SleepTime * 10 * 1000;
+		sleepThres = systemSettings.SleepTime * 10 * 100;
 	else
-		sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
+		sleepThres = (systemSettings.SleepTime - 5) * 60 * 100;
 	for (;;) {
 		uint16_t tipTemp = getTipRawTemp(0);
 
@@ -685,8 +670,8 @@ static void gui_solderingMode() {
 
 		lcd.refresh();
 		if (systemSettings.sensitivity)
-			if (HAL_GetTick() - lastMovementTime > sleepThres
-					&& HAL_GetTick() - lastButtonTime > sleepThres) {
+			if (xTaskGetTickCount() - lastMovementTime > sleepThres
+					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
 				if (gui_SolderingSleepingMode()) {
 					return;  // If the function returns non-0 then exit
 				}
@@ -735,14 +720,24 @@ void startGUITask(void const *argument) {
 	default:
 		break;
 	}
-	if (showBootLogoIfavailable())
-		waitForButtonPressOrTimeout(2000);
+	uint32_t ticks = xTaskGetTickCount();
+	ticks += 400;  //4 seconds
+	while (xTaskGetTickCount() < ticks) {
+		if (showBootLogoIfavailable() == false)
+			ticks = xTaskGetTickCount();
+		ButtonState buttons = getButtonState();
+		if (buttons)
+			ticks = xTaskGetTickCount();
+		GUIDelay();
+	}
+
 	HAL_IWDG_Refresh(&hiwdg);
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
 		if (systemSettings.autoStartMode == 1)
 			gui_solderingMode();
 	}
+
 #if ACCELDEBUG
 
 	for (;;) {
@@ -751,7 +746,6 @@ void startGUITask(void const *argument) {
 	}
 //^ Kept here for a way to block this thread
 #endif
-//Show warning : No accel
 
 	for (;;) {
 		ButtonState buttons = getButtonState();
@@ -804,11 +798,11 @@ void startGUITask(void const *argument) {
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
 		if (tipTemp > 50)
 			if (systemSettings.sensitivity) {
-				if ((HAL_GetTick() - lastMovementTime) > 60000
-						&& (HAL_GetTick() - lastButtonTime) > 60000)
+				if ((xTaskGetTickCount() - lastMovementTime) > 6000
+						&& (xTaskGetTickCount() - lastButtonTime) > 6000)
 					lcd.displayOnOff(false);  // turn lcd off when no movement
-				else if (HAL_GetTick() - lastMovementTime < 1000
-						|| HAL_GetTick() - lastButtonTime < 1000) /*Use short time for test, and prevent lots of I2C
+				else if (xTaskGetTickCount() - lastMovementTime < 100
+						|| xTaskGetTickCount() - lastButtonTime < 100) /*Use short time for test, and prevent lots of I2C
 						 writes for no need*/
 					lcd.displayOnOff(true);  // turn lcd back on
 			}
@@ -950,15 +944,7 @@ void startPIDTask(void const *argument) {
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
 	osDelay(4000);  // wait for accel to stabilize
-	if (PCBVersion == 2) {
-		//on PCB rev 2, accel does not work yet.
-		//So trigger wakeup timer events so the iron doesnt randomly sleep on people
-		for (;;) {
-			osDelay(1000);
-			lastMovementTime = HAL_GetTick();
-		}
 
-	}
 	int16_t datax[MOVFilter];
 	int16_t datay[MOVFilter];
 	int16_t dataz[MOVFilter];
@@ -977,7 +963,10 @@ void startMOVTask(void const *argument) {
 	for (;;) {
 		int32_t threshold = 1200 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
-		accel.getAxisReadings(&tx, &ty, &tz);
+		if (PCBVersion == 2)
+			accel2.getAxisReadings(&tx, &ty, &tz);
+		else
+			accel.getAxisReadings(&tx, &ty, &tz);
 
 		datax[currentPointer] = (int32_t) tx;
 		datay[currentPointer] = (int32_t) ty;
@@ -997,18 +986,19 @@ void startMOVTask(void const *argument) {
 		avgz /= MOVFilter;
 		lcd.setFont(1);
 		lcd.setCursor(0, 0);
-		lcd.printNumber(abs(avgx - (int32_t)tx), 5);
+		lcd.printNumber(abs(avgx - (int32_t) tx), 5);
 		lcd.print(" ");
-		lcd.printNumber(abs(avgy - (int32_t)ty), 5);
+		lcd.printNumber(abs(avgy - (int32_t) ty), 5);
 		if ((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)) > max)
-		max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 		lcd.setCursor(0, 8);
 		lcd.printNumber(max, 5);
 		lcd.print(" ");
 
 		lcd.printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
 		lcd.refresh();
-		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET) max = 0;
+		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET)
+			max = 0;
 #endif
 		// Only run the actual processing if the sensitivity is set (aka we are
 		// enabled)
@@ -1029,7 +1019,7 @@ void startMOVTask(void const *argument) {
 			int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 			// If error has occured then we update the tick timer
 			if (error > threshold) {
-				lastMovementTime = HAL_GetTick();
+				lastMovementTime = xTaskGetTickCount();
 			}
 		}
 
@@ -1056,43 +1046,23 @@ void startRotationTask(void const *argument) {
 		break;
 	}
 	osDelay(500);  // wait for accel to stabilize
-	if (PCBVersion == 2) {
-		//Accelerometer not supported yet
-		//Disable this feature for now :(
-		for (;;) {
-			osDelay(1000);
-		}
-	}
-	HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
-	HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-	//^ We hold off enabling these until now to ensure the semaphore is available
-	// to be used first
 
 	for (;;) {
-		if (xSemaphoreTake(rotationChangedSemaphore, portMAX_DELAY) == pdTRUE
-				|| (HAL_GPIO_ReadPin(INT_Orientation_GPIO_Port,
-				INT_Orientation_Pin) == GPIO_PIN_RESET)) {
-			// a rotation event has occured
-			bool rotation = accel.getOrientation();
-			if (systemSettings.OrientationMode == 2)
-				lcd.setRotation(rotation);  // link the data through
-		}
-		osDelay(300);
-	}
-}
 
-// Handler called by HAL when a EXTI occurs, but after IRQ bit is cleared
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	static signed long xHigherPriorityTaskWoken;
-	if (GPIO_Pin == INT_Orientation_Pin) {
-		xSemaphoreGiveFromISR(rotationChangedSemaphore,
-				&xHigherPriorityTaskWoken);
-	} else if (GPIO_Pin == INT_Movement_Pin) {
-		// New data is available for reading from the unit
-		// xSemaphoreGiveFromISR(accelDataAvailableSemaphore,
-		// &xHigherPriorityTaskWoken);
+		// a rotation event has occurred
+		uint8_t rotation;
+		if (PCBVersion == 2) {
+			rotation = accel2.getOrientation();
+		} else {
+			rotation = accel.getOrientation();
+		}
+		if (systemSettings.OrientationMode == 2) {
+			if (rotation != 0) {
+				lcd.setRotation(rotation == 2);  // link the data through
+			}
+		}
+
+		osDelay(500);
 	}
 }
 

@@ -15,7 +15,7 @@ public:
 
 	MMA8652FC(I2C_HandleTypeDef* i2cHandle);
 	void initalize();		// Initalize the system
-	bool getOrientation();// Reads the I2C register and returns the orientation (true == left)
+	uint8_t getOrientation();// Reads the I2C register and returns the orientation (true == left)
 	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:

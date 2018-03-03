@@ -103,13 +103,13 @@ static void printShortDescription(uint32_t shortDescIndex,
 
 static int userConfirmation(const char* message) {
   uint8_t maxOffset = strlen(message) + 7;
-  uint32_t messageStart = HAL_GetTick();
+  uint32_t messageStart = xTaskGetTickCount();
 
   lcd.setFont(0);
   lcd.setCursor(0, 0);
 
   for (;;) {
-    int16_t messageOffset = (((HAL_GetTick() - messageStart) / 150) % maxOffset);
+    int16_t messageOffset = (((xTaskGetTickCount() - messageStart) / 15) % maxOffset);
 
     lcd.clearScreen();
     lcd.setCursor(12 * (7 - messageOffset), 0);
@@ -329,7 +329,7 @@ static void settings_setResetSettings(void) {
     lcd.print("RESET OK");
     lcd.refresh();
 
-    waitForButtonPressOrTimeout(2000);
+    waitForButtonPressOrTimeout(200);
   }
 }
 
