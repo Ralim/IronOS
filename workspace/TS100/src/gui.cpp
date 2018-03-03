@@ -102,38 +102,40 @@ static void printShortDescription(uint32_t shortDescIndex,
 }
 
 static int userConfirmation(const char* message) {
-  uint8_t maxOffset = strlen(message) + 7;
-  uint32_t messageStart = xTaskGetTickCount();
+	uint8_t maxOffset = strlen(message) + 7;
+	uint32_t messageStart = xTaskGetTickCount();
 
-  lcd.setFont(0);
-  lcd.setCursor(0, 0);
+	lcd.setFont(0);
+	lcd.setCursor(0, 0);
 
-  for (;;) {
-    int16_t messageOffset = (((xTaskGetTickCount() - messageStart) / 15) % maxOffset);
+	for (;;) {
+		int16_t messageOffset = (((xTaskGetTickCount() - messageStart) / 15)
+				% maxOffset);
 
-    lcd.clearScreen();
-    lcd.setCursor(12 * (7 - messageOffset), 0);
-    lcd.print(message);
+		lcd.clearScreen();
+		lcd.setCursor(12 * (7 - messageOffset), 0);
+		lcd.print(message);
 
-    ButtonState buttons = getButtonState();
-    switch (buttons) {
-      case BUTTON_F_SHORT:
-        //User confirmed
-        return 1;
+		ButtonState buttons = getButtonState();
+		switch (buttons) {
+		case BUTTON_F_SHORT:
+			//User confirmed
+			return 1;
 
-      case BUTTON_BOTH:
-      case BUTTON_B_SHORT:
-      case BUTTON_F_LONG:
-      case BUTTON_B_LONG:
-        return 0;
+		case BUTTON_NONE:
+			break;
+		default:
+		case BUTTON_BOTH:
+		case BUTTON_B_SHORT:
+		case BUTTON_F_LONG:
+		case BUTTON_B_LONG:
+			return 0;
+		}
 
-      case BUTTON_NONE:
-        break;
-    }
-
-    lcd.refresh();
-    osDelay(50);
-  }
+		lcd.refresh();
+		osDelay(50);
+	}
+	return 0;
 }
 
 

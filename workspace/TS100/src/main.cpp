@@ -349,7 +349,7 @@ static void gui_settingsMenu() {
 				descriptionStart = HAL_GetTick();
 
 			int16_t descriptionOffset = ((((HAL_GetTick() - descriptionStart)
-					/ 10) % (maxOffset * 3))) * 4;
+					/ 30) % (maxOffset * 3))) * 4;
 			//^ Rolling offset based on time
 			lcd.setCursor(((7 * 12) - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
@@ -749,13 +749,13 @@ void startGUITask(void const *argument) {
 		break;
 	}
 	uint32_t ticks = xTaskGetTickCount();
-	ticks += 400;  //4 seconds
+	ticks += 400;  //4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
 		if (showBootLogoIfavailable() == false)
 			ticks = xTaskGetTickCount();
 		ButtonState buttons = getButtonState();
 		if (buttons)
-			ticks = xTaskGetTickCount();
+			ticks = xTaskGetTickCount();//make timeout now so we will exit
 		GUIDelay();
 	}
 
