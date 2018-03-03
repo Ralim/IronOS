@@ -312,7 +312,7 @@ static void gui_solderingTempAdjust() {
 
 		if (xTaskGetTickCount() - lastChange > 200)
 			return;  // exit if user just doesn't press anything for a bit
-		lcd.drawChar('<');
+		lcd.drawChar('-');
 		lcd.drawChar(' ');
 		lcd.printNumber(systemSettings.SolderingTemp, 3);
 		if (systemSettings.temperatureInF)
@@ -320,7 +320,7 @@ static void gui_solderingTempAdjust() {
 		else
 			lcd.drawSymbol(1);
 		lcd.drawChar(' ');
-		lcd.drawChar('>');
+		lcd.drawChar('+');
 		lcd.refresh();
 		GUIDelay();
 	}
@@ -592,59 +592,87 @@ static void gui_solderingMode() {
 			waitForButtonPress();
 			return;
 		} else {
-			// We switch the layout direction depending on the orientation of the lcd.
-			if (lcd.getRotation()) {
-				// battery
-				gui_drawBatteryIcon();
+			if (systemSettings.detailedSoldering) {
+				lcd.setFont(1);
+				lcd.print(SolderingAdvancedPowerPrompt);  //Power:
+				lcd.printNumber(getTipPWM(), 3);
+				lcd.print("%");
 
-				lcd.drawChar(' ');  // Space out gap between battery <-> temp
-				if (systemSettings.temperatureInF) {
-					gui_drawTipTemp();  // Draw current tip temp
-					lcd.drawSymbol(0);  // deg F
-				} else {
-					gui_drawTipTemp();  // Draw current tip temp
-					lcd.drawSymbol(1);  // deg C
-				}
+				lcd.setCursor(0, 8);
+				lcd.print(SleepingTipAdvancedString);
+				uint16_t Temp = getTipRawTemp(0);
 
-				// We draw boost arrow if boosting, or else gap temp <-> heat indicator
-				if (boostModeOn)
-					lcd.drawSymbol(2);
+				if (systemSettings.temperatureInF)
+					Temp = tipMeasurementToF(Temp);
 				else
-					lcd.drawChar(' ');
-
-				// Draw heating/cooling symbols
-				// If tip PWM > 10% then we are 'heating'
-				if (getTipPWM() > 10)
-					lcd.drawSymbol(14);
+					Temp = tipMeasurementToC(Temp);
+				lcd.printNumber(Temp, 3);
+				if (systemSettings.temperatureInF)
+					lcd.print("F");
 				else
-					lcd.drawSymbol(15);
+					lcd.print("C");
+
+				lcd.print(" ");
+				lcd.printNumber(
+						getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+				lcd.drawChar('.');
+				lcd.printNumber(
+						getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+				lcd.drawChar('V');
 			} else {
-				// Draw heating/cooling symbols
-				// If tip PWM > 10% then we are 'heating'
-				if (getTipPWM() > 10)
-					lcd.drawSymbol(14);
-				else
-					lcd.drawSymbol(15);
-				// We draw boost arrow if boosting, or else gap temp <-> heat indicator
-				if (boostModeOn)
-					lcd.drawSymbol(2);
-				else
-					lcd.drawChar(' ');
+				// We switch the layout direction depending on the orientation of the lcd.
+				if (lcd.getRotation()) {
+					// battery
+					gui_drawBatteryIcon();
 
-				if (systemSettings.temperatureInF) {
-					gui_drawTipTemp();  // Draw current tip temp
-					lcd.drawSymbol(0);  // deg F
+					lcd.drawChar(' '); // Space out gap between battery <-> temp
+					if (systemSettings.temperatureInF) {
+						gui_drawTipTemp();  // Draw current tip temp
+						lcd.drawSymbol(0);  // deg F
+					} else {
+						gui_drawTipTemp();  // Draw current tip temp
+						lcd.drawSymbol(1);  // deg C
+					}
+
+					// We draw boost arrow if boosting, or else gap temp <-> heat indicator
+					if (boostModeOn)
+						lcd.drawSymbol(2);
+					else
+						lcd.drawChar(' ');
+
+					// Draw heating/cooling symbols
+					// If tip PWM > 10% then we are 'heating'
+					if (getTipPWM() > 10)
+						lcd.drawSymbol(14);
+					else
+						lcd.drawSymbol(15);
 				} else {
-					gui_drawTipTemp();  // Draw current tip temp
-					lcd.drawSymbol(1);  // deg C
+					// Draw heating/cooling symbols
+					// If tip PWM > 10% then we are 'heating'
+					if (getTipPWM() > 10)
+						lcd.drawSymbol(14);
+					else
+						lcd.drawSymbol(15);
+					// We draw boost arrow if boosting, or else gap temp <-> heat indicator
+					if (boostModeOn)
+						lcd.drawSymbol(2);
+					else
+						lcd.drawChar(' ');
+
+					if (systemSettings.temperatureInF) {
+						gui_drawTipTemp();  // Draw current tip temp
+						lcd.drawSymbol(0);  // deg F
+					} else {
+						gui_drawTipTemp();  // Draw current tip temp
+						lcd.drawSymbol(1);  // deg C
+					}
+
+					lcd.drawChar(' '); // Space out gap between battery <-> temp
+
+					gui_drawBatteryIcon();
 				}
-
-				lcd.drawChar(' ');  // Space out gap between battery <-> temp
-
-				gui_drawBatteryIcon();
 			}
 		}
-
 		// Update the setpoints for the temperature
 		if (boostModeOn) {
 			if (systemSettings.temperatureInF)
@@ -990,7 +1018,7 @@ void startMOVTask(void const *argument) {
 		lcd.print(" ");
 		lcd.printNumber(abs(avgy - (int32_t) ty), 5);
 		if ((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)) > max)
-			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+		max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 		lcd.setCursor(0, 8);
 		lcd.printNumber(max, 5);
 		lcd.print(" ");
@@ -998,7 +1026,7 @@ void startMOVTask(void const *argument) {
 		lcd.printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
 		lcd.refresh();
 		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET)
-			max = 0;
+		max = 0;
 #endif
 		// Only run the actual processing if the sensitivity is set (aka we are
 		// enabled)

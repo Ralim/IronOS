@@ -86,6 +86,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -149,6 +150,7 @@ cconst char* SleepingTipAdvancedString = "Tip:";     // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 /*
  * #TODO change support for multibyte constants here
@@ -218,6 +220,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -281,6 +284,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -344,6 +348,7 @@ const char* SleepingTipAdvancedString = "Punta:";      // <=6 chars
 const char* IdleTipString = "Pun:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Prev:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "PUNTA ASSENTE"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
@@ -407,6 +412,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
@@ -470,6 +476,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -533,6 +540,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -596,6 +604,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -659,6 +668,7 @@ const char* SleepingTipAdvancedString = "Vrh: ";      // <=6 chars
 const char* IdleTipString = "Vrh: ";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " / ";       // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "VRH NIJE SPOJEN!"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
@@ -722,6 +732,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
@@ -785,6 +796,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -848,6 +860,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'H';
 const char SettingLeftChar = 'V';
@@ -911,6 +924,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
@@ -975,6 +989,7 @@ const char* SleepingTipAdvancedString  = "Ponta:";            // <=6 chars
 const char* IdleTipString              = "Ponta:";            // IdleTipString+IdleSetString <= 10
 const char* IdleSetString              = " Aj:";             // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString      = "SEM PONTA";         // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar  = 'C';
