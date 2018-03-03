@@ -676,22 +676,22 @@ const char SettingAutoChar = 'A';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[16][2] = {
-  /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
-  /* (<= 4) Sleep temperature                  */ {"STMP"},
-  /* (<= 4) Sleep timeout                      */ {"STME"},
-  /* (<= 5) Shutdown timeout                   */ {"SHTME"},
-  /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
-  /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
-  /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
-  /* (<= 6) Display rotation mode              */ {"DSPROT"},
-  /* (<= 6) Boost enabled                      */ {"BOOST"},
-  /* (<= 4) Boost temperature                  */ {"BTMP"},
-  /* (<= 6) Automatic start mode               */ {"ASTART"},
-  /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
-  /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
-  /* (<= 8) Settings reset command             */ {"RESET?"},
-  /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
-  /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 11) Power source (DC or batt)          */ {"Izvor", "napajanja"},
+  /* (<=  9) Sleep temperature                  */ {"Temp", "spavanja"},
+  /* (<=  9) Sleep timeout                      */ {"Vrijeme", "spavanja"},
+  /* (<= 11) Shutdown timeout                   */ {"Vrijeme", "gašenja"},
+  /* (<= 13) Motion sensitivity level           */ {"Osjetljivost", "pokreta"},
+  /* (<= 13) Temperature in F and C             */ {"Jedinica", "temperature"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Detalji", "pri čekanju"},
+  /* (<= 13) Display rotation mode              */ {"Rotacija", "ekrana"},
+  /* (<= 13) Boost enabled                      */ {"Boost", "način"},
+  /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
+  /* (<= 13) Automatic start mode               */ {"Auto", "start"},
+  /* (<= 13) Cooldown blink                     */ {"Upozorenje", "pri hlađenju"},
+  /* (<= 16) Temperature calibration enter menu */ {"Kalibracija", "temperature"},
+  /* (<= 16) Settings reset command             */ {"Tvorničke", "postavke"},
+  /* (<= 16) Calibrate input voltage            */ {"Kalibracija", "napona napajanja"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Detalji", "pri lemljenju"},
 };
 #endif
 
