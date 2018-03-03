@@ -10,7 +10,7 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 #include "LIS2DH12.hpp"
-//#define I2CTest
+
 #define ACCELDEBUG 0
 // C++ objects
 OLED lcd(&hi2c1);
@@ -61,31 +61,6 @@ int main(void) {
 	restoreSettings();  // load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
 	HAL_IWDG_Refresh(&hiwdg);
-
-#ifdef I2CTest
-	for (;;) {
-		//We dont load the RTOS here, and test stuff instead
-		//Scan all of the I2C address space and see who answers
-		HAL_IWDG_Refresh(&hiwdg);
-
-		lcd.setFont(1);
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
-
-		lcd.printNumber(, 5);
-
-		lcd.refresh();
-
-		volatile uint32_t d, b = 0;
-		for (d = 0; d < 300; d++) {
-			for (b = 0; b < 0xFFF; b++) {
-			}
-		}
-		HAL_IWDG_Refresh(&hiwdg);
-
-	}
-
-#endif
 
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
@@ -373,8 +348,8 @@ static void gui_settingsMenu() {
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
-			int16_t descriptionOffset =(
-					(((HAL_GetTick() - descriptionStart) / 10) % (maxOffset * 3)))*4;
+			int16_t descriptionOffset = ((((HAL_GetTick() - descriptionStart)
+					/ 10) % (maxOffset * 3))) * 4;
 			//^ Rolling offset based on time
 			lcd.setCursor(((7 * 12) - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
@@ -1011,18 +986,19 @@ void startMOVTask(void const *argument) {
 		avgz /= MOVFilter;
 		lcd.setFont(1);
 		lcd.setCursor(0, 0);
-		lcd.printNumber(abs(avgx - (int32_t)tx), 5);
+		lcd.printNumber(abs(avgx - (int32_t) tx), 5);
 		lcd.print(" ");
-		lcd.printNumber(abs(avgy - (int32_t)ty), 5);
+		lcd.printNumber(abs(avgy - (int32_t) ty), 5);
 		if ((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)) > max)
-		max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 		lcd.setCursor(0, 8);
 		lcd.printNumber(max, 5);
 		lcd.print(" ");
 
 		lcd.printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
 		lcd.refresh();
-		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET) max = 0;
+		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET)
+			max = 0;
 #endif
 		// Only run the actual processing if the sensitivity is set (aka we are
 		// enabled)
@@ -1070,17 +1046,10 @@ void startRotationTask(void const *argument) {
 		break;
 	}
 	osDelay(500);  // wait for accel to stabilize
-	/*
-	 HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
-	 HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-	 HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-	 HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-	 */
-	//^ We hold off enabling these until now to ensure the semaphore is available
-	// to be used first
+
 	for (;;) {
 
-		// a rotation event has occured
+		// a rotation event has occurred
 		uint8_t rotation;
 		if (PCBVersion == 2) {
 			rotation = accel2.getOrientation();
@@ -1096,20 +1065,7 @@ void startRotationTask(void const *argument) {
 		osDelay(500);
 	}
 }
-/*
- // Handler called by HAL when a EXTI occurs, but after IRQ bit is cleared
- void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
- static signed long xHigherPriorityTaskWoken;
- if (GPIO_Pin == INT_Orientation_Pin) {
- xSemaphoreGiveFromISR(rotationChangedSemaphore,
- &xHigherPriorityTaskWoken);
- } else if (GPIO_Pin == INT_Movement_Pin) {
- // New data is available for reading from the unit
- // xSemaphoreGiveFromISR(accelDataAvailableSemaphore,
- // &xHigherPriorityTaskWoken);
- }
- }
- */
+
 #define FLASH_LOGOADDR \
   (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
 

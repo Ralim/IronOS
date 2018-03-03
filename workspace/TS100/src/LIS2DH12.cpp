@@ -13,7 +13,7 @@ LIS2DH12::LIS2DH12(I2C_HandleTypeDef* i2cHandle) {
 
 void LIS2DH12::initalize() {
 	I2C_RegisterWrite(LIS_CTRL_REG1, 0x17); //25Hz
-	I2C_RegisterWrite(LIS_CTRL_REG2, 0x00); //Highpass filter off
+	I2C_RegisterWrite(LIS_CTRL_REG2, 0b00001000); //Highpass filter off
 	I2C_RegisterWrite(LIS_CTRL_REG3, 0b01100000); //Setup interrupt pins
 	I2C_RegisterWrite(LIS_CTRL_REG4, 0b00001000); //Block update mode off,HR on
 	I2C_RegisterWrite(LIS_CTRL_REG5, 0b00000010);
@@ -50,9 +50,9 @@ void LIS2DH12::getAxisReadings(int16_t* x, int16_t* y, int16_t* z) {
 		HAL_Delay(5);
 	}
 	taskEXIT_CRITICAL();
-	(*x) = ((uint16_t) (tempArr[1] << 8 | tempArr[0])) / 6;
-	(*y) = ((uint16_t) (tempArr[3] << 8 | tempArr[2])) / 6;
-	(*z) = ((uint16_t) (tempArr[5] << 8 | tempArr[4])) / 6;
+	(*x) = ((uint16_t) (tempArr[1] << 8 | tempArr[0]));
+	(*y) = ((uint16_t) (tempArr[3] << 8 | tempArr[2]));
+	(*z) = ((uint16_t) (tempArr[5] << 8 | tempArr[4]));
 }
 
 void LIS2DH12::setSensitivity(uint8_t threshold, uint8_t filterTime) {

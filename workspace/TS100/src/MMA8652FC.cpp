@@ -69,7 +69,7 @@ uint8_t MMA8652FC::getOrientation() {
 		//0 == left handed
 		//1 == right handed
 
-		return !plStatus;
+		return plStatus==0?2:1;
 	} else
 		return 0;
 }
