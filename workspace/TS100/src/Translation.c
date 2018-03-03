@@ -638,7 +638,7 @@ const char* SettingsLongNames[16] = {
 	/* Power source (DC or batt)          */ "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>",
 	/* Sleep temperature                  */ "Temperatura spavanja. <C>",
 	/* Sleep timeout                      */ "Vrijeme spavanja. <Minute/Sekunde>",
-	/* Shutdown timeout                   */ "Vrijeme gašenja. <Minutes>",
+	/* Shutdown timeout                   */ "Vrijeme gašenja. <Minute>",
 	/* Motion sensitivity level           */ "Osjetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osjetljivo, 9=Najosjetljivije>",
 	/* Temperature in F and C             */ "Jedinica temperature. <C=Celzij, F=Fahrenheit>",
 	/* Advanced idle display mode enabled */ "Prikazivanje detaljnih informacija manjim fontom tijekom čekanja.",
@@ -674,7 +674,7 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[16][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
