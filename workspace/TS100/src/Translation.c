@@ -668,7 +668,7 @@ const char* SleepingTipAdvancedString = "Vrh: ";      // <=6 chars
 const char* IdleTipString = "Vrh: ";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " / ";       // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "VRH NIJE SPOJEN!"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SolderingAdvancedPowerPrompt = "Snaga: ";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
