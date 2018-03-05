@@ -286,7 +286,7 @@ void OLED::drawSymbol(uint8_t symbolID) {
 void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 		const uint8_t* ptr) {
 	// Splat this from x->x+wide in two strides
-	if (x < 0)
+	if (x <= -wide)
 		return;    //cutoffleft
 	if ((x) > 96)
 		return;    //cutoff right
