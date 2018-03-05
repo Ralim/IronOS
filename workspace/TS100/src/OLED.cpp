@@ -295,11 +295,10 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 	uint8_t visibleEnd = wide;
 
 	// trimming to draw partials
-	uint8_t sum = x + wide;
-	if(sum < 0) {
-	  visibleStart -= sum;  //subtract negative value == add absolute value
+	if(x < 0) {
+	  visibleStart -= x;  //subtract negative value == add absolute value
 	}
-	if(sum > 96) {
+	if(x + wide > 96) {
 	  visibleEnd = 96 - x;
 	}
 
