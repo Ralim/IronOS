@@ -21,6 +21,7 @@ uint8_t PCBVersion = 0;
 uint16_t currentlyActiveTemperatureTarget = 0;
 uint32_t lastMovementTime = 0;
 uint32_t lastButtonTime = 0;
+int16_t lastOffset = 0;
 
 // FreeRTOS variables
 osThreadId GUITaskHandle;
@@ -334,12 +335,13 @@ static void gui_settingsMenu() {
 	while ((settingsMenu[currentScreen].incrementHandler.func != NULL)
 			&& earlyExit == false) {
 		lcd.setFont(0);
-		lcd.clearScreen();
 		lcd.setCursor(0, 0);
 
 		if (xTaskGetTickCount() - lastButtonTime < 400) {
-			settingsMenu[currentScreen].draw.func();
+			lcd.clearScreen();
 
+			settingsMenu[currentScreen].draw.func();
+			lastOffset = 0;
 		} else {
 			// Draw description
 			// draw string starting from descriptionOffset
@@ -350,9 +352,15 @@ static void gui_settingsMenu() {
 
 			int16_t descriptionOffset = ((((HAL_GetTick() - descriptionStart)
 					/ 20) % (maxOffset * 2))) * 6;
-			//^ Rolling offset based on time
-			lcd.setCursor(((7 * 12) - descriptionOffset), 0);
-			lcd.print(settingsMenu[currentScreen].description);
+
+			if (lastOffset == 0 || lastOffset!=descriptionOffset) {
+				lcd.clearScreen();
+
+				//^ Rolling offset based on time
+				lcd.setCursor(((7 * 12) - descriptionOffset), 0);
+				lcd.print(settingsMenu[currentScreen].description);
+				lastOffset = descriptionOffset;
+			}
 
 		}
 
