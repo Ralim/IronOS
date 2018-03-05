@@ -349,7 +349,7 @@ static void gui_settingsMenu() {
 				descriptionStart = HAL_GetTick();
 
 			int16_t descriptionOffset = ((((HAL_GetTick() - descriptionStart)
-					/ 10) % (maxOffset * 3))) * 4;
+					/ 20) % (maxOffset * 2))) * 6;
 			//^ Rolling offset based on time
 			lcd.setCursor(((7 * 12) - descriptionOffset), 0);
 			lcd.print(settingsMenu[currentScreen].description);
