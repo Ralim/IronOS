@@ -21,7 +21,6 @@ uint8_t PCBVersion = 0;
 uint16_t currentlyActiveTemperatureTarget = 0;
 uint32_t lastMovementTime = 0;
 uint32_t lastButtonTime = 0;
-int16_t lastOffset = -1;
 
 // FreeRTOS variables
 osThreadId GUITaskHandle;
@@ -332,6 +331,9 @@ static void gui_settingsMenu() {
 	uint32_t autoRepeatTimer = 0;
 	bool earlyExit = false;
 	uint32_t descriptionStart = 0;
+	int16_t lastOffset = -1;
+	bool lcdRefresh = true;
+
 	while ((settingsMenu[currentScreen].incrementHandler.func != NULL)
 			&& earlyExit == false) {
 		lcd.setFont(0);
@@ -342,6 +344,7 @@ static void gui_settingsMenu() {
 
 			settingsMenu[currentScreen].draw.func();
 			lastOffset = -1;
+			lcdRefresh = true;
 		} else {
 			// Draw description
 			// draw string starting from descriptionOffset
@@ -365,6 +368,7 @@ static void gui_settingsMenu() {
 				lcd.setCursor((OLED_WIDTH - descriptionOffset), 0);
 				lcd.print(settingsMenu[currentScreen].description);
 				lastOffset = descriptionOffset;
+				lcdRefresh = true;
 			}
 
 		}
@@ -408,8 +412,11 @@ static void gui_settingsMenu() {
 			break;
 		}
 
-		lcd.refresh();  // update the LCD
-		osDelay(20);
+		if (lcdRefresh) {
+			lcd.refresh();  // update the LCD
+			osDelay(20);
+			lcdRefresh = false;
+		}
 	}
 
 	saveSettings();
