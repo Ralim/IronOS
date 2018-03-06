@@ -654,7 +654,7 @@ const char* SettingsLongNames[16] = {
 };
 
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsResetWarning = "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?";
 const char* UVLOWarningString = "BATERIJA";           // <=8 chars
 const char* UndervoltageString = "PRENIZAK NAPON";    // <=16 chars
 const char* InputVoltageString = "Napajanje: ";       // <=11 chars, preferably end with a space
