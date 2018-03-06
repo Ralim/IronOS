@@ -636,9 +636,9 @@ const char* SettingsLongNames[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>",
-	/* Sleep temperature                  */ "Temperatura spavanja. <C>",
-	/* Sleep timeout                      */ "Vrijeme spavanja. <Minute/Sekunde>",
-	/* Shutdown timeout                   */ "Vrijeme gašenja. <Minute>",
+	/* Sleep temperature                  */ "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. <C/F>",
+	/* Sleep timeout                      */ "Vrijeme mirovanja nakon kojega lemilica spušta temperaturu. <Minute/Sekunde>",
+	/* Shutdown timeout                   */ "Vrijeme mirovanja nakon kojega će se lemilica ugasiti. <Minute>",
 	/* Motion sensitivity level           */ "Osjetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osjetljivo, 9=Najosjetljivije>",
 	/* Temperature in F and C             */ "Jedinica temperature. <C=Celzij, F=Fahrenheit>",
 	/* Advanced idle display mode enabled */ "Prikazivanje detaljnih informacija manjim fontom tijekom čekanja.",
