@@ -110,8 +110,8 @@ static int userConfirmation(const char* message) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 
-	// TODO Description speed factor can be moved to User Interface settings
-	uint16_t messageSpeedFactor = 4;	// lower the value - higher the speed
+	// TODO Scrolling speed factor can be moved to User Interface settings
+	uint16_t scrollingSpeedFactor = 4;	// lower the value - higher the speed
 
 	for (;;) {
 		int16_t messageOffset = (int) ((HAL_GetTick() - messageStart)
