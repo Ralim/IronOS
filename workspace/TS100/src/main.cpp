@@ -334,6 +334,9 @@ static void gui_settingsMenu() {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 
+	// TODO Scrolling speed factor can be moved to User Interface settings
+	uint16_t scrollingSpeedFactor = 4;	// lower the value - higher the speed
+
 	while ((settingsMenu[currentScreen].incrementHandler.func != NULL)
 			&& earlyExit == false) {
 		lcd.setFont(0);
@@ -353,12 +356,9 @@ static void gui_settingsMenu() {
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
-			// TODO Description speed factor can be moved to User Interface settings
-			uint16_t descriptionSpeedFactor = 3;	// lower the value - higher the speed
-
 			int16_t descriptionOffset =
 					(int) ((HAL_GetTick() - descriptionStart)
-							/ (float) descriptionSpeedFactor + 0.5)
+							/ (float) scrollingSpeedFactor + 0.5)
 							% descriptionWidth;
 
 			if (lastOffset != descriptionOffset) {
