@@ -21,7 +21,7 @@ uint8_t PCBVersion = 0;
 uint16_t currentlyActiveTemperatureTarget = 0;
 uint32_t lastMovementTime = 0;
 uint32_t lastButtonTime = 0;
-int16_t lastOffset = 0;
+int16_t lastOffset = -1;
 
 // FreeRTOS variables
 osThreadId GUITaskHandle;
@@ -341,23 +341,28 @@ static void gui_settingsMenu() {
 			lcd.clearScreen();
 
 			settingsMenu[currentScreen].draw.func();
-			lastOffset = 0;
+			lastOffset = -1;
 		} else {
 			// Draw description
 			// draw string starting from descriptionOffset
-			int16_t maxOffset = strlen(settingsMenu[currentScreen].description)
-					+ 7;
+			int16_t descriptionWidth = FONT_12_WIDTH
+					* (strlen(settingsMenu[currentScreen].description) + 7);
 			if (descriptionStart == 0)
 				descriptionStart = HAL_GetTick();
 
-			int16_t descriptionOffset = ((((HAL_GetTick() - descriptionStart)
-					/ 20) % (maxOffset * 2))) * 6;
+			// TODO Description speed factor can be moved to User Interface settings
+			uint16_t descriptionSpeedFactor = 3;	// lower the value - higher the speed
 
-			if (lastOffset == 0 || lastOffset!=descriptionOffset) {
+			int16_t descriptionOffset =
+					(int) ((HAL_GetTick() - descriptionStart)
+							/ (float) descriptionSpeedFactor + 0.5)
+							% descriptionWidth;
+
+			if (lastOffset == -1 || lastOffset != descriptionOffset) {
 				lcd.clearScreen();
 
 				//^ Rolling offset based on time
-				lcd.setCursor(((7 * 12) - descriptionOffset), 0);
+				lcd.setCursor((OLED_WIDTH - descriptionOffset), 0);
 				lcd.print(settingsMenu[currentScreen].description);
 				lastOffset = descriptionOffset;
 			}
