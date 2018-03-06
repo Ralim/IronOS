@@ -115,7 +115,7 @@ static int userConfirmation(const char* message) {
 
 	for (;;) {
 		int16_t messageOffset = (int) ((HAL_GetTick() - messageStart)
-				/ (float) messageSpeedFactor + 0.5) % messageWidth;
+				/ (float) scrollingSpeedFactor + 0.5) % messageWidth;
 
 		if (lastOffset != messageOffset) {
 			lcd.clearScreen();
