@@ -358,7 +358,7 @@ static void gui_settingsMenu() {
 							/ (float) descriptionSpeedFactor + 0.5)
 							% descriptionWidth;
 
-			if (lastOffset == -1 || lastOffset != descriptionOffset) {
+			if (lastOffset != descriptionOffset) {
 				lcd.clearScreen();
 
 				//^ Rolling offset based on time
