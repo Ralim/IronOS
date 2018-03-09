@@ -832,7 +832,7 @@ void startGUITask(void const *argument) {
 		}
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
-		if (tipTemp > 50)
+		if (tipTemp < 50)
 			if (systemSettings.sensitivity) {
 				if ((xTaskGetTickCount() - lastMovementTime) > 6000
 						&& (xTaskGetTickCount() - lastButtonTime) > 6000)
