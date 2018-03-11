@@ -28,14 +28,14 @@ public:
 	OLED(I2C_HandleTypeDef* i2cHandle);	// Initialize Driver and store I2C pointer
 	void initialize(); 	// Startup the I2C coms (brings screen out of reset etc)
 	void refresh(); 	// Draw the buffer out to the LCD using the DMA Channel
-	void drawChar(char c, char preCursorCommand = '\0');// Draw a character to a specific location
+	void drawChar(char c, char preCursorCommand = '\0'); // Draw a character to a specific location
 	void displayOnOff(bool on);				// Turn the screen on or not
 	void setRotation(bool leftHanded);  	// Set the rotation for the screen
 	bool getRotation();					// Get the current rotation of the LCD
 	void print(const char* string);	// Draw a string to the current location, with current font
 	void setCursor(int16_t x, int16_t y);   // Set the cursor location by pixels
 	void setCharCursor(int16_t x, int16_t y); //Set cursor location by chars in current font
-	void setFont(uint8_t fontNumber);// (Future) Set the font that is being used
+	void setFont(uint8_t fontNumber); // (Future) Set the font that is being used
 	void drawImage(const uint8_t* buffer, uint8_t x, uint8_t width);
 	// Draws an image to the buffer, at x offset from top to bottom (fixed height renders)
 	void printNumber(uint16_t number, uint8_t places);
@@ -46,13 +46,15 @@ public:
 	void drawSymbol(uint8_t symbolID);//Used for drawing symbols of a predictable width
 	void drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 			const uint8_t* ptr);
+	void fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
+			const uint8_t value);
 private:
 
 	//Draw a buffer to the screen buffer
 
 	I2C_HandleTypeDef* i2c;					//i2c Pointer
 	const uint8_t* currentFont;	// Pointer to the current font used for rendering to the buffer
-	uint8_t screenBuffer[12 + 96 + 96 + 10];    // The data buffer
+	uint8_t screenBuffer[14 + 96 + 96 + 10];    // The data buffer
 	uint8_t* firstStripPtr; // Pointers to the strips to allow for buffer having extra content
 	uint8_t* secondStripPtr;	//Pointers to the strips
 	bool inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)

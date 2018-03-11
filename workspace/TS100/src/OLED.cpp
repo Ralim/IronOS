@@ -49,8 +49,8 @@ OLED::OLED(I2C_HandleTypeDef* i2cHandle) {
 	currentFont = FONT_12;
 	fontWidth = 12;
 	inLeftHandedMode = false;
-	firstStripPtr = &screenBuffer[13];
-	secondStripPtr = &screenBuffer[13 + 96];
+	firstStripPtr = &screenBuffer[15];
+	secondStripPtr = &screenBuffer[15 + 96];
 	fontHeight = 16;
 	fontWidth = 12;
 	displayOffset = 0;
@@ -77,19 +77,19 @@ void OLED::refresh() {
 	screenBuffer[3] = inLeftHandedMode ? 0 : 32; //display is shifted by 32 in left handed mode as driver ram is 128 wide
 	screenBuffer[4] = 0x80;
 	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F; //End address of the ram segment we are writing to (96 wide)
-
-	screenBuffer[6] = 0x80;    //Set pages to rollover after 2
-	screenBuffer[7] = 0x22;
-	screenBuffer[8] = 0x80;
-	screenBuffer[9] = 0x00;    //start page 0
+	screenBuffer[6] = 0x80; /*Set COM Scan direction*/
+	screenBuffer[7] = inLeftHandedMode ? 0xC8 : 0xC0;
+	screenBuffer[8] = 0x80;    //Set pages to rollover after 2
+	screenBuffer[9] = 0x22;
 	screenBuffer[10] = 0x80;
-	screenBuffer[11] = 0x01;
-
-	screenBuffer[12] = 0x40;    //start of data marker
+	screenBuffer[11] = 0x00;    //start page 0
+	screenBuffer[12] = 0x80;
+	screenBuffer[13] = 0x01;
+	screenBuffer[14] = 0x40;    //start of data marker
 	taskENTER_CRITICAL();
 	//Because I2C is shared, we cant task switch in the middle of the xfer
 
-	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1,
+	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 14 + 96 * 2 + 1,
 			500);
 	taskEXIT_CRITICAL();
 
@@ -123,10 +123,10 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 			index = (128) + (c);
 			break;
 #if defined(LANG_RU) || defined(LANG_UK) || defined(LANG_SR) || defined(LANG_BG) || defined(LANG_MK)
-		case 0xD0:
+			case 0xD0:
 			index = (192) + (c);
 			break;
-		case 0xD1:
+			case 0xD1:
 			index = (256) + (c);
 			break;
 #else
@@ -295,11 +295,11 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 	uint8_t visibleEnd = wide;
 
 	// trimming to draw partials
-	if(x < 0) {
-	  visibleStart -= x;  //subtract negative value == add absolute value
+	if (x < 0) {
+		visibleStart -= x;  //subtract negative value == add absolute value
 	}
-	if(x + wide > 96) {
-	  visibleEnd = 96 - x;
+	if (x + wide > 96) {
+		visibleEnd = 96 - x;
 	}
 
 	if (y == 0) {
@@ -312,6 +312,38 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 		// Splat the second line
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			secondStripPtr[x + xx] = ptr[xx + (height == 16 ? wide : 0)];
+		}
+	}
+}
+void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
+		const uint8_t value) {
+	// Splat this from x->x+wide in two strides
+	if (x <= -wide)
+		return;    //cutoffleft
+	if (x > 96)
+		return;    //cutoff right
+
+	uint8_t visibleStart = 0;
+	uint8_t visibleEnd = wide;
+
+	// trimming to draw partials
+	if (x < 0) {
+		visibleStart -= x;  //subtract negative value == add absolute value
+	}
+	if (x + wide > 96) {
+		visibleEnd = 96 - x;
+	}
+
+	if (y == 0) {
+		//Splat first line of data
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
+			firstStripPtr[xx + x] = value;
+		}
+	}
+	if (y == 8 || height == 16) {
+		// Splat the second line
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
+			secondStripPtr[x + xx] = value;
 		}
 	}
 }
