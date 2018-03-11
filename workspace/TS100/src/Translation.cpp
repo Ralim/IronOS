@@ -5,7 +5,9 @@
  *      Author: Ben V. Brown
  */
 #include "Translation.h"
-
+#ifndef LANG
+#define LANG_EN
+#endif
 // TEMPLATES for short names - choose one and use it as base for your
 // translation:
 
@@ -50,7 +52,8 @@
 //};
 
 #ifdef LANG_EN
-const char* SettingsLongNames[16] = {
+
+const char* SettingsDescriptions[16] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
@@ -111,10 +114,16 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
 };
+
+const char* SettingsMenuEntries[4] = {
+/*Soldering Menu*/"Soldering",
+/* Power Saving Menu*/"Power",
+/* UI Menu*/"UI",
+/* Advanced Menu*/"Advanced", };
 #endif
 
 #ifdef LANG_RU
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
@@ -184,7 +193,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_ES
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Fuente de energía. Ajusta el límite inferior de voltaje. <DC=10V S=3.3V por celda>",
@@ -248,7 +257,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_SE
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
@@ -312,7 +321,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_IT
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */"Scegli la sorgente di alimentazione; imposta la soglia di scaricamento per alimentazione Li-Po <DC: 10V; S: 3.3V per cella>",
@@ -376,7 +385,7 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 #endif
 
 #ifdef LANG_FR
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>",
@@ -440,7 +449,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_DE
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>",
@@ -504,7 +513,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_SK
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Zdroj napatia. Nastavit napatie pre vypnutie (cutoff)  <DC=10V, nS=n*3.3V pre LiIon clanky>",
@@ -568,7 +577,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_TR
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Güç Kaynağı. kesim geriliminı ayarlar. <DC 10V> <S 3.3V hücre başına>",
@@ -632,7 +641,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_HR
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>",
@@ -696,7 +705,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_CS_CZ
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length
   /* Power source (DC or batt)          */ "Při nižším napětí ukončí pájení <DC=10V, xS=x*3.3V pro LiPo,LiIon...>",
@@ -760,7 +769,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_HUN
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length
   /* Power source (DC or batt)          */ "Áramforrás. Beállítja a lekapcsolási feszültséget. <DC 10V> <S 3.3V cellánként>",
@@ -824,7 +833,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_DK
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length
   /* Power source (DC or batt)          */ "Strømforsyning. Indstil Cutoff Spændingen. <DC 10V <S 3.3V per cell",
@@ -888,7 +897,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_PL
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
     // These are all the help text for all the settings.
     // No requirements on spacing or length
     /* Power source (DC or batt)          */ "Źródło zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw Li>",
@@ -952,7 +961,7 @@ const char* SettingsShortNames[16][2] = {
 #endif
 
 #ifdef LANG_BR
-const char* SettingsLongNames[16] = {
+const char* SettingsDescriptions[16] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Fonte de alimentação. Define a tensão de corte. <DC 10V> <S 3.3V por célula>",

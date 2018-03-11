@@ -5,16 +5,15 @@
  *      Author: Ben V. Brown
  */
 
-#ifndef GUI_H_
-#define GUI_H_
+#ifndef GUI_HPP_
+#define GUI_HPP_
+#include "Translation.h"
+#include "Settings.h"
+#include "hardware.h"
 
 //GUI holds the menu structure and all its methods for the menu itself
 
-#include "main.hpp"
-#include "Settings.h"
-#include "Translation.h"
 //Declarations for all the methods for the settings menu (at end of this file)
-
 
 //Wrapper for holding a function pointer
 typedef struct state_func_t {
@@ -28,6 +27,7 @@ typedef struct {
 	const state_func draw;
 } menuitem;
 
-extern const menuitem settingsMenu[];
+void enterSettingsMenu();
+extern const menuitem rootSettingsMenu[];
 
-#endif /* GUI_H_ */
+#endif /* GUI_HPP_ */
