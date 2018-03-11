@@ -17,8 +17,8 @@ enum ShortNameType {
  * use SettingsShortNames as SettingsShortNames[16][1].. second column undefined
  */
 extern const enum ShortNameType SettingsShortNameType;
-extern const char* SettingsShortNames[16][2];
-extern const char* SettingsDescriptions[16];
+extern const char* SettingsShortNames[17][2];
+extern const char* SettingsDescriptions[17];
 extern const char* SettingsMenuEntries[4];
 extern const char* SettingsMenuEntriesDescriptions[4];
 
@@ -45,6 +45,10 @@ extern const char SettingFalseChar;
 extern const char SettingRightChar;
 extern const char SettingLeftChar;
 extern const char SettingAutoChar;
+
+extern const char SettingFastChar;
+extern const char SettingSlowChar;
+
 
 
 #endif /* TRANSLATION_H_ */

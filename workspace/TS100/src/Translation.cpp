@@ -49,11 +49,12 @@
 //  /* (<= 16) Settings reset command             */ {"Factory", "Reset?"},
 //  /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
 //  /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
+//  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
 //};
 
 #ifdef LANG_EN
 
-const char* SettingsDescriptions[16] = {
+const char* SettingsDescriptions[17] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
@@ -72,6 +73,7 @@ const char* SettingsDescriptions[16] = {
   /* Settings reset command             */ "Reset all settings",
   /* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
   /* Advanced soldering screen enabled  */ "Display detailed information while soldering",
+  /* Description Scroll Speed           */ "Speed this text scrols past at",
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
@@ -95,8 +97,11 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
+const char SettingFastChar = 'F';
+const char SettingSlowChar = 'S';
+
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
   /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
   /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
@@ -113,6 +118,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 16) Settings reset command             */ {"Factory", "reset?"},
   /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
 };
 
 const char* SettingsMenuEntries[4] = {
