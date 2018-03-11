@@ -10,6 +10,9 @@
 #ifndef FONT_H_
 #define FONT_H_
 #include "Translation.h"
+
+#define FONT_12_WIDTH   12
+
 /*
  * Remember screen is LSB at the top, MSB at the bottom of the strip!
  */

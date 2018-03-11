@@ -102,19 +102,30 @@ static void printShortDescription(uint32_t shortDescIndex,
 }
 
 static int userConfirmation(const char* message) {
-	uint8_t maxOffset = strlen(message) + 7;
-	uint32_t messageStart = xTaskGetTickCount();
+	uint16_t messageWidth = FONT_12_WIDTH * (strlen(message) + 7);
+	uint32_t messageStart = HAL_GetTick();
 
 	lcd.setFont(0);
 	lcd.setCursor(0, 0);
+	int16_t lastOffset = -1;
+	bool lcdRefresh = true;
+
+	// TODO Scrolling speed factor can be moved to User Interface settings
+	uint16_t scrollingSpeedFactor = 4;	// lower the value - higher the speed
 
 	for (;;) {
-		int16_t messageOffset = (((xTaskGetTickCount() - messageStart) / 15)
-				% maxOffset);
+		int16_t messageOffset = (int) ((HAL_GetTick() - messageStart)
+				/ (float) scrollingSpeedFactor + 0.5) % messageWidth;
 
-		lcd.clearScreen();
-		lcd.setCursor(12 * (7 - messageOffset), 0);
-		lcd.print(message);
+		if (lastOffset != messageOffset) {
+			lcd.clearScreen();
+
+			//^ Rolling offset based on time
+			lcd.setCursor((OLED_WIDTH - messageOffset), 0);
+			lcd.print(message);
+			lastOffset = messageOffset;
+			lcdRefresh = true;
+		}
 
 		ButtonState buttons = getButtonState();
 		switch (buttons) {
@@ -132,8 +143,11 @@ static int userConfirmation(const char* message) {
 			return 0;
 		}
 
-		lcd.refresh();
-		osDelay(50);
+		if (lcdRefresh) {
+			lcd.refresh();
+			osDelay(20);
+			lcdRefresh = false;
+		}
 	}
 	return 0;
 }
