@@ -98,10 +98,10 @@ const menuitem rootSettingsMenu[]
  * Exit
  */
  {(const char*)SettingsDescriptions[0], {settings_setInputVRange}, {settings_displayInputVRange}}, /*Voltage input*/
- {(const char*)SettingsMenuEntries[0], {settings_enterSolderingMenu}, {settings_displaySolderingMenu}}, /*Soldering*/
- {(const char*)SettingsMenuEntries[1], {settings_enterPowerMenu}, {settings_displayPowerMenu}}, /*Sleep Options Menu*/
- {(const char*)SettingsMenuEntries[2], {settings_enterUIMenu}, {settings_displayUIMenu}}, /*UI Menu*/
- {(const char*)SettingsMenuEntries[3], {settings_enterAdvancedMenu}, {settings_displayAdvancedMenu}}, /*Advanced Menu*/
+ {(const char*)SettingsMenuEntriesDescriptions[0], {settings_enterSolderingMenu}, {settings_displaySolderingMenu}}, /*Soldering*/
+ {(const char*)SettingsMenuEntriesDescriptions[1], {settings_enterPowerMenu}, {settings_displayPowerMenu}}, /*Sleep Options Menu*/
+ {(const char*)SettingsMenuEntriesDescriptions[2], {settings_enterUIMenu}, {settings_displayUIMenu}}, /*UI Menu*/
+ {(const char*)SettingsMenuEntriesDescriptions[3], {settings_enterAdvancedMenu}, {settings_displayAdvancedMenu}}, /*Advanced Menu*/
  {NULL, {NULL}, {NULL}}            // end of menu marker. DO NOT REMOVE
 };
 
@@ -533,28 +533,49 @@ static void settings_displayCalibrateVIN(void) {
 }
 static void settings_displaySolderingMenu(void) {
 	//Call into the menu
+	lcd.setFont(1);
+	lcd.setCursor(0,0);
+	//Draw title
+	lcd.print(SettingsMenuEntries[0]);
+	//Draw symbol
+	//16 pixel wide image
+	lcd.drawArea(96-16,0,16,16,(&SettingsMenuIcons[(16*2)*0]));
 }
 static void settings_enterSolderingMenu(void) {
 	gui_Menu(solderingMenu);
 }
 static void settings_displayPowerMenu(void) {
-
+	lcd.setFont(1);
+	lcd.setCursor(0,0);
+	//Draw title
+	lcd.print(SettingsMenuEntries[1]);
+	//Draw symbol
+	//16 pixel wide image
+	lcd.drawArea(96-16,0,16,16,(&SettingsMenuIcons[(16*2)*1]));
 }
 static void settings_enterPowerMenu(void) {
 	gui_Menu(PowerMenu);
 }
 static void settings_displayUIMenu(void) {
-
+	lcd.setFont(1);
+	lcd.setCursor(0,0);
+	//Draw title
+	lcd.print(SettingsMenuEntries[2]);
+	//Draw symbol
+	//16 pixel wide image
+	lcd.drawArea(96-16,0,16,16,(&SettingsMenuIcons[(16*2)*2]));
 }
 static void settings_enterUIMenu(void) {
 	gui_Menu(UIMenu);
 }
 static void settings_displayAdvancedMenu(void) {
-	lcd.setFont(0);
+	lcd.setFont(1);
 	lcd.setCursor(0,0);
 	//Draw title
-
+	lcd.print(SettingsMenuEntries[3]);
 	//Draw symbol
+	//16 pixel wide image
+	lcd.drawArea(96-16,0,16,16,(&SettingsMenuIcons[(16*2)*3]));
 
 }
 static void settings_enterAdvancedMenu(void) {

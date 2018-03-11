@@ -101,6 +101,11 @@ void OLED::refresh() {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(char c, char PrecursorCommand) {
+	if( c=='\n' && cursor_y==0)
+	{
+		cursor_x=0;
+		cursor_y=8;
+	}
 	if (c < ' ') {
 		return;
 	}

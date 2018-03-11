@@ -116,10 +116,16 @@ const char* SettingsShortNames[16][2] = {
 };
 
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering",
-/* Power Saving Menu*/"Power",
-/* UI Menu*/"UI",
-/* Advanced Menu*/"Advanced", };
+/*Soldering Menu*/"Soldering\nSettings",
+/* Power Saving Menu*/"Sleep\nModes",
+/* UI Menu*/"User\nInterface",
+/* Advanced Menu*/"Advanced\nOptions", };
+const char* SettingsMenuEntriesDescriptions[4] ={
+"Soldering settings",
+"Power Saving Settings",
+"User Interface settings",
+"Advanced options"
+};
 #endif
 
 #ifdef LANG_RU
