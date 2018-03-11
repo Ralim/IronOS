@@ -610,9 +610,7 @@ void gui_Menu(const menuitem* menu) {
 	uint32_t descriptionStart = 0;
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
-	uint8_t scrollingSpeedFactor = 10;
-	if (systemSettings.descriptionScrollSpeed == 1)
-		scrollingSpeedFactor = 4;
+
 	// lower the value - higher the speed
 	int16_t descriptionWidth = FONT_12_WIDTH
 						* (strlen(menu[currentScreen].description) + 7);
@@ -633,8 +631,8 @@ void gui_Menu(const menuitem* menu) {
 				descriptionStart = xTaskGetTickCount();
 
 			int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart)
-					/ scrollingSpeedFactor);
-			descriptionOffset %= descriptionWidth;
+					/ (systemSettings.descriptionScrollSpeed == 1?1:2));
+			descriptionOffset %= descriptionWidth;//Roll around at the end
 
 			if (lastOffset != descriptionOffset) {
 				lcd.clearScreen();
