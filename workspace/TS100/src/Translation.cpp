@@ -12,7 +12,7 @@
 // translation:
 
 //const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-//const char* SettingsShortNames[16][2] = {
+//const char* SettingsShortNames[17][2] = {
 //  /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
 //  /* (<= 4) Sleep temperature                  */ {"STMP"},
 //  /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -29,10 +29,11 @@
 //  /* (<= 8) Settings reset command             */ {"RESET?"},
 //  /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
 //  /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+//  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 //};
 
 //const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-//const char* SettingsShortNames[16][2] = {
+//const char* SettingsShortNames[17][2] = {
 //  /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
 //  /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
 //  /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
@@ -188,7 +189,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"ИстП  "},
   /* (<= 4) Sleep temperature                  */ {"Тожд"},
   /* (<= 4) Sleep timeout                      */ {"Вожд "},
@@ -205,6 +206,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"СБРОС?"},
   /* (<= 8) Calibrate input voltage            */ {"КалибрU?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ИнфПай "},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -268,7 +270,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -285,6 +287,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESET?"},
   /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -347,7 +350,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -364,6 +367,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESET?"},
   /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -426,7 +430,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
- const char* SettingsShortNames[16][2] = {
+ const char* SettingsShortNames[17][2] = {
     /* (<= 11) Power source (DC or batt)          */ {"Sorgente", "alimentaz"},
     /* (<=  9) Sleep temperature                  */ {"Temp", "standby"},
     /* (<=  9) Sleep timeout                      */ {"Timer", "standby"},
@@ -443,6 +447,7 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
     /* (<= 16) Settings reset command             */ {"Ripristino", "impostazioni"},
     /* (<= 16) Calibrate input voltage            */ {"Calibrazione", "tensione"},
     /* (<= 13) Advanced soldering screen enabled  */ {"Dettagli", "saldatura"},
+	  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
 };
  const char* SettingsMenuEntries[4] = {
  /*Soldering Menu*/"Soldering\nSettings",
@@ -458,44 +463,45 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 #endif
 
 #ifdef LANG_FR
+
 const char* SettingsDescriptions[17] = {
-	// These are all the help text for all the settings.
-	// No requirements on spacing or length.
-	/* Power source (DC or batt)          */ "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>",
-	/* Sleep temperature                  */ "Température en veille <C>",
-	/* Sleep timeout                      */ "Délai avant mise en veille <Minutes>",
-	/* Shutdown timeout                   */ "Délai avant extinction <Minutes>",
-	/* Motion sensitivity level           */ "Sensibilité du capteur de mouvement <0=Inactif 1=Peu sensible 9=Tres sensible>",
-	/* Temperature in F and C             */ "Unité de température <C=Celsius F=Fahrenheit>",
-	/* Advanced idle display mode enabled */ "Afficher des informations détaillées lors de la veille",
-	/* Display rotation mode              */ "Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>",
-	/* Boost enabled                      */ "Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure",
-	/* Boost temperature                  */ "Température du mode \"Boost\" <C>",
-	/* Automatic start mode               */ "Démarrer automatiquement la soudure à l'allumage",
-	/* Cooldown blink                     */ "Faire clignoter la température lors du refroidissement tant que la panne est chaude",
-	/* Temperature calibration enter menu */ "Étalonner la température de la panne",
-	/* Settings reset command             */ "Réinitialiser tous les réglages",
-	/* Calibrate input voltage            */ "Étalonner la tension d'entrée. Boutons pour ajuster, appui long pour quitter",
-	/* Advanced soldering screen enabled  */ "Afficher des informations détaillées pendant la soudure",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length.
+  /* Power source (DC or batt)          */ "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>",
+  /* Sleep temperature                  */ "Température en veille <C>",
+  /* Sleep timeout                      */ "Délai avant mise en veille <Minutes>",
+  /* Shutdown timeout                   */ "Délai avant extinction <Minutes>",
+  /* Motion sensitivity level           */ "Sensibilité du capteur de mouvement <0=Inactif 1=Peu sensible 9=Tres sensible>",
+  /* Temperature in F and C             */ "Unité de température <C=Celsius F=Fahrenheit>",
+  /* Advanced idle display mode enabled */ "Afficher des informations détaillées lors de la veille.",
+  /* Display rotation mode              */ "Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>",
+  /* Boost enabled                      */ "Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure",
+  /* Boost temperature                  */ "Température du mode \"Boost\"",
+  /* Automatic start mode               */ "Démarrer automatiquement la soudure a l'allumage <A=Activé, V=Mode Veille, D=Désactivé>",
+  /* Cooldown blink                     */ "Faire clignoter la température lors du refroidissement tant que la panne est chaude.",
+  /* Temperature calibration enter menu */ "Etalonner température de la panne.",
+  /* Settings reset command             */ "Réinitialiser tous les réglages",
+  /* Calibrate input voltage            */ "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
+  /* Advanced soldering screen enabled  */ "Afficher des informations détaillées pendant la soudure",
+  /* Description Scroll Speed           */ "Vitesse de défilement de ce texte à",
 };
 
 const char* SettingsCalibrationWarning = "Assurez-vous que la panne soit à température ambiante avant de continuer!";
 const char* SettingsResetWarning = "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
+const char* UVLOWarningString = "DC FAIBLE";            // <=8 chars
+const char* UndervoltageString = "Sous-tension";     // <=16 chars
+const char* InputVoltageString = "V d'entrée: ";        // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Temp. Panne: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "PANNE HS";                // <=8 chars
 const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
 const char* SleepingAdvancedString = "En veille...";    // <=16 chars
 const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
 const char* WarningAdvancedString = "ATTENTION! CHAUD"; // Must be <= 16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
+const char* SleepingTipAdvancedString = "PANNE:";      // <=6 chars
+const char* IdleTipString = "PANNE:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* TipDisconnectedString = "PANNE DEBRANCH"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Puissance: ";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
@@ -505,34 +511,36 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[16][2] = {
-	/* (<= 11) Power source (DC or batt)          */ {"Source", "d'alim"},
-	/* (<=  9) Sleep temperature                  */ {"Temp.", "veille"},
-	/* (<=  9) Sleep timeout                      */ {"Délai", "veille"},
-	/* (<= 11) Shutdown timeout                   */ {"Délai", "extinction"},
-	/* (<= 13) Motion sensitivity level           */ {"Sensibilité", "au mouvement"},
-	/* (<= 13) Temperature in F and C             */ {"Unité de", "température"},
-	/* (<= 13) Advanced idle display mode enabled */ {"Écran veille", "détaillé"},
-	/* (<= 13) Display rotation mode              */ {"Orientation", "de l'écran"},
-	/* (<= 13) Boost enabled                      */ {"Activation du", "mode Boost"},
-	/* (<=  9) Boost temperature                  */ {"Temp.", "Boost"},
-	/* (<= 13) Automatic start mode               */ {"Démarrage", "automatique"},
-	/* (<= 13) Cooldown blink                     */ {"Refroidir en", "clignottant"},
-	/* (<= 16) Temperature calibration enter menu */ {"Étalonner", "température"},
-	/* (<= 16) Settings reset command             */ {"Réinitialisation", "d'usine"},
-	/* (<= 16) Calibrate input voltage            */ {"Étalonner", "tension d'entrée"},
-	/* (<= 13) Advanced soldering screen enabled  */ {"Écran soudure", "détaillé"},
+const char* SettingsShortNames[17][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Source", "d'alim"},
+  /* (<=  9) Sleep temperature                  */ {"Temp.", "veille"},
+  /* (<=  9) Sleep timeout                      */ {"Délai", "veille"},
+  /* (<= 11) Shutdown timeout                   */ {"Délai", "extinction"},
+  /* (<= 13) Motion sensitivity level           */ {"Sensibilité", "au mouvement"},
+  /* (<= 13) Temperature in F and C             */ {"Unité de", "température"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Ecran veille", "détaillé"},
+  /* (<= 13) Display rotation mode              */ {"Orientation", "de l'écran"},
+  /* (<= 13) Boost enabled                      */ {"Activation du", "mode Boost"},
+  /* (<=  9) Boost temperature                  */ {"Temp.", "Boost"},
+  /* (<= 13) Automatic start mode               */ {"Démarrage", "automatique"},
+  /* (<= 13) Cooldown blink                     */ {"Refroidir en", "clignottant"},
+  /* (<= 16) Temperature calibration enter menu */ {"Etalonner", "température"},
+  /* (<= 16) Settings reset command             */ {"Réinitialisation", "d'usine"},
+  /* (<= 16) Calibrate input voltage            */ {"Etalonner", "tension d'entrée"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Ecran soudure", "détaillé"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Description "," Vitesse de défilement"},
 };
+
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering\nSettings",
-/* Power Saving Menu*/"Sleep\nModes",
-/* UI Menu*/"User\nInterface",
-/* Advanced Menu*/"Advanced\nOptions", };
+/*Soldering Menu*/"Soudure\nParamètres",
+/* Power Saving Menu*/"Mode\nVeille",
+/* UI Menu*/"Interface\nUtilisateur",
+/* Advanced Menu*/"Options\nAdvanced", };
 const char* SettingsMenuEntriesDescriptions[4] ={
-"Soldering settings",
-"Power Saving Settings",
-"User Interface settings",
-"Advanced options"
+"Paramètres de soudage",
+"Paramètres d'économie d'énergie",
+"Paramètres de l'interface utilisateur",
+"Options avancées"
 };
 #endif
 
@@ -584,7 +592,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Spannungs-", "quelle"},
   /* (<=  9) Sleep temperature                  */ {"Ruhetemp-", "eratur"},
   /* (<=  9) Sleep timeout                      */ {"Ruhever-", "zoegerung"},
@@ -601,6 +609,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 16) Settings reset command             */ {"Einstellungen", "zuruecksetzen?"},
   /* (<= 16) Calibrate input voltage            */ {"Eingangsspannung", "kalibrieren?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detaillierte", "Loetansicht"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -663,7 +672,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -680,6 +689,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESET?"},
   /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -742,7 +752,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -759,6 +769,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESET?"},
   /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -821,7 +832,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Izvor", "napajanja"},
   /* (<=  9) Sleep temperature                  */ {"Temp", "spavanja"},
   /* (<=  9) Sleep timeout                      */ {"Vrijeme", "spavanja"},
@@ -838,6 +849,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 16) Settings reset command             */ {"Tvorničke", "postavke"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibracija", "napona napajanja"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detalji", "pri lemljenju"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -900,7 +912,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Zdroj", "napájení"},
   /* (<=  9) Sleep temperature                  */ {"Teplota v", "r. spánku"},
   /* (<=  9) Sleep timeout                      */ {"Čas do", "r. spánku"},
@@ -917,6 +929,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 16) Settings reset command             */ {"Tovární", "nastavení?"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibrovat", "vstupní napětí?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Podrobnosti", "při pájení"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -979,7 +992,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -996,6 +1009,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESET?"},
   /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -1058,7 +1072,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -1075,6 +1089,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESET?"},
   /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -1137,7 +1152,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -1154,6 +1169,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESET?"},
   /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
   /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",
@@ -1217,7 +1233,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[16][2] = {
+const char* SettingsShortNames[17][2] = {
   //                                                1234567890
   /* (<= 5) Power source (DC or batt)          */ {"FONTE"},
   /* (<= 4) Sleep temperature                  */ {"TMPE"},
@@ -1235,6 +1251,7 @@ const char* SettingsShortNames[16][2] = {
   /* (<= 8) Settings reset command             */ {"RESETAR"},
   /* (<= 8) Calibrate input voltage            */ {"CAL.VOLT"},
   /* (<= 6) Advanced soldering screen enabled  */ {"AVNCAD"},
+  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soldering\nSettings",

@@ -326,8 +326,6 @@ static void gui_solderingTempAdjust() {
 	}
 }
 
-
-
 static int gui_showTipTempWarning() {
 	for (;;) {
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
@@ -659,7 +657,7 @@ void startGUITask(void const *argument) {
 
 	uint8_t animationStep = 0;
 	uint8_t tempWarningState = 0;
-
+	bool buttonLockout = false;
 	HAL_IWDG_Refresh(&hiwdg);
 	switch (systemSettings.OrientationMode) {
 	case 0:
@@ -705,12 +703,17 @@ void startGUITask(void const *argument) {
 		ButtonState buttons = getButtonState();
 		if (tempWarningState == 2)
 			buttons = BUTTON_F_SHORT;
+		if (buttons != BUTTON_NONE && buttonLockout)
+			buttons = BUTTON_NONE;
+		else
+			buttonLockout=false;
 		switch (buttons) {
 		case BUTTON_NONE:
 			// Do nothing
 			break;
 		case BUTTON_BOTH:
 			// Not used yet
+			//In multi-language this might be used to reset language on a long hold or some such
 			break;
 
 		case BUTTON_B_LONG:
@@ -743,6 +746,7 @@ void startGUITask(void const *argument) {
 			lcd.displayOnOff(true);  // turn lcd on
 			enterSettingsMenu();      // enter the settings menu
 			saveSettings();
+			buttonLockout = true;
 			setCalibrationOffset(systemSettings.CalibrationOffset); // ensure cal offset is applied
 			break;
 		default:

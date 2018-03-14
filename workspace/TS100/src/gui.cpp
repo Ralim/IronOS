@@ -221,19 +221,22 @@ static void printShortDescription(uint32_t shortDescIndex,
 
 static int userConfirmation(const char* message) {
 	uint16_t messageWidth = FONT_12_WIDTH * (strlen(message) + 7);
-	uint32_t messageStart = HAL_GetTick();
+	uint32_t messageStart = xTaskGetTickCount();
 
 	lcd.setFont(0);
 	lcd.setCursor(0, 0);
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 
-	// TODO Scrolling speed factor can be moved to User Interface settings
-	uint16_t scrollingSpeedFactor = 4;	// lower the value - higher the speed
 
 	for (;;) {
-		int16_t messageOffset = (int) ((HAL_GetTick() - messageStart)
-				/ (float) scrollingSpeedFactor + 0.5) % messageWidth;
+
+					int16_t messageOffset =
+							((xTaskGetTickCount() - messageStart)
+									/ (systemSettings.descriptionScrollSpeed == 1 ?
+											1 : 2));
+					messageOffset %= messageWidth;		//Roll around at the end
+
 
 		if (lastOffset != messageOffset) {
 			lcd.clearScreen();
@@ -611,10 +614,6 @@ void gui_Menu(const menuitem* menu) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 
-	// lower the value - higher the speed
-	int16_t descriptionWidth = FONT_12_WIDTH
-						* (strlen(menu[currentScreen].description) + 7);
-
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
 		lcd.setFont(0);
 		lcd.setCursor(0, 0);
@@ -629,10 +628,14 @@ void gui_Menu(const menuitem* menu) {
 			// Draw description
 			if (descriptionStart == 0)
 				descriptionStart = xTaskGetTickCount();
-
-			int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart)
-					/ (systemSettings.descriptionScrollSpeed == 1?1:2));
-			descriptionOffset %= descriptionWidth;//Roll around at the end
+			// lower the value - higher the speed
+			int16_t descriptionWidth = FONT_12_WIDTH
+					* (strlen(menu[currentScreen].description) + 7);
+			int16_t descriptionOffset =
+					((xTaskGetTickCount() - descriptionStart)
+							/ (systemSettings.descriptionScrollSpeed == 1 ?
+									1 : 2));
+			descriptionOffset %= descriptionWidth;		//Roll around at the end
 
 			if (lastOffset != descriptionOffset) {
 				lcd.clearScreen();
