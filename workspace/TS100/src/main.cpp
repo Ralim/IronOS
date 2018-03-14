@@ -5,11 +5,11 @@
 #include "Settings.h"
 #include "Translation.h"
 #include "cmsis_os.h"
-#include "gui.h"
 #include "stdlib.h"
 #include "stm32f1xx_hal.h"
 #include "string.h"
 #include "LIS2DH12.hpp"
+#include <gui.hpp>
 
 #define ACCELDEBUG 0
 // C++ objects
@@ -325,102 +325,8 @@ static void gui_solderingTempAdjust() {
 		GUIDelay();
 	}
 }
-static void gui_settingsMenu() {
-	// Draw the settings menu and provide iteration support etc
-	uint8_t currentScreen = 0;
-	uint32_t autoRepeatTimer = 0;
-	bool earlyExit = false;
-	uint32_t descriptionStart = 0;
-	int16_t lastOffset = -1;
-	bool lcdRefresh = true;
 
-	// TODO Scrolling speed factor can be moved to User Interface settings
-	uint16_t scrollingSpeedFactor = 4;	// lower the value - higher the speed
 
-	while ((settingsMenu[currentScreen].incrementHandler.func != NULL)
-			&& earlyExit == false) {
-		lcd.setFont(0);
-		lcd.setCursor(0, 0);
-
-		if (xTaskGetTickCount() - lastButtonTime < 400) {
-			lcd.clearScreen();
-
-			settingsMenu[currentScreen].draw.func();
-			lastOffset = -1;
-			lcdRefresh = true;
-		} else {
-			// Draw description
-			// draw string starting from descriptionOffset
-			int16_t descriptionWidth = FONT_12_WIDTH
-					* (strlen(settingsMenu[currentScreen].description) + 7);
-			if (descriptionStart == 0)
-				descriptionStart = HAL_GetTick();
-
-			int16_t descriptionOffset =
-					(int) ((HAL_GetTick() - descriptionStart)
-							/ (float) scrollingSpeedFactor + 0.5)
-							% descriptionWidth;
-
-			if (lastOffset != descriptionOffset) {
-				lcd.clearScreen();
-
-				//^ Rolling offset based on time
-				lcd.setCursor((OLED_WIDTH - descriptionOffset), 0);
-				lcd.print(settingsMenu[currentScreen].description);
-				lastOffset = descriptionOffset;
-				lcdRefresh = true;
-			}
-
-		}
-
-		ButtonState buttons = getButtonState();
-
-		switch (buttons) {
-		case BUTTON_BOTH:
-			earlyExit = true;  // will make us exit next loop
-			descriptionStart = 0;
-			break;
-		case BUTTON_F_SHORT:
-			// increment
-			if (descriptionStart == 0)
-				settingsMenu[currentScreen].incrementHandler.func();
-			else
-				descriptionStart = 0;
-			break;
-		case BUTTON_B_SHORT:
-			if (descriptionStart == 0)
-				currentScreen++;
-			else
-				descriptionStart = 0;
-			break;
-		case BUTTON_F_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
-				settingsMenu[currentScreen].incrementHandler.func();
-				autoRepeatTimer = xTaskGetTickCount();
-				descriptionStart = 0;
-			}
-			break;
-		case BUTTON_B_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
-				currentScreen++;
-				autoRepeatTimer = xTaskGetTickCount();
-				descriptionStart = 0;
-			}
-			break;
-		case BUTTON_NONE:
-		default:
-			break;
-		}
-
-		if (lcdRefresh) {
-			lcd.refresh();  // update the LCD
-			osDelay(20);
-			lcdRefresh = false;
-		}
-	}
-
-	saveSettings();
-}
 
 static int gui_showTipTempWarning() {
 	for (;;) {
@@ -775,7 +681,7 @@ void startGUITask(void const *argument) {
 			ticks = xTaskGetTickCount();
 		ButtonState buttons = getButtonState();
 		if (buttons)
-			ticks = xTaskGetTickCount();//make timeout now so we will exit
+			ticks = xTaskGetTickCount();  //make timeout now so we will exit
 		GUIDelay();
 	}
 
@@ -835,7 +741,7 @@ void startGUITask(void const *argument) {
 		case BUTTON_B_SHORT:
 			lcd.setFont(0);
 			lcd.displayOnOff(true);  // turn lcd on
-			gui_settingsMenu();      // enter the settings menu
+			enterSettingsMenu();      // enter the settings menu
 			saveSettings();
 			setCalibrationOffset(systemSettings.CalibrationOffset); // ensure cal offset is applied
 			break;
