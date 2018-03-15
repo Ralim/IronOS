@@ -551,7 +551,7 @@ const char* SettingsDescriptions[17] = {
 	/* Power source (DC or batt)          */ "Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>",
 	/* Sleep temperature                  */ "Ruhetemperatur (In der eingestellten Einheit)",
 	/* Sleep timeout                      */ "Ruhemodus nach <Sekunden/Minuten>",
-	/* Shutdown timeout                   */ "Abschaltzeit <Minuten>",
+	/* Shutdown timeout                   */ "Abschalten nach <Minuten>",
 	/* Motion sensitivity level           */ "Bewegungsempfindlichkeit <0=Aus, 1=Minimal ... 9=Maximal>",
 	/* Temperature in F and C             */ "Temperatureinheit <C=Celsius, F=Fahrenheit>",
 	/* Advanced idle display mode enabled */ "Detaillierte Anzeige im Ruhemodus <J=An, N=Aus>",
@@ -564,25 +564,25 @@ const char* SettingsDescriptions[17] = {
 	/* Settings reset command             */ "Alle Einstellungen zurücksetzen",
 	/* Calibrate input voltage            */ "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen.",
 	/* Advanced soldering screen enabled  */ "Detaillierte Anzeige im Lötmodus <J=An, N=Aus>",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+	/* Description Scroll Speed           */ "Scrollgeschwindigkeit der Texte",
 };
 
 const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
+const char* SettingsResetWarning = "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?";
+const char* UVLOWarningString = "V niedr.";            // <=8 chars
+const char* UndervoltageString = "Unterspannung";     // <=16 chars
+const char* InputVoltageString = "V Eingang: ";        // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Temperatur: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "DEFEKT";                // <=8 chars
 const char* SleepingSimpleString = "Zzz ";            // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ruhemodus...";  // <=16 chars
 const char* WarningSimpleString = "HEIß";             // Must be <= 4 chars
 const char* WarningAdvancedString = "Achtung! Spitze Heiß!"; // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SleepingTipAdvancedString = "Temp:";      // <=6 chars
+const char* IdleTipString = "Ist:";     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Soll:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "Spitze fehlt"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Leistung: "; // <= 12 ???
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -595,7 +595,7 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Spannungs-", "quelle"},
   /* (<=  9) Sleep temperature                  */ {"Ruhetemp-", "eratur"},
-  /* (<=  9) Sleep timeout                      */ {"Ruhever-", "zoegerung"},
+  /* (<=  9) Sleep timeout                      */ {"Ruhever-", "zögerung"},
   /* (<= 11) Shutdown timeout                   */ {"Abschalt-", "zeit"},
   /* (<= 13) Motion sensitivity level           */ {"Bewegungs-", "empfindlichk."},
   /* (<= 13) Temperature in F and C             */ {"Temperatur-", "einheit"},
@@ -603,24 +603,24 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 13) Display rotation mode              */ {"Anzeige-", "ausrichtung"},
   /* (<= 13) Boost enabled                      */ {"Boosttaste", "aktiv?"},
   /* (<=  9) Boost temperature                  */ {"Boosttemp-", "eratur"},
-  /* (<= 13) Automatic start mode               */ {"Start im", "Loetmodus?"},
-  /* (<= 13) Cooldown blink                     */ {"Abkuehl-", "blinken?"},
+  /* (<= 13) Automatic start mode               */ {"Start im", "Lötmodus?"},
+  /* (<= 13) Cooldown blink                     */ {"Abkühl-", "blinken?"},
   /* (<= 16) Temperature calibration enter menu */ {"Temperatur", "kalibrieren?"},
-  /* (<= 16) Settings reset command             */ {"Einstellungen", "zuruecksetzen?"},
+  /* (<= 16) Settings reset command             */ {"Einstellungen", "zurücksetzen?"},
   /* (<= 16) Calibrate input voltage            */ {"Eingangsspannung", "kalibrieren?"},
-  /* (<= 13) Advanced soldering screen enabled  */ {"Detaillierte", "Loetansicht"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Detaillierte", "Lötansicht"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Scroll-","geschw."},
 };
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering\nSettings",
-/* Power Saving Menu*/"Sleep\nModes",
-/* UI Menu*/"User\nInterface",
-/* Advanced Menu*/"Advanced\nOptions", };
+/*Soldering Menu*/"Löt-\neinstellungen",
+/* Power Saving Menu*/"Schlaf-\nmodus",
+/* UI Menu*/"Menü-\neinstellungen",
+/* Advanced Menu*/"Erweiterte\nEinstellungen", };
 const char* SettingsMenuEntriesDescriptions[4] ={
-"Soldering settings",
-"Power Saving Settings",
-"User Interface settings",
-"Advanced options"
+"Löteinstellungen",
+"Energiespareinstellungen",
+"Menüeinstellungen",
+"Erweiterte Einstellungen"
 };
 #endif
 
