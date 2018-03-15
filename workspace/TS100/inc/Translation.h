@@ -17,8 +17,11 @@ enum ShortNameType {
  * use SettingsShortNames as SettingsShortNames[16][1].. second column undefined
  */
 extern const enum ShortNameType SettingsShortNameType;
-extern const char* SettingsShortNames[16][2];
-extern const char* SettingsLongNames[16];
+extern const char* SettingsShortNames[17][2];
+extern const char* SettingsDescriptions[17];
+extern const char* SettingsMenuEntries[4];
+extern const char* SettingsMenuEntriesDescriptions[4];
+
 extern const char* SettingsCalibrationWarning;
 extern const char* SettingsResetWarning;
 extern const char* UVLOWarningString;
@@ -43,6 +46,9 @@ extern const char SettingRightChar;
 extern const char SettingLeftChar;
 extern const char SettingAutoChar;
 
-#define LANG_EN
+extern const char SettingFastChar;
+extern const char SettingSlowChar;
+
+
 
 #endif /* TRANSLATION_H_ */

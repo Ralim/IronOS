@@ -21,6 +21,7 @@ extern "C" {
 }
 #endif
 #define DEVICEADDR_OLED  (0x3c<<1)
+#define OLED_WIDTH       96
 
 class OLED {
 public:
