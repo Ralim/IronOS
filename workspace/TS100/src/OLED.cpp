@@ -101,6 +101,11 @@ void OLED::refresh() {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(char c, char PrecursorCommand) {
+	if( c=='\n' && cursor_y==0)
+	{
+		cursor_x=0;
+		cursor_y=8;
+	}
 	if (c < ' ') {
 		return;
 	}
@@ -286,25 +291,32 @@ void OLED::drawSymbol(uint8_t symbolID) {
 void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 		const uint8_t* ptr) {
 	// Splat this from x->x+wide in two strides
-	if (x < 0)
+	if (x <= -wide)
 		return;    //cutoffleft
-	if ((x) > 96)
+	if (x > 96)
 		return;    //cutoff right
-	uint8_t width = wide;
-	if ((x + wide) > 96)
-		width = 96 - x; // trimming to draw partials
+
+	uint8_t visibleStart = 0;
+	uint8_t visibleEnd = wide;
+
+	// trimming to draw partials
+	if(x < 0) {
+	  visibleStart -= x;  //subtract negative value == add absolute value
+	}
+	if(x + wide > 96) {
+	  visibleEnd = 96 - x;
+	}
 
 	if (y == 0) {
 		//Splat first line of data
-		for (uint8_t xx = 0; xx < (width); xx++) {
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			firstStripPtr[xx + x] = ptr[xx];
 		}
 	}
 	if (y == 8 || height == 16) {
 		// Splat the second line
-		for (uint8_t xx = 0; xx < width; xx++) {
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			secondStripPtr[x + xx] = ptr[xx + (height == 16 ? wide : 0)];
-
 		}
 	}
 }
