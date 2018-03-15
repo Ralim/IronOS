@@ -5,14 +5,11 @@
  *      Author: Ben V. Brown
  */
 
-#include "gui.hpp"
-#include "main.hpp"
+#include "gui.h"
 #include "cmsis_os.h"
-#include "Translation.h"
-
+#include "hardware.h"
 #include "string.h"
-extern uint32_t lastButtonTime;
-void gui_Menu(const menuitem* menu);
+
 static void settings_setInputVRange(void);
 static void settings_displayInputVRange(void);
 static void settings_setSleepTemp(void);
@@ -29,8 +26,6 @@ static void settings_setAdvancedSolderingScreens(void);
 static void settings_displayAdvancedSolderingScreens(void);
 static void settings_setAdvancedIDLEScreens(void);
 static void settings_displayAdvancedIDLEScreens(void);
-static void settings_setScrollSpeed(void);
-static void settings_displayScrollSpeed(void);
 
 static void settings_setDisplayRotation(void);
 static void settings_displayDisplayRotation(void);
@@ -49,153 +44,40 @@ static void settings_displayCalibrate(void);
 static void settings_setCalibrateVIN(void);
 static void settings_displayCalibrateVIN(void);
 
-//Menu functions
-static void settings_displaySolderingMenu(void);
-static void settings_enterSolderingMenu(void);
-static void settings_displayPowerMenu(void);
-static void settings_enterPowerMenu(void);
-static void settings_displayUIMenu(void);
-static void settings_enterUIMenu(void);
-static void settings_displayAdvancedMenu(void);
-static void settings_enterAdvancedMenu(void);
-/*
- * Root Settings Menu
- *
- * Power Source
- * Soldering
- * 	Boost Mode Enabled
- * 	Boost Mode Temp
- * 	Auto Start
- *
- * Power Saving
- * 	Sleep Temp
- * 	Sleep Time
- * 	Shutdown Time
- * 	Motion Sensitivity
- *
- * UI
- *  // Language
- *  Scrolling Speed
- *  Temperature Unit
- *  Display orientation
- *  Cooldown blink
- *
- * Advanced
- *  Detailed IDLE
- *  Detailed Soldering
- *  Logo Time
- *  Calibrate Temperature
- *  Calibrate Input V
- *  Reset Settings
- *
- */
-const menuitem rootSettingsMenu[] {
-/*
- * Power Source
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
-{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
-		settings_displayInputVRange } }, /*Voltage input*/
-{ (const char*) SettingsMenuEntriesDescriptions[0], {
-		settings_enterSolderingMenu }, { settings_displaySolderingMenu } }, /*Soldering*/
-{ (const char*) SettingsMenuEntriesDescriptions[1], { settings_enterPowerMenu },
-		{ settings_displayPowerMenu } }, /*Sleep Options Menu*/
-{ (const char*) SettingsMenuEntriesDescriptions[2], { settings_enterUIMenu }, {
-		settings_displayUIMenu } }, /*UI Menu*/
-{ (const char*) SettingsMenuEntriesDescriptions[3],
-		{ settings_enterAdvancedMenu }, { settings_displayAdvancedMenu } }, /*Advanced Menu*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
-};
-
-const menuitem solderingMenu[] = {
-/*
- * Boost Mode Enabled
- * 	Boost Mode Temp
- * 	Auto Start
- */
-{ (const char*) SettingsDescriptions[8], { settings_setBoostModeEnabled }, {
-		settings_displayBoostModeEnabled } }, /*Enable Boost*/
-{ (const char*) SettingsDescriptions[9], { settings_setBoostTemp }, {
-		settings_displayBoostTemp } }, /*Boost Temp*/
-{ (const char*) SettingsDescriptions[10], { settings_setAutomaticStartMode }, {
-		settings_displayAutomaticStartMode } }, /*Auto start*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
-};
-const menuitem UIMenu[] = {
-/*
- // Language
- *  Scrolling Speed
- *  Temperature Unit
- *  Display orientation
- *  Cooldown blink
- */
-{ (const char*) SettingsDescriptions[5], { settings_setTempF }, {
-		settings_displayTempF } }, /* Temperature units*/
-{ (const char*) SettingsDescriptions[7], { settings_setDisplayRotation }, {
-		settings_displayDisplayRotation } }, /*Display Rotation*/
-{ (const char*) SettingsDescriptions[11], { settings_setCoolingBlinkEnabled }, {
-		settings_displayCoolingBlinkEnabled } }, /*Cooling blink warning*/
-{ (const char*) SettingsDescriptions[16], { settings_setScrollSpeed }, {
-		settings_displayScrollSpeed } }, /*Scroll Speed for descriptions*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
-};
-const menuitem PowerMenu[] = {
-/*
- * Sleep Temp
- * 	Sleep Time
- * 	Shutdown Time
- * 	Motion Sensitivity
- */
-{ (const char*) SettingsDescriptions[1], { settings_setSleepTemp }, {
-		settings_displaySleepTemp } }, /*Sleep Temp*/
-{ (const char*) SettingsDescriptions[2], { settings_setSleepTime }, {
-		settings_displaySleepTime } }, /*Sleep Time*/
-{ (const char*) SettingsDescriptions[3], { settings_setShutdownTime }, {
-		settings_displayShutdownTime } }, /*Shutdown Time*/
-{ (const char*) SettingsDescriptions[4], { settings_setSensitivity }, {
-		settings_displaySensitivity } }, /* Motion Sensitivity*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
-};
-const menuitem advancedMenu[] = {
-
-/*
- * Detailed IDLE
- *  Detailed Soldering
- *  Logo Time
- *  Calibrate Temperature
- *  Calibrate Input V
- *  Reset Settings
- */
-{ (const char*) SettingsDescriptions[6], { settings_setAdvancedIDLEScreens }, {
-		settings_displayAdvancedIDLEScreens } }, /* Advanced idle screen*/
-{ (const char*) SettingsDescriptions[15],
-		{ settings_setAdvancedSolderingScreens }, {
-				settings_displayAdvancedSolderingScreens } }, /* Advanced soldering screen*/
-{ (const char*) SettingsDescriptions[13], { settings_setResetSettings }, {
-		settings_displayResetSettings } }, /*Resets settings*/
-{ (const char*) SettingsDescriptions[12], { settings_setCalibrate }, {
-		settings_displayCalibrate } }, /*Calibrate tip*/
-{ (const char*) SettingsDescriptions[14], { settings_setCalibrateVIN }, {
-		settings_displayCalibrateVIN } }, /*Voltage input cal*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+const menuitem settingsMenu[] = {
+    /*Struct used for all settings options in the settings menu*/
+    {(const char*)SettingsLongNames[0], {settings_setInputVRange}, {settings_displayInputVRange}}, /*Voltage input*/
+    {(const char*)SettingsLongNames[1], {settings_setSleepTemp}, {settings_displaySleepTemp}}, /*Sleep Temp*/
+    {(const char*)SettingsLongNames[2], {settings_setSleepTime}, {settings_displaySleepTime}}, /*Sleep Time*/
+    {(const char*)SettingsLongNames[3], {settings_setShutdownTime}, {settings_displayShutdownTime}}, /*Shutdown Time*/
+    {(const char*)SettingsLongNames[4], {settings_setSensitivity}, {settings_displaySensitivity}}, /* Motion Sensitivity*/
+    {(const char*)SettingsLongNames[5], {settings_setTempF}, {settings_displayTempF}}, /* Temperature units*/
+    {(const char*)SettingsLongNames[6], {settings_setAdvancedIDLEScreens}, {settings_displayAdvancedIDLEScreens}}, /* Advanced idle screen*/
+    {(const char*)SettingsLongNames[15], {settings_setAdvancedSolderingScreens}, {settings_displayAdvancedSolderingScreens}}, /* Advanced soldering screen*/
+    {(const char*)SettingsLongNames[7], {settings_setDisplayRotation}, {settings_displayDisplayRotation}}, /*Display Rotation*/
+    {(const char*)SettingsLongNames[8], {settings_setBoostModeEnabled}, {settings_displayBoostModeEnabled}}, /*Enable Boost*/
+    {(const char*)SettingsLongNames[9], {settings_setBoostTemp}, {settings_displayBoostTemp}}, /*Boost Temp*/
+    {(const char*)SettingsLongNames[10], {settings_setAutomaticStartMode}, {settings_displayAutomaticStartMode}}, /*Auto start*/
+    {(const char*)SettingsLongNames[11], {settings_setCoolingBlinkEnabled}, {settings_displayCoolingBlinkEnabled}}, /*Cooling blink warning*/
+    {(const char*)SettingsLongNames[12], {settings_setCalibrate}, {settings_displayCalibrate}}, /*Calibrate tip*/
+    {(const char*)SettingsLongNames[14], {settings_setCalibrateVIN}, {settings_displayCalibrateVIN}}, /*Voltage input cal*/
+    //reset is last menu item
+    {(const char*)SettingsLongNames[13], {settings_setResetSettings}, {settings_displayResetSettings}}, /*Resets settings*/
+    {NULL, {NULL}, {NULL}}            // end of menu marker. DO NOT REMOVE
 };
 
 static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
-	lcd.setFont(0);
-	lcd.setCharCursor(0, 0);
-	lcd.print(SettingsShortNames[shortDescIndex][0]);
+  lcd.setFont(0);
+  lcd.setCharCursor(0, 0);
+  lcd.print(SettingsShortNames[shortDescIndex][0]);
 }
 
 static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
-	lcd.setFont(1);
-	lcd.setCharCursor(0, 0);
-	lcd.print(SettingsShortNames[shortDescIndex][0]);
-	lcd.setCharCursor(0, 1);
-	lcd.print(SettingsShortNames[shortDescIndex][1]);
+  lcd.setFont(1);
+  lcd.setCharCursor(0, 0);
+  lcd.print(SettingsShortNames[shortDescIndex][0]);
+  lcd.setCharCursor(0, 1);
+  lcd.print(SettingsShortNames[shortDescIndex][1]);
 }
 
 /**
@@ -206,47 +88,33 @@ static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
  * description.
  */
 static void printShortDescription(uint32_t shortDescIndex,
-		uint16_t cursorCharPosition) {
-	// print short description (default single line, explicit double line)
-	if (SettingsShortNameType == SHORT_NAME_DOUBLE_LINE) {
-		printShortDescriptionDoubleLine(shortDescIndex);
-	} else {
-		printShortDescriptionSingleLine(shortDescIndex);
-	}
+                                  uint16_t cursorCharPosition) {
+  // print short description (default single line, explicit double line)
+  if (SettingsShortNameType == SHORT_NAME_DOUBLE_LINE) {
+    printShortDescriptionDoubleLine(shortDescIndex);
+  } else {
+    printShortDescriptionSingleLine(shortDescIndex);
+  }
 
-	// prepare cursor for value
-	lcd.setFont(0);
-	lcd.setCharCursor(cursorCharPosition, 0);
+  // prepare cursor for value
+  lcd.setFont(0);
+  lcd.setCharCursor(cursorCharPosition, 0);
 }
 
 static int userConfirmation(const char* message) {
-	uint16_t messageWidth = FONT_12_WIDTH * (strlen(message) + 7);
+	uint8_t maxOffset = strlen(message) + 7;
 	uint32_t messageStart = xTaskGetTickCount();
 
 	lcd.setFont(0);
 	lcd.setCursor(0, 0);
-	int16_t lastOffset = -1;
-	bool lcdRefresh = true;
-
 
 	for (;;) {
+		int16_t messageOffset = (((xTaskGetTickCount() - messageStart) / 15)
+				% maxOffset);
 
-					int16_t messageOffset =
-							((xTaskGetTickCount() - messageStart)
-									/ (systemSettings.descriptionScrollSpeed == 1 ?
-											1 : 2));
-					messageOffset %= messageWidth;		//Roll around at the end
-
-
-		if (lastOffset != messageOffset) {
-			lcd.clearScreen();
-
-			//^ Rolling offset based on time
-			lcd.setCursor((OLED_WIDTH - messageOffset), 0);
-			lcd.print(message);
-			lastOffset = messageOffset;
-			lcdRefresh = true;
-		}
+		lcd.clearScreen();
+		lcd.setCursor(12 * (7 - messageOffset), 0);
+		lcd.print(message);
 
 		ButtonState buttons = getButtonState();
 		switch (buttons) {
@@ -264,444 +132,292 @@ static int userConfirmation(const char* message) {
 			return 0;
 		}
 
-		if (lcdRefresh) {
-			lcd.refresh();
-			osDelay(20);
-			lcdRefresh = false;
-		}
+		lcd.refresh();
+		osDelay(50);
 	}
 	return 0;
 }
 
+
 static void settings_setInputVRange(void) {
-	systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 5;
+  systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 5;
 }
 
 static void settings_displayInputVRange(void) {
-	printShortDescription(0, 6);
+  printShortDescription(0, 6);
 
-	if (systemSettings.cutoutSetting) {
-		lcd.drawChar('0' + 2 + systemSettings.cutoutSetting);
-		lcd.drawChar('S');
-	} else {
-		lcd.print("DC");
-	}
+  if (systemSettings.cutoutSetting) {
+    lcd.drawChar('0' + 2 + systemSettings.cutoutSetting);
+    lcd.drawChar('S');
+  } else {
+    lcd.print("DC");
+  }
 }
 
+
 static void settings_setSleepTemp(void) {
-	systemSettings.SleepTemp += 10;
-	if (systemSettings.SleepTemp > 300)
-		systemSettings.SleepTemp = 50;
+  systemSettings.SleepTemp += 10;
+  if (systemSettings.SleepTemp > 300) systemSettings.SleepTemp = 50;
 }
 
 static void settings_displaySleepTemp(void) {
-	printShortDescription(1, 5);
-	lcd.printNumber(systemSettings.SleepTemp, 3);
+  printShortDescription(1, 5);
+  lcd.printNumber(systemSettings.SleepTemp, 3);
 }
 
+
 static void settings_setSleepTime(void) {
-	systemSettings.SleepTime++;  // Go up 1 minute at a time
-	if (systemSettings.SleepTime >= 16) {
-		systemSettings.SleepTime = 1;  // can't set time over 10 mins
-	}
-	// Remember that ^ is the time of no movement
+  systemSettings.SleepTime++;  // Go up 1 minute at a time
+  if (systemSettings.SleepTime >= 16) {
+    systemSettings.SleepTime = 1;  // can't set time over 10 mins
+  }
+  // Remember that ^ is the time of no movement
 }
 
 static void settings_displaySleepTime(void) {
-	printShortDescription(2, 5);
+  printShortDescription(2, 5);
 
-	if (systemSettings.SleepTime < 6) {
-		lcd.printNumber(systemSettings.SleepTime * 10, 2);
-		lcd.drawChar('S');
-	} else {
-		lcd.printNumber(systemSettings.SleepTime - 5, 2);
-		lcd.drawChar('M');
-	}
+  if (systemSettings.SleepTime < 6) {
+    lcd.printNumber(systemSettings.SleepTime * 10, 2);
+    lcd.drawChar('S');
+  } else {
+    lcd.printNumber(systemSettings.SleepTime - 5, 2);
+    lcd.drawChar('M');
+  }
 }
 
+
 static void settings_setShutdownTime(void) {
-	systemSettings.ShutdownTime++;
-	if (systemSettings.ShutdownTime > 60) {
-		systemSettings.ShutdownTime = 0;  // wrap to off
-	}
+  systemSettings.ShutdownTime++;
+  if (systemSettings.ShutdownTime > 60) {
+    systemSettings.ShutdownTime = 0;  // wrap to off
+  }
 }
 
 static void settings_displayShutdownTime(void) {
-	printShortDescription(3, 6);
-	lcd.printNumber(systemSettings.ShutdownTime, 2);
+  printShortDescription(3, 6);
+  lcd.printNumber(systemSettings.ShutdownTime, 2);
 }
 
+
 static void settings_setTempF(void) {
-	systemSettings.temperatureInF = !systemSettings.temperatureInF;
+  systemSettings.temperatureInF = !systemSettings.temperatureInF;
 }
 
 static void settings_displayTempF(void) {
-	printShortDescription(5, 7);
+  printShortDescription(5, 7);
 
-	lcd.drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
+  lcd.drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
 }
 
+
 static void settings_setSensitivity(void) {
-	systemSettings.sensitivity++;
-	systemSettings.sensitivity = systemSettings.sensitivity % 10;
+  systemSettings.sensitivity++;
+  systemSettings.sensitivity = systemSettings.sensitivity % 10;
 }
 
 static void settings_displaySensitivity(void) {
-	printShortDescription(4, 7);
-	lcd.printNumber(systemSettings.sensitivity, 1);
+  printShortDescription(4, 7);
+  lcd.printNumber(systemSettings.sensitivity, 1);
 }
 
+
 static void settings_setAdvancedSolderingScreens(void) {
-	systemSettings.detailedSoldering = !systemSettings.detailedSoldering;
+  systemSettings.detailedSoldering = !systemSettings.detailedSoldering;
 }
 
 static void settings_displayAdvancedSolderingScreens(void) {
-	printShortDescription(15, 7);
+  printShortDescription(15, 7);
 
-	lcd.drawCheckbox(systemSettings.detailedSoldering);
+  lcd.drawCheckbox(systemSettings.detailedSoldering);
 }
 
+
 static void settings_setAdvancedIDLEScreens(void) {
-	systemSettings.detailedIDLE = !systemSettings.detailedIDLE;
+  systemSettings.detailedIDLE = !systemSettings.detailedIDLE;
 }
 
 static void settings_displayAdvancedIDLEScreens(void) {
-	printShortDescription(6, 7);
+  printShortDescription(6, 7);
 
-	lcd.drawCheckbox(systemSettings.detailedIDLE);
+  lcd.drawCheckbox(systemSettings.detailedIDLE);
 }
-static void settings_setScrollSpeed(void) {
 
-	if (systemSettings.descriptionScrollSpeed == 0)
-		systemSettings.descriptionScrollSpeed = 1;
-	else
-		systemSettings.descriptionScrollSpeed = 0;
-}
-static void settings_displayScrollSpeed(void) {
-	printShortDescription(16, 7);
-	lcd.drawChar(
-			(systemSettings.descriptionScrollSpeed) ?
-					SettingFastChar : SettingSlowChar);
-}
 
 static void settings_setDisplayRotation(void) {
-	systemSettings.OrientationMode++;
-	systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
+  systemSettings.OrientationMode++;
+  systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
 }
 
 static void settings_displayDisplayRotation(void) {
-	printShortDescription(7, 7);
+  printShortDescription(7, 7);
 
-	switch (systemSettings.OrientationMode) {
-	case 0:
-		lcd.drawChar(SettingRightChar);
-		break;
-	case 1:
-		lcd.drawChar(SettingLeftChar);
-		break;
-	case 2:
-		lcd.drawChar(SettingAutoChar);
-		break;
-	default:
-		lcd.drawChar(SettingRightChar);
-		break;
-	}
+  switch (systemSettings.OrientationMode) {
+    case 0:
+      lcd.drawChar(SettingRightChar);
+      break;
+    case 1:
+      lcd.drawChar(SettingLeftChar);
+      break;
+    case 2:
+      lcd.drawChar(SettingAutoChar);
+      break;
+    default:
+      lcd.drawChar(SettingRightChar);
+      break;
+  }
 }
 
+
 static void settings_setBoostModeEnabled(void) {
-	systemSettings.boostModeEnabled = !systemSettings.boostModeEnabled;
+  systemSettings.boostModeEnabled = !systemSettings.boostModeEnabled;
 }
 
 static void settings_displayBoostModeEnabled(void) {
-	printShortDescription(8, 7);
+  printShortDescription(8, 7);
 
-	lcd.drawCheckbox(systemSettings.boostModeEnabled);
+  lcd.drawCheckbox(systemSettings.boostModeEnabled);
 }
 
+
 static void settings_setBoostTemp(void) {
-	systemSettings.BoostTemp += 10;  // Go up 10 at a time
-	if (systemSettings.temperatureInF) {
-		if (systemSettings.BoostTemp > 850) {
-			systemSettings.BoostTemp = 480;  // loop back at 250
-		}
-	} else {
-		if (systemSettings.BoostTemp > 450) {
-			systemSettings.BoostTemp = 250;  // loop back at 250
-		}
-	}
+  systemSettings.BoostTemp += 10;  // Go up 10 at a time
+  if (systemSettings.temperatureInF) {
+    if (systemSettings.BoostTemp > 850) {
+      systemSettings.BoostTemp = 480;  // loop back at 250
+    }
+  } else {
+    if (systemSettings.BoostTemp > 450) {
+      systemSettings.BoostTemp = 250;  // loop back at 250
+    }
+  }
 }
 
 static void settings_displayBoostTemp(void) {
-	printShortDescription(9, 5);
-	lcd.printNumber(systemSettings.BoostTemp, 3);
+  printShortDescription(9, 5);
+  lcd.printNumber(systemSettings.BoostTemp, 3);
 }
 
+
 static void settings_setAutomaticStartMode(void) {
-	systemSettings.autoStartMode++;
-	systemSettings.autoStartMode %= 2;
+  systemSettings.autoStartMode++;
+  systemSettings.autoStartMode %= 2;
 }
 
 static void settings_displayAutomaticStartMode(void) {
-	printShortDescription(10, 7);
+  printShortDescription(10, 7);
 
-	lcd.drawCheckbox(systemSettings.autoStartMode);
+  lcd.drawCheckbox(systemSettings.autoStartMode);
 }
 
+
 static void settings_setCoolingBlinkEnabled(void) {
-	systemSettings.coolingTempBlink = !systemSettings.coolingTempBlink;
+  systemSettings.coolingTempBlink = !systemSettings.coolingTempBlink;
 }
 
 static void settings_displayCoolingBlinkEnabled(void) {
-	printShortDescription(11, 7);
+  printShortDescription(11, 7);
 
-	lcd.drawCheckbox(systemSettings.coolingTempBlink);
+  lcd.drawCheckbox(systemSettings.coolingTempBlink);
 }
 
+
 static void settings_setResetSettings(void) {
-	if (userConfirmation(SettingsResetWarning)) {
-		resetSettings();
+  if(userConfirmation(SettingsResetWarning)) {
+    resetSettings();
 
-		lcd.setFont(0);
-		lcd.setCursor(0, 0);
-		lcd.print("RESET OK");
-		lcd.refresh();
+    lcd.setFont(0);
+    lcd.setCursor(0, 0);
+    lcd.print("RESET OK");
+    lcd.refresh();
 
-		waitForButtonPressOrTimeout(200);
-	}
+    waitForButtonPressOrTimeout(200);
+  }
 }
 
 static void settings_displayResetSettings(void) {
-	printShortDescription(13, 7);
+  printShortDescription(13, 7);
 }
 
+
 static void settings_setCalibrate(void) {
-	if (userConfirmation(SettingsCalibrationWarning)) {
-		//User confirmed
-		//So we now perform the actual calculation
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
-		lcd.print(".....");
-		lcd.refresh();
+  if(userConfirmation(SettingsCalibrationWarning)) {
+    //User confirmed
+    //So we now perform the actual calculation
+    lcd.clearScreen();
+    lcd.setCursor(0, 0);
+    lcd.print(".....");
+    lcd.refresh();
 
-		setCalibrationOffset(0);            //turn off the current offset
-		for (uint8_t i = 0; i < 20; i++) {
-			getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
-			osDelay(20);
-		}
-		osDelay(100);
+    setCalibrationOffset(0);            //turn off the current offset
+    for (uint8_t i = 0; i < 20; i++) {
+      getTipRawTemp(1);                 //cycle through the filter a fair bit to ensure we're stable.
+      osDelay(20);
+    }
+    osDelay(100);
 
-		uint16_t rawTempC = tipMeasurementToC(getTipRawTemp(0));
-		//We now measure the current reported tip temperature
-		uint16_t handleTempC = getHandleTemperature() / 10;
-		//We now have an error between these that we want to store as the offset
-		rawTempC = rawTempC - handleTempC;
-		systemSettings.CalibrationOffset = rawTempC;
-		setCalibrationOffset(rawTempC);       //store the error
-		osDelay(100);
-	}
+    uint16_t rawTempC = tipMeasurementToC(getTipRawTemp(0));
+    //We now measure the current reported tip temperature
+    uint16_t handleTempC = getHandleTemperature() / 10;
+    //We now have an error between these that we want to store as the offset
+    rawTempC = rawTempC - handleTempC;
+    systemSettings.CalibrationOffset = rawTempC;
+    setCalibrationOffset(rawTempC);       //store the error
+    osDelay(100);
+  }
 }
 
 static void settings_displayCalibrate(void) {
-	printShortDescription(12, 5);
+  printShortDescription(12, 5);
 }
 
+
 static void settings_setCalibrateVIN(void) {
-	// Jump to the voltage calibration subscreen
-	lcd.setFont(0);
-	lcd.clearScreen();
-	lcd.setCursor(0, 0);
+  // Jump to the voltage calibration subscreen
+  lcd.setFont(0);
+  lcd.clearScreen();
+  lcd.setCursor(0, 0);
 
-	for (;;) {
-		lcd.setCursor(0, 0);
-		lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
-		lcd.print(".");
-		lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
-		lcd.print("V");
+  for (;;) {
+    lcd.setCursor(0, 0);
+    lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+    lcd.print(".");
+    lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+    lcd.print("V");
 
-		ButtonState buttons = getButtonState();
-		switch (buttons) {
-		case BUTTON_F_SHORT:
-			systemSettings.voltageDiv++;
-			break;
+    ButtonState buttons = getButtonState();
+    switch (buttons) {
+      case BUTTON_F_SHORT:
+        systemSettings.voltageDiv++;
+        break;
 
-		case BUTTON_B_SHORT:
-			systemSettings.voltageDiv--;
-			break;
+      case BUTTON_B_SHORT:
+        systemSettings.voltageDiv--;
+        break;
 
-		case BUTTON_BOTH:
-		case BUTTON_F_LONG:
-		case BUTTON_B_LONG:
-			saveSettings();
-			return;
+      case BUTTON_BOTH:
+      case BUTTON_F_LONG:
+      case BUTTON_B_LONG:
+        saveSettings();
+        return;
 
-		case BUTTON_NONE:
-		default:
-			break;
-		}
+      case BUTTON_NONE:
+      default:
+        break;
+    }
 
-		lcd.refresh();
-		osDelay(50);
+    lcd.refresh();
+    osDelay(50);
 
-		// Cap to sensible values
-		if (systemSettings.voltageDiv < 90) {
-			systemSettings.voltageDiv = 90;
-		} else if (systemSettings.voltageDiv > 130) {
-			systemSettings.voltageDiv = 130;
-		}
-	}
+    // Cap to sensible values
+    if (systemSettings.voltageDiv < 90) {
+      systemSettings.voltageDiv = 90;
+    } else if (systemSettings.voltageDiv > 130) {
+      systemSettings.voltageDiv = 130;
+    }
+  }
 }
 
 static void settings_displayCalibrateVIN(void) {
-	printShortDescription(14, 5);
-}
-static void settings_displaySolderingMenu(void) {
-	//Call into the menu
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
-	//Draw title
-	lcd.print(SettingsMenuEntries[0]);
-	//Draw symbol
-	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 0]));
-}
-static void settings_enterSolderingMenu(void) {
-	gui_Menu(solderingMenu);
-}
-static void settings_displayPowerMenu(void) {
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
-	//Draw title
-	lcd.print(SettingsMenuEntries[1]);
-	//Draw symbol
-	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 1]));
-}
-static void settings_enterPowerMenu(void) {
-	gui_Menu(PowerMenu);
-}
-static void settings_displayUIMenu(void) {
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
-	//Draw title
-	lcd.print(SettingsMenuEntries[2]);
-	//Draw symbol
-	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 2]));
-}
-static void settings_enterUIMenu(void) {
-	gui_Menu(UIMenu);
-}
-static void settings_displayAdvancedMenu(void) {
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
-	//Draw title
-	lcd.print(SettingsMenuEntries[3]);
-	//Draw symbol
-	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 3]));
-
-}
-static void settings_enterAdvancedMenu(void) {
-	gui_Menu(advancedMenu);
-}
-
-void gui_Menu(const menuitem* menu) {
-	// Draw the settings menu and provide iteration support etc
-	uint8_t currentScreen = 0;
-	uint32_t autoRepeatTimer = 0;
-	bool earlyExit = false;
-	uint32_t descriptionStart = 0;
-	int16_t lastOffset = -1;
-	bool lcdRefresh = true;
-
-	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
-		lcd.setFont(0);
-		lcd.setCursor(0, 0);
-		//If the user has hesitated for >=3 seconds, show the long text
-		//Otherwise "draw" the option
-		if (xTaskGetTickCount() - lastButtonTime < 300) {
-			lcd.clearScreen();
-			menu[currentScreen].draw.func();
-			lastOffset = -1;
-			lcdRefresh = true;
-		} else {
-			// Draw description
-			if (descriptionStart == 0)
-				descriptionStart = xTaskGetTickCount();
-			// lower the value - higher the speed
-			int16_t descriptionWidth = FONT_12_WIDTH
-					* (strlen(menu[currentScreen].description) + 7);
-			int16_t descriptionOffset =
-					((xTaskGetTickCount() - descriptionStart)
-							/ (systemSettings.descriptionScrollSpeed == 1 ?
-									1 : 2));
-			descriptionOffset %= descriptionWidth;		//Roll around at the end
-
-			if (lastOffset != descriptionOffset) {
-				lcd.clearScreen();
-
-				//^ Rolling offset based on time
-				lcd.setCursor((OLED_WIDTH - descriptionOffset), 0);
-				lcd.print(menu[currentScreen].description);
-				lastOffset = descriptionOffset;
-				lcdRefresh = true;
-			}
-
-		}
-
-		ButtonState buttons = getButtonState();
-
-		switch (buttons) {
-		case BUTTON_BOTH:
-			earlyExit = true;  // will make us exit next loop
-			descriptionStart = 0;
-			break;
-		case BUTTON_F_SHORT:
-			// increment
-			if (descriptionStart == 0) {
-				if (menu[currentScreen].incrementHandler.func != NULL)
-					menu[currentScreen].incrementHandler.func();
-				else
-					earlyExit = true;
-			} else
-				descriptionStart = 0;
-			break;
-		case BUTTON_B_SHORT:
-			if (descriptionStart == 0)
-				currentScreen++;
-			else
-				descriptionStart = 0;
-			break;
-			//#TODO: Impliment ramping change
-		case BUTTON_F_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
-				menu[currentScreen].incrementHandler.func();
-				autoRepeatTimer = xTaskGetTickCount();
-				descriptionStart = 0;
-			}
-			break;
-		case BUTTON_B_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
-				currentScreen++;
-				autoRepeatTimer = xTaskGetTickCount();
-				descriptionStart = 0;
-			}
-			break;
-		case BUTTON_NONE:
-		default:
-			break;
-		}
-
-		if (lcdRefresh) {
-			lcd.refresh();  // update the LCD
-			osDelay(20);
-			lcdRefresh = false;
-		}
-	}
-
-}
-
-void enterSettingsMenu() {
-	gui_Menu(rootSettingsMenu);  //Call the root menu
-	saveSettings();
+  printShortDescription(14, 5);
 }

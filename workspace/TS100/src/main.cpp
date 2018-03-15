@@ -5,11 +5,11 @@
 #include "Settings.h"
 #include "Translation.h"
 #include "cmsis_os.h"
+#include "gui.h"
 #include "stdlib.h"
 #include "stm32f1xx_hal.h"
 #include "string.h"
 #include "LIS2DH12.hpp"
-#include <gui.hpp>
 
 #define ACCELDEBUG 0
 // C++ objects
@@ -21,6 +21,7 @@ uint8_t PCBVersion = 0;
 uint16_t currentlyActiveTemperatureTarget = 0;
 uint32_t lastMovementTime = 0;
 uint32_t lastButtonTime = 0;
+int16_t lastOffset = 0;
 
 // FreeRTOS variables
 osThreadId GUITaskHandle;
@@ -324,6 +325,89 @@ static void gui_solderingTempAdjust() {
 		lcd.refresh();
 		GUIDelay();
 	}
+}
+static void gui_settingsMenu() {
+	// Draw the settings menu and provide iteration support etc
+	uint8_t currentScreen = 0;
+	uint32_t autoRepeatTimer = 0;
+	bool earlyExit = false;
+	uint32_t descriptionStart = 0;
+	while ((settingsMenu[currentScreen].incrementHandler.func != NULL)
+			&& earlyExit == false) {
+		lcd.setFont(0);
+		lcd.setCursor(0, 0);
+
+		if (xTaskGetTickCount() - lastButtonTime < 400) {
+			lcd.clearScreen();
+
+			settingsMenu[currentScreen].draw.func();
+			lastOffset = 0;
+		} else {
+			// Draw description
+			// draw string starting from descriptionOffset
+			int16_t maxOffset = strlen(settingsMenu[currentScreen].description)
+					+ 7;
+			if (descriptionStart == 0)
+				descriptionStart = HAL_GetTick();
+
+			int16_t descriptionOffset = ((((HAL_GetTick() - descriptionStart)
+					/ 20) % (maxOffset * 2))) * 6;
+
+			if (lastOffset == 0 || lastOffset!=descriptionOffset) {
+				lcd.clearScreen();
+
+				//^ Rolling offset based on time
+				lcd.setCursor(((7 * 12) - descriptionOffset), 0);
+				lcd.print(settingsMenu[currentScreen].description);
+				lastOffset = descriptionOffset;
+			}
+
+		}
+
+		ButtonState buttons = getButtonState();
+
+		switch (buttons) {
+		case BUTTON_BOTH:
+			earlyExit = true;  // will make us exit next loop
+			descriptionStart = 0;
+			break;
+		case BUTTON_F_SHORT:
+			// increment
+			if (descriptionStart == 0)
+				settingsMenu[currentScreen].incrementHandler.func();
+			else
+				descriptionStart = 0;
+			break;
+		case BUTTON_B_SHORT:
+			if (descriptionStart == 0)
+				currentScreen++;
+			else
+				descriptionStart = 0;
+			break;
+		case BUTTON_F_LONG:
+			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
+				settingsMenu[currentScreen].incrementHandler.func();
+				autoRepeatTimer = xTaskGetTickCount();
+				descriptionStart = 0;
+			}
+			break;
+		case BUTTON_B_LONG:
+			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
+				currentScreen++;
+				autoRepeatTimer = xTaskGetTickCount();
+				descriptionStart = 0;
+			}
+			break;
+		case BUTTON_NONE:
+		default:
+			break;
+		}
+
+		lcd.refresh();  // update the LCD
+		osDelay(20);
+	}
+
+	saveSettings();
 }
 
 static int gui_showTipTempWarning() {
@@ -657,7 +741,7 @@ void startGUITask(void const *argument) {
 
 	uint8_t animationStep = 0;
 	uint8_t tempWarningState = 0;
-	bool buttonLockout = false;
+
 	HAL_IWDG_Refresh(&hiwdg);
 	switch (systemSettings.OrientationMode) {
 	case 0:
@@ -679,7 +763,7 @@ void startGUITask(void const *argument) {
 			ticks = xTaskGetTickCount();
 		ButtonState buttons = getButtonState();
 		if (buttons)
-			ticks = xTaskGetTickCount();  //make timeout now so we will exit
+			ticks = xTaskGetTickCount();//make timeout now so we will exit
 		GUIDelay();
 	}
 
@@ -703,17 +787,12 @@ void startGUITask(void const *argument) {
 		ButtonState buttons = getButtonState();
 		if (tempWarningState == 2)
 			buttons = BUTTON_F_SHORT;
-		if (buttons != BUTTON_NONE && buttonLockout)
-			buttons = BUTTON_NONE;
-		else
-			buttonLockout=false;
 		switch (buttons) {
 		case BUTTON_NONE:
 			// Do nothing
 			break;
 		case BUTTON_BOTH:
 			// Not used yet
-			//In multi-language this might be used to reset language on a long hold or some such
 			break;
 
 		case BUTTON_B_LONG:
@@ -744,9 +823,8 @@ void startGUITask(void const *argument) {
 		case BUTTON_B_SHORT:
 			lcd.setFont(0);
 			lcd.displayOnOff(true);  // turn lcd on
-			enterSettingsMenu();      // enter the settings menu
+			gui_settingsMenu();      // enter the settings menu
 			saveSettings();
-			buttonLockout = true;
 			setCalibrationOffset(systemSettings.CalibrationOffset); // ensure cal offset is applied
 			break;
 		default:
@@ -754,7 +832,7 @@ void startGUITask(void const *argument) {
 		}
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
-		if (tipTemp < 50)
+		if (tipTemp > 50)
 			if (systemSettings.sensitivity) {
 				if ((xTaskGetTickCount() - lastMovementTime) > 6000
 						&& (xTaskGetTickCount() - lastButtonTime) > 6000)

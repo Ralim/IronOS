@@ -35,7 +35,7 @@ OPTIM=-O2 -finline-small-functions -findirect-inlining -fdiagnostics-color
 
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG
+GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang)
 
 # Enable debug code generation
 DEBUG=-g
