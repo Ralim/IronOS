@@ -1,5 +1,5 @@
 /*
- * Translation.c
+ * Translation.cpp
  *
  *  Created on: 31Aug.,2017
  *      Author: Ben V. Brown
@@ -801,10 +801,10 @@ const char* SettingsDescriptions[17] = {
 	/* Automatic start mode               */ "Ako je aktivno, lemilica po uključivanju napajanja odmah počinje grijati.",
 	/* Cooldown blink                     */ "Bljeskanje temperature prilikom hlađenja, ako je lemilica vruća.",
 	/* Temperature calibration enter menu */ "Kalibriranje temperature mjeri razliku temperatura vrška i drške, dok je lemilica hladna.",
-	/* Settings reset command             */ "Vraćanje svih postavki.",
+	/* Settings reset command             */ "Vraćanje svih postavki na tvorničke vrijednosti.",
 	/* Calibrate input voltage            */ "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj.",
 	/* Advanced soldering screen enabled  */ "Prikazivanje detaljnih informacija tijekom lemljenja.",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+	/* Description Scroll Speed           */ "Brzina kretanja dugačkih poruka <B=brzo, S=sporo>",
 };
 
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
@@ -828,7 +828,7 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
+const char SettingFastChar = 'B';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
@@ -849,18 +849,18 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Settings reset command             */ {"Tvorničke", "postavke"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibracija", "napona napajanja"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detalji", "pri lemljenju"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Brzina","kretanja poruka"},
 };
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering\nSettings",
-/* Power Saving Menu*/"Sleep\nModes",
-/* UI Menu*/"User\nInterface",
-/* Advanced Menu*/"Advanced\nOptions", };
+/*Soldering Menu*/"Postavke\nlemljenja",
+/* Power Saving Menu*/"Ušteda\nenergije",
+/* UI Menu*/"Korisničko\nsučelje",
+/* Advanced Menu*/"Napredne\nopcije", };
 const char* SettingsMenuEntriesDescriptions[4] ={
-"Soldering settings",
-"Power Saving Settings",
-"User Interface settings",
-"Advanced options"
+"Postavke pri lemljenju",
+"Postavke spavanja i štednje energije",
+"Postavke korisničkog sučelja",
+"Upravljanje naprednim opcijama"
 };
 #endif
 
