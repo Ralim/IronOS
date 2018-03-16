@@ -805,6 +805,7 @@ const char* SettingsDescriptions[17] = {
 	/* Calibrate input voltage            */ "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj.",
 	/* Advanced soldering screen enabled  */ "Prikazivanje detaljnih informacija tijekom lemljenja.",
 	/* Description Scroll Speed           */ "Brzina kretanja dugačkih poruka <B=brzo, S=sporo>",
+x
 };
 
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
