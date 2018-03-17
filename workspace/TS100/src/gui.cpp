@@ -679,7 +679,6 @@ void gui_Menu(const menuitem* menu) {
 			else
 				descriptionStart = 0;
 			break;
-			//#TODO: Impliment ramping change
 		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					> (30 / autoRepeatAcceleration)) {
