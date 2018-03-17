@@ -11,6 +11,9 @@
 #include "Settings.h"
 #include "hardware.h"
 
+#define PRESS_ACCEL_FACTOR	1.2
+#define PRESS_ACCEL_MAX		3
+
 //GUI holds the menu structure and all its methods for the menu itself
 
 //Declarations for all the methods for the settings menu (at end of this file)
