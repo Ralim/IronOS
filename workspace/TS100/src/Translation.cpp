@@ -849,7 +849,7 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Settings reset command             */ {"Tvorničke", "postavke"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibracija", "napona napajanja"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detalji", "pri lemljenju"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Brzina","kretanja poruka"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Brzina","poruka"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Postavke\nlemljenja",
