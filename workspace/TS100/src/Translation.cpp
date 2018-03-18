@@ -92,7 +92,7 @@ const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
 const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SolderingAdvancedPowerPrompt = "Power: ";   //<= 12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -122,16 +122,19 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
 };
 
+// SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering\nSettings",
-/* Power Saving Menu*/"Sleep\nModes",
-/* UI Menu*/"User\nInterface",
-/* Advanced Menu*/"Advanced\nOptions", };
-const char* SettingsMenuEntriesDescriptions[4] ={
-"Soldering settings",
-"Power Saving Settings",
-"User Interface settings",
-"Advanced options"
+  /* Soldering Menu    */ "Soldering\nSettings",
+  /* Power Saving Menu */ "Sleep\nModes",
+  /* UI Menu           */ "User\nInterface",
+  /* Advanced Menu     */ "Advanced\nOptions",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  "Soldering settings",
+  "Power Saving Settings",
+  "User Interface settings",
+  "Advanced options"
 };
 #endif
 
@@ -849,7 +852,7 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Settings reset command             */ {"Tvorničke", "postavke"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibracija", "napona napajanja"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detalji", "pri lemljenju"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Brzina","kretanja poruka"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Brzina","poruka"},
 };
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Postavke\nlemljenja",
@@ -866,9 +869,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 
 #ifdef LANG_CS_CZ
 const char* SettingsDescriptions[17] = {
-  // These are all the help text for all the settings.
-  // No requirements on spacing or length
-  /* Power source (DC or batt)          */ "Při nižším napětí ukončí pájení <DC=10V, xS=x*3.3V pro LiPo,LiIon...>",
+  /* Power source (DC or batt)          */ "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo,LiIon...>",
   /* Sleep temperature                  */ "Teplota v režimu spánku.",
   /* Sleep timeout                      */ "Čas do režimu spánku <Minut/Sekund>",
   /* Shutdown timeout                   */ "Čas do automatického vypnutí <Minut>",
@@ -878,38 +879,38 @@ const char* SettingsDescriptions[17] = {
   /* Display rotation mode              */ "Orientace obrazovky <A=Auto, L=Levák, P=Pravák>",
   /* Boost enabled                      */ "Povolit boost držením předního tlačítka při pájení?",
   /* Boost temperature                  */ "Teplota v režimu boost.",
-  /* Automatic start mode               */ "Při startu ihned nahřívat hrot?",
+  /* Automatic start mode               */ "Při startu ihned nahřát hrot?",
   /* Cooldown blink                     */ "Blikání teploty při chladnutí, dokud je hrot horký?",
   /* Temperature calibration enter menu */ "Kalibrace měření teploty.",
   /* Settings reset command             */ "Obnovení továrního nastavení.",
   /* Calibrate input voltage            */ "Kalibrace vstupního napětí. Tlačítky uprav, podržením potvrď.",
   /* Advanced soldering screen enabled  */ "Zobrazit podrobnosti při pájení?",
-  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+  /* Description Scroll Speed           */ "Rychlost skrolování popisků podobných tomuto <P=Pomalu,R=Rychle>",
 };
 
-const char* SettingsCalibrationWarning = "Ujistěte se, že hrot má pokojovou teplotu! ";          // ending space needed
+const char* SettingsCalibrationWarning = "Ujistěte se, že hrot má pokojovou teplotu!";
 const char* SettingsResetWarning = "Opravdu chcete resetovat zařízení do továrního nastavení?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
+const char* UVLOWarningString = "DC LOW";                // <=8 chars
+const char* UndervoltageString = "! Nízké napětí !";     // <=16 chars
+const char* InputVoltageString = "Napětí: ";            // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Teplota: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                    // <=8 chars
 const char* SleepingSimpleString = "Zzz ";               // Must be <= 4 chars
 const char* SleepingAdvancedString = "Režim spánku...";  // <=16 chars
 const char* WarningSimpleString = "HOT!";                // Must be <= 4 chars
 const char* WarningAdvancedString = "!! HORKÝ HROT !!";  // <= 16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SleepingTipAdvancedString = "Hrot:";          // <=6 chars
+const char* IdleTipString = "Hrot:";     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Cíl:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "HROT NEPŘIPOJEN"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Ohřev: ";   // <=12 chars
 
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'R';
+const char SettingSlowChar = 'P';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
@@ -929,18 +930,22 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Settings reset command             */ {"Tovární", "nastavení?"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibrovat", "vstupní napětí?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Podrobnosti", "při pájení"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+  /* (<= 13) Display Help Text Scroll Speed     */ {"Rychlost", "popisků"},
 };
+
+// SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering\nSettings",
-/* Power Saving Menu*/"Sleep\nModes",
-/* UI Menu*/"User\nInterface",
-/* Advanced Menu*/"Advanced\nOptions", };
-const char* SettingsMenuEntriesDescriptions[4] ={
-"Soldering settings",
-"Power Saving Settings",
-"User Interface settings",
-"Advanced options"
+  /* Soldering Menu    */ "Pájecí\nnastavení",
+  /* Power Saving Menu */ "Režim\nspánku",
+  /* UI Menu           */ "Uživatelské\nrozhraní",
+  /* Advanced Menu     */ "Pokročilé\nvolby",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  "Nastavení pájení (boost, auto start...)",
+  "Nastavení režimu spánku, automatického vypnutí...",
+  "Nastavení uživatelského rozhraní.",
+  "Pokročilé volby (detailní obrazovky, kalibrace, tovární nastavení...)"
 };
 #endif
 
@@ -1263,5 +1268,86 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 "Power Saving Settings",
 "User Interface settings",
 "Advanced options"
+};
+#endif
+
+#ifdef LANG_LT
+const char* SettingsDescriptions[17] = {
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length.
+  /* Power source (DC or batt)          */ "Išjungimo įtampa. <DC 10V arba celių (S) kiekis (3.3V per celę)>",
+  /* Sleep temperature                  */ "Miego temperatūra <C>",
+  /* Sleep timeout                      */ "Miego laikas <minutės/sekundės>",
+  /* Shutdown timeout                   */ "Išjungimo laikas <minutės>",
+  /* Motion sensitivity level           */ "Jautrumas judesiui <0 - išjungta, 1 - mažiausias, 9 - didžiausias>",
+  /* Temperature in F and C             */ "Temperatūros vienetai <C - Celsijus, F - Farenheitas>",
+  /* Advanced idle display mode enabled */ "Ar rodyti papildomą informaciją mažesniu šriftu laukimo ekrane",
+  /* Display rotation mode              */ "Ekrano orientacija <A - automatinė, K - kairiarankiams, D - dešiniarankiams>",
+  /* Boost enabled                      */ "Ar lituojant viršutinis mygtukas įjungia turbo režimą",
+  /* Boost temperature                  */ "Temperatūra turbo režimu",
+  /* Automatic start mode               */ "Ar pradėti kaitininti iš karto įjungus lituoklį",
+  /* Cooldown blink                     */ "Ar mirksėti temperatūrą ekrane kol vėstantis antgalis vis dar karštas",
+  /* Temperature calibration enter menu */ "Antgalio temperatūros kalibravimas",
+  /* Settings reset command             */ "Nustatyti nustatymus iš naujo",
+  /* Calibrate input voltage            */ "Įvesties įtampos kalibravimas. Trumpai paspauskite, norėdami nustatyti, ilgai paspauskite, kad išeitumėte",
+  /* Advanced soldering screen enabled  */ "Ar rodyti išsamią informaciją lituojant",
+  /* Description Scroll Speed           */ "Greitis, kuriuo šis tekstas slenka",
+};
+
+const char* SettingsCalibrationWarning = "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!";
+const char* SettingsResetWarning = "Ar norite atstatyti nustatymus į numatytas reikšmes?";
+const char* UVLOWarningString = "MAŽ VOLT";            // <=8 chars
+const char* UndervoltageString = "Žema įtampa";     // <=16 chars
+const char* InputVoltageString = "Įvestis V: ";        // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Antgl Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BLOG ANT";                // <=8 chars
+const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
+const char* SleepingAdvancedString = "Miegu...";  // <=16 chars
+const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
+const char* WarningAdvancedString = "ANTGALIS KARŠTAS"; // <=16 chars
+const char* SleepingTipAdvancedString = "Antgl:";      // <=6 chars
+const char* IdleTipString = "Ant:";     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Nust:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "ANTGAL ATJUNGTAS"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Maitinimas: ";
+
+const char SettingRightChar = 'D';
+const char SettingLeftChar = 'K';
+const char SettingAutoChar = 'A';
+
+const char SettingFastChar = 'T';
+const char SettingSlowChar = 'N';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Maitinimo", "šaltinis"},
+  /* (<=  9) Sleep temperature                  */ {"Miego", "temperat."},
+  /* (<=  9) Sleep timeout                      */ {"Miego", "laikas"},
+  /* (<= 11) Shutdown timeout                   */ {"Išjungimo", "laikas"},
+  /* (<= 13) Motion sensitivity level           */ {"Jautrumas", "judesiui"},
+  /* (<= 13) Temperature in F and C             */ {"Temperatūros", "vienetai"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Detalus lauki-", "mo ekranas"},
+  /* (<= 13) Display rotation mode              */ {"Ekrano", "orientacija"},
+  /* (<= 13) Boost enabled                      */ {"Turbo režimas", "įjungtas"},
+  /* (<=  9) Boost temperature                  */ {"Turbo", "temperat."},
+  /* (<= 13) Automatic start mode               */ {"Auto", "paleidimas"},
+  /* (<= 13) Cooldown blink                     */ {"Atvėsimo", "mirksėjimas"},
+  /* (<= 16) Temperature calibration enter menu */ {"Kalibruoti", "temperatūrą?"},
+  /* (<= 16) Settings reset command             */ {"Atstatyti", "nustatymus?"},
+  /* (<= 16) Calibrate input voltage            */ {"Kalibruoti", "įvesties įtampą?"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Detalus lita-", "vimo ekranas"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Greitas apra-","šymo slinkimas"},
+};
+
+const char* SettingsMenuEntries[4] = {
+/*Soldering Menu*/"Litavimo\nnustatymai",
+/* Power Saving Menu*/"Miego\nrežimai",
+/* UI Menu*/"Naudotojo\nsąsaja",
+/* Advanced Menu*/"Išplėstiniai\nnustatymai", };
+const char* SettingsMenuEntriesDescriptions[4] ={
+"Litavimo nustatymai",
+"Energijos vartojimo nustatymai",
+"Naudotojo sąsajos nustatymai",
+"Išplėstiniai nustatymai"
 };
 #endif
