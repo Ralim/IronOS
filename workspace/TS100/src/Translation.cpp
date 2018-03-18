@@ -415,7 +415,7 @@ const char* UndervoltageString = "DC INSUFFICIENTE";     // <=16 chars
 const char* InputVoltageString = "V ingresso:";        // <=11 chars, preferably end with a space
 const char* WarningTipTempString = "Temp punta:";     // <=12 chars, preferably end with a space
 const char* BadTipString = "PUNTA NO";                // <=8 chars
-const char* SleepingSimpleString = "Zzz";       // Must be <= 4 chars
+const char* SleepingSimpleString = "Zzz ";       // Must be <= 4 chars
 const char* SleepingAdvancedString = "Standby";  // <=16 chars
 const char* WarningSimpleString = "HOT!";        // Must be <= 4 chars
 const char* WarningAdvancedString = "PUNTA CALDA!";  // <=16 chars
