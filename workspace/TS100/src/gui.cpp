@@ -609,7 +609,7 @@ void gui_Menu(const menuitem* menu) {
 	// Draw the settings menu and provide iteration support etc
 	uint8_t currentScreen = 0;
 	uint32_t autoRepeatTimer = 0;
-	float autoRepeatAcceleration = 1;
+	uint8_t autoRepeatAcceleration = 0;
 	bool earlyExit = false;
 	uint32_t descriptionStart = 0;
 	int16_t lastOffset = -1;
@@ -654,7 +654,7 @@ void gui_Menu(const menuitem* menu) {
 		ButtonState buttons = getButtonState();
 
 		if (buttons != lastButtonState) {
-			autoRepeatAcceleration = 1;
+			autoRepeatAcceleration = 0;
 			lastButtonState = buttons;
 		}
 
@@ -681,32 +681,32 @@ void gui_Menu(const menuitem* menu) {
 			break;
 		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
-					> (30 / autoRepeatAcceleration)) {
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				menu[currentScreen].incrementHandler.func();
 				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
 
-				autoRepeatAcceleration *= PRESS_ACCEL_FACTOR;
-				if (autoRepeatAcceleration > PRESS_ACCEL_MAX) {
-					autoRepeatAcceleration = PRESS_ACCEL_MAX;
-				}
+				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_B_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer > (30 / autoRepeatAcceleration)) {
+			if (xTaskGetTickCount() - autoRepeatTimer
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				currentScreen++;
 				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
 
-				autoRepeatAcceleration *= PRESS_ACCEL_FACTOR;
-				if (autoRepeatAcceleration > PRESS_ACCEL_MAX) {
-					autoRepeatAcceleration = PRESS_ACCEL_MAX;
-				}
+				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_NONE:
 		default:
 			break;
+		}
+
+		if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration)
+				< PRESS_ACCEL_INTERVAL_MIN) {
+			autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
 		}
 
 		if (lcdRefresh) {
