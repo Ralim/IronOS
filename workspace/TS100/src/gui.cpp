@@ -609,10 +609,12 @@ void gui_Menu(const menuitem* menu) {
 	// Draw the settings menu and provide iteration support etc
 	uint8_t currentScreen = 0;
 	uint32_t autoRepeatTimer = 0;
+	uint8_t autoRepeatAcceleration = 0;
 	bool earlyExit = false;
 	uint32_t descriptionStart = 0;
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
+	ButtonState lastButtonState = BUTTON_NONE;
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
 		lcd.setFont(0);
@@ -651,6 +653,11 @@ void gui_Menu(const menuitem* menu) {
 
 		ButtonState buttons = getButtonState();
 
+		if (buttons != lastButtonState) {
+			autoRepeatAcceleration = 0;
+			lastButtonState = buttons;
+		}
+
 		switch (buttons) {
 		case BUTTON_BOTH:
 			earlyExit = true;  // will make us exit next loop
@@ -672,24 +679,34 @@ void gui_Menu(const menuitem* menu) {
 			else
 				descriptionStart = 0;
 			break;
-			//#TODO: Impliment ramping change
 		case BUTTON_F_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
+			if (xTaskGetTickCount() - autoRepeatTimer
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				menu[currentScreen].incrementHandler.func();
 				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
+
+				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_B_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer > 30) {
+			if (xTaskGetTickCount() - autoRepeatTimer
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				currentScreen++;
 				autoRepeatTimer = xTaskGetTickCount();
 				descriptionStart = 0;
+
+				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_NONE:
 		default:
 			break;
+		}
+
+		if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration)
+				< PRESS_ACCEL_INTERVAL_MIN) {
+			autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
 		}
 
 		if (lcdRefresh) {
