@@ -405,7 +405,7 @@ const char* SettingsDescriptions[17] = {
   /* Settings reset command             */"Ripristina tutte le impostazioni",
   /* Calibrate input voltage            */"Calibra la tensione in ingresso; regola con i bottoni, tieni premuto per uscire",
   /* Advanced soldering screen enabled  */"Mostra informazioni dettagliate in modalità saldatura",
-  /* Description Scroll Speed           */"Imposta la velocità di scorrimento del testo",
+  /* Description Scroll Speed           */"Imposta la velocità di scorrimento del testo <L: lento; V: veloce>",
 };
 
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
