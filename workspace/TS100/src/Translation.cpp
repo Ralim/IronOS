@@ -1265,3 +1265,84 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 "Advanced options"
 };
 #endif
+
+#ifdef LANG_LT
+const char* SettingsDescriptions[17] = {
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length.
+  /* Power source (DC or batt)          */ "Išjungimo įtampa. <DC 10V arba celių (S) kiekis (3.3V per celę)>",
+  /* Sleep temperature                  */ "Miego temperatūra <C>",
+  /* Sleep timeout                      */ "Miego laikas <minutės/sekundės>",
+  /* Shutdown timeout                   */ "Išjungimo laikas <minutės>",
+  /* Motion sensitivity level           */ "Jautrumas judesiui <0 - išjungta, 1 - mažiausias, 9 - didžiausias>",
+  /* Temperature in F and C             */ "Temperatūros vienetai <C - Celsijus, F - Farenheitas>",
+  /* Advanced idle display mode enabled */ "Ar rodyti papildomą informaciją mažesniu šriftu laukimo ekrane",
+  /* Display rotation mode              */ "Ekrano orientacija <A - automatinė, K - kairiarankiams, D - dešiniarankiams>",
+  /* Boost enabled                      */ "Ar lituojant viršutinis mygtukas įjungia turbo režimą",
+  /* Boost temperature                  */ "Temperatūra turbo režimu",
+  /* Automatic start mode               */ "Ar pradėti kaitininti iš karto įjungus lituoklį",
+  /* Cooldown blink                     */ "Ar mirksėti temperatūrą ekrane kol vėstantis antgalis vis dar karštas",
+  /* Temperature calibration enter menu */ "Antgalio temperatūros kalibravimas",
+  /* Settings reset command             */ "Nustatyti nustatymus iš naujo",
+  /* Calibrate input voltage            */ "Įvesties įtampos kalibravimas. Trumpai paspauskite, norėdami nustatyti, ilgai paspauskite, kad išeitumėte",
+  /* Advanced soldering screen enabled  */ "Ar rodyti išsamią informaciją lituojant",
+  /* Description Scroll Speed           */ "Greitis, kuriuo šis tekstas slenka",
+};
+
+const char* SettingsCalibrationWarning = "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!";
+const char* SettingsResetWarning = "Ar norite atstatyti nustatymus į numatytas reikšmes?";
+const char* UVLOWarningString = "MAŽ VOLT";            // <=8 chars
+const char* UndervoltageString = "Žema įtampa";     // <=16 chars
+const char* InputVoltageString = "Įvestis V: ";        // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Antgl Temp: ";     // <=12 chars, preferably end with a space
+const char* BadTipString = "BLOG ANT";                // <=8 chars
+const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
+const char* SleepingAdvancedString = "Miegu...";  // <=16 chars
+const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
+const char* WarningAdvancedString = "ANTGALIS KARŠTAS"; // <=16 chars
+const char* SleepingTipAdvancedString = "Antgl:";      // <=6 chars
+const char* IdleTipString = "Ant:";     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Nust:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "ANTGAL ATJUNGTAS"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Maitinimas: ";
+
+const char SettingRightChar = 'D';
+const char SettingLeftChar = 'K';
+const char SettingAutoChar = 'A';
+
+const char SettingFastChar = 'T';
+const char SettingSlowChar = 'N';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Maitinimo", "šaltinis"},
+  /* (<=  9) Sleep temperature                  */ {"Miego", "temperat."},
+  /* (<=  9) Sleep timeout                      */ {"Miego", "laikas"},
+  /* (<= 11) Shutdown timeout                   */ {"Išjungimo", "laikas"},
+  /* (<= 13) Motion sensitivity level           */ {"Jautrumas", "judesiui"},
+  /* (<= 13) Temperature in F and C             */ {"Temperatūros", "vienetai"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Detalus lauki-", "mo ekranas"},
+  /* (<= 13) Display rotation mode              */ {"Ekrano", "orientacija"},
+  /* (<= 13) Boost enabled                      */ {"Turbo režimas", "įjungtas"},
+  /* (<=  9) Boost temperature                  */ {"Turbo", "temperat."},
+  /* (<= 13) Automatic start mode               */ {"Auto", "paleidimas"},
+  /* (<= 13) Cooldown blink                     */ {"Atvėsimo", "mirksėjimas"},
+  /* (<= 16) Temperature calibration enter menu */ {"Kalibruoti", "temperatūrą?"},
+  /* (<= 16) Settings reset command             */ {"Atstatyti", "nustatymus?"},
+  /* (<= 16) Calibrate input voltage            */ {"Kalibruoti", "įvesties įtampą?"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Detalus lita-", "vimo ekranas"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Greitas apra-","šymo slinkimas"},
+};
+
+const char* SettingsMenuEntries[4] = {
+/*Soldering Menu*/"Litavimo\nnustatymai",
+/* Power Saving Menu*/"Miego\nrežimai",
+/* UI Menu*/"Naudotojo\nsąsaja",
+/* Advanced Menu*/"Išplėstiniai\nnustatymai", };
+const char* SettingsMenuEntriesDescriptions[4] ={
+"Litavimo nustatymai",
+"Energijos vartojimo nustatymai",
+"Naudotojo sąsajos nustatymai",
+"Išplėstiniai nustatymai"
+};
+#endif
