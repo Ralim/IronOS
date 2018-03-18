@@ -394,7 +394,7 @@ const char* SettingsDescriptions[17] = {
   /* Sleep timeout                      */"Imposta timer per entrare in modalità standby <minuti/secondi>",
   /* Shutdown timeout                   */"Imposta timer per lo spegnimento <minuti>",
   /* Motion sensitivity level           */"Imposta sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>",
-  /* Temperature in F and C             */"Scegli l'unità di misura per la temperatura <°C: gradi Celsius; °F: gradi Farenheit>",
+  /* Temperature in F and C             */"Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>",
   /* Advanced idle display mode enabled */"Mostra informazioni dettagliate con un carattere più piccolo nella schermata principale",
   /* Display rotation mode              */"Imposta orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
   /* Boost enabled                      */"Il tasto anteriore attiva la funzione \"boost\" durante la saldatura",
