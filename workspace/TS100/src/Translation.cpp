@@ -138,6 +138,87 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 };
 #endif
 
+#ifdef LANG_BG
+
+const char* SettingsDescriptions[17] = {
+  /* Power source (DC or batt)          */ "Източник на захранване. Минимално напрежение. <DC 10V> <S 3.3V за клетка>",
+  /* Sleep temperature                  */ "Температура при режим \"сън\" <C>",
+  /* Sleep timeout                      */ "Включване в режим \"сън\" след: <Минути/Секунди>",
+  /* Shutdown timeout                   */ "Изключване след <Минути>",
+  /* Motion sensitivity level           */ "Усещане за движение <0.Изключено 1.Слабо 9.Силно>",
+  /* Temperature in F and C             */ "Единици за температура <C=Целзии F=Фаренхайт>",
+  /* Advanced idle display mode enabled */ "Покажи детайлна информация със ситен шрифт на екрана в режим на покой.",
+  /* Display rotation mode              */ "Ориентация на дисплея <A. Автоматично L. Лява Ръка R. Дясна Ръка>",
+  /* Boost enabled                      */ "Ползвай предния бутон за \"турбо\" режим с температура до 450C при запояване",
+  /* Boost temperature                  */ "Температура за \"турбо\" режим",
+  /* Automatic start mode               */ "Режим на поялника при включване на захранването. T=Работен, S=Сън, F=Изключен",
+  /* Cooldown blink                     */ "След изключване от работен режим, индикатора за температура да мига докато човката на поялника все още е топла",
+  /* Temperature calibration enter menu */ "Калибриране на температурата",
+  /* Settings reset command             */ "Връщане на фабрични настройки",
+  /* Calibrate input voltage            */ "Калибриране на входното напрежение (VIN). Задръжте бутонa за изход",
+  /* Advanced soldering screen enabled  */ "Детайлна информация в работен режим при запояване",
+  /* Description Scroll Speed           */ "Скорост на движение на този текст",
+};
+
+const char* SettingsCalibrationWarning = "Уверете се, че човката на поялника е със стайна температура преди да продължите!";
+const char* SettingsResetWarning = "Сигурни ли сте, че искате да върнете фабричните настройки?";
+const char* UVLOWarningString = "Ниско V!";             // <=8 chars
+const char* UndervoltageString = "Ниско Напрежение";    // <=16 chars
+const char* InputVoltageString = "Входно V: ";          // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Темп.: ";           // <=12 chars, preferably end with a space
+const char* BadTipString = "ЛОШ ВРЪХ";                   // <=8 chars
+const char* SleepingSimpleString = "Сън";               // Must be <= 4 chars
+const char* SleepingAdvancedString = "Хър Хър Хър...";  // <=16 chars
+const char* WarningSimpleString = "ОХ!";                // Must be <= 4 chars
+const char* WarningAdvancedString = "ВНИМАНИЕ! ТОПЛО!"; // <=16 chars
+const char* SleepingTipAdvancedString = "Връх:";        // <=6 chars
+const char* IdleTipString = "Връх:";  // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";  // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "ВРЪХ ЛОША ВРЪЗКА"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Захранване: ";
+
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+
+const char SettingFastChar = 'F';
+const char SettingSlowChar = 'S';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Източник", "захранване"},
+  /* (<=  9) Sleep temperature                  */ {"Темп.", "сън"},
+  /* (<=  9) Sleep timeout                      */ {"Време", "сън"},
+  /* (<= 11) Shutdown timeout                   */ {"Време", "изкл."},
+  /* (<= 13) Motion sensitivity level           */ {"Усещане", "за движение"},
+  /* (<= 13) Temperature in F and C             */ {"Единици за", "температура"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Детайлен", "екран в покой"},
+  /* (<= 13) Display rotation mode              */ {"Ориентация", "на дисплея"},
+  /* (<= 13) Boost enabled                      */ {"Турбо режим", "пуснат"},
+  /* (<=  9) Boost temperature                  */ {"Турбо", "темп."},
+  /* (<= 13) Automatic start mode               */ {"Автоматичен", "работен режим"},
+  /* (<= 13) Cooldown blink                     */ {"Мигай при", "топъл поялник"},
+  /* (<= 16) Temperature calibration enter menu */ {"Калибриране", "температура?"},
+  /* (<= 16) Settings reset command             */ {"Фабрични", "настройки?"},
+  /* (<= 16) Calibrate input voltage            */ {"Калибриране", "напрежение?"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Детайлен", "работен екран"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Скорост","на текста"},
+};
+
+const char* SettingsMenuEntries[4] = {
+	/* Soldering Menu */"Поялник\nНастройки",
+	/* Power Saving Menu */"Режими\nНастройки",
+	/* UI Menu */"Интерфейс\nНастройки",
+	/* Advanced Menu */"Допълнителни\nНастройки"
+};
+const char* SettingsMenuEntriesDescriptions[4] = {
+	"Настройки на поялника",
+	"Настройки енергоспестяване",
+	"Настройки на интерфейса",
+	"Допълнителни настройки"
+};
+#endif
+
 #ifdef LANG_RU
 const char* SettingsDescriptions[17] = {
 	// These are all the help text for all the settings.
