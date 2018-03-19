@@ -394,7 +394,7 @@ const char* SettingsDescriptions[17] = {
   /* Sleep timeout                      */"Imposta timer per entrare in modalità standby <minuti/secondi>",
   /* Shutdown timeout                   */"Imposta timer per lo spegnimento <minuti>",
   /* Motion sensitivity level           */"Imposta sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>",
-  /* Temperature in F and C             */"Scegli l'unità di misura per la temperatura <C: Celsius; F: Farenheit>",
+  /* Temperature in F and C             */"Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>",
   /* Advanced idle display mode enabled */"Mostra informazioni dettagliate con un carattere più piccolo nella schermata principale",
   /* Display rotation mode              */"Imposta orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
   /* Boost enabled                      */"Il tasto anteriore attiva la funzione \"boost\" durante la saldatura",
@@ -405,7 +405,7 @@ const char* SettingsDescriptions[17] = {
   /* Settings reset command             */"Ripristina tutte le impostazioni",
   /* Calibrate input voltage            */"Calibra la tensione in ingresso; regola con i bottoni, tieni premuto per uscire",
   /* Advanced soldering screen enabled  */"Mostra informazioni dettagliate in modalità saldatura",
-  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+  /* Description Scroll Speed           */"Imposta la velocità di scorrimento del testo <L: lento; V: veloce>",
 };
 
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
@@ -415,22 +415,22 @@ const char* UndervoltageString = "DC INSUFFICIENTE";     // <=16 chars
 const char* InputVoltageString = "V ingresso:";        // <=11 chars, preferably end with a space
 const char* WarningTipTempString = "Temp punta:";     // <=12 chars, preferably end with a space
 const char* BadTipString = "PUNTA NO";                // <=8 chars
-const char* SleepingSimpleString = "Zzz";       // Must be <= 4 chars
+const char* SleepingSimpleString = "Zzz ";       // Must be <= 4 chars
 const char* SleepingAdvancedString = "Standby";  // <=16 chars
 const char* WarningSimpleString = "HOT!";        // Must be <= 4 chars
 const char* WarningAdvancedString = "PUNTA CALDA!";  // <=16 chars
 const char* SleepingTipAdvancedString = "Punta:";      // <=6 chars
-const char* IdleTipString = "Pun:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Prev:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* IdleTipString = "Punta:";     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Im:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "PUNTA ASSENTE"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SolderingAdvancedPowerPrompt = "Potenza:";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'V';
+const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
  const char* SettingsShortNames[17][2] = {
@@ -450,18 +450,18 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
     /* (<= 16) Settings reset command             */ {"Ripristino", "impostazioni"},
     /* (<= 16) Calibrate input voltage            */ {"Calibrazione", "tensione"},
     /* (<= 13) Advanced soldering screen enabled  */ {"Dettagli", "saldatura"},
-	  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+    /* (<= 11) Display Help Text Scroll Speed     */ {"Velocità", "testo"},
 };
  const char* SettingsMenuEntries[4] = {
- /*Soldering Menu*/"Soldering\nSettings",
- /* Power Saving Menu*/"Sleep\nModes",
- /* UI Menu*/"User\nInterface",
- /* Advanced Menu*/"Advanced\nOptions", };
+ /*Soldering Menu*/"Opzioni\nsaldatura",
+ /* Power Saving Menu*/"Risparmio\nenergetico",
+ /* UI Menu*/"Interfaccia\nutente",
+ /* Advanced Menu*/"Opzioni\navanzate", };
  const char* SettingsMenuEntriesDescriptions[4] ={
- "Soldering settings",
- "Power Saving Settings",
- "User Interface settings",
- "Advanced options"
+ "Menù impostazioni saldatura",
+ "Menù risparmio energetico",
+ "Menù interfaccia utente",
+ "Menù impostazioni avanzate"
  };
 #endif
 
