@@ -1,0 +1,198 @@
+{
+	"languageCode": "PT",
+	"messages": {
+		"SettingsCalibrationWarning": "A ponta deve estar em temperatura ambiente antes de continuar!",
+		"SettingsResetWarning": "Reverter para os ajustes de fábrica?",
+		"UVLOWarningString": "DC BAIXO",
+		"UndervoltageString": "Subtensão",
+		"InputVoltageString": "Tensão ",
+		"WarningTipTempString": "Temperatura ",
+		"BadTipString": "ER PONTA",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Repouso...",
+		"WarningSimpleString": "TEMP",
+		"WarningAdvancedString": "TEMP ELEVADA!",
+		"SleepingTipAdvancedString": "Ponta:",
+		"IdleTipString": "Ponta:",
+		"IdleSetString": " Aj:",
+		"TipDisconnectedString": "SEM PONTA",
+		"SolderingAdvancedPowerPrompt": "Power: "
+	},
+	"characters": {
+		"SettingRightChar": "D",
+		"SettingLeftChar": "C",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": false,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"Settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"Modes"
+			],
+			"desc": "Power Saving Settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"Interface"
+			],
+			"desc": "User Interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"Options"
+			],
+			"desc": "Advanced options"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "FONTE",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Fonte de alimentação. Define a tensão de corte. <DC 10V> <S 3.3V por célula>"
+		},
+		"SleepTemperature": {
+			"text": "TMPE",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatura de repouso <C>"
+		},
+		"SleepTimeout": {
+			"text": "TMPO",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tempo para repouso <Minutos/Segundos>"
+		},
+		"ShutdownTimeout": {
+			"text": "DESLI",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tempo para desligamento <Minutos>"
+		},
+		"MotionSensitivity": {
+			"text": "MOVIME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Sensibilidade ao movimento <0=Desligado 1=Menor 9=Maior>"
+		},
+		"TemperatureUnit": {
+			"text": "UNIDAD",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Unidade de temperatura <C=Celsius F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "OCIOSO",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Exibe informações avançadas quando ocioso"
+		},
+		"DisplayRotation": {
+			"text": "ORIENT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Orientação da tela <A.utomática C.anhoto D.estro>"
+		},
+		"BoostEnabled": {
+			"text": "TURBO",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tecla frontal ativa modo \"turbo\""
+		},
+		"BoostTemperature": {
+			"text": "TTMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Ajuste de temperatura do modo \"turbo\""
+		},
+		"AutoStart": {
+			"text": "MODOAT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatura de aquecimento ao ligar <T=Trabalho S=Repouso F=Desligado>"
+		},
+		"CooldownBlink": {
+			"text": "RESFRI",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Exibe a temperatura durante o resfriamento"
+		},
+		"TemperatureCalibration": {
+			"text": "CAL.TEMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Calibra a temperatura"
+		},
+		"SettingsReset": {
+			"text": "RESETAR",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Reverte todos ajustes"
+		},
+		"VoltageCalibration": {
+			"text": "CAL.VOLT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Calibra a tensão e configura os botões. Mantenha presionado para sair"
+		},
+		"AdvancedSoldering": {
+			"text": "AVNCAD",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Exibe informações avançadas durante o uso"
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Speed this text scrolls past at"
+		}
+	},
+	"languageLocalName": "Portugues"
+}

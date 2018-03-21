@@ -1,0 +1,110 @@
+* {
+	font-family: sans-serif;
+}
+
+h1 {
+	color: #66A;
+}
+
+h1 span {
+	color: #000;
+}
+
+table.data, div.data {
+	border: 1px solid #888;
+	width: 100%;
+}
+
+div.value {
+	margin: 2px;
+}
+
+.header input {
+	width: 50% !important;
+}
+
+input.short {
+	width: 150px  !important;
+	font-family: monospace;
+}
+
+.header .selected {
+	display: block;
+	font-family: monospace;
+}
+
+.stringId {
+	font-family: monospace;
+	font-weight: bold;
+}
+
+.label {
+	background-color: #ddf;
+	padding: 0.5em;
+	width: 20%;
+	color: #66A;
+}
+
+.value {
+	background-color: #eef;
+}
+
+.value .label {
+	width: 99%;
+	font-weight: bold;
+}
+
+td input {
+	width: 99%;
+}
+
+input.unchanged, input.empty, .unchanged input, .empty input {
+	background-color: #ffc;
+}
+
+input.invalid, .invalid input {
+	background-color: #f99;
+}
+
+.ref, .tran input {
+	font-family: monospace;
+}
+
+.ref::before, .ref::after {
+	color: #99F;
+	font-family: sans-serif;
+	content: "\"";
+}
+
+.note {
+	color : #66A;
+	font-style: italic;
+}
+
+div.constraint {
+	float: right;
+	display: inline-block;
+	font-family: monospace;
+	color: #66A;
+}
+
+.invalid .constraint {
+	color: #f00;
+}
+
+.value {
+	font-size: smaller;
+}
+
+.hidden {
+	display: none;
+}
+
+.footer {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.saved {
+	background-color: #ddd;
+}

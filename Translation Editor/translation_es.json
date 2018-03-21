@@ -1,0 +1,198 @@
+{
+	"languageCode": "ES",
+	"messages": {
+		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
+		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Sleeping...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "WARNING! TIP HOT!",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SolderingAdvancedPowerPrompt": "Power: "
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": false,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"Settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"Modes"
+			],
+			"desc": "Power Saving Settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"Interface"
+			],
+			"desc": "User Interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"Options"
+			],
+			"desc": "Advanced options"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "PWRSC",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Fuente de energía. Ajusta el límite inferior de voltaje. <DC=10V S=3.3V por celda>"
+		},
+		"SleepTemperature": {
+			"text": "STMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatura en reposo. <C>"
+		},
+		"SleepTimeout": {
+			"text": "STME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tiempo hasta activar reposo. <Minutos>"
+		},
+		"ShutdownTimeout": {
+			"text": "SHTME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tiempo hasta apagado. <Minutos>"
+		},
+		"MotionSensitivity": {
+			"text": "MSENSE",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Sensibilidad del movimiento. <0=Apagado 1=El menos sensible 9=El más sensible>"
+		},
+		"TemperatureUnit": {
+			"text": "TMPUNT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Unidad de temperatura."
+		},
+		"AdvancedIdle": {
+			"text": "ADVIDL",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Display detailed information in a smaller font on the idle screen."
+		},
+		"DisplayRotation": {
+			"text": "DSPROT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Orientación de la pantalla <A=Automático I=Mano izquierda D=Mano derecha>"
+		},
+		"BoostEnabled": {
+			"text": "BOOST",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Activar el botón \"Boost\" en modo soldadura."
+		},
+		"BoostTemperature": {
+			"text": "BTMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatura en modo \"Boost\". <C>"
+		},
+		"AutoStart": {
+			"text": "ASTART",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Iniciar modo soldadura en el encendido. <V=Sí S=Modo reposo F=No>"
+		},
+		"CooldownBlink": {
+			"text": "CLBLNK",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Parpadea la temperatura en el enfriamiento si la punta sigue caliente."
+		},
+		"TemperatureCalibration": {
+			"text": "TMP CAL?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Calibrate tip offset."
+		},
+		"SettingsReset": {
+			"text": "RESET?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Reset all settings"
+		},
+		"VoltageCalibration": {
+			"text": "CAL VIN?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "VIN Calibration. Buttons adjust, long press to exit"
+		},
+		"AdvancedSoldering": {
+			"text": "ADVSLD",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Display detailed information while soldering"
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Speed this text scrolls past at"
+		}
+	},
+	"languageLocalName": "Español"
+}
