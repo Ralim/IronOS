@@ -706,7 +706,7 @@ void startGUITask(void const *argument) {
 		if (buttons != BUTTON_NONE && buttonLockout)
 			buttons = BUTTON_NONE;
 		else
-			buttonLockout=false;
+			buttonLockout = false;
 		switch (buttons) {
 		case BUTTON_NONE:
 			// Do nothing
@@ -754,16 +754,18 @@ void startGUITask(void const *argument) {
 		}
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
-		if (tipTemp < 50)
+		if (tipTemp < 50) {
 			if (systemSettings.sensitivity) {
 				if ((xTaskGetTickCount() - lastMovementTime) > 6000
 						&& (xTaskGetTickCount() - lastButtonTime) > 6000)
 					lcd.displayOnOff(false);  // turn lcd off when no movement
-				else if (xTaskGetTickCount() - lastMovementTime < 100
-						|| xTaskGetTickCount() - lastButtonTime < 100) /*Use short time for test, and prevent lots of I2C
-						 writes for no need*/
-					lcd.displayOnOff(true);  // turn lcd back on
-			}
+				else
+					lcd.displayOnOff(true);  // turn lcd on
+			} else
+				lcd.displayOnOff(true);  // turn lcd on
+		} else
+			lcd.displayOnOff(true);  // turn lcd on
+
 		if (tipTemp > 600)
 			tipTemp = 0;
 		if (tipTemp > 50) {
