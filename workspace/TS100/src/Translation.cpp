@@ -568,7 +568,7 @@ const char* SettingsDescriptions[17] = {
   /* Settings reset command             */ "Réinitialiser tous les réglages",
   /* Calibrate input voltage            */ "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
   /* Advanced soldering screen enabled  */ "Afficher des informations détaillées pendant la soudure",
-  /* Description Scroll Speed           */ "Vitesse de défilement de ce texte à",
+  /* Description Scroll Speed           */ "Vitesse de défilement de ce texte en <R=Rapide L=Lent>",
 };
 
 const char* SettingsCalibrationWarning = "Assurez-vous que la panne soit à température ambiante avant de continuer!";
@@ -592,8 +592,8 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'R';
+const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
@@ -613,14 +613,14 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Settings reset command             */ {"Réinitialisation", "d'usine"},
   /* (<= 16) Calibrate input voltage            */ {"Etalonner", "tension d'entrée"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Ecran soudure", "détaillé"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Description "," Vitesse de défilement"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Vitesse de","défilement"},
 };
 
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soudure\nParamètres",
 /* Power Saving Menu*/"Mode\nVeille",
 /* UI Menu*/"Interface\nUtilisateur",
-/* Advanced Menu*/"Options\nAdvanced", };
+/* Advanced Menu*/"Options\nAdvancées", };
 const char* SettingsMenuEntriesDescriptions[4] ={
 "Paramètres de soudage",
 "Paramètres d'économie d'énergie",
