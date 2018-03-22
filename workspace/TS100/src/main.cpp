@@ -52,10 +52,15 @@ int main(void) {
 		PCBVersion = 1;
 		accel.initalize(); // this sets up the I2C registers and loads up the default
 						   // settings
-	} else {
+	} else if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT,
+			buffer, 1, 1000) == HAL_OK) {
 		PCBVersion = 2;
 		//Setup the ST Accelerometer
 		accel2.initalize();						   //startup the accelerometer
+	}
+	{
+		PCBVersion = 3;
+
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
@@ -920,12 +925,16 @@ void startMOVTask(void const *argument) {
 	uint32_t max = 0;
 #endif
 
+	if (PCBVersion == 3) {
+		for (;;)
+			osDelay(5000);
+	}
 	for (;;) {
 		int32_t threshold = 1200 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
 		if (PCBVersion == 2)
 			accel2.getAxisReadings(&tx, &ty, &tz);
-		else
+		else if (PCBVersion == 1)
 			accel.getAxisReadings(&tx, &ty, &tz);
 
 		datax[currentPointer] = (int32_t) tx;
@@ -992,6 +1001,11 @@ void startRotationTask(void const *argument) {
 	 * This task is used to manage rotation of the LCD screen & button re-mapping
 	 *
 	 */
+	if(PCBVersion==3)
+		{
+			for(;;)
+				osDelay(5000);
+		}
 	switch (systemSettings.OrientationMode) {
 	case 0:
 		lcd.setRotation(false);
@@ -1013,7 +1027,7 @@ void startRotationTask(void const *argument) {
 		uint8_t rotation;
 		if (PCBVersion == 2) {
 			rotation = accel2.getOrientation();
-		} else {
+		} else if (PCBVersion == 1) {
 			rotation = accel.getOrientation();
 		}
 		if (systemSettings.OrientationMode == 2) {
