@@ -18,7 +18,7 @@ uint16_t getHandleTemperature() {
 	// STM32 = 4096 count @ 3.3V input -> But
 	// We oversample by 32/(2^2) = 8 times oversampling
 	// Therefore 32768 is the 3.3V input, so 0.201416015625 mV per count
-	// So we need to subtract an offset of 0.5V to center on 0C (2482 counts)
+	// So we need to subtract an offset of 0.5V to center on 0C (2482*2 counts)
 	//
 	uint16_t result = getADC(0);
 	if (result < 4964)
@@ -29,21 +29,25 @@ uint16_t getHandleTemperature() {
 
 }
 uint16_t tipMeasurementToC(uint16_t raw) {
-	return ((raw - 532) / 33) + (getHandleTemperature() / 10) - CalibrationTempOffset;
+	return ((raw - 532) / 33) + (getHandleTemperature() / 10)
+			- CalibrationTempOffset;
 	//Surprisingly that appears to be a fairly good linear best fit
 }
 uint16_t ctoTipMeasurement(uint16_t temp) {
 	//We need to compensate for cold junction temp
-	return ((temp - (getHandleTemperature() / 10) + CalibrationTempOffset) * 33) + 532;
+	return ((temp - (getHandleTemperature() / 10) + CalibrationTempOffset) * 33)
+			+ 532;
 }
 
 uint16_t tipMeasurementToF(uint16_t raw) {
-	return ((((raw - 532) / 33) + (getHandleTemperature() / 10) - CalibrationTempOffset) * 9) / 5 + 32;
+	return ((((raw - 532) / 33) + (getHandleTemperature() / 10)
+			- CalibrationTempOffset) * 9) / 5 + 32;
 
 }
 uint16_t ftoTipMeasurement(uint16_t temp) {
 
-	return (((((temp - 32) * 5) / 9) - (getHandleTemperature() / 10) + CalibrationTempOffset) * 33) + 532;
+	return (((((temp - 32) * 5) / 9) - (getHandleTemperature() / 10)
+			+ CalibrationTempOffset) * 33) + 532;
 }
 
 uint16_t getTipInstantTemperature() {
@@ -116,7 +120,7 @@ uint8_t getTipPWM() {
 	return htim2.Instance->CCR4;
 }
 void setTipPWM(uint8_t pulse) {
-	PWMSafetyTimer = 100;    //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
+	PWMSafetyTimer = 640; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
 		pulse = 100;
 	if (pulse) {
@@ -133,7 +137,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	//Period has elapsed
 	if (htim->Instance == TIM2) {
 		//we want to turn on the output again
-		PWMSafetyTimer--;    //We decrement this safety value so that lockups in the scheduler will not cause the PWM to become locked in an active driving state.
+		PWMSafetyTimer--; //We decrement this safety value so that lockups in the scheduler will not cause the PWM to become locked in an active driving state.
 		//While we could assume this could never happened, its a small price for increased safety
 		if (htim2.Instance->CCR4 && PWMSafetyTimer) {
 			htim3.Instance->CCR1 = 50;
@@ -153,6 +157,14 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
 			HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 			htim3.Instance->CCR1 = 0;
-		}
+
+		} /*else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
+		}*/
 	}
+}
+
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
+
 }
