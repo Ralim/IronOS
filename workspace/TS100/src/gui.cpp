@@ -387,6 +387,19 @@ static void settings_displayScrollSpeed(void) {
 static void settings_setDisplayRotation(void) {
 	systemSettings.OrientationMode++;
 	systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
+	switch (systemSettings.OrientationMode) {
+		case 0:
+			lcd.setRotation(false);
+			break;
+		case 1:
+			lcd.setRotation(true);
+			break;
+		case 2:
+			//do nothing on auto
+			break;
+		default:
+			break;
+		}
 }
 
 static void settings_displayDisplayRotation(void) {

@@ -79,20 +79,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "Sleeping...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
-const char* WarningAdvancedString = "!!! TIP HOT !!!"; // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* UVLOWarningString = "DC LOW";               // <=8 chars
+const char* UndervoltageString = "Undervoltage";        // <=16 chars
+const char* InputVoltageString = "Input V: ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";        // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                   // <=8 chars
+const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Sleeping...";     // <=16 chars
+const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
+const char* WarningAdvancedString = "!!! TIP HOT !!!";  // <=16 chars
+const char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
+const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";   //<= 12 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -162,20 +162,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Уверете се, че човката на поялника е със стайна температура преди да продължите!";
 const char* SettingsResetWarning = "Сигурни ли сте, че искате да върнете фабричните настройки?";
-const char* UVLOWarningString = "Ниско V!";             // <=8 chars
-const char* UndervoltageString = "Ниско Напрежение";    // <=16 chars
-const char* InputVoltageString = "Входно V: ";          // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Темп.: ";           // <=12 chars, preferably end with a space
-const char* BadTipString = "ЛОШ ВРЪХ";                   // <=8 chars
-const char* SleepingSimpleString = "Сън";               // Must be <= 4 chars
-const char* SleepingAdvancedString = "Хър Хър Хър...";  // <=16 chars
-const char* WarningSimpleString = "ОХ!";                // Must be <= 4 chars
-const char* WarningAdvancedString = "ВНИМАНИЕ! ТОПЛО!"; // <=16 chars
-const char* SleepingTipAdvancedString = "Връх:";        // <=6 chars
-const char* IdleTipString = "Връх:";  // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";  // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "ВРЪХ ЛОША ВРЪЗКА"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Захранване: ";
+const char* UVLOWarningString = "Ниско V!";                // <=8 chars
+const char* UndervoltageString = "Ниско Напрежение";       // <=16 chars
+const char* InputVoltageString = "Входно V: ";             // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Темп.: ";              // <=12 chars, preferably end with a space
+const char* BadTipString = "ЛОШ ВРЪХ";                     // <=8 chars
+const char* SleepingSimpleString = "Сън";                  // Must be <= 4 chars
+const char* SleepingAdvancedString = "Хър Хър Хър...";     // <=16 chars
+const char* WarningSimpleString = "ОХ!";                   // Must be <= 4 chars
+const char* WarningAdvancedString = "ВНИМАНИЕ! ТОПЛО!";    // <=16 chars
+const char* SleepingTipAdvancedString = "Връх:";           // <=6 chars
+const char* IdleTipString = "Връх:";                       // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                       // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "ВРЪХ ЛОША ВРЪЗКА";    // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Захранване: "; // <=12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -239,25 +239,25 @@ const char* SettingsDescriptions[17] = {
 	/* Settings reset command             */ "Сброс всех настроек.",
 	/* Calibrate input voltage            */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
 	/* Advanced soldering screen enabled  */ "Показывать детальную информацию при пайке.",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+	/* Description Scroll Speed           */ "Speed this text scrolls past at",
 };
 
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "БАТ РАЗР";          // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Хррр";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "Ожидание...";  // <=16 chars
-const char* WarningSimpleString = " АЙ!";            // Must be <= 4 chars
+const char* UVLOWarningString = "БАТ РАЗР";              // <=8 chars
+const char* UndervoltageString = "Undervoltage";         // <=16 chars
+const char* InputVoltageString = "Input V: ";            // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                    // <=8 chars
+const char* SleepingSimpleString = "Хррр";               // Must be <= 4 chars
+const char* SleepingAdvancedString = "Ожидание...";      // <=16 chars
+const char* WarningSimpleString = " АЙ!";                // Must be <= 4 chars
 const char* WarningAdvancedString = "ОСТОРОЖНО! ГОРЯЧО"; // <=16 chars
-cconst char* SleepingTipAdvancedString = "Tip:";     // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+cconst char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
+const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
 
 /*
  * #TODO change support for multibyte constants here
@@ -331,20 +331,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "Sleeping...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
+const char* UVLOWarningString = "DC LOW";                // <=8 chars
+const char* UndervoltageString = "Undervoltage";         // <=16 chars
+const char* InputVoltageString = "Input V: ";            // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                    // <=8 chars
+const char* SleepingSimpleString = "Zzzz";               // Must be <= 4 chars
+const char* SleepingAdvancedString = "Sleeping...";      // <=16 chars
+const char* WarningSimpleString = "HOT!";                // Must be <= 4 chars
 const char* WarningAdvancedString = "WARNING! TIP HOT!"; // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SleepingTipAdvancedString = "Tip:";          // <=6 chars
+const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -406,25 +406,25 @@ const char* SettingsDescriptions[17] = {
 	/* Settings reset command             */ "Reset all settings",
 	/* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
 	/* Advanced soldering screen enabled  */ "Display detailed information while soldering",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+	/* Description Scroll Speed           */ "Speed this text scrolls past at",
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "Sleeping...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
-const char* WarningAdvancedString = "WARNING! TIP HOT!";  // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* UVLOWarningString = "DC LOW";                // <=8 chars
+const char* UndervoltageString = "Undervoltage";         // <=16 chars
+const char* InputVoltageString = "Input V: ";            // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                    // <=8 chars
+const char* SleepingSimpleString = "Zzzz";               // Must be <= 4 chars
+const char* SleepingAdvancedString = "Sleeping...";      // <=16 chars
+const char* WarningSimpleString = "HOT!";                // Must be <= 4 chars
+const char* WarningAdvancedString = "WARNING! TIP HOT!"; // <=16 chars
+const char* SleepingTipAdvancedString = "Tip:";          // <=6 chars
+const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -470,41 +470,42 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 const char* SettingsDescriptions[17] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
-  /* Power source (DC or batt)          */"Scegli la sorgente di alimentazione; imposta la soglia di scaricamento per alimentazione Li-Po <DC: 10V; S: 3.3V per cella>",
-  /* Sleep temperature                  */"Imposta temperatura in modalità standby <°C>",
-  /* Sleep timeout                      */"Imposta timer per entrare in modalità standby <minuti/secondi>",
-  /* Shutdown timeout                   */"Imposta timer per lo spegnimento <minuti>",
-  /* Motion sensitivity level           */"Imposta sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>",
+  /* Power source (DC or batt)          */"Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>",
+  /* Sleep temperature                  */"Imposta la temperatura da mantenere in modalità standby <°C>",
+  /* Sleep timeout                      */"Imposta il timer per entrare in modalità standby <minuti/secondi>",
+  /* Shutdown timeout                   */"Imposta il timer per lo spegnimento <minuti>",
+  /* Motion sensitivity level           */"Imposta la sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>",
   /* Temperature in F and C             */"Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>",
-  /* Advanced idle display mode enabled */"Mostra informazioni dettagliate con un carattere più piccolo nella schermata principale",
-  /* Display rotation mode              */"Imposta orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
-  /* Boost enabled                      */"Il tasto anteriore attiva la funzione \"boost\" durante la saldatura",
-  /* Boost temperature                  */"Imposta la temperatura in funzione \"boost\"",
+  /* Advanced idle display mode enabled */"Mostra informazioni dettagliate con un carattere più piccolo all'interno della schermata principale",
+  /* Display rotation mode              */"Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
+  /* Boost enabled                      */"Il tasto superiore attiva la funzione \"turbo\" durante la modalità Saldatura",
+  /* Boost temperature                  */"Imposta la temperatura della funzione \"turbo\"",
   /* Automatic start mode               */"Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
   /* Cooldown blink                     */"Mostra la temperatura durante il raffreddamento se la punta è ancora calda",
-  /* Temperature calibration enter menu */"Calibra la differenza di temperatura rilevata da quella presente sulla punta",
+  /* Temperature calibration enter menu */"Calibra le rilevazioni di temperatura",
   /* Settings reset command             */"Ripristina tutte le impostazioni",
-  /* Calibrate input voltage            */"Calibra la tensione in ingresso; regola con i bottoni, tieni premuto per uscire",
-  /* Advanced soldering screen enabled  */"Mostra informazioni dettagliate in modalità saldatura",
+  /* Calibrate input voltage            */"Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire",
+  /* Advanced soldering screen enabled  */"Mostra informazioni dettagliate durante la modalità Saldatura",
   /* Description Scroll Speed           */"Imposta la velocità di scorrimento del testo <L: lento; V: veloce>",
+
 };
 
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
 const char* SettingsResetWarning = "Ripristinare le impostazioni iniziali?";
 const char* UVLOWarningString = "DC BASSA";            // <=8 chars
-const char* UndervoltageString = "DC INSUFFICIENTE";     // <=16 chars
+const char* UndervoltageString = "DC INSUFFICIENTE";   // <=16 chars
 const char* InputVoltageString = "V ingresso:";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Temp punta:";     // <=12 chars, preferably end with a space
-const char* BadTipString = "PUNTA NO";                // <=8 chars
-const char* SleepingSimpleString = "Zzz ";       // Must be <= 4 chars
-const char* SleepingAdvancedString = "Standby";  // <=16 chars
-const char* WarningSimpleString = "HOT!";        // Must be <= 4 chars
-const char* WarningAdvancedString = "PUNTA CALDA!";  // <=16 chars
+const char* WarningTipTempString = "Temp punta:";      // <=12 chars, preferably end with a space
+const char* BadTipString = "PUNTA NO";                 // <=8 chars
+const char* SleepingSimpleString = "ZZZ ";             // Must be <= 4 chars
+const char* SleepingAdvancedString = "Standby";        // <=16 chars
+const char* WarningSimpleString = "HOT!";              // Must be <= 4 chars
+const char* WarningAdvancedString = "PUNTA CALDA!";    // <=16 chars
 const char* SleepingTipAdvancedString = "Punta:";      // <=6 chars
-const char* IdleTipString = "Punta:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Im:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "PUNTA ASSENTE"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Potenza:";
+const char* IdleTipString = "Punta:";                  // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = "/";                       // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "PUNTA ASSENTE";   // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Potenza:"; // <=12 chars
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
@@ -523,8 +524,8 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
     /* (<= 13) Temperature in F and C             */ {"Unità di", "temperatura"},
     /* (<= 13) Advanced idle display mode enabled */ {"Mostra", "dettagli"},
     /* (<= 13) Display rotation mode              */ {"Orientamento", "display"},
-    /* (<= 13) Boost enabled                      */ {"Funzione", "\"boost\""},
-    /* (<=  9) Boost temperature                  */ {"Temp", "\"boost\""},
+    /* (<= 13) Boost enabled                      */ {"Funzione", "\"turbo\""},
+    /* (<=  9) Boost temperature                  */ {"Temp", "\"turbo\""},
     /* (<= 13) Automatic start mode               */ {"Avvio", "automatico"},
     /* (<= 13) Cooldown blink                     */ {"Avviso", "punta calda"},
     /* (<= 16) Temperature calibration enter menu */ {"Calibrazione", "temperatura"},
@@ -539,10 +540,10 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
  /* UI Menu*/"Interfaccia\nutente",
  /* Advanced Menu*/"Opzioni\navanzate", };
  const char* SettingsMenuEntriesDescriptions[4] ={
- "Menù impostazioni saldatura",
- "Menù risparmio energetico",
- "Menù interfaccia utente",
- "Menù impostazioni avanzate"
+ "Menù d'impostazioni della modalità Saldatura",
+ "Menù d'impostazioni per il risparmio energetico",
+ "Menù d'impostazioni dell'interfaccia utente",
+ "Menù d'impostazioni avanzate"
  };
 #endif
 
@@ -567,32 +568,32 @@ const char* SettingsDescriptions[17] = {
   /* Settings reset command             */ "Réinitialiser tous les réglages",
   /* Calibrate input voltage            */ "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
   /* Advanced soldering screen enabled  */ "Afficher des informations détaillées pendant la soudure",
-  /* Description Scroll Speed           */ "Vitesse de défilement de ce texte à",
+  /* Description Scroll Speed           */ "Vitesse de défilement de ce texte en <R=Rapide L=Lent>",
 };
 
 const char* SettingsCalibrationWarning = "Assurez-vous que la panne soit à température ambiante avant de continuer!";
 const char* SettingsResetWarning = "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?";
-const char* UVLOWarningString = "DC FAIBLE";            // <=8 chars
-const char* UndervoltageString = "Sous-tension";     // <=16 chars
-const char* InputVoltageString = "V d'entrée: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Temp. Panne: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "PANNE HS";                // <=8 chars
-const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
-const char* SleepingAdvancedString = "En veille...";    // <=16 chars
-const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
-const char* WarningAdvancedString = "ATTENTION! CHAUD"; // Must be <= 16 chars
-const char* SleepingTipAdvancedString = "PANNE:";      // <=6 chars
-const char* IdleTipString = "PANNE:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "PANNE DEBRANCH"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Puissance: ";
+const char* UVLOWarningString = "DC FAIBLE";              // <=8 chars
+const char* UndervoltageString = "Sous-tension";          // <=16 chars
+const char* InputVoltageString = "V d'entrée: ";          // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Temp. Panne: ";       // <=12 chars, preferably end with a space
+const char* BadTipString = "PANNE HS";                    // <=8 chars
+const char* SleepingSimpleString = "Zzzz";                // Must be <= 4 chars
+const char* SleepingAdvancedString = "En veille...";      // <=16 chars
+const char* WarningSimpleString = "HOT!";                 // Must be <= 4 chars
+const char* WarningAdvancedString = "ATTENTION! CHAUD";   // Must be <= 16 chars
+const char* SleepingTipAdvancedString = "PANNE:";         // <=6 chars
+const char* IdleTipString = "PANNE:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                      // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "PANNE DEBRANCH";     // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Puissance: "; // <= 12 chars
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'R';
+const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
@@ -612,14 +613,14 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Settings reset command             */ {"Réinitialisation", "d'usine"},
   /* (<= 16) Calibrate input voltage            */ {"Etalonner", "tension d'entrée"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Ecran soudure", "détaillé"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Description "," Vitesse de défilement"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Vitesse de","défilement"},
 };
 
 const char* SettingsMenuEntries[4] = {
 /*Soldering Menu*/"Soudure\nParamètres",
 /* Power Saving Menu*/"Mode\nVeille",
 /* UI Menu*/"Interface\nUtilisateur",
-/* Advanced Menu*/"Options\nAdvanced", };
+/* Advanced Menu*/"Options\nAdvancées", };
 const char* SettingsMenuEntriesDescriptions[4] ={
 "Paramètres de soudage",
 "Paramètres d'économie d'énergie",
@@ -653,20 +654,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
 const char* SettingsResetWarning = "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?";
-const char* UVLOWarningString = "V niedr.";            // <=8 chars
-const char* UndervoltageString = "Unterspannung";     // <=16 chars
-const char* InputVoltageString = "V Eingang: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Temperatur: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "DEFEKT";                // <=8 chars
-const char* SleepingSimpleString = "Zzz ";            // Must be <= 4 chars
-const char* SleepingAdvancedString = "Ruhemodus...";  // <=16 chars
-const char* WarningSimpleString = "HEIß";             // Must be <= 4 chars
-const char* WarningAdvancedString = "Achtung! Spitze Heiß!"; // <=16 chars
-const char* SleepingTipAdvancedString = "Temp:";      // <=6 chars
-const char* IdleTipString = "Ist:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Soll:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "Spitze fehlt"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Leistung: "; // <= 12 ???
+const char* UVLOWarningString = "V niedr.";              // <=8 chars
+const char* UndervoltageString = "Unterspannung";        // <=16 chars
+const char* InputVoltageString = "V Eingang: ";          // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Temperatur: ";       // <=12 chars, preferably end with a space
+const char* BadTipString = "DEFEKT";                     // <=8 chars
+const char* SleepingSimpleString = "Zzz ";               // Must be <= 4 chars
+const char* SleepingAdvancedString = "Ruhemodus...";     // <=16 chars
+const char* WarningSimpleString = "HEIß";                // Must be <= 4 chars
+const char* WarningAdvancedString = "SPITZE HEIß!";      // <=16 chars
+const char* SleepingTipAdvancedString = "Temp:";         // <=6 chars
+const char* IdleTipString = "Ist:";                      // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Soll:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "Spitze fehlt";      // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Leistung: "; // <= 12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -728,25 +729,25 @@ const char* SettingsDescriptions[17] = {
 	/* Settings reset command             */ "Tovarenske nastavenia",
 	/* Calibrate input voltage            */ "Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat",
 	/* Advanced soldering screen enabled  */ "Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+	/* Description Scroll Speed           */ "Speed this text scrolls past at",
 };
 
 const char* SettingsCalibrationWarning = "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Chrr";                // Must be <= 4 chars
-const char* SleepingAdvancedString = "Kludovy rezim...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";                 // Must be <= 4 chars
+const char* UVLOWarningString = "DC LOW";                // <=8 chars
+const char* UndervoltageString = "Undervoltage";         // <=16 chars
+const char* InputVoltageString = "Input V: ";            // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                    // <=8 chars
+const char* SleepingSimpleString = "Chrr";               // Must be <= 4 chars
+const char* SleepingAdvancedString = "Kludovy rezim..."; // <=16 chars
+const char* WarningSimpleString = "HOT!";                // Must be <= 4 chars
 const char* WarningAdvancedString = "Pozor! Hrot je horuci!";  // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SleepingTipAdvancedString = "Tip:";          // <=6 chars
+const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -808,25 +809,25 @@ const char* SettingsDescriptions[17] = {
 	/* Settings reset command             */ "Bütün ayarları sıfırla",
 	/* Calibrate input voltage            */ "VIN Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas.",
 	/* Advanced soldering screen enabled  */ "Lehimleme yaparken detaylı bilgi göster",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+	/* Description Scroll Speed           */ "Speed this text scrolls past at",
 };
 
 const char* SettingsCalibrationWarning = "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";          // <=8 chars
-const char* UndervoltageString = "Undervoltage";   // <=16 chars
-const char* InputVoltageString = "Input V: ";      // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";   // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";              // <=8 chars
-const char* SleepingSimpleString = "Zzzz";         // Must be <= 4 chars
-const char* SleepingAdvancedString = "Uyuyor...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";          // Must be <= 4 chars
-const char* WarningAdvancedString = "UYARI! UÇ SICAK!";  // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* UVLOWarningString = "DC LOW";               // <=8 chars
+const char* UndervoltageString = "Undervoltage";        // <=16 chars
+const char* InputVoltageString = "Input V: ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";        // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                   // <=8 chars
+const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Uyuyor...";       // <=16 chars
+const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
+const char* WarningAdvancedString = "UYARI! UÇ SICAK!"; // <=16 chars
+const char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
+const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -893,20 +894,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
 const char* SettingsResetWarning = "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?";
-const char* UVLOWarningString = "BATERIJA";           // <=8 chars
-const char* UndervoltageString = "PRENIZAK NAPON";    // <=16 chars
-const char* InputVoltageString = "Napajanje: ";       // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Temp vrha: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "NEISPRAVAN VRH";          // <=8 chars
-const char* SleepingSimpleString = "Zzz ";            // Must be <= 4 chars
-const char* SleepingAdvancedString = "SPAVANJE...";   // <=16 chars
-const char* WarningSimpleString = "VRUĆ";             // Must be <= 4 chars
-const char* WarningAdvancedString = "OPREZ, VRUĆE!";  // <=16 chars
-const char* SleepingTipAdvancedString = "Vrh: ";      // <=6 chars
-const char* IdleTipString = "Vrh: ";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " / ";       // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* UVLOWarningString = "BATERIJA";             // <=8 chars
+const char* UndervoltageString = "PRENIZAK NAPON";      // <=16 chars
+const char* InputVoltageString = "Napajanje: ";         // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Temp vrha: ";       // <=12 chars, preferably end with a space
+const char* BadTipString = "NEISPRAVAN VRH";            // <=8 chars
+const char* SleepingSimpleString = "Zzz ";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "SPAVANJE...";     // <=16 chars
+const char* WarningSimpleString = "VRUĆ";               // Must be <= 4 chars
+const char* WarningAdvancedString = "OPREZ, VRUĆE!";    // <=16 chars
+const char* SleepingTipAdvancedString = "Vrh: ";        // <=6 chars
+const char* IdleTipString = "Vrh: ";                    // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " / ";                      // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "VRH NIJE SPOJEN!"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Snaga: ";
+const char* SolderingAdvancedPowerPrompt = "Snaga: ";   // <=12 chars
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
@@ -971,19 +972,19 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Ujistěte se, že hrot má pokojovou teplotu!";
 const char* SettingsResetWarning = "Opravdu chcete resetovat zařízení do továrního nastavení?";
-const char* UVLOWarningString = "DC LOW";                // <=8 chars
-const char* UndervoltageString = "! Nízké napětí !";     // <=16 chars
+const char* UVLOWarningString = "DC LOW";               // <=8 chars
+const char* UndervoltageString = "! Nízké napětí !";    // <=16 chars
 const char* InputVoltageString = "Napětí: ";            // <=11 chars, preferably end with a space
 const char* WarningTipTempString = "Teplota: ";         // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                    // <=8 chars
-const char* SleepingSimpleString = "Zzz ";               // Must be <= 4 chars
-const char* SleepingAdvancedString = "Režim spánku...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";                // Must be <= 4 chars
-const char* WarningAdvancedString = "!! HORKÝ HROT !!";  // <= 16 chars
-const char* SleepingTipAdvancedString = "Hrot:";          // <=6 chars
-const char* IdleTipString = "Hrot:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Cíl:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "HROT NEPŘIPOJEN"; // <=16 chars
+const char* BadTipString = "BAD TIP";                   // <=8 chars
+const char* SleepingSimpleString = "Zzz ";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Režim spánku..."; // <=16 chars
+const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
+const char* WarningAdvancedString = "!! HORKÝ HROT !!"; // <= 16 chars
+const char* SleepingTipAdvancedString = "Hrot:";        // <=6 chars
+const char* IdleTipString = "Hrot:";                    // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Cíl:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "HROT NEPŘIPOJEN";  // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Ohřev: ";   // <=12 chars
 
 const char SettingRightChar = 'P';
@@ -1055,20 +1056,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "Alvás...";     // <=16 chars
-const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
+const char* UVLOWarningString = "DC LOW";               // <=8 chars
+const char* UndervoltageString = "Undervoltage";        // <=16 chars
+const char* InputVoltageString = "Input V: ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";        // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                   // <=8 chars
+const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Alvás...";        // <=16 chars
+const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
 const char* WarningAdvancedString = "FIGYELEM! FORRÓ HEGY!";  // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
+const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -1135,20 +1136,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "Lav Volt";          // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Zzzz";        // Must be <= 4 chars
-const char* SleepingAdvancedString = "Dvale...";  // <=16 chars
-const char* WarningSimpleString = "Varm";         // Must be <= 4 chars
+const char* UVLOWarningString = "Lav Volt";             // <=8 chars
+const char* UndervoltageString = "Undervoltage";        // <=16 chars
+const char* InputVoltageString = "Input V: ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";        // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                   // <=8 chars
+const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Dvale...";        // <=16 chars
+const char* WarningSimpleString = "Varm";               // Must be <= 4 chars
 const char* WarningAdvancedString = "ADVARSEL! VARM LODDESPIDS!"; // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
+const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
 
 const char SettingRightChar = 'H';
 const char SettingLeftChar = 'V';
@@ -1210,25 +1211,25 @@ const char* SettingsDescriptions[17] = {
     /* Settings reset command             */ "Zresetuj wszystkie ustawienia",
     /* Calibrate input voltage            */ "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść.",
     /* Advanced soldering screen enabled  */ "Wyświetl szczegółowe informacje podczas lutowania <T = wł., N = wył.>",
-	  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+    /* Description Scroll Speed           */ "Speed this text scrolls past at",
 };
 
 const char* SettingsCalibrationWarning = "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";            // <=8 chars
-const char* UndervoltageString = "Undervoltage";     // <=16 chars
-const char* InputVoltageString = "Input V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                // <=8 chars
-const char* SleepingSimpleString = "Zzz!";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "Uspienie...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
+const char* UVLOWarningString = "DC LOW";               // <=8 chars
+const char* UndervoltageString = "Undervoltage";        // <=16 chars
+const char* InputVoltageString = "Input V: ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";        // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                   // <=8 chars
+const char* SleepingSimpleString = "Zzz!";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Uspienie...";     // <=16 chars
+const char* WarningSimpleString = "HOT!";               // Must be <= 4 chars
 const char* WarningAdvancedString = "UWAGA! GORĄCA KOŃCÓWKA!"; // <=16 chars
-const char* SleepingTipAdvancedString = "Tip:";      // <=6 chars
-const char* IdleTipString = "Tip:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
+const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
 
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
@@ -1294,22 +1295,21 @@ const char* SettingsDescriptions[17] = {
 };
 
 const char* SettingsCalibrationWarning = "A ponta deve estar em temperatura ambiente antes de continuar!";
-const char* SettingsResetWarning       = "Reverter para os ajustes de fábrica?";
-//                                        12345678901234567890
-const char* UVLOWarningString          = "DC BAIXO";          // <=8 chars
-const char* UndervoltageString         = "Subtensão";         // <=16 chars
-const char* InputVoltageString         = "Tensão ";           // <=11 chars, preferably end with a space
-const char* WarningTipTempString       = "Temperatura ";      // <=12 chars, preferably end with a space
-const char* BadTipString               = "ER PONTA";          // <=8 chars
-const char* SleepingSimpleString       = "Zzzz";              // Must be <= 4 chars
-const char* SleepingAdvancedString     = "Repouso...";        // <=16 chars
-const char* WarningSimpleString        = "TEMP";              // Must be <= 4 chars
-const char* WarningAdvancedString      = "TEMP ELEVADA!";     // <=16 chars
-const char* SleepingTipAdvancedString  = "Ponta:";            // <=6 chars
-const char* IdleTipString              = "Ponta:";            // IdleTipString+IdleSetString <= 10
-const char* IdleSetString              = " Aj:";             // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString      = "SEM PONTA";         // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* SettingsResetWarning = "Reverter para os ajustes de fábrica?";
+const char* UVLOWarningString = "DC BAIXO";           // <=8 chars
+const char* UndervoltageString = "Subtensão";         // <=16 chars
+const char* InputVoltageString = "Tensão ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Temperatura ";    // <=12 chars, preferably end with a space
+const char* BadTipString = "ER PONTA";                // <=8 chars
+const char* SleepingSimpleString = "Zzzz";            // Must be <= 4 chars
+const char* SleepingAdvancedString = "Repouso...";    // <=16 chars
+const char* WarningSimpleString = "TEMP";             // Must be <= 4 chars
+const char* WarningAdvancedString = "TEMP ELEVADA!";  // <=16 chars
+const char* SleepingTipAdvancedString = "Ponta:";     // <=6 chars
+const char* IdleTipString = "Ponta:";                 // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Aj:";                   // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "SEM PONTA";      // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Power: "; // <=12 chars
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar  = 'C';
@@ -1320,7 +1320,6 @@ const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
 const char* SettingsShortNames[17][2] = {
-  //                                                1234567890
   /* (<= 5) Power source (DC or batt)          */ {"FONTE"},
   /* (<= 4) Sleep temperature                  */ {"TMPE"},
   /* (<= 4) Sleep timeout                      */ {"TMPO"},
@@ -1377,20 +1376,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!";
 const char* SettingsResetWarning = "Ar norite atstatyti nustatymus į numatytas reikšmes?";
-const char* UVLOWarningString = "MAŽ VOLT";            // <=8 chars
-const char* UndervoltageString = "Žema įtampa";     // <=16 chars
-const char* InputVoltageString = "Įvestis V: ";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Antgl Temp: ";     // <=12 chars, preferably end with a space
-const char* BadTipString = "BLOG ANT";                // <=8 chars
-const char* SleepingSimpleString = "Zzzz";           // Must be <= 4 chars
-const char* SleepingAdvancedString = "Miegu...";  // <=16 chars
-const char* WarningSimpleString = "HOT!";            // Must be <= 4 chars
-const char* WarningAdvancedString = "ANTGALIS KARŠTAS"; // <=16 chars
-const char* SleepingTipAdvancedString = "Antgl:";      // <=6 chars
-const char* IdleTipString = "Ant:";     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Nust:";    // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "ANTGAL ATJUNGTAS"; // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Maitinimas: ";
+const char* UVLOWarningString = "MAŽ VOLT";                // <=8 chars
+const char* UndervoltageString = "Žema įtampa";            // <=16 chars
+const char* InputVoltageString = "Įvestis V: ";            // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Antgl Temp: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "BLOG ANT";                     // <=8 chars
+const char* SleepingSimpleString = "Zzzz";                 // Must be <= 4 chars
+const char* SleepingAdvancedString = "Miegu...";           // <=16 chars
+const char* WarningSimpleString = "HOT!";                  // Must be <= 4 chars
+const char* WarningAdvancedString = "ANTGALIS KARŠTAS";    // <=16 chars
+const char* SleepingTipAdvancedString = "Antgl:";          // <=6 chars
+const char* IdleTipString = "Ant:";                        // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Nust:";                      // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "ANTGAL ATJUNGTAS";    // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Maitinimas: "; // <=12 chars
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'K';

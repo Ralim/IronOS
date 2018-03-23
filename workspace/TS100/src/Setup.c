@@ -10,7 +10,6 @@ DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
 
-
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -59,27 +58,29 @@ void SystemClock_Config(void) {
 
 	/**Initializes the CPU, AHB and APB busses clocks
 	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSI;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI
+			| RCC_OSCILLATORTYPE_LSI;
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
 	RCC_OscInitStruct.HSICalibrationValue = 16;
 	RCC_OscInitStruct.LSIState = RCC_LSI_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
-	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
+	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;    //64MHz
 	HAL_RCC_OscConfig(&RCC_OscInitStruct);
 
 	/**Initializes the CPU, AHB and APB busses clocks
 	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV16;
-	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV16; //TIM 2,3,4,5,6,7,12,13,14
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1; //64 mhz to soem peripherals and adc
 
 	HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
 
 	PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-	PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
+	PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6; //6 or 8 are the only non overclocked options
 	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit);
 
 	/**Configure the Systick interrupt time
@@ -99,7 +100,6 @@ static void MX_ADC1_Init(void) {
 
 	ADC_ChannelConfTypeDef sConfig;
 	ADC_InjectionConfTypeDef sConfigInjected;
-
 	/**Common config
 	 */
 	hadc1.Instance = ADC1;
@@ -126,10 +126,15 @@ static void MX_ADC1_Init(void) {
 
 	/**Configure Injected Channel
 	 */
+	//F in = 10.66 MHz
+	/*
+	 * Injected time is 1 delay clock + (12 adc cycles*4)+4*sampletime =~217 clocks = 0.2ms
+	 *
+	 * */
 	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
 	sConfigInjected.InjectedRank = 1;
 	sConfigInjected.InjectedNbrOfConversion = 4;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_13CYCLES_5;
 	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
 	sConfigInjected.AutoInjectedConv = DISABLE;
 	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
@@ -141,14 +146,14 @@ static void MX_ADC1_Init(void) {
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	sConfigInjected.InjectedRank = 4;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-
+	//SET_BIT(hadc1.Instance->CR1, ( ADC_CR1_JEOCIE ));//Enable end of injected conv irq
 }
 
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {
 
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.ClockSpeed = 300000;//200Khz
+	hi2c1.Init.ClockSpeed = 300000;    //200Khz
 	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -178,10 +183,10 @@ static void MX_TIM3_Init(void) {
 	TIM_OC_InitTypeDef sConfigOC;
 
 	htim3.Instance = TIM3;
-	htim3.Init.Prescaler = 1;
+	htim3.Init.Prescaler = 2;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period = 100;
-	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //2mhz
+	htim3.Init.Period = 100;    //10 Khz PWM freq
+	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //4mhz before div
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	HAL_TIM_Base_Init(&htim3);
 
@@ -229,10 +234,10 @@ static void MX_TIM2_Init(void) {
 
 	//Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC in the PWM off time.
 	htim2.Instance = TIM2;
-	htim2.Init.Prescaler = 1500;
+	htim2.Init.Prescaler = 2000; // pwm out is 10k, we want to run our PWM at around 100hz
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim2.Init.Period = 120;
-	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //2mhz
+	htim2.Init.Period = 122;
+	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //4mhz before divide
 	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	HAL_TIM_Base_Init(&htim2);
 
@@ -247,7 +252,12 @@ static void MX_TIM2_Init(void) {
 	HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 110;
+	sConfigOC.Pulse = 117;
+	/*
+	 * It takes 4 milliseconds for output to be stable after PWM turns off.
+	 * Assume ADC samples in 0.5ms
+	 * We need to set this to 100% + 4.5ms
+	 * */
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
 	HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
@@ -318,13 +328,15 @@ static void MX_GPIO_Init(void) {
 
 	/*Configure GPIO pins : PA0 PA1 PA2 PA3
 	 PA4 PA5 PA10 PA15 */
-	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_10
-			| GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_15;
+	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3
+			| GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12
+			| GPIO_PIN_15;
 	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	//Set PA 11 and PA 12 to GND to stop usb detection
-	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12;
+	//Set PA 11 and PA 12 to GND to stop usb detection, 14 re-rused for debug
+	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
@@ -349,7 +361,7 @@ static void MX_GPIO_Init(void) {
 	/*Configure GPIO pins : INT_Orientation_Pin INT_Movement_Pin */
 	GPIO_InitStruct.Pin = INT_Orientation_Pin | INT_Movement_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;    //Technically the IMU is P-P but safer to pullup (very tiny current cost)
+	GPIO_InitStruct.Pull = GPIO_PULLUP; //Technically the IMU is P-P but safer to pullup (very tiny current cost)
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/*Configure peripheral I/O remapping */

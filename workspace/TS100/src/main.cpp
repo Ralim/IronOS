@@ -52,10 +52,13 @@ int main(void) {
 		PCBVersion = 1;
 		accel.initalize(); // this sets up the I2C registers and loads up the default
 						   // settings
-	} else {
+	} else if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT,
+			buffer, 1, 1000) == HAL_OK) {
 		PCBVersion = 2;
 		//Setup the ST Accelerometer
 		accel2.initalize();						   //startup the accelerometer
+	} else {
+		PCBVersion = 3;
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
@@ -706,7 +709,7 @@ void startGUITask(void const *argument) {
 		if (buttons != BUTTON_NONE && buttonLockout)
 			buttons = BUTTON_NONE;
 		else
-			buttonLockout=false;
+			buttonLockout = false;
 		switch (buttons) {
 		case BUTTON_NONE:
 			// Do nothing
@@ -754,16 +757,18 @@ void startGUITask(void const *argument) {
 		}
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
-		if (tipTemp < 50)
+		if (tipTemp < 50) {
 			if (systemSettings.sensitivity) {
 				if ((xTaskGetTickCount() - lastMovementTime) > 6000
 						&& (xTaskGetTickCount() - lastButtonTime) > 6000)
 					lcd.displayOnOff(false);  // turn lcd off when no movement
-				else if (xTaskGetTickCount() - lastMovementTime < 100
-						|| xTaskGetTickCount() - lastButtonTime < 100) /*Use short time for test, and prevent lots of I2C
-						 writes for no need*/
-					lcd.displayOnOff(true);  // turn lcd back on
-			}
+				else
+					lcd.displayOnOff(true);  // turn lcd on
+			} else
+				lcd.displayOnOff(true);  // turn lcd on
+		} else
+			lcd.displayOnOff(true);  // turn lcd on
+
 		if (tipTemp > 600)
 			tipTemp = 0;
 		if (tipTemp > 50) {
@@ -835,16 +840,14 @@ void startPIDTask(void const *argument) {
 	 */
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
-	int32_t kp, ki, kd, kb;
-	int32_t backoffOverflow = 0;
-	kp = 20;
-	ki = 50;
-	kd = 40;
-	kb = 0;
+	int32_t kp, ki, kd;
+	kp = 30;
+	ki = 60;
+	kd = 20;
 	// REMEBER ^^^^ These constants are backwards
 	// They act as dividers, so to 'increase' a P term, you make the number
 	// smaller.
-	const int32_t itermMax = 40;
+	const int32_t itermMax = 60;
 	for (;;) {
 		uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 		if (currentlyActiveTemperatureTarget) {
@@ -869,34 +872,27 @@ void startPIDTask(void const *argument) {
 				output += integralCount;
 			if (kd)
 				output -= (dInput / kd);
-			if (kb)
-				output -= backoffOverflow / kb;
 
 			if (output > 100) {
-				backoffOverflow = output;
 				output = 100;  // saturate
 			} else if (output < 0) {
-				backoffOverflow = output;
 				output = 0;
-			} else
-				backoffOverflow = 0;
-			if (currentlyActiveTemperatureTarget < rawTemp) {
-				output = 0;
-				integralCount = 0;
-				backoffOverflow = 0;
-				derivativeLastValue = 0;
 			}
+
+			/*if (currentlyActiveTemperatureTarget < rawTemp) {
+			 output = 0;
+			 }*/
 			setTipPWM(output);
+			derivativeLastValue = rawTemp;  // store for next loop
+
 		} else {
 			setTipPWM(0); // disable the output driver if the output is set to be off
-						  // elsewhere
 			integralCount = 0;
-			backoffOverflow = 0;
 			derivativeLastValue = 0;
 		}
-		derivativeLastValue = rawTemp;  // store for next loop
+
 		HAL_IWDG_Refresh(&hiwdg);
-		osDelay(100);  // 10 Hz temp loop
+		osDelay(10);  // 100 Hz temp loop
 	}
 }
 #define MOVFilter 8
@@ -918,12 +914,16 @@ void startMOVTask(void const *argument) {
 	uint32_t max = 0;
 #endif
 
+	if (PCBVersion == 3) {
+		for (;;)
+			osDelay(5000);
+	}
 	for (;;) {
 		int32_t threshold = 1200 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
 		if (PCBVersion == 2)
 			accel2.getAxisReadings(&tx, &ty, &tz);
-		else
+		else if (PCBVersion == 1)
 			accel.getAxisReadings(&tx, &ty, &tz);
 
 		datax[currentPointer] = (int32_t) tx;
@@ -990,6 +990,10 @@ void startRotationTask(void const *argument) {
 	 * This task is used to manage rotation of the LCD screen & button re-mapping
 	 *
 	 */
+	if (PCBVersion == 3) {
+		for (;;)
+			osDelay(5000);
+	}
 	switch (systemSettings.OrientationMode) {
 	case 0:
 		lcd.setRotation(false);
@@ -1008,10 +1012,10 @@ void startRotationTask(void const *argument) {
 	for (;;) {
 
 		// a rotation event has occurred
-		uint8_t rotation;
+		uint8_t rotation = 0;
 		if (PCBVersion == 2) {
 			rotation = accel2.getOrientation();
-		} else {
+		} else if (PCBVersion == 1) {
 			rotation = accel.getOrientation();
 		}
 		if (systemSettings.OrientationMode == 2) {
