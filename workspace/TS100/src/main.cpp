@@ -57,10 +57,8 @@ int main(void) {
 		PCBVersion = 2;
 		//Setup the ST Accelerometer
 		accel2.initalize();						   //startup the accelerometer
-	}
-	{
+	} else {
 		PCBVersion = 3;
-
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
@@ -843,9 +841,9 @@ void startPIDTask(void const *argument) {
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 	int32_t kp, ki, kd;
-	kp = 80;
-	ki = 120;
-	kd = 60;
+	kp = 30;
+	ki = 60;
+	kd = 20;
 	// REMEBER ^^^^ These constants are backwards
 	// They act as dividers, so to 'increase' a P term, you make the number
 	// smaller.

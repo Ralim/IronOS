@@ -236,7 +236,7 @@ static void MX_TIM2_Init(void) {
 	htim2.Instance = TIM2;
 	htim2.Init.Prescaler = 2000; // pwm out is 10k, we want to run our PWM at around 100hz
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim2.Init.Period = 120;
+	htim2.Init.Period = 122;
 	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;    //4mhz before divide
 	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	HAL_TIM_Base_Init(&htim2);
