@@ -41,6 +41,11 @@ function isDefinedNN(obj) {
 	return isDefined(obj) && obj != null;
 }
 
+function padLeft(str, chr, maxLen) {
+	str = str.toString();
+	return str.length < maxLen ? padLeft(chr + str, chr, maxLen) : str;
+}
+
 // sourceArray contains a list of objects that have a property "id". This methods makes a map using the "id" as a key, and the owning object as a value.
 function copyArrayToMap(sourceArray, map) {
 	if (!isDefined(map)) {
