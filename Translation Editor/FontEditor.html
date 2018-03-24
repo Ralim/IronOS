@@ -3,7 +3,7 @@
 <head>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="translations_commons.js"></script>
-
+	<title>TS100 Font Editor</title>
 	<style>
 		.matrix {
 			display: inline-block;
@@ -31,7 +31,7 @@
 		.header {
 		}
 		
-		.data input {
+		.data input, .data textarea {
 			margin-top: 1em;
 			width: 100%;
 		}
@@ -174,7 +174,7 @@
 					cols: 12,
 					rows: 16
 				},
-				ttype: "Big",
+				type: "big",
 				encodedData: ""
 			},
 			methods : {
@@ -183,8 +183,22 @@
 				},
 				
 				VchangeSize : function() {
-					app.matrix.cols = app.ttype == "Big" ? 12 : 6;
-					app.matrix.rows = app.ttype == "Big" ? 16 : 8;
+					if (app.type == "big") {
+						app.matrix.cols = 12;
+						app.matrix.rows = 16;
+					} else if (app.type == "small") {
+						app.matrix.cols = 6;
+						app.matrix.rows = 8;
+					} else if (app.type == "icon") {
+						app.matrix.cols = 16;
+						app.matrix.rows = 16;
+					} else if (app.type == "screen") {
+						app.matrix.cols = 84;
+						app.matrix.rows = 16;
+					} else if (app.type == "fullscreen") {
+						app.matrix.cols = 96;
+						app.matrix.rows = 16;
+					}
 					stringFromMatrix();
 				}
 				
@@ -201,9 +215,12 @@
 <body>
 	<div id="app">
 		<div class="header">
-			<select v-model="ttype" v-on:change="VchangeSize()">
-				<option value="Small">Small Font (6x8)</option>
-				<option value="Big">Big Font (12x16)</option>
+			<select v-model="type" v-on:change="VchangeSize()">
+				<option value="small">Small Font (6x8)</option>
+				<option value="big">Big Font (12x16)</option>
+				<option value="icon">Icon (16x16)</option>
+				<option value="screen">Screen (84x16)</option>
+				<option value="fullscreen">Full Screen (96x16)</option>
 			</select>
 		</div>
 		<div id="matrix" class="matrix" onmousedown="mousedown(this)" onmouseup="mouseup(this)" ondragstart="return false">
@@ -215,7 +232,7 @@
 			<input type="button" value="Clear" onclick="clearMatrix();stringFromMatrix()">
 		</div>
 		<div class="data">
-			<input type="text" v-model="encodedData" style="width:100%" v-on:change="VtoMatrix(encodedData)">
+			<textarea v-model="encodedData" style="width:100%" v-on:change="VtoMatrix(encodedData)" rows=5>
 		</div>
 	</div>
 		
