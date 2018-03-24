@@ -192,6 +192,9 @@
 					} else if (app.type == "icon") {
 						app.matrix.cols = 16;
 						app.matrix.rows = 16;
+					} else if (app.type == "icon24") {
+						app.matrix.cols = 24;
+						app.matrix.rows = 16;
 					} else if (app.type == "screen") {
 						app.matrix.cols = 84;
 						app.matrix.rows = 16;
@@ -219,6 +222,7 @@
 				<option value="small">Small Font (6x8)</option>
 				<option value="big">Big Font (12x16)</option>
 				<option value="icon">Icon (16x16)</option>
+				<option value="icon24">Icon (24x16)</option>
 				<option value="screen">Screen (84x16)</option>
 				<option value="fullscreen">Full Screen (96x16)</option>
 			</select>
