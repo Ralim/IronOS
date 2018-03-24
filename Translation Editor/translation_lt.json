@@ -1,6 +1,6 @@
 {
 	"languageCode": "LT",
-	"languageLocalName": "Lietuvių"
+	"languageLocalName": "Lietuvių",
 	"messages": {
 		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
 		"SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
@@ -194,5 +194,5 @@
 			],
 			"desc": "Greitis, kuriuo šis tekstas slenka"
 		}
-	},
+	}
 }
