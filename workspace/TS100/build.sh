@@ -23,3 +23,13 @@ make -j16 lang=SE
 rm -rf Objects/src
 make -j16 lang=TR
 rm -rf Objects/src
+make -j16 lang=BG
+rm -rf Objects/src
+make -j16 lang=SK
+rm -rf Objects/src
+make -j16 lang=HUN
+rm -rf Objects/src
+make -j16 lang=BR
+rm -rf Objects/src
+make -j16 lang=LT
+rm -rf Objects/src
