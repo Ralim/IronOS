@@ -235,7 +235,7 @@ const char* SettingsDescriptions[17] = {
 	/* Boost temperature                  */ "Температура в Турбо-режиме",
 	/* Automatic start mode               */ "Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим ожидания,F=Выкл.",
 	/* Cooldown blink                     */ "Показывать температуру на экране охлаждения, пока жало остается горячим, при этом экран моргает",
-	/* Temperature calibration enter menu */ "Калибровка термодатчика.",
+	/* Temperature calibration enter menu */ "Калибровка температурного датчика.",
 	/* Settings reset command             */ "Сброс всех настроек к исходным значения.",
 	/* Calibrate input voltage            */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
 	/* Advanced soldering screen enabled  */ "Показывать детальную информацию при пайке.",
@@ -278,7 +278,7 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 4) Sleep temperature                  */ {"Температура","ухода в сон"},
   /* (<= 4) Sleep timeout                      */ {"Время ухода","в сон"},
   /* (<= 5) Shutdown timeout                   */ {"Время до","отключения"},
-  /* (<= 6) Motion sensitivity level           */ {"Чуствит. сен-","сора движения"},
+  /* (<= 6) Motion sensitivity level           */ {"Чувствительность","сенсора движения"},
   /* (<= 6) Temperature in F and C             */ {"Формат темпе-","ратуры (C°/F°)"},
   /* (<= 6) Advanced idle display mode enabled */ {"Подробный","режим ожидания"},
   /* (<= 6) Display rotation mode              */ {"Автоповорот","экрана"},
@@ -299,7 +299,7 @@ const char* SettingsMenuEntries[4] = {
 /* UI Menu*/"Интерфейс",
 /* Advanced Menu*/"Другие", };
 const char* SettingsMenuEntriesDescriptions[4] ={
-"Настройки для режима пайки. Действуют при включеном жале.",
+"Настройки для режима пайки. Действуют при включенном жале.",
 "Настройки при бездействии. Полезно что бы не обжечься и не случайно не сжечь жилище:)",
 "Пользовательский интерфейс.",
 "Расширенные настройки. Дополнительные удобства."
