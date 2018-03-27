@@ -224,40 +224,40 @@ const char* SettingsDescriptions[17] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
-	/* Sleep temperature                  */ "Температура режима ожидания <С>",
+	/* Sleep temperature                  */ "Температура режима ожидания <C°/F°>",
 	/* Sleep timeout                      */ "Время до перехода в режим ожидания <Минуты>",
 	/* Shutdown timeout                   */ "Время до отключения <Минуты>",
 	/* Motion sensitivity level           */ "Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>",
-	/* Temperature in F and C             */ "В чем измерять температуру",
+	/* Temperature in F and C             */ "В чем измерять температуру < C - Цельсий, F - Фаренгейт >",
 	/* Advanced idle display mode enabled */ "Показывать детальную информацию маленьким шрифтом на домашнем экране",
-	/* Display rotation mode              */ "Ориентация дисплея <A. Автоматический, Л. Левая рука, П. Правая рука>",
+	/* Display rotation mode              */ "Ориентация дисплея <A. Автоповорот, L Левша, R Правша>",
 	/* Boost enabled                      */ "Турбо-режим при удержании кнопки А при пайке ",
-	/* Boost temperature                  */ "Температура в турбо-режиме",
+	/* Boost temperature                  */ "Температура в Турбо-режиме",
 	/* Automatic start mode               */ "Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим ожидания,F=Выкл.",
-	/* Cooldown blink                     */ "Показывать температуру на экране охлаждения, пока жало остается горячим.",
+	/* Cooldown blink                     */ "Показывать температуру на экране охлаждения, пока жало остается горячим, при этом экран моргает",
 	/* Temperature calibration enter menu */ "Калибровка термодатчика.",
-	/* Settings reset command             */ "Сброс всех настроек.",
+	/* Settings reset command             */ "Сброс всех настроек к исходным значения.",
 	/* Calibrate input voltage            */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
 	/* Advanced soldering screen enabled  */ "Показывать детальную информацию при пайке.",
-	/* Description Scroll Speed           */ "Speed this text scrolls past at",
+	/* Description Scroll Speed           */ "Скорость прокрутки текста",
 };
 
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "БАТ РАЗР";              // <=8 chars
-const char* UndervoltageString = "Undervoltage";         // <=16 chars
-const char* InputVoltageString = "Input V: ";            // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Tip Temp: ";         // <=12 chars, preferably end with a space
-const char* BadTipString = "BAD TIP";                    // <=8 chars
-const char* SleepingSimpleString = "Хррр";               // Must be <= 4 chars
+const char* SettingsResetWarning = "Вы действительно хотите сбросить настройки до значений по умолчанию?";
+const char* UVLOWarningString = "АККУМ--";              // <=8 chars
+const char* UndervoltageString = "Под питанием";         // <=16 chars
+const char* InputVoltageString = "Питание(B):";            // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Жало t°: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "Жало--";                    // <=8 chars
+const char* SleepingSimpleString = "Сон";               // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ожидание...";      // <=16 chars
 const char* WarningSimpleString = " АЙ!";                // Must be <= 4 chars
-const char* WarningAdvancedString = "ОСТОРОЖНО! ГОРЯЧО"; // <=16 chars
-cconst char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
-const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
+const char* WarningAdvancedString = "ОСТОРОЖНО!ГОРЯЧО!"; // <=16 chars
+const char* SleepingTipAdvancedString = "Жало:";         // <=6 chars
+const char* IdleTipString = "Жало:";                      // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " задать:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "Жало отключено!";  // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Питание: ";    // <=12 chars
 
 /*
  * #TODO change support for multibyte constants here
@@ -269,40 +269,40 @@ const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = '+';
+const char SettingSlowChar = '-';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
 const char* SettingsShortNames[17][2] = {
-  /* (<= 5) Power source (DC or batt)          */ {"ИстП  "},
-  /* (<= 4) Sleep temperature                  */ {"Тожд"},
-  /* (<= 4) Sleep timeout                      */ {"Вожд "},
-  /* (<= 5) Shutdown timeout                   */ {"Тоткл "},
-  /* (<= 6) Motion sensitivity level           */ {"ЧувсДв "},
-  /* (<= 6) Temperature in F and C             */ {"ЕдТемп "},
-  /* (<= 6) Advanced idle display mode enabled */ {"ИнфОжд "},
-  /* (<= 6) Display rotation mode              */ {"ПовЭкр "},
-  /* (<= 6) Boost enabled                      */ {"Турбо  "},
-  /* (<= 4) Boost temperature                  */ {"Ттур "},
-  /* (<= 6) Automatic start mode               */ {"Астарт"},
-  /* (<= 6) Cooldown blink                     */ {"Охлажд "},
-  /* (<= 8) Temperature calibration enter menu */ {"КалибрТ"},
-  /* (<= 8) Settings reset command             */ {"СБРОС?"},
-  /* (<= 8) Calibrate input voltage            */ {"КалибрU?"},
-  /* (<= 6) Advanced soldering screen enabled  */ {"ИнфПай "},
-  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
+  /* (<= 5) Power source (DC or batt)          */ {"Настройки","питания"},
+  /* (<= 4) Sleep temperature                  */ {"Температура","ухода в сон"},
+  /* (<= 4) Sleep timeout                      */ {"Время ухода","в сон"},
+  /* (<= 5) Shutdown timeout                   */ {"Время до","отключения"},
+  /* (<= 6) Motion sensitivity level           */ {"Чуствит. сен-","сора движения"},
+  /* (<= 6) Temperature in F and C             */ {"Формат темпе-","ратуры (C°/F°)"},
+  /* (<= 6) Advanced idle display mode enabled */ {"Подробный","режим ожидания"},
+  /* (<= 6) Display rotation mode              */ {"Автоповорот","экрана"},
+  /* (<= 6) Boost enabled                      */ {"Режим-Турбо",""},
+  /* (<= 4) Boost temperature                  */ {"Температура","Режима-Турбо"},
+  /* (<= 6) Automatic start mode               */ {"Режим при","включении"},
+  /* (<= 6) Cooldown blink                     */ {"Показ t° при","остывании"},
+  /* (<= 8) Temperature calibration enter menu */ {"Калибровка","температуры"},
+  /* (<= 8) Settings reset command             */ {"Сбросить все","настройки?"},
+  /* (<= 8) Calibrate input voltage            */ {"Калибровка","напряжения"},
+  /* (<= 6) Advanced soldering screen enabled  */ {"Подробный","режим пайки"},
+  /* (<= 6) Message Scroll Speed               */ {"Скорость про-","крутки текста"},
 };
 
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering\nSettings",
-/* Power Saving Menu*/"Sleep\nModes",
-/* UI Menu*/"User\nInterface",
-/* Advanced Menu*/"Advanced\nOptions", };
+/*Soldering Menu*/"Пайка",
+/* Power Saving Menu*/"Сон",
+/* UI Menu*/"Интерфейс",
+/* Advanced Menu*/"Другие", };
 const char* SettingsMenuEntriesDescriptions[4] ={
-"Soldering settings",
-"Power Saving Settings",
-"User Interface settings",
-"Advanced options"
+"Настройки для режима пайки. Действуют при включеном жале.",
+"Настройки при бездействии. Полезно что бы не обжечься и не случайно не сжечь жилище:)",
+"Пользовательский интерфейс.",
+"Расширенные настройки. Дополнительные удобства."
 };
 #endif
 
