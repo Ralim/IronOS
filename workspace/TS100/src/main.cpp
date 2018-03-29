@@ -760,14 +760,14 @@ void startGUITask(void const *argument) {
 		if (tipTemp < 50) {
 			if (systemSettings.sensitivity) {
 				if ((xTaskGetTickCount() - lastMovementTime) > 6000
-						&& (xTaskGetTickCount() - lastButtonTime) > 6000)
+						&& (xTaskGetTickCount() - lastButtonTime) > 6000) {
 					lcd.displayOnOff(false);  // turn lcd off when no movement
-				else
+				} else
 					lcd.displayOnOff(true);  // turn lcd on
 			} else
-				lcd.displayOnOff(true);  // turn lcd on
+				lcd.displayOnOff(true);  // turn lcd on - disabled motion sleep
 		} else
-			lcd.displayOnOff(true);  // turn lcd on
+			lcd.displayOnOff(true);  // turn lcd on when temp > 50C
 
 		if (tipTemp > 600)
 			tipTemp = 0;
@@ -841,9 +841,9 @@ void startPIDTask(void const *argument) {
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 	int32_t kp, ki, kd;
-	kp = 30;
+	kp = 40;
 	ki = 60;
-	kd = 20;
+	kd = 30;
 	// REMEBER ^^^^ These constants are backwards
 	// They act as dividers, so to 'increase' a P term, you make the number
 	// smaller.
@@ -879,9 +879,9 @@ void startPIDTask(void const *argument) {
 				output = 0;
 			}
 
-			/*if (currentlyActiveTemperatureTarget < rawTemp) {
-			 output = 0;
-			 }*/
+			if (currentlyActiveTemperatureTarget < rawTemp) {
+				output = 0;
+			}
 			setTipPWM(output);
 			derivativeLastValue = rawTemp;  // store for next loop
 

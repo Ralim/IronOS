@@ -170,7 +170,7 @@ static void MX_IWDG_Init(void) {
 
 	hiwdg.Instance = IWDG;
 	hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
-	hiwdg.Init.Reload = 50;
+	hiwdg.Init.Reload = 100;
 	HAL_IWDG_Init(&hiwdg);
 
 }

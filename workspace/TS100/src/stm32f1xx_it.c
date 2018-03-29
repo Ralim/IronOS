@@ -12,35 +12,27 @@ extern TIM_HandleTypeDef htim1; //used for the systick
 /******************************************************************************/
 
 void NMI_Handler(void) {
-
+	NVIC_SystemReset();
 }
 
 //We have the assembly for a breakpoint trigger here to halt the system when a debugger is connected
 // Hardfault handler, often a screwup in the code
 void HardFault_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 // Memory management unit had an error
 void MemManage_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 // Prefetcher or busfault occured
 void BusFault_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 void UsageFault_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 void DebugMon_Handler(void) {
