@@ -316,21 +316,21 @@ const char* SettingsDescriptions[17] = {
   /* Shutdown timeout                   */ "Tiempo hasta apagado. <Minutos>",
   /* Motion sensitivity level           */ "Sensibilidad del movimiento. <0=Apagado 1=El menos sensible 9=El más sensible>",
   /* Temperature in F and C             */ "Unidad de temperatura.",
-  /* Advanced idle display mode enabled */ "Display detailed information in a smaller font on the idle screen.",
+  /* Advanced idle display mode enabled */ "Mostrar información detallada con fuente de menor tamaño en la pantalla de reposo.",
   /* Display rotation mode              */ "Orientación de la pantalla <A=Automático I=Mano izquierda D=Mano derecha>",
   /* Boost enabled                      */ "Activar el botón \"Boost\" en modo soldadura.",
   /* Boost temperature                  */ "Temperatura en modo \"Boost\". <C>",
   /* Automatic start mode               */ "Iniciar modo soldadura en el encendido. <V=Sí S=Modo reposo F=No>",
   /* Cooldown blink                     */ "Parpadea la temperatura en el enfriamiento si la punta sigue caliente.",
-  /* Temperature calibration enter menu */ "Calibrate tip offset.",
-  /* Settings reset command             */ "Reset all settings",
-  /* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
-  /* Advanced soldering screen enabled  */ "Display detailed information while soldering",
-  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+  /* Temperature calibration enter menu */ "Calibrar desviación térmica de la punta.",
+  /* Settings reset command             */ "Volver a estado de fábrica.",
+  /* Calibrate input voltage            */ "Calibración VIN (Voltaje de entrada). Ajuste con ambos botones, pulsación larga para salir.",
+  /* Advanced soldering screen enabled  */ "Mostrar información detallada mientras suelda.",
+  /* Description Scroll Speed           */ "Velocidad de desplazamiento del texto.",
 };
 
-const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsCalibrationWarning = "Por favor, ¡asegúrese que la punta esté a temperatura ambiente antes de proceder!";
+const char* SettingsResetWarning = "¿Está seguro de volver a estado de fábrica?";
 const char* UVLOWarningString = "DC LOW";                // <=8 chars
 const char* UndervoltageString = "Undervoltage";         // <=16 chars
 const char* InputVoltageString = "Input V: ";            // <=11 chars, preferably end with a space
@@ -346,12 +346,12 @@ const char* IdleSetString = " Set:";                     // preferably start wit
 const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
 
-const char SettingRightChar = 'R';
-const char SettingLeftChar = 'L';
+const char SettingRightChar = 'D'; // D is "Derecha" = Right
+const char SettingLeftChar = 'I'; // I is "Izquierda" = Left
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'R'; // R is "Rápido" = Fast
+const char SettingSlowChar = 'L'; // L is "Lento" = Slow
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
 const char* SettingsShortNames[17][2] = {
@@ -374,15 +374,15 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
 };
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Soldering\nSettings",
-/* Power Saving Menu*/"Sleep\nModes",
-/* UI Menu*/"User\nInterface",
-/* Advanced Menu*/"Advanced\nOptions", };
+/*Soldering Menu*/"Opciones de\nsoldadura",
+/* Power Saving Menu*/"Modos de\nreposo",
+/* UI Menu*/"Interfaz de\nusuario",
+/* Advanced Menu*/"Opciones\navanzadas", };
 const char* SettingsMenuEntriesDescriptions[4] ={
-"Soldering settings",
-"Power Saving Settings",
-"User Interface settings",
-"Advanced options"
+"Opciones de soldadura",
+"Opciones de ahorro energético",
+"Opciones de interfaz de usuario",
+"Opciones avanzadas"
 };
 #endif
 
