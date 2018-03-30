@@ -7,7 +7,7 @@
 
 extern OLED lcd;
 extern MMA8652FC accel;
-
+extern uint8_t PCBVersion;
 enum ButtonState {
 	BUTTON_NONE = 0, /* No buttons pressed / < filter time*/
 	BUTTON_F_SHORT = 1, /* User has pressed the front button*/

@@ -66,7 +66,7 @@ void restoreSettings() {
  */
 uint8_t lookupVoltageLevel(uint8_t level) {
 	if (level == 0)
-		return 100;    //10V since iron does not function effectively below this
+		return 90;    //9V since iron does not function effectively below this
 	else
 		return (level * 33) + (33 * 2);
 }

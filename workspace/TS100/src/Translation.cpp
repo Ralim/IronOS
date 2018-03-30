@@ -93,6 +93,7 @@ const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSet
 const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -176,6 +177,7 @@ const char* IdleTipString = "Връх:";                       // IdleTipString+
 const char* IdleSetString = " Set:";                       // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "ВРЪХ ЛОША ВРЪЗКА";    // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Захранване: "; // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -258,6 +260,7 @@ const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSe
 const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 /*
  * #TODO change support for multibyte constants here
@@ -345,6 +348,7 @@ const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSe
 const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'D'; // D is "Derecha" = Right
 const char SettingLeftChar = 'I'; // I is "Izquierda" = Left
@@ -425,6 +429,7 @@ const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSe
 const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -506,6 +511,7 @@ const char* IdleTipString = "Punta:";                  // IdleTipString+IdleSetS
 const char* IdleSetString = "/";                       // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "PUNTA ASSENTE";   // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Potenza:"; // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
@@ -587,6 +593,7 @@ const char* IdleTipString = "PANNE:";                     // IdleTipString+IdleS
 const char* IdleSetString = " Set:";                      // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "PANNE DEBRANCH";     // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Puissance: "; // <= 12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'G';
@@ -668,6 +675,7 @@ const char* IdleTipString = "Ist:";                      // IdleTipString+IdleSe
 const char* IdleSetString = " Soll:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "Spitze fehlt";      // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Leistung: "; // <= 12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -748,6 +756,7 @@ const char* IdleTipString = "Tip:";                      // IdleTipString+IdleSe
 const char* IdleSetString = " Set:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED";  // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";    // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -828,6 +837,7 @@ const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSet
 const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -908,6 +918,7 @@ const char* IdleTipString = "Vrh: ";                    // IdleTipString+IdleSet
 const char* IdleSetString = " / ";                      // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "VRH NIJE SPOJEN!"; // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Snaga: ";   // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
@@ -986,6 +997,7 @@ const char* IdleTipString = "Hrot:";                    // IdleTipString+IdleSet
 const char* IdleSetString = " Cíl:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "HROT NEPŘIPOJEN";  // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Ohřev: ";   // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
@@ -1070,6 +1082,7 @@ const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSet
 const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -1150,6 +1163,7 @@ const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSet
 const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'H';
 const char SettingLeftChar = 'V';
@@ -1230,6 +1244,7 @@ const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSet
 const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "TIP DISCONNECTED"; // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: ";   // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'P';
 const char SettingLeftChar = 'L';
@@ -1310,6 +1325,7 @@ const char* IdleTipString = "Ponta:";                 // IdleTipString+IdleSetSt
 const char* IdleSetString = " Aj:";                   // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "SEM PONTA";      // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Power: "; // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar  = 'C';
@@ -1390,6 +1406,7 @@ const char* IdleTipString = "Ant:";                        // IdleTipString+Idle
 const char* IdleSetString = " Nust:";                      // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "ANTGAL ATJUNGTAS";    // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Maitinimas: "; // <=12 chars
+const char* OffString ="Off";// 3 chars max
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'K';

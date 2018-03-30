@@ -47,6 +47,7 @@ int main(void) {
 	lcd.setFont(0);     // default to bigger font
 	//Testing for new weird board version
 	uint8_t buffer[1];
+	HAL_IWDG_Refresh(&hiwdg);
 	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
 			1000) == HAL_OK) {
 		PCBVersion = 1;
@@ -59,6 +60,8 @@ int main(void) {
 		accel2.initalize();						   //startup the accelerometer
 	} else {
 		PCBVersion = 3;
+		systemSettings.SleepTime=0;
+		systemSettings.ShutdownTime=0;//No accel -> disable sleep
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash

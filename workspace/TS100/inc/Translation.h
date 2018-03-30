@@ -39,6 +39,7 @@ extern const char* IdleTipString;
 extern const char* IdleSetString;
 extern const char* TipDisconnectedString;
 extern const char* SolderingAdvancedPowerPrompt;
+extern const char* OffString;
 
 extern const char SettingTrueChar;
 extern const char SettingFalseChar;
