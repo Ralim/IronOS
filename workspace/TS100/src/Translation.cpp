@@ -246,20 +246,20 @@ const char* SettingsDescriptions[17] = {
 
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
 const char* SettingsResetWarning = "Вы действительно хотите сбросить настройки до значений по умолчанию?";
-const char* UVLOWarningString = "АККУМ--";              // <=8 chars
+const char* UVLOWarningString = "АККУМ--";               // <=8 chars
 const char* UndervoltageString = "Под питанием";         // <=16 chars
-const char* InputVoltageString = "Питание(B):";            // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Жало t°: ";         // <=12 chars, preferably end with a space
-const char* BadTipString = "Жало--";                    // <=8 chars
-const char* SleepingSimpleString = "Сон";               // Must be <= 4 chars
+const char* InputVoltageString = "Питание(B):";          // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Жало t°: ";          // <=12 chars, preferably end with a space
+const char* BadTipString = "Жало--";                     // <=8 chars
+const char* SleepingSimpleString = "Сон";                // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ожидание...";      // <=16 chars
 const char* WarningSimpleString = " АЙ!";                // Must be <= 4 chars
 const char* WarningAdvancedString = "ОСТОРОЖНО!ГОРЯЧО!"; // <=16 chars
 const char* SleepingTipAdvancedString = "Жало:";         // <=6 chars
-const char* IdleTipString = "Жало:";                      // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " задать:";                     // preferably start with a space; IdleTipString+IdleSetString <= 10
-const char* TipDisconnectedString = "Жало отключено!";  // <=16 chars
-const char* SolderingAdvancedPowerPrompt = "Питание: ";    // <=12 chars
+const char* IdleTipString = "Жало:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " задать:";                  // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "Жало отключено!";   // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Питание: ";  // <=12 chars
 const char* OffString ="Off";// 3 chars max
 
 /*
@@ -275,18 +275,18 @@ const char SettingAutoChar = 'A';
 const char SettingFastChar = '+';
 const char SettingSlowChar = '-';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Настройки","питания"},		//9,7
-  /* (<= 9) Sleep temperature                   */ {"Темпер.","сна"},			//7,3
-  /* (<= 9) Sleep timeout                       */ {"Таймаут","сна"},			//7,3
+  /* (<=  9) Sleep temperature                  */ {"Темпер.","сна"},			//7,3
+  /* (<=  9) Sleep timeout                      */ {"Таймаут","сна"},			//7,3
   /* (<= 11) Shutdown timeout                   */ {"Время до","отключения"},		//8,10
   /* (<= 13) Motion sensitivity level           */ {"Чувст. сенсо-","ра движения"},	//13,11
   /* (<= 13) Temperature in F and C             */ {"Формат темпе-","ратуры(C°/F°)"},	//13,13
   /* (<= 13) Advanced idle display mode enabled */ {"Подробный ре-","жим ожидания"},	//13,12
   /* (<= 13) Display rotation mode              */ {"Автоповорот","экрана"},		//11,6
   /* (<= 13) Boost enabled                      */ {"Режим","Турбо"},			//5,5
-  /* (<= 9) Boost temperature                   */ {"Темпер.","Турбо"},			//7,5
+  /* (<=  9) Boost temperature                  */ {"Темпер.","Турбо"},                 //7,5
   /* (<= 13) Automatic start mode               */ {"Режим при","включении"},		//9,9
   /* (<= 13) Cooldown blink                     */ {"Показ t° при","остывании"},	//7,3
   /* (<= 16) Temperature calibration enter menu */ {"Калибровка","температуры"},	//10,11
@@ -476,15 +476,15 @@ const char* SettingsDescriptions[17] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */"Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>",
-  /* Sleep temperature                  */"Imposta la temperatura da mantenere in modalità standby <°C>",
-  /* Sleep timeout                      */"Imposta il timer per entrare in modalità standby <minuti/secondi>",
+  /* Sleep temperature                  */"Imposta la temperatura da mantenere in modalità Standby <°C/°F>",
+  /* Sleep timeout                      */"Imposta il timer per entrare in modalità Standby <minuti/secondi>",
   /* Shutdown timeout                   */"Imposta il timer per lo spegnimento <minuti>",
-  /* Motion sensitivity level           */"Imposta la sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>",
+  /* Motion sensitivity level           */"Imposta la sensibilità al movimento per uscire dalla modalità Standby <0: nessuna; 1: minima; 9: massima>",
   /* Temperature in F and C             */"Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>",
   /* Advanced idle display mode enabled */"Mostra informazioni dettagliate con un carattere più piccolo all'interno della schermata principale",
   /* Display rotation mode              */"Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
-  /* Boost enabled                      */"Il tasto superiore attiva la funzione \"turbo\" durante la modalità Saldatura",
-  /* Boost temperature                  */"Imposta la temperatura della funzione \"turbo\"",
+  /* Boost enabled                      */"Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura",
+  /* Boost temperature                  */"Imposta la temperatura della funzione «Turbo»",
   /* Automatic start mode               */"Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
   /* Cooldown blink                     */"Mostra la temperatura durante il raffreddamento se la punta è ancora calda",
   /* Temperature calibration enter menu */"Calibra le rilevazioni di temperatura",
@@ -500,7 +500,7 @@ const char* SettingsResetWarning = "Ripristinare le impostazioni iniziali?";
 const char* UVLOWarningString = "DC BASSA";            // <=8 chars
 const char* UndervoltageString = "DC INSUFFICIENTE";   // <=16 chars
 const char* InputVoltageString = "V ingresso:";        // <=11 chars, preferably end with a space
-const char* WarningTipTempString = "Temp punta:";      // <=12 chars, preferably end with a space
+const char* WarningTipTempString = "Punta:";           // <=12 chars, preferably end with a space
 const char* BadTipString = "PUNTA NO";                 // <=8 chars
 const char* SleepingSimpleString = "ZZZ ";             // Must be <= 4 chars
 const char* SleepingAdvancedString = "Standby";        // <=16 chars
@@ -511,7 +511,7 @@ const char* IdleTipString = "Punta:";                  // IdleTipString+IdleSetS
 const char* IdleSetString = "/";                       // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "PUNTA ASSENTE";   // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Potenza:"; // <=12 chars
-const char* OffString ="Off";// 3 chars max
+const char* OffString ="OFF";                          // 3 chars max
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'S';
@@ -525,13 +525,13 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
     /* (<= 11) Power source (DC or batt)          */ {"Sorgente", "alimentaz"},
     /* (<=  9) Sleep temperature                  */ {"Temp", "standby"},
     /* (<=  9) Sleep timeout                      */ {"Timer", "standby"},
-    /* (<= 11) Shutdown timeout                   */ {"Timer", "spegnimento"},
+    /* (<= 11) Shutdown timeout                   */ {"Timer di", "arresto"},
     /* (<= 13) Motion sensitivity level           */ {"Sensibilità", "al movimento"},
     /* (<= 13) Temperature in F and C             */ {"Unità di", "temperatura"},
     /* (<= 13) Advanced idle display mode enabled */ {"Mostra", "dettagli"},
     /* (<= 13) Display rotation mode              */ {"Orientamento", "display"},
-    /* (<= 13) Boost enabled                      */ {"Funzione", "\"turbo\""},
-    /* (<=  9) Boost temperature                  */ {"Temp", "\"turbo\""},
+    /* (<= 13) Boost enabled                      */ {"Funzione", "«Turbo»"},
+    /* (<=  9) Boost temperature                  */ {"Temp", "«Turbo»"},
     /* (<= 13) Automatic start mode               */ {"Avvio", "automatico"},
     /* (<= 13) Cooldown blink                     */ {"Avviso", "punta calda"},
     /* (<= 16) Temperature calibration enter menu */ {"Calibrazione", "temperatura"},
