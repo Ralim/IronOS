@@ -227,15 +227,15 @@ const char* SettingsDescriptions[17] = {
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
 	/* Sleep temperature                  */ "Температура режима ожидания <C°/F°>",
-	/* Sleep timeout                      */ "Время до перехода в режим ожидания <Минуты>",
-	/* Shutdown timeout                   */ "Время до отключения <Минуты>",
-	/* Motion sensitivity level           */ "Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>",
-	/* Temperature in F and C             */ "В чем измерять температуру < C - Цельсий, F - Фаренгейт >",
+	/* Sleep timeout                      */ "Время до перехода в режим ожидания <Доступно отключение>",
+	/* Shutdown timeout                   */ "Время до отключения <Доступно отключение>",
+	/* Motion sensitivity level           */ "Акселерометр <0 - Выкл. 1 - мин. чувствительный 9 - макс. чувствительный>",
+	/* Temperature in F and C             */ "Единица измерения температуры < C - Цельсий, F - Фаренгейт >",
 	/* Advanced idle display mode enabled */ "Показывать детальную информацию маленьким шрифтом на домашнем экране",
-	/* Display rotation mode              */ "Ориентация дисплея <A. Автоповорот, L Левша, R Правша>",
+	/* Display rotation mode              */ "Ориентация дисплея <A - Автоповорот, L - Левша, R - Правша>",
 	/* Boost enabled                      */ "Турбо-режим при удержании кнопки А при пайке ",
 	/* Boost temperature                  */ "Температура в Турбо-режиме",
-	/* Automatic start mode               */ "Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим ожидания,F=Выкл.",
+	/* Automatic start mode               */ "Автоматический запуск паяльника при включении питания. T - Нагрев, S - Режим ожидания, F - Выкл.",
 	/* Cooldown blink                     */ "Показывать температуру на экране охлаждения, пока жало остается горячим, при этом экран моргает",
 	/* Temperature calibration enter menu */ "Калибровка температурного датчика.",
 	/* Settings reset command             */ "Сброс всех настроек к исходным значения.",
@@ -251,13 +251,13 @@ const char* UndervoltageString = "Под питанием";         // <=16 char
 const char* InputVoltageString = "Питание(B):";          // <=11 chars, preferably end with a space
 const char* WarningTipTempString = "Жало t°: ";          // <=12 chars, preferably end with a space
 const char* BadTipString = "Жало--";                     // <=8 chars
-const char* SleepingSimpleString = "Сон";                // Must be <= 4 chars
+const char* SleepingSimpleString = "Сон ";                // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ожидание...";      // <=16 chars
 const char* WarningSimpleString = " АЙ!";                // Must be <= 4 chars
 const char* WarningAdvancedString = "ОСТОРОЖНО!ГОРЯЧО!"; // <=16 chars
 const char* SleepingTipAdvancedString = "Жало:";         // <=6 chars
 const char* IdleTipString = "Жало:";                     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " задать:";                  // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " ->";                  // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "Жало отключено!";   // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Питание: ";  // <=12 chars
 const char* OffString ="Off";                            // 3 chars max
@@ -303,7 +303,7 @@ const char* SettingsMenuEntries[4] = {
 /* Advanced Menu*/"Другие", };
 const char* SettingsMenuEntriesDescriptions[4] ={
 "Настройки для режима пайки. Действуют при включенном жале.",
-"Настройки при бездействии. Полезно что бы не обжечься и не случайно не сжечь жилище:)",
+"Настройки при бездействии. Полезно что бы не обжечься и случайно не сжечь жилище.",
 "Пользовательский интерфейс.",
 "Расширенные настройки. Дополнительные удобства."
 };
