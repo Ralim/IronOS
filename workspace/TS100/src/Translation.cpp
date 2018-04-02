@@ -225,13 +225,13 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 const char* SettingsDescriptions[17] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
-	/* Power source (DC or batt)          */ "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
+	/* Power source (DC or batt)          */ "Установка напряжения отключения. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>",
 	/* Sleep temperature                  */ "Температура режима ожидания <C°/F°>",
 	/* Sleep timeout                      */ "Время до перехода в режим ожидания <Доступно отключение>",
 	/* Shutdown timeout                   */ "Время до отключения <Доступно отключение>",
 	/* Motion sensitivity level           */ "Акселерометр <0 - Выкл. 1 - мин. чувствительный 9 - макс. чувствительный>",
 	/* Temperature in F and C             */ "Единица измерения температуры < C - Цельсий, F - Фаренгейт >",
-	/* Advanced idle display mode enabled */ "Показывать детальную информацию маленьким шрифтом на домашнем экране",
+	/* Advanced idle display mode enabled */ "Показывать детальную в режиме настроек <Вместо картинки>",
 	/* Display rotation mode              */ "Ориентация дисплея <A - Автоповорот, L - Левша, R - Правша>",
 	/* Boost enabled                      */ "Турбо-режим при удержании кнопки А при пайке ",
 	/* Boost temperature                  */ "Температура в Турбо-режиме",
@@ -254,7 +254,7 @@ const char* BadTipString = "Жало--";                     // <=8 chars
 const char* SleepingSimpleString = "Сон ";                // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ожидание...";      // <=16 chars
 const char* WarningSimpleString = " АЙ!";                // Must be <= 4 chars
-const char* WarningAdvancedString = "ОСТОРОЖНО!ГОРЯЧО!"; // <=16 chars
+const char* WarningAdvancedString = "ВНИМАНИЕ ГОРЯЧО!"; // <=16 chars
 const char* SleepingTipAdvancedString = "Жало:";         // <=6 chars
 const char* IdleTipString = "Жало:";                     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " ->";                  // preferably start with a space; IdleTipString+IdleSetString <= 10
@@ -277,7 +277,7 @@ const char SettingSlowChar = '-';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
-  /* (<= 11) Power source (DC or batt)          */ {"Настройки","питания"},		//9,7
+  /* (<= 11) Power source (DC or batt)          */ {"Источник","питания"},		//8,7
   /* (<=  9) Sleep temperature                  */ {"Темпер.","сна"},			//7,3
   /* (<=  9) Sleep timeout                      */ {"Таймаут","сна"},			//7,3
   /* (<= 10) Shutdown timeout                   */ {"Время до","отключения"},		//8,10
