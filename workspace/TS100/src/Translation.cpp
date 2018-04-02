@@ -235,7 +235,7 @@ const char* SettingsDescriptions[17] = {
 	/* Display rotation mode              */ "Ориентация дисплея <A - Автоповорот, L - Левша, R - Правша>",
 	/* Boost enabled                      */ "Турбо-режим при удержании кнопки А при пайке ",
 	/* Boost temperature                  */ "Температура в Турбо-режиме",
-	/* Automatic start mode               */ "Автоматический запуск паяльника при включении питания. T - Нагрев, S - Режим ожидания, F - Выкл.",
+	/* Automatic start mode               */ "Автоматический переход в режим пайки при включении питания.",
 	/* Cooldown blink                     */ "Показывать температуру на экране охлаждения, пока жало остается горячим, при этом экран моргает",
 	/* Temperature calibration enter menu */ "Калибровка температурного датчика.",
 	/* Settings reset command             */ "Сброс всех настроек к исходным значения.",
@@ -287,7 +287,7 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 13) Display rotation mode              */ {"Автоповорот","экрана"},		//11,6
   /* (<= 13) Boost enabled                      */ {"Режим","Турбо"},			//5,5
   /* (<=  9) Boost temperature                  */ {"Темпер.","Турбо"},                 //7,5
-  /* (<= 13) Automatic start mode               */ {"Режим при","включении"},		//9,9
+  /* (<= 13) Automatic start mode               */ {"Горячий","старт"},			//9,9
   /* (<= 13) Cooldown blink                     */ {"Показ t° при","остывании"},	//7,3
   /* (<= 16) Temperature calibration enter menu */ {"Калибровка","температуры"},	//10,11
   /* (<= 16) Settings reset command             */ {"Сбросить все","настройки?"},	//12,10
