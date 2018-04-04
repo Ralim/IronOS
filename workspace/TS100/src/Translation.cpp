@@ -1449,7 +1449,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 };
 #endif
 
-#ifdef LANG_UA
+#ifdef LANG_UK
 const char* SettingsDescriptions[17] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
