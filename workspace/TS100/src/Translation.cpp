@@ -1448,3 +1448,87 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 "Išplėstiniai nustatymai"
 };
 #endif
+
+#ifdef LANG_UA
+const char* SettingsDescriptions[17] = {
+	// These are all the help text for all the settings.
+	// No requirements on spacing or length.
+	/* Power source (DC or batt)          */ "Установка напруги відключення. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>",
+	/* Sleep temperature                  */ "Температура режиму очікування <C°/F°>",
+	/* Sleep timeout                      */ "Час до переходу в режим очікування <Доступно отключение>",
+	/* Shutdown timeout                   */ "Час до відключення <Доступно відключення>",
+	/* Motion sensitivity level           */ "Акселерометр <0 - Викл. 1 хв. чутливості 9 - макс. чутливості>",
+	/* Temperature in F and C             */ "Одиниця виміру температури <C - Цельсій, F - Фаренгейт>",
+	/* Advanced idle display mode enabled */ "Показувати детальну в режимі налаштувань <Замість картинки>",
+	/* Display rotation mode              */ "Орієнтація дисплея <A - Автоповорот, L - Лівша, R - Правша>",
+	/* Boost enabled                      */ "Турбо-режим при утриманні кнопки А при пайці",
+	/* Boost temperature                  */ "Температура в Турбо-режимі",
+	/* Automatic start mode               */ "Автоматичний перехід в режим пайки при включенні живлення.",
+	/* Cooldown blink                     */ "Показувати температуру на екрані охолодження, поки жало залишається гарячим, при цьому екран моргає",
+	/* Temperature calibration enter menu */ "Калібрування температурного датчика.",
+	/* Settings reset command             */ "Скидання всіх параметрів до вихідних значень.",
+	/* Calibrate input voltage            */ "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити.",
+	/* Advanced soldering screen enabled  */ "Показувати детальну інформацію при пайці.",
+	/* Description Scroll Speed           */ "Швидкість прокрутки тексту",
+};
+
+const char* SettingsCalibrationWarning = "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!";
+const char* SettingsResetWarning = "Ви дійсно хочете скинути налаштування до значень за замовчуванням?";
+const char* UVLOWarningString = "АККУМ--";              // <=8 chars
+const char* UndervoltageString = "Під живленням";       // <=16 chars
+const char* InputVoltageString = "Жив.(B):";		// <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Жало t°: ";         // <=12 chars, preferably end with a space
+const char* BadTipString = "Жало--";                    // <=8 chars
+const char* SleepingSimpleString = "Сон ";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Очікування...";   // <=16 chars
+const char* WarningSimpleString = " АЙ!";               // Must be <= 4 chars
+const char* WarningAdvancedString = "УВАГА ГАРЯЧЕ!"; 	// <=16 chars
+const char* SleepingTipAdvancedString = "Жало:";        // <=6 chars
+const char* IdleTipString = "Жало:";                    // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " ->";                  	// preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "Жало вимкнено!";   // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Живлення: ";// <=12 chars
+const char* OffString ="Вим";                           // 3 chars max
+
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+
+const char SettingFastChar = '+';
+const char SettingSlowChar = '-';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Джерело","живлення"},		//7,8
+  /* (<=  9) Sleep temperature                  */ {"Темпер.","сну"},			//7,3
+  /* (<=  9) Sleep timeout                      */ {"Таймаут","сну"},			//7,3
+  /* (<= 10) Shutdown timeout                   */ {"Часу до","вимкнення"},		//7,9
+  /* (<= 13) Motion sensitivity level           */ {"Чутл. сенсо-","ру руху"},		//12,7
+  /* (<= 13) Temperature in F and C             */ {"Формат темпе-","ратури(C°/F°)"},	//13,13
+  /* (<= 13) Advanced idle display mode enabled */ {"Детальний ре-","жим очікуван."},	//13,13
+  /* (<= 13) Display rotation mode              */ {"Автоповорот","екрану"},		//11,6
+  /* (<= 13) Boost enabled                      */ {"Режим","Турбо"},			//5,5
+  /* (<=  9) Boost temperature                  */ {"Темпер.","Турбо"},                 //7,5
+  /* (<= 13) Automatic start mode               */ {"Гарячий","старт"},			//7,5
+  /* (<= 13) Cooldown blink                     */ {"Показ t° при","охолодж."},		//12,8
+  /* (<= 16) Temperature calibration enter menu */ {"Калібровка","температури"},	//10,11
+  /* (<= 16) Settings reset command             */ {"Скинути всі","налаштування?"},	//11,13
+  /* (<= 16) Calibrate input voltage            */ {"Калібровка","напруга"},		//10,7
+  /* (<= 13) Advanced soldering screen enabled  */ {"Детальний ре-","жим пайки"},	//13,9
+  /* (<= 11) Message Scroll Speed               */ {"Швидкість","тексту"},		//9,6
+};
+
+const char* SettingsMenuEntries[4] = {
+/*Soldering Menu*/"Пайка",
+/* Power Saving Menu*/"Сон",
+/* UI Menu*/"Інтерфейс",
+/* Advanced Menu*/"Інші", 
+};
+
+const char* SettingsMenuEntriesDescriptions[4] ={
+"Налаштування для режиму пайки. Діють при включеному жалі.",
+"Налаштування при бездіяльності. Корисно що б не обпектися і з часом не спалити житло.",
+"Користувальницький інтерфейс.",
+"Розширені налаштування. Додаткові зручності."
+};
+#endif
