@@ -285,9 +285,16 @@ static void settings_displayInputVRange(void) {
 }
 
 static void settings_setSleepTemp(void) {
-	systemSettings.SleepTemp += 10;
-	if (systemSettings.SleepTemp > 300)
-		systemSettings.SleepTemp = 50;
+	//If in C, 10 deg, if in F 20 deg
+	if (systemSettings.temperatureInF) {
+		systemSettings.SleepTemp += 20;
+		if (systemSettings.SleepTemp > 580)
+			systemSettings.SleepTemp = 120;
+	} else {
+		systemSettings.SleepTemp += 10;
+		if (systemSettings.SleepTemp > 300)
+			systemSettings.SleepTemp = 50;
+	}
 }
 
 static void settings_displaySleepTemp(void) {
@@ -339,6 +346,22 @@ static void settings_displayShutdownTime(void) {
 
 static void settings_setTempF(void) {
 	systemSettings.temperatureInF = !systemSettings.temperatureInF;
+	if (systemSettings.temperatureInF) {
+		//Change sleep, boost and soldering temps to the F equiv
+		//C to F == F= ( (C*9) +160)/5
+		systemSettings.BoostTemp = ((systemSettings.BoostTemp * 9) + 160) / 5;
+		systemSettings.SolderingTemp =
+				((systemSettings.SolderingTemp * 9) + 160) / 5;
+		systemSettings.SleepTemp = ((systemSettings.SleepTemp * 9) + 160) / 5;
+	} else {
+		//Change sleep, boost and soldering temps to the C equiv
+		// F->C == C = ((F-32)*5)/9
+		systemSettings.BoostTemp = ((systemSettings.BoostTemp - 32) * 5) / 9;
+		systemSettings.SolderingTemp = ((systemSettings.SolderingTemp - 32) * 5)
+				/ 9;
+		systemSettings.SleepTemp = ((systemSettings.SleepTemp - 32) * 5) / 9;
+
+	}
 }
 
 static void settings_displayTempF(void) {
@@ -438,12 +461,14 @@ static void settings_displayBoostModeEnabled(void) {
 }
 
 static void settings_setBoostTemp(void) {
-	systemSettings.BoostTemp += 10;  // Go up 10 at a time
+
 	if (systemSettings.temperatureInF) {
+		systemSettings.BoostTemp += 20;  // Go up 20F at a time
 		if (systemSettings.BoostTemp > 850) {
 			systemSettings.BoostTemp = 480;  // loop back at 250
 		}
 	} else {
+		systemSettings.BoostTemp += 10;  // Go up 10C at a time
 		if (systemSettings.BoostTemp > 450) {
 			systemSettings.BoostTemp = 250;  // loop back at 250
 		}

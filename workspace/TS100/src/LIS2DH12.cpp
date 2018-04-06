@@ -33,7 +33,9 @@ void LIS2DH12::initalize() {
 uint8_t LIS2DH12::getOrientation() {
 	// 8=right handed,4=left,16=flat
 	//So we ignore if not 8/4
+	taskENTER_CRITICAL();
 	uint8_t pos = I2C_RegisterRead(LIS_INT2_SRC);
+	taskEXIT_CRITICAL();
 	if (pos == 8)
 		return 1;
 	else if (pos == 4)
@@ -59,7 +61,6 @@ void LIS2DH12::setSensitivity(uint8_t threshold, uint8_t filterTime) {
 }
 
 void LIS2DH12::I2C_RegisterWrite(uint8_t reg, uint8_t data) {
-
 	HAL_I2C_Mem_Write(i2c, LIS2DH_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, &data,
 			1, 500);
 }
@@ -68,6 +69,5 @@ uint8_t LIS2DH12::I2C_RegisterRead(uint8_t reg) {
 	uint8_t tx_data[1];
 	HAL_I2C_Mem_Read(i2c, LIS2DH_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT,
 			tx_data, 1, 500);
-
 	return tx_data[0];
 }

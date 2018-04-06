@@ -60,8 +60,9 @@ int main(void) {
 		accel2.initalize();						   //startup the accelerometer
 	} else {
 		PCBVersion = 3;
-		systemSettings.SleepTime=0;
-		systemSettings.ShutdownTime=0;//No accel -> disable sleep
+		systemSettings.SleepTime = 0;
+		systemSettings.ShutdownTime = 0;			//No accel -> disable sleep
+		systemSettings.sensitivity=0;
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
@@ -70,25 +71,25 @@ int main(void) {
 
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
-	osThreadDef(GUITask, startGUITask, osPriorityBelowNormal, 0, 512);
+	osThreadDef(GUITask, startGUITask, osPriorityBelowNormal, 0, 768);  //3k
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
 	/* definition and creation of PIDTask */
-	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 256);
+	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 512);  //2k
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
-
-	/* definition and creation of ROTTask */
-	osThreadDef(ROTTask, startRotationTask, osPriorityLow, 0, 256);
-	ROTTaskHandle = osThreadCreate(osThread(ROTTask), NULL);
-	/* definition and creation of MOVTask */
-	osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 256);
-	MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
-
+	if (PCBVersion != 3) {
+		/* definition and creation of ROTTask */
+		osThreadDef(ROTTask, startRotationTask, osPriorityLow, 0, 256);  //1k
+		ROTTaskHandle = osThreadCreate(osThread(ROTTask), NULL);
+		/* definition and creation of MOVTask */
+		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 512);  //2k
+		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
+	}
 	/* Create the objects*/
-	rotationChangedSemaphore =
-	xSemaphoreCreateBinary();  // Used to unlock rotation thread
-	accelDataAvailableSemaphore =
-	xSemaphoreCreateBinary();  // Used to unlock the movement thread
+	rotationChangedSemaphore = xSemaphoreCreateBinary();
+	// Used to unlock rotation thread
+	accelDataAvailableSemaphore = xSemaphoreCreateBinary();
+	// Used to unlock the movement thread
 	/* Start scheduler */
 	osKernelStart();
 
@@ -627,7 +628,7 @@ static void gui_solderingMode() {
 		}
 
 		lcd.refresh();
-		if (systemSettings.sensitivity)
+		if (systemSettings.sensitivity && systemSettings.SleepTime)
 			if (xTaskGetTickCount() - lastMovementTime > sleepThres
 					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
 				if (gui_SolderingSleepingMode()) {
@@ -728,8 +729,8 @@ void startGUITask(void const *argument) {
 			lcd.clearScreen();    // Ensure the buffer starts clean
 			lcd.setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 			lcd.setFont(1);       // small font
-			lcd.print((char *) "V2.03 PCB");  // Print version number
-			lcd.printNumber(PCBVersion, 1);
+			lcd.print((char *) "V2.04 PCB");  // Print version number
+			lcd.printNumber(PCBVersion, 1); //Print PCB ID number
 			lcd.setCursor(0, 8);         // second line
 			lcd.print(__DATE__);         // print the compile date
 			lcd.refresh();
@@ -758,10 +759,15 @@ void startGUITask(void const *argument) {
 		default:
 			break;
 		}
+
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
-		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
+
+		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(1));//This forces a faster update rate on the filtering
+
 		if (tipTemp < 50) {
+
 			if (systemSettings.sensitivity) {
+
 				if ((xTaskGetTickCount() - lastMovementTime) > 6000
 						&& (xTaskGetTickCount() - lastButtonTime) > 6000) {
 					lcd.displayOnOff(false);  // turn lcd off when no movement
@@ -846,11 +852,11 @@ void startPIDTask(void const *argument) {
 	int32_t kp, ki, kd;
 	kp = 40;
 	ki = 60;
-	kd = 30;
+	kd = 20;
 	// REMEBER ^^^^ These constants are backwards
 	// They act as dividers, so to 'increase' a P term, you make the number
 	// smaller.
-	const int32_t itermMax = 60;
+	const int32_t itermMax = 100;
 	for (;;) {
 		uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 		if (currentlyActiveTemperatureTarget) {
@@ -858,6 +864,11 @@ void startPIDTask(void const *argument) {
 			// Because our values here are quite large for all measurements (0-16k ~=
 			// 33 counts per C)
 			// P I & D are divisors, so inverse logic applies (beware)
+
+			// Cap the max setpoint to 450C
+			if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
+				currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
+			}
 
 			int32_t rawTempError = currentlyActiveTemperatureTarget - rawTemp;
 			int32_t ierror = (rawTempError / ki);
@@ -892,6 +903,7 @@ void startPIDTask(void const *argument) {
 			setTipPWM(0); // disable the output driver if the output is set to be off
 			integralCount = 0;
 			derivativeLastValue = 0;
+			osDelay(100); //sleep for a bit longer
 		}
 
 		HAL_IWDG_Refresh(&hiwdg);
@@ -901,7 +913,7 @@ void startPIDTask(void const *argument) {
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
 	osDelay(4000);  // wait for accel to stabilize
-
+	lastMovementTime = 0;
 	int16_t datax[MOVFilter];
 	int16_t datay[MOVFilter];
 	int16_t dataz[MOVFilter];
@@ -922,8 +934,8 @@ void startMOVTask(void const *argument) {
 			osDelay(5000);
 	}
 	for (;;) {
-		int32_t threshold = 1200 + (9 * 200);
-		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
+		int32_t threshold = 1500 + (9 * 200);
+		threshold -= systemSettings.sensitivity * 200; // 200 is the step size
 		if (PCBVersion == 2)
 			accel2.getAxisReadings(&tx, &ty, &tz);
 		else if (PCBVersion == 1)
@@ -961,27 +973,24 @@ void startMOVTask(void const *argument) {
 		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET)
 		max = 0;
 #endif
-		// Only run the actual processing if the sensitivity is set (aka we are
-		// enabled)
-		if (systemSettings.sensitivity) {
-			// calculate averages
-			avgx = avgy = avgz = 0;
-			for (uint8_t i = 0; i < MOVFilter; i++) {
-				avgx += datax[i];
-				avgy += datay[i];
-				avgz += dataz[i];
-			}
-			avgx /= MOVFilter;
-			avgy /= MOVFilter;
-			avgz /= MOVFilter;
 
-			// So now we have averages, we want to look if these are different by more
-			// than the threshold
-			int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
-			// If error has occured then we update the tick timer
-			if (error > threshold) {
-				lastMovementTime = xTaskGetTickCount();
-			}
+		// calculate averages
+		avgx = avgy = avgz = 0;
+		for (uint8_t i = 0; i < MOVFilter; i++) {
+			avgx += datax[i];
+			avgy += datay[i];
+			avgz += dataz[i];
+		}
+		avgx /= MOVFilter;
+		avgy /= MOVFilter;
+		avgz /= MOVFilter;
+
+		// So now we have averages, we want to look if these are different by more
+		// than the threshold
+		int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+		// If error has occurred then we update the tick timer
+		if (error > threshold) {
+			lastMovementTime = xTaskGetTickCount();
 		}
 
 		osDelay(100);  // Slow down update rate

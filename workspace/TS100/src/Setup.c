@@ -36,7 +36,7 @@ void Setup_HAL() {
 	MX_TIM2_Init();
 	MX_IWDG_Init();
 
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADCReadings, 64);
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADCReadings, 64);//start DMA of normal readings
 	HAL_ADCEx_InjectedStart(&hadc1);    //enable injected  readings
 }
 
@@ -252,7 +252,7 @@ static void MX_TIM2_Init(void) {
 	HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 117;
+	sConfigOC.Pulse = 118;
 	/*
 	 * It takes 4 milliseconds for output to be stable after PWM turns off.
 	 * Assume ADC samples in 0.5ms
