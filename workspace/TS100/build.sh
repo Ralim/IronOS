@@ -33,3 +33,5 @@ make -j16 lang=BR
 rm -rf Objects/src
 make -j16 lang=LT
 rm -rf Objects/src
+make -j16 lang=UK
+rm -rf Objects/src
