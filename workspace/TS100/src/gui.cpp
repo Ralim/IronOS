@@ -362,6 +362,14 @@ static void settings_setTempF(void) {
 		systemSettings.SleepTemp = ((systemSettings.SleepTemp - 32) * 5) / 9;
 
 	}
+	// Rescale both to be multiples of 10
+	systemSettings.BoostTemp = systemSettings.BoostTemp/10;
+	systemSettings.BoostTemp *=10;
+	systemSettings.SolderingTemp = systemSettings.SolderingTemp/10;
+	systemSettings.SolderingTemp *=10;
+	systemSettings.SleepTemp = systemSettings.SleepTemp/10;
+	systemSettings.SleepTemp *=10;
+	
 }
 
 static void settings_displayTempF(void) {

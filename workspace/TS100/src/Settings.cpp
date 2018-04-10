@@ -71,7 +71,7 @@ uint8_t lookupVoltageLevel(uint8_t level) {
 		return (level * 33) + (33 * 2);
 }
 void resetSettings() {
-
+	memset((void*)&systemSettings,0,sizeof(systemSettingsType));
 	systemSettings.SleepTemp = 150;    //Temperature the iron sleeps at - default 150.0 C
 	systemSettings.SleepTime = 6;    //How many seconds/minutes we wait until going to sleep - default 1 min
 	systemSettings.SolderingTemp = 320;    //Default soldering temp is 320.0 C
