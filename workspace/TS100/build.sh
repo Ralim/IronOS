@@ -19,7 +19,7 @@ make -j16 lang=PL
 rm -rf Objects/src
 make -j16 lang=RU
 rm -rf Objects/src
-make -j16 lang=SE
+make -j16 lang=FI
 rm -rf Objects/src
 make -j16 lang=TR
 rm -rf Objects/src
