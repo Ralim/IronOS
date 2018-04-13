@@ -847,6 +847,8 @@ void startPIDTask(void const *argument) {
 	 * struct
 	 *
 	 */
+	setTipPWM(0); // disable the output driver if the output is set to be off
+	osDelay(500);
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 	int32_t kp, ki, kd;
@@ -856,6 +858,11 @@ void startPIDTask(void const *argument) {
 	// REMEBER ^^^^ These constants are backwards
 	// They act as dividers, so to 'increase' a P term, you make the number
 	// smaller.
+	if(getInputVoltageX10(systemSettings.voltageDiv) < 150)
+	{
+		//Boot P term if < 15 Volts
+		kp=30;
+	}
 	const int32_t itermMax = 100;
 	for (;;) {
 		uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
@@ -865,7 +872,7 @@ void startPIDTask(void const *argument) {
 			// 33 counts per C)
 			// P I & D are divisors, so inverse logic applies (beware)
 
-			// Cap the max setpoint to 450C
+			// Cap the max set point to 450C
 			if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
 				currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
 			}

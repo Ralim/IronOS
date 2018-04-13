@@ -396,26 +396,26 @@ const char* SettingsDescriptions[17] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Käytettävä virtalähde. Asettaa katkaisujänniteen. <DC 10V, 3S=9.9V, 4S=13.2V, 5S=16.5V, 6S=19.8V>",
-  /* Sleep temperature                  */ "Lepolämpötila <C>",
-  /* Sleep timeout                      */ "Lepoviive <minuuttia/sekuntia>",
+  /* Sleep temperature                  */ "Lepotilan lämpötila <C>", //"Lepolämpötila <C>",
+  /* Sleep timeout                      */ "Lepotilan viive <minuuttia/sekuntia>",//"Lepoviive <minuuttia/sekuntia>",
   /* Shutdown timeout                   */ "Sammutuksen aikaviive <minuuttia>",
-  /* Motion sensitivity level           */ "Liikeherkkyys <0=pois, 1=epäherkin, 9=herkin>",
+  /* Motion sensitivity level           */ "Liikkeentunnistuksen herkkyys <0=pois, 1=epäherkin, 9=herkin>", //"Liikeherkkyys <0=pois, 1=epäherkin, 9=herkin>",
   /* Temperature in F and C             */ "Lämpötilan yksikkö <C=celsius, F=fahrenheit>",
-  /* Advanced idle display mode enabled */ "Näyttää tarkemmat tiedot leponäytössä",
-  /* Display rotation mode              */ "Näytön suunta <A=automaattinen O=oikeakätinen V=vasenkätinen>",
+  /* Advanced idle display mode enabled */ "Näytä yksityiskohtaiset tiedot lepotilassa", //"Näyttää tarkemmat tiedot leponäytössä",
+  /* Display rotation mode              */ "Näytön kierto <A=automaattinen O=oikeakätinen V=vasenkätinen>", //"Näytön suunta <A=automaattinen O=oikeakätinen V=vasenkätinen>",
   /* Boost enabled                      */ "Etupainikeella siirrytään juotettaessa tehostustilaan ",
-  /* Boost temperature                  */ "Tehostuksen lämpötila kun käytetään tehostustilaa",
-  /* Automatic start mode               */ "Lämmitys käynnistyy automaattisesti kun virrat kytketään. T=juottamiseen, S=lepotilaan, F=ei käytössä",
+  /* Boost temperature                  */ "Tehostustilan lämpötila", //"Tehostuksen lämpötila kun käytetään tehostustilaa",
+  /* Automatic start mode               */ "Aloittaa lämmityksen automaattisesti kun virrat kytketään. T=juotostila, S=Lepotila, F=Ei käytössä", //"Lämmitys käynnistyy automaattisesti kun virrat kytketään. T=juottamiseen, S=lepotilaan, F=ei käytössä",
   /* Cooldown blink                     */ "Vilkutetaan näytössä lämpötilaa kun juotoskärki jäähtyy, mutta on yhä kuuma",
-  /* Temperature calibration enter menu */ "Kalibroidaan juotoskärjen lämpötilaero",
-  /* Settings reset command             */ "Palautetaan kaikki asetukset alkuperäisiksi",
+  /* Temperature calibration enter menu */ "Kalibroi kärjen lämpötilaero", //"Kalibroidaan juotoskärjen lämpötilaero",
+  /* Settings reset command             */ "Palauta kaikki asetukset oletusarvoihin" //"Palautetaan kaikki asetukset alkuperäisiksi",
   /* Calibrate input voltage            */ "Tulojännitten kalibrointi (VIN). Painikkeilla säädetään ja pitkään painamalla poistutaan",
-  /* Advanced soldering screen enabled  */ "Näytetään tarkemmat tiedot juottamisen aikana",
-  /* Description Scroll Speed           */ "Tekstin vieritysnopeus näytöllä",
+  /* Advanced soldering screen enabled  */ "Näytä yksityiskohtaiset tiedot juotostilassa", //"Näytetään tarkemmat tiedot juottamisen aikana",
+  /* Description Scroll Speed           */ "Näiden ohjetekstien vieritysnopeus" ,//"Tekstin vieritysnopeus näytöllä",
 };
 
-const char* SettingsCalibrationWarning = "Älä jatka ennen kuin kärki on jäähtynyt!";
-const char* SettingsResetWarning = "Haluatko palauttaa oletusarvot?";
+const char* SettingsCalibrationWarning = "Varmista että kärki on huoneenlämpöinen ennen jatkamista!"; //"Älä jatka ennen kuin kärki on jäähtynyt!";
+const char* SettingsResetWarning = "Haluatko varmasti palauttaa oletusarvot?"; //"Haluatko palauttaa oletusarvot?";
 const char* UVLOWarningString = "DC LOW";               // <=8 chars
 const char* UndervoltageString = "Alijännite";        // <=16 chars
 const char* InputVoltageString = "Jännite: ";           // <=11 chars, preferably end with a space
@@ -424,7 +424,7 @@ const char* BadTipString = "VIKATILA";                   // <=8 chars
 const char* SleepingSimpleString = "Zzz";              // Must be <= 4 chars
 const char* SleepingAdvancedString = "Lepotila...";     // <=16 chars
 const char* WarningSimpleString = "HOT";               // Must be <= 4 chars
-const char* WarningAdvancedString = "KUUMA KÄRKI";  // <=16 chars
+const char* WarningAdvancedString = " ! KÄRKI KUUMA !"; //"KUUMA KÄRKI";  // <=16 chars
 const char* SleepingTipAdvancedString = "Kärki:";         // <=6 chars
 const char* IdleTipString = "Kärki:";                     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Asetus:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
@@ -436,36 +436,36 @@ const char SettingRightChar = 'O';
 const char SettingLeftChar = 'V';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'N';   //'F';
+const char SettingSlowChar = 'H';   //'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Virtalähde", "DC"},
   /* (<=  9) Sleep temperature                  */ {"Lepotilan", "lämpötila"},
   /* (<=  9) Sleep timeout                      */ {"Lepotilan", "viive"},
-  /* (<= 10) Shutdown timeout                   */ {"Sammutuksen", "viive"},
+  /* (<= 10) Shutdown timeout                   */ {"Sammutuksen", "viive"}, // Too long
   /* (<= 13) Motion sensitivity level           */ {"Liikkeen", "herkkyys"},
   /* (<= 13) Temperature in F and C             */ {"Lämpötilan", "yksikkö"},
-  /* (<= 13) Advanced idle display mode enabled */ {"Tarkemmat tiedot", "lepotilassa"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Tarkemmat tiedot", "lepotilassa"}, // Too long
   /* (<= 13) Display rotation mode              */ {"Näytön", "esityssuunta"},
   /* (<= 13) Boost enabled                      */ {"Tehostus", "käytössä"},
   /* (<=  9) Boost temperature                  */ {"Tehostus", "lämpötila"},
-  /* (<= 13) Automatic start mode               */ {"Automattinen", "käynnistyminen"},
+  /* (<= 13) Automatic start mode               */ {"Automattinen", "käynnistyminen"}, // Too long
   /* (<= 13) Cooldown blink                     */ {"Jäähdytyksen", "vilkutus"},
   /* (<= 16) Temperature calibration enter menu */ {"Kalibroidaanko", "lämpötila?"},
   /* (<= 16) Settings reset command             */ {"Palautetaanko", "tehdasasetukset?"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibroidaanko", "tulojännite?"},
-  /* (<= 13) Advanced soldering screen enabled  */ {"Monipuolisempi", "juotosnäyttö"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Selitteiden","näyttönopeus"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Monipuolisempi", "juotosnäyttö"}, // Too long
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Selitteiden","näyttönopeus"}, // Too long
 };
 
 // SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
-  /* Soldering Menu    */ "Juotos\nasetukset",
-  /* Power Saving Menu */ "Lepo\ntila",
-  /* UI Menu           */ "Käyttö\nliittymä",
-  /* Advanced Menu     */ "Lisä\nasetukset",
+  /* Soldering Menu    */ "Juotos-\nasetukset" ,//"Juotos\nasetukset",
+  /* Power Saving Menu */ "Lepotilan\nasetukset", // "Lepo\ntila",
+  /* UI Menu           */ "Käyttö-\nliittymä", //"Käyttö\nliittymä",
+  /* Advanced Menu     */ "Lisäasetukset", // "Lisä\nasetukset",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
