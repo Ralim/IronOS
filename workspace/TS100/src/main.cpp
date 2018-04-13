@@ -860,9 +860,8 @@ void startPIDTask(void const *argument) {
 	}
 	const int32_t itermMax = 100;
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
-	uint32_t ulNotificationValue;
 	for (;;) {
-		ulNotificationValue = ulTaskNotifyTake( pdTRUE, 100);//Wait a max of 100ms
+		ulTaskNotifyTake( pdTRUE, 100);	//Wait a max of 100ms
 		//This is a call to block this thread until the ADC does its samples
 		uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 		if (currentlyActiveTemperatureTarget) {
@@ -900,8 +899,8 @@ void startPIDTask(void const *argument) {
 			}
 
 			/*if (currentlyActiveTemperatureTarget < rawTemp) {
-				output = 0;
-			}*/
+			 output = 0;
+			 }*/
 			setTipPWM(output);
 			derivativeLastValue = rawTemp;  // store for next loop
 
