@@ -27,8 +27,8 @@ osThreadId GUITaskHandle;
 osThreadId PIDTaskHandle;
 osThreadId ROTTaskHandle;
 osThreadId MOVTaskHandle;
-SemaphoreHandle_t rotationChangedSemaphore = NULL;
-SemaphoreHandle_t accelDataAvailableSemaphore = NULL;
+
+static TaskHandle_t pidTaskNotification = NULL;
 
 void startGUITask(void const *argument);
 void startPIDTask(void const *argument);
@@ -62,7 +62,7 @@ int main(void) {
 		PCBVersion = 3;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;			//No accel -> disable sleep
-		systemSettings.sensitivity=0;
+		systemSettings.sensitivity = 0;
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
@@ -85,11 +85,7 @@ int main(void) {
 		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 512);  //2k
 		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
 	}
-	/* Create the objects*/
-	rotationChangedSemaphore = xSemaphoreCreateBinary();
-	// Used to unlock rotation thread
-	accelDataAvailableSemaphore = xSemaphoreCreateBinary();
-	// Used to unlock the movement thread
+
 	/* Start scheduler */
 	osKernelStart();
 
@@ -98,7 +94,7 @@ int main(void) {
 	}
 }
 void GUIDelay() {
-	osDelay(50);  // 20Hz
+	osDelay(66);  // 15Hz
 }
 void gui_drawTipTemp() {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
@@ -762,7 +758,7 @@ void startGUITask(void const *argument) {
 
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
 
-		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(1));//This forces a faster update rate on the filtering
+		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(1)); //This forces a faster update rate on the filtering
 
 		if (tipTemp < 50) {
 
@@ -854,17 +850,20 @@ void startPIDTask(void const *argument) {
 	int32_t kp, ki, kd;
 	kp = 40;
 	ki = 60;
-	kd = 20;
+	kd = 15;
 	// REMEBER ^^^^ These constants are backwards
 	// They act as dividers, so to 'increase' a P term, you make the number
 	// smaller.
-	if(getInputVoltageX10(systemSettings.voltageDiv) < 150)
-	{
+	if (getInputVoltageX10(systemSettings.voltageDiv) < 150) {
 		//Boot P term if < 15 Volts
-		kp=30;
+		kp = 30;
 	}
 	const int32_t itermMax = 100;
+	pidTaskNotification = xTaskGetCurrentTaskHandle();
+	uint32_t ulNotificationValue;
 	for (;;) {
+		ulNotificationValue = ulTaskNotifyTake( pdTRUE, 100);//Wait a max of 100ms
+		//This is a call to block this thread until the ADC does its samples
 		uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 		if (currentlyActiveTemperatureTarget) {
 			// Compute the PID loop in here
@@ -900,9 +899,9 @@ void startPIDTask(void const *argument) {
 				output = 0;
 			}
 
-			if (currentlyActiveTemperatureTarget < rawTemp) {
+			/*if (currentlyActiveTemperatureTarget < rawTemp) {
 				output = 0;
-			}
+			}*/
 			setTipPWM(output);
 			derivativeLastValue = rawTemp;  // store for next loop
 
@@ -914,12 +913,11 @@ void startPIDTask(void const *argument) {
 		}
 
 		HAL_IWDG_Refresh(&hiwdg);
-		osDelay(10);  // 100 Hz temp loop
 	}
 }
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
-	osDelay(4000);  // wait for accel to stabilize
+	osDelay(250);  // wait for accelerometer to stabilize
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter];
 	int16_t datay[MOVFilter];
@@ -936,10 +934,6 @@ void startMOVTask(void const *argument) {
 	uint32_t max = 0;
 #endif
 
-	if (PCBVersion == 3) {
-		for (;;)
-			osDelay(5000);
-	}
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200; // 200 is the step size
@@ -1009,10 +1003,6 @@ void startRotationTask(void const *argument) {
 	 * This task is used to manage rotation of the LCD screen & button re-mapping
 	 *
 	 */
-	if (PCBVersion == 3) {
-		for (;;)
-			osDelay(5000);
-	}
 	switch (systemSettings.OrientationMode) {
 	case 0:
 		lcd.setRotation(false);
@@ -1026,7 +1016,7 @@ void startRotationTask(void const *argument) {
 	default:
 		break;
 	}
-	osDelay(500);  // wait for accel to stabilize
+	osDelay(250);  // wait for accel to stabilize
 
 	for (;;) {
 
@@ -1076,4 +1066,19 @@ bool showBootLogoIfavailable() {
 	lcd.drawArea(0, 0, 96, 16, (uint8_t *) (temp8 + 4));
 	lcd.refresh();
 	return true;
+}
+
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
+	if (pidTaskNotification) {
+		/* Notify the task that the transmission is complete. */
+		vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+
+		/* If xHigherPriorityTaskWoken is now set to pdTRUE then a context switch
+		 should be performed to ensure the interrupt returns directly to the highest
+		 priority task.  The macro used for this purpose is dependent on the port in
+		 use and may be called portEND_SWITCHING_ISR(). */
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+	}
 }

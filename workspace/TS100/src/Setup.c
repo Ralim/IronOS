@@ -134,11 +134,12 @@ static void MX_ADC1_Init(void) {
 	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
 	sConfigInjected.InjectedRank = 1;
 	sConfigInjected.InjectedNbrOfConversion = 4;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_13CYCLES_5;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_7CYCLES_5;
 	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
 	sConfigInjected.AutoInjectedConv = DISABLE;
 	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
 	sConfigInjected.InjectedOffset = 0;
+
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	sConfigInjected.InjectedRank = 2;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
@@ -146,14 +147,14 @@ static void MX_ADC1_Init(void) {
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	sConfigInjected.InjectedRank = 4;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-	//SET_BIT(hadc1.Instance->CR1, ( ADC_CR1_JEOCIE ));//Enable end of injected conv irq
+	SET_BIT(hadc1.Instance->CR1, ( ADC_CR1_JEOCIE ));//Enable end of injected conv irq
 }
 
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {
 
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.ClockSpeed = 300000;    //200Khz
+	hi2c1.Init.ClockSpeed = 300000;    //300Khz
 	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -256,7 +257,7 @@ static void MX_TIM2_Init(void) {
 	/*
 	 * It takes 4 milliseconds for output to be stable after PWM turns off.
 	 * Assume ADC samples in 0.5ms
-	 * We need to set this to 100% + 4.5ms
+	 * We need to set this to 100% + 5.5ms
 	 * */
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;

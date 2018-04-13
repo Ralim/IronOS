@@ -25,5 +25,11 @@ enum ButtonState {
 
 ButtonState getButtonState();
 void waitForButtonPressOrTimeout(uint32_t timeout);
-
+#ifdef __cplusplus
+ extern "C" {
+#endif
+ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc);
+#ifdef __cplusplus
+ }
+#endif
 #endif /* __MAIN_H */

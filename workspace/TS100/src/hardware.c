@@ -60,35 +60,17 @@ uint16_t getTipInstantTemperature() {
 
 }
 uint16_t getTipRawTemp(uint8_t instant) {
-#define  filterDepth1 1
-	/*Pre filter used before PID*/
-#define  filterDepth2 48
-	/*Post filter used for UI display*/
-	static uint16_t filterLayer1[filterDepth1];
-	static uint16_t filterLayer2[filterDepth2];
-	static uint8_t index = 0;
-	static uint8_t indexFilter = 0;
+	static int64_t filterFP = 0;
+	const uint8_t filterBeta = 5; //higher values smooth out more, but reduce responsiveness
 
 	if (instant) {
 		uint16_t itemp = getTipInstantTemperature();
-		filterLayer1[index] = itemp;
-		index = (index + 1) % filterDepth1;
-		uint32_t total = 0;
-		for (uint8_t i = 0; i < filterDepth1; i++)
-			total += filterLayer1[i];
-
-		return total / filterDepth1;
+		filterFP = (filterFP << filterBeta) - filterFP;
+		filterFP += (itemp << 9);
+		filterFP = filterFP >> filterBeta;
+		return itemp;
 	} else {
-		uint32_t total = 0;
-		for (uint8_t i = 0; i < filterDepth1; i++)
-			total += filterLayer1[i];
-		filterLayer2[indexFilter] = total / filterDepth1;
-		indexFilter = (indexFilter + 1) % filterDepth2;
-		total = 0;
-		for (uint8_t i = 0; i < filterDepth2; i++)
-			total += filterLayer2[i];
-
-		return total / filterDepth2;
+		return filterFP >> 9;
 	}
 }
 uint16_t getInputVoltageX10(uint8_t divisor) {
@@ -120,15 +102,10 @@ uint8_t getTipPWM() {
 	return htim2.Instance->CCR4;
 }
 void setTipPWM(uint8_t pulse) {
-	PWMSafetyTimer = 640; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
+	PWMSafetyTimer = 2; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
 		pulse = 100;
-	if (pulse) {
-		htim2.Instance->CCR4 = pulse;
-	} else {
-		htim2.Instance->CCR4 = 0;
-	}
-
+	htim2.Instance->CCR4 = pulse;
 }
 
 //Thse are called by the HAL after the corresponding events from the system timers.
@@ -138,7 +115,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
 		//we want to turn on the output again
 		PWMSafetyTimer--; //We decrement this safety value so that lockups in the scheduler will not cause the PWM to become locked in an active driving state.
-		//While we could assume this could never happened, its a small price for increased safety
+		//While we could assume this could never happen, its a small price for increased safety
 		if (htim2.Instance->CCR4 && PWMSafetyTimer) {
 			htim3.Instance->CCR1 = 50;
 			HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -159,12 +136,9 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 			htim3.Instance->CCR1 = 0;
 
 		} /*else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
-		}*/
+		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
+		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
+		 }*/
 	}
 }
 
-void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
-
-}
