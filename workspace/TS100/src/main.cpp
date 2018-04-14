@@ -10,12 +10,14 @@
 #include "string.h"
 #include "LIS2DH12.hpp"
 #include <gui.hpp>
+#include "FRToSI2C.hpp"
 
 #define ACCELDEBUG 0
 // C++ objects
-OLED lcd(&hi2c1);
-MMA8652FC accel(&hi2c1);
-LIS2DH12 accel2(&hi2c1);
+FRToSI2C i2cDev(&hi2c1);
+OLED lcd(&i2cDev);
+MMA8652FC accel(&i2cDev);
+LIS2DH12 accel2(&i2cDev);
 uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
@@ -620,6 +622,7 @@ static void gui_solderingMode() {
 
 		// Undervoltage test
 		if (checkVoltageForExit()) {
+			lastButtonTime = xTaskGetTickCount();
 			return;
 		}
 
@@ -628,6 +631,7 @@ static void gui_solderingMode() {
 			if (xTaskGetTickCount() - lastMovementTime > sleepThres
 					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
 				if (gui_SolderingSleepingMode()) {
+					lastButtonTime = xTaskGetTickCount();
 					return;  // If the function returns non-0 then exit
 				}
 			}

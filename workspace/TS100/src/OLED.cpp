@@ -43,7 +43,7 @@ uint8_t OLED_Setup_Array[] = { /**/
 };
 //Setup based on the SSD1307 and modified for the SSD1306
 
-OLED::OLED(I2C_HandleTypeDef* i2cHandle) {
+OLED::OLED(FRToSI2C* i2cHandle) {
 	i2c = i2cHandle;
 	cursor_x = cursor_y = 0;
 	currentFont = FONT_12;
@@ -63,8 +63,7 @@ void OLED::initialize() {
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(5);
 	//Send the setup settings
-	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
-			configLength, 0xFFFF);
+	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, configLength);
 	//displayOnOff(true);
 
 }
@@ -86,12 +85,8 @@ void OLED::refresh() {
 	screenBuffer[11] = 0x01;
 
 	screenBuffer[12] = 0x40;    //start of data marker
-	taskENTER_CRITICAL();
-	//Because I2C is shared, we cant task switch in the middle of the xfer
 
-	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1,
-			500);
-	taskEXIT_CRITICAL();
+	i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1);
 
 }
 
@@ -101,10 +96,9 @@ void OLED::refresh() {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(char c, char PrecursorCommand) {
-	if( c=='\n' && cursor_y==0)
-	{
-		cursor_x=0;
-		cursor_y=8;
+	if (c == '\n' && cursor_y == 0) {
+		cursor_x = 0;
+		cursor_y = 8;
 	}
 	if (c < ' ') {
 		return;
@@ -128,10 +122,10 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 			index = (128) + (c);
 			break;
 #if defined(LANG_RU) || defined(LANG_UK) || defined(LANG_SR) || defined(LANG_BG) || defined(LANG_MK)
-		case 0xD0:
+			case 0xD0:
 			index = (192) + (c);
 			break;
-		case 0xD1:
+			case 0xD1:
 			index = (256) + (c);
 			break;
 #else
@@ -165,8 +159,7 @@ void OLED::displayOnOff(bool on) {
 			data[5] = 0xAE;
 		}
 		taskENTER_CRITICAL();
-
-		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, data, 6, 0xFFFF);
+		i2c->Transmit( DEVICEADDR_OLED, data, 6);
 		taskEXIT_CRITICAL();
 		displayOnOffState = on;
 	}
@@ -184,8 +177,7 @@ void OLED::setRotation(bool leftHanded) {
 		}
 		taskENTER_CRITICAL();
 
-		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED,
-				(uint8_t*) OLED_Setup_Array, 50, 0xFFFF);
+		i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, 50);
 		taskEXIT_CRITICAL();
 		inLeftHandedMode = leftHanded;
 	}
@@ -300,11 +292,11 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 	uint8_t visibleEnd = wide;
 
 	// trimming to draw partials
-	if(x < 0) {
-	  visibleStart -= x;  //subtract negative value == add absolute value
+	if (x < 0) {
+		visibleStart -= x;  //subtract negative value == add absolute value
 	}
-	if(x + wide > 96) {
-	  visibleEnd = 96 - x;
+	if (x + wide > 96) {
+		visibleEnd = 96 - x;
 	}
 
 	if (y == 0) {
