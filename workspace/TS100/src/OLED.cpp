@@ -159,9 +159,7 @@ void OLED::displayOnOff(bool on) {
 			data[3] = 0x10;
 			data[5] = 0xAE;
 		}
-		taskENTER_CRITICAL();
 		i2c->Transmit( DEVICEADDR_OLED, data, 6);
-		taskEXIT_CRITICAL();
 		displayOnOffState = on;
 	}
 }
@@ -176,10 +174,7 @@ void OLED::setRotation(bool leftHanded) {
 			OLED_Setup_Array[11] = 0xC0;
 			OLED_Setup_Array[19] = 0xA0;
 		}
-		taskENTER_CRITICAL();
-
 		i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, 50);
-		taskEXIT_CRITICAL();
 		inLeftHandedMode = leftHanded;
 	}
 }
