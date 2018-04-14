@@ -14,9 +14,7 @@ class FRToSI2C {
 public:
 	FRToSI2C(I2C_HandleTypeDef* i2chandle);
 	void FRToSInit();
-	void MasterTxCpltCallback(); //Normal Tx Callback
-	void MemRxCpltCallback(); //Callback from memory read cycles
-	void MemTxCpltCallback(); //Callback from memory write cycles
+	void CpltCallback(); //Normal Tx Callback
 
 	void Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize,
 			uint8_t *pData, uint16_t Size);
@@ -26,7 +24,6 @@ public:
 	void Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
 
 private:
-	bool RToSUP=false;
 	I2C_HandleTypeDef* i2c;
 	SemaphoreHandle_t I2CSemaphore;
 };
