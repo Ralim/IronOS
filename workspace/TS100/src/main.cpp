@@ -571,8 +571,8 @@ static void gui_solderingMode() {
 						lcd.drawChar(' ');
 
 					// Draw heating/cooling symbols
-					// If tip PWM > 10% then we are 'heating'
-					if (getTipPWM() > 10)
+					// If tip PWM > 30% then we are 'heating'
+					if (getTipPWM() > 30)
 						lcd.drawSymbol(14);
 					else
 						lcd.drawSymbol(15);
@@ -854,8 +854,7 @@ void startPIDTask(void const *argument) {
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 	int32_t kp, ki, kd;
-	kp = 40;
-	ki = 60;
+	ki = 50;
 	kd = 15;
 	// REMEBER ^^^^ These constants are backwards
 	// They act as dividers, so to 'increase' a P term, you make the number
@@ -863,11 +862,12 @@ void startPIDTask(void const *argument) {
 	if (getInputVoltageX10(systemSettings.voltageDiv) < 150) {
 		//Boot P term if < 15 Volts
 		kp = 30;
-	}
+	} else
+		kp = 42;
 	const int32_t itermMax = 100;
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
-		ulTaskNotifyTake( pdTRUE, 100);	//Wait a max of 100ms
+		ulTaskNotifyTake( pdTRUE, 50);	//Wait a max of 50ms
 		//This is a call to block this thread until the ADC does its samples
 		uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 		if (currentlyActiveTemperatureTarget) {
@@ -1098,10 +1098,10 @@ void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c) {
 
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c){
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c){
+void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c) {
 	i2cDev.CpltCallback();
 }
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
