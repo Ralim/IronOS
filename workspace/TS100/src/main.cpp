@@ -44,6 +44,7 @@ int main(void) {
 	 */
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
+	HAL_IWDG_Refresh(&hiwdg);
 	setTipPWM(0);
 	lcd.initialize();   // start up the LCD
 	lcd.setFont(0);     // default to bigger font
@@ -641,6 +642,7 @@ static void gui_solderingMode() {
 
 /* StartGUITask function */
 void startGUITask(void const *argument) {
+	i2cDev.FRToSInit();
 	/*
 	 * Main program states:
 	 *
@@ -1084,4 +1086,17 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 		 use and may be called portEND_SWITCHING_ISR(). */
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	}
+}
+
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+}
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {
+	i2cDev.MasterTxCpltCallback();
+}
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c) {
+	i2cDev.MemTxCpltCallback();
+}
+
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+i2cDev.MemRxCpltCallback();
 }

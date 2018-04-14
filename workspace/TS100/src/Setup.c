@@ -77,7 +77,7 @@ void SystemClock_Config(void) {
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV16; //TIM 2,3,4,5,6,7,12,13,14
-	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1; //64 mhz to soem peripherals and adc
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1; //64 mhz to some peripherals and adc
 
 	HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
 
