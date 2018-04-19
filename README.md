@@ -1,7 +1,7 @@
 # TS100
 This is a complete rewrite of the open source software for the ts100 soldering iron.
 The version two fork of this code has no shared code with the original firmware from Miniware (E-design) group.
-This project is concidered feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
+This project is considered feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
 
 A short(ish) video that goes through every single menu option in the firmware is available [over here](https://www.youtube.com/watch?v=WlnpboYfxNk). 
 This video was created on an earlier 1.x version of the firmware, so alot has changed and a new video will be coming soon for the 2.x fork.
