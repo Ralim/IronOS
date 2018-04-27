@@ -1538,3 +1538,84 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 "Розширені налаштування. Додаткові зручності."
 };
 #endif
+
+#ifdef LANG_NB
+const char* SettingsDescriptions[17] = {
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length
+  /* Power source (DC or batt)          */ "Strømforsyning. Sett nedre spenning for automatisk nedstenging. <DC 10V <S 3.3V per celle",
+  /* Sleep temperature                  */ "Dvaletemperatur <C",
+  /* Sleep timeout                      */ "Tid før dvale <Minutter/Sekunder",
+  /* Shutdown timeout                   */ "Tid før automatisk nedstenging <Minutter",
+  /* Motion sensitivity level           */ "Bevegelsesfølsomhet <0.Inaktiv 1.Minst følsom 9.Mest følsom",
+  /* Temperature in F and C             */ "Temperaturskala <C=Celsius F=Fahrenheit",
+  /* Advanced idle display mode enabled */ "Vis detaljert informasjon med liten skrift på dvaleskjermen.",
+  /* Display rotation mode              */ "Skjermretning <A. Automatisk V. Venstrehendt H. Høyrehendt",
+  /* Boost enabled                      */ "Frontknappen aktiverer kraftfunksjonen, 450C ved lodding",
+  /* Boost temperature                  */ "Temperatur i \"kraft\"-modus",
+  /* Automatic start mode               */ "Start automatisk med lodding når strøm kobles til. L=Lodding, D=Dvale, I=Inaktiv",
+  /* Cooldown blink                     */ "Blink temperaturen på skjermen mens spissen fortsatt er varm.",
+  /* Temperature calibration enter menu */ "Kalibrer spiss-temperatur.",
+  /* Settings reset command             */ "Tilbakestill alle innstillinger",
+  /* Calibrate input voltage            */ "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut",
+  /* Advanced soldering screen enabled  */ "Vis detaljert informasjon ved lodding",
+  /* Description Scroll Speed           */ "Hastigheten på rulletekst",
+};
+
+const char* SettingsCalibrationWarning = "Sørg for at loddespissen har romtemperatur før du fortsetter!";
+const char* SettingsResetWarning = "Er du sikker på at du vil tilbakestille til standardinnstillinger?";
+const char* UVLOWarningString = "Lavspenn";             // <=8 chars
+const char* UndervoltageString = "Underspenning";        // <=16 chars
+const char* InputVoltageString = "Innspenn.: ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Spisstemp: ";        // <=12 chars, preferably end with a space
+const char* BadTipString = "BAD TIP";                   // <=8 chars
+const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Dvale...";        // <=16 chars
+const char* WarningSimpleString = "Varm";               // Must be <= 4 chars
+const char* WarningAdvancedString = "VARM SPISS!"; // <=16 chars
+const char* SleepingTipAdvancedString = "Spiss:";         // <=6 chars
+const char* IdleTipString = "Spiss:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = "Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "SPISS FRAKOBLET"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Effekt: ";   // <=12 chars
+const char* OffString ="Av";                           // 3 chars max
+
+const char SettingRightChar = 'H';
+const char SettingLeftChar = 'V';
+const char SettingAutoChar = 'A';
+
+const char SettingFastChar = 'H';
+const char SettingSlowChar = 'L';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* (<= 5) Power source (DC or batt)          */ {"Kilde"},
+  /* (<= 4) Sleep temperature                  */ {"DTmp"},
+  /* (<= 4) Sleep timeout                      */ {"DTid"},
+  /* (<= 5) Shutdown timeout                   */ {"AvTid"},
+  /* (<= 6) Motion sensitivity level           */ {"BSensr"},
+  /* (<= 6) Temperature in F and C             */ {"TmpEnh"},
+  /* (<= 6) Advanced idle display mode enabled */ {"AvDvSk"},
+  /* (<= 6) Display rotation mode              */ {"SkRetn"},
+  /* (<= 6) Boost enabled                      */ {"Kraft"},
+  /* (<= 4) Boost temperature                  */ {"KTmp"},
+  /* (<= 6) Automatic start mode               */ {"AStart"},
+  /* (<= 6) Cooldown blink                     */ {"KjBlnk"},
+  /* (<= 8) Temperature calibration enter menu */ {"TempKal?"},
+  /* (<= 8) Settings reset command             */ {"TilbStl?"},
+  /* (<= 8) Calibrate input voltage            */ {"KalSpIn?"},
+  /* (<= 6) Advanced soldering screen enabled  */ {"AvLdSk"},
+  /* (<= 6) Message Scroll Speed               */ {"RullHa"},
+};
+const char* SettingsMenuEntries[4] = {
+/*Soldering Menu*/"Lodde-\ninnst.",
+/* Power Saving Menu*/"Dvale-\ninnst.",
+/* UI Menu*/"Bruker-\ngrensesn.",
+/* Advanced Menu*/"Avanserte\nvalg", };
+const char* SettingsMenuEntriesDescriptions[4] ={
+"Loddeinnstillinger",
+"Dvaleinnstillinger",
+"Brukergrensesnitt-innstillinger",
+"Avanserte valg"
+};
+#endif
