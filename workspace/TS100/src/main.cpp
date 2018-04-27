@@ -665,8 +665,10 @@ void startGUITask(void const *argument) {
 	 */
 
 	uint8_t animationStep = 0;
+
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
+
 	HAL_IWDG_Refresh(&hiwdg);
 	switch (systemSettings.OrientationMode) {
 	case 0:
@@ -710,12 +712,14 @@ void startGUITask(void const *argument) {
 
 	for (;;) {
 		ButtonState buttons = getButtonState();
+
 		if (tempWarningState == 2)
 			buttons = BUTTON_F_SHORT;
 		if (buttons != BUTTON_NONE && buttonLockout)
 			buttons = BUTTON_NONE;
 		else
 			buttonLockout = false;
+
 		switch (buttons) {
 		case BUTTON_NONE:
 			// Do nothing
@@ -748,7 +752,7 @@ void startGUITask(void const *argument) {
 			lcd.setFont(0);
 			lcd.displayOnOff(true);  // turn lcd on
 			gui_solderingMode();     // enter soldering mode
-			tempWarningState = 0;    // make sure warning can show
+
 			break;
 		case BUTTON_B_SHORT:
 			lcd.setFont(0);
@@ -782,17 +786,7 @@ void startGUITask(void const *argument) {
 
 		if (tipTemp > 600)
 			tipTemp = 0;
-		if (tipTemp > 50) {
-			if (tempWarningState == 0) {
-				currentlyActiveTemperatureTarget = 0;  // ensure tip is off
-				lcd.displayOnOff(true);                // force LCD on
-				if (gui_showTipTempWarning() == 1) {
-					tempWarningState = 2;  // we can re-enter the warning
-				} else
-					tempWarningState = 1;
-			}
-		} else
-			tempWarningState = 0;
+
 		// Clear the lcd buffer
 		lcd.clearScreen();
 		lcd.setCursor(0, 0);
@@ -825,9 +819,25 @@ void startGUITask(void const *argument) {
 				lcd.setCursor(0, 0);
 				gui_drawBatteryIcon();
 			} else {
-				lcd.drawArea(0, 0, 84, 16, idleScreenBGF); // Needs to be flipped
+				lcd.drawArea(0, 0, 84, 16, idleScreenBGF); // Needs to be flipped so button ends up on right side of screen
 				lcd.setCursor(84, 0);
 				gui_drawBatteryIcon();
+			}
+			if (tipTemp > 50) {
+				//draw temp over the start soldering button
+				//Location changes on screen rotation
+				if (lcd.getRotation()) {
+					// in right handed mode we want to draw over the first part
+					lcd.fillArea(55, 0, 41, 16, 0);	//clear the area for the temp
+					lcd.setCursor(56, 0);
+
+				} else {
+					lcd.fillArea(0, 0, 41, 16, 0);				//clear the area
+					lcd.setCursor(0, 0);
+				}
+				//draw in the temp
+				lcd.setFont(0);				//big font
+				gui_drawTipTemp();				// draw in the temp
 			}
 		}
 

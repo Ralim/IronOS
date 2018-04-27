@@ -49,8 +49,8 @@ OLED::OLED(FRToSI2C* i2cHandle) {
 	currentFont = FONT_12;
 	fontWidth = 12;
 	inLeftHandedMode = false;
-	firstStripPtr = &screenBuffer[13];
-	secondStripPtr = &screenBuffer[13 + 96];
+	firstStripPtr = &screenBuffer[15];
+	secondStripPtr = &screenBuffer[15 + 96];
 	fontHeight = 16;
 	fontWidth = 12;
 	displayOffset = 0;
@@ -77,17 +77,17 @@ void OLED::refresh() {
 	screenBuffer[3] = inLeftHandedMode ? 0 : 32; //display is shifted by 32 in left handed mode as driver ram is 128 wide
 	screenBuffer[4] = 0x80;
 	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F; //End address of the ram segment we are writing to (96 wide)
-
-	screenBuffer[6] = 0x80;    //Set pages to rollover after 2
-	screenBuffer[7] = 0x22;
-	screenBuffer[8] = 0x80;
-	screenBuffer[9] = 0x00;    //start page 0
+	screenBuffer[6] = 0x80; /*Set COM Scan direction*/
+	screenBuffer[7] = inLeftHandedMode ? 0xC8 : 0xC0;
+	screenBuffer[8] = 0x80;    //Set pages to rollover after 2
+	screenBuffer[9] = 0x22;
 	screenBuffer[10] = 0x80;
-	screenBuffer[11] = 0x01;
-
-	screenBuffer[12] = 0x40;    //start of data marker
-
-	i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1);
+	screenBuffer[11] = 0x00;    //start page 0
+	screenBuffer[12] = 0x80;
+	screenBuffer[13] = 0x01;
+	screenBuffer[14] = 0x40;    //start of data marker
+	
+  i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1);
 
 }
 
@@ -305,6 +305,38 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 		// Splat the second line
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			secondStripPtr[x + xx] = ptr[xx + (height == 16 ? wide : 0)];
+		}
+	}
+}
+void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
+		const uint8_t value) {
+	// Splat this from x->x+wide in two strides
+	if (x <= -wide)
+		return;    //cutoffleft
+	if (x > 96)
+		return;    //cutoff right
+
+	uint8_t visibleStart = 0;
+	uint8_t visibleEnd = wide;
+
+	// trimming to draw partials
+	if (x < 0) {
+		visibleStart -= x;  //subtract negative value == add absolute value
+	}
+	if (x + wide > 96) {
+		visibleEnd = 96 - x;
+	}
+
+	if (y == 0) {
+		//Splat first line of data
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
+			firstStripPtr[xx + x] = value;
+		}
+	}
+	if (y == 8 || height == 16) {
+		// Splat the second line
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
+			secondStripPtr[x + xx] = value;
 		}
 	}
 }
