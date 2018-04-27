@@ -49,6 +49,8 @@ public:
 			const uint8_t* ptr);
 	void fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 			const uint8_t value);
+	void drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,bool clear);
+	void drawHeatSymbol(uint8_t state);
 private:
 
 	//Draw a buffer to the screen buffer

@@ -256,7 +256,7 @@ static void gui_drawBatteryIcon() {
 			cellV = 9;
 		lcd.drawBattery(cellV + 1);
 	} else
-		lcd.drawSymbol(16);  // Draw the DC Logo
+		lcd.drawSymbol(15);  // Draw the DC Logo
 }
 static void gui_solderingTempAdjust() {
 	uint32_t lastChange = xTaskGetTickCount();
@@ -571,18 +571,10 @@ static void gui_solderingMode() {
 						lcd.drawChar(' ');
 
 					// Draw heating/cooling symbols
-					// If tip PWM > 30% then we are 'heating'
-					if (getTipPWM() > 30)
-						lcd.drawSymbol(14);
-					else
-						lcd.drawSymbol(15);
+					lcd.drawHeatSymbol(getTipPWM());
 				} else {
 					// Draw heating/cooling symbols
-					// If tip PWM > 10% then we are 'heating'
-					if (getTipPWM() > 10)
-						lcd.drawSymbol(14);
-					else
-						lcd.drawSymbol(15);
+					lcd.drawHeatSymbol(getTipPWM());
 					// We draw boost arrow if boosting, or else gap temp <-> heat indicator
 					if (boostModeOn)
 						lcd.drawSymbol(2);

@@ -86,8 +86,8 @@ void OLED::refresh() {
 	screenBuffer[12] = 0x80;
 	screenBuffer[13] = 0x01;
 	screenBuffer[14] = 0x40;    //start of data marker
-	
-  i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1);
+
+	i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 14 + 96 * 2 + 1);
 
 }
 
@@ -266,7 +266,7 @@ void OLED::drawBattery(uint8_t state) {
 	drawSymbol(3 + state);
 }
 void OLED::drawCheckbox(bool state) {
-	drawSymbol((state) ? 17 : 18);
+	drawSymbol((state) ? 16 : 17);
 }
 void OLED::drawSymbol(uint8_t symbolID) {
 	//draw a symbol to the current cursor location
@@ -339,4 +339,50 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 			secondStripPtr[x + xx] = value;
 		}
 	}
+}
+
+void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
+		bool clear) {
+	//Draw this in 3 sections
+	//This is basically a N wide version of vertical line
+
+	//Step 1 : Draw in the top few pixels that are not /8 aligned
+	//LSB is at the top of the screen
+	uint8_t mask = 0xFF;
+	if (y0) {
+		mask = mask << (y0 % 8);
+		for (uint8_t col = x0; col < x1; col++)
+			if (clear)
+				firstStripPtr[(y0 / 8) * 96 + col] &= ~mask;
+			else
+				firstStripPtr[(y0 / 8) * 96 + col] |= mask;
+	}
+	//Next loop down the line the total number of solids
+	if (y0 / 8 != y1 / 8)
+		for (uint8_t col = x0; col < x1; col++)
+			for (uint8_t r = (y0 / 8); r < (y1 / 8); r++) {
+				//This gives us the row index r
+				if (clear)
+					firstStripPtr[(r * 96) + col] = 0;
+				else
+					firstStripPtr[(r * 96) + col] = 0xFF;
+			}
+
+	//Finally draw the tail
+	mask = ~(mask << (y1 % 8));
+	for (uint8_t col = x0; col < x1; col++)
+		if (clear)
+			firstStripPtr[(y1 / 8) * 96 + col] &= ~mask;
+		else
+			firstStripPtr[(y1 / 8) * 96 + col] |= mask;
+}
+
+void OLED::drawHeatSymbol(uint8_t state) {
+	//Draw symbol 14
+//Then draw over it botom 5 pixels always stay. 8 pixels above that are the levels
+	state /= 12; // 0-> 8 range
+	//Then we want to draw down (16-(5+state)
+	uint8_t cursor_x_temp = cursor_x;
+	drawSymbol(14);
+	drawFilledRect(cursor_x_temp, 0, cursor_x_temp + 12, 2 + (8 - state), true);
 }
