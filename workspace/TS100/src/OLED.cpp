@@ -43,7 +43,7 @@ uint8_t OLED_Setup_Array[] = { /**/
 };
 //Setup based on the SSD1307 and modified for the SSD1306
 
-OLED::OLED(I2C_HandleTypeDef* i2cHandle) {
+OLED::OLED(FRToSI2C* i2cHandle) {
 	i2c = i2cHandle;
 	cursor_x = cursor_y = 0;
 	currentFont = FONT_12;
@@ -60,11 +60,11 @@ OLED::OLED(I2C_HandleTypeDef* i2cHandle) {
 
 void OLED::initialize() {
 	HAL_Delay(5);
+
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(5);
 	//Send the setup settings
-	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
-			configLength, 0xFFFF);
+	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, configLength);
 	//displayOnOff(true);
 
 }
@@ -86,12 +86,8 @@ void OLED::refresh() {
 	screenBuffer[12] = 0x80;
 	screenBuffer[13] = 0x01;
 	screenBuffer[14] = 0x40;    //start of data marker
-	taskENTER_CRITICAL();
-	//Because I2C is shared, we cant task switch in the middle of the xfer
-
-	HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, screenBuffer, 14 + 96 * 2 + 1,
-			500);
-	taskEXIT_CRITICAL();
+	
+  i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 12 + 96 * 2 + 1);
 
 }
 
@@ -101,6 +97,10 @@ void OLED::refresh() {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(char c, char PrecursorCommand) {
+	if (c == '\n' && cursor_y == 0) {
+		cursor_x = 0;
+		cursor_y = 8;
+	}
 	if (c < ' ') {
 		return;
 	}
@@ -159,10 +159,7 @@ void OLED::displayOnOff(bool on) {
 			data[3] = 0x10;
 			data[5] = 0xAE;
 		}
-		taskENTER_CRITICAL();
-
-		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED, data, 6, 0xFFFF);
-		taskEXIT_CRITICAL();
+		i2c->Transmit( DEVICEADDR_OLED, data, 6);
 		displayOnOffState = on;
 	}
 }
@@ -177,11 +174,7 @@ void OLED::setRotation(bool leftHanded) {
 			OLED_Setup_Array[11] = 0xC0;
 			OLED_Setup_Array[19] = 0xA0;
 		}
-		taskENTER_CRITICAL();
-
-		HAL_I2C_Master_Transmit(i2c, DEVICEADDR_OLED,
-				(uint8_t*) OLED_Setup_Array, 50, 0xFFFF);
-		taskEXIT_CRITICAL();
+		i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, 50);
 		inLeftHandedMode = leftHanded;
 	}
 }

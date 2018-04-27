@@ -7,7 +7,7 @@
 
 #include <LIS2DH12.hpp>
 #include "cmsis_os.h"
-LIS2DH12::LIS2DH12(I2C_HandleTypeDef* i2cHandle) {
+LIS2DH12::LIS2DH12(FRToSI2C* i2cHandle) {
 	i2c = i2cHandle;
 }
 
@@ -44,12 +44,9 @@ uint8_t LIS2DH12::getOrientation() {
 
 void LIS2DH12::getAxisReadings(int16_t* x, int16_t* y, int16_t* z) {
 	uint8_t tempArr[6];
-	taskENTER_CRITICAL();
-	while (HAL_I2C_Mem_Read(i2c, LIS2DH_I2C_ADDRESS, 0xA8,
-	I2C_MEMADD_SIZE_8BIT, (uint8_t*) tempArr, 6, 5000) != HAL_OK) {
-		HAL_Delay(5);
-	}
-	taskEXIT_CRITICAL();
+	i2c->Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8, I2C_MEMADD_SIZE_8BIT,
+			(uint8_t*) tempArr, 6);
+
 	(*x) = ((uint16_t) (tempArr[1] << 8 | tempArr[0]));
 	(*y) = ((uint16_t) (tempArr[3] << 8 | tempArr[2]));
 	(*z) = ((uint16_t) (tempArr[5] << 8 | tempArr[4]));
@@ -59,15 +56,12 @@ void LIS2DH12::setSensitivity(uint8_t threshold, uint8_t filterTime) {
 }
 
 void LIS2DH12::I2C_RegisterWrite(uint8_t reg, uint8_t data) {
+	i2c->Mem_Write(LIS2DH_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, &data, 1);
 
-	HAL_I2C_Mem_Write(i2c, LIS2DH_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, &data,
-			1, 500);
 }
 
 uint8_t LIS2DH12::I2C_RegisterRead(uint8_t reg) {
 	uint8_t tx_data[1];
-	HAL_I2C_Mem_Read(i2c, LIS2DH_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT,
-			tx_data, 1, 500);
-
+	i2c->Mem_Read( LIS2DH_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, tx_data, 1);
 	return tx_data[0];
 }

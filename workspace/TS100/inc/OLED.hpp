@@ -12,6 +12,7 @@
 #include <hardware.h>
 #include "stm32f1xx_hal.h"
 #include <stdbool.h>
+#include "FRToSI2C.hpp"
 #include "Font.h"
 #ifdef __cplusplus
 extern "C" {
@@ -25,7 +26,7 @@ extern "C" {
 
 class OLED {
 public:
-	OLED(I2C_HandleTypeDef* i2cHandle);	// Initialize Driver and store I2C pointer
+	OLED(FRToSI2C* i2cHandle);	// Initialize Driver and store I2C pointer
 	void initialize(); 	// Startup the I2C coms (brings screen out of reset etc)
 	void refresh(); 	// Draw the buffer out to the LCD using the DMA Channel
 	void drawChar(char c, char preCursorCommand = '\0'); // Draw a character to a specific location
@@ -52,7 +53,7 @@ private:
 
 	//Draw a buffer to the screen buffer
 
-	I2C_HandleTypeDef* i2c;					//i2c Pointer
+	FRToSI2C* i2c;					//i2c Pointer
 	const uint8_t* currentFont;	// Pointer to the current font used for rendering to the buffer
 	uint8_t screenBuffer[14 + 96 + 96 + 10];    // The data buffer
 	uint8_t* firstStripPtr; // Pointers to the strips to allow for buffer having extra content
