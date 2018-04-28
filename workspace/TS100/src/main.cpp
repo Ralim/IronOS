@@ -744,7 +744,7 @@ void startGUITask(void const *argument) {
 			lcd.setFont(0);
 			lcd.displayOnOff(true);  // turn lcd on
 			gui_solderingMode();     // enter soldering mode
-
+			buttonLockout = true;
 			break;
 		case BUTTON_B_SHORT:
 			lcd.setFont(0);
