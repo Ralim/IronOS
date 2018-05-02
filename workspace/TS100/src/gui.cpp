@@ -164,23 +164,23 @@ const menuitem advancedMenu[] = {
 
 /*
  * Detailed IDLE
- *  Detailed Soldering
- *  Logo Time
- *  Calibrate Temperature
- *  Calibrate Input V
- *  Reset Settings
+ * Detailed Soldering
+ * Logo Time
+ * Calibrate Temperature
+ * Calibrate Input V
+ * Reset Settings
  */
 { (const char*) SettingsDescriptions[6], { settings_setAdvancedIDLEScreens }, {
 		settings_displayAdvancedIDLEScreens } }, /* Advanced idle screen*/
 { (const char*) SettingsDescriptions[15],
 		{ settings_setAdvancedSolderingScreens }, {
 				settings_displayAdvancedSolderingScreens } }, /* Advanced soldering screen*/
-{ (const char*) SettingsDescriptions[13], { settings_setResetSettings }, {
-		settings_displayResetSettings } }, /*Resets settings*/
 { (const char*) SettingsDescriptions[12], { settings_setCalibrate }, {
 		settings_displayCalibrate } }, /*Calibrate tip*/
 { (const char*) SettingsDescriptions[14], { settings_setCalibrateVIN }, {
 		settings_displayCalibrateVIN } }, /*Voltage input cal*/
+{ (const char*) SettingsDescriptions[13], { settings_setResetSettings }, {
+		settings_displayResetSettings } }, /*Resets settings - KEEP LAST*/
 { NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
 };
 
