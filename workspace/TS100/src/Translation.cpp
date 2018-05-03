@@ -231,33 +231,33 @@ const char* SettingsDescriptions[17] = {
 	/* Shutdown timeout                   */ "Время до отключения <Доступно отключение>.",
 	/* Motion sensitivity level           */ "Акселерометр <0 - Выкл., 1 - Мин. чувствительность, 9 - Макс. чувствительность>.",
 	/* Temperature in F and C             */ "Единица измерения температуры. < C - Цельсий, F - Фаренгейт >",
-	/* Advanced idle display mode enabled */ "Показывать детальную в режиме настроек <Вместо картинки>.",
+	/* Advanced idle display mode enabled */ "Показывать детальную информацию в режиме настроек <Вместо картинки>.",
 	/* Display rotation mode              */ "Ориентация дисплея. <A - Автоповорот, L - Левша, R - Правша>",
-	/* Boost enabled                      */ "Турбо-режим при удержании кнопки А в режиме пайки.",
+	/* Boost enabled                      */ "Повышение температуры при удержании кнопки А в режиме пайки.",
 	/* Boost temperature                  */ "Температура в Турбо-режиме.",
 	/* Automatic start mode               */ "Автоматический переход в режим пайки при включении питания.",
-	/* Cooldown blink                     */ "Показывать изменение температуры в процессе охлаждения, мигая экраном.",
+	/* Cooldown blink                     */ "Показывать изменение температуры на мигающем экране в процессе охлаждения.",
 	/* Temperature calibration enter menu */ "Калибровка температурного датчика.",
-	/* Settings reset command             */ "Сброс всех настроек к исходным значения.",
-	/* Calibrate input voltage            */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
+	/* Settings reset command             */ "Сброс всех настроек к исходным значениям.",
+	/* Calibrate input voltage            */ "Калибровка напряжения. Настройка кнопками, длительное нажатие для завершения.",
 	/* Advanced soldering screen enabled  */ "Показывать детальную информацию при пайке.",
 	/* Description Scroll Speed           */ "Скорость прокрутки текста.",
 };
 
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
 const char* SettingsResetWarning = "Вы действительно хотите сбросить настройки до значений по умолчанию?";
-const char* UVLOWarningString = "АККУМ--";               // <=8 chars
-const char* UndervoltageString = "Под питанием";         // <=16 chars
+const char* UVLOWarningString = "АККУМ--!";              // <=8 chars
+const char* UndervoltageString = "Низ. напряжение!";     // <=16 chars
 const char* InputVoltageString = "Питание(B):";          // <=11 chars, preferably end with a space
 const char* WarningTipTempString = "Жало t°: ";          // <=12 chars, preferably end with a space
-const char* BadTipString = "Жало--";                     // <=8 chars
-const char* SleepingSimpleString = "Сон ";                // Must be <= 4 chars
+const char* BadTipString = "ПлохЖало";                   // <=8 chars
+const char* SleepingSimpleString = "Сон ";               // Must be <= 4 chars
 const char* SleepingAdvancedString = "Ожидание...";      // <=16 chars
 const char* WarningSimpleString = " АЙ!";                // Must be <= 4 chars
-const char* WarningAdvancedString = "ВНИМАНИЕ ГОРЯЧО!"; // <=16 chars
+const char* WarningAdvancedString = "ВНИМАНИЕ ГОРЯЧО!";  // <=16 chars
 const char* SleepingTipAdvancedString = "Жало:";         // <=6 chars
 const char* IdleTipString = "Жало:";                     // IdleTipString+IdleSetString <= 10
-const char* IdleSetString = " ->";                  // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " ->";                       // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "Жало отключено!";   // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Питание: ";  // <=12 chars
 const char* OffString ="Off";                            // 3 chars max
@@ -296,16 +296,17 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 11) Message Scroll Speed               */ {"Скорость","текста"},		//8,6
 };
 
+// SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
-/*Soldering Menu*/"Пайка",
-/* Power Saving Menu*/"Сон",
-/* UI Menu*/"Интерфейс",
-/* Advanced Menu*/"Другие", };
-const char* SettingsMenuEntriesDescriptions[4] ={
-"Настройки для режима пайки. Действуют при включенном жале.",
-"Настройки при бездействии. Полезно чтобы не обжечься и случайно не сжечь жилище.",
-"Пользовательский интерфейс.",
-"Расширенные настройки. Дополнительные удобства."
+/* Soldering Menu    */ "Настройки\nрежима пайки",
+/* Power Saving Menu */ "Сон и энерго-\nсбережение",
+/* UI Menu           */ "Настройки\nинтерфейса",
+/* Advanced Menu     */ "Расширенные\nнастройки", };
+const char* SettingsMenuEntriesDescriptions[4] = {
+"Режим пайки. Настройки действуют при включенном жале.",
+"Поведение при простое для экономии энергии и безопасности использования.",
+"Настройки отображения данных на экране.",
+"Расширенные настройки, вывод дополнительной информации."
 };
 #endif
 
