@@ -12,14 +12,12 @@
 #include "LIS2DH12_defines.hpp"
 class LIS2DH12 {
 public:
-	LIS2DH12(FRToSI2C* i2cHandle);
+	LIS2DH12(FRToSI2C* i2cHandle) : i2c(i2cHandle) {}
 	void initalize();
 	uint8_t getOrientation();
 	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:
-	void setSensitivity(uint8_t threshold, uint8_t filterTime);	// Sets the sensitivity of the unit
-
 	void I2C_RegisterWrite(uint8_t reg, uint8_t data);
 	uint8_t I2C_RegisterRead(uint8_t reg);
 	FRToSI2C* i2c;
