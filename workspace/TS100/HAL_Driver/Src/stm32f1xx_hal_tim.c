@@ -4280,7 +4280,7 @@ uint32_t HAL_TIM_ReadCapturedValue(TIM_HandleTypeDef *htim, uint32_t Channel)
   */
 
 /**
-  * @brief  Period elapsed callback in non blocking mode 
+  * @brief  Period elapsed callback in non blocking mode
   * @param  htim : TIM handle
   * @retval None
   */

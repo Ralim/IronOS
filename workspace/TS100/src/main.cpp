@@ -99,7 +99,7 @@ void printVoltage() {
 void GUIDelay() {
 	osDelay(66);  // 15Hz
 }
-void gui_drawTipTemp() {
+void gui_drawTipTemp(bool symbol) {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
 	uint16_t Temp = getTipRawTemp(0);
 
@@ -112,6 +112,12 @@ void gui_drawTipTemp() {
 	//	Temp = systemSettings.SolderingTemp;
 
 	lcd.printNumber(Temp, 3);  // Draw the tip temp out finally
+	if (symbol) {
+		if (systemSettings.temperatureInF)
+			lcd.print("F");
+		else
+			lcd.print("C");
+	}
 }
 ButtonState getButtonState() {
 	/*
@@ -473,18 +479,7 @@ static void gui_solderingMode() {
 
 				lcd.setCursor(0, 8);
 				lcd.print(SleepingTipAdvancedString);
-				uint16_t Temp = getTipRawTemp(0);
-
-				if (systemSettings.temperatureInF)
-					Temp = tipMeasurementToF(Temp);
-				else
-					Temp = tipMeasurementToC(Temp);
-				lcd.printNumber(Temp, 3);
-				if (systemSettings.temperatureInF)
-					lcd.print("F");
-				else
-					lcd.print("C");
-
+				gui_drawTipTemp(true);
 				lcd.print(" ");
 				printVoltage();
 				lcd.drawChar('V');
@@ -495,13 +490,7 @@ static void gui_solderingMode() {
 					gui_drawBatteryIcon();
 
 					lcd.drawChar(' '); // Space out gap between battery <-> temp
-					if (systemSettings.temperatureInF) {
-						gui_drawTipTemp();  // Draw current tip temp
-						lcd.drawSymbol(0);  // deg F
-					} else {
-						gui_drawTipTemp();  // Draw current tip temp
-						lcd.drawSymbol(1);  // deg C
-					}
+					gui_drawTipTemp(true);  // Draw current tip temp
 
 					// We draw boost arrow if boosting, or else gap temp <-> heat indicator
 					if (boostModeOn)
@@ -519,14 +508,7 @@ static void gui_solderingMode() {
 						lcd.drawSymbol(2);
 					else
 						lcd.drawChar(' ');
-
-					if (systemSettings.temperatureInF) {
-						gui_drawTipTemp();  // Draw current tip temp
-						lcd.drawSymbol(0);  // deg F
-					} else {
-						gui_drawTipTemp();  // Draw current tip temp
-						lcd.drawSymbol(1);  // deg C
-					}
+					gui_drawTipTemp(true);  // Draw current tip temp
 
 					lcd.drawChar(' '); // Space out gap between battery <-> temp
 
@@ -800,7 +782,7 @@ void startGUITask(void const *argument) {
 				}
 				//draw in the temp
 				lcd.setFont(0);				//big font
-				gui_drawTipTemp();				// draw in the temp
+				gui_drawTipTemp(false);				// draw in the temp
 			}
 		}
 
@@ -1054,7 +1036,6 @@ void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {
 	i2cDev.CpltCallback();
 }
 void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c) {
-
 	i2cDev.CpltCallback();
 }
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
