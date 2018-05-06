@@ -14,13 +14,12 @@ class MMA8652FC {
 
 public:
 
-	MMA8652FC(FRToSI2C* i2cHandle);
+	MMA8652FC(FRToSI2C* i2cHandle) : i2c(i2cHandle) {}
 	void initalize();		// Initalize the system
 	uint8_t getOrientation();// Reads the I2C register and returns the orientation (true == left)
 	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:
-	void setSensitivity(uint8_t threshold, uint8_t filterTime);	// Sets the sensitivity of the unit
 
 	void I2C_RegisterWrite(uint8_t reg, uint8_t data);
 	uint8_t I2C_RegisterRead(uint8_t reg);

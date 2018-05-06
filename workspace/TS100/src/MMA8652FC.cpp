@@ -8,9 +8,26 @@
 #include <MMA8652FC.hpp>
 #include "cmsis_os.h"
 
-MMA8652FC::MMA8652FC(FRToSI2C* i2cHandle) {
-	i2c = i2cHandle;
-}
+typedef struct {
+        const uint8_t reg;
+        const uint8_t val;
+} MMA_REG;
+
+static const MMA_REG i2c_registers[] = {
+        {CTRL_REG2, 0},    //Normal mode
+        {CTRL_REG2, 0x40},      // Reset all registers to POR values
+        {FF_MT_CFG_REG, 0x78}, // Enable motion detection for X, Y, Z axis, latch disabled
+        {PL_CFG_REG, 0x40},     //Enable the orientation detection
+        {PL_COUNT_REG, 200},    //200 count debounce
+        {PL_BF_ZCOMP_REG, 0b01000111}, //Set the threshold to 42 degrees
+        {P_L_THS_REG, 0b10011100},    //Up the trip angles
+        {CTRL_REG4, 0x01 | (1 << 4)}, // Enable dataready interrupt & orientation interrupt
+        {CTRL_REG5, 0x01}, // Route data ready interrupts to INT1 ->PB5 ->EXTI5, leaving orientation routed to INT2
+        {CTRL_REG2, 0x12},   //Set maximum resolution oversampling
+        {XYZ_DATA_CFG_REG, (1 << 4)}, //select high pass filtered data
+        {HP_FILTER_CUTOFF_REG, 0x03}, //select high pass filtered data
+        {CTRL_REG1, 0x19} // ODR=12 Hz, Active mode
+};
 
 void MMA8652FC::I2C_RegisterWrite(uint8_t reg, uint8_t data) {
 	i2c->Mem_Write( MMA8652FC_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, &data, 1);
@@ -24,33 +41,18 @@ uint8_t MMA8652FC::I2C_RegisterRead(uint8_t reg) {
 	return tx_data[0];
 }
 void MMA8652FC::initalize() {
+	size_t index = 0;
+
 	//send all the init commands to the unit
-	I2C_RegisterWrite(CTRL_REG2, 0);    //Normal mode
-	I2C_RegisterWrite( CTRL_REG2, 0x40);	// Reset all registers to POR values
+
+	I2C_RegisterWrite(i2c_registers[index].reg, i2c_registers[index].val); index++;
+	I2C_RegisterWrite(i2c_registers[index].reg, i2c_registers[index].val); index++;
+
 	HAL_Delay(2);		// ~1ms delay
-	I2C_RegisterWrite(FF_MT_CFG_REG, 0x78); // Enable motion detection for X, Y, Z axis, latch disabled
 
-	I2C_RegisterWrite(PL_CFG_REG, 0x40);	//Enable the orientation detection
-	I2C_RegisterWrite(PL_COUNT_REG, 200);    //200 count debounce
-	I2C_RegisterWrite(PL_BF_ZCOMP_REG, 0b01000111); //Set the threshold to 42 degrees
-	I2C_RegisterWrite(P_L_THS_REG, 0b10011100);    //Up the trip angles
-	I2C_RegisterWrite( CTRL_REG4, 0); // Disable IRQ's
-	I2C_RegisterWrite( CTRL_REG5, 0x01); // Route data ready interrupts to INT1 ->PB5 ->EXTI5, leaving orientation routed to INT2
-	I2C_RegisterWrite( CTRL_REG2, 0x12);   //Set maximum resolution oversampling
-	I2C_RegisterWrite( XYZ_DATA_CFG_REG, (1 << 4)); //select high pass filtered data
-	I2C_RegisterWrite( HP_FILTER_CUTOFF_REG, 0x03); //select high pass filtered data
-
-	I2C_RegisterWrite( CTRL_REG1, 0x19);		// ODR=12 Hz, Active mode
-
-}
-
-void MMA8652FC::setSensitivity(uint8_t threshold, uint8_t filterTime) {
-	uint8_t sens = 9 * 2 + 17;
-	sens -= 2 * threshold;
-	I2C_RegisterWrite( CTRL_REG1, 0);		//  sleep mode
-	I2C_RegisterWrite(FF_MT_THS_REG, (sens & 0x7F));// Set accumulation threshold
-	I2C_RegisterWrite(FF_MT_COUNT_REG, filterTime);    // Set debounce threshold
-	I2C_RegisterWrite( CTRL_REG1, 0x31);		// ODR=12 Hz, Active mode
+	while (index < (sizeof(i2c_registers) / sizeof(i2c_registers[0]))) {
+		I2C_RegisterWrite(i2c_registers[index].reg, i2c_registers[index].val); index++;
+	}
 }
 
 uint8_t MMA8652FC::getOrientation() {
