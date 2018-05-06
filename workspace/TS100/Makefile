@@ -9,8 +9,6 @@ SOURCE := $(shell find . -type f -name '*.c')
 SOURCE_CPP := $(shell find . -type f -name '*.cpp')
 SOURCES := $(shell find . -type f -name '*.c*')
 S_SRCS := $(shell find . -type f -name '*.s') 
-CPPCHECK := cppcheck
-CHECKFLAGS := -q --error-exitcode=1
 
 APP_INC_DIR = ./inc
 CMSIS_DEVICE_INC_DIR = ./CMSIS/device
@@ -34,7 +32,7 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-O2 -finline-small-functions -findirect-inlining -fdiagnostics-color
+OPTIM=-Os -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 
 # global defines ---------------------------------------------------------------
@@ -133,7 +131,11 @@ CXXFLAGS=$(CPUFLAGS) \
 		-fno-rtti 			\
 		-fno-exceptions 	\
 		-fno-non-call-exceptions \
-		-fno-use-cxa-atexit	\
+		-fno-use-cxa-atexit		\
+		-fno-strict-aliasing 		\
+		-fno-rtti 			\
+		-fno-exceptions		\
+		-fno-threadsafe-statics \
 		-T$(LDSCRIPT)
 
 
@@ -175,7 +177,7 @@ OUT_OBJS_CPP=$(addprefix $(OUTPUT_DIR)/,$(OBJS_CPP))
 OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 OUT_HEXFILE=$(addprefix $(HEXFILE_DIR)/,$(OUTPUT_EXE))
 
-all: cppcheck.out.xml $(OUT_HEXFILE).hex
+all: $(OUT_HEXFILE).hex
 
 #
 # The rule to create the target directory
@@ -212,8 +214,6 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.s Makefile
 	@echo 'Finished building: $<'
 	@echo ' '
 
-cppcheck.out.xml: $(SOURCES) 
-	$(CPPCHECK) $(CHECKFLAGS) $^ -xml >$@
 
 clean :
 	rm -Rf $(OUTPUT_DIR)

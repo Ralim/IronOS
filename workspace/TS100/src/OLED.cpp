@@ -49,8 +49,8 @@ OLED::OLED(FRToSI2C* i2cHandle) {
 	currentFont = FONT_12;
 	fontWidth = 12;
 	inLeftHandedMode = false;
-	firstStripPtr = &screenBuffer[15];
-	secondStripPtr = &screenBuffer[15 + 96];
+	firstStripPtr = &screenBuffer[16 + 1];
+	secondStripPtr = &screenBuffer[16 + 1 + 96];
 	fontHeight = 16;
 	fontWidth = 12;
 	displayOffset = 0;
@@ -70,22 +70,24 @@ void OLED::initialize() {
 //Write out the buffer to the OLEd & call any rendering objects
 void OLED::refresh() {
 	screenBuffer[0] = 0x80;
-	screenBuffer[1] = 0x21;
+	screenBuffer[1] = displayOnOffState ? 0xAF : 0xAE;
 	screenBuffer[2] = 0x80;
-	screenBuffer[3] = inLeftHandedMode ? 0 : 32; //display is shifted by 32 in left handed mode as driver ram is 128 wide
+	screenBuffer[3] = 0x21;
 	screenBuffer[4] = 0x80;
-	screenBuffer[5] = inLeftHandedMode ? 95 : 0x7F; //End address of the ram segment we are writing to (96 wide)
-	screenBuffer[6] = 0x80; /*Set COM Scan direction*/
-	screenBuffer[7] = inLeftHandedMode ? 0xC8 : 0xC0;
-	screenBuffer[8] = 0x80;    //Set pages to rollover after 2
-	screenBuffer[9] = 0x22;
-	screenBuffer[10] = 0x80;
-	screenBuffer[11] = 0x00;    //start page 0
+	screenBuffer[5] = inLeftHandedMode ? 0 : 32; //display is shifted by 32 in left handed mode as driver ram is 128 wide
+	screenBuffer[6] = 0x80;
+	screenBuffer[7] = inLeftHandedMode ? 95 : 0x7F; //End address of the ram segment we are writing to (96 wide)
+	screenBuffer[8] = 0x80; /*Set COM Scan direction*/
+	screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
+	screenBuffer[10] = 0x80;    //Set pages to rollover after 2
+	screenBuffer[11] = 0x22;
 	screenBuffer[12] = 0x80;
-	screenBuffer[13] = 0x01;
-	screenBuffer[14] = 0x40;    //start of data marker
+	screenBuffer[13] = 0x00;    //start page 0
+	screenBuffer[14] = 0x80;
+	screenBuffer[15] = 0x01;
+	screenBuffer[16] = 0x40;    //start of data marker
 
-	i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 14 + 96 * 2 + 1);
+	i2c->Transmit( DEVICEADDR_OLED, screenBuffer, 16 + (96 * 2) + 1);
 
 }
 
@@ -150,16 +152,7 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 }
 
 void OLED::displayOnOff(bool on) {
-
-	if (on != displayOnOffState) {
-		uint8_t data[6] = { 0x80, 0X8D, 0x80, 0X14, 0x80, 0XAF };    //on
-		if (!on) {
-			data[3] = 0x10;
-			data[5] = 0xAE;
-		}
-		i2c->Transmit( DEVICEADDR_OLED, data, 6);
-		displayOnOffState = on;
-	}
+	displayOnOffState = on;
 }
 
 void OLED::setRotation(bool leftHanded) {
@@ -172,7 +165,8 @@ void OLED::setRotation(bool leftHanded) {
 			OLED_Setup_Array[11] = 0xC0;
 			OLED_Setup_Array[19] = 0xA0;
 		}
-		i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, configLength);
+		i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
+				configLength);
 		inLeftHandedMode = leftHanded;
 	}
 }
@@ -340,7 +334,7 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 }
 
 void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
-		bool clear) {
+bool clear) {
 	//Draw this in 3 sections
 	//This is basically a N wide version of vertical line
 

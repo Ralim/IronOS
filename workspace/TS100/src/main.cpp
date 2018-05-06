@@ -587,6 +587,10 @@ void showVersion(void) {
 		case 5:
 			lcd.print("Time: ");
 			lcd.printNumber(xTaskGetTickCount() / 100, 5);
+			break;
+		case 6:
+			lcd.print("Move: ");
+			lcd.printNumber(lastMovementTime / 100, 5);
 
 			break;
 		}
@@ -597,7 +601,7 @@ void showVersion(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 6;
+			screen = screen % 7;
 		}
 	}
 }
@@ -605,29 +609,6 @@ void showVersion(void) {
 /* StartGUITask function */
 void startGUITask(void const *argument) {
 	i2cDev.FRToSInit();
-	/*
-	 * Main program states:
-	 *
-	 * * Soldering (gui_solderingMode)
-	 * -> Main loop where we draw temp, and animations
-	 * --> User presses buttons and they goto the temperature adjust screen
-	 * ---> Display the current setpoint temperature
-	 * ---> Use buttons to change forward and back on temperature
-	 * ---> Both buttons or timeout for exiting
-	 * --> Long hold front button to enter boost mode
-	 * ---> Just temporarily sets the system into the alternate temperature for
-	 * PID control
-	 * --> Long hold back button to exit
-	 * --> Double button to exit
-	 * * Settings Menu (gui_settingsMenu)
-	 * -> Show setting name
-	 * --> If no button press for > 3 Seconds, scroll description
-	 * -> If user presses back button, adjust the setting
-	 * -> Currently the same as 1.x (future to make more depth based)
-	 */
-
-	uint8_t animationStep = 0;
-
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 
@@ -727,7 +708,6 @@ void startGUITask(void const *argument) {
 					lcd.displayOnOff(false);  // turn lcd off when no movement
 				} else
 					lcd.displayOnOff(true);  // turn lcd on
-
 			} else
 				lcd.displayOnOff(true);  // turn lcd on - disabled motion sleep
 		} else
@@ -787,7 +767,6 @@ void startGUITask(void const *argument) {
 		}
 
 		lcd.refresh();
-		animationStep++;
 		GUIDelay();
 	}
 }

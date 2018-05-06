@@ -57,7 +57,7 @@ private:
 
 	FRToSI2C* i2c;					//i2c Pointer
 	const uint8_t* currentFont;	// Pointer to the current font used for rendering to the buffer
-	uint8_t screenBuffer[14 + 96 + 96 + 10];    // The data buffer
+	uint8_t screenBuffer[16 + 96 + 96 + 10];    // The data buffer
 	uint8_t* firstStripPtr; // Pointers to the strips to allow for buffer having extra content
 	uint8_t* secondStripPtr;	//Pointers to the strips
 	bool inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
