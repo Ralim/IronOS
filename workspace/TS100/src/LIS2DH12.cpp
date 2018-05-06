@@ -35,19 +35,6 @@ void LIS2DH12::initalize() {
     }
 }
 
-//0=no change, 1= right handed, 2= left handed
-uint8_t LIS2DH12::getOrientation() {
-	// 8=right handed,4=left,16=flat
-	//So we ignore if not 8/4
-	uint8_t pos = I2C_RegisterRead(LIS_INT2_SRC);
-	if (pos == 8)
-		return 1;
-	else if (pos == 4)
-		return 2;
-	else
-		return 0;
-}
-
 void LIS2DH12::getAxisReadings(int16_t* x, int16_t* y, int16_t* z) {
 	uint8_t tempArr[6];
 	i2c->Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8, I2C_MEMADD_SIZE_8BIT,

@@ -55,18 +55,20 @@ void MMA8652FC::initalize() {
 	}
 }
 
-uint8_t MMA8652FC::getOrientation() {
+Orientation MMA8652FC::getOrientation() {
 	//First read the PL_STATUS register
 	uint8_t plStatus = I2C_RegisterRead(PL_STATUS_REG);
 	if ((plStatus & 0b10000000) == 0b10000000) {
 		plStatus >>= 1;    //We don't need the up/down bit
 		plStatus &= 0x03;    //mask to the two lower bits
+
 		//0 == left handed
 		//1 == right handed
 
-		return plStatus == 0 ? 2 : 1;
-	} else
-		return 0;
+		return static_cast<Orientation>(plStatus);
+	}
+	
+	return ORIENTATION_FLAT;
 }
 void MMA8652FC::getAxisReadings(int16_t *x, int16_t *y, int16_t *z) {
 	uint8_t tempArr[6];

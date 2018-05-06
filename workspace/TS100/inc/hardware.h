@@ -13,6 +13,12 @@
 extern "C" {
 #endif
 
+enum Orientation {
+    ORIENTATION_LEFT_HAND = 0,
+    ORIENTATION_RIGHT_HAND = 1,
+    ORIENTATION_FLAT = 3
+};
+
 #define KEY_B_Pin GPIO_PIN_6
 #define KEY_B_GPIO_Port GPIOA
 #define TMP36_INPUT_Pin GPIO_PIN_7

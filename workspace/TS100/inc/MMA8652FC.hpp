@@ -10,13 +10,15 @@
 #include "stm32f1xx_hal.h"
 #include "MMA8652FC_defines.h"
 #include "FRToSI2C.hpp"
+#include "hardware.h"
+
 class MMA8652FC {
 
 public:
 
 	MMA8652FC(FRToSI2C* i2cHandle) : i2c(i2cHandle) {}
 	void initalize();		// Initalize the system
-	uint8_t getOrientation();// Reads the I2C register and returns the orientation (true == left)
+	Orientation getOrientation();// Reads the I2C register and returns the orientation (true == left)
 	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:

@@ -887,7 +887,7 @@ void startMOVTask(void const *argument) {
 #if ACCELDEBUG
 	uint32_t max = 0;
 #endif
-	uint8_t rotation = 0;
+	Orientation rotation = ORIENTATION_FLAT;
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200; // 200 is the step size
@@ -900,8 +900,8 @@ void startMOVTask(void const *argument) {
 			rotation = accel.getOrientation();
 		}
 		if (systemSettings.OrientationMode == 2) {
-			if (rotation != 0) {
-				lcd.setRotation(rotation == 2);  // link the data through
+			if (rotation != ORIENTATION_FLAT) {
+				lcd.setRotation(rotation == ORIENTATION_LEFT_HAND);  // link the data through
 			}
 		}
 		datax[currentPointer] = (int32_t) tx;

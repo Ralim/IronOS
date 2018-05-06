@@ -10,11 +10,13 @@
 #include "stm32f1xx_hal.h"
 #include "FRToSI2C.hpp"
 #include "LIS2DH12_defines.hpp"
+#include "hardware.h"
+
 class LIS2DH12 {
 public:
 	LIS2DH12(FRToSI2C* i2cHandle) : i2c(i2cHandle) {}
 	void initalize();
-	uint8_t getOrientation();
+	Orientation getOrientation() { return static_cast<Orientation>((I2C_RegisterRead(LIS_INT2_SRC) >> 2) - 1); }
 	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:
