@@ -28,9 +28,9 @@ void HAL_MspInit(void) {
 
 	/**NOJTAG: JTAG-DP Disabled and SW-DP Enabled
 	 */
-	__HAL_AFIO_REMAP_SWJ_NOJTAG()
-	;
-//	__HAL_AFIO_REMAP_SWJ_DISABLE(); /*Disable swd for debug io use*/
+	//__HAL_AFIO_REMAP_SWJ_NOJTAG()
+	//;
+	__HAL_AFIO_REMAP_SWJ_DISABLE(); /*Disable swd for debug io use*/
 
 }
 
@@ -68,7 +68,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc) {
 		__HAL_LINKDMA(hadc, DMA_Handle, hdma_adc1);
 
 		/* ADC1 interrupt Init */
-		HAL_NVIC_SetPriority(ADC1_2_IRQn, 5, 0);
+		HAL_NVIC_SetPriority(ADC1_2_IRQn, 15, 0);
 		HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
 	}
 
@@ -118,9 +118,9 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c) {
 	__HAL_LINKDMA(hi2c, hdmatx, hdma_i2c1_tx);
 
 	/* I2C1 interrupt Init */
-	HAL_NVIC_SetPriority(I2C1_EV_IRQn, 5, 0);
+	HAL_NVIC_SetPriority(I2C1_EV_IRQn, 15, 0);
 	HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
-	HAL_NVIC_SetPriority(I2C1_ER_IRQn, 5, 0);
+	HAL_NVIC_SetPriority(I2C1_ER_IRQn, 15, 0);
 	HAL_NVIC_EnableIRQ(I2C1_ER_IRQn);
 
 }

@@ -27,7 +27,6 @@ uint32_t lastButtonTime = 0;
 // FreeRTOS variables
 osThreadId GUITaskHandle;
 osThreadId PIDTaskHandle;
-osThreadId ROTTaskHandle;
 osThreadId MOVTaskHandle;
 
 static TaskHandle_t pidTaskNotification = NULL;
@@ -35,7 +34,6 @@ static TaskHandle_t pidTaskNotification = NULL;
 void startGUITask(void const *argument);
 void startPIDTask(void const *argument);
 void startMOVTask(void const *argument);
-void startRotationTask(void const *argument);
 // End FreeRTOS
 
 // Main sets up the hardware then hands over to the FreeRTOS kernel
@@ -81,9 +79,6 @@ int main(void) {
 	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 512);  //2k
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 	if (PCBVersion != 3) {
-		/* definition and creation of ROTTask */
-		osThreadDef(ROTTask, startRotationTask, osPriorityLow, 0, 256);  //1k
-		ROTTaskHandle = osThreadCreate(osThread(ROTTask), NULL);
 		/* definition and creation of MOVTask */
 		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 512);  //2k
 		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
@@ -95,6 +90,11 @@ int main(void) {
 	/* We should never get here as control is now taken by the scheduler */
 	while (1) {
 	}
+}
+void printVoltage() {
+	lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+	lcd.drawChar('.');
+	lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
 }
 void GUIDelay() {
 	osDelay(66);  // 15Hz
@@ -221,11 +221,7 @@ static bool checkVoltageForExit() {
 			lcd.print(UndervoltageString);
 			lcd.setCursor(0, 8);
 			lcd.print(InputVoltageString);
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10,
-					2);
-			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10,
-					1);
+			printVoltage();
 			lcd.print("V");
 
 		} else {
@@ -332,56 +328,6 @@ static void gui_solderingTempAdjust() {
 	}
 }
 
-static int gui_showTipTempWarning() {
-	for (;;) {
-		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
-		if (systemSettings.detailedSoldering) {
-			lcd.setFont(1);
-			lcd.print(WarningAdvancedString);
-			lcd.setCursor(0, 8);
-			lcd.print(WarningTipTempString);
-
-			if (systemSettings.temperatureInF) {
-				lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
-				lcd.print("F");
-			} else {
-				lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
-				lcd.print("C");
-			}
-		} else {
-			lcd.setFont(0);
-			lcd.drawArea(0, 0, 24, 16, WarningBlock24);
-			lcd.setCursor(24, 0);
-			// lcd.print(WarningSimpleString);
-			lcd.print(" ");
-			if (systemSettings.temperatureInF) {
-				lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
-				lcd.drawSymbol(0);
-			} else {
-				lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
-				lcd.drawSymbol(1);
-			}
-		}
-		if (systemSettings.coolingTempBlink && tipTemp > 70) {
-			if (xTaskGetTickCount() % 50 < 25)
-				lcd.clearScreen();
-		}
-		lcd.refresh();
-		ButtonState buttons = getButtonState();
-		if (buttons == BUTTON_F_SHORT)
-			return 1;
-		else if (buttons == BUTTON_B_SHORT || buttons == BUTTON_BOTH)
-			return 0;
-
-		if (tipTemp < 50)
-			return 0;  //Exit the warning screen
-
-		GUIDelay();
-	}
-	return 0;
-}
 static uint16_t min(uint16_t a, uint16_t b) {
 	if (a > b)
 		return b;
@@ -401,14 +347,15 @@ static int gui_SolderingSleepingMode() {
 		if (checkVoltageForExit())
 			return 1;  // return non-zero on error
 
-		if (systemSettings.temperatureInF)
+		if (systemSettings.temperatureInF) {
 			currentlyActiveTemperatureTarget = ftoTipMeasurement(
 					min(systemSettings.SleepTemp,
 							systemSettings.SolderingTemp));
-		else
+		} else {
 			currentlyActiveTemperatureTarget = ctoTipMeasurement(
 					min(systemSettings.SleepTemp,
 							systemSettings.SolderingTemp));
+		}
 		// draw the lcd
 		uint16_t tipTemp;
 		if (systemSettings.temperatureInF)
@@ -430,11 +377,7 @@ static int gui_SolderingSleepingMode() {
 				lcd.print("C");
 
 			lcd.print(" ");
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10,
-					2);
-			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10,
-					1);
+			printVoltage();
 			lcd.drawChar('V');
 		} else {
 			lcd.setFont(0);
@@ -543,11 +486,7 @@ static void gui_solderingMode() {
 					lcd.print("C");
 
 				lcd.print(" ");
-				lcd.printNumber(
-						getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
-				lcd.drawChar('.');
-				lcd.printNumber(
-						getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+				printVoltage();
 				lcd.drawChar('V');
 			} else {
 				// We switch the layout direction depending on the orientation of the lcd.
@@ -632,6 +571,55 @@ static void gui_solderingMode() {
 	}
 }
 
+void showVersion(void) {
+	uint8_t screen = 0;
+	ButtonState b;
+	for (;;) {
+		lcd.clearScreen();    // Ensure the buffer starts clean
+		lcd.setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
+		lcd.setFont(1);       // small font
+		lcd.print((char *) "V2.05 PCB");  // Print version number
+		lcd.printNumber(PCBVersion, 1); //Print PCB ID number
+		lcd.setCursor(0, 8);         // second line
+		switch (screen) {
+		case 0:
+			lcd.print(__DATE__);         // print the compile date
+			break;
+		case 1:
+			lcd.print("Heap: ");
+			lcd.printNumber(xPortGetFreeHeapSize(), 5);
+			break;
+		case 2:
+			lcd.print("HWMG: ");
+			lcd.printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5);
+			break;
+		case 3:
+			lcd.print("HWMP: ");
+			lcd.printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5);
+			break;
+		case 4:
+			lcd.print("HWMM: ");
+			lcd.printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5);
+			break;
+
+		case 5:
+			lcd.print("Time: ");
+			lcd.printNumber(xTaskGetTickCount() / 100, 5);
+
+			break;
+		}
+
+		lcd.refresh();
+		b = getButtonState();
+		if (b == BUTTON_B_SHORT)
+			return;
+		else if (b == BUTTON_F_SHORT) {
+			screen++;
+			screen = screen % 6;
+		}
+	}
+}
+
 /* StartGUITask function */
 void startGUITask(void const *argument) {
 	i2cDev.FRToSInit();
@@ -661,7 +649,6 @@ void startGUITask(void const *argument) {
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 
-	HAL_IWDG_Refresh(&hiwdg);
 	switch (systemSettings.OrientationMode) {
 	case 0:
 		lcd.setRotation(false);
@@ -685,8 +672,6 @@ void startGUITask(void const *argument) {
 			ticks = xTaskGetTickCount();  //make timeout now so we will exit
 		GUIDelay();
 	}
-
-	HAL_IWDG_Refresh(&hiwdg);
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
 		if (systemSettings.autoStartMode == 1)
@@ -723,18 +708,7 @@ void startGUITask(void const *argument) {
 
 		case BUTTON_B_LONG:
 			// Show the version information
-		{
-			lcd.clearScreen();    // Ensure the buffer starts clean
-			lcd.setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
-			lcd.setFont(1);       // small font
-			lcd.print((char *) "V2.04 PCB");  // Print version number
-			lcd.printNumber(PCBVersion, 1); //Print PCB ID number
-			lcd.setCursor(0, 8);         // second line
-			lcd.print(__DATE__);         // print the compile date
-			lcd.refresh();
-			waitForButtonPress();
-			lcd.setFont(0);  // reset font
-		}
+			showVersion();
 			break;
 		case BUTTON_F_LONG:
 			gui_solderingTempAdjust();
@@ -771,6 +745,7 @@ void startGUITask(void const *argument) {
 					lcd.displayOnOff(false);  // turn lcd off when no movement
 				} else
 					lcd.displayOnOff(true);  // turn lcd on
+
 			} else
 				lcd.displayOnOff(true);  // turn lcd on - disabled motion sleep
 		} else
@@ -797,11 +772,7 @@ void startGUITask(void const *argument) {
 			}
 			lcd.setCursor(0, 8);
 			lcd.print(InputVoltageString);
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10,
-					2);
-			lcd.drawChar('.');
-			lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10,
-					1);
+			printVoltage();
 			lcd.print("V");
 
 		} else {
@@ -858,9 +829,9 @@ void startPIDTask(void const *argument) {
 	int32_t kp, ki, kd;
 	ki = 50;
 	kd = 15;
-	// REMEBER ^^^^ These constants are backwards
-	// They act as dividers, so to 'increase' a P term, you make the number
-	// smaller.
+// REMEBER ^^^^ These constants are backwards
+// They act as dividers, so to 'increase' a P term, you make the number
+// smaller.
 	if (getInputVoltageX10(systemSettings.voltageDiv) < 150) {
 		//Boot P term if < 15 Volts
 		kp = 30;
@@ -869,62 +840,77 @@ void startPIDTask(void const *argument) {
 	const int32_t itermMax = 100;
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
-		ulTaskNotifyTake( pdTRUE, 50);	//Wait a max of 50ms
-		//This is a call to block this thread until the ADC does its samples
-		uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
-		if (currentlyActiveTemperatureTarget) {
-			// Compute the PID loop in here
-			// Because our values here are quite large for all measurements (0-16k ~=
-			// 33 counts per C)
-			// P I & D are divisors, so inverse logic applies (beware)
+		if (ulTaskNotifyTake( pdTRUE, 50)) {
+			//Wait a max of 50ms
+			//This is a call to block this thread until the ADC does its samples
+			uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
+			if (currentlyActiveTemperatureTarget) {
+				// Compute the PID loop in here
+				// Because our values here are quite large for all measurements (0-16k ~=
+				// 33 counts per C)
+				// P I & D are divisors, so inverse logic applies (beware)
 
-			// Cap the max set point to 450C
-			if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
-				currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
+				// Cap the max set point to 450C
+				if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
+					currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
+				}
+
+				int32_t rawTempError = currentlyActiveTemperatureTarget
+						- rawTemp;
+				int32_t ierror = (rawTempError / ki);
+				integralCount += ierror;
+				if (integralCount > (itermMax / 2))
+					integralCount = itermMax / 2;  // prevent too much lead
+				else if (integralCount < -itermMax)
+					integralCount = itermMax;
+
+				int32_t dInput = (rawTemp - derivativeLastValue);
+
+				/*Compute PID Output*/
+				int32_t output = (rawTempError / kp);
+				if (ki)
+					output += integralCount;
+				if (kd)
+					output -= (dInput / kd);
+
+				if (output > 100) {
+					output = 100;  // saturate
+				} else if (output < 0) {
+					output = 0;
+				}
+
+				/*if (currentlyActiveTemperatureTarget < rawTemp) {
+				 output = 0;
+				 }*/
+				setTipPWM(output);
+				derivativeLastValue = rawTemp;  // store for next loop
+
+			} else {
+				setTipPWM(0); // disable the output driver if the output is set to be off
+				integralCount = 0;
+				derivativeLastValue = 0;
 			}
 
-			int32_t rawTempError = currentlyActiveTemperatureTarget - rawTemp;
-			int32_t ierror = (rawTempError / ki);
-			integralCount += ierror;
-			if (integralCount > (itermMax / 2))
-				integralCount = itermMax / 2;  // prevent too much lead
-			else if (integralCount < -itermMax)
-				integralCount = itermMax;
-
-			int32_t dInput = (rawTemp - derivativeLastValue);
-
-			/*Compute PID Output*/
-			int32_t output = (rawTempError / kp);
-			if (ki)
-				output += integralCount;
-			if (kd)
-				output -= (dInput / kd);
-
-			if (output > 100) {
-				output = 100;  // saturate
-			} else if (output < 0) {
-				output = 0;
-			}
-
-			/*if (currentlyActiveTemperatureTarget < rawTemp) {
-			 output = 0;
-			 }*/
-			setTipPWM(output);
-			derivativeLastValue = rawTemp;  // store for next loop
-
-		} else {
-			setTipPWM(0); // disable the output driver if the output is set to be off
-			integralCount = 0;
-			derivativeLastValue = 0;
-			osDelay(100); //sleep for a bit longer
+			HAL_IWDG_Refresh(&hiwdg);
 		}
-
-		HAL_IWDG_Refresh(&hiwdg);
 	}
 }
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
 	osDelay(250);  // wait for accelerometer to stabilize
+	switch (systemSettings.OrientationMode) {
+	case 0:
+		lcd.setRotation(false);
+		break;
+	case 1:
+		lcd.setRotation(true);
+		break;
+	case 2:
+		lcd.setRotation(false);
+		break;
+	default:
+		break;
+	}
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter];
 	int16_t datay[MOVFilter];
@@ -940,20 +926,29 @@ void startMOVTask(void const *argument) {
 #if ACCELDEBUG
 	uint32_t max = 0;
 #endif
-
+	uint8_t rotation = 0;
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200; // 200 is the step size
-		if (PCBVersion == 2)
-			accel2.getAxisReadings(&tx, &ty, &tz);
-		else if (PCBVersion == 1)
-			accel.getAxisReadings(&tx, &ty, &tz);
 
+		if (PCBVersion == 2) {
+			accel2.getAxisReadings(&tx, &ty, &tz);
+			rotation = accel2.getOrientation();
+		} else if (PCBVersion == 1) {
+			accel.getAxisReadings(&tx, &ty, &tz);
+			rotation = accel.getOrientation();
+		}
+		if (systemSettings.OrientationMode == 2) {
+			if (rotation != 0) {
+				lcd.setRotation(rotation == 2);  // link the data through
+			}
+		}
 		datax[currentPointer] = (int32_t) tx;
 		datay[currentPointer] = (int32_t) ty;
 		dataz[currentPointer] = (int32_t) tz;
 		currentPointer = (currentPointer + 1) % MOVFilter;
 #if ACCELDEBUG
+
 		// Debug for Accel
 
 		avgx = avgy = avgz = 0;
@@ -995,6 +990,7 @@ void startMOVTask(void const *argument) {
 
 		// So now we have averages, we want to look if these are different by more
 		// than the threshold
+		//Sum the deltas
 		int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 		// If error has occurred then we update the tick timer
 		if (error > threshold) {
@@ -1004,52 +1000,13 @@ void startMOVTask(void const *argument) {
 		osDelay(100);  // Slow down update rate
 	}
 }
-/* StartRotationTask function */
-void startRotationTask(void const *argument) {
-	/*
-	 * This task is used to manage rotation of the LCD screen & button re-mapping
-	 *
-	 */
-	switch (systemSettings.OrientationMode) {
-	case 0:
-		lcd.setRotation(false);
-		break;
-	case 1:
-		lcd.setRotation(true);
-		break;
-	case 2:
-		lcd.setRotation(false);
-		break;
-	default:
-		break;
-	}
-	osDelay(250);  // wait for accel to stabilize
-
-	for (;;) {
-
-		// a rotation event has occurred
-		uint8_t rotation = 0;
-		if (PCBVersion == 2) {
-			rotation = accel2.getOrientation();
-		} else if (PCBVersion == 1) {
-			rotation = accel.getOrientation();
-		}
-		if (systemSettings.OrientationMode == 2) {
-			if (rotation != 0) {
-				lcd.setRotation(rotation == 2);  // link the data through
-			}
-		}
-
-		osDelay(500);
-	}
-}
 
 #define FLASH_LOGOADDR \
   (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
 
 bool showBootLogoIfavailable() {
-	// check if the header is there (0xAA,0x55,0xF0,0x0D)
-	// If so display logo
+// check if the header is there (0xAA,0x55,0xF0,0x0D)
+// If so display logo
 	uint16_t temp[98];
 
 	for (uint8_t i = 0; i < (98); i++) {
@@ -1108,4 +1065,10 @@ void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c) {
 }
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 	i2cDev.CpltCallback();
+}
+void vApplicationStackOverflowHook( xTaskHandle *pxTask,
+		signed portCHAR *pcTaskName) {
+//We dont have a good way to handle a stack overflow at this point in time
+	NVIC_SystemReset();
+
 }

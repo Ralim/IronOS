@@ -34,7 +34,7 @@ void MMA8652FC::initalize() {
 	I2C_RegisterWrite(PL_COUNT_REG, 200);    //200 count debounce
 	I2C_RegisterWrite(PL_BF_ZCOMP_REG, 0b01000111); //Set the threshold to 42 degrees
 	I2C_RegisterWrite(P_L_THS_REG, 0b10011100);    //Up the trip angles
-	I2C_RegisterWrite( CTRL_REG4, 0x01 | (1 << 4)); // Enable dataready interrupt & orientation interrupt
+	I2C_RegisterWrite( CTRL_REG4, 0); // Disable IRQ's
 	I2C_RegisterWrite( CTRL_REG5, 0x01); // Route data ready interrupts to INT1 ->PB5 ->EXTI5, leaving orientation routed to INT2
 	I2C_RegisterWrite( CTRL_REG2, 0x12);   //Set maximum resolution oversampling
 	I2C_RegisterWrite( XYZ_DATA_CFG_REG, (1 << 4)); //select high pass filtered data

@@ -38,7 +38,7 @@ void Setup_HAL() {
 	MX_TIM2_Init();
 	MX_IWDG_Init();
 
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADCReadings, 64);//start DMA of normal readings
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADCReadings, 64); //start DMA of normal readings
 	HAL_ADCEx_InjectedStart(&hadc1);    //enable injected  readings
 }
 
@@ -131,7 +131,9 @@ static void MX_ADC1_Init(void) {
 	//F in = 10.66 MHz
 	/*
 	 * Injected time is 1 delay clock + (12 adc cycles*4)+4*sampletime =~217 clocks = 0.2ms
-	 *
+	 * Charge time is 0.016 uS ideally
+	 * So Sampling time must be >= 0.016uS
+	 * 1/10.66MHz is 0.09uS, so 1 CLK is *should* be enough
 	 * */
 	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
 	sConfigInjected.InjectedRank = 1;
@@ -143,13 +145,16 @@ static void MX_ADC1_Init(void) {
 	sConfigInjected.InjectedOffset = 0;
 
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
 	sConfigInjected.InjectedRank = 2;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	sConfigInjected.InjectedRank = 3;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	sConfigInjected.InjectedRank = 4;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-	SET_BIT(hadc1.Instance->CR1, ( ADC_CR1_JEOCIE ));//Enable end of injected conv irq
+	SET_BIT(hadc1.Instance->CR1, ( ADC_CR1_JEOCIE )); //Enable end of injected conv irq
+	while(HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK);
 }
 
 /* I2C1 init function */
@@ -288,13 +293,13 @@ static void MX_DMA_Init(void) {
 
 	/* DMA interrupt init */
 	/* DMA1_Channel1_IRQn interrupt configuration */
-	HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 5, 0);
+	HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 15, 0);
 	HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 	/* DMA1_Channel6_IRQn interrupt configuration */
-	HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 5, 0);
+	HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 15, 0);
 	HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
 	/* DMA1_Channel7_IRQn interrupt configuration */
-	HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 5, 0);
+	HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 15, 0);
 	HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
 
 }
@@ -336,13 +341,16 @@ static void MX_GPIO_Init(void) {
 			| GPIO_PIN_15;
 	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	//Set PA 11 and PA 12 to GND to stop usb detection, 14 re-rused for debug
+
+	//Set PA 11 and PA 12 to GND to stop usb detection, 13/14 re-rused for debug
 	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
 
 	/*Configure GPIO pins : KEY_B_Pin KEY_A_Pin */
 	GPIO_InitStruct.Pin = KEY_B_Pin | KEY_A_Pin;
@@ -361,10 +369,11 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(OLED_RESET_GPIO_Port, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : INT_Orientation_Pin INT_Movement_Pin */
+	/* Configure GPIO pins : INT_Orientation_Pin INT_Movement_Pin */
+	/* Not used anymore*/
 	GPIO_InitStruct.Pin = INT_Orientation_Pin | INT_Movement_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct.Pull = GPIO_PULLUP; //Technically the IMU is P-P but safer to pullup (very tiny current cost)
+	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/*Configure peripheral I/O remapping */

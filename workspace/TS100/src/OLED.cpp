@@ -60,13 +60,11 @@ OLED::OLED(FRToSI2C* i2cHandle) {
 
 void OLED::initialize() {
 	HAL_Delay(5);
-
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
-	HAL_Delay(5);
+	HAL_Delay(10);
 	//Send the setup settings
 	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, configLength);
-	//displayOnOff(true);
-
+	displayOnOff(true);
 }
 
 //Write out the buffer to the OLEd & call any rendering objects
@@ -174,7 +172,7 @@ void OLED::setRotation(bool leftHanded) {
 			OLED_Setup_Array[11] = 0xC0;
 			OLED_Setup_Array[19] = 0xA0;
 		}
-		i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, 50);
+		i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, configLength);
 		inLeftHandedMode = leftHanded;
 	}
 }
