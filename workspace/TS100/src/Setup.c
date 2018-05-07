@@ -154,14 +154,16 @@ static void MX_ADC1_Init(void) {
 	sConfigInjected.InjectedRank = 4;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 	SET_BIT(hadc1.Instance->CR1, ( ADC_CR1_JEOCIE )); //Enable end of injected conv irq
-	while(HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK);
+	// Run ADC internal calibration
+	while (HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK)
+		;
 }
 
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {
 
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.ClockSpeed = 300000;    //300Khz
+	hi2c1.Init.ClockSpeed = 100000; // OLED doesnt handle >100k when its asleep (off).
 	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;

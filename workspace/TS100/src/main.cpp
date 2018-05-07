@@ -787,17 +787,11 @@ void startPIDTask(void const *argument) {
 	osDelay(500);
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
-	int32_t kp, ki, kd;
-	ki = 50;
-	kd = 15;
+
 // REMEBER ^^^^ These constants are backwards
 // They act as dividers, so to 'increase' a P term, you make the number
 // smaller.
-	if (getInputVoltageX10(systemSettings.voltageDiv) < 150) {
-		//Boot P term if < 15 Volts
-		kp = 30;
-	} else
-		kp = 42;
+
 	const int32_t itermMax = 100;
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
@@ -818,7 +812,7 @@ void startPIDTask(void const *argument) {
 
 				int32_t rawTempError = currentlyActiveTemperatureTarget
 						- rawTemp;
-				int32_t ierror = (rawTempError / ki);
+				int32_t ierror = (rawTempError / ((int32_t)systemSettings.PID_I));
 				integralCount += ierror;
 				if (integralCount > (itermMax / 2))
 					integralCount = itermMax / 2;  // prevent too much lead
@@ -828,11 +822,11 @@ void startPIDTask(void const *argument) {
 				int32_t dInput = (rawTemp - derivativeLastValue);
 
 				/*Compute PID Output*/
-				int32_t output = (rawTempError / kp);
-				if (ki)
+				int32_t output = (rawTempError / ((int32_t)systemSettings.PID_P));
+				if (((int32_t)systemSettings.PID_I))
 					output += integralCount;
-				if (kd)
-					output -= (dInput / kd);
+				if (((int32_t)systemSettings.PID_D))
+					output -= (dInput / ((int32_t)systemSettings.PID_D));
 
 				if (output > 100) {
 					output = 100;  // saturate
@@ -968,6 +962,7 @@ void startMOVTask(void const *argument) {
 bool showBootLogoIfavailable() {
 // check if the header is there (0xAA,0x55,0xF0,0x0D)
 // If so display logo
+	//TODO REDUCE STACK ON THIS ONE, USE DRAWING IN THE READ LOOP
 	uint16_t temp[98];
 
 	for (uint8_t i = 0; i < (98); i++) {

@@ -90,6 +90,10 @@ void resetSettings() {
 	systemSettings.CalibrationOffset = 10;		//This appears to be quite close for both of my tips, in both of my handles
 	systemSettings.temperatureInF = 0;			//default to 0
 	systemSettings.descriptionScrollSpeed=0;//default to slow
+	systemSettings.PID_P =42;
+	systemSettings.PID_I =50;
+	systemSettings.PID_D =15;
+
 	saveSettings();
 }
 

@@ -75,6 +75,15 @@ const char* SettingsDescriptions[17] = {
   /* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
   /* Advanced soldering screen enabled  */ "Display detailed information while soldering",
   /* Description Scroll Speed           */ "Speed this text scrolls past at",
+
+#ifdef PIDSETTINGS
+
+  "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+  "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+  "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+
+#endif
+
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
@@ -121,6 +130,13 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
   /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+#ifdef PIDSETTINGS
+
+  {"PID","P"},
+  {"PID","I"},
+  {"PID","D"},
+#endif
+
 };
 
 // SettingsMenuEntries lengths <= 13 per line (\n starts second line)

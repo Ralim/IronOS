@@ -31,7 +31,15 @@ static void settings_setAdvancedIDLEScreens(void);
 static void settings_displayAdvancedIDLEScreens(void);
 static void settings_setScrollSpeed(void);
 static void settings_displayScrollSpeed(void);
+#ifdef PIDSETTINGS
 
+static void settings_setPIDP(void);
+static void settings_displayPIDP(void);
+static void settings_setPIDI(void);
+static void settings_displayPIDI(void);
+static void settings_setPIDD(void);
+static void settings_displayPIDD(void);
+#endif
 static void settings_setDisplayRotation(void);
 static void settings_displayDisplayRotation(void);
 static void settings_setBoostModeEnabled(void);
@@ -181,6 +189,15 @@ const menuitem advancedMenu[] = {
 		settings_displayCalibrate } }, /*Calibrate tip*/
 { (const char*) SettingsDescriptions[14], { settings_setCalibrateVIN }, {
 		settings_displayCalibrateVIN } }, /*Voltage input cal*/
+#ifdef PIDSETTINGS
+
+{ (const char*) SettingsDescriptions[17], { settings_setPIDP }, {
+		settings_displayPIDP } }, /*Voltage input cal*/
+{ (const char*) SettingsDescriptions[18], { settings_setPIDI }, {
+		settings_displayPIDI } }, /*Voltage input cal*/
+{ (const char*) SettingsDescriptions[19], { settings_setPIDD }, {
+		settings_displayPIDD } }, /*Voltage input cal*/
+#endif
 { NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
 };
 
@@ -363,13 +380,13 @@ static void settings_setTempF(void) {
 
 	}
 	// Rescale both to be multiples of 10
-	systemSettings.BoostTemp = systemSettings.BoostTemp/10;
-	systemSettings.BoostTemp *=10;
-	systemSettings.SolderingTemp = systemSettings.SolderingTemp/10;
-	systemSettings.SolderingTemp *=10;
-	systemSettings.SleepTemp = systemSettings.SleepTemp/10;
-	systemSettings.SleepTemp *=10;
-	
+	systemSettings.BoostTemp = systemSettings.BoostTemp / 10;
+	systemSettings.BoostTemp *= 10;
+	systemSettings.SolderingTemp = systemSettings.SolderingTemp / 10;
+	systemSettings.SolderingTemp *= 10;
+	systemSettings.SleepTemp = systemSettings.SleepTemp / 10;
+	systemSettings.SleepTemp *= 10;
+
 }
 
 static void settings_displayTempF(void) {
@@ -488,6 +505,33 @@ static void settings_displayBoostTemp(void) {
 	lcd.printNumber(systemSettings.BoostTemp, 3);
 }
 
+#ifdef PIDSETTINGS
+static void settings_setPIDP(void) {
+	systemSettings.PID_P++;
+	systemSettings.PID_P %= 100;
+}
+static void settings_displayPIDP(void) {
+	printShortDescription(17, 6);
+	lcd.printNumber(systemSettings.PID_P, 2);
+}
+static void settings_setPIDI(void) {
+	systemSettings.PID_I++;
+	systemSettings.PID_I %= 100;
+}
+static void settings_displayPIDI(void) {
+	printShortDescription(18, 6);
+	lcd.printNumber(systemSettings.PID_I, 2);
+}
+static void settings_setPIDD(void) {
+	systemSettings.PID_D++;
+	systemSettings.PID_D %= 100;
+}
+static void settings_displayPIDD(void) {
+	printShortDescription(19, 6);
+	lcd.printNumber(systemSettings.PID_D, 2);
+}
+#endif
+
 static void settings_setAutomaticStartMode(void) {
 	systemSettings.autoStartMode++;
 	systemSettings.autoStartMode %= 2;
@@ -495,7 +539,6 @@ static void settings_setAutomaticStartMode(void) {
 
 static void settings_displayAutomaticStartMode(void) {
 	printShortDescription(10, 7);
-
 	lcd.drawCheckbox(systemSettings.autoStartMode);
 }
 
