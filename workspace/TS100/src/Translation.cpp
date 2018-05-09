@@ -55,7 +55,7 @@
 
 #ifdef LANG_EN
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
@@ -75,6 +75,12 @@ const char* SettingsDescriptions[17] = {
   /* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
   /* Advanced soldering screen enabled  */ "Display detailed information while soldering",
   /* Description Scroll Speed           */ "Speed this text scrolls past at",
+  /* ...                                */ "Regulated voltage (notebook adapter...). Minimum voltage 9.0V",
+  /* ...                                */ "Lithium batterie. Minimum voltage computed from cell count and minimum cell voltage.",
+  /* ...                                */ "Number of battery cells connected in series.",
+  /* ...                                */ "Minimum cell voltage.",
+  /* ...                                */ "Custom settings of minimal voltage.",
+  /* ...                                */ "Set custom minimum voltage between 9V-24V.",
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
@@ -103,39 +109,50 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
   /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
   /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
   /* (<= 10) Shutdown timeout                   */ {"Shutdown", "timeout"},
   /* (<= 13) Motion sensitivity level           */ {"Motion", "sensitivity"},
+
   /* (<= 13) Temperature in F and C             */ {"Temperature", "units"},
   /* (<= 13) Advanced idle display mode enabled */ {"Detailed", "idle screen"},
   /* (<= 13) Display rotation mode              */ {"Display", "orientation"},
   /* (<= 13) Boost enabled                      */ {"Boost mode", "enabled"},
   /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
+
   /* (<= 13) Automatic start mode               */ {"Auto", "start"},
   /* (<= 13) Cooldown blink                     */ {"Cooldown", "blink"},
   /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
   /* (<= 16) Settings reset command             */ {"Factory", "reset?"},
   /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
+
   /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
   /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+  /* --------------------------------------     */ {"DC", ""},
+  /* ...                                        */ {"Battery", ""},
+  /* ...                                        */ {"Custom", ""},
+
+  /* ...                                        */ {"Cell", "count"},
+  /* ...                                        */ {"Voltage", "per cell"},
 };
 
 // SettingsMenuEntries lengths <= 13 per line (\n starts second line)
-const char* SettingsMenuEntries[4] = {
+const char* SettingsMenuEntries[5] = {
   /* Soldering Menu    */ "Soldering\nSettings",
   /* Power Saving Menu */ "Sleep\nModes",
   /* UI Menu           */ "User\nInterface",
   /* Advanced Menu     */ "Advanced\nOptions",
+  /* Power Source Menu */ "Power\nSource"
 };
 
-const char* SettingsMenuEntriesDescriptions[4] = {
+const char* SettingsMenuEntriesDescriptions[5] = {
   "Soldering settings",
   "Power Saving Settings",
   "User Interface settings",
-  "Advanced options"
+  "Advanced options",
+  "Power source options"
 };
 #endif
 
@@ -967,7 +984,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_CS_CZ
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   /* Power source (DC or batt)          */ "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo,LiIon...>",
   /* Sleep temperature                  */ "Teplota v režimu spánku.",
   /* Sleep timeout                      */ "Čas do režimu spánku <Minut/Sekund>",
@@ -985,6 +1002,12 @@ const char* SettingsDescriptions[17] = {
   /* Calibrate input voltage            */ "Kalibrace vstupního napětí. Tlačítky uprav, podržením potvrď.",
   /* Advanced soldering screen enabled  */ "Zobrazit podrobnosti při pájení?",
   /* Description Scroll Speed           */ "Rychlost skrolování popisků podobných tomuto <P=Pomalu,R=Rychle>",
+  /* ...                                */ "Regulovaný zdroj (notebook adaptér, laboratorní zdroj...). Minimální napětí 9.0V",
+  /* ...                                */ "Lithiová baterie. Minimální napětí vypočítáno podle počtu článků a minimálního napětí na článek.",
+  /* ...                                */ "Počet seriově zapojených článků v baterii.",
+  /* ...                                */ "Minimální napětí jednoho článku baterie.",
+  /* ...                                */ "Vlastní nastavení minimálního napětí.",
+  /* ...                                */ "Nastav vlastní minimální napětí mezi 9V-24V.",
 };
 
 const char* SettingsCalibrationWarning = "Ujistěte se, že hrot má pokojovou teplotu!";
@@ -1013,39 +1036,50 @@ const char SettingFastChar = 'R';
 const char SettingSlowChar = 'P';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Zdroj", "napájení"},
   /* (<=  9) Sleep temperature                  */ {"Teplota v", "r. spánku"},
   /* (<=  9) Sleep timeout                      */ {"Čas do", "r. spánku"},
   /* (<= 10) Shutdown timeout                   */ {"Čas do", "vypnutí"},
   /* (<= 13) Motion sensitivity level           */ {"Citlivost", "det. pohybu"},
+
   /* (<= 13) Temperature in F and C             */ {"Jednotky", "teploty"},
   /* (<= 13) Advanced idle display mode enabled */ {"Podrobnosti", "na vých. obr."},
   /* (<= 13) Display rotation mode              */ {"Orientace", "obrazovky"},
   /* (<= 13) Boost enabled                      */ {"Povolit", "boost"},
   /* (<=  9) Boost temperature                  */ {"Teplota v", "r. boost"},
+
   /* (<= 13) Automatic start mode               */ {"Auto", "start"},
   /* (<= 13) Cooldown blink                     */ {"Blikáni při", "chladnutí"},
   /* (<= 16) Temperature calibration enter menu */ {"Kalibrovat", "teplotu?"},
   /* (<= 16) Settings reset command             */ {"Tovární", "nastavení?"},
   /* (<= 16) Calibrate input voltage            */ {"Kalibrovat", "vstupní napětí?"},
+
   /* (<= 13) Advanced soldering screen enabled  */ {"Podrobnosti", "při pájení"},
   /* (<= 13) Display Help Text Scroll Speed     */ {"Rychlost", "popisků"},
+  /* --------------------------------------     */ {"DC", ""},
+  /* ...                                        */ {"Baterie", ""},
+  /* ...                                        */ {"Vlastní", ""},
+
+  /* ...                                        */ {"Počet", "článků"},
+  /* ...                                        */ {"Napětí na", "článek"},
 };
 
 // SettingsMenuEntries lengths <= 13 per line (\n starts second line)
-const char* SettingsMenuEntries[4] = {
+const char* SettingsMenuEntries[5] = {
   /* Soldering Menu    */ "Pájecí\nnastavení",
   /* Power Saving Menu */ "Režim\nspánku",
   /* UI Menu           */ "Uživatelské\nrozhraní",
   /* Advanced Menu     */ "Pokročilé\nvolby",
+  /* Power Source Menu */ "Zdroj napájení"
 };
 
-const char* SettingsMenuEntriesDescriptions[4] = {
+const char* SettingsMenuEntriesDescriptions[5] = {
   "Nastavení pájení (boost, auto start...)",
   "Nastavení režimu spánku, automatického vypnutí...",
   "Nastavení uživatelského rozhraní.",
-  "Pokročilé volby (detailní obrazovky, kalibrace, tovární nastavení...)"
+  "Pokročilé volby (detailní obrazovky, kalibrace, tovární nastavení...)",
+  "Nastavení zdroje napájení (minimální napětí)"
 };
 #endif
 

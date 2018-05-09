@@ -21,15 +21,19 @@
 //Declarations for all the methods for the settings menu (at end of this file)
 
 //Wrapper for holding a function pointer
-typedef struct state_func_t {
+typedef struct draw_func_t {
 	void (*func)(void);
-} state_func;
+} draw_func;
+
+typedef struct incr_func_t {
+	bool (*func)(void);
+} incr_func;
 
 //Struct for holding the function pointers and descriptions
 typedef struct {
 	const char *description;
-	const state_func incrementHandler;
-	const state_func draw;
+	const incr_func incrementHandler;
+	const draw_func draw;
 } menuitem;
 
 void enterSettingsMenu();

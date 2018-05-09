@@ -36,6 +36,10 @@ typedef struct {
 	int16_t CalibrationOffset;		//This stores the temperature offset for this tip in the iron.
 	uint8_t version;				//Used to track if a reset is needed on firmware upgrade
 	uint32_t padding;    			//This is here for in case we are not an even divisor so that nothing gets cut off
+	//XXX
+	uint8_t cutoutCellCount;
+	uint8_t cutoutCellVoltage;
+	uint8_t cutoutCustom;
 } systemSettingsType;
 
 extern volatile systemSettingsType systemSettings;

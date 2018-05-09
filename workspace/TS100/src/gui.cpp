@@ -13,65 +13,86 @@
 #include "string.h"
 extern uint32_t lastButtonTime;
 void gui_Menu(const menuitem* menu);
-static void settings_setInputVRange(void);
-static void settings_displayInputVRange(void);
-static void settings_setSleepTemp(void);
+static bool settings_setPowerSourceType(void);
+static void settings_displayPowerSourceType(void);
+static bool settings_setBatteryCellCount(void);
+static void settings_displayBatteryCellCount(void);
+static bool settings_setBatteryCellVoltage(void);
+static void settings_displayBatteryCellVoltage(void);
+static bool settings_setPowerSourceCustom(void);
+static void settings_displayPowerSourceCustom(void);
+static bool settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
-static void settings_setSleepTime(void);
+static bool settings_setSleepTime(void);
 static void settings_displaySleepTime(void);
-static void settings_setShutdownTime(void);
+static bool settings_setShutdownTime(void);
 static void settings_displayShutdownTime(void);
-static void settings_setSensitivity(void);
+static bool settings_setSensitivity(void);
 static void settings_displaySensitivity(void);
-static void settings_setTempF(void);
+static bool settings_setTempF(void);
 static void settings_displayTempF(void);
-static void settings_setAdvancedSolderingScreens(void);
+static bool settings_setAdvancedSolderingScreens(void);
 static void settings_displayAdvancedSolderingScreens(void);
-static void settings_setAdvancedIDLEScreens(void);
+static bool settings_setAdvancedIDLEScreens(void);
 static void settings_displayAdvancedIDLEScreens(void);
-static void settings_setScrollSpeed(void);
+static bool settings_setScrollSpeed(void);
 static void settings_displayScrollSpeed(void);
 
-static void settings_setDisplayRotation(void);
+static bool settings_setDisplayRotation(void);
 static void settings_displayDisplayRotation(void);
-static void settings_setBoostModeEnabled(void);
+static bool settings_setBoostModeEnabled(void);
 static void settings_displayBoostModeEnabled(void);
-static void settings_setBoostTemp(void);
+static bool settings_setBoostTemp(void);
 static void settings_displayBoostTemp(void);
-static void settings_setAutomaticStartMode(void);
+static bool settings_setAutomaticStartMode(void);
 static void settings_displayAutomaticStartMode(void);
-static void settings_setCoolingBlinkEnabled(void);
+static bool settings_setCoolingBlinkEnabled(void);
 static void settings_displayCoolingBlinkEnabled(void);
-static void settings_setResetSettings(void);
+static bool settings_setResetSettings(void);
 static void settings_displayResetSettings(void);
-static void settings_setCalibrate(void);
+static bool settings_setCalibrate(void);
 static void settings_displayCalibrate(void);
-static void settings_setCalibrateVIN(void);
+static bool settings_setCalibrateVIN(void);
 static void settings_displayCalibrateVIN(void);
 
 //Menu functions
 static void settings_displaySolderingMenu(void);
-static void settings_enterSolderingMenu(void);
+static bool settings_enterSolderingMenu(void);
 static void settings_displayPowerMenu(void);
-static void settings_enterPowerMenu(void);
+static bool settings_enterPowerMenu(void);
+static void settings_displayPowerSourceMenu(void);
+static bool settings_enterPowerSourceMenu(void);
 static void settings_displayUIMenu(void);
-static void settings_enterUIMenu(void);
+static bool settings_enterUIMenu(void);
 static void settings_displayAdvancedMenu(void);
-static void settings_enterAdvancedMenu(void);
+static bool settings_enterAdvancedMenu(void);
+
+
+static bool settings_exitMenuLevel(void) {
+	return true;
+}
+const menuitem END_OF_MENU = {NULL, {settings_exitMenuLevel}, {NULL}};
+
 /*
  * Root Settings Menu
  *
  * Power Source
+ *  DC (9V)
+ *  Lithium battery
+ *   - cell count
+ *   - voltage per cell
+ *  Custom
+ *
  * Soldering
- * 	Boost Mode Enabled
- * 	Boost Mode Temp
- * 	Auto Start
+ *  Boost Mode Enabled
+ *  Boost Mode Temp
+ *  Auto Start
  *
  * Power Saving
- * 	Sleep Temp
- * 	Sleep Time
- * 	Shutdown Time
- * 	Motion Sensitivity
+ *  Sleep Temp
+ *  Sleep Time
+ *  Shutdown Time
+ *  Motion Sensitivity
  *
  * UI
  *  // Language
@@ -91,15 +112,18 @@ static void settings_enterAdvancedMenu(void);
  */
 const menuitem rootSettingsMenu[] {
 /*
- * Power Source
+ * Power Source Menu
  * Soldering Menu
  * Power Saving Menu
  * UI Menu
  * Advanced Menu
  * Exit
  */
-{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
-		settings_displayInputVRange } }, /*Voltage input*/
+//XXX
+//{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
+//		settings_displayInputVRange } }, /*Voltage input*/
+{ (const char*) SettingsMenuEntriesDescriptions[4], { settings_enterPowerSourceMenu }, {
+		settings_displayPowerSourceMenu } }, /*Power Source Menu*/
 { (const char*) SettingsMenuEntriesDescriptions[0], {
 		settings_enterSolderingMenu }, { settings_displaySolderingMenu } }, /*Soldering*/
 { (const char*) SettingsMenuEntriesDescriptions[1], { settings_enterPowerMenu },
@@ -108,7 +132,7 @@ const menuitem rootSettingsMenu[] {
 		settings_displayUIMenu } }, /*UI Menu*/
 { (const char*) SettingsMenuEntriesDescriptions[3],
 		{ settings_enterAdvancedMenu }, { settings_displayAdvancedMenu } }, /*Advanced Menu*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+END_OF_MENU            // end of menu marker. DO NOT REMOVE
 };
 
 const menuitem solderingMenu[] = {
@@ -123,11 +147,12 @@ const menuitem solderingMenu[] = {
 		settings_displayBoostTemp } }, /*Boost Temp*/
 { (const char*) SettingsDescriptions[10], { settings_setAutomaticStartMode }, {
 		settings_displayAutomaticStartMode } }, /*Auto start*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+END_OF_MENU            // end of menu marker. DO NOT REMOVE
 };
+
 const menuitem UIMenu[] = {
 /*
- // Language
+ * Language
  *  Scrolling Speed
  *  Temperature Unit
  *  Display orientation
@@ -141,8 +166,9 @@ const menuitem UIMenu[] = {
 		settings_displayCoolingBlinkEnabled } }, /*Cooling blink warning*/
 { (const char*) SettingsDescriptions[16], { settings_setScrollSpeed }, {
 		settings_displayScrollSpeed } }, /*Scroll Speed for descriptions*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+END_OF_MENU            // end of menu marker. DO NOT REMOVE
 };
+
 const menuitem PowerMenu[] = {
 /*
  * Sleep Temp
@@ -158,10 +184,10 @@ const menuitem PowerMenu[] = {
 		settings_displayShutdownTime } }, /*Shutdown Time*/
 { (const char*) SettingsDescriptions[4], { settings_setSensitivity }, {
 		settings_displaySensitivity } }, /* Motion Sensitivity*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+END_OF_MENU            // end of menu marker. DO NOT REMOVE
 };
-const menuitem advancedMenu[] = {
 
+const menuitem advancedMenu[] = {
 /*
  * Detailed IDLE
  *  Detailed Soldering
@@ -181,7 +207,33 @@ const menuitem advancedMenu[] = {
 		settings_displayCalibrate } }, /*Calibrate tip*/
 { (const char*) SettingsDescriptions[14], { settings_setCalibrateVIN }, {
 		settings_displayCalibrateVIN } }, /*Voltage input cal*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+END_OF_MENU            // end of menu marker. DO NOT REMOVE
+};
+
+const menuitem PowerSourceMenu[][4] = {	//XXX array dimensions?
+//DC (9V)
+{
+	{(const char*) SettingsDescriptions[17], {settings_setPowerSourceType}, {settings_displayPowerSourceType}},
+	END_OF_MENU,
+	END_OF_MENU,
+	END_OF_MENU            // end of menu marker. DO NOT REMOVE
+},
+//Lithium battery
+// - cell count
+// - voltage per cell
+{
+	{(const char*) SettingsDescriptions[18], {settings_setPowerSourceType}, {settings_displayPowerSourceType}},
+	{(const char*) SettingsDescriptions[19], {settings_setBatteryCellCount}, {settings_displayBatteryCellCount}},
+	{(const char*) SettingsDescriptions[20], {settings_setBatteryCellVoltage}, {settings_displayBatteryCellVoltage}},
+	END_OF_MENU            // end of menu marker. DO NOT REMOVE
+},
+//Custom
+{
+	{(const char*) SettingsDescriptions[21], {settings_setPowerSourceType}, {settings_displayPowerSourceType}},
+	{(const char*) SettingsDescriptions[22], {settings_setPowerSourceCustom}, {settings_displayPowerSourceCustom}},
+	END_OF_MENU,
+	END_OF_MENU            // end of menu marker. DO NOT REMOVE
+}
 };
 
 static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
@@ -269,22 +321,87 @@ static int userConfirmation(const char* message) {
 	return 0;
 }
 
-static void settings_setInputVRange(void) {
-	systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 5;
+//TODO copied from main.cpp
+void printVoltageCutout(uint16_t voltageX10) {
+	lcd.printNumber(voltageX10 / 10, 2);
+	lcd.drawChar('.');
+	lcd.printNumber(voltageX10 % 10, 1);
+	lcd.drawChar('V');
 }
 
-static void settings_displayInputVRange(void) {
-	printShortDescription(0, 6);
-
-	if (systemSettings.cutoutSetting) {
-		lcd.drawChar('0' + 2 + systemSettings.cutoutSetting);
-		lcd.drawChar('S');
-	} else {
-		lcd.print("DC");
+//XXX
+static bool settings_setPowerSourceType(void) {
+	systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 3;
+	return true;
+}
+static void settings_displayPowerSourceType(void) {
+	switch(systemSettings.cutoutSetting) {
+		//DC
+		case 0:
+			printShortDescription(17, 0);
+			break;
+		//Battery
+		case 1:
+			printShortDescription(18, 0);
+			break;
+		//Custom
+		case 2:
+			printShortDescription(19, 0);
+			break;
 	}
+	lcd.setFont(1);
+	lcd.setCharCursor(10, 1);
+	printVoltageCutout(lookupVoltageLevel(systemSettings.cutoutSetting));
 }
 
-static void settings_setSleepTemp(void) {
+static bool settings_setBatteryCellCount(void) {
+	//3S-6S
+	if(++systemSettings.cutoutCellCount > 6) {
+		systemSettings.cutoutCellCount = 3;
+	}
+	//ensure minimum 9V
+	if(systemSettings.cutoutCellCount == 3 && systemSettings.cutoutCellVoltage < 30) {
+		systemSettings.cutoutCellVoltage = 30;
+	}
+	return false;
+}
+static void settings_displayBatteryCellCount(void) {
+	printShortDescription(20, 7);
+	lcd.drawChar('0' + systemSettings.cutoutCellCount);
+}
+
+static bool settings_setBatteryCellVoltage(void) {
+	//2.7V-4.2V
+	if(++systemSettings.cutoutCellVoltage > 42) {
+		//ensure minimum 9V
+		if(systemSettings.cutoutCellCount == 3) {
+			systemSettings.cutoutCellVoltage = 30;
+		}
+		//4+ cells allowed down to 2.7V
+		else {
+			systemSettings.cutoutCellVoltage = 27;
+		}
+	}
+	return false;
+}
+static void settings_displayBatteryCellVoltage(void) {
+	printShortDescription(21, 5);
+	printVoltageCutout(lookupVoltageLevel(systemSettings.cutoutSetting));
+}
+
+static bool settings_setPowerSourceCustom(void) {
+	//9V-24V
+	if(++systemSettings.cutoutCustom > 240) {
+		systemSettings.cutoutCustom = 90;
+	}
+	return false;
+}
+static void settings_displayPowerSourceCustom(void) {
+	printShortDescription(21, 5);
+	printVoltageCutout(lookupVoltageLevel(systemSettings.cutoutSetting));
+}
+
+static bool settings_setSleepTemp(void) {
 	//If in C, 10 deg, if in F 20 deg
 	if (systemSettings.temperatureInF) {
 		systemSettings.SleepTemp += 20;
@@ -295,6 +412,7 @@ static void settings_setSleepTemp(void) {
 		if (systemSettings.SleepTemp > 300)
 			systemSettings.SleepTemp = 50;
 	}
+	return false;
 }
 
 static void settings_displaySleepTemp(void) {
@@ -302,7 +420,7 @@ static void settings_displaySleepTemp(void) {
 	lcd.printNumber(systemSettings.SleepTemp, 3);
 }
 
-static void settings_setSleepTime(void) {
+static bool settings_setSleepTime(void) {
 	systemSettings.SleepTime++;  // Go up 1 minute at a time
 	if (systemSettings.SleepTime >= 16) {
 		systemSettings.SleepTime = 0;  // can't set time over 10 mins
@@ -310,6 +428,7 @@ static void settings_setSleepTime(void) {
 	// Remember that ^ is the time of no movement
 	if (PCBVersion == 3)
 		systemSettings.SleepTime = 0;  //Disable sleep on no accel
+	return false;
 }
 
 static void settings_displaySleepTime(void) {
@@ -325,13 +444,14 @@ static void settings_displaySleepTime(void) {
 	}
 }
 
-static void settings_setShutdownTime(void) {
+static bool settings_setShutdownTime(void) {
 	systemSettings.ShutdownTime++;
 	if (systemSettings.ShutdownTime > 60) {
 		systemSettings.ShutdownTime = 0;  // wrap to off
 	}
 	if (PCBVersion == 3)
 		systemSettings.ShutdownTime = 0;  //Disable shutdown on no accel
+	return false;
 }
 
 static void settings_displayShutdownTime(void) {
@@ -344,7 +464,7 @@ static void settings_displayShutdownTime(void) {
 	}
 }
 
-static void settings_setTempF(void) {
+static bool settings_setTempF(void) {
 	systemSettings.temperatureInF = !systemSettings.temperatureInF;
 	if (systemSettings.temperatureInF) {
 		//Change sleep, boost and soldering temps to the F equiv
@@ -369,7 +489,8 @@ static void settings_setTempF(void) {
 	systemSettings.SolderingTemp *=10;
 	systemSettings.SleepTemp = systemSettings.SleepTemp/10;
 	systemSettings.SleepTemp *=10;
-	
+
+	return false;
 }
 
 static void settings_displayTempF(void) {
@@ -378,9 +499,10 @@ static void settings_displayTempF(void) {
 	lcd.drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
 }
 
-static void settings_setSensitivity(void) {
+static bool settings_setSensitivity(void) {
 	systemSettings.sensitivity++;
 	systemSettings.sensitivity = systemSettings.sensitivity % 10;
+	return false;
 }
 
 static void settings_displaySensitivity(void) {
@@ -388,8 +510,9 @@ static void settings_displaySensitivity(void) {
 	lcd.printNumber(systemSettings.sensitivity, 1);
 }
 
-static void settings_setAdvancedSolderingScreens(void) {
+static bool settings_setAdvancedSolderingScreens(void) {
 	systemSettings.detailedSoldering = !systemSettings.detailedSoldering;
+	return false;
 }
 
 static void settings_displayAdvancedSolderingScreens(void) {
@@ -398,8 +521,9 @@ static void settings_displayAdvancedSolderingScreens(void) {
 	lcd.drawCheckbox(systemSettings.detailedSoldering);
 }
 
-static void settings_setAdvancedIDLEScreens(void) {
+static bool settings_setAdvancedIDLEScreens(void) {
 	systemSettings.detailedIDLE = !systemSettings.detailedIDLE;
+	return false;
 }
 
 static void settings_displayAdvancedIDLEScreens(void) {
@@ -407,12 +531,12 @@ static void settings_displayAdvancedIDLEScreens(void) {
 
 	lcd.drawCheckbox(systemSettings.detailedIDLE);
 }
-static void settings_setScrollSpeed(void) {
-
-	if (systemSettings.descriptionScrollSpeed == 0)
+static bool settings_setScrollSpeed(void) {
+	if (systemSettings.descriptionScrollSpeed == 0)	//TODO 1 bit -> just to increment should be enough?
 		systemSettings.descriptionScrollSpeed = 1;
 	else
 		systemSettings.descriptionScrollSpeed = 0;
+	return false;
 }
 static void settings_displayScrollSpeed(void) {
 	printShortDescription(16, 7);
@@ -421,7 +545,7 @@ static void settings_displayScrollSpeed(void) {
 					SettingFastChar : SettingSlowChar);
 }
 
-static void settings_setDisplayRotation(void) {
+static bool settings_setDisplayRotation(void) {
 	systemSettings.OrientationMode++;
 	systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
 	switch (systemSettings.OrientationMode) {
@@ -437,6 +561,7 @@ static void settings_setDisplayRotation(void) {
 	default:
 		break;
 	}
+	return false;
 }
 
 static void settings_displayDisplayRotation(void) {
@@ -458,8 +583,9 @@ static void settings_displayDisplayRotation(void) {
 	}
 }
 
-static void settings_setBoostModeEnabled(void) {
+static bool settings_setBoostModeEnabled(void) {
 	systemSettings.boostModeEnabled = !systemSettings.boostModeEnabled;
+	return false;
 }
 
 static void settings_displayBoostModeEnabled(void) {
@@ -468,8 +594,7 @@ static void settings_displayBoostModeEnabled(void) {
 	lcd.drawCheckbox(systemSettings.boostModeEnabled);
 }
 
-static void settings_setBoostTemp(void) {
-
+static bool settings_setBoostTemp(void) {
 	if (systemSettings.temperatureInF) {
 		systemSettings.BoostTemp += 20;  // Go up 20F at a time
 		if (systemSettings.BoostTemp > 850) {
@@ -481,6 +606,7 @@ static void settings_setBoostTemp(void) {
 			systemSettings.BoostTemp = 250;  // loop back at 250
 		}
 	}
+	return false;
 }
 
 static void settings_displayBoostTemp(void) {
@@ -488,9 +614,10 @@ static void settings_displayBoostTemp(void) {
 	lcd.printNumber(systemSettings.BoostTemp, 3);
 }
 
-static void settings_setAutomaticStartMode(void) {
+static bool settings_setAutomaticStartMode(void) {
 	systemSettings.autoStartMode++;
 	systemSettings.autoStartMode %= 2;
+	return false;
 }
 
 static void settings_displayAutomaticStartMode(void) {
@@ -499,8 +626,9 @@ static void settings_displayAutomaticStartMode(void) {
 	lcd.drawCheckbox(systemSettings.autoStartMode);
 }
 
-static void settings_setCoolingBlinkEnabled(void) {
-	systemSettings.coolingTempBlink = !systemSettings.coolingTempBlink;
+static bool settings_setCoolingBlinkEnabled(void) {
+	systemSettings.coolingTempBlink = !systemSettings.coolingTempBlink;	//TODO same with description speed?
+	return false;
 }
 
 static void settings_displayCoolingBlinkEnabled(void) {
@@ -509,7 +637,7 @@ static void settings_displayCoolingBlinkEnabled(void) {
 	lcd.drawCheckbox(systemSettings.coolingTempBlink);
 }
 
-static void settings_setResetSettings(void) {
+static bool settings_setResetSettings(void) {
 	if (userConfirmation(SettingsResetWarning)) {
 		resetSettings();
 
@@ -520,13 +648,14 @@ static void settings_setResetSettings(void) {
 
 		waitForButtonPressOrTimeout(200);
 	}
+	return false;
 }
 
 static void settings_displayResetSettings(void) {
 	printShortDescription(13, 7);
 }
 
-static void settings_setCalibrate(void) {
+static bool settings_setCalibrate(void) {
 	if (userConfirmation(SettingsCalibrationWarning)) {
 		//User confirmed
 		//So we now perform the actual calculation
@@ -551,13 +680,14 @@ static void settings_setCalibrate(void) {
 		setCalibrationOffset(rawTempC);       //store the error
 		osDelay(100);
 	}
+	return false;
 }
 
 static void settings_displayCalibrate(void) {
 	printShortDescription(12, 5);
 }
 
-static void settings_setCalibrateVIN(void) {
+static bool settings_setCalibrateVIN(void) {
 	// Jump to the voltage calibration subscreen
 	lcd.setFont(0);
 	lcd.clearScreen();
@@ -584,7 +714,7 @@ static void settings_setCalibrateVIN(void) {
 		case BUTTON_F_LONG:
 		case BUTTON_B_LONG:
 			saveSettings();
-			return;
+			return false;
 
 		case BUTTON_NONE:
 		default:
@@ -601,6 +731,7 @@ static void settings_setCalibrateVIN(void) {
 			systemSettings.voltageDiv = 130;
 		}
 	}
+	return false;
 }
 
 static void settings_displayCalibrateVIN(void) {
@@ -616,8 +747,9 @@ static void settings_displaySolderingMenu(void) {
 	//16 pixel wide image
 	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 0]));
 }
-static void settings_enterSolderingMenu(void) {
+static bool settings_enterSolderingMenu(void) {
 	gui_Menu(solderingMenu);
+	return false;
 }
 static void settings_displayPowerMenu(void) {
 	lcd.setFont(1);
@@ -628,8 +760,30 @@ static void settings_displayPowerMenu(void) {
 	//16 pixel wide image
 	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 1]));
 }
-static void settings_enterPowerMenu(void) {
+static bool settings_enterPowerMenu(void) {
 	gui_Menu(PowerMenu);
+	return false;
+}
+//XXX
+static void settings_displayPowerSourceMenu(void) {
+	lcd.setFont(1);
+	lcd.setCursor(0, 0);
+	//Draw title
+	lcd.print(SettingsMenuEntries[4]);
+	//Draw symbol
+	//16 pixel wide image
+	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 1]));	//TODO icon
+}
+static bool settings_enterPowerSourceMenu(void) {
+	uint8_t selectedType = -1;
+	//when user changes power source type, increment handler returns here
+	//so we can switch menu to corresponding one for new source type
+	do {
+		selectedType = systemSettings.cutoutSetting;
+		gui_Menu(PowerSourceMenu[selectedType]);
+	}
+	while(selectedType != systemSettings.cutoutSetting);
+	return false;
 }
 static void settings_displayUIMenu(void) {
 	lcd.setFont(1);
@@ -640,8 +794,9 @@ static void settings_displayUIMenu(void) {
 	//16 pixel wide image
 	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 2]));
 }
-static void settings_enterUIMenu(void) {
+static bool settings_enterUIMenu(void) {
 	gui_Menu(UIMenu);
+	return false;
 }
 static void settings_displayAdvancedMenu(void) {
 	lcd.setFont(1);
@@ -653,8 +808,9 @@ static void settings_displayAdvancedMenu(void) {
 	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 3]));
 
 }
-static void settings_enterAdvancedMenu(void) {
+static bool settings_enterAdvancedMenu(void) {
 	gui_Menu(advancedMenu);
+	return false;
 }
 
 void gui_Menu(const menuitem* menu) {

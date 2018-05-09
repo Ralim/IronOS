@@ -217,6 +217,7 @@ void waitForButtonPressOrTimeout(uint32_t timeout) {
 }
 
 // returns true if undervoltage has occured
+//XXX
 static bool checkVoltageForExit() {
 	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv);
 	if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {

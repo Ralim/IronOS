@@ -64,11 +64,16 @@ void restoreSettings() {
  * 3=5S
  * 4=6S
  */
+//XXX
 uint8_t lookupVoltageLevel(uint8_t level) {
-	if (level == 0)
-		return 90;    //9V since iron does not function effectively below this
-	else
-		return (level * 33) + (33 * 2);
+	switch(level) {
+		//battery
+		case 1: return systemSettings.cutoutCellCount * systemSettings.cutoutCellVoltage;
+		//custom
+		case 2: return systemSettings.cutoutCustom;
+		//DC or error
+		default: return 90;	//9V since iron does not function effectively below this
+	}
 }
 void resetSettings() {
 	memset((void*)&systemSettings,0,sizeof(systemSettingsType));
@@ -90,6 +95,10 @@ void resetSettings() {
 	systemSettings.CalibrationOffset = 10;		//This appears to be quite close for both of my tips, in both of my handles
 	systemSettings.temperatureInF = 0;			//default to 0
 	systemSettings.descriptionScrollSpeed=0;//default to slow
+	//XXX
+	systemSettings.cutoutCellCount = 3;	//3S
+	systemSettings.cutoutCellVoltage = 33;	//3.3V
+	systemSettings.cutoutCustom = 90;	//custom, defaults to DC
 	saveSettings();
 }
 
