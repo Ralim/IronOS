@@ -640,19 +640,7 @@ void startGUITask(void const *argument) {
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
-	switch (systemSettings.OrientationMode) {
-	case 0:
-		lcd.setRotation(false);
-		break;
-	case 1:
-		lcd.setRotation(true);
-		break;
-	case 2:
-		lcd.setRotation(false);
-		break;
-	default:
-		break;
-	}
+	lcd.setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
 	ticks += 400;  //4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
@@ -889,27 +877,12 @@ void startPIDTask(void const *argument) {
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
 	osDelay(250);  // wait for accelerometer to stabilize
-	switch (systemSettings.OrientationMode) {
-	case 0:
-		lcd.setRotation(false);
-		break;
-	case 1:
-		lcd.setRotation(true);
-		break;
-	case 2:
-		lcd.setRotation(false);
-		break;
-	default:
-		break;
-	}
+	lcd.setRotation(systemSettings.OrientationMode & 1);
 	lastMovementTime = 0;
-	int16_t datax[MOVFilter];
-	int16_t datay[MOVFilter];
-	int16_t dataz[MOVFilter];
+	int16_t datax[MOVFilter] = { 0 };
+	int16_t datay[MOVFilter] = { 0 };
+	int16_t dataz[MOVFilter] = { 0 };
 	uint8_t currentPointer = 0;
-	memset(datax, 0, MOVFilter * sizeof(int16_t));
-	memset(datay, 0, MOVFilter * sizeof(int16_t));
-	memset(dataz, 0, MOVFilter * sizeof(int16_t));
 	int16_t tx, ty, tz;
 	int32_t avgx, avgy, avgz;
 	if (systemSettings.sensitivity > 9)
