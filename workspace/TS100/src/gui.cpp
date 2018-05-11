@@ -646,55 +646,40 @@ static void settings_setCalibrateVIN(void) {
 	}
 }
 
-static void settings_displayCalibrateVIN(void) {
-	printShortDescription(14, 5);
-}
-static void settings_displaySolderingMenu(void) {
+static void displayMenu(size_t index) {
 	//Call into the menu
 	lcd.setFont(1);
 	lcd.setCursor(0, 0);
 	//Draw title
-	lcd.print(SettingsMenuEntries[0]);
+	lcd.print(SettingsMenuEntries[index]);
 	//Draw symbol
 	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 0]));
+	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));	
+}
+
+static void settings_displayCalibrateVIN(void) {
+	printShortDescription(14, 5);
+}
+static void settings_displaySolderingMenu(void) {
+	displayMenu(0);
 }
 static void settings_enterSolderingMenu(void) {
 	gui_Menu(solderingMenu);
 }
 static void settings_displayPowerMenu(void) {
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
-	//Draw title
-	lcd.print(SettingsMenuEntries[1]);
-	//Draw symbol
-	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 1]));
+	displayMenu(1);
 }
 static void settings_enterPowerMenu(void) {
 	gui_Menu(PowerMenu);
 }
 static void settings_displayUIMenu(void) {
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
-	//Draw title
-	lcd.print(SettingsMenuEntries[2]);
-	//Draw symbol
-	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 2]));
+	displayMenu(2);
 }
 static void settings_enterUIMenu(void) {
 	gui_Menu(UIMenu);
 }
 static void settings_displayAdvancedMenu(void) {
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
-	//Draw title
-	lcd.print(SettingsMenuEntries[3]);
-	//Draw symbol
-	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * 3]));
-
+	displayMenu(3);
 }
 static void settings_enterAdvancedMenu(void) {
 	gui_Menu(advancedMenu);
