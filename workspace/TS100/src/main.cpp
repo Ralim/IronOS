@@ -580,6 +580,16 @@ static void gui_solderingMode() {
 	}
 }
 
+static const char *HEADERS[] = {
+	__DATE__,
+	"Heap: ",
+	"HWMG: ",
+	"HWMP: ",
+	"HWMM: ",
+	"Time: ",
+	"Move: "
+};
+
 void showVersion(void) {
 	uint8_t screen = 0;
 	ButtonState b;
@@ -590,35 +600,27 @@ void showVersion(void) {
 		lcd.print((char *) "V2.05 PCB");  // Print version number
 		lcd.printNumber(PCBVersion, 1); //Print PCB ID number
 		lcd.setCursor(0, 8);         // second line
+		lcd.print(HEADERS[screen]);
 		switch (screen) {
-		case 0:
-			lcd.print(__DATE__);         // print the compile date
-			break;
 		case 1:
-			lcd.print("Heap: ");
 			lcd.printNumber(xPortGetFreeHeapSize(), 5);
 			break;
 		case 2:
-			lcd.print("HWMG: ");
 			lcd.printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5);
 			break;
 		case 3:
-			lcd.print("HWMP: ");
 			lcd.printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5);
 			break;
 		case 4:
-			lcd.print("HWMM: ");
 			lcd.printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5);
 			break;
-
 		case 5:
-			lcd.print("Time: ");
 			lcd.printNumber(xTaskGetTickCount() / 100, 5);
 			break;
 		case 6:
-			lcd.print("Move: ");
 			lcd.printNumber(lastMovementTime / 100, 5);
-
+			break;
+		default:
 			break;
 		}
 
