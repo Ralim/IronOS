@@ -263,6 +263,8 @@ static void gui_drawBatteryIcon() {
 static void gui_solderingTempAdjust() {
 	uint32_t lastChange = xTaskGetTickCount();
 	currentlyActiveTemperatureTarget = 0;
+	uint32_t autoRepeatTimer = 0;
+	uint8_t autoRepeatAcceleration = 0;
 	for (;;) {
 		lcd.setCursor(0, 0);
 		lcd.clearScreen();
@@ -279,10 +281,30 @@ static void gui_solderingTempAdjust() {
 			return;
 			break;
 		case BUTTON_B_LONG:
+			if (xTaskGetTickCount() - autoRepeatTimer
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
+				if (!lcd.getRotation()) {
+					systemSettings.SolderingTemp += 10;  // add 10
+				} else {
+					systemSettings.SolderingTemp -= 10;  // sub 10
+				}
+				autoRepeatTimer = xTaskGetTickCount();
 
+				autoRepeatAcceleration += PRESS_ACCEL_STEP;
+			}
 			break;
 		case BUTTON_F_LONG:
+			if (xTaskGetTickCount() - autoRepeatTimer
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
+				if (!lcd.getRotation()) {
+					systemSettings.SolderingTemp -= 10;
+				} else {
+					systemSettings.SolderingTemp += 10;
+				}
+				autoRepeatTimer = xTaskGetTickCount();
 
+				autoRepeatAcceleration += PRESS_ACCEL_STEP;
+			}
 			break;
 		case BUTTON_F_SHORT:
 			if (lcd.getRotation()) {
@@ -300,6 +322,11 @@ static void gui_solderingTempAdjust() {
 			break;
 		default:
 			break;
+		}
+		if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration)
+				< PRESS_ACCEL_INTERVAL_MIN) {
+			autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX
+					- PRESS_ACCEL_INTERVAL_MIN;
 		}
 		// constrain between 50-450 C
 		if (systemSettings.temperatureInF) {
