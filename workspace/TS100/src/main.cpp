@@ -612,7 +612,7 @@ void startGUITask(void const *argument) {
 	i2cDev.FRToSInit();
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
-
+	bool tempOnDisplay = false;
 	switch (systemSettings.OrientationMode) {
 	case 0:
 		lcd.setRotation(false);
@@ -749,7 +749,11 @@ void startGUITask(void const *argument) {
 				lcd.setCursor(84, 0);
 				gui_drawBatteryIcon();
 			}
-			if (tipTemp > 50) {
+			if (tipTemp > 55)
+				tempOnDisplay = true;
+			else if (tipTemp < 45)
+				tempOnDisplay = false;
+			if (tempOnDisplay) {
 				//draw temp over the start soldering button
 				//Location changes on screen rotation
 				if (lcd.getRotation()) {
@@ -763,7 +767,9 @@ void startGUITask(void const *argument) {
 				}
 				//draw in the temp
 				lcd.setFont(0);				//big font
-				gui_drawTipTemp(false);				// draw in the temp
+				if (!(systemSettings.coolingTempBlink
+						&& (xTaskGetTickCount() % 50 < 25)))
+					gui_drawTipTemp(false);				// draw in the temp
 			}
 		}
 
