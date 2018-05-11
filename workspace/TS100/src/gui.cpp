@@ -279,7 +279,7 @@ static int userConfirmation(const char* message) {
 
 		if (lcdRefresh) {
 			lcd.refresh();
-			osDelay(20);
+			osDelay(40);
 			lcdRefresh = false;
 		}
 	}
@@ -635,7 +635,7 @@ static void settings_setCalibrateVIN(void) {
 		}
 
 		lcd.refresh();
-		osDelay(50);
+		osDelay(40);
 
 		// Cap to sensible values
 		if (systemSettings.voltageDiv < 90) {
@@ -807,7 +807,7 @@ void gui_Menu(const menuitem* menu) {
 
 		if (lcdRefresh) {
 			lcd.refresh();  // update the LCD
-			osDelay(20);
+			osDelay(40);
 			lcdRefresh = false;
 		}
 	}

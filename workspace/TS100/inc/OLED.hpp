@@ -35,6 +35,8 @@ public:
 	// Draw the buffer out to the LCD using the DMA Channel
 	void refresh() {
 		i2c->Transmit( DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START + (OLED_WIDTH * 2));
+		//DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
+		//or we need to goto double buffering
 	}
 
 	void drawChar(char c, char preCursorCommand = '\0'); // Draw a character to a specific location

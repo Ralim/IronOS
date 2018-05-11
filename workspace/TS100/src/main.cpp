@@ -97,7 +97,7 @@ void printVoltage() {
 	lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
 }
 void GUIDelay() {
-	osDelay(66);  // 15Hz
+	osDelay(50);
 }
 void gui_drawTipTemp(bool symbol) {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
@@ -193,13 +193,13 @@ static void waitForButtonPress() {
 	ButtonState buttons = getButtonState();
 	while (buttons) {
 		buttons = getButtonState();
-		GUIDelay();
 		lcd.refresh();
+		GUIDelay();
 	}
 	while (!buttons) {
 		buttons = getButtonState();
-		GUIDelay();
 		lcd.refresh();
+		GUIDelay();
 	}
 }
 
@@ -603,6 +603,7 @@ void showVersion(void) {
 			screen++;
 			screen = screen % 7;
 		}
+		GUIDelay();
 	}
 }
 
@@ -812,7 +813,8 @@ void startPIDTask(void const *argument) {
 
 				int32_t rawTempError = currentlyActiveTemperatureTarget
 						- rawTemp;
-				int32_t ierror = (rawTempError / ((int32_t)systemSettings.PID_I));
+				int32_t ierror = (rawTempError
+						/ ((int32_t) systemSettings.PID_I));
 				integralCount += ierror;
 				if (integralCount > (itermMax / 2))
 					integralCount = itermMax / 2;  // prevent too much lead
@@ -822,11 +824,12 @@ void startPIDTask(void const *argument) {
 				int32_t dInput = (rawTemp - derivativeLastValue);
 
 				/*Compute PID Output*/
-				int32_t output = (rawTempError / ((int32_t)systemSettings.PID_P));
-				if (((int32_t)systemSettings.PID_I))
+				int32_t output = (rawTempError
+						/ ((int32_t) systemSettings.PID_P));
+				if (((int32_t) systemSettings.PID_I))
 					output += integralCount;
-				if (((int32_t)systemSettings.PID_D))
-					output -= (dInput / ((int32_t)systemSettings.PID_D));
+				if (((int32_t) systemSettings.PID_D))
+					output -= (dInput / ((int32_t) systemSettings.PID_D));
 
 				if (output > 100) {
 					output = 100;  // saturate
@@ -895,7 +898,7 @@ void startMOVTask(void const *argument) {
 		}
 		if (systemSettings.OrientationMode == 2) {
 			if (rotation != ORIENTATION_FLAT) {
-				lcd.setRotation(rotation == ORIENTATION_LEFT_HAND);  // link the data through
+				lcd.setRotation(rotation == ORIENTATION_LEFT_HAND); // link the data through
 			}
 		}
 		datax[currentPointer] = (int32_t) tx;
