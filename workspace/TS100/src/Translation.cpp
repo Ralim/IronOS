@@ -55,7 +55,7 @@
 
 #ifdef LANG_EN
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
@@ -112,7 +112,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
   /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
   /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
@@ -130,11 +130,13 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
   /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+
 #ifdef PIDSETTINGS
 
   {"PID","P"},
   {"PID","I"},
   {"PID","D"},
+
 #endif
 
 };
