@@ -32,7 +32,7 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 
 # global defines ---------------------------------------------------------------
@@ -73,7 +73,7 @@ LINKER_FLAGS=-Wl,--gc-sections 		\
 			-mcpu=cortex-m3		\
 			-mthumb			\
 			-mfloat-abi=soft	\
-			-lm
+			-lm -Os -flto -Wl,--undefined=vTaskSwitchContext
 
 # compiler flags ---------------------------------------------------------------
 CPUFLAGS=-D GCC_ARMCM3		\
@@ -185,13 +185,13 @@ all: $(OUT_HEXFILE).hex
 
 # Create hexfile
 %.hex : %.elf
-	$(SIZE) -x $^
+	$(SIZE) $^
 	$(OBJCOPY) $^ -O ihex $@
 
 $(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S)  $(LIBS) $(LINKER_FLAGS)
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
