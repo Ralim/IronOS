@@ -1554,3 +1554,88 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 "Розширені налаштування. Додаткові зручності."
 };
 #endif
+
+#ifdef LANG_NL
+const char* SettingsDescriptions[17] = {
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length.
+  /* Power source (DC or batt)          */ "Spanningsbron. Stelt drempelspanning in. <DC 10V> <S 3.3V per cel>",
+  /* Sleep temperature                  */ "Temperatuur in slaapstand <C>",
+  /* Sleep timeout                      */ "Slaapstand time-out <Minuten/Seconden>",
+  /* Shutdown timeout                   */ "Automatisch afsluiten time-out <Minuten>",
+  /* Motion sensitivity level           */ "Bewegingsgevoeligheid <0.uit 1.minst gevoelig 9.meest gevoelig>",
+  /* Temperature in F and C             */ "Temperatuureenheid <C=Celsius F=Fahrenheit>",
+  /* Advanced idle display mode enabled */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het slaapscherm.",
+  /* Display rotation mode              */ "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>",
+  /* Boost enabled                      */ "Soldeerbout gaat naar een hogere boost-temperatuur wanneer de voorste knop ingedrukt is.",
+  /* Boost temperature                  */ "Temperatuur in boostmodes",
+  /* Automatic start mode               */ "Breng de soldeerbout direct op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit",
+  /* Cooldown blink                     */ "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is.",
+  /* Temperature calibration enter menu */ "tip offset calibreren.",
+  /* Settings reset command             */ "Alle instellingen terugzetten.",
+  /* Calibrate input voltage            */ "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen.",
+  /* Advanced soldering screen enabled  */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm.",
+  /* Description Scroll Speed           */ "Snelheid waarmee de tekst scrolt.",
+};
+
+const char* SettingsCalibrationWarning = "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!";
+const char* SettingsResetWarning = "Ben je zeker dat je alle instellingen naar de standaardwaardes wilt terugzetten?";
+const char* UVLOWarningString = "DC LAAG";               // <=8 chars
+const char* UndervoltageString = "Onderspanning";        // <=16 chars
+const char* InputVoltageString = "Input V: ";           // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Tip Temp: ";        // <=12 chars, preferably end with a space
+const char* BadTipString = "DEFECT";                   // <=8 chars
+const char* SleepingSimpleString = "Zzz ";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Slaapstand...";     // <=16 chars
+const char* WarningSimpleString = "WARM!";               // Must be <= 4 chars
+const char* WarningAdvancedString = "!!! TIP WARM !!!";  // <=16 chars
+const char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
+const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "TIP LOSGEKOPPELD"; // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "vermogen: ";   // <=12 chars
+const char* OffString ="Off";                           // 3 chars max
+
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+
+const char SettingFastChar = 'F';
+const char SettingSlowChar = 'S';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Spannings-", "bron"},
+  /* (<=  9) Sleep temperature                  */ {"Slaap", "temp"},
+  /* (<=  9) Sleep timeout                      */ {"Slaap", "time-out"},
+  /* (<= 10) Shutdown timeout                   */ {"Uitschakel", "time-out"},
+  /* (<= 13) Motion sensitivity level           */ {"Bewegings-", "gevoeligheid"},
+  /* (<= 13) Temperature in F and C             */ {"Temperatuur", "eenheid"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Gedetailleerd", "slaapscherm"},
+  /* (<= 13) Display rotation mode              */ {"Scherm-", "oriëntatie"},
+  /* (<= 13) Boost enabled                      */ {"Boostmodes", "ingeschakeld?"},
+  /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
+  /* (<= 13) Automatic start mode               */ {"Auto", "start"},
+  /* (<= 13) Cooldown blink                     */ {"Afkoel", "flikker"},
+  /* (<= 16) Temperature calibration enter menu */ {"Calibreer", "temperatuur?"},
+  /* (<= 16) Settings reset command             */ {"Instellingen", "resetten?"},
+  /* (<= 16) Calibrate input voltage            */ {"Calibreer", "input-voltage?"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Gedetailleerd", "soldeerscherm"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Scroll","snelheid"},
+};
+
+// SettingsMenuEntries lengths <= 13 per line (\n starts second line)
+const char* SettingsMenuEntries[4] = {
+  /* Soldering Menu    */ "Soldeer\nInstellingen",
+  /* Power Saving Menu */ "slaap\nModes",
+  /* UI Menu           */ "Gebruikers-\nInterface",
+  /* Advanced Menu     */ "geavanceerde\nInstellingen",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  "SoldeerInstellingen",
+  "Batterijbesparingsinstellingen",
+  "Gebruikersinterface instellingen",
+  "geavanceerde Instellingen"
+};
+#endif
