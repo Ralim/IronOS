@@ -1627,7 +1627,7 @@ const char* SettingsShortNames[17][2] = {
 // SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
   /* Soldering Menu    */ "Soldeer\nInstellingen",
-  /* Power Saving Menu */ "slaap\nModes",
+  /* Power Saving Menu */ "Slaap\nModes",
   /* UI Menu           */ "Gebruikers-\nInterface",
   /* Advanced Menu     */ "geavanceerde\nInstellingen",
 };
