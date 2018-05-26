@@ -177,7 +177,7 @@ OUT_OBJS_CPP=$(addprefix $(OUTPUT_DIR)/,$(OBJS_CPP))
 OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 OUT_HEXFILE=$(addprefix $(HEXFILE_DIR)/,$(OUTPUT_EXE))
 
-all: $(OUT_HEXFILE).hex
+all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 
 #
 # The rule to create the target directory
@@ -187,6 +187,10 @@ all: $(OUT_HEXFILE).hex
 %.hex : %.elf
 	$(SIZE) $^
 	$(OBJCOPY) $^ -O ihex $@
+
+%.bin : %.elf
+	$(SIZE) $^
+	$(OBJCOPY) $^ -O binary $@
 
 $(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
