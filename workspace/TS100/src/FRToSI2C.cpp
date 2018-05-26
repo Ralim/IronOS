@@ -7,11 +7,6 @@
 
 #include "FRToSI2C.hpp"
 
-FRToSI2C::FRToSI2C(I2C_HandleTypeDef* i2chandle) {
-	i2c = i2chandle;
-	I2CSemaphore = NULL;
-}
-
 void FRToSI2C::CpltCallback() {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	i2c->State = HAL_I2C_STATE_READY;//Force state reset
@@ -19,8 +14,6 @@ void FRToSI2C::CpltCallback() {
 		xSemaphoreGiveFromISR(I2CSemaphore, &xHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	}
-
-
 }
 
 void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
@@ -69,14 +62,7 @@ void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 		} else {
 			NVIC_SystemReset();
 		}
-
 	}
-
-}
-
-void FRToSI2C::FRToSInit() {
-	I2CSemaphore = xSemaphoreCreateBinary();
-	xSemaphoreGive(I2CSemaphore);
 }
 
 void FRToSI2C::Transmit(uint16_t DevAddress, uint8_t* pData, uint16_t Size) {

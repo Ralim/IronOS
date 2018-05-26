@@ -580,6 +580,16 @@ static void gui_solderingMode() {
 	}
 }
 
+static const char *HEADERS[] = {
+	__DATE__,
+	"Heap: ",
+	"HWMG: ",
+	"HWMP: ",
+	"HWMM: ",
+	"Time: ",
+	"Move: "
+};
+
 void showVersion(void) {
 	uint8_t screen = 0;
 	ButtonState b;
@@ -590,35 +600,27 @@ void showVersion(void) {
 		lcd.print((char *) "V2.05 PCB");  // Print version number
 		lcd.printNumber(PCBVersion, 1); //Print PCB ID number
 		lcd.setCursor(0, 8);         // second line
+		lcd.print(HEADERS[screen]);
 		switch (screen) {
-		case 0:
-			lcd.print(__DATE__);         // print the compile date
-			break;
 		case 1:
-			lcd.print("Heap: ");
 			lcd.printNumber(xPortGetFreeHeapSize(), 5);
 			break;
 		case 2:
-			lcd.print("HWMG: ");
 			lcd.printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5);
 			break;
 		case 3:
-			lcd.print("HWMP: ");
 			lcd.printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5);
 			break;
 		case 4:
-			lcd.print("HWMM: ");
 			lcd.printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5);
 			break;
-
 		case 5:
-			lcd.print("Time: ");
 			lcd.printNumber(xTaskGetTickCount() / 100, 5);
 			break;
 		case 6:
-			lcd.print("Move: ");
 			lcd.printNumber(lastMovementTime / 100, 5);
-
+			break;
+		default:
 			break;
 		}
 
@@ -640,19 +642,7 @@ void startGUITask(void const *argument) {
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
-	switch (systemSettings.OrientationMode) {
-	case 0:
-		lcd.setRotation(false);
-		break;
-	case 1:
-		lcd.setRotation(true);
-		break;
-	case 2:
-		lcd.setRotation(false);
-		break;
-	default:
-		break;
-	}
+	lcd.setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
 	ticks += 400;  //4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
@@ -889,27 +879,12 @@ void startPIDTask(void const *argument) {
 #define MOVFilter 8
 void startMOVTask(void const *argument) {
 	osDelay(250);  // wait for accelerometer to stabilize
-	switch (systemSettings.OrientationMode) {
-	case 0:
-		lcd.setRotation(false);
-		break;
-	case 1:
-		lcd.setRotation(true);
-		break;
-	case 2:
-		lcd.setRotation(false);
-		break;
-	default:
-		break;
-	}
+	lcd.setRotation(systemSettings.OrientationMode & 1);
 	lastMovementTime = 0;
-	int16_t datax[MOVFilter];
-	int16_t datay[MOVFilter];
-	int16_t dataz[MOVFilter];
+	int16_t datax[MOVFilter] = { 0 };
+	int16_t datay[MOVFilter] = { 0 };
+	int16_t dataz[MOVFilter] = { 0 };
 	uint8_t currentPointer = 0;
-	memset(datax, 0, MOVFilter * sizeof(int16_t));
-	memset(datay, 0, MOVFilter * sizeof(int16_t));
-	memset(dataz, 0, MOVFilter * sizeof(int16_t));
 	int16_t tx, ty, tz;
 	int32_t avgx, avgy, avgz;
 	if (systemSettings.sensitivity > 9)
