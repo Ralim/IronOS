@@ -1571,7 +1571,7 @@ const char* SettingsDescriptions[17] = {
   /* Boost temperature                  */ "Temperatuur in boostmodes",
   /* Automatic start mode               */ "Breng de soldeerbout direct op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit",
   /* Cooldown blink                     */ "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is.",
-  /* Temperature calibration enter menu */ "Temperatuurs-offset van de soldeerpunt calibreren.",
+  /* Temperature calibration enter menu */ "Temperatuursafwijking van de soldeerpunt calibreren.",
   /* Settings reset command             */ "Alle instellingen terugzetten.",
   /* Calibrate input voltage            */ "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen.",
   /* Advanced soldering screen enabled  */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm.",
@@ -1633,9 +1633,9 @@ const char* SettingsMenuEntries[4] = {
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  "SoldeerInstellingen",
+  "Soldeerinstellingen",
   "Batterijbesparingsinstellingen",
-  "Gebruikersinterface instellingen",
+  "Gebruikersinterface Instellingen",
   "geavanceerde Instellingen"
 };
 #endif
