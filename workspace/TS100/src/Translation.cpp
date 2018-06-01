@@ -1571,7 +1571,7 @@ const char* SettingsDescriptions[17] = {
   /* Boost temperature                  */ "Temperatuur in boostmodes",
   /* Automatic start mode               */ "Breng de soldeerbout direct op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit",
   /* Cooldown blink                     */ "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is.",
-  /* Temperature calibration enter menu */ "tip offset calibreren.",
+  /* Temperature calibration enter menu */ "Temperatuurs-offset van de soldeerpunt calibreren.",
   /* Settings reset command             */ "Alle instellingen terugzetten.",
   /* Calibrate input voltage            */ "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen.",
   /* Advanced soldering screen enabled  */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm.",
@@ -1587,8 +1587,8 @@ const char* WarningTipTempString = "Tip Temp: ";        // <=12 chars, preferabl
 const char* BadTipString = "DEFECT";                   // <=8 chars
 const char* SleepingSimpleString = "Zzz ";              // Must be <= 4 chars
 const char* SleepingAdvancedString = "Slaapstand...";     // <=16 chars
-const char* WarningSimpleString = "WARM!";               // Must be <= 4 chars
-const char* WarningAdvancedString = "!!! TIP WARM !!!";  // <=16 chars
+const char* WarningSimpleString = "HEET!";               // Must be <= 4 chars
+const char* WarningAdvancedString = "!!! TIP HEET !!!";  // <=16 chars
 const char* SleepingTipAdvancedString = "Tip:";         // <=6 chars
 const char* IdleTipString = "Tip:";                     // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Set:";                    // preferably start with a space; IdleTipString+IdleSetString <= 10
