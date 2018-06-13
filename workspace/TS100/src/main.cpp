@@ -885,8 +885,8 @@ void startMOVTask(void const *argument) {
 	int16_t datay[MOVFilter] = { 0 };
 	int16_t dataz[MOVFilter] = { 0 };
 	uint8_t currentPointer = 0;
-	int16_t tx, ty, tz;
-	int32_t avgx, avgy, avgz;
+	int16_t tx = 0, ty = 0, tz = 0;
+	int32_t avgx = 0, avgy = 0, avgz = 0;
 	if (systemSettings.sensitivity > 9)
 		systemSettings.sensitivity = 9;
 #if ACCELDEBUG
@@ -913,11 +913,8 @@ void startMOVTask(void const *argument) {
 		datay[currentPointer] = (int32_t) ty;
 		dataz[currentPointer] = (int32_t) tz;
 		currentPointer = (currentPointer + 1) % MOVFilter;
-#if ACCELDEBUG
 
-		// Debug for Accel
-
-		avgx = avgy = avgz = 0;
+		// calculate averages
 		for (uint8_t i = 0; i < MOVFilter; i++) {
 			avgx += datax[i];
 			avgy += datay[i];
@@ -926,38 +923,35 @@ void startMOVTask(void const *argument) {
 		avgx /= MOVFilter;
 		avgy /= MOVFilter;
 		avgz /= MOVFilter;
+
+		//Sum the deltas
+		int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+
+#if ACCELDEBUG
+		// Debug for Accel
+
 		lcd.setFont(1);
 		lcd.setCursor(0, 0);
 		lcd.printNumber(abs(avgx - (int32_t) tx), 5);
 		lcd.print(" ");
 		lcd.printNumber(abs(avgy - (int32_t) ty), 5);
-		if ((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)) > max)
-		max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+		if (error > max) {
+			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+		}
 		lcd.setCursor(0, 8);
 		lcd.printNumber(max, 5);
 		lcd.print(" ");
 
 		lcd.printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
 		lcd.refresh();
-		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET)
-		max = 0;
-#endif
-
-		// calculate averages
-		avgx = avgy = avgz = 0;
-		for (uint8_t i = 0; i < MOVFilter; i++) {
-			avgx += datax[i];
-			avgy += datay[i];
-			avgz += dataz[i];
+		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET) {
+			max = 0;
 		}
-		avgx /= MOVFilter;
-		avgy /= MOVFilter;
-		avgz /= MOVFilter;
+#endif
 
 		// So now we have averages, we want to look if these are different by more
 		// than the threshold
-		//Sum the deltas
-		int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+
 		// If error has occurred then we update the tick timer
 		if (error > threshold) {
 			lastMovementTime = xTaskGetTickCount();
