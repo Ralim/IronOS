@@ -1639,3 +1639,89 @@ const char* SettingsMenuEntriesDescriptions[4] = {
   "geavanceerde Instellingen"
 };
 #endif
+
+#ifdef LANG_SV
+const char* SettingsDescriptions[17] = {
+  // These are all the help text for all the settings.
+  // No requirements on spacing or length.
+  /* Power source (DC or batt)          */ "Strömkälla. Anger lägsta spänning. <DC 10V> <S 3.3V per cell>",
+  /* Sleep temperature                  */ "Vilotemperatur <C>",
+  /* Sleep timeout                      */ "Vilo-timeout <Minuter/Seconder>",
+  /* Shutdown timeout                   */ "Avstängnings-timeout <Minuter>",
+  /* Motion sensitivity level           */ "Rörelsekänslighet <0.Av 1.minst känslig 9.mest känslig>",
+  /* Temperature in F and C             */ "Temperaturenhet <C=Celsius F=Fahrenheit>",
+  /* Advanced idle display mode enabled */ "Visa detaljerad information i mindre typsnitt när inaktiv.",
+  /* Display rotation mode              */ "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>",
+
+  /* Boost enabled                      */ "Enable front key enters boost mode 450C mode when soldering",
+  /* Boost temperature                  */ "Temperature when in \"boost\" mode",
+  /* Automatic start mode               */ "Automatically starts the iron into soldering on power up. T=Soldering, S= Sleep mode,F=Off",
+  /* Cooldown blink                     */ "Blink the temperature on the cooling screen while the tip is still hot.",
+  /* Temperature calibration enter menu */ "Calibrate tip offset.",
+  /* Settings reset command             */ "Reset all settings",
+  /* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
+  /* Advanced soldering screen enabled  */ "Display detailed information while soldering",
+  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+};
+
+const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* UVLOWarningString = "DC LÅG";               // <=8 chars
+const char* UndervoltageString = "Underspänning";       // <=16 chars
+const char* InputVoltageString = "Inspän. V: ";         // <=11 chars, preferably end with a space
+const char* WarningTipTempString = "Spetstemp: ";       // <=12 chars, preferably end with a space
+const char* BadTipString = "SPETSFEL";                  // <=8 chars
+const char* SleepingSimpleString = "Zzzz";              // Must be <= 4 chars
+const char* SleepingAdvancedString = "Viloläge...";     // <=16 chars
+const char* WarningSimpleString = "VARM";               // Must be <= 4 chars
+const char* WarningAdvancedString = "!! SPETS VARM !!"; // <=16 chars
+const char* SleepingTipAdvancedString = "Spets:";       // <=6 chars
+const char* IdleTipString = "Spets:";                   // IdleTipString+IdleSetString <= 10
+const char* IdleSetString = " Ange:";                   // preferably start with a space; IdleTipString+IdleSetString <= 10
+const char* TipDisconnectedString = "SPETS URTAGEN";    // <=16 chars
+const char* SolderingAdvancedPowerPrompt = "Ström: ";   // <=12 chars
+const char* OffString ="Av";                            // 3 chars max
+
+const char SettingRightChar = 'H';
+const char SettingLeftChar = 'V';
+const char SettingAutoChar = 'A';
+
+const char SettingFastChar = 'S';
+const char SettingSlowChar = 'L';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
+  /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
+  /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
+  /* (<= 10) Shutdown timeout                   */ {"Shutdown", "timeout"},
+  /* (<= 13) Motion sensitivity level           */ {"Motion", "sensitivity"},
+  /* (<= 13) Temperature in F and C             */ {"Temperature", "units"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Detailed", "idle screen"},
+  /* (<= 13) Display rotation mode              */ {"Display", "orientation"},
+  /* (<= 13) Boost enabled                      */ {"Boost mode", "enabled"},
+  /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
+  /* (<= 13) Automatic start mode               */ {"Auto", "start"},
+  /* (<= 13) Cooldown blink                     */ {"Cooldown", "blink"},
+  /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
+  /* (<= 16) Settings reset command             */ {"Factory", "reset?"},
+  /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+};
+
+// SettingsMenuEntries lengths <= 13 per line (\n starts second line)
+const char* SettingsMenuEntries[4] = {
+  /* Soldering Menu    */ "Soldering\nSettings",
+  /* Power Saving Menu */ "Sleep\nModes",
+  /* UI Menu           */ "User\nInterface",
+  /* Advanced Menu     */ "Advanced\nOptions",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  "Soldering settings",
+  "Power Saving Settings",
+  "User Interface settings",
+  "Advanced options"
+};
+#endif
