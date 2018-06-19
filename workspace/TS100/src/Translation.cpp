@@ -1653,15 +1653,15 @@ const char* SettingsDescriptions[17] = {
   /* Advanced idle display mode enabled */ "Visa detaljerad information i mindre typsnitt när inaktiv.",
   /* Display rotation mode              */ "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>",
 
-  /* Boost enabled                      */ "Enable front key enters boost mode 450C mode when soldering",
-  /* Boost temperature                  */ "Temperature when in \"boost\" mode",
-  /* Automatic start mode               */ "Automatically starts the iron into soldering on power up. T=Soldering, S= Sleep mode,F=Off",
-  /* Cooldown blink                     */ "Blink the temperature on the cooling screen while the tip is still hot.",
-  /* Temperature calibration enter menu */ "Calibrate tip offset.",
-  /* Settings reset command             */ "Reset all settings",
-  /* Calibrate input voltage            */ "VIN Calibration. Buttons adjust, long press to exit",
-  /* Advanced soldering screen enabled  */ "Display detailed information while soldering",
-  /* Description Scroll Speed           */ "Speed this text scrolls past at",
+  /* Boost enabled                      */ "Aktivera främre knappen för turboläge (temperaturhöjning) vid lödning",
+  /* Boost temperature                  */ "Temperatur i \"turbo\"-läge",
+  /* Automatic start mode               */ "Startar automatiskt lödpennan vid uppstart. T=Lödning, S=Viloläge, F=Av",
+  /* Cooldown blink                     */ "Blinka temperaturen medan spetsen kyls av och fortfarande är varm.",
+  /* Temperature calibration enter menu */ "Kalibrera spets-kompensation.",
+  /* Settings reset command             */ "Återställ alla inställningar",
+  /* Calibrate input voltage            */ "Inspänningskalibrering. Knapparna justerar, håll inne för avslut",
+  /* Advanced soldering screen enabled  */ "Visa detaljerad information vid lödning",
+  /* Description Scroll Speed           */ "Hastighet som den här texten rullar i",
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
@@ -1691,37 +1691,37 @@ const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
-  /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
-  /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
-  /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
-  /* (<= 10) Shutdown timeout                   */ {"Shutdown", "timeout"},
-  /* (<= 13) Motion sensitivity level           */ {"Motion", "sensitivity"},
-  /* (<= 13) Temperature in F and C             */ {"Temperature", "units"},
-  /* (<= 13) Advanced idle display mode enabled */ {"Detailed", "idle screen"},
-  /* (<= 13) Display rotation mode              */ {"Display", "orientation"},
-  /* (<= 13) Boost enabled                      */ {"Boost mode", "enabled"},
-  /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
+  /* (<= 11) Power source (DC or batt)          */ {"Ström-", "källa"},
+  /* (<=  9) Sleep temperature                  */ {"Vilo-", "temp"},
+  /* (<=  9) Sleep timeout                      */ {"Vilo-", "timeout"},
+  /* (<= 10) Shutdown timeout                   */ {"Avstängn.", "timeout"},
+  /* (<= 13) Motion sensitivity level           */ {"Rörelse-", "känslighet"},
+  /* (<= 13) Temperature in F and C             */ {"Temperatur-", "enheter"},
+  /* (<= 13) Advanced idle display mode enabled */ {"Detaljerad", "vid inaktiv"},
+  /* (<= 13) Display rotation mode              */ {"Visnings", "läge"},
+  /* (<= 13) Boost enabled                      */ {"Turboläge", "aktiverat"},
+  /* (<=  9) Boost temperature                  */ {"Turbo-", "temp"},
   /* (<= 13) Automatic start mode               */ {"Auto", "start"},
-  /* (<= 13) Cooldown blink                     */ {"Cooldown", "blink"},
-  /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
-  /* (<= 16) Settings reset command             */ {"Factory", "reset?"},
-  /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
-  /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
-  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+  /* (<= 13) Cooldown blink                     */ {"Nedkylnings-", "blink"},
+  /* (<= 16) Temperature calibration enter menu */ {"Kalibrera", "temperatur?"},
+  /* (<= 16) Settings reset command             */ {"Fabriks-", "inställ?"},
+  /* (<= 16) Calibrate input voltage            */ {"Kalibrera", "inspänning?"},
+  /* (<= 13) Advanced soldering screen enabled  */ {"Detaljerad", "lödng.skärm"},
+  /* (<= 11) Display Help Text Scroll Speed     */ {"Beskrivning","rullhast."},
 };
 
 // SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
-  /* Soldering Menu    */ "Soldering\nSettings",
-  /* Power Saving Menu */ "Sleep\nModes",
-  /* UI Menu           */ "User\nInterface",
-  /* Advanced Menu     */ "Advanced\nOptions",
+  /* Soldering Menu    */ "Lödnings-\ninställningar",
+  /* Power Saving Menu */ "Vilo-\nlägen",
+  /* UI Menu           */ "Användar-\ngränssnitt",
+  /* Advanced Menu     */ "Avancerade\nalternativ",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  "Soldering settings",
-  "Power Saving Settings",
-  "User Interface settings",
-  "Advanced options"
+  "Lödningsinställningar",
+  "Viloläges-inställningar",
+  "Användargränssnitts-inställningar",
+  "Avancerade alternativ"
 };
 #endif
