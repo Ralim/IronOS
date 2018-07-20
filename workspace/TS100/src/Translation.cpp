@@ -1421,14 +1421,14 @@ const char* WarningTipTempString = "Antgl Temp: ";         // <=12 chars, prefer
 const char* BadTipString = "BLOG ANT";                     // <=8 chars
 const char* SleepingSimpleString = "Zzzz";                 // Must be <= 4 chars
 const char* SleepingAdvancedString = "Miegu...";           // <=16 chars
-const char* WarningSimpleString = "HOT!";                  // Must be <= 4 chars
+const char* WarningSimpleString = "KRŠ!";                  // Must be <= 4 chars
 const char* WarningAdvancedString = "ANTGALIS KARŠTAS";    // <=16 chars
 const char* SleepingTipAdvancedString = "Antgl:";          // <=6 chars
 const char* IdleTipString = "Ant:";                        // IdleTipString+IdleSetString <= 10
 const char* IdleSetString = " Nust:";                      // preferably start with a space; IdleTipString+IdleSetString <= 10
 const char* TipDisconnectedString = "ANTGAL ATJUNGTAS";    // <=16 chars
 const char* SolderingAdvancedPowerPrompt = "Maitinimas: "; // <=12 chars
-const char* OffString ="Off";                              // 3 chars max
+const char* OffString ="Išj";                              // 3 chars max
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'K';
