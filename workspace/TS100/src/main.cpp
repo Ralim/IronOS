@@ -581,14 +581,7 @@ static void gui_solderingMode() {
 }
 
 static const char *HEADERS[] = {
-	__DATE__,
-	"Heap: ",
-	"HWMG: ",
-	"HWMP: ",
-	"HWMM: ",
-	"Time: ",
-	"Move: "
-};
+__DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ","Rtip: ","Ctip: ","Vin :" };
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -620,6 +613,15 @@ void showVersion(void) {
 		case 6:
 			lcd.printNumber(lastMovementTime / 100, 5);
 			break;
+		case 7:
+			lcd.printNumber(getTipRawTemp(0),5);
+			break;
+		case 8:
+			lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)),5);
+			break;
+		case 9:
+			printVoltage();
+			break;
 		default:
 			break;
 		}
@@ -630,7 +632,7 @@ void showVersion(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 7;
+			screen = screen % 10;
 		}
 		GUIDelay();
 	}
@@ -642,6 +644,7 @@ void startGUITask(void const *argument) {
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
+	getTipRawTemp(2);         //reset filter
 	lcd.setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
 	ticks += 400;  //4 seconds from now

@@ -191,14 +191,14 @@ const menuitem advancedMenu[] = {
 		settings_displayCalibrateVIN } }, /*Voltage input cal*/
 #ifdef PIDSETTINGS
 
-{ (const char*) SettingsDescriptions[17], { settings_setPIDP }, {
-		settings_displayPIDP } }, /*Voltage input cal*/
-{ (const char*) SettingsDescriptions[18], { settings_setPIDI }, {
-		settings_displayPIDI } }, /*Voltage input cal*/
-{ (const char*) SettingsDescriptions[19], { settings_setPIDD }, {
-		settings_displayPIDD } }, /*Voltage input cal*/
+		{	(const char*) SettingsDescriptions[17], {settings_setPIDP}, {
+				settings_displayPIDP}}, /*Voltage input cal*/
+		{	(const char*) SettingsDescriptions[18], {settings_setPIDI}, {
+				settings_displayPIDI}}, /*Voltage input cal*/
+		{	(const char*) SettingsDescriptions[19], {settings_setPIDD}, {
+				settings_displayPIDD}}, /*Voltage input cal*/
 #endif
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+		{ NULL, { NULL }, { NULL } }        // end of menu marker. DO NOT REMOVE
 };
 
 static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
@@ -628,7 +628,7 @@ static void settings_setCalibrateVIN(void) {
 		case BUTTON_B_LONG:
 			saveSettings();
 			return;
-
+			break;
 		case BUTTON_NONE:
 		default:
 			break;
@@ -654,7 +654,7 @@ static void displayMenu(size_t index) {
 	lcd.print(SettingsMenuEntries[index]);
 	//Draw symbol
 	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));	
+	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));
 }
 
 static void settings_displayCalibrateVIN(void) {

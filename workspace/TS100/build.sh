@@ -35,3 +35,5 @@ make -j16 lang=LT
 rm -rf Objects/src
 make -j16 lang=UA
 rm -rf Objects/src
+make -j16 lang=SR
+rm -rf Objects/src
