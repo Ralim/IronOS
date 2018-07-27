@@ -12,7 +12,7 @@
 // translation:
 
 //const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-//const char* SettingsShortNames[17][2] = {
+//const char* SettingsShortNames[][2] = {
 //  /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
 //  /* (<= 4) Sleep temperature                  */ {"STMP"},
 //  /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -33,7 +33,7 @@
 //};
 
 //const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-//const char* SettingsShortNames[17][2] = {
+//const char* SettingsShortNames[][2] = {
 //  /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
 //  /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
 //  /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
@@ -55,7 +55,7 @@
 
 #ifdef LANG_EN
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
@@ -112,7 +112,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
   /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
   /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
@@ -130,11 +130,13 @@ const char* SettingsShortNames[17][2] = {
   /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
   /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
   /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
+
 #ifdef PIDSETTINGS
 
   {"PID","P"},
   {"PID","I"},
   {"PID","D"},
+
 #endif
 
 };
@@ -157,7 +159,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 
 #ifdef LANG_BG
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   /* Power source (DC or batt)          */ "Източник на захранване. Минимално напрежение. <DC 10V> <S 3.3V за клетка>",
   /* Sleep temperature                  */ "Температура при режим \"сън\" <C>",
   /* Sleep timeout                      */ "Включване в режим \"сън\" след: <Минути/Секунди>",
@@ -203,7 +205,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Източник", "захранване"},
   /* (<=  9) Sleep temperature                  */ {"Темп.", "сън"},
   /* (<=  9) Sleep timeout                      */ {"Време", "сън"},
@@ -238,7 +240,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_RU
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Установка минимального напряжения. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>",
@@ -292,7 +294,7 @@ const char SettingFastChar = '+';
 const char SettingSlowChar = '-';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Источник","питания"},		//8,7
   /* (<=  9) Sleep temperature                  */ {"Темпер.","сна"},			//7,3
   /* (<=  9) Sleep timeout                      */ {"Таймаут","сна"},			//7,3
@@ -326,7 +328,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_ES
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Fuente de energía. Ajusta el límite inferior de voltaje. <DC=10V S=3.3V por celda>",
@@ -374,7 +376,7 @@ const char SettingFastChar = 'R'; // R is "Rápido" = Fast
 const char SettingSlowChar = 'L'; // L is "Lento" = Slow
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -408,7 +410,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 
 #ifdef LANG_FI
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Käytettävä virtalähde. Asettaa katkaisujänniteen. <DC 10V, 3S=9.9V, 4S=13.2V, 5S=16.5V, 6S=19.8V>",
@@ -456,7 +458,7 @@ const char SettingFastChar = 'N';   //'F';
 const char SettingSlowChar = 'H';   //'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Virtalähde", "DC"},
   /* (<=  9) Sleep temperature                  */ {"Lepotilan", "lämpötila"},
   /* (<=  9) Sleep timeout                      */ {"Lepotilan", "viive"},
@@ -494,7 +496,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_IT
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */"Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>",
@@ -543,7 +545,7 @@ const char SettingFastChar = 'V';
 const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
- const char* SettingsShortNames[17][2] = {
+ const char* SettingsShortNames[][2] = {
     /* (<= 11) Power source (DC or batt)          */ {"Sorgente", "alimentaz"},
     /* (<=  9) Sleep temperature                  */ {"Temp", "standby"},
     /* (<=  9) Sleep timeout                      */ {"Timer", "standby"},
@@ -577,7 +579,7 @@ const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 
 #ifdef LANG_FR
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>",
@@ -625,7 +627,7 @@ const char SettingFastChar = 'R';
 const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Source", "d'alim"},
   /* (<=  9) Sleep temperature                  */ {"Temp.", "veille"},
   /* (<=  9) Sleep timeout                      */ {"Délai", "veille"},
@@ -659,7 +661,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_DE
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>",
@@ -707,7 +709,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Spannungs-", "quelle"},
   /* (<=  9) Sleep temperature                  */ {"Ruhetemp-", "eratur"},
   /* (<=  9) Sleep timeout                      */ {"Ruhever-", "zögerung"},
@@ -740,7 +742,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_SK
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Zdroj napatia. Nastavit napatie pre vypnutie (cutoff)  <DC=10V, nS=n*3.3V pre LiIon clanky>",
@@ -788,7 +790,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -821,7 +823,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_TR
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Güç Kaynağı. kesim geriliminı ayarlar. <DC 10V> <S 3.3V hücre başına>",
@@ -869,7 +871,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -902,7 +904,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_HR
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>",
@@ -950,7 +952,7 @@ const char SettingFastChar = 'B';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Izvor", "napajanja"},
   /* (<=  9) Sleep temperature                  */ {"Temp", "spavanja"},
   /* (<=  9) Sleep timeout                      */ {"Vrijeme", "spavanja"},
@@ -983,7 +985,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_CS_CZ
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   /* Power source (DC or batt)          */ "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo,LiIon...>",
   /* Sleep temperature                  */ "Teplota v režimu spánku.",
   /* Sleep timeout                      */ "Čas do režimu spánku <Minut/Sekund>",
@@ -1029,7 +1031,7 @@ const char SettingFastChar = 'R';
 const char SettingSlowChar = 'P';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Zdroj", "napájení"},
   /* (<=  9) Sleep temperature                  */ {"Teplota v", "r. spánku"},
   /* (<=  9) Sleep timeout                      */ {"Čas do", "r. spánku"},
@@ -1066,7 +1068,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_HUN
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length
   /* Power source (DC or batt)          */ "Áramforrás. Beállítja a lekapcsolási feszültséget. <DC 10V> <S 3.3V cellánként>",
@@ -1114,7 +1116,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -1147,7 +1149,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_DK
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length
   /* Power source (DC or batt)          */ "Strømforsyning. Indstil Cutoff Spændingen. <DC 10V <S 3.3V per cell",
@@ -1195,7 +1197,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -1228,7 +1230,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_PL
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
     // These are all the help text for all the settings.
     // No requirements on spacing or length
     /* Power source (DC or batt)          */ "Źródło zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw Li>",
@@ -1276,7 +1278,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
   /* (<= 4) Sleep temperature                  */ {"STMP"},
   /* (<= 4) Sleep timeout                      */ {"STME"},
@@ -1309,7 +1311,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_BR
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Fonte de alimentação. Define a tensão de corte. <DC 10V> <S 3.3V por célula>",
@@ -1357,7 +1359,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 5) Power source (DC or batt)          */ {"FONTE"},
   /* (<= 4) Sleep temperature                  */ {"TMPE"},
   /* (<= 4) Sleep timeout                      */ {"TMPO"},
@@ -1390,7 +1392,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_LT
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
   // These are all the help text for all the settings.
   // No requirements on spacing or length.
   /* Power source (DC or batt)          */ "Išjungimo įtampa. <DC 10V arba celių (S) kiekis (3.3V per celę)>",
@@ -1438,7 +1440,7 @@ const char SettingFastChar = 'T';
 const char SettingSlowChar = 'N';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Maitinimo", "šaltinis"},
   /* (<=  9) Sleep temperature                  */ {"Miego", "temperat."},
   /* (<=  9) Sleep timeout                      */ {"Miego", "laikas"},
@@ -1472,7 +1474,7 @@ const char* SettingsMenuEntriesDescriptions[4] ={
 #endif
 
 #ifdef LANG_UA
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */ "Установка напруги відключення. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>",
@@ -1520,7 +1522,7 @@ const char SettingFastChar = '+';
 const char SettingSlowChar = '-';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[][2] = {
   /* (<= 11) Power source (DC or batt)          */ {"Джерело","живлення"},		//7,8
   /* (<=  9) Sleep temperature                  */ {"Темпер.","сну"},			//7,3
   /* (<=  9) Sleep timeout                      */ {"Таймаут","сну"},			//7,3
