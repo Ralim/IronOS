@@ -6,7 +6,7 @@
  */
 #include "Translation.h"
 #ifndef LANG
-#define LANG_FR
+#define LANG_EN
 #endif
 // TEMPLATES for short names - choose one and use it as base for your
 // translation:

@@ -283,42 +283,24 @@ static void gui_solderingTempAdjust() {
 		case BUTTON_B_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
-				if (!lcd.getRotation()) {
-					systemSettings.SolderingTemp += 10;  // add 10
-				} else {
-					systemSettings.SolderingTemp -= 10;  // sub 10
-				}
+				systemSettings.SolderingTemp -= 10;  // sub 10
 				autoRepeatTimer = xTaskGetTickCount();
-
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
-				if (!lcd.getRotation()) {
-					systemSettings.SolderingTemp -= 10;
-				} else {
-					systemSettings.SolderingTemp += 10;
-				}
+				systemSettings.SolderingTemp += 10;
 				autoRepeatTimer = xTaskGetTickCount();
-
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_F_SHORT:
-			if (lcd.getRotation()) {
-				systemSettings.SolderingTemp += 10;  // add 10
-			} else {
-				systemSettings.SolderingTemp -= 10;  // sub 10
-			}
+			systemSettings.SolderingTemp += 10;  // add 10
 			break;
 		case BUTTON_B_SHORT:
-			if (!lcd.getRotation()) {
-				systemSettings.SolderingTemp += 10;  // add 10
-			} else {
-				systemSettings.SolderingTemp -= 10;  // sub 10
-			}
+			systemSettings.SolderingTemp -= 10;  // sub 10
 			break;
 		default:
 			break;
@@ -347,7 +329,12 @@ static void gui_solderingTempAdjust() {
 
 		if (xTaskGetTickCount() - lastChange > 200)
 			return;  // exit if user just doesn't press anything for a bit
-		lcd.drawChar('-');
+
+		if (lcd.getRotation())
+			lcd.drawChar('-');
+		else
+			lcd.drawChar('+');
+
 		lcd.drawChar(' ');
 		lcd.printNumber(systemSettings.SolderingTemp, 3);
 		if (systemSettings.temperatureInF)
@@ -355,7 +342,10 @@ static void gui_solderingTempAdjust() {
 		else
 			lcd.drawSymbol(1);
 		lcd.drawChar(' ');
-		lcd.drawChar('+');
+		if (lcd.getRotation())
+				lcd.drawChar('+');
+			else
+				lcd.drawChar('-');
 		lcd.refresh();
 		GUIDelay();
 	}
@@ -440,14 +430,15 @@ static void display_countdown(int sleepThres) {
 	 * Print seconds or minutes (if > 99 seconds) until sleep
 	 * mode is triggered.
 	 */
-	int lastEventTime = lastButtonTime < lastMovementTime ?
-	    lastMovementTime : lastButtonTime;
+	int lastEventTime =
+			lastButtonTime < lastMovementTime ?
+					lastMovementTime : lastButtonTime;
 	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
 	if (downCount > 9900) {
-		lcd.printNumber(downCount/6000 + 1, 2);
+		lcd.printNumber(downCount / 6000 + 1, 2);
 		lcd.print("M");
 	} else {
-		lcd.printNumber(downCount/100 + 1, 2);
+		lcd.printNumber(downCount / 100 + 1, 2);
 		lcd.print("S");
 	}
 }
@@ -522,8 +513,7 @@ static void gui_solderingMode() {
 				lcd.printNumber(getTipPWM(), 3);
 				lcd.print("%");
 
-				if (systemSettings.sensitivity && systemSettings.SleepTime)
-				{
+				if (systemSettings.sensitivity && systemSettings.SleepTime) {
 					lcd.print(" ");
 					display_countdown(sleepThres);
 				}
@@ -605,7 +595,8 @@ static void gui_solderingMode() {
 }
 
 static const char *HEADERS[] = {
-__DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ","Rtip: ","Ctip: ","Vin :" };
+__DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "Rtip: ",
+		"Ctip: ", "Vin :" };
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -638,10 +629,10 @@ void showVersion(void) {
 			lcd.printNumber(lastMovementTime / 100, 5);
 			break;
 		case 7:
-			lcd.printNumber(getTipRawTemp(0),5);
+			lcd.printNumber(getTipRawTemp(0), 5);
 			break;
 		case 8:
-			lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)),5);
+			lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 5);
 			break;
 		case 9:
 			printVoltage();
