@@ -434,6 +434,24 @@ static int gui_SolderingSleepingMode() {
 	}
 	return 0;
 }
+
+static void display_countdown(int sleepThres) {
+	/*
+	 * Print seconds or minutes (if > 99 seconds) until sleep
+	 * mode is triggered.
+	 */
+	int lastEventTime = lastButtonTime < lastMovementTime ?
+	    lastMovementTime : lastButtonTime;
+	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
+	if (downCount > 9900) {
+		lcd.printNumber(downCount/6000 + 1, 2);
+		lcd.print("M");
+	} else {
+		lcd.printNumber(downCount/100 + 1, 2);
+		lcd.print("S");
+	}
+}
+
 static void gui_solderingMode() {
 	/*
 	 * * Soldering (gui_solderingMode)
@@ -503,6 +521,12 @@ static void gui_solderingMode() {
 				lcd.print(SolderingAdvancedPowerPrompt);  //Power:
 				lcd.printNumber(getTipPWM(), 3);
 				lcd.print("%");
+
+				if (systemSettings.sensitivity && systemSettings.SleepTime)
+				{
+					lcd.print(" ");
+					display_countdown(sleepThres);
+				}
 
 				lcd.setCursor(0, 8);
 				lcd.print(SleepingTipAdvancedString);
