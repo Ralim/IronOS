@@ -19,6 +19,9 @@ enum Orientation {
     ORIENTATION_FLAT = 3
 };
 
+#define MODEL_TS100
+#ifdef MODEL_TS100
+
 #define KEY_B_Pin GPIO_PIN_6
 #define KEY_B_GPIO_Port GPIOA
 #define TMP36_INPUT_Pin GPIO_PIN_7
@@ -42,6 +45,33 @@ enum Orientation {
 #define SDA_Pin GPIO_PIN_7
 #define SDA_GPIO_Port GPIOB
 
+#else
+// TS80 pin map
+
+#define KEY_B_Pin GPIO_PIN_6
+#define KEY_B_GPIO_Port GPIOA
+#define TMP36_INPUT_Pin GPIO_PIN_7
+#define TMP36_INPUT_GPIO_Port GPIOA
+#define TIP_TEMP_Pin GPIO_PIN_0
+#define TIP_TEMP_GPIO_Port GPIOB
+#define VIN_Pin GPIO_PIN_1
+#define VIN_GPIO_Port GPIOB
+#define OLED_RESET_Pin GPIO_PIN_8
+#define OLED_RESET_GPIO_Port GPIOA
+#define KEY_A_Pin GPIO_PIN_9
+#define KEY_A_GPIO_Port GPIOA
+#define INT_Orientation_Pin GPIO_PIN_3
+#define INT_Orientation_GPIO_Port GPIOB
+#define PWM_Out_Pin GPIO_PIN_4
+#define PWM_Out_GPIO_Port GPIOB
+#define INT_Movement_Pin GPIO_PIN_5
+#define INT_Movement_GPIO_Port GPIOB
+#define SCL_Pin GPIO_PIN_6
+#define SCL_GPIO_Port GPIOB
+#define SDA_Pin GPIO_PIN_7
+#define SDA_GPIO_Port GPIOB
+
+#endif
 uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t instant);
 uint16_t getInputVoltageX10(uint8_t divisor);
