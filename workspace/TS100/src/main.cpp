@@ -343,9 +343,9 @@ static void gui_solderingTempAdjust() {
 			lcd.drawSymbol(1);
 		lcd.drawChar(' ');
 		if (lcd.getRotation())
-				lcd.drawChar('+');
-			else
-				lcd.drawChar('-');
+			lcd.drawChar('+');
+		else
+			lcd.drawChar('-');
 		lcd.refresh();
 		GUIDelay();
 	}
@@ -1013,39 +1013,41 @@ bool showBootLogoIfavailable() {
 
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	if (hadc == &hadc1) {
+		if (pidTaskNotification) {
+			/* Notify the task that the transmission is complete. */
+			vTaskNotifyGiveFromISR(pidTaskNotification,
+					&xHigherPriorityTaskWoken);
 
-	if (pidTaskNotification) {
-		/* Notify the task that the transmission is complete. */
-		vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
-
-		/* If xHigherPriorityTaskWoken is now set to pdTRUE then a context switch
-		 should be performed to ensure the interrupt returns directly to the highest
-		 priority task.  The macro used for this purpose is dependent on the port in
-		 use and may be called portEND_SWITCHING_ISR(). */
-		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+			/* If xHigherPriorityTaskWoken is now set to pdTRUE then a context switch
+			 should be performed to ensure the interrupt returns directly to the highest
+			 priority task.  The macro used for this purpose is dependent on the port in
+			 use and may be called portEND_SWITCHING_ISR(). */
+			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		}
 	}
 }
 
-void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void vApplicationStackOverflowHook( xTaskHandle *pxTask,
-		signed portCHAR *pcTaskName) {
+void vApplicationStackOverflowHook( xTaskHandle *pxTask __unused,
+		signed portCHAR *pcTaskName __unused) {
 //We dont have a good way to handle a stack overflow at this point in time
 	NVIC_SystemReset();
 

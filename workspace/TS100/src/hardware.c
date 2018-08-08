@@ -56,7 +56,11 @@ uint16_t getTipInstantTemperature() {
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_4);
-	return sum;
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_1);
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_2);
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_3);
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_4);
+	return sum >>1; // 8x oversample, div by 2, should give a usable 14 bits or so
 
 }
 uint16_t getTipRawTemp(uint8_t instant) {
@@ -138,10 +142,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 			HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 			htim3.Instance->CCR1 = 0;
 
-		} /*else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
-		 }*/
+		}
 	}
 }
 
