@@ -1013,7 +1013,6 @@ bool showBootLogoIfavailable() {
 
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	if (hadc == &hadc1) {
 		if (pidTaskNotification) {
 			/* Notify the task that the transmission is complete. */
 			vTaskNotifyGiveFromISR(pidTaskNotification,
@@ -1025,7 +1024,7 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 			 use and may be called portEND_SWITCHING_ISR(). */
 			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 		}
-	}
+
 }
 
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {

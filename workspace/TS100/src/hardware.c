@@ -29,29 +29,30 @@ uint16_t getHandleTemperature() {
 
 }
 uint16_t tipMeasurementToC(uint16_t raw) {
-	return ((raw - 532) / 33) + (getHandleTemperature() / 10)
+	return ((raw - 1064) / 67) + (getHandleTemperature() / 10)
 			- CalibrationTempOffset;
 	//Surprisingly that appears to be a fairly good linear best fit
 }
 uint16_t ctoTipMeasurement(uint16_t temp) {
 	//We need to compensate for cold junction temp
-	return ((temp - (getHandleTemperature() / 10) + CalibrationTempOffset) * 33)
-			+ 532;
+	return ((temp - (getHandleTemperature() / 10) + CalibrationTempOffset) * 67)
+			+ 1064;
 }
 
 uint16_t tipMeasurementToF(uint16_t raw) {
-	return ((((raw - 532) / 33) + (getHandleTemperature() / 10)
+	return ((((raw - 1064) / 67) + (getHandleTemperature() / 10)
 			- CalibrationTempOffset) * 9) / 5 + 32;
 
 }
 uint16_t ftoTipMeasurement(uint16_t temp) {
 
 	return (((((temp - 32) * 5) / 9) - (getHandleTemperature() / 10)
-			+ CalibrationTempOffset) * 33) + 532;
+			+ CalibrationTempOffset) * 67) + 1064;
 }
 
 uint16_t getTipInstantTemperature() {
 	uint16_t sum;
+
 	sum = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
@@ -60,7 +61,8 @@ uint16_t getTipInstantTemperature() {
 	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_2);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_3);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_4);
-	return sum >>1; // 8x oversample, div by 2, should give a usable 14 bits or so
+
+	return sum ; // 8x oversample,
 
 }
 uint16_t getTipRawTemp(uint8_t instant) {

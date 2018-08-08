@@ -41,6 +41,7 @@ void Setup_HAL() {
 	MX_TIM2_Init();
 	MX_IWDG_Init();
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADCReadings, 64); //start DMA of normal readings
+	HAL_ADC_Start(&hadc2);
 	HAL_ADCEx_InjectedStart(&hadc1);    //enable injected  readings
 	HAL_ADCEx_InjectedStart(&hadc2);    //enable injected  readings
 
@@ -103,6 +104,7 @@ void SystemClock_Config(void) {
 
 /* ADC1 init function */
 static void MX_ADC1_Init(void) {
+	ADC_MultiModeTypeDef multimode;
 
 	ADC_ChannelConfTypeDef sConfig;
 	ADC_InjectionConfTypeDef sConfigInjected;
@@ -116,6 +118,11 @@ static void MX_ADC1_Init(void) {
 	hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
 	hadc1.Init.NbrOfConversion = 2;
 	HAL_ADC_Init(&hadc1);
+
+	/**Configure the ADC multi-mode
+	 */
+	multimode.Mode = ADC_DUALMODE_REGSIMULT_INJECSIMULT;
+	HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode);
 
 	/**Configure Regular Channel
 	 */
@@ -173,18 +180,22 @@ static void MX_ADC2_Init(void) {
 	 */
 	hadc2.Instance = ADC2;
 	hadc2.Init.ScanConvMode = ADC_SCAN_ENABLE;
-	hadc2.Init.ContinuousConvMode = DISABLE;
+	hadc2.Init.ContinuousConvMode = ENABLE;
 	hadc2.Init.DiscontinuousConvMode = DISABLE;
 	hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
 	hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-	hadc2.Init.NbrOfConversion = 1;
+	hadc2.Init.NbrOfConversion = 2;
 	HAL_ADC_Init(&hadc2);
 
 	/**Configure Regular Channel
 	 */
 	sConfig.Channel = ADC_CHANNEL_8;
 	sConfig.Rank = ADC_REGULAR_RANK_1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
+	sConfig.Channel = ADC_CHANNEL_8;
+	sConfig.Rank = ADC_REGULAR_RANK_2;
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
 	/**Configure Injected Channel
@@ -192,12 +203,13 @@ static void MX_ADC2_Init(void) {
 	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
 	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_1;
 	sConfigInjected.InjectedNbrOfConversion = 4;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T3_CC4;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_7CYCLES_5;
+	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
 	sConfigInjected.AutoInjectedConv = DISABLE;
 	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
 	sConfigInjected.InjectedOffset = 0;
 	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
 
 	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_2;
 	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
