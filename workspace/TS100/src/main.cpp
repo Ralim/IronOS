@@ -596,7 +596,7 @@ static void gui_solderingMode() {
 
 static const char *HEADERS[] = {
 __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "Rtip: ",
-		"Ctip: ", "Vin :","THan: " };
+		"Ctip: ", "Vin :", "THan: " };
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -637,7 +637,7 @@ void showVersion(void) {
 		case 9:
 			printVoltage();
 			break;
-		case 10 :
+		case 10:
 			lcd.printNumber(getHandleTemperature(), 3);
 		default:
 			break;
@@ -893,6 +893,12 @@ void startPIDTask(void const *argument) {
 			}
 
 			HAL_IWDG_Refresh(&hiwdg);
+		} else {
+			if (currentlyActiveTemperatureTarget == 0) {
+				setTipPWM(0); // disable the output driver if the output is set to be off
+				integralCount = 0;
+				derivativeLastValue = 0;
+			}
 		}
 	}
 }
@@ -1013,39 +1019,37 @@ bool showBootLogoIfavailable() {
 	return true;
 }
 
-void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
+/*
+ * Catch the IRQ that says that the conversion is done on the temperature readings coming in
+ * Once these have come in we can unblock the PID so that it runs again
+ */
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	if(hadc == &hadc1){
+	if (hadc == &hadc1) {
 		if (pidTaskNotification) {
-			/* Notify the task that the transmission is complete. */
 			vTaskNotifyGiveFromISR(pidTaskNotification,
 					&xHigherPriorityTaskWoken);
-
-			/* If xHigherPriorityTaskWoken is now set to pdTRUE then a context switch
-			 should be performed to ensure the interrupt returns directly to the highest
-			 priority task.  The macro used for this purpose is dependent on the port in
-			 use and may be called portEND_SWITCHING_ISR(). */
 			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 		}
 	}
 }
 
-void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
 void vApplicationStackOverflowHook( xTaskHandle *pxTask __unused,

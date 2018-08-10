@@ -107,24 +107,27 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 		preFillneeded = 1;
 	return sum / divisor;
 }
+volatile uint32_t pendingPWM=0;
 uint8_t getTipPWM() {
-	return htim2.Instance->CCR4;
+	return pendingPWM;
 }
 void setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 2; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
 		pulse = 100;
-	htim2.Instance->CCR4 = pulse;
+
+	pendingPWM= pulse;
 }
 
-//Thse are called by the HAL after the corresponding events from the system timers.
+//These are called by the HAL after the corresponding events from the system timers.
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	//Period has elapsed
 	if (htim->Instance == TIM2) {
 		//we want to turn on the output again
 		PWMSafetyTimer--; //We decrement this safety value so that lockups in the scheduler will not cause the PWM to become locked in an active driving state.
 		//While we could assume this could never happen, its a small price for increased safety
+		htim2.Instance->CCR4 = pendingPWM;
 		if (htim2.Instance->CCR4 && PWMSafetyTimer) {
 			htim3.Instance->CCR1 = 50;
 			HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -133,13 +136,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 			htim3.Instance->CCR1 = 0;
 		}
 	} else if (htim->Instance == TIM1) {
+		// STM uses this for internal functions as a counter for timeouts
 		HAL_IncTick();
 	}
 }
 
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
-		//This was a pulse event
+		//This was a when the PWM for the output has timed out
 		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
 			HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 			htim3.Instance->CCR1 = 0;
