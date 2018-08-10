@@ -67,7 +67,7 @@ uint16_t getTipInstantTemperature() {
 }
 uint16_t getTipRawTemp(uint8_t instant) {
 	static int64_t filterFP = 0;
-	const uint8_t filterBeta = 5; //higher values smooth out more, but reduce responsiveness
+	const uint8_t filterBeta = 6; //higher values smooth out more, but reduce responsiveness
 
 	if (instant == 1) {
 		uint16_t itemp = getTipInstantTemperature();
@@ -76,7 +76,7 @@ uint16_t getTipRawTemp(uint8_t instant) {
 		filterFP = filterFP >> filterBeta;
 		return itemp;
 	} else if (instant == 2) {
-		filterFP = (getTipInstantTemperature() << 9);
+		filterFP = (getTipInstantTemperature() << 8);
 		return filterFP >> 9;
 	} else {
 		return filterFP >> 9;

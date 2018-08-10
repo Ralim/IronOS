@@ -500,7 +500,7 @@ static void gui_solderingMode() {
 		lcd.setCursor(0, 0);
 		lcd.clearScreen();
 		lcd.setFont(0);
-		if (tipTemp > 16300) {
+		if (tipTemp > 32752) {
 			lcd.print(BadTipString);
 			lcd.refresh();
 			currentlyActiveTemperatureTarget = 0;
@@ -596,7 +596,7 @@ static void gui_solderingMode() {
 
 static const char *HEADERS[] = {
 __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "Rtip: ",
-		"Ctip: ", "Vin :" };
+		"Ctip: ", "Vin :","THan: " };
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -629,7 +629,7 @@ void showVersion(void) {
 			lcd.printNumber(lastMovementTime / 100, 5);
 			break;
 		case 7:
-			lcd.printNumber(getTipRawTemp(0), 5);
+			lcd.printNumber(getTipRawTemp(0), 6);
 			break;
 		case 8:
 			lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 5);
@@ -637,6 +637,8 @@ void showVersion(void) {
 		case 9:
 			printVoltage();
 			break;
+		case 10 :
+			lcd.printNumber(getHandleTemperature(), 3);
 		default:
 			break;
 		}
@@ -647,7 +649,7 @@ void showVersion(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 10;
+			screen = screen % 11;
 		}
 		GUIDelay();
 	}
@@ -1013,6 +1015,7 @@ bool showBootLogoIfavailable() {
 
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	if(hadc == &hadc1){
 		if (pidTaskNotification) {
 			/* Notify the task that the transmission is complete. */
 			vTaskNotifyGiveFromISR(pidTaskNotification,
@@ -1024,7 +1027,7 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 			 use and may be called portEND_SWITCHING_ISR(). */
 			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 		}
-
+	}
 }
 
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
