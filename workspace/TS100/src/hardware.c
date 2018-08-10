@@ -50,7 +50,7 @@ uint16_t ftoTipMeasurement(uint16_t temp) {
 			+ CalibrationTempOffset) * 67) + 1064;
 }
 
-uint16_t getTipInstantTemperature() {
+uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTemperature() {
 	uint16_t sum;
 
 	sum = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
@@ -62,18 +62,24 @@ uint16_t getTipInstantTemperature() {
 	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_3);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_4);
 
-	return sum ; // 8x oversample,
+	return sum; // 8x oversample
 
 }
-uint16_t getTipRawTemp(uint8_t instant) {
+uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipRawTemp(
+		uint8_t instant) {
 	static int64_t filterFP = 0;
-	const uint8_t filterBeta = 6; //higher values smooth out more, but reduce responsiveness
+	static uint16_t lastSample = 0;
+	const uint8_t filterBeta = 7; //higher values smooth out more, but reduce responsiveness
 
 	if (instant == 1) {
 		uint16_t itemp = getTipInstantTemperature();
 		filterFP = (filterFP << filterBeta) - filterFP;
 		filterFP += (itemp << 9);
 		filterFP = filterFP >> filterBeta;
+		uint16_t temp = itemp;
+		itemp += lastSample;
+		itemp /= 2;
+		lastSample = temp;
 		return itemp;
 	} else if (instant == 2) {
 		filterFP = (getTipInstantTemperature() << 8);
@@ -107,7 +113,7 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 		preFillneeded = 1;
 	return sum / divisor;
 }
-volatile uint32_t pendingPWM=0;
+volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
 	return pendingPWM;
 }
@@ -116,12 +122,13 @@ void setTipPWM(uint8_t pulse) {
 	if (pulse > 100)
 		pulse = 100;
 
-	pendingPWM= pulse;
+	pendingPWM = pulse;
 }
 
 //These are called by the HAL after the corresponding events from the system timers.
 
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PeriodElapsedCallback(
+		TIM_HandleTypeDef *htim) {
 	//Period has elapsed
 	if (htim->Instance == TIM2) {
 		//we want to turn on the output again
@@ -141,7 +148,8 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PeriodElaps
 	}
 }
 
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PWM_PulseFinishedCallback(
+		TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
 		//This was a when the PWM for the output has timed out
 		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {

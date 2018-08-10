@@ -508,10 +508,11 @@ static void gui_solderingMode() {
 			return;
 		} else {
 			if (systemSettings.detailedSoldering) {
-				lcd.setFont(1);
-				lcd.print(SolderingAdvancedPowerPrompt);  //Power:
-				lcd.printNumber(getTipPWM(), 3);
-				lcd.print("%");
+				lcd.setFont(1);/*
+				 lcd.print(SolderingAdvancedPowerPrompt);  //Power:
+				 lcd.printNumber(getTipPWM(), 3);
+				 lcd.print("%");*/
+				lcd.printNumber(getTipRawTemp(0), 6);
 
 				if (systemSettings.sensitivity && systemSettings.SleepTime) {
 					lcd.print(" ");
@@ -816,7 +817,7 @@ void startGUITask(void const *argument) {
 }
 
 /* StartPIDTask function */
-void startPIDTask(void const *argument) {
+void startPIDTask(void const *argument __unused) {
 	/*
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM
@@ -845,8 +846,8 @@ void startPIDTask(void const *argument) {
 			uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 			if (currentlyActiveTemperatureTarget) {
 				// Compute the PID loop in here
-				// Because our values here are quite large for all measurements (0-16k ~=
-				// 33 counts per C)
+				// Because our values here are quite large for all measurements (0-32k ~=
+				// 66 counts per C)
 				// P I & D are divisors, so inverse logic applies (beware)
 
 				// Cap the max set point to 450C
@@ -856,9 +857,12 @@ void startPIDTask(void const *argument) {
 
 				int32_t rawTempError = currentlyActiveTemperatureTarget
 						- rawTemp;
+
 				int32_t ierror = (rawTempError
 						/ ((int32_t) systemSettings.PID_I));
+
 				integralCount += ierror;
+
 				if (integralCount > (itermMax / 2))
 					integralCount = itermMax / 2;  // prevent too much lead
 				else if (integralCount < -itermMax)
@@ -880,9 +884,11 @@ void startPIDTask(void const *argument) {
 					output = 0;
 				}
 
-				/*if (currentlyActiveTemperatureTarget < rawTemp) {
-				 output = 0;
-				 }*/
+				if (currentlyActiveTemperatureTarget < rawTemp) {
+					output = 0;
+					integralCount = 0;
+					derivativeLastValue = 0;
+				}
 				setTipPWM(output);
 				derivativeLastValue = rawTemp;  // store for next loop
 
@@ -903,7 +909,7 @@ void startPIDTask(void const *argument) {
 	}
 }
 #define MOVFilter 8
-void startMOVTask(void const *argument) {
+void startMOVTask(void const *argument __unused) {
 	osDelay(250);  // wait for accelerometer to stabilize
 	lcd.setRotation(systemSettings.OrientationMode & 1);
 	lastMovementTime = 0;
@@ -1023,7 +1029,8 @@ bool showBootLogoIfavailable() {
  * Catch the IRQ that says that the conversion is done on the temperature readings coming in
  * Once these have come in we can unblock the PID so that it runs again
  */
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_ADCEx_InjectedConvCpltCallback(
+		ADC_HandleTypeDef* hadc) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	if (hadc == &hadc1) {
 		if (pidTaskNotification) {
@@ -1034,22 +1041,28 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_ADCEx_InjectedC
 	}
 }
 
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterRxCpltCallback(
+		I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterTxCpltCallback(
+		I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemTxCpltCallback(
+		I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_ErrorCallback(
+		I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_AbortCpltCallback(
+		I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemRxCpltCallback(
+		I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
 void vApplicationStackOverflowHook( xTaskHandle *pxTask __unused,
