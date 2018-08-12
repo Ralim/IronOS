@@ -52,6 +52,8 @@ static void settings_setCoolingBlinkEnabled(void);
 static void settings_displayCoolingBlinkEnabled(void);
 static void settings_setResetSettings(void);
 static void settings_displayResetSettings(void);
+static void settings_setTipModel(void);
+static void settings_displayTipModel(void);
 static void settings_setCalibrate(void);
 static void settings_displayCalibrate(void);
 static void settings_setCalibrateVIN(void);
@@ -185,6 +187,8 @@ const menuitem advancedMenu[] = {
 				settings_displayAdvancedSolderingScreens } }, /* Advanced soldering screen*/
 { (const char*) SettingsDescriptions[13], { settings_setResetSettings }, {
 		settings_displayResetSettings } }, /*Resets settings*/
+{ (const char*) SettingsDescriptions[17], { settings_setTipModel }, {
+		settings_displayTipModel } }, /*Select tip Model */
 { (const char*) SettingsDescriptions[12], { settings_setCalibrate }, {
 		settings_displayCalibrate } }, /*Calibrate tip*/
 { (const char*) SettingsDescriptions[14], { settings_setCalibrateVIN }, {
@@ -569,6 +573,14 @@ static void settings_displayResetSettings(void) {
 	printShortDescription(13, 7);
 }
 
+//NEED TO UPDATE:
+
+static void settings_setTipModel(void) {
+
+}
+static void settings_displayTipModel(void) {
+
+}
 static void settings_setCalibrate(void) {
 	if (userConfirmation(SettingsCalibrationWarning)) {
 		//User confirmed
@@ -590,6 +602,7 @@ static void settings_setCalibrate(void) {
 		uint16_t handleTempC = getHandleTemperature() / 10;
 		//We now have an error between these that we want to store as the offset
 		rawTempC = rawTempC - handleTempC;
+
 		systemSettings.CalibrationOffset = rawTempC;
 		setCalibrationOffset(rawTempC);       //store the error
 		osDelay(100);

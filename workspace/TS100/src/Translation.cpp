@@ -55,7 +55,7 @@
 
 #ifdef LANG_EN
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[18] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */"Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
@@ -75,8 +75,10 @@ const char* SettingsDescriptions[17] = {
 	/* Calibrate input voltage            */"VIN Calibration. Buttons adjust, long press to exit",
 	/* Advanced soldering screen enabled  */"Display detailed information while soldering",
 	/* Description Scroll Speed           */"Speed this text scrolls past at",
+	/* Tip Model 						  */"Tip Model selection ",
 
-#ifdef PIDSETTINGS
+
+	#ifdef PIDSETTINGS
 
 	"PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
 	"PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
