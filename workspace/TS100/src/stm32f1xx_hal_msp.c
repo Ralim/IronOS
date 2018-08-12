@@ -30,7 +30,8 @@ void HAL_MspInit(void) {
 	 */
 	//__HAL_AFIO_REMAP_SWJ_NOJTAG()
 	//;
-	__HAL_AFIO_REMAP_SWJ_DISABLE(); /*Disable swd for debug io use*/
+	__HAL_AFIO_REMAP_SWJ_DISABLE()
+	; /*Disable swd for debug io use*/
 
 }
 
@@ -40,18 +41,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc) {
 	if (hadc->Instance == ADC1) {
 		__HAL_RCC_ADC1_CLK_ENABLE()
 		;
-		/**ADC1 GPIO Configuration
-		 PA7     ------> ADC1_IN7
-		 PB0     ------> ADC1_IN8
-		 PB1     ------> ADC1_IN9
-		 */
-		GPIO_InitStruct.Pin = TMP36_INPUT_Pin;
-		GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-		HAL_GPIO_Init(TMP36_INPUT_GPIO_Port, &GPIO_InitStruct);
-
-		GPIO_InitStruct.Pin = TIP_TEMP_Pin | VIN_Pin;
-		GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 		/* ADC1 DMA Init */
 		/* ADC1 Init */
@@ -84,7 +73,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c) {
 	GPIO_InitStruct.Pin = SCL_Pin | SDA_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/* Peripheral clock enable */

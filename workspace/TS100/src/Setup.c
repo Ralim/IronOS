@@ -115,14 +115,14 @@ static void MX_ADC1_Init(void) {
 
 	/**Configure Regular Channel
 	 */
-	sConfig.Channel = ADC_CHANNEL_7;
+	sConfig.Channel = TMP36_ADC1_CHANNEL;
 	sConfig.Rank = 1;
 	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
 	/**Configure Regular Channel
 	 */
-	sConfig.Channel = ADC_CHANNEL_9;
+	sConfig.Channel = VIN_ADC1_CHANNEL;
 	sConfig.Rank = 2;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
@@ -135,7 +135,7 @@ static void MX_ADC1_Init(void) {
 	 * So Sampling time must be >= 0.016uS
 	 * 1/10.66MHz is 0.09uS, so 1 CLK is *should* be enough
 	 * */
-	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
+	sConfigInjected.InjectedChannel = TIP_TEMP_ADC1_CHANNEL;
 	sConfigInjected.InjectedRank = 1;
 	sConfigInjected.InjectedNbrOfConversion = 4;
 	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_7CYCLES_5;
@@ -215,7 +215,7 @@ static void MX_TIM3_Init(void) {
 	sConfigOC.Pulse = 50;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
-	HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1);
+	HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, PWM_Out_CHANNEL);
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -226,10 +226,14 @@ static void MX_TIM3_Init(void) {
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
-
+#ifdef MODEL_TS100
+	//Remap TIM3_CH1 to be on pB4
 	__HAL_AFIO_REMAP_TIM3_PARTIAL()
 	;
-	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+#else
+	// No re-map required
+#endif
+	HAL_TIM_PWM_Start(&htim3, PWM_Out_CHANNEL);
 
 }
 /* TIM3 init function */
@@ -336,15 +340,19 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-	/*Configure GPIO pins : PA0 PA1 PA2 PA3
-	 PA4 PA5 PA10 PA15 */
+	/*
+	 * Configure All pins as analog by default
+	 */
 	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3
-			| GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12
-			| GPIO_PIN_15;
+			| GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8
+			| GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13
+			| GPIO_PIN_14 | GPIO_PIN_15;
 	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	//Set PA 11 and PA 12 to GND to stop usb detection, 13/14 re-rused for debug
+#ifdef MODEL_TS100
+	/* Pull USB lines low to disable, pull down debug too*/
 	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
@@ -353,17 +361,16 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
+#else
+	/* TS80 */
+	/* Leave USB lines open circuit*/
+#endif
 
 	/*Configure GPIO pins : KEY_B_Pin KEY_A_Pin */
 	GPIO_InitStruct.Pin = KEY_B_Pin | KEY_A_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-	/*Configure GPIO pins : TIP_TEMP_Pin VIN_Pin PB2 */
-	GPIO_InitStruct.Pin = TIP_TEMP_Pin | VIN_Pin | GPIO_PIN_2;
-	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	HAL_GPIO_Init(KEY_B_GPIO_Port, &GPIO_InitStruct);
 
 	/*Configure GPIO pin : OLED_RESET_Pin */
 	GPIO_InitStruct.Pin = OLED_RESET_Pin;
@@ -371,16 +378,13 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(OLED_RESET_GPIO_Port, &GPIO_InitStruct);
 
-	/* Configure GPIO pins : INT_Orientation_Pin INT_Movement_Pin */
-	/* Not used anymore*/
-	GPIO_InitStruct.Pin = INT_Orientation_Pin | INT_Movement_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
 	/*Configure peripheral I/O remapping */
 	__HAL_AFIO_REMAP_PD01_ENABLE();
 	//^ remap XTAL so that pins can be analog (all input buffers off).
 	// reduces power consumption
+	//Pull down LCD reset
+	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_RESET);
+	HAL_Delay(10);
+	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 
 }
