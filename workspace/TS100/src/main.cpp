@@ -68,6 +68,7 @@ int main(void) {
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
+	setTipType(systemSettings.tipType, systemSettings.customTipGain); //apply tip type selection
 	HAL_IWDG_Refresh(&hiwdg);
 
 	/* Create the thread(s) */
@@ -97,6 +98,9 @@ void printVoltage() {
 	lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
 }
 void GUIDelay() {
+	//Called in all UI looping tasks,
+	//This limits the re-draw rate to the LCD and also lets the DMA run
+	//As the gui task can very easily fill this bus with transactions, which will prevent the movement detection from running
 	osDelay(50);
 }
 void gui_drawTipTemp(bool symbol) {
@@ -314,15 +318,11 @@ static void gui_solderingTempAdjust() {
 		if (systemSettings.temperatureInF) {
 			if (systemSettings.SolderingTemp > 850)
 				systemSettings.SolderingTemp = 850;
-		} else {
-			if (systemSettings.SolderingTemp > 450)
-				systemSettings.SolderingTemp = 450;
-		}
-
-		if (systemSettings.temperatureInF) {
 			if (systemSettings.SolderingTemp < 120)
 				systemSettings.SolderingTemp = 120;
 		} else {
+			if (systemSettings.SolderingTemp > 450)
+				systemSettings.SolderingTemp = 450;
 			if (systemSettings.SolderingTemp < 50)
 				systemSettings.SolderingTemp = 50;
 		}

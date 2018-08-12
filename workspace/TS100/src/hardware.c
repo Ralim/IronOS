@@ -9,14 +9,13 @@
 #include "hardware.h"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
-uint16_t tipGainCalValue =0;
-
-void setTipType(enum TipType tipType,uint8_t manualCalGain)
-{
-if(manualCalGain)
-	tipGainCalValue = manualCalGain;
-else
-	tipGainCalValue = lookupTipDefaultCalValue(tipType);
+uint16_t tipGainCalValue = 0;
+uint16_t lookupTipDefaultCalValue(enum TipType tipID);
+void setTipType(enum TipType tipType, uint8_t manualCalGain) {
+	if (manualCalGain)
+		tipGainCalValue = manualCalGain;
+	else
+		tipGainCalValue = lookupTipDefaultCalValue(tipType);
 }
 void setCalibrationOffset(int16_t offSet) {
 	CalibrationTempOffset = offSet;
@@ -38,30 +37,39 @@ uint16_t getHandleTemperature() {
 
 }
 uint16_t tipMeasurementToC(uint16_t raw) {
-	return ((raw - 1064) / 67) + (getHandleTemperature() / 10)
-			- CalibrationTempOffset;
-	//Surprisingly that appears to be a fairly good linear best fit
+
+	//((Raw Tip-RawOffset) * calibrationgain) / 1000 = tip delta in CX10
+	// tip delta in CX10 + handleTemp in CX10 = tip absolute temp in CX10
+	//Div answer by 10 to get final result
+
+	uint32_t tipDelta = ((raw - CalibrationTempOffset) * tipGainCalValue)
+			/ 1000;
+	tipDelta += getHandleTemperature();
+
+	return tipDelta / 10;
+
 }
 uint16_t ctoTipMeasurement(uint16_t temp) {
-	//We need to compensate for cold junction temp
-	return ((temp - (getHandleTemperature() / 10) + CalibrationTempOffset) * 67)
-			+ 1064;
+	//[ (temp-handle/10) * 10000 ]/calibrationgain = tip raw delta
+	// tip raw delta + tip offset = tip ADC reading
+	int32_t TipRaw = ((temp - (getHandleTemperature() / 10)) * 10000)
+			/ tipGainCalValue;
+	TipRaw += CalibrationTempOffset;
+	return TipRaw;
 }
 
 uint16_t tipMeasurementToF(uint16_t raw) {
-	return ((((raw - 1064) / 67) + (getHandleTemperature() / 10)
-			- CalibrationTempOffset) * 9) / 5 + 32;
+	//Convert result from C to F
+	return (tipMeasurementToC(raw) * 9) / 5 + 32;
 
 }
 uint16_t ftoTipMeasurement(uint16_t temp) {
-
-	return (((((temp - 32) * 5) / 9) - (getHandleTemperature() / 10)
-			+ CalibrationTempOffset) * 67) + 1064;
+//Convert the temp back to C from F
+	return ctoTipMeasurement(((temp - 32) * 5) / 9);
 }
 
 uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTemperature() {
 	uint16_t sum;
-
 	sum = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
@@ -80,16 +88,14 @@ uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTe
  * This can be found by line of best fit of TipRaw on X, and TipTemp-handle on Y.
  * Then take the m term * 10000
  * */
-uint16_t lookupTipDefaultCalValue(enum TipType tipID)
-{
+uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 
-	switch(tipID)
-	{
+	switch (tipID) {
 	case TS_D24:
 		return 141;
 		break;
 	case TS_BC2:
-		return (133+129)/2;
+		return (133 + 129) / 2;
 		break;
 	case TS_C1:
 		return 133;
@@ -101,7 +107,6 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID)
 		break;
 	}
 }
-
 
 uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipRawTemp(
 		uint8_t instant) {
