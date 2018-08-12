@@ -14,11 +14,18 @@ extern "C" {
 #endif
 
 enum Orientation {
-    ORIENTATION_LEFT_HAND = 0,
-    ORIENTATION_RIGHT_HAND = 1,
-    ORIENTATION_FLAT = 3
+	ORIENTATION_LEFT_HAND = 0, ORIENTATION_RIGHT_HAND = 1, ORIENTATION_FLAT = 3
 };
-
+/*
+ * Keep in a uint8_t range for the ID's
+ */
+enum TipType {
+	TS_B2 = 1,
+	TS_D24 = 2,
+	TS_BC2 = 3,
+	TS_C1 = 4,
+	HAKKO_BC2=5,
+};
 #define KEY_B_Pin GPIO_PIN_6
 #define KEY_B_GPIO_Port GPIOA
 #define TMP36_INPUT_Pin GPIO_PIN_7

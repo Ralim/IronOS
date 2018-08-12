@@ -657,7 +657,7 @@ void showVersion(void) {
 }
 
 /* StartGUITask function */
-void startGUITask(void const *argument) {
+void startGUITask(void const *argument __unused) {
 	i2cDev.FRToSInit();
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;

@@ -9,6 +9,15 @@
 #include "hardware.h"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
+uint16_t tipGainCalValue =0;
+
+void setTipType(enum TipType tipType,uint8_t manualCalGain)
+{
+if(manualCalGain)
+	tipGainCalValue = manualCalGain;
+else
+	tipGainCalValue = lookupTipDefaultCalValue(tipType);
+}
 void setCalibrationOffset(int16_t offSet) {
 	CalibrationTempOffset = offSet;
 }
@@ -62,9 +71,38 @@ uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTe
 	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_3);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_4);
 
-	return sum; // 8x oversample
+	return sum; // 8x over sample
 
 }
+/*
+ * Loopup table for the tip calibration values for
+ * the gain of the tip's
+ * This can be found by line of best fit of TipRaw on X, and TipTemp-handle on Y.
+ * Then take the m term * 10000
+ * */
+uint16_t lookupTipDefaultCalValue(enum TipType tipID)
+{
+
+	switch(tipID)
+	{
+	case TS_D24:
+		return 141;
+		break;
+	case TS_BC2:
+		return (133+129)/2;
+		break;
+	case TS_C1:
+		return 133;
+		break;
+	case TS_B2:
+		return 133;
+	default:
+		return 132; // make this the average of all
+		break;
+	}
+}
+
+
 uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipRawTemp(
 		uint8_t instant) {
 	static int64_t filterFP = 0;
