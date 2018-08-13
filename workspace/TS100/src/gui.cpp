@@ -573,9 +573,9 @@ static void settings_displayResetSettings(void) {
 	printShortDescription(13, 7);
 }
 
-//NEED TO UPDATE:
-
 static void settings_setTipModel(void) {
+	systemSettings.tipType++;
+	systemSettings.tipType %= (Tip_Custom + 1);  //Wrap after custom
 
 }
 static void settings_displayTipModel(void) {
@@ -589,8 +589,7 @@ static void settings_displayTipModel(void) {
 		lcd.print("TS100");
 	} else if (systemSettings.tipType < Tip_Hakko) {
 		lcd.print("HAKKO");
-	} else if (systemSettings.tipType == Tip_Custom)
-	{
+	} else if (systemSettings.tipType == Tip_Custom) {
 		lcd.print("User");
 	}
 	lcd.setCharCursor(32, 1);
@@ -606,36 +605,56 @@ static void settings_displayTipModel(void) {
 	case HAKKO_BC2:
 		lcd.print(" BC2 ");
 	case Tip_Custom:
-
+		lcd.print("Tuned");
 		break;
 	default:
 		break;
 	}
 }
+//Provide the user the option to tune their own tip if custom is selected
+//If not only do single point tuning as per usual
 static void settings_setCalibrate(void) {
+	if (systemSettings.tipType == Tip_Custom) {
+		//Two types of calibration
+		//1. Basic, idle temp + hot water (100C)
+		//2. Advanced, 100C + 350C
+
+	}
+	//Else
+	// Ask user if handle is at the tip temperature
+	// Any error between handle and the tip will be a direct offset in the control loop
+
 	if (userConfirmation(SettingsCalibrationWarning)) {
 		//User confirmed
 		//So we now perform the actual calculation
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
-		lcd.print(".....");
-		lcd.refresh();
 
 		setCalibrationOffset(0);            //turn off the current offset
 		for (uint8_t i = 0; i < 20; i++) {
 			getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
-			osDelay(20);
+			lcd.clearScreen();
+			lcd.setCursor(0, 0);
+			for (uint8_t x = 0; x < i / 4; x++)
+				lcd.print(".");
+			lcd.refresh();
+			osDelay(50);
 		}
-		osDelay(100);
 
-		uint16_t rawTempC = tipMeasurementToC(getTipRawTemp(0));
-		//We now measure the current reported tip temperature
-		uint16_t handleTempC = getHandleTemperature() / 10;
-		//We now have an error between these that we want to store as the offset
-		rawTempC = rawTempC - handleTempC;
+		//If the thermocouple at the end of the tip, and the handle are at equalibrium, then the output should be zero, as there is no temperature differential.
 
-		systemSettings.CalibrationOffset = rawTempC;
-		setCalibrationOffset(rawTempC);       //store the error
+		int32_t offset = 0;
+		for (uint8_t i = 0; i < 15; i++) {
+			offset += getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
+
+			lcd.clearScreen();
+			lcd.setCursor(0, 0);
+
+			for (uint8_t x = 0; x < i / 4; x++)
+				lcd.print(".");
+			lcd.refresh();
+			osDelay(200);
+		}
+		systemSettings.CalibrationOffset = offset / 15;
+		setCalibrationOffset(systemSettings.CalibrationOffset); //store the error
 		osDelay(100);
 	}
 }

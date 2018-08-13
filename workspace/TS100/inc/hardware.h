@@ -24,10 +24,10 @@ enum TipType {
 	TS_D24 = 2,
 	TS_BC2 = 3,
 	TS_C1 = 4,
-	Tip_MiniWare=64,
-	HAKKO_BC2=64,
-	Tip_Hakko=128,
-	Tip_Custom=255,
+	Tip_MiniWare=5,
+	HAKKO_BC2=5,
+	Tip_Hakko=6,
+	Tip_Custom=6,
 };
 #define KEY_B_Pin GPIO_PIN_6
 #define KEY_B_GPIO_Port GPIOA
