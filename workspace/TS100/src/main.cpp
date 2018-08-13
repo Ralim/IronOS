@@ -68,7 +68,7 @@ int main(void) {
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
-	setTipType(systemSettings.tipType, systemSettings.customTipGain); //apply tip type selection
+	setTipType((enum TipType)systemSettings.tipType, systemSettings.customTipGain); //apply tip type selection
 	HAL_IWDG_Refresh(&hiwdg);
 
 	/* Create the thread(s) */

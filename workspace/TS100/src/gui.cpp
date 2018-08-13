@@ -579,7 +579,38 @@ static void settings_setTipModel(void) {
 
 }
 static void settings_displayTipModel(void) {
+	printShortDescription(17, 4);
+	//Print in small text the tip model
+	lcd.setFont(1);
+	//set the cursor
+	//Print the mfg
+	lcd.setCursor(32, 0);
+	if (systemSettings.tipType < Tip_MiniWare) {
+		lcd.print("TS100");
+	} else if (systemSettings.tipType < Tip_Hakko) {
+		lcd.print("HAKKO");
+	} else if (systemSettings.tipType == Tip_Custom)
+	{
+		lcd.print("User");
+	}
+	lcd.setCharCursor(32, 1);
+	switch ((enum TipType) systemSettings.tipType) {
+	case TS_B2:
+		lcd.print(" B2 ");
+	case TS_D24:
+		lcd.print(" D24 ");
+	case TS_BC2:
+		lcd.print(" BC2 ");
+	case TS_C1:
+		lcd.print(" C1 ");
+	case HAKKO_BC2:
+		lcd.print(" BC2 ");
+	case Tip_Custom:
 
+		break;
+	default:
+		break;
+	}
 }
 static void settings_setCalibrate(void) {
 	if (userConfirmation(SettingsCalibrationWarning)) {
