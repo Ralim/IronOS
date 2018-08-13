@@ -584,7 +584,7 @@ static void settings_displayTipModel(void) {
 	lcd.setFont(1);
 	//set the cursor
 	//Print the mfg
-	lcd.setCursor(32, 0);
+	lcd.setCursor(40, 0);
 	if (systemSettings.tipType < Tip_MiniWare) {
 		lcd.print("TS100");
 	} else if (systemSettings.tipType < Tip_Hakko) {
@@ -592,22 +592,28 @@ static void settings_displayTipModel(void) {
 	} else if (systemSettings.tipType == Tip_Custom) {
 		lcd.print("User");
 	}
-	lcd.setCharCursor(32, 1);
+	lcd.setCursor(40, 8);
 	switch ((enum TipType) systemSettings.tipType) {
 	case TS_B2:
 		lcd.print(" B2 ");
+		break;
 	case TS_D24:
 		lcd.print(" D24 ");
+		break;
 	case TS_BC2:
 		lcd.print(" BC2 ");
+		break;
 	case TS_C1:
 		lcd.print(" C1 ");
+		break;
 	case HAKKO_BC2:
 		lcd.print(" BC2 ");
+		break;
 	case Tip_Custom:
 		lcd.print("Tuned");
 		break;
 	default:
+		lcd.print("????");
 		break;
 	}
 }

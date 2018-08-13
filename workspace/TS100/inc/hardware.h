@@ -20,14 +20,14 @@ enum Orientation {
  * Keep in a uint8_t range for the ID's
  */
 enum TipType {
-	TS_B2 = 1,
-	TS_D24 = 2,
-	TS_BC2 = 3,
-	TS_C1 = 4,
-	Tip_MiniWare=5,
-	HAKKO_BC2=5,
-	Tip_Hakko=6,
-	Tip_Custom=6,
+	TS_B2 = 0,
+	TS_D24 = 1,
+	TS_BC2 = 2,
+	TS_C1 = 3,
+	Tip_MiniWare=4,
+	HAKKO_BC2=4,
+	Tip_Hakko=5,
+	Tip_Custom=5,
 };
 #define KEY_B_Pin GPIO_PIN_6
 #define KEY_B_GPIO_Port GPIOA

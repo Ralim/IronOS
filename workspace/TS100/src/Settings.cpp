@@ -89,12 +89,12 @@ void resetSettings() {
 	systemSettings.BoostTemp = 420;				//default to 400C
 	systemSettings.autoStartMode = 0;				//Auto start off for safety
 	systemSettings.coolingTempBlink = 0;//Blink the temperature on the cooling screen when its > 50C
-	systemSettings.CalibrationOffset = 5;//This appears to be quite close for both of my tips, in both of my handles
 	systemSettings.temperatureInF = 0;			//default to 0
 	systemSettings.descriptionScrollSpeed = 0;			//default to slow
 	systemSettings.PID_P = 42;
 	systemSettings.PID_I = 50;
 	systemSettings.PID_D = 15;
+	systemSettings.CalibrationOffset = 2780; // the adc offset
 	systemSettings.customTipGain = 0; // The tip type is either default or a custom gain
 	systemSettings.tipType = TS_B2;
 	saveSettings();
