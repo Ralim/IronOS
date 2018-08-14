@@ -435,6 +435,7 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(OLED_RESET_GPIO_Port, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_RESET);
 
 	/* Configure GPIO pins : INT_Orientation_Pin INT_Movement_Pin */
 	/* Not used anymore*/

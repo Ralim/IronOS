@@ -59,6 +59,12 @@ static void settings_displayCalibrate(void);
 static void settings_setCalibrateVIN(void);
 static void settings_displayCalibrateVIN(void);
 
+//Calibration Menu
+static void calibration_displaySimpleCal(void); // Hot water cal
+static void calibration_enterSimpleCal(void);
+static void calibration_displayAdvancedCal(void); // two point cal
+static void calibration_enterAdvancedCal(void);
+
 //Menu functions
 static void settings_displaySolderingMenu(void);
 static void settings_enterSolderingMenu(void);
@@ -204,6 +210,13 @@ const menuitem advancedMenu[] = {
 #endif
 		{ NULL, { NULL }, { NULL } }        // end of menu marker. DO NOT REMOVE
 };
+
+const menuitem calibrationMenu[] { { (const char*) SettingsDescriptions[6], {
+		calibration_enterSimpleCal }, { calibration_displaySimpleCal } },
+/* Simple Cal*/
+{ (const char*) SettingsDescriptions[6], { calibration_enterAdvancedCal }, {
+		calibration_displayAdvancedCal } }, /* Advanced Cal */
+{ NULL, { NULL }, { NULL } } };
 
 static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
 	lcd.setFont(0);
@@ -617,25 +630,12 @@ static void settings_displayTipModel(void) {
 		break;
 	}
 }
-//Provide the user the option to tune their own tip if custom is selected
-//If not only do single point tuning as per usual
-static void settings_setCalibrate(void) {
-	if (systemSettings.tipType == Tip_Custom) {
-		//Two types of calibration
-		//1. Basic, idle temp + hot water (100C)
-		//2. Advanced, 100C + 350C
-
-	}
-	//Else
-	// Ask user if handle is at the tip temperature
-	// Any error between handle and the tip will be a direct offset in the control loop
-
-	if (userConfirmation(SettingsCalibrationWarning)) {
-		//User confirmed
-		//So we now perform the actual calculation
-
-		setCalibrationOffset(0);            //turn off the current offset
-		for (uint8_t i = 0; i < 20; i++) {
+static void calibration_displaySimpleCal(void) {
+	printShortDescription(18, 5);
+}
+static void dotDelay()
+{
+	for (uint8_t i = 0; i < 20; i++) {
 			getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
 			lcd.clearScreen();
 			lcd.setCursor(0, 0);
@@ -644,24 +644,97 @@ static void settings_setCalibrate(void) {
 			lcd.refresh();
 			osDelay(50);
 		}
+}
+static void setTipOffset() {
+	setCalibrationOffset(0);            //turn off the current offset
+	dotDelay();
 
-		//If the thermocouple at the end of the tip, and the handle are at equalibrium, then the output should be zero, as there is no temperature differential.
+	//If the thermocouple at the end of the tip, and the handle are at equalibrium, then the output should be zero, as there is no temperature differential.
 
-		int32_t offset = 0;
-		for (uint8_t i = 0; i < 15; i++) {
-			offset += getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
+	int32_t offset = 0;
+	for (uint8_t i = 0; i < 15; i++) {
+		offset += getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
 
-			lcd.clearScreen();
-			lcd.setCursor(0, 0);
+		lcd.clearScreen();
+		lcd.setCursor(0, 0);
 
-			for (uint8_t x = 0; x < i / 4; x++)
-				lcd.print(".");
-			lcd.refresh();
-			osDelay(200);
-		}
-		systemSettings.CalibrationOffset = offset / 15;
-		setCalibrationOffset(systemSettings.CalibrationOffset); //store the error
-		osDelay(100);
+		for (uint8_t x = 0; x < i / 4; x++)
+			lcd.print(".");
+		lcd.refresh();
+		osDelay(200);
+	}
+	systemSettings.CalibrationOffset = offset / 15;
+	setCalibrationOffset(systemSettings.CalibrationOffset); //store the error
+	osDelay(100);
+}
+static void calibration_enterSimpleCal(void) {
+//User has entered into the simple cal routine
+	if (userConfirmation(SettingsCalibrationWarning)) {
+		//User has confirmed their handle is at ambient
+		//So take the offset measurement
+		setTipOffset();
+		//Next we want the user to put the tip into 100C water so we can calculate their tip's gain
+		//Gain is the m term from rise/run plot of raw readings vs (tip-handle)
+		//Thus we want to calculate  ([TipRawHot-TipRawCold])/(ActualHot-HandleHot)-(ActualCold-HandleCold)
+		//Thus we first need to store -> TiprawCold,HandleCold,ActualCold==HandleCold -> RawTipCold
+		uint32_t RawTipCold = getTipRawTemp(0);
+		lcd.clearScreen();
+		lcd.setCursor(0,0);
+		lcd.setFont(1);
+		lcd.print("Please Insert Tip\nInto Boiling Water");
+		lcd.refresh();
+		osDelay(200);
+		waitForButtonPress();
+		dotDelay();//cycle the filter a bit
+		//Now take the three hot measurements
+		//Assume water is boiling at 100C
+		uint32_t RawTipHot = getTipRawTemp(0);
+		uint32_t HandleTempHot = getHandleTemperature();
+
+		uint32_t gain =( RawTipHot-RawTipCold) / (1000-HandleTempHot);
+		//Show this to the user
+		lcd.clearScreen();
+		lcd.setCursor(0,0);
+		lcd.print("Your Gain: ");
+		lcd.printNumber(gain,6);
+		lcd.print("\nThis should be around 120-140");
+		lcd.refresh();
+		osDelay(500);
+		waitForButtonPress();
+
+	}
+}
+static void calibration_displayAdvancedCal(void) {
+	printShortDescription(19, 5);
+}
+static void calibration_enterAdvancedCal(void) {
+	//Advanced cal
+	if (userConfirmation(SettingsCalibrationWarning)) {
+		//User has confirmed their handle is at ambient
+		//So take the offset measurement
+		setTipOffset();
+		//The tip now has a known ADC offset (We dont need it here, but its required for adjustment use)
+
+	}
+}
+//Provide the user the option to tune their own tip if custom is selected
+//If not only do single point tuning as per usual
+static void settings_setCalibrate(void) {
+	if (systemSettings.tipType == Tip_Custom) {
+		//Two types of calibration
+		//1. Basic, idle temp + hot water (100C)
+		//2. Advanced, 100C + 350C, we keep PID tracking to a temperature target
+		gui_Menu(calibrationMenu);
+	}
+	//Else
+	// Ask user if handle is at the tip temperature
+	// Any error between handle and the tip will be a direct offset in the control loop
+
+	if (userConfirmation(SettingsCalibrationWarning)) {
+		//User confirmed
+		//So we now perform the actual calculation
+		setTipOffset();
+
 	}
 }
 

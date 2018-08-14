@@ -61,9 +61,9 @@ OLED::OLED(FRToSI2C* i2cHandle) {
 void OLED::initialize() {
 	memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
-	HAL_Delay(5);
+	HAL_Delay(50);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
-	HAL_Delay(10);
+	HAL_Delay(50);
 	//Send the setup settings
 	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
 			sizeof(OLED_Setup_Array));

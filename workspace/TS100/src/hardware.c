@@ -160,7 +160,7 @@ volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
 	return pendingPWM;
 }
-void setTipPWM(uint8_t pulse) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 2; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
 		pulse = 100;

@@ -191,7 +191,7 @@ ButtonState getButtonState() {
 	return BUTTON_NONE;
 }
 
-static void waitForButtonPress() {
+ void waitForButtonPress() {
 	// we are just lazy and sleep until user confirms button press
 	// This also eats the button press event!
 	ButtonState buttons = getButtonState();
@@ -817,7 +817,7 @@ void startGUITask(void const *argument __unused) {
 }
 
 /* StartPIDTask function */
-void startPIDTask(void const *argument __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) startPIDTask(void const *argument __unused) {
 	/*
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM
