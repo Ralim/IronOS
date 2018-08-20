@@ -25,6 +25,7 @@ enum ButtonState {
 
 ButtonState getButtonState();
 void waitForButtonPressOrTimeout(uint32_t timeout);
+void waitForButtonPress();
 #ifdef __cplusplus
 extern "C" {
 #endif

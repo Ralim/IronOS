@@ -59,6 +59,21 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc) {
 		/* ADC1 interrupt Init */
 		HAL_NVIC_SetPriority(ADC1_2_IRQn, 15, 0);
 		HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
+	} else {
+		__HAL_RCC_ADC2_CLK_ENABLE()
+		;
+
+		/**ADC2 GPIO Configuration
+		 PB0     ------> ADC2_IN8
+		 PB1     ------> ADC2_IN9
+		 */
+		GPIO_InitStruct.Pin = TIP_TEMP_Pin;
+		GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+		/* ADC2 interrupt Init */
+		HAL_NVIC_SetPriority(ADC1_2_IRQn, 15, 0);
+		HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
 	}
 
 }

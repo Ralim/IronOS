@@ -7,7 +7,7 @@
 
 #include "FRToSI2C.hpp"
 
-void FRToSI2C::CpltCallback() {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) FRToSI2C::CpltCallback() {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	i2c->State = HAL_I2C_STATE_READY;//Force state reset
 	if (I2CSemaphore) {

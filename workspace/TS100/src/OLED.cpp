@@ -42,17 +42,8 @@ uint8_t OLED_Setup_Array[] = { /**/
 };
 //Setup based on the SSD1307 and modified for the SSD1306
 
-const uint8_t REFRESH_COMMANDS[17] = {
-	0x80, 0xAF,
-	0x80, 0x21,
-	0x80, 0x20,
-	0x80, 0x7F,
-	0x80, 0xC0,
-	0x80, 0x22,
-	0x80, 0x00,
-	0x80, 0x01,
-	0x40
-};
+const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
+		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
 OLED::OLED(FRToSI2C* i2cHandle) {
 	i2c = i2cHandle;
@@ -70,11 +61,12 @@ OLED::OLED(FRToSI2C* i2cHandle) {
 void OLED::initialize() {
 	memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
-	HAL_Delay(5);
+	HAL_Delay(50);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
-	HAL_Delay(10);
+	HAL_Delay(50);
 	//Send the setup settings
-	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, sizeof(OLED_Setup_Array));
+	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
+			sizeof(OLED_Setup_Array));
 	displayOnOff(true);
 }
 
@@ -145,19 +137,20 @@ void OLED::setRotation(bool leftHanded) {
 
 	//send command struct again with changes
 	if (leftHanded) {
-			OLED_Setup_Array[11] = 0xC8;    //c1?
-			OLED_Setup_Array[19] = 0xA1;
+		OLED_Setup_Array[11] = 0xC8;    //c1?
+		OLED_Setup_Array[19] = 0xA1;
 	} else {
-			OLED_Setup_Array[11] = 0xC0;
-			OLED_Setup_Array[19] = 0xA0;
-		}
-	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array, sizeof(OLED_Setup_Array));
-		inLeftHandedMode = leftHanded;
+		OLED_Setup_Array[11] = 0xC0;
+		OLED_Setup_Array[19] = 0xA0;
+	}
+	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
+			sizeof(OLED_Setup_Array));
+	inLeftHandedMode = leftHanded;
 
 	screenBuffer[5] = inLeftHandedMode ? 0 : 32; //display is shifted by 32 in left handed mode as driver ram is 128 wide
 	screenBuffer[7] = inLeftHandedMode ? 95 : 0x7F; //End address of the ram segment we are writing to (96 wide)
 	screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
-	}
+}
 
 //print a string to the current cursor location
 void OLED::print(const char* str) {
@@ -190,9 +183,13 @@ void OLED::setFont(uint8_t fontNumber) {
 
 //maximum places is 5
 void OLED::printNumber(uint16_t number, uint8_t places) {
-	char buffer[6] = { 0 };
-	
-	if (places == 5) {
+	char buffer[7] = { 0 };
+
+	if (places >= 5) {
+		buffer[5] = '0' + number % 10;
+		number /= 10;
+	}
+	if (places > 4) {
 		buffer[4] = '0' + number % 10;
 		number /= 10;
 	}
@@ -291,7 +288,7 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 }
 
 void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
-bool clear) {
+		bool clear) {
 	//Draw this in 3 sections
 	//This is basically a N wide version of vertical line
 
