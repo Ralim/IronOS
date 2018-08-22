@@ -7,6 +7,7 @@ endif
 # Discover the source files to build
 SOURCE := $(shell find . -type f -name '*.c')
 SOURCE_CPP := $(shell find . -type f -name '*.cpp')
+SOURCES := $(shell find . -type f -name '*.c*')
 S_SRCS := $(shell find . -type f -name '*.s') 
 
 APP_INC_DIR = ./inc
@@ -31,11 +32,11 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-O2 -finline-small-functions -findirect-inlining -fdiagnostics-color
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang)
+GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG
 
 # Enable debug code generation
 DEBUG=-g
@@ -72,7 +73,7 @@ LINKER_FLAGS=-Wl,--gc-sections 		\
 			-mcpu=cortex-m3		\
 			-mthumb			\
 			-mfloat-abi=soft	\
-			-lm
+			-lm -Os -flto -Wl,--undefined=vTaskSwitchContext
 
 # compiler flags ---------------------------------------------------------------
 CPUFLAGS=-D GCC_ARMCM3		\
@@ -130,7 +131,11 @@ CXXFLAGS=$(CPUFLAGS) \
 		-fno-rtti 			\
 		-fno-exceptions 	\
 		-fno-non-call-exceptions \
-		-fno-use-cxa-atexit	\
+		-fno-use-cxa-atexit		\
+		-fno-strict-aliasing 		\
+		-fno-rtti 			\
+		-fno-exceptions		\
+		-fno-threadsafe-statics \
 		-T$(LDSCRIPT)
 
 
@@ -172,21 +177,25 @@ OUT_OBJS_CPP=$(addprefix $(OUTPUT_DIR)/,$(OBJS_CPP))
 OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 OUT_HEXFILE=$(addprefix $(HEXFILE_DIR)/,$(OUTPUT_EXE))
 
-all: $(OUT_HEXFILE).hex
-	
+all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
+
 #
 # The rule to create the target directory
 #
 
 # Create hexfile
 %.hex : %.elf
-	$(SIZE) -x $^
+	$(SIZE) $^
 	$(OBJCOPY) $^ -O ihex $@
+
+%.bin : %.elf
+	$(SIZE) $^
+	$(OBJCOPY) $^ -O binary $@
 
 $(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S)  $(LIBS) $(LINKER_FLAGS)
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)

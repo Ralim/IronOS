@@ -101,12 +101,14 @@
 #define configTICK_RATE_HZ                       ((TickType_t)100)
 #define configMAX_PRIORITIES                     ( 4 )
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)256)
-#define configTOTAL_HEAP_SIZE                    ((size_t)10240)
-#define configMAX_TASK_NAME_LEN                  ( 16 )
+#define configTOTAL_HEAP_SIZE                    ((size_t)10240) /*Currently use about 9000*/
+#define configMAX_TASK_NAME_LEN                  ( 48 )
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1
 #define configQUEUE_REGISTRY_SIZE                8
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION  1
+#define configCHECK_FOR_STACK_OVERFLOW			 2
+
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES                    0
@@ -122,6 +124,7 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil             0
 #define INCLUDE_vTaskDelay                  1
 #define INCLUDE_xTaskGetSchedulerState      1
+#define INCLUDE_uxTaskGetStackHighWaterMark 1
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS

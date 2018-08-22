@@ -11,7 +11,7 @@
 #include "Setup.h"
 #define FLASH_ADDR 		(0x8000000|0xFC00)/*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
 #include "string.h"
-systemSettingsType systemSettings;
+volatile systemSettingsType systemSettings;
 
 void saveSettings() {
 	//First we erase the flash
@@ -66,12 +66,12 @@ void restoreSettings() {
  */
 uint8_t lookupVoltageLevel(uint8_t level) {
 	if (level == 0)
-		return 100;    //10V since iron does not function effectively below this
+		return 90;    //9V since iron does not function effectively below this
 	else
 		return (level * 33) + (33 * 2);
 }
 void resetSettings() {
-
+	memset((void*)&systemSettings,0,sizeof(systemSettingsType));
 	systemSettings.SleepTemp = 150;    //Temperature the iron sleeps at - default 150.0 C
 	systemSettings.SleepTime = 6;    //How many seconds/minutes we wait until going to sleep - default 1 min
 	systemSettings.SolderingTemp = 320;    //Default soldering temp is 320.0 C
@@ -89,6 +89,11 @@ void resetSettings() {
 	systemSettings.coolingTempBlink = 0;				//Blink the temperature on the cooling screen when its > 50C
 	systemSettings.CalibrationOffset = 10;		//This appears to be quite close for both of my tips, in both of my handles
 	systemSettings.temperatureInF = 0;			//default to 0
+	systemSettings.descriptionScrollSpeed=0;//default to slow
+	systemSettings.PID_P =42;
+	systemSettings.PID_I =50;
+	systemSettings.PID_D =15;
+
 	saveSettings();
 }
 

@@ -12,35 +12,27 @@ extern TIM_HandleTypeDef htim1; //used for the systick
 /******************************************************************************/
 
 void NMI_Handler(void) {
-
+	NVIC_SystemReset();
 }
 
 //We have the assembly for a breakpoint trigger here to halt the system when a debugger is connected
 // Hardfault handler, often a screwup in the code
 void HardFault_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 // Memory management unit had an error
 void MemManage_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 // Prefetcher or busfault occured
 void BusFault_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 void UsageFault_Handler(void) {
-	while (1) {
-		asm("bkpt");
-	}
+	NVIC_SystemReset();
 }
 
 void DebugMon_Handler(void) {
@@ -62,7 +54,6 @@ void SysTick_Handler(void) {
 void DMA1_Channel1_IRQHandler(void) {
 	HAL_DMA_IRQHandler(&hdma_adc1);
 }
-
 //ADC interrupt used for DMA
 void ADC1_2_IRQHandler(void) {
 	HAL_ADC_IRQHandler(&hadc1);
@@ -71,7 +62,6 @@ void ADC1_2_IRQHandler(void) {
 //Timer 1 has overflowed, used for HAL ticks
 void TIM1_UP_IRQHandler(void) {
 	HAL_TIM_IRQHandler(&htim1);
-
 }
 //Timer 3 is used for the PWM output to the tip
 void TIM3_IRQHandler(void) {
@@ -82,13 +72,18 @@ void TIM3_IRQHandler(void) {
 void TIM2_IRQHandler(void) {
 	HAL_TIM_IRQHandler(&htim2);
 }
-//EXTI 3 is triggered via the accelerometer on orientation change
-void EXTI3_IRQHandler(void) {
 
-	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
+void I2C1_EV_IRQHandler(void) {
+	HAL_I2C_EV_IRQHandler(&hi2c1);
 }
-//EXTI 5 is triggered via the accelerometer on movement
-void EXTI9_5_IRQHandler(void) {
-	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_5);
+void I2C1_ER_IRQHandler(void) {
+	HAL_I2C_ER_IRQHandler(&hi2c1);
+}
 
+void DMA1_Channel6_IRQHandler(void) {
+	HAL_DMA_IRQHandler(&hdma_i2c1_tx);
+}
+
+void DMA1_Channel7_IRQHandler(void) {
+	HAL_DMA_IRQHandler(&hdma_i2c1_rx);
 }

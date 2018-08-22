@@ -7,7 +7,7 @@
 
 extern OLED lcd;
 extern MMA8652FC accel;
-
+extern uint8_t PCBVersion;
 enum ButtonState {
 	BUTTON_NONE = 0, /* No buttons pressed / < filter time*/
 	BUTTON_F_SHORT = 1, /* User has pressed the front button*/
@@ -25,5 +25,20 @@ enum ButtonState {
 
 ButtonState getButtonState();
 void waitForButtonPressOrTimeout(uint32_t timeout);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc);
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
+void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed portCHAR *pcTaskName );
+
+#ifdef __cplusplus
+}
+#endif
 #endif /* __MAIN_H */
