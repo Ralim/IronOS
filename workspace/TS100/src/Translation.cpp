@@ -1322,7 +1322,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 const char* SettingsDescriptions[17] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
-	/* Power source (DC or batt)          */"Fonte de alimentação. Define a tensão de corte. <DC 10V> <S 3.3V por célula>",
+	/* Power source (DC or batt)          */"Fonte de alimentação. Define a tensão de corte. <DC=10V> <S=3.3V/célula>"
 	/* Sleep temperature                  */"Temperatura de repouso <C>",
 	/* Sleep timeout                      */"Tempo para repouso <Minutos/Segundos>",
 	/* Shutdown timeout                   */"Tempo para desligamento <Minutos>",
@@ -1332,13 +1332,22 @@ const char* SettingsDescriptions[17] = {
 	/* Display rotation mode              */"Orientação da tela <A.utomática C.anhoto D.estro>",
 	/* Boost enabled                      */"Tecla frontal ativa modo \"turbo\"",
 	/* Boost temperature                  */"Ajuste de temperatura do modo \"turbo\"",
-	/* Automatic start mode               */"Temperatura de aquecimento ao ligar <T=Trabalho S=Repouso F=Desligado>",
-	/* Cooldown blink                     */"Exibe a temperatura durante o resfriamento",
+	/* Automatic start mode               */"Aquece a ponta automaticamente ao ligar",
+	/* Cooldown blink                     */"Faz o valor da temperatura piscar durante o resfriamento",
 	/* Temperature calibration enter menu */"Calibra a temperatura",
 	/* Settings reset command             */"Reverte todos ajustes",
-	/* Calibrate input voltage            */"Calibra a tensão e configura os botões. Mantenha presionado para sair",
+	/* Calibrate input voltage            */"Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha presionado para sair",
 	/* Advanced soldering screen enabled  */"Exibe informações avançadas durante o uso",
 	/* Description Scroll Speed           */"Velocidade que esse texto é exibido",
+
+#ifdef PIDSETTINGS
+
+	"PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+	"PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+	"PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+
+#endif
+
 };
 
 const char* SettingsCalibrationWarning = "A ponta deve estar em temperatura ambiente antes de continuar!";
@@ -1363,36 +1372,45 @@ const char SettingRightChar = 'D';
 const char SettingLeftChar = 'C';
 const char SettingAutoChar = 'A';
 
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'R';
+const char SettingSlowChar = 'L';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
-	/* (<= 5) Power source (DC or batt)          */{"FONTE"},
-	/* (<= 4) Sleep temperature                  */{"TMPE"},
-	/* (<= 4) Sleep timeout                      */{"TMPO"},
-	/* (<= 5) Shutdown timeout                   */{"DESLI"},
-	/* (<= 6) Motion sensitivity level           */{"MOVIME"},
-	/* (<= 6) Temperature in F and C             */{"UNIDAD"},
-	/* (<= 6) Advanced idle display mode enabled */{"OCIOSO"},
-	/* (<= 6) Display rotation mode              */{"ORIENT"},
-	/* (<= 6) Boost enabled                      */{"TURBO"},
-	/* (<= 4) Boost temperature                  */{"TTMP"},
-	/* (<= 6) Automatic start mode               */{"MODOAT"},
-	/* (<= 6) Cooldown blink                     */{"RESFRI"},
-	/* (<= 8) Temperature calibration enter menu */{"CAL.TEMP"},
-	/* (<= 8) Settings reset command             */{"RESETAR"},
-	/* (<= 8) Calibrate input voltage            */{"CAL.VOLT"},
-	/* (<= 6) Advanced soldering screen enabled  */{"AVNCAD"},
-	/* (<= 6) Message Scroll Speed               */{"VELTEX"},
+//                                                    1234567890123456   1234567890123456
+	/* (<= 11) Power source (DC or batt)          */{"Fonte",           "alimentação"},
+	/* (<=  9) Sleep temperature                  */{"Temperat.",       "repouso"},
+	/* (<=  9) Sleep timeout                      */{"Tempo",           "repouso"},
+	/* (<= 10) Shutdown timeout                   */{"Tempo",           "desligam."},
+	/* (<= 13) Motion sensitivity level           */{"Sensibilidade",   "movimento"},
+	/* (<= 13) Temperature in F and C             */{"Unidade",         "temperatura"},
+	/* (<= 13) Advanced idle display mode enabled */{"Tela repouso",    "avançada"},
+	/* (<= 13) Display rotation mode              */{"Orientação",      "tela"},
+	/* (<= 13) Boost enabled                      */{"Modo turbo",      "ativado"},
+	/* (<=  9) Boost temperature                  */{"Modo turbo",      "temperat."},
+	/* (<= 13) Automatic start mode               */{"Partida",         "automática"},
+	/* (<= 13) Cooldown blink                     */{"Piscar ao",       "resfriar"},
+	/* (<= 16) Temperature calibration enter menu */{"Calibrar",        "temperatura"},
+	/* (<= 16) Settings reset command             */{"Reset de",        "fábrica?"},
+	/* (<= 16) Calibrate input voltage            */{"Calibrar",        "tensão"},
+	/* (<= 13) Advanced soldering screen enabled  */{"Tela trabalho",   "avançada"},
+	/* (<= 11) Display Help Text Scroll Speed     */{"Velocidade",      "texto ajuda"},
+#ifdef PIDSETTINGS
+	{	"PID","P"},
+	{	"PID","I"},
+	{	"PID","D"},
+#endif
+
 };
+
+// SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
 	/*Soldering Menu*/"Configurações\nSolda",
-	/* Power Saving Menu*/"Modos\nSuspensão",
+	/* Power Saving Menu*/"Modos\nRepouso",
 	/* UI Menu*/"Interface\nUsuário",
 	/* Advanced Menu*/"Menu\nAvançado",};
 const char* SettingsMenuEntriesDescriptions[4] = {
-	"Configurações de solda",
+	"Configurações de soldagem",
 	"Configurações de economia de energia",
 	"Configurações da interface do usuário",
 	"Opções avançadas"
