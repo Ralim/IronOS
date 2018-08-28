@@ -7,6 +7,8 @@
 
 //These are all the functions for interacting with the hardware
 #include "hardware.h"
+#include "FreeRTos.h"
+#include "stm32f1xx_hal.h"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
 uint16_t tipGainCalValue = 0;
@@ -183,7 +185,7 @@ int startQC() {
 	GPIO_InitStruct.Pin = GPIO_PIN_3;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOAB, &GPIO_InitStruct);
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 	//Enable pullup on PA10 so we can sense if its pulled low
 	GPIO_InitStruct.Pin = GPIO_PIN_10;
@@ -192,12 +194,12 @@ int startQC() {
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	//Delay 1.2 seconds
-	bool enteredQC = false;
-	for (uint8_t i = 0; i < 125 && enteredQC == false; i++) {
+	uint8_t enteredQC = 0;
+	for (uint8_t i = 0; i < 125 && enteredQC == 0; i++) {
 		vTaskDelay(10);
 		//Check if D- is low to spot a QC charger
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET)
-			enteredQC = true;
+			enteredQC = 0;
 	}
 	if (enteredQC) {
 		//We have a QC capable charger
@@ -206,7 +208,7 @@ int startQC() {
 		//Both 0.6V
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 		GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_8;
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT;
+		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);

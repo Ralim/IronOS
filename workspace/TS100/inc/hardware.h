@@ -46,6 +46,7 @@ enum TipType {
 #define VIN_Pin GPIO_PIN_1
 #define VIN_GPIO_Port GPIOB
 #define VIN_ADC1_CHANNEL ADC_CHANNEL_9
+#define VIN_ADC2_CHANNEL ADC_CHANNEL_9
 #define OLED_RESET_Pin GPIO_PIN_8
 #define OLED_RESET_GPIO_Port GPIOA
 #define KEY_A_Pin GPIO_PIN_9
@@ -79,6 +80,7 @@ enum TipType {
 #define VIN_Pin GPIO_PIN_2
 #define VIN_GPIO_Port GPIOA
 #define VIN_ADC1_CHANNEL ADC_CHANNEL_2
+#define VIN_ADC2_CHANNEL ADC_CHANNEL_2
 #define OLED_RESET_Pin GPIO_PIN_15
 #define OLED_RESET_GPIO_Port GPIOA
 #define KEY_A_Pin GPIO_PIN_0
