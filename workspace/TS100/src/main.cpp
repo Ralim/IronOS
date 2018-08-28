@@ -52,8 +52,7 @@ int main(void) {
 	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
 			1000) == HAL_OK) {
 		PCBVersion = 1;
-		accel.initalize(); // this sets up the I2C registers and loads up the default
-						   // settings
+		accel.initalize(); // this sets up the I2C registers
 	} else if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT,
 			buffer, 1, 1000) == HAL_OK) {
 		PCBVersion = 2;
@@ -68,7 +67,8 @@ int main(void) {
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
 	setCalibrationOffset(systemSettings.CalibrationOffset);
-	setTipType((enum TipType)systemSettings.tipType, systemSettings.customTipGain); //apply tip type selection
+	setTipType((enum TipType) systemSettings.tipType,
+			systemSettings.customTipGain); //apply tip type selection
 	HAL_IWDG_Refresh(&hiwdg);
 
 	/* Create the thread(s) */
@@ -191,7 +191,7 @@ ButtonState getButtonState() {
 	return BUTTON_NONE;
 }
 
- void waitForButtonPress() {
+void waitForButtonPress() {
 	// we are just lazy and sleep until user confirms button press
 	// This also eats the button press event!
 	ButtonState buttons = getButtonState();
@@ -817,7 +817,8 @@ void startGUITask(void const *argument __unused) {
 }
 
 /* StartPIDTask function */
-void __attribute__ ((long_call, section (".data.ramfuncs"))) startPIDTask(void const *argument __unused) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) startPIDTask(
+		void const *argument __unused) {
 	/*
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM
@@ -829,7 +830,18 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) startPIDTask(void c
 	 *
 	 */
 	setTipPWM(0); // disable the output driver if the output is set to be off
-	osDelay(500);
+#ifdef MODEL_TS100
+			for(uint8_t i=0;i<50;i++)
+			{
+				osDelay(10);
+				getTipRawTemp(1); // cycle up the tip temp
+			}
+#else
+	//On the TS80 we replace the delay with the QC negotiation
+	//As it delays around 1-2 seconds
+	startQC();
+
+#endif
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 

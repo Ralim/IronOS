@@ -135,6 +135,8 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 	//ADC maximum is 16384 == 3.3V at input == 28V at VIN
 	//Therefore we can divide down from there
 	//Ideal term is 117
+	//For TS80 input range is up to 16V, so ideal diviser is then going to be 205
+
 #define BATTFILTERDEPTH 64
 	static uint8_t preFillneeded = 1;
 	static uint32_t samples[BATTFILTERDEPTH];
@@ -156,11 +158,95 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 		preFillneeded = 1;
 	return sum / divisor;
 }
+
+//Must be called after FreeRToS Starts
+int startQC() {
+	//Pre check that the input could be >5V already, and if so, dont both negotiating as someone is feeding in hv
+	uint16_t vin = getInputVoltageX10(205);
+	if (vin > 150)
+		return -1; // Over voltage
+	if (vin > 100)
+		return 12; // ALready at 12V
+
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	// Tries to negotiate QC for 9V
+	// This is a multiple step process.
+	// 1. Set around 0.6V on D+ for 1.25 Seconds or so
+	//2. After this It should un-short D+->D- and instead add a 20k pulldown on D-
+	// 3. Now set D+ to 3.3V and D- to 0.6V to request 9V
+// OR both at 0.6V for 12V request (if the adapter can do it).
+	//If 12V is implimented then should fallback to 9V after validation
+
+	//Step 1. We want to pull D+ to 0.6V
+	// Pull PB3 donwn to ground
+	GPIO_InitStruct.Pin = GPIO_PIN_3;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOAB, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+	//Enable pullup on PA10 so we can sense if its pulled low
+	GPIO_InitStruct.Pin = GPIO_PIN_10;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	//Delay 1.2 seconds
+	bool enteredQC = false;
+	for (uint8_t i = 0; i < 125 && enteredQC == false; i++) {
+		vTaskDelay(10);
+		//Check if D- is low to spot a QC charger
+		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET)
+			enteredQC = true;
+	}
+	if (enteredQC) {
+		//We have a QC capable charger
+		//Try and negotiate for 12V
+		//Now that we are in QC mode we just set the pins
+		//Both 0.6V
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+		GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_8;
+		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT;
+		GPIO_InitStruct.Pull = GPIO_NOPULL;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+		vTaskDelay(250);
+		//Check if we have 12V
+		vin = getInputVoltageX10(205);
+		if (vin > 100) {
+			//Voltage is > 10V, so ~12V with tolerance
+			return 12;
+		}
+		//Try for 9V
+		//Let D+ rise to 3.3V
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+		vTaskDelay(250);
+		//Check if we have 12V
+		vin = getInputVoltageX10(205);
+		if (vin > 70) {
+			//Voltage is > 7V, so ~9V with tolerance
+			return 9;
+		} else {
+			//Fallback to 5V
+			return 5;
+		}
+
+	} else {
+		return -2;	// no QC
+	}
+}
+void stopQC() {
+	// Resets QC back to 5V
+}
 volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
 	return pendingPWM;
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) setTipPWM(uint8_t pulse) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) setTipPWM(
+		uint8_t pulse) {
 	PWMSafetyTimer = 2; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
 		pulse = 100;

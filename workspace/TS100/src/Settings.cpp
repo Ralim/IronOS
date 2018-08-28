@@ -83,20 +83,25 @@ void resetSettings() {
 	systemSettings.detailedIDLE = 0;// Detailed idle screen (off for first time users)
 	systemSettings.OrientationMode = 2;				//Default to automatic
 	systemSettings.sensitivity = 7;				//Default high sensitivity
+#ifdef MODEL_TS80
+	systemSettings.voltageDiv = 205;			//Default divider from schematic
+
+#else
 	systemSettings.voltageDiv = 117;			//Default divider from schematic
+#endif
 	systemSettings.ShutdownTime = 10;//How many minutes until the unit turns itself off
-	systemSettings.boostModeEnabled = 1;//Default to safe, with no boost mode
+	systemSettings.boostModeEnabled = 1;//Default to having boost mode on as most people prefer itF
 	systemSettings.BoostTemp = 420;				//default to 400C
 	systemSettings.autoStartMode = 0;				//Auto start off for safety
 	systemSettings.coolingTempBlink = 0;//Blink the temperature on the cooling screen when its > 50C
 	systemSettings.temperatureInF = 0;			//default to 0
 	systemSettings.descriptionScrollSpeed = 0;			//default to slow
-	systemSettings.PID_P = 42;
+	systemSettings.PID_P = 42;			//PID tuning constants
 	systemSettings.PID_I = 50;
 	systemSettings.PID_D = 15;
 	systemSettings.CalibrationOffset = 2780; // the adc offset
 	systemSettings.customTipGain = 0; // The tip type is either default or a custom gain
-	systemSettings.tipType = TS_B2;
-	saveSettings();
+	systemSettings.tipType = TS_B2; //Default to the B2 Tip
+	saveSettings(); // Save defaults
 }
 

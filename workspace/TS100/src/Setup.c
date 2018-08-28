@@ -190,18 +190,18 @@ static void MX_ADC2_Init(void) {
 
 	/**Configure Regular Channel
 	 */
-	sConfig.Channel = ADC_CHANNEL_8;
+	sConfig.Channel = TIP_TEMP_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_1;
 	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
-	sConfig.Channel = ADC_CHANNEL_8;
+	sConfig.Channel = VIN_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_2;
 	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
 	/**Configure Injected Channel
 	 */
-	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
+	sConfigInjected.InjectedChannel = TIP_TEMP_ADC2_CHANNEL;
 	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_1;
 	sConfigInjected.InjectedNbrOfConversion = 4;
 	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_7CYCLES_5;
@@ -285,7 +285,7 @@ static void MX_TIM3_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	/**TIM3 GPIO Configuration
-	 PB4     ------> TIM3_CH1
+	 PWM_Out_Pin     ------> TIM3_CH1
 	 */
 	GPIO_InitStruct.Pin = PWM_Out_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
