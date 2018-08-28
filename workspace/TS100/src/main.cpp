@@ -449,7 +449,7 @@ static void display_countdown(int sleepThres) {
 	}
 }
 
-static void gui_solderingMode() {
+static void gui_solderingMode(uint8_t jumpToSleep) {
 	/*
 	 * * Soldering (gui_solderingMode)
 	 * -> Main loop where we draw temp, and animations
@@ -564,6 +564,8 @@ static void gui_solderingMode() {
 				}
 			}
 		}
+		lcd.refresh();
+
 		// Update the setpoints for the temperature
 		if (boostModeOn) {
 			if (systemSettings.temperatureInF)
@@ -582,13 +584,25 @@ static void gui_solderingMode() {
 						systemSettings.SolderingTemp);
 		}
 
+#ifdef MODEL_TS100
 		// Undervoltage test
 		if (checkVoltageForExit()) {
 			lastButtonTime = xTaskGetTickCount();
 			return;
 		}
-
-		lcd.refresh();
+#else
+		//on the TS80 we only want to check for over voltage to prevent tip damage
+		if (getInputVoltageX10(systemSettings.voltageDiv) > 150) {
+			lastButtonTime = xTaskGetTickCount();
+			return; // Over voltage
+		}
+#endif
+		if (jumpToSleep) {
+			if (gui_SolderingSleepingMode()) {
+				lastButtonTime = xTaskGetTickCount();
+				return;  // If the function returns non-0 then exit
+			}
+		}
 		if (systemSettings.sensitivity && systemSettings.SleepTime)
 			if (xTaskGetTickCount() - lastMovementTime > sleepThres
 					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
@@ -603,7 +617,7 @@ static void gui_solderingMode() {
 
 static const char *HEADERS[] = {
 __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "Rtip: ",
-		"Ctip: ", "Vin :", "THan: " };
+		"Ctip: ", "Vin :", "THan: ", "Model: " };
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -612,8 +626,11 @@ void showVersion(void) {
 		lcd.clearScreen();    // Ensure the buffer starts clean
 		lcd.setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		lcd.setFont(1);       // small font
-		lcd.print((char *) "V2.05 PCB");  // Print version number
-		lcd.printNumber(PCBVersion, 1); //Print PCB ID number
+#ifdef MODEL_TS100
+				lcd.print((char *) "V2.06 TS100");  // Print version number
+#else
+		lcd.print((char *) "V2.06 TS80");  // Print version number
+#endif
 		lcd.setCursor(0, 8);         // second line
 		lcd.print(HEADERS[screen]);
 		switch (screen) {
@@ -646,6 +663,9 @@ void showVersion(void) {
 			break;
 		case 10:
 			lcd.printNumber(getHandleTemperature(), 3);
+		case 11:
+			lcd.printNumber(PCBVersion, 1); //Print PCB ID number
+			break;
 		default:
 			break;
 		}
@@ -683,7 +703,9 @@ void startGUITask(void const *argument __unused) {
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
 		if (systemSettings.autoStartMode == 1)
-			gui_solderingMode();
+			gui_solderingMode(0);
+		if (systemSettings.autoStartMode == 2)
+			gui_solderingMode(1);
 	}
 
 #if ACCELDEBUG
@@ -725,7 +747,7 @@ void startGUITask(void const *argument __unused) {
 		case BUTTON_F_SHORT:
 			lcd.setFont(0);
 			lcd.displayOnOff(true);  // turn lcd on
-			gui_solderingMode();     // enter soldering mode
+			gui_solderingMode(0);     // enter soldering mode
 			buttonLockout = true;
 			break;
 		case BUTTON_B_SHORT:

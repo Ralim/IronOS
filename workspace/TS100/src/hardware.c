@@ -91,7 +91,7 @@ uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTe
  * Then take the m term * 10000
  * */
 uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
-
+#ifdef MODEL_TS100
 	switch (tipID) {
 	case TS_D24:
 		return 141;
@@ -108,6 +108,8 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 		return 132; // make this the average of all
 		break;
 	}
+#else
+#endif
 }
 
 uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipRawTemp(
