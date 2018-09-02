@@ -633,17 +633,16 @@ static void settings_displayTipModel(void) {
 static void calibration_displaySimpleCal(void) {
 	printShortDescription(18, 5);
 }
-static void dotDelay()
-{
+static void dotDelay() {
 	for (uint8_t i = 0; i < 20; i++) {
-			getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
-			lcd.clearScreen();
-			lcd.setCursor(0, 0);
-			for (uint8_t x = 0; x < i / 4; x++)
-				lcd.print(".");
-			lcd.refresh();
-			osDelay(50);
-		}
+		getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
+		lcd.clearScreen();
+		lcd.setCursor(0, 0);
+		for (uint8_t x = 0; x < i / 4; x++)
+			lcd.print(".");
+		lcd.refresh();
+		osDelay(50);
+	}
 }
 static void setTipOffset() {
 	setCalibrationOffset(0);            //turn off the current offset
@@ -677,31 +676,41 @@ static void calibration_enterSimpleCal(void) {
 		//Gain is the m term from rise/run plot of raw readings vs (tip-handle)
 		//Thus we want to calculate  ([TipRawHot-TipRawCold])/(ActualHot-HandleHot)-(ActualCold-HandleCold)
 		//Thus we first need to store -> TiprawCold,HandleCold,ActualCold==HandleCold -> RawTipCold
-		uint32_t RawTipCold = getTipRawTemp(0);
+		uint32_t RawTipCold = getTipRawTemp(0) * 10;
 		lcd.clearScreen();
-		lcd.setCursor(0,0);
+		lcd.setCursor(0, 0);
 		lcd.setFont(1);
 		lcd.print("Please Insert Tip\nInto Boiling Water");
 		lcd.refresh();
 		osDelay(200);
 		waitForButtonPress();
-		dotDelay();//cycle the filter a bit
+		dotDelay();		//cycle the filter a bit
 		//Now take the three hot measurements
 		//Assume water is boiling at 100C
-		uint32_t RawTipHot = getTipRawTemp(0);
-		uint32_t HandleTempHot = getHandleTemperature();
+		uint32_t RawTipHot = getTipRawTemp(0) * 10;
+		uint32_t HandleTempHot = getHandleTemperature() / 10;
 
-		uint32_t gain =( RawTipHot-RawTipCold) / (1000-HandleTempHot);
+		uint32_t gain = (RawTipHot - RawTipCold) / (100 - HandleTempHot);
+
 		//Show this to the user
 		lcd.clearScreen();
-		lcd.setCursor(0,0);
-		lcd.print("Your Gain: ");
-		lcd.printNumber(gain,6);
-		lcd.print("\nThis should be around 120-140");
+		lcd.setCursor(0, 0);
+		lcd.print("Your G: ");
+		lcd.printNumber(gain, 6);
+		lcd.print("\n~= 120-140");
 		lcd.refresh();
-		osDelay(500);
+		osDelay(2000);
 		waitForButtonPress();
-
+		lcd.clearScreen();
+		lcd.setCursor(0, 0);
+		lcd.print("H: ");
+		lcd.printNumber(RawTipHot, 8);
+		lcd.setCursor(0, 8);
+		lcd.print("C: ");
+		lcd.printNumber(RawTipCold, 8);
+		lcd.refresh();
+		osDelay(2000);
+		waitForButtonPress();
 	}
 }
 static void calibration_displayAdvancedCal(void) {
@@ -724,13 +733,13 @@ static void settings_setCalibrate(void) {
 		//Two types of calibration
 		//1. Basic, idle temp + hot water (100C)
 		//2. Advanced, 100C + 350C, we keep PID tracking to a temperature target
-		gui_Menu(calibrationMenu);
+		return gui_Menu(calibrationMenu);
 	}
 	//Else
 	// Ask user if handle is at the tip temperature
 	// Any error between handle and the tip will be a direct offset in the control loop
 
-	if (userConfirmation(SettingsCalibrationWarning)) {
+	else if (userConfirmation(SettingsCalibrationWarning)) {
 		//User confirmed
 		//So we now perform the actual calculation
 		setTipOffset();
