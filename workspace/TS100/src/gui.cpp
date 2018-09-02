@@ -722,7 +722,57 @@ static void calibration_enterAdvancedCal(void) {
 		//User has confirmed their handle is at ambient
 		//So take the offset measurement
 		setTipOffset();
-		//The tip now has a known ADC offset (We dont need it here, but its required for adjustment use)
+		//The tip now has a known ADC offset
+		//Head up until it is at 350C
+		//Then let the user adjust the gain value until it converges
+		systemSettings.customTipGain = 120;
+		bool exit = false;
+
+		while (exit == false) {
+			//Set tip to 350C
+			currentlyActiveTemperatureTarget = ctoTipMeasurement(350);
+			//Check if user has pressed button to change the gain
+			ButtonState buttons = getButtonState();
+			switch (buttons) {
+			case BUTTON_NONE:
+				break;
+			case BUTTON_BOTH:
+			case BUTTON_B_LONG:
+			case BUTTON_F_LONG:
+				exit = true;
+				break;
+			case BUTTON_F_SHORT:
+				systemSettings.customTipGain++;
+				break;
+			case BUTTON_B_SHORT: {
+				systemSettings.customTipGain--;
+			}
+				break;
+			default:
+				break;
+			}
+			if (systemSettings.customTipGain > 200)
+				systemSettings.customTipGain = 200;
+			else if (systemSettings.customTipGain <= 100)
+				systemSettings.customTipGain = 100;
+			lcd.setCursor(0, 0);
+			lcd.clearScreen();
+			lcd.setFont(0);
+			if (lcd.getRotation())
+				lcd.drawChar('-');
+			else
+				lcd.drawChar('+');
+
+			lcd.drawChar(' ');
+			lcd.printNumber(systemSettings.customTipGain, 4);
+			lcd.drawChar(' ');
+			if (lcd.getRotation())
+				lcd.drawChar('+');
+			else
+				lcd.drawChar('-');
+			lcd.refresh();
+			GUIDelay();
+		}
 
 	}
 }
