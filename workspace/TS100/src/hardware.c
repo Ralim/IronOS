@@ -163,7 +163,7 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 	return sum / divisor;
 }
 uint8_t QCMode = 0;
-void seekQC(uint16_t Vx10) {
+void seekQC(int16_t Vx10) {
 	if (QCMode <= 1)
 		return;	//NOT connected to a QC Charger
 
@@ -171,8 +171,9 @@ void seekQC(uint16_t Vx10) {
 	//try and step towards the wanted value
 
 	//1. Measure current voltage
-	int16_t vStart = getInputVoltageX10(205);
-	int difference = (int16_t) Vx10 - vStart;
+	int16_t vStart = getInputVoltageX10(195);
+	int difference = Vx10 - vStart;
+
 	//2. calculate ideal steps (0.2V changes)
 
 	int steps = difference / 2;
@@ -186,7 +187,7 @@ void seekQC(uint16_t Vx10) {
 			vTaskDelay(3);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 			HAL_IWDG_Refresh(&hiwdg);
-			vTaskDelay(10);
+			vTaskDelay(3);
 			steps++;
 		}
 		while (steps > 0) {
@@ -200,26 +201,34 @@ void seekQC(uint16_t Vx10) {
 			vTaskDelay(3);
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 			HAL_IWDG_Refresh(&hiwdg);
-			vTaskDelay(10);
+			vTaskDelay(3);
 			steps--;
 		}
 	}
 	//Re-measure
-	/*
-	 if (abs(vStart - getInputVoltageX10(205)) > (difference / 2)) {
-	 //No continuous mode, so QC2
-	 QCMode = 2;
-	 //Goto nearest
-	 if (Vx10 > 10.5) {
-	 //request 12V
-	 } else {
-	 //request 9V
-	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-	 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-	 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-	 }
-	 }*/
+	/* Disabled due to nothing to test and code space of around 1k*/
+#ifdef QC2CHECKS
+	if (abs(vStart - getInputVoltageX10(195)) > (difference / 2)) {
+		//No continuous mode, so QC2
+		QCMode = 2;
+		//Goto nearest
+		if (Vx10 > 10.5) {
+			//request 12V
+			//D- = 0.6V, D+ = 0.6V
+			//Clamp PB3
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);//pull down D+
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+
+		} else {
+			//request 9V
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+		}
+	}
 	//all is good in the world
+#endif
 }
 
 //Must be called after FreeRToS Starts
@@ -285,16 +294,16 @@ void startQC() {
 
 		//Wait for frontend ADC to stabilise
 		QCMode = 4;
-		for (uint8_t i = 0; i < 100; i++) {
-			if (getInputVoltageX10(205) > 80) {
+		for (uint8_t i = 0; i < 10; i++) {
+			if (getInputVoltageX10(195) > 80) {
 				//yay we have at least QC2.0 or QC3.0
 				QCMode = 3;	//We have at least QC2, pray for 3
-				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET); // prep IO for QC3
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 				return;
 			}
-			vTaskDelay(1);//10mS
+			vTaskDelay(10); //100mS
 		}
 		QCMode = 0;
 		//No QC / not working  to us

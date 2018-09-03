@@ -112,7 +112,7 @@ uint16_t ctoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToC(uint16_t raw);
 uint16_t ftoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToF(uint16_t raw);
-void seekQC(uint16_t Vx10);
+void seekQC(int16_t Vx10);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);
 

@@ -979,6 +979,9 @@ void startMOVTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	startQC();
 	seekQC(120);
+	vTaskDelay(200);
+	seekQC(90);
+
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
 #endif
