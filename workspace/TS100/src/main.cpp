@@ -14,8 +14,7 @@
 
 #define ACCELDEBUG 0
 // C++ objects
-FRToSI2C i2cDev(&hi2c1);
-OLED lcd(&i2cDev);
+OLED lcd;
 uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
@@ -47,6 +46,8 @@ int main(void) {
 	startQC();
 	seekQC(110);
 #endif
+	FRToSI2C::init(&hi2c1);
+
 	lcd.initialize();   // start up the LCD
 	lcd.setFont(0);     // default to bigger font
 	//Testing for new weird board version
@@ -56,14 +57,12 @@ int main(void) {
 			1000) == HAL_OK) {
 		PCBVersion = 1;
 
-		MMA8652FC::init(&i2cDev);
 		MMA8652FC::initalize(); // this sets up the I2C registers
 	} else if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT,
 			buffer, 1, 1000) == HAL_OK) {
 		PCBVersion = 2;
 		//Setup the ST Accelerometer
 
-		LIS2DH12::init(&i2cDev);
 		LIS2DH12::initalize();						   //startup the accelerometer
 	} else {
 		PCBVersion = 3;
@@ -710,7 +709,7 @@ void showVersion(void) {
 
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
-	i2cDev.FRToSInit();
+	FRToSI2C::FRToSInit();
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
@@ -1108,22 +1107,22 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 }
 
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	i2cDev.CpltCallback();
+	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	i2cDev.CpltCallback();
+	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	i2cDev.CpltCallback();
+	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
-	i2cDev.CpltCallback();
+	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	i2cDev.CpltCallback();
+	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	i2cDev.CpltCallback();
+	FRToSI2C::CpltCallback();
 }
 void vApplicationStackOverflowHook( xTaskHandle *pxTask __unused,
 		signed portCHAR *pcTaskName __unused) {

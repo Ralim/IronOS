@@ -8,7 +8,6 @@
 #include <LIS2DH12.hpp>
 #include "cmsis_os.h"
 
- FRToSI2C* LIS2DH12::i2c;
 
 typedef struct {
         const uint8_t reg;
@@ -33,13 +32,13 @@ static const LIS_REG i2c_registers[] = {
 
 void LIS2DH12::initalize() {
     for (size_t index = 0; index < (sizeof(i2c_registers) / sizeof(i2c_registers[0])); index++) {
-		i2c->I2C_RegisterWrite(LIS2DH_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].value);
+    	FRToSI2C::I2C_RegisterWrite(LIS2DH_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].value);
     }
 }
 
 void LIS2DH12::getAxisReadings(int16_t* x, int16_t* y, int16_t* z) {
 	uint8_t tempArr[6];
-	i2c->Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8, I2C_MEMADD_SIZE_8BIT,
+FRToSI2C::Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8, I2C_MEMADD_SIZE_8BIT,
 			(uint8_t*) tempArr, 6);
 
 	(*x) = ((uint16_t) (tempArr[1] << 8 | tempArr[0]));

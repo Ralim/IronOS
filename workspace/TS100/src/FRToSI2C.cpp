@@ -7,6 +7,8 @@
 
 #include "FRToSI2C.hpp"
 
+I2C_HandleTypeDef *FRToSI2C::i2c;
+SemaphoreHandle_t FRToSI2C::I2CSemaphore;
 void FRToSI2C::CpltCallback() {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	i2c->State = HAL_I2C_STATE_READY; //Force state reset

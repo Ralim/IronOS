@@ -9,6 +9,17 @@
 #include <string.h>
 #include "Translation.h"
 #include "cmsis_os.h"
+
+const uint8_t* OLED::currentFont;// Pointer to the current font used for rendering to the buffer
+uint8_t* OLED::firstStripPtr; // Pointers to the strips to allow for buffer having extra content
+uint8_t* OLED::secondStripPtr;	//Pointers to the strips
+bool OLED::inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
+bool OLED::displayOnOffState;					// If the display is on or not
+uint8_t OLED::fontWidth, OLED::fontHeight;
+int16_t OLED::cursor_x, OLED::cursor_y;
+uint8_t OLED::displayOffset;
+uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10];    // The data buffer
+
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
@@ -45,27 +56,25 @@ uint8_t OLED_Setup_Array[] = { /**/
 const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
 		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
-OLED::OLED(FRToSI2C* i2cHandle) {
-	i2c = i2cHandle;
-	cursor_x = cursor_y = 0;
-	currentFont = FONT_12;
-	fontWidth = 12;
-	inLeftHandedMode = false;
-	firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
-	secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
-	fontHeight = 16;
-	displayOffset = 0;
-	displayOnOffState = true;
-}
+
 
 void OLED::initialize() {
+	cursor_x = cursor_y = 0;
+		currentFont = FONT_12;
+		fontWidth = 12;
+		inLeftHandedMode = false;
+		firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
+		secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
+		fontHeight = 16;
+		displayOffset = 0;
+		displayOnOffState = true;
 	memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
 	HAL_Delay(50);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(50);
 	//Send the setup settings
-	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
+	FRToSI2C::Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
 			sizeof(OLED_Setup_Array));
 	displayOnOff(true);
 }
@@ -143,7 +152,7 @@ void OLED::setRotation(bool leftHanded) {
 		OLED_Setup_Array[11] = 0xC0;
 		OLED_Setup_Array[19] = 0xA0;
 	}
-	i2c->Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
+	FRToSI2C::Transmit( DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
 			sizeof(OLED_Setup_Array));
 	inLeftHandedMode = leftHanded;
 
