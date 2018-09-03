@@ -113,8 +113,7 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 #endif
 }
 
-uint16_t getTipRawTemp(
-		uint8_t instant) {
+uint16_t getTipRawTemp(uint8_t instant) {
 	static int64_t filterFP = 0;
 	static uint16_t lastSample = 0;
 	const uint8_t filterBeta = 7; //higher values smooth out more, but reduce responsiveness
@@ -142,7 +141,7 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 	//Ideal term is 117
 	//For TS80 input range is up to 16V, so ideal diviser is then going to be 205
 
-#define BATTFILTERDEPTH 64
+#define BATTFILTERDEPTH 48
 	static uint8_t preFillneeded = 1;
 	static uint32_t samples[BATTFILTERDEPTH];
 	static uint8_t index = 0;
@@ -172,8 +171,8 @@ void seekQC(uint16_t Vx10) {
 	//try and step towards the wanted value
 
 	//1. Measure current voltage
-	uint16_t vStart = getInputVoltageX10(205);
-	int difference = Vx10 - vStart;
+	int16_t vStart = getInputVoltageX10(205);
+	int difference = (int16_t) Vx10 - vStart;
 	//2. calculate ideal steps (0.2V changes)
 
 	int steps = difference / 2;
@@ -182,11 +181,12 @@ void seekQC(uint16_t Vx10) {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-			HAL_Delay(50);
+			vTaskDelay(3);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-			HAL_Delay(50);
+			vTaskDelay(3);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 			HAL_IWDG_Refresh(&hiwdg);
+			vTaskDelay(10);
 			steps++;
 		}
 		while (steps > 0) {
@@ -194,30 +194,31 @@ void seekQC(uint16_t Vx10) {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-			HAL_Delay(50);
+			vTaskDelay(3);
 
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-			HAL_Delay(50);
+			vTaskDelay(3);
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 			HAL_IWDG_Refresh(&hiwdg);
+			vTaskDelay(10);
 			steps--;
 		}
 	}
 	//Re-measure
 	/*
-	if (abs(vStart - getInputVoltageX10(205)) > (difference / 2)) {
-		//No continuous mode, so QC2
-		QCMode = 2;
-		//Goto nearest
-		if (Vx10 > 10.5) {
-			//request 12V
-		} else {
-			//request 9V
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-		}
-	}*/
+	 if (abs(vStart - getInputVoltageX10(205)) > (difference / 2)) {
+	 //No continuous mode, so QC2
+	 QCMode = 2;
+	 //Goto nearest
+	 if (Vx10 > 10.5) {
+	 //request 12V
+	 } else {
+	 //request 9V
+	 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+	 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+	 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+	 }
+	 }*/
 	//all is good in the world
 }
 
@@ -282,13 +283,21 @@ void startQC() {
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 		HAL_IWDG_Refresh(&hiwdg);
 
-		vTaskDelay(20);
-		//HAL_Delay(200);
-		//Check if the input is now 9V
-		if (getInputVoltageX10(205) > 80) {
-			//yay we have at least QC2.0 or QC3.0
-			QCMode = 3;	//We have at least QC2, pray for 3
+		//Wait for frontend ADC to stabilise
+		QCMode = 4;
+		for (uint8_t i = 0; i < 100; i++) {
+			if (getInputVoltageX10(205) > 80) {
+				//yay we have at least QC2.0 or QC3.0
+				QCMode = 3;	//We have at least QC2, pray for 3
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET); // prep IO for QC3
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+				return;
+			}
+			vTaskDelay(1);//10mS
 		}
+		QCMode = 0;
+		//No QC / not working  to us
 
 	} else {
 		// no QC
@@ -301,8 +310,7 @@ volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
 	return pendingPWM;
 }
-void setTipPWM(
-		uint8_t pulse) {
+void setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 2; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
 		pulse = 100;
@@ -312,8 +320,7 @@ void setTipPWM(
 
 //These are called by the HAL after the corresponding events from the system timers.
 
-void HAL_TIM_PeriodElapsedCallback(
-		TIM_HandleTypeDef *htim) {
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	//Period has elapsed
 	if (htim->Instance == TIM2) {
 		//we want to turn on the output again
@@ -333,8 +340,7 @@ void HAL_TIM_PeriodElapsedCallback(
 	}
 }
 
-void HAL_TIM_PWM_PulseFinishedCallback(
-		TIM_HandleTypeDef *htim) {
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
 		//This was a when the PWM for the output has timed out
 		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {

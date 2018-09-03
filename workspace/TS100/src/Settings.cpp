@@ -84,10 +84,10 @@ void resetSettings() {
 	systemSettings.OrientationMode = 2;				//Default to automatic
 	systemSettings.sensitivity = 7;				//Default high sensitivity
 #ifdef MODEL_TS80
-	systemSettings.voltageDiv = 205;			//Default divider from schematic
+	systemSettings.voltageDiv = 195;			//Default divider from schematic
 
 #else
-	systemSettings.voltageDiv = 117;			//Default divider from schematic
+	systemSettings.voltageDiv = 115;			//Default divider from schematic
 #endif
 	systemSettings.ShutdownTime = 10;//How many minutes until the unit turns itself off
 	systemSettings.boostModeEnabled = 1;//Default to having boost mode on as most people prefer itF

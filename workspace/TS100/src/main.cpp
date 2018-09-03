@@ -42,7 +42,6 @@ int main(void) {
 	HAL_IWDG_Refresh(&hiwdg);
 	setTipPWM(0);
 
-
 	FRToSI2C::init(&hi2c1);
 
 	lcd.initialize();   // start up the LCD
@@ -60,7 +59,7 @@ int main(void) {
 		PCBVersion = 2;
 		//Setup the ST Accelerometer
 
-		LIS2DH12::initalize();						   //startup the accelerometer
+		LIS2DH12::initalize();						 //startup the accelerometer
 	} else {
 		PCBVersion = 3;
 		systemSettings.SleepTime = 0;
@@ -277,13 +276,17 @@ static void gui_drawBatteryIcon() {
 #else
 	//On TS80 we replace this symbol with the voltage we are operating on
 	//If <9V then show single digit, if not show duals
-	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv) / 10;
+	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv);
+	if (V % 10 >= 5)
+		V = V / 10 + 1;//round up
+	else
+		V = V / 10;
 	if (V >= 10) {
 		int16_t xPos = lcd.getCursorX();
 		lcd.setFont(1);
-		lcd.printNumber(1, 2);
-		lcd.setCharCursor(xPos, 8);
-		lcd.printNumber(V % 10, 2);
+		lcd.printNumber(1, 1);
+		lcd.setCursor(xPos, 8);
+		lcd.printNumber(V % 10, 1);
 
 		lcd.setFont(0);
 	} else {
@@ -395,7 +398,7 @@ static int gui_SolderingSleepingMode() {
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
-		if (checkVoltageForExit())
+			if (checkVoltageForExit())
 			return 1;  // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
@@ -975,7 +978,7 @@ void startPIDTask(void const *argument __unused) {
 void startMOVTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	startQC();
-	seekQC(110);
+	seekQC(120);
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
 #endif
