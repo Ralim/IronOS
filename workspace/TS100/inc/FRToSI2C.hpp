@@ -30,6 +30,8 @@ class FRToSI2C {
 				   uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
 
 	void Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+	void I2C_RegisterWrite(uint8_t address,uint8_t reg, uint8_t data);
+	uint8_t I2C_RegisterRead(uint8_t address,uint8_t reg);
 
   private:
 	I2C_HandleTypeDef *i2c;

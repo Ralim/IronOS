@@ -204,6 +204,7 @@ void seekQC(uint16_t Vx10) {
 		}
 	}
 	//Re-measure
+	/*
 	if (abs(vStart - getInputVoltageX10(205)) > (difference / 2)) {
 		//No continuous mode, so QC2
 		QCMode = 2;
@@ -216,7 +217,7 @@ void seekQC(uint16_t Vx10) {
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 		}
-	}
+	}*/
 	//all is good in the world
 }
 

@@ -16,8 +16,6 @@
 // C++ objects
 FRToSI2C i2cDev(&hi2c1);
 OLED lcd(&i2cDev);
-MMA8652FC accel(&i2cDev);
-LIS2DH12 accel2(&i2cDev);
 uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
@@ -57,12 +55,16 @@ int main(void) {
 	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
 			1000) == HAL_OK) {
 		PCBVersion = 1;
-		accel.initalize(); // this sets up the I2C registers
+
+		MMA8652FC::init(&i2cDev);
+		MMA8652FC::initalize(); // this sets up the I2C registers
 	} else if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT,
 			buffer, 1, 1000) == HAL_OK) {
 		PCBVersion = 2;
 		//Setup the ST Accelerometer
-		accel2.initalize();						   //startup the accelerometer
+
+		LIS2DH12::init(&i2cDev);
+		LIS2DH12::initalize();						   //startup the accelerometer
 	} else {
 		PCBVersion = 3;
 		systemSettings.SleepTime = 0;
@@ -995,8 +997,8 @@ void startMOVTask(void const *argument __unused) {
 		threshold -= systemSettings.sensitivity * 200; // 200 is the step size
 
 		if (PCBVersion == 2) {
-			accel2.getAxisReadings(&tx, &ty, &tz);
-			rotation = accel2.getOrientation();
+			LIS2DH12::getAxisReadings(&tx, &ty, &tz);
+			rotation = LIS2DH12::getOrientation();
 		} else if (PCBVersion == 1) {
 			accel.getAxisReadings(&tx, &ty, &tz);
 			rotation = accel.getOrientation();

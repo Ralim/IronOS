@@ -7,9 +7,9 @@
 
 #include "FRToSI2C.hpp"
 
-void __attribute__ ((long_call, section (".data.ramfuncs"))) FRToSI2C::CpltCallback() {
+void FRToSI2C::CpltCallback() {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	i2c->State = HAL_I2C_STATE_READY;//Force state reset
+	i2c->State = HAL_I2C_STATE_READY; //Force state reset
 	if (I2CSemaphore) {
 		xSemaphoreGiveFromISR(I2CSemaphore, &xHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
@@ -40,7 +40,15 @@ void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
 	}
 
 }
+void FRToSI2C::I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data) {
+	Mem_Write(address, reg, I2C_MEMADD_SIZE_8BIT, &data, 1);
+}
 
+uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
+	uint8_t tx_data[1];
+	Mem_Read(add, reg, I2C_MEMADD_SIZE_8BIT, tx_data, 1);
+	return tx_data[0];
+}
 void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 		uint16_t MemAddSize, uint8_t* pData, uint16_t Size) {
 	if (xTaskGetSchedulerState() == taskSCHEDULER_NOT_STARTED
