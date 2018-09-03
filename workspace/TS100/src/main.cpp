@@ -42,10 +42,7 @@ int main(void) {
 	HAL_IWDG_Refresh(&hiwdg);
 	setTipPWM(0);
 
-#ifdef MODEL_TS80
-	startQC();
-	seekQC(110);
-#endif
+
 	FRToSI2C::init(&hi2c1);
 
 	lcd.initialize();   // start up the LCD
@@ -976,7 +973,13 @@ void startPIDTask(void const *argument __unused) {
 }
 #define MOVFilter 8
 void startMOVTask(void const *argument __unused) {
+#ifdef MODEL_TS80
+	startQC();
+	seekQC(110);
+#else
 	osDelay(250);  // wait for accelerometer to stabilize
+#endif
+
 	lcd.setRotation(systemSettings.OrientationMode & 1);
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };

@@ -261,7 +261,8 @@ void startQC() {
 	//Delay 1.25 seconds
 	uint8_t enteredQC = 0;
 	for (uint16_t i = 0; i < 130 && enteredQC == 0; i++) {
-		HAL_Delay(10);
+//		HAL_Delay(10);
+		vTaskDelay(1);
 		HAL_IWDG_Refresh(&hiwdg);
 	}
 	//Check if D- is low to spot a QC charger
@@ -281,7 +282,8 @@ void startQC() {
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 		HAL_IWDG_Refresh(&hiwdg);
 
-		HAL_Delay(200);
+		vTaskDelay(20);
+		//HAL_Delay(200);
 		//Check if the input is now 9V
 		if (getInputVoltageX10(205) > 80) {
 			//yay we have at least QC2.0 or QC3.0
