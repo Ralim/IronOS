@@ -93,18 +93,18 @@ uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTe
 uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 #ifdef MODEL_TS100
 	switch (tipID) {
-	case TS_D24:
+		case TS_D24:
 		return 141;
 		break;
-	case TS_BC2:
+		case TS_BC2:
 		return (133 + 129) / 2;
 		break;
-	case TS_C1:
+		case TS_C1:
 		return 133;
 		break;
-	case TS_B2:
+		case TS_B2:
 		return 133;
-	default:
+		default:
 		return 132; // make this the average of all
 		break;
 	}
@@ -168,7 +168,7 @@ int startQC() {
 	//Pre check that the input could be >5V already, and if so, dont both negotiating as someone is feeding in hv
 	uint16_t vin = getInputVoltageX10(205);
 	if (vin > 150)
-		return -1; // Over voltage
+		return 20; // Over voltage
 	if (vin > 100)
 		return 12; // ALready at 12V
 
@@ -181,45 +181,59 @@ int startQC() {
 	// 3. Now set D+ to 3.3V and D- to 0.6V to request 9V
 // OR both at 0.6V for 12V request (if the adapter can do it).
 	//If 12V is implimented then should fallback to 9V after validation
-
 	//Step 1. We want to pull D+ to 0.6V
 	// Pull PB3 donwn to ground
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);//pull low to put 0.6V on D+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 	GPIO_InitStruct.Pin = GPIO_PIN_3;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-	//Enable pullup on PA10 so we can sense if its pulled low
-	GPIO_InitStruct.Pin = GPIO_PIN_10;
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);//pull low to put 0.6V on D+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
 	//Delay 1.2 seconds
 	uint8_t enteredQC = 0;
-	for (uint8_t i = 0; i < 125 && enteredQC == 0; i++) {
-		vTaskDelay(10);
-		//Check if D- is low to spot a QC charger
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET)
-			enteredQC = 0;
+	for (uint16_t i = 0; i < 125 && enteredQC == 0; i++) {
+		HAL_Delay(10);
+		HAL_IWDG_Refresh(&hiwdg);
 	}
+	//Check if D- is low to spot a QC charger
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET)
+		enteredQC = 1;
 	if (enteredQC) {
 		//We have a QC capable charger
-		//Try and negotiate for 12V
-		//Now that we are in QC mode we just set the pins
-		//Both 0.6V
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-		GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_8;
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+
 		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+		GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_8;
 		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+		HAL_IWDG_Refresh(&hiwdg);
+		//12V is
+		HAL_Delay(200);
+
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-		vTaskDelay(250);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+		HAL_Delay(50);
+
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+		HAL_Delay(50);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 		//Check if we have 12V
-		vin = getInputVoltageX10(205);
+		vin = getInputVoltageX10(204);
 		if (vin > 100) {
 			//Voltage is > 10V, so ~12V with tolerance
 			return 12;
@@ -227,9 +241,14 @@ int startQC() {
 		//Try for 9V
 		//Let D+ rise to 3.3V
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-		vTaskDelay(250);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+
+		HAL_IWDG_Refresh(&hiwdg);
+
+		HAL_Delay(50);
 		//Check if we have 12V
-		vin = getInputVoltageX10(205);
+		vin = getInputVoltageX10(204);
 		if (vin > 70) {
 			//Voltage is > 7V, so ~9V with tolerance
 			return 9;
@@ -239,7 +258,7 @@ int startQC() {
 		}
 
 	} else {
-		return -2;	// no QC
+		return 30;	// no QC
 	}
 }
 void stopQC() {

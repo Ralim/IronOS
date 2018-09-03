@@ -32,6 +32,7 @@ static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
+	__HAL_AFIO_REMAP_SWJ_DISABLE();
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();
@@ -404,6 +405,10 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1;
 	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+	/*Configure peripheral I/O remapping */
+	__HAL_AFIO_REMAP_PD01_ENABLE();
+	//^ remap XTAL so that pins can be analog (all input buffers off).
+	// reduces power consumption
 
 	/*
 	 * Configure All pins as analog by default
@@ -444,10 +449,6 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_Init(OLED_RESET_GPIO_Port, &GPIO_InitStruct);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_RESET);
 
-	/*Configure peripheral I/O remapping */
-	__HAL_AFIO_REMAP_PD01_ENABLE();
-	//^ remap XTAL so that pins can be analog (all input buffers off).
-	// reduces power consumption
 	//Pull down LCD reset
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_RESET);
 	HAL_Delay(10);

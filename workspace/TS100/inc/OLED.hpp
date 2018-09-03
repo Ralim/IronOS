@@ -50,6 +50,7 @@ public:
 	bool getRotation() const {
 		return inLeftHandedMode;
 	}					
+	int16_t getCursorX() {return cursor_x;}
 	void print(const char* string);	// Draw a string to the current location, with current font
 	// Set the cursor location by pixels
 	void setCursor(int16_t x, int16_t y) {

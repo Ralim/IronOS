@@ -67,7 +67,7 @@ enum TipType {
 #else
 // TS80 pin map
 #define MODEL_TS80
-#define KEY_B_Pin GPIO_PIN_1
+#define KEY_B_Pin GPIO_PIN_0
 #define KEY_B_GPIO_Port GPIOB
 #define TMP36_INPUT_Pin GPIO_PIN_4
 #define TMP36_INPUT_GPIO_Port GPIOA
@@ -83,7 +83,7 @@ enum TipType {
 #define VIN_ADC2_CHANNEL ADC_CHANNEL_2
 #define OLED_RESET_Pin GPIO_PIN_15
 #define OLED_RESET_GPIO_Port GPIOA
-#define KEY_A_Pin GPIO_PIN_0
+#define KEY_A_Pin GPIO_PIN_1
 #define KEY_A_GPIO_Port GPIOB
 #define INT_Orientation_Pin GPIO_PIN_4
 #define INT_Orientation_GPIO_Port GPIOB

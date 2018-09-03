@@ -43,6 +43,7 @@ int main(void) {
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
 	HAL_IWDG_Refresh(&hiwdg);
+	int QCState = startQC();
 	setTipPWM(0);
 	lcd.initialize();   // start up the LCD
 	lcd.setFont(0);     // default to bigger font
@@ -253,6 +254,7 @@ static bool checkVoltageForExit() {
 	return false;
 }
 static void gui_drawBatteryIcon() {
+#ifdef MODEL_TS100
 	if (systemSettings.cutoutSetting) {
 		// User is on a lithium battery
 		// we need to calculate which of the 10 levels they are on
@@ -269,6 +271,23 @@ static void gui_drawBatteryIcon() {
 		lcd.drawBattery(cellV + 1);
 	} else
 		lcd.drawSymbol(15);  // Draw the DC Logo
+#else
+	//On TS80 we replace this symbol with the voltage we are operating on
+	//If <9V then show single digit, if not show duals
+	uint8_t V =getInputVoltageX10(systemSettings.voltageDiv)/10;
+	if(V>=10){
+	int16_t xPos = lcd.getCursorX();
+	lcd.setFont(1);
+	lcd.printNumber(1,2);
+	lcd.setCharCursor(xPos,8);
+	lcd.printNumber(V%10,2);
+
+	lcd.setFont(0);
+	}
+	else {
+		lcd.printNumber(V,1);
+	}
+#endif
 }
 static void gui_solderingTempAdjust() {
 	uint32_t lastChange = xTaskGetTickCount();
@@ -717,6 +736,7 @@ void startGUITask(void const *argument __unused) {
 //^ Kept here for a way to block this thread
 #endif
 
+
 	for (;;) {
 		ButtonState buttons = getButtonState();
 
@@ -799,10 +819,10 @@ void startGUITask(void const *argument __unused) {
 				lcd.print(IdleSetString);
 				lcd.printNumber(systemSettings.SolderingTemp, 3);
 			}
+			printVoltage();
 			lcd.setCursor(0, 8);
 			lcd.print(InputVoltageString);
 			printVoltage();
-			lcd.print("V");
 
 		} else {
 			lcd.setFont(0);
@@ -862,14 +882,16 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) startPIDTask(
 			for(uint8_t i=0;i<50;i++)
 			{
 				osDelay(10);
-				getTipRawTemp(1); // cycle up the tip temp
+				getTipRawTemp(1); // cycle up the tip temp filter
+				HAL_IWDG_Refresh(&hiwdg);
 			}
 #else
 	//On the TS80 we replace the delay with the QC negotiation
 	//As it delays around 1-2 seconds
-	startQC();
+//	int QCState = startQC();
 
 #endif
+	currentlyActiveTemperatureTarget=0;//Force start with no output (off). If in sleep / soldering this will be over-ridded rapidly
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 
