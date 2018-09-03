@@ -31,7 +31,12 @@ enum TipType {
   Tip_Hakko = 5,
   Tip_Custom = 5,
 };
-//#define MODEL_TS100
+
+#ifndef MODEL_TS100
+#ifndef MODEL_TS80
+#define MODEL_TS80
+#endif
+#endif
 
 #ifdef MODEL_TS100
 
@@ -66,7 +71,6 @@ enum TipType {
 
 #else
 // TS80 pin map
-#define MODEL_TS80
 #define KEY_B_Pin GPIO_PIN_0
 #define KEY_B_GPIO_Port GPIOB
 #define TMP36_INPUT_Pin GPIO_PIN_4
@@ -108,11 +112,11 @@ uint16_t ctoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToC(uint16_t raw);
 uint16_t ftoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToF(uint16_t raw);
-
+void seekQC(uint16_t Vx10);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);
 
-int startQC(); // Tries to negotiate QC for highest voltage, must be run after RToS
+void startQC(); // Tries to negotiate QC for highest voltage, must be run after RToS
 // This will try for 12V, failing that 9V, failing that 5V
 // If input is over 12V returns -1
 // If the input is [5-12] Will return the value.

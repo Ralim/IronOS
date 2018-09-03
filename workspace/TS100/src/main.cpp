@@ -43,8 +43,12 @@ int main(void) {
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
 	HAL_IWDG_Refresh(&hiwdg);
-	int QCState = startQC();
 	setTipPWM(0);
+
+#ifdef MODEL_TS80
+	startQC();
+	seekQC(110);
+#endif
 	lcd.initialize();   // start up the LCD
 	lcd.setFont(0);     // default to bigger font
 	//Testing for new weird board version
@@ -226,7 +230,7 @@ void waitForButtonPressOrTimeout(uint32_t timeout) {
 		GUIDelay();
 	}
 }
-
+#ifdef MODEL_TS100
 // returns true if undervoltage has occured
 static bool checkVoltageForExit() {
 	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv);
@@ -253,6 +257,7 @@ static bool checkVoltageForExit() {
 	}
 	return false;
 }
+#endif
 static void gui_drawBatteryIcon() {
 #ifdef MODEL_TS100
 	if (systemSettings.cutoutSetting) {
@@ -260,32 +265,31 @@ static void gui_drawBatteryIcon() {
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
 		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv)
-				/ cellCount;
+		/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
-			cellV = 33;
-		cellV -= 33;  // Should leave us a number of 0-9
+		cellV = 33;
+		cellV -= 33;// Should leave us a number of 0-9
 		if (cellV > 9)
-			cellV = 9;
+		cellV = 9;
 		lcd.drawBattery(cellV + 1);
 	} else
-		lcd.drawSymbol(15);  // Draw the DC Logo
+	lcd.drawSymbol(15);  // Draw the DC Logo
 #else
 	//On TS80 we replace this symbol with the voltage we are operating on
 	//If <9V then show single digit, if not show duals
-	uint8_t V =getInputVoltageX10(systemSettings.voltageDiv)/10;
-	if(V>=10){
-	int16_t xPos = lcd.getCursorX();
-	lcd.setFont(1);
-	lcd.printNumber(1,2);
-	lcd.setCharCursor(xPos,8);
-	lcd.printNumber(V%10,2);
+	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv) / 10;
+	if (V >= 10) {
+		int16_t xPos = lcd.getCursorX();
+		lcd.setFont(1);
+		lcd.printNumber(1, 2);
+		lcd.setCharCursor(xPos, 8);
+		lcd.printNumber(V % 10, 2);
 
-	lcd.setFont(0);
-	}
-	else {
-		lcd.printNumber(V,1);
+		lcd.setFont(0);
+	} else {
+		lcd.printNumber(V, 1);
 	}
 #endif
 }
@@ -392,9 +396,10 @@ static int gui_SolderingSleepingMode() {
 		if ((xTaskGetTickCount() - lastMovementTime < 100)
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
+#ifdef MODEL_TS100
 		if (checkVoltageForExit())
 			return 1;  // return non-zero on error
-
+#endif
 		if (systemSettings.temperatureInF) {
 			currentlyActiveTemperatureTarget = ftoTipMeasurement(
 					min(systemSettings.SleepTemp,
@@ -695,7 +700,7 @@ void showVersion(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 11;
+			screen = screen % 12;
 		}
 		GUIDelay();
 	}
@@ -735,7 +740,6 @@ void startGUITask(void const *argument __unused) {
 	}
 //^ Kept here for a way to block this thread
 #endif
-
 
 	for (;;) {
 		ButtonState buttons = getButtonState();
@@ -865,8 +869,7 @@ void startGUITask(void const *argument __unused) {
 }
 
 /* StartPIDTask function */
-void __attribute__ ((long_call, section (".data.ramfuncs"))) startPIDTask(
-		void const *argument __unused) {
+void startPIDTask(void const *argument __unused) {
 	/*
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM
@@ -891,7 +894,7 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) startPIDTask(
 //	int QCState = startQC();
 
 #endif
-	currentlyActiveTemperatureTarget=0;//Force start with no output (off). If in sleep / soldering this will be over-ridded rapidly
+	currentlyActiveTemperatureTarget = 0;//Force start with no output (off). If in sleep / soldering this will be over-ridded rapidly
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 
@@ -1091,8 +1094,7 @@ bool showBootLogoIfavailable() {
  * Catch the IRQ that says that the conversion is done on the temperature readings coming in
  * Once these have come in we can unblock the PID so that it runs again
  */
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_ADCEx_InjectedConvCpltCallback(
-		ADC_HandleTypeDef* hadc) {
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	if (hadc == &hadc1) {
 		if (pidTaskNotification) {
@@ -1103,28 +1105,22 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_ADCEx_InjectedC
 	}
 }
 
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterRxCpltCallback(
-		I2C_HandleTypeDef *hi2c __unused) {
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MasterTxCpltCallback(
-		I2C_HandleTypeDef *hi2c __unused) {
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemTxCpltCallback(
-		I2C_HandleTypeDef *hi2c __unused) {
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_ErrorCallback(
-		I2C_HandleTypeDef *hi2c __unused) {
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_AbortCpltCallback(
-		I2C_HandleTypeDef *hi2c __unused) {
+void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_I2C_MemRxCpltCallback(
-		I2C_HandleTypeDef *hi2c __unused) {
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	i2cDev.CpltCallback();
 }
 void vApplicationStackOverflowHook( xTaskHandle *pxTask __unused,

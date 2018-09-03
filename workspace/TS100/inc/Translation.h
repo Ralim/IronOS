@@ -20,7 +20,6 @@ extern const enum ShortNameType SettingsShortNameType;
 extern const char* SettingsShortNames[20][2];
 extern const char* SettingsDescriptions[20];
 extern const char* SettingsMenuEntries[4];
-extern const char* SettingsMenuEntriesDescriptions[4];
 
 extern const char* SettingsCalibrationWarning;
 extern const char* SettingsResetWarning;

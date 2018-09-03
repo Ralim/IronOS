@@ -112,12 +112,6 @@ const char* SettingsMenuEntries[4] = {
 	/* Advanced Menu     */"Advanced\nOptions",
 };
 
-const char* SettingsMenuEntriesDescriptions[4] = {
-	"Soldering settings",
-	"Power Saving Settings",
-	"User Interface settings",
-	"Advanced options"
-};
 #endif
 
 #ifdef LANG_BG

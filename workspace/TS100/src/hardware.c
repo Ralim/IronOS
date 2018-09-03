@@ -70,7 +70,7 @@ uint16_t ftoTipMeasurement(uint16_t temp) {
 	return ctoTipMeasurement(((temp - 32) * 5) / 9);
 }
 
-uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTemperature() {
+uint16_t getTipInstantTemperature() {
 	uint16_t sum;
 	sum = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
@@ -109,10 +109,11 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 		break;
 	}
 #else
+	return 132;
 #endif
 }
 
-uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipRawTemp(
+uint16_t getTipRawTemp(
 		uint8_t instant) {
 	static int64_t filterFP = 0;
 	static uint16_t lastSample = 0;
@@ -162,16 +163,73 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 		preFillneeded = 1;
 	return sum / divisor;
 }
+uint8_t QCMode = 0;
+void seekQC(uint16_t Vx10) {
+	if (QCMode <= 1)
+		return;	//NOT connected to a QC Charger
+
+	//Seek the QC to the Voltage given if this adapter supports continuous mode
+	//try and step towards the wanted value
+
+	//1. Measure current voltage
+	uint16_t vStart = getInputVoltageX10(205);
+	int difference = Vx10 - vStart;
+	//2. calculate ideal steps (0.2V changes)
+
+	int steps = difference / 2;
+	if (QCMode == 3) {
+		while (steps < 0) {
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			HAL_Delay(50);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+			HAL_Delay(50);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+			HAL_IWDG_Refresh(&hiwdg);
+			steps++;
+		}
+		while (steps > 0) {
+			//step once up
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			HAL_Delay(50);
+
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+			HAL_Delay(50);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+			HAL_IWDG_Refresh(&hiwdg);
+			steps--;
+		}
+	}
+	//Re-measure
+	if (abs(vStart - getInputVoltageX10(205)) > (difference / 2)) {
+		//No continuous mode, so QC2
+		QCMode = 2;
+		//Goto nearest
+		if (Vx10 > 10.5) {
+			//request 12V
+		} else {
+			//request 9V
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+		}
+	}
+	//all is good in the world
+}
 
 //Must be called after FreeRToS Starts
-int startQC() {
+void startQC() {
 	//Pre check that the input could be >5V already, and if so, dont both negotiating as someone is feeding in hv
 	uint16_t vin = getInputVoltageX10(205);
 	if (vin > 150)
-		return 20; // Over voltage
-	if (vin > 100)
-		return 12; // ALready at 12V
-
+		return; // Over voltage
+	if (vin > 100) {
+		QCMode = 1; // ALready at ~12V
+		return;
+	}
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	// Tries to negotiate QC for 9V
@@ -199,9 +257,9 @@ int startQC() {
 	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	//Delay 1.2 seconds
+	//Delay 1.25 seconds
 	uint8_t enteredQC = 0;
-	for (uint16_t i = 0; i < 125 && enteredQC == 0; i++) {
+	for (uint16_t i = 0; i < 130 && enteredQC == 0; i++) {
 		HAL_Delay(10);
 		HAL_IWDG_Refresh(&hiwdg);
 	}
@@ -221,44 +279,16 @@ int startQC() {
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 		HAL_IWDG_Refresh(&hiwdg);
-		//12V is
+
 		HAL_Delay(200);
-
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-		HAL_Delay(50);
-
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-		HAL_Delay(50);
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-		//Check if we have 12V
-		vin = getInputVoltageX10(204);
-		if (vin > 100) {
-			//Voltage is > 10V, so ~12V with tolerance
-			return 12;
-		}
-		//Try for 9V
-		//Let D+ rise to 3.3V
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-
-		HAL_IWDG_Refresh(&hiwdg);
-
-		HAL_Delay(50);
-		//Check if we have 12V
-		vin = getInputVoltageX10(204);
-		if (vin > 70) {
-			//Voltage is > 7V, so ~9V with tolerance
-			return 9;
-		} else {
-			//Fallback to 5V
-			return 5;
+		//Check if the input is now 9V
+		if (getInputVoltageX10(205) > 80) {
+			//yay we have at least QC2.0 or QC3.0
+			QCMode = 3;	//We have at least QC2, pray for 3
 		}
 
 	} else {
-		return 30;	// no QC
+		// no QC
 	}
 }
 void stopQC() {
@@ -268,7 +298,7 @@ volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
 	return pendingPWM;
 }
-void __attribute__ ((long_call, section (".data.ramfuncs"))) setTipPWM(
+void setTipPWM(
 		uint8_t pulse) {
 	PWMSafetyTimer = 2; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
@@ -279,7 +309,7 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) setTipPWM(
 
 //These are called by the HAL after the corresponding events from the system timers.
 
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PeriodElapsedCallback(
+void HAL_TIM_PeriodElapsedCallback(
 		TIM_HandleTypeDef *htim) {
 	//Period has elapsed
 	if (htim->Instance == TIM2) {
@@ -300,7 +330,7 @@ void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PeriodElaps
 	}
 }
 
-void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PWM_PulseFinishedCallback(
+void HAL_TIM_PWM_PulseFinishedCallback(
 		TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
 		//This was a when the PWM for the output has timed out

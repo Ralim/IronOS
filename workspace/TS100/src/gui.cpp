@@ -13,8 +13,10 @@
 #include "string.h"
 extern uint32_t lastButtonTime;
 void gui_Menu(const menuitem* menu);
+#ifdef MODEL_TS100
 static void settings_setInputVRange(void);
 static void settings_displayInputVRange(void);
+#endif
 static void settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
 static void settings_setSleepTime(void);
@@ -106,25 +108,27 @@ static void settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[] {
-/*
- * Power Source
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
-{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
-		settings_displayInputVRange } }, /*Voltage input*/
-{ (const char*) SettingsMenuEntriesDescriptions[0], {
-		settings_enterSolderingMenu }, { settings_displaySolderingMenu } }, /*Soldering*/
-{ (const char*) SettingsMenuEntriesDescriptions[1], { settings_enterPowerMenu },
-		{ settings_displayPowerMenu } }, /*Sleep Options Menu*/
-{ (const char*) SettingsMenuEntriesDescriptions[2], { settings_enterUIMenu }, {
-		settings_displayUIMenu } }, /*UI Menu*/
-{ (const char*) SettingsMenuEntriesDescriptions[3],
-		{ settings_enterAdvancedMenu }, { settings_displayAdvancedMenu } }, /*Advanced Menu*/
-{ NULL, { NULL }, { NULL } }            // end of menu marker. DO NOT REMOVE
+		/*
+		 * Power Source
+		 * Soldering Menu
+		 * Power Saving Menu
+		 * UI Menu
+		 * Advanced Menu
+		 * Exit
+		 */
+#ifdef MODEL_TS100
+		{	(const char*) SettingsDescriptions[0], {settings_setInputVRange}, {
+				settings_displayInputVRange}}, /*Voltage input*/
+#endif
+		{ (const char*) NULL, {
+				settings_enterSolderingMenu }, { settings_displaySolderingMenu } }, /*Soldering*/
+		{ (const char*) NULL, {
+				settings_enterPowerMenu }, { settings_displayPowerMenu } }, /*Sleep Options Menu*/
+		{ (const char*) NULL, {
+				settings_enterUIMenu }, { settings_displayUIMenu } }, /*UI Menu*/
+		{ (const char*) NULL, {
+				settings_enterAdvancedMenu }, { settings_displayAdvancedMenu } }, /*Advanced Menu*/
+		{ NULL, { NULL }, { NULL } }        // end of menu marker. DO NOT REMOVE
 };
 
 const menuitem solderingMenu[] = {
@@ -302,7 +306,7 @@ static int userConfirmation(const char* message) {
 	}
 	return 0;
 }
-
+#ifdef MODEL_TS100
 static void settings_setInputVRange(void) {
 	systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 5;
 }
@@ -317,7 +321,7 @@ static void settings_displayInputVRange(void) {
 		lcd.print("DC");
 	}
 }
-
+#endif
 static void settings_setSleepTemp(void) {
 	//If in C, 10 deg, if in F 20 deg
 	if (systemSettings.temperatureInF) {
@@ -633,17 +637,16 @@ static void settings_displayTipModel(void) {
 static void calibration_displaySimpleCal(void) {
 	printShortDescription(18, 5);
 }
-static void dotDelay()
-{
+static void dotDelay() {
 	for (uint8_t i = 0; i < 20; i++) {
-			getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
-			lcd.clearScreen();
-			lcd.setCursor(0, 0);
-			for (uint8_t x = 0; x < i / 4; x++)
-				lcd.print(".");
-			lcd.refresh();
-			osDelay(50);
-		}
+		getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
+		lcd.clearScreen();
+		lcd.setCursor(0, 0);
+		for (uint8_t x = 0; x < i / 4; x++)
+			lcd.print(".");
+		lcd.refresh();
+		osDelay(50);
+	}
 }
 static void setTipOffset() {
 	setCalibrationOffset(0);            //turn off the current offset
@@ -679,24 +682,24 @@ static void calibration_enterSimpleCal(void) {
 		//Thus we first need to store -> TiprawCold,HandleCold,ActualCold==HandleCold -> RawTipCold
 		uint32_t RawTipCold = getTipRawTemp(0);
 		lcd.clearScreen();
-		lcd.setCursor(0,0);
+		lcd.setCursor(0, 0);
 		lcd.setFont(1);
 		lcd.print("Please Insert Tip\nInto Boiling Water");
 		lcd.refresh();
 		osDelay(200);
 		waitForButtonPress();
-		dotDelay();//cycle the filter a bit
+		dotDelay();		//cycle the filter a bit
 		//Now take the three hot measurements
 		//Assume water is boiling at 100C
 		uint32_t RawTipHot = getTipRawTemp(0);
 		uint32_t HandleTempHot = getHandleTemperature();
 
-		uint32_t gain =( RawTipHot-RawTipCold) / (1000-HandleTempHot);
+		uint32_t gain = (RawTipHot - RawTipCold) / (1000 - HandleTempHot);
 		//Show this to the user
 		lcd.clearScreen();
-		lcd.setCursor(0,0);
+		lcd.setCursor(0, 0);
 		lcd.print("Your Gain: ");
-		lcd.printNumber(gain,6);
+		lcd.printNumber(gain, 6);
 		lcd.print("\nThis should be around 120-140");
 		lcd.refresh();
 		osDelay(500);
@@ -843,7 +846,7 @@ void gui_Menu(const menuitem* menu) {
 		lcd.setCursor(0, 0);
 		//If the user has hesitated for >=3 seconds, show the long text
 		//Otherwise "draw" the option
-		if (xTaskGetTickCount() - lastButtonTime < 300) {
+		if ((xTaskGetTickCount() - lastButtonTime < 300)||menu[currentScreen].description==NULL) {
 			lcd.clearScreen();
 			menu[currentScreen].draw.func();
 			lastOffset = -1;
