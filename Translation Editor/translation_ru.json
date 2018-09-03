@@ -1,0 +1,198 @@
+{
+	"languageCode": "RU",
+	"messages": {
+		"SettingsCalibrationWarning": "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!",
+		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"UVLOWarningString": "БАТ РАЗР",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Хррр",
+		"SleepingAdvancedString": "Ожидание...",
+		"WarningSimpleString": " АЙ!",
+		"WarningAdvancedString": "!!! ГОРЯЧО !!!",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SolderingAdvancedPowerPrompt": "Power: "
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": false,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"Settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"Modes"
+			],
+			"desc": "Power Saving Settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"Interface"
+			],
+			"desc": "User Interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"Options"
+			],
+			"desc": "Advanced options"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "ИстП",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>"
+		},
+		"SleepTemperature": {
+			"text": "Тожд",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Температура режима ожидания <С>"
+		},
+		"SleepTimeout": {
+			"text": "Вожд",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Время до перехода в режим ожидания <Минуты>"
+		},
+		"ShutdownTimeout": {
+			"text": "Тоткл",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Время до отключения <Минуты>"
+		},
+		"MotionSensitivity": {
+			"text": "ЧувсДв",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>"
+		},
+		"TemperatureUnit": {
+			"text": "ЕдТемп",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "В чем измерять температуру"
+		},
+		"AdvancedIdle": {
+			"text": "ИнфОжд",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Показывать детальную информацию маленьким шрифтом на домашнем экране"
+		},
+		"DisplayRotation": {
+			"text": "ПовЭкр",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Ориентация дисплея <A. Автоматический, Л. Левая рука, П. Правая рука>"
+		},
+		"BoostEnabled": {
+			"text": "Турбо",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Турбо-режим при удержании кнопки А при пайке "
+		},
+		"BoostTemperature": {
+			"text": "Ттур",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Температура в турбо-режиме"
+		},
+		"AutoStart": {
+			"text": "Астарт",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим ожидания,F=Выкл."
+		},
+		"CooldownBlink": {
+			"text": "Охлажд",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Показывать температуру на экране охлаждения, пока жало остается горячим."
+		},
+		"TemperatureCalibration": {
+			"text": "КалибрТ",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Калибровка термодатчика."
+		},
+		"SettingsReset": {
+			"text": "СБРОС?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Сброс всех настроек."
+		},
+		"VoltageCalibration": {
+			"text": "КалибрU?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить."
+		},
+		"AdvancedSoldering": {
+			"text": "ИнфПай",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Показывать детальную информацию при пайке."
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Speed this text scrolls past at"
+		}
+	},
+	"languageLocalName": "Русский"
+}
