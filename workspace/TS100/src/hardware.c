@@ -166,7 +166,8 @@ uint8_t QCMode = 0;
 void seekQC(int16_t Vx10) {
 	if (QCMode <= 1)
 		return;	//NOT connected to a QC Charger
-
+	if (Vx10 < 50)
+		return;
 	//Seek the QC to the Voltage given if this adapter supports continuous mode
 	//try and step towards the wanted value
 
@@ -210,7 +211,7 @@ void seekQC(int16_t Vx10) {
 #ifdef QC2_ROUND_DOWN
 	steps = vStart - getInputVoltageX10(195);
 	if (steps < 0)
-		steps = -steps;
+	steps = -steps;
 	if (steps > (difference / 2)) {
 		//No continuous mode, so QC2
 		QCMode = 2;

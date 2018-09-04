@@ -603,7 +603,11 @@ static void settings_displayTipModel(void) {
 	//Print the mfg
 	lcd.setCursor(40, 0);
 	if (systemSettings.tipType < Tip_MiniWare) {
+#ifdef MODEL_TS100
 		lcd.print("TS100");
+#else
+		lcd.print("TS80");
+#endif
 	} else if (systemSettings.tipType < Tip_Hakko) {
 		lcd.print("HAKKO");
 	} else if (systemSettings.tipType == Tip_Custom) {
