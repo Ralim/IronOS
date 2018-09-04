@@ -72,15 +72,14 @@ uint16_t ftoTipMeasurement(uint16_t temp) {
 
 uint16_t getTipInstantTemperature() {
 	uint16_t sum;
-	sum = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
-	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
-	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
-	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_4);
-	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_1);
-	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_2);
-	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_3);
-	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_4);
-
+	sum = hadc1.Instance->JDR1;
+	sum += hadc1.Instance->JDR2;
+	sum += hadc1.Instance->JDR3;
+	sum += hadc1.Instance->JDR4;
+	sum += hadc2.Instance->JDR1;
+	sum += hadc2.Instance->JDR2;
+	sum += hadc2.Instance->JDR3;
+	sum += hadc2.Instance->JDR4;
 	return sum; // 8x over sample
 
 }
@@ -162,6 +161,7 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 		preFillneeded = 1;
 	return sum / divisor;
 }
+#ifdef MODEL_TS80
 uint8_t QCMode = 0;
 void seekQC(int16_t Vx10) {
 	if (QCMode <= 1)
@@ -312,9 +312,32 @@ void startQC() {
 		// no QC
 	}
 }
-void stopQC() {
-	// Resets QC back to 5V
+uint16_t calculateTipR() {
+	// We inject a small current into the front end of the iron,
+	// By measuring the Vdrop over the tip we can calculate the resistance
+	// Turn PA0 into an output and drive high to inject (3.3V-0.6)/(6K8+Rtip) current
+	// PA0->Diode -> 6K8 -> Tip -> GND
+	// So the op-amp will amplify the small signal across the tip and convert this into an easily read voltage
+	GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitStruct.Pin = GPIO_PIN_0;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);	//Set low first
+	setTipPWM(0);
+	vTaskDelay(10);	//delay to allow opamp stabilize
+	uint32_t offReading = getTipInstantTemperature();
+	//Turn on
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);	//Set low first
+	vTaskDelay(10);	//delay to allow opamp stabilize
+	uint32_t onReading = getTipInstantTemperature();
+	uint32_t difference = onReading-offReading;
+	// V = IR, therefore I = V/R
+	//We can divide this reading by a known "gain" to get the resulting resistance
+	//This was determined emperically
+
 }
+#endif
 volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
 	return pendingPWM;
