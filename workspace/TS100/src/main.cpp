@@ -826,8 +826,9 @@ void startGUITask(void const *argument __unused) {
 			}
 			printVoltage();
 			lcd.setCursor(0, 8);
-			lcd.print(InputVoltageString);
-			printVoltage();
+			/*lcd.print(InputVoltageString);
+			printVoltage();*/
+			lcd.printNumber(calculateMaxVoltage(),5);
 
 		} else {
 			lcd.setFont(0);

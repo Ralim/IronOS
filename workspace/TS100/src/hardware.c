@@ -312,7 +312,8 @@ void startQC() {
 		// no QC
 	}
 }
-uint16_t calculateTipR() {
+//Get tip resistance in milliohms
+uint32_t calculateTipR() {
 	// We inject a small current into the front end of the iron,
 	// By measuring the Vdrop over the tip we can calculate the resistance
 	// Turn PA0 into an output and drive high to inject (3.3V-0.6)/(6K8+Rtip) current
@@ -325,17 +326,66 @@ uint16_t calculateTipR() {
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);	//Set low first
 	setTipPWM(0);
-	vTaskDelay(10);	//delay to allow opamp stabilize
+	vTaskDelay(1);
 	uint32_t offReading = getTipInstantTemperature();
+	for (uint8_t i = 0; i < 24; i++) {
+		vTaskDelay(1);	//delay to allow it too stabilize
+		offReading += getTipInstantTemperature();
+	}
+
 	//Turn on
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);	//Set low first
-	vTaskDelay(10);	//delay to allow opamp stabilize
+	vTaskDelay(1);	//delay to allow it too stabilize
 	uint32_t onReading = getTipInstantTemperature();
-	uint32_t difference = onReading-offReading;
+	for (uint8_t i = 0; i < 24; i++) {
+		vTaskDelay(1);	//delay to allow it too stabilize
+		onReading += getTipInstantTemperature();
+	}
+
+	uint32_t difference = onReading - offReading;
 	// V = IR, therefore I = V/R
 	//We can divide this reading by a known "gain" to get the resulting resistance
 	//This was determined emperically
+	//This tip is 4.688444162 ohms, 4688 milliohms (Measured using 4 terminal measurement)
+	//25x oversampling reads this as around 47490
+	//Almost perfectly 10x the milliohms value
+	//This will drift massively with tip temp
+	//However we really only need 10x ohms
+	return (difference / 10)+1;//ceil
+}
+static unsigned int sqrt32(unsigned long n) {
+	unsigned int c = 0x8000;
+	unsigned int g = 0x8000;
 
+	for (;;) {
+		if (g * g > n)
+			g ^= c;
+		c >>= 1;
+		if (c == 0)
+			return g;
+		g |= c;
+	}
+}
+int16_t calculateMaxVoltage() {
+	// This measures the tip resistance, then it calculates the appropriate voltage
+	// To stay under ~18W. Mosfet is "9A", so no issues there
+	//QC3.0 supports up to 18W, which is 2A @9V and 1.5A @12V
+	uint32_t milliOhms = calculateTipR();
+	//V = sqrt(18W*R)
+	//Convert this to sqrt(18W)*sqrt(milli ohms)*sqrt(1/1000)
+
+	uint32_t Vx = sqrt32(milliOhms);
+	//Round to nearest 200mV,
+	//So divide by 100 to start, to get in Vxx
+	Vx *= 1342;
+	Vx/=100;
+	if(Vx%10>=5)
+		Vx+=10;
+	Vx/=10;
+	//Round to nearest increment of 2
+	if(Vx%2==1)
+		Vx++;
+	return Vx;
 }
 #endif
 volatile uint32_t pendingPWM = 0;

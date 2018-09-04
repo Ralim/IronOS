@@ -14,22 +14,20 @@ extern "C" {
 #endif
 
 enum Orientation {
-  ORIENTATION_LEFT_HAND = 0,
-  ORIENTATION_RIGHT_HAND = 1,
-  ORIENTATION_FLAT = 3
+	ORIENTATION_LEFT_HAND = 0, ORIENTATION_RIGHT_HAND = 1, ORIENTATION_FLAT = 3
 };
 /*
  * Keep in a uint8_t range for the ID's
  */
 enum TipType {
-  TS_B2 = 0,
-  TS_D24 = 1,
-  TS_BC2 = 2,
-  TS_C1 = 3,
-  Tip_MiniWare = 4,
-  HAKKO_BC2 = 4,
-  Tip_Hakko = 5,
-  Tip_Custom = 5,
+	TS_B2 = 0,
+	TS_D24 = 1,
+	TS_BC2 = 2,
+	TS_C1 = 3,
+	Tip_MiniWare = 4,
+	HAKKO_BC2 = 4,
+	Tip_Hakko = 5,
+	Tip_Custom = 5,
 };
 
 #ifndef MODEL_TS100
@@ -115,7 +113,8 @@ uint16_t tipMeasurementToF(uint16_t raw);
 void seekQC(int16_t Vx10);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);
-
+uint32_t calculateTipR();
+int16_t calculateMaxVoltage();
 void startQC(); // Tries to negotiate QC for highest voltage, must be run after RToS
 // This will try for 12V, failing that 9V, failing that 5V
 // If input is over 12V returns -1
