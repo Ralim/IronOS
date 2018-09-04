@@ -32,7 +32,8 @@ static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
-	__HAL_AFIO_REMAP_SWJ_DISABLE();
+	__HAL_AFIO_REMAP_SWJ_DISABLE()
+	;
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();
@@ -45,7 +46,6 @@ void Setup_HAL() {
 	HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) ADCReadings, 64); //start DMA of normal readings
 	HAL_ADCEx_InjectedStart(&hadc1);    //enable injected  readings
 	HAL_ADCEx_InjectedStart(&hadc2);    //enable injected  readings
-
 
 }
 
@@ -415,16 +415,16 @@ static void MX_GPIO_Init(void) {
 	 */
 	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3
 			| GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8
-			| GPIO_PIN_9 | GPIO_PIN_10  | GPIO_PIN_15;
+			| GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_15;
 	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 |
 #ifdef MODEL_TS100
 			GPIO_PIN_3 |
 #endif
-				 GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8
-				| GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13
-				| GPIO_PIN_14 | GPIO_PIN_15;
+			GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8
+			| GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13
+			| GPIO_PIN_14 | GPIO_PIN_15;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 #ifdef MODEL_TS100

@@ -20,7 +20,7 @@ uint8_t PCBVersion = 0;
 uint16_t currentlyActiveTemperatureTarget = 0;
 uint32_t lastMovementTime = 0;
 uint32_t lastButtonTime = 0;
-
+int16_t idealQCVoltage = 0;
 // FreeRTOS variables
 osThreadId GUITaskHandle;
 osThreadId PIDTaskHandle;
@@ -278,7 +278,7 @@ static void gui_drawBatteryIcon() {
 	//If <9V then show single digit, if not show duals
 	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv);
 	if (V % 10 >= 5)
-		V = V / 10 + 1;//round up
+		V = V / 10 + 1;	//round up
 	else
 		V = V / 10;
 	if (V >= 10) {
@@ -772,6 +772,11 @@ void startGUITask(void const *argument __unused) {
 		case BUTTON_F_SHORT:
 			lcd.setFont(0);
 			lcd.displayOnOff(true);  // turn lcd on
+#ifdef MODEL_TS80
+			if (idealQCVoltage < 90)
+				idealQCVoltage = calculateMaxVoltage(1); //1 means use filtered values rather than do its own
+			seekQC(idealQCVoltage);
+#endif
 			gui_solderingMode(0);     // enter soldering mode
 			buttonLockout = true;
 			break;
@@ -824,11 +829,9 @@ void startGUITask(void const *argument __unused) {
 				lcd.print(IdleSetString);
 				lcd.printNumber(systemSettings.SolderingTemp, 3);
 			}
-			printVoltage();
 			lcd.setCursor(0, 8);
-			/*lcd.print(InputVoltageString);
-			printVoltage();*/
-			lcd.printNumber(calculateMaxVoltage(),5);
+			lcd.print(InputVoltageString);
+			printVoltage();
 
 		} else {
 			lcd.setFont(0);
@@ -891,12 +894,19 @@ void startPIDTask(void const *argument __unused) {
 				HAL_IWDG_Refresh(&hiwdg);
 			}
 #else
-	//On the TS80 we replace the delay with the QC negotiation
-	//As it delays around 1-2 seconds
-//	int QCState = startQC();
+	//On the TS80 we can measure the tip resistance before cycling the filter a bit
+	idealQCVoltage = 0;
+	idealQCVoltage = calculateMaxVoltage(0);
+	//Rapidly cycle the filter to help converge
+	HAL_IWDG_Refresh(&hiwdg);
+	for (uint8_t i = 0; i < 50; i++) {
+		osDelay(11);
+		getTipRawTemp(1); // cycle up the tip temp filter
+	}
+	HAL_IWDG_Refresh(&hiwdg);
 
 #endif
-	currentlyActiveTemperatureTarget = 0;//Force start with no output (off). If in sleep / soldering this will be over-ridded rapidly
+	currentlyActiveTemperatureTarget = 0; //Force start with no output (off). If in sleep / soldering this will be over-ridded rapidly
 	int32_t integralCount = 0;
 	int32_t derivativeLastValue = 0;
 
@@ -971,17 +981,20 @@ void startPIDTask(void const *argument __unused) {
 				setTipPWM(0); // disable the output driver if the output is set to be off
 				integralCount = 0;
 				derivativeLastValue = 0;
+
 			}
 		}
+
 	}
 }
 #define MOVFilter 8
 void startMOVTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	startQC();
-	seekQC(120);
-	vTaskDelay(200);
-	seekQC(90);
+	while (idealQCVoltage == 0)
+		osDelay(20); //To ensure we return after idealQCVoltage is setup
+
+	seekQC(idealQCVoltage); //this will move the QC output to the preferred voltage
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize

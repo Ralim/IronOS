@@ -207,8 +207,11 @@ void seekQC(int16_t Vx10) {
 	}
 	//Re-measure
 	/* Disabled due to nothing to test and code space of around 1k*/
-#ifdef QC2CHECKS
-	if (abs(vStart - getInputVoltageX10(195)) > (difference / 2)) {
+#ifdef QC2_ROUND_DOWN
+	steps = vStart - getInputVoltageX10(195);
+	if (steps < 0)
+		steps = -steps;
+	if (steps > (difference / 2)) {
 		//No continuous mode, so QC2
 		QCMode = 2;
 		//Goto nearest
@@ -227,8 +230,8 @@ void seekQC(int16_t Vx10) {
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 		}
 	}
-	//all is good in the world
 #endif
+
 }
 
 //Must be called after FreeRToS Starts
@@ -313,7 +316,7 @@ void startQC() {
 	}
 }
 //Get tip resistance in milliohms
-uint32_t calculateTipR() {
+uint32_t calculateTipR(uint8_t useFilter) {
 	// We inject a small current into the front end of the iron,
 	// By measuring the Vdrop over the tip we can calculate the resistance
 	// Turn PA0 into an output and drive high to inject (3.3V-0.6)/(6K8+Rtip) current
@@ -329,8 +332,12 @@ uint32_t calculateTipR() {
 	vTaskDelay(1);
 	uint32_t offReading = getTipInstantTemperature();
 	for (uint8_t i = 0; i < 24; i++) {
-		vTaskDelay(1);	//delay to allow it too stabilize
-		offReading += getTipInstantTemperature();
+		if (useFilter == 0) {
+			vTaskDelay(1);	//delay to allow it too stabilize
+			offReading += getTipInstantTemperature();
+		} else {
+			offReading += getTipRawTemp(0);
+		}
 	}
 
 	//Turn on
@@ -338,8 +345,12 @@ uint32_t calculateTipR() {
 	vTaskDelay(1);	//delay to allow it too stabilize
 	uint32_t onReading = getTipInstantTemperature();
 	for (uint8_t i = 0; i < 24; i++) {
-		vTaskDelay(1);	//delay to allow it too stabilize
-		onReading += getTipInstantTemperature();
+		if (useFilter == 0) {
+			vTaskDelay(1);	//delay to allow it too stabilize
+			onReading += getTipInstantTemperature();
+		} else {
+			onReading += getTipRawTemp(0);
+		}
 	}
 
 	uint32_t difference = onReading - offReading;
@@ -351,7 +362,7 @@ uint32_t calculateTipR() {
 	//Almost perfectly 10x the milliohms value
 	//This will drift massively with tip temp
 	//However we really only need 10x ohms
-	return (difference / 10)+1;//ceil
+	return (difference / 10) + 1;	//ceil
 }
 static unsigned int sqrt32(unsigned long n) {
 	unsigned int c = 0x8000;
@@ -366,11 +377,15 @@ static unsigned int sqrt32(unsigned long n) {
 		g |= c;
 	}
 }
-int16_t calculateMaxVoltage() {
+int16_t calculateMaxVoltage(uint8_t useFilter) {
 	// This measures the tip resistance, then it calculates the appropriate voltage
 	// To stay under ~18W. Mosfet is "9A", so no issues there
 	//QC3.0 supports up to 18W, which is 2A @9V and 1.5A @12V
-	uint32_t milliOhms = calculateTipR();
+	uint32_t milliOhms = calculateTipR(useFilter);
+	//Check no tip
+	if (milliOhms > 10000)
+		return -1;
+	//
 	//V = sqrt(18W*R)
 	//Convert this to sqrt(18W)*sqrt(milli ohms)*sqrt(1/1000)
 
@@ -378,15 +393,16 @@ int16_t calculateMaxVoltage() {
 	//Round to nearest 200mV,
 	//So divide by 100 to start, to get in Vxx
 	Vx *= 1342;
-	Vx/=100;
-	if(Vx%10>=5)
-		Vx+=10;
-	Vx/=10;
+	Vx /= 100;
+	if (Vx % 10 >= 5)
+		Vx += 10;
+	Vx /= 10;
 	//Round to nearest increment of 2
-	if(Vx%2==1)
+	if (Vx % 2 == 1)
 		Vx++;
 	return Vx;
 }
+
 #endif
 volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {

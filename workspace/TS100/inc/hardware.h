@@ -100,7 +100,7 @@ enum TipType {
 #define SDA_GPIO_Port GPIOB
 
 #endif
-uint16_t getHandleTemperature();
+ uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t instant);
 uint16_t getInputVoltageX10(uint8_t divisor);
 uint16_t getTipInstantTemperature();
@@ -113,8 +113,8 @@ uint16_t tipMeasurementToF(uint16_t raw);
 void seekQC(int16_t Vx10);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);
-uint32_t calculateTipR();
-int16_t calculateMaxVoltage();
+uint32_t calculateTipR(uint8_t useFilter);
+int16_t calculateMaxVoltage(uint8_t useFilter);
 void startQC(); // Tries to negotiate QC for highest voltage, must be run after RToS
 // This will try for 12V, failing that 9V, failing that 5V
 // If input is over 12V returns -1
