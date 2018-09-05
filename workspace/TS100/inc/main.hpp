@@ -4,8 +4,6 @@
 #include <MMA8652FC.hpp>
 #include "Setup.h"
 #include "OLED.hpp"
-#include "FRToSI2C.hpp"
-#include "OLED.hpp"
 
 extern uint8_t PCBVersion;
 enum ButtonState {
@@ -30,28 +28,13 @@ void waitForButtonPress();
 extern "C" {
 #endif
 
-
-inline void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-inline void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-inline void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-inline void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-inline void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-inline void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc);
-
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
 void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed portCHAR *pcTaskName );
 
 #ifdef __cplusplus

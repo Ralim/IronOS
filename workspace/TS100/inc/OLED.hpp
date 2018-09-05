@@ -31,7 +31,7 @@ public:
 	static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
 
 	// Draw the buffer out to the LCD using the DMA Channel
-	inline static void refresh() {
+	static void refresh() {
 		FRToSI2C::Transmit( DEVICEADDR_OLED, screenBuffer,
 				FRAMEBUFFER_START + (OLED_WIDTH * 2));
 		//DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms

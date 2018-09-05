@@ -11,7 +11,7 @@ I2C_HandleTypeDef *FRToSI2C::i2c;
 SemaphoreHandle_t FRToSI2C::I2CSemaphore;
 void FRToSI2C::CpltCallback() {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	i2c->State = HAL_I2C_STATE_READY; //Force state reset
+	i2c->State = HAL_I2C_STATE_READY; //Force state reset (even if tx error)
 	if (I2CSemaphore) {
 		xSemaphoreGiveFromISR(I2CSemaphore, &xHigherPriorityTaskWoken);
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
@@ -20,8 +20,7 @@ void FRToSI2C::CpltCallback() {
 
 void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
 		uint16_t MemAddSize, uint8_t* pData, uint16_t Size) {
-	if (xTaskGetSchedulerState() == taskSCHEDULER_NOT_STARTED
-			|| I2CSemaphore == NULL) {
+	if (I2CSemaphore == NULL) {
 		//no RToS, run blocking code
 		HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
 				5000);
@@ -53,8 +52,7 @@ uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
 }
 void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 		uint16_t MemAddSize, uint8_t* pData, uint16_t Size) {
-	if (xTaskGetSchedulerState() == taskSCHEDULER_NOT_STARTED
-			|| I2CSemaphore == NULL) {
+	if (I2CSemaphore == NULL) {
 		//no RToS, run blocking code
 		HAL_I2C_Mem_Write(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
 				5000);
@@ -76,8 +74,7 @@ void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 }
 
 void FRToSI2C::Transmit(uint16_t DevAddress, uint8_t* pData, uint16_t Size) {
-	if (xTaskGetSchedulerState() == taskSCHEDULER_NOT_STARTED
-			|| I2CSemaphore == NULL) {
+	if (I2CSemaphore == NULL) {
 		//no RToS, run blocking code
 		HAL_I2C_Master_Transmit(i2c, DevAddress, pData, Size, 5000);
 	} else {
