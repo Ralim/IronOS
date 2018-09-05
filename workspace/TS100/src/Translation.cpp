@@ -87,7 +87,7 @@ const char* SettingsDescriptions[17] = {
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsResetWarning = "Are you sure you want to reset settings to default values?";
 const char* UVLOWarningString = "DC LOW";               // <=8 chars
 const char* UndervoltageString = "Undervoltage";// <=16 chars
 const char* InputVoltageString = "Input V: ";// <=11 chars, preferably end with a space
