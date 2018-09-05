@@ -3,7 +3,7 @@
 	"languageLocalName": "English",
 	"messages": {
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
-		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"SettingsResetWarning": "Are you sure you want to reset settings to default values?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
 		"InputVoltageString": "Input V: ",
