@@ -582,7 +582,7 @@ static void settings_setResetSettings(void) {
 		OLED::print("RESET OK");
 		OLED::refresh();
 
-		waitForButtonPressOrTimeout(200);
+		waitForButtonPressOrTimeout(200);//2 second timeout
 	}
 }
 

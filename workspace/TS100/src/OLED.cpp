@@ -10,7 +10,7 @@
 #include "Translation.h"
 #include "cmsis_os.h"
 
-const uint8_t* OLED::currentFont;// Pointer to the current font used for rendering to the buffer
+const uint8_t* OLED::currentFont; // Pointer to the current font used for rendering to the buffer
 uint8_t* OLED::firstStripPtr; // Pointers to the strips to allow for buffer having extra content
 uint8_t* OLED::secondStripPtr;	//Pointers to the strips
 bool OLED::inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
@@ -56,18 +56,16 @@ uint8_t OLED_Setup_Array[] = { /**/
 const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
 		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
-
-
 void OLED::initialize() {
 	cursor_x = cursor_y = 0;
-		currentFont = FONT_12;
-		fontWidth = 12;
-		inLeftHandedMode = false;
-		firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
-		secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
-		fontHeight = 16;
-		displayOffset = 0;
-		displayOnOffState = true;
+	currentFont = FONT_12;
+	fontWidth = 12;
+	inLeftHandedMode = false;
+	firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
+	secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
+	fontHeight = 16;
+	displayOffset = 0;
+	displayOnOffState = true;
 	memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
 	HAL_Delay(50);
@@ -334,7 +332,8 @@ void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
 
 void OLED::drawHeatSymbol(uint8_t state) {
 	//Draw symbol 14
-//Then draw over it botom 5 pixels always stay. 8 pixels above that are the levels
+	//Then draw over it, the bottom 5 pixels always stay. 8 pixels above that are the levels
+	//masks the symbol nicely
 	state /= 12; // 0-> 8 range
 	//Then we want to draw down (16-(5+state)
 	uint8_t cursor_x_temp = cursor_x;

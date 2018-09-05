@@ -37,10 +37,8 @@ int main(void) {
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
 	HAL_IWDG_Refresh(&hiwdg);
-	setTipPWM(0);
-
+	setTipPWM(0);  //force tip off
 	FRToSI2C::init(&hi2c1);
-
 	OLED::initialize();   // start up the LCD
 	OLED::setFont(0);     // default to bigger font
 	//Testing for new weird board version
@@ -49,19 +47,18 @@ int main(void) {
 	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
 			1000) == HAL_OK) {
 		PCBVersion = 1;
-
 		MMA8652FC::initalize(); // this sets up the I2C registers
 	} else if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT,
 			buffer, 1, 1000) == HAL_OK) {
 		PCBVersion = 2;
 		//Setup the ST Accelerometer
-
 		LIS2DH12::initalize();						 //startup the accelerometer
 	} else {
 		PCBVersion = 3;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;			//No accel -> disable sleep
 		systemSettings.sensitivity = 0;
+		saveSettings();
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
@@ -78,7 +75,7 @@ int main(void) {
 	/* definition and creation of PIDTask */
 	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 512);  //2k
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
-	if (PCBVersion != 3) {
+	if (PCBVersion < 3) {
 		/* definition and creation of MOVTask */
 		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 512);  //2k
 		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
@@ -110,9 +107,6 @@ void gui_drawTipTemp(bool symbol) {
 		Temp = tipMeasurementToF(Temp);
 	else
 		Temp = tipMeasurementToC(Temp);
-	//[Disabled 24/11/2017] Round if nearby
-	// if (abs(Temp - systemSettings.SolderingTemp) < 3)
-	//	Temp = systemSettings.SolderingTemp;
 
 	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
@@ -202,26 +196,32 @@ void waitForButtonPress() {
 	ButtonState buttons = getButtonState();
 	while (buttons) {
 		buttons = getButtonState();
-		OLED::refresh();
+		GUIDelay();
 		GUIDelay();
 	}
 	while (!buttons) {
 		buttons = getButtonState();
-		OLED::refresh();
+		GUIDelay();
 		GUIDelay();
 	}
 }
 
 void waitForButtonPressOrTimeout(uint32_t timeout) {
 	timeout += xTaskGetTickCount();
-	// Make timeout our exit value
-	for (;;) {
-		ButtonState buttons = getButtonState();
-		if (buttons)
-			return;
+	// calculate the exit point
+
+	ButtonState buttons = getButtonState();
+	while (buttons) {
+		buttons = getButtonState();
+		GUIDelay();
 		if (xTaskGetTickCount() > timeout)
 			return;
+	}
+	while (!buttons) {
+		buttons = getButtonState();
 		GUIDelay();
+		if (xTaskGetTickCount() > timeout)
+			return;
 	}
 }
 #ifdef MODEL_TS100
@@ -803,7 +803,7 @@ void startGUITask(void const *argument __unused) {
 				} else
 					OLED::displayOnOff(true);  // turn lcd on
 			} else
-				OLED::displayOnOff(true);  // turn lcd on - disabled motion sleep
+				OLED::displayOnOff(true); // turn lcd on - disabled motion sleep
 		} else
 			OLED::displayOnOff(true);  // turn lcd on when temp > 50C
 
@@ -850,11 +850,11 @@ void startGUITask(void const *argument __unused) {
 				//Location changes on screen rotation
 				if (OLED::getRotation()) {
 					// in right handed mode we want to draw over the first part
-					OLED::fillArea(55, 0, 41, 16, 0);	//clear the area for the temp
+					OLED::fillArea(55, 0, 41, 16, 0);//clear the area for the temp
 					OLED::setCursor(56, 0);
 
 				} else {
-					OLED::fillArea(0, 0, 41, 16, 0);				//clear the area
+					OLED::fillArea(0, 0, 41, 16, 0);			//clear the area
 					OLED::setCursor(0, 0);
 				}
 				//draw in the temp
