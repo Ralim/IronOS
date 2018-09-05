@@ -1,7 +1,6 @@
 // By Ben V. Brown - V2.0 of the TS100 firmware
 #include <MMA8652FC.hpp>
 #include <main.hpp>
-#include "OLED.hpp"
 #include "Settings.h"
 #include "Translation.h"
 #include "cmsis_os.h"
@@ -10,11 +9,9 @@
 #include "string.h"
 #include "LIS2DH12.hpp"
 #include <gui.hpp>
-#include "FRToSI2C.hpp"
 
 #define ACCELDEBUG 0
 // C++ objects
-OLED lcd;
 uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
@@ -44,8 +41,8 @@ int main(void) {
 
 	FRToSI2C::init(&hi2c1);
 
-	lcd.initialize();   // start up the LCD
-	lcd.setFont(0);     // default to bigger font
+	OLED::initialize();   // start up the LCD
+	OLED::setFont(0);     // default to bigger font
 	//Testing for new weird board version
 	uint8_t buffer[1];
 	HAL_IWDG_Refresh(&hiwdg);
@@ -95,9 +92,9 @@ int main(void) {
 	}
 }
 void printVoltage() {
-	lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
-	lcd.drawChar('.');
-	lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+	OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+	OLED::drawChar('.');
+	OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
 }
 void GUIDelay() {
 	//Called in all UI looping tasks,
@@ -117,12 +114,12 @@ void gui_drawTipTemp(bool symbol) {
 	// if (abs(Temp - systemSettings.SolderingTemp) < 3)
 	//	Temp = systemSettings.SolderingTemp;
 
-	lcd.printNumber(Temp, 3);  // Draw the tip temp out finally
+	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
 		if (systemSettings.temperatureInF)
-			lcd.print("F");
+			OLED::print("F");
 		else
-			lcd.print("C");
+			OLED::print("C");
 	}
 }
 ButtonState getButtonState() {
@@ -205,12 +202,12 @@ void waitForButtonPress() {
 	ButtonState buttons = getButtonState();
 	while (buttons) {
 		buttons = getButtonState();
-		lcd.refresh();
+		OLED::refresh();
 		GUIDelay();
 	}
 	while (!buttons) {
 		buttons = getButtonState();
-		lcd.refresh();
+		OLED::refresh();
 		GUIDelay();
 	}
 }
@@ -232,22 +229,22 @@ void waitForButtonPressOrTimeout(uint32_t timeout) {
 static bool checkVoltageForExit() {
 	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv);
 	if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
+		OLED::clearScreen();
+		OLED::setCursor(0, 0);
 		if (systemSettings.detailedSoldering) {
-			lcd.setFont(1);
-			lcd.print(UndervoltageString);
-			lcd.setCursor(0, 8);
-			lcd.print(InputVoltageString);
+			OLED::setFont(1);
+			OLED::print(UndervoltageString);
+			OLED::setCursor(0, 8);
+			OLED::print(InputVoltageString);
 			printVoltage();
-			lcd.print("V");
+			OLED::print("V");
 
 		} else {
-			lcd.setFont(0);
-			lcd.print(UVLOWarningString);
+			OLED::setFont(0);
+			OLED::print(UVLOWarningString);
 		}
 
-		lcd.refresh();
+		OLED::refresh();
 		currentlyActiveTemperatureTarget = 0;
 		waitForButtonPress();
 		return true;
@@ -270,9 +267,9 @@ static void gui_drawBatteryIcon() {
 		cellV -= 33;// Should leave us a number of 0-9
 		if (cellV > 9)
 		cellV = 9;
-		lcd.drawBattery(cellV + 1);
+		OLED::drawBattery(cellV + 1);
 	} else
-	lcd.drawSymbol(15);  // Draw the DC Logo
+	OLED::drawSymbol(15);  // Draw the DC Logo
 #else
 	//On TS80 we replace this symbol with the voltage we are operating on
 	//If <9V then show single digit, if not show duals
@@ -282,15 +279,15 @@ static void gui_drawBatteryIcon() {
 	else
 		V = V / 10;
 	if (V >= 10) {
-		int16_t xPos = lcd.getCursorX();
-		lcd.setFont(1);
-		lcd.printNumber(1, 1);
-		lcd.setCursor(xPos, 8);
-		lcd.printNumber(V % 10, 1);
+		int16_t xPos = OLED::getCursorX();
+		OLED::setFont(1);
+		OLED::printNumber(1, 1);
+		OLED::setCursor(xPos, 8);
+		OLED::printNumber(V % 10, 1);
 
-		lcd.setFont(0);
+		OLED::setFont(0);
 	} else {
-		lcd.printNumber(V, 1);
+		OLED::printNumber(V, 1);
 	}
 #endif
 }
@@ -300,9 +297,9 @@ static void gui_solderingTempAdjust() {
 	uint32_t autoRepeatTimer = 0;
 	uint8_t autoRepeatAcceleration = 0;
 	for (;;) {
-		lcd.setCursor(0, 0);
-		lcd.clearScreen();
-		lcd.setFont(0);
+		OLED::setCursor(0, 0);
+		OLED::clearScreen();
+		OLED::setFont(0);
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			lastChange = xTaskGetTickCount();
@@ -360,23 +357,23 @@ static void gui_solderingTempAdjust() {
 		if (xTaskGetTickCount() - lastChange > 200)
 			return;  // exit if user just doesn't press anything for a bit
 
-		if (lcd.getRotation())
-			lcd.drawChar('-');
+		if (OLED::getRotation())
+			OLED::drawChar('-');
 		else
-			lcd.drawChar('+');
+			OLED::drawChar('+');
 
-		lcd.drawChar(' ');
-		lcd.printNumber(systemSettings.SolderingTemp, 3);
+		OLED::drawChar(' ');
+		OLED::printNumber(systemSettings.SolderingTemp, 3);
 		if (systemSettings.temperatureInF)
-			lcd.drawSymbol(0);
+			OLED::drawSymbol(0);
 		else
-			lcd.drawSymbol(1);
-		lcd.drawChar(' ');
-		if (lcd.getRotation())
-			lcd.drawChar('+');
+			OLED::drawSymbol(1);
+		OLED::drawChar(' ');
+		if (OLED::getRotation())
+			OLED::drawChar('+');
 		else
-			lcd.drawChar('-');
-		lcd.refresh();
+			OLED::drawChar('-');
+		OLED::refresh();
 		GUIDelay();
 	}
 }
@@ -417,30 +414,30 @@ static int gui_SolderingSleepingMode() {
 		else
 			tipTemp = tipMeasurementToC(getTipRawTemp(0));
 
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
+		OLED::clearScreen();
+		OLED::setCursor(0, 0);
 		if (systemSettings.detailedSoldering) {
-			lcd.setFont(1);
-			lcd.print(SleepingAdvancedString);
-			lcd.setCursor(0, 8);
-			lcd.print(SleepingTipAdvancedString);
-			lcd.printNumber(tipTemp, 3);
+			OLED::setFont(1);
+			OLED::print(SleepingAdvancedString);
+			OLED::setCursor(0, 8);
+			OLED::print(SleepingTipAdvancedString);
+			OLED::printNumber(tipTemp, 3);
 			if (systemSettings.temperatureInF)
-				lcd.print("F");
+				OLED::print("F");
 			else
-				lcd.print("C");
+				OLED::print("C");
 
-			lcd.print(" ");
+			OLED::print(" ");
 			printVoltage();
-			lcd.drawChar('V');
+			OLED::drawChar('V');
 		} else {
-			lcd.setFont(0);
-			lcd.print(SleepingSimpleString);
-			lcd.printNumber(tipTemp, 3);
+			OLED::setFont(0);
+			OLED::print(SleepingSimpleString);
+			OLED::printNumber(tipTemp, 3);
 			if (systemSettings.temperatureInF)
-				lcd.drawSymbol(0);
+				OLED::drawSymbol(0);
 			else
-				lcd.drawSymbol(1);
+				OLED::drawSymbol(1);
 		}
 		if (systemSettings.ShutdownTime) // only allow shutdown exit if time > 0
 			if (lastMovementTime)
@@ -450,7 +447,7 @@ static int gui_SolderingSleepingMode() {
 					currentlyActiveTemperatureTarget = 0;
 					return 1;  // we want to exit soldering mode
 				}
-		lcd.refresh();
+		OLED::refresh();
 		GUIDelay();
 	}
 	return 0;
@@ -466,11 +463,11 @@ static void display_countdown(int sleepThres) {
 					lastMovementTime : lastButtonTime;
 	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
 	if (downCount > 9900) {
-		lcd.printNumber(downCount / 6000 + 1, 2);
-		lcd.print("M");
+		OLED::printNumber(downCount / 6000 + 1, 2);
+		OLED::print("M");
 	} else {
-		lcd.printNumber(downCount / 100 + 1, 2);
-		lcd.print("S");
+		OLED::printNumber(downCount / 100 + 1, 2);
+		OLED::print("S");
 	}
 }
 
@@ -528,68 +525,68 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			break;
 		}
 		// else we update the screen information
-		lcd.setCursor(0, 0);
-		lcd.clearScreen();
-		lcd.setFont(0);
+		OLED::setCursor(0, 0);
+		OLED::clearScreen();
+		OLED::setFont(0);
 		if (tipTemp > 32752) {
-			lcd.print(BadTipString);
-			lcd.refresh();
+			OLED::print(BadTipString);
+			OLED::refresh();
 			currentlyActiveTemperatureTarget = 0;
 			waitForButtonPress();
 			return;
 		} else {
 			if (systemSettings.detailedSoldering) {
-				lcd.setFont(1);/*
-				 lcd.print(SolderingAdvancedPowerPrompt);  //Power:
-				 lcd.printNumber(getTipPWM(), 3);
-				 lcd.print("%");*/
-				lcd.printNumber(getTipRawTemp(0), 6);
+				OLED::setFont(1);/*
+				 OLED::print(SolderingAdvancedPowerPrompt);  //Power:
+				 OLED::printNumber(getTipPWM(), 3);
+				 OLED::print("%");*/
+				OLED::printNumber(getTipRawTemp(0), 6);
 
 				if (systemSettings.sensitivity && systemSettings.SleepTime) {
-					lcd.print(" ");
+					OLED::print(" ");
 					display_countdown(sleepThres);
 				}
 
-				lcd.setCursor(0, 8);
-				lcd.print(SleepingTipAdvancedString);
+				OLED::setCursor(0, 8);
+				OLED::print(SleepingTipAdvancedString);
 				gui_drawTipTemp(true);
-				lcd.print(" ");
+				OLED::print(" ");
 				printVoltage();
-				lcd.drawChar('V');
+				OLED::drawChar('V');
 			} else {
-				// We switch the layout direction depending on the orientation of the lcd.
-				if (lcd.getRotation()) {
+				// We switch the layout direction depending on the orientation of the OLED::
+				if (OLED::getRotation()) {
 					// battery
 					gui_drawBatteryIcon();
 
-					lcd.drawChar(' '); // Space out gap between battery <-> temp
+					OLED::drawChar(' '); // Space out gap between battery <-> temp
 					gui_drawTipTemp(true);  // Draw current tip temp
 
 					// We draw boost arrow if boosting, or else gap temp <-> heat indicator
 					if (boostModeOn)
-						lcd.drawSymbol(2);
+						OLED::drawSymbol(2);
 					else
-						lcd.drawChar(' ');
+						OLED::drawChar(' ');
 
 					// Draw heating/cooling symbols
-					lcd.drawHeatSymbol(getTipPWM());
+					OLED::drawHeatSymbol(getTipPWM());
 				} else {
 					// Draw heating/cooling symbols
-					lcd.drawHeatSymbol(getTipPWM());
+					OLED::drawHeatSymbol(getTipPWM());
 					// We draw boost arrow if boosting, or else gap temp <-> heat indicator
 					if (boostModeOn)
-						lcd.drawSymbol(2);
+						OLED::drawSymbol(2);
 					else
-						lcd.drawChar(' ');
+						OLED::drawChar(' ');
 					gui_drawTipTemp(true);  // Draw current tip temp
 
-					lcd.drawChar(' '); // Space out gap between battery <-> temp
+					OLED::drawChar(' '); // Space out gap between battery <-> temp
 
 					gui_drawBatteryIcon();
 				}
 			}
 		}
-		lcd.refresh();
+		OLED::refresh();
 
 		// Update the setpoints for the temperature
 		if (boostModeOn) {
@@ -648,54 +645,54 @@ void showVersion(void) {
 	uint8_t screen = 0;
 	ButtonState b;
 	for (;;) {
-		lcd.clearScreen();    // Ensure the buffer starts clean
-		lcd.setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
-		lcd.setFont(1);       // small font
+		OLED::clearScreen();    // Ensure the buffer starts clean
+		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
+		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-				lcd.print((char *) "V2.06 TS100");  // Print version number
+				OLED::print((char *) "V2.06 TS100");  // Print version number
 #else
-		lcd.print((char *) "V2.06 TS80");  // Print version number
+		OLED::print((char *) "V2.06 TS80");  // Print version number
 #endif
-		lcd.setCursor(0, 8);         // second line
-		lcd.print(HEADERS[screen]);
+		OLED::setCursor(0, 8);         // second line
+		OLED::print(HEADERS[screen]);
 		switch (screen) {
 		case 1:
-			lcd.printNumber(xPortGetFreeHeapSize(), 5);
+			OLED::printNumber(xPortGetFreeHeapSize(), 5);
 			break;
 		case 2:
-			lcd.printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5);
+			OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5);
 			break;
 		case 3:
-			lcd.printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5);
+			OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5);
 			break;
 		case 4:
-			lcd.printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5);
+			OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5);
 			break;
 		case 5:
-			lcd.printNumber(xTaskGetTickCount() / 100, 5);
+			OLED::printNumber(xTaskGetTickCount() / 100, 5);
 			break;
 		case 6:
-			lcd.printNumber(lastMovementTime / 100, 5);
+			OLED::printNumber(lastMovementTime / 100, 5);
 			break;
 		case 7:
-			lcd.printNumber(getTipRawTemp(0), 6);
+			OLED::printNumber(getTipRawTemp(0), 6);
 			break;
 		case 8:
-			lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 5);
+			OLED::printNumber(tipMeasurementToC(getTipRawTemp(0)), 5);
 			break;
 		case 9:
 			printVoltage();
 			break;
 		case 10:
-			lcd.printNumber(getHandleTemperature(), 3);
+			OLED::printNumber(getHandleTemperature(), 3);
 		case 11:
-			lcd.printNumber(PCBVersion, 1); //Print PCB ID number
+			OLED::printNumber(PCBVersion, 1); //Print PCB ID number
 			break;
 		default:
 			break;
 		}
 
-		lcd.refresh();
+		OLED::refresh();
 		b = getButtonState();
 		if (b == BUTTON_B_SHORT)
 			return;
@@ -714,7 +711,7 @@ void startGUITask(void const *argument __unused) {
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
 	getTipRawTemp(2);         //reset filter
-	lcd.setRotation(systemSettings.OrientationMode & 1);
+	OLED::setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
 	ticks += 400;  //4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
@@ -770,8 +767,8 @@ void startGUITask(void const *argument __unused) {
 			saveSettings();
 			break;
 		case BUTTON_F_SHORT:
-			lcd.setFont(0);
-			lcd.displayOnOff(true);  // turn lcd on
+			OLED::setFont(0);
+			OLED::displayOnOff(true);  // turn lcd on
 #ifdef MODEL_TS80
 			if (idealQCVoltage < 90)
 				idealQCVoltage = calculateMaxVoltage(1); //1 means use filtered values rather than do its own
@@ -781,8 +778,8 @@ void startGUITask(void const *argument __unused) {
 			buttonLockout = true;
 			break;
 		case BUTTON_B_SHORT:
-			lcd.setFont(0);
-			lcd.displayOnOff(true);  // turn lcd on
+			OLED::setFont(0);
+			OLED::displayOnOff(true);  // turn lcd on
 			enterSettingsMenu();      // enter the settings menu
 			saveSettings();
 			buttonLockout = true;
@@ -802,46 +799,46 @@ void startGUITask(void const *argument __unused) {
 
 				if ((xTaskGetTickCount() - lastMovementTime) > 6000
 						&& (xTaskGetTickCount() - lastButtonTime) > 6000) {
-					lcd.displayOnOff(false);  // turn lcd off when no movement
+					OLED::displayOnOff(false);  // turn lcd off when no movement
 				} else
-					lcd.displayOnOff(true);  // turn lcd on
+					OLED::displayOnOff(true);  // turn lcd on
 			} else
-				lcd.displayOnOff(true);  // turn lcd on - disabled motion sleep
+				OLED::displayOnOff(true);  // turn lcd on - disabled motion sleep
 		} else
-			lcd.displayOnOff(true);  // turn lcd on when temp > 50C
+			OLED::displayOnOff(true);  // turn lcd on when temp > 50C
 
 		if (tipTemp > 600)
 			tipTemp = 0;
 
 		// Clear the lcd buffer
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
+		OLED::clearScreen();
+		OLED::setCursor(0, 0);
 		if (systemSettings.detailedIDLE) {
-			lcd.setFont(1);
+			OLED::setFont(1);
 			if (tipTemp > 470) {
-				lcd.print(TipDisconnectedString);
+				OLED::print(TipDisconnectedString);
 			} else {
-				lcd.print(IdleTipString);
+				OLED::print(IdleTipString);
 				if (systemSettings.temperatureInF)
-					lcd.printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
+					OLED::printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
 				else
-					lcd.printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
-				lcd.print(IdleSetString);
-				lcd.printNumber(systemSettings.SolderingTemp, 3);
+					OLED::printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
+				OLED::print(IdleSetString);
+				OLED::printNumber(systemSettings.SolderingTemp, 3);
 			}
-			lcd.setCursor(0, 8);
-			lcd.print(InputVoltageString);
+			OLED::setCursor(0, 8);
+			OLED::print(InputVoltageString);
 			printVoltage();
 
 		} else {
-			lcd.setFont(0);
-			if (lcd.getRotation()) {
-				lcd.drawArea(12, 0, 84, 16, idleScreenBG);
-				lcd.setCursor(0, 0);
+			OLED::setFont(0);
+			if (OLED::getRotation()) {
+				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
+				OLED::setCursor(0, 0);
 				gui_drawBatteryIcon();
 			} else {
-				lcd.drawArea(0, 0, 84, 16, idleScreenBGF); // Needs to be flipped so button ends up on right side of screen
-				lcd.setCursor(84, 0);
+				OLED::drawArea(0, 0, 84, 16, idleScreenBGF); // Needs to be flipped so button ends up on right side of screen
+				OLED::setCursor(84, 0);
 				gui_drawBatteryIcon();
 			}
 			if (tipTemp > 55)
@@ -851,24 +848,24 @@ void startGUITask(void const *argument __unused) {
 			if (tempOnDisplay) {
 				//draw temp over the start soldering button
 				//Location changes on screen rotation
-				if (lcd.getRotation()) {
+				if (OLED::getRotation()) {
 					// in right handed mode we want to draw over the first part
-					lcd.fillArea(55, 0, 41, 16, 0);	//clear the area for the temp
-					lcd.setCursor(56, 0);
+					OLED::fillArea(55, 0, 41, 16, 0);	//clear the area for the temp
+					OLED::setCursor(56, 0);
 
 				} else {
-					lcd.fillArea(0, 0, 41, 16, 0);				//clear the area
-					lcd.setCursor(0, 0);
+					OLED::fillArea(0, 0, 41, 16, 0);				//clear the area
+					OLED::setCursor(0, 0);
 				}
 				//draw in the temp
-				lcd.setFont(0);				//big font
+				OLED::setFont(0);				//big font
 				if (!(systemSettings.coolingTempBlink
 						&& (xTaskGetTickCount() % 50 < 25)))
 					gui_drawTipTemp(false);				// draw in the temp
 			}
 		}
 
-		lcd.refresh();
+		OLED::refresh();
 		GUIDelay();
 	}
 }
@@ -1000,7 +997,7 @@ void startMOVTask(void const *argument __unused) {
 	osDelay(250);  // wait for accelerometer to stabilize
 #endif
 
-	lcd.setRotation(systemSettings.OrientationMode & 1);
+	OLED::setRotation(systemSettings.OrientationMode & 1);
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
 	int16_t datay[MOVFilter] = { 0 };
@@ -1022,12 +1019,12 @@ void startMOVTask(void const *argument __unused) {
 			LIS2DH12::getAxisReadings(&tx, &ty, &tz);
 			rotation = LIS2DH12::getOrientation();
 		} else if (PCBVersion == 1) {
-			accel.getAxisReadings(&tx, &ty, &tz);
-			rotation = accel.getOrientation();
+			MMA8652FC::getAxisReadings(&tx, &ty, &tz);
+			rotation = MMA8652FC::getOrientation();
 		}
 		if (systemSettings.OrientationMode == 2) {
 			if (rotation != ORIENTATION_FLAT) {
-				lcd.setRotation(rotation == ORIENTATION_LEFT_HAND); // link the data through
+				OLED::setRotation(rotation == ORIENTATION_LEFT_HAND); // link the data through
 			}
 		}
 		datax[currentPointer] = (int32_t) tx;
@@ -1051,20 +1048,20 @@ void startMOVTask(void const *argument __unused) {
 #if ACCELDEBUG
 		// Debug for Accel
 
-		lcd.setFont(1);
-		lcd.setCursor(0, 0);
-		lcd.printNumber(abs(avgx - (int32_t) tx), 5);
-		lcd.print(" ");
-		lcd.printNumber(abs(avgy - (int32_t) ty), 5);
+		OLED::setFont(1);
+		OLED::setCursor(0, 0);
+		OLED::printNumber(abs(avgx - (int32_t) tx), 5);
+		OLED::print(" ");
+		OLED::printNumber(abs(avgy - (int32_t) ty), 5);
 		if (error > max) {
 			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
 		}
-		lcd.setCursor(0, 8);
-		lcd.printNumber(max, 5);
-		lcd.print(" ");
+		OLED::setCursor(0, 8);
+		OLED::printNumber(max, 5);
+		OLED::print(" ");
 
-		lcd.printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
-		lcd.refresh();
+		OLED::printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
+		OLED::refresh();
 		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET) {
 			max = 0;
 		}
@@ -1109,8 +1106,8 @@ bool showBootLogoIfavailable() {
 	if (temp8[3] != 0x0D)
 		return false;
 
-	lcd.drawArea(0, 0, 96, 16, (uint8_t *) (temp8 + 4));
-	lcd.refresh();
+	OLED::drawArea(0, 0, 96, 16, (uint8_t *) (temp8 + 4));
+	OLED::refresh();
 	return true;
 }
 
@@ -1129,24 +1126,6 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc) {
 	}
 }
 
-void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
 void vApplicationStackOverflowHook( xTaskHandle *pxTask __unused,
 		signed portCHAR *pcTaskName __unused) {
 //We dont have a good way to handle a stack overflow at this point in time

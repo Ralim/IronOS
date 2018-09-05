@@ -120,14 +120,14 @@ const menuitem rootSettingsMenu[] {
 		{	(const char*) SettingsDescriptions[0], {settings_setInputVRange}, {
 				settings_displayInputVRange}}, /*Voltage input*/
 #endif
-		{ (const char*) NULL, {
-				settings_enterSolderingMenu }, { settings_displaySolderingMenu } }, /*Soldering*/
-		{ (const char*) NULL, {
-				settings_enterPowerMenu }, { settings_displayPowerMenu } }, /*Sleep Options Menu*/
-		{ (const char*) NULL, {
-				settings_enterUIMenu }, { settings_displayUIMenu } }, /*UI Menu*/
-		{ (const char*) NULL, {
-				settings_enterAdvancedMenu }, { settings_displayAdvancedMenu } }, /*Advanced Menu*/
+		{ (const char*) NULL, { settings_enterSolderingMenu }, {
+				settings_displaySolderingMenu } }, /*Soldering*/
+		{ (const char*) NULL, { settings_enterPowerMenu }, {
+				settings_displayPowerMenu } }, /*Sleep Options Menu*/
+		{ (const char*) NULL, { settings_enterUIMenu },
+				{ settings_displayUIMenu } }, /*UI Menu*/
+		{ (const char*) NULL, { settings_enterAdvancedMenu }, {
+				settings_displayAdvancedMenu } }, /*Advanced Menu*/
 		{ NULL, { NULL }, { NULL } }        // end of menu marker. DO NOT REMOVE
 };
 
@@ -223,17 +223,17 @@ const menuitem calibrationMenu[] { { (const char*) SettingsDescriptions[6], {
 { NULL, { NULL }, { NULL } } };
 
 static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
-	lcd.setFont(0);
-	lcd.setCharCursor(0, 0);
-	lcd.print(SettingsShortNames[shortDescIndex][0]);
+	OLED::setFont(0);
+	OLED::setCharCursor(0, 0);
+	OLED::print(SettingsShortNames[shortDescIndex][0]);
 }
 
 static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
-	lcd.setFont(1);
-	lcd.setCharCursor(0, 0);
-	lcd.print(SettingsShortNames[shortDescIndex][0]);
-	lcd.setCharCursor(0, 1);
-	lcd.print(SettingsShortNames[shortDescIndex][1]);
+	OLED::setFont(1);
+	OLED::setCharCursor(0, 0);
+	OLED::print(SettingsShortNames[shortDescIndex][0]);
+	OLED::setCharCursor(0, 1);
+	OLED::print(SettingsShortNames[shortDescIndex][1]);
 }
 
 /**
@@ -253,16 +253,16 @@ static void printShortDescription(uint32_t shortDescIndex,
 	}
 
 	// prepare cursor for value
-	lcd.setFont(0);
-	lcd.setCharCursor(cursorCharPosition, 0);
+	OLED::setFont(0);
+	OLED::setCharCursor(cursorCharPosition, 0);
 }
 
 static int userConfirmation(const char* message) {
 	uint16_t messageWidth = FONT_12_WIDTH * (strlen(message) + 7);
 	uint32_t messageStart = xTaskGetTickCount();
 
-	lcd.setFont(0);
-	lcd.setCursor(0, 0);
+	OLED::setFont(0);
+	OLED::setCursor(0, 0);
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 
@@ -273,11 +273,11 @@ static int userConfirmation(const char* message) {
 		messageOffset %= messageWidth;		//Roll around at the end
 
 		if (lastOffset != messageOffset) {
-			lcd.clearScreen();
+			OLED::clearScreen();
 
 			//^ Rolling offset based on time
-			lcd.setCursor((OLED_WIDTH - messageOffset), 0);
-			lcd.print(message);
+			OLED::setCursor((OLED_WIDTH - messageOffset), 0);
+			OLED::print(message);
 			lastOffset = messageOffset;
 			lcdRefresh = true;
 		}
@@ -299,7 +299,7 @@ static int userConfirmation(const char* message) {
 		}
 
 		if (lcdRefresh) {
-			lcd.refresh();
+			OLED::refresh();
 			osDelay(40);
 			lcdRefresh = false;
 		}
@@ -315,10 +315,10 @@ static void settings_displayInputVRange(void) {
 	printShortDescription(0, 6);
 
 	if (systemSettings.cutoutSetting) {
-		lcd.drawChar('0' + 2 + systemSettings.cutoutSetting);
-		lcd.drawChar('S');
+		OLED::drawChar('0' + 2 + systemSettings.cutoutSetting);
+		OLED::drawChar('S');
 	} else {
-		lcd.print("DC");
+		OLED::print("DC");
 	}
 }
 #endif
@@ -337,7 +337,7 @@ static void settings_setSleepTemp(void) {
 
 static void settings_displaySleepTemp(void) {
 	printShortDescription(1, 5);
-	lcd.printNumber(systemSettings.SleepTemp, 3);
+	OLED::printNumber(systemSettings.SleepTemp, 3);
 }
 
 static void settings_setSleepTime(void) {
@@ -353,13 +353,13 @@ static void settings_setSleepTime(void) {
 static void settings_displaySleepTime(void) {
 	printShortDescription(2, 5);
 	if (systemSettings.SleepTime == 0) {
-		lcd.print(OffString);
+		OLED::print(OffString);
 	} else if (systemSettings.SleepTime < 6) {
-		lcd.printNumber(systemSettings.SleepTime * 10, 2);
-		lcd.drawChar('S');
+		OLED::printNumber(systemSettings.SleepTime * 10, 2);
+		OLED::drawChar('S');
 	} else {
-		lcd.printNumber(systemSettings.SleepTime - 5, 2);
-		lcd.drawChar('M');
+		OLED::printNumber(systemSettings.SleepTime - 5, 2);
+		OLED::drawChar('M');
 	}
 }
 
@@ -375,10 +375,10 @@ static void settings_setShutdownTime(void) {
 static void settings_displayShutdownTime(void) {
 	printShortDescription(3, 5);
 	if (systemSettings.ShutdownTime == 0) {
-		lcd.print(OffString);
+		OLED::print(OffString);
 	} else {
-		lcd.printNumber(systemSettings.ShutdownTime, 2);
-		lcd.drawChar('M');
+		OLED::printNumber(systemSettings.ShutdownTime, 2);
+		OLED::drawChar('M');
 	}
 }
 
@@ -413,7 +413,7 @@ static void settings_setTempF(void) {
 static void settings_displayTempF(void) {
 	printShortDescription(5, 7);
 
-	lcd.drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
+	OLED::drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
 }
 
 static void settings_setSensitivity(void) {
@@ -423,7 +423,7 @@ static void settings_setSensitivity(void) {
 
 static void settings_displaySensitivity(void) {
 	printShortDescription(4, 7);
-	lcd.printNumber(systemSettings.sensitivity, 1);
+	OLED::printNumber(systemSettings.sensitivity, 1);
 }
 
 static void settings_setAdvancedSolderingScreens(void) {
@@ -433,7 +433,7 @@ static void settings_setAdvancedSolderingScreens(void) {
 static void settings_displayAdvancedSolderingScreens(void) {
 	printShortDescription(15, 7);
 
-	lcd.drawCheckbox(systemSettings.detailedSoldering);
+	OLED::drawCheckbox(systemSettings.detailedSoldering);
 }
 
 static void settings_setAdvancedIDLEScreens(void) {
@@ -443,7 +443,7 @@ static void settings_setAdvancedIDLEScreens(void) {
 static void settings_displayAdvancedIDLEScreens(void) {
 	printShortDescription(6, 7);
 
-	lcd.drawCheckbox(systemSettings.detailedIDLE);
+	OLED::drawCheckbox(systemSettings.detailedIDLE);
 }
 static void settings_setScrollSpeed(void) {
 
@@ -454,7 +454,7 @@ static void settings_setScrollSpeed(void) {
 }
 static void settings_displayScrollSpeed(void) {
 	printShortDescription(16, 7);
-	lcd.drawChar(
+	OLED::drawChar(
 			(systemSettings.descriptionScrollSpeed) ?
 					SettingFastChar : SettingSlowChar);
 }
@@ -464,10 +464,10 @@ static void settings_setDisplayRotation(void) {
 	systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
 	switch (systemSettings.OrientationMode) {
 	case 0:
-		lcd.setRotation(false);
+		OLED::setRotation(false);
 		break;
 	case 1:
-		lcd.setRotation(true);
+		OLED::setRotation(true);
 		break;
 	case 2:
 		//do nothing on auto
@@ -482,16 +482,16 @@ static void settings_displayDisplayRotation(void) {
 
 	switch (systemSettings.OrientationMode) {
 	case 0:
-		lcd.drawChar(SettingRightChar);
+		OLED::drawChar(SettingRightChar);
 		break;
 	case 1:
-		lcd.drawChar(SettingLeftChar);
+		OLED::drawChar(SettingLeftChar);
 		break;
 	case 2:
-		lcd.drawChar(SettingAutoChar);
+		OLED::drawChar(SettingAutoChar);
 		break;
 	default:
-		lcd.drawChar(SettingRightChar);
+		OLED::drawChar(SettingRightChar);
 		break;
 	}
 }
@@ -503,7 +503,7 @@ static void settings_setBoostModeEnabled(void) {
 static void settings_displayBoostModeEnabled(void) {
 	printShortDescription(8, 7);
 
-	lcd.drawCheckbox(systemSettings.boostModeEnabled);
+	OLED::drawCheckbox(systemSettings.boostModeEnabled);
 }
 
 static void settings_setBoostTemp(void) {
@@ -523,7 +523,7 @@ static void settings_setBoostTemp(void) {
 
 static void settings_displayBoostTemp(void) {
 	printShortDescription(9, 5);
-	lcd.printNumber(systemSettings.BoostTemp, 3);
+	OLED::printNumber(systemSettings.BoostTemp, 3);
 }
 
 #ifdef PIDSETTINGS
@@ -533,7 +533,7 @@ static void settings_setPIDP(void) {
 }
 static void settings_displayPIDP(void) {
 	printShortDescription(17, 6);
-	lcd.printNumber(systemSettings.PID_P, 2);
+	OLED::printNumber(systemSettings.PID_P, 2);
 }
 static void settings_setPIDI(void) {
 	systemSettings.PID_I++;
@@ -541,7 +541,7 @@ static void settings_setPIDI(void) {
 }
 static void settings_displayPIDI(void) {
 	printShortDescription(18, 6);
-	lcd.printNumber(systemSettings.PID_I, 2);
+	OLED::printNumber(systemSettings.PID_I, 2);
 }
 static void settings_setPIDD(void) {
 	systemSettings.PID_D++;
@@ -549,7 +549,7 @@ static void settings_setPIDD(void) {
 }
 static void settings_displayPIDD(void) {
 	printShortDescription(19, 6);
-	lcd.printNumber(systemSettings.PID_D, 2);
+	OLED::printNumber(systemSettings.PID_D, 2);
 }
 #endif
 
@@ -560,7 +560,7 @@ static void settings_setAutomaticStartMode(void) {
 
 static void settings_displayAutomaticStartMode(void) {
 	printShortDescription(10, 7);
-	lcd.drawCheckbox(systemSettings.autoStartMode);
+	OLED::drawCheckbox(systemSettings.autoStartMode);
 }
 
 static void settings_setCoolingBlinkEnabled(void) {
@@ -570,17 +570,17 @@ static void settings_setCoolingBlinkEnabled(void) {
 static void settings_displayCoolingBlinkEnabled(void) {
 	printShortDescription(11, 7);
 
-	lcd.drawCheckbox(systemSettings.coolingTempBlink);
+	OLED::drawCheckbox(systemSettings.coolingTempBlink);
 }
 
 static void settings_setResetSettings(void) {
 	if (userConfirmation(SettingsResetWarning)) {
 		resetSettings();
 
-		lcd.setFont(0);
-		lcd.setCursor(0, 0);
-		lcd.print("RESET OK");
-		lcd.refresh();
+		OLED::setFont(0);
+		OLED::setCursor(0, 0);
+		OLED::print("RESET OK");
+		OLED::refresh();
 
 		waitForButtonPressOrTimeout(200);
 	}
@@ -598,45 +598,68 @@ static void settings_setTipModel(void) {
 static void settings_displayTipModel(void) {
 	printShortDescription(17, 4);
 	//Print in small text the tip model
-	lcd.setFont(1);
+	OLED::setFont(1);
 	//set the cursor
 	//Print the mfg
-	lcd.setCursor(40, 0);
+	OLED::setCursor(40, 0);
 	if (systemSettings.tipType < Tip_MiniWare) {
 #ifdef MODEL_TS100
-		lcd.print("TS100");
+		OLED::print("TS100");
 #else
-		lcd.print("TS80");
+		OLED::print("TS80");
 #endif
-	} else if (systemSettings.tipType < Tip_Hakko) {
-		lcd.print("HAKKO");
-	} else if (systemSettings.tipType == Tip_Custom) {
-		lcd.print("User");
 	}
-	lcd.setCursor(40, 8);
+#ifdef MODEL_TS100
+	else if (systemSettings.tipType < Tip_Hakko) {
+		OLED::print("HAKKO");
+	}
+#endif
+	else if (systemSettings.tipType == Tip_Custom) {
+		OLED::print("User");
+	}
+	OLED::setCursor(40, 8);
+#ifdef MODEL_TS100
 	switch ((enum TipType) systemSettings.tipType) {
-	case TS_B2:
-		lcd.print(" B2 ");
+		case TS_B2:
+		OLED::print(" B2  ");
 		break;
-	case TS_D24:
-		lcd.print(" D24 ");
+		case TS_D24:
+		OLED::print(" D24 ");
 		break;
-	case TS_BC2:
-		lcd.print(" BC2 ");
+		case TS_BC2:
+		OLED::print(" BC2 ");
 		break;
-	case TS_C1:
-		lcd.print(" C1 ");
+		case TS_C1:
+		OLED::print(" C1 ");
 		break;
-	case HAKKO_BC2:
-		lcd.print(" BC2 ");
+		case HAKKO_BC2:
+		OLED::print(" BC2 ");
+		break;
+		case Tip_Custom:
+		OLED::print("Tuned");
+		break;
+		default:
+		OLED::print("????");
+		break;
+	}
+#endif
+#ifdef MODEL_TS80
+	//only 2 tips atm
+	switch ((enum TipType) systemSettings.tipType) {
+	case TS_B02:
+		OLED::print(" B02 ");
+		break;
+	case TS_D25:
+		OLED::print(" D25 ");
 		break;
 	case Tip_Custom:
-		lcd.print("Tuned");
+		OLED::print("Tuned");
 		break;
 	default:
-		lcd.print("????");
+		OLED::print("????");
 		break;
 	}
+#endif
 }
 static void calibration_displaySimpleCal(void) {
 	printShortDescription(18, 5);
@@ -644,11 +667,11 @@ static void calibration_displaySimpleCal(void) {
 static void dotDelay() {
 	for (uint8_t i = 0; i < 20; i++) {
 		getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
+		OLED::clearScreen();
+		OLED::setCursor(0, 0);
 		for (uint8_t x = 0; x < i / 4; x++)
-			lcd.print(".");
-		lcd.refresh();
+			OLED::print(".");
+		OLED::refresh();
 		osDelay(50);
 	}
 }
@@ -662,12 +685,12 @@ static void setTipOffset() {
 	for (uint8_t i = 0; i < 15; i++) {
 		offset += getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
 
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
+		OLED::clearScreen();
+		OLED::setCursor(0, 0);
 
 		for (uint8_t x = 0; x < i / 4; x++)
-			lcd.print(".");
-		lcd.refresh();
+			OLED::print(".");
+		OLED::refresh();
 		osDelay(200);
 	}
 	systemSettings.CalibrationOffset = offset / 15;
@@ -685,11 +708,11 @@ static void calibration_enterSimpleCal(void) {
 		//Thus we want to calculate  ([TipRawHot-TipRawCold])/(ActualHot-HandleHot)-(ActualCold-HandleCold)
 		//Thus we first need to store -> TiprawCold,HandleCold,ActualCold==HandleCold -> RawTipCold
 		uint32_t RawTipCold = getTipRawTemp(0);
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
-		lcd.setFont(1);
-		lcd.print("Please Insert Tip\nInto Boiling Water");
-		lcd.refresh();
+		OLED::clearScreen();
+		OLED::setCursor(0, 0);
+		OLED::setFont(1);
+		OLED::print("Please Insert Tip\nInto Boiling Water");
+		OLED::refresh();
 		osDelay(200);
 		waitForButtonPress();
 		dotDelay();		//cycle the filter a bit
@@ -700,12 +723,12 @@ static void calibration_enterSimpleCal(void) {
 
 		uint32_t gain = (RawTipHot - RawTipCold) / (1000 - HandleTempHot);
 		//Show this to the user
-		lcd.clearScreen();
-		lcd.setCursor(0, 0);
-		lcd.print("Your Gain: ");
-		lcd.printNumber(gain, 6);
-		lcd.print("\nThis should be around 120-140");
-		lcd.refresh();
+		OLED::clearScreen();
+		OLED::setCursor(0, 0);
+		OLED::print("Your Gain: ");
+		OLED::printNumber(gain, 6);
+		OLED::print("\nThis should be around 120-140");
+		OLED::refresh();
 		osDelay(500);
 		waitForButtonPress();
 
@@ -751,16 +774,16 @@ static void settings_displayCalibrate(void) {
 
 static void settings_setCalibrateVIN(void) {
 	// Jump to the voltage calibration subscreen
-	lcd.setFont(0);
-	lcd.clearScreen();
-	lcd.setCursor(0, 0);
+	OLED::setFont(0);
+	OLED::clearScreen();
+	OLED::setCursor(0, 0);
 
 	for (;;) {
-		lcd.setCursor(0, 0);
-		lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
-		lcd.print(".");
-		lcd.printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
-		lcd.print("V");
+		OLED::setCursor(0, 0);
+		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+		OLED::print(".");
+		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+		OLED::print("V");
 
 		ButtonState buttons = getButtonState();
 		switch (buttons) {
@@ -783,7 +806,7 @@ static void settings_setCalibrateVIN(void) {
 			break;
 		}
 
-		lcd.refresh();
+		OLED::refresh();
 		osDelay(40);
 
 		// Cap to sensible values
@@ -797,13 +820,13 @@ static void settings_setCalibrateVIN(void) {
 
 static void displayMenu(size_t index) {
 	//Call into the menu
-	lcd.setFont(1);
-	lcd.setCursor(0, 0);
+	OLED::setFont(1);
+	OLED::setCursor(0, 0);
 	//Draw title
-	lcd.print(SettingsMenuEntries[index]);
+	OLED::print(SettingsMenuEntries[index]);
 	//Draw symbol
 	//16 pixel wide image
-	lcd.drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));
+	OLED::drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));
 }
 
 static void settings_displayCalibrateVIN(void) {
@@ -846,12 +869,13 @@ void gui_Menu(const menuitem* menu) {
 	ButtonState lastButtonState = BUTTON_NONE;
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
-		lcd.setFont(0);
-		lcd.setCursor(0, 0);
+		OLED::setFont(0);
+		OLED::setCursor(0, 0);
 		//If the user has hesitated for >=3 seconds, show the long text
 		//Otherwise "draw" the option
-		if ((xTaskGetTickCount() - lastButtonTime < 300)||menu[currentScreen].description==NULL) {
-			lcd.clearScreen();
+		if ((xTaskGetTickCount() - lastButtonTime < 300)
+				|| menu[currentScreen].description == NULL) {
+			OLED::clearScreen();
 			menu[currentScreen].draw.func();
 			lastOffset = -1;
 			lcdRefresh = true;
@@ -869,11 +893,11 @@ void gui_Menu(const menuitem* menu) {
 			descriptionOffset %= descriptionWidth;		//Roll around at the end
 
 			if (lastOffset != descriptionOffset) {
-				lcd.clearScreen();
+				OLED::clearScreen();
 
 				//^ Rolling offset based on time
-				lcd.setCursor((OLED_WIDTH - descriptionOffset), 0);
-				lcd.print(menu[currentScreen].description);
+				OLED::setCursor((OLED_WIDTH - descriptionOffset), 0);
+				OLED::print(menu[currentScreen].description);
 				lastOffset = descriptionOffset;
 				lcdRefresh = true;
 			}
@@ -940,7 +964,7 @@ void gui_Menu(const menuitem* menu) {
 		}
 
 		if (lcdRefresh) {
-			lcd.refresh();  // update the LCD
+			OLED::refresh();  // update the LCD
 			osDelay(40);
 			lcdRefresh = false;
 		}

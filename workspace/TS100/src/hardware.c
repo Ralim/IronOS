@@ -108,7 +108,17 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 		break;
 	}
 #else
-	return 132;
+	switch (tipID) {
+			case TS_D25:
+			return 141;
+			break;
+			case TS_B02:
+			return 133;
+			break;
+			default:
+			return 132; // make this the average of all
+			break;
+		}
 #endif
 }
 
@@ -138,7 +148,7 @@ uint16_t getInputVoltageX10(uint8_t divisor) {
 	//ADC maximum is 16384 == 3.3V at input == 28V at VIN
 	//Therefore we can divide down from there
 	//Ideal term is 117
-	//For TS80 input range is up to 16V, so ideal diviser is then going to be 205
+	//For TS80 input range is up to 16V, so ideal divisor is then going to be ~200, but 195 matches the units tested so far
 
 #define BATTFILTERDEPTH 48
 	static uint8_t preFillneeded = 1;

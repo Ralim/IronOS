@@ -17,12 +17,19 @@ public:
 	static void initalize();
 	//1 = rh, 2,=lh, 8=flat
 	static Orientation getOrientation() {
-		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,LIS_INT2_SRC) >> 2);
-		if(val==8)
-			val=3;
+#ifdef MODEL_TS80
+		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,
+				LIS_INT2_SRC) >> 2);
+		if (val == 8)
+			val = 3;
 		else
 			val--;
-		return static_cast<Orientation>( val); }
+		return static_cast<Orientation>(val);
+#endif
+#ifdef MODEL_TS100
+		return static_cast<Orientation>((FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,LIS_INT2_SRC) >> 2) - 1);
+#endif
+	}
 	static void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:

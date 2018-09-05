@@ -16,19 +16,6 @@ extern "C" {
 enum Orientation {
 	ORIENTATION_LEFT_HAND = 0, ORIENTATION_RIGHT_HAND = 1, ORIENTATION_FLAT = 3
 };
-/*
- * Keep in a uint8_t range for the ID's
- */
-enum TipType {
-	TS_B2 = 0,
-	TS_D24 = 1,
-	TS_BC2 = 2,
-	TS_C1 = 3,
-	Tip_MiniWare = 4,
-	HAKKO_BC2 = 4,
-	Tip_Hakko = 5,
-	Tip_Custom = 5,
-};
 
 #ifndef MODEL_TS100
 #ifndef MODEL_TS80
@@ -100,7 +87,32 @@ enum TipType {
 #define SDA_GPIO_Port GPIOB
 
 #endif
- uint16_t getHandleTemperature();
+
+/*
+ * Keep in a uint8_t range for the ID's
+ */
+#ifdef MODEL_TS100
+enum TipType {
+	TS_B2 = 0,
+	TS_D24 = 1,
+	TS_BC2 = 2,
+	TS_C1 = 3,
+	Tip_MiniWare = 4,
+	HAKKO_BC2 = 4,
+	Tip_Hakko = 5,
+	Tip_Custom = 5,
+};
+#endif
+#ifdef MODEL_TS80
+enum TipType {
+	TS_B02 = 0,
+	TS_D25 = 1,
+	Tip_MiniWare = 2,
+	Tip_Custom = 2,
+};
+#endif
+
+uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t instant);
 uint16_t getInputVoltageX10(uint8_t divisor);
 uint16_t getTipInstantTemperature();

@@ -101,7 +101,13 @@ void resetSettings() {
 	systemSettings.PID_D = 15;
 	systemSettings.CalibrationOffset = 2780; // the adc offset
 	systemSettings.customTipGain = 0; // The tip type is either default or a custom gain
+#ifdef MODEL_TS100
 	systemSettings.tipType = TS_B2; //Default to the B2 Tip
+#endif
+#ifdef MODEL_TS80
+
+	systemSettings.tipType = TS_B02; //Default to the B2 Tip
+#endif
 	saveSettings(); // Save defaults
 }
 
