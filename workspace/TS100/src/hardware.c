@@ -27,14 +27,15 @@ uint16_t getHandleTemperature() {
 	// TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for example)
 	// STM32 = 4096 count @ 3.3V input -> But
 	// We oversample by 32/(2^2) = 8 times oversampling
-	// Therefore 32768 is the 3.3V input, so 0.201416015625 mV per count
-	// So we need to subtract an offset of 0.5V to center on 0C (2482*2 counts)
+	// Therefore 32768 is the 3.3V input, so 0.1007080078125 mV per count
+	// So we need to subtract an offset of 0.5V to center on 0C (4964.8 counts)
 	//
-	uint16_t result = getADC(0);
-	if (result < 4964)
-		return 0;
-	result -= 4964;    //remove 0.5V offset
-	result /= 10;    //convert to X10 C
+	int32_t result = getADC(0);
+	result -= 4965;    //remove 0.5V offset
+	//10mV per C
+	//99.29 counts per Deg C above 0C
+	result *= 10;
+	result /= 993;
 	return result;
 
 }
@@ -109,16 +110,16 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 	}
 #else
 	switch (tipID) {
-			case TS_D25:
-			return 141;
-			break;
-			case TS_B02:
-			return 133;
-			break;
-			default:
-			return 132; // make this the average of all
-			break;
-		}
+	case TS_D25:
+		return 154;
+		break;
+	case TS_B02:
+		return 154;
+		break;
+	default:
+		return 154; // make this the average of all
+		break;
+	}
 #endif
 }
 

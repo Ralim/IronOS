@@ -311,7 +311,7 @@ static void gui_solderingTempAdjust() {
 			// exit
 			return;
 			break;
-		case BUTTON_B_LONG:
+		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				systemSettings.SolderingTemp -= 10;  // sub 10
@@ -319,7 +319,7 @@ static void gui_solderingTempAdjust() {
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
-		case BUTTON_F_LONG:
+		case BUTTON_B_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				systemSettings.SolderingTemp += 10;
@@ -327,10 +327,10 @@ static void gui_solderingTempAdjust() {
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
-		case BUTTON_F_SHORT:
+		case BUTTON_B_SHORT:
 			systemSettings.SolderingTemp += 10;  // add 10
 			break;
-		case BUTTON_B_SHORT:
+		case BUTTON_F_SHORT:
 			systemSettings.SolderingTemp -= 10;  // sub 10
 			break;
 		default:
