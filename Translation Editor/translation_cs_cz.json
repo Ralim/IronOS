@@ -16,7 +16,8 @@
 		"IdleTipString": "Hrot:",
 		"IdleSetString": " Cíl:",
 		"TipDisconnectedString": "HROT NEPŘIPOJEN",
-		"SolderingAdvancedPowerPrompt": "Ohřev: "
+		"SolderingAdvancedPowerPrompt": "Ohřev: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "P",

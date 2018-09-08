@@ -73,6 +73,10 @@ var def =
 		{
 			"id" :"SolderingAdvancedPowerPrompt",
 			"maxLen": null
+		},
+		{
+			"id" :"OffString",
+			"maxLen": 3
 		}
 	],
 	"characters": [

@@ -16,7 +16,8 @@
 		"IdleTipString": "Punta:",
 		"IdleSetString": " Aj:",
 		"TipDisconnectedString": "SIN PUNTA",
-		"SolderingAdvancedPowerPrompt": "POTENCIA: "
+		"SolderingAdvancedPowerPrompt": "POTENCIA: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "D",
