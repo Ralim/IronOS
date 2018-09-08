@@ -17,7 +17,8 @@
 		"IdleTipString": "Ant:",
 		"IdleSetString": " Nust:",
 		"TipDisconnectedString": "ANTGAL ATJUNGTAS",
-		"SolderingAdvancedPowerPrompt": "Maitinimas: "
+		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
+		"OffString": "Išj"
 	},
 	"characters": {
 		"SettingRightChar": "D",

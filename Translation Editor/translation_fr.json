@@ -16,7 +16,8 @@
 		"IdleTipString": "PANNE:",
 		"IdleSetString": " Set:",
 		"TipDisconnectedString": "PANNE DEBRANCH",
-		"SolderingAdvancedPowerPrompt": "Puissance: "
+		"SolderingAdvancedPowerPrompt": "Puissance: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "D",

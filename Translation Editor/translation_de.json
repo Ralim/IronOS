@@ -16,7 +16,8 @@
 		"IdleTipString": "Ist:",
 		"IdleSetString": " Soll:",
 		"TipDisconnectedString": "Spitze fehlt",
-		"SolderingAdvancedPowerPrompt": "Leistung: "
+		"SolderingAdvancedPowerPrompt": "Leistung: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "R",
