@@ -1,3 +1,4 @@
+from __future__ import print_function
 import json
 import os
 import io
@@ -13,7 +14,7 @@ except NameError:
 
 # Loading a single JSON file
 def loadJson(fileName, skipFirstLine):
-    with open(fileName) as f:
+    with io.open(fileName, mode="r", encoding="utf-8") as f:
         if skipFirstLine:
             f.readline()
 
@@ -66,7 +67,7 @@ def escapeC(s):
 
 
 def writeLanguage(languageCode):
-    print "Generating block for " + languageCode 
+    print("Generating block for " + languageCode)
     lang = langDict[languageCode]
     
     f.write(to_unicode("\n#ifdef LANG_" + languageCode + "\n"))
@@ -163,7 +164,7 @@ Second parameter = target directory
 '''
 
 
-print "Making " + TRANSLATION_CPP + ":"
+print("Making " + TRANSLATION_CPP + ":")
 
 if len(sys.argv) > 1:
     jsonDir = sys.argv[1]
@@ -187,8 +188,7 @@ defs = loadJson(os.path.join(jsonDir, "translations_def.js"), True)
 mandatoryOrder = ['EN']
 
 # Then add all others in alphabetical order
-sortedKeys = langDict.keys()
-sortedKeys.sort()
+sortedKeys = sorted(langDict.keys())
 
 for key in sortedKeys:
     if key not in mandatoryOrder:
@@ -205,4 +205,4 @@ with io.open(targetTranslationFile, 'w', encoding='utf-8', newline="\n") as f:
     for langCode in mandatoryOrder:
         writeLanguage(langCode)
     
-    print "Done"
+    print("Done")
