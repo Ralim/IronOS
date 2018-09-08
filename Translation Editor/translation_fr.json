@@ -189,10 +189,10 @@
 		"ScrollingSpeed": {
 			"text": "",
 			"text2": [
-				"Description ",
-				"Vitesse de défilement"
+				"Vitesse de",
+				"défilement"
 			],
-			"desc": "Vitesse de défilement de ce texte à"
+			"desc": "Vitesse de défilement de ce texte en <R=Rapide L=Lent>"
 		}
 	},
 	"languageLocalName": "Français"

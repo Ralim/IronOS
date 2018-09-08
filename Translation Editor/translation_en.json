@@ -190,8 +190,8 @@
 		"ScrollingSpeed": {
 			"text": "DESCSP",
 			"text2": [
-				"Description",
-				"Scroll Speed"
+				"Scrolling",
+				"Speed"
 			],
 			"desc": "Speed this text scrolls past at"
 		}

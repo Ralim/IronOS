@@ -17,7 +17,7 @@
 		"IdleSetString": " / ",
 		"TipDisconnectedString": "VRH NIJE SPOJEN!",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
-		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
+		"SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
 		"OffString": "Off"
 	},
 	"characters": {
