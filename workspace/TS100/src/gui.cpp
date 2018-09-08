@@ -579,15 +579,19 @@ static void settings_setCalibrate(void) {
 		lcd.refresh();
 
 		setCalibrationOffset(0);            //turn off the current offset
-		for (uint8_t i = 0; i < 20; i++) {
-			getTipRawTemp(1); //cycle through the filter a fair bit to ensure we're stable.
+		const uint8_t samples = 100;		// arbitrary, takes ~2 seconds.
+		uint64_t tipSum = 0;
+		uint64_t handleSum = 0;
+		for (uint8_t i = 0; i < samples; i++) {
+			tipSum += getTipRawTemp(1);
+			handleSum += getHandleTemperature();
 			osDelay(20);
 		}
 		osDelay(100);
 
-		uint16_t rawTempC = tipMeasurementToC(getTipRawTemp(0));
+		uint16_t rawTempC = tipMeasurementToC(tipSum/samples);
 		//We now measure the current reported tip temperature
-		uint16_t handleTempC = getHandleTemperature() / 10;
+		uint16_t handleTempC = handleSum / samples / 10;
 		//We now have an error between these that we want to store as the offset
 		rawTempC = rawTempC - handleTempC;
 		systemSettings.CalibrationOffset = rawTempC;
