@@ -82,13 +82,17 @@ def writeLanguage(languageCode):
 
     # ----- Writing SettingsDescriptions
     obj = lang['menuOptions']
-    f.write(to_unicode("const char* SettingsDescriptions[" + str(len(obj)) + "] = {\n"))
+    f.write(to_unicode("const char* SettingsDescriptions[] = {\n"))
     
     maxLen = 25
     for mod in defs['menuOptions']:
         eid = mod['id']
+        if 'feature' in mod:
+            f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         f.write(to_unicode("\"" + escapeC(obj[eid]['desc']) + "\",\n"))
+        if 'feature' in mod:
+            f.write(to_unicode("#endif\n"))
 
     f.write(to_unicode("};\n\n"))
     
@@ -119,16 +123,20 @@ def writeLanguage(languageCode):
 
     # ----- Writing SettingsDescriptions
     obj = lang['menuOptions']
-    f.write(to_unicode("const char* SettingsShortNames[" + str(len(obj)) + "][2] = {\n"))
+    f.write(to_unicode("const char* SettingsShortNames[][2] = {\n"))
     
     maxLen = 25
     for mod in defs['menuOptions']:
         eid = mod['id']
+        if 'feature' in mod:
+            f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         if lang['menuDouble']:
             f.write(to_unicode("{ \"" + escapeC(obj[eid]['text2'][0]) + "\", \"" + escapeC(obj[eid]['text2'][1]) + "\" },\n"))
         else:
             f.write(to_unicode("{ \"" + escapeC(obj[eid]['text']) + "\" },\n"))
+        if 'feature' in mod:
+            f.write(to_unicode("#endif\n"))
                 
     f.write(to_unicode("};\n\n"))
 
@@ -178,7 +186,7 @@ jsonDir = os.path.abspath(jsonDir)
 if len(sys.argv) > 2:
     outDir = sys.argv[2]
 else:
-    outDir = jsonDir
+    outDir = jsonDir + "/../workspace/TS100/src/"
 
 langDict = readTranslations(jsonDir)
 
