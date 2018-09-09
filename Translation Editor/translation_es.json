@@ -148,7 +148,7 @@
 		"CooldownBlink": {
 			"text": "CLBLNK",
 			"text2": [
-				"Temp. en el",
+				"Parpadea m.",
 				"enfriamiento"
 			],
 			"desc": "Parpadea la temperatura en el enfriamiento si la punta sigue caliente."
