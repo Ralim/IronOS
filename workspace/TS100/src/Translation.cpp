@@ -507,6 +507,90 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 
 #endif
 
+#ifdef LANG_FI
+// ---- Suomi ----
+
+const char* SettingsDescriptions[17] = {
+  /* PowerSource               */ "Käytettävä virtalähde. Asettaa katkaisujänniteen. <DC 10V, 3S=9.9V, 4S=13.2V, 5S=16.5V, 6S=19.8V>",
+  /* SleepTemperature          */ "Lepotilan lämpötila. <C>",
+  /* SleepTimeout              */ "Lepotilan viive. <minuuttia/sekuntia>",
+  /* ShutdownTimeout           */ "Automaattisen sammutuksen aikaviive. <minuuttia>",
+  /* MotionSensitivity         */ "Liikkeentunnistuksen herkkyys. <0=pois, 1=epäherkin, 9=herkin>",
+  /* TemperatureUnit           */ "Lämpötilan yksikkö. <C=celsius, F=fahrenheit>",
+  /* AdvancedIdle              */ "Näyttää yksityiskohtaisemmat tiedot lepotilassa.",
+  /* DisplayRotation           */ "Näytön kierto. <A=automaattinen O=oikeakätinen V=vasenkätinen>",
+  /* BoostEnabled              */ "Etupainikeella siirrytään juotettaessa tehostustilaan.",
+  /* BoostTemperature          */ "Tehostustilan lämpötila",
+  /* AutoStart                 */ "Käynnistää virrat kytkettäessä juotostilan automaattisesti. T=juotostila, S=Lepotila, F=Ei käytössä",
+  /* CooldownBlink             */ "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma.",
+  /* TemperatureCalibration    */ "Kalibroi kärjen lämpötilaeron.",
+  /* SettingsReset             */ "Palauta kaikki asetukset oletusarvoihin.",
+  /* VoltageCalibration        */ "Tulojännitten kalibrointi (VIN). Painikkeilla säädetään ja pitkään painamalla poistutaan.",
+  /* AdvancedSoldering         */ "Näyttää yksityiskohtaisemmat tiedot juotostilassa.",
+  /* ScrollingSpeed            */ "Näiden selitetekstien vieritysnopeus.",
+};
+
+const char* SettingsCalibrationWarning = "Varmista että kärki on huoneenlämpöinen ennen jatkamista!";
+const char* SettingsResetWarning = "Haluatko varmasti palauttaa oletusarvot?";
+const char* UVLOWarningString = "DC LOW";
+const char* UndervoltageString = "Alijännite";
+const char* InputVoltageString = "Jännite: ";
+const char* WarningTipTempString = "Lämpötila: ";
+const char* BadTipString = "VIKATILA";
+const char* SleepingSimpleString = "Zzzz";
+const char* SleepingAdvancedString = "Lepotila...";
+const char* WarningSimpleString = "HOT";
+const char* WarningAdvancedString = "! KÄRKI KUUMA !";
+const char* SleepingTipAdvancedString = "Kärki:";
+const char* IdleTipString = "Kärki:";
+const char* IdleSetString = " Asetus:";
+const char* TipDisconnectedString = "KÄRKI ON IRTI";
+const char* SolderingAdvancedPowerPrompt = "Teho: ";
+const char* OffString = "OFF";
+
+const char SettingRightChar = 'O';
+const char SettingLeftChar = 'V';
+const char SettingAutoChar = 'A';
+const char SettingFastChar = 'N';
+const char SettingSlowChar = 'H';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* PowerSource               */ { "Virtalähde", "DC" },
+  /* SleepTemperature          */ { "Lepotilan", "lämpötila" },
+  /* SleepTimeout              */ { "Lepotilan", "viive" },
+  /* ShutdownTimeout           */ { "Sammutus", "viive" },
+  /* MotionSensitivity         */ { "Liikkeen", "herkkyys" },
+  /* TemperatureUnit           */ { "Lämpötilan", "yksikkö" },
+  /* AdvancedIdle              */ { "Tiedot", "lepotilassa" },
+  /* DisplayRotation           */ { "Näytön", "kierto" },
+  /* BoostEnabled              */ { "Tehostus", "käytössä" },
+  /* BoostTemperature          */ { "Tehostus-", "lämpötila" },
+  /* AutoStart                 */ { "Autom.", "käynnistys" },
+  /* CooldownBlink             */ { "Jäähdytyksen", "vilkutus" },
+  /* TemperatureCalibration    */ { "Kalibroi", "lämpötila?" },
+  /* SettingsReset             */ { "Palauta", "tehdasasetukset?" },
+  /* VoltageCalibration        */ { "Kalibroi", "tulojännite?" },
+  /* AdvancedSoldering         */ { "Tarkempi", "juotosnäyttö" },
+  /* ScrollingSpeed            */ { "Tietojen", "näyttönopeus" },
+};
+
+const char* SettingsMenuEntries[4] = {
+  /* SolderingMenu             */ "Juotos-\nasetukset",
+  /* PowerSavingMenu           */ "Lepotilan\nasetukset",
+  /* UIMenu                    */ "Käyttö-\nliittymä",
+  /* AdvancedMenu              */ "Lisä-\nasetukset",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  /* SolderingMenu             */ "Juotosasetukset",
+  /* PowerSavingMenu           */ "Virransäästöasetukset",
+  /* UIMenu                    */ "Käyttöliittymän asetukset",
+  /* AdvancedMenu              */ "Lisäasetukset",
+};
+
+#endif
+
 #ifdef LANG_FR
 // ---- Français ----
 
@@ -927,6 +1011,90 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 
 #endif
 
+#ifdef LANG_NL
+// ---- Nederlands ----
+
+const char* SettingsDescriptions[17] = {
+  /* PowerSource               */ "Spanningsbron. Stelt drempelspanning in. <DC 10V> <S 3.3V per cel>",
+  /* SleepTemperature          */ "Temperatuur in slaapstand <C>",
+  /* SleepTimeout              */ "Slaapstand time-out <Minuten/Seconden>",
+  /* ShutdownTimeout           */ "Automatisch afsluiten time-out <Minuten>",
+  /* MotionSensitivity         */ "Bewegingsgevoeligheid <0.uit 1.minst gevoelig 9.meest gevoelig>",
+  /* TemperatureUnit           */ "Temperatuureenheid <C=Celsius F=Fahrenheit>",
+  /* AdvancedIdle              */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het slaapscherm.",
+  /* DisplayRotation           */ "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>",
+  /* BoostEnabled              */ "Soldeerbout gaat naar een hogere boost-temperatuur wanneer de voorste knop ingedrukt is.",
+  /* BoostTemperature          */ "Temperatuur in boostmodes",
+  /* AutoStart                 */ "Breng de soldeerbout direct op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit",
+  /* CooldownBlink             */ "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is.",
+  /* TemperatureCalibration    */ "Temperatuursafwijking van de soldeerpunt calibreren.",
+  /* SettingsReset             */ "Alle instellingen terugzetten.",
+  /* VoltageCalibration        */ "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen.",
+  /* AdvancedSoldering         */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm.",
+  /* ScrollingSpeed            */ "Snelheid waarmee de tekst scrolt.",
+};
+
+const char* SettingsCalibrationWarning = "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!";
+const char* SettingsResetWarning = "Ben je zeker dat je alle instellingen naar de standaardwaardes wilt terugzetten?";
+const char* UVLOWarningString = "DC LAAG";
+const char* UndervoltageString = "Onderspanning";
+const char* InputVoltageString = "Input V: ";
+const char* WarningTipTempString = "Tip Temp: ";
+const char* BadTipString = "DEFECT";
+const char* SleepingSimpleString = "Zzz ";
+const char* SleepingAdvancedString = "Slaapstand...";
+const char* WarningSimpleString = "HEET";
+const char* WarningAdvancedString = "!!! TIP HEET !!!";
+const char* SleepingTipAdvancedString = "Tip:";
+const char* IdleTipString = "Tip:";
+const char* IdleSetString = " Set:";
+const char* TipDisconnectedString = "TIP LOSGEKOPPELD";
+const char* SolderingAdvancedPowerPrompt = "vermogen: ";
+const char* OffString = "Off";
+
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingFastChar = 'F';
+const char SettingSlowChar = 'S';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* PowerSource               */ { "Spannings-", "bron" },
+  /* SleepTemperature          */ { "Slaap", "temp" },
+  /* SleepTimeout              */ { "Slaap", "time-out" },
+  /* ShutdownTimeout           */ { "Uitschakel", "time-out" },
+  /* MotionSensitivity         */ { "Bewegings-", "gevoeligheid" },
+  /* TemperatureUnit           */ { "Temperatuur", "eenheid" },
+  /* AdvancedIdle              */ { "Gedetailleerd", "slaapscherm" },
+  /* DisplayRotation           */ { "Scherm-", "oriëntatie" },
+  /* BoostEnabled              */ { "Boostmodes", "ingeschakeld?" },
+  /* BoostTemperature          */ { "Boost", "temp" },
+  /* AutoStart                 */ { "Auto", "start" },
+  /* CooldownBlink             */ { "Afkoel", "flikker" },
+  /* TemperatureCalibration    */ { "Calibreer", "temperatuur?" },
+  /* SettingsReset             */ { "Instellingen", "resetten?" },
+  /* VoltageCalibration        */ { "Calibreer", "input-voltage?" },
+  /* AdvancedSoldering         */ { "Gedetailleerd", "soldeerscherm" },
+  /* ScrollingSpeed            */ { "Scroll", "snelheid" },
+};
+
+const char* SettingsMenuEntries[4] = {
+  /* SolderingMenu             */ "Soldeer\nInstellingen",
+  /* PowerSavingMenu           */ "Slaap\nModes",
+  /* UIMenu                    */ "Gebruikers-\nInterface",
+  /* AdvancedMenu              */ "geavanceerde\nInstellingen",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  /* SolderingMenu             */ "Soldeerinstellingen",
+  /* PowerSavingMenu           */ "Batterijbesparingsinstellingen",
+  /* UIMenu                    */ "Gebruikersinterface Instellingen",
+  /* AdvancedMenu              */ "geavanceerde Instellingen",
+};
+
+#endif
+
 #ifdef LANG_PL
 // ---- Polski ----
 
@@ -1015,7 +1183,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 // ---- Portugues ----
 
 const char* SettingsDescriptions[17] = {
-  /* PowerSource               */ "Fonte de alimentação. Define a tensão de corte. <DC 10V> <S 3.3V por célula>",
+  /* PowerSource               */ "nte de alimentação. Define a tensão de corte. <DC=10V> <S=3.3V/célula>",
   /* SleepTemperature          */ "Temperatura de repouso <C>",
   /* SleepTimeout              */ "Tempo para repouso <Minutos/Segundos>",
   /* ShutdownTimeout           */ "Tempo para desligamento <Minutos>",
@@ -1025,17 +1193,17 @@ const char* SettingsDescriptions[17] = {
   /* DisplayRotation           */ "Orientação da tela <A.utomática C.anhoto D.estro>",
   /* BoostEnabled              */ "Tecla frontal ativa modo \"turbo\"",
   /* BoostTemperature          */ "Ajuste de temperatura do modo \"turbo\"",
-  /* AutoStart                 */ "Temperatura de aquecimento ao ligar <T=Trabalho S=Repouso F=Desligado>",
-  /* CooldownBlink             */ "Exibe a temperatura durante o resfriamento",
+  /* AutoStart                 */ "Aquece a ponta automaticamente ao ligar",
+  /* CooldownBlink             */ "Faz o valor da temperatura piscar durante o resfriamento",
   /* TemperatureCalibration    */ "Calibra a temperatura",
   /* SettingsReset             */ "Reverte todos ajustes",
-  /* VoltageCalibration        */ "Calibra a tensão e configura os botões. Mantenha presionado para sair",
+  /* VoltageCalibration        */ "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha presionado para sair",
   /* AdvancedSoldering         */ "Exibe informações avançadas durante o uso",
-  /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* ScrollingSpeed            */ "Velocidade que esse texto é exibido",
 };
 
 const char* SettingsCalibrationWarning = "A ponta deve estar em temperatura ambiente antes de continuar!";
-const char* SettingsResetWarning = "Reverter para os ajustes de fábrica?";
+const char* SettingsResetWarning = "Resetar para ajustes de fábrica?";
 const char* UVLOWarningString = "DC BAIXO";
 const char* UndervoltageString = "Subtensão";
 const char* InputVoltageString = "Tensão ";
@@ -1055,42 +1223,42 @@ const char* OffString = "Off";
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'C';
 const char SettingAutoChar = 'A';
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'R';
+const char SettingSlowChar = 'L';
 
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[17][2] = {
-  /* PowerSource               */ "FONTE",
-  /* SleepTemperature          */ "TMPE",
-  /* SleepTimeout              */ "TMPO",
-  /* ShutdownTimeout           */ "DESLI",
-  /* MotionSensitivity         */ "MOVIME",
-  /* TemperatureUnit           */ "UNIDAD",
-  /* AdvancedIdle              */ "OCIOSO",
-  /* DisplayRotation           */ "ORIENT",
-  /* BoostEnabled              */ "TURBO",
-  /* BoostTemperature          */ "TTMP",
-  /* AutoStart                 */ "MODOAT",
-  /* CooldownBlink             */ "RESFRI",
-  /* TemperatureCalibration    */ "CAL.TEMP",
-  /* SettingsReset             */ "RESETAR",
-  /* VoltageCalibration        */ "CAL.VOLT",
-  /* AdvancedSoldering         */ "AVNCAD",
-  /* ScrollingSpeed            */ "DESCSP",
+  /* PowerSource               */ { "Fonte", "alimentação" },
+  /* SleepTemperature          */ { "Temperat.", "repouso" },
+  /* SleepTimeout              */ { "Tempo", "repouso" },
+  /* ShutdownTimeout           */ { "Tempo", "desligam." },
+  /* MotionSensitivity         */ { "Sensibilidade", "movimento" },
+  /* TemperatureUnit           */ { "Unidade", "temperatura" },
+  /* AdvancedIdle              */ { "Tela repouso", "avançada" },
+  /* DisplayRotation           */ { "Orientação", "tela" },
+  /* BoostEnabled              */ { "Modo turbo", "ativado" },
+  /* BoostTemperature          */ { "Modo turbo", "temperat." },
+  /* AutoStart                 */ { "Partida", "automática" },
+  /* CooldownBlink             */ { "Piscar ao", "resfriar" },
+  /* TemperatureCalibration    */ { "Calibrar", "temperatura" },
+  /* SettingsReset             */ { "Reset de", "fábrica?" },
+  /* VoltageCalibration        */ { "Calibrar", "tensão" },
+  /* AdvancedSoldering         */ { "Tela trabalho", "avançada" },
+  /* ScrollingSpeed            */ { "Velocidade", "texto ajuda" },
 };
 
 const char* SettingsMenuEntries[4] = {
-  /* SolderingMenu             */ "Soldering\nSettings",
-  /* PowerSavingMenu           */ "Sleep\nModes",
-  /* UIMenu                    */ "User\nInterface",
-  /* AdvancedMenu              */ "Advanced\nOptions",
+  /* SolderingMenu             */ "Configurações\nSolda",
+  /* PowerSavingMenu           */ "Modos\nRepouso",
+  /* UIMenu                    */ "Interface\nUsuário",
+  /* AdvancedMenu              */ "Menu\nAvançado",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  /* SolderingMenu             */ "Soldering settings",
-  /* PowerSavingMenu           */ "Power Saving Settings",
-  /* UIMenu                    */ "User Interface settings",
-  /* AdvancedMenu              */ "Advanced options",
+  /* SolderingMenu             */ "Configurações de soldagem",
+  /* PowerSavingMenu           */ "Configurações de economia de energia",
+  /* UIMenu                    */ "Configurações da interface do usuário",
+  /* AdvancedMenu              */ "Opções avançadas",
 };
 
 #endif
@@ -1343,6 +1511,90 @@ const char* SettingsMenuEntriesDescriptions[4] = {
   /* PowerSavingMenu           */ "Power Saving Settings",
   /* UIMenu                    */ "User Interface settings",
   /* AdvancedMenu              */ "Advanced options",
+};
+
+#endif
+
+#ifdef LANG_UA
+// ---- Українська ----
+
+const char* SettingsDescriptions[17] = {
+  /* PowerSource               */ "Установка напруги відключення. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>",
+  /* SleepTemperature          */ "Температура режиму очікування <C°/F°>",
+  /* SleepTimeout              */ "Час до переходу в режим очікування <Доступно отключение>",
+  /* ShutdownTimeout           */ "Час до відключення <Доступно відключення>",
+  /* MotionSensitivity         */ "Акселерометр <0 - Викл. 1 хв. чутливості 9 - макс. чутливості>",
+  /* TemperatureUnit           */ "Одиниця виміру температури <C - Цельсій, F - Фаренгейт>",
+  /* AdvancedIdle              */ "Показувати детальну в режимі налаштувань <Замість картинки>",
+  /* DisplayRotation           */ "Орієнтація дисплея <A - Автоповорот, L - Лівша, R - Правша>",
+  /* BoostEnabled              */ "Турбо-режим при утриманні кнопки А при пайці",
+  /* BoostTemperature          */ "Температура в Турбо-режимі",
+  /* AutoStart                 */ "Автоматичний перехід в режим пайки при включенні живлення.",
+  /* CooldownBlink             */ "Показувати температуру на екрані охолодження, поки жало залишається гарячим, при цьому екран моргає",
+  /* TemperatureCalibration    */ "Калібрування температурного датчика.",
+  /* SettingsReset             */ "Скидання всіх параметрів до вихідних значень.",
+  /* VoltageCalibration        */ "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити.",
+  /* AdvancedSoldering         */ "Показувати детальну інформацію при пайці.",
+  /* ScrollingSpeed            */ "Швидкість прокрутки тексту",
+};
+
+const char* SettingsCalibrationWarning = "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!";
+const char* SettingsResetWarning = "Ви дійсно хочете скинути налаштування до значень за замовчуванням?";
+const char* UVLOWarningString = "АККУМ--";
+const char* UndervoltageString = "Під живленням";
+const char* InputVoltageString = "Жив.(B): ";
+const char* WarningTipTempString = "Жало t°: ";
+const char* BadTipString = "Жало--";
+const char* SleepingSimpleString = "Сон ";
+const char* SleepingAdvancedString = "Очікування...";
+const char* WarningSimpleString = "АЙ!";
+const char* WarningAdvancedString = "УВАГА ГАРЯЧЕ!";
+const char* SleepingTipAdvancedString = "Жало:";
+const char* IdleTipString = "Жало:";
+const char* IdleSetString = " ->";
+const char* TipDisconnectedString = "Жало вимкнено!";
+const char* SolderingAdvancedPowerPrompt = "Живлення: ";
+const char* OffString = "Вим";
+
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingFastChar = '+';
+const char SettingSlowChar = '-';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[17][2] = {
+  /* PowerSource               */ { "Джерело", "живлення" },
+  /* SleepTemperature          */ { "Темпер.", "сну" },
+  /* SleepTimeout              */ { "Таймаут", "сну" },
+  /* ShutdownTimeout           */ { "Часу до", "вимкнення" },
+  /* MotionSensitivity         */ { "Чутл. сенсо-", "ру руху" },
+  /* TemperatureUnit           */ { "Формат темпе-", "ратури(C°/F°)" },
+  /* AdvancedIdle              */ { "Детальний ре-", "жим очікуван." },
+  /* DisplayRotation           */ { "Автоповорот", "екрану" },
+  /* BoostEnabled              */ { "Режим", "Турбо" },
+  /* BoostTemperature          */ { "Темпер.", "Турбо" },
+  /* AutoStart                 */ { "Гарячий", "старт" },
+  /* CooldownBlink             */ { "Показ t° при", "охолодж." },
+  /* TemperatureCalibration    */ { "Калібровка", "температури" },
+  /* SettingsReset             */ { "Скинути всі", "налаштування?" },
+  /* VoltageCalibration        */ { "Калібровка", "напруга" },
+  /* AdvancedSoldering         */ { "Детальний ре-", "жим пайки" },
+  /* ScrollingSpeed            */ { "Швидкість", "тексту" },
+};
+
+const char* SettingsMenuEntries[4] = {
+  /* SolderingMenu             */ "Пайка\n",
+  /* PowerSavingMenu           */ "Сон\n",
+  /* UIMenu                    */ "Інтерфейс\n",
+  /* AdvancedMenu              */ "Інші\n",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  /* SolderingMenu             */ "Налаштування для режиму пайки. Діють при включеному жалі.",
+  /* PowerSavingMenu           */ "Налаштування при бездіяльності. Корисно що б не обпектися і з часом не спалити житло.",
+  /* UIMenu                    */ "Користувальницький інтерфейс.",
+  /* AdvancedMenu              */ "Розширені налаштування. Додаткові зручності.",
 };
 
 #endif
