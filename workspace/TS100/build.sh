@@ -25,6 +25,8 @@ make -j16 lang=LT
 rm -rf Objects/src
 make -j16 lang=NL
 rm -rf Objects/src
+make -j16 lang=NO
+rm -rf Objects/src
 make -j16 lang=PL
 rm -rf Objects/src
 make -j16 lang=PT
@@ -32,6 +34,8 @@ rm -rf Objects/src
 make -j16 lang=RU
 rm -rf Objects/src
 make -j16 lang=SK
+rm -rf Objects/src
+make -j16 lang=SR
 rm -rf Objects/src
 make -j16 lang=SV
 rm -rf Objects/src
