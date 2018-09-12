@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION 0x14 /*Change this if you change the struct below to prevent people getting out of sync*/
+#define SETTINGSVERSION 0x15 /*Change this if you change the struct below to prevent people getting out of sync*/
 
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from flash in uint16_t chunks

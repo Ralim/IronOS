@@ -638,10 +638,10 @@ static void settings_setCalibrateVIN(void) {
 		osDelay(40);
 
 		// Cap to sensible values
-		if (systemSettings.voltageDiv < 90) {
-			systemSettings.voltageDiv = 90;
-		} else if (systemSettings.voltageDiv > 130) {
-			systemSettings.voltageDiv = 130;
+		if (systemSettings.voltageDiv < 360) {
+			systemSettings.voltageDiv = 360;
+		} else if (systemSettings.voltageDiv > 520) {
+			systemSettings.voltageDiv = 520;
 		}
 	}
 }

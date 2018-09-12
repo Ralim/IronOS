@@ -77,9 +77,10 @@ uint16_t getTipRawTemp(uint8_t instant) {
 	}
 }
 uint16_t getInputVoltageX10(uint16_t divisor) {
-	//ADC maximum is 16384 == 3.3V at input == 28V at VIN
+	//ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
 	//Therefore we can divide down from there
-	//Ideal term is 117
+	//Multiplying ADC max by 4 for additional calibration options,
+	//ideal term is 467
 #define BATTFILTERDEPTH 64
 	static uint8_t preFillneeded = 1;
 	static uint32_t samples[BATTFILTERDEPTH];
@@ -99,7 +100,7 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 	sum /= BATTFILTERDEPTH;
 	if (sum < 50)
 		preFillneeded = 1;
-	return sum / divisor;
+	return sum * 4 / divisor;
 }
 uint8_t getTipPWM() {
 	return htim2.Instance->CCR4;

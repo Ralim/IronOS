@@ -81,7 +81,7 @@ void resetSettings() {
 	systemSettings.detailedIDLE=0;					// Detailed idle screen (off for first time users)
 	systemSettings.OrientationMode = 2;				//Default to automatic
 	systemSettings.sensitivity = 7;				//Default high sensitivity
-	systemSettings.voltageDiv = 117;			//Default divider from schematic
+	systemSettings.voltageDiv = 467;			//Default divider from schematic
 	systemSettings.ShutdownTime = 10;			//How many minutes until the unit turns itself off
 	systemSettings.boostModeEnabled = 1;		//Default to safe, with no boost mode
 	systemSettings.BoostTemp = 420;				//default to 400C
