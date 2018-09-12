@@ -76,7 +76,7 @@ uint16_t getTipRawTemp(uint8_t instant) {
 		return filterFP >> 9;
 	}
 }
-uint16_t getInputVoltageX10(uint8_t divisor) {
+uint16_t getInputVoltageX10(uint16_t divisor) {
 	//ADC maximum is 16384 == 3.3V at input == 28V at VIN
 	//Therefore we can divide down from there
 	//Ideal term is 117
