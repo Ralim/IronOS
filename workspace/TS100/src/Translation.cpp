@@ -8,54 +8,11 @@
 #ifndef LANG
 #define LANG_EN
 #endif
-// TEMPLATES for short names - choose one and use it as base for your
-// translation:
-
-//const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-//const char* SettingsShortNames[17][2] = {
-//  /* (<= 5) Power source (DC or batt)          */ {"PWRSC"},
-//  /* (<= 4) Sleep temperature                  */ {"STMP"},
-//  /* (<= 4) Sleep timeout                      */ {"STME"},
-//  /* (<= 5) Shutdown timeout                   */ {"SHTME"},
-//  /* (<= 6) Motion sensitivity level           */ {"MSENSE"},
-//  /* (<= 6) Temperature in F and C             */ {"TMPUNT"},
-//  /* (<= 6) Advanced idle display mode enabled */ {"ADVIDL"},
-//  /* (<= 6) Display rotation mode              */ {"DSPROT"},
-//  /* (<= 6) Boost enabled                      */ {"BOOST"},
-//  /* (<= 4) Boost temperature                  */ {"BTMP"},
-//  /* (<= 6) Automatic start mode               */ {"ASTART"},
-//  /* (<= 6) Cooldown blink                     */ {"CLBLNK"},
-//  /* (<= 8) Temperature calibration enter menu */ {"TMP CAL?"},
-//  /* (<= 8) Settings reset command             */ {"RESET?"},
-//  /* (<= 8) Calibrate input voltage            */ {"CAL VIN?"},
-//  /* (<= 6) Advanced soldering screen enabled  */ {"ADVSLD"},
-//  /* (<= 6) Message Scroll Speed               */ {"DESCSP"},
-//};
-
-//const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-//const char* SettingsShortNames[17][2] = {
-//  /* (<= 11) Power source (DC or batt)          */ {"Power", "source"},
-//  /* (<=  9) Sleep temperature                  */ {"Sleep", "temp"},
-//  /* (<=  9) Sleep timeout                      */ {"Sleep", "timeout"},
-//  /* (<= 11) Shutdown timeout                   */ {"Shutdown", "timeout"},
-//  /* (<= 13) Motion sensitivity level           */ {"Motion", "sensitivity"},
-//  /* (<= 13) Temperature in F and C             */ {"Temperature", "units"},
-//  /* (<= 13) Advanced idle display mode enabled */ {"Detailed", "idle screen"},
-//  /* (<= 13) Display rotation mode              */ {"Display", "orientation"},
-//  /* (<= 13) Boost enabled                      */ {"Boost mode", "enabled"},
-//  /* (<=  9) Boost temperature                  */ {"Boost", "temp"},
-//  /* (<= 13) Automatic start mode               */ {"Auto", "start"},
-//  /* (<= 13) Cooldown blink                     */ {"Cooldown", "blink"},
-//  /* (<= 16) Temperature calibration enter menu */ {"Calibrate", "temperature?"},
-//  /* (<= 16) Settings reset command             */ {"Factory", "Reset?"},
-//  /* (<= 16) Calibrate input voltage            */ {"Calibrate", "input voltage?"},
-//  /* (<= 13) Advanced soldering screen enabled  */ {"Detailed", "solder screen"},
-//  /* (<= 11) Display Help Text Scroll Speed     */ {"Description","Scroll Speed"},
-//};
+// TEMPLATE: Please use the English translations
 
 #ifdef LANG_EN
 
-const char* SettingsDescriptions[17] = {
+const char* SettingsDescriptions[20] = {
 	// These are all the help text for all the settings.
 	// No requirements on spacing or length.
 	/* Power source (DC or batt)          */"Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>",
@@ -75,8 +32,12 @@ const char* SettingsDescriptions[17] = {
 	/* Calibrate input voltage            */"VIN Calibration. Buttons adjust, long press to exit",
 	/* Advanced soldering screen enabled  */"Display detailed information while soldering",
 	/* Description Scroll Speed           */"Speed this text scrolls past at",
+	/* Tip Model 						  */"Tip Model selection ",
+	/* Simple Calibration Mode  		  */"Simple Calibration using Hot water",
+	/* Advanced Calibration Mode          */"Advanced calibration using thermocouple on the tip"
 
-#ifdef PIDSETTINGS
+
+	#ifdef PIDSETTINGS
 
 	"PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
 	"PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
@@ -112,7 +73,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Power", "source"},
 	/* (<=  9) Sleep temperature                  */{"Sleep", "temp"},
 	/* (<=  9) Sleep timeout                      */{"Sleep", "timeout"},
@@ -130,6 +91,9 @@ const char* SettingsShortNames[17][2] = {
 	/* (<= 16) Calibrate input voltage            */{"Calibrate", "input voltage?"},
 	/* (<= 13) Advanced soldering screen enabled  */{"Detailed", "solder screen"},
 	/* (<= 11) Display Help Text Scroll Speed     */{"Description","Scroll Speed"},
+	/* (<= 08) The Tip model being selected       */{"Tip","Model"},
+	/* (<= 16) Simple Calibration                 */{"Simple","Calibration"},
+	/* (<= 16) Advanced Calibration               */{"Advanced","Calibration"},
 #ifdef PIDSETTINGS
 
 	{	"PID","P"},
@@ -138,6 +102,7 @@ const char* SettingsShortNames[17][2] = {
 #endif
 
 };
+
 
 // SettingsMenuEntries lengths <= 13 per line (\n starts second line)
 const char* SettingsMenuEntries[4] = {
@@ -203,7 +168,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Източник", "захранване"},
 	/* (<=  9) Sleep temperature                  */{"Темп.", "сън"},
 	/* (<=  9) Sleep timeout                      */{"Време", "сън"},
@@ -292,7 +257,7 @@ const char SettingFastChar = '+';
 const char SettingSlowChar = '-';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Источник","питания"},	//8,7
 	/* (<=  9) Sleep temperature                  */{"Темпер.","сна"},	//7,3
 	/* (<=  9) Sleep timeout                      */{"Таймаут","сна"},	//7,3
@@ -457,7 +422,7 @@ const char SettingFastChar = 'N';//'F';
 const char SettingSlowChar = 'H';//'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Virtalähde", "DC"},
 	/* (<=  9) Sleep temperature                  */{"Lepotilan", "lämpötila"},
 	/* (<=  9) Sleep timeout                      */{"Lepotilan", "viive"},
@@ -544,7 +509,7 @@ const char SettingFastChar = 'V';
 const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Sorgente", "alimentaz"},
 	/* (<=  9) Sleep temperature                  */{"Temp", "standby"},
 	/* (<=  9) Sleep timeout                      */{"Timer", "standby"},
@@ -628,7 +593,7 @@ const char SettingFastChar = 'R';
 const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Source", "d'alim"},
 	/* (<=  9) Sleep temperature                  */{"Temp.", "veille"},
 	/* (<=  9) Sleep timeout                      */{"Délai", "veille"},
@@ -718,7 +683,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Spannungs-", "quelle"},
 	/* (<=  9) Sleep temperature                  */{"Ruhetemp-", "eratur"},
 	/* (<=  9) Sleep timeout                      */{"Ruhever-", "zögerung"},
@@ -799,7 +764,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 5) Power source (DC or batt)          */{"PWRSC"},
 	/* (<= 4) Sleep temperature                  */{"STMP"},
 	/* (<= 4) Sleep timeout                      */{"STME"},
@@ -880,7 +845,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 5) Power source (DC or batt)          */{"PWRSC"},
 	/* (<= 4) Sleep temperature                  */{"STMP"},
 	/* (<= 4) Sleep timeout                      */{"STME"},
@@ -961,7 +926,7 @@ const char SettingFastChar = 'B';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Izvor", "napajanja"},
 	/* (<=  9) Sleep temperature                  */{"Temp", "spavanja"},
 	/* (<=  9) Sleep timeout                      */{"Vrijeme", "spavanja"},
@@ -1040,7 +1005,7 @@ const char SettingFastChar = 'R';
 const char SettingSlowChar = 'P';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Zdroj", "napájení"},
 	/* (<=  9) Sleep temperature                  */{"Teplota v", "r. spánku"},
 	/* (<=  9) Sleep timeout                      */{"Čas do", "r. spánku"},
@@ -1125,7 +1090,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 5) Power source (DC or batt)          */{"PWRSC"},
 	/* (<= 4) Sleep temperature                  */{"STMP"},
 	/* (<= 4) Sleep timeout                      */{"STME"},
@@ -1206,7 +1171,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 5) Power source (DC or batt)          */{"PWRSC"},
 	/* (<= 4) Sleep temperature                  */{"STMP"},
 	/* (<= 4) Sleep timeout                      */{"STME"},
@@ -1287,7 +1252,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 5) Power source (DC or batt)          */{"PWRSC"},
 	/* (<= 4) Sleep temperature                  */{"STMP"},
 	/* (<= 4) Sleep timeout                      */{"STME"},
@@ -1467,7 +1432,7 @@ const char SettingFastChar = 'T';
 const char SettingSlowChar = 'N';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Maitinimo", "šaltinis"},
 	/* (<=  9) Sleep temperature                  */{"Miego", "temperat."},
 	/* (<=  9) Sleep timeout                      */{"Miego", "laikas"},
@@ -1549,7 +1514,7 @@ const char SettingFastChar = '+';
 const char SettingSlowChar = '-';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Джерело","живлення"},	//7,8
 	/* (<=  9) Sleep temperature                  */{"Темпер.","сну"},	//7,3
 	/* (<=  9) Sleep timeout                      */{"Таймаут","сну"},	//7,3
@@ -1633,7 +1598,7 @@ const char SettingFastChar = 'F';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Spannings-", "bron"},
 	/* (<=  9) Sleep temperature                  */{"Slaap", "temp"},
 	/* (<=  9) Sleep timeout                      */{"Slaap", "time-out"},
@@ -1719,7 +1684,7 @@ const char SettingFastChar = 'S';
 const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 11) Power source (DC or batt)          */{"Ström-", "källa"},
 	/* (<=  9) Sleep temperature                  */{"Vilo-", "temp"},
 	/* (<=  9) Sleep timeout                      */{"Vilo-", "timeout"},
@@ -1806,7 +1771,7 @@ const char SettingFastChar = 'B';
 const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
-const char* SettingsShortNames[17][2] =
+const char* SettingsShortNames[20][2] =
 		{
 		/* (<= 11) Power source (DC or batt) */{ "Izvor", "napajanja" },
 		/* (<= 9) Sleep temperature */{ "Temp", "spavanja" },
@@ -1884,7 +1849,7 @@ const char SettingAutoChar = 'A';
 const char SettingFastChar = 'H';
 const char SettingSlowChar = 'L';
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[17][2] = {
+const char* SettingsShortNames[20][2] = {
 	/* (<= 5) Power source (DC or batt)          */{"Kilde"},
 	/* (<= 4) Sleep temperature                  */{"DTmp"},
 	/* (<= 4) Sleep timeout                      */{"DTid"},

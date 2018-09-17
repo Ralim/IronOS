@@ -14,11 +14,21 @@ extern "C" {
 #endif
 
 enum Orientation {
-    ORIENTATION_LEFT_HAND = 0,
-    ORIENTATION_RIGHT_HAND = 1,
-    ORIENTATION_FLAT = 3
+	ORIENTATION_LEFT_HAND = 0, ORIENTATION_RIGHT_HAND = 1, ORIENTATION_FLAT = 3
 };
-
+/*
+ * Keep in a uint8_t range for the ID's
+ */
+enum TipType {
+	TS_B2 = 0,
+	TS_D24 = 1,
+	TS_BC2 = 2,
+	TS_C1 = 3,
+	Tip_MiniWare=4,
+	HAKKO_BC2=4,
+	Tip_Hakko=5,
+	Tip_Custom=5,
+};
 #define KEY_B_Pin GPIO_PIN_6
 #define KEY_B_GPIO_Port GPIOA
 #define TMP36_INPUT_Pin GPIO_PIN_7
@@ -54,6 +64,7 @@ uint16_t ftoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToF(uint16_t raw);
 
 void setCalibrationOffset(int16_t offSet);
+void setTipType(enum TipType tipType, uint8_t manualCalGain);
 #ifdef __cplusplus
 }
 #endif

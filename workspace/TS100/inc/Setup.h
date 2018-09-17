@@ -15,6 +15,7 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 
 extern ADC_HandleTypeDef hadc1;
+extern ADC_HandleTypeDef hadc2;
 extern DMA_HandleTypeDef hdma_adc1;
 
 extern DMA_HandleTypeDef hdma_i2c1_rx;
