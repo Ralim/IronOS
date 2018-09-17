@@ -6,6 +6,7 @@
  */
 #include "Setup.h"
 ADC_HandleTypeDef hadc1;
+ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
@@ -27,6 +28,7 @@ static void MX_TIM3_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
+static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
@@ -34,12 +36,16 @@ void Setup_HAL() {
 	MX_DMA_Init();
 	MX_I2C1_Init();
 	MX_ADC1_Init();
+	MX_ADC2_Init();
 	MX_TIM3_Init();
 	MX_TIM2_Init();
 	MX_IWDG_Init();
-
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADCReadings, 64); //start DMA of normal readings
+	HAL_ADC_Start(&hadc2);
+	HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) ADCReadings, 64); //start DMA of normal readings
 	HAL_ADCEx_InjectedStart(&hadc1);    //enable injected  readings
+	HAL_ADCEx_InjectedStart(&hadc2);    //enable injected  readings
+
+
 }
 
 //channel 0 -> temperature sensor, 1-> VIN
@@ -99,6 +105,7 @@ void SystemClock_Config(void) {
 
 /* ADC1 init function */
 static void MX_ADC1_Init(void) {
+	ADC_MultiModeTypeDef multimode;
 
 	ADC_ChannelConfTypeDef sConfig;
 	ADC_InjectionConfTypeDef sConfigInjected;
@@ -112,6 +119,11 @@ static void MX_ADC1_Init(void) {
 	hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
 	hadc1.Init.NbrOfConversion = 2;
 	HAL_ADC_Init(&hadc1);
+
+	/**Configure the ADC multi-mode
+	 */
+	multimode.Mode = ADC_DUALMODE_REGSIMULT_INJECSIMULT;
+	HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode);
 
 	/**Configure Regular Channel
 	 */
@@ -159,6 +171,59 @@ static void MX_ADC1_Init(void) {
 		;
 }
 
+/* ADC2 init function */
+static void MX_ADC2_Init(void) {
+
+	ADC_ChannelConfTypeDef sConfig;
+	ADC_InjectionConfTypeDef sConfigInjected;
+
+	/**Common config
+	 */
+	hadc2.Instance = ADC2;
+	hadc2.Init.ScanConvMode = ADC_SCAN_ENABLE;
+	hadc2.Init.ContinuousConvMode = ENABLE;
+	hadc2.Init.DiscontinuousConvMode = DISABLE;
+	hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+	hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+	hadc2.Init.NbrOfConversion = 2;
+	HAL_ADC_Init(&hadc2);
+
+	/**Configure Regular Channel
+	 */
+	sConfig.Channel = ADC_CHANNEL_8;
+	sConfig.Rank = ADC_REGULAR_RANK_1;
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
+	sConfig.Channel = ADC_CHANNEL_8;
+	sConfig.Rank = ADC_REGULAR_RANK_2;
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
+
+	/**Configure Injected Channel
+	 */
+	sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
+	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_1;
+	sConfigInjected.InjectedNbrOfConversion = 4;
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_7CYCLES_5;
+	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
+	sConfigInjected.AutoInjectedConv = DISABLE;
+	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
+	sConfigInjected.InjectedOffset = 0;
+	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
+	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+
+	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_2;
+	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
+	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_3;
+	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
+	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_4;
+	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
+
+	// Run ADC internal calibration
+	while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK)
+		;
+
+}
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {
 
@@ -370,6 +435,7 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(OLED_RESET_GPIO_Port, &GPIO_InitStruct);
+	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_RESET);
 
 	/* Configure GPIO pins : INT_Orientation_Pin INT_Movement_Pin */
 	/* Not used anymore*/

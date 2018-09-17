@@ -35,15 +35,15 @@
 									<listOptionValue builtIn="false" value="USE_RTOS_SYSTICK"/>
 								</option>
 								<option id="com.atollic.truestudio.as.general.incpath.1741841972" name="Include path" superClass="com.atollic.truestudio.as.general.incpath" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM3&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\Middlewares\Third_Party\FreeRTOS\Source\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\Middlewares\Third_Party\FreeRTOS\Source\portable&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\HAL_Driver\Inc\Legacy&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\HAL_Driver\Inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\CMSIS\core&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Ralim.DESKTOP-R877O7F\Documents\GitHub\ts100\workspace\TS100\CMSIS\device&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM3&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\Middlewares\Third_Party\FreeRTOS\Source\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\Middlewares\Third_Party\FreeRTOS\Source\portable&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\HAL_Driver\Inc\Legacy&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\HAL_Driver\Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\CMSIS\core&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\CMSIS\device&quot;"/>
 								</option>
 								<inputType id="com.atollic.truestudio.as.input.640267647" name="Input" superClass="com.atollic.truestudio.as.input"/>
 							</tool>
