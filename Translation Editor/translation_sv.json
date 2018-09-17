@@ -1,0 +1,223 @@
+{
+	"languageCode": "SV",
+	"languageLocalName": "Svenska",
+	"messages": {
+		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
+		"SettingsResetWarning": "Are you sure you want to reset settings to default values?",
+		"UVLOWarningString": "DC LÅG",
+		"UndervoltageString": "Underspänning",
+		"InputVoltageString": "Inspän. V: ",
+		"WarningTipTempString": "Spetstemp: ",
+		"BadTipString": "SPETSFEL",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Viloläge...",
+		"WarningSimpleString": "VARM",
+		"WarningAdvancedString": "!! SPETS VARM !!",
+		"SleepingTipAdvancedString": "Spets:",
+		"IdleTipString": "Spets:",
+		"IdleSetString": " Ange:",
+		"TipDisconnectedString": "SPETS URTAGEN",
+		"SolderingAdvancedPowerPrompt": "Ström: ",
+		"OffString": "Av"
+	},
+	"characters": {
+		"SettingRightChar": "H",
+		"SettingLeftChar": "V",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "S",
+		"SettingSlowChar": "L"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Lödnings-",
+				"inställningar"
+			],
+			"desc": "Lödningsinställningar"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Vilo-",
+				"lägen"
+			],
+			"desc": "Viloläges-inställningar"
+		},
+		"UIMenu": {
+			"text2": [
+				"Användar-",
+				"gränssnitt"
+			],
+			"desc": "Användargränssnitts-inställningar"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Avancerade",
+				"alternativ"
+			],
+			"desc": "Avancerade alternativ"
+		}
+	},
+	"menuDouble": true,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Ström-",
+				"källa"
+			],
+			"desc": "Strömkälla. Anger lägsta spänning. <DC 10V> <S 3.3V per cell>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Vilo-",
+				"temp"
+			],
+			"desc": "Vilotemperatur <C>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Vilo-",
+				"timeout"
+			],
+			"desc": "Vilo-timeout <Minuter/Seconder>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Avstängn.",
+				"timeout"
+			],
+			"desc": "Avstängnings-timeout <Minuter>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Rörelse-",
+				"känslighet"
+			],
+			"desc": "Rörelsekänslighet <0.Av 1.minst känslig 9.mest känslig>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Temperatur-",
+				"enheter"
+			],
+			"desc": "Temperaturenhet <C=Celsius F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Detaljerad",
+				"vid inaktiv"
+			],
+			"desc": "Visa detaljerad information i mindre typsnitt när inaktiv."
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Visnings",
+				"läge"
+			],
+			"desc": "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Turboläge",
+				"aktiverat"
+			],
+			"desc": "Aktivera främre knappen för turboläge (temperaturhöjning) vid lödning"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Turbo-",
+				"temp"
+			],
+			"desc": "Temperatur i \\\"turbo\\\"-läge"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Auto",
+				"start"
+			],
+			"desc": "Startar automatiskt lödpennan vid uppstart. T=Lödning, S=Viloläge, F=Av"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Nedkylnings-",
+				"blink"
+			],
+			"desc": "Blinka temperaturen medan spetsen kyls av och fortfarande är varm."
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibrera",
+				"temperatur?"
+			],
+			"desc": "Kalibrera spets-kompensation."
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Fabriks-",
+				"inställ?"
+			],
+			"desc": "Återställ alla inställningar"
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibrera",
+				"inspänning?"
+			],
+			"desc": "Inspänningskalibrering. Knapparna justerar, håll inne för avslut"
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Detaljerad",
+				"lödng.skärm"
+			],
+			"desc": "Visa detaljerad information vid lödning"
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Beskrivning",
+				"rullhast."
+			],
+			"desc": "Hastighet som den här texten rullar i"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}
