@@ -943,7 +943,7 @@ const char* SettingsDescriptions[] = {
   /* SettingsReset             */ "Beállítások alaphelyzetbe állítása",
   /* VoltageCalibration        */ "A bemeneti feszültség kalibrálása. Röviden megnyomva állítsa be, hosszan nyomja meg a kilépéshez.",
   /* AdvancedSoldering         */ "Részletes információk megjelenítése forrasztás közben",
-  /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* ScrollingSpeed            */ "Szöveg görgetésének gyorsítása",
 #ifdef PIDSETTINGS
   /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
 #endif
@@ -956,16 +956,16 @@ const char* SettingsDescriptions[] = {
 };
 
 const char* SettingsCalibrationWarning = "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* SettingsResetWarning = "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?";
 const char* UVLOWarningString = "DC LOW";
 const char* UndervoltageString = "Undervoltage";
 const char* InputVoltageString = "Input V: ";
 const char* WarningTipTempString = "Tip Temp: ";
-const char* BadTipString = "BAD TIP";
+const char* BadTipString = "HEGY";
 const char* SleepingSimpleString = "Zzzz";
 const char* SleepingAdvancedString = "Alvás...";
 const char* WarningSimpleString = "HOT!";
-const char* WarningAdvancedString = "FORRÓ HEGY!";
+const char* WarningAdvancedString = "!! FORRÓ HEGY !!";
 const char* SleepingTipAdvancedString = "Tip:";
 const char* IdleTipString = "Tip:";
 const char* IdleSetString = " Set:";
@@ -1010,17 +1010,17 @@ const char* SettingsShortNames[][2] = {
 };
 
 const char* SettingsMenuEntries[4] = {
-  /* SolderingMenu             */ "Soldering\nSettings",
-  /* PowerSavingMenu           */ "Sleep\nModes",
-  /* UIMenu                    */ "User\nInterface",
-  /* AdvancedMenu              */ "Advanced\nOptions",
+  /* SolderingMenu             */ "Forrasztás\nBeállítások",
+  /* PowerSavingMenu           */ "Alvás\nMódok",
+  /* UIMenu                    */ "Felhasználó\nfelület",
+  /* AdvancedMenu              */ "Speciális\nbeállítások",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  /* SolderingMenu             */ "Soldering settings",
-  /* PowerSavingMenu           */ "Power Saving Settings",
-  /* UIMenu                    */ "User Interface settings",
-  /* AdvancedMenu              */ "Advanced options",
+  /* SolderingMenu             */ "Forrasztási beállítások",
+  /* PowerSavingMenu           */ "Energiatakarékossági beállítások",
+  /* UIMenu                    */ "Felhasználói felület beállításai",
+  /* AdvancedMenu              */ "Speciális beállítások",
 };
 
 #endif

@@ -2,16 +2,16 @@
 	"languageCode": "HU",
 	"messages": {
 		"SettingsCalibrationWarning": "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!",
-		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"SettingsResetWarning": "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
 		"InputVoltageString": "Input V: ",
 		"WarningTipTempString": "Tip Temp: ",
-		"BadTipString": "BAD TIP",
+		"BadTipString": "HEGY",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Alvás...",
 		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "FORRÓ HEGY!",
+		"WarningAdvancedString": "!! FORRÓ HEGY !!",
 		"SleepingTipAdvancedString": "Tip:",
 		"IdleTipString": "Tip:",
 		"IdleSetString": " Set:",
@@ -30,31 +30,31 @@
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Soldering",
-				"Settings"
+				"Forrasztás",
+				"Beállítások"
 			],
-			"desc": "Soldering settings"
+			"desc": "Forrasztási beállítások"
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Sleep",
-				"Modes"
+				"Alvás",
+				"Módok"
 			],
-			"desc": "Power Saving Settings"
+			"desc": "Energiatakarékossági beállítások"
 		},
 		"UIMenu": {
 			"text2": [
-				"User",
-				"Interface"
+				"Felhasználó",
+				"felület"
 			],
-			"desc": "User Interface settings"
+			"desc": "Felhasználói felület beállításai"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Advanced",
-				"Options"
+				"Speciális",
+				"beállítások"
 			],
-			"desc": "Advanced options"
+			"desc": "Speciális beállítások"
 		}
 	},
 	"menuOptions": {
@@ -192,7 +192,7 @@
 				"",
 				""
 			],
-			"desc": "Speed this text scrolls past at"
+			"desc": "Szöveg görgetésének gyorsítása"
 		},
 		"PidSettingsP": {
 			"text": "PIDP",
