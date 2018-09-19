@@ -1085,7 +1085,7 @@ __weak void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef *htim)
   *            @arg TIM_CHANNEL_4: TIM Channel 4 selected
   * @retval HAL status
 */
-HAL_StatusTypeDef HAL_TIM_PWM_Start(TIM_HandleTypeDef *htim, uint32_t Channel)
+HAL_StatusTypeDef __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PWM_Start(TIM_HandleTypeDef *htim, uint32_t Channel)
 {
   /* Check the parameters */
   assert_param(IS_TIM_CCX_INSTANCE(htim->Instance, Channel));
@@ -1117,7 +1117,7 @@ HAL_StatusTypeDef HAL_TIM_PWM_Start(TIM_HandleTypeDef *htim, uint32_t Channel)
   *            @arg TIM_CHANNEL_4: TIM Channel 4 selected
   * @retval HAL status
 */
-HAL_StatusTypeDef HAL_TIM_PWM_Stop(TIM_HandleTypeDef *htim, uint32_t Channel)
+HAL_StatusTypeDef __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PWM_Stop(TIM_HandleTypeDef *htim, uint32_t Channel)
 {
   /* Check the parameters */
   assert_param(IS_TIM_CCX_INSTANCE(htim->Instance, Channel));

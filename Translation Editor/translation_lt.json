@@ -11,13 +11,14 @@
 		"BadTipString": "BLOG ANT",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Miegu...",
-		"WarningSimpleString": "HOT!",
+		"WarningSimpleString": "KRŠ!",
 		"WarningAdvancedString": "ANTGALIS KARŠTAS",
 		"SleepingTipAdvancedString": "Antgl:",
 		"IdleTipString": "Ant:",
 		"IdleSetString": " Nust:",
 		"TipDisconnectedString": "ANTGAL ATJUNGTAS",
-		"SolderingAdvancedPowerPrompt": "Maitinimas: "
+		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
+		"OffString": "Išj"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -51,7 +52,7 @@
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Išplėstiniai",
+				"Išplėstin.",
 				"nustatymai"
 			],
 			"desc": "Išplėstiniai nustatymai"
@@ -109,7 +110,7 @@
 		"AdvancedIdle": {
 			"text": "",
 			"text2": [
-				"Detalus lauki-",
+				"Detalus lauki",
 				"mo ekranas"
 			],
 			"desc": "Ar rodyti papildomą informaciją mažesniu šriftu laukimo ekrane"
@@ -189,10 +190,34 @@
 		"ScrollingSpeed": {
 			"text": "",
 			"text2": [
-				"Greitas apra-",
-				"šymo slinkimas"
+				"Greitas apr",
+				"ašym. slink"
 			],
 			"desc": "Greitis, kuriuo šis tekstas slenka"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
 		}
 	}
 }

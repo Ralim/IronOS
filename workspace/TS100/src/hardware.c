@@ -9,6 +9,14 @@
 #include "hardware.h"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
+uint16_t tipGainCalValue = 0;
+uint16_t lookupTipDefaultCalValue(enum TipType tipID);
+void setTipType(enum TipType tipType, uint8_t manualCalGain) {
+	if (manualCalGain)
+		tipGainCalValue = manualCalGain;
+	else
+		tipGainCalValue = lookupTipDefaultCalValue(tipType);
+}
 void setCalibrationOffset(int16_t offSet) {
 	CalibrationTempOffset = offSet;
 }
@@ -29,48 +37,95 @@ uint16_t getHandleTemperature() {
 
 }
 uint16_t tipMeasurementToC(uint16_t raw) {
-	return ((raw - 532) / 33) + (getHandleTemperature() / 10)
-			- CalibrationTempOffset;
-	//Surprisingly that appears to be a fairly good linear best fit
+
+	//((Raw Tip-RawOffset) * calibrationgain) / 1000 = tip delta in CX10
+	// tip delta in CX10 + handleTemp in CX10 = tip absolute temp in CX10
+	//Div answer by 10 to get final result
+
+	uint32_t tipDelta = ((raw - CalibrationTempOffset) * tipGainCalValue)
+			/ 1000;
+	tipDelta += getHandleTemperature();
+
+	return tipDelta / 10;
+
 }
 uint16_t ctoTipMeasurement(uint16_t temp) {
-	//We need to compensate for cold junction temp
-	return ((temp - (getHandleTemperature() / 10) + CalibrationTempOffset) * 33)
-			+ 532;
+	//[ (temp-handle/10) * 10000 ]/calibrationgain = tip raw delta
+	// tip raw delta + tip offset = tip ADC reading
+	int32_t TipRaw = ((temp - (getHandleTemperature() / 10)) * 10000)
+			/ tipGainCalValue;
+	TipRaw += CalibrationTempOffset;
+	return TipRaw;
 }
 
 uint16_t tipMeasurementToF(uint16_t raw) {
-	return ((((raw - 532) / 33) + (getHandleTemperature() / 10)
-			- CalibrationTempOffset) * 9) / 5 + 32;
+	//Convert result from C to F
+	return (tipMeasurementToC(raw) * 9) / 5 + 32;
 
 }
 uint16_t ftoTipMeasurement(uint16_t temp) {
-
-	return (((((temp - 32) * 5) / 9) - (getHandleTemperature() / 10)
-			+ CalibrationTempOffset) * 33) + 532;
+//Convert the temp back to C from F
+	return ctoTipMeasurement(((temp - 32) * 5) / 9);
 }
 
-uint16_t getTipInstantTemperature() {
+uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipInstantTemperature() {
 	uint16_t sum;
 	sum = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
 	sum += HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_4);
-	return sum;
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_1);
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_2);
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_3);
+	sum += HAL_ADCEx_InjectedGetValue(&hadc2, ADC_INJECTED_RANK_4);
+
+	return sum; // 8x over sample
 
 }
-uint16_t getTipRawTemp(uint8_t instant) {
+/*
+ * Loopup table for the tip calibration values for
+ * the gain of the tip's
+ * This can be found by line of best fit of TipRaw on X, and TipTemp-handle on Y.
+ * Then take the m term * 10000
+ * */
+uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
+
+	switch (tipID) {
+	case TS_D24:
+		return 141;
+		break;
+	case TS_BC2:
+		return (133 + 129) / 2;
+		break;
+	case TS_C1:
+		return 133;
+		break;
+	case TS_B2:
+		return 133;
+	default:
+		return 132; // make this the average of all
+		break;
+	}
+}
+
+uint16_t __attribute__ ((long_call, section (".data.ramfuncs"))) getTipRawTemp(
+		uint8_t instant) {
 	static int64_t filterFP = 0;
-	const uint8_t filterBeta = 5; //higher values smooth out more, but reduce responsiveness
+	static uint16_t lastSample = 0;
+	const uint8_t filterBeta = 7; //higher values smooth out more, but reduce responsiveness
 
 	if (instant == 1) {
 		uint16_t itemp = getTipInstantTemperature();
 		filterFP = (filterFP << filterBeta) - filterFP;
 		filterFP += (itemp << 9);
 		filterFP = filterFP >> filterBeta;
+		uint16_t temp = itemp;
+		itemp += lastSample;
+		itemp /= 2;
+		lastSample = temp;
 		return itemp;
 	} else if (instant == 2) {
-		filterFP = (getTipInstantTemperature() << 9);
+		filterFP = (getTipInstantTemperature() << 8);
 		return filterFP >> 9;
 	} else {
 		return filterFP >> 9;
@@ -102,24 +157,28 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 		preFillneeded = 1;
 	return sum * 4 / divisor;
 }
+volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
-	return htim2.Instance->CCR4;
+	return pendingPWM;
 }
-void setTipPWM(uint8_t pulse) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 2; //This is decremented in the handler for PWM so that the tip pwm is disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
 		pulse = 100;
-	htim2.Instance->CCR4 = pulse;
+
+	pendingPWM = pulse;
 }
 
-//Thse are called by the HAL after the corresponding events from the system timers.
+//These are called by the HAL after the corresponding events from the system timers.
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PeriodElapsedCallback(
+		TIM_HandleTypeDef *htim) {
 	//Period has elapsed
 	if (htim->Instance == TIM2) {
 		//we want to turn on the output again
 		PWMSafetyTimer--; //We decrement this safety value so that lockups in the scheduler will not cause the PWM to become locked in an active driving state.
 		//While we could assume this could never happen, its a small price for increased safety
+		htim2.Instance->CCR4 = pendingPWM;
 		if (htim2.Instance->CCR4 && PWMSafetyTimer) {
 			htim3.Instance->CCR1 = 50;
 			HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
@@ -128,21 +187,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 			htim3.Instance->CCR1 = 0;
 		}
 	} else if (htim->Instance == TIM1) {
+		// STM uses this for internal functions as a counter for timeouts
 		HAL_IncTick();
 	}
 }
 
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
+void __attribute__ ((long_call, section (".data.ramfuncs"))) HAL_TIM_PWM_PulseFinishedCallback(
+		TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
-		//This was a pulse event
+		//This was a when the PWM for the output has timed out
 		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
 			HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 			htim3.Instance->CCR1 = 0;
 
-		} /*else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
-		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
-		 }*/
+		}
 	}
 }
 

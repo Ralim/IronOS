@@ -73,6 +73,10 @@ var def =
 		{
 			"id" :"SolderingAdvancedPowerPrompt",
 			"maxLen": null
+		},
+		{
+			"id" :"OffString",
+			"maxLen": 3
 		}
 	],
 	"characters": [
@@ -200,6 +204,24 @@ var def =
 			"id": "ScrollingSpeed",
 			"maxLen": 6,
 			"maxLen2": 11
+		},
+		{
+			"id": "PidSettingsP",
+			"maxLen": 6,
+			"maxLen2": 11,
+			"feature": "PIDSETTINGS"
+		},
+		{
+			"id": "PidSettingsI",
+			"maxLen": 6,
+			"maxLen2": 11,
+			"feature": "PIDSETTINGS"
+		},
+		{
+			"id": "PidSettingsD",
+			"maxLen": 6,
+			"maxLen2": 11,
+			"feature": "PIDSETTINGS"
 		}
 	]
 }

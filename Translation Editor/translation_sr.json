@@ -1,8 +1,9 @@
 {
-	"languageCode": "HR",
-	"languageLocalName": "Hrvatski",
+	"languageCode": "SR",
+	"languageLocalName": "Srpski",
 	"messages": {
-		"SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",
+		"SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite!",
+		"SettingsResetWarning": "Jeste li sigurni da želite da vratite sva podešavanja na fabričke vrednosti?",
 		"UVLOWarningString": "BATERIJA",
 		"UndervoltageString": "PRENIZAK NAPON",
 		"InputVoltageString": "Napajanje: ",
@@ -12,12 +13,11 @@
 		"SleepingAdvancedString": "SPAVANJE...",
 		"WarningSimpleString": "VRUĆ",
 		"WarningAdvancedString": "OPREZ, VRUĆE!",
-		"SleepingTipAdvancedString": "Vrh: ",
-		"IdleTipString": "Vrh: ",
+		"SleepingTipAdvancedString": "Vrh:",
+		"IdleTipString": "Vrh:",
 		"IdleSetString": " / ",
 		"TipDisconnectedString": "VRH NIJE SPOJEN!",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
-		"SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
 		"OffString": "Off"
 	},
 	"characters": {
@@ -44,10 +44,10 @@
 		},
 		"UIMenu": {
 			"text2": [
-				"Korisničko",
-				"sučelje"
+				"Korisničke",
+				"opcije"
 			],
-			"desc": "Postavke korisničkog sučelja"
+			"desc": "Postavke korisničkih opcija"
 		},
 		"AdvancedMenu": {
 			"text2": [
@@ -60,7 +60,7 @@
 	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
-			"text": "PWRSC",
+			"text": "",
 			"text2": [
 				"Izvor",
 				"napajanja"
@@ -68,7 +68,7 @@
 			"desc": "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>"
 		},
 		"SleepTemperature": {
-			"text": "STMP",
+			"text": "",
 			"text2": [
 				"Temp",
 				"spavanja"
@@ -76,63 +76,63 @@
 			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. <C/F>"
 		},
 		"SleepTimeout": {
-			"text": "STME",
+			"text": "",
 			"text2": [
-				"Vrijeme",
+				"Vreme",
 				"spavanja"
 			],
-			"desc": "Vrijeme mirovanja nakon kojega lemilica spušta temperaturu. <Minute/Sekunde>"
+			"desc": "Vreme mirovanja nakon koga lemilica spušta temperaturu. <Minute/Sekunde>"
 		},
 		"ShutdownTimeout": {
-			"text": "SHTME",
+			"text": "",
 			"text2": [
-				"Vrijeme",
+				"Vreme",
 				"gašenja"
 			],
-			"desc": "Vrijeme mirovanja nakon kojega će se lemilica ugasiti. <Minute>"
+			"desc": "Vreme mirovanja nakon koga će se lemilica ugasiti."
 		},
 		"MotionSensitivity": {
-			"text": "MSENSE",
+			"text": "",
 			"text2": [
-				"Osjetljivost",
+				"Osetljivost",
 				"pokreta"
 			],
-			"desc": "Osjetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osjetljivo, 9=Najosjetljivije>"
+			"desc": "Osetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osetljivo, 9=Najosjetljivije>"
 		},
 		"TemperatureUnit": {
-			"text": "TMPUNT",
+			"text": "",
 			"text2": [
 				"Jedinica",
 				"temperature"
 			],
-			"desc": "Jedinica temperature. <C=Celzij, F=Fahrenheit>"
+			"desc": "Jedinica temperature. <C=Celzijus, F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-			"text": "ADVIDL",
+			"text": "",
 			"text2": [
 				"Detalji",
 				"pri čekanju"
 			],
-			"desc": "Prikazivanje detaljnih informacija tijekom čekanja."
+			"desc": "Prikazivanje detaljnih informacija manjim fontom tokom čekanja."
 		},
 		"DisplayRotation": {
-			"text": "DSPROT",
+			"text": "",
 			"text2": [
 				"Rotacija",
 				"ekrana"
 			],
-			"desc": "Orijentacija ekrana. <A=Automatski, L=Ljevoruki, D=Desnoruki>"
+			"desc": "Orijentacija ekrana. <A=Automatski, L=Levoruki, D=Desnoruki>"
 		},
 		"BoostEnabled": {
-			"text": "BOOST",
+			"text": "",
 			"text2": [
 				"Boost",
 				"način"
 			],
-			"desc": "Držanjem prednjeg gumba prilikom lemljenja aktivira se pojačani (Boost) način."
+			"desc": "Držanjem prednjeg dugmeta prilikom lemljenja aktivira se pojačani (Boost) način."
 		},
 		"BoostTemperature": {
-			"text": "BTMP",
+			"text": "",
 			"text2": [
 				"Boost",
 				"temp"
@@ -140,60 +140,60 @@
 			"desc": "Temperatura u pojačanom (Boost) načinu."
 		},
 		"AutoStart": {
-			"text": "ASTART",
+			"text": "",
 			"text2": [
 				"Auto",
 				"start"
 			],
-			"desc": "Ako je aktivno, lemilica po uključivanju napajanja odmah počinje grijati."
+			"desc": "Ako je aktivno, lemilica po uključivanju napajanja odmah počinje grejati."
 		},
 		"CooldownBlink": {
-			"text": "CLBLNK",
+			"text": "",
 			"text2": [
 				"Upozorenje",
 				"pri hlađenju"
 			],
-			"desc": "Bljeskanje temperature prilikom hlađenja, ako je lemilica vruća."
+			"desc": "Blinkanje temperature prilikom hlađenja, ako je lemilica vruća."
 		},
 		"TemperatureCalibration": {
-			"text": "TMP CAL?",
+			"text": "",
 			"text2": [
 				"Kalibracija",
 				"temperature"
 			],
-			"desc": "Kalibriranje temperature mjeri razliku temperatura vrška i drške, dok je lemilica hladna."
+			"desc": "Kalibrisanje temperature meri razliku temperatura vrha i drške, dok je lemilica hladna."
 		},
 		"SettingsReset": {
-			"text": "RESET?",
+			"text": "",
 			"text2": [
-				"Tvorničke",
+				"Fabričke",
 				"postavke"
 			],
-			"desc": "Vraćanje svih postavki na tvorničke vrijednosti."
+			"desc": "Vraćanje svih podešavanja na fabričke vrednosti."
 		},
 		"VoltageCalibration": {
-			"text": "CAL VIN?",
+			"text": "",
 			"text2": [
 				"Kalibracija",
 				"napona napajanja"
 			],
-			"desc": "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj."
+			"desc": "Kalibracija ulaznog napona. Podešavanje tastera, dugački pritisak za kraj."
 		},
 		"AdvancedSoldering": {
-			"text": "ADVSLD",
+			"text": "",
 			"text2": [
 				"Detalji",
 				"pri lemljenju"
 			],
-			"desc": "Prikazivanje detaljnih informacija tijekom lemljenja."
+			"desc": "Prikazivanje detaljnih informacija tokom lemljenja."
 		},
 		"ScrollingSpeed": {
-			"text": "DESCSP",
+			"text": "",
 			"text2": [
 				"Brzina",
 				"poruka"
 			],
-			"desc": "Brzina kretanja dugačkih poruka. <B=brzo, S=sporo>"
+			"desc": "Brzina kretanja dugačkih poruka <B=brzo, S=sporo>"
 		},
 		"PidSettingsP": {
 			"text": "PIDP",
