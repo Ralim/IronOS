@@ -54,7 +54,7 @@ enum TipType {
 
 uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t instant);
-uint16_t getInputVoltageX10(uint8_t divisor);
+uint16_t getInputVoltageX10(uint16_t divisor);
 uint16_t getTipInstantTemperature();
 uint8_t getTipPWM();
 void setTipPWM(uint8_t pulse);
