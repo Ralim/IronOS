@@ -4,7 +4,7 @@
 #include <MMA8652FC.hpp>
 #include "Setup.h"
 #include "OLED.hpp"
-
+extern uint16_t currentlyActiveTemperatureTarget;
 extern OLED lcd;
 extern MMA8652FC accel;
 extern uint8_t PCBVersion;
@@ -25,6 +25,8 @@ enum ButtonState {
 
 ButtonState getButtonState();
 void waitForButtonPressOrTimeout(uint32_t timeout);
+void waitForButtonPress();
+void GUIDelay();
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -36,7 +38,8 @@ void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
-void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed portCHAR *pcTaskName );
+void vApplicationStackOverflowHook( xTaskHandle *pxTask,
+		signed portCHAR *pcTaskName);
 
 #ifdef __cplusplus
 }

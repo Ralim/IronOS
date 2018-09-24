@@ -16,7 +16,8 @@
 		"IdleTipString": "Punta:",
 		"IdleSetString": " Im:",
 		"TipDisconnectedString": "PUNTA ASSENTE",
-		"SolderingAdvancedPowerPrompt": "Potenza:"
+		"SolderingAdvancedPowerPrompt": "Potenza:",
+		"OffString": "OFF"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -63,7 +64,7 @@
 				"Sorgente",
 				"alimentaz"
 			],
-			"desc": "Scegli la sorgente di alimentazione; imposta la soglia di scaricamento per alimentazione Li-Po <DC: 10V; S: 3.3V per cella>"
+			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>"
 		},
 		"SleepTemperature": {
 			"text": "",
@@ -71,7 +72,7 @@
 				"Temp",
 				"standby"
 			],
-			"desc": "Imposta temperatura in modalità standby <°C>"
+			"desc": "Imposta la temperatura da mantenere in modalità Standby <°C/°F>"
 		},
 		"SleepTimeout": {
 			"text": "",
@@ -79,7 +80,7 @@
 				"Timer",
 				"standby"
 			],
-			"desc": "Imposta timer per entrare in modalità standby <minuti/secondi>"
+			"desc": "Imposta il timer per entrare in modalità Standby <minuti/secondi>"
 		},
 		"ShutdownTimeout": {
 			"text": "",
@@ -87,7 +88,7 @@
 				"Timer",
 				"spegnimento"
 			],
-			"desc": "Imposta timer per lo spegnimento <minuti>"
+			"desc": "Imposta il timer per lo spegnimento <minuti>"
 		},
 		"MotionSensitivity": {
 			"text": "",
@@ -95,7 +96,7 @@
 				"Sensibilità",
 				"al movimento"
 			],
-			"desc": "Imposta sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>"
+			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Standby <0: nessuna; 1: minima; 9: massima>"
 		},
 		"TemperatureUnit": {
 			"text": "",
@@ -111,7 +112,7 @@
 				"Mostra",
 				"dettagli"
 			],
-			"desc": "Mostra informazioni dettagliate con un carattere più piccolo nella schermata principale"
+			"desc": "Mostra informazioni dettagliate con un carattere più piccolo all'interno della schermata principale"
 		},
 		"DisplayRotation": {
 			"text": "",
@@ -119,7 +120,7 @@
 				"Orientamento",
 				"display"
 			],
-			"desc": "Imposta orientamento del display <A: automatico; S: mano sinistra; D: mano destra>"
+			"desc": "Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>"
 		},
 		"BoostEnabled": {
 			"text": "",
@@ -127,7 +128,7 @@
 				"Funzione",
 				"\"boost\""
 			],
-			"desc": "Il tasto anteriore attiva la funzione \"boost\" durante la saldatura"
+			"desc": "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura"
 		},
 		"BoostTemperature": {
 			"text": "",
@@ -135,7 +136,7 @@
 				"Temp",
 				"\"boost\""
 			],
-			"desc": "Imposta la temperatura in funzione \"boost\""
+			"desc": "Imposta la temperatura della funzione «Turbo»"
 		},
 		"AutoStart": {
 			"text": "",
@@ -159,7 +160,7 @@
 				"Calibrazione",
 				"temperatura"
 			],
-			"desc": "Calibra la differenza di temperatura rilevata da quella presente sulla punta"
+			"desc": "Calibra le rilevazioni di temperatura"
 		},
 		"SettingsReset": {
 			"text": "",
@@ -175,7 +176,7 @@
 				"Calibrazione",
 				"tensione"
 			],
-			"desc": "Calibra la tensione in ingresso; regola con i bottoni, tieni premuto per uscire"
+			"desc": "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire"
 		},
 		"AdvancedSoldering": {
 			"text": "",
@@ -183,7 +184,7 @@
 				"Dettagli",
 				"saldatura"
 			],
-			"desc": "Mostra informazioni dettagliate in modalità saldatura"
+			"desc": "Mostra informazioni dettagliate durante la modalità Saldatura"
 		},
 		"ScrollingSpeed": {
 			"text": "",
@@ -192,6 +193,30 @@
 				"testo"
 			],
 			"desc": "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
 		}
 	},
 	"languageLocalName": "Italiano"

@@ -2,21 +2,22 @@
 	"languageCode": "HU",
 	"messages": {
 		"SettingsCalibrationWarning": "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!",
-		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"SettingsResetWarning": "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
 		"InputVoltageString": "Input V: ",
 		"WarningTipTempString": "Tip Temp: ",
-		"BadTipString": "BAD TIP",
+		"BadTipString": "HEGY",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Alvás...",
 		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "FIGYELEM! FORRÓ HEGY!",
+		"WarningAdvancedString": "!! FORRÓ HEGY !!",
 		"SleepingTipAdvancedString": "Tip:",
 		"IdleTipString": "Tip:",
 		"IdleSetString": " Set:",
 		"TipDisconnectedString": "TIP DISCONNECTED",
-		"SolderingAdvancedPowerPrompt": "Power: "
+		"SolderingAdvancedPowerPrompt": "Power: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -29,31 +30,31 @@
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Soldering",
-				"Settings"
+				"Forrasztás",
+				"Beállítások"
 			],
-			"desc": "Soldering settings"
+			"desc": "Forrasztási beállítások"
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Sleep",
-				"Modes"
+				"Alvás",
+				"Módok"
 			],
-			"desc": "Power Saving Settings"
+			"desc": "Energiatakarékossági beállítások"
 		},
 		"UIMenu": {
 			"text2": [
-				"User",
-				"Interface"
+				"Felhasználó",
+				"felület"
 			],
-			"desc": "User Interface settings"
+			"desc": "Felhasználói felület beállításai"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Advanced",
-				"Options"
+				"Speciális",
+				"beállítások"
 			],
-			"desc": "Advanced options"
+			"desc": "Speciális beállítások"
 		}
 	},
 	"menuOptions": {
@@ -191,7 +192,31 @@
 				"",
 				""
 			],
-			"desc": "Speed this text scrolls past at"
+			"desc": "Szöveg görgetésének gyorsítása"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
 		}
 	},
 	"languageLocalName": "Magyar"

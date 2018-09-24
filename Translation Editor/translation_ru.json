@@ -2,196 +2,221 @@
 	"languageCode": "RU",
 	"messages": {
 		"SettingsCalibrationWarning": "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!",
-		"SettingsResetWarning": "Are you sure to reset settings to default values?",
-		"UVLOWarningString": "БАТ РАЗР",
-		"UndervoltageString": "Undervoltage",
-		"InputVoltageString": "Input V: ",
-		"WarningTipTempString": "Tip Temp: ",
-		"BadTipString": "BAD TIP",
-		"SleepingSimpleString": "Хррр",
+		"SettingsResetWarning": "Вы действительно хотите сбросить настройки до значений по умолчанию?",
+		"UVLOWarningString": "АККУМ--",
+		"UndervoltageString": "Под питанием",
+		"InputVoltageString": "Питание B: ",
+		"WarningTipTempString": "Жало t°: ",
+		"BadTipString": "Жало--",
+		"SleepingSimpleString": "Сон ",
 		"SleepingAdvancedString": "Ожидание...",
 		"WarningSimpleString": " АЙ!",
-		"WarningAdvancedString": "!!! ГОРЯЧО !!!",
-		"SleepingTipAdvancedString": "Tip:",
-		"IdleTipString": "Tip:",
-		"IdleSetString": " Set:",
-		"TipDisconnectedString": "TIP DISCONNECTED",
-		"SolderingAdvancedPowerPrompt": "Power: "
+		"WarningAdvancedString": "ВНИМАНИЕ ГОРЯЧО",
+		"SleepingTipAdvancedString": "Жало:",
+		"IdleTipString": "Жало:",
+		"IdleSetString": " ->",
+		"TipDisconnectedString": "Жало отключено",
+		"SolderingAdvancedPowerPrompt": "Питание: ",
+		"OffString": "Off"
 	},
 	"characters": {
-		"SettingRightChar": "R",
-		"SettingLeftChar": "L",
+		"SettingRightChar": "П",
+		"SettingLeftChar": "Л",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "F",
-		"SettingSlowChar": "S"
+		"SettingFastChar": "+",
+		"SettingSlowChar": "-"
 	},
-	"menuDouble": false,
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Soldering",
-				"Settings"
+				"Параметры",
+				"пайки"
 			],
-			"desc": "Soldering settings"
+			"desc": "Параметры пайки"
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Sleep",
-				"Modes"
+				"Режим",
+				"сна"
 			],
-			"desc": "Power Saving Settings"
+			"desc": "Параметры экономии энергии"
 		},
 		"UIMenu": {
 			"text2": [
-				"User",
-				"Interface"
+				"Пользовател",
+				"интерфейс"
 			],
-			"desc": "User Interface settings"
+			"desc": "Параметры пользовательского интерфейса"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Advanced",
-				"Options"
+				"Дополнител.",
+				"параметры"
 			],
-			"desc": "Advanced options"
+			"desc": "Дополнительные параметры"
 		}
 	},
 	"menuOptions": {
 		"PowerSource": {
 			"text": "ИстП",
 			"text2": [
-				"",
-				""
+				"Источник",
+				"питания"
 			],
 			"desc": "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>"
 		},
 		"SleepTemperature": {
 			"text": "Тожд",
 			"text2": [
-				"",
-				""
+				"Темпер.",
+				"сна"
 			],
 			"desc": "Температура режима ожидания <С>"
 		},
 		"SleepTimeout": {
 			"text": "Вожд",
 			"text2": [
-				"",
-				""
+				"Таймаут",
+				"сна"
 			],
 			"desc": "Время до перехода в режим ожидания <Минуты>"
 		},
 		"ShutdownTimeout": {
 			"text": "Тоткл",
 			"text2": [
-				"",
-				""
+				"Время до",
+				"отключения"
 			],
 			"desc": "Время до отключения <Минуты>"
 		},
 		"MotionSensitivity": {
 			"text": "ЧувсДв",
 			"text2": [
-				"",
-				""
+				"Чувст. сенсо-",
+				"ра движения"
 			],
 			"desc": "Акселерометр <0. Выкл. 1. мин. чувствительный 9. макс. чувствительный>"
 		},
 		"TemperatureUnit": {
 			"text": "ЕдТемп",
 			"text2": [
-				"",
-				""
+				"Формат темпе-",
+				"ратуры(C°/F°)"
 			],
 			"desc": "В чем измерять температуру"
 		},
 		"AdvancedIdle": {
 			"text": "ИнфОжд",
 			"text2": [
-				"",
-				""
+				"Подробный ре-",
+				"жим ожидания"
 			],
 			"desc": "Показывать детальную информацию маленьким шрифтом на домашнем экране"
 		},
 		"DisplayRotation": {
 			"text": "ПовЭкр",
 			"text2": [
-				"",
-				""
+				"Автоповорот",
+				"экрана"
 			],
 			"desc": "Ориентация дисплея <A. Автоматический, Л. Левая рука, П. Правая рука>"
 		},
 		"BoostEnabled": {
 			"text": "Турбо",
 			"text2": [
-				"",
-				""
+				"Режим",
+				"Турбо"
 			],
 			"desc": "Турбо-режим при удержании кнопки А при пайке "
 		},
 		"BoostTemperature": {
 			"text": "Ттур",
 			"text2": [
-				"",
-				""
+				"Темпер.",
+				"Турбо"
 			],
 			"desc": "Температура в турбо-режиме"
 		},
 		"AutoStart": {
 			"text": "Астарт",
 			"text2": [
-				"",
-				""
+				"Горячий",
+				"старт"
 			],
 			"desc": "Автоматический запуск паяльника при включении питания. T=Нагрев, S=Режим ожидания,F=Выкл."
 		},
 		"CooldownBlink": {
 			"text": "Охлажд",
 			"text2": [
-				"",
-				""
+				"Показ t° при",
+				"остывании"
 			],
 			"desc": "Показывать температуру на экране охлаждения, пока жало остается горячим."
 		},
 		"TemperatureCalibration": {
 			"text": "КалибрТ",
 			"text2": [
-				"",
-				""
+				"Калибровка",
+				"температуры"
 			],
 			"desc": "Калибровка термодатчика."
 		},
 		"SettingsReset": {
 			"text": "СБРОС?",
 			"text2": [
-				"",
-				""
+				"Сбросить все",
+				"настройки?"
 			],
 			"desc": "Сброс всех настроек."
 		},
 		"VoltageCalibration": {
 			"text": "КалибрU?",
 			"text2": [
-				"",
-				""
+				"Калибровка",
+				"напряжения"
 			],
 			"desc": "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить."
 		},
 		"AdvancedSoldering": {
 			"text": "ИнфПай",
 			"text2": [
-				"",
-				""
+				"Подробный ре-",
+				"жим пайки"
 			],
 			"desc": "Показывать детальную информацию при пайке."
 		},
 		"ScrollingSpeed": {
 			"text": "DESCSP",
 			"text2": [
-				"",
-				""
+				"Скорость",
+				"текста"
 			],
-			"desc": "Speed this text scrolls past at"
+			"desc": "Скорость прокрутки текста"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
 		}
 	},
 	"languageLocalName": "Русский"

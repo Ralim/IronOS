@@ -1,0 +1,223 @@
+{
+	"languageCode": "NO",
+	"languageLocalName": "Norsk",
+	"messages": {
+		"SettingsCalibrationWarning": "Sørg for at loddespissen har romtemperatur før du fortsetter!",
+		"SettingsResetWarning": "Er du sikker på at du vil tilbakestille til standardinnstillinger?",
+		"UVLOWarningString": "Lavspenn",
+		"UndervoltageString": "Underspenning",
+		"InputVoltageString": "Innspenn.: ",
+		"WarningTipTempString": "Spisstemp: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Dvale...",
+		"WarningSimpleString": "Varm",
+		"WarningAdvancedString": "VARM SPISS!",
+		"SleepingTipAdvancedString": "Spiss:",
+		"IdleTipString": "Spiss:",
+		"IdleSetString": "Set:",
+		"TipDisconnectedString": "SPISS FRAKOBLET",
+		"SolderingAdvancedPowerPrompt": "Effekt: ",
+		"OffString": "Av"
+	},
+	"characters": {
+		"SettingRightChar": "H",
+		"SettingLeftChar": "V",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "H",
+		"SettingSlowChar": "L"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Lodde-",
+				"innst."
+			],
+			"desc": "Loddeinnstillinger"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Dvale-",
+				"innst."
+			],
+			"desc": "Dvaleinnstillinger"
+		},
+		"UIMenu": {
+			"text2": [
+				"Bruker-",
+				"grensesn."
+			],
+			"desc": "Brukergrensesnitt-innstillinger"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Avanserte",
+				"valg"
+			],
+			"desc": "Avanserte valg"
+		}
+	},
+	"menuDouble": false,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "Kilde",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Strømforsyning. Sett nedre spenning for automatisk nedstenging. <DC 10V <S 3.3V per celle"
+		},
+		"SleepTemperature": {
+			"text": "DTmp",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Dvaletemperatur <C"
+		},
+		"SleepTimeout": {
+			"text": "DTid",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tid før dvale <Minutter/Sekunder"
+		},
+		"ShutdownTimeout": {
+			"text": "AvTid",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tid før automatisk nedstenging <Minutter"
+		},
+		"MotionSensitivity": {
+			"text": "BSensr",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Bevegelsesfølsomhet <0.Inaktiv 1.Minst følsom 9.Mest følsom"
+		},
+		"TemperatureUnit": {
+			"text": "TmpEnh",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperaturskala <C=Celsius F=Fahrenheit"
+		},
+		"AdvancedIdle": {
+			"text": "AvDvSk",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
+		},
+		"DisplayRotation": {
+			"text": "SkRetn",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Skjermretning <A. Automatisk V. Venstrehendt H. Høyrehendt"
+		},
+		"BoostEnabled": {
+			"text": "Kraft",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Frontknappen aktiverer kraftfunksjonen, 450C ved lodding"
+		},
+		"BoostTemperature": {
+			"text": "KTmp",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatur i \"kraft\"-modus"
+		},
+		"AutoStart": {
+			"text": "AStart",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Start automatisk med lodding når strøm kobles til. L=Lodding, D=Dvale, I=Inaktiv"
+		},
+		"CooldownBlink": {
+			"text": "KjBlnk",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
+		},
+		"TemperatureCalibration": {
+			"text": "TempKal?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kalibrer spiss-temperatur."
+		},
+		"SettingsReset": {
+			"text": "TilbStl?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tilbakestill alle innstillinger"
+		},
+		"VoltageCalibration": {
+			"text": "KalSpIn?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
+		},
+		"AdvancedSoldering": {
+			"text": "AvLdSk",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Vis detaljert informasjon ved lodding"
+		},
+		"ScrollingSpeed": {
+			"text": "RullHa",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Hastigheten på rulletekst"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}
