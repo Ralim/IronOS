@@ -35,6 +35,7 @@ def readTranslations(jsonDir):
     
         # Read only translation_XX.json
         if lf.startswith("translation_") and lf.endswith(".json"):
+            print("Reading " + lf)
             lang = loadJson(fileWithPath, False)
             
             # Extract lang code from file name
