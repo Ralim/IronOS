@@ -849,7 +849,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 // ---- Italiano ----
 
 const char* SettingsDescriptions[] = {
-  /* PowerSource               */ "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>",
+  /* PowerSource               */ "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3,3V per cella>",
   /* SleepTemperature          */ "Imposta la temperatura da mantenere in modalità Standby <°C/°F>",
   /* SleepTimeout              */ "Imposta il timer per entrare in modalità Standby <minuti/secondi>",
   /* ShutdownTimeout           */ "Imposta il timer per lo spegnimento <minuti>",
@@ -860,7 +860,7 @@ const char* SettingsDescriptions[] = {
   /* BoostEnabled              */ "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura",
   /* BoostTemperature          */ "Imposta la temperatura della funzione «Turbo»",
   /* AutoStart                 */ "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
-  /* CooldownBlink             */ "Mostra la temperatura durante il raffreddamento se la punta è ancora calda",
+  /* CooldownBlink             */ "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda",
   /* TemperatureCalibration    */ "Calibra le rilevazioni di temperatura",
   /* SettingsReset             */ "Ripristina tutte le impostazioni",
   /* VoltageCalibration        */ "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire",
@@ -881,7 +881,7 @@ const char* WarningSimpleString = "HOT!";
 const char* WarningAdvancedString = "PUNTA CALDA!";
 const char* SleepingTipAdvancedString = "Punta:";
 const char* IdleTipString = "Punta:";
-const char* IdleSetString = " Im:";
+const char* IdleSetString = "/";
 const char* TipDisconnectedString = "PUNTA ASSENTE";
 const char* SolderingAdvancedPowerPrompt = "Potenza:";
 const char* OffString = "OFF";
@@ -902,8 +902,8 @@ const char* SettingsShortNames[][2] = {
   /* TemperatureUnit           */ { "Unità di", "temperatura" },
   /* AdvancedIdle              */ { "Mostra", "dettagli" },
   /* DisplayRotation           */ { "Orientamento", "display" },
-  /* BoostEnabled              */ { "Funzione", "\"boost\"" },
-  /* BoostTemperature          */ { "Temp", "\"boost\"" },
+  /* BoostEnabled              */ { "Funzione", "«Turbo»" },
+  /* BoostTemperature          */ { "Temp", "«Turbo»" },
   /* AutoStart                 */ { "Avvio", "automatico" },
   /* CooldownBlink             */ { "Avviso", "punta calda" },
   /* TemperatureCalibration    */ { "Calibrazione", "temperatura" },
@@ -921,10 +921,10 @@ const char* SettingsMenuEntries[4] = {
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  /* SolderingMenu             */ "Menù impostazioni saldatura",
-  /* PowerSavingMenu           */ "Menù risparmio energetico",
-  /* UIMenu                    */ "Menù interfaccia utente",
-  /* AdvancedMenu              */ "Menù impostazioni avanzate",
+  /* SolderingMenu             */ "Menù d'impostazioni della modalità Saldatura",
+  /* PowerSavingMenu           */ "Menù d'impostazioni per il risparmio energetico",
+  /* UIMenu                    */ "Menù d'impostazioni dell'interfaccia utente",
+  /* AdvancedMenu              */ "Menù d'impostazioni avanzate",
 };
 
 #endif
