@@ -26,15 +26,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Calibration. Buttons adjust, long press to exit",
   /* AdvancedSoldering         */ "Display detailed information while soldering",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
@@ -80,15 +71,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrate", "input voltage?" },
   /* AdvancedSoldering         */ { "Detailed", "solder screen" },
   /* ScrollingSpeed            */ { "Scrolling", "Speed" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -128,15 +110,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калибриране на входното напрежение (VIN). Задръжте бутонa за изход",
   /* AdvancedSoldering         */ "Детайлна информация в работен режим при запояване",
   /* ScrollingSpeed            */ "Скорост на движение на този текст",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Уверете се, че човката на поялника е със стайна температура преди да продължите!";
@@ -182,15 +155,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калибриране", "напрежение?" },
   /* AdvancedSoldering         */ { "Детайлен", "работен екран" },
   /* ScrollingSpeed            */ { "Скорост", "на текста" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -230,15 +194,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibrace vstupního napětí. Tlačítky uprav, podržením potvrď.",
   /* AdvancedSoldering         */ "Zobrazit podrobnosti při pájení?",
   /* ScrollingSpeed            */ "Rychlost skrolování popisků podobných tomuto <P=Pomalu,R=Rychle>",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Ujistěte se, že hrot má pokojovou teplotu!";
@@ -284,15 +239,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibrovat", "vstupní napětí?" },
   /* AdvancedSoldering         */ { "Podrobnosti", "při pájení" },
   /* ScrollingSpeed            */ { "Rychlost", "popisků" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -332,15 +278,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen.",
   /* AdvancedSoldering         */ "Detaillierte Anzeige im Lötmodus <J=An, N=Aus>",
   /* ScrollingSpeed            */ "Scrollgeschwindigkeit der Texte",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
@@ -386,15 +323,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Eingangsspannung", "kalibrieren?" },
   /* AdvancedSoldering         */ { "Detaillierte", "Lötansicht" },
   /* ScrollingSpeed            */ { "Scroll-", "geschw." },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -434,15 +362,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud",
   /* AdvancedSoldering         */ "Vis detialieret information mens der loddes",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!";
@@ -488,15 +407,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PIDP" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PIDI" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PIDD" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -536,15 +446,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Calibración VIN (Voltaje de entrada). Ajuste con ambos botones, pulsación larga para salir.",
   /* AdvancedSoldering         */ "Mostrar información detallada mientras suelda.",
   /* ScrollingSpeed            */ "Velocidad de desplazamiento del texto.",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "¡Asegúrese que la punta esté a temperatura ambiente antes de proceder!";
@@ -584,21 +485,12 @@ const char* SettingsShortNames[][2] = {
   /* BoostEnabled              */ { "Boost botón", "activado" },
   /* BoostTemperature          */ { "Temp en", "Boost" },
   /* AutoStart                 */ { "Soldadura", "al enchufar" },
-  /* CooldownBlink             */ { "Temp. en el", "enfriamiento" },
+  /* CooldownBlink             */ { "Parpadea m.", "enfriamiento" },
   /* TemperatureCalibration    */ { "Calibrar temp", "de la punta" },
   /* SettingsReset             */ { "Estado de", "fábrica" },
   /* VoltageCalibration        */ { "Calibrar", "V entrada" },
-  /* AdvancedSoldering         */ { "Inf detallada", "de soldadura" },
+  /* AdvancedSoldering         */ { "Inf detallada", "del soldadura" },
   /* ScrollingSpeed            */ { "Velocidad", "del texto" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -638,15 +530,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Tulojännitten kalibrointi (VIN). Painikkeilla säädetään ja pitkään painamalla poistutaan.",
   /* AdvancedSoldering         */ "Näyttää yksityiskohtaisemmat tiedot juotostilassa.",
   /* ScrollingSpeed            */ "Näiden selitetekstien vieritysnopeus.",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Varmista että kärki on huoneenlämpöinen ennen jatkamista!";
@@ -692,15 +575,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibroi", "tulojännite?" },
   /* AdvancedSoldering         */ { "Tarkempi", "juotosnäyttö" },
   /* ScrollingSpeed            */ { "Tietojen", "näyttönopeus" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -740,15 +614,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
   /* AdvancedSoldering         */ "Afficher des informations détaillées pendant la soudure",
   /* ScrollingSpeed            */ "Vitesse de défilement de ce texte en <R=Rapide L=Lent>",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Assurez-vous que la panne soit à température ambiante avant de continuer!";
@@ -794,15 +659,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Etalonner", "tension d'entrée" },
   /* AdvancedSoldering         */ { "Ecran soudure", "détaillé" },
   /* ScrollingSpeed            */ { "Vitesse de", "défilement" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -842,15 +698,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj.",
   /* AdvancedSoldering         */ "Prikazivanje detaljnih informacija tijekom lemljenja.",
   /* ScrollingSpeed            */ "Brzina kretanja dugačkih poruka. <B=brzo, S=sporo>",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
@@ -896,15 +743,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibracija", "napona napajanja" },
   /* AdvancedSoldering         */ { "Detalji", "pri lemljenju" },
   /* ScrollingSpeed            */ { "Brzina", "poruka" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -944,15 +782,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "A bemeneti feszültség kalibrálása. Röviden megnyomva állítsa be, hosszan nyomja meg a kilépéshez.",
   /* AdvancedSoldering         */ "Részletes információk megjelenítése forrasztás közben",
   /* ScrollingSpeed            */ "Szöveg görgetésének gyorsítása",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
@@ -998,15 +827,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PIDP" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PIDI" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PIDD" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1029,7 +849,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 // ---- Italiano ----
 
 const char* SettingsDescriptions[] = {
-  /* PowerSource               */ "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>",
+  /* PowerSource               */ "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3,3V per cella>",
   /* SleepTemperature          */ "Imposta la temperatura da mantenere in modalità Standby <°C/°F>",
   /* SleepTimeout              */ "Imposta il timer per entrare in modalità Standby <minuti/secondi>",
   /* ShutdownTimeout           */ "Imposta il timer per lo spegnimento <minuti>",
@@ -1040,21 +860,12 @@ const char* SettingsDescriptions[] = {
   /* BoostEnabled              */ "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura",
   /* BoostTemperature          */ "Imposta la temperatura della funzione «Turbo»",
   /* AutoStart                 */ "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
-  /* CooldownBlink             */ "Mostra la temperatura durante il raffreddamento se la punta è ancora calda",
+  /* CooldownBlink             */ "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda",
   /* TemperatureCalibration    */ "Calibra le rilevazioni di temperatura",
   /* SettingsReset             */ "Ripristina tutte le impostazioni",
   /* VoltageCalibration        */ "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire",
   /* AdvancedSoldering         */ "Mostra informazioni dettagliate durante la modalità Saldatura",
   /* ScrollingSpeed            */ "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
@@ -1070,7 +881,7 @@ const char* WarningSimpleString = "HOT!";
 const char* WarningAdvancedString = "PUNTA CALDA!";
 const char* SleepingTipAdvancedString = "Punta:";
 const char* IdleTipString = "Punta:";
-const char* IdleSetString = " Im:";
+const char* IdleSetString = "/";
 const char* TipDisconnectedString = "PUNTA ASSENTE";
 const char* SolderingAdvancedPowerPrompt = "Potenza:";
 const char* OffString = "OFF";
@@ -1091,8 +902,8 @@ const char* SettingsShortNames[][2] = {
   /* TemperatureUnit           */ { "Unità di", "temperatura" },
   /* AdvancedIdle              */ { "Mostra", "dettagli" },
   /* DisplayRotation           */ { "Orientamento", "display" },
-  /* BoostEnabled              */ { "Funzione", "\"boost\"" },
-  /* BoostTemperature          */ { "Temp", "\"boost\"" },
+  /* BoostEnabled              */ { "Funzione", "«Turbo»" },
+  /* BoostTemperature          */ { "Temp", "«Turbo»" },
   /* AutoStart                 */ { "Avvio", "automatico" },
   /* CooldownBlink             */ { "Avviso", "punta calda" },
   /* TemperatureCalibration    */ { "Calibrazione", "temperatura" },
@@ -1100,15 +911,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrazione", "tensione" },
   /* AdvancedSoldering         */ { "Dettagli", "saldatura" },
   /* ScrollingSpeed            */ { "Velocità", "testo" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1119,10 +921,10 @@ const char* SettingsMenuEntries[4] = {
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  /* SolderingMenu             */ "Menù impostazioni saldatura",
-  /* PowerSavingMenu           */ "Menù risparmio energetico",
-  /* UIMenu                    */ "Menù interfaccia utente",
-  /* AdvancedMenu              */ "Menù impostazioni avanzate",
+  /* SolderingMenu             */ "Menù d'impostazioni della modalità Saldatura",
+  /* PowerSavingMenu           */ "Menù d'impostazioni per il risparmio energetico",
+  /* UIMenu                    */ "Menù d'impostazioni dell'interfaccia utente",
+  /* AdvancedMenu              */ "Menù d'impostazioni avanzate",
 };
 
 #endif
@@ -1148,15 +950,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Įvesties įtampos kalibravimas. Trumpai paspauskite, norėdami nustatyti, ilgai paspauskite, kad išeitumėte",
   /* AdvancedSoldering         */ "Ar rodyti išsamią informaciją lituojant",
   /* ScrollingSpeed            */ "Greitis, kuriuo šis tekstas slenka",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!";
@@ -1202,15 +995,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibruoti", "įvesties įtampą?" },
   /* AdvancedSoldering         */ { "Detalus lita-", "vimo ekranas" },
   /* ScrollingSpeed            */ { "Greitas apr", "ašym. slink" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1250,15 +1034,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen.",
   /* AdvancedSoldering         */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm.",
   /* ScrollingSpeed            */ "Snelheid waarmee de tekst scrolt.",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!";
@@ -1304,15 +1079,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibreer", "input-voltage?" },
   /* AdvancedSoldering         */ { "Gedetailleerd", "soldeerscherm" },
   /* ScrollingSpeed            */ { "Scroll", "snelheid" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1352,15 +1118,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut",
   /* AdvancedSoldering         */ "Vis detaljert informasjon ved lodding",
   /* ScrollingSpeed            */ "Hastigheten på rulletekst",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Sørg for at loddespissen har romtemperatur før du fortsetter!";
@@ -1406,15 +1163,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "KalSpIn?" },
   /* AdvancedSoldering         */ { "AvLdSk" },
   /* ScrollingSpeed            */ { "RullHa" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PIDP" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PIDI" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PIDD" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1454,15 +1202,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść.",
   /* AdvancedSoldering         */ "Wyświetl szczegółowe informacje podczas lutowania <T = wł., N = wył.>",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!";
@@ -1508,15 +1247,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PIDP" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PIDI" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PIDD" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1556,15 +1286,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha presionado para sair",
   /* AdvancedSoldering         */ "Exibe informações avançadas durante o uso",
   /* ScrollingSpeed            */ "Velocidade que esse texto é exibido",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "A ponta deve estar em temperatura ambiente antes de continuar!";
@@ -1610,15 +1331,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrar", "tensão" },
   /* AdvancedSoldering         */ { "Tela trabalho", "avançada" },
   /* ScrollingSpeed            */ { "Velocidade", "texto ajuda" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1658,15 +1370,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
   /* AdvancedSoldering         */ "Показывать детальную информацию при пайке.",
   /* ScrollingSpeed            */ "Скорость прокрутки текста",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
@@ -1712,15 +1415,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калибровка", "напряжения" },
   /* AdvancedSoldering         */ { "Подробный ре-", "жим пайки" },
   /* ScrollingSpeed            */ { "Скорость", "текста" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1760,15 +1454,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat",
   /* AdvancedSoldering         */ "Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!";
@@ -1814,15 +1499,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PIDP" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PIDI" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PIDD" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1862,15 +1538,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracija ulaznog napona. Podešavanje tastera, dugački pritisak za kraj.",
   /* AdvancedSoldering         */ "Prikazivanje detaljnih informacija tokom lemljenja.",
   /* ScrollingSpeed            */ "Brzina kretanja dugačkih poruka <B=brzo, S=sporo>",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite!";
@@ -1916,15 +1583,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibracija", "napona napajanja" },
   /* AdvancedSoldering         */ { "Detalji", "pri lemljenju" },
   /* ScrollingSpeed            */ { "Brzina", "poruka" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1956,7 +1614,7 @@ const char* SettingsDescriptions[] = {
   /* AdvancedIdle              */ "Visa detaljerad information i mindre typsnitt när inaktiv.",
   /* DisplayRotation           */ "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>",
   /* BoostEnabled              */ "Aktivera främre knappen för turboläge (temperaturhöjning) vid lödning",
-  /* BoostTemperature          */ "Temperatur i \\"turbo\\"-läge",
+  /* BoostTemperature          */ "Temperatur i \"turbo\"-läge",
   /* AutoStart                 */ "Startar automatiskt lödpennan vid uppstart. T=Lödning, S=Viloläge, F=Av",
   /* CooldownBlink             */ "Blinka temperaturen medan spetsen kyls av och fortfarande är varm.",
   /* TemperatureCalibration    */ "Kalibrera spets-kompensation.",
@@ -1964,15 +1622,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Inspänningskalibrering. Knapparna justerar, håll inne för avslut",
   /* AdvancedSoldering         */ "Visa detaljerad information vid lödning",
   /* ScrollingSpeed            */ "Hastighet som den här texten rullar i",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
@@ -2018,15 +1667,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibrera", "inspänning?" },
   /* AdvancedSoldering         */ { "Detaljerad", "lödng.skärm" },
   /* ScrollingSpeed            */ { "Beskrivning", "rullhast." },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -2066,15 +1706,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas.",
   /* AdvancedSoldering         */ "Lehimleme yaparken detaylı bilgi göster",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!";
@@ -2120,15 +1751,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PIDP" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PIDI" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PIDD" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -2168,15 +1790,6 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити.",
   /* AdvancedSoldering         */ "Показувати детальну інформацію при пайці.",
   /* ScrollingSpeed            */ "Швидкість прокрутки тексту",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
 };
 
 const char* SettingsCalibrationWarning = "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!";
@@ -2222,15 +1835,6 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калібровка", "напруга" },
   /* AdvancedSoldering         */ { "Детальний ре-", "жим пайки" },
   /* ScrollingSpeed            */ { "Швидкість", "тексту" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
 };
 
 const char* SettingsMenuEntries[4] = {
