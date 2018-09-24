@@ -1614,7 +1614,7 @@ const char* SettingsDescriptions[] = {
   /* AdvancedIdle              */ "Visa detaljerad information i mindre typsnitt när inaktiv.",
   /* DisplayRotation           */ "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>",
   /* BoostEnabled              */ "Aktivera främre knappen för turboläge (temperaturhöjning) vid lödning",
-  /* BoostTemperature          */ "Temperatur i \\"turbo\\"-läge",
+  /* BoostTemperature          */ "Temperatur i \"turbo\"-läge",
   /* AutoStart                 */ "Startar automatiskt lödpennan vid uppstart. T=Lödning, S=Viloläge, F=Av",
   /* CooldownBlink             */ "Blinka temperaturen medan spetsen kyls av och fortfarande är varm.",
   /* TemperatureCalibration    */ "Kalibrera spets-kompensation.",
