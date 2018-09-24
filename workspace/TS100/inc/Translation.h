@@ -9,7 +9,8 @@
 #define TRANSLATION_H_
 
 enum ShortNameType {
-	SHORT_NAME_SINGLE_LINE = 1, SHORT_NAME_DOUBLE_LINE = 2,
+  SHORT_NAME_SINGLE_LINE = 1,
+  SHORT_NAME_DOUBLE_LINE = 2,
 };
 
 /*
@@ -48,7 +49,5 @@ extern const char SettingAutoChar;
 
 extern const char SettingFastChar;
 extern const char SettingSlowChar;
-
-
 
 #endif /* TRANSLATION_H_ */

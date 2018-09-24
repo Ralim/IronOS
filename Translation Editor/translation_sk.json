@@ -1,0 +1,222 @@
+{
+	"languageCode": "SK",
+	"messages": {
+		"SettingsCalibrationWarning": "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!",
+		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Chrr",
+		"SleepingAdvancedString": "Kludovy rezim...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "HROT JE HORUCI !",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SolderingAdvancedPowerPrompt": "Power: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": false,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"Settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"Modes"
+			],
+			"desc": "Power Saving Settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"Interface"
+			],
+			"desc": "User Interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"Options"
+			],
+			"desc": "Advanced options"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "PWRSC",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Zdroj napatia. Nastavit napatie pre vypnutie (cutoff)  <DC=10V, nS=n*3.3V pre LiIon clanky>"
+		},
+		"SleepTemperature": {
+			"text": "STMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kludova teplota (v nastavenych jednotkach)"
+		},
+		"SleepTimeout": {
+			"text": "STME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kludovy rezim po <sekundach/minutach>"
+		},
+		"ShutdownTimeout": {
+			"text": "SHTME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Cas na vypnutie <minuty>"
+		},
+		"MotionSensitivity": {
+			"text": "MSENSE",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Citlivost detekcie pohybu <0=Vyp, 1=Min ... 9=Max>"
+		},
+		"TemperatureUnit": {
+			"text": "TMPUNT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Jednotky merania teploty <C=stupne Celzia, F=stupne Fahrenheita>"
+		},
+		"AdvancedIdle": {
+			"text": "ADVIDL",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Zobrazit detailne informacie v kludovom rezime <T=Zap, F=Vyp>"
+		},
+		"DisplayRotation": {
+			"text": "DSPROT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Orientacia displeja <A=Auto, L=Lavak, R=Pravak>"
+		},
+		"BoostEnabled": {
+			"text": "BOOST",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Povolit tlacidlo pre prudky nahrev <T=Zap, F=Vyp>"
+		},
+		"BoostTemperature": {
+			"text": "BTMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Cielova teplota pre prudky nahrev (v nastavenych jednotkach)"
+		},
+		"AutoStart": {
+			"text": "ASTART",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Pri starte spustit rezim spajkovania <T=Zap, F=Vyp, S=Spanok>"
+		},
+		"CooldownBlink": {
+			"text": "CLBLNK",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Blikanie ukazovatela teploty pocas chladnutia hrotu <T=Zap, F=Vyp>"
+		},
+		"TemperatureCalibration": {
+			"text": "TMP CAL?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kalibracia posunu hrotu"
+		},
+		"SettingsReset": {
+			"text": "RESET?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Tovarenske nastavenia"
+		},
+		"VoltageCalibration": {
+			"text": "CAL VIN?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat"
+		},
+		"AdvancedSoldering": {
+			"text": "ADVSLD",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>"
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Speed this text scrolls past at"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}

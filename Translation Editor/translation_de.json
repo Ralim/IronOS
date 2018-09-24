@@ -1,0 +1,223 @@
+{
+	"languageCode": "DE",
+	"messages": {
+		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
+		"SettingsResetWarning": "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?",
+		"UVLOWarningString": "V niedr.",
+		"UndervoltageString": "Unterspannung",
+		"InputVoltageString": "V Eingang: ",
+		"WarningTipTempString": "Temperatur: ",
+		"BadTipString": "DEFEKT",
+		"SleepingSimpleString": "Zzz ",
+		"SleepingAdvancedString": "Ruhemodus...",
+		"WarningSimpleString": "HEIß",
+		"WarningAdvancedString": "! Achtung Heiß !",
+		"SleepingTipAdvancedString": "Temp:",
+		"IdleTipString": "Ist:",
+		"IdleSetString": " Soll:",
+		"TipDisconnectedString": "Spitze fehlt",
+		"SolderingAdvancedPowerPrompt": "Leistung: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": true,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Löt-",
+				"einstellungen"
+			],
+			"desc": "Löteinstellungen"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Schlaf-",
+				"modus"
+			],
+			"desc": "Energiespareinstellungen"
+		},
+		"UIMenu": {
+			"text2": [
+				"Menü-",
+				"einstellungen"
+			],
+			"desc": "Menüeinstellungen"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Erweiterte",
+				"Einstellungen"
+			],
+			"desc": "Erweiterte Einstellungen"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Spannungs-",
+				"quelle"
+			],
+			"desc": "Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Ruhetemp-",
+				"eratur"
+			],
+			"desc": "Ruhetemperatur (In der eingestellten Einheit)"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Ruhever-",
+				"zögerung"
+			],
+			"desc": "Ruhemodus nach <Sekunden/Minuten>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Abschalt-",
+				"zeit"
+			],
+			"desc": "Abschalten nach <Minuten>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Bewegungs-",
+				"empfindlichk."
+			],
+			"desc": "Bewegungsempfindlichkeit <0=Aus, 1=Minimal ... 9=Maximal>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Temperatur-",
+				"einheit"
+			],
+			"desc": "Temperatureinheit <C=Celsius, F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Detaillierte",
+				"Ruheansicht"
+			],
+			"desc": "Detaillierte Anzeige im Ruhemodus <J=An, N=Aus>"
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Anzeige-",
+				"ausrichtung"
+			],
+			"desc": "Ausrichtung der Anzeige <A=Automatisch, L=Linkshändig, R=Rechtshändig>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Boosttaste",
+				"aktiv?"
+			],
+			"desc": "Vordere Taste für Temperaturboost verwenden <J=An, N=Aus>"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Boosttemp-",
+				"eratur"
+			],
+			"desc": "Temperatur im Boostmodus  (In der eingestellten Einheit)"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Start im",
+				"Lötmodus?"
+			],
+			"desc": "Automatischer Start des Lötmodus beim Einschalten der Spannungsversorgung. <J=An, N=Aus>"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Abkühl-",
+				"blinken?"
+			],
+			"desc": "Blinkende Temperaturanzeige beim Abkühlen, solange heiß. <J=An, N=Aus>"
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Temperatur",
+				"kalibrieren?"
+			],
+			"desc": "Kalibrierung der Lötspitzentemperatur"
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Einstellungen",
+				"zurücksetzen?"
+			],
+			"desc": "Alle Einstellungen zurücksetzen"
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Eingangsspannung",
+				"kalibrieren?"
+			],
+			"desc": "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen."
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Detaillierte",
+				"Lötansicht"
+			],
+			"desc": "Detaillierte Anzeige im Lötmodus <J=An, N=Aus>"
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Scroll-",
+				"geschw."
+			],
+			"desc": "Scrollgeschwindigkeit der Texte"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "Deutsch"
+}

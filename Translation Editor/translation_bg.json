@@ -1,0 +1,223 @@
+{
+	"languageCode": "BG",
+	"messages": {
+		"SettingsCalibrationWarning": "Уверете се, че човката на поялника е със стайна температура преди да продължите!",
+		"SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
+		"UVLOWarningString": "Ниско V!",
+		"UndervoltageString": "Ниско Напрежение",
+		"InputVoltageString": "Входно V: ",
+		"WarningTipTempString": "Темп.: ",
+		"BadTipString": "ЛОШ ВРЪХ",
+		"SleepingSimpleString": "Сън",
+		"SleepingAdvancedString": "Хър Хър Хър...",
+		"WarningSimpleString": "ОХ!",
+		"WarningAdvancedString": "ВНИМАНИЕ! ТОПЛО!",
+		"SleepingTipAdvancedString": "Връх:",
+		"IdleTipString": "Връх:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "ВРЪХ ЛОША ВРЪЗКА",
+		"SolderingAdvancedPowerPrompt": "Захранване: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": true,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Поялник",
+				"Настройки"
+			],
+			"desc": "Настройки на поялника"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Режими",
+				"Настройки"
+			],
+			"desc": "Настройки енергоспестяване"
+		},
+		"UIMenu": {
+			"text2": [
+				"Интерфейс",
+				"Настройки"
+			],
+			"desc": "Настройки на интерфейса"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Разширени",
+				"Настройки"
+			],
+			"desc": "Допълнителни настройки"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Източник",
+				"захранване"
+			],
+			"desc": "Източник на захранване. Минимално напрежение. <DC 10V> <S 3.3V за клетка>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Темп.",
+				"сън"
+			],
+			"desc": "Температура при режим \"сън\" <C>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Време",
+				"сън"
+			],
+			"desc": "Включване в режим \"сън\" след: <Минути/Секунди>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Време",
+				"изкл."
+			],
+			"desc": "Изключване след <Минути>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Усещане",
+				"за движение"
+			],
+			"desc": "Усещане за движение <0.Изключено 1.Слабо 9.Силно>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Единици за",
+				"температура"
+			],
+			"desc": "Единици за температура <C=Целзии F=Фаренхайт>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Детайлен",
+				"екран в покой"
+			],
+			"desc": "Покажи детайлна информация със ситен шрифт на екрана в режим на покой."
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Ориентация",
+				"на дисплея"
+			],
+			"desc": "Ориентация на дисплея <A. Автоматично L. Лява Ръка R. Дясна Ръка>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Турбо режим",
+				"пуснат"
+			],
+			"desc": "Ползвай предния бутон за \"турбо\" режим с температура до 450C при запояване"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Турбо",
+				"темп."
+			],
+			"desc": "Температура за \"турбо\" режим"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Автоматичен",
+				"работен режим"
+			],
+			"desc": "Режим на поялника при включване на захранването. T=Работен, S=Сън, F=Изключен"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Мигай при",
+				"топъл поялник"
+			],
+			"desc": "След изключване от работен режим, индикатора за температура да мига докато човката на поялника все още е топла"
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Калибриране",
+				"температура?"
+			],
+			"desc": "Калибриране на температурата"
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Фабрични",
+				"настройки?"
+			],
+			"desc": "Връщане на фабрични настройки"
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Калибриране",
+				"напрежение?"
+			],
+			"desc": "Калибриране на входното напрежение (VIN). Задръжте бутонa за изход"
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Детайлен",
+				"работен екран"
+			],
+			"desc": "Детайлна информация в работен режим при запояване"
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Скорост",
+				"на текста"
+			],
+			"desc": "Скорост на движение на този текст"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "български"
+}

@@ -1,0 +1,223 @@
+{
+	"languageCode": "UA",
+	"languageLocalName": "Українська",
+	"messages": {
+		"SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",
+		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням?",
+		"UVLOWarningString": "АККУМ--",
+		"UndervoltageString": "Під живленням",
+		"InputVoltageString": "Жив.(B): ",
+		"WarningTipTempString": "Жало t°: ",
+		"BadTipString": "Жало--",
+		"SleepingSimpleString": "Сон ",
+		"SleepingAdvancedString": "Очікування...",
+		"WarningSimpleString": "АЙ!",
+		"WarningAdvancedString": "УВАГА ГАРЯЧЕ!",
+		"SleepingTipAdvancedString": "Жало:",
+		"IdleTipString": "Жало:",
+		"IdleSetString": " ->",
+		"TipDisconnectedString": "Жало вимкнено!",
+		"SolderingAdvancedPowerPrompt": "Живлення: ",
+		"OffString": "Вим"
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "+",
+		"SettingSlowChar": "-"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Пайка",
+				""
+			],
+			"desc": "Налаштування для режиму пайки. Діють при включеному жалі."
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Сон",
+				""
+			],
+			"desc": "Налаштування при бездіяльності. Корисно що б не обпектися і з часом не спалити житло."
+		},
+		"UIMenu": {
+			"text2": [
+				"Інтерфейс",
+				""
+			],
+			"desc": "Користувальницький інтерфейс."
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Інші",
+				""
+			],
+			"desc": "Розширені налаштування. Додаткові зручності."
+		}
+	},
+	"menuDouble": true,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Джерело",
+				"живлення"
+			],
+			"desc": "Установка напруги відключення. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Темпер.",
+				"сну"
+			],
+			"desc": "Температура режиму очікування <C°/F°>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Таймаут",
+				"сну"
+			],
+			"desc": "Час до переходу в режим очікування <Доступно отключение>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Часу до",
+				"вимкнення"
+			],
+			"desc": "Час до відключення <Доступно відключення>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Чутл. сенсо-",
+				"ру руху"
+			],
+			"desc": "Акселерометр <0 - Викл. 1 хв. чутливості 9 - макс. чутливості>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Формат темпе-",
+				"ратури(C°/F°)"
+			],
+			"desc": "Одиниця виміру температури <C - Цельсій, F - Фаренгейт>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Детальний ре-",
+				"жим очікуван."
+			],
+			"desc": "Показувати детальну в режимі налаштувань <Замість картинки>"
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Автоповорот",
+				"екрану"
+			],
+			"desc": "Орієнтація дисплея <A - Автоповорот, L - Лівша, R - Правша>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Режим",
+				"Турбо"
+			],
+			"desc": "Турбо-режим при утриманні кнопки А при пайці"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Темпер.",
+				"Турбо"
+			],
+			"desc": "Температура в Турбо-режимі"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Гарячий",
+				"старт"
+			],
+			"desc": "Автоматичний перехід в режим пайки при включенні живлення."
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Показ t° при",
+				"охолодж."
+			],
+			"desc": "Показувати температуру на екрані охолодження, поки жало залишається гарячим, при цьому екран моргає"
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Калібровка",
+				"температури"
+			],
+			"desc": "Калібрування температурного датчика."
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Скинути всі",
+				"налаштування?"
+			],
+			"desc": "Скидання всіх параметрів до вихідних значень."
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Калібровка",
+				"напруга"
+			],
+			"desc": "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити."
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Детальний ре-",
+				"жим пайки"
+			],
+			"desc": "Показувати детальну інформацію при пайці."
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Швидкість",
+				"тексту"
+			],
+			"desc": "Швидкість прокрутки тексту"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}

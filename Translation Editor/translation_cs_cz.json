@@ -1,0 +1,223 @@
+{
+	"languageCode": "CS_CZ",
+	"messages": {
+		"SettingsCalibrationWarning": "Ujistěte se, že hrot má pokojovou teplotu!",
+		"SettingsResetWarning": "Opravdu chcete resetovat zařízení do továrního nastavení?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "! Nízké napětí !",
+		"InputVoltageString": "Napětí: ",
+		"WarningTipTempString": "Teplota: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Zzz ",
+		"SleepingAdvancedString": "Režim spánku...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "!! HORKÝ HROT !!",
+		"SleepingTipAdvancedString": "Hrot:",
+		"IdleTipString": "Hrot:",
+		"IdleSetString": " Cíl:",
+		"TipDisconnectedString": "HROT NEPŘIPOJEN",
+		"SolderingAdvancedPowerPrompt": "Ohřev: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "P",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "R",
+		"SettingSlowChar": "P"
+	},
+	"menuDouble": true,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Pájecí",
+				"nastavení"
+			],
+			"desc": "Nastavení pájení (boost, auto start...)"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Režim",
+				"spánku"
+			],
+			"desc": "Nastavení režimu spánku, automatického vypnutí..."
+		},
+		"UIMenu": {
+			"text2": [
+				"Uživatelské",
+				"rozhraní"
+			],
+			"desc": "Nastavení uživatelského rozhraní."
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Pokročilé",
+				"volby"
+			],
+			"desc": "Pokročilé volby (detailní obrazovky, kalibrace, tovární nastavení...)"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Zdroj",
+				"napájení"
+			],
+			"desc": "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo,LiIon...>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Teplota v",
+				"r. spánku"
+			],
+			"desc": "Teplota v režimu spánku."
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Čas do",
+				"r. spánku"
+			],
+			"desc": "Čas do režimu spánku <Minut/Sekund>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Čas do",
+				"vypnutí"
+			],
+			"desc": "Čas do automatického vypnutí <Minut>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Citlivost",
+				"det. pohybu"
+			],
+			"desc": "Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Jednotky",
+				"teploty"
+			],
+			"desc": "Jednotky měření teploty <C=Celsius, F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Podrobnosti",
+				"na vých. obr."
+			],
+			"desc": "Zobrazit podrobnosti na výchozí obrazovce?"
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Orientace",
+				"obrazovky"
+			],
+			"desc": "Orientace obrazovky <A=Auto, L=Levák, P=Pravák>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Povolit",
+				"boost"
+			],
+			"desc": "Povolit boost držením předního tlačítka při pájení?"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Teplota v",
+				"r. boost"
+			],
+			"desc": "Teplota v režimu boost."
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Auto",
+				"start"
+			],
+			"desc": "Při startu ihned nahřát hrot?"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Blikáni při",
+				"chladnutí"
+			],
+			"desc": "Blikání teploty při chladnutí, dokud je hrot horký?"
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibrovat",
+				"teplotu?"
+			],
+			"desc": "Kalibrace měření teploty."
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Tovární",
+				"nastavení?"
+			],
+			"desc": "Obnovení továrního nastavení."
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibrovat",
+				"vstupní napětí?"
+			],
+			"desc": "Kalibrace vstupního napětí. Tlačítky uprav, podržením potvrď."
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Podrobnosti",
+				"při pájení"
+			],
+			"desc": "Zobrazit podrobnosti při pájení?"
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Rychlost",
+				"popisků"
+			],
+			"desc": "Rychlost skrolování popisků podobných tomuto <P=Pomalu,R=Rychle>"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "Český"
+}

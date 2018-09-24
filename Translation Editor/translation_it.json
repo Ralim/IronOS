@@ -1,0 +1,223 @@
+{
+	"languageCode": "IT",
+	"messages": {
+		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",
+		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
+		"UVLOWarningString": "DC BASSA",
+		"UndervoltageString": "DC INSUFFICIENTE",
+		"InputVoltageString": "V ingresso:",
+		"WarningTipTempString": "Temp punta:",
+		"BadTipString": "PUNTA NO",
+		"SleepingSimpleString": "Zzz ",
+		"SleepingAdvancedString": "Standby",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "PUNTA CALDA!",
+		"SleepingTipAdvancedString": "Punta:",
+		"IdleTipString": "Punta:",
+		"IdleSetString": " Im:",
+		"TipDisconnectedString": "PUNTA ASSENTE",
+		"SolderingAdvancedPowerPrompt": "Potenza:",
+		"OffString": "OFF"
+	},
+	"characters": {
+		"SettingRightChar": "D",
+		"SettingLeftChar": "S",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "V",
+		"SettingSlowChar": "L"
+	},
+	"menuDouble": true,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Opzioni",
+				"saldatura"
+			],
+			"desc": "Menù impostazioni saldatura"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Risparmio",
+				"energetico"
+			],
+			"desc": "Menù risparmio energetico"
+		},
+		"UIMenu": {
+			"text2": [
+				"Interfaccia",
+				"utente"
+			],
+			"desc": "Menù interfaccia utente"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Opzioni",
+				"avanzate"
+			],
+			"desc": "Menù impostazioni avanzate"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Sorgente",
+				"alimentaz"
+			],
+			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Temp",
+				"standby"
+			],
+			"desc": "Imposta la temperatura da mantenere in modalità Standby <°C/°F>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Timer",
+				"standby"
+			],
+			"desc": "Imposta il timer per entrare in modalità Standby <minuti/secondi>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Timer",
+				"spegnimento"
+			],
+			"desc": "Imposta il timer per lo spegnimento <minuti>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Sensibilità",
+				"al movimento"
+			],
+			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Standby <0: nessuna; 1: minima; 9: massima>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Unità di",
+				"temperatura"
+			],
+			"desc": "Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Mostra",
+				"dettagli"
+			],
+			"desc": "Mostra informazioni dettagliate con un carattere più piccolo all'interno della schermata principale"
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Orientamento",
+				"display"
+			],
+			"desc": "Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Funzione",
+				"\"boost\""
+			],
+			"desc": "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Temp",
+				"\"boost\""
+			],
+			"desc": "Imposta la temperatura della funzione «Turbo»"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Avvio",
+				"automatico"
+			],
+			"desc": "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Avviso",
+				"punta calda"
+			],
+			"desc": "Mostra la temperatura durante il raffreddamento se la punta è ancora calda"
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Calibrazione",
+				"temperatura"
+			],
+			"desc": "Calibra le rilevazioni di temperatura"
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Ripristino",
+				"impostazioni"
+			],
+			"desc": "Ripristina tutte le impostazioni"
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Calibrazione",
+				"tensione"
+			],
+			"desc": "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire"
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Dettagli",
+				"saldatura"
+			],
+			"desc": "Mostra informazioni dettagliate durante la modalità Saldatura"
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Velocità",
+				"testo"
+			],
+			"desc": "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "Italiano"
+}

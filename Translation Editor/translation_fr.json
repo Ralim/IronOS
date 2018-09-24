@@ -1,0 +1,223 @@
+{
+	"languageCode": "FR",
+	"messages": {
+		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer!",
+		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?",
+		"UVLOWarningString": "DC FAIBLE",
+		"UndervoltageString": "Sous-tension",
+		"InputVoltageString": "V d'entrée: ",
+		"WarningTipTempString": "Temp. Panne: ",
+		"BadTipString": "PANNE HS",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "En veille...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "ATTENTION! CHAUD",
+		"SleepingTipAdvancedString": "PANNE:",
+		"IdleTipString": "PANNE:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "PANNE DEBRANCH",
+		"SolderingAdvancedPowerPrompt": "Puissance: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "D",
+		"SettingLeftChar": "G",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": true,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soudure",
+				"Paramètres"
+			],
+			"desc": "Paramètres de soudage"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Mode",
+				"Veille"
+			],
+			"desc": "Paramètres d'économie d'énergie"
+		},
+		"UIMenu": {
+			"text2": [
+				"Interface",
+				"Utilisateur"
+			],
+			"desc": "Paramètres de l'interface utilisateur"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Options",
+				"Advanced"
+			],
+			"desc": "Options avancées"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Source",
+				"d'alim"
+			],
+			"desc": "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Temp.",
+				"veille"
+			],
+			"desc": "Température en veille <C>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Délai",
+				"veille"
+			],
+			"desc": "Délai avant mise en veille <Minutes>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Délai",
+				"extinction"
+			],
+			"desc": "Délai avant extinction <Minutes>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Sensibilité",
+				"au mouvement"
+			],
+			"desc": "Sensibilité du capteur de mouvement <0=Inactif 1=Peu sensible 9=Tres sensible>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Unité de",
+				"température"
+			],
+			"desc": "Unité de température <C=Celsius F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Ecran veille",
+				"détaillé"
+			],
+			"desc": "Afficher des informations détaillées lors de la veille."
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Orientation",
+				"de l'écran"
+			],
+			"desc": "Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Activation du",
+				"mode Boost"
+			],
+			"desc": "Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Temp.",
+				"Boost"
+			],
+			"desc": "Température du mode \"Boost\""
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Démarrage",
+				"automatique"
+			],
+			"desc": "Démarrer automatiquement la soudure a l'allumage <A=Activé, V=Mode Veille, D=Désactivé>"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Refroidir en",
+				"clignottant"
+			],
+			"desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude."
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Etalonner",
+				"température"
+			],
+			"desc": "Etalonner température de la panne."
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Réinitialisation",
+				"d'usine"
+			],
+			"desc": "Réinitialiser tous les réglages"
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Etalonner",
+				"tension d'entrée"
+			],
+			"desc": "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter"
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Ecran soudure",
+				"détaillé"
+			],
+			"desc": "Afficher des informations détaillées pendant la soudure"
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Vitesse de",
+				"défilement"
+			],
+			"desc": "Vitesse de défilement de ce texte en <R=Rapide L=Lent>"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "Français"
+}

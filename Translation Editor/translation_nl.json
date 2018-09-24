@@ -1,0 +1,223 @@
+{
+	"languageCode": "NL",
+	"languageLocalName": "Nederlands",
+	"messages": {
+		"SettingsCalibrationWarning": "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!",
+		"SettingsResetWarning": "Ben je zeker dat je alle instellingen naar de standaardwaardes wilt terugzetten?",
+		"UVLOWarningString": "DC LAAG",
+		"UndervoltageString": "Onderspanning",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "DEFECT",
+		"SleepingSimpleString": "Zzz ",
+		"SleepingAdvancedString": "Slaapstand...",
+		"WarningSimpleString": "HEET",
+		"WarningAdvancedString": "!!! TIP HEET !!!",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP LOSGEKOPPELD",
+		"SolderingAdvancedPowerPrompt": "vermogen: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldeer",
+				"Instellingen"
+			],
+			"desc": "Soldeerinstellingen"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Slaap",
+				"Modes"
+			],
+			"desc": "Batterijbesparingsinstellingen"
+		},
+		"UIMenu": {
+			"text2": [
+				"Gebruikers-",
+				"Interface"
+			],
+			"desc": "Gebruikersinterface Instellingen"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"geavanceerde",
+				"Instellingen"
+			],
+			"desc": "geavanceerde Instellingen"
+		}
+	},
+	"menuDouble": true,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Spannings-",
+				"bron"
+			],
+			"desc": "Spanningsbron. Stelt drempelspanning in. <DC 10V> <S 3.3V per cel>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Slaap",
+				"temp"
+			],
+			"desc": "Temperatuur in slaapstand <C>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Slaap",
+				"time-out"
+			],
+			"desc": "Slaapstand time-out <Minuten/Seconden>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Uitschakel",
+				"time-out"
+			],
+			"desc": "Automatisch afsluiten time-out <Minuten>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Bewegings-",
+				"gevoeligheid"
+			],
+			"desc": "Bewegingsgevoeligheid <0.uit 1.minst gevoelig 9.meest gevoelig>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Temperatuur",
+				"eenheid"
+			],
+			"desc": "Temperatuureenheid <C=Celsius F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Gedetailleerd",
+				"slaapscherm"
+			],
+			"desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het slaapscherm."
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Scherm-",
+				"oriëntatie"
+			],
+			"desc": "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Boostmodes",
+				"ingeschakeld?"
+			],
+			"desc": "Soldeerbout gaat naar een hogere boost-temperatuur wanneer de voorste knop ingedrukt is."
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Boost",
+				"temp"
+			],
+			"desc": "Temperatuur in boostmodes"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Auto",
+				"start"
+			],
+			"desc": "Breng de soldeerbout direct op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Afkoel",
+				"flikker"
+			],
+			"desc": "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is."
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Calibreer",
+				"temperatuur?"
+			],
+			"desc": "Temperatuursafwijking van de soldeerpunt calibreren."
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Instellingen",
+				"resetten?"
+			],
+			"desc": "Alle instellingen terugzetten."
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Calibreer",
+				"input-voltage?"
+			],
+			"desc": "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen."
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Gedetailleerd",
+				"soldeerscherm"
+			],
+			"desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm."
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Scroll",
+				"snelheid"
+			],
+			"desc": "Snelheid waarmee de tekst scrolt."
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}

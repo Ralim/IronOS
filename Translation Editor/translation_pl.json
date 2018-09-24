@@ -1,0 +1,223 @@
+{
+	"languageCode": "PL",
+	"messages": {
+		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!",
+		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Zzz!",
+		"SleepingAdvancedString": "Uspienie...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "GORĄCA KOŃCÓWKA!",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SolderingAdvancedPowerPrompt": "Power: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "P",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": false,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"Settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"Modes"
+			],
+			"desc": "Power Saving Settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"Interface"
+			],
+			"desc": "User Interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"Options"
+			],
+			"desc": "Advanced options"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "PWRSC",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Źródło zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw Li>"
+		},
+		"SleepTemperature": {
+			"text": "STMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatura uśpienia <°C>"
+		},
+		"SleepTimeout": {
+			"text": "STME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Czas uśpienia <Minuty/Sekundy>"
+		},
+		"ShutdownTimeout": {
+			"text": "SHTME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Czas wyłączenia <Minuty>"
+		},
+		"MotionSensitivity": {
+			"text": "MSENSE",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Czułość ruchu <0.Wyłączona 1.minimalna 9.maksymalna>"
+		},
+		"TemperatureUnit": {
+			"text": "TMPUNT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Jednostka temperatury <C=Celsius F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "ADVIDL",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynnośći <T = wł., N = wył.>"
+		},
+		"DisplayRotation": {
+			"text": "DSPROT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Orientacja wyświetlacza <A. Automatyczna L. Leworęczna P. Praworęczna>"
+		},
+		"BoostEnabled": {
+			"text": "BOOST",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Użyj przycisku przedniego w celu zwiększenia temperatury <T = wł., N = wył.>"
+		},
+		"BoostTemperature": {
+			"text": "BTMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatura w trybie \"boost\" "
+		},
+		"AutoStart": {
+			"text": "ASTART",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. T=Lutowanie, S= Tryb Uspienia ,N=Wyłącz"
+		},
+		"CooldownBlink": {
+			"text": "CLBLNK",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatura na ekranie miga, gdy grot jest jeszcze gorący. <T = wł., N = wył.>"
+		},
+		"TemperatureCalibration": {
+			"text": "TMP CAL?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kalibracja temperatury grota lutownicy"
+		},
+		"SettingsReset": {
+			"text": "RESET?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Zresetuj wszystkie ustawienia"
+		},
+		"VoltageCalibration": {
+			"text": "CAL VIN?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść."
+		},
+		"AdvancedSoldering": {
+			"text": "ADVSLD",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Wyświetl szczegółowe informacje podczas lutowania <T = wł., N = wył.>"
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Speed this text scrolls past at"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "Polski"
+}

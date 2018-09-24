@@ -1,0 +1,223 @@
+{
+	"languageCode": "HU",
+	"messages": {
+		"SettingsCalibrationWarning": "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!",
+		"SettingsResetWarning": "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "HEGY",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Alvás...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "!! FORRÓ HEGY !!",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SolderingAdvancedPowerPrompt": "Power: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": false,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Forrasztás",
+				"Beállítások"
+			],
+			"desc": "Forrasztási beállítások"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Alvás",
+				"Módok"
+			],
+			"desc": "Energiatakarékossági beállítások"
+		},
+		"UIMenu": {
+			"text2": [
+				"Felhasználó",
+				"felület"
+			],
+			"desc": "Felhasználói felület beállításai"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Speciális",
+				"beállítások"
+			],
+			"desc": "Speciális beállítások"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "PWRSC",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Áramforrás. Beállítja a lekapcsolási feszültséget. <DC 10V> <S 3.3V cellánként>"
+		},
+		"SleepTemperature": {
+			"text": "STMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Alvási hőmérséklet <C>"
+		},
+		"SleepTimeout": {
+			"text": "STME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Elalvási időzítő <Perc/Másodperc>"
+		},
+		"ShutdownTimeout": {
+			"text": "SHTME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Kikapcsolási időzítő <Minutes>"
+		},
+		"MotionSensitivity": {
+			"text": "MSENSE",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Mozgás érzékenység beállítása. <0.Ki 1.kevésbé érzékeny 9.legérzékenyebb>"
+		},
+		"TemperatureUnit": {
+			"text": "TMPUNT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Hőmérsékleti egység <C=Celsius F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "ADVIDL",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Részletes információ megjelenítése kisebb betűméretben a készenléti képernyőn."
+		},
+		"DisplayRotation": {
+			"text": "DSPROT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Megjelenítési tájolás <A. Automatikus L. Balkezes R. Jobbkezes>"
+		},
+		"BoostEnabled": {
+			"text": "BOOST",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Elülső gombbal lépjen boost módba, 450C forrasztás közben"
+		},
+		"BoostTemperature": {
+			"text": "BTMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Hőmérséklet \"boost\" módban"
+		},
+		"AutoStart": {
+			"text": "ASTART",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Bekapcsolás után automatikusan lépjen forrasztás módba. T=Forrasztás, S=Alvó mód,F=Ki"
+		},
+		"CooldownBlink": {
+			"text": "CLBLNK",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Villogjon a hőmérséklet hűlés közben, amíg a hegy forró."
+		},
+		"TemperatureCalibration": {
+			"text": "TMP CAL?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Hegy hőmérsékletének kalibrálása"
+		},
+		"SettingsReset": {
+			"text": "RESET?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Beállítások alaphelyzetbe állítása"
+		},
+		"VoltageCalibration": {
+			"text": "CAL VIN?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "A bemeneti feszültség kalibrálása. Röviden megnyomva állítsa be, hosszan nyomja meg a kilépéshez."
+		},
+		"AdvancedSoldering": {
+			"text": "ADVSLD",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Részletes információk megjelenítése forrasztás közben"
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Szöveg görgetésének gyorsítása"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "Magyar"
+}

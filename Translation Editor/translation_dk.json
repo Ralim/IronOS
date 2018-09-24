@@ -1,0 +1,223 @@
+{
+	"languageCode": "DK",
+	"messages": {
+		"SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!",
+		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"UVLOWarningString": "Lav Volt",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Dvale...",
+		"WarningSimpleString": "Varm",
+		"WarningAdvancedString": "VARM LODDESPIDS!",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SolderingAdvancedPowerPrompt": "Power: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "H",
+		"SettingLeftChar": "V",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuDouble": false,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"Settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"Modes"
+			],
+			"desc": "Power Saving Settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"Interface"
+			],
+			"desc": "User Interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"Options"
+			],
+			"desc": "Advanced options"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "PWRSC",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Strømforsyning. Indstil Cutoff Spændingen. <DC 10V <S 3.3V per cell"
+		},
+		"SleepTemperature": {
+			"text": "STMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Dvale Temperatur <C"
+		},
+		"SleepTimeout": {
+			"text": "STME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Dvale Timeout <Minutter/Sekunder"
+		},
+		"ShutdownTimeout": {
+			"text": "SHTME",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "sluknings Timeout <Minutter"
+		},
+		"MotionSensitivity": {
+			"text": "MSENSE",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Bevægelsesfølsomhed <0.Slukket 1.Mindst følsom 9.Mest følsom"
+		},
+		"TemperatureUnit": {
+			"text": "TMPUNT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatur Enhed <C=Celsius F=Fahrenheit"
+		},
+		"AdvancedIdle": {
+			"text": "ADVIDL",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Vis detialieret information med en mindre skriftstørrelse på standby skærmen."
+		},
+		"DisplayRotation": {
+			"text": "DSPROT",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Skærm Orientering <A. Automatisk V. Venstre Håndet H. Højre Håndet"
+		},
+		"BoostEnabled": {
+			"text": "BOOST",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Ved tryk på front knap Aktiveres boost-funktionen, 450C tilstand når der loddes"
+		},
+		"BoostTemperature": {
+			"text": "BTMP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Temperatur i \"boost\" mode"
+		},
+		"AutoStart": {
+			"text": "ASTART",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Start automatisk med lodning når strøm sættes til. L=Lodning, D= Dvale tilstand,S=Slukket"
+		},
+		"CooldownBlink": {
+			"text": "CLBLNK",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Blink temperaturen på skærmen, mens spidsen stadig er varm."
+		},
+		"TemperatureCalibration": {
+			"text": "TMP CAL?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "kalibrere spids temperatur."
+		},
+		"SettingsReset": {
+			"text": "RESET?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Gendan alle indstillinger"
+		},
+		"VoltageCalibration": {
+			"text": "CAL VIN?",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud"
+		},
+		"AdvancedSoldering": {
+			"text": "ADVSLD",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Vis detialieret information mens der loddes"
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"",
+				""
+			],
+			"desc": "Speed this text scrolls past at"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	},
+	"languageLocalName": "Dansk"
+}

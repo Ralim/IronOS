@@ -1,0 +1,223 @@
+{
+	"languageCode": "EN",
+	"languageLocalName": "English",
+	"messages": {
+		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
+		"SettingsResetWarning": "Are you sure you want to reset settings to default values?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"WarningTipTempString": "Tip Temp: ",
+		"BadTipString": "BAD TIP",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Sleeping...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "!!! TIP HOT !!!",
+		"SleepingTipAdvancedString": "Tip:",
+		"IdleTipString": "Tip:",
+		"IdleSetString": " Set:",
+		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SolderingAdvancedPowerPrompt": "Power: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "F",
+		"SettingSlowChar": "S"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"Settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"Modes"
+			],
+			"desc": "Power saving settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"Interface"
+			],
+			"desc": "User interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"Options"
+			],
+			"desc": "Advanced options"
+		}
+	},
+	"menuDouble": true,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "PWRSC",
+			"text2": [
+				"Power",
+				"source"
+			],
+			"desc": "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>"
+		},
+		"SleepTemperature": {
+			"text": "STMP",
+			"text2": [
+				"Sleep",
+				"temp"
+			],
+			"desc": "Sleep Temperature <C>"
+		},
+		"SleepTimeout": {
+			"text": "STME",
+			"text2": [
+				"Sleep",
+				"timeout"
+			],
+			"desc": "Sleep Timeout <Minutes/Seconds>"
+		},
+		"ShutdownTimeout": {
+			"text": "SHTME",
+			"text2": [
+				"Shutdown",
+				"timeout"
+			],
+			"desc": "Shutdown Timeout <Minutes>"
+		},
+		"MotionSensitivity": {
+			"text": "MSENSE",
+			"text2": [
+				"Motion",
+				"sensitivity"
+			],
+			"desc": "Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>"
+		},
+		"TemperatureUnit": {
+			"text": "TMPUNT",
+			"text2": [
+				"Temperature",
+				"units"
+			],
+			"desc": "Temperature Unit <C=Celsius F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "ADVIDL",
+			"text2": [
+				"Detailed",
+				"idle screen"
+			],
+			"desc": "Display detailed information in a smaller font on the idle screen."
+		},
+		"DisplayRotation": {
+			"text": "DSPROT",
+			"text2": [
+				"Display",
+				"orientation"
+			],
+			"desc": "Display Orientation <A. Automatic L. Left Handed R. Right Handed>"
+		},
+		"BoostEnabled": {
+			"text": "BOOST",
+			"text2": [
+				"Boost mode",
+				"enabled"
+			],
+			"desc": "Enable front key enters boost mode 450C mode when soldering"
+		},
+		"BoostTemperature": {
+			"text": "BTMP",
+			"text2": [
+				"Boost",
+				"temp"
+			],
+			"desc": "Temperature when in \"boost\" mode"
+		},
+		"AutoStart": {
+			"text": "ASTART",
+			"text2": [
+				"Auto",
+				"start"
+			],
+			"desc": "Automatically starts the iron into soldering on power up. T=Soldering, S= Sleep mode,F=Off"
+		},
+		"CooldownBlink": {
+			"text": "CLBLNK",
+			"text2": [
+				"Cooldown",
+				"blink"
+			],
+			"desc": "Blink the temperature on the cooling screen while the tip is still hot."
+		},
+		"TemperatureCalibration": {
+			"text": "TMP CAL?",
+			"text2": [
+				"Calibrate",
+				"temperature?"
+			],
+			"desc": "Calibrate tip offset."
+		},
+		"SettingsReset": {
+			"text": "RESET?",
+			"text2": [
+				"Factory",
+				"Reset?"
+			],
+			"desc": "Reset all settings"
+		},
+		"VoltageCalibration": {
+			"text": "CAL VIN?",
+			"text2": [
+				"Calibrate",
+				"input voltage?"
+			],
+			"desc": "VIN Calibration. Buttons adjust, long press to exit"
+		},
+		"AdvancedSoldering": {
+			"text": "ADVSLD",
+			"text2": [
+				"Detailed",
+				"solder screen"
+			],
+			"desc": "Display detailed information while soldering"
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"Scrolling",
+				"Speed"
+			],
+			"desc": "Speed this text scrolls past at"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}

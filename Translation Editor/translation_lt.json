@@ -1,0 +1,223 @@
+{
+	"languageCode": "LT",
+	"languageLocalName": "Lietuvių",
+	"messages": {
+		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
+		"SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
+		"UVLOWarningString": "MAŽ VOLT",
+		"UndervoltageString": "Žema įtampa",
+		"InputVoltageString": "Įvestis V: ",
+		"WarningTipTempString": "Antgl Temp: ",
+		"BadTipString": "BLOG ANT",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Miegu...",
+		"WarningSimpleString": "KRŠ!",
+		"WarningAdvancedString": "ANTGALIS KARŠTAS",
+		"SleepingTipAdvancedString": "Antgl:",
+		"IdleTipString": "Ant:",
+		"IdleSetString": " Nust:",
+		"TipDisconnectedString": "ANTGAL ATJUNGTAS",
+		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
+		"OffString": "Išj"
+	},
+	"characters": {
+		"SettingRightChar": "D",
+		"SettingLeftChar": "K",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "T",
+		"SettingSlowChar": "N"
+	},
+	"menuDouble": true,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Litavimo",
+				"nustatymai"
+			],
+			"desc": "Litavimo nustatymai"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Miego",
+				"režimai"
+			],
+			"desc": "Energijos vartojimo nustatymai"
+		},
+		"UIMenu": {
+			"text2": [
+				"Naudotojo",
+				"sąsaja"
+			],
+			"desc": "Naudotojo sąsajos nustatymai"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Išplėstin.",
+				"nustatymai"
+			],
+			"desc": "Išplėstiniai nustatymai"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Maitinimo",
+				"šaltinis"
+			],
+			"desc": "Išjungimo įtampa. <DC 10V arba celių (S) kiekis (3.3V per celę)>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Miego",
+				"temperat."
+			],
+			"desc": "Miego temperatūra <C>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Miego",
+				"laikas"
+			],
+			"desc": "Miego laikas <minutės/sekundės>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Išjungimo",
+				"laikas"
+			],
+			"desc": "Išjungimo laikas <minutės>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Jautrumas",
+				"judesiui"
+			],
+			"desc": "Jautrumas judesiui <0 - išjungta, 1 - mažiausias, 9 - didžiausias>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Temperatūros",
+				"vienetai"
+			],
+			"desc": "Temperatūros vienetai <C - Celsijus, F - Farenheitas>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Detalus lauki",
+				"mo ekranas"
+			],
+			"desc": "Ar rodyti papildomą informaciją mažesniu šriftu laukimo ekrane"
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Ekrano",
+				"orientacija"
+			],
+			"desc": "Ekrano orientacija <A - automatinė, K - kairiarankiams, D - dešiniarankiams>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Turbo režimas",
+				"įjungtas"
+			],
+			"desc": "Ar lituojant viršutinis mygtukas įjungia turbo režimą"
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Turbo",
+				"temperat."
+			],
+			"desc": "Temperatūra turbo režimu"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Auto",
+				"paleidimas"
+			],
+			"desc": "Ar pradėti kaitininti iš karto įjungus lituoklį"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Atvėsimo",
+				"mirksėjimas"
+			],
+			"desc": "Ar mirksėti temperatūrą ekrane kol vėstantis antgalis vis dar karštas"
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibruoti",
+				"temperatūrą?"
+			],
+			"desc": "Antgalio temperatūros kalibravimas"
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Atstatyti",
+				"nustatymus?"
+			],
+			"desc": "Nustatyti nustatymus iš naujo"
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibruoti",
+				"įvesties įtampą?"
+			],
+			"desc": "Įvesties įtampos kalibravimas. Trumpai paspauskite, norėdami nustatyti, ilgai paspauskite, kad išeitumėte"
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Detalus lita-",
+				"vimo ekranas"
+			],
+			"desc": "Ar rodyti išsamią informaciją lituojant"
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Greitas apr",
+				"ašym. slink"
+			],
+			"desc": "Greitis, kuriuo šis tekstas slenka"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}

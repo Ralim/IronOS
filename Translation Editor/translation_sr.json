@@ -1,0 +1,223 @@
+{
+	"languageCode": "SR",
+	"languageLocalName": "Srpski",
+	"messages": {
+		"SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite!",
+		"SettingsResetWarning": "Jeste li sigurni da želite da vratite sva podešavanja na fabričke vrednosti?",
+		"UVLOWarningString": "BATERIJA",
+		"UndervoltageString": "PRENIZAK NAPON",
+		"InputVoltageString": "Napajanje: ",
+		"WarningTipTempString": "Temp vrha: ",
+		"BadTipString": "LOŠ VRH",
+		"SleepingSimpleString": "Zzz ",
+		"SleepingAdvancedString": "SPAVANJE...",
+		"WarningSimpleString": "VRUĆ",
+		"WarningAdvancedString": "OPREZ, VRUĆE!",
+		"SleepingTipAdvancedString": "Vrh:",
+		"IdleTipString": "Vrh:",
+		"IdleSetString": " / ",
+		"TipDisconnectedString": "VRH NIJE SPOJEN!",
+		"SolderingAdvancedPowerPrompt": "Snaga: ",
+		"OffString": "Off"
+	},
+	"characters": {
+		"SettingRightChar": "D",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "B",
+		"SettingSlowChar": "S"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Postavke",
+				"lemljenja"
+			],
+			"desc": "Postavke pri lemljenju"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Ušteda",
+				"energije"
+			],
+			"desc": "Postavke spavanja i štednje energije"
+		},
+		"UIMenu": {
+			"text2": [
+				"Korisničke",
+				"opcije"
+			],
+			"desc": "Postavke korisničkih opcija"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Napredne",
+				"opcije"
+			],
+			"desc": "Upravljanje naprednim opcijama"
+		}
+	},
+	"menuDouble": true,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Izvor",
+				"napajanja"
+			],
+			"desc": "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Temp",
+				"spavanja"
+			],
+			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. <C/F>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Vreme",
+				"spavanja"
+			],
+			"desc": "Vreme mirovanja nakon koga lemilica spušta temperaturu. <Minute/Sekunde>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Vreme",
+				"gašenja"
+			],
+			"desc": "Vreme mirovanja nakon koga će se lemilica ugasiti."
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Osetljivost",
+				"pokreta"
+			],
+			"desc": "Osetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osetljivo, 9=Najosjetljivije>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Jedinica",
+				"temperature"
+			],
+			"desc": "Jedinica temperature. <C=Celzijus, F=Fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Detalji",
+				"pri čekanju"
+			],
+			"desc": "Prikazivanje detaljnih informacija manjim fontom tokom čekanja."
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Rotacija",
+				"ekrana"
+			],
+			"desc": "Orijentacija ekrana. <A=Automatski, L=Levoruki, D=Desnoruki>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Boost",
+				"način"
+			],
+			"desc": "Držanjem prednjeg dugmeta prilikom lemljenja aktivira se pojačani (Boost) način."
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Boost",
+				"temp"
+			],
+			"desc": "Temperatura u pojačanom (Boost) načinu."
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Auto",
+				"start"
+			],
+			"desc": "Ako je aktivno, lemilica po uključivanju napajanja odmah počinje grejati."
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Upozorenje",
+				"pri hlađenju"
+			],
+			"desc": "Blinkanje temperature prilikom hlađenja, ako je lemilica vruća."
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibracija",
+				"temperature"
+			],
+			"desc": "Kalibrisanje temperature meri razliku temperatura vrha i drške, dok je lemilica hladna."
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Fabričke",
+				"postavke"
+			],
+			"desc": "Vraćanje svih podešavanja na fabričke vrednosti."
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibracija",
+				"napona napajanja"
+			],
+			"desc": "Kalibracija ulaznog napona. Podešavanje tastera, dugački pritisak za kraj."
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Detalji",
+				"pri lemljenju"
+			],
+			"desc": "Prikazivanje detaljnih informacija tokom lemljenja."
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Brzina",
+				"poruka"
+			],
+			"desc": "Brzina kretanja dugačkih poruka <B=brzo, S=sporo>"
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}

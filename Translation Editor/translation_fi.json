@@ -1,0 +1,223 @@
+{
+	"languageCode": "FI",
+	"languageLocalName": "Suomi",
+	"messages": {
+		"SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",
+		"SettingsResetWarning": "Haluatko varmasti palauttaa oletusarvot?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "Alijännite",
+		"InputVoltageString": "Jännite: ",
+		"WarningTipTempString": "Lämpötila: ",
+		"BadTipString": "VIKATILA",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Lepotila...",
+		"WarningSimpleString": "HOT",
+		"WarningAdvancedString": "! KÄRKI KUUMA !",
+		"SleepingTipAdvancedString": "Kärki:",
+		"IdleTipString": "Kärki:",
+		"IdleSetString": " Asetus:",
+		"TipDisconnectedString": "KÄRKI ON IRTI",
+		"SolderingAdvancedPowerPrompt": "Teho: ",
+		"OffString": "OFF"
+	},
+	"characters": {
+		"SettingRightChar": "O",
+		"SettingLeftChar": "V",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "N",
+		"SettingSlowChar": "H"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Juotos-",
+				"asetukset"
+			],
+			"desc": "Juotosasetukset"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Lepotilan",
+				"asetukset"
+			],
+			"desc": "Virransäästöasetukset"
+		},
+		"UIMenu": {
+			"text2": [
+				"Käyttö-",
+				"liittymä"
+			],
+			"desc": "Käyttöliittymän asetukset"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Lisä-",
+				"asetukset"
+			],
+			"desc": "Lisäasetukset"
+		}
+	},
+	"menuDouble": true,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "",
+			"text2": [
+				"Virtalähde",
+				"DC"
+			],
+			"desc": "Käytettävä virtalähde. Asettaa katkaisujänniteen. <DC 10V, 3S=9.9V, 4S=13.2V, 5S=16.5V, 6S=19.8V>"
+		},
+		"SleepTemperature": {
+			"text": "",
+			"text2": [
+				"Lepotilan",
+				"lämpötila"
+			],
+			"desc": "Lepotilan lämpötila. <C>"
+		},
+		"SleepTimeout": {
+			"text": "",
+			"text2": [
+				"Lepotilan",
+				"viive"
+			],
+			"desc": "Lepotilan viive. <minuuttia/sekuntia>"
+		},
+		"ShutdownTimeout": {
+			"text": "",
+			"text2": [
+				"Sammutus",
+				"viive"
+			],
+			"desc": "Automaattisen sammutuksen aikaviive. <minuuttia>"
+		},
+		"MotionSensitivity": {
+			"text": "",
+			"text2": [
+				"Liikkeen",
+				"herkkyys"
+			],
+			"desc": "Liikkeentunnistuksen herkkyys. <0=pois, 1=epäherkin, 9=herkin>"
+		},
+		"TemperatureUnit": {
+			"text": "",
+			"text2": [
+				"Lämpötilan",
+				"yksikkö"
+			],
+			"desc": "Lämpötilan yksikkö. <C=celsius, F=fahrenheit>"
+		},
+		"AdvancedIdle": {
+			"text": "",
+			"text2": [
+				"Tiedot",
+				"lepotilassa"
+			],
+			"desc": "Näyttää yksityiskohtaisemmat tiedot lepotilassa."
+		},
+		"DisplayRotation": {
+			"text": "",
+			"text2": [
+				"Näytön",
+				"kierto"
+			],
+			"desc": "Näytön kierto. <A=automaattinen O=oikeakätinen V=vasenkätinen>"
+		},
+		"BoostEnabled": {
+			"text": "",
+			"text2": [
+				"Tehostus",
+				"käytössä"
+			],
+			"desc": "Etupainikeella siirrytään juotettaessa tehostustilaan."
+		},
+		"BoostTemperature": {
+			"text": "",
+			"text2": [
+				"Tehostus-",
+				"lämpötila"
+			],
+			"desc": "Tehostustilan lämpötila"
+		},
+		"AutoStart": {
+			"text": "",
+			"text2": [
+				"Autom.",
+				"käynnistys"
+			],
+			"desc": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. T=juotostila, S=Lepotila, F=Ei käytössä"
+		},
+		"CooldownBlink": {
+			"text": "",
+			"text2": [
+				"Jäähdytyksen",
+				"vilkutus"
+			],
+			"desc": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma."
+		},
+		"TemperatureCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibroi",
+				"lämpötila?"
+			],
+			"desc": "Kalibroi kärjen lämpötilaeron."
+		},
+		"SettingsReset": {
+			"text": "",
+			"text2": [
+				"Palauta",
+				"tehdasasetukset?"
+			],
+			"desc": "Palauta kaikki asetukset oletusarvoihin."
+		},
+		"VoltageCalibration": {
+			"text": "",
+			"text2": [
+				"Kalibroi",
+				"tulojännite?"
+			],
+			"desc": "Tulojännitten kalibrointi (VIN). Painikkeilla säädetään ja pitkään painamalla poistutaan."
+		},
+		"AdvancedSoldering": {
+			"text": "",
+			"text2": [
+				"Tarkempi",
+				"juotosnäyttö"
+			],
+			"desc": "Näyttää yksityiskohtaisemmat tiedot juotostilassa."
+		},
+		"ScrollingSpeed": {
+			"text": "",
+			"text2": [
+				"Tietojen",
+				"näyttönopeus"
+			],
+			"desc": "Näiden selitetekstien vieritysnopeus."
+		},
+		"PidSettingsP": {
+			"text": "PIDP",
+			"text2": [
+				"PID",
+				"P"
+			],
+			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsI": {
+			"text": "PIDI",
+			"text2": [
+				"PID",
+				"I"
+			],
+			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		},
+		"PidSettingsD": {
+			"text": "PIDD",
+			"text2": [
+				"PID",
+				"D"
+			],
+			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+		}
+	}
+}
