@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from __future__ import print_function
 import json
 import os
@@ -35,9 +37,13 @@ def readTranslations(jsonDir):
     
         # Read only translation_XX.json
         if lf.startswith("translation_") and lf.endswith(".json"):
-            print("Reading " + lf)
-            lang = loadJson(fileWithPath, False)
-            
+            try:
+                lang = loadJson(fileWithPath, False)
+            except json.decoder.JSONDecodeError as e:
+                print("Failed to decode " + lf)
+                print(str(e))
+                sys.exit(2)
+
             # Extract lang code from file name
             langCode = fileName[12:-5].upper()
             # ...and the one specified in the JSON file...
@@ -66,10 +72,10 @@ def writeStart(f):
 
 
 def escapeC(s):
-    return s.replace("\"", "\\\"");
+    return s.replace("\"", "\\\"")
 
 
-def writeLanguage(languageCode):
+def writeLanguage(languageCode, defs, f):
     print("Generating block for " + languageCode)
     lang = langDict[languageCode]
     
@@ -168,52 +174,65 @@ def writeLanguage(languageCode):
     # ----- Block end    
     f.write(to_unicode("#endif\n"))
 
+
+def read_opts():
+    """ Reading input parameters
+    First parameter = json directory
+    Second parameter = target directory
+    """
+    if len(sys.argv) > 1:
+        jsonDir = sys.argv[1]
+    else:
+        jsonDir = "."
+
+    if len(sys.argv) > 2:
+        outFile = sys.argv[2]
+    else:
+        outDir = os.path.relpath(jsonDir + "/../workspace/TS100/src/")
+        outFile = os.path.join(outDir, TRANSLATION_CPP)
+
+    if len(sys.argv) > 3:
+        raise Exception("Too many parameters!")
+
+    return jsonDir, outFile
+
+
+def orderOutput(langDict):
+    # These languages go first
+    mandatoryOrder = ['EN']
+
+    # Then add all others in alphabetical order
+    sortedKeys = sorted(langDict.keys())
+
+    # Add the rest as they come
+    for key in sortedKeys:
+        if key not in mandatoryOrder:
+            mandatoryOrder.append(key)
+
+    return mandatoryOrder
     
-''' Reading input parameters
-First parameter = json directory
-Second parameter = target directory
-'''
+
+def writeTarget(outFile, defs, langCodes):
+    # Start writing the file
+    with io.open(outFile, 'w', encoding='utf-8', newline="\n") as f:
+        writeStart(f)
+
+        for langCode in langCodes:
+            writeLanguage(langCode, defs, f)
 
 
-print("Making " + TRANSLATION_CPP + ":")
+if __name__ == "__main__":
+    try:
+        jsonDir, outFile = read_opts()
+    except:
+        print("usage: make_translation.py {json dir} {cpp dir}")
+        sys.exit(1)
 
-if len(sys.argv) > 1:
-    jsonDir = sys.argv[1]
-else:
-    jsonDir = "."
+    print("Making " + outFile + " from " + jsonDir)
 
-jsonDir = os.path.abspath(jsonDir)
+    langDict = readTranslations(jsonDir)
+    defs = loadJson(os.path.join(jsonDir, "translations_def.js"), True)
+    langCodes = orderOutput(langDict)
+    writeTarget(outFile, defs, langCodes)
 
-if len(sys.argv) > 2:
-    outDir = sys.argv[2]
-else:
-    outDir = jsonDir + "/../workspace/TS100/src/"
-
-langDict = readTranslations(jsonDir)
-
-# Read definition (required for ordering)
-
-defs = loadJson(os.path.join(jsonDir, "translations_def.js"), True)
-
-# These languages go first
-mandatoryOrder = ['EN']
-
-# Then add all others in alphabetical order
-sortedKeys = sorted(langDict.keys())
-
-for key in sortedKeys:
-    if key not in mandatoryOrder:
-        mandatoryOrder.append(key)
-    
-# Add the rest as they come
-
-# Start writing the file
-targetTranslationFile = os.path.join(outDir, TRANSLATION_CPP)
-
-with io.open(targetTranslationFile, 'w', encoding='utf-8', newline="\n") as f:
-    writeStart(f)
-    
-    for langCode in mandatoryOrder:
-        writeLanguage(langCode)
-    
     print("Done")
