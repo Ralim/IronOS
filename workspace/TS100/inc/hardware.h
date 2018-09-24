@@ -20,9 +20,9 @@ enum Orientation {
 };
 
 #ifndef MODEL_TS100
-#ifndef MODEL_TS80
-#define MODEL_TS80
-#endif
+	#ifndef MODEL_TS80
+#error "Please Define the model you are building for! MODEL=TS100 or MODEL=TS80"
+	#endif
 #endif
 
 #ifdef MODEL_TS100
