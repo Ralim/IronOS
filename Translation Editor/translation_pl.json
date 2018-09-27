@@ -1,6 +1,7 @@
 {
 	"languageCode": "PL",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!",
 		"SettingsResetWarning": "Are you sure to reset settings to default values?",
 		"UVLOWarningString": "DC LOW",

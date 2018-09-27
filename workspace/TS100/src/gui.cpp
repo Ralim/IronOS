@@ -741,7 +741,6 @@ static void calibration_enterAdvancedCal(void) {
 		}
 		// Wait for the user to confirm the exit message that the calibration is done
 		userConfirmation(SettingsCalibrationDone);
-
 	}
 }
 //Provide the user the option to tune their own tip if custom is selected

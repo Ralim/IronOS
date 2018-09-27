@@ -2,6 +2,7 @@
 	"languageCode": "UA",
 	"languageLocalName": "Українська",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",
 		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням?",
 		"UVLOWarningString": "АККУМ--",

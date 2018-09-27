@@ -2,6 +2,7 @@
 	"languageCode": "FI",
 	"languageLocalName": "Suomi",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",
 		"SettingsResetWarning": "Haluatko varmasti palauttaa oletusarvot?",
 		"UVLOWarningString": "DC LOW",

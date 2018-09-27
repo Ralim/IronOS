@@ -1,6 +1,7 @@
 {
 	"languageCode": "FR",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer!",
 		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?",
 		"UVLOWarningString": "DC FAIBLE",

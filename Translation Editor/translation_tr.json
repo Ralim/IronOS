@@ -1,6 +1,7 @@
 {
 	"languageCode": "TR",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
 		"SettingsResetWarning": "Are you sure to reset settings to default values?",
 		"UVLOWarningString": "DC LOW",

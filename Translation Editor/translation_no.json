@@ -2,6 +2,7 @@
 	"languageCode": "NO",
 	"languageLocalName": "Norsk",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Sørg for at loddespissen har romtemperatur før du fortsetter!",
 		"SettingsResetWarning": "Er du sikker på at du vil tilbakestille til standardinnstillinger?",
 		"UVLOWarningString": "Lavspenn",

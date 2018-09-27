@@ -1,6 +1,7 @@
 {
 	"languageCode": "HU",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!",
 		"SettingsResetWarning": "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?",
 		"UVLOWarningString": "DC LOW",

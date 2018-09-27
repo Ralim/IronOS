@@ -1,6 +1,7 @@
 {
 	"languageCode": "SK",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!",
 		"SettingsResetWarning": "Are you sure to reset settings to default values?",
 		"UVLOWarningString": "DC LOW",

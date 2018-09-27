@@ -1,6 +1,7 @@
 {
 	"languageCode": "PT",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "A ponta deve estar em temperatura ambiente antes de continuar!",
 		"SettingsResetWarning": "Resetar para ajustes de fábrica?",
 		"UVLOWarningString": "DC BAIXO",

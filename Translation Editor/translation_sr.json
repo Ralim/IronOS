@@ -2,6 +2,7 @@
 	"languageCode": "SR",
 	"languageLocalName": "Srpski",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite!",
 		"SettingsResetWarning": "Jeste li sigurni da želite da vratite sva podešavanja na fabričke vrednosti?",
 		"UVLOWarningString": "BATERIJA",

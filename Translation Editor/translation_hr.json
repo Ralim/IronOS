@@ -2,6 +2,7 @@
 	"languageCode": "HR",
 	"languageLocalName": "Hrvatski",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",
 		"UVLOWarningString": "BATERIJA",
 		"UndervoltageString": "PRENIZAK NAPON",

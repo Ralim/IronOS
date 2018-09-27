@@ -1,6 +1,7 @@
 {
 	"languageCode": "BG",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Уверете се, че човката на поялника е със стайна температура преди да продължите!",
 		"SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
 		"UVLOWarningString": "Ниско V!",

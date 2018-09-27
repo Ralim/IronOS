@@ -1,6 +1,7 @@
 {
 	"languageCode": "DE",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
 		"SettingsResetWarning": "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?",
 		"UVLOWarningString": "V niedr.",

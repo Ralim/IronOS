@@ -1,6 +1,7 @@
 {
 	"languageCode": "IT",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",

@@ -1,6 +1,7 @@
 {
 	"languageCode": "RU",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!",
 		"SettingsResetWarning": "Вы действительно хотите сбросить настройки до значений по умолчанию?",
 		"UVLOWarningString": "АККУМ--",
