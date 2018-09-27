@@ -26,17 +26,12 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Calibration. Buttons adjust, long press to exit",
   /* AdvancedSoldering         */ "Display detailed information while soldering",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
-#endif
-};
+  /* Tip Model 				   */"Tip Model selection ",
+  /* Simple Calibration Mode   */"Simple Calibration using Hot water",
+  /* Advanced Calibration Mode */"Advanced calibration using thermocouple on the tip"
 
+};
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* SettingsResetWarning = "Are you sure you want to reset settings to default values?";
 const char* UVLOWarningString = "DC LOW";
@@ -80,15 +75,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrate", "input voltage?" },
   /* AdvancedSoldering         */ { "Detailed", "solder screen" },
   /* ScrollingSpeed            */ { "Scrolling", "Speed" },
-#ifdef PIDSETTINGS
-  /* PidSettingsP              */ { "PID", "P" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsI              */ { "PID", "I" },
-#endif
-#ifdef PIDSETTINGS
-  /* PidSettingsD              */ { "PID", "D" },
-#endif
+  /* The Tip model being selected  */{"Tip","Model"},
+  /* Simple Calibration                 */{"Simple","Calibration"},
+  /* Advanced Calibration               */{"Advanced","Calibration"},
 };
 
 const char* SettingsMenuEntries[4] = {

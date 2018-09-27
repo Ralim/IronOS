@@ -22,6 +22,7 @@ extern const char* SettingsDescriptions[];
 extern const char* SettingsMenuEntries[4];
 extern const char* SettingsMenuEntriesDescriptions[4];
 
+extern const char* SettingsCalibrationDone;
 extern const char* SettingsCalibrationWarning;
 extern const char* SettingsResetWarning;
 extern const char* UVLOWarningString;
@@ -49,7 +50,5 @@ extern const char SettingAutoChar;
 
 extern const char SettingFastChar;
 extern const char SettingSlowChar;
-
-
 
 #endif /* TRANSLATION_H_ */

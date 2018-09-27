@@ -31,15 +31,7 @@ static void settings_setAdvancedIDLEScreens(void);
 static void settings_displayAdvancedIDLEScreens(void);
 static void settings_setScrollSpeed(void);
 static void settings_displayScrollSpeed(void);
-#ifdef PIDSETTINGS
 
-static void settings_setPIDP(void);
-static void settings_displayPIDP(void);
-static void settings_setPIDI(void);
-static void settings_displayPIDI(void);
-static void settings_setPIDD(void);
-static void settings_displayPIDD(void);
-#endif
 static void settings_setDisplayRotation(void);
 static void settings_displayDisplayRotation(void);
 static void settings_setBoostModeEnabled(void);
@@ -522,33 +514,6 @@ static void settings_displayBoostTemp(void) {
 	lcd.printNumber(systemSettings.BoostTemp, 3);
 }
 
-#ifdef PIDSETTINGS
-static void settings_setPIDP(void) {
-	systemSettings.PID_P++;
-	systemSettings.PID_P %= 100;
-}
-static void settings_displayPIDP(void) {
-	printShortDescription(17, 6);
-	lcd.printNumber(systemSettings.PID_P, 2);
-}
-static void settings_setPIDI(void) {
-	systemSettings.PID_I++;
-	systemSettings.PID_I %= 100;
-}
-static void settings_displayPIDI(void) {
-	printShortDescription(18, 6);
-	lcd.printNumber(systemSettings.PID_I, 2);
-}
-static void settings_setPIDD(void) {
-	systemSettings.PID_D++;
-	systemSettings.PID_D %= 100;
-}
-static void settings_displayPIDD(void) {
-	printShortDescription(19, 6);
-	lcd.printNumber(systemSettings.PID_D, 2);
-}
-#endif
-
 static void settings_setAutomaticStartMode(void) {
 	systemSettings.autoStartMode++;
 	systemSettings.autoStartMode %= 2;
@@ -725,11 +690,12 @@ static void calibration_enterAdvancedCal(void) {
 		//The tip now has a known ADC offset
 		//Head up until it is at 350C
 		//Then let the user adjust the gain value until it converges
-		systemSettings.customTipGain = 120;
+		systemSettings.customTipGain = 160; // start safe and high
 		bool exit = false;
 
 		while (exit == false) {
 			//Set tip to 350C
+			setTipType(Tip_Custom,systemSettings.customTipGain);
 			currentlyActiveTemperatureTarget = ctoTipMeasurement(350);
 			//Check if user has pressed button to change the gain
 			ButtonState buttons = getButtonState();
@@ -773,6 +739,8 @@ static void calibration_enterAdvancedCal(void) {
 			lcd.refresh();
 			GUIDelay();
 		}
+		// Wait for the user to confirm the exit message that the calibration is done
+		userConfirmation(SettingsCalibrationDone);
 
 	}
 }
