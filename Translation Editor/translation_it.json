@@ -15,7 +15,7 @@
 		"WarningAdvancedString": "PUNTA CALDA!",
 		"SleepingTipAdvancedString": "Punta:",
 		"IdleTipString": "Punta:",
-		"IdleSetString": " Im:",
+		"IdleSetString": "/",
 		"TipDisconnectedString": "PUNTA ASSENTE",
 		"SolderingAdvancedPowerPrompt": "Potenza:",
 		"OffString": "OFF"
@@ -34,28 +34,28 @@
 				"Opzioni",
 				"saldatura"
 			],
-			"desc": "Menù impostazioni saldatura"
+			"desc": "Menù d'impostazioni della modalità Saldatura"
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Risparmio",
 				"energetico"
 			],
-			"desc": "Menù risparmio energetico"
+			"desc": "Menù d'impostazioni per il risparmio energetico"
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfaccia",
 				"utente"
 			],
-			"desc": "Menù interfaccia utente"
+			"desc": "Menù d'impostazioni dell'interfaccia utente"
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Opzioni",
 				"avanzate"
 			],
-			"desc": "Menù impostazioni avanzate"
+			"desc": "Menù d'impostazioni avanzate"
 		}
 	},
 	"menuOptions": {
@@ -65,7 +65,7 @@
 				"Sorgente",
 				"alimentaz"
 			],
-			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>"
+			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3,3V per cella>"
 		},
 		"SleepTemperature": {
 			"text": "",
@@ -127,7 +127,7 @@
 			"text": "",
 			"text2": [
 				"Funzione",
-				"\"boost\""
+				"«Turbo»"
 			],
 			"desc": "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura"
 		},
@@ -135,7 +135,7 @@
 			"text": "",
 			"text2": [
 				"Temp",
-				"\"boost\""
+				"«Turbo»"
 			],
 			"desc": "Imposta la temperatura della funzione «Turbo»"
 		},
@@ -153,7 +153,7 @@
 				"Avviso",
 				"punta calda"
 			],
-			"desc": "Mostra la temperatura durante il raffreddamento se la punta è ancora calda"
+			"desc": "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda"
 		},
 		"TemperatureCalibration": {
 			"text": "",
@@ -194,30 +194,6 @@
 				"testo"
 			],
 			"desc": "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>"
-		},
-		"PidSettingsP": {
-			"text": "PIDP",
-			"text2": [
-				"PID",
-				"P"
-			],
-			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
-		},
-		"PidSettingsI": {
-			"text": "PIDI",
-			"text2": [
-				"PID",
-				"I"
-			],
-			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
-		},
-		"PidSettingsD": {
-			"text": "PIDD",
-			"text2": [
-				"PID",
-				"D"
-			],
-			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
 		}
 	},
 	"languageLocalName": "Italiano"

@@ -150,7 +150,7 @@
 		"CooldownBlink": {
 			"text": "CLBLNK",
 			"text2": [
-				"Temp. en el",
+				"Parpadea m.",
 				"enfriamiento"
 			],
 			"desc": "Parpadea la temperatura en el enfriamiento si la punta sigue caliente."
@@ -183,7 +183,7 @@
 			"text": "ADVSLD",
 			"text2": [
 				"Inf detallada",
-				"de soldadura"
+				"del soldadura"
 			],
 			"desc": "Mostrar información detallada mientras suelda."
 		},
@@ -194,30 +194,6 @@
 				"del texto"
 			],
 			"desc": "Velocidad de desplazamiento del texto."
-		},
-		"PidSettingsP": {
-			"text": "PIDP",
-			"text2": [
-				"PID",
-				"P"
-			],
-			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
-		},
-		"PidSettingsI": {
-			"text": "PIDI",
-			"text2": [
-				"PID",
-				"I"
-			],
-			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
-		},
-		"PidSettingsD": {
-			"text": "PIDD",
-			"text2": [
-				"PID",
-				"D"
-			],
-			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
 		}
 	},
 	"languageLocalName": "Español"
