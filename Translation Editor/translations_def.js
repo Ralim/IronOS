@@ -2,6 +2,9 @@ var def =
 {
 	"messages": [
 		{
+			"id": "SettingsCalibrationDone"
+		}, 
+		{
 			"id": "SettingsCalibrationWarning"
 		}, 
 		{

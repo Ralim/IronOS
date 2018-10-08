@@ -26,11 +26,17 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Calibration. Buttons adjust, long press to exit",
   /* AdvancedSoldering         */ "Display detailed information while soldering",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
-  /* Tip Model 				   */"Tip Model selection ",
-  /* Simple Calibration Mode   */"Simple Calibration using Hot water",
-  /* Advanced Calibration Mode */"Advanced calibration using thermocouple on the tip"
-
+#ifdef PIDSETTINGS
+  /* PidSettingsP              */ "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+#endif
+#ifdef PIDSETTINGS
+  /* PidSettingsI              */ "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+#endif
+#ifdef PIDSETTINGS
+  /* PidSettingsD              */ "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems",
+#endif
 };
+
 const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* SettingsResetWarning = "Are you sure you want to reset settings to default values?";
@@ -75,9 +81,15 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrate", "input voltage?" },
   /* AdvancedSoldering         */ { "Detailed", "solder screen" },
   /* ScrollingSpeed            */ { "Scrolling", "Speed" },
-  /* The Tip model being selected  */{"Tip","Model"},
-  /* Simple Calibration                 */{"Simple","Calibration"},
-  /* Advanced Calibration               */{"Advanced","Calibration"},
+#ifdef PIDSETTINGS
+  /* PidSettingsP              */ { "PID", "P" },
+#endif
+#ifdef PIDSETTINGS
+  /* PidSettingsI              */ { "PID", "I" },
+#endif
+#ifdef PIDSETTINGS
+  /* PidSettingsD              */ { "PID", "D" },
+#endif
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -128,6 +140,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Уверете се, че човката на поялника е със стайна температура преди да продължите!";
 const char* SettingsResetWarning = "Сигурни ли сте, че искате да върнете фабричните настройки?";
 const char* UVLOWarningString = "Ниско V!";
@@ -230,6 +243,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Ujistěte se, že hrot má pokojovou teplotu!";
 const char* SettingsResetWarning = "Opravdu chcete resetovat zařízení do továrního nastavení?";
 const char* UVLOWarningString = "DC LOW";
@@ -332,6 +346,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
 const char* SettingsResetWarning = "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?";
 const char* UVLOWarningString = "V niedr.";
@@ -434,6 +449,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "Lav Volt";
@@ -536,6 +552,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "¡Asegúrese que la punta esté a temperatura ambiente antes de proceder!";
 const char* SettingsResetWarning = "¿Está seguro de volver a estado de fábrica?";
 const char* UVLOWarningString = "DC BAJO";
@@ -638,6 +655,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Varmista että kärki on huoneenlämpöinen ennen jatkamista!";
 const char* SettingsResetWarning = "Haluatko varmasti palauttaa oletusarvot?";
 const char* UVLOWarningString = "DC LOW";
@@ -740,6 +758,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Assurez-vous que la panne soit à température ambiante avant de continuer!";
 const char* SettingsResetWarning = "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?";
 const char* UVLOWarningString = "DC FAIBLE";
@@ -842,6 +861,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
 const char* SettingsResetWarning = "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?";
 const char* UVLOWarningString = "BATERIJA";
@@ -944,6 +964,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
 const char* SettingsResetWarning = "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?";
 const char* UVLOWarningString = "DC LOW";
@@ -1046,6 +1067,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!";
 const char* SettingsResetWarning = "Ripristinare le impostazioni iniziali?";
 const char* UVLOWarningString = "DC BASSA";
@@ -1148,6 +1170,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Kalibracija atlikta!";
 const char* SettingsCalibrationWarning = "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!";
 const char* SettingsResetWarning = "Ar norite atstatyti nustatymus į numatytas reikšmes?";
 const char* UVLOWarningString = "MAŽ VOLT";
@@ -1250,6 +1273,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!";
 const char* SettingsResetWarning = "Ben je zeker dat je alle instellingen naar de standaardwaardes wilt terugzetten?";
 const char* UVLOWarningString = "DC LAAG";
@@ -1352,6 +1376,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Sørg for at loddespissen har romtemperatur før du fortsetter!";
 const char* SettingsResetWarning = "Er du sikker på at du vil tilbakestille til standardinnstillinger?";
 const char* UVLOWarningString = "Lavspenn";
@@ -1454,6 +1479,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "DC LOW";
@@ -1556,6 +1582,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "A ponta deve estar em temperatura ambiente antes de continuar!";
 const char* SettingsResetWarning = "Resetar para ajustes de fábrica?";
 const char* UVLOWarningString = "DC BAIXO";
@@ -1658,6 +1685,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
 const char* SettingsResetWarning = "Вы действительно хотите сбросить настройки до значений по умолчанию?";
 const char* UVLOWarningString = "АККУМ--";
@@ -1760,6 +1788,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "DC LOW";
@@ -1862,6 +1891,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite!";
 const char* SettingsResetWarning = "Jeste li sigurni da želite da vratite sva podešavanja na fabričke vrednosti?";
 const char* UVLOWarningString = "BATERIJA";
@@ -1964,6 +1994,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Please ensure the tip is at room temperature before continuing!";
 const char* SettingsResetWarning = "Are you sure you want to reset settings to default values?";
 const char* UVLOWarningString = "DC LÅG";
@@ -2066,6 +2097,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!";
 const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
 const char* UVLOWarningString = "DC LOW";
@@ -2168,6 +2200,7 @@ const char* SettingsDescriptions[] = {
 #endif
 };
 
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!";
 const char* SettingsResetWarning = "Ви дійсно хочете скинути налаштування до значень за замовчуванням?";
 const char* UVLOWarningString = "АККУМ--";

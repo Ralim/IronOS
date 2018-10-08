@@ -2,7 +2,7 @@
 	"languageCode": "LT",
 	"languageLocalName": "Lietuvių",
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibracija atlikta!",
 		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
 		"SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
 		"UVLOWarningString": "MAŽ VOLT",
