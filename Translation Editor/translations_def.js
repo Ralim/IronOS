@@ -207,6 +207,21 @@ var def =
 			"id": "ScrollingSpeed",
 			"maxLen": 6,
 			"maxLen2": 11
+		},
+		{
+			"id": "TipModel",
+			"maxLen": 8,
+			"maxLen2": 16
+		},
+		{
+			"id": "SimpleCalibrationMode",
+			"maxLen": 8,
+			"maxLen2": 16
+		},
+		{
+			"id": "AdvancedCalibrationMode",
+			"maxLen": 8,
+			"maxLen2": 16
 		}
 	]
 }

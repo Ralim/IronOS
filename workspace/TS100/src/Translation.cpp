@@ -26,6 +26,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Calibration. Buttons adjust, long press to exit",
   /* AdvancedSoldering         */ "Display detailed information while soldering",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -72,6 +75,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrate", "input voltage?" },
   /* AdvancedSoldering         */ { "Detailed", "solder screen" },
   /* ScrollingSpeed            */ { "Scrolling", "Speed" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -111,6 +117,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калибриране на входното напрежение (VIN). Задръжте бутонa за изход",
   /* AdvancedSoldering         */ "Детайлна информация в работен режим при запояване",
   /* ScrollingSpeed            */ "Скорост на движение на този текст",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -157,6 +166,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калибриране", "напрежение?" },
   /* AdvancedSoldering         */ { "Детайлен", "работен екран" },
   /* ScrollingSpeed            */ { "Скорост", "на текста" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -196,6 +208,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibrace vstupního napětí. Tlačítky uprav, podržením potvrď.",
   /* AdvancedSoldering         */ "Zobrazit podrobnosti při pájení?",
   /* ScrollingSpeed            */ "Rychlost skrolování popisků podobných tomuto <P=Pomalu,R=Rychle>",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -242,6 +257,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibrovat", "vstupní napětí?" },
   /* AdvancedSoldering         */ { "Podrobnosti", "při pájení" },
   /* ScrollingSpeed            */ { "Rychlost", "popisků" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -281,6 +299,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen.",
   /* AdvancedSoldering         */ "Detaillierte Anzeige im Lötmodus <J=An, N=Aus>",
   /* ScrollingSpeed            */ "Scrollgeschwindigkeit der Texte",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -327,6 +348,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Eingangsspannung", "kalibrieren?" },
   /* AdvancedSoldering         */ { "Detaillierte", "Lötansicht" },
   /* ScrollingSpeed            */ { "Scroll-", "geschw." },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -366,6 +390,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud",
   /* AdvancedSoldering         */ "Vis detialieret information mens der loddes",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -412,6 +439,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
+  /* TipModel                  */ { "TIPMO" },
+  /* SimpleCalibrationMode     */ { "SMPCAL" },
+  /* AdvancedCalibrationMode   */ { "ADVCAL" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -451,6 +481,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Calibración VIN (Voltaje de entrada). Ajuste con ambos botones, pulsación larga para salir.",
   /* AdvancedSoldering         */ "Mostrar información detallada mientras suelda.",
   /* ScrollingSpeed            */ "Velocidad de desplazamiento del texto.",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -497,6 +530,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrar", "V entrada" },
   /* AdvancedSoldering         */ { "Inf detallada", "del soldadura" },
   /* ScrollingSpeed            */ { "Velocidad", "del texto" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -536,6 +572,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Tulojännitten kalibrointi (VIN). Painikkeilla säädetään ja pitkään painamalla poistutaan.",
   /* AdvancedSoldering         */ "Näyttää yksityiskohtaisemmat tiedot juotostilassa.",
   /* ScrollingSpeed            */ "Näiden selitetekstien vieritysnopeus.",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -582,6 +621,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibroi", "tulojännite?" },
   /* AdvancedSoldering         */ { "Tarkempi", "juotosnäyttö" },
   /* ScrollingSpeed            */ { "Tietojen", "näyttönopeus" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -621,6 +663,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter",
   /* AdvancedSoldering         */ "Afficher des informations détaillées pendant la soudure",
   /* ScrollingSpeed            */ "Vitesse de défilement de ce texte en <R=Rapide L=Lent>",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -667,6 +712,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Etalonner", "tension d'entrée" },
   /* AdvancedSoldering         */ { "Ecran soudure", "détaillé" },
   /* ScrollingSpeed            */ { "Vitesse de", "défilement" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -706,6 +754,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj.",
   /* AdvancedSoldering         */ "Prikazivanje detaljnih informacija tijekom lemljenja.",
   /* ScrollingSpeed            */ "Brzina kretanja dugačkih poruka. <B=brzo, S=sporo>",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -752,6 +803,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibracija", "napona napajanja" },
   /* AdvancedSoldering         */ { "Detalji", "pri lemljenju" },
   /* ScrollingSpeed            */ { "Brzina", "poruka" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -791,6 +845,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "A bemeneti feszültség kalibrálása. Röviden megnyomva állítsa be, hosszan nyomja meg a kilépéshez.",
   /* AdvancedSoldering         */ "Részletes információk megjelenítése forrasztás közben",
   /* ScrollingSpeed            */ "Szöveg görgetésének gyorsítása",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -837,6 +894,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
+  /* TipModel                  */ { "TIPMO" },
+  /* SimpleCalibrationMode     */ { "SMPCAL" },
+  /* AdvancedCalibrationMode   */ { "ADVCAL" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -876,6 +936,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire",
   /* AdvancedSoldering         */ "Mostra informazioni dettagliate durante la modalità Saldatura",
   /* ScrollingSpeed            */ "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -922,6 +985,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrazione", "tensione" },
   /* AdvancedSoldering         */ { "Dettagli", "saldatura" },
   /* ScrollingSpeed            */ { "Velocità", "testo" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -961,6 +1027,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Įvesties įtampos kalibravimas. Trumpai paspauskite, norėdami nustatyti, ilgai paspauskite, kad išeitumėte",
   /* AdvancedSoldering         */ "Ar rodyti išsamią informaciją lituojant",
   /* ScrollingSpeed            */ "Greitis, kuriuo šis tekstas slenka",
+  /* TipModel                  */ "Antgalio modelio pasirinkimas",
+  /* SimpleCalibrationMode     */ "Paprasta kalibracija naudojant karštą vandienį",
+  /* AdvancedCalibrationMode   */ "Išplėstinė kalibracija naudojant termoelementą",
 };
 
 const char* SettingsCalibrationDone = "Kalibracija atlikta!";
@@ -1007,6 +1076,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibruoti", "įvesties įtampą?" },
   /* AdvancedSoldering         */ { "Detalus lita-", "vimo ekranas" },
   /* ScrollingSpeed            */ { "Greitas apr", "ašym. slink" },
+  /* TipModel                  */ { "Antgalio", "modelis" },
+  /* SimpleCalibrationMode     */ { "Paprasta", "kalibracija" },
+  /* AdvancedCalibrationMode   */ { "Išplėstinė", "kalibracija" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1046,6 +1118,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen.",
   /* AdvancedSoldering         */ "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm.",
   /* ScrollingSpeed            */ "Snelheid waarmee de tekst scrolt.",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1092,6 +1167,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibreer", "input-voltage?" },
   /* AdvancedSoldering         */ { "Gedetailleerd", "soldeerscherm" },
   /* ScrollingSpeed            */ { "Scroll", "snelheid" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1131,6 +1209,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut",
   /* AdvancedSoldering         */ "Vis detaljert informasjon ved lodding",
   /* ScrollingSpeed            */ "Hastigheten på rulletekst",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1177,6 +1258,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "KalSpIn?" },
   /* AdvancedSoldering         */ { "AvLdSk" },
   /* ScrollingSpeed            */ { "RullHa" },
+  /* TipModel                  */ { "TIPMO" },
+  /* SimpleCalibrationMode     */ { "SMPCAL" },
+  /* AdvancedCalibrationMode   */ { "ADVCAL" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1216,6 +1300,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść.",
   /* AdvancedSoldering         */ "Wyświetl szczegółowe informacje podczas lutowania <T = wł., N = wył.>",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1262,6 +1349,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
+  /* TipModel                  */ { "TIPMO" },
+  /* SimpleCalibrationMode     */ { "SMPCAL" },
+  /* AdvancedCalibrationMode   */ { "ADVCAL" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1301,6 +1391,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha presionado para sair",
   /* AdvancedSoldering         */ "Exibe informações avançadas durante o uso",
   /* ScrollingSpeed            */ "Velocidade que esse texto é exibido",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1347,6 +1440,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrar", "tensão" },
   /* AdvancedSoldering         */ { "Tela trabalho", "avançada" },
   /* ScrollingSpeed            */ { "Velocidade", "texto ajuda" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1386,6 +1482,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
   /* AdvancedSoldering         */ "Показывать детальную информацию при пайке.",
   /* ScrollingSpeed            */ "Скорость прокрутки текста",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1432,6 +1531,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калибровка", "напряжения" },
   /* AdvancedSoldering         */ { "Подробный ре-", "жим пайки" },
   /* ScrollingSpeed            */ { "Скорость", "текста" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1471,6 +1573,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat",
   /* AdvancedSoldering         */ "Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1517,6 +1622,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
+  /* TipModel                  */ { "TIPMO" },
+  /* SimpleCalibrationMode     */ { "SMPCAL" },
+  /* AdvancedCalibrationMode   */ { "ADVCAL" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1556,6 +1664,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracija ulaznog napona. Podešavanje tastera, dugački pritisak za kraj.",
   /* AdvancedSoldering         */ "Prikazivanje detaljnih informacija tokom lemljenja.",
   /* ScrollingSpeed            */ "Brzina kretanja dugačkih poruka <B=brzo, S=sporo>",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1602,6 +1713,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibracija", "napona napajanja" },
   /* AdvancedSoldering         */ { "Detalji", "pri lemljenju" },
   /* ScrollingSpeed            */ { "Brzina", "poruka" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1641,6 +1755,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Inspänningskalibrering. Knapparna justerar, håll inne för avslut",
   /* AdvancedSoldering         */ "Visa detaljerad information vid lödning",
   /* ScrollingSpeed            */ "Hastighet som den här texten rullar i",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1687,6 +1804,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibrera", "inspänning?" },
   /* AdvancedSoldering         */ { "Detaljerad", "lödng.skärm" },
   /* ScrollingSpeed            */ { "Beskrivning", "rullhast." },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1726,6 +1846,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "VIN Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas.",
   /* AdvancedSoldering         */ "Lehimleme yaparken detaylı bilgi göster",
   /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1772,6 +1895,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "CAL VIN?" },
   /* AdvancedSoldering         */ { "ADVSLD" },
   /* ScrollingSpeed            */ { "DESCSP" },
+  /* TipModel                  */ { "TIPMO" },
+  /* SimpleCalibrationMode     */ { "SMPCAL" },
+  /* AdvancedCalibrationMode   */ { "ADVCAL" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1811,6 +1937,9 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити.",
   /* AdvancedSoldering         */ "Показувати детальну інформацію при пайці.",
   /* ScrollingSpeed            */ "Швидкість прокрутки тексту",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
@@ -1857,6 +1986,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калібровка", "напруга" },
   /* AdvancedSoldering         */ { "Детальний ре-", "жим пайки" },
   /* ScrollingSpeed            */ { "Швидкість", "тексту" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
 };
 
 const char* SettingsMenuEntries[4] = {

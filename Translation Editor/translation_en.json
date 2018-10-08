@@ -195,6 +195,30 @@
 				"Speed"
 			],
 			"desc": "Speed this text scrolls past at"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Tip",
+				"Model"
+			],
+			"desc": "Tip Model selection"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Simple",
+				"Calibration"
+			],
+			"desc": "Simple Calibration using Hot water"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Advanced",
+				"Calibration"
+			],
+			"desc": "Advanced calibration using thermocouple on the tip"
 		}
 	}
 }

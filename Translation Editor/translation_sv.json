@@ -195,6 +195,30 @@
 				"rullhast."
 			],
 			"desc": "Hastighet som den här texten rullar i"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Tip",
+				"Model"
+			],
+			"desc": "Tip Model selection"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Simple",
+				"Calibration"
+			],
+			"desc": "Simple Calibration using Hot water"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Advanced",
+				"Calibration"
+			],
+			"desc": "Advanced calibration using thermocouple on the tip"
 		}
 	}
 }

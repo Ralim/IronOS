@@ -195,6 +195,30 @@
 				"ašym. slink"
 			],
 			"desc": "Greitis, kuriuo šis tekstas slenka"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Antgalio",
+				"modelis"
+			],
+			"desc": "Antgalio modelio pasirinkimas"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Paprasta",
+				"kalibracija"
+			],
+			"desc": "Paprasta kalibracija naudojant karštą vandienį"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Išplėstinė",
+				"kalibracija"
+			],
+			"desc": "Išplėstinė kalibracija naudojant termoelementą"
 		}
 	}
 }
