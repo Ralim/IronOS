@@ -2,7 +2,7 @@
 	"languageCode": "LT",
 	"languageLocalName": "Lietuvių",
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibracija atlikta!",
 		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
 		"SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
 		"UVLOWarningString": "MAŽ VOLT",
@@ -196,29 +196,29 @@
 			],
 			"desc": "Greitis, kuriuo šis tekstas slenka"
 		},
-		"PidSettingsP": {
-			"text": "PIDP",
+		"TipModel": {
+			"text": "TIPMO",
 			"text2": [
-				"PID",
-				"P"
+				"Antgalio",
+				"modelis"
 			],
-			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Antgalio modelio pasirinkimas"
 		},
-		"PidSettingsI": {
-			"text": "PIDI",
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
 			"text2": [
-				"PID",
-				"I"
+				"Paprasta",
+				"kalibracija"
 			],
-			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Paprasta kalibracija naudojant karštą vandienį"
 		},
-		"PidSettingsD": {
-			"text": "PIDD",
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
 			"text2": [
-				"PID",
-				"D"
+				"Išplėstinė",
+				"kalibracija"
 			],
-			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Išplėstinė kalibracija naudojant termoelementą"
 		}
 	}
 }

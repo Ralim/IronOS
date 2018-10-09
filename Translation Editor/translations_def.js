@@ -2,6 +2,9 @@ var def =
 {
 	"messages": [
 		{
+			"id": "SettingsCalibrationDone"
+		}, 
+		{
 			"id": "SettingsCalibrationWarning"
 		}, 
 		{
@@ -206,22 +209,19 @@ var def =
 			"maxLen2": 11
 		},
 		{
-			"id": "PidSettingsP",
-			"maxLen": 6,
-			"maxLen2": 11,
-			"feature": "PIDSETTINGS"
+			"id": "TipModel",
+			"maxLen": 8,
+			"maxLen2": 16
 		},
 		{
-			"id": "PidSettingsI",
-			"maxLen": 6,
-			"maxLen2": 11,
-			"feature": "PIDSETTINGS"
+			"id": "SimpleCalibrationMode",
+			"maxLen": 8,
+			"maxLen2": 16
 		},
 		{
-			"id": "PidSettingsD",
-			"maxLen": 6,
-			"maxLen2": 11,
-			"feature": "PIDSETTINGS"
+			"id": "AdvancedCalibrationMode",
+			"maxLen": 8,
+			"maxLen2": 16
 		}
 	]
 }
