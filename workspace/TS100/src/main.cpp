@@ -698,7 +698,7 @@ void showVersion(void) {
 #ifdef MODEL_TS80
 			OLED::printNumber(idealQCVoltage,3);
 #else
-			OLED::print("Tek.com")
+			OLED::print("Tek.com");
 			#endif
 			break;
 		default:

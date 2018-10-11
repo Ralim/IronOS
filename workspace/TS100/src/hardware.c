@@ -7,7 +7,7 @@
 
 // These are all the functions for interacting with the hardware
 #include "hardware.h"
-#include "FreeRTos.h"
+#include "FreeRTOS.h"
 #include "stm32f1xx_hal.h"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
