@@ -9,55 +9,47 @@
 #include "cmsis_os.h"
 
 typedef struct {
-        const uint8_t reg;
-        const uint8_t val;
+	const uint8_t reg;
+	const uint8_t val;
 } MMA_REG;
 
-static const MMA_REG i2c_registers[] = {
-        {CTRL_REG2, 0},    //Normal mode
-        {CTRL_REG2, 0x40},      // Reset all registers to POR values
-        {FF_MT_CFG_REG, 0x78}, // Enable motion detection for X, Y, Z axis, latch disabled
-        {PL_CFG_REG, 0x40},     //Enable the orientation detection
-        {PL_COUNT_REG, 200},    //200 count debounce
-        {PL_BF_ZCOMP_REG, 0b01000111}, //Set the threshold to 42 degrees
-        {P_L_THS_REG, 0b10011100},    //Up the trip angles
-        {CTRL_REG4, 0x01 | (1 << 4)}, // Enable dataready interrupt & orientation interrupt
-        {CTRL_REG5, 0x01}, // Route data ready interrupts to INT1 ->PB5 ->EXTI5, leaving orientation routed to INT2
-        {CTRL_REG2, 0x12},   //Set maximum resolution oversampling
-        {XYZ_DATA_CFG_REG, (1 << 4)}, //select high pass filtered data
-        {HP_FILTER_CUTOFF_REG, 0x03}, //select high pass filtered data
-        {CTRL_REG1, 0x19} // ODR=12 Hz, Active mode
+static const MMA_REG i2c_registers[] = { { CTRL_REG2, 0 },    //Normal mode
+		{ CTRL_REG2, 0x40 },      // Reset all registers to POR values
+		{ FF_MT_CFG_REG, 0x78 }, // Enable motion detection for X, Y, Z axis, latch disabled
+		{ PL_CFG_REG, 0x40 },     //Enable the orientation detection
+		{ PL_COUNT_REG, 200 },    //200 count debounce
+		{ PL_BF_ZCOMP_REG, 0b01000111 }, //Set the threshold to 42 degrees
+		{ P_L_THS_REG, 0b10011100 },    //Up the trip angles
+		{ CTRL_REG4, 0x01 | (1 << 4) }, // Enable dataready interrupt & orientation interrupt
+		{ CTRL_REG5, 0x01 }, // Route data ready interrupts to INT1 ->PB5 ->EXTI5, leaving orientation routed to INT2
+		{ CTRL_REG2, 0x12 },   //Set maximum resolution oversampling
+		{ XYZ_DATA_CFG_REG, (1 << 4) }, //select high pass filtered data
+		{ HP_FILTER_CUTOFF_REG, 0x03 }, //select high pass filtered data
+		{ CTRL_REG1, 0x19 } // ODR=12 Hz, Active mode
 };
 
-void MMA8652FC::I2C_RegisterWrite(uint8_t reg, uint8_t data) {
-	i2c->Mem_Write( MMA8652FC_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, &data, 1);
-}
 
-uint8_t MMA8652FC::I2C_RegisterRead(uint8_t reg) {
-	uint8_t tx_data[1];
-	i2c->Mem_Read( MMA8652FC_I2C_ADDRESS, reg, I2C_MEMADD_SIZE_8BIT, tx_data,
-			1);
-
-	return tx_data[0];
-}
 void MMA8652FC::initalize() {
 	size_t index = 0;
 
 	//send all the init commands to the unit
 
-	I2C_RegisterWrite(i2c_registers[index].reg, i2c_registers[index].val); index++;
-	I2C_RegisterWrite(i2c_registers[index].reg, i2c_registers[index].val); index++;
+	FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].val);
+	index++;
+	FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].val);
+	index++;
 
 	HAL_Delay(2);		// ~1ms delay
 
 	while (index < (sizeof(i2c_registers) / sizeof(i2c_registers[0]))) {
-		I2C_RegisterWrite(i2c_registers[index].reg, i2c_registers[index].val); index++;
+		FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].val);
+		index++;
 	}
 }
 
 Orientation MMA8652FC::getOrientation() {
 	//First read the PL_STATUS register
-	uint8_t plStatus = I2C_RegisterRead(PL_STATUS_REG);
+	uint8_t plStatus = FRToSI2C::I2C_RegisterRead(MMA8652FC_I2C_ADDRESS,PL_STATUS_REG);
 	if ((plStatus & 0b10000000) == 0b10000000) {
 		plStatus >>= 1;    //We don't need the up/down bit
 		plStatus &= 0x03;    //mask to the two lower bits
@@ -67,12 +59,13 @@ Orientation MMA8652FC::getOrientation() {
 
 		return static_cast<Orientation>(plStatus);
 	}
-	
+
 	return ORIENTATION_FLAT;
 }
 void MMA8652FC::getAxisReadings(int16_t *x, int16_t *y, int16_t *z) {
 	uint8_t tempArr[6];
-	i2c->Mem_Read( MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG,I2C_MEMADD_SIZE_8BIT, (uint8_t*) tempArr, 6);
+	FRToSI2C::Mem_Read( MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG, I2C_MEMADD_SIZE_8BIT,
+			(uint8_t*) tempArr, 6);
 
 	(*x) = tempArr[0] << 8 | tempArr[1];
 	(*y) = tempArr[2] << 8 | tempArr[3];

@@ -166,11 +166,6 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TS100/inc/stm32f1xx_it.h</locationURI>
 		</link>
 		<link>
-			<name>inc/uRender.hpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TS100/inc/uRender.hpp</locationURI>
-		</link>
-		<link>
 			<name>src/FRToSI2C.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/FRToSI2C.cpp</locationURI>
@@ -249,11 +244,6 @@
 			<name>src/system_stm32f1xx.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/system_stm32f1xx.c</locationURI>
-		</link>
-		<link>
-			<name>src/uRender.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/uRender.cpp</locationURI>
 		</link>
 		<link>
 			<name>startup/startup_stm32.s</name>

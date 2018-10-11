@@ -14,15 +14,29 @@
 
 class LIS2DH12 {
 public:
-	LIS2DH12(FRToSI2C* i2cHandle) : i2c(i2cHandle) {}
-	void initalize();
-	Orientation getOrientation() { return static_cast<Orientation>((I2C_RegisterRead(LIS_INT2_SRC) >> 2) - 1); }
-	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
+	static void initalize();
+	//1 = rh, 2,=lh, 8=flat
+	static Orientation getOrientation() {
+#ifdef MODEL_TS80
+		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,
+				LIS_INT2_SRC) >> 2);
+		if (val == 8)
+			val = 3;
+		else if (val==1)
+			val=0;
+		else if(val==2)
+			val=1;
+		else
+			val=3;
+		return static_cast<Orientation>(val);
+#endif
+#ifdef MODEL_TS100
+		return static_cast<Orientation>((FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,LIS_INT2_SRC) >> 2) - 1);
+#endif
+	}
+	static void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:
-	void I2C_RegisterWrite(uint8_t reg, uint8_t data);
-	uint8_t I2C_RegisterRead(uint8_t reg);
-	FRToSI2C* i2c;
 };
 
 #endif /* LIS2DH12_HPP_ */
