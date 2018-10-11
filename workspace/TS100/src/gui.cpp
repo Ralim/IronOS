@@ -16,6 +16,10 @@ void gui_Menu(const menuitem* menu);
 #ifdef MODEL_TS100
 static void settings_setInputVRange(void);
 static void settings_displayInputVRange(void);
+#else
+static void settings_setInputPRange(void);
+static void settings_displayInputPRange(void);
+
 #endif
 static void settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
@@ -120,6 +124,10 @@ const menuitem rootSettingsMenu[]{
     {(const char*)SettingsDescriptions[0],
      {settings_setInputVRange},
      {settings_displayInputVRange}}, /*Voltage input*/
+#else
+	  {(const char*)SettingsDescriptions[18],
+	     {settings_setInputPRange},
+	     {settings_displayInputPRange}}, /*Voltage input*/
 #endif
     {(const char*)NULL,
      {settings_enterSolderingMenu},
@@ -348,6 +356,28 @@ static void settings_displayInputVRange(void) {
     OLED::print("DC");
   }
 }
+#else
+static void settings_setInputPRange(void) {
+  systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 2;
+}
+
+static void settings_displayInputPRange(void) {
+  printShortDescription(0, 5);
+//0 = 18W, 1=24W
+  switch(systemSettings.cutoutSetting)
+  {
+  case 0:
+	  OLED::print("18W");
+	  break;
+  case 1:
+	  OLED::print("24W");
+	  break;
+  default:
+	  break;
+  }
+
+}
+
 #endif
 static void settings_setSleepTemp(void) {
   // If in C, 10 deg, if in F 20 deg

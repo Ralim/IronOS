@@ -37,6 +37,7 @@ const char* SettingsDescriptions[] = {
     /* AdvancedSoldering         */
     "Display detailed information while soldering",
     /* ScrollingSpeed            */ "Speed this text scrolls past at",
+	/* Power Input               */ "The power rating of the power adapter",
 #ifdef PIDSETTINGS
     /* PidSettingsP              */
     "PID P term. Inverse values! This acts as a divisor. So Larger numbers == "

@@ -23,7 +23,7 @@ typedef struct {
 	uint16_t SolderingTemp;  // current set point for the iron
 	uint16_t SleepTemp;      // temp to drop to in sleep
 	uint8_t SleepTime;       // minutes timeout to sleep
-	uint8_t cutoutSetting;   // The voltage we cut out at for under voltage
+	uint8_t cutoutSetting;   // The voltage we cut out at for under voltage OR Power level for TS80
 	uint8_t OrientationMode :2; // If true we want to invert the display for lefties
 	uint8_t sensitivity :4;  // Sensitivity of accelerometer (5 bits)
 	uint8_t autoStartMode :2;  // Should the unit automatically jump straight

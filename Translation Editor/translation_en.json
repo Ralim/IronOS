@@ -195,6 +195,14 @@
 			],
 			"desc": "Speed this text scrolls past at"
 		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
+		},
 		"PidSettingsP": {
 			"text": "PIDP",
 			"text2": [

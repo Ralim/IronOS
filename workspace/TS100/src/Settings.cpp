@@ -80,7 +80,7 @@ void resetSettings() {
   systemSettings.SleepTime = 6;  // How many seconds/minutes we wait until going
                                  // to sleep - default 1 min
   systemSettings.SolderingTemp = 320;  // Default soldering temp is 320.0 C
-  systemSettings.cutoutSetting = 0;    // default to no cut-off voltage
+  systemSettings.cutoutSetting = 0;    // default to no cut-off voltage (or 18W for TS80)
   systemSettings.version =
       SETTINGSVERSION;  // Store the version number to allow for easier upgrades
   systemSettings.detailedSoldering = 0;  // Detailed soldering screen

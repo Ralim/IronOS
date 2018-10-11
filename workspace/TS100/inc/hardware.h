@@ -18,7 +18,6 @@ enum Orientation {
   ORIENTATION_RIGHT_HAND = 1,
   ORIENTATION_FLAT = 3
 };
-
 #ifndef MODEL_TS100
 	#ifndef MODEL_TS80
 #error "Please Define the model you are building for! MODEL=TS100 or MODEL=TS80"
@@ -128,7 +127,7 @@ void seekQC(int16_t Vx10);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);
 uint32_t calculateTipR(uint8_t useFilter);
-int16_t calculateMaxVoltage(uint8_t useFilter);
+int16_t calculateMaxVoltage(uint8_t useFilter, uint8_t useHP);
 void startQC();  // Tries to negotiate QC for highest voltage, must be run after
                  // RToS
 // This will try for 12V, failing that 9V, failing that 5V
