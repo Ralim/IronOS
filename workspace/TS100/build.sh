@@ -43,3 +43,48 @@ make -j16 lang=TR
 rm -rf Objects/src
 make -j16 lang=UA
 rm -rf Objects/src
+
+make -j16 lang=EN model=TS80
+rm -rf Objects/src
+make -j16 lang=BG model=TS80
+rm -rf Objects/src
+make -j16 lang=CS_CZ model=TS80
+rm -rf Objects/src
+make -j16 lang=DE model=TS80
+rm -rf Objects/src
+make -j16 lang=DK model=TS80
+rm -rf Objects/src
+make -j16 lang=ES model=TS80
+rm -rf Objects/src
+make -j16 lang=FI model=TS80
+rm -rf Objects/src
+make -j16 lang=FR model=TS80
+rm -rf Objects/src
+make -j16 lang=HR model=TS80
+rm -rf Objects/src
+make -j16 lang=HU model=TS80
+rm -rf Objects/src
+make -j16 lang=IT model=TS80
+rm -rf Objects/src
+make -j16 lang=LT model=TS80
+rm -rf Objects/src
+make -j16 lang=NL model=TS80
+rm -rf Objects/src
+make -j16 lang=NO model=TS80
+rm -rf Objects/src
+make -j16 lang=PL model=TS80
+rm -rf Objects/src
+make -j16 lang=PT model=TS80
+rm -rf Objects/src
+make -j16 lang=RU model=TS80
+rm -rf Objects/src
+make -j16 lang=SK model=TS80
+rm -rf Objects/src
+make -j16 lang=SR model=TS80
+rm -rf Objects/src
+make -j16 lang=SV model=TS80
+rm -rf Objects/src
+make -j16 lang=TR model=TS80
+rm -rf Objects/src
+make -j16 lang=UA model=TS80
+rm -rf Objects/src

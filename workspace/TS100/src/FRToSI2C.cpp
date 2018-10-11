@@ -31,11 +31,9 @@ void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
     if (xSemaphoreTake(I2CSemaphore, (TickType_t)5000) == pdTRUE) {
       if (HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
                            5000) != HAL_OK) {
-        NVIC_SystemReset();
       }
       xSemaphoreGive(I2CSemaphore);
     } else {
-      NVIC_SystemReset();
     }
   }
 }
@@ -61,12 +59,10 @@ void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
     if (xSemaphoreTake(I2CSemaphore, (TickType_t)5000) == pdTRUE) {
       if (HAL_I2C_Mem_Write(i2c, DevAddress, MemAddress, MemAddSize, pData,
                             Size, 5000) != HAL_OK) {
-        NVIC_SystemReset();
       }
       xSemaphoreGive(I2CSemaphore);
 
     } else {
-      NVIC_SystemReset();
     }
   }
 }
@@ -81,11 +77,9 @@ void FRToSI2C::Transmit(uint16_t DevAddress, uint8_t* pData, uint16_t Size) {
     // Wait up to 1 second for the mutex
     if (xSemaphoreTake(I2CSemaphore, (TickType_t)5000) == pdTRUE) {
       if (HAL_I2C_Master_Transmit_DMA(i2c, DevAddress, pData, Size) != HAL_OK) {
-        NVIC_SystemReset();
       }
       // xSemaphoreGive(I2CSemaphore);
     } else {
-      NVIC_SystemReset();
     }
   }
 }
