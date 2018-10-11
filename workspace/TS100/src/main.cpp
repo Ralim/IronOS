@@ -11,7 +11,6 @@
 #include "string.h"
 
 #define ACCELDEBUG 0
-// C++ objects 
 uint8_t PCBVersion = 0;
 // File local variables
 uint16_t currentlyActiveTemperatureTarget = 0;
@@ -41,7 +40,7 @@ int main(void) {
 	FRToSI2C::init(&hi2c1);
 	OLED::initialize();  // start up the LCD
 	OLED::setFont(0);    // default to bigger font
-	// Testing for new weird board version
+	// Testing for which accelerometer is mounted
 	uint8_t buffer[1];
 	HAL_IWDG_Refresh(&hiwdg);
 	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
@@ -828,12 +827,17 @@ void startGUITask(void const *argument __unused) {
 				OLED::printNumber(systemSettings.SolderingTemp, 3);
 			}
 			OLED::setCursor(0, 8);
+
 			OLED::print(InputVoltageString);
 			printVoltage();
 
 		} else {
 			OLED::setFont(0);
-			if (OLED::getRotation()) {
+#ifdef MODEL_TS80
+			if (!OLED::getRotation()) {
+#else
+				if (OLED::getRotation()) {
+#endif
 				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
 				OLED::setCursor(0, 0);
 				gui_drawBatteryIcon();
@@ -850,7 +854,11 @@ void startGUITask(void const *argument __unused) {
 			if (tempOnDisplay) {
 				// draw temp over the start soldering button
 				// Location changes on screen rotation
+#ifdef MODEL_TS80
+			if (!OLED::getRotation()) {
+#else
 				if (OLED::getRotation()) {
+#endif
 					// in right handed mode we want to draw over the first part
 					OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp
 					OLED::setCursor(56, 0);

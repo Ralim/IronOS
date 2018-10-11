@@ -67,8 +67,7 @@ uint16_t ftoTipMeasurement(uint16_t temp) {
 	return ctoTipMeasurement(((temp - 32) * 5) / 9);
 }
 
-uint16_t __attribute__((long_call, section(".data.ramfuncs")))
-getTipInstantTemperature() {
+uint16_t getTipInstantTemperature() {
 	uint16_t sum;
 	sum = hadc1.Instance->JDR1;
 	sum += hadc1.Instance->JDR2;
@@ -89,30 +88,30 @@ getTipInstantTemperature() {
 uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 #ifdef MODEL_TS100
 	switch (tipID) {
-		case TS_D24:
+	case TS_D24:
 		return 141;
 		break;
-		case TS_BC2:
+	case TS_BC2:
 		return (133 + 129) / 2;
 		break;
-		case TS_C1:
+	case TS_C1:
 		return 133;
 		break;
-		case TS_B2:
+	case TS_B2:
 		return 133;
-		default:
+	default:
 		return 132;  // make this the average of all
 		break;
 	}
 #else
 	switch (tipID) {
-	case TS_D25:
+		case TS_D25:
 		return 154;
 		break;
-	case TS_B02:
+		case TS_B02:
 		return 154;
 		break;
-	default:
+		default:
 		return 154;  // make this the average of all
 		break;
 	}
@@ -171,9 +170,9 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 uint8_t QCMode = 0;
 void seekQC(int16_t Vx10) {
 	if (QCMode <= 1)
-		return;  // NOT connected to a QC Charger
+	return;  // NOT connected to a QC Charger
 	if (Vx10 < 50)
-		return;
+	return;
 	// Seek the QC to the Voltage given if this adapter supports continuous mode
 	// try and step towards the wanted value
 
@@ -245,7 +244,7 @@ void startQC() {
 	// negotiating as someone is feeding in hv
 	uint16_t vin = getInputVoltageX10(205);
 	if (vin > 150)
-		return;  // Over voltage
+	return;// Over voltage
 	if (vin > 100) {
 		QCMode = 1;  // ALready at ~12V
 		return;
@@ -262,14 +261,14 @@ void startQC() {
 	// If 12V is implimented then should fallback to 9V after validation
 	// Step 1. We want to pull D+ to 0.6V
 	// Pull PB3 donwn to ground
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET); // pull low to put 0.6V on D+
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);// pull low to put 0.6V on D+
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 	GPIO_InitStruct.Pin = GPIO_PIN_3;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET); // pull low to put 0.6V on D+
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);// pull low to put 0.6V on D+
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 
@@ -287,7 +286,7 @@ void startQC() {
 	}
 	// Check if D- is low to spot a QC charger
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET)
-		enteredQC = 1;
+	enteredQC = 1;
 	if (enteredQC) {
 		// We have a QC capable charger
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
@@ -307,7 +306,7 @@ void startQC() {
 		for (uint8_t i = 0; i < 10; i++) {
 			if (getInputVoltageX10(195) > 80) {
 				// yay we have at least QC2.0 or QC3.0
-				QCMode = 3;  // We have at least QC2, pray for 3
+				QCMode = 3;// We have at least QC2, pray for 3
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
@@ -334,7 +333,7 @@ uint32_t calculateTipR(uint8_t useFilter) {
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);  // Set low first
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);// Set low first
 	setTipPWM(0);
 	vTaskDelay(1);
 	uint32_t offReading = getTipInstantTemperature();
@@ -348,8 +347,8 @@ uint32_t calculateTipR(uint8_t useFilter) {
 	}
 
 	// Turn on
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);  // Set low first
-	vTaskDelay(1);  // delay to allow it too stabilize
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);// Set low first
+	vTaskDelay(1);// delay to allow it too stabilize
 	uint32_t onReading = getTipInstantTemperature();
 	for (uint8_t i = 0; i < 24; i++) {
 		if (useFilter == 0) {
@@ -367,7 +366,7 @@ uint32_t calculateTipR(uint8_t useFilter) {
 	// 4688 milliohms (Measured using 4 terminal measurement) 25x oversampling
 	// reads this as around 47490 Almost perfectly 10x the milliohms value This
 	// will drift massively with tip temp However we really only need 10x ohms
-	return (difference / 10) + 1;  // ceil
+	return (difference / 10) + 1;// ceil
 }
 static unsigned int sqrt32(unsigned long n) {
 	unsigned int c = 0x8000;
@@ -375,10 +374,10 @@ static unsigned int sqrt32(unsigned long n) {
 
 	for (;;) {
 		if (g * g > n)
-			g ^= c;
+		g ^= c;
 		c >>= 1;
 		if (c == 0)
-			return g;
+		return g;
 		g |= c;
 	}
 }
@@ -389,26 +388,26 @@ int16_t calculateMaxVoltage(uint8_t useFilter, uint8_t useHP) {
 	uint32_t milliOhms = calculateTipR(useFilter);
 	// Check no tip
 	if (milliOhms > 10000)
-		return -1;
+	return -1;
 	//
 	// V = sqrt(18W*R)
 	// Convert this to sqrt(18W)*sqrt(milli ohms)*sqrt(1/1000)
 
 	uint32_t Vx = sqrt32(milliOhms);
 	if (useHP)
-		Vx *= 1549;  //sqrt(24)*sqrt(1/1000)
+	Vx *= 1549;//sqrt(24)*sqrt(1/1000)
 	else
-		Vx *= 1342; // sqrt(18) * sqrt(1/1000)
+	Vx *= 1342;// sqrt(18) * sqrt(1/1000)
 
 	// Round to nearest 200mV,
 	// So divide by 100 to start, to get in Vxx
 	Vx /= 100;
 	if (Vx % 10 >= 5)
-		Vx += 10;
+	Vx += 10;
 	Vx /= 10;
 	// Round to nearest increment of 2
 	if (Vx % 2 == 1)
-		Vx++;
+	Vx++;
 	return Vx;
 }
 
@@ -417,8 +416,7 @@ volatile uint32_t pendingPWM = 0;
 uint8_t getTipPWM() {
 	return pendingPWM;
 }
-void __attribute__((long_call, section(".data.ramfuncs")))
-setTipPWM(uint8_t pulse) {
+void setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 2; // This is decremented in the handler for PWM so that the tip pwm is
 						// disabled if the PID task is not scheduled often enough.
 	if (pulse > 100)
@@ -430,8 +428,7 @@ setTipPWM(uint8_t pulse) {
 // These are called by the HAL after the corresponding events from the system
 // timers.
 
-void __attribute__((long_call, section(".data.ramfuncs")))
-HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	// Period has elapsed
 	if (htim->Instance == TIM2) {
 		// we want to turn on the output again
@@ -454,8 +451,7 @@ HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	}
 }
 
-void __attribute__((long_call, section(".data.ramfuncs")))
-HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 	if (htim->Instance == TIM2) {
 		// This was a when the PWM for the output has timed out
 		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {

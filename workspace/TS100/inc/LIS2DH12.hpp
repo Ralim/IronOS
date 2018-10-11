@@ -22,8 +22,12 @@ public:
 				LIS_INT2_SRC) >> 2);
 		if (val == 8)
 			val = 3;
+		else if (val==1)
+			val=0;
+		else if(val==2)
+			val=1;
 		else
-			val--;
+			val=3;
 		return static_cast<Orientation>(val);
 #endif
 #ifdef MODEL_TS100
