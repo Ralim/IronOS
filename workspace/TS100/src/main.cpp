@@ -639,7 +639,13 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 static const char *HEADERS[] = {
 __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "RTip: ",
-		"CTip: ", "Vin :", "THan: ", "Model: " };
+		"CTip: ", "Vin :", "THan: ", "Model: ",
+#ifdef MODEL_TS80
+		"QCV: ",
+#else
+		"Ralim-",
+#endif
+		};
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -688,6 +694,13 @@ void showVersion(void) {
 		case 11:
 			OLED::printNumber(PCBVersion, 1);  // Print PCB ID number
 			break;
+		case 12:
+#ifdef MODEL_TS80
+			OLED::printNumber(idealQCVoltage,3);
+#else
+			OLED::print("Tek.com")
+			#endif
+			break;
 		default:
 			break;
 		}
@@ -698,7 +711,7 @@ void showVersion(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 12;
+			screen = screen % 13;
 		}
 		GUIDelay();
 	}

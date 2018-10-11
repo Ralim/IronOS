@@ -177,7 +177,7 @@ void seekQC(int16_t Vx10) {
 	// try and step towards the wanted value
 
 	// 1. Measure current voltage
-	int16_t vStart = getInputVoltageX10(195);
+	int16_t vStart = getInputVoltageX10(780);
 	int difference = Vx10 - vStart;
 
 	// 2. calculate ideal steps (0.2V changes)
@@ -242,7 +242,7 @@ void seekQC(int16_t Vx10) {
 void startQC() {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
-	uint16_t vin = getInputVoltageX10(205);
+	uint16_t vin = getInputVoltageX10(780);
 	if (vin > 150)
 	return;// Over voltage
 	if (vin > 100) {
