@@ -1,6 +1,7 @@
 {
 	"languageCode": "IT",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",
@@ -14,7 +15,7 @@
 		"WarningAdvancedString": "PUNTA CALDA!",
 		"SleepingTipAdvancedString": "Punta:",
 		"IdleTipString": "Punta:",
-		"IdleSetString": " Im:",
+		"IdleSetString": "/",
 		"TipDisconnectedString": "PUNTA ASSENTE",
 		"SolderingAdvancedPowerPrompt": "Potenza:",
 		"OffString": "OFF"
@@ -33,28 +34,28 @@
 				"Opzioni",
 				"saldatura"
 			],
-			"desc": "Menù impostazioni saldatura"
+			"desc": "Menù d'impostazioni della modalità Saldatura"
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Risparmio",
 				"energetico"
 			],
-			"desc": "Menù risparmio energetico"
+			"desc": "Menù d'impostazioni per il risparmio energetico"
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfaccia",
 				"utente"
 			],
-			"desc": "Menù interfaccia utente"
+			"desc": "Menù d'impostazioni dell'interfaccia utente"
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Opzioni",
 				"avanzate"
 			],
-			"desc": "Menù impostazioni avanzate"
+			"desc": "Menù d'impostazioni avanzate"
 		}
 	},
 	"menuOptions": {
@@ -64,7 +65,7 @@
 				"Sorgente",
 				"alimentaz"
 			],
-			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3.3V per cella>"
+			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3,3V per cella>"
 		},
 		"SleepTemperature": {
 			"text": "",
@@ -126,7 +127,7 @@
 			"text": "",
 			"text2": [
 				"Funzione",
-				"\"boost\""
+				"«Turbo»"
 			],
 			"desc": "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura"
 		},
@@ -134,7 +135,7 @@
 			"text": "",
 			"text2": [
 				"Temp",
-				"\"boost\""
+				"«Turbo»"
 			],
 			"desc": "Imposta la temperatura della funzione «Turbo»"
 		},
@@ -152,7 +153,7 @@
 				"Avviso",
 				"punta calda"
 			],
-			"desc": "Mostra la temperatura durante il raffreddamento se la punta è ancora calda"
+			"desc": "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda"
 		},
 		"TemperatureCalibration": {
 			"text": "",
@@ -194,29 +195,29 @@
 			],
 			"desc": "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>"
 		},
-		"PidSettingsP": {
-			"text": "PIDP",
+		"TipModel": {
+			"text": "TIPMO",
 			"text2": [
-				"PID",
-				"P"
+				"Tip",
+				"Model"
 			],
-			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Tip Model selection"
 		},
-		"PidSettingsI": {
-			"text": "PIDI",
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
 			"text2": [
-				"PID",
-				"I"
+				"Simple",
+				"Calibration"
 			],
-			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Simple Calibration using Hot water"
 		},
-		"PidSettingsD": {
-			"text": "PIDD",
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
 			"text2": [
-				"PID",
-				"D"
+				"Advanced",
+				"Calibration"
 			],
-			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Advanced calibration using thermocouple on the tip"
 		}
 	},
 	"languageLocalName": "Italiano"

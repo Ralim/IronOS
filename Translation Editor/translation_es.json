@@ -1,6 +1,7 @@
 {
 	"languageCode": "ES",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "¡Asegúrese que la punta esté a temperatura ambiente antes de proceder!",
 		"SettingsResetWarning": "¿Está seguro de volver a estado de fábrica?",
 		"UVLOWarningString": "DC BAJO",
@@ -149,7 +150,7 @@
 		"CooldownBlink": {
 			"text": "CLBLNK",
 			"text2": [
-				"Temp. en el",
+				"Parpadea m.",
 				"enfriamiento"
 			],
 			"desc": "Parpadea la temperatura en el enfriamiento si la punta sigue caliente."
@@ -182,7 +183,7 @@
 			"text": "ADVSLD",
 			"text2": [
 				"Inf detallada",
-				"de soldadura"
+				"del soldadura"
 			],
 			"desc": "Mostrar información detallada mientras suelda."
 		},
@@ -194,29 +195,29 @@
 			],
 			"desc": "Velocidad de desplazamiento del texto."
 		},
-		"PidSettingsP": {
-			"text": "PIDP",
+		"TipModel": {
+			"text": "TIPMO",
 			"text2": [
-				"PID",
-				"P"
+				"Tip",
+				"Model"
 			],
-			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Tip Model selection"
 		},
-		"PidSettingsI": {
-			"text": "PIDI",
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
 			"text2": [
-				"PID",
-				"I"
+				"Simple",
+				"Calibration"
 			],
-			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Simple Calibration using Hot water"
 		},
-		"PidSettingsD": {
-			"text": "PIDD",
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
 			"text2": [
-				"PID",
-				"D"
+				"Advanced",
+				"Calibration"
 			],
-			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
+			"desc": "Advanced calibration using thermocouple on the tip"
 		}
 	},
 	"languageLocalName": "Español"

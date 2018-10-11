@@ -37,15 +37,7 @@ static void settings_setAdvancedIDLEScreens(void);
 static void settings_displayAdvancedIDLEScreens(void);
 static void settings_setScrollSpeed(void);
 static void settings_displayScrollSpeed(void);
-#ifdef PIDSETTINGS
 
-static void settings_setPIDP(void);
-static void settings_displayPIDP(void);
-static void settings_setPIDI(void);
-static void settings_displayPIDI(void);
-static void settings_setPIDD(void);
-static void settings_displayPIDD(void);
-#endif
 static void settings_setDisplayRotation(void);
 static void settings_displayDisplayRotation(void);
 static void settings_setBoostModeEnabled(void);
@@ -125,7 +117,7 @@ const menuitem rootSettingsMenu[]{
      {settings_setInputVRange},
      {settings_displayInputVRange}}, /*Voltage input*/
 #else
-	  {(const char*)SettingsDescriptions[18],
+	  {(const char*)SettingsDescriptions[20],
 	     {settings_setInputPRange},
 	     {settings_displayInputPRange}}, /*Voltage input*/
 #endif
@@ -232,18 +224,6 @@ const menuitem advancedMenu[] = {
     {(const char*)SettingsDescriptions[14],
      {settings_setCalibrateVIN},
      {settings_displayCalibrateVIN}}, /*Voltage input cal*/
-#ifdef PIDSETTINGS
-
-    {(const char*)SettingsDescriptions[17],
-     {settings_setPIDP},
-     {settings_displayPIDP}}, /*Voltage input cal*/
-    {(const char*)SettingsDescriptions[18],
-     {settings_setPIDI},
-     {settings_displayPIDI}}, /*Voltage input cal*/
-    {(const char*)SettingsDescriptions[19],
-     {settings_setPIDD},
-     {settings_displayPIDD}}, /*Voltage input cal*/
-#endif
     {NULL, {NULL}, {NULL}}  // end of menu marker. DO NOT REMOVE
 };
 
@@ -576,33 +556,6 @@ static void settings_displayBoostTemp(void) {
   OLED::printNumber(systemSettings.BoostTemp, 3);
 }
 
-#ifdef PIDSETTINGS
-static void settings_setPIDP(void) {
-  systemSettings.PID_P++;
-  systemSettings.PID_P %= 100;
-}
-static void settings_displayPIDP(void) {
-  printShortDescription(17, 6);
-  OLED::printNumber(systemSettings.PID_P, 2);
-}
-static void settings_setPIDI(void) {
-  systemSettings.PID_I++;
-  systemSettings.PID_I %= 100;
-}
-static void settings_displayPIDI(void) {
-  printShortDescription(18, 6);
-  OLED::printNumber(systemSettings.PID_I, 2);
-}
-static void settings_setPIDD(void) {
-  systemSettings.PID_D++;
-  systemSettings.PID_D %= 100;
-}
-static void settings_displayPIDD(void) {
-  printShortDescription(19, 6);
-  OLED::printNumber(systemSettings.PID_D, 2);
-}
-#endif
-
 static void settings_setAutomaticStartMode(void) {
   systemSettings.autoStartMode++;
   systemSettings.autoStartMode %= 2;
@@ -799,65 +752,69 @@ static void calibration_displayAdvancedCal(void) {
   printShortDescription(19, 5);
 }
 static void calibration_enterAdvancedCal(void) {
-  // Advanced cal
-  if (userConfirmation(SettingsCalibrationWarning)) {
-    // User has confirmed their handle is at ambient
-    // So take the offset measurement
-    setTipOffset();
-    // The tip now has a known ADC offset
-    // Head up until it is at 350C
-    // Then let the user adjust the gain value until it converges
-    systemSettings.customTipGain = 120;
-    bool exit = false;
+	//Advanced cal
+	if (userConfirmation(SettingsCalibrationWarning)) {
+		//User has confirmed their handle is at ambient
+		//So take the offset measurement
+		setTipOffset();
+		//The tip now has a known ADC offset
+		//Head up until it is at 350C
+		//Then let the user adjust the gain value until it converges
+		systemSettings.customTipGain = 160; // start safe and high
+		bool exit = false;
 
-    while (exit == false) {
-      // Set tip to 350C
-      currentlyActiveTemperatureTarget = ctoTipMeasurement(350);
-      // Check if user has pressed button to change the gain
-      ButtonState buttons = getButtonState();
-      switch (buttons) {
-        case BUTTON_NONE:
-          break;
-        case BUTTON_BOTH:
-        case BUTTON_B_LONG:
-        case BUTTON_F_LONG:
-          exit = true;
-          break;
-        case BUTTON_F_SHORT:
-          systemSettings.customTipGain++;
-          break;
-        case BUTTON_B_SHORT: {
-          systemSettings.customTipGain--;
-        } break;
-        default:
-          break;
-      }
-      if (systemSettings.customTipGain > 200)
-        systemSettings.customTipGain = 200;
-      else if (systemSettings.customTipGain <= 100)
-        systemSettings.customTipGain = 100;
-      OLED::setCursor(0, 0);
-      OLED::clearScreen();
-      OLED::setFont(0);
-      if (OLED::getRotation())
-        OLED::drawChar('-');
-      else
-        OLED::drawChar('+');
+		while (exit == false) {
+			//Set tip to 350C
+			setTipType(Tip_Custom,systemSettings.customTipGain);
+			currentlyActiveTemperatureTarget = ctoTipMeasurement(350);
+			//Check if user has pressed button to change the gain
+			ButtonState buttons = getButtonState();
+			switch (buttons) {
+			case BUTTON_NONE:
+				break;
+			case BUTTON_BOTH:
+			case BUTTON_B_LONG:
+			case BUTTON_F_LONG:
+				exit = true;
+				break;
+			case BUTTON_F_SHORT:
+				systemSettings.customTipGain++;
+				break;
+			case BUTTON_B_SHORT: {
+				systemSettings.customTipGain--;
+			}
+				break;
+			default:
+				break;
+			}
+			if (systemSettings.customTipGain > 200)
+				systemSettings.customTipGain = 200;
+			else if (systemSettings.customTipGain <= 100)
+				systemSettings.customTipGain = 100;
+			OLED::setCursor(0, 0);
+			OLED::clearScreen();
+			OLED::setFont(0);
+			if (OLED::getRotation())
+				OLED::drawChar('-');
+			else
+				OLED::drawChar('+');
 
-      OLED::drawChar(' ');
-      OLED::printNumber(systemSettings.customTipGain, 4);
-      OLED::drawChar(' ');
-      if (OLED::getRotation())
-        OLED::drawChar('+');
-      else
-        OLED::drawChar('-');
-      OLED::refresh();
-      GUIDelay();
-    }
-  }
+			OLED::drawChar(' ');
+			OLED::printNumber(systemSettings.customTipGain, 4);
+			OLED::drawChar(' ');
+			if (OLED::getRotation())
+				OLED::drawChar('+');
+			else
+				OLED::drawChar('-');
+			OLED::refresh();
+			GUIDelay();
+		}
+		// Wait for the user to confirm the exit message that the calibration is done
+		userConfirmation(SettingsCalibrationDone);
+	}
 }
-// Provide the user the option to tune their own tip if custom is selected
-// If not only do single point tuning as per usual
+//Provide the user the option to tune their own tip if custom is selected
+//If not only do single point tuning as per usual
 static void settings_setCalibrate(void) {
   if (systemSettings.tipType == Tip_Custom) {
     // Two types of calibration

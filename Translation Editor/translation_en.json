@@ -2,6 +2,7 @@
 	"languageCode": "EN",
 	"languageLocalName": "English",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
 		"SettingsResetWarning": "Are you sure you want to reset settings to default values?",
 		"UVLOWarningString": "DC LOW",
@@ -195,6 +196,30 @@
 			],
 			"desc": "Speed this text scrolls past at"
 		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Tip",
+				"Model"
+			],
+			"desc": "Tip Model selection"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Simple",
+				"Calibration"
+			],
+			"desc": "Simple Calibration using Hot water"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Advanced",
+				"Calibration"
+			],
+			"desc": "Advanced calibration using thermocouple on the tip"
+		}
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
@@ -203,29 +228,5 @@
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
-		"PidSettingsP": {
-			"text": "PIDP",
-			"text2": [
-				"PID",
-				"P"
-			],
-			"desc": "PID P term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
-		},
-		"PidSettingsI": {
-			"text": "PIDI",
-			"text2": [
-				"PID",
-				"I"
-			],
-			"desc": "PID I term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
-		},
-		"PidSettingsD": {
-			"text": "PIDD",
-			"text2": [
-				"PID",
-				"D"
-			],
-			"desc": "PID D term. Inverse values! This acts as a divisor. So Larger numbers == typically smaller in other systems"
-		}
 	}
 }
