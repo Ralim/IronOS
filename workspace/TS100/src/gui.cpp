@@ -874,11 +874,19 @@ static void settings_setCalibrateVIN(void) {
     osDelay(40);
 
     // Cap to sensible values
+#ifdef MODEL_TS80
+    if (systemSettings.voltageDiv < 500) {
+      systemSettings.voltageDiv = 500;
+    } else if (systemSettings.voltageDiv > 900) {
+      systemSettings.voltageDiv = 900;
+    }
+#else
     if (systemSettings.voltageDiv < 360) {
       systemSettings.voltageDiv = 360;
     } else if (systemSettings.voltageDiv > 520) {
       systemSettings.voltageDiv = 520;
     }
+#endif
   }
 }
 
