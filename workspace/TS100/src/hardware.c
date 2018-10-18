@@ -169,19 +169,21 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 #ifdef MODEL_TS80
 uint8_t QCMode = 0;
 uint8_t QCTries = 0;
-void seekQC(int16_t Vx10) {
+void seekQC(int16_t Vx10,uint16_t divisor) {
 	if (QCMode == 5)
-		startQC();
+		startQC(divisor);
 	if (QCMode == 0)
 		return;  // NOT connected to a QC Charger
 
 	if (Vx10 < 50)
 		return;
+	if(Vx10>130)
+		Vx10=130;//Cap max value at 13V
 	// Seek the QC to the Voltage given if this adapter supports continuous mode
 	// try and step towards the wanted value
 
 	// 1. Measure current voltage
-	int16_t vStart = getInputVoltageX10(780);
+	int16_t vStart = getInputVoltageX10(divisor);
 	int difference = Vx10 - vStart;
 
 	// 2. calculate ideal steps (0.2V changes)
@@ -243,10 +245,10 @@ void seekQC(int16_t Vx10) {
 }
 
 // Must be called after FreeRToS Starts
-void startQC() {
+void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
-	uint16_t vin = getInputVoltageX10(780);
+	uint16_t vin = getInputVoltageX10(divisor);
 	if (vin > 150)
 		return;	// Over voltage
 	if (vin > 100) {
@@ -308,7 +310,7 @@ void startQC() {
 		// Wait for frontend ADC to stabilise
 		QCMode = 4;
 		for (uint8_t i = 0; i < 10; i++) {
-			if (getInputVoltageX10(195) > 80) {
+			if (getInputVoltageX10(divisor) > 80) {
 				// yay we have at least QC2.0 or QC3.0
 				QCMode = 3;	// We have at least QC2, pray for 3
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);

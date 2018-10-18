@@ -787,7 +787,7 @@ void startGUITask(void const *argument __unused) {
 			if (idealQCVoltage < 90)
 				idealQCVoltage = calculateMaxVoltage(1,
 						systemSettings.cutoutSetting); // 1 means use filtered values rather than do its own
-			seekQC(idealQCVoltage);
+			seekQC(idealQCVoltage,systemSettings.voltageDiv);
 #endif
 			gui_solderingMode(0);  // enter soldering mode
 			buttonLockout = true;
@@ -1011,11 +1011,11 @@ void startMOVTask(void const *argument __unused) {
 	OLED::setRotation(false);
 
 #ifdef MODEL_TS80
-	startQC();
+	startQC(systemSettings.voltageDiv);
 	while (idealQCVoltage == 0)
 		osDelay(20);  // To ensure we return after idealQCVoltage is setup
 
-	seekQC(idealQCVoltage); // this will move the QC output to the preferred voltage to start with
+	seekQC(idealQCVoltage,systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
@@ -1102,7 +1102,7 @@ void startMOVTask(void const *argument __unused) {
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
 		if (currentlyActiveTemperatureTarget) {
-			seekQC(idealQCVoltage); // Run the QC seek again to try and compensate for cable V drop
+			seekQC(idealQCVoltage,systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
 		}
 #endif
 	}
