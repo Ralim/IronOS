@@ -1,7 +1,7 @@
 {
 	"languageCode": "IT",
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Calibrazione effettuata",
 		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",
@@ -198,26 +198,26 @@
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
-				"Model"
+				"Modello",
+				"della punta"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Seleziona il modello della punta in uso"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Calibrazione",
+				"semplice"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua calda"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Calibrazione",
+				"avanzata"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta"
 		}
 	},
 	"languageLocalName": "Italiano"

@@ -282,8 +282,8 @@ static void gui_drawBatteryIcon() {
 		OLED::printNumber(1, 1);
 		OLED::setCursor(xPos, 8);
 		OLED::printNumber(V % 10, 1);
-
 		OLED::setFont(0);
+		OLED::setCursor(xPos+12,0); // need to reset this as if we drew a wide char
 	} else {
 		OLED::printNumber(V, 1);
 	}
@@ -537,7 +537,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				OLED::print(SolderingAdvancedPowerPrompt);  // Power:
 				OLED::printNumber(getTipPWM(), 3);
 				OLED::print("%");
-				// OLED::printNumber(getTipRawTemp(0), 6);
 
 				if (systemSettings.sensitivity && systemSettings.SleepTime) {
 					OLED::print(" ");
@@ -784,10 +783,11 @@ void startGUITask(void const *argument __unused) {
 			OLED::setFont(0);
 			OLED::displayOnOff(true);  // turn lcd on
 #ifdef MODEL_TS80
+			//Here we re-check for tip presence
 			if (idealQCVoltage < 90)
 				idealQCVoltage = calculateMaxVoltage(1,
 						systemSettings.cutoutSetting); // 1 means use filtered values rather than do its own
-			seekQC(idealQCVoltage);
+			seekQC(idealQCVoltage,systemSettings.voltageDiv);
 #endif
 			gui_solderingMode(0);  // enter soldering mode
 			buttonLockout = true;
@@ -1008,12 +1008,14 @@ void startPIDTask(void const *argument __unused) {
 }
 #define MOVFilter 8
 void startMOVTask(void const *argument __unused) {
+	OLED::setRotation(false);
+
 #ifdef MODEL_TS80
-	startQC();
+	startQC(systemSettings.voltageDiv);
 	while (idealQCVoltage == 0)
 		osDelay(20);  // To ensure we return after idealQCVoltage is setup
 
-	seekQC(idealQCVoltage); // this will move the QC output to the preferred voltage to start with
+	seekQC(idealQCVoltage,systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
@@ -1100,7 +1102,7 @@ void startMOVTask(void const *argument __unused) {
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
 		if (currentlyActiveTemperatureTarget) {
-			seekQC(idealQCVoltage); // Run the QC seek again to try and compensate for cable V drop
+			seekQC(idealQCVoltage,systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
 		}
 #endif
 	}
