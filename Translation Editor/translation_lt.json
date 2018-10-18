@@ -219,6 +219,14 @@
 				"kalibracija"
 			],
 			"desc": "Išplėstinė kalibracija naudojant termoelementą"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Galia",
+				"vatais"
+			],
+			"desc": "Maitinimo bloko galia vatais"
 		}
 	}
 }

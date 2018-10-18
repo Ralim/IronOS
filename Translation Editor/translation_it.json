@@ -218,6 +218,14 @@
 				"avanzata"
 			],
 			"desc": "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
 		}
 	},
 	"languageLocalName": "Italiano"
