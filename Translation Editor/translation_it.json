@@ -222,10 +222,10 @@
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Power",
-				"Wattage"
+				"Potenza",
+				"alimentaz"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Imposta la potenza dell'alimentatore in uso"
 		}
 	},
 	"languageLocalName": "Italiano"
