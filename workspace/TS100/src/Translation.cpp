@@ -305,15 +305,15 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen.",
   /* AdvancedSoldering         */ "Detaillierte Anzeige im Lötmodus <J=An, N=Aus>",
   /* ScrollingSpeed            */ "Scrollgeschwindigkeit der Texte",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* TipModel                  */ "Auswahl der Lötspitze",
+  /* SimpleCalibrationMode     */ "Einfache Kalibrierung mittels heißem Wasser",
+  /* AdvancedCalibrationMode   */ "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze",
+  /* PowerInput                */ "Leistungsaufnahme der verwendeten Spannungsversorgung",
 };
 
-const char* SettingsCalibrationDone = "Calibration done!";
+const char* SettingsCalibrationDone = "Kalibrierung abgeschlossen!";
 const char* SettingsCalibrationWarning = "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!";
-const char* SettingsResetWarning = "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?";
+const char* SettingsResetWarning = "Sind Sie sicher, dass Sie alle Werte zurücksetzen wollen?";
 const char* UVLOWarningString = "V niedr.";
 const char* UndervoltageString = "Unterspannung";
 const char* InputVoltageString = "V Eingang: ";
@@ -328,7 +328,7 @@ const char* IdleTipString = "Ist:";
 const char* IdleSetString = " Soll:";
 const char* TipDisconnectedString = "Spitze fehlt";
 const char* SolderingAdvancedPowerPrompt = "Leistung: ";
-const char* OffString = "Off";
+const char* OffString = "Aus";
 
 const char SettingRightChar = 'R';
 const char SettingLeftChar = 'L';
@@ -355,10 +355,10 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Eingangsspannung", "kalibrieren?" },
   /* AdvancedSoldering         */ { "Detaillierte", "Lötansicht" },
   /* ScrollingSpeed            */ { "Scroll-", "geschw." },
-  /* TipModel                  */ { "Tip", "Model" },
-  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
-  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
-  /* PowerInput                */ { "Power", "Wattage" },
+  /* TipModel                  */ { "Löt-", "spitze" },
+  /* SimpleCalibrationMode     */ { "Einfache", "Kalibrierung" },
+  /* AdvancedCalibrationMode   */ { "Erweiterte", "Kalibrierung" },
+  /* PowerInput                */ { "Leistungs-", "aufnahme" },
 };
 
 const char* SettingsMenuEntries[4] = {

@@ -1,9 +1,9 @@
 {
 	"languageCode": "DE",
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibrierung abgeschlossen!",
 		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
-		"SettingsResetWarning": "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?",
+		"SettingsResetWarning": "Sind Sie sicher, dass Sie alle Werte zurücksetzen wollen?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",
 		"InputVoltageString": "V Eingang: ",
@@ -18,7 +18,7 @@
 		"IdleSetString": " Soll:",
 		"TipDisconnectedString": "Spitze fehlt",
 		"SolderingAdvancedPowerPrompt": "Leistung: ",
-		"OffString": "Off"
+		"OffString": "Aus"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -198,34 +198,34 @@
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
-				"Model"
+				"Löt-",
+				"spitze"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Auswahl der Lötspitze"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Einfache",
+				"Kalibrierung"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Einfache Kalibrierung mittels heißem Wasser"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Erweiterte",
+				"Kalibrierung"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze"
 		},
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Power",
-				"Wattage"
+				"Leistungs-",
+				"aufnahme"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Leistungsaufnahme der verwendeten Spannungsversorgung"
 		}
 	},
 	"languageLocalName": "Deutsch"
