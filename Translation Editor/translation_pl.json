@@ -1,24 +1,24 @@
 {
 	"languageCode": "PL",
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibracja udana!",
 		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!",
-		"SettingsResetWarning": "Are you sure to reset settings to default values?",
-		"UVLOWarningString": "DC LOW",
-		"UndervoltageString": "Undervoltage",
-		"InputVoltageString": "Input V: ",
-		"WarningTipTempString": "Tip Temp: ",
-		"BadTipString": "BAD TIP",
+		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
+		"UVLOWarningString": "NISKIE DC",
+		"UndervoltageString": "Pod napięciem",
+		"InputVoltageString": "Wejściowe V: ",
+		"WarningTipTempString": "Temperatura grota: ",
+		"BadTipString": "ZŁY GROT",
 		"SleepingSimpleString": "Zzz!",
 		"SleepingAdvancedString": "Uspienie...",
 		"WarningSimpleString": "HOT!",
 		"WarningAdvancedString": "GORĄCA KOŃCÓWKA!",
-		"SleepingTipAdvancedString": "Tip:",
-		"IdleTipString": "Tip:",
-		"IdleSetString": " Set:",
-		"TipDisconnectedString": "TIP DISCONNECTED",
+		"SleepingTipAdvancedString": "Grot:",
+		"IdleTipString": "Grot:",
+		"IdleSetString": " Ustaw:",
+		"TipDisconnectedString": "GROT ODŁĄCZONY",
 		"SolderingAdvancedPowerPrompt": "Power: ",
-		"OffString": "Off"
+		"OffString": "Wyłącz"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -31,31 +31,31 @@
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Soldering",
-				"Settings"
+				"Lutowanie",
+				"Ustawienia"
 			],
-			"desc": "Soldering settings"
+			"desc": "Ustawienia lutownicy"
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Sleep",
-				"Modes"
+				"Uśpienie",
+				"Tryby"
 			],
-			"desc": "Power Saving Settings"
+			"desc": "Ustawienia oszczędzania energii"
 		},
 		"UIMenu": {
 			"text2": [
-				"User",
-				"Interface"
+				"Użytkownik",
+				"Interfejs"
 			],
-			"desc": "User Interface settings"
+			"desc": "Ustawienia interfejsu użytkownika"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Advanced",
-				"Options"
+				"Zaawansowane",
+				"Opcje"
 			],
-			"desc": "Advanced options"
+			"desc": "Opcje zaawansowane"
 		}
 	},
 	"menuOptions": {
@@ -193,39 +193,39 @@
 				"",
 				""
 			],
-			"desc": "Speed this text scrolls past at"
+			"desc": "Szybkość przewijania tekstu"
 		},
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
+				"Grot",
 				"Model"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Wybór grotu"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Prosta",
+				"Kalibracja"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Prosta kalibracja używając gorącej wody"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Zaawansowana",
+				"Kalibracja"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Zaawansowana kalibracja za pomocy termopoary na grocie"
 		},
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Power",
-				"Wattage"
+				"Moc",
+				"Wattach"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Moc używanego zasilacza w Watach"
 		}
 	},
 	"languageLocalName": "Polski"
