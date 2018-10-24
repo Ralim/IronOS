@@ -959,7 +959,7 @@ const char* SettingsDescriptions[] = {
   /* TipModel                  */ "Seleziona il modello della punta in uso",
   /* SimpleCalibrationMode     */ "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua calda",
   /* AdvancedCalibrationMode   */ "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta",
-  /* PowerInput                */ "Imposta la potenza dell'alimentatore in uso",
+  /* PowerInput                */ "Power Wattage of the power adapter used",
 };
 
 const char* SettingsCalibrationDone = "Calibrazione effettuata";
@@ -1009,7 +1009,7 @@ const char* SettingsShortNames[][2] = {
   /* TipModel                  */ { "Modello", "della punta" },
   /* SimpleCalibrationMode     */ { "Calibrazione", "semplice" },
   /* AdvancedCalibrationMode   */ { "Calibrazione", "avanzata" },
-  /* PowerInput                */ { "Potenza", "alimentaz" },
+  /* PowerInput                */ { "Power", "Wattage" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1514,13 +1514,13 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
   /* AdvancedSoldering         */ "Показывать детальную информацию при пайке.",
   /* ScrollingSpeed            */ "Скорость прокрутки текста",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
+  /* TipModel                  */ "Выбор модели жало",
+  /* SimpleCalibrationMode     */ "Простая калибровка с использованием горячей воды",
+  /* AdvancedCalibrationMode   */ "Калибровка с помощью термопары",
   /* PowerInput                */ "Power Wattage of the power adapter used",
 };
 
-const char* SettingsCalibrationDone = "Calibration done!";
+const char* SettingsCalibrationDone = "Калибровка выполнена!";
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
 const char* SettingsResetWarning = "Вы действительно хотите сбросить настройки до значений по умолчанию?";
 const char* UVLOWarningString = "АККУМ--";
@@ -1564,9 +1564,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калибровка", "напряжения" },
   /* AdvancedSoldering         */ { "Подробный ре-", "жим пайки" },
   /* ScrollingSpeed            */ { "Скорость", "текста" },
-  /* TipModel                  */ { "Tip", "Model" },
-  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
-  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
+  /* TipModel                  */ { "Модель", "жало" },
+  /* SimpleCalibrationMode     */ { "Простая", "калибровка" },
+  /* AdvancedCalibrationMode   */ { "Подробная", "калибровка" },
   /* PowerInput                */ { "Power", "Wattage" },
 };
 
