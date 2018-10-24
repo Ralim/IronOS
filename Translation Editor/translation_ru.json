@@ -1,7 +1,7 @@
 {
 	"languageCode": "RU",
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Калибровка выполнена!",
 		"SettingsCalibrationWarning": "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!",
 		"SettingsResetWarning": "Вы действительно хотите сбросить настройки до значений по умолчанию?",
 		"UVLOWarningString": "АККУМ--",
@@ -198,26 +198,26 @@
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
-				"Model"
+				"Модель",
+				"жало"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Выбор модели жало"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Простая",
+				"калибровка"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Простая калибровка с использованием горячей воды"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Подробная",
+				"калибровка"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Калибровка с помощью термопары"
 		},
 		"PowerInput": {
 			"text": "PWRW",
