@@ -843,94 +843,94 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_HU
-// ---- Magyar ----
+// ---- magyar ----
 
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Áramforrás. Beállítja a lekapcsolási feszültséget. <DC 10V> <S 3.3V cellánként>",
   /* SleepTemperature          */ "Alvási hőmérséklet <C>",
-  /* SleepTimeout              */ "Elalvási időzítő <Perc/Másodperc>",
-  /* ShutdownTimeout           */ "Kikapcsolási időzítő <Minutes>",
-  /* MotionSensitivity         */ "Mozgás érzékenység beállítása. <0.Ki 1.kevésbé érzékeny 9.legérzékenyebb>",
-  /* TemperatureUnit           */ "Hőmérsékleti egység <C=Celsius F=Fahrenheit>",
+  /* SleepTimeout              */ "Alvás időzítő <perc/másodperc>",
+  /* ShutdownTimeout           */ "Kikapcsolási időzítő <perc>",
+  /* MotionSensitivity         */ "Mozgás érzékenység beállítása. <0.kikapcsolva 1.legkevésbé érzékeny 9.legérzékenyebb>",
+  /* TemperatureUnit           */ "Hőmérséklet mértékegysége <C=Celsius F=Fahrenheit>",
   /* AdvancedIdle              */ "Részletes információ megjelenítése kisebb betűméretben a készenléti képernyőn.",
-  /* DisplayRotation           */ "Megjelenítési tájolás <A. Automatikus L. Balkezes R. Jobbkezes>",
-  /* BoostEnabled              */ "Elülső gombbal lépjen boost módba, 450C forrasztás közben",
+  /* DisplayRotation           */ "Kijelző tájolása <A. automatikus B. balkezes J. jobbkezes>",
+  /* BoostEnabled              */ "Elülső gombbal boost módba (450C) lép forrasztás közben",
   /* BoostTemperature          */ "Hőmérséklet \"boost\" módban",
-  /* AutoStart                 */ "Bekapcsolás után automatikusan lépjen forrasztás módba. T=Forrasztás, S=Alvó mód,F=Ki",
+  /* AutoStart                 */ "Bekapcsolás után automatikusan lépjen forrasztás módba. T=forrasztás, S=alvó mód, F=ki",
   /* CooldownBlink             */ "Villogjon a hőmérséklet hűlés közben, amíg a hegy forró.",
-  /* TemperatureCalibration    */ "Hegy hőmérsékletének kalibrálása",
+  /* TemperatureCalibration    */ "Hegy hőmérséklet-különbségének kalibrálása.",
   /* SettingsReset             */ "Beállítások alaphelyzetbe állítása",
-  /* VoltageCalibration        */ "A bemeneti feszültség kalibrálása. Röviden megnyomva állítsa be, hosszan nyomja meg a kilépéshez.",
+  /* VoltageCalibration        */ "Bemeneti feszültség kalibrálása. Röviden megnyomva módosítás, hosszan megnyomva kilépés",
   /* AdvancedSoldering         */ "Részletes információk megjelenítése forrasztás közben",
-  /* ScrollingSpeed            */ "Szöveg görgetésének gyorsítása",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* ScrollingSpeed            */ "Szöveggörgetés sebessége",
+  /* TipModel                  */ "Forrasztóhegy modell kiválasztása",
+  /* SimpleCalibrationMode     */ "Egyszerű kalibrálás forró víz segítségével",
+  /* AdvancedCalibrationMode   */ "Haladó kalibrálás hegyre helyezett hőelem segítségével",
+  /* PowerInput                */ "A tápegység által leadott teljesítmény",
 };
 
-const char* SettingsCalibrationDone = "Calibration done!";
-const char* SettingsCalibrationWarning = "Folytatás előtt győződj meg róla, hogy a hegy szobahőmérsékletű!";
+const char* SettingsCalibrationDone = "Kalibráció befejezve!";
+const char* SettingsCalibrationWarning = "Folytatás előtt győződjön meg róla, hogy a hegy szobahőmérsékletű!";
 const char* SettingsResetWarning = "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?";
-const char* UVLOWarningString = "DC LOW";
-const char* UndervoltageString = "Undervoltage";
-const char* InputVoltageString = "Input V: ";
-const char* WarningTipTempString = "Tip Temp: ";
-const char* BadTipString = "HEGY";
+const char* UVLOWarningString = "DC KEVÉS";
+const char* UndervoltageString = "Alulfeszültség";
+const char* InputVoltageString = "Bemenet V: ";
+const char* WarningTipTempString = "Hegy hő: ";
+const char* BadTipString = "HEGY HIB";
 const char* SleepingSimpleString = "Zzzz";
 const char* SleepingAdvancedString = "Alvás...";
-const char* WarningSimpleString = "HOT!";
+const char* WarningSimpleString = "FORR";
 const char* WarningAdvancedString = "!! FORRÓ HEGY !!";
-const char* SleepingTipAdvancedString = "Tip:";
-const char* IdleTipString = "Tip:";
-const char* IdleSetString = " Set:";
-const char* TipDisconnectedString = "TIP DISCONNECTED";
-const char* SolderingAdvancedPowerPrompt = "Power: ";
-const char* OffString = "Off";
+const char* SleepingTipAdvancedString = "Hegy:";
+const char* IdleTipString = "Hegy:";
+const char* IdleSetString = " Cél:";
+const char* TipDisconnectedString = "HEGY LEVÉVE";
+const char* SolderingAdvancedPowerPrompt = "Telj: ";
+const char* OffString = "Ki";
 
-const char SettingRightChar = 'R';
-const char SettingLeftChar = 'L';
+const char SettingRightChar = 'J';
+const char SettingLeftChar = 'B';
 const char SettingAutoChar = 'A';
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
+const char SettingFastChar = 'G';
+const char SettingSlowChar = 'L';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
 const char* SettingsShortNames[][2] = {
-  /* PowerSource               */ { "PWRSC" },
-  /* SleepTemperature          */ { "STMP" },
-  /* SleepTimeout              */ { "STME" },
-  /* ShutdownTimeout           */ { "SHTME" },
-  /* MotionSensitivity         */ { "MSENSE" },
-  /* TemperatureUnit           */ { "TMPUNT" },
-  /* AdvancedIdle              */ { "ADVIDL" },
-  /* DisplayRotation           */ { "DSPROT" },
+  /* PowerSource               */ { "ÁRAMF" },
+  /* SleepTemperature          */ { "AHŐM" },
+  /* SleepTimeout              */ { "AIDŐ" },
+  /* ShutdownTimeout           */ { "KIIDŐ" },
+  /* MotionSensitivity         */ { "MOZGÉR" },
+  /* TemperatureUnit           */ { "HŐEGYS" },
+  /* AdvancedIdle              */ { "RÉSZLI" },
+  /* DisplayRotation           */ { "KIJTÁJ" },
   /* BoostEnabled              */ { "BOOST" },
-  /* BoostTemperature          */ { "BTMP" },
+  /* BoostTemperature          */ { "BHŐ" },
   /* AutoStart                 */ { "ASTART" },
-  /* CooldownBlink             */ { "CLBLNK" },
-  /* TemperatureCalibration    */ { "TMP CAL?" },
+  /* CooldownBlink             */ { "HŰLÉSV" },
+  /* TemperatureCalibration    */ { "HŐM KAL?" },
   /* SettingsReset             */ { "RESET?" },
-  /* VoltageCalibration        */ { "CAL VIN?" },
-  /* AdvancedSoldering         */ { "ADVSLD" },
-  /* ScrollingSpeed            */ { "DESCSP" },
-  /* TipModel                  */ { "TIPMO" },
-  /* SimpleCalibrationMode     */ { "SMPCAL" },
-  /* AdvancedCalibrationMode   */ { "ADVCAL" },
-  /* PowerInput                */ { "PWRW" },
+  /* VoltageCalibration        */ { "VIN KAL?" },
+  /* AdvancedSoldering         */ { "HALKÉP" },
+  /* ScrollingSpeed            */ { "GÖRGS" },
+  /* TipModel                  */ { "HEGYMOD" },
+  /* SimpleCalibrationMode     */ { "EGYSZKAL" },
+  /* AdvancedCalibrationMode   */ { "HALKAL" },
+  /* PowerInput                */ { "TELJW" },
 };
 
 const char* SettingsMenuEntries[4] = {
-  /* SolderingMenu             */ "Forrasztás\nBeállítások",
-  /* PowerSavingMenu           */ "Alvás\nMódok",
+  /* SolderingMenu             */ "Forrasztási\nbeállítások",
+  /* PowerSavingMenu           */ "Alvási\nmódok",
   /* UIMenu                    */ "Felhasználó\nfelület",
-  /* AdvancedMenu              */ "Speciális\nbeállítások",
+  /* AdvancedMenu              */ "Haladó\nbeállítások",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
   /* SolderingMenu             */ "Forrasztási beállítások",
   /* PowerSavingMenu           */ "Energiatakarékossági beállítások",
   /* UIMenu                    */ "Felhasználói felület beállításai",
-  /* AdvancedMenu              */ "Speciális beállítások",
+  /* AdvancedMenu              */ "Haladó beállítások",
 };
 
 #endif
@@ -959,7 +959,7 @@ const char* SettingsDescriptions[] = {
   /* TipModel                  */ "Seleziona il modello della punta in uso",
   /* SimpleCalibrationMode     */ "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua calda",
   /* AdvancedCalibrationMode   */ "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* PowerInput                */ "Imposta la potenza dell'alimentatore in uso",
 };
 
 const char* SettingsCalibrationDone = "Calibrazione effettuata";
@@ -1009,7 +1009,7 @@ const char* SettingsShortNames[][2] = {
   /* TipModel                  */ { "Modello", "della punta" },
   /* SimpleCalibrationMode     */ { "Calibrazione", "semplice" },
   /* AdvancedCalibrationMode   */ { "Calibrazione", "avanzata" },
-  /* PowerInput                */ { "Power", "Wattage" },
+  /* PowerInput                */ { "Potenza", "alimentaz" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -1514,13 +1514,13 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калибровка напряжения входа. Настройка кнопками, нажать и удержать чтобы завершить.",
   /* AdvancedSoldering         */ "Показывать детальную информацию при пайке.",
   /* ScrollingSpeed            */ "Скорость прокрутки текста",
-  /* TipModel                  */ "Выбор модели жало",
-  /* SimpleCalibrationMode     */ "Простая калибровка с использованием горячей воды",
-  /* AdvancedCalibrationMode   */ "Калибровка с помощью термопары",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
   /* PowerInput                */ "Power Wattage of the power adapter used",
 };
 
-const char* SettingsCalibrationDone = "Калибровка выполнена!";
+const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!";
 const char* SettingsResetWarning = "Вы действительно хотите сбросить настройки до значений по умолчанию?";
 const char* UVLOWarningString = "АККУМ--";
@@ -1564,9 +1564,9 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калибровка", "напряжения" },
   /* AdvancedSoldering         */ { "Подробный ре-", "жим пайки" },
   /* ScrollingSpeed            */ { "Скорость", "текста" },
-  /* TipModel                  */ { "Модель", "жало" },
-  /* SimpleCalibrationMode     */ { "Простая", "калибровка" },
-  /* AdvancedCalibrationMode   */ { "Подробная", "калибровка" },
+  /* TipModel                  */ { "Tip", "Model" },
+  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
+  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
   /* PowerInput                */ { "Power", "Wattage" },
 };
 
