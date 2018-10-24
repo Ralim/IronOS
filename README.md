@@ -35,15 +35,16 @@ Please calibrate your irons voltage reading when you are using a lithium battery
 
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *ts100_EN.hex* unless you want the translations, they are ts100_*language short name*.hex.
 
-Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
+Officially the bootloader on the iron only works under Windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
-1. Hold the button closest to the tip, and plug in the USB to the computer.
-2. The unit will appear as a USB drive.
-3. Drag the .hex file onto the USB drive.
-4. The unit will disconnect and reconnect.
-5. The filename will have changed to end in .RDY or .ERR 
-6. If it ends with .RDY you're done! Otherwise something went wrong.
-7. Disconnect the USB and power up the iron. You're good to go.
+1. Disable Teracopy or other Explorer replacements.
+2. Hold the button closest to the tip, and plug in the USB to the computer.
+3. The unit will appear as a USB drive.
+4. Drag the .hex file onto the USB drive.
+5. The unit will disconnect and reconnect.
+6. The filename will have changed to end in .RDY or .ERR 
+7. If it ends with .RDY you're done! Otherwise something went wrong, retry?
+8. Disconnect the USB and power up the iron. You're good to go.
 
 For the more adventurerous out there, you can also load this firmware onto the device using a SWD programmer.
 On the bottom of the MCU riser pcb, there are 4 pads for programming.
