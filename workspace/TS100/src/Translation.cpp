@@ -959,7 +959,7 @@ const char* SettingsDescriptions[] = {
   /* TipModel                  */ "Seleziona il modello della punta in uso",
   /* SimpleCalibrationMode     */ "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua calda",
   /* AdvancedCalibrationMode   */ "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* PowerInput                */ "Imposta la potenza dell'alimentatore in uso",
 };
 
 const char* SettingsCalibrationDone = "Calibrazione effettuata";
@@ -1009,7 +1009,7 @@ const char* SettingsShortNames[][2] = {
   /* TipModel                  */ { "Modello", "della punta" },
   /* SimpleCalibrationMode     */ { "Calibrazione", "semplice" },
   /* AdvancedCalibrationMode   */ { "Calibrazione", "avanzata" },
-  /* PowerInput                */ { "Power", "Wattage" },
+  /* PowerInput                */ { "Potenza", "alimentaz" },
 };
 
 const char* SettingsMenuEntries[4] = {
