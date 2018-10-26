@@ -1,3 +1,4 @@
+python ../../Translation\ Editor/make_translation.py ../../Translation\ Editor
 make clean
 make -j16 lang=EN
 rm -rf Objects/src
