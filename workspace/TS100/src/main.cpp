@@ -654,7 +654,7 @@ void showVersion(void) {
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-				OLED::print((char *)"V2.06 TS100");  // Print version number
+		OLED::print((char *)"V2.06 TS100");  // Print version number
 #else
 		OLED::print((char *) "V2.06 TS80");  // Print version number
 #endif
@@ -690,6 +690,7 @@ void showVersion(void) {
 			break;
 		case 10:
 			OLED::printNumber(getHandleTemperature(), 3);
+			break;
 		case 11:
 			OLED::printNumber(PCBVersion, 1);  // Print PCB ID number
 			break;
@@ -698,7 +699,7 @@ void showVersion(void) {
 			OLED::printNumber(idealQCVoltage,3);
 #else
 			OLED::print("Tek.com");
-			#endif
+#endif
 			break;
 		default:
 			break;
