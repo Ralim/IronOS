@@ -19,9 +19,9 @@ enum Orientation {
   ORIENTATION_FLAT = 3
 };
 
-#if defined(MODEL_TS100) && defined(MODEL_TS80)
+#if defined(MODEL_TS100) + defined(MODEL_TS80) > 1
 #error "Multiple models defined!"
-#elif !defined(MODEL_TS100) && !defined(MODEL_TS80)
+#elif defined(MODEL_TS100) + defined(MODEL_TS80) == 0
 #error "No model defined!"
 #endif
 
