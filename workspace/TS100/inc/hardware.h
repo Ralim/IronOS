@@ -18,11 +18,11 @@ enum Orientation {
   ORIENTATION_RIGHT_HAND = 1,
   ORIENTATION_FLAT = 3
 };
-#define MODEL_TS80
-#ifndef MODEL_TS100
-	#ifndef MODEL_TS80
-#error "Please Define the model you are building for! MODEL=TS100 or MODEL=TS80"
-	#endif
+
+#if defined(MODEL_TS100) + defined(MODEL_TS80) > 1
+#error "Multiple models defined!"
+#elif defined(MODEL_TS100) + defined(MODEL_TS80) == 0
+#error "No model defined!"
 #endif
 
 #ifdef MODEL_TS100
