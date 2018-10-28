@@ -690,6 +690,7 @@ void showVersion(void) {
 			break;
 		case 10:
 			OLED::printNumber(getHandleTemperature(), 3);
+			break;
 		case 11:
 			OLED::printNumber(PCBVersion, 1);  // Print PCB ID number
 			break;
