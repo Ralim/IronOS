@@ -699,7 +699,7 @@ void showVersion(void) {
 			OLED::printNumber(idealQCVoltage,3);
 #else
 			OLED::print("Tek.com");
-			#endif
+#endif
 			break;
 		default:
 			break;
