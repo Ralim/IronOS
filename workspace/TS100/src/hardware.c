@@ -144,7 +144,7 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 	// Therefore we can divide down from there
 	// Multiplying ADC max by 4 for additional calibration options,
 	// ideal term is 467
-#define BATTFILTERDEPTH 64
+#define BATTFILTERDEPTH 32
 	static uint8_t preFillneeded = 1;
 	static uint32_t samples[BATTFILTERDEPTH];
 	static uint8_t index = 0;
@@ -174,7 +174,7 @@ void seekQC(int16_t Vx10,uint16_t divisor) {
 	if (QCMode == 0)
 	return;  // NOT connected to a QC Charger
 
-	if (Vx10 < 50)
+	if (Vx10 < 45)
 	return;
 	if(Vx10>130)
 	Vx10=130;//Cap max value at 13V
@@ -190,15 +190,15 @@ void seekQC(int16_t Vx10,uint16_t divisor) {
 	int steps = difference / 2;
 	if (QCMode == 3) {
 		while (steps < 0) {
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);//D+0.6
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);//D-3.3V
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);// D-3.3Vs
 			vTaskDelay(3);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-			vTaskDelay(3);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);//-0.6V
+			HAL_Delay(1);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 			HAL_IWDG_Refresh(&hiwdg);
-			vTaskDelay(3);
+			HAL_Delay(1);
 			steps++;
 		}
 		while (steps > 0) {
@@ -209,10 +209,10 @@ void seekQC(int16_t Vx10,uint16_t divisor) {
 			vTaskDelay(3);
 
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-			vTaskDelay(3);
+			HAL_Delay(1);
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 			HAL_IWDG_Refresh(&hiwdg);
-			vTaskDelay(3);
+			HAL_Delay(1);
 			steps--;
 		}
 	}
