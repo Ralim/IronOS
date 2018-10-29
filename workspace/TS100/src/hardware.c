@@ -12,7 +12,6 @@
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
 uint16_t tipGainCalValue = 0;
-uint16_t lookupTipDefaultCalValue(enum TipType tipID);
 void setTipType(enum TipType tipType, uint8_t manualCalGain) {
 	if (manualCalGain)
 		tipGainCalValue = manualCalGain;
@@ -133,7 +132,7 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 	// Therefore we can divide down from there
 	// Multiplying ADC max by 4 for additional calibration options,
 	// ideal term is 467
-#define BATTFILTERDEPTH 64
+#define BATTFILTERDEPTH 32
 	static uint8_t preFillneeded = 1;
 	static uint32_t samples[BATTFILTERDEPTH];
 	static uint8_t index = 0;
@@ -159,14 +158,14 @@ uint8_t QCMode = 0;
 uint8_t QCTries = 0;
 void seekQC(int16_t Vx10,uint16_t divisor) {
 	if (QCMode == 5)
-		startQC(divisor);
+	startQC(divisor);
 	if (QCMode == 0)
-		return;  // NOT connected to a QC Charger
+	return;  // NOT connected to a QC Charger
 
-	if (Vx10 < 50)
-		return;
+	if (Vx10 < 45)
+	return;
 	if(Vx10>130)
-		Vx10=130;//Cap max value at 13V
+	Vx10=130;//Cap max value at 13V
 	// Seek the QC to the Voltage given if this adapter supports continuous mode
 	// try and step towards the wanted value
 
@@ -179,15 +178,15 @@ void seekQC(int16_t Vx10,uint16_t divisor) {
 	int steps = difference / 2;
 	if (QCMode == 3) {
 		while (steps < 0) {
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);//D+0.6
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);//D-3.3V
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);// D-3.3Vs
 			vTaskDelay(3);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-			vTaskDelay(3);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);//-0.6V
+			HAL_Delay(1);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 			HAL_IWDG_Refresh(&hiwdg);
-			vTaskDelay(3);
+			HAL_Delay(1);
 			steps++;
 		}
 		while (steps > 0) {
@@ -198,10 +197,10 @@ void seekQC(int16_t Vx10,uint16_t divisor) {
 			vTaskDelay(3);
 
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-			vTaskDelay(3);
+			HAL_Delay(1);
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 			HAL_IWDG_Refresh(&hiwdg);
-			vTaskDelay(3);
+			HAL_Delay(1);
 			steps--;
 		}
 	}
@@ -238,7 +237,7 @@ void startQC(uint16_t divisor) {
 	// negotiating as someone is feeding in hv
 	uint16_t vin = getInputVoltageX10(divisor);
 	if (vin > 150)
-		return;	// Over voltage
+	return;// Over voltage
 	if (vin > 100) {
 		QCMode = 1;  // ALready at ~12V
 		return;
@@ -280,7 +279,7 @@ void startQC(uint16_t divisor) {
 	}
 	// Check if D- is low to spot a QC charger
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET)
-		enteredQC = 1;
+	enteredQC = 1;
 	if (enteredQC) {
 		// We have a QC capable charger
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
@@ -300,7 +299,7 @@ void startQC(uint16_t divisor) {
 		for (uint8_t i = 0; i < 10; i++) {
 			if (getInputVoltageX10(divisor) > 80) {
 				// yay we have at least QC2.0 or QC3.0
-				QCMode = 3;	// We have at least QC2, pray for 3
+				QCMode = 3;// We have at least QC2, pray for 3
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
@@ -311,14 +310,14 @@ void startQC(uint16_t divisor) {
 		QCMode = 5;
 		QCTries++;
 		if (QCTries > 10) // 10 goes to get it going
-			QCMode = 0;
+		QCMode = 0;
 	} else {
 		// no QC
 		QCMode = 0;
 
 	}
 	if (QCTries > 10)
-		QCMode = 0;
+	QCMode = 0;
 }
 // Get tip resistance in milliohms
 uint32_t calculateTipR() {
@@ -332,7 +331,7 @@ uint32_t calculateTipR() {
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);	// Set low first
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);// Set low first
 	setTipPWM(0);
 	vTaskDelay(1);
 	uint32_t offReading = getTipRawTemp(1);
@@ -342,8 +341,8 @@ uint32_t calculateTipR() {
 	}
 
 	// Turn on
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);  // Set low first
-	vTaskDelay(1);  // delay to allow it to stabilize
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);// Set low first
+	vTaskDelay(1); // delay to allow it too stabilize
 	uint32_t onReading = getTipInstantTemperature();
 	for (uint8_t i = 0; i < 24; i++) {
 		vTaskDelay(1);  // delay to allow it to stabilize
@@ -357,7 +356,7 @@ uint32_t calculateTipR() {
 	// 4688 milliohms (Measured using 4 terminal measurement) 25x oversampling
 	// reads this as around 47490 Almost perfectly 10x the milliohms value This
 	// will drift massively with tip temp However we really only need 10x ohms
-	return (difference / 10) + 1;	// ceil
+	return (difference / 10) + 1;// ceil
 }
 static unsigned int sqrt32(unsigned long n) {
 	unsigned int c = 0x8000;
@@ -365,10 +364,10 @@ static unsigned int sqrt32(unsigned long n) {
 
 	for (;;) {
 		if (g * g > n)
-			g ^= c;
+		g ^= c;
 		c >>= 1;
 		if (c == 0)
-			return g;
+		return g;
 		g |= c;
 	}
 }
@@ -379,26 +378,26 @@ int16_t calculateMaxVoltage(uint8_t useHP) {
 	uint32_t milliOhms = calculateTipR();
 	// Check no tip
 	if (milliOhms > 10000)
-		return -1;
+	return -1;
 	//
 	// V = sqrt(18W*R)
 	// Convert this to sqrt(18W)*sqrt(milli ohms)*sqrt(1/1000)
 
 	uint32_t Vx = sqrt32(milliOhms);
 	if (useHP)
-		Vx *= 1549;	//sqrt(24)*sqrt(1/1000)
+	Vx *= 1549;//sqrt(24)*sqrt(1/1000)
 	else
-		Vx *= 1342;	// sqrt(18) * sqrt(1/1000)
+	Vx *= 1342;// sqrt(18) * sqrt(1/1000)
 
 	// Round to nearest 200mV,
 	// So divide by 100 to start, to get in Vxx
 	Vx /= 100;
 	if (Vx % 10 >= 5)
-		Vx += 10;
+	Vx += 10;
 	Vx /= 10;
 	// Round to nearest increment of 2
 	if (Vx % 2 == 1)
-		Vx++;
+	Vx++;
 	return Vx;
 }
 
@@ -410,9 +409,10 @@ uint8_t getTipPWM() {
 void setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 2; // This is decremented in the handler for PWM so that the tip pwm is
 						// disabled if the PID task is not scheduled often enough.
-	if (pulse > 100)
-		pulse = 100;
-
+	if (pulse > 255)
+		pulse = 255;
+	if (pulse == 0) // Need to have some pulse to keep the PID controller moving forward as these end of cycle completions move the thread along
+		pulse = 1;
 	pendingPWM = pulse;
 }
 

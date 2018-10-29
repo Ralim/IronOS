@@ -308,9 +308,12 @@ static void MX_TIM2_Init(void) {
   // in the PWM off time.
   htim2.Instance = TIM2;
   htim2.Init.Prescaler =
-      2000;  // pwm out is 10k, we want to run our PWM at around 100hz
+      785;  // pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
+  // The input is 1mhz after the div/4, so divide this by 785 to give around 4Hz output change rate
+  //Trade off is the slower the PWM output the slower we can respond and we gain temperature accuracy in settling time,
+  //But it increases the time delay between the heat cycle and the measurement and calculate cycle
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 122;
+  htim2.Init.Period = 255+56;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before divide
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   HAL_TIM_Base_Init(&htim2);
@@ -326,11 +329,11 @@ static void MX_TIM2_Init(void) {
   HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 118;
+  sConfigOC.Pulse = 255+47; //255 is the largest time period of the drive signal, and the 47 offsets this around 5ms afterwards
   /*
    * It takes 4 milliseconds for output to be stable after PWM turns off.
    * Assume ADC samples in 0.5ms
-   * We need to set this to 100% + 5.5ms
+   * We need to set this to 100% + 4.5ms
    * */
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;

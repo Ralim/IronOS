@@ -262,34 +262,37 @@ static void gui_drawBatteryIcon() {
 		// User is on a lithium battery
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
-		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv) / cellCount;
+		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv)
+				/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
-		if (cellV < 33) cellV = 33;
-		cellV -= 33;// Should leave us a number of 0-9
-		if (cellV > 9) cellV = 9;
+		if (cellV < 33)
+			cellV = 33;
+		cellV -= 33;		// Should leave us a number of 0-9
+		if (cellV > 9)
+			cellV = 9;
 		OLED::drawBattery(cellV + 1);
 	} else
-	OLED::drawSymbol(15);  // Draw the DC Logo
+		OLED::drawSymbol(15);  // Draw the DC Logo
 #else
-	// On TS80 we replace this symbol with the voltage we are operating on
-	// If <9V then show single digit, if not show duals
-	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv);
-	if (V % 10 >= 5)
-		V = V / 10 + 1;  // round up
-	else
-		V = V / 10;
-	if (V >= 10) {
-		int16_t xPos = OLED::getCursorX();
-		OLED::setFont(1);
-		OLED::printNumber(1, 1);
-		OLED::setCursor(xPos, 8);
-		OLED::printNumber(V % 10, 1);
-		OLED::setFont(0);
-		OLED::setCursor(xPos+12,0); // need to reset this as if we drew a wide char
-	} else {
-		OLED::printNumber(V, 1);
-	}
+				// On TS80 we replace this symbol with the voltage we are operating on
+				// If <9V then show single digit, if not show duals
+				uint8_t V = getInputVoltageX10(systemSettings.voltageDiv);
+				if (V % 10 >= 5)
+				V = V / 10 + 1;// round up
+				else
+				V = V / 10;
+				if (V >= 10) {
+					int16_t xPos = OLED::getCursorX();
+					OLED::setFont(1);
+					OLED::printNumber(1, 1);
+					OLED::setCursor(xPos, 8);
+					OLED::printNumber(V % 10, 1);
+					OLED::setFont(0);
+					OLED::setCursor(xPos+12,0); // need to reset this as if we drew a wide char
+				} else {
+					OLED::printNumber(V, 1);
+				}
 #endif
 }
 static void gui_solderingTempAdjust() {
@@ -312,7 +315,7 @@ static void gui_solderingTempAdjust() {
 			// exit
 			return;
 			break;
-		case BUTTON_F_LONG:
+		case BUTTON_B_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration >
 			PRESS_ACCEL_INTERVAL_MAX) {
 				systemSettings.SolderingTemp -= 10;  // sub 10
@@ -320,7 +323,7 @@ static void gui_solderingTempAdjust() {
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
-		case BUTTON_B_LONG:
+		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration >
 			PRESS_ACCEL_INTERVAL_MAX) {
 				systemSettings.SolderingTemp += 10;
@@ -328,10 +331,10 @@ static void gui_solderingTempAdjust() {
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
-		case BUTTON_B_SHORT:
+		case BUTTON_F_SHORT:
 			systemSettings.SolderingTemp += 10;  // add 10
 			break;
-		case BUTTON_F_SHORT:
+		case BUTTON_B_SHORT:
 			systemSettings.SolderingTemp -= 10;  // sub 10
 			break;
 		default:
@@ -358,7 +361,11 @@ static void gui_solderingTempAdjust() {
 		if (xTaskGetTickCount() - lastChange > 200)
 			return;  // exit if user just doesn't press anything for a bit
 
+#ifdef MODEL_TS80
+		if (!OLED::getRotation())
+#else
 		if (OLED::getRotation())
+#endif
 			OLED::drawChar('-');
 		else
 			OLED::drawChar('+');
@@ -370,7 +377,11 @@ static void gui_solderingTempAdjust() {
 		else
 			OLED::drawSymbol(1);
 		OLED::drawChar(' ');
+#ifdef MODEL_TS80
+		if (!OLED::getRotation())
+#else
 		if (OLED::getRotation())
+#endif
 			OLED::drawChar('+');
 		else
 			OLED::drawChar('-');
@@ -396,7 +407,8 @@ static int gui_SolderingSleepingMode() {
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
-			if (checkVoltageForExit()) return 1; // return non-zero on error
+		if (checkVoltageForExit())
+			return 1; // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
 			currentlyActiveTemperatureTarget = ftoTipMeasurement(
@@ -659,9 +671,9 @@ void showVersion(void) {
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-		OLED::print((char *)"V2.06 TS100");  // Print version number
+		OLED::print((char *) "V2.06 TS100");  // Print version number
 #else
-		OLED::print((char *) "V2.06 TS80");  // Print version number
+				OLED::print((char *) "V2.06 TS80");  // Print version number
 #endif
 		OLED::setCursor(0, 8);  // second line
 		OLED::print(HEADERS[screen]);
@@ -729,7 +741,7 @@ void startGUITask(void const *argument __unused) {
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
 	getTipRawTemp(1);  // reset filter
-	OLED::setRotation(systemSettings.OrientationMode & 1);
+	OLED::setRotation(!(systemSettings.OrientationMode & 1));
 	uint32_t ticks = xTaskGetTickCount();
 	ticks += 400;  // 4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
@@ -854,7 +866,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			if (!OLED::getRotation()) {
 #else
-				if (OLED::getRotation()) {
+			if (OLED::getRotation()) {
 #endif
 				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
 				OLED::setCursor(0, 0);
@@ -873,7 +885,7 @@ void startGUITask(void const *argument __unused) {
 				// draw temp over the start soldering button
 				// Location changes on screen rotation
 #ifdef MODEL_TS80
-			if (!OLED::getRotation()) {
+				if (!OLED::getRotation()) {
 #else
 				if (OLED::getRotation()) {
 #endif
@@ -976,20 +988,20 @@ void startPIDTask(void const *argument __unused) {
 
 #define MOVFilter 8
 void startMOVTask(void const *argument __unused) {
-	OLED::setRotation(false);
+	OLED::setRotation(true);
 
 #ifdef MODEL_TS80
 	startQC(systemSettings.voltageDiv);
 	while (idealQCVoltage == 0)
-		osDelay(20);  // To ensure we return after idealQCVoltage is setup
+	osDelay(20);  // To ensure we return after idealQCVoltage is setup
 
-	seekQC(idealQCVoltage,systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
+	seekQC(idealQCVoltage,systemSettings.voltageDiv);// this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
 #endif
 
-	OLED::setRotation(systemSettings.OrientationMode & 1);
+	OLED::setRotation(!(systemSettings.OrientationMode & 1));
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
 	int16_t datay[MOVFilter] = { 0 };
@@ -1069,9 +1081,9 @@ void startMOVTask(void const *argument __unused) {
 
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
-		if (currentlyActiveTemperatureTarget) {
-			seekQC(idealQCVoltage,systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
-		}
+				if (currentlyActiveTemperatureTarget) {
+					seekQC(idealQCVoltage,systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
+				}
 #endif
 	}
 }

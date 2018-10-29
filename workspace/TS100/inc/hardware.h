@@ -115,6 +115,7 @@ enum TipType {
 };
 #endif
 
+uint16_t lookupTipDefaultCalValue(enum TipType tipID);
 uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t refresh);
 uint16_t getInputVoltageX10(uint16_t divisor);
