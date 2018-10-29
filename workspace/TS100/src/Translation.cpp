@@ -1214,6 +1214,99 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 
 #endif
 
+#ifdef LANG_NL_BE
+// ---- Vlaams ----
+
+const char* SettingsDescriptions[] = {
+  /* PowerSource               */ "Spanningsbron. Stelt minimumspanning in. <DC 10V> <S 3.3V per cel>",
+  /* SleepTemperature          */ "Temperatuur in slaapstand <°C>",
+  /* SleepTimeout              */ "Slaapstand time-out <Minuten/Seconden>",
+  /* ShutdownTimeout           */ "Automatisch afsluiten time-out <Minuten>",
+  /* MotionSensitivity         */ "Bewegingsgevoeligheid <0.uit 1.minst gevoelig 9.meest gevoelig>",
+  /* TemperatureUnit           */ "Temperatuurschaal <°C=Celsius °F=Fahrenheit>",
+  /* AdvancedIdle              */ "Gedetailleerde informatie in een kleiner lettertype in het slaapscherm.",
+  /* DisplayRotation           */ "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>",
+  /* BoostEnabled              */ "Temperatuur verhoogt als voorste knop is ingedrukt",
+  /* BoostTemperature          */ "Verhogingstemperatuur",
+  /* AutoStart                 */ "Breng de soldeerbout op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit",
+  /* CooldownBlink             */ "Temperatuur knippert in hoofdmenu tijdens afkoeling.",
+  /* TemperatureCalibration    */ "Temperatuur van de punt calibreren.",
+  /* SettingsReset             */ "Alle instellingen resetten.",
+  /* VoltageCalibration        */ "VIN Calibreren. Bevestigen door knoppen lang in te drukken.",
+  /* AdvancedSoldering         */ "Gedetailleerde informatie in kleiner lettertype in soldeerscherm.",
+  /* ScrollingSpeed            */ "Scrolsnelheid van de tekst.",
+  /* TipModel                  */ "Gekozen punt",
+  /* SimpleCalibrationMode     */ "Calibrering met heet water",
+  /* AdvancedCalibrationMode   */ "Calibrering met thermokoppel",
+  /* PowerInput                */ "Vermogen van de adapter",
+};
+
+const char* SettingsCalibrationDone = "Gecalibreerd!";
+const char* SettingsCalibrationWarning = "Zorg vooraf dat de punt op kamertemperatuur is!";
+const char* SettingsResetWarning = "Ben je zeker dat je alle standaardwaarden wil resetten?";
+const char* UVLOWarningString = "Voedingsspanning LAAG";
+const char* UndervoltageString = "Onderspanning";
+const char* InputVoltageString = "Voedingsspanning: ";
+const char* WarningTipTempString = "Punt Temp: ";
+const char* BadTipString = "DEFECT";
+const char* SleepingSimpleString = "Zzz ";
+const char* SleepingAdvancedString = "Slaapstand...";
+const char* WarningSimpleString = "HEET";
+const char* WarningAdvancedString = "!!! PUNT HEET !!!";
+const char* SleepingTipAdvancedString = "Punt:";
+const char* IdleTipString = "Punt:";
+const char* IdleSetString = "Stel in:";
+const char* TipDisconnectedString = "Punt ONTKOPPELD";
+const char* SolderingAdvancedPowerPrompt = "Vermogen: ";
+const char* OffString = "Uit";
+
+const char SettingRightChar = 'R';
+const char SettingLeftChar = 'L';
+const char SettingAutoChar = 'A';
+const char SettingFastChar = 'S';
+const char SettingSlowChar = 'T';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[][2] = {
+  /* PowerSource               */ { "Spannings-", "bron" },
+  /* SleepTemperature          */ { "Slaap", "temp" },
+  /* SleepTimeout              */ { "Slaap", "time-out" },
+  /* ShutdownTimeout           */ { "Uitschakel", "time-out" },
+  /* MotionSensitivity         */ { "Bewegings-", "gevoeligheid" },
+  /* TemperatureUnit           */ { "Temperatuur", "schaal" },
+  /* AdvancedIdle              */ { "Gedetailleerd", "slaapscherm" },
+  /* DisplayRotation           */ { "Scherm-", "oriëntatie" },
+  /* BoostEnabled              */ { "Temperatuurverhoging", "ingeschakeld?" },
+  /* BoostTemperature          */ { "Verhogings", "temp" },
+  /* AutoStart                 */ { "Auto", "start" },
+  /* CooldownBlink             */ { "Afkoel", "knipper" },
+  /* TemperatureCalibration    */ { "Calibreer", "temperatuur?" },
+  /* SettingsReset             */ { "Instellingen", "resetten?" },
+  /* VoltageCalibration        */ { "Calibreer", "voedingsspanning?" },
+  /* AdvancedSoldering         */ { "Gedetailleerd", "soldeerscherm" },
+  /* ScrollingSpeed            */ { "Scrol", "snelheid" },
+  /* TipModel                  */ { "Punt", "Model" },
+  /* SimpleCalibrationMode     */ { "Eenvoudige", "Calibrering" },
+  /* AdvancedCalibrationMode   */ { "Gevorderde", "Calibrering" },
+  /* PowerInput                */ { "Vermogen", "Watt" },
+};
+
+const char* SettingsMenuEntries[4] = {
+  /* SolderingMenu             */ "Soldeer\nInstellingen",
+  /* PowerSavingMenu           */ "Slaap\nstanden",
+  /* UIMenu                    */ "Gebruikers-\nInterface",
+  /* AdvancedMenu              */ "Gevorderde\nInstellingen",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  /* SolderingMenu             */ "Soldeerinstellingen",
+  /* PowerSavingMenu           */ "Batterijspaarstanden",
+  /* UIMenu                    */ "Gebruikersinterface Instellingen",
+  /* AdvancedMenu              */ "Gevorderde Instellingen",
+};
+
+#endif
+
 #ifdef LANG_NO
 // ---- Norsk ----
 
