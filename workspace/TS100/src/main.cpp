@@ -90,20 +90,6 @@ int main(void) {
 	}
 }
 
-void debugNumber(int32_t val) {
-	if (abs(val) > 99999) {
-		OLED::print(" OoB"); // out of bounds
-		return;
-	}
-	if (val >= 0) {
-		OLED::drawChar(' ');
-		OLED::printNumber(val, 5);
-	} else {
-		OLED::drawChar('-');
-		OLED::printNumber(-val, 5);
-	}
-}
-
 void printVoltage() {
 	OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
 	OLED::drawChar('.');
