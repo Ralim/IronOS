@@ -118,28 +118,16 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 #endif
 }
 
-uint16_t getTipRawTemp(uint8_t instant) {
-	static int64_t filterFP = 0;
+uint16_t getTipRawTemp(uint8_t refresh) {
 	static uint16_t lastSample = 0;
-	const uint8_t filterBeta = 7; // higher values smooth out more, but reduce responsiveness
 
-	if (instant == 1) {
-		uint16_t itemp = getTipInstantTemperature();
-		filterFP = (filterFP << filterBeta) - filterFP;
-		filterFP += (itemp << 9);
-		filterFP = filterFP >> filterBeta;
-		uint16_t temp = itemp;
-		itemp += lastSample;
-		itemp /= 2;
-		lastSample = temp;
-		return itemp;
-	} else if (instant == 2) {
-		filterFP = (getTipInstantTemperature() << 8);
-		return filterFP >> 9;
-	} else {
-		return filterFP >> 9;
+	if (refresh) {
+		lastSample = getTipInstantTemperature();
 	}
+
+	return lastSample;
 }
+
 uint16_t getInputVoltageX10(uint16_t divisor) {
 	// ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
 	// Therefore we can divide down from there
@@ -333,7 +321,7 @@ void startQC(uint16_t divisor) {
 		QCMode = 0;
 }
 // Get tip resistance in milliohms
-uint32_t calculateTipR(uint8_t useFilter) {
+uint32_t calculateTipR() {
 	// We inject a small current into the front end of the iron,
 	// By measuring the Vdrop over the tip we can calculate the resistance
 	// Turn PA0 into an output and drive high to inject (3.3V-0.6)/(6K8+Rtip)
@@ -347,27 +335,19 @@ uint32_t calculateTipR(uint8_t useFilter) {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);	// Set low first
 	setTipPWM(0);
 	vTaskDelay(1);
-	uint32_t offReading = getTipInstantTemperature();
+	uint32_t offReading = getTipRawTemp(1);
 	for (uint8_t i = 0; i < 24; i++) {
-		if (useFilter == 0) {
-			vTaskDelay(1);  // delay to allow it too stabilize
-			offReading += getTipInstantTemperature();
-		} else {
-			offReading += getTipRawTemp(0);
-		}
+		vTaskDelay(1);  // delay to allow it to stabilize
+		offReading += getTipRawTemp(1);
 	}
 
 	// Turn on
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);  // Set low first
-	vTaskDelay(1);  // delay to allow it too stabilize
+	vTaskDelay(1);  // delay to allow it to stabilize
 	uint32_t onReading = getTipInstantTemperature();
 	for (uint8_t i = 0; i < 24; i++) {
-		if (useFilter == 0) {
-			vTaskDelay(1);  // delay to allow it too stabilize
-			onReading += getTipInstantTemperature();
-		} else {
-			onReading += getTipRawTemp(0);
-		}
+		vTaskDelay(1);  // delay to allow it to stabilize
+		onReading += getTipRawTemp(1);
 	}
 
 	uint32_t difference = onReading - offReading;
@@ -392,11 +372,11 @@ static unsigned int sqrt32(unsigned long n) {
 		g |= c;
 	}
 }
-int16_t calculateMaxVoltage(uint8_t useFilter, uint8_t useHP) {
+int16_t calculateMaxVoltage(uint8_t useHP) {
 	// This measures the tip resistance, then it calculates the appropriate
 	// voltage To stay under ~18W. Mosfet is "9A", so no issues there
 	// QC3.0 supports up to 18W, which is 2A @9V and 1.5A @12V
-	uint32_t milliOhms = calculateTipR(useFilter);
+	uint32_t milliOhms = calculateTipR();
 	// Check no tip
 	if (milliOhms > 10000)
 		return -1;

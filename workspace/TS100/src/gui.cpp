@@ -664,20 +664,8 @@ static void settings_displayTipModel(void) {
 #endif
 }
 static void calibration_displaySimpleCal(void) { printShortDescription(18, 5); }
-static void dotDelay() {
-  for (uint8_t i = 0; i < 20; i++) {
-    getTipRawTemp(
-        1);  // cycle through the filter a fair bit to ensure we're stable.
-    OLED::clearScreen();
-    OLED::setCursor(0, 0);
-    for (uint8_t x = 0; x < i / 4; x++) OLED::print(".");
-    OLED::refresh();
-    osDelay(50);
-  }
-}
 static void setTipOffset() {
   setCalibrationOffset(0);  // turn off the current offset
-  dotDelay();
 
   // If the thermocouple at the end of the tip, and the handle are at
   // equalibrium, then the output should be zero, as there is no temperature
@@ -685,8 +673,7 @@ static void setTipOffset() {
 
   int32_t offset = 0;
   for (uint8_t i = 0; i < 15; i++) {
-    offset += getTipRawTemp(
-        1);  // cycle through the filter a fair bit to ensure we're stable.
+    offset += getTipRawTemp(1);
 
     OLED::clearScreen();
     OLED::setCursor(0, 0);
@@ -719,7 +706,6 @@ static void calibration_enterSimpleCal(void) {
     OLED::refresh();
     osDelay(200);
     waitForButtonPress();
-    dotDelay();  // cycle the filter a bit
     // Now take the three hot measurements
     // Assume water is boiling at 100C
     uint32_t RawTipHot = getTipRawTemp(0) * 10;
