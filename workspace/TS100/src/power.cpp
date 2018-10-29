@@ -9,11 +9,11 @@
 #include <Settings.h>
 #include <hardware.h>
 
-history<uint16_t, 75> milliWattHistory = {{0}, 0, 0};
-
 const uint8_t tipResistance = 87;
-const uint8_t hz = 33;
-const uint8_t maxPWM = 100;
+const uint8_t maxPWM = 255;
+
+history<uint16_t, oscillationPeriod> milliWattHistory = {{0}, 0, 0};
+
 
 int32_t tempToMilliWatts(int32_t rawTemp, uint16_t mass, uint8_t rawC) {
 	 // mass is in milliJ/*C, rawC is raw per degree C

@@ -929,6 +929,7 @@ void startPIDTask(void const *argument __unused) {
 	int32_t rawC = ctoTipMeasurement(100) - ctoTipMeasurement(101);  // 1*C change in raw.
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
 										  // be over-ridden rapidly
+
 	history<int16_t> tempError = {{0}, 0, 0};
 
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
@@ -955,8 +956,8 @@ void startPIDTask(void const *argument __unused) {
 				// P term - total power needed to hit target temp next cycle.
 				// thermal mass = 1690 milliJ/*C for my tip.
 				//  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-				// divided by 4 to let I term dominate near set point.
-				const uint16_t mass = 1690 / 4;
+				// divided by 8 to let I term dominate near set point.
+				const uint16_t mass = 1690 / 8;
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(), mass, rawC);
 				milliWattsOut += milliWattsNeeded;
 
