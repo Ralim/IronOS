@@ -926,7 +926,7 @@ void startPIDTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
-	int32_t rawC = ctoTipMeasurement(100) - ctoTipMeasurement(101);  // 1*C change in raw.
+	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100);  // 1*C change in raw.
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
 										  // be over-ridden rapidly
 
@@ -948,7 +948,10 @@ void startPIDTask(void const *argument __unused) {
 				//  to be unstable. Use a rolling average to dampen it.
 				// We overshoot by roughly 1/2 of 1 degree Fahrenheit.
 				//  This helps stabilize the display.
-				tempError.update(currentlyActiveTemperatureTarget - rawTemp + rawC/4);
+				int32_t tError = currentlyActiveTemperatureTarget - rawTemp + rawC/4;
+				tError = tError > INT16_MAX ? INT16_MAX : tError;
+				tError = tError < INT16_MIN ? INT16_MIN : tError;
+				tempError.update(tError);
 
 				// Now for the PID!
 				int32_t milliWattsOut = 0;
@@ -956,8 +959,10 @@ void startPIDTask(void const *argument __unused) {
 				// P term - total power needed to hit target temp next cycle.
 				// thermal mass = 1690 milliJ/*C for my tip.
 				//  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-				// divided by 8 to let I term dominate near set point.
-				const uint16_t mass = 1690 / 8;
+				// divided by 20 to let I term dominate near set point.
+				// I should retune this, but don't want to do it until
+				//  the feed-forward temp adjustment is in place.
+				const uint16_t mass = 1690 / 20;
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(), mass, rawC);
 				milliWattsOut += milliWattsNeeded;
 
