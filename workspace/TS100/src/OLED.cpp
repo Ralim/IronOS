@@ -7,6 +7,7 @@
 
 #include <string.h>
 #include <OLED.hpp>
+#include <stdlib.h>
 #include "Translation.h"
 #include "cmsis_os.h"
 
@@ -229,6 +230,20 @@ void OLED::printNumber(uint16_t number, uint8_t places) {
   buffer[0] = '0' + number % 10;
   number /= 10;
   print(buffer);
+}
+
+void OLED::debugNumber(int32_t val) {
+	if (abs(val) > 99999) {
+		OLED::print(" OoB"); // out of bounds
+		return;
+	}
+	if (val >= 0) {
+		OLED::drawChar(' ');
+		OLED::printNumber(val, 5);
+	} else {
+		OLED::drawChar('-');
+		OLED::printNumber(-val, 5);
+	}
 }
 
 void OLED::drawSymbol(uint8_t symbolID) {

@@ -117,9 +117,8 @@ enum TipType {
 
 uint16_t lookupTipDefaultCalValue(enum TipType tipID);
 uint16_t getHandleTemperature();
-uint16_t getTipRawTemp(uint8_t instant);
+uint16_t getTipRawTemp(uint8_t refresh);
 uint16_t getInputVoltageX10(uint16_t divisor);
-uint16_t getTipInstantTemperature();
 uint8_t getTipPWM();
 void setTipPWM(uint8_t pulse);
 uint16_t ctoTipMeasurement(uint16_t temp);
@@ -129,8 +128,8 @@ uint16_t tipMeasurementToF(uint16_t raw);
 void seekQC(int16_t Vx10,uint16_t divisor);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);
-uint32_t calculateTipR(uint8_t useFilter);
-int16_t calculateMaxVoltage(uint8_t useFilter, uint8_t useHP);
+uint32_t calculateTipR();
+int16_t calculateMaxVoltage(uint8_t useHP);
 void startQC(uint16_t divisor);  // Tries to negotiate QC for highest voltage, must be run after
                  // RToS
 // This will try for 12V, failing that 9V, failing that 5V
