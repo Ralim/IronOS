@@ -948,7 +948,10 @@ void startPIDTask(void const *argument __unused) {
 				//  to be unstable. Use a rolling average to dampen it.
 				// We overshoot by roughly 1/2 of 1 degree Fahrenheit.
 				//  This helps stabilize the display.
-				tempError.update(currentlyActiveTemperatureTarget - rawTemp + rawC/4);
+				int32_t tError = currentlyActiveTemperatureTarget - rawTemp + rawC/4;
+				tError = tError > INT16_MAX ? INT16_MAX : tError;
+				tError = tError < INT16_MIN ? INT16_MIN : tError;
+				tempError.update(tError);
 
 				// Now for the PID!
 				int32_t milliWattsOut = 0;
