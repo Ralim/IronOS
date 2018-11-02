@@ -1420,29 +1420,29 @@ const char* SettingsDescriptions[] = {
   /* SettingsReset             */ "Zresetuj wszystkie ustawienia",
   /* VoltageCalibration        */ "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść.",
   /* AdvancedSoldering         */ "Wyświetl szczegółowe informacje podczas lutowania <T = wł., N = wył.>",
-  /* ScrollingSpeed            */ "Speed this text scrolls past at",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* ScrollingSpeed            */ "Szybkość przewijania tekstu",
+  /* TipModel                  */ "Wybór grotu",
+  /* SimpleCalibrationMode     */ "Prosta kalibracja używając gorącej wody",
+  /* AdvancedCalibrationMode   */ "Zaawansowana kalibracja za pomocy termopoary na grocie",
+  /* PowerInput                */ "Moc używanego zasilacza w Watach",
 };
 
-const char* SettingsCalibrationDone = "Calibration done!";
+const char* SettingsCalibrationDone = "Kalibracja udana!";
 const char* SettingsCalibrationWarning = "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "DC LOW";
-const char* UndervoltageString = "Undervoltage";
-const char* InputVoltageString = "Input V: ";
-const char* WarningTipTempString = "Tip Temp: ";
-const char* BadTipString = "BAD TIP";
+const char* SettingsResetWarning = "Czy na pewno chcesz przywrócić ustawienia fabryczne?";
+const char* UVLOWarningString = "NISKIE DC";
+const char* UndervoltageString = "Pod napięciem";
+const char* InputVoltageString = "Wejściowe V: ";
+const char* WarningTipTempString = "Temperatura grotu: ";
+const char* BadTipString = "ZŁA KOŃCÓWKA";
 const char* SleepingSimpleString = "Zzz!";
 const char* SleepingAdvancedString = "Uspienie...";
 const char* WarningSimpleString = "HOT!";
 const char* WarningAdvancedString = "GORĄCA KOŃCÓWKA!";
-const char* SleepingTipAdvancedString = "Tip:";
-const char* IdleTipString = "Tip:";
-const char* IdleSetString = " Set:";
-const char* TipDisconnectedString = "TIP DISCONNECTED";
+const char* SleepingTipAdvancedString = "Grot:";
+const char* IdleTipString = "Grot:";
+const char* IdleSetString = " Ustaw:";
+const char* TipDisconnectedString = "GROT ODŁĄCZONY";
 const char* SolderingAdvancedPowerPrompt = "Power: ";
 const char* OffString = "Off";
 
@@ -1478,20 +1478,21 @@ const char* SettingsShortNames[][2] = {
 };
 
 const char* SettingsMenuEntries[4] = {
-  /* SolderingMenu             */ "Soldering\nSettings",
-  /* PowerSavingMenu           */ "Sleep\nModes",
-  /* UIMenu                    */ "User\nInterface",
-  /* AdvancedMenu              */ "Advanced\nOptions",
+  /* SolderingMenu             */ "Lutowanie\nUstawienia",
+  /* PowerSavingMenu           */ "Uśpienie\nTryby",
+  /* UIMenu                    */ "Użytkownik\nInterfejs",
+  /* AdvancedMenu              */ "Zaawansowane\nOpcje",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  /* SolderingMenu             */ "Soldering settings",
-  /* PowerSavingMenu           */ "Power Saving Settings",
-  /* UIMenu                    */ "User Interface settings",
-  /* AdvancedMenu              */ "Advanced options",
+  /* SolderingMenu             */ "Ustawienia lutownicy",
+  /* PowerSavingMenu           */ "Ustawienia oszczędzania energii",
+  /* UIMenu                    */ "Ustawienia interfejsu użytkownika",
+  /* AdvancedMenu              */ "Opcje zaawansowane",
 };
 
 #endif
+
 
 #ifdef LANG_PT
 // ---- Portugues ----
