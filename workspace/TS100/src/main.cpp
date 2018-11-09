@@ -954,11 +954,13 @@ void startPIDTask(void const *argument __unused) {
 				// P term - total power needed to hit target temp next cycle.
 				// thermal mass = 1690 milliJ/*C for my tip.
 				//  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-				// divided by 20 to let I term dominate near set point.
-				// I should retune this, but don't want to do it until
-				//  the feed-forward temp adjustment is in place.
-				const uint16_t mass = 1690 / 20;
+				// we divide milliWattsNeeded by 20 to let the I term dominate near the set point.
+				//  This is necessary because of the temp noise and thermal lag in the system.
+				// Once we have feed-forward temp estimation we should be able to better tune this.
+				const uint16_t mass = 1690 / 20;  // divide here so division is compile-time.
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(), mass, rawC);
+				// note that milliWattsNeeded is sometimes negative, this counters overshoot
+				//  from I term's inertia.
 				milliWattsOut += milliWattsNeeded;
 
 				// I term - energy needed to compensate for heat loss.

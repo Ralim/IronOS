@@ -16,7 +16,9 @@ history<uint16_t, oscillationPeriod> milliWattHistory = {{0}, 0, 0};
 
 
 int32_t tempToMilliWatts(int32_t rawTemp, uint16_t mass, uint8_t rawC) {
-	 // mass is in milliJ/*C, rawC is raw per degree C
+	// mass is in milliJ/*C, rawC is raw per degree C
+	// returns milliWatts needed to raise/lower a mass by rawTemp
+	//  degrees in one cycle.
 	int32_t milliJoules = mass * rawTemp / rawC;
 	return milliJoules * hz;
 }
