@@ -914,13 +914,7 @@ void startGUITask(void const *argument __unused) {
 void startPIDTask(void const *argument __unused) {
 	/*
 	 * We take the current tip temperature & evaluate the next step for the tip
-	 * control PWM
-	 * Tip temperature is measured by getTipTemperature(1) so we get instant
-	 * result
-	 * This comes in Cx10 format
-	 * We then control the tip temperature to aim for the setpoint in the settings
-	 * struct
-	 *
+	 * control PWM.
 	 */
 	setTipMilliWatts(0);  // disable the output driver if the output is set to be off
 #ifdef MODEL_TS80
@@ -934,7 +928,8 @@ void startPIDTask(void const *argument __unused) {
 
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
-		if (ulTaskNotifyTake(pdTRUE, 50)) {
+
+		if (ulTaskNotifyTake(pdTRUE, 1000)) {
 			// Wait a max of 50ms
 			// This is a call to block this thread until the ADC does its samples
 			uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading

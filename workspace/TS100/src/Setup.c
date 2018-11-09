@@ -313,7 +313,7 @@ static void MX_TIM2_Init(void) {
   //Trade off is the slower the PWM output the slower we can respond and we gain temperature accuracy in settling time,
   //But it increases the time delay between the heat cycle and the measurement and calculate cycle
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 255+56;
+  htim2.Init.Period = 255+60;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before divide
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   HAL_TIM_Base_Init(&htim2);
@@ -329,7 +329,7 @@ static void MX_TIM2_Init(void) {
   HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 255+47; //255 is the largest time period of the drive signal, and the 47 offsets this around 5ms afterwards
+  sConfigOC.Pulse = 255+50; //255 is the largest time period of the drive signal, and the 47 offsets this around 5ms afterwards
   /*
    * It takes 4 milliseconds for output to be stable after PWM turns off.
    * Assume ADC samples in 0.5ms

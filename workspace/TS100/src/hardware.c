@@ -133,13 +133,13 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 	// Multiplying ADC max by 4 for additional calibration options,
 	// ideal term is 467
 #define BATTFILTERDEPTH 32
-	static uint8_t preFillneeded = 1;
+	static uint8_t preFillneeded = 10;
 	static uint32_t samples[BATTFILTERDEPTH];
 	static uint8_t index = 0;
 	if (preFillneeded) {
 		for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
 			samples[i] = getADC(1);
-		preFillneeded = 0;
+		preFillneeded--;
 	}
 	samples[index] = getADC(1);
 	index = (index + 1) % BATTFILTERDEPTH;
@@ -409,10 +409,7 @@ uint8_t getTipPWM() {
 void setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 2; // This is decremented in the handler for PWM so that the tip pwm is
 						// disabled if the PID task is not scheduled often enough.
-	if (pulse > 255)
-		pulse = 255;
-	if (pulse == 0) // Need to have some pulse to keep the PID controller moving forward as these end of cycle completions move the thread along
-		pulse = 1;
+
 	pendingPWM = pulse;
 }
 
@@ -430,11 +427,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		// increased safety
 		htim2.Instance->CCR4 = pendingPWM;
 		if (htim2.Instance->CCR4 && PWMSafetyTimer) {
-			htim3.Instance->CCR1 = 50;
 			HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 		} else {
 			HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
-			htim3.Instance->CCR1 = 0;
 		}
 	} else if (htim->Instance == TIM1) {
 		// STM uses this for internal functions as a counter for timeouts
@@ -447,7 +442,6 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 		// This was a when the PWM for the output has timed out
 		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
 			HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
-			htim3.Instance->CCR1 = 0;
 		}
 	}
 }
