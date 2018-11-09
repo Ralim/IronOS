@@ -1036,7 +1036,7 @@ void startMOVTask(void const *argument __unused) {
 		datay[currentPointer] = (int32_t) ty;
 		dataz[currentPointer] = (int32_t) tz;
 		currentPointer = (currentPointer + 1) % MOVFilter;
-
+		avgx = avgy = avgz = 0;
 		// calculate averages
 		for (uint8_t i = 0; i < MOVFilter; i++) {
 			avgx += datax[i];
