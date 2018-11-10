@@ -263,36 +263,36 @@ static void gui_drawBatteryIcon() {
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
 		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv)
-				/ cellCount;
+		/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
-			cellV = 33;
-		cellV -= 33;		// Should leave us a number of 0-9
+		cellV = 33;
+		cellV -= 33;// Should leave us a number of 0-9
 		if (cellV > 9)
-			cellV = 9;
+		cellV = 9;
 		OLED::drawBattery(cellV + 1);
 	} else
-		OLED::drawSymbol(15);  // Draw the DC Logo
+	OLED::drawSymbol(15);  // Draw the DC Logo
 #else
-				// On TS80 we replace this symbol with the voltage we are operating on
-				// If <9V then show single digit, if not show duals
-				uint8_t V = getInputVoltageX10(systemSettings.voltageDiv);
-				if (V % 10 >= 5)
-				V = V / 10 + 1;// round up
-				else
-				V = V / 10;
-				if (V >= 10) {
-					int16_t xPos = OLED::getCursorX();
-					OLED::setFont(1);
-					OLED::printNumber(1, 1);
-					OLED::setCursor(xPos, 8);
-					OLED::printNumber(V % 10, 1);
-					OLED::setFont(0);
-					OLED::setCursor(xPos+12,0); // need to reset this as if we drew a wide char
-				} else {
-					OLED::printNumber(V, 1);
-				}
+	// On TS80 we replace this symbol with the voltage we are operating on
+	// If <9V then show single digit, if not show duals
+	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv);
+	if (V % 10 >= 5)
+		V = V / 10 + 1;				// round up
+	else
+		V = V / 10;
+	if (V >= 10) {
+		int16_t xPos = OLED::getCursorX();
+		OLED::setFont(1);
+		OLED::printNumber(1, 1);
+		OLED::setCursor(xPos, 8);
+		OLED::printNumber(V % 10, 1);
+		OLED::setFont(0);
+		OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
+	} else {
+		OLED::printNumber(V, 1);
+	}
 #endif
 }
 static void gui_solderingTempAdjust() {
@@ -364,7 +364,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-		if (OLED::getRotation())
+			if (OLED::getRotation())
 #endif
 			OLED::drawChar('-');
 		else
@@ -380,7 +380,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-		if (OLED::getRotation())
+			if (OLED::getRotation())
 #endif
 			OLED::drawChar('+');
 		else
@@ -407,7 +407,7 @@ static int gui_SolderingSleepingMode() {
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
-		if (checkVoltageForExit())
+			if (checkVoltageForExit())
 			return 1; // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
@@ -661,7 +661,7 @@ __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "RTip: ",
 #else
 		"Ralim-",
 #endif
-		};
+	};
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -671,9 +671,9 @@ void showVersion(void) {
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-		OLED::print((char *) "V2.06 TS100");  // Print version number
+				OLED::print((char *) "V2.06 TS100");  // Print version number
 #else
-				OLED::print((char *) "V2.06 TS80");  // Print version number
+		OLED::print((char *) "V2.06 TS80");  // Print version number
 #endif
 		OLED::setCursor(0, 8);  // second line
 		OLED::print(HEADERS[screen]);
@@ -713,7 +713,7 @@ void showVersion(void) {
 			break;
 		case 12:
 #ifdef MODEL_TS80
-			OLED::printNumber(idealQCVoltage,3);
+			OLED::printNumber(idealQCVoltage, 3);
 #else
 			OLED::print("Tek.com");
 #endif
@@ -803,8 +803,9 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			//Here we re-check for tip presence
 			if (idealQCVoltage < 90)
-				idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
-			seekQC(idealQCVoltage,systemSettings.voltageDiv);
+				idealQCVoltage = calculateMaxVoltage(
+						systemSettings.cutoutSetting);
+			seekQC(idealQCVoltage, systemSettings.voltageDiv);
 #endif
 			gui_solderingMode(0);  // enter soldering mode
 			buttonLockout = true;
@@ -866,7 +867,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			if (!OLED::getRotation()) {
 #else
-			if (OLED::getRotation()) {
+				if (OLED::getRotation()) {
 #endif
 				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
 				OLED::setCursor(0, 0);
@@ -887,7 +888,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 				if (!OLED::getRotation()) {
 #else
-				if (OLED::getRotation()) {
+					if (OLED::getRotation()) {
 #endif
 					// in right handed mode we want to draw over the first part
 					OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp
@@ -916,15 +917,15 @@ void startPIDTask(void const *argument __unused) {
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM.
 	 */
-	setTipMilliWatts(0);  // disable the output driver if the output is set to be off
+	setTipMilliWatts(0); // disable the output driver if the output is set to be off
 #ifdef MODEL_TS80
 	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
-	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100);  // 1*C change in raw.
+	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
 										  // be over-ridden rapidly
 
-	history<int16_t> tempError = {{0}, 0, 0};
+	history<int16_t> tempError = { { 0 }, 0, 0 };
 
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
@@ -943,7 +944,8 @@ void startPIDTask(void const *argument __unused) {
 				//  to be unstable. Use a rolling average to dampen it.
 				// We overshoot by roughly 1/2 of 1 degree Fahrenheit.
 				//  This helps stabilize the display.
-				int32_t tError = currentlyActiveTemperatureTarget - rawTemp + rawC/4;
+				int32_t tError = currentlyActiveTemperatureTarget - rawTemp
+						+ rawC / 4;
 				tError = tError > INT16_MAX ? INT16_MAX : tError;
 				tError = tError < INT16_MIN ? INT16_MIN : tError;
 				tempError.update(tError);
@@ -954,17 +956,21 @@ void startPIDTask(void const *argument __unused) {
 				// P term - total power needed to hit target temp next cycle.
 				// thermal mass = 1690 milliJ/*C for my tip.
 				//  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-				// divided by 20 to let I term dominate near set point.
-				// I should retune this, but don't want to do it until
-				//  the feed-forward temp adjustment is in place.
+				// we divide milliWattsNeeded by 20 to let the I term dominate near the set point.
+				//  This is necessary because of the temp noise and thermal lag in the system.
+				// Once we have feed-forward temp estimation we should be able to better tune this.
+
 #ifdef MODEL_TS100
-				const uint16_t mass = 1690 / 20;
+				const uint16_t mass = 1690 / 20; // divide here so division is compile-time.
 #endif
 #ifdef MODEL_TS80
 				const uint16_t mass = 1690 / 50;
 #endif
 
-				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(), mass, rawC);
+				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),
+						mass, rawC);
+				// note that milliWattsNeeded is sometimes negative, this counters overshoot
+				//  from I term's inertia.
 				milliWattsOut += milliWattsNeeded;
 
 				// I term - energy needed to compensate for heat loss.
@@ -1000,9 +1006,9 @@ void startMOVTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	startQC(systemSettings.voltageDiv);
 	while (idealQCVoltage == 0)
-	osDelay(20);  // To ensure we return after idealQCVoltage is setup
+		osDelay(20);  // To ensure we return after idealQCVoltage is setup
 
-	seekQC(idealQCVoltage,systemSettings.voltageDiv);// this will move the QC output to the preferred voltage to start with
+	seekQC(idealQCVoltage, systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
@@ -1088,9 +1094,9 @@ void startMOVTask(void const *argument __unused) {
 
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
-				if (currentlyActiveTemperatureTarget) {
-					seekQC(idealQCVoltage,systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
-				}
+		if (currentlyActiveTemperatureTarget) {
+			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
+		}
 #endif
 	}
 }
