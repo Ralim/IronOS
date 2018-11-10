@@ -957,7 +957,13 @@ void startPIDTask(void const *argument __unused) {
 				// divided by 20 to let I term dominate near set point.
 				// I should retune this, but don't want to do it until
 				//  the feed-forward temp adjustment is in place.
+#ifdef MODEL_TS100
 				const uint16_t mass = 1690 / 20;
+#endif
+#ifdef MODEL_TS80
+				const uint16_t mass = 1690 / 50;
+#endif
+
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(), mass, rawC);
 				milliWattsOut += milliWattsNeeded;
 

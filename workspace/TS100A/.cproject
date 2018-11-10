@@ -45,13 +45,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\CMSIS\core&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../TS100\CMSIS\device&quot;"/>
 								</option>
-								<option id="com.atollic.truestudio.common_options.target.interwork.1685024437" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
+								<option id="com.atollic.truestudio.common_options.target.interwork.1685024437" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
 								<inputType id="com.atollic.truestudio.as.input.640267647" name="Input" superClass="com.atollic.truestudio.as.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.gcc.45651038" name="C Compiler" superClass="com.atollic.truestudio.exe.release.toolchain.gcc">
 								<option id="com.atollic.truestudio.gcc.symbols.defined.1383071182" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="STM32F103T8Ux"/>
-									<listOptionValue builtIn="false" value="MODEL_TS100"/>
+									<listOptionValue builtIn="false" value="MODEL_TS80"/>
 									<listOptionValue builtIn="false" value="STM32F1"/>
 									<listOptionValue builtIn="false" value="STM32"/>
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
@@ -78,7 +78,7 @@
 								<option id="com.atollic.truestudio.gcc.optimization.prep_data.295328985" name="Prepare dead data removal" superClass="com.atollic.truestudio.gcc.optimization.prep_data" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.exe.release.toolchain.gcc.debug.info.846808695" name="Debug Level" superClass="com.atollic.truestudio.exe.release.toolchain.gcc.debug.info" useByScannerDiscovery="false" value="com.atollic.truestudio.gcc.debug.info.3" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.gcc.warnings.extra.1975907231" name="Enable extra warning flags" superClass="com.atollic.truestudio.gcc.warnings.extra" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.atollic.truestudio.common_options.target.interwork.1740987679" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
+								<option id="com.atollic.truestudio.common_options.target.interwork.1740987679" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
 								<inputType id="com.atollic.truestudio.gcc.input.118701765" superClass="com.atollic.truestudio.gcc.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.ld.967762086" name="C Linker" superClass="com.atollic.truestudio.exe.release.toolchain.ld">
@@ -89,12 +89,12 @@
 								<option id="com.atollic.truestudio.common_options.target.fpu.44307830" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu"/>
 								<option id="com.atollic.truestudio.ld.general.scriptfile.755006424" name="Linker script" superClass="com.atollic.truestudio.ld.general.scriptfile" value="../stm32_flash.ld" valueType="string"/>
 								<option id="com.atollic.truestudio.ld.optimization.do_garbage.2103581239" name="Dead code removal " superClass="com.atollic.truestudio.ld.optimization.do_garbage" value="true" valueType="boolean"/>
-								<option id="com.atollic.truestudio.common_options.target.interwork.234525005" superClass="com.atollic.truestudio.common_options.target.interwork"/>
+								<option id="com.atollic.truestudio.common_options.target.interwork.234525005" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.gpp.93636755" name="C++ Compiler" superClass="com.atollic.truestudio.exe.release.toolchain.gpp">
 								<option id="com.atollic.truestudio.gpp.symbols.defined.552082963" name="Defined symbols" superClass="com.atollic.truestudio.gpp.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="STM32F103T8Ux"/>
-									<listOptionValue builtIn="false" value="MODEL_TS100"/>
+									<listOptionValue builtIn="false" value="MODEL_TS80"/>
 									<listOptionValue builtIn="false" value="STM32F1"/>
 									<listOptionValue builtIn="false" value="STM32"/>
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
@@ -124,7 +124,7 @@
 								<option id="com.atollic.truestudio.exe.release.toolchain.gpp.debug.info.2091338048" name="Debug Level" superClass="com.atollic.truestudio.exe.release.toolchain.gpp.debug.info" useByScannerDiscovery="false" value="com.atollic.truestudio.gpp.debug.info.3" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.gpp.warnings.extra.843614419" name="Enable extra warning flags" superClass="com.atollic.truestudio.gpp.warnings.extra" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.gpp.cppstandard.1895895086" name="C++ standard" superClass="com.atollic.truestudio.gpp.cppstandard" useByScannerDiscovery="false" value="com.atollic.truestudio.gpp.cppstandard.gnupp14" valueType="enumerated"/>
-								<option id="com.atollic.truestudio.common_options.target.interwork.429864345" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
+								<option id="com.atollic.truestudio.common_options.target.interwork.429864345" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
 								<inputType id="com.atollic.truestudio.gpp.input.1156264590" superClass="com.atollic.truestudio.gpp.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.ldcc.407189665" name="C++ Linker" superClass="com.atollic.truestudio.exe.release.toolchain.ldcc">
@@ -136,8 +136,8 @@
 								<option id="com.atollic.truestudio.ldcc.optimization.do_garbage.324971909" name="Dead code removal" superClass="com.atollic.truestudio.ldcc.optimization.do_garbage" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.ldcc.general.scriptfile.59845520" name="Linker script" superClass="com.atollic.truestudio.ldcc.general.scriptfile" useByScannerDiscovery="false" value="${workspace_loc:/${ProjName}}/../TS100/LinkerScript.ld" valueType="string"/>
 								<option id="com.atollic.truestudio.ldcc.misc.linkerflags.2127852186" name="Other options" superClass="com.atollic.truestudio.ldcc.misc.linkerflags" useByScannerDiscovery="false" value="-Wl,-cref,-u,Reset_Handler,-lm -Os -flto -Wl,--undefined=vTaskSwitchContext" valueType="string"/>
-								<option id="com.atollic.truestudio.ldcc.optimization.malloc_page_size.1711302014" superClass="com.atollic.truestudio.ldcc.optimization.malloc_page_size" useByScannerDiscovery="false" value="com.atollic.truestudio.ldcc.optimization.malloc_page_size.128" valueType="enumerated"/>
-								<option id="com.atollic.truestudio.common_options.target.interwork.1666808603" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
+								<option id="com.atollic.truestudio.ldcc.optimization.malloc_page_size.1711302014" name="Page size allocation for malloc() " superClass="com.atollic.truestudio.ldcc.optimization.malloc_page_size" useByScannerDiscovery="false" value="com.atollic.truestudio.ldcc.optimization.malloc_page_size.128" valueType="enumerated"/>
+								<option id="com.atollic.truestudio.common_options.target.interwork.1666808603" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
 								<inputType id="com.atollic.truestudio.ldcc.input.1102687442" name="Input" superClass="com.atollic.truestudio.ldcc.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
