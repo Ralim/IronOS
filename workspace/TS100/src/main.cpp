@@ -657,9 +657,11 @@ static const char *HEADERS[] = {
 __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "RTip: ",
 		"CTip: ", "Vin :", "THan: ", "Model: ",
 #ifdef MODEL_TS80
-		"QCV: ",
+		"QCV: ", "Tr ",
 #else
+		"Tm ",
 		"Ralim-",
+
 #endif
 	};
 
@@ -715,6 +717,13 @@ void showVersion(void) {
 #ifdef MODEL_TS80
 			OLED::printNumber(idealQCVoltage, 3);
 #else
+			OLED::printNumber(systemSettings.tipType, 3);
+#endif
+			break;
+		case 13:
+#ifdef MODEL_TS80
+			OLED::printNumber(calculateTipR(), 5);
+#else
 			OLED::print("Tek.com");
 #endif
 			break;
@@ -728,7 +737,7 @@ void showVersion(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 13;
+			screen = screen % 14;
 		}
 		GUIDelay();
 	}
@@ -924,7 +933,14 @@ void startPIDTask(void const *argument __unused) {
 	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
 										  // be over-ridden rapidly
+#ifdef MODEL_TS80
+	//Set power management code to the tip resistance in ohms * 10
+	setupPower(calculateTipR() / 100);
+	size_t lastPowerPulse = 0;
+#else
+	setupPower(85);
 
+#endif
 	history<int16_t> tempError = { { 0 }, 0, 0 };
 
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
@@ -987,7 +1003,23 @@ void startPIDTask(void const *argument __unused) {
 
 				setTipMilliWatts(milliWattsOut);
 			} else {
+
+#ifdef MODEL_TS80
+				//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
+				//~200ms @ a low wattage
+				//Doesnt keep all power banks awake but helps with some
+				if (xTaskGetTickCount() - lastPowerPulse < 20) {
+					// for the first 200mS turn on for a bit
+					setTipMilliWatts(4000); // typically its around 5W to hold the current temp, so this wont raise temp much
+				}else
+					setTipMilliWatts(0);
+				//Then wait until the next second
+				if (xTaskGetTickCount() - lastPowerPulse > 100) {
+					lastPowerPulse = xTaskGetTickCount();
+				}
+#else
 				setTipMilliWatts(0);
+#endif
 			}
 
 			HAL_IWDG_Refresh(&hiwdg);

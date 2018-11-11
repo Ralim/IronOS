@@ -253,7 +253,7 @@ static void MX_TIM3_Init(void) {
   TIM_OC_InitTypeDef sConfigOC;
 
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 2;
+  htim3.Init.Prescaler = 4;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 100;                            // 10 Khz PWM freq
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before div
