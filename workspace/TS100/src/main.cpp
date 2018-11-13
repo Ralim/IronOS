@@ -977,10 +977,10 @@ void startPIDTask(void const *argument __unused) {
 				// Once we have feed-forward temp estimation we should be able to better tune this.
 
 #ifdef MODEL_TS100
-				const uint16_t mass = 1690 / 20; // divide here so division is compile-time.
+				const uint16_t mass = 2020 / 20; // divide here so division is compile-time.
 #endif
 #ifdef MODEL_TS80
-				const uint16_t mass = 1690 / 50;
+				const uint16_t mass = 2020 / 50;
 #endif
 
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),
