@@ -1,0 +1,232 @@
+{
+	"languageCode": "SR_LATN",
+	"languageLocalName": "Srpski",
+	"messages": {
+		"SettingsCalibrationDone": "Kalibracija završena!",
+		"SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite",
+		"SettingsResetWarning": "Da li zaista želite da vratite postavke na fabričke vrednosti?",
+		"UVLOWarningString": "DC NIZAK",
+		"UndervoltageString": "Prenizak napon",
+		"InputVoltageString": "Ul. napon: ",
+		"WarningTipTempString": "Temp. vrha: ",
+		"BadTipString": "LOŠ VRH",
+		"SleepingSimpleString": "Zzz",
+		"SleepingAdvancedString": "Spavanje...",
+		"WarningSimpleString": "VRUĆ",
+		"WarningAdvancedString": "! OPREZ, VRUĆE !",
+		"SleepingTipAdvancedString": "Vrh:",
+		"IdleTipString": "Vrh:",
+		"IdleSetString": " / ",
+		"TipDisconnectedString": "VRH NIJE SPOJEN",
+		"SolderingAdvancedPowerPrompt": "Snaga: ",
+		"OffString": "Isk"
+	},
+	"characters": {
+		"SettingRightChar": "D",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingFastChar": "B",
+		"SettingSlowChar": "S"
+	},
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Postavke",
+				"lemljenja"
+			],
+			"desc": "Postavke režima lemljenja."
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Ušteda",
+				"energije"
+			],
+			"desc": "Postavke režima mirovanja."
+		},
+		"UIMenu": {
+			"text2": [
+				"Korisničko",
+				"sučelje"
+			],
+			"desc": "Postavke korisničkog sučelja."
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Napredne",
+				"postavke"
+			],
+			"desc": "Napredne postavke."
+		}
+	},
+	"menuDouble": true,
+	"menuOptions": {
+		"PowerSource": {
+			"text": "Npjnj",
+			"text2": [
+				"Vrsta",
+				"napajanja"
+			],
+			"desc": "Tip napajanja; određuje najniži radni napon. <DC=adapter (10V), S=baterija (3,3V po ćeliji)>"
+		},
+		"SleepTemperature": {
+			"text": "TSpv",
+			"text2": [
+				"Temp.",
+				"spavanja"
+			],
+			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena. <C/F>"
+		},
+		"SleepTimeout": {
+			"text": "VSpv",
+			"text2": [
+				"Vreme do",
+				"spavanja"
+			],
+			"desc": "Vreme mirovanja nakon koga lemilica spušta temperaturu. <M=minuti, S=sekunde>"
+		},
+		"ShutdownTimeout": {
+			"text": "VGšnj",
+			"text2": [
+				"Vreme do",
+				"gašenja"
+			],
+			"desc": "Vreme mirovanja nakon koga se lemilica gasi. <M=minuti>"
+		},
+		"MotionSensitivity": {
+			"text": "OstPkr",
+			"text2": [
+				"Osetljivost",
+				"na pokret"
+			],
+			"desc": "Osetljivost senzora pokreta. <0=isključeno, 1=najmanje osetljivo, 9=najosetljivije>"
+		},
+		"TemperatureUnit": {
+			"text": "JedTmp",
+			"text2": [
+				"Jedinica",
+				"temperature"
+			],
+			"desc": "Jedinice u kojima se prikazuje temperatura. <C=celzijus, F=farenhajt>"
+		},
+		"AdvancedIdle": {
+			"text": "DtlMir",
+			"text2": [
+				"Detalji tokom",
+				"mirovanja"
+			],
+			"desc": "Prikazivanje detaljnih informacija na ekranu tokom mirovanja."
+		},
+		"DisplayRotation": {
+			"text": "OrjEkr",
+			"text2": [
+				"Orijentacija",
+				"ekrana"
+			],
+			"desc": "Kako je okrenut ekran. <A=automatski, L=za levoruke, D=za desnoruke>"
+		},
+		"BoostEnabled": {
+			"text": "Pjčnj",
+			"text2": [
+				"Omogućeno",
+				"pojačanje"
+			],
+			"desc": "Držanjem prednjeg dugmeta prilikom lemljenja dodatno se pojačava toplota vrha."
+		},
+		"BoostTemperature": {
+			"text": "TPjč",
+			"text2": [
+				"Temp.",
+				"pojačanja"
+			],
+			"desc": "Temperatura vrha lemilice u toku pojačanja."
+		},
+		"AutoStart": {
+			"text": "VrćSta",
+			"text2": [
+				"Vrući",
+				"start"
+			],
+			"desc": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se."
+		},
+		"CooldownBlink": {
+			"text": "UpzHla",
+			"text2": [
+				"Upozorenje",
+				"pri hlađenju"
+			],
+			"desc": "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć."
+		},
+		"TemperatureCalibration": {
+			"text": "KalbrTmp",
+			"text2": [
+				"Kalibracija",
+				"temperature"
+			],
+			"desc": "Kalibrisanje odstupanja temperature vrha u odnosu na dršku."
+		},
+		"SettingsReset": {
+			"text": "FabrPost",
+			"text2": [
+				"Fabričke",
+				"postavke"
+			],
+			"desc": "Vraćanje svih postavki na fabričke vrednosti."
+		},
+		"VoltageCalibration": {
+			"text": "KalbrNap",
+			"text2": [
+				"Kalibracija",
+				"ulaznog napona"
+			],
+			"desc": "Kalibrisanje ulaznog napona. Podešava se na tastere; dugi pritisak za kraj."
+		},
+		"AdvancedSoldering": {
+			"text": "DtlLem",
+			"text2": [
+				"Detalji tokom",
+				"lemljenja"
+			],
+			"desc": "Prikazivanje detaljnih informacija na ekranu tokom lemljenja."
+		},
+		"ScrollingSpeed": {
+			"text": "BrzPor",
+			"text2": [
+				"Brzina",
+				"poruka"
+			],
+			"desc": "Brzina kretanja opisnih poruka poput ove. <S=sporo, B=brzo>"
+		},
+		"TipModel": {
+			"text": "ModelVrh",
+			"text2": [
+				"Model",
+				"vrha"
+			],
+			"desc": "Izbor modela vrha."
+		},
+		"SimpleCalibrationMode": {
+			"text": "JedKalbr",
+			"text2": [
+				"Jednostavna",
+				"kalibracija"
+			],
+			"desc": "Jednostavna kalibracija pomoću vruće vode."
+		},
+		"AdvancedCalibrationMode": {
+			"text": "NapKalbr",
+			"text2": [
+				"Napredna",
+				"kalibracija"
+			],
+			"desc": "Napredna kalibracija pomoću termopara."
+		},
+		"PowerInput": {
+			"text": "UlazSnag",
+			"text2": [
+				"Ulazna",
+				"snaga"
+			],
+			"desc": "Snaga ulaznog adaptera u vatima."
+		}
+	}
+}

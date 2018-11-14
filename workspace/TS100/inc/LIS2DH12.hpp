@@ -8,20 +8,35 @@
 #ifndef LIS2DH12_HPP_
 #define LIS2DH12_HPP_
 #include "stm32f1xx_hal.h"
+#include "FRToSI2C.hpp"
 #include "LIS2DH12_defines.hpp"
+#include "hardware.h"
+
 class LIS2DH12 {
 public:
-	LIS2DH12(I2C_HandleTypeDef* i2cHandle);
-	void initalize();
-	uint8_t getOrientation();
-	void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
+	static void initalize();
+	//1 = rh, 2,=lh, 8=flat
+	static Orientation getOrientation() {
+#ifdef MODEL_TS80
+		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,
+				LIS_INT2_SRC) >> 2);
+		if (val == 8)
+			val = 3;
+		else if (val==1)
+			val=0;
+		else if(val==2)
+			val=1;
+		else
+			val=3;
+		return static_cast<Orientation>(val);
+#endif
+#ifdef MODEL_TS100
+		return static_cast<Orientation>((FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,LIS_INT2_SRC) >> 2) - 1);
+#endif
+	}
+	static void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
 
 private:
-	void setSensitivity(uint8_t threshold, uint8_t filterTime);	// Sets the sensitivity of the unit
-
-	void I2C_RegisterWrite(uint8_t reg, uint8_t data);
-	uint8_t I2C_RegisterRead(uint8_t reg);
-	I2C_HandleTypeDef* i2c;
 };
 
 #endif /* LIS2DH12_HPP_ */

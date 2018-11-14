@@ -44,3 +44,8 @@ workspace/ts100/ts100.xml
 workspace/ts100_old/*
 *.cache
 workspace/TS100/.settings/language.settings.xml
+workspace/TS100A/Release/TS100A.map
+workspace/TS100A/Release/TS100A.list
+workspace/TS100A/Release/TS100A.hex
+workspace/TS100A/.settings/language.settings.xml
+workspace/TS100A/.metadata/
