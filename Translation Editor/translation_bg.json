@@ -1,6 +1,7 @@
 {
 	"languageCode": "BG",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Уверете се, че човката на поялника е със стайна температура преди да продължите!",
 		"SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
 		"UVLOWarningString": "Ниско V!",
@@ -16,7 +17,8 @@
 		"IdleTipString": "Връх:",
 		"IdleSetString": " Set:",
 		"TipDisconnectedString": "ВРЪХ ЛОША ВРЪЗКА",
-		"SolderingAdvancedPowerPrompt": "Захранване: "
+		"SolderingAdvancedPowerPrompt": "Захранване: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -192,6 +194,38 @@
 				"на текста"
 			],
 			"desc": "Скорост на движение на този текст"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Tip",
+				"Model"
+			],
+			"desc": "Tip Model selection"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Simple",
+				"Calibration"
+			],
+			"desc": "Simple Calibration using Hot water"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Advanced",
+				"Calibration"
+			],
+			"desc": "Advanced calibration using thermocouple on the tip"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
 		}
 	},
 	"languageLocalName": "български"

@@ -2,6 +2,7 @@
 	"languageCode": "LT",
 	"languageLocalName": "Lietuvių",
 	"messages": {
+		"SettingsCalibrationDone": "Kalibracija atlikta!",
 		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
 		"SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
 		"UVLOWarningString": "MAŽ VOLT",
@@ -11,13 +12,14 @@
 		"BadTipString": "BLOG ANT",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Miegu...",
-		"WarningSimpleString": "HOT!",
+		"WarningSimpleString": "KRŠ!",
 		"WarningAdvancedString": "ANTGALIS KARŠTAS",
 		"SleepingTipAdvancedString": "Antgl:",
 		"IdleTipString": "Ant:",
 		"IdleSetString": " Nust:",
 		"TipDisconnectedString": "ANTGAL ATJUNGTAS",
-		"SolderingAdvancedPowerPrompt": "Maitinimas: "
+		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
+		"OffString": "Išj"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -51,7 +53,7 @@
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Išplėstiniai",
+				"Išplėstin.",
 				"nustatymai"
 			],
 			"desc": "Išplėstiniai nustatymai"
@@ -109,7 +111,7 @@
 		"AdvancedIdle": {
 			"text": "",
 			"text2": [
-				"Detalus lauki-",
+				"Detalus lauki",
 				"mo ekranas"
 			],
 			"desc": "Ar rodyti papildomą informaciją mažesniu šriftu laukimo ekrane"
@@ -189,10 +191,42 @@
 		"ScrollingSpeed": {
 			"text": "",
 			"text2": [
-				"Greitas apra-",
-				"šymo slinkimas"
+				"Greitas apr",
+				"ašym. slink"
 			],
 			"desc": "Greitis, kuriuo šis tekstas slenka"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Antgalio",
+				"modelis"
+			],
+			"desc": "Antgalio modelio pasirinkimas"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Paprasta",
+				"kalibracija"
+			],
+			"desc": "Paprasta kalibracija naudojant karštą vandienį"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Išplėstinė",
+				"kalibracija"
+			],
+			"desc": "Išplėstinė kalibracija naudojant termoelementą"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Galia",
+				"vatais"
+			],
+			"desc": "Maitinimo bloko galia vatais"
 		}
 	}
 }

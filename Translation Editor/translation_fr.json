@@ -1,57 +1,59 @@
 {
 	"languageCode": "FR",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration effectuée!",
 		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer!",
 		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine?",
-		"UVLOWarningString": "DC FAIBLE",
+		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
-		"InputVoltageString": "V d'entrée: ",
-		"WarningTipTempString": "Temp. Panne: ",
+		"InputVoltageString": "V d'entrée:",
+		"WarningTipTempString": "Temp. Panne:",
 		"BadTipString": "PANNE HS",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "En veille...",
 		"WarningSimpleString": "HOT!",
 		"WarningAdvancedString": "ATTENTION! CHAUD",
-		"SleepingTipAdvancedString": "PANNE:",
-		"IdleTipString": "PANNE:",
+		"SleepingTipAdvancedString": "Panne:",
+		"IdleTipString": "Tip:",
 		"IdleSetString": " Set:",
-		"TipDisconnectedString": "PANNE DEBRANCH",
-		"SolderingAdvancedPowerPrompt": "Puissance: "
+		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
+		"SolderingAdvancedPowerPrompt": "Puissance: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "D",
 		"SettingLeftChar": "G",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "F",
-		"SettingSlowChar": "S"
+		"SettingFastChar": "R",
+		"SettingSlowChar": "L"
 	},
 	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Soudure",
-				"Paramètres"
+				"Paramètres",
+				"de soudure"
 			],
-			"desc": "Paramètres de soudage"
+			"desc": "Paramètres de soudure"
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Mode",
-				"Veille"
+				"veille"
 			],
 			"desc": "Paramètres d'économie d'énergie"
 		},
 		"UIMenu": {
 			"text2": [
 				"Interface",
-				"Utilisateur"
+				"utilisateur"
 			],
 			"desc": "Paramètres de l'interface utilisateur"
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Options",
-				"Advanced"
+				"avancées"
 			],
 			"desc": "Options avancées"
 		}
@@ -108,7 +110,7 @@
 		"AdvancedIdle": {
 			"text": "",
 			"text2": [
-				"Ecran veille",
+				"Écran veille",
 				"détaillé"
 			],
 			"desc": "Afficher des informations détaillées lors de la veille."
@@ -149,17 +151,17 @@
 			"text": "",
 			"text2": [
 				"Refroidir en",
-				"clignottant"
+				"clignotant"
 			],
 			"desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude."
 		},
 		"TemperatureCalibration": {
 			"text": "",
 			"text2": [
-				"Etalonner",
+				"Étalonner",
 				"température"
 			],
-			"desc": "Etalonner température de la panne."
+			"desc": "Étalonner température de la panne."
 		},
 		"SettingsReset": {
 			"text": "",
@@ -172,15 +174,15 @@
 		"VoltageCalibration": {
 			"text": "",
 			"text2": [
-				"Etalonner",
+				"Étalonner",
 				"tension d'entrée"
 			],
-			"desc": "Etalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter"
+			"desc": "Étalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter"
 		},
 		"AdvancedSoldering": {
 			"text": "",
 			"text2": [
-				"Ecran soudure",
+				"Écran soudure",
 				"détaillé"
 			],
 			"desc": "Afficher des informations détaillées pendant la soudure"
@@ -188,10 +190,42 @@
 		"ScrollingSpeed": {
 			"text": "",
 			"text2": [
-				"Description ",
-				"Vitesse de défilement"
+				"Vitesse de",
+				"défilement"
 			],
-			"desc": "Vitesse de défilement de ce texte à"
+			"desc": "Vitesse de défilement de ce texte en <R=Rapide L=Lent>"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Panne",
+				"Modèle"
+			],
+			"desc": "Sélection du modèle de la panne"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Calibration",
+				"simple"
+			],
+			"desc": "Calibration simple à l'aide d'eau chaude"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Calibration",
+				"avancées"
+			],
+			"desc": "Calibration avancées à l'aide d'un thermocouple sur la panne"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Puissance de",
+				"l'alimentation"
+			],
+			"desc": "Puissance de l'alimentation utilisée"
 		}
 	},
 	"languageLocalName": "Français"

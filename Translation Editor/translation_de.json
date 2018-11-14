@@ -1,8 +1,9 @@
 {
 	"languageCode": "DE",
 	"messages": {
+		"SettingsCalibrationDone": "Kalibrierung abgeschlossen!",
 		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
-		"SettingsResetWarning": "Sind Sie sicher, dass Sie alle Werte Zurücksetzen wollen?",
+		"SettingsResetWarning": "Sind Sie sicher, dass Sie alle Werte zurücksetzen wollen?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",
 		"InputVoltageString": "V Eingang: ",
@@ -16,7 +17,8 @@
 		"IdleTipString": "Ist:",
 		"IdleSetString": " Soll:",
 		"TipDisconnectedString": "Spitze fehlt",
-		"SolderingAdvancedPowerPrompt": "Leistung: "
+		"SolderingAdvancedPowerPrompt": "Leistung: ",
+		"OffString": "Aus"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -192,6 +194,38 @@
 				"geschw."
 			],
 			"desc": "Scrollgeschwindigkeit der Texte"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Löt-",
+				"spitze"
+			],
+			"desc": "Auswahl der Lötspitze"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Einfache",
+				"Kalibrierung"
+			],
+			"desc": "Einfache Kalibrierung mittels heißem Wasser"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Erweiterte",
+				"Kalibrierung"
+			],
+			"desc": "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Leistungs-",
+				"aufnahme"
+			],
+			"desc": "Leistungsaufnahme der verwendeten Spannungsversorgung"
 		}
 	},
 	"languageLocalName": "Deutsch"

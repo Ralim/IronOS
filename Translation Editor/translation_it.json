@@ -1,6 +1,7 @@
 {
 	"languageCode": "IT",
 	"messages": {
+		"SettingsCalibrationDone": "Calibrazione effettuata",
 		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",
@@ -14,9 +15,10 @@
 		"WarningAdvancedString": "PUNTA CALDA!",
 		"SleepingTipAdvancedString": "Punta:",
 		"IdleTipString": "Punta:",
-		"IdleSetString": " Im:",
+		"IdleSetString": "/",
 		"TipDisconnectedString": "PUNTA ASSENTE",
-		"SolderingAdvancedPowerPrompt": "Potenza:"
+		"SolderingAdvancedPowerPrompt": "Potenza:",
+		"OffString": "OFF"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -32,28 +34,28 @@
 				"Opzioni",
 				"saldatura"
 			],
-			"desc": "Menù impostazioni saldatura"
+			"desc": "Menù d'impostazioni della modalità Saldatura"
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Risparmio",
 				"energetico"
 			],
-			"desc": "Menù risparmio energetico"
+			"desc": "Menù d'impostazioni per il risparmio energetico"
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfaccia",
 				"utente"
 			],
-			"desc": "Menù interfaccia utente"
+			"desc": "Menù d'impostazioni dell'interfaccia utente"
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Opzioni",
 				"avanzate"
 			],
-			"desc": "Menù impostazioni avanzate"
+			"desc": "Menù d'impostazioni avanzate"
 		}
 	},
 	"menuOptions": {
@@ -63,7 +65,7 @@
 				"Sorgente",
 				"alimentaz"
 			],
-			"desc": "Scegli la sorgente di alimentazione; imposta la soglia di scaricamento per alimentazione Li-Po <DC: 10V; S: 3.3V per cella>"
+			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3,3V per cella>"
 		},
 		"SleepTemperature": {
 			"text": "",
@@ -71,7 +73,7 @@
 				"Temp",
 				"standby"
 			],
-			"desc": "Imposta temperatura in modalità standby <°C>"
+			"desc": "Imposta la temperatura da mantenere in modalità Standby <°C/°F>"
 		},
 		"SleepTimeout": {
 			"text": "",
@@ -79,7 +81,7 @@
 				"Timer",
 				"standby"
 			],
-			"desc": "Imposta timer per entrare in modalità standby <minuti/secondi>"
+			"desc": "Imposta il timer per entrare in modalità Standby <minuti/secondi>"
 		},
 		"ShutdownTimeout": {
 			"text": "",
@@ -87,7 +89,7 @@
 				"Timer",
 				"spegnimento"
 			],
-			"desc": "Imposta timer per lo spegnimento <minuti>"
+			"desc": "Imposta il timer per lo spegnimento <minuti>"
 		},
 		"MotionSensitivity": {
 			"text": "",
@@ -95,7 +97,7 @@
 				"Sensibilità",
 				"al movimento"
 			],
-			"desc": "Imposta sensibilità al movimento per uscire dalla modalità standby <0: nessuna; 1: minima; 9: massima>"
+			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Standby <0: nessuna; 1: minima; 9: massima>"
 		},
 		"TemperatureUnit": {
 			"text": "",
@@ -111,7 +113,7 @@
 				"Mostra",
 				"dettagli"
 			],
-			"desc": "Mostra informazioni dettagliate con un carattere più piccolo nella schermata principale"
+			"desc": "Mostra informazioni dettagliate con un carattere più piccolo all'interno della schermata principale"
 		},
 		"DisplayRotation": {
 			"text": "",
@@ -119,23 +121,23 @@
 				"Orientamento",
 				"display"
 			],
-			"desc": "Imposta orientamento del display <A: automatico; S: mano sinistra; D: mano destra>"
+			"desc": "Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>"
 		},
 		"BoostEnabled": {
 			"text": "",
 			"text2": [
 				"Funzione",
-				"\"boost\""
+				"«Turbo»"
 			],
-			"desc": "Il tasto anteriore attiva la funzione \"boost\" durante la saldatura"
+			"desc": "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura"
 		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [
 				"Temp",
-				"\"boost\""
+				"«Turbo»"
 			],
-			"desc": "Imposta la temperatura in funzione \"boost\""
+			"desc": "Imposta la temperatura della funzione «Turbo»"
 		},
 		"AutoStart": {
 			"text": "",
@@ -151,7 +153,7 @@
 				"Avviso",
 				"punta calda"
 			],
-			"desc": "Mostra la temperatura durante il raffreddamento se la punta è ancora calda"
+			"desc": "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda"
 		},
 		"TemperatureCalibration": {
 			"text": "",
@@ -159,7 +161,7 @@
 				"Calibrazione",
 				"temperatura"
 			],
-			"desc": "Calibra la differenza di temperatura rilevata da quella presente sulla punta"
+			"desc": "Calibra le rilevazioni di temperatura"
 		},
 		"SettingsReset": {
 			"text": "",
@@ -175,7 +177,7 @@
 				"Calibrazione",
 				"tensione"
 			],
-			"desc": "Calibra la tensione in ingresso; regola con i bottoni, tieni premuto per uscire"
+			"desc": "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire"
 		},
 		"AdvancedSoldering": {
 			"text": "",
@@ -183,7 +185,7 @@
 				"Dettagli",
 				"saldatura"
 			],
-			"desc": "Mostra informazioni dettagliate in modalità saldatura"
+			"desc": "Mostra informazioni dettagliate durante la modalità Saldatura"
 		},
 		"ScrollingSpeed": {
 			"text": "",
@@ -192,6 +194,38 @@
 				"testo"
 			],
 			"desc": "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Modello",
+				"della punta"
+			],
+			"desc": "Seleziona il modello della punta in uso"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Calibrazione",
+				"semplice"
+			],
+			"desc": "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua calda"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Calibrazione",
+				"avanzata"
+			],
+			"desc": "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Potenza",
+				"alimentaz"
+			],
+			"desc": "Imposta la potenza dell'alimentatore in uso"
 		}
 	},
 	"languageLocalName": "Italiano"

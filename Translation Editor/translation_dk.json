@@ -1,6 +1,7 @@
 {
 	"languageCode": "DK",
 	"messages": {
+		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!",
 		"SettingsResetWarning": "Are you sure to reset settings to default values?",
 		"UVLOWarningString": "Lav Volt",
@@ -11,12 +12,13 @@
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Dvale...",
 		"WarningSimpleString": "Varm",
-		"WarningAdvancedString": "ADVARSEL! VARM LODDESPIDS!",
+		"WarningAdvancedString": "VARM LODDESPIDS!",
 		"SleepingTipAdvancedString": "Tip:",
 		"IdleTipString": "Tip:",
 		"IdleSetString": " Set:",
 		"TipDisconnectedString": "TIP DISCONNECTED",
-		"SolderingAdvancedPowerPrompt": "Power: "
+		"SolderingAdvancedPowerPrompt": "Power: ",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "H",
@@ -192,6 +194,38 @@
 				""
 			],
 			"desc": "Speed this text scrolls past at"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Tip",
+				"Model"
+			],
+			"desc": "Tip Model selection"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Simple",
+				"Calibration"
+			],
+			"desc": "Simple Calibration using Hot water"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Advanced",
+				"Calibration"
+			],
+			"desc": "Advanced calibration using thermocouple on the tip"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
 		}
 	},
 	"languageLocalName": "Dansk"
