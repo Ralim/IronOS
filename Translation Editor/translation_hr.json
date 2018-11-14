@@ -2,6 +2,7 @@
 	"languageCode": "HR",
 	"languageLocalName": "Hrvatski",
 	"messages": {
+		"SettingsCalibrationDone": "Kalibracija gotova!",
 		"SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",
 		"UVLOWarningString": "BATERIJA",
 		"UndervoltageString": "PRENIZAK NAPON",
@@ -17,7 +18,8 @@
 		"IdleSetString": " / ",
 		"TipDisconnectedString": "VRH NIJE SPOJEN!",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
-		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!"
+		"SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
+		"OffString": "Off"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -193,6 +195,38 @@
 				"poruka"
 			],
 			"desc": "Brzina kretanja dugačkih poruka. <B=brzo, S=sporo>"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Model",
+				"Vrha"
+			],
+			"desc": "Odabir modela lemnog vrha"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Jednostavna",
+				"kalibracija"
+			],
+			"desc": "Kalibracija kipućom vodom"
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Napredna",
+				"kalibracija"
+			],
+			"desc": "Kalibracija korištenjem termo-elementa"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Snaga",
+				"napajanja"
+			],
+			"desc": "Snaga modula za napajanje"
 		}
 	}
 }
