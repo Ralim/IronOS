@@ -228,5 +228,6 @@
 			"desc": "Power Wattage of the power adapter used"
 		}
 	},
-	"languageLocalName": "Русский"
+	"languageLocalName": "Русский",
+	"cyrillicGlyphs": true
 }

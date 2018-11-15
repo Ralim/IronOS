@@ -51,7 +51,7 @@ def readTranslations(jsonDir):
                 langCodeFromJson = lang['languageCode']
             except KeyError:
                 langCodeFromJson = "(missing)"
-                
+
             # ...cause they should be the same!
             if langCode != langCodeFromJson:
                 raise ValueError("Invalid languageCode " + langCodeFromJson + " in file " + fileName)
@@ -87,6 +87,14 @@ def writeLanguage(languageCode, defs, f):
          
     f.write(to_unicode("// ---- " + langName + " ----\n\n"))
 
+    try:
+        cyrillic = lang['cyrillicGlyphs']
+    except KeyError:
+        cyrillic = False
+
+    if cyrillic :
+        f.write(to_unicode("#define CYRILLIC_GLYPHS\n\n"))
+        
     # ----- Writing SettingsDescriptions
     obj = lang['menuOptions']
     f.write(to_unicode("const char* SettingsDescriptions[] = {\n"))
