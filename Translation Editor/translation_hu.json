@@ -1,5 +1,7 @@
 {
 	"languageCode": "HU",
+	"languageLocalName": "Magyar",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibráció befejezve!",
 		"SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a hegy szobahőmérsékletű!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "A tápegység által leadott teljesítmény"
 		}
-	},
-	"languageLocalName": "magyar"
+	}
 }

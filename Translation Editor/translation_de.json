@@ -1,5 +1,7 @@
 {
 	"languageCode": "DE",
+	"languageLocalName": "Deutsch",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibrierung abgeschlossen!",
 		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "Leistungsaufnahme der verwendeten Spannungsversorgung"
 		}
-	},
-	"languageLocalName": "Deutsch"
+	}
 }

@@ -1,6 +1,7 @@
 {
 	"languageCode": "FI",
 	"languageLocalName": "Suomi",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",

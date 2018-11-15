@@ -1,6 +1,7 @@
 {
 	"languageCode": "HR",
 	"languageLocalName": "Hrvatski",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracija gotova!",
 		"SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",

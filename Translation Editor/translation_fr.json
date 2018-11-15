@@ -1,5 +1,7 @@
 {
 	"languageCode": "FR",
+	"languageLocalName": "Français",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration effectuée!",
 		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "Puissance de l'alimentation utilisée"
 		}
-	},
-	"languageLocalName": "Français"
+	}
 }

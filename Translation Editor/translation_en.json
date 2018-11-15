@@ -1,6 +1,7 @@
 {
 	"languageCode": "EN",
 	"languageLocalName": "English",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",

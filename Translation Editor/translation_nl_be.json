@@ -1,6 +1,7 @@
 {
 	"languageCode": "NL_BE",
 	"languageLocalName": "Vlaams",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Gecalibreerd!",
 		"SettingsCalibrationWarning": "Zorg vooraf dat de punt op kamertemperatuur is!",

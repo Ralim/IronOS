@@ -1,6 +1,7 @@
 {
 	"languageCode": "NL",
 	"languageLocalName": "Nederlands",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!",
