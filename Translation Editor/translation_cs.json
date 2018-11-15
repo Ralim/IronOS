@@ -1,5 +1,6 @@
 {
-	"languageCode": "CS_CZ",
+	"languageCode": "CS",
+	"languageLocalName": "Český",
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Ujistěte se, že hrot má pokojovou teplotu!",
@@ -227,6 +228,5 @@
 			],
 			"desc": "Power Wattage of the power adapter used"
 		}
-	},
-	"languageLocalName": "Český"
+	}
 }
