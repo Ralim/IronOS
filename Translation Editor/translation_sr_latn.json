@@ -29,6 +29,7 @@
 		"SettingFastChar": "B",
 		"SettingSlowChar": "S"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -59,7 +60,6 @@
 			"desc": "Napredne postavke."
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "Npjnj",

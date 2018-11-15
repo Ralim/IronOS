@@ -29,6 +29,7 @@
 		"SettingFastChar": "+",
 		"SettingSlowChar": "-"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -59,7 +60,6 @@
 			"desc": "Розширені налаштування. Додаткові зручності."
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "",

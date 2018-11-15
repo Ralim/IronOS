@@ -29,6 +29,7 @@
 		"SettingFastChar": "S",
 		"SettingSlowChar": "L"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -59,7 +60,6 @@
 			"desc": "Avancerade alternativ"
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "",

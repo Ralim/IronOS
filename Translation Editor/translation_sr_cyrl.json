@@ -29,6 +29,7 @@
 		"SettingFastChar": "Б",
 		"SettingSlowChar": "С"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -59,7 +60,6 @@
 			"desc": "Напредне поставке."
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "Нпјње",
