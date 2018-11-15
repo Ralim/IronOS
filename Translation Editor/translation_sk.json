@@ -1,5 +1,6 @@
 {
 	"languageCode": "SK",
+	"languageLocalName": "Slovenský",
 	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
