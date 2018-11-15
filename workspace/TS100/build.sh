@@ -138,9 +138,9 @@ then
     make clean 1>/dev/null
     checkLastCommand
 
-    for lang in "${BUILD_LANGUAGES[@]}"
+    for model in "${BUILD_MODELS[@]}"
     do
-        for model in "${BUILD_MODELS[@]}"
+        for lang in "${BUILD_LANGUAGES[@]}"
         do
             echo "Building firmware for $model in $lang"
             make -j16 lang=$lang model=$model 1>/dev/null
