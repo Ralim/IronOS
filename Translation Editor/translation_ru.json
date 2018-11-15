@@ -1,5 +1,7 @@
 {
 	"languageCode": "RU",
+	"languageLocalName": "Русский",
+	"cyrillicGlyphs": true,
 	"messages": {
 		"SettingsCalibrationDone": "Калибровка выполнена!",
 		"SettingsCalibrationWarning": "Убедитесь, что жало остыло до комнатной температуры, прежде чем продолжать!",
@@ -227,7 +229,5 @@
 			],
 			"desc": "Power Wattage of the power adapter used"
 		}
-	},
-	"languageLocalName": "Русский",
-	"cyrillicGlyphs": true
+	}
 }
