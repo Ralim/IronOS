@@ -2,7 +2,7 @@
 	"languageCode": "HR",
 	"languageLocalName": "Hrvatski",
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibracija gotova!",
 		"SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",
 		"UVLOWarningString": "BATERIJA",
 		"UndervoltageString": "PRENIZAK NAPON",
@@ -199,34 +199,34 @@
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
-				"Model"
+				"Model",
+				"Vrha"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Odabir modela lemnog vrha"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Jednostavna",
+				"kalibracija"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Kalibracija kipućom vodom"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Napredna",
+				"kalibracija"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Kalibracija korištenjem termo-elementa"
 		},
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Power",
-				"Wattage"
+				"Snaga",
+				"napajanja"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Snaga modula za napajanje"
 		}
 	}
 }
