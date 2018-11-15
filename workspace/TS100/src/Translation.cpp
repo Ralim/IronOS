@@ -1589,6 +1589,8 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #ifdef LANG_RU
 // ---- Русский ----
 
+#define CYRILLIC_GLYPHS
+
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
   /* SleepTemperature          */ "Температура режима ожидания <С>",

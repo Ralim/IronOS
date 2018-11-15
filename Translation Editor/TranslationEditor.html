@@ -48,6 +48,9 @@
 			} else if (id == "current-lang-file") {
 				if (checkTranslationFile(file.name)) {
 					app.current = json;
+					if (!app.current.cyrillicGlyphs){
+						app.current.cyrillicGlyphs = false;
+					}
 					app.meta.currentLoaded = true;
 				}
 			} 		
@@ -237,6 +240,15 @@
 				<tr v-if="meta.currentLoaded">
 					<td class="label">Local Language Name</td>
 					<td class="value"><input type="text" v-model="current.languageLocalName" class="short"></td>
+				</tr>
+				<tr v-if="meta.currentLoaded">
+					<td class="label">Font table to use</td>
+					<td class="value">
+						<select v-model="current.cyrillicGlyphs" v-on:change="current.cyrillicGlyphs = current.cyrillicGlyphs=='true'">
+							<option value="false">Latin Extended</option>
+							<option value="true">Cyrillic Glyphs</option>
+						</select>
+					</td>
 				</tr>
 			</table>
 			
