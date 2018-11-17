@@ -2,7 +2,6 @@
 
 TRANSLATION_DIR="../../Translation Editor"
 TRANSLATION_SCRIPT="make_translation.py"
-TRANSLATION_FILE_PATTERN="translation_*.json"
 
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
 AVAILABLE_LANGUAGES=()
@@ -82,11 +81,12 @@ echo "                                     by Ralim"
 echo "*********************************************"
 
 # Calculate available languages
-for file in $(find "$TRANSLATION_DIR" -name "$TRANSLATION_FILE_PATTERN" -exec basename {} ';')
+for f in "$TRANSLATION_DIR"/translation_*.json
 do
-    endIdx=$((${#file}-5))
-    AVAILABLE_LANGUAGES+=($(echo "$file" | cut -c13-$endIdx | tr "[a-z]" "[A-Z]"))
-done
+    lang_json=${f#*/translation_}      # Remove ".../translation_"
+    lang=${lang_json%.json}            # Remove ".json"
+    AVAILABLE_LANGUAGES+=("${lang^^}") # Convert to uppercase
+done    
 
 # Checking requested language
 echo "Available languages :"
