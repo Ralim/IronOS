@@ -12,7 +12,7 @@ BUILD_MODELS=()
 
 usage ()
 {
-  echo "Usage : $(basename $0) [-l <LANG_CODE>] [-m <TS100|TS80>] [-h]
+  echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80>] [-h]
 
 Parameters :
     -l LANG_CODE : Force a specific language (E.g. : EN, FR, NL_BE, ...)
@@ -85,46 +85,46 @@ echo "*********************************************"
 for file in $(find "$TRANSLATION_DIR" -name "$TRANSLATION_FILE_PATTERN" -exec basename {} ';')
 do
     endIdx=$((${#file}-5))
-    AVAILABLE_LANGUAGES+=($(echo "$file" | cut -c13-$endIdx | tr [a-z] [A-Z]))
+    AVAILABLE_LANGUAGES+=($(echo "$file" | cut -c13-$endIdx | tr "[a-z]" "[A-Z]"))
 done
 
 # Checking requested language
 echo "Available languages :"
-echo "    ${AVAILABLE_LANGUAGES[@]}"
+echo "    ${AVAILABLE_LANGUAGES[*]}"
 echo "Requested languages :"
 if [ -n "$LANGUAGE" ]
 then
     if isInArray "$LANGUAGE" "${AVAILABLE_LANGUAGES[@]}"
     then
         echo "    $LANGUAGE" 
-        BUILD_LANGUAGES+=($LANGUAGE)
+        BUILD_LANGUAGES+=("$LANGUAGE")
     else
         echo "    $LANGUAGE doesn't exist" 
         forceExit
     fi
 else
 	echo "    [ALL LANGUAGES]"
-    BUILD_LANGUAGES+=(${AVAILABLE_LANGUAGES[@]})
+    BUILD_LANGUAGES+=("${AVAILABLE_LANGUAGES[@]}")
 fi
 echo "*********************************************"
 
 # Checking requested model
 echo "Available models :"
-echo "    ${AVAILABLE_MODELS[@]}"
+echo "    ${AVAILABLE_MODELS[*]}"
 echo "Requested models :"
 if [ -n "$MODEL" ]
 then
     if isInArray "$MODEL" "${AVAILABLE_MODELS[@]}"
     then
     	echo "    $MODEL" 
-        BUILD_MODELS+=($MODEL)
+        BUILD_MODELS+=("$MODEL")
     else
         echo "    $MODEL doesn't exist" 
         forceExit
     fi
 else
 	echo "    [ALL MODELS]"
-    BUILD_MODELS+=(${AVAILABLE_MODELS[@]})
+    BUILD_MODELS+=("${AVAILABLE_MODELS[@]}")
 fi
 echo "*********************************************"
 
@@ -143,7 +143,7 @@ then
         for lang in "${BUILD_LANGUAGES[@]}"
         do
             echo "Building firmware for $model in $lang"
-            make -j16 lang=$lang model=$model 1>/dev/null
+            make -j16 lang="$lang" model="$model" 1>/dev/null
             checkLastCommand
             rm -rf Objects/src 1>/dev/null
         done
