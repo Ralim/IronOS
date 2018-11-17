@@ -1,12 +1,13 @@
 {
 	"languageCode": "SR_CYRL",
 	"languageLocalName": "Српски",
+	"cyrillicGlyphs": true,
 	"messages": {
-		"SettingsCalibrationDone": "Калибрација завршена!",
+		"SettingsCalibrationDone": "Калибрација готова",
 		"SettingsCalibrationWarning": "Проверите да ли је врх охлађен на собну температуру пре него што наставите",
 		"SettingsResetWarning": "Да ли заиста желите да вратите поставке на фабричке вредности?",
-		"UVLOWarningString": "DC НИЗАК",
-		"UndervoltageString": "Пренизак напон",
+		"UVLOWarningString": "НИЗ.НАП.",
+		"UndervoltageString": "ПРЕНИЗАК НАПОН",
 		"InputVoltageString": "Ул. напон: ",
 		"WarningTipTempString": "Темп. врха: ",
 		"BadTipString": "ЛОШ ВРХ",
@@ -28,6 +29,7 @@
 		"SettingFastChar": "Б",
 		"SettingSlowChar": "С"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "Напредне поставке."
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "Нпјње",
@@ -74,7 +75,7 @@
 				"Темп.",
 				"спавања"
 			],
-			"desc": "Температура на коју се спушта лемилица након одређеног времена. <C/F>"
+			"desc": "Температура на коју се спушта лемилица након одређеног времена мировања. <C/F>"
 		},
 		"SleepTimeout": {
 			"text": "ВСпв",
@@ -127,10 +128,10 @@
 		"BoostEnabled": {
 			"text": "Пјчње",
 			"text2": [
-				"Омогућено",
-				"појачање"
+				"Појачање",
+				"омогућено"
 			],
-			"desc": "Држањем предњег дугмета приликом лемљења додатно се појачава топлота врха."
+			"desc": "Држање предњег тастера током лемљења додатно појачава температуру врха."
 		},
 		"BoostTemperature": {
 			"text": "ТПјч",
@@ -202,7 +203,7 @@
 				"Модел",
 				"врха"
 			],
-			"desc": "Избор модела врха."
+			"desc": "Одабир модела лемног врха."
 		},
 		"SimpleCalibrationMode": {
 			"text": "ЈедКалбр",
@@ -210,7 +211,7 @@
 				"Једноставна",
 				"калибрација"
 			],
-			"desc": "Једноставна калибрација помоћу вруће воде."
+			"desc": "Једноставна калибрација кипућом водом."
 		},
 		"AdvancedCalibrationMode": {
 			"text": "НапКалбр",
@@ -226,7 +227,7 @@
 				"Улазна",
 				"снага"
 			],
-			"desc": "Снага улазног адаптера у ватима."
+			"desc": "Снага напајања у ватима."
 		}
 	}
 }

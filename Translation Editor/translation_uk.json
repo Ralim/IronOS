@@ -1,6 +1,7 @@
 {
-	"languageCode": "UA",
+	"languageCode": "UK",
 	"languageLocalName": "Українська",
+	"cyrillicGlyphs": true,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",
@@ -28,6 +29,7 @@
 		"SettingFastChar": "+",
 		"SettingSlowChar": "-"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "Розширені налаштування. Додаткові зручності."
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "",

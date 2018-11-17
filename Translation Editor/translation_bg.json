@@ -1,5 +1,7 @@
 {
 	"languageCode": "BG",
+	"languageLocalName": "Български",
+	"cyrillicGlyphs": true,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Уверете се, че човката на поялника е със стайна температура преди да продължите!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "Power Wattage of the power adapter used"
 		}
-	},
-	"languageLocalName": "български"
+	}
 }

@@ -1,6 +1,7 @@
 {
 	"languageCode": "EN",
 	"languageLocalName": "English",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
@@ -28,6 +29,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "Advanced options"
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "PWRSC",

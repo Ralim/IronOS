@@ -1,5 +1,7 @@
 {
 	"languageCode": "TR",
+	"languageLocalName": "Türk",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "Power Wattage of the power adapter used"
 		}
-	},
-	"languageLocalName": "Türk"
+	}
 }

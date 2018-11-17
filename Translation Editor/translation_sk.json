@@ -1,5 +1,7 @@
 {
 	"languageCode": "SK",
+	"languageLocalName": "Slovenský",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!",

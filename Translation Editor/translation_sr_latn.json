@@ -1,12 +1,13 @@
 {
 	"languageCode": "SR_LATN",
 	"languageLocalName": "Srpski",
+	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "Kalibracija završena!",
+		"SettingsCalibrationDone": "Kalibracija gotova",
 		"SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite",
 		"SettingsResetWarning": "Da li zaista želite da vratite postavke na fabričke vrednosti?",
-		"UVLOWarningString": "DC NIZAK",
-		"UndervoltageString": "Prenizak napon",
+		"UVLOWarningString": "NIZ.NAP.",
+		"UndervoltageString": "PRENIZAK NAPON",
 		"InputVoltageString": "Ul. napon: ",
 		"WarningTipTempString": "Temp. vrha: ",
 		"BadTipString": "LOŠ VRH",
@@ -28,6 +29,7 @@
 		"SettingFastChar": "B",
 		"SettingSlowChar": "S"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "Napredne postavke."
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "Npjnj",
@@ -74,7 +75,7 @@
 				"Temp.",
 				"spavanja"
 			],
-			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena. <C/F>"
+			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. <C/F>"
 		},
 		"SleepTimeout": {
 			"text": "VSpv",
@@ -127,10 +128,10 @@
 		"BoostEnabled": {
 			"text": "Pjčnj",
 			"text2": [
-				"Omogućeno",
-				"pojačanje"
+				"Pojačanje",
+				"omogućeno"
 			],
-			"desc": "Držanjem prednjeg dugmeta prilikom lemljenja dodatno se pojačava toplota vrha."
+			"desc": "Držanje prednjeg tastera tokom lemljenja dodatno pojačava temperaturu vrha."
 		},
 		"BoostTemperature": {
 			"text": "TPjč",
@@ -202,7 +203,7 @@
 				"Model",
 				"vrha"
 			],
-			"desc": "Izbor modela vrha."
+			"desc": "Odabir modela lemnog vrha."
 		},
 		"SimpleCalibrationMode": {
 			"text": "JedKalbr",
@@ -210,7 +211,7 @@
 				"Jednostavna",
 				"kalibracija"
 			],
-			"desc": "Jednostavna kalibracija pomoću vruće vode."
+			"desc": "Jednostavna kalibracija kipućom vodom."
 		},
 		"AdvancedCalibrationMode": {
 			"text": "NapKalbr",
@@ -226,7 +227,7 @@
 				"Ulazna",
 				"snaga"
 			],
-			"desc": "Snaga ulaznog adaptera u vatima."
+			"desc": "Snaga napajanja u vatima."
 		}
 	}
 }

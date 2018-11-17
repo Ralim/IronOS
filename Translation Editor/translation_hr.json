@@ -1,8 +1,10 @@
 {
 	"languageCode": "HR",
 	"languageLocalName": "Hrvatski",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracija gotova!",
+		"SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
 		"SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",
 		"UVLOWarningString": "BATERIJA",
 		"UndervoltageString": "PRENIZAK NAPON",
@@ -18,7 +20,6 @@
 		"IdleSetString": " / ",
 		"TipDisconnectedString": "VRH NIJE SPOJEN!",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
-		"SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
 		"OffString": "Off"
 	},
 	"characters": {
@@ -28,6 +29,7 @@
 		"SettingFastChar": "B",
 		"SettingSlowChar": "S"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "Upravljanje naprednim opcijama"
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "PWRSC",
