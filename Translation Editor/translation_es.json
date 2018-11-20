@@ -1,5 +1,7 @@
 {
 	"languageCode": "ES",
+	"languageLocalName": "Español",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "¡Asegúrese que la punta esté a temperatura ambiente antes de proceder!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "Power Wattage of the power adapter used"
 		}
-	},
-	"languageLocalName": "Español"
+	}
 }

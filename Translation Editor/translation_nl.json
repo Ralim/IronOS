@@ -1,6 +1,7 @@
 {
 	"languageCode": "NL",
 	"languageLocalName": "Nederlands",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!",
@@ -28,6 +29,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "geavanceerde Instellingen"
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "",

@@ -1,91 +1,156 @@
-python ../../Translation\ Editor/make_translation.py ../../Translation\ Editor
-make clean
-make -j16 lang=EN
-rm -rf Objects/src
-make -j16 lang=BG
-rm -rf Objects/src
-make -j16 lang=CS_CZ
-rm -rf Objects/src
-make -j16 lang=DE
-rm -rf Objects/src
-make -j16 lang=DK
-rm -rf Objects/src
-make -j16 lang=ES
-rm -rf Objects/src
-make -j16 lang=FI
-rm -rf Objects/src
-make -j16 lang=FR
-rm -rf Objects/src
-make -j16 lang=HR
-rm -rf Objects/src
-make -j16 lang=HU
-rm -rf Objects/src
-make -j16 lang=IT
-rm -rf Objects/src
-make -j16 lang=LT
-rm -rf Objects/src
-make -j16 lang=NL
-rm -rf Objects/src
-make -j16 lang=NO
-rm -rf Objects/src
-make -j16 lang=PL
-rm -rf Objects/src
-make -j16 lang=PT
-rm -rf Objects/src
-make -j16 lang=RU
-rm -rf Objects/src
-make -j16 lang=SK
-rm -rf Objects/src
-make -j16 lang=SR
-rm -rf Objects/src
-make -j16 lang=SV
-rm -rf Objects/src
-make -j16 lang=TR
-rm -rf Objects/src
-make -j16 lang=UA
-rm -rf Objects/src
+#!/bin/bash
 
-make -j16 lang=EN model=TS80
-rm -rf Objects/src
-make -j16 lang=BG model=TS80
-rm -rf Objects/src
-make -j16 lang=CS_CZ model=TS80
-rm -rf Objects/src
-make -j16 lang=DE model=TS80
-rm -rf Objects/src
-make -j16 lang=DK model=TS80
-rm -rf Objects/src
-make -j16 lang=ES model=TS80
-rm -rf Objects/src
-make -j16 lang=FI model=TS80
-rm -rf Objects/src
-make -j16 lang=FR model=TS80
-rm -rf Objects/src
-make -j16 lang=HR model=TS80
-rm -rf Objects/src
-make -j16 lang=HU model=TS80
-rm -rf Objects/src
-make -j16 lang=IT model=TS80
-rm -rf Objects/src
-make -j16 lang=LT model=TS80
-rm -rf Objects/src
-make -j16 lang=NL model=TS80
-rm -rf Objects/src
-make -j16 lang=NO model=TS80
-rm -rf Objects/src
-make -j16 lang=PL model=TS80
-rm -rf Objects/src
-make -j16 lang=PT model=TS80
-rm -rf Objects/src
-make -j16 lang=RU model=TS80
-rm -rf Objects/src
-make -j16 lang=SK model=TS80
-rm -rf Objects/src
-make -j16 lang=SR model=TS80
-rm -rf Objects/src
-make -j16 lang=SV model=TS80
-rm -rf Objects/src
-make -j16 lang=TR model=TS80
-rm -rf Objects/src
-make -j16 lang=UA model=TS80
-rm -rf Objects/src
+TRANSLATION_DIR="../../Translation Editor"
+TRANSLATION_SCRIPT="make_translation.py"
+
+# AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
+AVAILABLE_LANGUAGES=()
+BUILD_LANGUAGES=()
+AVAILABLE_MODELS=("TS100" "TS80")
+BUILD_MODELS=()
+
+usage ()
+{
+  echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80>] [-h]
+
+Parameters :
+    -l LANG_CODE : Force a specific language (E.g. : EN, FR, NL_BE, ...)
+    -m MODEL     : Force a specific model (E.g. : TS100 or TS80)
+    -h           : Show this help message
+
+INFO : By default, without parameters, the build is for all platforms and all languages" 1>&2
+  exit 1
+}
+
+checkLastCommand ()
+{
+    if [ $? -eq 0 ]
+    then
+        echo "    [Success]"
+        echo "*********************************************"
+    else
+        forceExit
+fi
+}
+
+forceExit ()
+{
+    echo "    [Error]"
+    echo "*********************************************"
+    echo " -- Stop on error --"
+    exit 1
+}
+
+isInArray ()
+{
+    local value="$1"   # Save first argument in a variable
+    shift              # Shift all arguments to the left (original $1 gets lost)
+    local array=("$@") # Rebuild the array with rest of arguments
+
+    for item in "${array[@]}"
+    do
+        [[ $value == "$item" ]] && return 0
+    done
+    return 1
+}
+
+while getopts h:l:m: option
+do
+    case "${option}" in
+        h)
+            usage
+            ;;
+        l)
+            LANGUAGE=${OPTARG}
+            ;;
+        m)
+            MODEL=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+echo "*********************************************"
+echo "             Builder for the"
+echo "      Alternate Open Source Firmware"
+echo "        for Miniware TS100 or TS80"
+echo "                                     by Ralim"
+echo "*********************************************"
+
+# Calculate available languages
+for f in "$TRANSLATION_DIR"/translation_*.json
+do
+    lang_json=${f#*/translation_}      # Remove ".../translation_"
+    lang=${lang_json%.json}            # Remove ".json"
+    AVAILABLE_LANGUAGES+=("${lang^^}") # Convert to uppercase
+done    
+
+# Checking requested language
+echo "Available languages :"
+echo "    ${AVAILABLE_LANGUAGES[*]}"
+echo "Requested languages :"
+if [ -n "$LANGUAGE" ]
+then
+    if isInArray "$LANGUAGE" "${AVAILABLE_LANGUAGES[@]}"
+    then
+        echo "    $LANGUAGE" 
+        BUILD_LANGUAGES+=("$LANGUAGE")
+    else
+        echo "    $LANGUAGE doesn't exist" 
+        forceExit
+    fi
+else
+	echo "    [ALL LANGUAGES]"
+    BUILD_LANGUAGES+=("${AVAILABLE_LANGUAGES[@]}")
+fi
+echo "*********************************************"
+
+# Checking requested model
+echo "Available models :"
+echo "    ${AVAILABLE_MODELS[*]}"
+echo "Requested models :"
+if [ -n "$MODEL" ]
+then
+    if isInArray "$MODEL" "${AVAILABLE_MODELS[@]}"
+    then
+    	echo "    $MODEL" 
+        BUILD_MODELS+=("$MODEL")
+    else
+        echo "    $MODEL doesn't exist" 
+        forceExit
+    fi
+else
+	echo "    [ALL MODELS]"
+    BUILD_MODELS+=("${AVAILABLE_MODELS[@]}")
+fi
+echo "*********************************************"
+
+if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]
+then 
+    echo "Generating Translation.cpp"
+    python "$TRANSLATION_DIR/$TRANSLATION_SCRIPT" "$TRANSLATION_DIR" 1>/dev/null
+    checkLastCommand
+
+    echo "Cleaning previous builds"
+    make clean 1>/dev/null
+    checkLastCommand
+
+    for model in "${BUILD_MODELS[@]}"
+    do
+        for lang in "${BUILD_LANGUAGES[@]}"
+        do
+            echo "Building firmware for $model in $lang"
+            make -j16 lang="$lang" model="$model" 1>/dev/null
+            checkLastCommand
+            rm -rf Objects/src 1>/dev/null
+        done
+    done
+else
+    echo "Nothing to build. (no model or language specified)"
+    forceExit
+fi
+echo " -- Firmwares successfully generated --"
+echo "End..."

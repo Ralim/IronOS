@@ -1,6 +1,7 @@
 {
 	"languageCode": "SV",
 	"languageLocalName": "Svenska",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
@@ -28,6 +29,7 @@
 		"SettingFastChar": "S",
 		"SettingSlowChar": "L"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "Avancerade alternativ"
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "",

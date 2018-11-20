@@ -1,5 +1,7 @@
 {
 	"languageCode": "PL",
+	"languageLocalName": "Polski",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracja udana!",
 		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnela temperature pokojowa!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "Moc używanego zasilacza w Watach"
 		}
-	},
-	"languageLocalName": "Polski"
+	}
 }

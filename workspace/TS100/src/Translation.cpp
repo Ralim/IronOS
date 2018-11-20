@@ -99,7 +99,9 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_BG
-// ---- български ----
+// ---- Български ----
+
+#define CYRILLIC_GLYPHS
 
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Източник на захранване. Минимално напрежение. <DC 10V> <S 3.3V за клетка>",
@@ -191,7 +193,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 
 #endif
 
-#ifdef LANG_CS_CZ
+#ifdef LANG_CS
 // ---- Český ----
 
 const char* SettingsDescriptions[] = {
@@ -280,6 +282,99 @@ const char* SettingsMenuEntriesDescriptions[4] = {
   /* PowerSavingMenu           */ "Nastavení režimu spánku, automatického vypnutí...",
   /* UIMenu                    */ "Nastavení uživatelského rozhraní.",
   /* AdvancedMenu              */ "Pokročilé volby (detailní obrazovky, kalibrace, tovární nastavení...)",
+};
+
+#endif
+
+#ifdef LANG_DA
+// ---- Dansk ----
+
+const char* SettingsDescriptions[] = {
+  /* PowerSource               */ "Strømforsyning. Indstil Cutoff Spændingen. <DC 10V <S 3.3V per cell",
+  /* SleepTemperature          */ "Dvale Temperatur <C",
+  /* SleepTimeout              */ "Dvale Timeout <Minutter/Sekunder",
+  /* ShutdownTimeout           */ "sluknings Timeout <Minutter",
+  /* MotionSensitivity         */ "Bevægelsesfølsomhed <0.Slukket 1.Mindst følsom 9.Mest følsom",
+  /* TemperatureUnit           */ "Temperatur Enhed <C=Celsius F=Fahrenheit",
+  /* AdvancedIdle              */ "Vis detialieret information med en mindre skriftstørrelse på standby skærmen.",
+  /* DisplayRotation           */ "Skærm Orientering <A. Automatisk V. Venstre Håndet H. Højre Håndet",
+  /* BoostEnabled              */ "Ved tryk på front knap Aktiveres boost-funktionen, 450C tilstand når der loddes",
+  /* BoostTemperature          */ "Temperatur i \"boost\" mode",
+  /* AutoStart                 */ "Start automatisk med lodning når strøm sættes til. L=Lodning, D= Dvale tilstand,S=Slukket",
+  /* CooldownBlink             */ "Blink temperaturen på skærmen, mens spidsen stadig er varm.",
+  /* TemperatureCalibration    */ "kalibrere spids temperatur.",
+  /* SettingsReset             */ "Gendan alle indstillinger",
+  /* VoltageCalibration        */ "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud",
+  /* AdvancedSoldering         */ "Vis detialieret information mens der loddes",
+  /* ScrollingSpeed            */ "Speed this text scrolls past at",
+  /* TipModel                  */ "Tip Model selection",
+  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
+  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
+  /* PowerInput                */ "Power Wattage of the power adapter used",
+};
+
+const char* SettingsCalibrationDone = "Calibration done!";
+const char* SettingsCalibrationWarning = "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!";
+const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
+const char* UVLOWarningString = "Lav Volt";
+const char* UndervoltageString = "Undervoltage";
+const char* InputVoltageString = "Input V: ";
+const char* WarningTipTempString = "Tip Temp: ";
+const char* BadTipString = "BAD TIP";
+const char* SleepingSimpleString = "Zzzz";
+const char* SleepingAdvancedString = "Dvale...";
+const char* WarningSimpleString = "Varm";
+const char* WarningAdvancedString = "VARM LODDESPIDS!";
+const char* SleepingTipAdvancedString = "Tip:";
+const char* IdleTipString = "Tip:";
+const char* IdleSetString = " Set:";
+const char* TipDisconnectedString = "TIP DISCONNECTED";
+const char* SolderingAdvancedPowerPrompt = "Power: ";
+const char* OffString = "Off";
+
+const char SettingRightChar = 'H';
+const char SettingLeftChar = 'V';
+const char SettingAutoChar = 'A';
+const char SettingFastChar = 'F';
+const char SettingSlowChar = 'S';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
+const char* SettingsShortNames[][2] = {
+  /* PowerSource               */ { "PWRSC" },
+  /* SleepTemperature          */ { "STMP" },
+  /* SleepTimeout              */ { "STME" },
+  /* ShutdownTimeout           */ { "SHTME" },
+  /* MotionSensitivity         */ { "MSENSE" },
+  /* TemperatureUnit           */ { "TMPUNT" },
+  /* AdvancedIdle              */ { "ADVIDL" },
+  /* DisplayRotation           */ { "DSPROT" },
+  /* BoostEnabled              */ { "BOOST" },
+  /* BoostTemperature          */ { "BTMP" },
+  /* AutoStart                 */ { "ASTART" },
+  /* CooldownBlink             */ { "CLBLNK" },
+  /* TemperatureCalibration    */ { "TMP CAL?" },
+  /* SettingsReset             */ { "RESET?" },
+  /* VoltageCalibration        */ { "CAL VIN?" },
+  /* AdvancedSoldering         */ { "ADVSLD" },
+  /* ScrollingSpeed            */ { "DESCSP" },
+  /* TipModel                  */ { "TIPMO" },
+  /* SimpleCalibrationMode     */ { "SMPCAL" },
+  /* AdvancedCalibrationMode   */ { "ADVCAL" },
+  /* PowerInput                */ { "PWRW" },
+};
+
+const char* SettingsMenuEntries[4] = {
+  /* SolderingMenu             */ "Soldering\nSettings",
+  /* PowerSavingMenu           */ "Sleep\nModes",
+  /* UIMenu                    */ "User\nInterface",
+  /* AdvancedMenu              */ "Advanced\nOptions",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  /* SolderingMenu             */ "Soldering settings",
+  /* PowerSavingMenu           */ "Power Saving Settings",
+  /* UIMenu                    */ "User Interface settings",
+  /* AdvancedMenu              */ "Advanced options",
 };
 
 #endif
@@ -373,99 +468,6 @@ const char* SettingsMenuEntriesDescriptions[4] = {
   /* PowerSavingMenu           */ "Energiespareinstellungen",
   /* UIMenu                    */ "Menüeinstellungen",
   /* AdvancedMenu              */ "Erweiterte Einstellungen",
-};
-
-#endif
-
-#ifdef LANG_DK
-// ---- Dansk ----
-
-const char* SettingsDescriptions[] = {
-  /* PowerSource               */ "Strømforsyning. Indstil Cutoff Spændingen. <DC 10V <S 3.3V per cell",
-  /* SleepTemperature          */ "Dvale Temperatur <C",
-  /* SleepTimeout              */ "Dvale Timeout <Minutter/Sekunder",
-  /* ShutdownTimeout           */ "sluknings Timeout <Minutter",
-  /* MotionSensitivity         */ "Bevægelsesfølsomhed <0.Slukket 1.Mindst følsom 9.Mest følsom",
-  /* TemperatureUnit           */ "Temperatur Enhed <C=Celsius F=Fahrenheit",
-  /* AdvancedIdle              */ "Vis detialieret information med en mindre skriftstørrelse på standby skærmen.",
-  /* DisplayRotation           */ "Skærm Orientering <A. Automatisk V. Venstre Håndet H. Højre Håndet",
-  /* BoostEnabled              */ "Ved tryk på front knap Aktiveres boost-funktionen, 450C tilstand når der loddes",
-  /* BoostTemperature          */ "Temperatur i \"boost\" mode",
-  /* AutoStart                 */ "Start automatisk med lodning når strøm sættes til. L=Lodning, D= Dvale tilstand,S=Slukket",
-  /* CooldownBlink             */ "Blink temperaturen på skærmen, mens spidsen stadig er varm.",
-  /* TemperatureCalibration    */ "kalibrere spids temperatur.",
-  /* SettingsReset             */ "Gendan alle indstillinger",
-  /* VoltageCalibration        */ "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud",
-  /* AdvancedSoldering         */ "Vis detialieret information mens der loddes",
-  /* ScrollingSpeed            */ "Speed this text scrolls past at",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
-};
-
-const char* SettingsCalibrationDone = "Calibration done!";
-const char* SettingsCalibrationWarning = "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!";
-const char* SettingsResetWarning = "Are you sure to reset settings to default values?";
-const char* UVLOWarningString = "Lav Volt";
-const char* UndervoltageString = "Undervoltage";
-const char* InputVoltageString = "Input V: ";
-const char* WarningTipTempString = "Tip Temp: ";
-const char* BadTipString = "BAD TIP";
-const char* SleepingSimpleString = "Zzzz";
-const char* SleepingAdvancedString = "Dvale...";
-const char* WarningSimpleString = "Varm";
-const char* WarningAdvancedString = "VARM LODDESPIDS!";
-const char* SleepingTipAdvancedString = "Tip:";
-const char* IdleTipString = "Tip:";
-const char* IdleSetString = " Set:";
-const char* TipDisconnectedString = "TIP DISCONNECTED";
-const char* SolderingAdvancedPowerPrompt = "Power: ";
-const char* OffString = "Off";
-
-const char SettingRightChar = 'H';
-const char SettingLeftChar = 'V';
-const char SettingAutoChar = 'A';
-const char SettingFastChar = 'F';
-const char SettingSlowChar = 'S';
-
-const enum ShortNameType SettingsShortNameType = SHORT_NAME_SINGLE_LINE;
-const char* SettingsShortNames[][2] = {
-  /* PowerSource               */ { "PWRSC" },
-  /* SleepTemperature          */ { "STMP" },
-  /* SleepTimeout              */ { "STME" },
-  /* ShutdownTimeout           */ { "SHTME" },
-  /* MotionSensitivity         */ { "MSENSE" },
-  /* TemperatureUnit           */ { "TMPUNT" },
-  /* AdvancedIdle              */ { "ADVIDL" },
-  /* DisplayRotation           */ { "DSPROT" },
-  /* BoostEnabled              */ { "BOOST" },
-  /* BoostTemperature          */ { "BTMP" },
-  /* AutoStart                 */ { "ASTART" },
-  /* CooldownBlink             */ { "CLBLNK" },
-  /* TemperatureCalibration    */ { "TMP CAL?" },
-  /* SettingsReset             */ { "RESET?" },
-  /* VoltageCalibration        */ { "CAL VIN?" },
-  /* AdvancedSoldering         */ { "ADVSLD" },
-  /* ScrollingSpeed            */ { "DESCSP" },
-  /* TipModel                  */ { "TIPMO" },
-  /* SimpleCalibrationMode     */ { "SMPCAL" },
-  /* AdvancedCalibrationMode   */ { "ADVCAL" },
-  /* PowerInput                */ { "PWRW" },
-};
-
-const char* SettingsMenuEntries[4] = {
-  /* SolderingMenu             */ "Soldering\nSettings",
-  /* PowerSavingMenu           */ "Sleep\nModes",
-  /* UIMenu                    */ "User\nInterface",
-  /* AdvancedMenu              */ "Advanced\nOptions",
-};
-
-const char* SettingsMenuEntriesDescriptions[4] = {
-  /* SolderingMenu             */ "Soldering settings",
-  /* PowerSavingMenu           */ "Power Saving Settings",
-  /* UIMenu                    */ "User Interface settings",
-  /* AdvancedMenu              */ "Advanced options",
 };
 
 #endif
@@ -770,13 +772,13 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj.",
   /* AdvancedSoldering         */ "Prikazivanje detaljnih informacija tijekom lemljenja.",
   /* ScrollingSpeed            */ "Brzina kretanja dugačkih poruka. <B=brzo, S=sporo>",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* TipModel                  */ "Odabir modela lemnog vrha",
+  /* SimpleCalibrationMode     */ "Kalibracija kipućom vodom",
+  /* AdvancedCalibrationMode   */ "Kalibracija korištenjem termo-elementa",
+  /* PowerInput                */ "Snaga modula za napajanje",
 };
 
-const char* SettingsCalibrationDone = "Calibration done!";
+const char* SettingsCalibrationDone = "Kalibracija gotova!";
 const char* SettingsCalibrationWarning = "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!";
 const char* SettingsResetWarning = "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?";
 const char* UVLOWarningString = "BATERIJA";
@@ -820,10 +822,10 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Kalibracija", "napona napajanja" },
   /* AdvancedSoldering         */ { "Detalji", "pri lemljenju" },
   /* ScrollingSpeed            */ { "Brzina", "poruka" },
-  /* TipModel                  */ { "Tip", "Model" },
-  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
-  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
-  /* PowerInput                */ { "Power", "Wattage" },
+  /* TipModel                  */ { "Model", "Vrha" },
+  /* SimpleCalibrationMode     */ { "Jednostavna", "kalibracija" },
+  /* AdvancedCalibrationMode   */ { "Napredna", "kalibracija" },
+  /* PowerInput                */ { "Snaga", "napajanja" },
 };
 
 const char* SettingsMenuEntries[4] = {
@@ -843,7 +845,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_HU
-// ---- magyar ----
+// ---- Magyar ----
 
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Áramforrás. Beállítja a lekapcsolási feszültséget. <DC 10V> <S 3.3V cellánként>",
@@ -1494,7 +1496,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_PT
-// ---- Portugues ----
+// ---- Português ----
 
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "nte de alimentação. Define a tensão de corte. <DC=10V> <S=3.3V/célula>",
@@ -1589,6 +1591,8 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #ifdef LANG_RU
 // ---- Русский ----
 
+#define CYRILLIC_GLYPHS
+
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Источник питания. Установка напряжения отключения. <DC 10V> <S 3.3 V на батарею>",
   /* SleepTemperature          */ "Температура режима ожидания <С>",
@@ -1680,7 +1684,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 #endif
 
 #ifdef LANG_SK
-// ---- SK ----
+// ---- Slovenský ----
 
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Zdroj napatia. Nastavit napatie pre vypnutie (cutoff)  <DC=10V, nS=n*3.3V pre LiIon clanky>",
@@ -1772,51 +1776,146 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 
 #endif
 
-#ifdef LANG_SR
+#ifdef LANG_SR_CYRL
+// ---- Српски ----
+
+#define CYRILLIC_GLYPHS
+
+const char* SettingsDescriptions[] = {
+  /* PowerSource               */ "Тип напајања; одређује најнижи радни напон. <DC=адаптер (10V), S=батерија (3,3V по ћелији)>",
+  /* SleepTemperature          */ "Температура на коју се спушта лемилица након одређеног времена мировања. <C/F>",
+  /* SleepTimeout              */ "Време мировања након кога лемилица спушта температуру. <M=минути, S=секунде>",
+  /* ShutdownTimeout           */ "Време мировања након кога се лемилица гаси. <M=минути>",
+  /* MotionSensitivity         */ "Осетљивост сензора покрета. <0=искључено, 1=најмање осетљиво, 9=најосетљивије>",
+  /* TemperatureUnit           */ "Јединице у којима се приказује температура. <C=целзијус, F=фаренхајт>",
+  /* AdvancedIdle              */ "Приказивање детаљних информација на екрану током мировања.",
+  /* DisplayRotation           */ "Како је окренут екран. <А=аутоматски, Л=за леворуке, Д=за десноруке>",
+  /* BoostEnabled              */ "Држање предњег тастера током лемљења додатно појачава температуру врха.",
+  /* BoostTemperature          */ "Температура врха лемилице у току појачања.",
+  /* AutoStart                 */ "Лемилица одмах по покретању прелази у режим лемљења и греје се.",
+  /* CooldownBlink             */ "Приказ температуре трепће приликом хлађења докле год је врх и даље врућ.",
+  /* TemperatureCalibration    */ "Калибрисање одступања температуре врха у односу на дршку.",
+  /* SettingsReset             */ "Враћање свих поставки на фабричке вредности.",
+  /* VoltageCalibration        */ "Калибрисање улазног напона. Подешава се на тастере; дуги притисак за крај.",
+  /* AdvancedSoldering         */ "Приказивање детаљних информација на екрану током лемљења.",
+  /* ScrollingSpeed            */ "Брзина кретања описних порука попут ове. <С=споро, Б=брзо>",
+  /* TipModel                  */ "Одабир модела лемног врха.",
+  /* SimpleCalibrationMode     */ "Једноставна калибрација кипућом водом.",
+  /* AdvancedCalibrationMode   */ "Напредна калибрација помоћу термопара.",
+  /* PowerInput                */ "Снага напајања у ватима.",
+};
+
+const char* SettingsCalibrationDone = "Калибрација готова";
+const char* SettingsCalibrationWarning = "Проверите да ли је врх охлађен на собну температуру пре него што наставите";
+const char* SettingsResetWarning = "Да ли заиста желите да вратите поставке на фабричке вредности?";
+const char* UVLOWarningString = "НИЗ.НАП.";
+const char* UndervoltageString = "ПРЕНИЗАК НАПОН";
+const char* InputVoltageString = "Ул. напон: ";
+const char* WarningTipTempString = "Темп. врха: ";
+const char* BadTipString = "ЛОШ ВРХ";
+const char* SleepingSimpleString = "Сан";
+const char* SleepingAdvancedString = "Спавање...";
+const char* WarningSimpleString = "ВРУЋ";
+const char* WarningAdvancedString = "! ОПРЕЗ, ВРУЋЕ !";
+const char* SleepingTipAdvancedString = "Врх:";
+const char* IdleTipString = "Врх:";
+const char* IdleSetString = " / ";
+const char* TipDisconnectedString = "ВРХ НИЈЕ СПОЈЕН";
+const char* SolderingAdvancedPowerPrompt = "Снага: ";
+const char* OffString = "Иск";
+
+const char SettingRightChar = 'Д';
+const char SettingLeftChar = 'Л';
+const char SettingAutoChar = 'А';
+const char SettingFastChar = 'Б';
+const char SettingSlowChar = 'С';
+
+const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
+const char* SettingsShortNames[][2] = {
+  /* PowerSource               */ { "Врста", "напајања" },
+  /* SleepTemperature          */ { "Темп.", "спавања" },
+  /* SleepTimeout              */ { "Време до", "спавања" },
+  /* ShutdownTimeout           */ { "Време до", "гашења" },
+  /* MotionSensitivity         */ { "Осетљивост", "на покрет" },
+  /* TemperatureUnit           */ { "Јединица", "температуре" },
+  /* AdvancedIdle              */ { "Детаљи током", "мировања" },
+  /* DisplayRotation           */ { "Оријентација", "екрана" },
+  /* BoostEnabled              */ { "Појачање", "омогућено" },
+  /* BoostTemperature          */ { "Темп.", "појачања" },
+  /* AutoStart                 */ { "Врући", "старт" },
+  /* CooldownBlink             */ { "Упозорење", "при хлађењу" },
+  /* TemperatureCalibration    */ { "Калибрација", "температуре" },
+  /* SettingsReset             */ { "Фабричке", "поставке" },
+  /* VoltageCalibration        */ { "Калибрација", "улазног напона" },
+  /* AdvancedSoldering         */ { "Детаљи током", "лемљења" },
+  /* ScrollingSpeed            */ { "Брзина", "порука" },
+  /* TipModel                  */ { "Модел", "врха" },
+  /* SimpleCalibrationMode     */ { "Једноставна", "калибрација" },
+  /* AdvancedCalibrationMode   */ { "Напредна", "калибрација" },
+  /* PowerInput                */ { "Улазна", "снага" },
+};
+
+const char* SettingsMenuEntries[4] = {
+  /* SolderingMenu             */ "Поставке\nлемљења",
+  /* PowerSavingMenu           */ "Уштеда\nенергије",
+  /* UIMenu                    */ "Корисничко\nсучеље",
+  /* AdvancedMenu              */ "Напредне\nпоставке",
+};
+
+const char* SettingsMenuEntriesDescriptions[4] = {
+  /* SolderingMenu             */ "Поставке режима лемљења.",
+  /* PowerSavingMenu           */ "Поставке режима мировања.",
+  /* UIMenu                    */ "Поставке корисничког сучеља.",
+  /* AdvancedMenu              */ "Напредне поставке.",
+};
+
+#endif
+
+#ifdef LANG_SR_LATN
 // ---- Srpski ----
 
 const char* SettingsDescriptions[] = {
-  /* PowerSource               */ "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>",
+  /* PowerSource               */ "Tip napajanja; određuje najniži radni napon. <DC=adapter (10V), S=baterija (3,3V po ćeliji)>",
   /* SleepTemperature          */ "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. <C/F>",
-  /* SleepTimeout              */ "Vreme mirovanja nakon koga lemilica spušta temperaturu. <Minute/Sekunde>",
-  /* ShutdownTimeout           */ "Vreme mirovanja nakon koga će se lemilica ugasiti.",
-  /* MotionSensitivity         */ "Osetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osetljivo, 9=Najosjetljivije>",
-  /* TemperatureUnit           */ "Jedinica temperature. <C=Celzijus, F=Fahrenheit>",
-  /* AdvancedIdle              */ "Prikazivanje detaljnih informacija manjim fontom tokom čekanja.",
-  /* DisplayRotation           */ "Orijentacija ekrana. <A=Automatski, L=Levoruki, D=Desnoruki>",
-  /* BoostEnabled              */ "Držanjem prednjeg dugmeta prilikom lemljenja aktivira se pojačani (Boost) način.",
-  /* BoostTemperature          */ "Temperatura u pojačanom (Boost) načinu.",
-  /* AutoStart                 */ "Ako je aktivno, lemilica po uključivanju napajanja odmah počinje grejati.",
-  /* CooldownBlink             */ "Blinkanje temperature prilikom hlađenja, ako je lemilica vruća.",
-  /* TemperatureCalibration    */ "Kalibrisanje temperature meri razliku temperatura vrha i drške, dok je lemilica hladna.",
-  /* SettingsReset             */ "Vraćanje svih podešavanja na fabričke vrednosti.",
-  /* VoltageCalibration        */ "Kalibracija ulaznog napona. Podešavanje tastera, dugački pritisak za kraj.",
-  /* AdvancedSoldering         */ "Prikazivanje detaljnih informacija tokom lemljenja.",
-  /* ScrollingSpeed            */ "Brzina kretanja dugačkih poruka <B=brzo, S=sporo>",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* SleepTimeout              */ "Vreme mirovanja nakon koga lemilica spušta temperaturu. <M=minuti, S=sekunde>",
+  /* ShutdownTimeout           */ "Vreme mirovanja nakon koga se lemilica gasi. <M=minuti>",
+  /* MotionSensitivity         */ "Osetljivost senzora pokreta. <0=isključeno, 1=najmanje osetljivo, 9=najosetljivije>",
+  /* TemperatureUnit           */ "Jedinice u kojima se prikazuje temperatura. <C=celzijus, F=farenhajt>",
+  /* AdvancedIdle              */ "Prikazivanje detaljnih informacija na ekranu tokom mirovanja.",
+  /* DisplayRotation           */ "Kako je okrenut ekran. <A=automatski, L=za levoruke, D=za desnoruke>",
+  /* BoostEnabled              */ "Držanje prednjeg tastera tokom lemljenja dodatno pojačava temperaturu vrha.",
+  /* BoostTemperature          */ "Temperatura vrha lemilice u toku pojačanja.",
+  /* AutoStart                 */ "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se.",
+  /* CooldownBlink             */ "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć.",
+  /* TemperatureCalibration    */ "Kalibrisanje odstupanja temperature vrha u odnosu na dršku.",
+  /* SettingsReset             */ "Vraćanje svih postavki na fabričke vrednosti.",
+  /* VoltageCalibration        */ "Kalibrisanje ulaznog napona. Podešava se na tastere; dugi pritisak za kraj.",
+  /* AdvancedSoldering         */ "Prikazivanje detaljnih informacija na ekranu tokom lemljenja.",
+  /* ScrollingSpeed            */ "Brzina kretanja opisnih poruka poput ove. <S=sporo, B=brzo>",
+  /* TipModel                  */ "Odabir modela lemnog vrha.",
+  /* SimpleCalibrationMode     */ "Jednostavna kalibracija kipućom vodom.",
+  /* AdvancedCalibrationMode   */ "Napredna kalibracija pomoću termopara.",
+  /* PowerInput                */ "Snaga napajanja u vatima.",
 };
 
-const char* SettingsCalibrationDone = "Calibration done!";
-const char* SettingsCalibrationWarning = "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite!";
-const char* SettingsResetWarning = "Jeste li sigurni da želite da vratite sva podešavanja na fabričke vrednosti?";
-const char* UVLOWarningString = "BATERIJA";
+const char* SettingsCalibrationDone = "Kalibracija gotova";
+const char* SettingsCalibrationWarning = "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite";
+const char* SettingsResetWarning = "Da li zaista želite da vratite postavke na fabričke vrednosti?";
+const char* UVLOWarningString = "NIZ.NAP.";
 const char* UndervoltageString = "PRENIZAK NAPON";
-const char* InputVoltageString = "Napajanje: ";
-const char* WarningTipTempString = "Temp vrha: ";
+const char* InputVoltageString = "Ul. napon: ";
+const char* WarningTipTempString = "Temp. vrha: ";
 const char* BadTipString = "LOŠ VRH";
-const char* SleepingSimpleString = "Zzz ";
-const char* SleepingAdvancedString = "SPAVANJE...";
+const char* SleepingSimpleString = "Zzz";
+const char* SleepingAdvancedString = "Spavanje...";
 const char* WarningSimpleString = "VRUĆ";
-const char* WarningAdvancedString = "OPREZ, VRUĆE!";
+const char* WarningAdvancedString = "! OPREZ, VRUĆE !";
 const char* SleepingTipAdvancedString = "Vrh:";
 const char* IdleTipString = "Vrh:";
 const char* IdleSetString = " / ";
-const char* TipDisconnectedString = "VRH NIJE SPOJEN!";
+const char* TipDisconnectedString = "VRH NIJE SPOJEN";
 const char* SolderingAdvancedPowerPrompt = "Snaga: ";
-const char* OffString = "Off";
+const char* OffString = "Isk";
 
 const char SettingRightChar = 'D';
 const char SettingLeftChar = 'L';
@@ -1826,41 +1925,41 @@ const char SettingSlowChar = 'S';
 
 const enum ShortNameType SettingsShortNameType = SHORT_NAME_DOUBLE_LINE;
 const char* SettingsShortNames[][2] = {
-  /* PowerSource               */ { "Izvor", "napajanja" },
-  /* SleepTemperature          */ { "Temp", "spavanja" },
-  /* SleepTimeout              */ { "Vreme", "spavanja" },
-  /* ShutdownTimeout           */ { "Vreme", "gašenja" },
-  /* MotionSensitivity         */ { "Osetljivost", "pokreta" },
+  /* PowerSource               */ { "Vrsta", "napajanja" },
+  /* SleepTemperature          */ { "Temp.", "spavanja" },
+  /* SleepTimeout              */ { "Vreme do", "spavanja" },
+  /* ShutdownTimeout           */ { "Vreme do", "gašenja" },
+  /* MotionSensitivity         */ { "Osetljivost", "na pokret" },
   /* TemperatureUnit           */ { "Jedinica", "temperature" },
-  /* AdvancedIdle              */ { "Detalji", "pri čekanju" },
-  /* DisplayRotation           */ { "Rotacija", "ekrana" },
-  /* BoostEnabled              */ { "Boost", "način" },
-  /* BoostTemperature          */ { "Boost", "temp" },
-  /* AutoStart                 */ { "Auto", "start" },
+  /* AdvancedIdle              */ { "Detalji tokom", "mirovanja" },
+  /* DisplayRotation           */ { "Orijentacija", "ekrana" },
+  /* BoostEnabled              */ { "Pojačanje", "omogućeno" },
+  /* BoostTemperature          */ { "Temp.", "pojačanja" },
+  /* AutoStart                 */ { "Vrući", "start" },
   /* CooldownBlink             */ { "Upozorenje", "pri hlađenju" },
   /* TemperatureCalibration    */ { "Kalibracija", "temperature" },
   /* SettingsReset             */ { "Fabričke", "postavke" },
-  /* VoltageCalibration        */ { "Kalibracija", "napona napajanja" },
-  /* AdvancedSoldering         */ { "Detalji", "pri lemljenju" },
+  /* VoltageCalibration        */ { "Kalibracija", "ulaznog napona" },
+  /* AdvancedSoldering         */ { "Detalji tokom", "lemljenja" },
   /* ScrollingSpeed            */ { "Brzina", "poruka" },
-  /* TipModel                  */ { "Tip", "Model" },
-  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
-  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
-  /* PowerInput                */ { "Power", "Wattage" },
+  /* TipModel                  */ { "Model", "vrha" },
+  /* SimpleCalibrationMode     */ { "Jednostavna", "kalibracija" },
+  /* AdvancedCalibrationMode   */ { "Napredna", "kalibracija" },
+  /* PowerInput                */ { "Ulazna", "snaga" },
 };
 
 const char* SettingsMenuEntries[4] = {
   /* SolderingMenu             */ "Postavke\nlemljenja",
   /* PowerSavingMenu           */ "Ušteda\nenergije",
-  /* UIMenu                    */ "Korisničke\nopcije",
-  /* AdvancedMenu              */ "Napredne\nopcije",
+  /* UIMenu                    */ "Korisničko\nsučelje",
+  /* AdvancedMenu              */ "Napredne\npostavke",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
-  /* SolderingMenu             */ "Postavke pri lemljenju",
-  /* PowerSavingMenu           */ "Postavke spavanja i štednje energije",
-  /* UIMenu                    */ "Postavke korisničkih opcija",
-  /* AdvancedMenu              */ "Upravljanje naprednim opcijama",
+  /* SolderingMenu             */ "Postavke režima lemljenja.",
+  /* PowerSavingMenu           */ "Postavke režima mirovanja.",
+  /* UIMenu                    */ "Postavke korisničkog sučelja.",
+  /* AdvancedMenu              */ "Napredne postavke.",
 };
 
 #endif
@@ -2051,8 +2150,10 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 
 #endif
 
-#ifdef LANG_UA
+#ifdef LANG_UK
 // ---- Українська ----
+
+#define CYRILLIC_GLYPHS
 
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Установка напруги відключення. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>",

@@ -1,5 +1,7 @@
 {
 	"languageCode": "IT",
+	"languageLocalName": "Italiano",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibrazione effettuata",
 		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",
@@ -227,6 +229,5 @@
 			],
 			"desc": "Imposta la potenza dell'alimentatore in uso"
 		}
-	},
-	"languageLocalName": "Italiano"
+	}
 }
