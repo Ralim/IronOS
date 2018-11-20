@@ -232,26 +232,29 @@ void waitForButtonPressOrTimeout(uint32_t timeout) {
 // returns true if undervoltage has occured
 static bool checkVoltageForExit() {
 	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv);
-	if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
-		OLED::clearScreen();
-		OLED::setCursor(0, 0);
-		if (systemSettings.detailedSoldering) {
-			OLED::setFont(1);
-			OLED::print(UndervoltageString);
-			OLED::setCursor(0, 8);
-			OLED::print(InputVoltageString);
-			printVoltage();
-			OLED::print("V");
+	//Dont check for first 1.5 seconds while the ADC stabilizes and the DMA fills the buffer
+	if(xTaskGetTickCount()>150) {
+		if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
+			OLED::clearScreen();
+			OLED::setCursor(0, 0);
+			if (systemSettings.detailedSoldering) {
+				OLED::setFont(1);
+				OLED::print(UndervoltageString);
+				OLED::setCursor(0, 8);
+				OLED::print(InputVoltageString);
+				printVoltage();
+				OLED::print("V");
 
-		} else {
-			OLED::setFont(0);
-			OLED::print(UVLOWarningString);
+			} else {
+				OLED::setFont(0);
+				OLED::print(UVLOWarningString);
+			}
+
+			OLED::refresh();
+			currentlyActiveTemperatureTarget = 0;
+			waitForButtonPress();
+			return true;
 		}
-
-		OLED::refresh();
-		currentlyActiveTemperatureTarget = 0;
-		waitForButtonPress();
-		return true;
 	}
 	return false;
 }
@@ -1011,7 +1014,7 @@ void startPIDTask(void const *argument __unused) {
 				if (xTaskGetTickCount() - lastPowerPulse < 20) {
 					// for the first 200mS turn on for a bit
 					setTipMilliWatts(4000); // typically its around 5W to hold the current temp, so this wont raise temp much
-				}else
+				} else
 					setTipMilliWatts(0);
 				//Then wait until the next second
 				if (xTaskGetTickCount() - lastPowerPulse > 100) {
