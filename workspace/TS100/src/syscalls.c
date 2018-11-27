@@ -40,7 +40,10 @@ int _kill(int pid, int sig)
 void _exit (int status)
 {
 	_kill(status, -1);
-	while (1) {}		/* Make sure we hang here */
+	
+	/* devblackhunter: If you want to create a loop, don`t use a while(true),
+	its a fucking dumb */
+	for(;;) {}		/* Make sure we hang here */
 }
 
 int _read (int file, char *ptr, int len)
