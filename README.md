@@ -42,8 +42,8 @@ Officially the bootloader on the iron only works under Windows. However, users h
 3. The unit will appear as a USB drive.
 4. Drag the .hex file onto the USB drive.
 5. The unit will disconnect and reconnect.
-6. The filename will have changed to end in .RDY or .ERR 
-7. If it ends with .RDY you're done! Otherwise something went wrong, retry?
+6. The filename will have changed to end in .RDY (=success) or .ERR (=error)
+7. If it ends with .RDY you're done! Otherwise something went wrong, retry. E.g. try to copy the firmware with the windows command line tool "copy" instead of explorer
 8. Disconnect the USB and power up the iron. You're good to go.
 
 For the more adventurerous out there, you can also load this firmware onto the device using a SWD programmer.
