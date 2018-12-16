@@ -506,7 +506,12 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		sleepThres = systemSettings.SleepTime * 10 * 100;
 	else
 		sleepThres = (systemSettings.SleepTime - 5) * 60 * 100;
-
+	if (jumpToSleep) {
+		if (gui_SolderingSleepingMode()) {
+			lastButtonTime = xTaskGetTickCount();
+			return;  // If the function returns non-0 then exit
+		}
+	}
 	for (;;) {
 
 		ButtonState buttons = getButtonState();
@@ -552,7 +557,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			currentlyActiveTemperatureTarget = 0;
 			return;
 		} else {
-			OLED::setCursor(0, 0);
 			if (systemSettings.detailedSoldering) {
 				OLED::setFont(1);
 				OLED::print(SolderingAdvancedPowerPrompt);  // Power:
@@ -573,13 +577,11 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				printVoltage();
 				OLED::drawChar('V');
 			} else {
-				OLED::setFont(0);
 				// We switch the layout direction depending on the orientation of the
 				// OLED::
 				if (OLED::getRotation()) {
 					// battery
 					gui_drawBatteryIcon();
-
 					OLED::drawChar(' '); // Space out gap between battery <-> temp
 					gui_drawTipTemp(true);  // Draw current tip temp
 
@@ -591,10 +593,14 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 						OLED::drawChar(' ');
 
 					// Draw heating/cooling symbols
-					OLED::drawHeatSymbol(milliWattsToPWM(milliWattHistory[0],systemSettings.voltageDiv));
+					OLED::drawHeatSymbol(
+							milliWattsToPWM(milliWattHistory[0],
+									systemSettings.voltageDiv));
 				} else {
 					// Draw heating/cooling symbols
-					OLED::drawHeatSymbol(milliWattsToPWM(milliWattHistory[0],systemSettings.voltageDiv));
+					OLED::drawHeatSymbol(
+							milliWattsToPWM(milliWattHistory[0],
+									systemSettings.voltageDiv));
 					// We draw boost arrow if boosting, or else gap temp <-> heat
 					// indicator
 					if (boostModeOn)
@@ -637,26 +643,21 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		}
 #else
 		// on the TS80 we only want to check for over voltage to prevent tip damage
-		if (getInputVoltageX10(systemSettings.voltageDiv, 1) > 150) {
-			lastButtonTime = xTaskGetTickCount();
-			currentlyActiveTemperatureTarget = 0;
-			return;  // Over voltage
-		}
+		/*if (getInputVoltageX10(systemSettings.voltageDiv, 1) > 150) {
+		 lastButtonTime = xTaskGetTickCount();
+		 currentlyActiveTemperatureTarget = 0;
+		 return;  // Over voltage
+		 }*/
 #endif
-		if (jumpToSleep) {
-			if (gui_SolderingSleepingMode()) {
-				lastButtonTime = xTaskGetTickCount();
-				return;  // If the function returns non-0 then exit
-			}
-		}
+
 		if (systemSettings.sensitivity && systemSettings.SleepTime)
 			if (xTaskGetTickCount() - lastMovementTime > sleepThres
 					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
 				if (gui_SolderingSleepingMode()) {
-					lastButtonTime = xTaskGetTickCount();
 					return;  // If the function returns non-0 then exit
 				}
 			}
+		//slow down ui update rate
 		GUIDelay();
 	}
 }
@@ -787,7 +788,10 @@ void startGUITask(void const *argument __unused) {
 
 	for (;;) {
 		ButtonState buttons = getButtonState();
-
+		if (buttons != BUTTON_NONE) {
+			OLED::displayOnOff(true);  // turn lcd on
+			OLED::setFont(0);
+		}
 		if (tempWarningState == 2)
 			buttons = BUTTON_F_SHORT;
 		if (buttons != BUTTON_NONE && buttonLockout)
@@ -814,21 +818,10 @@ void startGUITask(void const *argument __unused) {
 			saveSettings();
 			break;
 		case BUTTON_F_SHORT:
-			OLED::setFont(0);
-			OLED::displayOnOff(true);  // turn lcd on
-#ifdef MODEL_TS80
-			//Here we re-check for tip presence
-			if (idealQCVoltage < 90)
-				idealQCVoltage = calculateMaxVoltage(
-						systemSettings.cutoutSetting);
-			seekQC(idealQCVoltage, systemSettings.voltageDiv);
-#endif
 			gui_solderingMode(0);  // enter soldering mode
 			buttonLockout = true;
 			break;
 		case BUTTON_B_SHORT:
-			OLED::setFont(0);
-			OLED::displayOnOff(true);  // turn lcd on
 			enterSettingsMenu();       // enter the settings menu
 			saveSettings();
 			buttonLockout = true;
@@ -853,9 +846,6 @@ void startGUITask(void const *argument __unused) {
 				OLED::displayOnOff(true); // turn lcd on - disabled motion sleep
 		} else
 			OLED::displayOnOff(true);  // turn lcd on when temp > 50C
-
-		if (tipTemp > 600)
-			tipTemp = 0;
 
 		// Clear the lcd buffer
 		OLED::clearScreen();
@@ -912,13 +902,11 @@ void startGUITask(void const *argument __unused) {
 					OLED::setCursor(0, 0);
 				}
 				// draw in the temp
-				OLED::setFont(0);  // big font
 				if (!(systemSettings.coolingTempBlink
-						&& (xTaskGetTickCount() % 50 < 25)))
+						&& (xTaskGetTickCount() % 25 < 16)))
 					gui_drawTipTemp(false);  // draw in the temp
 			}
 		}
-
 		OLED::refresh();
 		GUIDelay();
 	}
@@ -946,7 +934,7 @@ void startPIDTask(void const *argument __unused) {
 #endif
 	history<int32_t> tempError = { { 0 }, 0, 0 };
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
-											  // be over-ridden rapidly
+										  // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
 
@@ -1015,14 +1003,14 @@ void startPIDTask(void const *argument __unused) {
 				//~200ms @ a low wattage
 				//Doesnt keep all power banks awake but helps with some
 				/*if (xTaskGetTickCount() - lastPowerPulse < 20) {
-					// for the first 200mS turn on for a bit
-					setTipMilliWatts(4000);	// typically its around 5W to hold the current temp, so this wont raise temp much
-				} else
-					setTipMilliWatts(0);
-				//Then wait until the next second
-				if (xTaskGetTickCount() - lastPowerPulse > 100) {
-					lastPowerPulse = xTaskGetTickCount();
-				}*/
+				 // for the first 200mS turn on for a bit
+				 setTipMilliWatts(4000);	// typically its around 5W to hold the current temp, so this wont raise temp much
+				 } else
+				 setTipMilliWatts(0);
+				 //Then wait until the next second
+				 if (xTaskGetTickCount() - lastPowerPulse > 100) {
+				 lastPowerPulse = xTaskGetTickCount();
+				 }*/
 				setTipMilliWatts(0);
 #else
 				setTipMilliWatts(0);

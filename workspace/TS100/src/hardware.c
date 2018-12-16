@@ -9,6 +9,7 @@
 #include "hardware.h"
 #include "FreeRTOS.h"
 #include "stm32f1xx_hal.h"
+#include "cmsis_os.h"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
 uint16_t tipGainCalValue = 0;
@@ -420,9 +421,7 @@ int16_t calculateMaxVoltage(uint8_t useHP) {
 
 #endif
 volatile uint32_t pendingPWM = 0;
-uint8_t getTipPWM() {
-	return pendingPWM;
-}
+
 void setTipPWM(uint8_t pulse) {
 	PWMSafetyTimer = 50; // This is decremented in the handler for PWM so that the tip pwm is
 						 // disabled if the PID task is not scheduled often enough.
@@ -456,10 +455,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
-	if (htim->Instance == TIM2) {
-		// This was a when the PWM for the output has timed out
-		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-			HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
-		}
+	// This was a when the PWM for the output has timed out
+	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 	}
 }

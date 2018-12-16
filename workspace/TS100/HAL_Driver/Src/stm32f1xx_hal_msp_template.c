@@ -1,8 +1,10 @@
 /**
   ******************************************************************************
-  * @file    stm32f1xx_ll_pwr.c
+  * @file    stm32f1xx_hal_msp_template.c
   * @author  MCD Application Team
-  * @brief   PWR LL module driver.
+  * @brief   HAL BSP module.
+  *          This file template is located in the HAL folder and should be copied
+  *          to the user folder.
   ******************************************************************************
   * @attention
   *
@@ -32,52 +34,64 @@
   *
   ******************************************************************************
   */
-#if defined(USE_FULL_LL_DRIVER)
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f1xx_ll_pwr.h"
-#include "stm32f1xx_ll_bus.h"
+#include "stm32f1xx_hal.h"
 
-/** @addtogroup STM32F1xx_LL_Driver
+/** @addtogroup STM32F1xx_HAL_Driver
   * @{
   */
 
-#if defined(PWR)
-
-/** @defgroup PWR_LL PWR
+/** @defgroup HAL_MSP HAL_MSP
+  * @brief HAL MSP module.
   * @{
   */
 
-/* Private types -------------------------------------------------------------*/
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-/* Private constants ---------------------------------------------------------*/
-/* Private macros ------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
 
-/* Exported functions --------------------------------------------------------*/
-/** @addtogroup PWR_LL_Exported_Functions
-  * @{
-  */
-
-/** @addtogroup PWR_LL_EF_Init
+/** @defgroup HAL_MSP_Exported_Functions HAL MSP Exported Functions
   * @{
   */
 
 /**
-  * @brief  De-initialize the PWR registers to their default reset values.
-  * @retval An ErrorStatus enumeration value:
-  *          - SUCCESS: PWR registers are de-initialized
-  *          - ERROR: not applicable
+  * @brief  Initializes the Global MSP.
+  * @retval None
   */
-ErrorStatus LL_PWR_DeInit(void)
+void HAL_MspInit(void)
 {
-  /* Force reset of PWR clock */
-  LL_APB1_GRP1_ForceReset(LL_APB1_GRP1_PERIPH_PWR);
 
-  /* Release reset of PWR clock */
-  LL_APB1_GRP1_ReleaseReset(LL_APB1_GRP1_PERIPH_PWR);
+}
 
-  return SUCCESS;
+/**
+  * @brief  DeInitializes the Global MSP.
+  * @retval None
+  */
+void HAL_MspDeInit(void)
+{
+
+}
+
+/**
+  * @brief  Initializes the PPP MSP.
+  * @retval None
+  */
+void HAL_PPP_MspInit(void)
+{
+
+}
+
+/**
+  * @brief  DeInitializes the PPP MSP.
+  * @retval None
+  */
+void HAL_PPP_MspDeInit(void)
+{
+
 }
 
 /**
@@ -91,11 +105,5 @@ ErrorStatus LL_PWR_DeInit(void)
 /**
   * @}
   */
-#endif /* defined(PWR) */
-/**
-  * @}
-  */
-
-#endif /* USE_FULL_LL_DRIVER */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
