@@ -11,9 +11,9 @@
 
 uint8_t tipResistance = 85; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
 const uint16_t powerPWM = 255;
-const uint16_t totalPWM = 255+50; // Setup.c:sConfigOC.Pulse, the full PWM cycle
+const uint16_t totalPWM = 255 + 65; //htim2.Init.Period, the full PWM cycle
 
-history<uint16_t, oscillationPeriod> milliWattHistory = { { 0 }, 0, 0 };
+history<uint32_t, oscillationPeriod> milliWattHistory = { { 0 }, 0, 0 };
 
 void setupPower(uint8_t res) {
 	tipResistance = res;
@@ -41,19 +41,23 @@ uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor) {
 	//				R = R*10
 	// P therefore is in V^2*10/R = W*10.
 	// Scale input milliWatts to the pwm rate
-	int32_t v = getInputVoltageX10(divisor);// 100 = 10v
+	int32_t v = getInputVoltageX10(divisor, 1);	// 100 = 10v
 	int32_t availableMilliWatts = v * v / tipResistance;
-	int32_t pwm = (powerPWM * totalPWM / powerPWM) * milliWatts / availableMilliWatts;
+
+	int32_t pwm = ((powerPWM * totalPWM / powerPWM) * milliWatts)
+			/ availableMilliWatts;
 
 	if (pwm > powerPWM) {
 		pwm = powerPWM;
 	} else if (pwm < 0) {
 		pwm = 0;
 	}
+	if (milliWatts == 0)
+		pwm = 0;
 	return pwm;
 }
 
 int32_t PWMToMilliWatts(uint8_t pwm, uint8_t divisor) {
-	int32_t v = getInputVoltageX10(divisor);
+	int32_t v = getInputVoltageX10(divisor, 0);
 	return pwm * (v * v / tipResistance) / (powerPWM * totalPWM / powerPWM);
 }

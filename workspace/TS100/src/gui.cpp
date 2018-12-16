@@ -662,6 +662,10 @@ static void setTipOffset() {
 		osDelay(333);
 	}
 	systemSettings.CalibrationOffset = offset / 15;
+	// Need to remove from this the ambient temperature offset
+	uint32_t ambientoffset = getHandleTemperature(); // Handle temp in C
+	ambientoffset *=1000;
+	ambientoffset /= tipGainCalValue;
 	setCalibrationOffset(systemSettings.CalibrationOffset);  // store the error
 	osDelay(100);
 }
@@ -812,10 +816,10 @@ static void settings_setCalibrateVIN(void) {
 
 	for (;;) {
 		OLED::setCursor(0, 0);
-		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10,
+		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv,0) / 10,
 				2);
 		OLED::print(".");
-		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10,
+		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv,0) % 10,
 				1);
 		OLED::print("V");
 

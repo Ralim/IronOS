@@ -13,7 +13,7 @@
 
 const uint8_t hz = 32;//PID loop rate
 const uint8_t oscillationPeriod = 3.5 * hz; // dampening look back tuning
-extern history<uint16_t, oscillationPeriod> milliWattHistory;
+extern history<uint32_t, oscillationPeriod> milliWattHistory;
 void setupPower(uint8_t resistance);
 
 int32_t tempToMilliWatts(int32_t rawTemp, uint16_t mass, uint8_t rawC);

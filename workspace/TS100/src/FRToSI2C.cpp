@@ -6,7 +6,7 @@
  */
 
 #include "FRToSI2C.hpp"
-
+//#define I2CUSESDMA
 I2C_HandleTypeDef* FRToSI2C::i2c;
 SemaphoreHandle_t FRToSI2C::I2CSemaphore;
 void FRToSI2C::CpltCallback() {
@@ -20,6 +20,7 @@ void FRToSI2C::CpltCallback() {
 
 void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
                         uint16_t MemAddSize, uint8_t* pData, uint16_t Size) {
+#ifdef I2CUSESDMA
   if (I2CSemaphore == NULL) {
     // no RToS, run blocking code
     HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
@@ -36,6 +37,10 @@ void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
     } else {
     }
   }
+#else
+  HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
+                       5000);
+#endif
 }
 void FRToSI2C::I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data) {
   Mem_Write(address, reg, I2C_MEMADD_SIZE_8BIT, &data, 1);
@@ -48,6 +53,7 @@ uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
 }
 void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
                          uint16_t MemAddSize, uint8_t* pData, uint16_t Size) {
+#ifdef I2CUSESDMA
   if (I2CSemaphore == NULL) {
     // no RToS, run blocking code
     HAL_I2C_Mem_Write(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
@@ -65,9 +71,14 @@ void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
     } else {
     }
   }
+#else
+  HAL_I2C_Mem_Write(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
+                       5000);
+#endif
 }
 
 void FRToSI2C::Transmit(uint16_t DevAddress, uint8_t* pData, uint16_t Size) {
+#ifdef I2CUSESDMA
   if (I2CSemaphore == NULL) {
     // no RToS, run blocking code
     HAL_I2C_Master_Transmit(i2c, DevAddress, pData, Size, 5000);
@@ -82,4 +93,7 @@ void FRToSI2C::Transmit(uint16_t DevAddress, uint8_t* pData, uint16_t Size) {
     } else {
     }
   }
+#else
+  HAL_I2C_Master_Transmit(i2c, DevAddress, pData, Size, 5000);
+#endif
 }

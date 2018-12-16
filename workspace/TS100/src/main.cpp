@@ -15,7 +15,7 @@
 #define ACCELDEBUG 0
 uint8_t PCBVersion = 0;
 // File local variables
-uint16_t currentlyActiveTemperatureTarget = 0;
+uint32_t currentlyActiveTemperatureTarget = 0;
 uint32_t lastMovementTime = 0;
 uint32_t lastButtonTime = 0;
 int16_t idealQCVoltage = 0;
@@ -59,7 +59,6 @@ int main(void) {
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
-		saveSettings();
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
@@ -70,15 +69,15 @@ int main(void) {
 
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
-	osThreadDef(GUITask, startGUITask, osPriorityBelowNormal, 0, 768);  // 3k
+	osThreadDef(GUITask, startGUITask, osPriorityBelowNormal, 0, 4 * 1024 / 4);
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
 	/* definition and creation of PIDTask */
-	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 512);  // 2k
+	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 2 * 1024 / 4);
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 	if (PCBVersion < 3) {
 		/* definition and creation of MOVTask */
-		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 512);  // 2k
+		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 2 * 1024 / 4);
 		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
 	}
 
@@ -91,9 +90,10 @@ int main(void) {
 }
 
 void printVoltage() {
-	OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) / 10, 2);
+	uint32_t volt = getInputVoltageX10(systemSettings.voltageDiv, 0);
+	OLED::printNumber(volt / 10, 2);
 	OLED::drawChar('.');
-	OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv) % 10, 1);
+	OLED::printNumber(volt % 10, 1);
 }
 void GUIDelay() {
 	// Called in all UI looping tasks,
@@ -201,11 +201,9 @@ void waitForButtonPress() {
 	while (buttons) {
 		buttons = getButtonState();
 		GUIDelay();
-		GUIDelay();
 	}
 	while (!buttons) {
 		buttons = getButtonState();
-		GUIDelay();
 		GUIDelay();
 	}
 }
@@ -231,10 +229,12 @@ void waitForButtonPressOrTimeout(uint32_t timeout) {
 #ifdef MODEL_TS100
 // returns true if undervoltage has occured
 static bool checkVoltageForExit() {
-	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv);
+	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv, 0);
+
 	//Dont check for first 1.5 seconds while the ADC stabilizes and the DMA fills the buffer
-	if(xTaskGetTickCount()>150) {
+	if (xTaskGetTickCount() > 150) {
 		if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
+			GUIDelay();
 			OLED::clearScreen();
 			OLED::setCursor(0, 0);
 			if (systemSettings.detailedSoldering) {
@@ -265,7 +265,7 @@ static void gui_drawBatteryIcon() {
 		// User is on a lithium battery
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
-		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv)
+		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
 		/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
@@ -280,7 +280,7 @@ static void gui_drawBatteryIcon() {
 #else
 	// On TS80 we replace this symbol with the voltage we are operating on
 	// If <9V then show single digit, if not show duals
-	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv);
+	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
 	if (V % 10 >= 5)
 		V = V / 10 + 1;				// round up
 	else
@@ -506,8 +506,8 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		sleepThres = systemSettings.SleepTime * 10 * 100;
 	else
 		sleepThres = (systemSettings.SleepTime - 5) * 60 * 100;
+
 	for (;;) {
-		uint16_t tipTemp = getTipRawTemp(0);
 
 		ButtonState buttons = getButtonState();
 		switch (buttons) {
@@ -543,13 +543,16 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		OLED::setCursor(0, 0);
 		OLED::clearScreen();
 		OLED::setFont(0);
+		uint16_t tipTemp = getTipRawTemp(0);
 		if (tipTemp > 32752) {
 			OLED::print(BadTipString);
 			OLED::refresh();
 			currentlyActiveTemperatureTarget = 0;
 			waitForButtonPress();
+			currentlyActiveTemperatureTarget = 0;
 			return;
 		} else {
+			OLED::setCursor(0, 0);
 			if (systemSettings.detailedSoldering) {
 				OLED::setFont(1);
 				OLED::print(SolderingAdvancedPowerPrompt);  // Power:
@@ -570,6 +573,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				printVoltage();
 				OLED::drawChar('V');
 			} else {
+				OLED::setFont(0);
 				// We switch the layout direction depending on the orientation of the
 				// OLED::
 				if (OLED::getRotation()) {
@@ -587,10 +591,10 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 						OLED::drawChar(' ');
 
 					// Draw heating/cooling symbols
-					OLED::drawHeatSymbol(getTipPWM());
+					OLED::drawHeatSymbol(milliWattsToPWM(milliWattHistory[0],systemSettings.voltageDiv));
 				} else {
 					// Draw heating/cooling symbols
-					OLED::drawHeatSymbol(getTipPWM());
+					OLED::drawHeatSymbol(milliWattsToPWM(milliWattHistory[0],systemSettings.voltageDiv));
 					// We draw boost arrow if boosting, or else gap temp <-> heat
 					// indicator
 					if (boostModeOn)
@@ -633,8 +637,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		}
 #else
 		// on the TS80 we only want to check for over voltage to prevent tip damage
-		if (getInputVoltageX10(systemSettings.voltageDiv) > 150) {
+		if (getInputVoltageX10(systemSettings.voltageDiv, 1) > 150) {
 			lastButtonTime = xTaskGetTickCount();
+			currentlyActiveTemperatureTarget = 0;
 			return;  // Over voltage
 		}
 #endif
@@ -662,8 +667,7 @@ __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "RTip: ",
 #ifdef MODEL_TS80
 		"QCV: ", "Tr ",
 #else
-		"Tm ",
-		"Ralim-",
+		"Tm ", "Ralim-",
 
 #endif
 	};
@@ -835,7 +839,7 @@ void startGUITask(void const *argument __unused) {
 		}
 
 		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
-
+		getInputVoltageX10(systemSettings.voltageDiv, 0);
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
 
 		if (tipTemp < 50) {
@@ -862,10 +866,7 @@ void startGUITask(void const *argument __unused) {
 				OLED::print(TipDisconnectedString);
 			} else {
 				OLED::print(IdleTipString);
-				if (systemSettings.temperatureInF)
-					OLED::printNumber(tipMeasurementToF(getTipRawTemp(0)), 3);
-				else
-					OLED::printNumber(tipMeasurementToC(getTipRawTemp(0)), 3);
+				gui_drawTipTemp(false);
 				OLED::print(IdleSetString);
 				OLED::printNumber(systemSettings.SolderingTemp, 3);
 			}
@@ -934,8 +935,7 @@ void startPIDTask(void const *argument __unused) {
 	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
 	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
-	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
-										  // be over-ridden rapidly
+
 #ifdef MODEL_TS80
 	//Set power management code to the tip resistance in ohms * 10
 	setupPower(calculateTipR() / 100);
@@ -944,13 +944,13 @@ void startPIDTask(void const *argument __unused) {
 	setupPower(85);
 
 #endif
-	history<int16_t> tempError = { { 0 }, 0, 0 };
-
+	history<int32_t> tempError = { { 0 }, 0, 0 };
+	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
+											  // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
 
-		if (ulTaskNotifyTake(pdTRUE, 1000)) {
-			// Wait a max of 50ms
+		if (ulTaskNotifyTake(pdTRUE, 2000)) {
 			// This is a call to block this thread until the ADC does its samples
 			uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 			if (currentlyActiveTemperatureTarget) {
@@ -958,13 +958,16 @@ void startPIDTask(void const *argument __unused) {
 				if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
 					currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
 				}
+				if (currentlyActiveTemperatureTarget > 32500) {
+					currentlyActiveTemperatureTarget = 32500;
+				}
 
 				// As we get close to our target, temp noise causes the system
 				//  to be unstable. Use a rolling average to dampen it.
 				// We overshoot by roughly 1/2 of 1 degree Fahrenheit.
 				//  This helps stabilize the display.
 				int32_t tError = currentlyActiveTemperatureTarget - rawTemp
-						+ rawC / 4;
+						+ (rawC / 4);
 				tError = tError > INT16_MAX ? INT16_MAX : tError;
 				tError = tError < INT16_MIN ? INT16_MIN : tError;
 				tempError.update(tError);
@@ -1011,15 +1014,16 @@ void startPIDTask(void const *argument __unused) {
 				//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
 				//~200ms @ a low wattage
 				//Doesnt keep all power banks awake but helps with some
-				if (xTaskGetTickCount() - lastPowerPulse < 20) {
+				/*if (xTaskGetTickCount() - lastPowerPulse < 20) {
 					// for the first 200mS turn on for a bit
-					setTipMilliWatts(4000); // typically its around 5W to hold the current temp, so this wont raise temp much
+					setTipMilliWatts(4000);	// typically its around 5W to hold the current temp, so this wont raise temp much
 				} else
 					setTipMilliWatts(0);
 				//Then wait until the next second
 				if (xTaskGetTickCount() - lastPowerPulse > 100) {
 					lastPowerPulse = xTaskGetTickCount();
-				}
+				}*/
+				setTipMilliWatts(0);
 #else
 				setTipMilliWatts(0);
 #endif
@@ -1027,9 +1031,9 @@ void startPIDTask(void const *argument __unused) {
 
 			HAL_IWDG_Refresh(&hiwdg);
 		} else {
-			if (currentlyActiveTemperatureTarget == 0) {
-				setTipMilliWatts(0);
-			}
+//ADC interrupt timeout
+			setTipMilliWatts(0);
+			setTipPWM(0);
 		}
 	}
 }
@@ -1040,8 +1044,8 @@ void startMOVTask(void const *argument __unused) {
 
 #ifdef MODEL_TS80
 	startQC(systemSettings.voltageDiv);
-	while (idealQCVoltage == 0)
-		osDelay(20);  // To ensure we return after idealQCVoltage is setup
+	while (pidTaskNotification == 0)
+		osDelay(20);  // To ensure we return after idealQCVoltage/tip resistance
 
 	seekQC(idealQCVoltage, systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 

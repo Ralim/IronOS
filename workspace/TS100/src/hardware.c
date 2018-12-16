@@ -127,7 +127,7 @@ uint16_t getTipRawTemp(uint8_t refresh) {
 	return lastSample;
 }
 
-uint16_t getInputVoltageX10(uint16_t divisor) {
+uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 	// ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
 	// Therefore we can divide down from there
 	// Multiplying ADC max by 4 for additional calibration options,
@@ -141,16 +141,16 @@ uint16_t getInputVoltageX10(uint16_t divisor) {
 			samples[i] = getADC(1);
 		preFillneeded--;
 	}
-	samples[index] = getADC(1);
-	index = (index + 1) % BATTFILTERDEPTH;
+	if (sample) {
+		samples[index] = getADC(1);
+		index = (index + 1) % BATTFILTERDEPTH;
+	}
 	uint32_t sum = 0;
 
 	for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
 		sum += samples[i];
 
 	sum /= BATTFILTERDEPTH;
-	if (sum < 50)
-		preFillneeded = 1;
 	return sum * 4 / divisor;
 }
 #ifdef MODEL_TS80
@@ -170,7 +170,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 	// try and step towards the wanted value
 
 	// 1. Measure current voltage
-	int16_t vStart = getInputVoltageX10(divisor);
+	int16_t vStart = getInputVoltageX10(divisor, 0);
 	int difference = Vx10 - vStart;
 
 	// 2. calculate ideal steps (0.2V changes)
@@ -185,7 +185,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);	//-0.6V
 			HAL_Delay(1);
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-			HAL_IWDG_Refresh(&hiwdg);
+
 			HAL_Delay(1);
 			steps++;
 		}
@@ -199,7 +199,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
 			HAL_Delay(1);
 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-			HAL_IWDG_Refresh(&hiwdg);
+
 			HAL_Delay(1);
 			steps--;
 		}
@@ -235,7 +235,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
-	uint16_t vin = getInputVoltageX10(divisor);
+	uint16_t vin = getInputVoltageX10(divisor, 1);
 	if (vin > 150)
 		return;	// Over voltage
 	if (vin > 100) {
@@ -275,7 +275,7 @@ void startQC(uint16_t divisor) {
 	for (uint16_t i = 0; i < 130 && enteredQC == 0; i++) {
 		//		HAL_Delay(10);
 		vTaskDelay(1);
-		HAL_IWDG_Refresh(&hiwdg);
+
 	}
 	// Check if D- is low to spot a QC charger
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET)
@@ -292,12 +292,11 @@ void startQC(uint16_t divisor) {
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-		HAL_IWDG_Refresh(&hiwdg);
 
 		// Wait for frontend ADC to stabilise
 		QCMode = 4;
 		for (uint8_t i = 0; i < 10; i++) {
-			if (getInputVoltageX10(divisor) > 80) {
+			if (getInputVoltageX10(divisor, 1) > 80) {
 				// yay we have at least QC2.0 or QC3.0
 				QCMode = 3;	// We have at least QC2, pray for 3
 				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
@@ -321,8 +320,8 @@ void startQC(uint16_t divisor) {
 }
 // Get tip resistance in milliohms
 uint32_t calculateTipR() {
-	static uint32_t lastRes=0;
-	if(lastRes)
+	static uint32_t lastRes = 0;
+	if (lastRes)
 		return lastRes;
 	// We inject a small current into the front end of the iron,
 	// By measuring the Vdrop over the tip we can calculate the resistance
@@ -340,6 +339,7 @@ uint32_t calculateTipR() {
 	uint32_t offReading = getTipRawTemp(1);
 	for (uint8_t i = 0; i < 49; i++) {
 		vTaskDelay(1);  // delay to allow it to stabilize
+		HAL_IWDG_Refresh(&hiwdg);
 		offReading += getTipRawTemp(1);
 	}
 
@@ -349,6 +349,7 @@ uint32_t calculateTipR() {
 	uint32_t onReading = getTipInstantTemperature();
 	for (uint8_t i = 0; i < 49; i++) {
 		vTaskDelay(1);  // delay to allow it to stabilize
+		HAL_IWDG_Refresh(&hiwdg);
 		onReading += getTipRawTemp(1);
 	}
 
@@ -362,7 +363,7 @@ uint32_t calculateTipR() {
 	// 4688 milliohms (Measured using 4 terminal measurement) 25x oversampling
 	// reads this as around 47490 Almost perfectly 10x the milliohms value This
 	// will drift massively with tip temp However we really only need 10x ohms
-	lastRes=(difference / 21) + 1;	// ceil
+	lastRes = (difference / 21) + 1;	// ceil
 	return lastRes;
 }
 static unsigned int sqrt32(unsigned long n) {
@@ -423,8 +424,8 @@ uint8_t getTipPWM() {
 	return pendingPWM;
 }
 void setTipPWM(uint8_t pulse) {
-	PWMSafetyTimer = 2; // This is decremented in the handler for PWM so that the tip pwm is
-						// disabled if the PID task is not scheduled often enough.
+	PWMSafetyTimer = 50; // This is decremented in the handler for PWM so that the tip pwm is
+						 // disabled if the PID task is not scheduled often enough.
 
 	pendingPWM = pulse;
 }
@@ -436,9 +437,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	// Period has elapsed
 	if (htim->Instance == TIM2) {
 		// we want to turn on the output again
-		PWMSafetyTimer--; // We decrement this safety value so that lockups in the
-						  // scheduler will not cause the PWM to become locked in an
-						  // active driving state.
+		PWMSafetyTimer--;
+		// We decrement this safety value so that lockups in the
+		// scheduler will not cause the PWM to become locked in an
+		// active driving state.
 		// While we could assume this could never happen, its a small price for
 		// increased safety
 		htim2.Instance->CCR4 = pendingPWM;

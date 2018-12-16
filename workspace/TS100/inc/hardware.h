@@ -14,9 +14,7 @@ extern "C" {
 #endif
 
 enum Orientation {
-  ORIENTATION_LEFT_HAND = 0,
-  ORIENTATION_RIGHT_HAND = 1,
-  ORIENTATION_FLAT = 3
+	ORIENTATION_LEFT_HAND = 0, ORIENTATION_RIGHT_HAND = 1, ORIENTATION_FLAT = 3
 };
 
 #if defined(MODEL_TS100) + defined(MODEL_TS80) > 1
@@ -96,42 +94,40 @@ enum Orientation {
  */
 #ifdef MODEL_TS100
 enum TipType {
-  TS_B2 = 0,
-  TS_D24 = 1,
-  TS_BC2 = 2,
-  TS_C1 = 3,
-  Tip_MiniWare = 4,
-  HAKKO_BC2 = 4,
-  Tip_Hakko = 5,
-  Tip_Custom = 5,
+	TS_B2 = 0,
+	TS_D24 = 1,
+	TS_BC2 = 2,
+	TS_C1 = 3,
+	Tip_MiniWare = 4,
+	HAKKO_BC2 = 4,
+	Tip_Hakko = 5,
+	Tip_Custom = 5,
 };
 #endif
 #ifdef MODEL_TS80
 enum TipType {
-  TS_B02 = 0,
-  TS_D25 = 1,
-  Tip_MiniWare = 2,
-  Tip_Custom = 2,
+	TS_B02 = 0, TS_D25 = 1, Tip_MiniWare = 2, Tip_Custom = 2,
 };
 #endif
+extern uint16_t tipGainCalValue ;
 
 uint16_t lookupTipDefaultCalValue(enum TipType tipID);
 uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t refresh);
-uint16_t getInputVoltageX10(uint16_t divisor);
+uint16_t getInputVoltageX10(uint16_t divisor,uint8_t sample);
 uint8_t getTipPWM();
 void setTipPWM(uint8_t pulse);
 uint16_t ctoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToC(uint16_t raw);
 uint16_t ftoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToF(uint16_t raw);
-void seekQC(int16_t Vx10,uint16_t divisor);
+void seekQC(int16_t Vx10, uint16_t divisor);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);
 uint32_t calculateTipR();
 int16_t calculateMaxVoltage(uint8_t useHP);
-void startQC(uint16_t divisor);  // Tries to negotiate QC for highest voltage, must be run after
-                 // RToS
+void startQC(uint16_t divisor); // Tries to negotiate QC for highest voltage, must be run after
+// RToS
 // This will try for 12V, failing that 9V, failing that 5V
 // If input is over 12V returns -1
 // If the input is [5-12] Will return the value.

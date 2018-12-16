@@ -329,7 +329,7 @@ static void MX_TIM2_Init(void) {
   HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 255+50; //255 is the largest time period of the drive signal, and the 47 offsets this around 5ms afterwards
+  sConfigOC.Pulse = 255+50; //255 is the largest time period of the drive signal, and the 50 offsets this around 5ms afterwards
   /*
    * It takes 4 milliseconds for output to be stable after PWM turns off.
    * Assume ADC samples in 0.5ms
@@ -348,6 +348,7 @@ static void MX_TIM2_Init(void) {
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_4);
+  HAL_NVIC_SetPriority(TIM2_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(TIM2_IRQn);
 }
 
