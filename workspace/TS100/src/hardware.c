@@ -415,7 +415,7 @@ int16_t calculateMaxVoltage(uint8_t useHP) {
 	if (Vx < 90)
 		Vx = 90;
 	else if (Vx >= 105)
-		Vx = 12;
+		Vx = 120;
 	return Vx;
 }
 
