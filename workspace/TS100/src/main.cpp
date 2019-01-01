@@ -105,7 +105,7 @@ void GUIDelay() {
 	// This limits the re-draw rate to the LCD and also lets the DMA run
 	// As the gui task can very easily fill this bus with transactions, which will
 	// prevent the movement detection from running
-	osDelay(75);
+	osDelay(50);
 }
 void gui_drawTipTemp(bool symbol) {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
