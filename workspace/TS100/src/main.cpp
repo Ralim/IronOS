@@ -555,68 +555,70 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		OLED::clearScreen();
 		OLED::setFont(0);
 		uint16_t tipTemp = getTipRawTemp(0);
-		if (tipTemp > 32760) {
-			badTipCounter++;
+		if (tipTemp > 32700) {
+			badTipCounter++;// Use a counter so that error has to persist for > 1 second continious so that peak errors dont trip it
 		} else {
 			badTipCounter = 0;
-			if (systemSettings.detailedSoldering) {
-				OLED::setFont(1);
-				OLED::print(SolderingAdvancedPowerPrompt);  // Power:
-				OLED::printNumber(milliWattHistory[0] / 1000, 2);
-				OLED::drawChar('.');
-				OLED::printNumber(milliWattHistory[0] / 100 % 10, 1);
-				OLED::drawChar('W');
+		}
+		//Draw in the screen details
+		if (systemSettings.detailedSoldering) {
+			OLED::setFont(1);
+			OLED::print(SolderingAdvancedPowerPrompt);  // Power:
+			OLED::printNumber(milliWattHistory[0] / 1000, 2);
+			OLED::drawChar('.');
+			OLED::printNumber(milliWattHistory[0] / 100 % 10, 1);
+			OLED::drawChar('W');
 
-				if (systemSettings.sensitivity && systemSettings.SleepTime) {
-					OLED::print(" ");
-					display_countdown(sleepThres);
-				}
-
-				OLED::setCursor(0, 8);
-				OLED::print(SleepingTipAdvancedString);
-				gui_drawTipTemp(true);
+			if (systemSettings.sensitivity && systemSettings.SleepTime) {
 				OLED::print(" ");
-				printVoltage();
-				OLED::drawChar('V');
+				display_countdown(sleepThres);
+			}
+
+			OLED::setCursor(0, 8);
+			OLED::print(SleepingTipAdvancedString);
+			gui_drawTipTemp(true);
+			OLED::print(" ");
+			printVoltage();
+			OLED::drawChar('V');
+		} else {
+			// We switch the layout direction depending on the orientation of the
+			// OLED::
+			if (OLED::getRotation()) {
+				// battery
+				gui_drawBatteryIcon();
+				OLED::drawChar(' '); // Space out gap between battery <-> temp
+				gui_drawTipTemp(true);  // Draw current tip temp
+
+				// We draw boost arrow if boosting, or else gap temp <-> heat
+				// indicator
+				if (boostModeOn)
+					OLED::drawSymbol(2);
+				else
+					OLED::drawChar(' ');
+
+				// Draw heating/cooling symbols
+				OLED::drawHeatSymbol(
+						milliWattsToPWM(milliWattHistory[0],
+								systemSettings.voltageDiv));
 			} else {
-				// We switch the layout direction depending on the orientation of the
-				// OLED::
-				if (OLED::getRotation()) {
-					// battery
-					gui_drawBatteryIcon();
-					OLED::drawChar(' '); // Space out gap between battery <-> temp
-					gui_drawTipTemp(true);  // Draw current tip temp
+				// Draw heating/cooling symbols
+				OLED::drawHeatSymbol(
+						milliWattsToPWM(milliWattHistory[0],
+								systemSettings.voltageDiv));
+				// We draw boost arrow if boosting, or else gap temp <-> heat
+				// indicator
+				if (boostModeOn)
+					OLED::drawSymbol(2);
+				else
+					OLED::drawChar(' ');
+				gui_drawTipTemp(true);  // Draw current tip temp
 
-					// We draw boost arrow if boosting, or else gap temp <-> heat
-					// indicator
-					if (boostModeOn)
-						OLED::drawSymbol(2);
-					else
-						OLED::drawChar(' ');
+				OLED::drawChar(' '); // Space out gap between battery <-> temp
 
-					// Draw heating/cooling symbols
-					OLED::drawHeatSymbol(
-							milliWattsToPWM(milliWattHistory[0],
-									systemSettings.voltageDiv));
-				} else {
-					// Draw heating/cooling symbols
-					OLED::drawHeatSymbol(
-							milliWattsToPWM(milliWattHistory[0],
-									systemSettings.voltageDiv));
-					// We draw boost arrow if boosting, or else gap temp <-> heat
-					// indicator
-					if (boostModeOn)
-						OLED::drawSymbol(2);
-					else
-						OLED::drawChar(' ');
-					gui_drawTipTemp(true);  // Draw current tip temp
-
-					OLED::drawChar(' '); // Space out gap between battery <-> temp
-
-					gui_drawBatteryIcon();
-				}
+				gui_drawBatteryIcon();
 			}
 		}
+
 		if (badTipCounter > 128) {
 			OLED::print(BadTipString);
 			OLED::refresh();

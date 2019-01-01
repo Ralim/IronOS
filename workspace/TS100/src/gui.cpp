@@ -580,7 +580,7 @@ static void settings_displayTipModel(void) {
 	OLED::setFont(1);
 	// set the cursor
 	// Print the mfg
-	OLED::setCursor(40, 0);
+	OLED::setCursor(55, 0);
 	if (systemSettings.tipType < Tip_MiniWare) {
 #ifdef MODEL_TS100
 		OLED::print("TS100");
@@ -596,7 +596,7 @@ static void settings_displayTipModel(void) {
 	else if (systemSettings.tipType == Tip_Custom) {
 		OLED::print("User");
 	}
-	OLED::setCursor(40, 8);
+	OLED::setCursor(55, 8);
 #ifdef MODEL_TS100
 	switch ((enum TipType)systemSettings.tipType) {
 		case TS_B2:

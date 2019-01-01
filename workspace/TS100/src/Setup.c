@@ -32,8 +32,13 @@ static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
-	__HAL_AFIO_REMAP_SWJ_DISABLE()
-	;
+	#ifndef LOCAL_BUILD
+__HAL_AFIO_REMAP_SWJ_DISABLE();
+	#else 
+__HAL_AFIO_REMAP_SWJ_NOJTAG();
+	#endif
+	
+	
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();
@@ -226,7 +231,7 @@ static void MX_ADC2_Init(void) {
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.ClockSpeed = 50000;
+	hi2c1.Init.ClockSpeed = 75000;
 	// OLED doesnt handle >100k when its asleep (off).
 	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	hi2c1.Init.OwnAddress1 = 0;
@@ -243,7 +248,9 @@ static void MX_IWDG_Init(void) {
 	hiwdg.Instance = IWDG;
 	hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
 	hiwdg.Init.Reload = 100;
+#ifndef LOCAL_BUILD
 	HAL_IWDG_Init(&hiwdg);
+#endif
 }
 
 /* TIM3 init function */
@@ -253,11 +260,11 @@ static void MX_TIM3_Init(void) {
 	TIM_OC_InitTypeDef sConfigOC;
 
 	htim3.Instance = TIM3;
-	htim3.Init.Prescaler = 4;
+	htim3.Init.Prescaler = 8;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim3.Init.Period = 100;                            // 10 Khz PWM freq
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before div
-	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
 	HAL_TIM_Base_Init(&htim3);
 
 	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
@@ -314,7 +321,7 @@ static void MX_TIM2_Init(void) {
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim2.Init.Period = 255 + 60;
 	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before divide
-	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
 	HAL_TIM_Base_Init(&htim2);
 
 	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;

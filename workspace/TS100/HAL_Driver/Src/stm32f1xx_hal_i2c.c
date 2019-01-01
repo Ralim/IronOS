@@ -3478,48 +3478,7 @@ void HAL_I2C_EV_IRQHandler(I2C_HandleTypeDef *hi2c)
       }
     }
   }
-  /* Slave mode selected */
-  else
-  {
-    /* ADDR set --------------------------------------------------------------*/
-    if(((sr1itflags & I2C_FLAG_ADDR) != RESET) && ((itsources & I2C_IT_EVT) != RESET))
-    {
-      I2C_Slave_ADDR(hi2c);
-    }
-    /* STOPF set --------------------------------------------------------------*/
-    else if(((sr1itflags & I2C_FLAG_STOPF) != RESET) && ((itsources & I2C_IT_EVT) != RESET))
-    {
-      I2C_Slave_STOPF(hi2c);
-    }
-    /* I2C in mode Transmitter -----------------------------------------------*/
-    else if((sr2itflags & I2C_FLAG_TRA) != RESET)
-    {
-      /* TXE set and BTF reset -----------------------------------------------*/
-      if(((sr1itflags & I2C_FLAG_TXE) != RESET) && ((itsources & I2C_IT_BUF) != RESET) && ((sr1itflags & I2C_FLAG_BTF) == RESET))
-      {
-        I2C_SlaveTransmit_TXE(hi2c);
-      }
-      /* BTF set -------------------------------------------------------------*/
-      else if(((sr1itflags & I2C_FLAG_BTF) != RESET) && ((itsources & I2C_IT_EVT) != RESET))
-      {
-        I2C_SlaveTransmit_BTF(hi2c);
-      }
-    }
-    /* I2C in mode Receiver --------------------------------------------------*/
-    else
-    {
-      /* RXNE set and BTF reset ----------------------------------------------*/
-      if(((sr1itflags & I2C_FLAG_RXNE) != RESET) && ((itsources & I2C_IT_BUF) != RESET) && ((sr1itflags & I2C_FLAG_BTF) == RESET))
-      {
-        I2C_SlaveReceive_RXNE(hi2c);
-      }
-      /* BTF set -------------------------------------------------------------*/
-      else if(((sr1itflags & I2C_FLAG_BTF) != RESET) && ((itsources & I2C_IT_EVT) != RESET))
-      {
-        I2C_SlaveReceive_BTF(hi2c);
-      }
-    }
-  }
+
 }
 
 /**

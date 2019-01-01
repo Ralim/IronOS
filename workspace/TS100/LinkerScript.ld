@@ -6,14 +6,19 @@ ENTRY(Reset_Handler)
 /* Highest address of the user mode stack */
 _estack = 0x20005000;    /* end of RAM */
 
-_Min_Heap_Size = 0x200;      /* required amount of heap  */
-_Min_Stack_Size = 0x400; /* required amount of stack */
+_Min_Heap_Size = 0x300;      /* required amount of heap  */
+_Min_Stack_Size = 1024; /* required amount of stack */
 
 /* Memories definition */
 MEMORY
 {
   RAM (xrw)		: ORIGIN = 0x20000000, LENGTH = 20K
-  ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 46K
+ /* LOCAL_BUILD*/
+/*ROM (rx)		: ORIGIN = 0x08000000, LENGTH = 46K*/
+  /* production*/
+ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 46K
+  
+  
   
 }
 /* ROM is normally 48K after the bootloader, however we allocate the last page for settings, and the second last one for display boot logo*/

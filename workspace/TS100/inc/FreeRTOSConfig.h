@@ -101,13 +101,13 @@
 #define configTICK_RATE_HZ                       ((TickType_t)100)
 #define configMAX_PRIORITIES                     ( 4 )
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)256)
-#define configTOTAL_HEAP_SIZE                    ((size_t)10240+2048) /*Currently use about 9000*/
+#define configTOTAL_HEAP_SIZE                    ((size_t)1024*14) /*Currently use about 9000*/
 #define configMAX_TASK_NAME_LEN                  ( 24 )
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1
 #define configQUEUE_REGISTRY_SIZE                8
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION  1
-#define configCHECK_FOR_STACK_OVERFLOW			 0 /*Bump this to 2 during development and bug hunting*/
+#define configCHECK_FOR_STACK_OVERFLOW			 2 /*Bump this to 2 during development and bug hunting*/
 
 
 /* Co-routine definitions. */

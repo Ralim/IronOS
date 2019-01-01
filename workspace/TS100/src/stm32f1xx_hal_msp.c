@@ -26,12 +26,6 @@ void HAL_MspInit(void) {
 	/* SysTick_IRQn interrupt configuration */
 	HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 
-	/**NOJTAG: JTAG-DP Disabled and SW-DP Enabled
-	 */
-	//__HAL_AFIO_REMAP_SWJ_NOJTAG()
-	//;
-	__HAL_AFIO_REMAP_SWJ_DISABLE()
-	; /*Disable swd for debug io use*/
 
 }
 
