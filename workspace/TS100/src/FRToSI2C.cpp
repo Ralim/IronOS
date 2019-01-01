@@ -29,12 +29,13 @@ void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
 		// Wait up to 1 second for the mutex
 		if (xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE) {
 #ifdef I2CUSESDMA
-			if (HAL_I2C_Mem_Read_DMA(i2c, DevAddress, MemAddress, MemAddSize,
-					pData, Size) != HAL_OK) {
+			if (HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize,
+					pData, Size,500) != HAL_OK) {
 
 				I2C1_ClearBusyFlagErratum();
 				xSemaphoreGive(I2CSemaphore);
 			}
+			xSemaphoreGive(I2CSemaphore);
 #else
 
 			HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize, pData, Size,
@@ -68,12 +69,13 @@ void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 		// Wait up to 1 second for the mutex
 		if (xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE) {
 #ifdef I2CUSESDMA
-			if (HAL_I2C_Mem_Write_DMA(i2c, DevAddress, MemAddress, MemAddSize,
-					pData, Size) != HAL_OK) {
+			if (HAL_I2C_Mem_Write(i2c, DevAddress, MemAddress, MemAddSize,
+					pData, Size,500) != HAL_OK) {
 
 				I2C1_ClearBusyFlagErratum();
 				xSemaphoreGive(I2CSemaphore);
 			}
+			xSemaphoreGive(I2CSemaphore);
 #else
 			if (HAL_I2C_Mem_Write(i2c, DevAddress, MemAddress, MemAddSize, pData,
 							Size, 5000) != HAL_OK) {

@@ -420,10 +420,10 @@ int16_t calculateMaxVoltage(uint8_t useHP) {
 }
 
 #endif
-volatile uint32_t pendingPWM = 0;
+volatile uint8_t pendingPWM = 0;
 
 void setTipPWM(uint8_t pulse) {
-	PWMSafetyTimer = 50; // This is decremented in the handler for PWM so that the tip pwm is
+	PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
 						 // disabled if the PID task is not scheduled often enough.
 
 	pendingPWM = pulse;

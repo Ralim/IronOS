@@ -28,7 +28,7 @@ int32_t tempToMilliWatts(int32_t rawTemp, uint16_t mass, uint8_t rawC) {
 }
 
 void setTipMilliWatts(int32_t mw) {
-	int32_t output = milliWattsToPWM(mw, systemSettings.voltageDiv / 10);
+	int32_t output = milliWattsToPWM(mw, systemSettings.voltageDiv / 10,1);
 	setTipPWM(output);
 	uint16_t actualMilliWatts = PWMToMilliWatts(output,
 			systemSettings.voltageDiv / 10);
@@ -36,12 +36,14 @@ void setTipMilliWatts(int32_t mw) {
 	milliWattHistory.update(actualMilliWatts);
 }
 
-uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor) {
+uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor, uint8_t sample) {
 	//P = V^2 / R, v*v = v^2 * 100
 	//				R = R*10
 	// P therefore is in V^2*10/R = W*10.
 	// Scale input milliWatts to the pwm rate
-	int32_t v = getInputVoltageX10(divisor, 1);	// 100 = 10v
+	if (milliWatts == 0)
+		return 0;
+	int32_t v = getInputVoltageX10(divisor, sample);	// 100 = 10v
 	int32_t availableMilliWatts = v * v / tipResistance;
 
 	//int32_t pwm = ((powerPWM * totalPWM / powerPWM) * milliWatts)	/ availableMilliWatts;
@@ -51,8 +53,8 @@ uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor) {
 	} else if (pwm < 0) {
 		pwm = 0;
 	}
-	if (milliWatts == 0)
-		pwm = 0;
+
+
 	return pwm;
 }
 

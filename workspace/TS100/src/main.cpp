@@ -73,12 +73,17 @@ int main(void) {
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
 	/* definition and creation of PIDTask */
-	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 2 * 1024 / 4);
+	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 3 * 1024 / 4);
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 	if (PCBVersion < 3) {
 		/* definition and creation of MOVTask */
-		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 3 * 1024 / 4);
+		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 4 * 1024 / 4);
 		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
+#ifdef LOCAL_BUILD
+		//Test that there was enough ram in the FreeRToS pool to allocate all the tasks
+		if (MOVTaskHandle == 0)
+			asm("bkpt");
+#endif
 	}
 
 	/* Start scheduler */
@@ -100,7 +105,7 @@ void GUIDelay() {
 	// This limits the re-draw rate to the LCD and also lets the DMA run
 	// As the gui task can very easily fill this bus with transactions, which will
 	// prevent the movement detection from running
-	osDelay(50);
+	osDelay(75);
 }
 void gui_drawTipTemp(bool symbol) {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
@@ -265,7 +270,7 @@ static void gui_drawBatteryIcon() {
 		// User is on a lithium battery
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
-		uint16_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
+		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
 				/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
@@ -1025,6 +1030,8 @@ void startPIDTask(void const *argument __unused) {
 
 			HAL_IWDG_Refresh(&hiwdg);
 		} else {
+			asm("bkpt");
+
 //ADC interrupt timeout
 			setTipMilliWatts(0);
 			setTipPWM(0);
@@ -1196,7 +1203,7 @@ void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
 	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	asm("bkpt");
+	//asm("bkpt");
 
 	FRToSI2C::CpltCallback();
 }

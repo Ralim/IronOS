@@ -356,7 +356,7 @@ void OLED::drawHeatSymbol(uint8_t state) {
   // Draw symbol 14
   // Then draw over it, the bottom 5 pixels always stay. 8 pixels above that are
   // the levels masks the symbol nicely
-  state /= 12;  // 0-> 8 range
+  state /= 31;  // 0-> 8 range
   // Then we want to draw down (16-(5+state)
   uint8_t cursor_x_temp = cursor_x;
   drawSymbol(14);

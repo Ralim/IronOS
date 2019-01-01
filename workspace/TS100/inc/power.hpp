@@ -18,7 +18,7 @@ void setupPower(uint8_t resistance);
 
 int32_t tempToMilliWatts(int32_t rawTemp, uint16_t mass, uint8_t rawC);
 void setTipMilliWatts(int32_t mw);
-uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor);
+uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor,uint8_t sample=0);
 int32_t PWMToMilliWatts(uint8_t pwm, uint8_t divisor);
 
 #endif /* POWER_HPP_ */
