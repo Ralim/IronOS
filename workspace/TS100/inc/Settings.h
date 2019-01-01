@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
 #define SETTINGSVERSION                                                       \
-  0x16 /*Change this if you change the struct below to prevent people getting \
+  0x18 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
 /*
