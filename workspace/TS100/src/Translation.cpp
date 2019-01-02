@@ -949,7 +949,7 @@ const char* SettingsDescriptions[] = {
   /* TemperatureUnit           */ "Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>",
   /* AdvancedIdle              */ "Mostra informazioni dettagliate all'interno della schermata principale",
   /* DisplayRotation           */ "Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
-  /* BoostEnabled              */ "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura",
+  /* BoostEnabled              */ "Attiva la funzione «Turbo», durante la modalità Saldatura, tenendo premuto il tasto superiore",
   /* BoostTemperature          */ "Imposta la temperatura della funzione «Turbo»",
   /* AutoStart                 */ "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
   /* CooldownBlink             */ "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda",
