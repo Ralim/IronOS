@@ -770,7 +770,7 @@ void startGUITask(void const *argument __unused) {
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
 	getTipRawTemp(1);  // reset filter
-	OLED::setRotation(!(systemSettings.OrientationMode & 1));
+	OLED::setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
 	ticks += 400;  // 4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
@@ -1056,7 +1056,7 @@ void startMOVTask(void const *argument __unused) {
 	osDelay(250);  // wait for accelerometer to stabilize
 #endif
 
-	OLED::setRotation(!(systemSettings.OrientationMode & 1));
+	OLED::setRotation(systemSettings.OrientationMode & 1);
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
 	int16_t datay[MOVFilter] = { 0 };
