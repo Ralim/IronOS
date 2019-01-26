@@ -485,6 +485,7 @@
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="TS100"/>
+		<configuration configurationName="TS100_LOCAL"/>
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/TS100A"/>
 		</configuration>

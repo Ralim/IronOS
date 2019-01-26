@@ -939,7 +939,7 @@ void startPIDTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			//Set power management code to the tip resistance in ohms * 10
 			setupPower(calculateTipR() / 100);
-			size_t lastPowerPulse = 0;
+			//size_t lastPowerPulse = 0;
 #else
 	setupPower(85);
 
@@ -987,7 +987,7 @@ void startPIDTask(void const *argument __unused) {
 				const uint16_t mass = 2020 / 20; // divide here so division is compile-time.
 #endif
 #ifdef MODEL_TS80
-				const uint16_t mass = 2020 / 50;
+				const uint16_t mass = 2020 / 60;
 #endif
 
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),

@@ -10,7 +10,11 @@
 #ifndef FONT_H_
 #define FONT_H_
 #include "Translation.h"
-
+#ifdef LANG_RU
+#ifndef CYRILLIC_GLYPHS
+#define CYRILLIC_GLYPHS
+#endif
+#endif
 #define FONT_12_WIDTH   12
 
 /*

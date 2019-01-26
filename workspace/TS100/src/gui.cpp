@@ -652,22 +652,28 @@ static void setTipOffset() {
 
 	uint32_t offset = 0;
 	for (uint8_t i = 0; i < 15; i++) {
-		offset += getTipRawTemp(1);
+		offset += getTipRawTemp(0);
 		// cycle through the filter a fair bit to ensure we're stable.
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
+		OLED::print(".");
 		for (uint8_t x = 0; x < i / 4; x++)
 			OLED::print(".");
 		OLED::refresh();
-		osDelay(333);
+		osDelay(100);
 	}
 	systemSettings.CalibrationOffset = offset / 15;
 	// Need to remove from this the ambient temperature offset
-	uint32_t ambientoffset = getHandleTemperature(); // Handle temp in C
-	ambientoffset *=1000;
+	uint32_t ambientoffset = getHandleTemperature(); // Handle temp in C x10
+	ambientoffset *= 100;
 	ambientoffset /= tipGainCalValue;
+	systemSettings.CalibrationOffset -= ambientoffset;
 	setCalibrationOffset(systemSettings.CalibrationOffset);  // store the error
-	osDelay(100);
+	OLED::clearScreen();
+	OLED::setCursor(0, 0);
+	OLED::print("OK");
+	OLED::refresh();
+	osDelay(1000);
 }
 static void calibration_enterSimpleCal(void) {
 	// User has entered into the simple cal routine
@@ -816,10 +822,10 @@ static void settings_setCalibrateVIN(void) {
 
 	for (;;) {
 		OLED::setCursor(0, 0);
-		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv,0) / 10,
+		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) / 10,
 				2);
 		OLED::print(".");
-		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv,0) % 10,
+		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) % 10,
 				1);
 		OLED::print("V");
 

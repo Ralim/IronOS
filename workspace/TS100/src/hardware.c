@@ -34,7 +34,7 @@ uint16_t getHandleTemperature() {
 	result -= 4965;  // remove 0.5V offset
 	// 10mV per C
 	// 99.29 counts per Deg C above 0C
-	result *= 10;
+	result *= 100;
 	result /= 993;
 	return result;
 }
