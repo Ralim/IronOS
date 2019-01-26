@@ -144,6 +144,9 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 }
 
 void OLED::setRotation(bool leftHanded) {
+#ifdef MODEL_TS80
+	leftHanded=!leftHanded;
+#endif
   if (inLeftHandedMode == leftHanded) {
     return;
   }

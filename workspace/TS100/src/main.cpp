@@ -987,7 +987,7 @@ void startPIDTask(void const *argument __unused) {
 				const uint16_t mass = 2020 / 20; // divide here so division is compile-time.
 #endif
 #ifdef MODEL_TS80
-				const uint16_t mass = 2020 / 60;
+				const uint16_t mass = 2020 / 50;
 #endif
 
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),
