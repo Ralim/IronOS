@@ -2158,7 +2158,7 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 const char* SettingsDescriptions[] = {
   /* PowerSource               */ "Установка напруги відключення. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>",
   /* SleepTemperature          */ "Температура режиму очікування <C°/F°>",
-  /* SleepTimeout              */ "Час до переходу в режим очікування <Доступно отключение>",
+  /* SleepTimeout              */ "Час до переходу в режим очікування <Доступно відключення>",
   /* ShutdownTimeout           */ "Час до відключення <Доступно відключення>",
   /* MotionSensitivity         */ "Акселерометр <0 - Викл. 1 хв. чутливості 9 - макс. чутливості>",
   /* TemperatureUnit           */ "Одиниця виміру температури <C - Цельсій, F - Фаренгейт>",
@@ -2173,16 +2173,16 @@ const char* SettingsDescriptions[] = {
   /* VoltageCalibration        */ "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити.",
   /* AdvancedSoldering         */ "Показувати детальну інформацію при пайці.",
   /* ScrollingSpeed            */ "Швидкість прокрутки тексту",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
+  /* TipModel                  */ "Вибір моделі жала",
+  /* SimpleCalibrationMode     */ "Просте калібрування гарячою водою",
+  /* AdvancedCalibrationMode   */ "Точне калібрування термопарою на жалі",
   /* PowerInput                */ "Power Wattage of the power adapter used",
 };
 
 const char* SettingsCalibrationDone = "Calibration done!";
 const char* SettingsCalibrationWarning = "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!";
 const char* SettingsResetWarning = "Ви дійсно хочете скинути налаштування до значень за замовчуванням?";
-const char* UVLOWarningString = "АККУМ--";
+const char* UVLOWarningString = "АКУМ--";
 const char* UndervoltageString = "Під живленням";
 const char* InputVoltageString = "Жив.(B): ";
 const char* WarningTipTempString = "Жало t°: ";
@@ -2223,7 +2223,7 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Калібровка", "напруга" },
   /* AdvancedSoldering         */ { "Детальний ре-", "жим пайки" },
   /* ScrollingSpeed            */ { "Швидкість", "тексту" },
-  /* TipModel                  */ { "Tip", "Model" },
+  /* TipModel                  */ { "Жало", "Модель" },
   /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
   /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
   /* PowerInput                */ { "Power", "Wattage" },
@@ -2238,7 +2238,7 @@ const char* SettingsMenuEntries[4] = {
 
 const char* SettingsMenuEntriesDescriptions[4] = {
   /* SolderingMenu             */ "Налаштування для режиму пайки. Діють при включеному жалі.",
-  /* PowerSavingMenu           */ "Налаштування при бездіяльності. Корисно що б не обпектися і з часом не спалити житло.",
+  /* PowerSavingMenu           */ "Налаштування при бездіяльності. Корисно, щоб не обпектися і з часом не спалити житло.",
   /* UIMenu                    */ "Користувальницький інтерфейс.",
   /* AdvancedMenu              */ "Розширені налаштування. Додаткові зручності.",
 };
