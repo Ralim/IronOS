@@ -947,9 +947,9 @@ const char* SettingsDescriptions[] = {
   /* ShutdownTimeout           */ "Imposta il timer per lo spegnimento <minuti>",
   /* MotionSensitivity         */ "Imposta la sensibilità al movimento per uscire dalla modalità Standby <0: nessuna; 1: minima; 9: massima>",
   /* TemperatureUnit           */ "Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>",
-  /* AdvancedIdle              */ "Mostra informazioni dettagliate all'interno della schermata principale",
+  /* AdvancedIdle              */ "Mostra informazioni dettagliate con un carattere più piccolo all'interno della schermata principale",
   /* DisplayRotation           */ "Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>",
-  /* BoostEnabled              */ "Attiva la funzione «Turbo», durante la modalità Saldatura, tenendo premuto il tasto superiore",
+  /* BoostEnabled              */ "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura",
   /* BoostTemperature          */ "Imposta la temperatura della funzione «Turbo»",
   /* AutoStart                 */ "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>",
   /* CooldownBlink             */ "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda",
@@ -961,7 +961,7 @@ const char* SettingsDescriptions[] = {
   /* TipModel                  */ "Seleziona il modello della punta in uso",
   /* SimpleCalibrationMode     */ "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua calda",
   /* AdvancedCalibrationMode   */ "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta",
-  /* PowerInput                */ "Imposta la potenza massima erogabile dall'alimentatore in uso",
+  /* PowerInput                */ "Imposta la potenza dell'alimentatore in uso",
 };
 
 const char* SettingsCalibrationDone = "Calibrazione effettuata";
@@ -977,10 +977,10 @@ const char* SleepingAdvancedString = "Standby";
 const char* WarningSimpleString = "HOT!";
 const char* WarningAdvancedString = "PUNTA CALDA!";
 const char* SleepingTipAdvancedString = "Punta:";
-const char* IdleTipString = "T punta:";
+const char* IdleTipString = "Punta:";
 const char* IdleSetString = "/";
 const char* TipDisconnectedString = "PUNTA ASSENTE";
-const char* SolderingAdvancedPowerPrompt = "Potenz:";
+const char* SolderingAdvancedPowerPrompt = "Potenza:";
 const char* OffString = "OFF";
 
 const char SettingRightChar = 'D';
@@ -997,7 +997,7 @@ const char* SettingsShortNames[][2] = {
   /* ShutdownTimeout           */ { "Timer", "spegnimento" },
   /* MotionSensitivity         */ { "Sensibilità", "al movimento" },
   /* TemperatureUnit           */ { "Unità di", "temperatura" },
-  /* AdvancedIdle              */ { "Interfaccia", "testuale" },
+  /* AdvancedIdle              */ { "Mostra", "dettagli" },
   /* DisplayRotation           */ { "Orientamento", "display" },
   /* BoostEnabled              */ { "Funzione", "«Turbo»" },
   /* BoostTemperature          */ { "Temp", "«Turbo»" },
@@ -1008,7 +1008,7 @@ const char* SettingsShortNames[][2] = {
   /* VoltageCalibration        */ { "Calibrazione", "tensione" },
   /* AdvancedSoldering         */ { "Dettagli", "saldatura" },
   /* ScrollingSpeed            */ { "Velocità", "testo" },
-  /* TipModel                  */ { "Modello", "punta" },
+  /* TipModel                  */ { "Modello", "della punta" },
   /* SimpleCalibrationMode     */ { "Calibrazione", "semplice" },
   /* AdvancedCalibrationMode   */ { "Calibrazione", "avanzata" },
   /* PowerInput                */ { "Potenza", "alimentaz" },
@@ -1499,32 +1499,32 @@ const char* SettingsMenuEntriesDescriptions[4] = {
 // ---- Português ----
 
 const char* SettingsDescriptions[] = {
-  /* PowerSource               */ "nte de alimentação. Define a tensão de corte. <DC=10V> <S=3.3V/célula>",
+  /* PowerSource               */ "Fonte de alimentação. Define a tensão de corte. <DC=10V> <S=3.3V/célula>",
   /* SleepTemperature          */ "Temperatura de repouso <C>",
   /* SleepTimeout              */ "Tempo para repouso <Minutos/Segundos>",
   /* ShutdownTimeout           */ "Tempo para desligamento <Minutos>",
   /* MotionSensitivity         */ "Sensibilidade ao movimento <0=Desligado 1=Menor 9=Maior>",
   /* TemperatureUnit           */ "Unidade de temperatura <C=Celsius F=Fahrenheit>",
-  /* AdvancedIdle              */ "Exibe informações avançadas quando ocioso",
+  /* AdvancedIdle              */ "Exibe informações avançadas quando em espera",
   /* DisplayRotation           */ "Orientação da tela <A.utomática C.anhoto D.estro>",
-  /* BoostEnabled              */ "Tecla frontal ativa modo \"turbo\"",
+  /* BoostEnabled              */ "Tecla frontal activa modo \"turbo\"",
   /* BoostTemperature          */ "Ajuste de temperatura do modo \"turbo\"",
   /* AutoStart                 */ "Aquece a ponta automaticamente ao ligar",
-  /* CooldownBlink             */ "Faz o valor da temperatura piscar durante o resfriamento",
+  /* CooldownBlink             */ "Faz o valor da temperatura piscar durante o arrefecimento",
   /* TemperatureCalibration    */ "Calibra a temperatura",
   /* SettingsReset             */ "Reverte todos ajustes",
-  /* VoltageCalibration        */ "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha presionado para sair",
+  /* VoltageCalibration        */ "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair",
   /* AdvancedSoldering         */ "Exibe informações avançadas durante o uso",
-  /* ScrollingSpeed            */ "Velocidade que esse texto é exibido",
-  /* TipModel                  */ "Tip Model selection",
-  /* SimpleCalibrationMode     */ "Simple Calibration using Hot water",
-  /* AdvancedCalibrationMode   */ "Advanced calibration using thermocouple on the tip",
-  /* PowerInput                */ "Power Wattage of the power adapter used",
+  /* ScrollingSpeed            */ "Velocidade a que o texto é exibido",
+  /* TipModel                  */ "Selecção de modelo de ponta",
+  /* SimpleCalibrationMode     */ "Calibração simples com água quente",
+  /* AdvancedCalibrationMode   */ "Calibração avançada com um termopar na ponta",
+  /* PowerInput                */ "Potência da fonte usada (Watt)",
 };
 
-const char* SettingsCalibrationDone = "Calibration done!";
-const char* SettingsCalibrationWarning = "A ponta deve estar em temperatura ambiente antes de continuar!";
-const char* SettingsResetWarning = "Resetar para ajustes de fábrica?";
+const char* SettingsCalibrationDone = "Calibração terminada!";
+const char* SettingsCalibrationWarning = "A ponta deve estar à temperatura ambiente antes de continuar!";
+const char* SettingsResetWarning = "Definições de fábrica?";
 const char* UVLOWarningString = "DC BAIXO";
 const char* UndervoltageString = "Subtensão";
 const char* InputVoltageString = "Tensão ";
@@ -1557,32 +1557,32 @@ const char* SettingsShortNames[][2] = {
   /* TemperatureUnit           */ { "Unidade", "temperatura" },
   /* AdvancedIdle              */ { "Tela repouso", "avançada" },
   /* DisplayRotation           */ { "Orientação", "tela" },
-  /* BoostEnabled              */ { "Modo turbo", "ativado" },
+  /* BoostEnabled              */ { "Modo turbo", "activado" },
   /* BoostTemperature          */ { "Modo turbo", "temperat." },
   /* AutoStart                 */ { "Partida", "automática" },
-  /* CooldownBlink             */ { "Piscar ao", "resfriar" },
+  /* CooldownBlink             */ { "Piscar ao", "arrefecer" },
   /* TemperatureCalibration    */ { "Calibrar", "temperatura" },
   /* SettingsReset             */ { "Reset de", "fábrica?" },
   /* VoltageCalibration        */ { "Calibrar", "tensão" },
   /* AdvancedSoldering         */ { "Tela trabalho", "avançada" },
   /* ScrollingSpeed            */ { "Velocidade", "texto ajuda" },
-  /* TipModel                  */ { "Tip", "Model" },
-  /* SimpleCalibrationMode     */ { "Simple", "Calibration" },
-  /* AdvancedCalibrationMode   */ { "Advanced", "Calibration" },
-  /* PowerInput                */ { "Power", "Wattage" },
+  /* TipModel                  */ { "Ponta", "Modelo" },
+  /* SimpleCalibrationMode     */ { "Calibração", "Simples" },
+  /* AdvancedCalibrationMode   */ { "Calibração", "Avançada" },
+  /* PowerInput                */ { "Potência", "Fonte" },
 };
 
 const char* SettingsMenuEntries[4] = {
   /* SolderingMenu             */ "Configurações\nSolda",
   /* PowerSavingMenu           */ "Modos\nRepouso",
-  /* UIMenu                    */ "Interface\nUsuário",
+  /* UIMenu                    */ "Interface\nUtilizador",
   /* AdvancedMenu              */ "Menu\nAvançado",
 };
 
 const char* SettingsMenuEntriesDescriptions[4] = {
   /* SolderingMenu             */ "Configurações de soldagem",
   /* PowerSavingMenu           */ "Configurações de economia de energia",
-  /* UIMenu                    */ "Configurações da interface do usuário",
+  /* UIMenu                    */ "Configurações do interface do utilizador",
   /* AdvancedMenu              */ "Opções avançadas",
 };
 

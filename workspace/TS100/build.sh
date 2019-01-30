@@ -61,7 +61,7 @@ do
             usage
             ;;
         l)
-            LANGUAGE=${OPTARG}
+            LANGUAGEREQ=${OPTARG}
             ;;
         m)
             MODEL=${OPTARG}
@@ -92,14 +92,14 @@ done
 echo "Available languages :"
 echo "    ${AVAILABLE_LANGUAGES[*]}"
 echo "Requested languages :"
-if [ -n "$LANGUAGE" ]
+if [ -n "$LANGUAGEREQ" ]
 then
-    if isInArray "$LANGUAGE" "${AVAILABLE_LANGUAGES[@]}"
+    if isInArray "$LANGUAGEREQ" "${AVAILABLE_LANGUAGES[@]}"
     then
-        echo "    $LANGUAGE" 
-        BUILD_LANGUAGES+=("$LANGUAGE")
+        echo "    $LANGUAGEREQ" 
+        BUILD_LANGUAGES+=("$LANGUAGEREQ")
     else
-        echo "    $LANGUAGE doesn't exist" 
+        echo "    $LANGUAGEREQ doesn't exist" 
         forceExit
     fi
 else
@@ -131,7 +131,7 @@ echo "*********************************************"
 if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]
 then 
     echo "Generating Translation.cpp"
-    python "$TRANSLATION_DIR/$TRANSLATION_SCRIPT" "$TRANSLATION_DIR" 1>/dev/null
+    python3 "$TRANSLATION_DIR/$TRANSLATION_SCRIPT" "$TRANSLATION_DIR" 
     checkLastCommand
 
     echo "Cleaning previous builds"
