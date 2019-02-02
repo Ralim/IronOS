@@ -16,10 +16,10 @@
 		"WarningSimpleString": "HOT!",
 		"WarningAdvancedString": "PUNTA CALDA!",
 		"SleepingTipAdvancedString": "Punta:",
-		"IdleTipString": "Punta:",
+		"IdleTipString": "T punta:",
 		"IdleSetString": "/",
 		"TipDisconnectedString": "PUNTA ASSENTE",
-		"SolderingAdvancedPowerPrompt": "Potenza:",
+		"SolderingAdvancedPowerPrompt": "Potenz:",
 		"OffString": "OFF"
 	},
 	"characters": {
@@ -112,10 +112,10 @@
 		"AdvancedIdle": {
 			"text": "",
 			"text2": [
-				"Mostra",
-				"dettagli"
+				"Interfaccia",
+				"testuale"
 			],
-			"desc": "Mostra informazioni dettagliate con un carattere più piccolo all'interno della schermata principale"
+			"desc": "Mostra informazioni dettagliate all'interno della schermata principale"
 		},
 		"DisplayRotation": {
 			"text": "",
@@ -131,7 +131,7 @@
 				"Funzione",
 				"«Turbo»"
 			],
-			"desc": "Il tasto superiore attiva la funzione «Turbo» durante la modalità Saldatura"
+			"desc": "Attiva la funzione «Turbo», durante la modalità Saldatura, tenendo premuto il tasto superiore"
 		},
 		"BoostTemperature": {
 			"text": "",
@@ -201,7 +201,7 @@
 			"text": "TIPMO",
 			"text2": [
 				"Modello",
-				"della punta"
+				"punta"
 			],
 			"desc": "Seleziona il modello della punta in uso"
 		},
@@ -227,7 +227,7 @@
 				"Potenza",
 				"alimentaz"
 			],
-			"desc": "Imposta la potenza dell'alimentatore in uso"
+			"desc": "Imposta la potenza massima erogabile dall'alimentatore in uso"
 		}
 	}
 }
