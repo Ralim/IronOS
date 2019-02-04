@@ -98,7 +98,7 @@ To calibrate your Iron:
 3. Enter the settings menu
 4. Under the advanced submenu
 5. Select the calibrate voltage option
-6. Use the front and back buttons to adjust the displayed voltage to minimise the error to your origional measurement
+6. Use the front and back buttons to adjust the displayed voltage to minimise the error to your original measurement
 7. Hold both buttons to save and exit to the menu
 
 ### Calibrating tip offset
