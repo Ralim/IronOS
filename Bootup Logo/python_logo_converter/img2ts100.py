@@ -8,7 +8,7 @@ import sys
 try:
     from PIL import Image, ImageOps
 except ImportError as error:
-    raise ImportError("{}: {} requres Python Imaging Library (PIL). " 
+    raise ImportError("{}: {} requres Python Imaging Library (PIL). "
                       "Install with `pip` or OS-specific package "
                       "management tool."
                       .format(error, sys.argv[0]))
@@ -32,29 +32,32 @@ def split16(word):
     return (word >> 8) & 0xff, word & 0xff
 
 
-def intel_hex_line(file, record_type, offset, data):
-    """write a line of data in Intel hex format"""
+def intel_hex_line(record_type, offset, data):
+    """generate a line of data in Intel hex format"""
     # length, address offset, record type
     record_length = len(data)
-    file.write(':{:02X}{:04X}{:02X}'.format(record_length, offset, record_type))
+    yield ':{:02X}{:04X}{:02X}'.format(record_length, offset, record_type)
 
     # data
-    map(lambda byte: file.write("{:02X}".format(byte)), data)
+    for byte in data:
+        yield "{:02X}".format(byte)
 
     # compute and write checksum (with DOS line ending for compatibility/safety)
-    file.write("{:02X}\r\n"
-               .format((((sum(data,                   # sum data ...
-                              record_length           # ... and other ...
-                              + sum(split16(offset))  # ... fields ...
-                              + record_type)          # ... on line
-                          & 0xff)                     # low 8 bits
-                         ^ 0xff)                      # two's ...
-                        + 1)                          # ... complement
-                       & 0xff))                       # low 8 bits
+    yield "{:02X}\r\n".format((((sum(data,                   # sum data ...
+                                     record_length           # ... and other ...
+                                     + sum(split16(offset))  # ... fields ...
+                                     + record_type)          # ... on line
+                                 & 0xff)                     # low 8 bits
+                                ^ 0xff)                      # two's ...
+                               + 1)                          # ... complement
+                              & 0xff)                        # low 8 bits
 
 
 def intel_hex(file, bytes_, start_address=0x0):
     """write block of data in Intel hex format"""
+    def write(generator):
+        file.write(''.join(generator))
+
     if len(bytes_) % INTELHEX_BYTES_PER_LINE != 0:
         raise ValueError("Program error: Size of LCD data is not evenly divisible by {}"
                          .format(INTELHEX_BYTES_PER_LINE))
@@ -62,25 +65,21 @@ def intel_hex(file, bytes_, start_address=0x0):
     address_lo =  start_address        & 0xffff
     address_hi = (start_address >> 16) & 0xffff
 
-    intel_hex_line(file,
-                   INTELHEX_EXTENDED_LINEAR_ADDRESS_RECORD,
-                   0,
-                   split16(address_hi))
+    write(intel_hex_line(INTELHEX_EXTENDED_LINEAR_ADDRESS_RECORD, 0,
+                               split16(address_hi)))
 
     size_written = 0
     while size_written < INTELHEX_MINIMUM_SIZE:
         offset = address_lo
         for line_start in range(0, len(bytes_), INTELHEX_BYTES_PER_LINE):
-            intel_hex_line(file,
-                           INTELHEX_DATA_RECORD,
-                           offset,
-                           bytes_[line_start:line_start + INTELHEX_BYTES_PER_LINE])
+            write(intel_hex_line(INTELHEX_DATA_RECORD, offset,
+                                 bytes_[line_start:line_start + INTELHEX_BYTES_PER_LINE]))
             size_written += INTELHEX_BYTES_PER_LINE
             if size_written >= INTELHEX_MINIMUM_SIZE:
                 break
             offset += INTELHEX_BYTES_PER_LINE
 
-    intel_hex_line(file, INTELHEX_END_OF_FILE_RECORD, 0, ())
+    write(intel_hex_line(INTELHEX_END_OF_FILE_RECORD, 0, ()))
 
 
 def img2hex(input_filename,
