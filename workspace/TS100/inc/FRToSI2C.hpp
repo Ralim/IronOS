@@ -34,6 +34,7 @@ public:
 
 private:
 	static I2C_HandleTypeDef *i2c;
+	static void I2C1_ClearBusyFlagErratum();
 	static SemaphoreHandle_t I2CSemaphore;
 };
 

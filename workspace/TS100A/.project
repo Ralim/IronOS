@@ -151,9 +151,19 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TS100/inc/hardware.h</locationURI>
 		</link>
 		<link>
+			<name>inc/history.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TS100/inc/history.hpp</locationURI>
+		</link>
+		<link>
 			<name>inc/main.hpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TS100/inc/main.hpp</locationURI>
+		</link>
+		<link>
+			<name>inc/power.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TS100/inc/power.hpp</locationURI>
 		</link>
 		<link>
 			<name>inc/stm32f1xx_hal_conf.h</name>
@@ -219,6 +229,11 @@
 			<name>src/main.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/main.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/power.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/power.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/stm32f1xx_hal_msp.c</name>

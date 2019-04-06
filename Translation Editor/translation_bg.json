@@ -1,5 +1,7 @@
 {
 	"languageCode": "BG",
+	"languageLocalName": "Български",
+	"cyrillicGlyphs": true,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Уверете се, че човката на поялника е със стайна температура преди да продължите!",
@@ -218,7 +220,14 @@
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
 		}
-	},
-	"languageLocalName": "български"
+	}
 }

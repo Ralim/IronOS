@@ -7,6 +7,7 @@
 
 #include <string.h>
 #include <OLED.hpp>
+#include <stdlib.h>
 #include "Translation.h"
 #include "cmsis_os.h"
 
@@ -143,6 +144,9 @@ void OLED::drawChar(char c, char PrecursorCommand) {
 }
 
 void OLED::setRotation(bool leftHanded) {
+#ifdef MODEL_TS80
+	leftHanded=!leftHanded;
+#endif
   if (inLeftHandedMode == leftHanded) {
     return;
   }
@@ -229,6 +233,20 @@ void OLED::printNumber(uint16_t number, uint8_t places) {
   buffer[0] = '0' + number % 10;
   number /= 10;
   print(buffer);
+}
+
+void OLED::debugNumber(int32_t val) {
+	if (abs(val) > 99999) {
+		OLED::print(" OoB"); // out of bounds
+		return;
+	}
+	if (val >= 0) {
+		OLED::drawChar(' ');
+		OLED::printNumber(val, 5);
+	} else {
+		OLED::drawChar('-');
+		OLED::printNumber(-val, 5);
+	}
 }
 
 void OLED::drawSymbol(uint8_t symbolID) {
@@ -341,7 +359,7 @@ void OLED::drawHeatSymbol(uint8_t state) {
   // Draw symbol 14
   // Then draw over it, the bottom 5 pixels always stay. 8 pixels above that are
   // the levels masks the symbol nicely
-  state /= 12;  // 0-> 8 range
+  state /= 31;  // 0-> 8 range
   // Then we want to draw down (16-(5+state)
   uint8_t cursor_x_temp = cursor_x;
   drawSymbol(14);

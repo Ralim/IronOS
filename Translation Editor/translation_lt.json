@@ -1,6 +1,7 @@
 {
 	"languageCode": "LT",
 	"languageLocalName": "Lietuvių",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracija atlikta!",
 		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
@@ -219,6 +220,14 @@
 				"kalibracija"
 			],
 			"desc": "Išplėstinė kalibracija naudojant termoelementą"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Galia",
+				"vatais"
+			],
+			"desc": "Maitinimo bloko galia vatais"
 		}
 	}
 }

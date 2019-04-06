@@ -1,5 +1,6 @@
 # Translation
-If you would like to contribute a translation, look at the file `translation.c` in the source code.
-Currently translations are compiled in at compile time with #defines (nothing complex).
-So all you need to do is add another section formatted like the english one that is there and either create a pull request or a github issue for inclusion.
-If the glyphs required already exist in the fonts then support should be quick. Otherwise it may take longer for the fonts to be created.
+If you would like to contribute a translation, use the [Translation Editor](http://htmlpreview.github.io/?https://github.com/Ralim/ts100/blob/master/Translation%20Editor/TranslationEditor.html).
+
+[Open a reference language file and optionally a target language file](https://github.com/Ralim/ts100/tree/master/Translation%20Editor).
+
+You can create an issue with your updated json translation, or make your own pull request. If you make a pull request, also run `python3 make_translation.py` to regenerate the source file.

@@ -38,7 +38,7 @@ This project is considered feature complete for use as a soldering iron, *so ple
 
 This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
 
-Officially the bootloader on the iron only works under windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
+Officially the bootloader on the iron only works under Windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
 ```
 1. Hold the button closest to the tip, and plug in the USB to the computer.
@@ -50,6 +50,7 @@ Officially the bootloader on the iron only works under windows. However, users h
 7. If it didnt work the first time, try copying the file again without disconnecting the iron, often it will work on the second shot.
 8. Disconnect the USB and power up the iron. You're good to go.
 ```
+
 
 For the more adventurous out there, you can also load this firmware onto the device using a SWD programmer.
 On the bottom of the MCU riser pcb, there are 4 pads for programming.
@@ -76,6 +77,7 @@ When on the main screen, the unit shows prompts for the two most common operatio
 More details are over in the [Menu information.](menu.md)
 
 ## Thanks
+
 
 If you love this firmware and want to continue my caffeine addiction, you can do so here (or email me for other options) : https://paypal.me/RalimTek
 I also want to should out to all of the [Fantastic Contributors](https://github.com/Ralim/ts100/graphs/contributors).

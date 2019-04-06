@@ -19,15 +19,15 @@ public:
 	static Orientation getOrientation() {
 #ifdef MODEL_TS80
 		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,
-				LIS_INT2_SRC) >> 2);
+		LIS_INT2_SRC) >> 2);
 		if (val == 8)
 			val = 3;
-		else if (val==1)
-			val=0;
-		else if(val==2)
-			val=1;
+		else if (val == 1)
+			val = 1;
+		else if (val == 2)
+			val = 0;
 		else
-			val=3;
+			val = 3;
 		return static_cast<Orientation>(val);
 #endif
 #ifdef MODEL_TS100

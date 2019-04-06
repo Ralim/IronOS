@@ -5,7 +5,7 @@
 #include "OLED.hpp"
 #include "Setup.h"
 extern uint8_t PCBVersion;
-extern uint16_t currentlyActiveTemperatureTarget;
+extern uint32_t currentlyActiveTemperatureTarget;
 enum ButtonState {
   BUTTON_NONE = 0,    /* No buttons pressed / < filter time*/
   BUTTON_F_SHORT = 1, /* User has pressed the front button*/

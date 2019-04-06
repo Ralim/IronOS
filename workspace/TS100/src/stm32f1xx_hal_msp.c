@@ -26,12 +26,6 @@ void HAL_MspInit(void) {
 	/* SysTick_IRQn interrupt configuration */
 	HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 
-	/**NOJTAG: JTAG-DP Disabled and SW-DP Enabled
-	 */
-	//__HAL_AFIO_REMAP_SWJ_NOJTAG()
-	//;
-	__HAL_AFIO_REMAP_SWJ_DISABLE()
-	; /*Disable swd for debug io use*/
 
 }
 
@@ -88,7 +82,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c) {
 	GPIO_InitStruct.Pin = SCL_Pin | SDA_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/* Peripheral clock enable */
@@ -103,7 +97,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c) {
 	hdma_i2c1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
 	hdma_i2c1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
 	hdma_i2c1_rx.Init.Mode = DMA_NORMAL;
-	hdma_i2c1_rx.Init.Priority = DMA_PRIORITY_MEDIUM;
+	hdma_i2c1_rx.Init.Priority = DMA_PRIORITY_LOW;
 	HAL_DMA_Init(&hdma_i2c1_rx);
 
 	__HAL_LINKDMA(hi2c, hdmarx, hdma_i2c1_rx);

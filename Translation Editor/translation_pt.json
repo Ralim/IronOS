@@ -1,9 +1,11 @@
 {
 	"languageCode": "PT",
+	"languageLocalName": "Português",
+	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
-		"SettingsCalibrationWarning": "A ponta deve estar em temperatura ambiente antes de continuar!",
-		"SettingsResetWarning": "Resetar para ajustes de fábrica?",
+		"SettingsCalibrationDone": "Calibração terminada!",
+		"SettingsCalibrationWarning": "A ponta deve estar à temperatura ambiente antes de continuar!",
+		"SettingsResetWarning": "Definições de fábrica?",
 		"UVLOWarningString": "DC BAIXO",
 		"UndervoltageString": "Subtensão",
 		"InputVoltageString": "Tensão ",
@@ -46,9 +48,9 @@
 		"UIMenu": {
 			"text2": [
 				"Interface",
-				"Usuário"
+				"Utilizador"
 			],
-			"desc": "Configurações da interface do usuário"
+			"desc": "Configurações do interface do utilizador"
 		},
 		"AdvancedMenu": {
 			"text2": [
@@ -65,7 +67,7 @@
 				"Fonte",
 				"alimentação"
 			],
-			"desc": "nte de alimentação. Define a tensão de corte. <DC=10V> <S=3.3V/célula>"
+			"desc": "Fonte de alimentação. Define a tensão de corte. <DC=10V> <S=3.3V/célula>"
 		},
 		"SleepTemperature": {
 			"text": "TMPE",
@@ -108,12 +110,12 @@
 			"desc": "Unidade de temperatura <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-			"text": "OCIOSO",
+			"text": "EM ESPERA",
 			"text2": [
 				"Tela repouso",
 				"avançada"
 			],
-			"desc": "Exibe informações avançadas quando ocioso"
+			"desc": "Exibe informações avançadas quando em espera"
 		},
 		"DisplayRotation": {
 			"text": "ORIENT",
@@ -127,9 +129,9 @@
 			"text": "TURBO",
 			"text2": [
 				"Modo turbo",
-				"ativado"
+				"activado"
 			],
-			"desc": "Tecla frontal ativa modo \"turbo\""
+			"desc": "Tecla frontal activa modo \"turbo\""
 		},
 		"BoostTemperature": {
 			"text": "TTMP",
@@ -151,9 +153,9 @@
 			"text": "RESFRI",
 			"text2": [
 				"Piscar ao",
-				"resfriar"
+				"arrefecer"
 			],
-			"desc": "Faz o valor da temperatura piscar durante o resfriamento"
+			"desc": "Faz o valor da temperatura piscar durante o arrefecimento"
 		},
 		"TemperatureCalibration": {
 			"text": "CAL.TEMP",
@@ -164,7 +166,7 @@
 			"desc": "Calibra a temperatura"
 		},
 		"SettingsReset": {
-			"text": "RESETAR",
+			"text": "RESET",
 			"text2": [
 				"Reset de",
 				"fábrica?"
@@ -177,7 +179,7 @@
 				"Calibrar",
 				"tensão"
 			],
-			"desc": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha presionado para sair"
+			"desc": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair"
 		},
 		"AdvancedSoldering": {
 			"text": "AVNCAD",
@@ -193,32 +195,39 @@
 				"Velocidade",
 				"texto ajuda"
 			],
-			"desc": "Velocidade que esse texto é exibido"
+			"desc": "Velocidade a que o texto é exibido"
 		},
 		"TipModel": {
-			"text": "TIPMO",
+			"text": "MODPNT",
 			"text2": [
-				"Tip",
-				"Model"
+				"Ponta",
+				"Modelo"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Selecção de modelo de ponta"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Calibração",
+				"Simples"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Calibração simples com água quente"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Calibração",
+				"Avançada"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Calibração avançada com um termopar na ponta"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Potência",
+				"Fonte"
+			],
+			"desc": "Potência da fonte usada (Watt)"
 		}
-	},
-	"languageLocalName": "Portugues"
+	}
 }

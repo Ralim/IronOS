@@ -1,5 +1,7 @@
 {
 	"languageCode": "SK",
+	"languageLocalName": "Slovenský",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Najprv sa prosim uistite, ze hrot ma izbovu teplotu!",
@@ -218,6 +220,14 @@
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
 		}
 	}
 }

@@ -1,6 +1,7 @@
 {
 	"languageCode": "FI",
 	"languageLocalName": "Suomi",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",
@@ -28,6 +29,7 @@
 		"SettingFastChar": "N",
 		"SettingSlowChar": "H"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -58,7 +60,6 @@
 			"desc": "Lisäasetukset"
 		}
 	},
-	"menuDouble": true,
 	"menuOptions": {
 		"PowerSource": {
 			"text": "",
@@ -219,6 +220,14 @@
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
 		}
 	}
 }

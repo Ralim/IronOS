@@ -107,7 +107,7 @@ void resetSettings() {
   systemSettings.PID_P = 42;                  // PID tuning constants
   systemSettings.PID_I = 50;
   systemSettings.PID_D = 15;
-  systemSettings.CalibrationOffset = 2780;  // the adc offset
+  systemSettings.CalibrationOffset = 1400;  // the adc offset
   systemSettings.customTipGain =
       0;  // The tip type is either default or a custom gain
 #ifdef MODEL_TS100

@@ -84,6 +84,7 @@
 				if (!isDefined(lang)) {
 					lang = {
 						languageCode: langCode,
+						cyrillicGlyphs: false,
 						messages: {},
 						characters: {},
 						menuDouble : false,
@@ -93,6 +94,13 @@
 					langMap[langCode] = lang;
 					app.languages[app.languages.length] = langCode;
 				}
+				entryIndex = 0;
+				continue;
+			}
+
+			// Use Cyrillic glyphs
+			if (startsWith(line, "#define CYRILLIC_GLYPHS")) {
+				lang.cyrillicGlyphs = true;
 				entryIndex = 0;
 				continue;
 			}

@@ -1,5 +1,7 @@
 {
 	"languageCode": "ES",
+	"languageLocalName": "Español",
+	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "¡Asegúrese que la punta esté a temperatura ambiente antes de proceder!",
@@ -218,7 +220,14 @@
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Power",
+				"Wattage"
+			],
+			"desc": "Power Wattage of the power adapter used"
 		}
-	},
-	"languageLocalName": "Español"
+	}
 }
