@@ -76,7 +76,8 @@ LINKER_FLAGS=-Wl,--gc-sections 		\
 			-mcpu=cortex-m3		\
 			-mthumb			\
 			-mfloat-abi=soft	\
-			-lm -Os -flto -Wl,--undefined=vTaskSwitchContext
+			-lm -Os -flto -Wl,--undefined=vTaskSwitchContext \
+			--specs=nano.specs
 
 # compiler flags ---------------------------------------------------------------
 CPUFLAGS=-D GCC_ARMCM3		\
