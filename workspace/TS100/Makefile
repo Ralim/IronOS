@@ -35,7 +35,7 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
+OPTIM=-Os -flto -ffat-lto-objects -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 
 # global defines ---------------------------------------------------------------
