@@ -38,7 +38,7 @@ public:
 		//or we need to goto double buffering
 	}
 
-	static void drawChar(char c, char preCursorCommand = '\0'); // Draw a character to a specific location
+	static void drawChar(char c); // Draw a character to a specific location
 	// Turn the screen on or not
 	static void displayOnOff(bool on) {
 		displayOnOffState = on;

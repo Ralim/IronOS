@@ -462,7 +462,7 @@ static void settings_setScrollSpeed(void) {
 }
 static void settings_displayScrollSpeed(void) {
 	printShortDescription(16, 7);
-	OLED::drawChar(
+	OLED::print(
 			(systemSettings.descriptionScrollSpeed) ?
 					SettingFastChar : SettingSlowChar);
 }
@@ -490,16 +490,16 @@ static void settings_displayDisplayRotation(void) {
 
 	switch (systemSettings.OrientationMode) {
 	case 0:
-		OLED::drawChar(SettingRightChar);
+		OLED::print(SettingRightChar);
 		break;
 	case 1:
-		OLED::drawChar(SettingLeftChar);
+		OLED::print(SettingLeftChar);
 		break;
 	case 2:
-		OLED::drawChar(SettingAutoChar);
+		OLED::print(SettingAutoChar);
 		break;
 	default:
-		OLED::drawChar(SettingRightChar);
+		OLED::print(SettingRightChar);
 		break;
 	}
 }

@@ -140,29 +140,49 @@ def getFontMapAndTable(textList):
     # allocate out these in their order as number codes
     symbolMap = {}
     index = 1
-    if len(textList) > 245:
+    #enforce numbers are first
+    for i in range(10):
+        s = "%0.1d" % i
+        symbolMap[s] = "\\x%0.2X" % index
+        index = index + 1
+    if len(textList) > 235:
         print('Error, too many used symbols for this version')
         exit(1)
     print('Generating fonts for {} symbols'.format(len(textList)))
+
     for sym in textList:
-        symbolMap[sym] = "\\x%0.2X" % index
-        index = index + 1
+        if sym not in symbolMap:
+            symbolMap[sym] = "\\x%0.2X" % index
+            index = index + 1
     # Get the font table
     fontTableStrings = []
     fontSmallTableStrings = []
     fontTable = fontTables.getFontMap()
     fontSmallTable = fontTables.getSmallFontMap()
+    for i in range(10):
+        sym = "%0.1d" % i
+        if sym not in fontTable:
+            print('Missing Large font element for {}'.format(sym))
+            exit(1)
+        fontLine = fontTable[sym]
+        fontTableStrings.append(fontLine + "// -> {}".format(sym))
+        if sym not in fontSmallTable:
+            print('Missing Small font element for {}'.format(sym))
+            exit(1)
+        fontLine = fontSmallTable[sym]
+        fontSmallTableStrings.append(fontLine + "// -> {}".format(sym))
+
     for sym in textList:
         if sym not in fontTable:
             print('Missing Large font element for {}'.format(sym))
             exit(1)
         fontLine = fontTable[sym]
-        fontTableStrings.append(fontLine)
+        fontTableStrings.append(fontLine + "// -> {}".format(sym))
         if sym not in fontSmallTable:
             print('Missing Small font element for {}'.format(sym))
             exit(1)
         fontLine = fontSmallTable[sym]
-        fontSmallTableStrings.append(fontLine)
+        fontSmallTableStrings.append(fontLine + "// -> {}".format(sym))
     outputTable = "const uint8_t USER_FONT_12[] = {" + to_unicode("\n")
     for line in fontTableStrings:
         # join font table int one large string
@@ -251,8 +271,8 @@ def writeLanguage(languageCode, defs, f):
     for mod in defs['characters']:
         eid = mod['id']
         f.write(
-            to_unicode("const char* " + eid + " = '" +
-                       convStr(symbolConversionTable, obj[eid]) + "';\n"))
+            to_unicode("const char* " + eid + " = \"" +
+                       convStr(symbolConversionTable, obj[eid]) + "\";\n"))
 
     f.write(to_unicode("\n"))
 

@@ -7,12 +7,13 @@
 
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
-
+#include "stm32f1xx_hal.h"
 enum ShortNameType {
   SHORT_NAME_SINGLE_LINE = 1,
   SHORT_NAME_DOUBLE_LINE = 2,
 };
-
+extern const uint8_t USER_FONT_12[];
+extern const uint8_t USER_FONT_6x8[];
 /*
  * When SettingsShortNameType is SHORT_NAME_SINGLE_LINE
  * use SettingsShortNames as SettingsShortNames[16][1].. second column undefined
@@ -42,13 +43,13 @@ extern const char* TipDisconnectedString;
 extern const char* SolderingAdvancedPowerPrompt;
 extern const char* OffString;
 
-extern const char SettingTrueChar;
-extern const char SettingFalseChar;
-extern const char SettingRightChar;
-extern const char SettingLeftChar;
-extern const char SettingAutoChar;
+extern const char* SettingTrueChar;
+extern const char* SettingFalseChar;
+extern const char* SettingRightChar;
+extern const char* SettingLeftChar;
+extern const char* SettingAutoChar;
 
-extern const char SettingFastChar;
-extern const char SettingSlowChar;
+extern const char* SettingFastChar;
+extern const char* SettingSlowChar;
 
 #endif /* TRANSLATION_H_ */
