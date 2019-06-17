@@ -574,6 +574,12 @@ static void settings_displayResetSettings(void) {
 
 static void settings_setTipModel(void) {
 	systemSettings.tipType++;
+	if(systemSettings.tipType==Tip_MiniWare)
+		systemSettings.tipType++;
+#ifdef MODEL_TS100
+	if(systemSettings.tipType==Tip_Hakko)
+			systemSettings.tipType++;
+#endif
 	systemSettings.tipType %= (Tip_Custom + 1);  // Wrap after custom
 }
 static void settings_displayTipModel(void) {
@@ -583,7 +589,9 @@ static void settings_displayTipModel(void) {
 	// set the cursor
 	// Print the mfg
 	OLED::setCursor(55, 0);
-	if (systemSettings.tipType < Tip_MiniWare) {
+	if (systemSettings.tipType == Tip_Custom) {
+		OLED::print(TipModelStrings[Tip_Custom]);
+	} else if (systemSettings.tipType < Tip_MiniWare) {
 		OLED::print(TipModelStrings[Tip_MiniWare]);
 	}
 #ifdef MODEL_TS100
@@ -591,13 +599,10 @@ static void settings_displayTipModel(void) {
 		OLED::print(TipModelStrings[Tip_Hakko]);
 	}
 #endif
-	else if (systemSettings.tipType == Tip_Custom) {
-		OLED::print(TipModelStrings[Tip_Custom]);
-	}
+
 	OLED::setCursor(55, 8);
 	if (systemSettings.tipType != Tip_Custom)
-		if (systemSettings.tipType != Tip_MiniWare)
-			OLED::print(TipModelStrings[systemSettings.tipType]);
+		OLED::print(TipModelStrings[systemSettings.tipType]);
 
 }
 static void calibration_displaySimpleCal(void) {
