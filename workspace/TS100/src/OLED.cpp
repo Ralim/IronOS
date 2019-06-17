@@ -88,11 +88,14 @@ void OLED::initialize() {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(char c) {
-	if (c == '\n' && cursor_y == 0) {
+	if (c == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
 		cursor_x = 0;
 		cursor_y = 8;
+		return;
+	} else if (c == 0) {
+		return;
 	}
-	uint16_t index = c-1;
+	uint16_t index = c - 2; //First index is \x02
 	uint8_t* charPointer;
 	charPointer = ((uint8_t*) currentFont)
 			+ ((fontWidth * (fontHeight / 8)) * index);
@@ -156,44 +159,44 @@ void OLED::printNumber(uint16_t number, uint8_t places) {
 	char buffer[7] = { 0 };
 
 	if (places >= 5) {
-		buffer[5] = 1 + number % 10;
+		buffer[5] = 2 + number % 10;
 		number /= 10;
 	}
 	if (places > 4) {
-		buffer[4] = 1 + number % 10;
+		buffer[4] = 2 + number % 10;
 		number /= 10;
 	}
 
 	if (places > 3) {
-		buffer[3] = 1 + number % 10;
+		buffer[3] = 2 + number % 10;
 		number /= 10;
 	}
 
 	if (places > 2) {
-		buffer[2] = 1 + number % 10;
+		buffer[2] = 2 + number % 10;
 		number /= 10;
 	}
 
 	if (places > 1) {
-		buffer[1] = 1 + number % 10;
+		buffer[1] = 2 + number % 10;
 		number /= 10;
 	}
 
-	buffer[0] = 1 + number % 10;
+	buffer[0] = 2 + number % 10;
 	number /= 10;
 	print(buffer);
 }
 
 void OLED::debugNumber(int32_t val) {
 	if (abs(val) > 99999) {
-		OLED::print(" OoB"); // out of bounds
+		OLED::print(SymbolSpace); // out of bounds
 		return;
 	}
 	if (val >= 0) {
-		OLED::drawChar(' ');
+		OLED::print(SymbolSpace);
 		OLED::printNumber(val, 5);
 	} else {
-		OLED::drawChar('-');
+		OLED::print(SymbolMinus);
 		OLED::printNumber(-val, 5);
 	}
 }
@@ -201,8 +204,7 @@ void OLED::debugNumber(int32_t val) {
 void OLED::drawSymbol(uint8_t symbolID) {
 	// draw a symbol to the current cursor location
 	setFont(2);
-	drawChar(' ' + symbolID); // space offset is in all fonts, so we pad it here
-							  // and remove it later
+	drawChar(symbolID + 2);
 	setFont(0);
 }
 

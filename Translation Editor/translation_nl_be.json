@@ -20,7 +20,8 @@
 		"IdleSetString": "Stel in:",
 		"TipDisconnectedString": "Punt ONTKOPPELD",
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
-		"OffString": "Uit"
+		"OffString": "Uit",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "R",

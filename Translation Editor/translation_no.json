@@ -20,7 +20,8 @@
 		"IdleSetString": "Set:",
 		"TipDisconnectedString": "SPISS FRAKOBLET",
 		"SolderingAdvancedPowerPrompt": "Effekt: ",
-		"OffString": "Av"
+		"OffString": "Av",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "H",

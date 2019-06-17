@@ -20,7 +20,8 @@
 		"IdleSetString": " Set:",
 		"TipDisconnectedString": "ВРЪХ ЛОША ВРЪЗКА",
 		"SolderingAdvancedPowerPrompt": "Захранване: ",
-		"OffString": "Off"
+		"OffString": "Off",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "R",

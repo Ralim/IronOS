@@ -97,7 +97,7 @@ int main(void) {
 void printVoltage() {
 	uint32_t volt = getInputVoltageX10(systemSettings.voltageDiv, 0);
 	OLED::printNumber(volt / 10, 2);
-	OLED::drawChar('.');
+	OLED::print(SymbolDot);
 	OLED::printNumber(volt % 10, 1);
 }
 void GUIDelay() {
@@ -374,25 +374,25 @@ static void gui_solderingTempAdjust() {
 #else
 		if (OLED::getRotation())
 #endif
-			OLED::drawChar('-');
+			OLED::print(SymbolMinus);
 		else
-			OLED::drawChar('+');
+			OLED::print(SymbolPlus);
 
-		OLED::drawChar(' ');
+		OLED::print(SymbolSpace);
 		OLED::printNumber(systemSettings.SolderingTemp, 3);
 		if (systemSettings.temperatureInF)
 			OLED::drawSymbol(0);
 		else
 			OLED::drawSymbol(1);
-		OLED::drawChar(' ');
+		OLED::print(SymbolSpace);
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
 		if (OLED::getRotation())
 #endif
-			OLED::drawChar('+');
+			OLED::print(SymbolPlus);
 		else
-			OLED::drawChar('-');
+			OLED::print(SymbolMinus);
 		OLED::refresh();
 		GUIDelay();
 	}
@@ -443,13 +443,13 @@ static int gui_SolderingSleepingMode() {
 			OLED::print(SleepingTipAdvancedString);
 			OLED::printNumber(tipTemp, 3);
 			if (systemSettings.temperatureInF)
-				OLED::print("F");
+				OLED::print(SymbolDegF);
 			else
-				OLED::print("C");
+				OLED::print(SymbolDegC);
 
-			OLED::print(" ");
+			OLED::print(SymbolSpace);
 			printVoltage();
-			OLED::drawChar('V');
+			OLED::print(SymbolVolts);
 		} else {
 			OLED::setFont(0);
 			OLED::print(SleepingSimpleString);
@@ -565,28 +565,28 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			OLED::setFont(1);
 			OLED::print(SolderingAdvancedPowerPrompt);  // Power:
 			OLED::printNumber(milliWattHistory[0] / 1000, 2);
-			OLED::drawChar('.');
+			OLED::print(SymbolDot);
 			OLED::printNumber(milliWattHistory[0] / 100 % 10, 1);
-			OLED::drawChar('W');
+			OLED::print(SymbolWatts);
 
 			if (systemSettings.sensitivity && systemSettings.SleepTime) {
-				OLED::print(" ");
+				OLED::print(SymbolSpace);
 				display_countdown(sleepThres);
 			}
 
 			OLED::setCursor(0, 8);
 			OLED::print(SleepingTipAdvancedString);
 			gui_drawTipTemp(true);
-			OLED::print(" ");
+			OLED::print(SymbolSpace);
 			printVoltage();
-			OLED::drawChar('V');
+			OLED::print(SymbolVolts);
 		} else {
 			// We switch the layout direction depending on the orientation of the
 			// OLED::
 			if (OLED::getRotation()) {
 				// battery
 				gui_drawBatteryIcon();
-				OLED::drawChar(' '); // Space out gap between battery <-> temp
+				OLED::print(SymbolSpace); // Space out gap between battery <-> temp
 				gui_drawTipTemp(true);  // Draw current tip temp
 
 				// We draw boost arrow if boosting, or else gap temp <-> heat
@@ -594,7 +594,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				if (boostModeOn)
 					OLED::drawSymbol(2);
 				else
-					OLED::drawChar(' ');
+					OLED::print(SymbolSpace);
 
 				// Draw heating/cooling symbols
 				OLED::drawHeatSymbol(
@@ -610,10 +610,10 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				if (boostModeOn)
 					OLED::drawSymbol(2);
 				else
-					OLED::drawChar(' ');
+					OLED::print(SymbolSpace);
 				gui_drawTipTemp(true);  // Draw current tip temp
 
-				OLED::drawChar(' '); // Space out gap between battery <-> temp
+				OLED::print(SymbolSpace); // Space out gap between battery <-> temp
 
 				gui_drawBatteryIcon();
 			}

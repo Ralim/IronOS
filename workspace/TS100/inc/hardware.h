@@ -106,7 +106,7 @@ enum TipType {
 #endif
 #ifdef MODEL_TS80
 enum TipType {
-	TS_B02 = 0, TS_D25 = 1, Tip_MiniWare = 2, Tip_Custom = 2,
+	TS_B02 = 0, TS_D25 = 1, Tip_MiniWare = 2, Tip_Custom = 3,
 };
 #endif
 extern uint16_t tipGainCalValue ;

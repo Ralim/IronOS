@@ -20,7 +20,8 @@
 		"IdleSetString": " Cél:",
 		"TipDisconnectedString": "HEGY LEVÉVE",
 		"SolderingAdvancedPowerPrompt": "Telj: ",
-		"OffString": "Ki"
+		"OffString": "Ki",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "J",

@@ -20,7 +20,8 @@
 		"IdleSetString": " Ustaw:",
 		"TipDisconnectedString": "GROT ODŁĄCZONY",
 		"SolderingAdvancedPowerPrompt": "Power: ",
-		"OffString": "Wyłącz"
+		"OffString": "Wyłącz",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "P",

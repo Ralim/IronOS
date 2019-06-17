@@ -305,10 +305,10 @@ static void settings_displayInputVRange(void) {
 	printShortDescription(0, 6);
 
 	if (systemSettings.cutoutSetting) {
-		OLED::drawChar('0' + 2 + systemSettings.cutoutSetting);
-		OLED::drawChar('S');
+		OLED::printNumer(2 + systemSettings.cutoutSetting,1);
+		OLED::print(SymbolCellCount);
 	} else {
-		OLED::print("DC");
+		OLED::print(SymbolDC);
 	}
 }
 #else
@@ -321,10 +321,12 @@ static void settings_displayInputPRange(void) {
 //0 = 18W, 1=24W
 	switch (systemSettings.cutoutSetting) {
 	case 0:
-		OLED::print("18W");
+		OLED::printNumber(18, 2);
+		OLED::print(SymbolWatts);
 		break;
 	case 1:
-		OLED::print("24W");
+		OLED::printNumber(24, 2);
+		OLED::print(SymbolWatts);
 		break;
 	default:
 		break;
@@ -367,10 +369,10 @@ static void settings_displaySleepTime(void) {
 		OLED::print(OffString);
 	} else if (systemSettings.SleepTime < 6) {
 		OLED::printNumber(systemSettings.SleepTime * 10, 2);
-		OLED::drawChar('S');
+		OLED::print(SymbolSeconds);
 	} else {
 		OLED::printNumber(systemSettings.SleepTime - 5, 2);
-		OLED::drawChar('M');
+		OLED::print(SymbolMinutes);
 	}
 }
 
@@ -389,7 +391,7 @@ static void settings_displayShutdownTime(void) {
 		OLED::print(OffString);
 	} else {
 		OLED::printNumber(systemSettings.ShutdownTime, 2);
-		OLED::drawChar('M');
+		OLED::print(SymbolMinutes);
 	}
 }
 
@@ -422,7 +424,7 @@ static void settings_setTempF(void) {
 static void settings_displayTempF(void) {
 	printShortDescription(5, 7);
 
-	OLED::drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
+	OLED::print((systemSettings.temperatureInF) ? SymbolDegF : SymbolDegC);
 }
 
 static void settings_setSensitivity(void) {
@@ -559,7 +561,7 @@ static void settings_setResetSettings(void) {
 
 		OLED::setFont(0);
 		OLED::setCursor(0, 0);
-		OLED::print("RESET OK");
+		OLED::print(ResetOKMessage);
 		OLED::refresh();
 
 		waitForButtonPressOrTimeout(200);  // 2 second timeout
@@ -582,63 +584,21 @@ static void settings_displayTipModel(void) {
 	// Print the mfg
 	OLED::setCursor(55, 0);
 	if (systemSettings.tipType < Tip_MiniWare) {
-#ifdef MODEL_TS100
-		OLED::print("TS100");
-#else
-		OLED::print("TS80");
-#endif
+		OLED::print(TipModelStrings[Tip_MiniWare]);
 	}
 #ifdef MODEL_TS100
 	else if (systemSettings.tipType < Tip_Hakko) {
-		OLED::print("HAKKO");
+		OLED::print(TipModelStrings[Tip_Hakko]);
 	}
 #endif
 	else if (systemSettings.tipType == Tip_Custom) {
-		OLED::print("User");
+		OLED::print(TipModelStrings[Tip_Custom]);
 	}
 	OLED::setCursor(55, 8);
-#ifdef MODEL_TS100
-	switch ((enum TipType)systemSettings.tipType) {
-		case TS_B2:
-		OLED::print(" B2  ");
-		break;
-		case TS_D24:
-		OLED::print(" D24 ");
-		break;
-		case TS_BC2:
-		OLED::print(" BC2 ");
-		break;
-		case TS_C1:
-		OLED::print(" C1 ");
-		break;
-		case HAKKO_BC2:
-		OLED::print(" BC2 ");
-		break;
-		case Tip_Custom:
-		OLED::print("Tuned");
-		break;
-		default:
-		OLED::print("????");
-		break;
-	}
-#endif
-#ifdef MODEL_TS80
-	// only 2 tips atm
-	switch ((enum TipType) systemSettings.tipType) {
-	case TS_B02:
-		OLED::print(" B02 ");
-		break;
-	case TS_D25:
-		OLED::print(" D25 ");
-		break;
-	case Tip_Custom:
-		OLED::print("Tuned");
-		break;
-	default:
-		OLED::print("????");
-		break;
-	}
-#endif
+	if (systemSettings.tipType != Tip_Custom)
+		if (systemSettings.tipType != Tip_MiniWare)
+			OLED::print(TipModelStrings[systemSettings.tipType]);
+
 }
 static void calibration_displaySimpleCal(void) {
 	printShortDescription(18, 5);
@@ -771,17 +731,17 @@ static void calibration_enterAdvancedCal(void) {
 			OLED::clearScreen();
 			OLED::setFont(0);
 			if (OLED::getRotation())
-				OLED::drawChar('-');
+				OLED::print(SymbolMinus);
 			else
-				OLED::drawChar('+');
+				OLED::print(SymbolPlus);
 
-			OLED::drawChar(' ');
+			OLED::print(SymbolSpace);
 			OLED::printNumber(systemSettings.customTipGain, 4);
-			OLED::drawChar(' ');
+			OLED::print(SymbolSpace);
 			if (OLED::getRotation())
-				OLED::drawChar('+');
+				OLED::print(SymbolPlus);
 			else
-				OLED::drawChar('-');
+				OLED::print(SymbolMinus);
 			OLED::refresh();
 			GUIDelay();
 		}

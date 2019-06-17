@@ -20,7 +20,8 @@
 		"IdleSetString": " Nust:",
 		"TipDisconnectedString": "ANTGAL ATJUNGTAS",
 		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
-		"OffString": "Išj"
+		"OffString": "Išj",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",

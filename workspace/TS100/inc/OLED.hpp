@@ -38,7 +38,6 @@ public:
 		//or we need to goto double buffering
 	}
 
-	static void drawChar(char c); // Draw a character to a specific location
 	// Turn the screen on or not
 	static void displayOnOff(bool on) {
 		displayOnOffState = on;
@@ -92,9 +91,7 @@ public:
 			bool clear);
 	static void drawHeatSymbol(uint8_t state);
 private:
-
-	//Draw a buffer to the screen buffer
-
+	static void drawChar(char c); // Draw a character to a specific location
 	static const uint8_t* currentFont;// Pointer to the current font used for rendering to the buffer
 	static uint8_t* firstStripPtr; // Pointers to the strips to allow for buffer having extra content
 	static uint8_t* secondStripPtr;	//Pointers to the strips

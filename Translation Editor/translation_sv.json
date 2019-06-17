@@ -20,7 +20,8 @@
 		"IdleSetString": " Ange:",
 		"TipDisconnectedString": "SPETS URTAGEN",
 		"SolderingAdvancedPowerPrompt": "Ström: ",
-		"OffString": "Av"
+		"OffString": "Av",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "H",

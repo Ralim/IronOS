@@ -80,6 +80,10 @@ var def =
 		{
 			"id": "OffString",
 			"maxLen": 3
+		},
+		{
+			"id": "ResetOKMessage",
+			"maxLen": 8
 		}
 	],
 	"characters": [

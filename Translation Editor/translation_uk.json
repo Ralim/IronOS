@@ -20,7 +20,8 @@
 		"IdleSetString": " ->",
 		"TipDisconnectedString": "Жало вимкнено!",
 		"SolderingAdvancedPowerPrompt": "Живлення: ",
-		"OffString": "Вим"
+		"OffString": "Вим",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "R",

@@ -78,6 +78,43 @@ def escapeC(s):
     return s.replace("\"", "\\\"")
 
 
+def getConstants():
+    # Extra constants that are used in the firmware that are shared across all languages
+    consants =[]
+    consants.append(('SymbolPlus','+'))
+    consants.append(('SymbolMinus','-'))
+    consants.append(('SymbolSpace',' '))
+    consants.append(('SymbolDot','.'))
+    consants.append(('SymbolDegC','C'))
+    consants.append(('SymbolDegF','F'))
+    consants.append(('SymbolMinutes','M'))
+    consants.append(('SymbolSeconds','S'))
+    consants.append(('SymbolWatts','W'))
+    consants.append(('SymbolVolts','V'))
+    consants.append(('SymbolDC','DC'))
+    consants.append(('SymbolCellCount','S'))
+    return consants
+def getTipModelEnumTS80(): 
+    constants = []
+    constants.append("B02")
+    constants.append("D25")
+    constants.append("TS80") # end of miniware
+    constants.append("User") # User
+    return constants
+
+def getTipModelEnumTS100(): 
+    constants = []
+    constants.append("B02")
+    constants.append("D24")
+    constants.append("BC2")
+    constants.append(" C1")
+    constants.append("TS100")# end of miniware
+    constants.append("BC2")
+    constants.append("Hakko")# end of hakko
+    constants.append("User")
+    return constants
+
+
 def getLetterCounts(defs, lang):
     textList = []
     #iterate over all strings
@@ -116,7 +153,12 @@ def getLetterCounts(defs, lang):
     for mod in defs['menuGroups']:
         eid = mod['id']
         textList.append(obj[eid]['desc'])
-
+    constants = getConstants()  
+    for x in constants:
+        textList.append(x[1])
+    textList.extend(getTipModelEnumTS100())
+    textList.extend(getTipModelEnumTS80())  
+        
     # collapse all strings down into the composite letters and store totals for these
 
     symbolCounts = {}
@@ -134,18 +176,20 @@ def getLetterCounts(defs, lang):
     symbolCounts.reverse()
     return symbolCounts
 
+    
 
 def getFontMapAndTable(textList):
     # the text list is sorted
     # allocate out these in their order as number codes
     symbolMap = {}
-    index = 1
+    symbolMap['\n'] = '\\x01'
+    index = 2  # start at 2, as 0= null terminator,1 = new line
+    forcedFirstSymbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     #enforce numbers are first
-    for i in range(10):
-        s = "%0.1d" % i
-        symbolMap[s] = "\\x%0.2X" % index
+    for sym in forcedFirstSymbols:
+        symbolMap[sym] = "\\x%0.2X" % index
         index = index + 1
-    if len(textList) > 235:
+    if len(textList) > (253 - len(forcedFirstSymbols)):
         print('Error, too many used symbols for this version')
         exit(1)
     print('Generating fonts for {} symbols'.format(len(textList)))
@@ -159,30 +203,30 @@ def getFontMapAndTable(textList):
     fontSmallTableStrings = []
     fontTable = fontTables.getFontMap()
     fontSmallTable = fontTables.getSmallFontMap()
-    for i in range(10):
-        sym = "%0.1d" % i
+    for sym in forcedFirstSymbols:
         if sym not in fontTable:
             print('Missing Large font element for {}'.format(sym))
             exit(1)
         fontLine = fontTable[sym]
-        fontTableStrings.append(fontLine + "// -> {}".format(sym))
+        fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym],sym))
         if sym not in fontSmallTable:
             print('Missing Small font element for {}'.format(sym))
             exit(1)
         fontLine = fontSmallTable[sym]
-        fontSmallTableStrings.append(fontLine + "// -> {}".format(sym))
+        fontSmallTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym],sym))
 
     for sym in textList:
         if sym not in fontTable:
             print('Missing Large font element for {}'.format(sym))
             exit(1)
-        fontLine = fontTable[sym]
-        fontTableStrings.append(fontLine + "// -> {}".format(sym))
-        if sym not in fontSmallTable:
-            print('Missing Small font element for {}'.format(sym))
-            exit(1)
-        fontLine = fontSmallTable[sym]
-        fontSmallTableStrings.append(fontLine + "// -> {}".format(sym))
+        if sym not in forcedFirstSymbols:
+            fontLine = fontTable[sym]
+            fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym],sym))
+            if sym not in fontSmallTable:
+                print('Missing Small font element for {}'.format(sym))
+                exit(1)
+            fontLine = fontSmallTable[sym]
+            fontSmallTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym],sym))
     outputTable = "const uint8_t USER_FONT_12[] = {" + to_unicode("\n")
     for line in fontTableStrings:
         # join font table int one large string
@@ -200,7 +244,7 @@ def getFontMapAndTable(textList):
 def convStr(symbolConversionTable, text):
     # convert all of the symbols from the string into escapes for their content
     outputString = ""
-    for c in text.replace('\\n', '').replace('\\r', ''):
+    for c in text.replace('\\r', '').replace('\\n','\n'):
         if c not in symbolConversionTable:
             print('Missing font definition for {}'.format(c))
         else:
@@ -276,6 +320,27 @@ def writeLanguage(languageCode, defs, f):
 
     f.write(to_unicode("\n"))
 
+    # Write out firmware constant options
+    constants = getConstants()
+    for x in constants:
+        f.write(
+            to_unicode("const char* " + x[0] + " = \"" +
+                       convStr(symbolConversionTable, x[1]) + "\";\n"))
+
+    f.write(to_unicode("\n"))
+    # Write out tip model strings
+
+    f.write(to_unicode("const char* TipModelStrings[] = {\n"))
+    f.write(to_unicode("#ifdef MODEL_TS100\n"))
+    for c in getTipModelEnumTS100():
+        f.write(to_unicode("\t \"" + convStr(symbolConversionTable, c) + "\",\n"))
+    f.write(to_unicode("#else\n"))
+    for c in getTipModelEnumTS80():
+        f.write(to_unicode("\t \"" +  convStr(symbolConversionTable, c)  + "\",\n"))
+    f.write(to_unicode("#endif\n"))
+
+    f.write(to_unicode("};\n\n"))
+    
     # ----- Menu Options
 
     # Menu type

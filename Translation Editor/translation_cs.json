@@ -20,7 +20,8 @@
 		"IdleSetString": " Cíl:",
 		"TipDisconnectedString": "HROT NEPŘIPOJEN",
 		"SolderingAdvancedPowerPrompt": "Ohřev: ",
-		"OffString": "Off"
+		"OffString": "Off",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "P",

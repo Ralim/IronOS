@@ -20,7 +20,8 @@
 		"IdleSetString": " Set:",
 		"TipDisconnectedString": "TIP LOSGEKOPPELD",
 		"SolderingAdvancedPowerPrompt": "vermogen: ",
-		"OffString": "Off"
+		"OffString": "Off",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "R",

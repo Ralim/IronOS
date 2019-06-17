@@ -9,8 +9,7 @@
 #define TRANSLATION_H_
 #include "stm32f1xx_hal.h"
 enum ShortNameType {
-  SHORT_NAME_SINGLE_LINE = 1,
-  SHORT_NAME_DOUBLE_LINE = 2,
+	SHORT_NAME_SINGLE_LINE = 1, SHORT_NAME_DOUBLE_LINE = 2,
 };
 extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
@@ -42,7 +41,7 @@ extern const char* IdleSetString;
 extern const char* TipDisconnectedString;
 extern const char* SolderingAdvancedPowerPrompt;
 extern const char* OffString;
-
+extern const char* ResetOKMessage;
 extern const char* SettingTrueChar;
 extern const char* SettingFalseChar;
 extern const char* SettingRightChar;
@@ -51,5 +50,18 @@ extern const char* SettingAutoChar;
 
 extern const char* SettingFastChar;
 extern const char* SettingSlowChar;
+extern const char*  TipModelStrings[];
+extern const char* SymbolPlus;
+extern const char* SymbolMinus;
+extern const char* SymbolSpace;
+extern const char* SymbolDot;
+extern const char* SymbolDegC;
+extern const char* SymbolDegF;
+extern const char* SymbolMinutes;
+extern const char* SymbolSeconds;
+extern const char* SymbolWatts;
+extern const char* SymbolVolts;
+extern const char* SymbolDC;
+extern const char* SymbolCellCount;
 
 #endif /* TRANSLATION_H_ */
