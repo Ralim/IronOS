@@ -192,7 +192,7 @@ def writeLanguage(languageCode, defs, f):
 
     for mod in defs['characters']:
         eid = mod['id']
-        f.write(to_unicode("const char " + eid + " = '" + obj[eid] + "';\n"))
+        f.write(to_unicode("const char* " + eid + " = '" + convStr(symbolConversionTable,obj[eid]) + "';\n"))
 
     f.write(to_unicode("\n"))
 
@@ -216,10 +216,10 @@ def writeLanguage(languageCode, defs, f):
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         if lang['menuDouble']:
             f.write(
-                to_unicode("{ \"" + escapeC(obj[eid]['text2'][0]) + "\", \"" +
-                           escapeC(obj[eid]['text2'][1]) + "\" },\n"))
+                to_unicode("{ \"" + convStr(symbolConversionTable,(obj[eid]['text2'][0])) + "\", \"" +
+                           convStr(symbolConversionTable,(obj[eid]['text2'][1])) + "\" },\n"))
         else:
-            f.write(to_unicode("{ \"" + escapeC(obj[eid]['text']) + "\" },\n"))
+            f.write(to_unicode("{ \"" + convStr(symbolConversionTable,(obj[eid]['text'])) + "\" },\n"))
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
 
@@ -236,7 +236,7 @@ def writeLanguage(languageCode, defs, f):
         eid = mod['id']
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         f.write(
-            to_unicode("\"" + escapeC(obj[eid]['text2'][0] + "\\n" +
+            to_unicode("\"" + convStr(symbolConversionTable,(obj[eid]['text2'][0]) + "\\n" +
                                       obj[eid]['text2'][1]) + "\",\n"))
 
     f.write(to_unicode("};\n\n"))
@@ -251,7 +251,7 @@ def writeLanguage(languageCode, defs, f):
     for mod in defs['menuGroups']:
         eid = mod['id']
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
-        f.write(to_unicode("\"" + escapeC(obj[eid]['desc']) + "\",\n"))
+        f.write(to_unicode("\"" + convStr(symbolConversionTable,(obj[eid]['desc'])) + "\",\n"))
 
     f.write(to_unicode("};\n\n"))
 
