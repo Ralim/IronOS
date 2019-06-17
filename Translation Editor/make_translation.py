@@ -5,7 +5,7 @@ import json
 import os
 import io
 import sys
-from font import getFontMap
+import fontTables
 TRANSLATION_CPP = "Translation.cpp"
 
 try:
@@ -140,20 +140,37 @@ def getFontMapAndTable(textList):
     # allocate out these in their order as number codes
     symbolMap = {}
     index = 1
+    if len(textList) > 245:
+        print('Error, too many used symbols for this version')
+        exit(1)
+    print('Generating fonts for {} symbols'.format(len(textList)))
     for sym in textList:
         symbolMap[sym] = "\\x%0.2X" % index
         index = index + 1
     # Get the font table
     fontTableStrings = []
-    fontTable = getFontMap()
+    fontSmallTableStrings = []
+    fontTable = fontTables.getFontMap()
+    fontSmallTable = fontTables.getSmallFontMap()
     for sym in textList:
         if sym not in fontTable:
-            print('Missing font element for {}'.format(sym))
+            print('Missing Large font element for {}'.format(sym))
             exit(1)
         fontLine = fontTable[sym]
         fontTableStrings.append(fontLine)
-    outputTable = "const uint8_t userFont_12[] = {" + to_unicode("\n")
+        if sym not in fontSmallTable:
+            print('Missing Small font element for {}'.format(sym))
+            exit(1)
+        fontLine = fontSmallTable[sym]
+        fontSmallTableStrings.append(fontLine)
+    outputTable = "const uint8_t USER_FONT_12[] = {" + to_unicode("\n")
     for line in fontTableStrings:
+        # join font table int one large string
+        outputTable = outputTable + line + to_unicode("\n")
+    outputTable = outputTable + "};" + to_unicode("\n")
+    outputTable = outputTable + "const uint8_t USER_FONT_6x8[] = {" + to_unicode(
+        "\n")
+    for line in fontSmallTableStrings:
         # join font table int one large string
         outputTable = outputTable + line + to_unicode("\n")
     outputTable = outputTable + "};" + to_unicode("\n")
