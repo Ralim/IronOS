@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
+#coding=utf-8
 from __future__ import print_function
 import json
 import os
@@ -85,12 +85,48 @@ def getLetterCounts(defs, lang):
     for mod in defs['menuOptions']:
         eid = mod['id']
         textList.append(obj[eid]['desc'])
+
+    obj = lang['messages']
+    for mod in defs['messages']:
+        eid = mod['id']
+        textList.append(obj[eid])
+
+    obj = lang['characters']
+
+    for mod in defs['characters']:
+        eid = mod['id']
+        textList.append(obj[eid])
+
+    obj = lang['menuOptions']
+    for mod in defs['menuOptions']:
+        eid = mod['id']
+        if lang['menuDouble']:
+            textList.append(obj[eid]['text2'][0])
+            textList.append(obj[eid]['text2'][1])
+        else:
+            textList.append(obj[eid]['text'])
+
+    obj = lang['menuGroups']
+    for mod in defs['menuGroups']:
+        eid = mod['id']
+        textList.append(obj[eid]['text2'][0])
+        textList.append(obj[eid]['text2'][1])
+
+    obj = lang['menuGroups']
+    for mod in defs['menuGroups']:
+        eid = mod['id']
+        textList.append(obj[eid]['desc'])
+
     # collapse all strings down into the composite letters and store totals for these
 
     symbolCounts = {}
     for line in textList:
-        for letter in line:
-            symbolCounts[letter] = symbolCounts.get(letter, 0) + 1
+        line = line.replace('\n', '').replace('\r', '')
+        line = line.replace('\\n', '').replace('\\r', '')
+        if len(line):
+            #print(line)
+            for letter in line:
+                symbolCounts[letter] = symbolCounts.get(letter, 0) + 1
     symbolCounts = sorted(
         symbolCounts.items(),
         key=lambda kv: kv[1])  # swap to Big -> little sort order
@@ -112,7 +148,7 @@ def getFontMapAndTable(textList):
     fontTable = getFontMap()
     for sym in textList:
         if sym not in fontTable:
-            print(f'Missing font element for {sym}')
+            print('Missing font element for {}'.format(sym))
             exit(1)
         fontLine = fontTable[sym]
         fontTableStrings.append(fontLine)
@@ -123,15 +159,17 @@ def getFontMapAndTable(textList):
     outputTable = outputTable + "};" + to_unicode("\n")
     return (outputTable, symbolMap)
 
-def convStr(symbolConversionTable,text):
+
+def convStr(symbolConversionTable, text):
     # convert all of the symbols from the string into escapes for their content
     outputString = ""
-    for c in text:
+    for c in text.replace('\\n', '').replace('\\r', ''):
         if c not in symbolConversionTable:
-            print(f'Missing font definition for {c}')
+            print('Missing font definition for {}'.format(c))
         else:
             outputString = outputString + symbolConversionTable[c]
     return outputString
+
 
 def writeLanguage(languageCode, defs, f):
     print("Generating block for " + languageCode)
@@ -140,9 +178,9 @@ def writeLanguage(languageCode, defs, f):
     textList = getLetterCounts(defs, lang)
     # From the letter counts, need to make a symbol translator & write out the font
     (fontTableText, symbolConversionTable) = getFontMapAndTable(textList)
-    
+
     f.write(to_unicode("\n#ifdef LANG_" + languageCode + "\n"))
-    f.write(fontTableText)    
+    f.write(fontTableText)
     try:
         langName = lang['languageLocalName']
     except KeyError:
@@ -168,7 +206,10 @@ def writeLanguage(languageCode, defs, f):
         if 'feature' in mod:
             f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
-        f.write(to_unicode("\"" + convStr(symbolConversionTable,(obj[eid]['desc'])) + "\",\n"))
+        f.write(
+            to_unicode("\"" +
+                       convStr(symbolConversionTable, (obj[eid]['desc'])) +
+                       "\",\n"))
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
 
@@ -181,8 +222,8 @@ def writeLanguage(languageCode, defs, f):
     for mod in defs['messages']:
         eid = mod['id']
         f.write(
-            to_unicode("const char* " + eid + " = \"" + convStr(symbolConversionTable,(obj[eid])) +
-                       "\";\n"))
+            to_unicode("const char* " + eid + " = \"" +
+                       convStr(symbolConversionTable, (obj[eid])) + "\";\n"))
 
     f.write(to_unicode("\n"))
 
@@ -192,7 +233,9 @@ def writeLanguage(languageCode, defs, f):
 
     for mod in defs['characters']:
         eid = mod['id']
-        f.write(to_unicode("const char* " + eid + " = '" + convStr(symbolConversionTable,obj[eid]) + "';\n"))
+        f.write(
+            to_unicode("const char* " + eid + " = '" +
+                       convStr(symbolConversionTable, obj[eid]) + "';\n"))
 
     f.write(to_unicode("\n"))
 
@@ -216,10 +259,17 @@ def writeLanguage(languageCode, defs, f):
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         if lang['menuDouble']:
             f.write(
-                to_unicode("{ \"" + convStr(symbolConversionTable,(obj[eid]['text2'][0])) + "\", \"" +
-                           convStr(symbolConversionTable,(obj[eid]['text2'][1])) + "\" },\n"))
+                to_unicode(
+                    "{ \"" +
+                    convStr(symbolConversionTable, (obj[eid]['text2'][0])) +
+                    "\", \"" +
+                    convStr(symbolConversionTable, (obj[eid]['text2'][1])) +
+                    "\" },\n"))
         else:
-            f.write(to_unicode("{ \"" + convStr(symbolConversionTable,(obj[eid]['text'])) + "\" },\n"))
+            f.write(
+                to_unicode("{ \"" +
+                           convStr(symbolConversionTable, (obj[eid]['text'])) +
+                           "\" },\n"))
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
 
@@ -236,8 +286,9 @@ def writeLanguage(languageCode, defs, f):
         eid = mod['id']
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         f.write(
-            to_unicode("\"" + convStr(symbolConversionTable,(obj[eid]['text2'][0]) + "\\n" +
-                                      obj[eid]['text2'][1]) + "\",\n"))
+            to_unicode("\"" +
+                       convStr(symbolConversionTable, (obj[eid]['text2'][0]) +
+                               "\\n" + obj[eid]['text2'][1]) + "\",\n"))
 
     f.write(to_unicode("};\n\n"))
 
@@ -251,7 +302,10 @@ def writeLanguage(languageCode, defs, f):
     for mod in defs['menuGroups']:
         eid = mod['id']
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
-        f.write(to_unicode("\"" + convStr(symbolConversionTable,(obj[eid]['desc'])) + "\",\n"))
+        f.write(
+            to_unicode("\"" +
+                       convStr(symbolConversionTable, (obj[eid]['desc'])) +
+                       "\",\n"))
 
     f.write(to_unicode("};\n\n"))
 

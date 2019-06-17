@@ -51,3 +51,4 @@ workspace/TS100A/.settings/language.settings.xml
 workspace/TS100A/.metadata/
 Translation Editor/.vscode/
 Translation Editor/__pycache__/
+*.pyc
