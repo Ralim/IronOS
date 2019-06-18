@@ -273,13 +273,6 @@ def writeLanguage(languageCode, defs, f):
 
     f.write(to_unicode("// ---- " + langName + " ----\n\n"))
 
-    try:
-        cyrillic = lang['cyrillicGlyphs']
-    except KeyError:
-        cyrillic = False
-
-    if cyrillic:
-        f.write(to_unicode("#define CYRILLIC_GLYPHS\n\n"))
 
     # ----- Writing SettingsDescriptions
     obj = lang['menuOptions']
@@ -294,7 +287,7 @@ def writeLanguage(languageCode, defs, f):
         f.write(
             to_unicode("\"" +
                        convStr(symbolConversionTable, (obj[eid]['desc'])) +
-                       "\",\n"))
+                       "\"," + "//{} \n".format(obj[eid]['desc'])))
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
 
@@ -309,11 +302,11 @@ def writeLanguage(languageCode, defs, f):
         if eid not in obj:
             f.write(
             to_unicode("const char* " + eid + " = \"" +
-                       convStr(symbolConversionTable, (mod['default'])) + "\";\n"))
+                       convStr(symbolConversionTable, (mod['default'])) + "\";"+ "//{} \n".format(mod['default'])))
         else:
             f.write(
                 to_unicode("const char* " + eid + " = \"" +
-                        convStr(symbolConversionTable, (obj[eid])) + "\";\n"))
+                        convStr(symbolConversionTable, (obj[eid])) + "\";"+ "//{} \n".format(obj[eid])))
 
     f.write(to_unicode("\n"))
 
@@ -325,7 +318,7 @@ def writeLanguage(languageCode, defs, f):
         eid = mod['id']
         f.write(
             to_unicode("const char* " + eid + " = \"" +
-                       convStr(symbolConversionTable, obj[eid]) + "\";\n"))
+                       convStr(symbolConversionTable, obj[eid]) + "\";"+ "//{} \n".format(obj[eid])))
 
     f.write(to_unicode("\n"))
 
@@ -334,7 +327,7 @@ def writeLanguage(languageCode, defs, f):
     for x in constants:
         f.write(
             to_unicode("const char* " + x[0] + " = \"" +
-                       convStr(symbolConversionTable, x[1]) + "\";\n"))
+                       convStr(symbolConversionTable, x[1]) + "\";"+ "//{} \n".format(x[1])))
 
     f.write(to_unicode("\n"))
     # Write out tip model strings
@@ -342,10 +335,10 @@ def writeLanguage(languageCode, defs, f):
     f.write(to_unicode("const char* TipModelStrings[] = {\n"))
     f.write(to_unicode("#ifdef MODEL_TS100\n"))
     for c in getTipModelEnumTS100():
-        f.write(to_unicode("\t \"" + convStr(symbolConversionTable, c) + "\",\n"))
+        f.write(to_unicode("\t \"" + convStr(symbolConversionTable, c) + "\","+ "//{} \n".format(c)))
     f.write(to_unicode("#else\n"))
     for c in getTipModelEnumTS80():
-        f.write(to_unicode("\t \"" +  convStr(symbolConversionTable, c)  + "\",\n"))
+        f.write(to_unicode("\t \"" +  convStr(symbolConversionTable, c)  + "\","+ "//{} \n".format(c)))
     f.write(to_unicode("#endif\n"))
 
     f.write(to_unicode("};\n\n"))
