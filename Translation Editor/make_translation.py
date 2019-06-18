@@ -368,12 +368,12 @@ def writeLanguage(languageCode, defs, f):
                     convStr(symbolConversionTable, (obj[eid]['text2'][0])) +
                     "\", \"" +
                     convStr(symbolConversionTable, (obj[eid]['text2'][1])) +
-                    "\" },\n"))
+                    "\" },"+ "//{} \n".format(obj[eid]['text2'])))
         else:
             f.write(
                 to_unicode("{ \"" +
                            convStr(symbolConversionTable, (obj[eid]['text'])) +
-                           "\" },\n"))
+                           "\" },"+ "//{} \n".format(obj[eid]['text'])))
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
 
@@ -392,7 +392,7 @@ def writeLanguage(languageCode, defs, f):
         f.write(
             to_unicode("\"" +
                        convStr(symbolConversionTable, (obj[eid]['text2'][0]) +
-                               "\\n" + obj[eid]['text2'][1]) + "\",\n"))
+                               "\\n" + obj[eid]['text2'][1]) + "\","+ "//{} \n".format(obj[eid]['text2'])))
 
     f.write(to_unicode("};\n\n"))
 
@@ -409,7 +409,7 @@ def writeLanguage(languageCode, defs, f):
         f.write(
             to_unicode("\"" +
                        convStr(symbolConversionTable, (obj[eid]['desc'])) +
-                       "\",\n"))
+                       "\","+ "//{} \n".format(obj[eid]['desc'])))
 
     f.write(to_unicode("};\n\n"))
 
