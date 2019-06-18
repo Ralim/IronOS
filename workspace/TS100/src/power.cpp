@@ -28,6 +28,8 @@ int32_t tempToMilliWatts(int32_t rawTemp, uint16_t mass, uint8_t rawC) {
 }
 
 void setTipMilliWatts(int32_t mw) {
+	//Enforce Max Watts Limiter # TODO
+
 	int32_t output = milliWattsToPWM(mw, systemSettings.voltageDiv / 10,1);
 	setTipPWM(output);
 	uint16_t actualMilliWatts = PWMToMilliWatts(output,

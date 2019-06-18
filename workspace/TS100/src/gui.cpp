@@ -318,15 +318,17 @@ static void settings_setInputPRange(void) {
 
 static void settings_displayInputPRange(void) {
 	printShortDescription(0, 5);
-//0 = 18W, 1=24W
+	//0 = 9V, 1=12V (Fixed Voltages, these imply 1.5A limits)
+	//2 = 18W, 2=24W (Auto Adjusting V, estimated from the tip resistance???) # TODO
+	// Need to come back and look at these ^ as there were issues with voltage hunting
 	switch (systemSettings.cutoutSetting) {
 	case 0:
-		OLED::printNumber(18, 2);
-		OLED::print(SymbolWatts);
+		OLED::printNumber(9, 2);
+		OLED::print(SymbolVolts);
 		break;
 	case 1:
-		OLED::printNumber(24, 2);
-		OLED::print(SymbolWatts);
+		OLED::printNumber(12, 2);
+		OLED::print(SymbolVolts);
 		break;
 	default:
 		break;

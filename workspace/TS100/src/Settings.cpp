@@ -114,7 +114,7 @@ void resetSettings() {
   systemSettings.tipType = TS_B2;  // Default to the B2 Tip
 #endif
 #ifdef MODEL_TS80
-
+  systemSettings.pidPowerLimit=24;  // Sets the max pwm power limit
   systemSettings.tipType = TS_B02;  // Default to the B2 Tip
 #endif
   saveSettings();  // Save defaults
