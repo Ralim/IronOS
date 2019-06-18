@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "TIP DISCONNECTED",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"YourGainMessage":"Your Gain:"
 	},
 	"characters": {
 		"SettingRightChar": "R",

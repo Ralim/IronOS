@@ -93,6 +93,7 @@ def getConstants():
     consants.append(('SymbolVolts','V'))
     consants.append(('SymbolDC','DC'))
     consants.append(('SymbolCellCount','S'))
+    consants.append(('SymbolVersionNumber','V2.06'))
     return consants
 def getTipModelEnumTS80(): 
     constants = []
@@ -126,7 +127,10 @@ def getLetterCounts(defs, lang):
     obj = lang['messages']
     for mod in defs['messages']:
         eid = mod['id']
-        textList.append(obj[eid])
+        if eid not in obj:
+            textList.append(mod['default'])
+        else:
+            textList.append(obj[eid])
 
     obj = lang['characters']
 
@@ -302,9 +306,14 @@ def writeLanguage(languageCode, defs, f):
 
     for mod in defs['messages']:
         eid = mod['id']
-        f.write(
+        if eid not in obj:
+            f.write(
             to_unicode("const char* " + eid + " = \"" +
-                       convStr(symbolConversionTable, (obj[eid])) + "\";\n"))
+                       convStr(symbolConversionTable, (mod['default'])) + "\";\n"))
+        else:
+            f.write(
+                to_unicode("const char* " + eid + " = \"" +
+                        convStr(symbolConversionTable, (obj[eid])) + "\";\n"))
 
     f.write(to_unicode("\n"))
 

@@ -42,6 +42,8 @@ extern const char* TipDisconnectedString;
 extern const char* SolderingAdvancedPowerPrompt;
 extern const char* OffString;
 extern const char* ResetOKMessage;
+extern const char* YourGainMessage;
+
 extern const char* SettingTrueChar;
 extern const char* SettingFalseChar;
 extern const char* SettingRightChar;
@@ -63,5 +65,6 @@ extern const char* SymbolWatts;
 extern const char* SymbolVolts;
 extern const char* SymbolDC;
 extern const char* SymbolCellCount;
+extern const char* SymbolVersionNumber;
 
 #endif /* TRANSLATION_H_ */

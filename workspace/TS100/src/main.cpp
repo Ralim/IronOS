@@ -119,9 +119,9 @@ void gui_drawTipTemp(bool symbol) {
 	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
 		if (systemSettings.temperatureInF)
-			OLED::print("F");
+			OLED::print(SymbolDegF);
 		else
-			OLED::print("C");
+			OLED::print(SymbolDegC);
 	}
 }
 ButtonState getButtonState() {
@@ -484,10 +484,10 @@ static void display_countdown(int sleepThres) {
 	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
 	if (downCount > 9900) {
 		OLED::printNumber(downCount / 6000 + 1, 2);
-		OLED::print("M");
+		OLED::print(SymbolMinutes);
 	} else {
 		OLED::printNumber(downCount / 100 + 1, 2);
-		OLED::print("S");
+		OLED::print(SymbolSeconds);
 	}
 }
 
@@ -693,9 +693,9 @@ void showVersion(void) {
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-		OLED::print((char *) "V2.06 TS100");  // Print version number
+		OLED::print(SymbolVersionNumber);  // Print version number
 #else
-				OLED::print((char *) "V2.06 TS80");  // Print version number
+				OLED::print(SymbolVersionNumber);  // Print version number
 #endif
 		OLED::setCursor(0, 8);  // second line
 		OLED::print(HEADERS[screen]);

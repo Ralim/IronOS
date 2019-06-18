@@ -621,9 +621,9 @@ static void setTipOffset() {
 		// cycle through the filter a fair bit to ensure we're stable.
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
-		OLED::print(".");
+		OLED::print(SymbolDot);
 		for (uint8_t x = 0; x < i / 4; x++)
-			OLED::print(".");
+			OLED::print(SymbolDot);
 		OLED::refresh();
 		osDelay(100);
 	}
@@ -636,7 +636,7 @@ static void setTipOffset() {
 	setCalibrationOffset(systemSettings.CalibrationOffset);  // store the error
 	OLED::clearScreen();
 	OLED::setCursor(0, 0);
-	OLED::print("OK");
+	OLED::drawCheckbox(true);
 	OLED::refresh();
 	osDelay(1000);
 }
@@ -671,18 +671,17 @@ static void calibration_enterSimpleCal(void) {
 		// Show this to the user
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
-		OLED::print("Your G: ");
+		OLED::print(YourGainMessage);
 		OLED::printNumber(gain, 6);
-		OLED::print("\n~= 120-140");
 		OLED::refresh();
 		osDelay(2000);
 		waitForButtonPress();
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
-		OLED::print("H: ");
+		OLED::print(SymbolPlus);
 		OLED::printNumber(RawTipHot, 8);
 		OLED::setCursor(0, 8);
-		OLED::print("C: ");
+		OLED::print(SymbolMinus);
 		OLED::printNumber(RawTipCold, 8);
 		OLED::refresh();
 		osDelay(2000);
@@ -789,10 +788,10 @@ static void settings_setCalibrateVIN(void) {
 		OLED::setCursor(0, 0);
 		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) / 10,
 				2);
-		OLED::print(".");
+		OLED::print(SymbolDot);
 		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) % 10,
 				1);
-		OLED::print("V");
+		OLED::print(SymbolVolts);
 
 		ButtonState buttons = getButtonState();
 		switch (buttons) {

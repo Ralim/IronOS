@@ -52,3 +52,4 @@ workspace/TS100A/.metadata/
 Translation Editor/.vscode/
 Translation Editor/__pycache__/
 *.pyc
+workspace/TS100/src/Translation.cpp
