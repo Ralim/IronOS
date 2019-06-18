@@ -305,7 +305,7 @@ static void settings_displayInputVRange(void) {
 	printShortDescription(0, 6);
 
 	if (systemSettings.cutoutSetting) {
-		OLED::printNumer(2 + systemSettings.cutoutSetting,1);
+		OLED::printNumber(2 + systemSettings.cutoutSetting,1);
 		OLED::print(SymbolCellCount);
 	} else {
 		OLED::print(SymbolDC);

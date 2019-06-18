@@ -42,7 +42,7 @@ OPTIM=-Os -flto -ffat-lto-objects -finline-small-functions -findirect-inlining -
 GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model)
 
 # Enable debug code generation
-DEBUG=-g
+DEBUG=-g3
 # Without debug code
 #DEBUG=
 
@@ -55,14 +55,17 @@ LDSCRIPT=LinkerScript.ld
 
 # ------------------------------------------------------------------------------
 COMPILER=gcc
+# arm-none is the general ARM compiler, 
+# arm-atollic is the atollic customised compilers if you have them setup
+COMPILER_PREFIX=arm-none
 # programs ---------------------------------------------------------------------
-CC=arm-none-eabi-gcc
-CPP=arm-none-eabi-g++
-AS=arm-none-eabi-as
-GCOV=arm-none-eabi-gcov
-OBJCOPY=arm-none-eabi-objcopy
-OBJDUMP=arm-none-eabi-objdump
-SIZE=arm-none-eabi-size
+CC=$(COMPILER_PREFIX)-eabi-gcc
+CPP=$(COMPILER_PREFIX)-eabi-g++
+AS=$(COMPILER_PREFIX)-eabi-as
+GCOV=$(COMPILER_PREFIX)-eabi-gcov
+OBJCOPY=$(COMPILER_PREFIX)-eabi-objcopy
+OBJDUMP=$(COMPILER_PREFIX)-eabi-objdump
+SIZE=$(COMPILER_PREFIX)-eabi-size
 SREC=srec_cat
 SREC_INFO=srec_info
 
