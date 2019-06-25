@@ -20,7 +20,8 @@
 		"IdleSetString": " Aj:",
 		"TipDisconnectedString": "SEM PONTA",
 		"SolderingAdvancedPowerPrompt": "Power: ",
-		"OffString": "Off"
+		"OffString": "Off",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",

@@ -20,7 +20,8 @@
 		"IdleSetString": "/",
 		"TipDisconnectedString": "PUNTA ASSENTE",
 		"SolderingAdvancedPowerPrompt": "Potenz:",
-		"OffString": "OFF"
+		"OffString": "OFF",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",

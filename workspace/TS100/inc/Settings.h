@@ -48,6 +48,9 @@ typedef struct {
 	uint8_t customTipGain;  // Tip gain value if custom tuned, or 0 if using a
 							// tipType param
 	uint8_t tipType;
+#ifdef MODEL_TS80
+	uint8_t pidPowerLimit;
+#endif
 	uint32_t padding;  // This is here for in case we are not an even divisor so
 					   // that nothing gets cut off
 } systemSettingsType;

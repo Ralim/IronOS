@@ -20,7 +20,8 @@
 		"IdleSetString": " Asetus:",
 		"TipDisconnectedString": "KÄRKI ON IRTI",
 		"SolderingAdvancedPowerPrompt": "Teho: ",
-		"OffString": "OFF"
+		"OffString": "OFF",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "O",

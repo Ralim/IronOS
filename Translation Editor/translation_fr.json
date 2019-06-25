@@ -20,7 +20,8 @@
 		"IdleSetString": " Set:",
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance: ",
-		"OffString": "Off"
+		"OffString": "Off",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",

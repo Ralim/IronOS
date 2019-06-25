@@ -20,7 +20,8 @@
 		"IdleSetString": " / ",
 		"TipDisconnectedString": "ВРХ НИЈЕ СПОЈЕН",
 		"SolderingAdvancedPowerPrompt": "Снага: ",
-		"OffString": "Иск"
+		"OffString": "Иск",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "Д",

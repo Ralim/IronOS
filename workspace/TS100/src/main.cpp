@@ -82,7 +82,7 @@ int main(void) {
 #ifdef LOCAL_BUILD
 		//Test that there was enough ram in the FreeRToS pool to allocate all the tasks
 		if (MOVTaskHandle == 0)
-			asm("bkpt");
+		asm("bkpt");
 #endif
 	}
 
@@ -97,7 +97,7 @@ int main(void) {
 void printVoltage() {
 	uint32_t volt = getInputVoltageX10(systemSettings.voltageDiv, 0);
 	OLED::printNumber(volt / 10, 2);
-	OLED::drawChar('.');
+	OLED::print(SymbolDot);
 	OLED::printNumber(volt % 10, 1);
 }
 void GUIDelay() {
@@ -119,9 +119,9 @@ void gui_drawTipTemp(bool symbol) {
 	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
 		if (systemSettings.temperatureInF)
-			OLED::print("F");
+			OLED::print(SymbolDegF);
 		else
-			OLED::print("C");
+			OLED::print(SymbolDegC);
 	}
 }
 ButtonState getButtonState() {
@@ -271,36 +271,36 @@ static void gui_drawBatteryIcon() {
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
 		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
-				/ cellCount;
+		/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
-			cellV = 33;
-		cellV -= 33;		// Should leave us a number of 0-9
+		cellV = 33;
+		cellV -= 33;// Should leave us a number of 0-9
 		if (cellV > 9)
-			cellV = 9;
+		cellV = 9;
 		OLED::drawBattery(cellV + 1);
 	} else
-		OLED::drawSymbol(15);  // Draw the DC Logo
+	OLED::drawSymbol(15);  // Draw the DC Logo
 #else
-				// On TS80 we replace this symbol with the voltage we are operating on
-				// If <9V then show single digit, if not show duals
-				uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
-				if (V % 10 >= 5)
-				V = V / 10 + 1;// round up
-				else
-				V = V / 10;
-				if (V >= 10) {
-					int16_t xPos = OLED::getCursorX();
-					OLED::setFont(1);
-					OLED::printNumber(1, 1);
-					OLED::setCursor(xPos, 8);
-					OLED::printNumber(V % 10, 1);
-					OLED::setFont(0);
-					OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
-				} else {
-					OLED::printNumber(V, 1);
-				}
+	// On TS80 we replace this symbol with the voltage we are operating on
+	// If <9V then show single digit, if not show duals
+	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
+	if (V % 10 >= 5)
+		V = V / 10 + 1;				// round up
+	else
+		V = V / 10;
+	if (V >= 10) {
+		int16_t xPos = OLED::getCursorX();
+		OLED::setFont(1);
+		OLED::printNumber(1, 1);
+		OLED::setCursor(xPos, 8);
+		OLED::printNumber(V % 10, 1);
+		OLED::setFont(0);
+		OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
+	} else {
+		OLED::printNumber(V, 1);
+	}
 #endif
 }
 static void gui_solderingTempAdjust() {
@@ -372,27 +372,27 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-		if (OLED::getRotation())
+			if (OLED::getRotation())
 #endif
-			OLED::drawChar('-');
+			OLED::print(SymbolMinus);
 		else
-			OLED::drawChar('+');
+			OLED::print(SymbolPlus);
 
-		OLED::drawChar(' ');
+		OLED::print(SymbolSpace);
 		OLED::printNumber(systemSettings.SolderingTemp, 3);
 		if (systemSettings.temperatureInF)
 			OLED::drawSymbol(0);
 		else
 			OLED::drawSymbol(1);
-		OLED::drawChar(' ');
+		OLED::print(SymbolSpace);
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-		if (OLED::getRotation())
+			if (OLED::getRotation())
 #endif
-			OLED::drawChar('+');
+			OLED::print(SymbolPlus);
 		else
-			OLED::drawChar('-');
+			OLED::print(SymbolMinus);
 		OLED::refresh();
 		GUIDelay();
 	}
@@ -415,7 +415,7 @@ static int gui_SolderingSleepingMode() {
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
-		if (checkVoltageForExit())
+			if (checkVoltageForExit())
 			return 1; // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
@@ -443,13 +443,13 @@ static int gui_SolderingSleepingMode() {
 			OLED::print(SleepingTipAdvancedString);
 			OLED::printNumber(tipTemp, 3);
 			if (systemSettings.temperatureInF)
-				OLED::print("F");
+				OLED::print(SymbolDegF);
 			else
-				OLED::print("C");
+				OLED::print(SymbolDegC);
 
-			OLED::print(" ");
+			OLED::print(SymbolSpace);
 			printVoltage();
-			OLED::drawChar('V');
+			OLED::print(SymbolVolts);
 		} else {
 			OLED::setFont(0);
 			OLED::print(SleepingSimpleString);
@@ -484,10 +484,10 @@ static void display_countdown(int sleepThres) {
 	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
 	if (downCount > 9900) {
 		OLED::printNumber(downCount / 6000 + 1, 2);
-		OLED::print("M");
+		OLED::print(SymbolMinutes);
 	} else {
 		OLED::printNumber(downCount / 100 + 1, 2);
-		OLED::print("S");
+		OLED::print(SymbolSeconds);
 	}
 }
 
@@ -556,7 +556,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		OLED::setFont(0);
 		uint16_t tipTemp = getTipRawTemp(0);
 		if (tipTemp > 32700) {
-			badTipCounter++;// Use a counter so that error has to persist for > 1 second continious so that peak errors dont trip it
+			badTipCounter++; // Use a counter so that error has to persist for > 1 second continious so that peak errors dont trip it
 		} else {
 			badTipCounter = 0;
 		}
@@ -565,28 +565,28 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			OLED::setFont(1);
 			OLED::print(SolderingAdvancedPowerPrompt);  // Power:
 			OLED::printNumber(milliWattHistory[0] / 1000, 2);
-			OLED::drawChar('.');
+			OLED::print(SymbolDot);
 			OLED::printNumber(milliWattHistory[0] / 100 % 10, 1);
-			OLED::drawChar('W');
+			OLED::print(SymbolWatts);
 
 			if (systemSettings.sensitivity && systemSettings.SleepTime) {
-				OLED::print(" ");
+				OLED::print(SymbolSpace);
 				display_countdown(sleepThres);
 			}
 
 			OLED::setCursor(0, 8);
 			OLED::print(SleepingTipAdvancedString);
 			gui_drawTipTemp(true);
-			OLED::print(" ");
+			OLED::print(SymbolSpace);
 			printVoltage();
-			OLED::drawChar('V');
+			OLED::print(SymbolVolts);
 		} else {
 			// We switch the layout direction depending on the orientation of the
 			// OLED::
 			if (OLED::getRotation()) {
 				// battery
 				gui_drawBatteryIcon();
-				OLED::drawChar(' '); // Space out gap between battery <-> temp
+				OLED::print(SymbolSpace); // Space out gap between battery <-> temp
 				gui_drawTipTemp(true);  // Draw current tip temp
 
 				// We draw boost arrow if boosting, or else gap temp <-> heat
@@ -594,7 +594,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				if (boostModeOn)
 					OLED::drawSymbol(2);
 				else
-					OLED::drawChar(' ');
+					OLED::print(SymbolSpace);
 
 				// Draw heating/cooling symbols
 				OLED::drawHeatSymbol(
@@ -610,10 +610,10 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				if (boostModeOn)
 					OLED::drawSymbol(2);
 				else
-					OLED::drawChar(' ');
+					OLED::print(SymbolSpace);
 				gui_drawTipTemp(true);  // Draw current tip temp
 
-				OLED::drawChar(' '); // Space out gap between battery <-> temp
+				OLED::print(SymbolSpace); // Space out gap between battery <-> temp
 
 				gui_drawBatteryIcon();
 			}
@@ -683,7 +683,7 @@ __DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "RTip: ",
 		"Tm ", "Ralim-",
 
 #endif
-		};
+	};
 
 void showVersion(void) {
 	uint8_t screen = 0;
@@ -693,9 +693,9 @@ void showVersion(void) {
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-		OLED::print((char *) "V2.06 TS100");  // Print version number
+				OLED::print(SymbolVersionNumber);  // Print version number
 #else
-				OLED::print((char *) "V2.06 TS80");  // Print version number
+		OLED::print(SymbolVersionNumber);  // Print version number
 #endif
 		OLED::setCursor(0, 8);  // second line
 		OLED::print(HEADERS[screen]);
@@ -882,7 +882,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			if (!OLED::getRotation()) {
 #else
-			if (OLED::getRotation()) {
+				if (OLED::getRotation()) {
 #endif
 				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
 				OLED::setCursor(0, 0);
@@ -903,7 +903,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 				if (!OLED::getRotation()) {
 #else
-				if (OLED::getRotation()) {
+					if (OLED::getRotation()) {
 #endif
 					// in right handed mode we want to draw over the first part
 					OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp
@@ -932,14 +932,14 @@ void startPIDTask(void const *argument __unused) {
 	 */
 	setTipMilliWatts(0); // disable the output driver if the output is set to be off
 #ifdef MODEL_TS80
-			idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
+	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
 	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
 
 #ifdef MODEL_TS80
-			//Set power management code to the tip resistance in ohms * 10
-			setupPower(calculateTipR() / 100);
-			//size_t lastPowerPulse = 0;
+	//Set power management code to the tip resistance in ohms * 10
+	setupPower(calculateTipR() / 100);
+	TickType_t lastPowerPulse = 0;
 #else
 	setupPower(85);
 
@@ -1013,18 +1013,16 @@ void startPIDTask(void const *argument __unused) {
 
 #ifdef MODEL_TS80
 				//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
-				//~200ms @ a low wattage
-				//Doesnt keep all power banks awake but helps with some
-				/*if (xTaskGetTickCount() - lastPowerPulse < 20) {
-				 // for the first 200mS turn on for a bit
-				 setTipMilliWatts(4000);	// typically its around 5W to hold the current temp, so this wont raise temp much
-				 } else
-				 setTipMilliWatts(0);
-				 //Then wait until the next second
-				 if (xTaskGetTickCount() - lastPowerPulse > 100) {
-				 lastPowerPulse = xTaskGetTickCount();
-				 }*/
-				setTipMilliWatts(0);
+				// This is purely guesswork :'( as everyone implements stuff differently
+				if (xTaskGetTickCount() - lastPowerPulse < 10) {
+					// for the first 100mS turn on for a bit
+					setTipMilliWatts(5000);	// typically its around 5W to hold the current temp, so this wont raise temp much
+				} else
+					setTipMilliWatts(0);
+				//Then wait until the next 0.5 seconds
+				if (xTaskGetTickCount() - lastPowerPulse > 50) {
+					lastPowerPulse = xTaskGetTickCount();
+				}
 #else
 				setTipMilliWatts(0);
 #endif
@@ -1048,9 +1046,9 @@ void startMOVTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	startQC(systemSettings.voltageDiv);
 	while (pidTaskNotification == 0)
-	osDelay(20);  // To ensure we return after idealQCVoltage/tip resistance
+		osDelay(30);  // To ensure we return after idealQCVoltage/tip resistance
 
-	seekQC(idealQCVoltage, systemSettings.voltageDiv);// this will move the QC output to the preferred voltage to start with
+	seekQC(idealQCVoltage, systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
@@ -1103,29 +1101,6 @@ void startMOVTask(void const *argument __unused) {
 
 		// Sum the deltas
 		int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
-
-#if ACCELDEBUG
-		// Debug for Accel
-
-		OLED::setFont(1);
-		OLED::setCursor(0, 0);
-		OLED::printNumber(abs(avgx - (int32_t)tx), 5);
-		OLED::print(" ");
-		OLED::printNumber(abs(avgy - (int32_t)ty), 5);
-		if (error > max) {
-			max = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
-		}
-		OLED::setCursor(0, 8);
-		OLED::printNumber(max, 5);
-		OLED::print(" ");
-
-		OLED::printNumber((abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz)), 5);
-		OLED::refresh();
-		if (HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET) {
-			max = 0;
-		}
-#endif
-
 		// So now we have averages, we want to look if these are different by more
 		// than the threshold
 
@@ -1136,9 +1111,9 @@ void startMOVTask(void const *argument __unused) {
 
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
-				if (currentlyActiveTemperatureTarget) {
-					seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
-				}
+		if (currentlyActiveTemperatureTarget) {
+			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
+		}
 #endif
 	}
 }

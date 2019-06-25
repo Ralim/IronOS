@@ -20,7 +20,8 @@
 		"IdleSetString": " / ",
 		"TipDisconnectedString": "VRH NIJE SPOJEN!",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
-		"OffString": "Off"
+		"OffString": "Off",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",

@@ -305,10 +305,10 @@ static void settings_displayInputVRange(void) {
 	printShortDescription(0, 6);
 
 	if (systemSettings.cutoutSetting) {
-		OLED::drawChar('0' + 2 + systemSettings.cutoutSetting);
-		OLED::drawChar('S');
+		OLED::printNumber(2 + systemSettings.cutoutSetting,1);
+		OLED::print(SymbolCellCount);
 	} else {
-		OLED::print("DC");
+		OLED::print(SymbolDC);
 	}
 }
 #else
@@ -318,13 +318,17 @@ static void settings_setInputPRange(void) {
 
 static void settings_displayInputPRange(void) {
 	printShortDescription(0, 5);
-//0 = 18W, 1=24W
+	//0 = 9V, 1=12V (Fixed Voltages, these imply 1.5A limits)
+	//2 = 18W, 2=24W (Auto Adjusting V, estimated from the tip resistance???) # TODO
+	// Need to come back and look at these ^ as there were issues with voltage hunting
 	switch (systemSettings.cutoutSetting) {
 	case 0:
-		OLED::print("18W");
+		OLED::printNumber(9, 2);
+		OLED::print(SymbolVolts);
 		break;
 	case 1:
-		OLED::print("24W");
+		OLED::printNumber(12, 2);
+		OLED::print(SymbolVolts);
 		break;
 	default:
 		break;
@@ -367,10 +371,10 @@ static void settings_displaySleepTime(void) {
 		OLED::print(OffString);
 	} else if (systemSettings.SleepTime < 6) {
 		OLED::printNumber(systemSettings.SleepTime * 10, 2);
-		OLED::drawChar('S');
+		OLED::print(SymbolSeconds);
 	} else {
 		OLED::printNumber(systemSettings.SleepTime - 5, 2);
-		OLED::drawChar('M');
+		OLED::print(SymbolMinutes);
 	}
 }
 
@@ -389,7 +393,7 @@ static void settings_displayShutdownTime(void) {
 		OLED::print(OffString);
 	} else {
 		OLED::printNumber(systemSettings.ShutdownTime, 2);
-		OLED::drawChar('M');
+		OLED::print(SymbolMinutes);
 	}
 }
 
@@ -422,7 +426,7 @@ static void settings_setTempF(void) {
 static void settings_displayTempF(void) {
 	printShortDescription(5, 7);
 
-	OLED::drawChar((systemSettings.temperatureInF) ? 'F' : 'C');
+	OLED::print((systemSettings.temperatureInF) ? SymbolDegF : SymbolDegC);
 }
 
 static void settings_setSensitivity(void) {
@@ -462,7 +466,7 @@ static void settings_setScrollSpeed(void) {
 }
 static void settings_displayScrollSpeed(void) {
 	printShortDescription(16, 7);
-	OLED::drawChar(
+	OLED::print(
 			(systemSettings.descriptionScrollSpeed) ?
 					SettingFastChar : SettingSlowChar);
 }
@@ -490,16 +494,16 @@ static void settings_displayDisplayRotation(void) {
 
 	switch (systemSettings.OrientationMode) {
 	case 0:
-		OLED::drawChar(SettingRightChar);
+		OLED::print(SettingRightChar);
 		break;
 	case 1:
-		OLED::drawChar(SettingLeftChar);
+		OLED::print(SettingLeftChar);
 		break;
 	case 2:
-		OLED::drawChar(SettingAutoChar);
+		OLED::print(SettingAutoChar);
 		break;
 	default:
-		OLED::drawChar(SettingRightChar);
+		OLED::print(SettingRightChar);
 		break;
 	}
 }
@@ -559,7 +563,7 @@ static void settings_setResetSettings(void) {
 
 		OLED::setFont(0);
 		OLED::setCursor(0, 0);
-		OLED::print("RESET OK");
+		OLED::print(ResetOKMessage);
 		OLED::refresh();
 
 		waitForButtonPressOrTimeout(200);  // 2 second timeout
@@ -572,6 +576,12 @@ static void settings_displayResetSettings(void) {
 
 static void settings_setTipModel(void) {
 	systemSettings.tipType++;
+	if(systemSettings.tipType==Tip_MiniWare)
+		systemSettings.tipType++;
+#ifdef MODEL_TS100
+	if(systemSettings.tipType==Tip_Hakko)
+			systemSettings.tipType++;
+#endif
 	systemSettings.tipType %= (Tip_Custom + 1);  // Wrap after custom
 }
 static void settings_displayTipModel(void) {
@@ -581,64 +591,21 @@ static void settings_displayTipModel(void) {
 	// set the cursor
 	// Print the mfg
 	OLED::setCursor(55, 0);
-	if (systemSettings.tipType < Tip_MiniWare) {
-#ifdef MODEL_TS100
-		OLED::print("TS100");
-#else
-		OLED::print("TS80");
-#endif
+	if (systemSettings.tipType == Tip_Custom) {
+		OLED::print(TipModelStrings[Tip_Custom]);
+	} else if (systemSettings.tipType < Tip_MiniWare) {
+		OLED::print(TipModelStrings[Tip_MiniWare]);
 	}
 #ifdef MODEL_TS100
 	else if (systemSettings.tipType < Tip_Hakko) {
-		OLED::print("HAKKO");
+		OLED::print(TipModelStrings[Tip_Hakko]);
 	}
 #endif
-	else if (systemSettings.tipType == Tip_Custom) {
-		OLED::print("User");
-	}
+
 	OLED::setCursor(55, 8);
-#ifdef MODEL_TS100
-	switch ((enum TipType)systemSettings.tipType) {
-		case TS_B2:
-		OLED::print(" B2  ");
-		break;
-		case TS_D24:
-		OLED::print(" D24 ");
-		break;
-		case TS_BC2:
-		OLED::print(" BC2 ");
-		break;
-		case TS_C1:
-		OLED::print(" C1 ");
-		break;
-		case HAKKO_BC2:
-		OLED::print(" BC2 ");
-		break;
-		case Tip_Custom:
-		OLED::print("Tuned");
-		break;
-		default:
-		OLED::print("????");
-		break;
-	}
-#endif
-#ifdef MODEL_TS80
-	// only 2 tips atm
-	switch ((enum TipType) systemSettings.tipType) {
-	case TS_B02:
-		OLED::print(" B02 ");
-		break;
-	case TS_D25:
-		OLED::print(" D25 ");
-		break;
-	case Tip_Custom:
-		OLED::print("Tuned");
-		break;
-	default:
-		OLED::print("????");
-		break;
-	}
-#endif
+	if (systemSettings.tipType != Tip_Custom)
+		OLED::print(TipModelStrings[systemSettings.tipType]);
+
 }
 static void calibration_displaySimpleCal(void) {
 	printShortDescription(18, 5);
@@ -656,9 +623,9 @@ static void setTipOffset() {
 		// cycle through the filter a fair bit to ensure we're stable.
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
-		OLED::print(".");
+		OLED::print(SymbolDot);
 		for (uint8_t x = 0; x < i / 4; x++)
-			OLED::print(".");
+			OLED::print(SymbolDot);
 		OLED::refresh();
 		osDelay(100);
 	}
@@ -671,7 +638,7 @@ static void setTipOffset() {
 	setCalibrationOffset(systemSettings.CalibrationOffset);  // store the error
 	OLED::clearScreen();
 	OLED::setCursor(0, 0);
-	OLED::print("OK");
+	OLED::drawCheckbox(true);
 	OLED::refresh();
 	osDelay(1000);
 }
@@ -706,18 +673,17 @@ static void calibration_enterSimpleCal(void) {
 		// Show this to the user
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
-		OLED::print("Your G: ");
+		OLED::print(YourGainMessage);
 		OLED::printNumber(gain, 6);
-		OLED::print("\n~= 120-140");
 		OLED::refresh();
 		osDelay(2000);
 		waitForButtonPress();
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
-		OLED::print("H: ");
+		OLED::print(SymbolPlus);
 		OLED::printNumber(RawTipHot, 8);
 		OLED::setCursor(0, 8);
-		OLED::print("C: ");
+		OLED::print(SymbolMinus);
 		OLED::printNumber(RawTipCold, 8);
 		OLED::refresh();
 		osDelay(2000);
@@ -771,17 +737,17 @@ static void calibration_enterAdvancedCal(void) {
 			OLED::clearScreen();
 			OLED::setFont(0);
 			if (OLED::getRotation())
-				OLED::drawChar('-');
+				OLED::print(SymbolMinus);
 			else
-				OLED::drawChar('+');
+				OLED::print(SymbolPlus);
 
-			OLED::drawChar(' ');
+			OLED::print(SymbolSpace);
 			OLED::printNumber(systemSettings.customTipGain, 4);
-			OLED::drawChar(' ');
+			OLED::print(SymbolSpace);
 			if (OLED::getRotation())
-				OLED::drawChar('+');
+				OLED::print(SymbolPlus);
 			else
-				OLED::drawChar('-');
+				OLED::print(SymbolMinus);
 			OLED::refresh();
 			GUIDelay();
 		}
@@ -824,10 +790,10 @@ static void settings_setCalibrateVIN(void) {
 		OLED::setCursor(0, 0);
 		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) / 10,
 				2);
-		OLED::print(".");
+		OLED::print(SymbolDot);
 		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) % 10,
 				1);
-		OLED::print("V");
+		OLED::print(SymbolVolts);
 
 		ButtonState buttons = getButtonState();
 		switch (buttons) {

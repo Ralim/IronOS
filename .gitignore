@@ -49,3 +49,7 @@ workspace/TS100A/Release/TS100A.list
 workspace/TS100A/Release/TS100A.hex
 workspace/TS100A/.settings/language.settings.xml
 workspace/TS100A/.metadata/
+Translation Editor/.vscode/
+Translation Editor/__pycache__/
+*.pyc
+workspace/TS100/src/Translation.cpp

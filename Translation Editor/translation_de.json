@@ -20,7 +20,8 @@
 		"IdleSetString": " Soll:",
 		"TipDisconnectedString": "Spitze fehlt",
 		"SolderingAdvancedPowerPrompt": "Leistung: ",
-		"OffString": "Aus"
+		"OffString": "Aus",
+		"ResetOKMessage":"Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "R",
