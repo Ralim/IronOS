@@ -1045,12 +1045,11 @@ void startMOVTask(void const *argument __unused) {
 
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	lastMovementTime = 0;
-	int16_t datax[MOVFilter] = { 0 };
-	int16_t datay[MOVFilter] = { 0 };
-	int16_t dataz[MOVFilter] = { 0 };
-	uint8_t currentPointer = 0;
-	int16_t tx = 0, ty = 0, tz = 0;
-	int32_t avgx = 0, avgy = 0, avgz = 0;
+	history<int32_t, MOVFilter> datax = { { 0 }, 0, 0 };
+	history<int32_t, MOVFilter> datay = { { 0 }, 0, 0 };
+	history<int32_t, MOVFilter> dataz = { { 0 }, 0, 0 };
+
+	int16_t tempx = 0, tempy = 0, tempz = 0;
 	if (systemSettings.sensitivity > 9)
 		systemSettings.sensitivity = 9;
 #if ACCELDEBUG
@@ -1062,10 +1061,10 @@ void startMOVTask(void const *argument __unused) {
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
 
 		if (PCBVersion == 2) {
-			LIS2DH12::getAxisReadings(&tx, &ty, &tz);
+			LIS2DH12::getAxisReadings(&tempx, &tempy, &tempz);
 			rotation = LIS2DH12::getOrientation();
 		} else if (PCBVersion == 1) {
-			MMA8652FC::getAxisReadings(&tx, &ty, &tz);
+			MMA8652FC::getAxisReadings(&tempx, &tempy, &tempz);
 			rotation = MMA8652FC::getOrientation();
 		}
 		if (systemSettings.OrientationMode == 2) {
@@ -1073,37 +1072,21 @@ void startMOVTask(void const *argument __unused) {
 				OLED::setRotation(rotation == ORIENTATION_LEFT_HAND); // link the data through
 			}
 		}
-		datax[currentPointer] = (int32_t) tx;
-		datay[currentPointer] = (int32_t) ty;
-		dataz[currentPointer] = (int32_t) tz;
-		currentPointer = (currentPointer + 1) % MOVFilter;
-		avgx = avgy = avgz = 0;
-		// calculate averages
-		for (uint8_t i = 0; i < MOVFilter; i++) {
-			avgx += datax[i];
-			avgy += datay[i];
-			avgz += dataz[i];
-		}
-		avgx /= MOVFilter;
-		avgy /= MOVFilter;
-		avgz /= MOVFilter;
+
+		datax.update(tempx);
+		datay.update(tempx);
+		dataz.update(tempx);
 
 		// Sum the deltas
-		int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
+		int32_t error = (abs(datax.average() - tempx)
+				+ abs(datay.average() - tempy) + abs(dataz.average() - tempz));
 		// So now we have averages, we want to look if these are different by more
 		// than the threshold
-
-		// If error has occurred then we update the tick timer
+		// If this has occurred then we update the tick timer
 		if (error > threshold) {
 			lastMovementTime = xTaskGetTickCount();
 		}
-
 		osDelay(100);  // Slow down update rate
-#ifdef MODEL_TS80
-		if (currentlyActiveTemperatureTarget) {
-			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
-		}
-#endif
 	}
 }
 
