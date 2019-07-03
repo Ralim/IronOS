@@ -674,17 +674,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 	}
 }
 
-static const char *HEADERS[] = {
-__DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "RTip: ",
-		"CTip: ", "Vin :", "THan: ", "Model: ",
-#ifdef MODEL_TS80
-		"QCV: ", "Tr ",
-#else
-		"Tm ", "Ralim-",
-
-#endif
-	};
-
 void showVersion(void) {
 	uint8_t screen = 0;
 	ButtonState b;
@@ -698,7 +687,7 @@ void showVersion(void) {
 		OLED::print(SymbolVersionNumber);  // Print version number
 #endif
 		OLED::setCursor(0, 8);  // second line
-		OLED::print(HEADERS[screen]);
+		OLED::print(DebugMenu[screen]);
 		switch (screen) {
 		case 1:
 			OLED::printNumber(xPortGetFreeHeapSize(), 5);
@@ -744,7 +733,7 @@ void showVersion(void) {
 #ifdef MODEL_TS80
 			OLED::printNumber(calculateTipR(), 5);
 #else
-			OLED::print("Tek.com");
+			OLED::printNumber(8500,5));
 #endif
 			break;
 		default:

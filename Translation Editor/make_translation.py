@@ -115,6 +115,23 @@ def getTipModelEnumTS100():
     constants.append("User")
     return constants
 
+def getDebugMenuHeaders(): 
+    constants = []
+    constants.append("DateHere")
+    constants.append("Heap: ")
+    constants.append("HWMG: ")
+    constants.append("HWMP: ")
+    constants.append("HWMM: ")
+    constants.append("Time: ")
+    constants.append("Move: ")
+    constants.append("RTip: ")
+    constants.append("CTip: ")
+    constants.append("Vin: ")
+    constants.append("THan: ")
+    constants.append("Model: ")
+    constants.append("Tres: ")
+    return constants
+
 
 def getLetterCounts(defs, lang):
     textList = []
@@ -160,6 +177,7 @@ def getLetterCounts(defs, lang):
     constants = getConstants()  
     for x in constants:
         textList.append(x[1])
+    textList.extend(getDebugMenuHeaders())
     textList.extend(getTipModelEnumTS100())
     textList.extend(getTipModelEnumTS80())  
         
@@ -341,6 +359,15 @@ def writeLanguage(languageCode, defs, f):
         f.write(to_unicode("\t \"" +  convStr(symbolConversionTable, c)  + "\","+ "//{} \n".format(c)))
     f.write(to_unicode("#endif\n"))
 
+    f.write(to_unicode("};\n\n"))
+    
+    # -- Debugging Menu
+
+    
+
+    f.write(to_unicode("const char* DebugMenu[] = {\n"))
+    for c in getDebugMenuHeaders():
+        f.write(to_unicode("\t \"" + convStr(symbolConversionTable, c) + "\","+ "//{} \n".format(c)))
     f.write(to_unicode("};\n\n"))
     
     # ----- Menu Options

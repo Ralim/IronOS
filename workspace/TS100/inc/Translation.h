@@ -67,4 +67,5 @@ extern const char* SymbolDC;
 extern const char* SymbolCellCount;
 extern const char* SymbolVersionNumber;
 
+extern const char* DebugMenu[];
 #endif /* TRANSLATION_H_ */
