@@ -1128,14 +1128,13 @@ bool showBootLogoIfavailable() {
  * runs again
  */
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc) {
+	(void) hadc;
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	if (hadc == &hadc1) {
-		if (pidTaskNotification) {
-			vTaskNotifyGiveFromISR(pidTaskNotification,
-					&xHigherPriorityTaskWoken);
-			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-		}
+	if (pidTaskNotification) {
+		vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	}
+
 }
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	FRToSI2C::CpltCallback();
@@ -1147,13 +1146,9 @@ void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
-	asm("bkpt");
-
 	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	//asm("bkpt");
-
 	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
@@ -1161,7 +1156,6 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 }
 void vApplicationStackOverflowHook(xTaskHandle *pxTask __unused,
 		signed portCHAR *pcTaskName __unused) {
-	asm("bkpt");
 	// We dont have a good way to handle a stack overflow at this point in time
 	NVIC_SystemReset();
 }
