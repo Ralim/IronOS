@@ -221,9 +221,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/gui.cpp</locationURI>
 		</link>
 		<link>
-			<name>src/hardware.c</name>
+			<name>src/hardware.cpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/hardware.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/TS100/src/hardware.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/main.cpp</name>

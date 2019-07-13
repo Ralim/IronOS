@@ -271,36 +271,36 @@ static void gui_drawBatteryIcon() {
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
 		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
-		/ cellCount;
+				/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
-		cellV = 33;
-		cellV -= 33;// Should leave us a number of 0-9
+			cellV = 33;
+		cellV -= 33;		// Should leave us a number of 0-9
 		if (cellV > 9)
-		cellV = 9;
+			cellV = 9;
 		OLED::drawBattery(cellV + 1);
 	} else
-	OLED::drawSymbol(15);  // Draw the DC Logo
+		OLED::drawSymbol(15);  // Draw the DC Logo
 #else
-	// On TS80 we replace this symbol with the voltage we are operating on
-	// If <9V then show single digit, if not show duals
-	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
-	if (V % 10 >= 5)
-		V = V / 10 + 1;				// round up
-	else
-		V = V / 10;
-	if (V >= 10) {
-		int16_t xPos = OLED::getCursorX();
-		OLED::setFont(1);
-		OLED::printNumber(1, 1);
-		OLED::setCursor(xPos, 8);
-		OLED::printNumber(V % 10, 1);
-		OLED::setFont(0);
-		OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
-	} else {
-		OLED::printNumber(V, 1);
-	}
+				// On TS80 we replace this symbol with the voltage we are operating on
+				// If <9V then show single digit, if not show duals
+				uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
+				if (V % 10 >= 5)
+				V = V / 10 + 1;// round up
+				else
+				V = V / 10;
+				if (V >= 10) {
+					int16_t xPos = OLED::getCursorX();
+					OLED::setFont(1);
+					OLED::printNumber(1, 1);
+					OLED::setCursor(xPos, 8);
+					OLED::printNumber(V % 10, 1);
+					OLED::setFont(0);
+					OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
+				} else {
+					OLED::printNumber(V, 1);
+				}
 #endif
 }
 static void gui_solderingTempAdjust() {
@@ -372,7 +372,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-			if (OLED::getRotation())
+		if (OLED::getRotation())
 #endif
 			OLED::print(SymbolMinus);
 		else
@@ -388,7 +388,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-			if (OLED::getRotation())
+		if (OLED::getRotation())
 #endif
 			OLED::print(SymbolPlus);
 		else
@@ -415,7 +415,7 @@ static int gui_SolderingSleepingMode() {
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
-			if (checkVoltageForExit())
+		if (checkVoltageForExit())
 			return 1; // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
@@ -682,9 +682,9 @@ void showVersion(void) {
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-				OLED::print(SymbolVersionNumber);  // Print version number
-#else
 		OLED::print(SymbolVersionNumber);  // Print version number
+#else
+				OLED::print(SymbolVersionNumber);  // Print version number
 #endif
 		OLED::setCursor(0, 8);  // second line
 		OLED::print(DebugMenu[screen]);
@@ -733,7 +733,7 @@ void showVersion(void) {
 #ifdef MODEL_TS80
 			OLED::printNumber(calculateTipR(), 5);
 #else
-			OLED::printNumber(8500,5));
+			OLED::printNumber(8500, 5);
 #endif
 			break;
 		default:
@@ -871,7 +871,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			if (!OLED::getRotation()) {
 #else
-				if (OLED::getRotation()) {
+			if (OLED::getRotation()) {
 #endif
 				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
 				OLED::setCursor(0, 0);
@@ -892,7 +892,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 				if (!OLED::getRotation()) {
 #else
-					if (OLED::getRotation()) {
+				if (OLED::getRotation()) {
 #endif
 					// in right handed mode we want to draw over the first part
 					OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp
@@ -921,19 +921,16 @@ void startPIDTask(void const *argument __unused) {
 	 */
 	setTipMilliWatts(0); // disable the output driver if the output is set to be off
 #ifdef MODEL_TS80
-	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
+			idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
 	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
 
 #ifdef MODEL_TS80
-	//Set power management code to the tip resistance in ohms * 10
-	setupPower(calculateTipR() / 100);
-	TickType_t lastPowerPulse = 0;
-#else
-	setupPower(85);
-
+			//Set power management code to the tip resistance in ohms * 10
+			TickType_t lastPowerPulse = 0;
 #endif
-	history<int32_t> tempError = { { 0 }, 0, 0 };
+	// Tip temp reading filter
+	history<int32_t, PID_TIM_HZ / 4> tempError = { { 0 }, 0, 0 };
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
 										  // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
@@ -947,9 +944,9 @@ void startPIDTask(void const *argument __unused) {
 				if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
 					//Maximum allowed output
 					currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
-				} else if (currentlyActiveTemperatureTarget > 32400) {
-					//Cap to max adc reading
-					currentlyActiveTemperatureTarget = 32400;
+				} else if (currentlyActiveTemperatureTarget > 32700) {
+					//Cap to max adc reading (32768)
+					currentlyActiveTemperatureTarget = 32700;
 				}
 
 				// As we get close to our target, temp noise causes the system
@@ -963,27 +960,15 @@ void startPIDTask(void const *argument __unused) {
 				tempError.update(tError);
 
 				// Now for the PID!
-				int32_t milliWattsOut = 0;
 
 				// P term - total power needed to hit target temp next cycle.
 				// thermal mass = 1690 milliJ/*C for my tip.
 				//  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-				// we divide milliWattsNeeded by 20 to let the I term dominate near the set point.
-				//  This is necessary because of the temp noise and thermal lag in the system.
-				// Once we have feed-forward temp estimation we should be able to better tune this.
 
-#ifdef MODEL_TS100
-				const uint16_t mass = 2020 / 20; // divide here so division is compile-time.
-#endif
-#ifdef MODEL_TS80
-				const uint16_t mass = 2020 / 50;
-#endif
-
-				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),
-						mass, rawC);
+				int32_t milliWattsOut = tempToMilliWatts(tempError.average(),
+						rawC);
 				// note that milliWattsNeeded is sometimes negative, this counters overshoot
 				//  from I term's inertia.
-				milliWattsOut += milliWattsNeeded;
 
 				// I term - energy needed to compensate for heat loss.
 				// We track energy put into the system over some window.
@@ -991,11 +976,12 @@ void startPIDTask(void const *argument __unused) {
 				//  (If it isn't, P will dominate).
 				milliWattsOut += milliWattHistory.average();
 
-				// D term - use sudden temp change to counter fast cooling/heating.
-				//  In practice, this provides an early boost if temp is dropping
-				//  and counters extra power if the iron is no longer losing temp.
-				// basically: temp - lastTemp
-				//  Unfortunately, our temp signal is too noisy to really help.
+				// Not Used:
+				// 	D term - use sudden temp change to counter fast cooling/heating.
+				//  	In practice, this provides an early boost if temp is dropping
+				//  		and counters extra power if the iron is no longer losing temp.
+				// 		basically: temp - lastTemp
+				//  	Unfortunately, our temp signal is too noisy to really help.
 
 				setTipMilliWatts(milliWattsOut);
 			} else {
@@ -1005,9 +991,10 @@ void startPIDTask(void const *argument __unused) {
 				// This is purely guesswork :'( as everyone implements stuff differently
 				if (xTaskGetTickCount() - lastPowerPulse < 10) {
 					// for the first 100mS turn on for a bit
-					setTipMilliWatts(5000);	// typically its around 5W to hold the current temp, so this wont raise temp much
-				} else
+					setTipMilliWatts(2000);// typically its around 5W to hold the current temp, so this wont raise temp much
+				} else {
 					setTipMilliWatts(0);
+				}
 				//Then wait until the next 0.5 seconds
 				if (xTaskGetTickCount() - lastPowerPulse > 50) {
 					lastPowerPulse = xTaskGetTickCount();
@@ -1019,7 +1006,6 @@ void startPIDTask(void const *argument __unused) {
 
 			HAL_IWDG_Refresh(&hiwdg);
 		} else {
-			asm("bkpt");
 
 //ADC interrupt timeout
 			setTipMilliWatts(0);
@@ -1035,9 +1021,9 @@ void startMOVTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	startQC(systemSettings.voltageDiv);
 	while (pidTaskNotification == 0)
-		osDelay(30);  // To ensure we return after idealQCVoltage/tip resistance
+	osDelay(30);  // To ensure we return after idealQCVoltage/tip resistance
 
-	seekQC(idealQCVoltage, systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
+	seekQC(idealQCVoltage, systemSettings.voltageDiv);// this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
@@ -1096,16 +1082,11 @@ void startMOVTask(void const *argument __unused) {
 bool showBootLogoIfavailable() {
 	// check if the header is there (0xAA,0x55,0xF0,0x0D)
 	// If so display logo
-	// TODO REDUCE STACK ON THIS ONE, USE DRAWING IN THE READ LOOP
-	uint16_t temp[98];
-
-	for (uint8_t i = 0; i < (98); i++) {
-		temp[i] = *(uint16_t *) (FLASH_LOGOADDR + (i * 2));
-	}
 	uint8_t temp8[98 * 2];
 	for (uint8_t i = 0; i < 98; i++) {
-		temp8[i * 2] = temp[i] >> 8;
-		temp8[i * 2 + 1] = temp[i] & 0xFF;
+		uint16_t temp = *(uint16_t *) (FLASH_LOGOADDR + (i * 2));
+		temp8[i * 2] = temp >> 8;
+		temp8[i * 2 + 1] = temp & 0xFF;
 	}
 
 	if (temp8[0] != 0xAA)
