@@ -32,13 +32,13 @@ static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
-	#ifndef LOCAL_BUILD
-__HAL_AFIO_REMAP_SWJ_DISABLE();
-	#else 
-__HAL_AFIO_REMAP_SWJ_NOJTAG();
-	#endif
-	
-	
+#ifndef LOCAL_BUILD
+	__HAL_AFIO_REMAP_SWJ_DISABLE()
+	;
+#else
+	__HAL_AFIO_REMAP_SWJ_NOJTAG();
+#endif
+
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();
@@ -262,9 +262,9 @@ static void MX_TIM3_Init(void) {
 	htim3.Instance = TIM3;
 	htim3.Init.Prescaler = 8;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period = 400;                            // 5 Khz PWM freq
+	htim3.Init.Period = 100;                            // 5 Khz PWM freq
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before div
-	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;//Preload the ARR register (though we dont use this)
+	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE; //Preload the ARR register (though we dont use this)
 	HAL_TIM_Base_Init(&htim3);
 
 	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
@@ -279,7 +279,7 @@ static void MX_TIM3_Init(void) {
 	HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig);
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 80;//80% duty cycle, that is AC coupled through the cap
+	sConfigOC.Pulse = 80;  //80% duty cycle, that is AC coupled through the cap
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
 	HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, PWM_Out_CHANNEL);
@@ -291,11 +291,12 @@ static void MX_TIM3_Init(void) {
 	 */
 	GPIO_InitStruct.Pin = PWM_Out_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;//We would like sharp rising edges
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; //We would like sharp rising edges
 	HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
 #ifdef MODEL_TS100
 	// Remap TIM3_CH1 to be on PB4
-	__HAL_AFIO_REMAP_TIM3_PARTIAL();
+	__HAL_AFIO_REMAP_TIM3_PARTIAL()
+	;
 #else
 	// No re-map required
 #endif
@@ -314,17 +315,15 @@ static void MX_TIM2_Init(void) {
 	// Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC
 	// in the PWM off time.
 	htim2.Instance = TIM2;
-	htim2.Init.Prescaler = 2000; //1mhz tick rate/800 = 1.25 KHz tick rate
+	htim2.Init.Prescaler = 4000; //1mhz tick rate/800 = 1.25 KHz tick rate
 
 	// pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
-	// The input is 1mhz after the div/4, so divide this by 785 to give around 4Hz output change rate
-	//Trade off is the slower the PWM output the slower we can respond and we gain temperature accuracy in settling time,
-	//But it increases the time delay between the heat cycle and the measurement and calculate cycle
+	// These values give a rate of around 8Hz
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim2.Init.Period = 255 + 20;
+	htim2.Init.Period = 255 + 17;
 	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before divide
-	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
-	htim2.Init.RepetitionCounter=0;
+	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	htim2.Init.RepetitionCounter = 0;
 	HAL_TIM_Base_Init(&htim2);
 
 	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
@@ -338,7 +337,7 @@ static void MX_TIM2_Init(void) {
 	HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 255 + 10;
+	sConfigOC.Pulse = 255 + 13;//13 -> Delay of 5ms
 	//255 is the largest time period of the drive signal, and then offset ADC sample to be a bit delayed after this
 	/*
 	 * It takes 4 milliseconds for output to be stable after PWM turns off.
@@ -348,7 +347,7 @@ static void MX_TIM2_Init(void) {
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
 	HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
-	sConfigOC.Pulse = 0;//default to entirely off
+	sConfigOC.Pulse = 0;  //default to entirely off
 	HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4);
 
 	HAL_TIM_Base_Start_IT(&htim2);

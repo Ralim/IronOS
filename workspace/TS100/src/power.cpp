@@ -10,41 +10,25 @@
 #include <hardware.h>
 
 const uint16_t powerPWM = 255;
-const uint16_t totalPWM = 255 + 30; //htim2.Init.Period, the full PWM cycle
+const uint16_t totalPWM = 255 + 17; //htim2.Init.Period, the full PWM cycle
 
-// thermal mass = 1690 milliJ/*C for my tip.
-//  ->  Wattsx10*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-// we divide mass by 20 to let the I term dominate near the set point.
-//  This is necessary because of the temp noise and thermal lag in the system.
-// Once we have feed-forward temp estimation we should be able to better tune this.
-
-#ifdef MODEL_TS100
-const uint16_t tipMass = 2020 ; // divide here so division is compile-time.
-const uint8_t tipResistance = 85;//x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
-
-#endif
-#ifdef MODEL_TS80
-const uint16_t tipMass = 1000/4;
-const uint8_t tipResistance = 46; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
-
-#endif
 history<uint32_t, oscillationPeriod> milliWattHistory = { { 0 }, 0, 0 };
 
 int32_t tempToMilliWatts(int32_t rawTemp, uint8_t rawC) {
 	// mass is in milliJ/*C, rawC is raw per degree C
 	// returns milliWatts needed to raise/lower a mass by rawTemp
 	//  degrees in one cycle.
-	int32_t milliJoules = tipMass * (rawTemp / rawC);
+	int32_t milliJoules = tipMass*10 * (rawTemp / rawC);
 	return milliJoules;
 }
 
 void setTipMilliWatts(int32_t mw) {
 	//Enforce Max Watts Limiter # TODO
 
-	int32_t output = milliWattsToPWM(mw, systemSettings.voltageDiv / 10, 1);
+	int32_t output = milliWattsToPWM(mw, systemSettings.voltageDiv , 1);
 	setTipPWM(output);
 	uint32_t actualMilliWatts = PWMToMilliWatts(output,
-			systemSettings.voltageDiv / 10, 0);
+			systemSettings.voltageDiv , 0);
 
 	milliWattHistory.update(actualMilliWatts);
 }

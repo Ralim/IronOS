@@ -11,6 +11,12 @@ environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release
 environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.2005314669/C_INCLUDE_PATH/operation=remove
 environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.2005314669/append=true
 environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.2005314669/appendContributed=true
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.567701681/CPATH/delimiter=\:
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.567701681/CPATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.567701681/C_INCLUDE_PATH/delimiter=\:
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.567701681/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.567701681/append=true
+environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419.567701681/appendContributed=true
 environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419/CPATH/delimiter=;
 environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419/CPATH/operation=remove
 environment/buildEnvironmentInclude/com.atollic.truestudio.configuration.release.200032419/C_INCLUDE_PATH/delimiter=;
@@ -25,6 +31,10 @@ environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release
 environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419.2005314669/LIBRARY_PATH/operation=remove
 environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419.2005314669/append=true
 environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419.2005314669/appendContributed=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419.567701681/LIBRARY_PATH/delimiter=\:
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419.567701681/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419.567701681/append=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419.567701681/appendContributed=true
 environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419/LIBRARY_PATH/delimiter=;
 environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419/LIBRARY_PATH/operation=remove
 environment/buildEnvironmentLibrary/com.atollic.truestudio.configuration.release.200032419/append=true

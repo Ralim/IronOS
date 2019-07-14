@@ -16,7 +16,7 @@ extern "C" {
 enum Orientation {
 	ORIENTATION_LEFT_HAND = 0, ORIENTATION_RIGHT_HAND = 1, ORIENTATION_FLAT = 3
 };
-#define PID_TIM_HZ (16)
+#define PID_TIM_HZ (8)
 #if defined(MODEL_TS100) + defined(MODEL_TS80) > 1
 #error "Multiple models defined!"
 #elif defined(MODEL_TS100) + defined(MODEL_TS80) == 0

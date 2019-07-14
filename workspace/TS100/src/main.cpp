@@ -271,36 +271,36 @@ static void gui_drawBatteryIcon() {
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
 		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
-				/ cellCount;
+		/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
-			cellV = 33;
-		cellV -= 33;		// Should leave us a number of 0-9
+		cellV = 33;
+		cellV -= 33;// Should leave us a number of 0-9
 		if (cellV > 9)
-			cellV = 9;
+		cellV = 9;
 		OLED::drawBattery(cellV + 1);
 	} else
-		OLED::drawSymbol(15);  // Draw the DC Logo
+	OLED::drawSymbol(15);  // Draw the DC Logo
 #else
-				// On TS80 we replace this symbol with the voltage we are operating on
-				// If <9V then show single digit, if not show duals
-				uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
-				if (V % 10 >= 5)
-				V = V / 10 + 1;// round up
-				else
-				V = V / 10;
-				if (V >= 10) {
-					int16_t xPos = OLED::getCursorX();
-					OLED::setFont(1);
-					OLED::printNumber(1, 1);
-					OLED::setCursor(xPos, 8);
-					OLED::printNumber(V % 10, 1);
-					OLED::setFont(0);
-					OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
-				} else {
-					OLED::printNumber(V, 1);
-				}
+	// On TS80 we replace this symbol with the voltage we are operating on
+	// If <9V then show single digit, if not show duals
+	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
+	if (V % 10 >= 5)
+		V = V / 10 + 1;				// round up
+	else
+		V = V / 10;
+	if (V >= 10) {
+		int16_t xPos = OLED::getCursorX();
+		OLED::setFont(1);
+		OLED::printNumber(1, 1);
+		OLED::setCursor(xPos, 8);
+		OLED::printNumber(V % 10, 1);
+		OLED::setFont(0);
+		OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
+	} else {
+		OLED::printNumber(V, 1);
+	}
 #endif
 }
 static void gui_solderingTempAdjust() {
@@ -372,7 +372,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-		if (OLED::getRotation())
+			if (OLED::getRotation())
 #endif
 			OLED::print(SymbolMinus);
 		else
@@ -388,7 +388,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-		if (OLED::getRotation())
+			if (OLED::getRotation())
 #endif
 			OLED::print(SymbolPlus);
 		else
@@ -415,7 +415,7 @@ static int gui_SolderingSleepingMode() {
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
-		if (checkVoltageForExit())
+			if (checkVoltageForExit())
 			return 1; // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
@@ -682,9 +682,9 @@ void showVersion(void) {
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
 #ifdef MODEL_TS100
-		OLED::print(SymbolVersionNumber);  // Print version number
-#else
 				OLED::print(SymbolVersionNumber);  // Print version number
+#else
+		OLED::print(SymbolVersionNumber);  // Print version number
 #endif
 		OLED::setCursor(0, 8);  // second line
 		OLED::print(DebugMenu[screen]);
@@ -871,7 +871,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			if (!OLED::getRotation()) {
 #else
-			if (OLED::getRotation()) {
+				if (OLED::getRotation()) {
 #endif
 				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
 				OLED::setCursor(0, 0);
@@ -892,7 +892,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 				if (!OLED::getRotation()) {
 #else
-				if (OLED::getRotation()) {
+					if (OLED::getRotation()) {
 #endif
 					// in right handed mode we want to draw over the first part
 					OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp
@@ -921,15 +921,16 @@ void startPIDTask(void const *argument __unused) {
 	 */
 	setTipMilliWatts(0); // disable the output driver if the output is set to be off
 #ifdef MODEL_TS80
-			idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
+	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
 	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
 
 #ifdef MODEL_TS80
-			//Set power management code to the tip resistance in ohms * 10
-			TickType_t lastPowerPulse = 0;
+	//Set power management code to the tip resistance in ohms * 10
+	TickType_t lastPowerPulse = 0;
 #endif
 	// Tip temp reading filter
+	// Tip temp is read at a rate of PID_TIM_Hz
 	history<int32_t, PID_TIM_HZ / 4> tempError = { { 0 }, 0, 0 };
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
 										  // be over-ridden rapidly
@@ -991,7 +992,7 @@ void startPIDTask(void const *argument __unused) {
 				// This is purely guesswork :'( as everyone implements stuff differently
 				if (xTaskGetTickCount() - lastPowerPulse < 10) {
 					// for the first 100mS turn on for a bit
-					setTipMilliWatts(2000);// typically its around 5W to hold the current temp, so this wont raise temp much
+					setTipMilliWatts(2000);	// typically its around 5W to hold the current temp, so this wont raise temp much
 				} else {
 					setTipMilliWatts(0);
 				}
@@ -1021,9 +1022,9 @@ void startMOVTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	startQC(systemSettings.voltageDiv);
 	while (pidTaskNotification == 0)
-	osDelay(30);  // To ensure we return after idealQCVoltage/tip resistance
+		osDelay(30);  // To ensure we return after idealQCVoltage/tip resistance
 
-	seekQC(idealQCVoltage, systemSettings.voltageDiv);// this will move the QC output to the preferred voltage to start with
+	seekQC(idealQCVoltage, systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
