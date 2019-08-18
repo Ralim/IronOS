@@ -430,7 +430,7 @@ def read_opts():
     if len(sys.argv) > 2:
         outFile = sys.argv[2]
     else:
-        outDir = os.path.relpath(jsonDir + "/../workspace/TS100/src/")
+        outDir = os.path.relpath(jsonDir + "/../workspace/TS100/Core/Src")
         outFile = os.path.join(outDir, TRANSLATION_CPP)
 
     if len(sys.argv) > 3:

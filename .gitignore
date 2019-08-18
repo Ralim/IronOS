@@ -53,3 +53,7 @@ Translation Editor/.vscode/
 Translation Editor/__pycache__/
 *.pyc
 workspace/TS100/src/Translation.cpp
+*.lst
+*.mk
+*.list
+workspace/TS100/Release/TS100.hex
