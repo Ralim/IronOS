@@ -56,4 +56,5 @@ workspace/TS100/src/Translation.cpp
 *.lst
 *.mk
 *.list
-workspace/TS100/Release/TS100.hex
+workspace/TS100/Release/
+workspace/TS100/Hexfile/
