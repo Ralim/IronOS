@@ -2,11 +2,9 @@
 Please try and fill out this template where possible, not all fields are required and can be removed.
 
 * **Please check if the PR fulfills these requirements**
-- [ ] The commit message make sense
-- [ ] The changes have been tested locally
-- [ ] New features have been documented in the Wiki
-- [ ] I'm willing to maintain this in the future (Totally Optional)
-
+- [] The commit message make sense
+- [] The changes have been tested locally
+- [] Are there any breaking changes
 
 * **What kind of change does this PR introduce?** 
 (Bug fix, feature, docs update, ...)
