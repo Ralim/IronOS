@@ -20,9 +20,20 @@ uint32_t lastMovementTime = 0;
 uint32_t lastButtonTime = 0;
 int16_t idealQCVoltage = 0;
 // FreeRTOS variables
+
 osThreadId GUITaskHandle;
+static const size_t GUITaskStackSize = 1024;
+uint32_t GUITaskBuffer[GUITaskStackSize];
+osStaticThreadDef_t GUITaskControlBlock;
+
 osThreadId PIDTaskHandle;
+static const size_t PIDTaskStackSize = 3 * 1024 / 4;
+uint32_t PIDTaskBuffer[PIDTaskStackSize];
+osStaticThreadDef_t PIDTaskControlBlock;
 osThreadId MOVTaskHandle;
+static const size_t MOVTaskStackSize = 1024;
+uint32_t MOVTaskBuffer[MOVTaskStackSize];
+osStaticThreadDef_t MOVTaskControlBlock;
 
 static TaskHandle_t pidTaskNotification = NULL;
 
@@ -69,21 +80,20 @@ int main(void) {
 
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
-	osThreadDef(GUITask, startGUITask, osPriorityBelowNormal, 0, 5 * 1024 / 4);
+
+	osThreadStaticDef(GUITask, startGUITask, osPriorityBelowNormal, 0,
+			GUITaskStackSize, GUITaskBuffer, &GUITaskControlBlock);
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
 	/* definition and creation of PIDTask */
-	osThreadDef(PIDTask, startPIDTask, osPriorityRealtime, 0, 3 * 1024 / 4);
+	osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0,
+			PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
+
 	if (PCBVersion < 3) {
-		/* definition and creation of MOVTask */
-		osThreadDef(MOVTask, startMOVTask, osPriorityNormal, 0, 4 * 1024 / 4);
+		osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0,
+				MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);
 		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
-#ifdef LOCAL_BUILD
-		//Test that there was enough ram in the FreeRToS pool to allocate all the tasks
-		if (MOVTaskHandle == 0)
-		asm("bkpt");
-#endif
 	}
 
 	/* Start scheduler */
@@ -700,9 +710,6 @@ void showVersion(void) {
 		OLED::setCursor(0, 8);  // second line
 		OLED::print(HEADERS[screen]);
 		switch (screen) {
-		case 1:
-			OLED::printNumber(xPortGetFreeHeapSize(), 5);
-			break;
 		case 2:
 			OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5);
 			break;

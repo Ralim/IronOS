@@ -9,6 +9,8 @@
 #define I2CUSESDMA
 I2C_HandleTypeDef* FRToSI2C::i2c;
 SemaphoreHandle_t FRToSI2C::I2CSemaphore;
+StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
+
 void FRToSI2C::CpltCallback() {
 	i2c->State = HAL_I2C_STATE_READY;  // Force state reset (even if tx error)
 	if (I2CSemaphore) {
@@ -29,8 +31,8 @@ void FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
 		// Wait up to 1 second for the mutex
 		if (xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE) {
 #ifdef I2CUSESDMA
-			if (HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize,
-					pData, Size,500) != HAL_OK) {
+			if (HAL_I2C_Mem_Read(i2c, DevAddress, MemAddress, MemAddSize, pData,
+					Size, 500) != HAL_OK) {
 
 				I2C1_ClearBusyFlagErratum();
 				xSemaphoreGive(I2CSemaphore);
@@ -70,7 +72,7 @@ void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 		if (xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE) {
 #ifdef I2CUSESDMA
 			if (HAL_I2C_Mem_Write(i2c, DevAddress, MemAddress, MemAddSize,
-					pData, Size,500) != HAL_OK) {
+					pData, Size, 500) != HAL_OK) {
 
 				I2C1_ClearBusyFlagErratum();
 				xSemaphoreGive(I2CSemaphore);

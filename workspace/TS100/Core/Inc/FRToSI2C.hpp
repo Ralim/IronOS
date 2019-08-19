@@ -13,18 +13,20 @@
 class FRToSI2C {
 public:
 
-	static void init(I2C_HandleTypeDef *i2chandle) {i2c=i2chandle;
-		I2CSemaphore=nullptr;}
+	static void init(I2C_HandleTypeDef *i2chandle) {
+		i2c = i2chandle;
+		I2CSemaphore = nullptr;
+	}
 
 	static void FRToSInit() {
-		I2CSemaphore = xSemaphoreCreateBinary();
+		I2CSemaphore = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer);
 		xSemaphoreGive(I2CSemaphore);
 	}
 
 	static void CpltCallback(); //Normal Tx Callback
 
-	static void Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize,
-			uint8_t *pData, uint16_t Size);
+	static void Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
+			uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
 	static void Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 			uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
 
@@ -36,6 +38,7 @@ private:
 	static I2C_HandleTypeDef *i2c;
 	static void I2C1_ClearBusyFlagErratum();
 	static SemaphoreHandle_t I2CSemaphore;
+	static StaticSemaphore_t xSemaphoreBuffer;
 };
 
 #endif /* FRTOSI2C_HPP_ */
