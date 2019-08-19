@@ -20,16 +20,16 @@ int16_t idealQCVoltage = 0;
 // FreeRTOS variables
 
 osThreadId GUITaskHandle;
-static const size_t GUITaskStackSize = 1024;
+static const size_t GUITaskStackSize = 1024/4;
 uint32_t GUITaskBuffer[GUITaskStackSize];
 osStaticThreadDef_t GUITaskControlBlock;
 
 osThreadId PIDTaskHandle;
-static const size_t PIDTaskStackSize = 3 * 1024 / 4;
+static const size_t PIDTaskStackSize =512 / 4;
 uint32_t PIDTaskBuffer[PIDTaskStackSize];
 osStaticThreadDef_t PIDTaskControlBlock;
 osThreadId MOVTaskHandle;
-static const size_t MOVTaskStackSize = 1024;
+static const size_t MOVTaskStackSize = 512/4;
 uint32_t MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
 
