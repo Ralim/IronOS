@@ -13,10 +13,11 @@ SOURCE_CPP := $(shell find . -type f -name '*.cpp')
 SOURCES := $(shell find . -type f -name '*.c*')
 S_SRCS := $(shell find . -type f -name '*.s') 
 
-APP_INC_DIR = ./inc
-CMSIS_DEVICE_INC_DIR = ./CMSIS/device
-CMSIS_CORE_INC_DIR = ./CMSIS/core
-HAL_INC_DIR = ./HAL_Driver/Inc
+APP_INC_DIR = ./Core/Inc
+CMSIS_DEVICE_INC_DIR = ./Drivers/CMSIS/Device/ST/STM32F1xx/Include
+CMSIS_CORE_INC_DIR = ./Drivers/CMSIS/Include
+HAL_INC_DIR = ./Drivers/STM32F1xx_HAL_Driver/Inc
+HAL_LEGACY_INC_DIR = ./Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 FRTOS_GCC_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3
@@ -25,6 +26,7 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(CMSIS_DEVICE_INC_DIR)\
 	-I$(CMSIS_CORE_INC_DIR)	\
 	-I$(HAL_INC_DIR)	\
+	-I$(HAL_LEGACY_INC_DIR)	\
 	-I$(FRTOS_CMIS_INC_DIR)	\
 	-I$(FRTOS_INC_DIR)	\
 	-I$(FRTOS_GCC_INC_DIR)
