@@ -53,6 +53,7 @@ extern const char* SettingAutoChar;
 extern const char* SettingFastChar;
 extern const char* SettingSlowChar;
 extern const char*  TipModelStrings[];
+extern const char* DebugMenu[];
 extern const char* SymbolPlus;
 extern const char* SymbolMinus;
 extern const char* SymbolSpace;

@@ -4,6 +4,7 @@ from __future__ import print_function
 import json
 import os
 import io
+from datetime import datetime
 import sys
 import fontTables
 TRANSLATION_CPP = "Translation.cpp"
@@ -115,6 +116,21 @@ def getTipModelEnumTS100():
     constants.append("User")
     return constants
 
+def getDebugMenu(): 
+    constants = []
+    constants.append(datetime.today().strftime('%d-%m-%y'))
+    constants.append("HW G ")
+    constants.append("HW M ")
+    constants.append("HW P ")
+    constants.append("Time ")
+    constants.append("Move ")
+    constants.append("RTip ")
+    constants.append("CTip ")
+    constants.append("CHan ")
+    constants.append("Vin  ")
+    constants.append("PCB  ") # PCB Version AKA IMU version
+    return constants
+
 
 def getLetterCounts(defs, lang):
     textList = []
@@ -162,6 +178,7 @@ def getLetterCounts(defs, lang):
         textList.append(x[1])
     textList.extend(getTipModelEnumTS100())
     textList.extend(getTipModelEnumTS80())  
+    textList.extend(getDebugMenu())
         
     # collapse all strings down into the composite letters and store totals for these
 
@@ -343,6 +360,13 @@ def writeLanguage(languageCode, defs, f):
 
     f.write(to_unicode("};\n\n"))
     
+    # Debug Menu
+    f.write(to_unicode("const char* DebugMenu[] = {\n"))
+    
+    for c in getDebugMenu():
+        f.write(to_unicode("\t \"" + convStr(symbolConversionTable, c) + "\","+ "//{} \n".format(c)))
+    f.write(to_unicode("};\n\n"))
+
     # ----- Menu Options
 
     # Menu type

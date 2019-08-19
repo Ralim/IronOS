@@ -264,7 +264,7 @@ static void gui_solderingTempAdjust() {
 			break;
 		case BUTTON_B_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
-					+ autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				systemSettings.SolderingTemp -= 10;  // sub 10
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
@@ -272,7 +272,7 @@ static void gui_solderingTempAdjust() {
 			break;
 		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
-					+ autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
+					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
 				systemSettings.SolderingTemp += 10;
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
@@ -607,75 +607,58 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 	}
 }
 
-static const char *HEADERS[] = {
-__DATE__, "Heap: ", "HWMG: ", "HWMP: ", "HWMM: ", "Time: ", "Move: ", "RTip: ",
-		"CTip: ", "Vin :", "THan: ", "Model: ",
-#ifdef MODEL_TS80
-		"QCV: ", "Tr ",
-#else
-		"Tm ", "Ralim-",
-
-#endif
-	};
-
-void showVersion(void) {
+void showDebugMenu(void) {
 	uint8_t screen = 0;
 	ButtonState b;
 	for (;;) {
 		OLED::clearScreen();    // Ensure the buffer starts clean
 		OLED::setCursor(0, 0);  // Position the cursor at the 0,0 (top left)
 		OLED::setFont(1);       // small font
-#ifdef MODEL_TS100
-				OLED::print(SymbolVersionNumber);  // Print version number
-#else
 		OLED::print(SymbolVersionNumber);  // Print version number
-#endif
 		OLED::setCursor(0, 8);  // second line
-		OLED::print(HEADERS[screen]);
+		OLED::print(DebugMenu[screen]);
 		switch (screen) {
-		case 2:
+		case 0:  //Just prints date
+			break;
+		case 1:
+			//High water mark for GUI
 			OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5);
 			break;
+		case 2:
+			//High water mark for the Movement task
+			OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5);
+			break;
 		case 3:
+			//High water mark for the PID task
 			OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5);
 			break;
 		case 4:
-			OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5);
-			break;
-		case 5:
+			//system up time stamp
 			OLED::printNumber(xTaskGetTickCount() / 100, 5);
 			break;
-		case 6:
+		case 5:
+			//Movement time stamp
 			OLED::printNumber(lastMovementTime / 100, 5);
 			break;
-		case 7:
+		case 6:
+			//Raw Tip
 			OLED::printNumber(getTipRawTemp(0), 6);
 			break;
-		case 8:
+		case 7:
+			//Temp in C
 			OLED::printNumber(tipMeasurementToC(getTipRawTemp(0)), 5);
 			break;
+		case 8:
+			//Handle Temp
+			OLED::printNumber(getHandleTemperature(), 3);
+			break;
 		case 9:
+			//Voltage input
 			printVoltage();
 			break;
 		case 10:
-			OLED::printNumber(getHandleTemperature(), 3);
-			break;
-		case 11:
-			OLED::printNumber(PCBVersion, 1);  // Print PCB ID number
-			break;
-		case 12:
-#ifdef MODEL_TS80
-			OLED::printNumber(idealQCVoltage, 3);
-#else
-			OLED::printNumber(systemSettings.tipType, 3);
-#endif
-			break;
-		case 13:
-#ifdef MODEL_TS80
-			OLED::printNumber(calculateTipR(), 5);
-#else
-			OLED::print("Tek.com");
-#endif
+			// Print PCB ID number
+			OLED::printNumber(PCBVersion, 1);
 			break;
 		default:
 			break;
@@ -687,7 +670,7 @@ void showVersion(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 14;
+			screen = screen % 11;
 		}
 		GUIDelay();
 	}
@@ -753,7 +736,7 @@ void startGUITask(void const *argument __unused) {
 
 		case BUTTON_B_LONG:
 			// Show the version information
-			showVersion();
+			showDebugMenu();
 			break;
 		case BUTTON_F_LONG:
 			gui_solderingTempAdjust();
