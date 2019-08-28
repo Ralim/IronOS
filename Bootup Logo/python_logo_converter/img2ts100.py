@@ -229,7 +229,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     try:
-        with open(args.output_filename, 'w') as output:
+        with open(args.output_filename, 'w', newline='\r\n') as output:
             img2hex(args.input_filename,
                     output,
                     args.preview,
