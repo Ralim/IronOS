@@ -236,6 +236,16 @@ var def =
 			"id": "PowerInput",
 			"maxLen": 8,
 			"maxLen2": 16
+		},
+		{
+			"id": "PowerLimitEnable",
+			"maxLen": 6,
+			"maxLen2": 13
+		},
+		{
+			"id": "PowerLimit",
+			"maxLen": 5,
+			"maxLen2": 11
 		}
 	]
 }

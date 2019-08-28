@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION   ( 0x19 )
+#define SETTINGSVERSION   ( 0x1A )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -48,6 +48,10 @@ typedef struct {
 	uint8_t customTipGain;  // Tip gain value if custom tuned, or 0 if using a
 							// tipType param
 	uint8_t tipType;
+#ifdef MODEL_TS100
+    uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
+    uint16_t powerLimit; // Maximum power iron allowed to output (uint16_t is just barely big enough for 65W!)
+#endif
 #ifdef MODEL_TS80
 	uint8_t pidPowerLimit;
 #endif

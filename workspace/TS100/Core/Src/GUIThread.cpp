@@ -34,7 +34,7 @@ static uint16_t min(uint16_t a, uint16_t b) {
 }
 
 void printVoltage() {
-	uint32_t volt = getInputVoltageX10(systemSettings.voltageDiv, 0);
+	uint32_t volt = getInputVoltageX10(systemSettings.voltageDiv, 1); // setting the sample parameter to 1 somehow fixes a bug that causes the voltage to not update sometimes
 	OLED::printNumber(volt / 10, 2);
 	OLED::print(SymbolDot);
 	OLED::printNumber(volt % 10, 1);
@@ -187,7 +187,6 @@ static bool checkVoltageForExit() {
 				OLED::setCursor(0, 8);
 				OLED::print(InputVoltageString);
 				printVoltage();
-				OLED::print("V");
 
 			} else {
 				OLED::setFont(0);

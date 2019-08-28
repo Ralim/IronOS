@@ -16,6 +16,10 @@ void gui_Menu(const menuitem* menu);
 #ifdef MODEL_TS100
 static void settings_setInputVRange(void);
 static void settings_displayInputVRange(void);
+static void settings_setPowerLimitEnable(void);
+static void settings_displayPowerLimitEnable(void);
+static void settings_setPowerLimit(void);
+static void settings_displayPowerLimit(void);
 #else
 static void settings_setInputPRange(void);
 static void settings_displayInputPRange(void);
@@ -95,6 +99,8 @@ static void settings_enterAdvancedMenu(void);
  *  Cooldown blink
  *
  * Advanced
+ *  Enable Power Limit
+ *  Power Limit
  *  Detailed IDLE
  *  Detailed Soldering
  *  Logo Time
@@ -183,13 +189,21 @@ const menuitem PowerMenu[] = {
 const menuitem advancedMenu[] = {
 
 /*
- * Detailed IDLE
+ *  Power limit enable
+ *  Power limit
+ *  Detailed IDLE
  *  Detailed Soldering
  *  Logo Time
  *  Calibrate Temperature
  *  Calibrate Input V
  *  Reset Settings
  */
+#ifdef MODEL_TS100
+{ (const char*) SettingsDescriptions[21], { settings_setPowerLimitEnable }, {
+    settings_displayPowerLimitEnable } }, /*Power limit enable*/
+{ (const char*) SettingsDescriptions[22], { settings_setPowerLimit }, {
+    settings_displayPowerLimit } }, /*Power limit*/
+#endif
 { (const char*) SettingsDescriptions[6], { settings_setAdvancedIDLEScreens }, {
 		settings_displayAdvancedIDLEScreens } }, /* Advanced idle screen*/
 { (const char*) SettingsDescriptions[15],
@@ -299,6 +313,7 @@ static int userConfirmation(const char* message) {
 #ifdef MODEL_TS100
 static void settings_setInputVRange(void) {
 	systemSettings.cutoutSetting = (systemSettings.cutoutSetting + 1) % 5;
+	if(systemSettings.cutoutSetting) systemSettings.powerLimitEnable=0; // disable power limit if switching to a lipo power source
 }
 
 static void settings_displayInputVRange(void) {
@@ -458,6 +473,32 @@ static void settings_displayAdvancedIDLEScreens(void) {
 
 	OLED::drawCheckbox(systemSettings.detailedIDLE);
 }
+
+#ifdef MODEL_TS100
+
+static void settings_setPowerLimitEnable(void) {
+    systemSettings.powerLimitEnable = !systemSettings.powerLimitEnable;
+}
+
+static void settings_displayPowerLimitEnable(void) {
+    printShortDescription(21, 7);
+    OLED::drawCheckbox(systemSettings.powerLimitEnable);
+}
+
+static void settings_setPowerLimit(void) {
+	if(systemSettings.powerLimit>=65000)
+		systemSettings.powerLimit=5000;
+	else systemSettings.powerLimit+=5000;
+}
+
+static void settings_displayPowerLimit(void) {
+    printShortDescription(22, 5);
+    OLED::printNumber(systemSettings.powerLimit/1000, 2);
+    OLED::print(SymbolWatts);
+}
+
+#endif
+
 static void settings_setScrollSpeed(void) {
 	if (systemSettings.descriptionScrollSpeed == 0)
 		systemSettings.descriptionScrollSpeed = 1;

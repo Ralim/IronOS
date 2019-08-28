@@ -188,8 +188,10 @@ void startPIDTask(void const *argument __unused) {
 				//  and counters extra power if the iron is no longer losing temp.
 				// basically: temp - lastTemp
 				//  Unfortunately, our temp signal is too noisy to really help.
-
-				setTipMilliWatts(milliWattsOut);
+                
+                if(systemSettings.powerLimitEnable && milliWattsOut>systemSettings.powerLimit)
+                    setTipMilliWatts(systemSettings.powerLimit);
+				else setTipMilliWatts(milliWattsOut);
 			} else {
 
 #ifdef MODEL_TS80
