@@ -229,6 +229,22 @@
 				"snaga"
 			],
 			"desc": "Snaga napajanja u vatima."
+		},
+		"PowerLimitEnable": {
+			"text": "PLIMEN",
+			"text2": [
+				"P Limit",
+				"Enable"
+			],
+			"desc": "Enable power limit"
+		},
+		"PowerLimit": {
+			"text": "PLIM",
+			"text2": [
+				"Power",
+				"Limit"
+			],
+			"desc": "Maximum power the iron can use <Watts>"
 		}
 	}
 }

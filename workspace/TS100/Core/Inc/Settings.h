@@ -48,10 +48,10 @@ typedef struct {
 	uint8_t customTipGain;  // Tip gain value if custom tuned, or 0 if using a
 							// tipType param
 	uint8_t tipType;
-#ifdef MODEL_TS100
+	
     uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
     uint16_t powerLimit; // Maximum power iron allowed to output (uint16_t is just barely big enough for 65W!)
-#endif
+
 #ifdef MODEL_TS80
 	uint8_t pidPowerLimit;
 #endif
