@@ -26,8 +26,14 @@ extern "C" {
 #define OLED_WIDTH        96
 #define FRAMEBUFFER_START 17
 
-class OLED {
+class OLED {	
 public:
+
+	enum DisplayState : bool {
+		OFF = false,
+		ON  = true
+	};
+
 	static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
 
 	// Draw the buffer out to the LCD using the DMA Channel
@@ -38,11 +44,11 @@ public:
 		//or we need to goto double buffering
 	}
 
-	// Turn the screen on or not
-	static void displayOnOff(bool on) {
-		displayOnOffState = on;
-		screenBuffer[1] = on ? 0xAF : 0xAE;
+	static void setDisplayState(DisplayState state) {
+		displayState = state;
+		screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
 	}
+	
 	static void setRotation(bool leftHanded); // Set the rotation for the screen
 	// Get the current rotation of the LCD
 	static bool getRotation()  {
@@ -96,7 +102,7 @@ private:
 	static uint8_t* firstStripPtr; // Pointers to the strips to allow for buffer having extra content
 	static uint8_t* secondStripPtr;	//Pointers to the strips
 	static bool inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
-	static bool displayOnOffState;				// If the display is on or not
+	static DisplayState displayState;
 	static uint8_t fontWidth, fontHeight;
 	static int16_t cursor_x, cursor_y;
 	static uint8_t displayOffset;

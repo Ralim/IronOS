@@ -18,7 +18,7 @@ uint8_t* OLED::firstStripPtr;      // Pointers to the strips to allow for buffer
 uint8_t* OLED::secondStripPtr;     // Pointers to the strips
 bool OLED::inLeftHandedMode;   // Whether the screen is in left or not (used for
 // offsets in GRAM)
-bool OLED::displayOnOffState;  // If the display is on or not
+OLED::DisplayState OLED::displayState;
 uint8_t OLED::fontWidth, OLED::fontHeight;
 int16_t OLED::cursor_x, OLED::cursor_y;
 uint8_t OLED::displayOffset;
@@ -70,16 +70,18 @@ void OLED::initialize() {
 	secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
 	fontHeight = 16;
 	displayOffset = 0;
-	displayOnOffState = true;
 	memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
 	HAL_Delay(50);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(50);
-	// Send the setup settings
-	FRToSI2C::Transmit(DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
-			sizeof(OLED_Setup_Array));
-	displayOnOff(true);
+
+	// Set the display to be ON once the settings block is sent and send the
+	// initialisation data to the OLED.
+
+	setDisplayState(DisplayState::ON);
+	FRToSI2C::Transmit(DEVICEADDR_OLED, &OLED_Setup_Array[0],
+		sizeof(OLED_Setup_Array));
 }
 
 /*
