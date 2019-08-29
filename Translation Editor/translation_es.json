@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "SIN PUNTA",
 		"SolderingAdvancedPowerPrompt": "POTENCIA: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "D",

@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "ANTGAL ATJUNGTAS",
 		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
 		"OffString": "Išj",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "D",

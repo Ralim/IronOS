@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "Punt ONTKOPPELD",
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
 		"OffString": "Uit",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "R",

@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "D",

@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "VRH NIJE SPOJEN",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
 		"OffString": "Isk",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "D",

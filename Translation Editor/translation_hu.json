@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "HEGY LEVÉVE",
 		"SolderingAdvancedPowerPrompt": "Telj: ",
 		"OffString": "Ki",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "J",

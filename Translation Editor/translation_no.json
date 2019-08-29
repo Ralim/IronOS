@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "SPISS FRAKOBLET",
 		"SolderingAdvancedPowerPrompt": "Effekt: ",
 		"OffString": "Av",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "H",

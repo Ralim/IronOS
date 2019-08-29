@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "UÇ ÇIKARILDI",
 		"SolderingAdvancedPowerPrompt": "Güç: ",
 		"OffString": "Kapalı",
-		"ResetOKMessage":"Reset Tamam"
+		"ResetOKMessage":"Reset Tamam",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "R",

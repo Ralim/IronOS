@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "Жало вимкнено!",
 		"SolderingAdvancedPowerPrompt": "Живлення: ",
 		"OffString": "Вим",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "R",

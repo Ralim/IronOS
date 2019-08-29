@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "TIP LOSGEKOPPELD",
 		"SolderingAdvancedPowerPrompt": "vermogen: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "R",

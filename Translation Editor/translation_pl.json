@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "GROT ODŁĄCZONY",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Wyłącz",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "P",

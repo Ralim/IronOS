@@ -22,7 +22,8 @@
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
 		"ResetOKMessage":"Reset OK",
-		"YourGainMessage":"Your Gain:"
+		"YourGainMessage":"Your Gain:",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "R",

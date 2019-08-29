@@ -19,6 +19,10 @@ var def =
 			"maxLen": 16
 		},
 		{
+			"id": "UVTripString",
+			"maxLen": 12
+		},
+		{
 			"id": "InputVoltageString",
 			"maxLen": 11,
 			"note": "Preferably end with a space"

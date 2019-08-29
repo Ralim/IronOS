@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "ВРХ НИЈЕ СПОЈЕН",
 		"SolderingAdvancedPowerPrompt": "Снага: ",
 		"OffString": "Иск",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "Д",

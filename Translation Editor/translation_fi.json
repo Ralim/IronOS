@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "KÄRKI ON IRTI",
 		"SolderingAdvancedPowerPrompt": "Teho: ",
 		"OffString": "OFF",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "O",

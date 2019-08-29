@@ -22,7 +22,8 @@
 		"SolderingAdvancedPowerPrompt": "Moč: ",
 		"OffString": "Izk",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Ojačan.:"
+		"YourGainMessage": "Ojačan.:",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "D",

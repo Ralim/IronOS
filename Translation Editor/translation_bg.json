@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "ВРЪХ ЛОША ВРЪЗКА",
 		"SolderingAdvancedPowerPrompt": "Захранване: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "R",

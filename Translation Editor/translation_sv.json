@@ -21,7 +21,8 @@
 		"TipDisconnectedString": "SPETS URTAGEN",
 		"SolderingAdvancedPowerPrompt": "Ström: ",
 		"OffString": "Av",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage":"Reset OK",
+		"UVTripString":"Trip V: "
 	},
 	"characters": {
 		"SettingRightChar": "H",

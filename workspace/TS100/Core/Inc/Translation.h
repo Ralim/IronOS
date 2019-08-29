@@ -27,6 +27,7 @@ extern const char* SettingsCalibrationWarning;
 extern const char* SettingsResetWarning;
 extern const char* UVLOWarningString;
 extern const char* UndervoltageString;
+extern const char* UVTripString;
 extern const char* InputVoltageString;
 extern const char* WarningTipTempString;
 extern const char* BadTipString;

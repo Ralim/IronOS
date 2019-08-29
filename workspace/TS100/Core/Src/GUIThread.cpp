@@ -178,6 +178,8 @@ static bool checkVoltageForExit() {
 	//Dont check for first 1.5 seconds while the ADC stabilizes and the DMA fills the buffer
 	if (xTaskGetTickCount() > 150) {
 		if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
+			currentlyActiveTemperatureTarget = 0;
+			
 			GUIDelay();
 			OLED::clearScreen();
 			OLED::setCursor(0, 0);
@@ -185,17 +187,16 @@ static bool checkVoltageForExit() {
 				OLED::setFont(1);
 				OLED::print(UndervoltageString);
 				OLED::setCursor(0, 8);
-				OLED::print(InputVoltageString);
+				OLED::print(UVTripString);
 				printVoltage();
-
 			} else {
 				OLED::setFont(0);
 				OLED::print(UVLOWarningString);
 			}
-
 			OLED::refresh();
-			currentlyActiveTemperatureTarget = 0;
+			
 			waitForButtonPress();
+			
 			return true;
 		}
 	}
@@ -483,6 +484,22 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			break;
 		}
 		// else we update the screen information
+		
+#ifdef MODEL_TS100
+		// Undervoltage test
+		if (checkVoltageForExit()) {
+			lastButtonTime = xTaskGetTickCount();
+			return;
+		}
+#else
+		// on the TS80 we only want to check for over voltage to prevent tip damage
+		/*if (getInputVoltageX10(systemSettings.voltageDiv, 1) > 150) {
+		 lastButtonTime = xTaskGetTickCount();
+		 currentlyActiveTemperatureTarget = 0;
+		 return;  // Over voltage
+		 }*/
+#endif
+		
 		OLED::setCursor(0, 0);
 		OLED::clearScreen();
 		OLED::setFont(0);
@@ -578,21 +595,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				currentlyActiveTemperatureTarget = ctoTipMeasurement(
 						systemSettings.SolderingTemp);
 		}
-
-#ifdef MODEL_TS100
-		// Undervoltage test
-		if (checkVoltageForExit()) {
-			lastButtonTime = xTaskGetTickCount();
-			return;
-		}
-#else
-		// on the TS80 we only want to check for over voltage to prevent tip damage
-		/*if (getInputVoltageX10(systemSettings.voltageDiv, 1) > 150) {
-		 lastButtonTime = xTaskGetTickCount();
-		 currentlyActiveTemperatureTarget = 0;
-		 return;  // Over voltage
-		 }*/
-#endif
 
 		if (systemSettings.sensitivity && systemSettings.SleepTime)
 			if (xTaskGetTickCount() - lastMovementTime > sleepThres
