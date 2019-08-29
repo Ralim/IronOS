@@ -117,7 +117,7 @@ void resetSettings() {
 #else
   systemSettings.pidPowerLimit=24;  // Sets the max pwm power limit
   systemSettings.tipType = TS_B02;  // Default to the B2 Tip
-  systemSettings.powerLimit=20000; // 20 watts default power limit
+  systemSettings.powerLimit=24000; // 24 watts default power limit
 #endif
   saveSettings();  // Save defaults
 }

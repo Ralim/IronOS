@@ -483,11 +483,13 @@ static void settings_displayPowerLimitEnable(void) {
 static void settings_setPowerLimit(void) {
 #ifdef MODEL_TS100
 	if(systemSettings.powerLimit>=65000)
-#else
-	if(systemSettings.powerLimit>=30000)
-#endif
 		systemSettings.powerLimit=5000;
 	else systemSettings.powerLimit+=5000;
+#else
+	if(systemSettings.powerLimit>=30000)
+		systemSettings.powerLimit=2000;
+	else systemSettings.powerLimit+=2000;
+#endif
 }
 
 static void settings_displayPowerLimit(void) {
