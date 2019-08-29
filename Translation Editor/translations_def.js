@@ -86,6 +86,10 @@ var def =
 			"maxLen": 3
 		},
 		{
+			"id": "InfinityString",
+			"maxLen": 3
+		},
+		{
 			"id": "ResetOKMessage",
 			"maxLen": 8
 		}, 
@@ -248,6 +252,11 @@ var def =
 		},
 		{
 			"id": "PowerLimit",
+			"maxLen": 5,
+			"maxLen2": 11
+		},
+		{
+			"id": "LogoTime",
 			"maxLen": 5,
 			"maxLen2": 11
 		}

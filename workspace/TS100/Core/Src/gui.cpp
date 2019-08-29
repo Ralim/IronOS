@@ -59,6 +59,8 @@ static void settings_setCalibrate(void);
 static void settings_displayCalibrate(void);
 static void settings_setCalibrateVIN(void);
 static void settings_displayCalibrateVIN(void);
+static void settings_setLogoTime(void);
+static void settings_displayLogoTime(void);
 
 // Calibration Menu
 static void calibration_displaySimpleCal(void);  // Hot water cal
@@ -204,8 +206,10 @@ const menuitem advancedMenu[] = {
 { (const char*) SettingsDescriptions[6], { settings_setAdvancedIDLEScreens }, {
 		settings_displayAdvancedIDLEScreens } }, /* Advanced idle screen*/
 { (const char*) SettingsDescriptions[15],
-		{ settings_setAdvancedSolderingScreens }, {
-				settings_displayAdvancedSolderingScreens } }, /* Advanced soldering screen*/
+		{settings_setAdvancedSolderingScreens }, {
+		settings_displayAdvancedSolderingScreens } }, /* Advanced soldering screen*/
+{ (const char*) SettingsDescriptions[23], { settings_setLogoTime }, {
+		settings_displayLogoTime } }, /*Logo time*/
 { (const char*) SettingsDescriptions[13], { settings_setResetSettings }, {
 		settings_displayResetSettings } }, /*Resets settings*/
 { (const char*) SettingsDescriptions[17], { settings_setTipModel }, {
@@ -496,6 +500,25 @@ static void settings_displayPowerLimit(void) {
     printShortDescription(22, 5);
     OLED::printNumber(systemSettings.powerLimit/1000, 2);
     OLED::print(SymbolWatts);
+}
+
+static void settings_setLogoTime(void) {
+	if(systemSettings.logoTime==0) systemSettings.logoTime=1;
+	else if(systemSettings.logoTime==1) systemSettings.logoTime=2;
+	else if(systemSettings.logoTime==2) systemSettings.logoTime=5;
+	else if(systemSettings.logoTime==5) systemSettings.logoTime=10;
+	else if(systemSettings.logoTime==10) systemSettings.logoTime=30;
+	else if(systemSettings.logoTime==30) systemSettings.logoTime=-1;
+	else systemSettings.logoTime=0;
+}
+
+static void settings_displayLogoTime(void) {
+	printShortDescription(23, 5);
+	if(systemSettings.logoTime>0) {
+		OLED::printNumber(systemSettings.logoTime, 2);
+		OLED::print(SymbolSeconds);
+	} else if(systemSettings.logoTime==-1) OLED::print(InfinityString);
+	else OLED::print(OffString);
 }
 
 static void settings_setScrollSpeed(void) {

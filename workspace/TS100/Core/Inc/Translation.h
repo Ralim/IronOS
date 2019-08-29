@@ -18,8 +18,8 @@ extern const uint8_t USER_FONT_6x8[];
  * use SettingsShortNames as SettingsShortNames[16][1].. second column undefined
  */
 extern const enum ShortNameType SettingsShortNameType;
-extern const char* SettingsShortNames[23][2];
-extern const char* SettingsDescriptions[23];
+extern const char* SettingsShortNames[24][2];
+extern const char* SettingsDescriptions[24];
 extern const char* SettingsMenuEntries[4];
 
 extern const char* SettingsCalibrationDone;
@@ -31,6 +31,7 @@ extern const char* UVTripString;
 extern const char* InputVoltageString;
 extern const char* WarningTipTempString;
 extern const char* BadTipString;
+extern const char* InfinityString;
 
 extern const char* SleepingSimpleString;
 extern const char* SleepingAdvancedString;

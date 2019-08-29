@@ -110,6 +110,7 @@ void resetSettings() {
   systemSettings.CalibrationOffset = 1400;  // the adc offset
   systemSettings.customTipGain =
       0;  // The tip type is either default or a custom gain
+  systemSettings.logoTime=5; // Default to 5-second logo display
   systemSettings.powerLimitEnable=0; // Default to no power limit
 #ifdef MODEL_TS100
   systemSettings.tipType = TS_B2;  // Default to the B2 Tip

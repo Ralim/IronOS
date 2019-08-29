@@ -22,7 +22,8 @@
 		"SolderingAdvancedPowerPrompt": "Ohřev: ",
 		"OffString": "Off",
 		"ResetOKMessage":"Reset OK",
-		"UVTripString":"Trip V: "
+		"UVTripString":"Trip V: ",
+		"InfinityString":"Inf"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -246,6 +247,14 @@
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
+		},
+		"LogoTime": {
+			"text": "LOTIME",
+			"text2": [
+				"Logo",
+				"Time"
+			],
+			"desc": "How long to display the boot logo (if there is one) <Seconds>"
 		}
 	}
 }

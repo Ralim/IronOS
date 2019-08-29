@@ -30,7 +30,7 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * Boost mode lets you temporarily change the temperature when soldering (ie raise temperature for short periods of time)
 * (TS100) Battery charge level indicator if power source set to a lipo cell count.
 * (TS80) Power bank operating voltage is displayed.
-* Custom boot up logo support.
+* Custom boot up logo support with adjustable timeout
 * Automatic LCD rotation based on orientation
 * Configurable power limit for running from a source with power constraints
 * Supports both the version 1 and version 2 hardware (different accelerometers)

@@ -686,13 +686,12 @@ void startGUITask(void const *argument __unused) {
 	getTipRawTemp(1);  // reset filter
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
-	ticks += 400;  // 4 seconds from now
-	while (xTaskGetTickCount() < ticks) {
+	ticks += systemSettings.logoTime*100;
+	while(systemSettings.logoTime<0 || (systemSettings.logoTime>0 && xTaskGetTickCount() < ticks)) {
 		if (showBootLogoIfavailable() == false)
 			ticks = xTaskGetTickCount();
 		ButtonState buttons = getButtonState();
-		if (buttons)
-			ticks = xTaskGetTickCount();  // make timeout now so we will exit
+		if (buttons) break;
 		GUIDelay();
 	}
 	if (systemSettings.autoStartMode) {
