@@ -21,7 +21,7 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * Motion wake support
 * Settings menu on the unit
 * (TS100) Set a voltage lower limit for Lithium batteries so you dont kill your battery pack
-* (TS80 ) Set 18W or 24W settings for your power bank
+* (TS80) Set 18W or 24W settings for your power bank
 * All settings saved to flash when you exit the menu
 * Improved readability Fonts
 * Use hardware features to improve reliability
@@ -32,6 +32,7 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * (TS80) Power bank operating voltage is displayed.
 * Custom boot up logo support.
 * Automatic LCD rotation based on orientation
+* Configurable power limit for running from a source with power constraints
 * Supports both the version 1 and version 2 hardware (different accelerometers)
 
 # Upgrading your iron
