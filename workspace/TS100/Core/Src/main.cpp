@@ -254,10 +254,10 @@ void startMOVTask(void const *argument __unused) {
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
 
 		if (PCBVersion == 2) {
-			LIS2DH12::getAxisReadings(&tx, &ty, &tz);
+			LIS2DH12::getAxisReadings(tx, ty, tz);
 			rotation = LIS2DH12::getOrientation();
 		} else if (PCBVersion == 1) {
-			MMA8652FC::getAxisReadings(&tx, &ty, &tz);
+			MMA8652FC::getAxisReadings(tx, ty, tz);
 			rotation = MMA8652FC::getOrientation();
 		}
 		if (systemSettings.OrientationMode == 2) {

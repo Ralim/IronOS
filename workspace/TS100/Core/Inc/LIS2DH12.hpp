@@ -34,7 +34,7 @@ public:
 		return static_cast<Orientation>((FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,LIS_INT2_SRC) >> 2) - 1);
 #endif
 	}
-	static void getAxisReadings(int16_t *x, int16_t *y, int16_t *z);
+	static void getAxisReadings(int16_t& x, int16_t& y, int16_t& z);
 
 private:
 };

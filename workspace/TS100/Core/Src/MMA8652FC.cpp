@@ -5,7 +5,9 @@
  *      Author: Ben V. Brown
  */
 
-#include <MMA8652FC.hpp>
+#include <array>
+
+#include "MMA8652FC.hpp"
 #include "cmsis_os.h"
 
 typedef struct {
@@ -62,12 +64,15 @@ Orientation MMA8652FC::getOrientation() {
 
 	return ORIENTATION_FLAT;
 }
-void MMA8652FC::getAxisReadings(int16_t *x, int16_t *y, int16_t *z) {
-	uint8_t tempArr[6];
-	FRToSI2C::Mem_Read( MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG, I2C_MEMADD_SIZE_8BIT,
-			(uint8_t*) tempArr, 6);
 
-	(*x) = tempArr[0] << 8 | tempArr[1];
-	(*y) = tempArr[2] << 8 | tempArr[3];
-	(*z) = tempArr[4] << 8 | tempArr[5];
+void MMA8652FC::getAxisReadings(int16_t& x, int16_t& y, int16_t& z) {
+	std::array<int16_t, 3> sensorData;
+
+	FRToSI2C::Mem_Read(MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG, I2C_MEMADD_SIZE_8BIT,
+		reinterpret_cast<uint8_t*>(sensorData.begin()),
+		sensorData.size() * sizeof(int16_t));
+
+	x = static_cast<int16_t>(__builtin_bswap16(*reinterpret_cast<uint16_t*>(&sensorData[0])));
+	y = static_cast<int16_t>(__builtin_bswap16(*reinterpret_cast<uint16_t*>(&sensorData[1])));
+	z = static_cast<int16_t>(__builtin_bswap16(*reinterpret_cast<uint16_t*>(&sensorData[2])));
 }

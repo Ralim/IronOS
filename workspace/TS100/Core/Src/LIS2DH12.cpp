@@ -5,9 +5,10 @@
  *      Author: Ralim
  */
 
-#include <LIS2DH12.hpp>
-#include "cmsis_os.h"
+#include <array>
 
+#include "LIS2DH12.hpp"
+#include "cmsis_os.h"
 
 typedef struct {
         const uint8_t reg;
@@ -36,14 +37,14 @@ void LIS2DH12::initalize() {
     }
 }
 
-void LIS2DH12::getAxisReadings(int16_t* x, int16_t* y, int16_t* z) {
-	uint8_t tempArr[6];
-FRToSI2C::Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8, I2C_MEMADD_SIZE_8BIT,
-			(uint8_t*) tempArr, 6);
+void LIS2DH12::getAxisReadings(int16_t& x, int16_t& y, int16_t& z) {
+    std::array<int16_t, 3> sensorData;
 
-	(*x) = ((uint16_t) (tempArr[1] << 8 | tempArr[0]));
-	(*y) = ((uint16_t) (tempArr[3] << 8 | tempArr[2]));
-	(*z) = ((uint16_t) (tempArr[5] << 8 | tempArr[4]));
+    FRToSI2C::Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8, I2C_MEMADD_SIZE_8BIT,
+        reinterpret_cast<uint8_t*>(sensorData.begin()),
+        sensorData.size() * sizeof(int16_t));
+
+    x = sensorData[0];
+    y = sensorData[1];
+    z = sensorData[2];
 }
-
-
