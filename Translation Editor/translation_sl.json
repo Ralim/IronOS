@@ -1,0 +1,235 @@
+{
+	"languageCode": "SL",
+	"languageLocalName": "Slovensko",
+	"cyrillicGlyphs": false,
+	"messages": {
+		"SettingsCalibrationDone": "Kalibracija opravljena!",
+		"SettingsCalibrationWarning": "Preden nadaljujete, mora biti konica na sobni temperaturi!",
+		"SettingsResetWarning": "Ste prepričani, da želite ponastaviti nastavitve na privzete vrednosti?",
+		"UVLOWarningString": "NIZKA U",
+		"UndervoltageString": "Nizka napetost",
+		"InputVoltageString": "Vhodna U: ",
+		"WarningTipTempString": "Temp. kon.: ",
+		"BadTipString": "OKVARA K",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Spim...",
+		"WarningSimpleString": "HOT!",
+		"WarningAdvancedString": "!!!VROČA KON.!!!",
+		"SleepingTipAdvancedString": "Knica:",
+		"IdleTipString": "Kon:",
+		"IdleSetString": " nst.:",
+		"TipDisconnectedString": "KONICA ODSTRANJ.",
+		"SolderingAdvancedPowerPrompt": "Moč: ",
+		"OffString": "Izk",
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Ojačan.:"
+	},
+	"characters": {
+		"SettingRightChar": "D",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "S",
+		"SettingFastChar": "H",
+		"SettingSlowChar": "P"
+	},
+	"menuDouble": true,
+	"menuGroups": {
+		"SolderingMenu": {
+			"text2": [
+				"Nastavitve",
+				"spajkanja"
+			],
+			"desc": "Nastavitve spajkanja"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Načini",
+				"spanja"
+			],
+			"desc": "Nastavitve varčevanja z energijo"
+		},
+		"UIMenu": {
+			"text2": [
+				"Uporabniški",
+				"vmesnik"
+			],
+			"desc": "Nastavitve uporabniškega vmesnika"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Napredne",
+				"možnosti"
+			],
+			"desc": "Napredne možnosti"
+		}
+	},
+	"menuOptions": {
+		"PowerSource": {
+			"text": "PWRSC",
+			"text2": [
+				"Vir",
+				"napajanja"
+			],
+			"desc": "Vir napajanja. Nastavi napetost izklopa. <DC 10V> <S 3.3V na celico>"
+		},
+		"SleepTemperature": {
+			"text": "STMP",
+			"text2": [
+				"Temp. med",
+				"spanjem"
+			],
+			"desc": "Temperatura med spanjem <C>"
+		},
+		"SleepTimeout": {
+			"text": "STME",
+			"text2": [
+				"Čas do",
+				"spanja"
+			],
+			"desc": "Čas pred spanjem <minute/sekunde>"
+		},
+		"ShutdownTimeout": {
+			"text": "SHTME",
+			"text2": [
+				"Čas do",
+				"izklopa"
+			],
+			"desc": "Čas pred izklopom <minute>"
+		},
+		"MotionSensitivity": {
+			"text": "MSENSE",
+			"text2": [
+				"Občutljivost",
+				"premikanja"
+			],
+			"desc": "Občutljivost premikanja <0.izklopljeno 1.najmanj 9.najbolj občutljivo>"
+		},
+		"TemperatureUnit": {
+			"text": "TMPUNT",
+			"text2": [
+				"Enota za",
+				"temperaturo"
+			],
+			"desc": "Enota za temperaturo <C=celzija F=fahrenheita>"
+		},
+		"AdvancedIdle": {
+			"text": "ADVIDL",
+			"text2": [
+				"Več info na",
+				"zaslonu v mir"
+			],
+			"desc": "Prikaže več informacij z manjšo pisavo na zaslonu med mirovanjem."
+		},
+		"DisplayRotation": {
+			"text": "DSPROT",
+			"text2": [
+				"Orientacija",
+				"zaslona"
+			],
+			"desc": "Orientacija zaslona <S. samodejno L. levo D. desno>"
+		},
+		"BoostEnabled": {
+			"text": "BOOST",
+			"text2": [
+				"Omogoči",
+				"boost mode"
+			],
+			"desc": "Omogoči, da tipka za naprej zagreje konico na 450C."
+		},
+		"BoostTemperature": {
+			"text": "BTMP",
+			"text2": [
+				"Temperat.",
+				"v boost"
+			],
+			"desc": "Temperatura v \"boost\" načinu"
+		},
+		"AutoStart": {
+			"text": "ASTART",
+			"text2": [
+				"Samodejni",
+				"zagon"
+			],
+			"desc": "Samodejno segrej konico ob vklopu. T=segrej, S=spanje, F=izklop"
+		},
+		"CooldownBlink": {
+			"text": "CLBLNK",
+			"text2": [
+				"Utripanje med",
+				"hlajenjem"
+			],
+			"desc": "Utripaj temperaturo med hlajenjem, ko je konica še vroča."
+		},
+		"TemperatureCalibration": {
+			"text": "TMP CAL?",
+			"text2": [
+				"Kalibriram",
+				"temperaturo?"
+			],
+			"desc": "Kalibracija temperature na konici."
+		},
+		"SettingsReset": {
+			"text": "RESET?",
+			"text2": [
+				"Tovarniške",
+				"nastavitve?"
+			],
+			"desc": "Ponastavitev vseh nastavitev"
+		},
+		"VoltageCalibration": {
+			"text": "CAL VIN?",
+			"text2": [
+				"Kalibriram",
+				"vhodno napetost?"
+			],
+			"desc": "Kalibracija VIN. Nastavitve z gumbi, dolgi pritisk za izhod."
+		},
+		"AdvancedSoldering": {
+			"text": "ADVSLD",
+			"text2": [
+				"Več info na",
+				"zaslonu spaj."
+			],
+			"desc": "Prikaže več informacij z manjšo pisavo na zaslonu med spajkanjem."
+		},
+		"ScrollingSpeed": {
+			"text": "DESCSP",
+			"text2": [
+				"Hitrost",
+				"besedila"
+			],
+			"desc": "Hitrost, s katero se prikazuje besedilo"
+		},
+		"TipModel": {
+			"text": "TIPMO",
+			"text2": [
+				"Model",
+				"konice"
+			],
+			"desc": "Izbira tipa konice"
+		},
+		"SimpleCalibrationMode": {
+			"text": "SMPCAL",
+			"text2": [
+				"Preprosta",
+				"kalibracija"
+			],
+			"desc": "Preprosta kalibracija z vročo vodo."
+		},
+		"AdvancedCalibrationMode": {
+			"text": "ADVCAL",
+			"text2": [
+				"Napredna",
+				"kalibracija"
+			],
+			"desc": "Napredna kalibracija s termočlenom na konici"
+		},
+		"PowerInput": {
+			"text": "PWRW",
+			"text2": [
+				"Moč napajalnega",
+				"vira"
+			],
+			"desc": "Moč v W napajalnega vira"
+		}
+	}
+}

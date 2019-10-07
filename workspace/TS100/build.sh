@@ -83,9 +83,7 @@ echo "*********************************************"
 # Calculate available languages
 for f in "$TRANSLATION_DIR"/translation_*.json
 do
-    lang_json=${f#*/translation_}      # Remove ".../translation_"
-    lang=${lang_json%.json}            # Remove ".json"
-    AVAILABLE_LANGUAGES+=("${lang^^}") # Convert to uppercase
+    AVAILABLE_LANGUAGES+=(`echo $f | tr "[:lower:]" "[:upper:]" | sed "s/[^_]*_//" | sed "s/\.JSON//g"`)
 done    
 
 # Checking requested language

@@ -1,27 +1,27 @@
 {
 	"languageCode": "TR",
-	"languageLocalName": "Türk",
+	"languageLocalName": "Türkçe",
 	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibrasyon tamamlandı!",
 		"SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
-		"SettingsResetWarning": "Are you sure to reset settings to default values?",
+		"SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",
 		"UVLOWarningString": "DC LOW",
-		"UndervoltageString": "Undervoltage",
-		"InputVoltageString": "Input V: ",
-		"WarningTipTempString": "Tip Temp: ",
-		"BadTipString": "BAD TIP",
+		"UndervoltageString": "Düşüş Voltaj",
+		"InputVoltageString": "Giriş V: ",
+		"WarningTipTempString": "Uç Sıcaklığı: ",
+		"BadTipString": "KÖTÜ UÇ",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Uyuyor...",
-		"WarningSimpleString": "HOT!",
+		"WarningSimpleString": "SICAK!",
 		"WarningAdvancedString": "UYARI! UÇ SICAK!",
-		"SleepingTipAdvancedString": "Tip:",
-		"IdleTipString": "Tip:",
-		"IdleSetString": " Set:",
-		"TipDisconnectedString": "TIP DISCONNECTED",
-		"SolderingAdvancedPowerPrompt": "Power: ",
-		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"SleepingTipAdvancedString": "Uç:",
+		"IdleTipString": "Uç:",
+		"IdleSetString": " Ayarla:",
+		"TipDisconnectedString": "UÇ ÇIKARILDI",
+		"SolderingAdvancedPowerPrompt": "Güç: ",
+		"OffString": "Kapalı",
+		"ResetOKMessage":"Reset Tamam"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -34,31 +34,31 @@
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Soldering",
-				"Settings"
+				"Lehimleme",
+				"Ayarları"
 			],
-			"desc": "Soldering settings"
+			"desc": "Lehimleme Ayarları"
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Sleep",
-				"Modes"
+				"Uyku",
+				"Modları"
 			],
-			"desc": "Power Saving Settings"
+			"desc": "Güç Tasarrufu Ayarları"
 		},
 		"UIMenu": {
 			"text2": [
-				"User",
-				"Interface"
+				"Kullanıcı",
+				"Arayüzü"
 			],
-			"desc": "User Interface settings"
+			"desc": "Kullanıcı Arayüzü Ayarları"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Advanced",
-				"Options"
+				"Gelişmiş",
+				"Ayarlar"
 			],
-			"desc": "Advanced options"
+			"desc": "Gelişmiş Ayarlar"
 		}
 	},
 	"menuOptions": {
@@ -201,34 +201,34 @@
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
-				"Model"
+				"Uç",
+				"Modeli"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Uç Modeli seçimi"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Basit",
+				"Kalibrasyon"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Sıcak su kullanarak basit kalibrasyon"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Gelişmiş",
+				"Kalibrasyon"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Uçtaki ısı sensörünü kullanarak gelişmiş kalibrasyon"
 		},
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Power",
-				"Wattage"
+				"Güç",
+				"Miktarı(W)"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Kullanılan adaptörün güç miktarı"
 		}
 	}
 }
