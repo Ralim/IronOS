@@ -7,9 +7,7 @@
 
 // These are all the functions for interacting with the hardware
 #include "hardware.h"
-#include "FreeRTOS.h"
-#include "stm32f1xx_hal.h"
-#include "cmsis_os.h"
+#include "history.hpp"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
 uint16_t tipGainCalValue = 0;
@@ -68,15 +66,31 @@ uint16_t ftoTipMeasurement(uint16_t temp) {
 }
 
 uint16_t getTipInstantTemperature() {
-	uint16_t sum;
-	sum = hadc1.Instance->JDR1;
-	sum += hadc1.Instance->JDR2;
-	sum += hadc1.Instance->JDR3;
-	sum += hadc1.Instance->JDR4;
-	sum += hadc2.Instance->JDR1;
-	sum += hadc2.Instance->JDR2;
-	sum += hadc2.Instance->JDR3;
-	sum += hadc2.Instance->JDR4;
+	uint16_t sum = 0;	// 12 bit readings * 8 -> 15 bits
+	uint16_t readings[8];
+	//Looking to reject the highest outlier readings.
+	//As on some hardware these samples can run into the op-amp recovery time
+	//Once this time is up the signal stabilises quickly, so no need to reject minimums
+	readings[0] = hadc1.Instance->JDR1;
+	readings[1] = hadc1.Instance->JDR2;
+	readings[2] = hadc1.Instance->JDR3;
+	readings[3] = hadc1.Instance->JDR4;
+	readings[4] = hadc2.Instance->JDR1;
+	readings[5] = hadc2.Instance->JDR2;
+	readings[6] = hadc2.Instance->JDR3;
+	readings[7] = hadc2.Instance->JDR4;
+	uint8_t minID = 0, maxID = 0;
+	for (int i = 0; i < 8; i++) {
+		if (readings[i] < readings[minID])
+			minID = i;
+		else if (readings[i] > readings[maxID])
+			maxID = i;
+	}
+	for (int i = 0; i < 8; i++) {
+		if (i != maxID)
+			sum += readings[i];
+	}
+	sum += readings[minID];	//Duplicate the min to make up for the missing max value
 	return sum;  // 8x over sample
 }
 /*
@@ -117,15 +131,17 @@ uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
 	}
 #endif
 }
+//2 second filter (ADC is PID_TIM_HZ Hz)
+history<uint16_t, PID_TIM_HZ*4> rawTempFilter = { { 0 }, 0, 0 };
 
 uint16_t getTipRawTemp(uint8_t refresh) {
-	static uint16_t lastSample = 0;
-
 	if (refresh) {
-		lastSample = getTipInstantTemperature();
+		uint16_t lastSample = getTipInstantTemperature();
+		rawTempFilter.update(lastSample);
+		return lastSample;
+	} else {
+		return rawTempFilter.average();
 	}
-
-	return lastSample;
 }
 
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
@@ -237,8 +253,6 @@ void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
 	uint16_t vin = getInputVoltageX10(divisor, 1);
-	if (vin > 150)
-		return;	// Over voltage
 	if (vin > 100) {
 		QCMode = 1;  // ALready at ~12V
 		return;
@@ -460,6 +474,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 	}
 }
+
 
 void vApplicationIdleHook(void) {
 	HAL_IWDG_Refresh(&hiwdg);

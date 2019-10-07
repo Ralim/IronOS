@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 // max size = 127
-template <class T=uint16_t, uint8_t SIZE=15>
+template <class T, uint8_t SIZE>
 struct history {
     static const uint8_t size = SIZE;
 	T buf[size];

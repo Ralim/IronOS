@@ -176,6 +176,7 @@ def getLetterCounts(defs, lang):
     constants = getConstants()  
     for x in constants:
         textList.append(x[1])
+    textList.extend(getDebugMenuHeaders())
     textList.extend(getTipModelEnumTS100())
     textList.extend(getTipModelEnumTS80())  
     textList.extend(getDebugMenu())
