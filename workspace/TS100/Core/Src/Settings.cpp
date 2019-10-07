@@ -104,18 +104,15 @@ void resetSettings() {
       0;  // Blink the temperature on the cooling screen when its > 50C
   systemSettings.temperatureInF = 0;          // default to 0
   systemSettings.descriptionScrollSpeed = 0;  // default to slow
-  systemSettings.PID_P = 42;                  // PID tuning constants
-  systemSettings.PID_I = 50;
-  systemSettings.PID_D = 15;
 
 #ifdef MODEL_TS100
 
-  systemSettings.CalibrationOffset = 800;  // the adc offset in uV
+  systemSettings.CalibrationOffset = 650;  // the adc offset in uV
 
 #endif
 #ifdef MODEL_TS80
   systemSettings.pidPowerLimit=24;  // Sets the max pwm power limit
-  systemSettings.CalibrationOffset = 800;  // the adc offset in uV
+  systemSettings.CalibrationOffset = 650;  // the adc offset in uV
 #endif
   saveSettings();  // Save defaults
 }

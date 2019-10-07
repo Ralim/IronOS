@@ -40,16 +40,14 @@ typedef struct {
 	uint16_t voltageDiv;                 // Voltage divisor factor
 	uint16_t BoostTemp;                  // Boost mode set point for the iron
 	uint16_t CalibrationOffset; // This stores the temperature offset for this tip
-							   // in the iron.
-	uint8_t PID_P;    // PID P Term
-	uint8_t PID_I;    // PID I Term
-	uint8_t PID_D;    // PID D Term
-	uint8_t version;  // Used to track if a reset is needed on firmware upgrade
+								// in the iron.
+
 	uint8_t customTipGain;  // Tip gain value if custom tuned, or 0 if using a
 							// tipType param
 #ifdef MODEL_TS80
 	uint8_t pidPowerLimit;
 #endif
+	uint8_t version;  // Used to track if a reset is needed on firmware upgrade
 	uint32_t padding;  // This is here for in case we are not an even divisor so
 					   // that nothing gets cut off
 } systemSettingsType;
