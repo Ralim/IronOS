@@ -110,12 +110,12 @@ void resetSettings() {
 
 #ifdef MODEL_TS100
 
-  systemSettings.CalibrationOffset = 700;  // the adc offset in uV
+  systemSettings.CalibrationOffset = 800;  // the adc offset in uV
 
 #endif
 #ifdef MODEL_TS80
   systemSettings.pidPowerLimit=24;  // Sets the max pwm power limit
-  systemSettings.CalibrationOffset = 700;  // the adc offset in uV
+  systemSettings.CalibrationOffset = 800;  // the adc offset in uV
 #endif
   saveSettings();  // Save defaults
 }

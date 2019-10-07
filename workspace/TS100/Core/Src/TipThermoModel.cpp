@@ -7,6 +7,7 @@
 
 #include "TipThermoModel.h"
 #include "Settings.h"
+#include "hardware.h"
 
 /*
  * The hardware is laid out  as a non-inverting op-amp
@@ -245,3 +246,16 @@ uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
 	return ((degF - 32) * 5) / 9;
 }
 
+uint32_t TipThermoModel::getTipInC(bool sampleNow) {
+	uint32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(
+			getTipRawTemp(sampleNow));
+	currentTipTempInC += getHandleTemperature() / 10; //Add handle offset
+	return currentTipTempInC;
+}
+
+uint32_t TipThermoModel::getTipInF(bool sampleNow) {
+	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
+			getTipRawTemp(sampleNow));
+		currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
+		return currentTipTempInF;
+}

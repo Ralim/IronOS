@@ -126,7 +126,6 @@ void startPIDTask(void const *argument __unused) {
 
 		if (ulTaskNotifyTake(pdTRUE, 2000)) {
 			// This is a call to block this thread until the ADC does its samples
-			uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
 			if (currentTempTargetDegC) {
 				// Cap the max set point to 450C
 				if (currentTempTargetDegC > (450)) {
@@ -134,9 +133,7 @@ void startPIDTask(void const *argument __unused) {
 					currentTempTargetDegC = (450);
 				}
 				// Convert the current tip to degree's C
-				uint32_t currentTipTempInC =
-						TipThermoModel::convertTipRawADCToDegC(rawTemp);
-				currentTipTempInC += getHandleTemperature() / 10; //Add handle offset
+				uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
 
 				// As we get close to our target, temp noise causes the system
 				//  to be unstable. Use a rolling average to dampen it.

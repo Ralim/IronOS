@@ -12,6 +12,10 @@
 class TipThermoModel {
 public:
 	//These are the main two functions
+	static uint32_t getTipInC(bool sampleNow=false);
+	static uint32_t getTipInF(bool sampleNow=false);
+
+
 	static uint32_t convertTipRawADCToDegC(uint16_t rawADC);
 	static uint32_t convertTipRawADCToDegF(uint16_t rawADC);
 	//Returns the uV of the tip reading before the op-amp compensating for pullups

@@ -54,12 +54,12 @@ void GUIDelay() {
 }
 void gui_drawTipTemp(bool symbol) {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
-	uint16_t Temp = getTipRawTemp(0);
+	uint16_t Temp = 0;
 
 	if (systemSettings.temperatureInF)
-		Temp = TipThermoModel::convertTipRawADCToDegF(Temp);
+		Temp = TipThermoModel::getTipInF();
 	else
-		Temp = TipThermoModel::convertTipRawADCToDegC(Temp);
+		Temp = TipThermoModel::getTipInC();
 
 	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
@@ -368,9 +368,9 @@ static int gui_SolderingSleepingMode() {
 		// draw the lcd
 		uint16_t tipTemp;
 		if (systemSettings.temperatureInF)
-			tipTemp = TipThermoModel::convertTipRawADCToDegF(getTipRawTemp(0));
+			tipTemp = TipThermoModel::getTipInF();
 		else
-			tipTemp = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0));
+			tipTemp = TipThermoModel::getTipInC();
 
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
@@ -762,7 +762,7 @@ void startGUITask(void const *argument __unused) {
 
 		currentTempTargetDegC = 0;  // ensure tip is off
 		getInputVoltageX10(systemSettings.voltageDiv, 0);
-		uint16_t tipTemp = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0));
+		uint16_t tipTemp = TipThermoModel::getTipInC();
 
 		// Preemptively turn the display on.  Turn it off if and only if
 		// the tip temperature is below 50 degrees C *and* motion sleep
