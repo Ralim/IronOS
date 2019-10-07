@@ -30,7 +30,7 @@ const uint8_t tipResistance = 45; //x10 ohms, 8.5 typical for ts100, 4.5 typical
 const uint8_t oscillationPeriod = 6 * PID_TIM_HZ; // I term look back value
 extern history<uint32_t, oscillationPeriod> milliWattHistory;
 
-int32_t tempToMilliWatts(int32_t rawTemp, uint8_t rawC);
+int32_t tempToMilliWatts(int32_t rawTemp);
 void setTipMilliWatts(int32_t mw);
 uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor,
 		uint8_t sample = 0);

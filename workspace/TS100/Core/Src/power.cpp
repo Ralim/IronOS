@@ -14,11 +14,11 @@ const uint16_t totalPWM = 255 + 17; //htim2.Init.Period, the full PWM cycle
 
 history<uint32_t, oscillationPeriod> milliWattHistory = { { 0 }, 0, 0 };
 
-int32_t tempToMilliWatts(int32_t rawTemp, uint8_t rawC) {
+int32_t tempToMilliWatts(int32_t rawTemp) {
 	// mass is in milliJ/*C, rawC is raw per degree C
 	// returns milliWatts needed to raise/lower a mass by rawTemp
 	//  degrees in one cycle.
-	int32_t milliJoules = tipMass*10 * (rawTemp / rawC);
+	int32_t milliJoules = tipMass*10 * rawTemp;
 	return milliJoules;
 }
 

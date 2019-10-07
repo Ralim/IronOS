@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION   ( 0x19 )
+#define SETTINGSVERSION   ( 0x1A )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -39,7 +39,7 @@ typedef struct {
 	uint8_t descriptionScrollSpeed :1;  // Description scroll speed
 	uint16_t voltageDiv;                 // Voltage divisor factor
 	uint16_t BoostTemp;                  // Boost mode set point for the iron
-	int16_t CalibrationOffset; // This stores the temperature offset for this tip
+	uint16_t CalibrationOffset; // This stores the temperature offset for this tip
 							   // in the iron.
 	uint8_t PID_P;    // PID P Term
 	uint8_t PID_I;    // PID I Term
@@ -47,7 +47,6 @@ typedef struct {
 	uint8_t version;  // Used to track if a reset is needed on firmware upgrade
 	uint8_t customTipGain;  // Tip gain value if custom tuned, or 0 if using a
 							// tipType param
-	uint8_t tipType;
 #ifdef MODEL_TS80
 	uint8_t pidPowerLimit;
 #endif

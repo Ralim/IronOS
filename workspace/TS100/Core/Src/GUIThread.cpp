@@ -19,7 +19,7 @@
 #include "TipThermoModel.h"
 extern uint8_t PCBVersion;
 // File local variables
-extern uint32_t currentlyActiveTemperatureTarget;
+extern uint32_t currentTempTargetDegC;
 extern uint32_t lastMovementTime;
 extern int16_t idealQCVoltage;
 uint32_t lastButtonTime = 0;
@@ -57,9 +57,9 @@ void gui_drawTipTemp(bool symbol) {
 	uint16_t Temp = getTipRawTemp(0);
 
 	if (systemSettings.temperatureInF)
-		Temp = tipMeasurementToF(Temp);
+		Temp = TipThermoModel::convertTipRawADCToDegF(Temp);
 	else
-		Temp = tipMeasurementToC(Temp);
+		Temp = TipThermoModel::convertTipRawADCToDegC(Temp);
 
 	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
@@ -201,7 +201,7 @@ static bool checkVoltageForExit() {
 			}
 
 			OLED::refresh();
-			currentlyActiveTemperatureTarget = 0;
+			currentTempTargetDegC = 0;
 			waitForButtonPress();
 			return true;
 		}
@@ -216,17 +216,17 @@ static void gui_drawBatteryIcon() {
 		// we need to calculate which of the 10 levels they are on
 		uint8_t cellCount = systemSettings.cutoutSetting + 2;
 		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
-		/ cellCount;
+				/ cellCount;
 		// Should give us approx cell voltage X10
 		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
 		if (cellV < 33)
-		cellV = 33;
-		cellV -= 33;// Should leave us a number of 0-9
+			cellV = 33;
+		cellV -= 33;		// Should leave us a number of 0-9
 		if (cellV > 9)
-		cellV = 9;
+			cellV = 9;
 		OLED::drawBattery(cellV + 1);
 	} else
-	OLED::drawSymbol(15);  // Draw the DC Logo
+		OLED::drawSymbol(15);  // Draw the DC Logo
 #else
 	// On TS80 we replace this symbol with the voltage we are operating on
 	// If <9V then show single digit, if not show duals
@@ -250,7 +250,7 @@ static void gui_drawBatteryIcon() {
 }
 static void gui_solderingTempAdjust() {
 	uint32_t lastChange = xTaskGetTickCount();
-	currentlyActiveTemperatureTarget = 0;
+	currentTempTargetDegC = 0;
 	uint32_t autoRepeatTimer = 0;
 	uint8_t autoRepeatAcceleration = 0;
 	for (;;) {
@@ -317,7 +317,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-			if (OLED::getRotation())
+		if (OLED::getRotation())
 #endif
 			OLED::print(SymbolMinus);
 		else
@@ -333,7 +333,7 @@ static void gui_solderingTempAdjust() {
 #ifdef MODEL_TS80
 		if (!OLED::getRotation())
 #else
-			if (OLED::getRotation())
+		if (OLED::getRotation())
 #endif
 			OLED::print(SymbolPlus);
 		else
@@ -354,24 +354,23 @@ static int gui_SolderingSleepingMode() {
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
-			if (checkVoltageForExit())
+		if (checkVoltageForExit())
 			return 1; // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
-			currentlyActiveTemperatureTarget = ftoTipMeasurement(
+			currentTempTargetDegC = TipThermoModel::convertFtoC(
 					min(systemSettings.SleepTemp,
 							systemSettings.SolderingTemp));
 		} else {
-			currentlyActiveTemperatureTarget = ctoTipMeasurement(
-					min(systemSettings.SleepTemp,
-							systemSettings.SolderingTemp));
+			currentTempTargetDegC = (min(systemSettings.SleepTemp,
+					systemSettings.SolderingTemp));
 		}
 		// draw the lcd
 		uint16_t tipTemp;
 		if (systemSettings.temperatureInF)
-			tipTemp = tipMeasurementToF(getTipRawTemp(0));
+			tipTemp = TipThermoModel::convertTipRawADCToDegF(getTipRawTemp(0));
 		else
-			tipTemp = tipMeasurementToC(getTipRawTemp(0));
+			tipTemp = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0));
 
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
@@ -403,7 +402,7 @@ static int gui_SolderingSleepingMode() {
 				if (((uint32_t) (xTaskGetTickCount() - lastMovementTime))
 						> (uint32_t) (systemSettings.ShutdownTime * 60 * 100)) {
 					// shutdown
-					currentlyActiveTemperatureTarget = 0;
+					currentTempTargetDegC = 0;
 					return 1;  // we want to exit soldering mode
 				}
 		OLED::refresh();
@@ -561,9 +560,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		if (badTipCounter > 128) {
 			OLED::print(BadTipString);
 			OLED::refresh();
-			currentlyActiveTemperatureTarget = 0;
+			currentTempTargetDegC = 0;
 			waitForButtonPress();
-			currentlyActiveTemperatureTarget = 0;
+			currentTempTargetDegC = 0;
 			return;
 		}
 		OLED::refresh();
@@ -571,19 +570,17 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		// Update the setpoints for the temperature
 		if (boostModeOn) {
 			if (systemSettings.temperatureInF)
-				currentlyActiveTemperatureTarget = ftoTipMeasurement(
+				currentTempTargetDegC = TipThermoModel::convertFtoC(
 						systemSettings.BoostTemp);
 			else
-				currentlyActiveTemperatureTarget = ctoTipMeasurement(
-						systemSettings.BoostTemp);
+				currentTempTargetDegC = (systemSettings.BoostTemp);
 
 		} else {
 			if (systemSettings.temperatureInF)
-				currentlyActiveTemperatureTarget = ftoTipMeasurement(
+				currentTempTargetDegC = TipThermoModel::convertFtoC(
 						systemSettings.SolderingTemp);
 			else
-				currentlyActiveTemperatureTarget = ctoTipMeasurement(
-						systemSettings.SolderingTemp);
+				currentTempTargetDegC = (systemSettings.SolderingTemp);
 		}
 
 #ifdef MODEL_TS100
@@ -648,11 +645,13 @@ void showDebugMenu(void) {
 			break;
 		case 6:
 			//Raw Tip
-			OLED::printNumber(TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0)), 6);
+			OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)), 6);
 			break;
 		case 7:
 			//Temp in C
-			OLED::printNumber(tipMeasurementToC(getTipRawTemp(0)), 5);
+			OLED::printNumber(
+					TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0)),
+					5);
 			break;
 		case 8:
 			//Handle Temp
@@ -756,15 +755,14 @@ void startGUITask(void const *argument __unused) {
 			enterSettingsMenu();       // enter the settings menu
 			saveSettings();
 			buttonLockout = true;
-			setCalibrationOffset(systemSettings.CalibrationOffset); // ensure cal offset is applied
 			break;
 		default:
 			break;
 		}
 
-		currentlyActiveTemperatureTarget = 0;  // ensure tip is off
+		currentTempTargetDegC = 0;  // ensure tip is off
 		getInputVoltageX10(systemSettings.voltageDiv, 0);
-		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
+		uint16_t tipTemp = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0));
 
 		// Preemptively turn the display on.  Turn it off if and only if
 		// the tip temperature is below 50 degrees C *and* motion sleep
@@ -772,9 +770,11 @@ void startGUITask(void const *argument __unused) {
 		// button presses) in a while.
 		OLED::setDisplayState(OLED::DisplayState::ON);
 
-		if ((tipTemp < 50) && systemSettings.sensitivity &&
-			(((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) &&
-				((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
+		if ((tipTemp < 50) && systemSettings.sensitivity
+				&& (((xTaskGetTickCount() - lastMovementTime)
+						> MOVEMENT_INACTIVITY_TIME)
+						&& ((xTaskGetTickCount() - lastButtonTime)
+								> BUTTON_INACTIVITY_TIME))) {
 			OLED::setDisplayState(OLED::DisplayState::OFF);
 		}
 
@@ -801,7 +801,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 			if (!OLED::getRotation()) {
 #else
-				if (OLED::getRotation()) {
+			if (OLED::getRotation()) {
 #endif
 				OLED::drawArea(12, 0, 84, 16, idleScreenBG);
 				OLED::setCursor(0, 0);
@@ -822,7 +822,7 @@ void startGUITask(void const *argument __unused) {
 #ifdef MODEL_TS80
 				if (!OLED::getRotation()) {
 #else
-					if (OLED::getRotation()) {
+				if (OLED::getRotation()) {
 #endif
 					// in right handed mode we want to draw over the first part
 					OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp

@@ -11,10 +11,10 @@
 #include "stdlib.h"
 #include "stm32f1xx_hal.h"
 #include "string.h"
-
+#include "TipThermoModel.h"
 uint8_t PCBVersion = 0;
 // File local variables
-uint32_t currentlyActiveTemperatureTarget = 0;
+uint32_t currentTempTargetDegC = 0; // Current temperature target in C
 uint32_t lastMovementTime = 0;
 int16_t idealQCVoltage = 0;
 // FreeRTOS variables
@@ -71,9 +71,7 @@ int main(void) {
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
-	setCalibrationOffset(systemSettings.CalibrationOffset);
-	setTipType((enum TipType) systemSettings.tipType,
-			systemSettings.customTipGain);  // apply tip type selection
+
 	HAL_IWDG_Refresh(&hiwdg);
 
 	/* Create the thread(s) */
@@ -112,7 +110,6 @@ void startPIDTask(void const *argument __unused) {
 #ifdef MODEL_TS80
 	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
-	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
 
 #ifdef MODEL_TS80
 	//Set power management code to the tip resistance in ohms * 10
@@ -122,30 +119,30 @@ void startPIDTask(void const *argument __unused) {
 
 #endif
 	history<int32_t, 16> tempError = { { 0 }, 0, 0 };
-	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
-										  // be over-ridden rapidly
+	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
+							   // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
 
 		if (ulTaskNotifyTake(pdTRUE, 2000)) {
 			// This is a call to block this thread until the ADC does its samples
 			uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
-			if (currentlyActiveTemperatureTarget) {
+			if (currentTempTargetDegC) {
 				// Cap the max set point to 450C
-				if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
+				if (currentTempTargetDegC > (450)) {
 					//Maximum allowed output
-					currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
-				} else if (currentlyActiveTemperatureTarget > 32400) {
-					//Cap to max adc reading
-					currentlyActiveTemperatureTarget = 32400;
+					currentTempTargetDegC = (450);
 				}
+				// Convert the current tip to degree's C
+				uint32_t currentTipTempInC =
+						TipThermoModel::convertTipRawADCToDegC(rawTemp);
+				currentTipTempInC += getHandleTemperature() / 10; //Add handle offset
 
 				// As we get close to our target, temp noise causes the system
 				//  to be unstable. Use a rolling average to dampen it.
-				// We overshoot by roughly 1/2 of 1 degree Fahrenheit.
+				// We overshoot by roughly 1 degree C.
 				//  This helps stabilize the display.
-				int32_t tError = currentlyActiveTemperatureTarget - rawTemp
-						+ (rawC / 4);
+				int32_t tError = currentTempTargetDegC - currentTipTempInC + 1;
 				tError = tError > INT16_MAX ? INT16_MAX : tError;
 				tError = tError < INT16_MIN ? INT16_MIN : tError;
 				tempError.update(tError);
@@ -160,15 +157,8 @@ void startPIDTask(void const *argument __unused) {
 				//  This is necessary because of the temp noise and thermal lag in the system.
 				// Once we have feed-forward temp estimation we should be able to better tune this.
 
-#ifdef MODEL_TS100
-				const uint16_t mass = 2020 / 20; // divide here so division is compile-time.
-#endif
-#ifdef MODEL_TS80
-				const uint16_t mass = 2020 / 50;
-#endif
-
-				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),
-						mass);
+				int32_t milliWattsNeeded = tempToMilliWatts(
+						tempError.average());
 				// note that milliWattsNeeded is sometimes negative, this counters overshoot
 				//  from I term's inertia.
 				milliWattsOut += milliWattsNeeded;
@@ -193,7 +183,7 @@ void startPIDTask(void const *argument __unused) {
 				// This is purely guesswork :'( as everyone implements stuff differently
 				if (xTaskGetTickCount() - lastPowerPulse < 10) {
 					// for the first 100mS turn on for a bit
-					setTipMilliWatts(5000);	// typically its around 5W to hold the current temp, so this wont raise temp much
+					setTipMilliWatts(2500);	// typically its around 5W to hold the current temp, so this wont raise temp much
 				} else
 					setTipMilliWatts(0);
 				//Then wait until the next 0.5 seconds

@@ -9,7 +9,7 @@
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "main.hpp"
-
+#include "TipThermoModel.h"
 #include "string.h"
 extern uint32_t lastButtonTime;
 void gui_Menu(const menuitem* menu);
@@ -50,18 +50,10 @@ static void settings_setCoolingBlinkEnabled(void);
 static void settings_displayCoolingBlinkEnabled(void);
 static void settings_setResetSettings(void);
 static void settings_displayResetSettings(void);
-static void settings_setTipModel(void);
-static void settings_displayTipModel(void);
 static void settings_setCalibrate(void);
 static void settings_displayCalibrate(void);
 static void settings_setCalibrateVIN(void);
 static void settings_displayCalibrateVIN(void);
-
-// Calibration Menu
-static void calibration_displaySimpleCal(void);  // Hot water cal
-static void calibration_enterSimpleCal(void);
-static void calibration_displayAdvancedCal(void);  // two point cal
-static void calibration_enterAdvancedCal(void);
 
 // Menu functions
 static void settings_displaySolderingMenu(void);
@@ -197,21 +189,12 @@ const menuitem advancedMenu[] = {
 				settings_displayAdvancedSolderingScreens } }, /* Advanced soldering screen*/
 { (const char*) SettingsDescriptions[13], { settings_setResetSettings }, {
 		settings_displayResetSettings } }, /*Resets settings*/
-{ (const char*) SettingsDescriptions[17], { settings_setTipModel }, {
-		settings_displayTipModel } }, /*Select tip Model */
 { (const char*) SettingsDescriptions[12], { settings_setCalibrate }, {
 		settings_displayCalibrate } }, /*Calibrate tip*/
 { (const char*) SettingsDescriptions[14], { settings_setCalibrateVIN }, {
 		settings_displayCalibrateVIN } }, /*Voltage input cal*/
 { NULL, { NULL }, { NULL } }  // end of menu marker. DO NOT REMOVE
 };
-
-const menuitem calibrationMenu[] { { (const char*) SettingsDescriptions[6], {
-		calibration_enterSimpleCal }, { calibration_displaySimpleCal } },
-/* Simple Cal*/
-{ (const char*) SettingsDescriptions[6], { calibration_enterAdvancedCal }, {
-		calibration_displayAdvancedCal } }, /* Advanced Cal */
-{ NULL, { NULL }, { NULL } } };
 
 static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
 	OLED::setFont(0);
@@ -305,7 +288,7 @@ static void settings_displayInputVRange(void) {
 	printShortDescription(0, 6);
 
 	if (systemSettings.cutoutSetting) {
-		OLED::printNumber(2 + systemSettings.cutoutSetting,1);
+		OLED::printNumber(2 + systemSettings.cutoutSetting, 1);
 		OLED::print(SymbolCellCount);
 	} else {
 		OLED::print(SymbolDC);
@@ -574,47 +557,11 @@ static void settings_displayResetSettings(void) {
 	printShortDescription(13, 7);
 }
 
-static void settings_setTipModel(void) {
-	systemSettings.tipType++;
-	if(systemSettings.tipType==Tip_MiniWare)
-		systemSettings.tipType++;
-#ifdef MODEL_TS100
-	if(systemSettings.tipType==Tip_Hakko)
-			systemSettings.tipType++;
-#endif
-	systemSettings.tipType %= (Tip_Custom + 1);  // Wrap after custom
-}
-static void settings_displayTipModel(void) {
-	printShortDescription(17, 4);
-	// Print in small text the tip model
-	OLED::setFont(1);
-	// set the cursor
-	// Print the mfg
-	OLED::setCursor(55, 0);
-	if (systemSettings.tipType == Tip_Custom) {
-		OLED::print(TipModelStrings[Tip_Custom]);
-	} else if (systemSettings.tipType < Tip_MiniWare) {
-		OLED::print(TipModelStrings[Tip_MiniWare]);
-	}
-#ifdef MODEL_TS100
-	else if (systemSettings.tipType < Tip_Hakko) {
-		OLED::print(TipModelStrings[Tip_Hakko]);
-	}
-#endif
-
-	OLED::setCursor(55, 8);
-	if (systemSettings.tipType != Tip_Custom)
-		OLED::print(TipModelStrings[systemSettings.tipType]);
-
-}
-static void calibration_displaySimpleCal(void) {
-	printShortDescription(18, 5);
-}
 static void setTipOffset() {
-	setCalibrationOffset(0);  // turn off the current offset
+	systemSettings.CalibrationOffset = 0;
 
-	// If the thermocouple at the end of the tip, and the handle are at
-	// equalibrium, then the output should be zero, as there is no temperature
+	// If the thermo-couple at the end of the tip, and the handle are at
+	// equilibrium, then the output should be zero, as there is no temperature
 	// differential.
 
 	uint32_t offset = 0;
@@ -629,147 +576,20 @@ static void setTipOffset() {
 		OLED::refresh();
 		osDelay(100);
 	}
-	systemSettings.CalibrationOffset = offset / 15;
-	// Need to remove from this the ambient temperature offset
-	uint32_t ambientoffset = getHandleTemperature(); // Handle temp in C x10
-	ambientoffset *= 100;
-	ambientoffset /= tipGainCalValue;
-	systemSettings.CalibrationOffset -= ambientoffset;
-	setCalibrationOffset(systemSettings.CalibrationOffset);  // store the error
+	systemSettings.CalibrationOffset = TipThermoModel::convertTipRawADCTouV(
+			offset / 15);
 	OLED::clearScreen();
 	OLED::setCursor(0, 0);
 	OLED::drawCheckbox(true);
 	OLED::refresh();
 	osDelay(1000);
 }
-static void calibration_enterSimpleCal(void) {
-	// User has entered into the simple cal routine
-	if (userConfirmation(SettingsCalibrationWarning)) {
-		// User has confirmed their handle is at ambient
-		// So take the offset measurement
-		setTipOffset();
-		// Next we want the user to put the tip into 100C water so we can calculate
-		// their tip's gain Gain is the m term from rise/run plot of raw readings vs
-		// (tip-handle) Thus we want to calculate
-		// ([TipRawHot-TipRawCold])/(ActualHot-HandleHot)-(ActualCold-HandleCold)
-		// Thus we first need to store ->
-		// TiprawCold,HandleCold,ActualCold==HandleCold -> RawTipCold
-		uint32_t RawTipCold = getTipRawTemp(0) * 10;
-		OLED::clearScreen();
-		OLED::setCursor(0, 0);
-		OLED::setFont(1);
-		OLED::print("Please Insert Tip\nInto Boiling Water");
-		OLED::refresh();
-		osDelay(200);
-		waitForButtonPress();
 
-		// Now take the three hot measurements
-		// Assume water is boiling at 100C
-		uint32_t RawTipHot = getTipRawTemp(0) * 10;
-		uint32_t HandleTempHot = getHandleTemperature() / 10;
-
-		uint32_t gain = (RawTipHot - RawTipCold) / (100 - HandleTempHot);
-
-		// Show this to the user
-		OLED::clearScreen();
-		OLED::setCursor(0, 0);
-		OLED::print(YourGainMessage);
-		OLED::printNumber(gain, 6);
-		OLED::refresh();
-		osDelay(2000);
-		waitForButtonPress();
-		OLED::clearScreen();
-		OLED::setCursor(0, 0);
-		OLED::print(SymbolPlus);
-		OLED::printNumber(RawTipHot, 8);
-		OLED::setCursor(0, 8);
-		OLED::print(SymbolMinus);
-		OLED::printNumber(RawTipCold, 8);
-		OLED::refresh();
-		osDelay(2000);
-		waitForButtonPress();
-	}
-}
-static void calibration_displayAdvancedCal(void) {
-	printShortDescription(19, 5);
-}
-static void calibration_enterAdvancedCal(void) {
-	//Advanced cal
-	if (userConfirmation(SettingsCalibrationWarning)) {
-		//User has confirmed their handle is at ambient
-		//So take the offset measurement
-		setTipOffset();
-		//The tip now has a known ADC offset
-		//Head up until it is at 350C
-		//Then let the user adjust the gain value until it converges
-		systemSettings.customTipGain = 160; // start safe and high
-		bool exit = false;
-
-		while (exit == false) {
-			//Set tip to 350C
-			setTipType(Tip_Custom, systemSettings.customTipGain);
-			currentlyActiveTemperatureTarget = ctoTipMeasurement(350);
-			//Check if user has pressed button to change the gain
-			ButtonState buttons = getButtonState();
-			switch (buttons) {
-			case BUTTON_NONE:
-				break;
-			case BUTTON_BOTH:
-			case BUTTON_B_LONG:
-			case BUTTON_F_LONG:
-				exit = true;
-				break;
-			case BUTTON_F_SHORT:
-				systemSettings.customTipGain++;
-				break;
-			case BUTTON_B_SHORT: {
-				systemSettings.customTipGain--;
-			}
-				break;
-			default:
-				break;
-			}
-			if (systemSettings.customTipGain > 200)
-				systemSettings.customTipGain = 200;
-			else if (systemSettings.customTipGain <= 100)
-				systemSettings.customTipGain = 100;
-			OLED::setCursor(0, 0);
-			OLED::clearScreen();
-			OLED::setFont(0);
-			if (OLED::getRotation())
-				OLED::print(SymbolMinus);
-			else
-				OLED::print(SymbolPlus);
-
-			OLED::print(SymbolSpace);
-			OLED::printNumber(systemSettings.customTipGain, 4);
-			OLED::print(SymbolSpace);
-			if (OLED::getRotation())
-				OLED::print(SymbolPlus);
-			else
-				OLED::print(SymbolMinus);
-			OLED::refresh();
-			GUIDelay();
-		}
-		// Wait for the user to confirm the exit message that the calibration is done
-		userConfirmation(SettingsCalibrationDone);
-	}
-}
 //Provide the user the option to tune their own tip if custom is selected
 //If not only do single point tuning as per usual
 static void settings_setCalibrate(void) {
-	if (systemSettings.tipType == Tip_Custom) {
-		// Two types of calibration
-		// 1. Basic, idle temp + hot water (100C)
-		// 2. Advanced, 100C + 350C, we keep PID tracking to a temperature target
-		return gui_Menu(calibrationMenu);
-	}
-	// Else
-	// Ask user if handle is at the tip temperature
-	// Any error between handle and the tip will be a direct offset in the control
-	// loop
 
-	else if (userConfirmation(SettingsCalibrationWarning)) {
+	if (userConfirmation(SettingsCalibrationWarning)) {
 		// User confirmed
 		// So we now perform the actual calculation
 		setTipOffset();
