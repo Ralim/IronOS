@@ -26,6 +26,11 @@ extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
 
+// TODO: express time constants in terms of dividends of portTICK_RATE_MS
+
+#define MOVEMENT_INACTIVITY_TIME 6000
+#define BUTTON_INACTIVITY_TIME   6000
+
 static uint16_t min(uint16_t a, uint16_t b) {
 	if (a > b)
 		return b;
@@ -714,7 +719,7 @@ void startGUITask(void const *argument __unused) {
 	for (;;) {
 		ButtonState buttons = getButtonState();
 		if (buttons != BUTTON_NONE) {
-			OLED::displayOnOff(true);  // turn lcd on
+			OLED::setDisplayState(OLED::DisplayState::ON);
 			OLED::setFont(0);
 		}
 		if (tempWarningState == 2)
@@ -760,17 +765,17 @@ void startGUITask(void const *argument __unused) {
 		getInputVoltageX10(systemSettings.voltageDiv, 0);
 		uint16_t tipTemp = tipMeasurementToC(getTipRawTemp(0));
 
-		if (tipTemp < 50) {
-			if (systemSettings.sensitivity) {
-				if ((xTaskGetTickCount() - lastMovementTime) > 6000
-						&& (xTaskGetTickCount() - lastButtonTime) > 6000) {
-					OLED::displayOnOff(false);  // turn lcd off when no movement
-				} else
-					OLED::displayOnOff(true);  // turn lcd on
-			} else
-				OLED::displayOnOff(true); // turn lcd on - disabled motion sleep
-		} else
-			OLED::displayOnOff(true);  // turn lcd on when temp > 50C
+		// Preemptively turn the display on.  Turn it off if and only if
+		// the tip temperature is below 50 degrees C *and* motion sleep
+		// detection is enabled *and* there has been no activity (movement or
+		// button presses) in a while.
+		OLED::setDisplayState(OLED::DisplayState::ON);
+
+		if ((tipTemp < 50) && systemSettings.sensitivity &&
+			(((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) &&
+				((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
+			OLED::setDisplayState(OLED::DisplayState::OFF);
+		}
 
 		// Clear the lcd buffer
 		OLED::clearScreen();
