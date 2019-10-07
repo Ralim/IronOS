@@ -16,6 +16,7 @@
 #include "stdlib.h"
 #include "stm32f1xx_hal.h"
 #include "string.h"
+#include "TipThermoModel.h"
 extern uint8_t PCBVersion;
 // File local variables
 extern uint32_t currentlyActiveTemperatureTarget;
@@ -647,7 +648,7 @@ void showDebugMenu(void) {
 			break;
 		case 6:
 			//Raw Tip
-			OLED::printNumber(getTipRawTemp(0), 6);
+			OLED::printNumber(TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0)), 6);
 			break;
 		case 7:
 			//Temp in C
