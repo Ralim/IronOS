@@ -502,9 +502,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		if (systemSettings.detailedSoldering) {
 			OLED::setFont(1);
 			OLED::print(SolderingAdvancedPowerPrompt);  // Power:
-			OLED::printNumber(milliWattHistory[0] / 1000, 2);
+			OLED::printNumber(x10WattHistory[0] / 10, 2);
 			OLED::print(SymbolDot);
-			OLED::printNumber(milliWattHistory[0] / 100 % 10, 1);
+			OLED::printNumber(x10WattHistory[0] % 10, 1);
 			OLED::print(SymbolWatts);
 
 			if (systemSettings.sensitivity && systemSettings.SleepTime) {
@@ -514,6 +514,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 			OLED::setCursor(0, 8);
 			OLED::print(SleepingTipAdvancedString);
+			//OLED::printNumber(
+			//		TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)), 5); // Draw the tip temp out finally
+
 			gui_drawTipTemp(true);
 			OLED::print(SymbolSpace);
 			printVoltage();
@@ -535,14 +538,10 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 					OLED::print(SymbolSpace);
 
 				// Draw heating/cooling symbols
-				OLED::drawHeatSymbol(
-						milliWattsToPWM(milliWattHistory[0],
-								systemSettings.voltageDiv));
+				OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory[0]));
 			} else {
 				// Draw heating/cooling symbols
-				OLED::drawHeatSymbol(
-						milliWattsToPWM(milliWattHistory[0],
-								systemSettings.voltageDiv));
+				OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory[0]));
 				// We draw boost arrow if boosting, or else gap temp <-> heat
 				// indicator
 				if (boostModeOn)
@@ -645,13 +644,17 @@ void showDebugMenu(void) {
 			break;
 		case 6:
 			//Raw Tip
-			OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)), 6);
+		{
+			uint32_t temp = systemSettings.CalibrationOffset;
+			systemSettings.CalibrationOffset = 0;
+			OLED::printNumber(
+					TipThermoModel::convertTipRawADCTouV(getTipRawTemp(1)), 6);
+			systemSettings.CalibrationOffset = temp;
+		}
 			break;
 		case 7:
 			//Temp in C
-			OLED::printNumber(
-					TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(0)),
-					5);
+			OLED::printNumber(TipThermoModel::getTipInC(1), 5);
 			break;
 		case 8:
 			//Handle Temp

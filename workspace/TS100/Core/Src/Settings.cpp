@@ -106,13 +106,14 @@ void resetSettings() {
   systemSettings.descriptionScrollSpeed = 0;  // default to slow
 
 #ifdef MODEL_TS100
-
-  systemSettings.CalibrationOffset = 650;  // the adc offset in uV
+  systemSettings.CalibrationOffset = 300;  // the adc offset in uV
+  systemSettings.pidPowerLimit=70;  // Sets the max pwm power limit
 
 #endif
 #ifdef MODEL_TS80
   systemSettings.pidPowerLimit=24;  // Sets the max pwm power limit
-  systemSettings.CalibrationOffset = 650;  // the adc offset in uV
+
+  systemSettings.CalibrationOffset = 300;  // the adc offset in uV
 #endif
   saveSettings();  // Save defaults
 }

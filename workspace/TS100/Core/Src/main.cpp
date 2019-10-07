@@ -47,7 +47,7 @@ int main(void) {
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
 	HAL_IWDG_Refresh(&hiwdg);
-	setTipMilliWatts(0);  // force tip off
+	setTipX10Watts(0);  // force tip off
 	FRToSI2C::init(&hi2c1);
 	OLED::initialize();  // start up the LCD
 	OLED::setFont(0);    // default to bigger font
@@ -106,7 +106,7 @@ void startPIDTask(void const *argument __unused) {
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM.
 	 */
-	setTipMilliWatts(0); // disable the output driver if the output is set to be off
+	setTipX10Watts(0); // disable the output driver if the output is set to be off
 #ifdef MODEL_TS80
 	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
@@ -118,7 +118,7 @@ void startPIDTask(void const *argument __unused) {
 #else
 
 #endif
-	history<int32_t, 16> tempError = { { 0 }, 0, 0 };
+	history<int32_t, PID_TIM_HZ > tempError = { { 0 }, 0, 0 };
 	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
 							   // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
@@ -145,7 +145,7 @@ void startPIDTask(void const *argument __unused) {
 				tempError.update(tError);
 
 				// Now for the PID!
-				int32_t milliWattsOut = 0;
+				int32_t x10WattsOut = 0;
 
 				// P term - total power needed to hit target temp next cycle.
 				// thermal mass = 1690 milliJ/*C for my tip.
@@ -154,17 +154,17 @@ void startPIDTask(void const *argument __unused) {
 				//  This is necessary because of the temp noise and thermal lag in the system.
 				// Once we have feed-forward temp estimation we should be able to better tune this.
 
-				int32_t milliWattsNeeded = tempToMilliWatts(
-						tempError.average());
+				int32_t x10WattsNeeded = tempToX10Watts(tError);
+//						tempError.average());
 				// note that milliWattsNeeded is sometimes negative, this counters overshoot
 				//  from I term's inertia.
-				milliWattsOut += milliWattsNeeded;
+				x10WattsOut += x10WattsNeeded;
 
 				// I term - energy needed to compensate for heat loss.
 				// We track energy put into the system over some window.
 				// Assuming the temp is stable, energy in = energy transfered.
 				//  (If it isn't, P will dominate).
-				milliWattsOut += milliWattHistory.average();
+				x10WattsOut += x10WattHistory.average();
 
 				// D term - use sudden temp change to counter fast cooling/heating.
 				//  In practice, this provides an early boost if temp is dropping
@@ -172,7 +172,7 @@ void startPIDTask(void const *argument __unused) {
 				// basically: temp - lastTemp
 				//  Unfortunately, our temp signal is too noisy to really help.
 
-				setTipMilliWatts(milliWattsOut);
+				setTipX10Watts(x10WattsOut);
 			} else {
 
 #ifdef MODEL_TS80
@@ -180,15 +180,15 @@ void startPIDTask(void const *argument __unused) {
 				// This is purely guesswork :'( as everyone implements stuff differently
 				if (xTaskGetTickCount() - lastPowerPulse < 10) {
 					// for the first 100mS turn on for a bit
-					setTipMilliWatts(2500);	// typically its around 5W to hold the current temp, so this wont raise temp much
+					setTipX10Watts(25);	// typically its around 5W to hold the current temp, so this wont raise temp much
 				} else
-					setTipMilliWatts(0);
+					setTipX10Watts(0);
 				//Then wait until the next 0.5 seconds
 				if (xTaskGetTickCount() - lastPowerPulse > 50) {
 					lastPowerPulse = xTaskGetTickCount();
 				}
 #else
-				setTipMilliWatts(0);
+				setTipX10Watts(0);
 #endif
 			}
 
@@ -197,7 +197,6 @@ void startPIDTask(void const *argument __unused) {
 			asm("bkpt");
 
 //ADC interrupt timeout
-			setTipMilliWatts(0);
 			setTipPWM(0);
 		}
 	}

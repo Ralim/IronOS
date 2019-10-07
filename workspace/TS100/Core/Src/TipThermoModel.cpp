@@ -256,6 +256,6 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
 			getTipRawTemp(sampleNow));
-		currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
-		return currentTipTempInF;
+	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
+	return currentTipTempInF;
 }

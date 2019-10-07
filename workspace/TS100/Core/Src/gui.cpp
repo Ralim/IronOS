@@ -581,8 +581,9 @@ static void setTipOffset() {
 	OLED::clearScreen();
 	OLED::setCursor(0, 0);
 	OLED::drawCheckbox(true);
+	OLED::printNumber(systemSettings.CalibrationOffset,4);
 	OLED::refresh();
-	osDelay(1000);
+	osDelay(1200);
 }
 
 //Provide the user the option to tune their own tip if custom is selected

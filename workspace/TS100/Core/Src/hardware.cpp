@@ -27,7 +27,6 @@ uint16_t getHandleTemperature() {
 	return result;
 }
 
-
 uint16_t getTipInstantTemperature() {
 	uint16_t sum = 0;	// 12 bit readings * 8 -> 15 bits
 	uint16_t readings[8];
@@ -42,23 +41,15 @@ uint16_t getTipInstantTemperature() {
 	readings[5] = hadc2.Instance->JDR2;
 	readings[6] = hadc2.Instance->JDR3;
 	readings[7] = hadc2.Instance->JDR4;
-	uint8_t minID = 0, maxID = 0;
+
 	for (int i = 0; i < 8; i++) {
-		if (readings[i] < readings[minID])
-			minID = i;
-		else if (readings[i] > readings[maxID])
-			maxID = i;
+		sum += readings[i];
 	}
-	for (int i = 0; i < 8; i++) {
-		if (i != maxID)
-			sum += readings[i];
-	}
-	sum += readings[minID];	//Duplicate the min to make up for the missing max value
 	return sum;  // 8x over sample
 }
 
 //2 second filter (ADC is PID_TIM_HZ Hz)
-history<uint16_t, PID_TIM_HZ*4> rawTempFilter = { { 0 }, 0, 0 };
+history<uint16_t, PID_TIM_HZ > rawTempFilter = { { 0 }, 0, 0 };
 
 uint16_t getTipRawTemp(uint8_t refresh) {
 	if (refresh) {
@@ -353,7 +344,6 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 	}
 }
-
 
 void vApplicationIdleHook(void) {
 	HAL_IWDG_Refresh(&hiwdg);

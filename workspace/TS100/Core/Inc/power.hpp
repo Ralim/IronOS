@@ -18,22 +18,21 @@
 // Once we have feed-forward temp estimation we should be able to better tune this.
 
 #ifdef MODEL_TS100
-const uint16_t tipMass = 450; // divide here so division is compile-time.
+const int32_t tipMass = 3500; // divide here so division is compile-time.
 const uint8_t tipResistance = 85; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
 
 #endif
 #ifdef MODEL_TS80
-const uint16_t tipMass = 450;
+const uint32_t tipMass = 4500;
 const uint8_t tipResistance = 45; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
 
 #endif
-const uint8_t oscillationPeriod = 6 * PID_TIM_HZ; // I term look back value
-extern history<uint32_t, oscillationPeriod> milliWattHistory;
+const uint8_t oscillationPeriod = 8*PID_TIM_HZ; // I term look back value
+extern history<uint32_t, oscillationPeriod> x10WattHistory;
 
-int32_t tempToMilliWatts(int32_t rawTemp);
-void setTipMilliWatts(int32_t mw);
-uint8_t milliWattsToPWM(int32_t milliWatts, uint8_t divisor,
-		uint8_t sample = 0);
-int32_t PWMToMilliWatts(uint8_t pwm, uint8_t divisor, uint8_t sample = 0);
-
+int32_t tempToX10Watts(int32_t rawTemp);
+void setTipX10Watts(int32_t mw);
+uint8_t X10WattsToPWM(int32_t milliWatts, uint8_t sample = 0);
+int32_t PWMToX10Watts(uint8_t pwm, uint8_t sample = 0);
+uint32_t availableW10(uint8_t sample) ;
 #endif /* POWER_HPP_ */
