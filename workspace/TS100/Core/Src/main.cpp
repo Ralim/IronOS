@@ -20,16 +20,16 @@ int16_t idealQCVoltage = 0;
 // FreeRTOS variables
 
 osThreadId GUITaskHandle;
-static const size_t GUITaskStackSize = 1024/4;
+static const size_t GUITaskStackSize = 1024 / 4;
 uint32_t GUITaskBuffer[GUITaskStackSize];
 osStaticThreadDef_t GUITaskControlBlock;
 
 osThreadId PIDTaskHandle;
-static const size_t PIDTaskStackSize =512 / 4;
+static const size_t PIDTaskStackSize = 512 / 4;
 uint32_t PIDTaskBuffer[PIDTaskStackSize];
 osStaticThreadDef_t PIDTaskControlBlock;
 osThreadId MOVTaskHandle;
-static const size_t MOVTaskStackSize = 512/4;
+static const size_t MOVTaskStackSize = 512 / 4;
 uint32_t MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
 
@@ -102,9 +102,6 @@ int main(void) {
 	}
 }
 
-
-
-
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
 	/*
@@ -119,13 +116,12 @@ void startPIDTask(void const *argument __unused) {
 
 #ifdef MODEL_TS80
 	//Set power management code to the tip resistance in ohms * 10
-	setupPower(calculateTipR() / 100);
+
 	TickType_t lastPowerPulse = 0;
 #else
-	setupPower(85);
 
 #endif
-	history<int32_t> tempError = { { 0 }, 0, 0 };
+	history<int32_t, 16> tempError = { { 0 }, 0, 0 };
 	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
 										  // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
@@ -172,7 +168,7 @@ void startPIDTask(void const *argument __unused) {
 #endif
 
 				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),
-						mass, rawC);
+						mass);
 				// note that milliWattsNeeded is sometimes negative, this counters overshoot
 				//  from I term's inertia.
 				milliWattsOut += milliWattsNeeded;

@@ -9,6 +9,10 @@
 #define HARDWARE_H_
 #include "Setup.h"
 #include "stm32f1xx_hal.h"
+#include "FreeRTOS.h"
+#include "stm32f1xx_hal.h"
+#include "cmsis_os.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -131,7 +135,9 @@ void startQC(uint16_t divisor); // Tries to negotiate QC for highest voltage, mu
 // This will try for 12V, failing that 9V, failing that 5V
 // If input is over 12V returns -1
 // If the input is [5-12] Will return the value.
-
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
+		StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize) ;
+void vApplicationIdleHook(void);
 #ifdef __cplusplus
 }
 #endif

@@ -7,9 +7,6 @@
 
 // These are all the functions for interacting with the hardware
 #include "hardware.h"
-#include "FreeRTOS.h"
-#include "stm32f1xx_hal.h"
-#include "cmsis_os.h"
 #include "history.hpp"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile int16_t CalibrationTempOffset = 0;
@@ -477,3 +474,21 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 	}
 }
+
+
+void vApplicationIdleHook(void) {
+	HAL_IWDG_Refresh(&hiwdg);
+}
+
+/* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
+static StaticTask_t xIdleTaskTCBBuffer;
+static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
+
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
+		StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize) {
+	*ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
+	*ppxIdleTaskStackBuffer = &xIdleStack[0];
+	*pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+	/* place for user code */
+}
+/* USER CODE END GET_IDLE_TASK_MEMORY */
