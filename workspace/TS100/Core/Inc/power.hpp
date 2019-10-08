@@ -8,6 +8,7 @@
 #include "stdint.h"
 #include <history.hpp>
 #include "hardware.h"
+#include "expMovingAverage.h"
 #ifndef POWER_HPP_
 #define POWER_HPP_
 
@@ -18,17 +19,17 @@
 // Once we have feed-forward temp estimation we should be able to better tune this.
 
 #ifdef MODEL_TS100
-const int32_t tipMass = 3500; // divide here so division is compile-time.
+const int32_t tipMass = 45; // X10 watts to raise 1 deg C in 1 second
 const uint8_t tipResistance = 85; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
 
 #endif
 #ifdef MODEL_TS80
-const uint32_t tipMass = 4500;
+const uint32_t tipMass = 40;
 const uint8_t tipResistance = 45; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
 
 #endif
-const uint8_t oscillationPeriod = 8*PID_TIM_HZ; // I term look back value
-extern history<uint32_t, oscillationPeriod> x10WattHistory;
+const uint8_t wattHistoryFilter = 24; // I term look back weighting
+extern expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory;
 
 int32_t tempToX10Watts(int32_t rawTemp);
 void setTipX10Watts(int32_t mw);

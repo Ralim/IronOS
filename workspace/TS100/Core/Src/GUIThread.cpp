@@ -502,9 +502,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		if (systemSettings.detailedSoldering) {
 			OLED::setFont(1);
 			OLED::print(SolderingAdvancedPowerPrompt);  // Power:
-			OLED::printNumber(x10WattHistory[0] / 10, 2);
+			OLED::printNumber(x10WattHistory.average() / 10, 2);
 			OLED::print(SymbolDot);
-			OLED::printNumber(x10WattHistory[0] % 10, 1);
+			OLED::printNumber(x10WattHistory.average()% 10, 1);
 			OLED::print(SymbolWatts);
 
 			if (systemSettings.sensitivity && systemSettings.SleepTime) {
@@ -538,10 +538,10 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 					OLED::print(SymbolSpace);
 
 				// Draw heating/cooling symbols
-				OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory[0]));
+				OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory.average()));
 			} else {
 				// Draw heating/cooling symbols
-				OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory[0]));
+				OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory.average()));
 				// We draw boost arrow if boosting, or else gap temp <-> heat
 				// indicator
 				if (boostModeOn)

@@ -563,25 +563,26 @@ static void setTipOffset() {
 	// If the thermo-couple at the end of the tip, and the handle are at
 	// equilibrium, then the output should be zero, as there is no temperature
 	// differential.
-
-	uint32_t offset = 0;
-	for (uint8_t i = 0; i < 15; i++) {
-		offset += getTipRawTemp(0);
-		// cycle through the filter a fair bit to ensure we're stable.
-		OLED::clearScreen();
-		OLED::setCursor(0, 0);
-		OLED::print(SymbolDot);
-		for (uint8_t x = 0; x < i / 4; x++)
+	while (systemSettings.CalibrationOffset == 0) {
+		uint32_t offset = 0;
+		for (uint8_t i = 0; i < 16; i++) {
+			offset += getTipRawTemp(1);
+			// cycle through the filter a fair bit to ensure we're stable.
+			OLED::clearScreen();
+			OLED::setCursor(0, 0);
 			OLED::print(SymbolDot);
-		OLED::refresh();
-		osDelay(100);
+			for (uint8_t x = 0; x < (i / 4); x++)
+				OLED::print(SymbolDot);
+			OLED::refresh();
+			osDelay(100);
+		}
+		systemSettings.CalibrationOffset = TipThermoModel::convertTipRawADCTouV(
+				offset / 16);
 	}
-	systemSettings.CalibrationOffset = TipThermoModel::convertTipRawADCTouV(
-			offset / 15);
 	OLED::clearScreen();
 	OLED::setCursor(0, 0);
 	OLED::drawCheckbox(true);
-	OLED::printNumber(systemSettings.CalibrationOffset,4);
+	OLED::printNumber(systemSettings.CalibrationOffset, 4);
 	OLED::refresh();
 	osDelay(1200);
 }

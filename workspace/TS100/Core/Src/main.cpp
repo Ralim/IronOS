@@ -118,7 +118,7 @@ void startPIDTask(void const *argument __unused) {
 #else
 
 #endif
-	history<int32_t, PID_TIM_HZ > tempError = { { 0 }, 0, 0 };
+	history<int32_t, PID_TIM_HZ> tempError = { { 0 }, 0, 0 };
 	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
 							   // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
@@ -126,6 +126,9 @@ void startPIDTask(void const *argument __unused) {
 
 		if (ulTaskNotifyTake(pdTRUE, 2000)) {
 			// This is a call to block this thread until the ADC does its samples
+			// Do the reading here to keep the temp calculations churning along
+			uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
+
 			if (currentTempTargetDegC) {
 				// Cap the max set point to 450C
 				if (currentTempTargetDegC > (450)) {
@@ -133,7 +136,6 @@ void startPIDTask(void const *argument __unused) {
 					currentTempTargetDegC = (450);
 				}
 				// Convert the current tip to degree's C
-				uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
 
 				// As we get close to our target, temp noise causes the system
 				//  to be unstable. Use a rolling average to dampen it.

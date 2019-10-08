@@ -12,7 +12,7 @@
 const uint16_t powerPWM = 255;
 const uint16_t totalPWM = 255 + 17; //htim2.Init.Period, the full PWM cycle
 
-history<uint32_t, oscillationPeriod> x10WattHistory = { { 0 }, 0, 0 };
+expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory = { 0 };
 
 int32_t tempToX10Watts(int32_t rawTemp) {
 	// mass is in milliJ/*C, rawC is raw per degree C
