@@ -1,18 +1,18 @@
 # TS100 & TS80 Firmware
 
 This firmware is a fresh start for these soldering irons. Designed from the ground up as fully featured control software that leaves nothing to be desired.
-It originally started back back at the end of 2016 and has since seen vast improvements, especially some very smart work by community members.
+It originally started back at the end of 2016 and has since seen vast improvements, especially some very smart work by community members.
 
-The firmware supports everything you would expect in the soldering iron, and has the same features as the stock firmware with some nice extras packed in.
-There is a comprehensive menu system in the iron that allows for adjustment of all the settings on the unit, and support for various languages is added by the communitiy.
+The firmware supports everything you would expect in the soldering iron and has the same features as the stock firmware with some nice extras packed in.
+There is a comprehensive menu system in the iron that allows for adjustment of all the settings on the unit, and support for various languages is added by the community.
 
-On the TS100 there are settings to allow you to specify a cutoff voltage for different lithium iron battery packs to protect your power source.
+On the TS100 there are settings to allow you to specify a cutoff voltage for different lithium-ion battery packs to protect your power source.
 For the TS80 these are removed and replaced with the selection of 18W or 24W depending on what your QC power bank can support.
-Otherwise both systems work very similar and should support all the features.
+Otherwise, both systems work very similar and should support all the features.
 
 This project is considered feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
 
-*This firmware does **NOT** support the usb port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode.*
+*This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode.*
 
 ## Core Features
 
@@ -20,23 +20,23 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * Automatic sleep with selectable sensitivity
 * Motion wake support
 * Settings menu on the unit
-* (TS100) Set a voltage lower limit for Lithium batteries so you dont kill your battery pack
+* (TS100) Set a voltage lower limit for Lithium batteries so you don't kill your battery pack
 * (TS80 ) Set 18W or 24W settings for your power bank
 * All settings saved to flash when you exit the menu
 * Improved readability Fonts
 * Use hardware features to improve reliability
 * Can disable movement detection if desired
 * Full tip profile calibration
-* Boost mode lets you temporarily change the temperature when soldering (ie raise temperature for short periods of time)
+* Boost mode lets you temporarily change the temperature when soldering (ie raise the temperature for short periods of time)
 * (TS100) Battery charge level indicator if power source set to a lipo cell count.
 * (TS80) Power bank operating voltage is displayed.
 * Custom boot up logo support.
-* Automatic LCD rotation based on orientation
+* Automatic LCD rotation based on the orientation
 * Supports both the version 1 and version 2 hardware (different accelerometers)
 
 # Upgrading your iron
 
-This is completely safe, if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
+This is completely safe, but if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
 
 Officially the bootloader on the iron only works under Windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
@@ -46,15 +46,15 @@ Officially the bootloader on the iron only works under Windows. However, users h
 3. Drag the .hex file onto the USB drive.
 4. The unit will disconnect and reconnect.
 5. The filename will have changed to end in .RDY or .ERR 
-6. If it ends with .RDY you're done! Otherwise something went wrong.
-7. If it didnt work the first time, try copying the file again without disconnecting the iron, often it will work on the second shot.
+6. If it ends with .RDY you're done! Otherwise, something went wrong.
+7. If it didn't work the first time, try copying the file again without disconnecting the iron, often it will work on the second shot.
 8. Disconnect the USB and power up the iron. You're good to go.
 ```
 
 
-For the more adventurous out there, you can also load this firmware onto the device using a SWD programmer.
-On the bottom of the MCU riser pcb, there are 4 pads for programming.
-There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need a SWD programmer to load onto the unit).
+For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer.
+On the bottom of the MCU riser PCB, there are 4 pads for programming.
+There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need an SWD programmer to load onto the unit).
 For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector
 
 ## Setting a custom bootup image
@@ -95,12 +95,12 @@ Especially to the following users, who have helped in various ways that are mass
 
 ## Licence
 
-The code in this repository that is based on the STM tools is under a BSD like licence.
+The code in this repository that is based on the STM tools is under a BSD-like licence.
 The code created by the community is GNU GPLv3. Unless noted elsewhere.
 The FreeRToS is under its own licence.
 
 ## Commercial Use
 
-This software is provided as-is, so I cannot provide any commercial support for the firmware. However you are more than welcome to distribute links to the firmware, or provide irons with this software on them. 
-Please do not re-host the files, but rather link to this page, so that there are not old versions of the firmware scattered around. If this firmware does make you money, it would be nice to recieve a donation, however there is no enforcement.
+This software is provided as-is, so I cannot provide any commercial support for the firmware. However, you are more than welcome to distribute links to the firmware, or provide irons with this software on them. 
+Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around. If this firmware does make you money, it would be nice to receive a donation, however, there is no enforcement.
 
