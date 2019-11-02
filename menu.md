@@ -26,7 +26,7 @@ Please calibrate your iron if you have any issues with the cutoff voltage.
 Note that cutoff messages can also be triggered by using a power supply that is too weak and fails under the load of the iron.
 This is more critical than before with the new cell count based cutout voltage.
 
-To calibrate your Iron:
+To calibrate your iron:
 
 1. Measure the input voltage with a multimeter and note it down.
 2. Connect the input to your iron.
@@ -51,11 +51,11 @@ Some tips will have an offset on their readings, to calibrate this out perform t
 4. Scroll down to the advanced menu, and then the temperature calibration
 5. Press the button to change the option (tip button)
 6. The display will start to scroll a warning message to check that the tip is at ambient temperature!
-7. Press the button near the tip of the iron to confirm.
+7. Press the button near the tip of the iron to confirm
 8. The display will go to "...." for a short period of time as the unit measures the tip temperature and the handle temperature and compares them
 9. The display will then go back to *TMP CAL*
 10. Calibration is done, just exit the settings menu as normal
-11. You're done. Enjoy your iron.
+11. You're done, enjoy your iron!
 
 ### Calibration of custom tip
 
@@ -63,11 +63,11 @@ There are two methods to calibrate the tip, the simple mode which requires boili
 
 Advanced mode is preffered.
 
-In simple mode you first need to have the tip at room temperature to start, and then when promped place the tip into a cup of boiling water, wait a few seconds and then press a button to confirm.
+In simple mode you first need to have the tip at room temperature to start, and then when prompted place the tip into a cup of boiling water, wait a few seconds and then press a button to confirm.
 
-In advanced mode, follow instructions on the screen, you will need to adjust the ranges to find two calibration points by measuing the tip temperature directly. This tends to be significantly more accurate.
+In advanced mode, follow instructions on the screen, you will need to adjust the ranges to find two calibration points by measuring the tip temperature directly. This tends to be significantly more accurate.
 
-If you do calibrate your own values for a tip because its missing from the menu or because you think the one in the menu is really wrong, raise an issue on github and I'm happy to look at adding it or revising the existing settings.
+If you do calibrate your own values for a tip because it's missing from the menu or because you think the one in the menu is really wrong, raise an issue on github and I'll be happy to look at adding it or revising the existing settings.
 
 
 ### Boost mode

@@ -28,15 +28,15 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * Can disable movement detection if desired
 * Full tip profile calibration
 * Boost mode lets you temporarily change the temperature when soldering (ie raise the temperature for short periods of time)
-* (TS100) Battery charge level indicator if power source set to a lipo cell count.
-* (TS80) Power bank operating voltage is displayed.
-* Custom boot up logo support.
+* (TS100) Battery charge level indicator if power source set to a lipo cell count
+* (TS80) Power bank operating voltage is displayed
+* Custom boot up logo support
 * Automatic LCD rotation based on the orientation
 * Supports both the version 1 and version 2 hardware (different accelerometers)
 
 # Upgrading your iron
 
-This is completely safe, but if it goes wrong just put the .hex file from the official website onto the unit and your back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
+This is completely safe, but if it goes wrong just put the .hex file from the official website onto the unit and you're back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
 
 Officially the bootloader on the iron only works under Windows. However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
@@ -45,7 +45,7 @@ Officially the bootloader on the iron only works under Windows. However, users h
 2. The unit will appear as a USB drive.
 3. Drag the .hex file onto the USB drive.
 4. The unit will disconnect and reconnect.
-5. The filename will have changed to end in .RDY or .ERR 
+5. The filename will have changed to end in .RDY or .ERR
 6. If it ends with .RDY you're done! Otherwise, something went wrong.
 7. If it didn't work the first time, try copying the file again without disconnecting the iron, often it will work on the second shot.
 8. Disconnect the USB and power up the iron. You're good to go.
@@ -55,13 +55,13 @@ Officially the bootloader on the iron only works under Windows. However, users h
 For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer.
 On the bottom of the MCU riser PCB, there are 4 pads for programming.
 There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need an SWD programmer to load onto the unit).
-For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector
+For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector.
 
 ## Setting a custom bootup image
 
 This firmware uses a different method of updating the bootup image.
 This removes the need for emulating a USB drive on the iron just to allow for a bootup image to be setup.
-There are further instructions on the [wiki](https://github.com/Ralim/ts100/wiki/Logo-Editor). 
+There are further instructions on the [wiki](https://github.com/Ralim/ts100/wiki/Logo-Editor).
 Instructions are kept on the wiki so that users can update the information if they find extra helpful information.
 
 # Menu System
@@ -70,9 +70,9 @@ This new firmware uses a new menu system to allow access to the settings on the 
 When on the main screen, the unit shows prompts for the two most common operations.
 
 * Pressing the button near the tip enters soldering mode
-* Pressing the button near the USB enters the settings menu.
-* Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up).
-* Holding the button near the USB end will show the firmware version details.
+* Pressing the button near the USB enters the settings menu
+* Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
+* Holding the button near the USB end will show the firmware version details
 
 More details are over in the [Menu information.](menu.md)
 
@@ -80,9 +80,9 @@ More details are over in the [Menu information.](menu.md)
 
 
 If you love this firmware and want to continue my caffeine addiction, you can do so here (or email me for other options) : https://paypal.me/RalimTek
-I also want to should out to all of the [Fantastic Contributors](https://github.com/Ralim/ts100/graphs/contributors).
+I also want to give a shout out to all of the [Fantastic Contributors](https://github.com/Ralim/ts100/graphs/contributors).
 
-Especially to the following users, who have helped in various ways that are massively appreciated.:
+Especially to the following users, who have helped in various ways that are massively appreciated:
 
 * [dhiltonp](https://github.com/dhiltonp)
 * [Mrkvozrout](https://github.com/Mrkvozrout)
@@ -101,6 +101,5 @@ The FreeRToS is under its own licence.
 
 ## Commercial Use
 
-This software is provided as-is, so I cannot provide any commercial support for the firmware. However, you are more than welcome to distribute links to the firmware, or provide irons with this software on them. 
+This software is provided as-is, so I cannot provide any commercial support for the firmware. However, you are more than welcome to distribute links to the firmware, or provide irons with this software on them.
 Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around. If this firmware does make you money, it would be nice to receive a donation, however, there is no enforcement.
-

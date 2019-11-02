@@ -2,16 +2,16 @@
 Please try and fill out this template where possible, not all fields are required and can be removed.
 
 * **Please check if the PR fulfills these requirements**
-- [] The commit message make sense
+- [] The commit message makes sense
 - [] The changes have been tested locally
 - [] Are there any breaking changes
 
-* **What kind of change does this PR introduce?** 
+* **What kind of change does this PR introduce?**
 (Bug fix, feature, docs update, ...)
 
 
 
-* **What is the current behavior?** 
+* **What is the current behavior?**
 (You can also link to an open issue here)
 
 
@@ -20,7 +20,7 @@ Please try and fill out this template where possible, not all fields are require
 
 
 
-* **Does this PR introduce a breaking change?** 
+* **Does this PR introduce a breaking change?**
 (What changes might users need to make in their application due to this PR?)
 
 

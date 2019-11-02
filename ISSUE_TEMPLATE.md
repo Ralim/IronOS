@@ -21,9 +21,9 @@ Please edit this template and fill out all the information you can (where releva
 
 ***Steps to reproduce:***
 
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 ***Video of problem if hard to reproduce***
 
@@ -40,7 +40,6 @@ On the idle screen, you can hold the settings button and it will show you the fi
   - Power Supply (Voltage and Current Rating) :
 
 
-* **Other information** 
+* **Other information**
 
 If submitting graphics to go on the iron, please use BMP or PNG files over JPG.
-
