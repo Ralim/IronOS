@@ -6,7 +6,7 @@ This *means* that the power proivded in the tip is 100% controlled by the supply
 
 Both irons at their simplest are just a resistor connected to your power source via a switch.
 
-When the switch is on, the power in the resistor is `Current (I) times Volts (V)`. 
+When the switch is on, the power in the resistor is `Current (I) times Volts (V)`.
 Current through the resistor is `Volts (V) divided by Resistance (R)`.
 Combining these two gives the common equation, power is `Volts (V) squared / Resistance (R)`.
 

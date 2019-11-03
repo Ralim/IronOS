@@ -24,21 +24,21 @@ V1.16
 
 V1.15
 
-* Added support for a custom bootup logo to be programmed via the DFU bootloader.
+* Added support for a custom bootup logo to be programmed via the DFU bootloader
 
 V1.14
 
-* Changed input voltage cutoff to be based on cell count rather than voltage.
+* Changed input voltage cutoff to be based on cell count rather than voltage
 
 V1.13
 
 * Swapped buttons for menu to prevent accidentally changing first menu item
-* Added auto key repeat.
+* Added auto key repeat
 
 V1.12
 
 * Increases sensitivity options to be 1*9 with 0 off state
-* Fixes issue where going from COOL *> soldering can leave screen off.
+* Fixes issue where going from COOL *> soldering can leave screen off
 
 V1.11
 
@@ -77,7 +77,7 @@ V1.04
 * Allows temperature offset calibration
 * Nicer idle screen
 
-V1.03 
+V1.03
 
 * Improved Button handling
 * Ability to set motion sensitivity
@@ -85,5 +85,5 @@ V1.03
 
 V1.02
 
-* Adds hold both buttons on IDLE to access the therometer mode.
-* Changes the exit soldering mode to be holding both buttons (Like original firmware).
+* Adds hold both buttons on IDLE to access the therometer mode
+* Changes the exit soldering mode to be holding both buttons (Like original firmware)
