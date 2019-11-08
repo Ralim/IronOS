@@ -3,25 +3,26 @@
 	"languageLocalName": "Český",
 	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibrace dokončena!",
 		"SettingsCalibrationWarning": "Ujistěte se, že hrot má pokojovou teplotu!",
 		"SettingsResetWarning": "Opravdu chcete resetovat zařízení do továrního nastavení?",
-		"UVLOWarningString": "DC LOW",
+		"UVLOWarningString": "Nízké DC",
 		"UndervoltageString": "! Nízké napětí !",
 		"InputVoltageString": "Napětí: ",
 		"WarningTipTempString": "Teplota: ",
-		"BadTipString": "BAD TIP",
+		"BadTipString": "ŠP. HROT",
 		"SleepingSimpleString": "Zzz ",
 		"SleepingAdvancedString": "Režim spánku...",
-		"WarningSimpleString": "HOT!",
+		"WarningSimpleString": "PÁLÍ",
 		"WarningAdvancedString": "!! HORKÝ HROT !!",
 		"SleepingTipAdvancedString": "Hrot:",
 		"IdleTipString": "Hrot:",
 		"IdleSetString": " Cíl:",
 		"TipDisconnectedString": "HROT NEPŘIPOJEN",
 		"SolderingAdvancedPowerPrompt": "Ohřev: ",
-		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"OffString": "Vyp",
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Zisk:"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -37,7 +38,7 @@
 				"Pájecí",
 				"nastavení"
 			],
-			"desc": "Nastavení pájení (boost, auto start...)"
+			"desc": "Nastavení pájení (boost, auto start...)."
 		},
 		"PowerSavingMenu": {
 			"text2": [
@@ -58,7 +59,7 @@
 				"Pokročilé",
 				"volby"
 			],
-			"desc": "Pokročilé volby (detailní obrazovky, kalibrace, tovární nastavení...)"
+			"desc": "Pokročilé volby (detailní obrazovky, kalibrace, tovární nastavení...)."
 		}
 	},
 	"menuOptions": {
@@ -68,7 +69,7 @@
 				"Zdroj",
 				"napájení"
 			],
-			"desc": "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo,LiIon...>"
+			"desc": "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo, LiIon...>."
 		},
 		"SleepTemperature": {
 			"text": "",
@@ -84,7 +85,7 @@
 				"Čas do",
 				"r. spánku"
 			],
-			"desc": "Čas do režimu spánku <Minut/Sekund>"
+			"desc": "Čas do režimu spánku <Minut/Sekund>."
 		},
 		"ShutdownTimeout": {
 			"text": "",
@@ -92,7 +93,7 @@
 				"Čas do",
 				"vypnutí"
 			],
-			"desc": "Čas do automatického vypnutí <Minut>"
+			"desc": "Čas do automatického vypnutí <Minut>."
 		},
 		"MotionSensitivity": {
 			"text": "",
@@ -100,7 +101,7 @@
 				"Citlivost",
 				"det. pohybu"
 			],
-			"desc": "Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>"
+			"desc": "Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>."
 		},
 		"TemperatureUnit": {
 			"text": "",
@@ -108,7 +109,7 @@
 				"Jednotky",
 				"teploty"
 			],
-			"desc": "Jednotky měření teploty <C=Celsius, F=Fahrenheit>"
+			"desc": "Jednotky měření teploty <C=Celsius, F=Fahrenheit>."
 		},
 		"AdvancedIdle": {
 			"text": "",
@@ -124,7 +125,7 @@
 				"Orientace",
 				"obrazovky"
 			],
-			"desc": "Orientace obrazovky <A=Auto, L=Levák, P=Pravák>"
+			"desc": "Orientace obrazovky <A=Auto, L=Levák, P=Pravák>."
 		},
 		"BoostEnabled": {
 			"text": "",
@@ -132,7 +133,7 @@
 				"Povolit",
 				"boost"
 			],
-			"desc": "Povolit boost držením předního tlačítka při pájení?"
+			"desc": "Povolit boost podržením předního tlačítka při pájení?"
 		},
 		"BoostTemperature": {
 			"text": "",
@@ -145,7 +146,7 @@
 		"AutoStart": {
 			"text": "",
 			"text2": [
-				"Auto",
+				"Automatický",
 				"start"
 			],
 			"desc": "Při startu ihned nahřát hrot?"
@@ -196,39 +197,39 @@
 				"Rychlost",
 				"popisků"
 			],
-			"desc": "Rychlost skrolování popisků podobných tomuto <P=Pomalu,R=Rychle>"
+			"desc": "Rychlost posuvu popisků podobných tomuto <P=Pomalu, R=Rychle>"
 		},
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
-				"Model"
+				"Model",
+				"hrotu"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Výběr modelu hrotu."
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Jednoduchá",
+				"kalibrace"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Jednoduchá kalibrace pomocí horké vody."
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Pokročilá",
+				"kalibrace"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Pokročilá kalibrace pomocí termočlánku na hrotu."
 		},
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Power",
-				"Wattage"
+				"Výkon",
+				"ve wattech"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Výkon použítého napájecího adaptéru ve wattech."
 		}
 	}
 }
