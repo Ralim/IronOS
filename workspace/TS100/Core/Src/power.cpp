@@ -49,8 +49,11 @@ uint32_t availableW10(uint8_t sample) {
 
 uint8_t X10WattsToPWM(int32_t milliWatts, uint8_t sample) {
 	// Scale input milliWatts to the pwm range available
-	if (milliWatts < 1)
+	if (milliWatts < 1) {
+		//keep the battery voltage updating the filter
+		getInputVoltageX10(systemSettings.voltageDiv, sample);
 		return 0;
+	}
 	//	if (milliWatts > (int(systemSettings.pidPowerLimit) * 10))
 //		milliWatts = (int(systemSettings.pidPowerLimit) * 10);
 	//Calculate desired milliwatts as a percentage of availableW10
