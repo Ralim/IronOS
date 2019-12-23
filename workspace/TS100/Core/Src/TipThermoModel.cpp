@@ -1,0 +1,121 @@
+/*
+ * TipThermoModel.cpp
+ *
+ *  Created on: 7 Oct 2019
+ *      Author: ralim
+ */
+
+#include "TipThermoModel.h"
+#include "Settings.h"
+#include "hardware.h"
+
+/*
+ * The hardware is laid out  as a non-inverting op-amp
+ * There is a pullup of 39k(TS100) from the +ve input to 3.9V (1M pulup on TS100)
+ *
+ * The simplest case to model this, is to ignore the pullup resistors influence, and assume that its influence is mostly constant
+ * -> Tip resistance *does* change with temp, but this should be much less than the rest of the system.
+ *
+ * When a thermocouple is equal temperature at both sides (hot and cold junction), then the output should be 0uV
+ * Therefore, by measuring the uV when both are equal, the measured reading is the offset value.
+ * This is a mix of the pull-up resistor, combined with tip manufacturing differences.
+ *
+ * All of the thermocouple readings are based on this expired patent
+ * - > https://patents.google.com/patent/US6087631A/en
+ *
+ * This was bought to my attention by <Kuba Sztandera>
+ */
+
+// TIP_GAIN =  TIP_GAIN/1000 == uV per deg C constant of the tip
+#ifdef MODEL_TS100
+#define OP_AMP_Rf 		750*1000 		/*750  Kilo-ohms -> From schematic, R1*/
+#define OP_AMP_Rin 		2370			/*2.37 Kilo-ohms -> From schematic, R2*/
+#define TIP_GAIN 405
+#else
+#define OP_AMP_Rf 		180*1000 		/*180  Kilo-ohms -> From schematic, R6*/
+#define OP_AMP_Rin 		2000			/*2.0  Kilo-ohms -> From schematic, R3*/
+#define TIP_GAIN 115
+
+#endif
+
+#define  op_amp_gain_stage  (1+(OP_AMP_Rf/OP_AMP_Rin))
+uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
+	// This takes the raw ADC samples, converts these to uV
+	// Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
+	// Then remove the calibration value that is stored as a tip offset
+	uint32_t vddRailmVX10 = 33000;	//TODO use ADC Vref to calculate this
+	// 4096 * 8 readings for full scale
+	// Convert the input ADC reading back into mV times 10 format.
+	uint32_t rawInputmVX10 = (rawADC * vddRailmVX10) / (4096 * 8);
+
+	uint32_t valueuV = rawInputmVX10 * 100;	// shift into uV
+	//Now to divide this down by the gain
+	valueuV = (valueuV) / op_amp_gain_stage;
+	//Remove uV tipOffset
+	if (valueuV >= systemSettings.CalibrationOffset)
+		valueuV -= systemSettings.CalibrationOffset;
+	else
+		valueuV = 0;
+
+	return valueuV;
+}
+
+uint32_t TipThermoModel::convertTipRawADCToDegC(uint16_t rawADC) {
+	return convertuVToDegC(convertTipRawADCTouV(rawADC));
+}
+uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) {
+	return convertuVToDegF(convertTipRawADCTouV(rawADC));
+}
+
+//Table that is designed to be walked to find the best sample for the lookup
+
+//Extrapolate between two points
+// [x1, y1] = point 1
+// [x2, y2] = point 2
+//  x = input value
+// output is x's extrapolated y value
+int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2,
+		int32_t x) {
+	return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000;
+}
+
+uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
+	//based on new measurements, tip is quite linear at 24.9uV per deg C = 2.49 per 0.1C
+	//
+	tipuVDelta *= TIP_GAIN;
+	tipuVDelta /= 10000;
+	return tipuVDelta;
+}
+
+uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
+	tipuVDelta *= TIP_GAIN;
+	tipuVDelta /= 1000;
+	return ((tipuVDelta * 9) / 50) + 32;
+	//(Y °C × 9/5) + 32 =Y°F
+}
+
+uint32_t TipThermoModel::convertCtoF(uint32_t degC) {
+	//(Y °C × 9/5) + 32 =Y°F
+	return 32 + ((degC * 9) / 5);
+}
+
+uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
+	//(Y°F − 32) × 5/9 = Y°C
+	if (degF < 32)
+		return 0;
+	return ((degF - 32) * 5) / 9;
+}
+
+uint32_t TipThermoModel::getTipInC(bool sampleNow) {
+	uint32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(
+			getTipRawTemp(sampleNow));
+	currentTipTempInC += getHandleTemperature() / 10; //Add handle offset
+	return currentTipTempInC;
+}
+
+uint32_t TipThermoModel::getTipInF(bool sampleNow) {
+	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
+			getTipRawTemp(sampleNow));
+	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
+	return currentTipTempInF;
+}

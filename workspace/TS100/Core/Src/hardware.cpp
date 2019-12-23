@@ -9,17 +9,7 @@
 #include "hardware.h"
 #include "history.hpp"
 volatile uint16_t PWMSafetyTimer = 0;
-volatile int16_t CalibrationTempOffset = 0;
-uint16_t tipGainCalValue = 0;
-void setTipType(enum TipType tipType, uint8_t manualCalGain) {
-	if (manualCalGain)
-		tipGainCalValue = manualCalGain;
-	else
-		tipGainCalValue = lookupTipDefaultCalValue(tipType);
-}
-void setCalibrationOffset(int16_t offSet) {
-	CalibrationTempOffset = offSet;
-}
+
 uint16_t getHandleTemperature() {
 	// We return the current handle temperature in X10 C
 	// TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
@@ -36,34 +26,6 @@ uint16_t getHandleTemperature() {
 	result /= 993;
 	return result;
 }
-uint16_t tipMeasurementToC(uint16_t raw) {
-	//((Raw Tip-RawOffset) * calibrationgain) / 1000 = tip delta in CX10
-	// tip delta in CX10 + handleTemp in CX10 = tip absolute temp in CX10
-	// Div answer by 10 to get final result
-
-	uint32_t tipDelta = ((raw - CalibrationTempOffset) * tipGainCalValue)
-			/ 1000;
-	tipDelta += getHandleTemperature();
-
-	return tipDelta / 10;
-}
-uint16_t ctoTipMeasurement(uint16_t temp) {
-	//[ (temp-handle/10) * 10000 ]/calibrationgain = tip raw delta
-	// tip raw delta + tip offset = tip ADC reading
-	int32_t TipRaw = ((temp - (getHandleTemperature() / 10)) * 10000)
-			/ tipGainCalValue;
-	TipRaw += CalibrationTempOffset;
-	return TipRaw;
-}
-
-uint16_t tipMeasurementToF(uint16_t raw) {
-	// Convert result from C to F
-	return (tipMeasurementToC(raw) * 9) / 5 + 32;
-}
-uint16_t ftoTipMeasurement(uint16_t temp) {
-	// Convert the temp back to C from F
-	return ctoTipMeasurement(((temp - 32) * 5) / 9);
-}
 
 uint16_t getTipInstantTemperature() {
 	uint16_t sum = 0;	// 12 bit readings * 8 -> 15 bits
@@ -79,60 +41,15 @@ uint16_t getTipInstantTemperature() {
 	readings[5] = hadc2.Instance->JDR2;
 	readings[6] = hadc2.Instance->JDR3;
 	readings[7] = hadc2.Instance->JDR4;
-	uint8_t minID = 0, maxID = 0;
+
 	for (int i = 0; i < 8; i++) {
-		if (readings[i] < readings[minID])
-			minID = i;
-		else if (readings[i] > readings[maxID])
-			maxID = i;
+		sum += readings[i];
 	}
-	for (int i = 0; i < 8; i++) {
-		if (i != maxID)
-			sum += readings[i];
-	}
-	sum += readings[minID];	//Duplicate the min to make up for the missing max value
 	return sum;  // 8x over sample
 }
-/*
- * Loopup table for the tip calibration values for
- * the gain of the tip's
- * This can be found by line of best fit of TipRaw on X, and TipTemp-handle on
- * Y. Then take the m term * 10000
- * */
-uint16_t lookupTipDefaultCalValue(enum TipType tipID) {
-#ifdef MODEL_TS100
-	switch (tipID) {
-		case TS_D24:
-		return 141;
-		break;
-		case TS_BC2:
-		return (133 + 129) / 2;
-		break;
-		case TS_C1:
-		return 133;
-		break;
-		case TS_B2:
-		return 133;
-		default:
-		return 132;  // make this the average of all
-		break;
-	}
-#else
-	switch (tipID) {
-	case TS_D25:
-		return 154;
-		break;
-	case TS_B02:
-		return 154;
-		break;
-	default:
-		return 154;  // make this the average of all
-		break;
-	}
-#endif
-}
+
 //2 second filter (ADC is PID_TIM_HZ Hz)
-history<uint16_t, PID_TIM_HZ*4> rawTempFilter = { { 0 }, 0, 0 };
+history<uint16_t, PID_TIM_HZ > rawTempFilter = { { 0 }, 0, 0 };
 
 uint16_t getTipRawTemp(uint8_t refresh) {
 	if (refresh) {
@@ -333,54 +250,7 @@ void startQC(uint16_t divisor) {
 	if (QCTries > 10)
 		QCMode = 0;
 }
-// Get tip resistance in milliohms
-uint32_t calculateTipR() {
-	static uint32_t lastRes = 0;
-	if (lastRes)
-		return lastRes;
-	// We inject a small current into the front end of the iron,
-	// By measuring the Vdrop over the tip we can calculate the resistance
-	// Turn PA0 into an output and drive high to inject (3.3V-0.6)/(6K8+Rtip)
-	// current PA0->Diode -> 6K8 -> Tip -> GND So the op-amp will amplify the
-	// small signal across the tip and convert this into an easily read voltage
-	GPIO_InitTypeDef GPIO_InitStruct;
-	GPIO_InitStruct.Pin = GPIO_PIN_0;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);	// Set low first
-	setTipPWM(0);
-	vTaskDelay(1);
-	uint32_t offReading = getTipRawTemp(1);
-	for (uint8_t i = 0; i < 49; i++) {
-		vTaskDelay(1);  // delay to allow it to stabilize
-		HAL_IWDG_Refresh(&hiwdg);
-		offReading += getTipRawTemp(1);
-	}
 
-	// Turn on
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);  // Set hgih
-	vTaskDelay(1); // delay to allow it too stabilize
-	uint32_t onReading = getTipInstantTemperature();
-	for (uint8_t i = 0; i < 49; i++) {
-		vTaskDelay(1);  // delay to allow it to stabilize
-		HAL_IWDG_Refresh(&hiwdg);
-		onReading += getTipRawTemp(1);
-	}
-
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); // Turn the output off finally
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	uint32_t difference = onReading - offReading;
-	// V = IR, therefore I = V/R
-	// We can divide this reading by a known "gain" to get the resulting
-	// resistance This was determined emperically This tip is 4.688444162 ohms,
-	// 4688 milliohms (Measured using 4 terminal measurement) 25x oversampling
-	// reads this as around 47490 Almost perfectly 10x the milliohms value This
-	// will drift massively with tip temp However we really only need 10x ohms
-	lastRes = (difference / 21) + 1;	// ceil
-	return lastRes;
-}
 static unsigned int sqrt32(unsigned long n) {
 	unsigned int c = 0x8000;
 	unsigned int g = 0x8000;
@@ -398,7 +268,7 @@ int16_t calculateMaxVoltage(uint8_t useHP) {
 	// This measures the tip resistance, then it calculates the appropriate
 	// voltage To stay under ~18W. Mosfet is "9A", so no issues there
 	// QC3.0 supports up to 18W, which is 2A @9V and 1.5A @12V
-	uint32_t milliOhms = calculateTipR();
+	uint32_t milliOhms = 4500;
 	// Check no tip
 	if (milliOhms > 10000)
 		return -1;
@@ -474,7 +344,6 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 	}
 }
-
 
 void vApplicationIdleHook(void) {
 	HAL_IWDG_Refresh(&hiwdg);

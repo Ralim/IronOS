@@ -97,25 +97,23 @@ void resetSettings() {
   systemSettings.ShutdownTime =
       10;  // How many minutes until the unit turns itself off
   systemSettings.boostModeEnabled =
-      1;  // Default to having boost mode on as most people prefer itF
+      1;  // Default to having boost mode on as most people prefer it
   systemSettings.BoostTemp = 420;    // default to 400C
   systemSettings.autoStartMode = 0;  // Auto start off for safety
   systemSettings.coolingTempBlink =
       0;  // Blink the temperature on the cooling screen when its > 50C
   systemSettings.temperatureInF = 0;          // default to 0
   systemSettings.descriptionScrollSpeed = 0;  // default to slow
-  systemSettings.PID_P = 42;                  // PID tuning constants
-  systemSettings.PID_I = 50;
-  systemSettings.PID_D = 15;
-  systemSettings.CalibrationOffset = 1400;  // the adc offset
-  systemSettings.customTipGain =
-      0;  // The tip type is either default or a custom gain
+
 #ifdef MODEL_TS100
-  systemSettings.tipType = TS_B2;  // Default to the B2 Tip
+  systemSettings.CalibrationOffset = 850;  // the adc offset in uV
+  systemSettings.pidPowerLimit=70;  // Sets the max pwm power limit
+
 #endif
 #ifdef MODEL_TS80
   systemSettings.pidPowerLimit=24;  // Sets the max pwm power limit
-  systemSettings.tipType = TS_B02;  // Default to the B2 Tip
+
+  systemSettings.CalibrationOffset = 300;  // the adc offset in uV
 #endif
   saveSettings();  // Save defaults
 }
