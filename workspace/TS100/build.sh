@@ -144,8 +144,9 @@ then
         do
             echo "Building firmware for $model in $lang"
             make -j lang="$lang" model="$model" >/dev/null
+            checkLastCommand 
+            rm -rf Objects >/dev/null
             checkLastCommand
-            rm -rf Objects/src>/dev/null
         done
     done
 else
