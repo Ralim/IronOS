@@ -61,3 +61,6 @@ workspace/TS100/Hexfile/
 workspace/RemoteSystemsTempFiles/
 workspace/TS100/.settings/
 workspace/TS100/TS80/
+ci/artefacts/
+ci/secrets/unencrypted/
+codeship.aes
