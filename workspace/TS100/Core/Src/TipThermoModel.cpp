@@ -26,13 +26,15 @@
  * This was bought to my attention by <Kuba Sztandera>
  */
 
+// TIP_GAIN =  TIP_GAIN/1000 == uV per deg C constant of the tip
 #ifdef MODEL_TS100
 #define OP_AMP_Rf 		750*1000 		/*750  Kilo-ohms -> From schematic, R1*/
 #define OP_AMP_Rin 		2370			/*2.37 Kilo-ohms -> From schematic, R2*/
-
+#define TIP_GAIN 405
 #else
 #define OP_AMP_Rf 		180*1000 		/*180  Kilo-ohms -> From schematic, R6*/
 #define OP_AMP_Rin 		2000			/*2.0  Kilo-ohms -> From schematic, R3*/
+#define TIP_GAIN 115
 
 #endif
 
@@ -314,7 +316,7 @@ int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2,
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
 	//based on new measurements, tip is quite linear at 24.9uV per deg C = 2.49 per 0.1C
 	//
-	tipuVDelta *= 405;
+	tipuVDelta *= TIP_GAIN;
 	tipuVDelta /= 10000;
 	return tipuVDelta;
 
@@ -339,7 +341,7 @@ uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
 }
 
 uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
-	tipuVDelta *= 405;
+	tipuVDelta *= TIP_GAIN;
 	tipuVDelta /= 1000;
 	return ((tipuVDelta * 9) / 50) + 32;
 	//(Y °C × 9/5) + 32 =Y°F
