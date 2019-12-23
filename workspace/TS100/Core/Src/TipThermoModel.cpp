@@ -54,7 +54,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 		valueuV -= systemSettings.CalibrationOffset;
 	else
 		valueuV = 0;
-	//TODO
+
 	return valueuV;
 }
 
@@ -183,7 +183,124 @@ struct HakkoThermocoupleLookup {
 	uint32_t values[52][2];
 
 };
-constexpr auto ThermalTable = HakkoThermocoupleLookup();
+
+struct MiniwareThermocoupleLookup {
+	// 0 is the uV reading
+	// 1 is the deg C X10
+	// This was created from numbers transcribed from the patent by <Kuba Sztandera>
+	constexpr MiniwareThermocoupleLookup() :
+			values() {
+		values[0][0] = 0;
+		values[0][1] = 0;
+		values[1][0] = 0;
+		values[1][1] = 0;
+		values[2][0] = 0;
+		values[2][1] = 100;
+		values[3][0] = 192;
+		values[3][1] = 200;
+		values[4][0] = 490;
+		values[4][1] = 300;
+		values[5][0] = 791;
+		values[5][1] = 400;
+		values[6][0] = 373;
+		values[6][1] = 500;
+		values[7][0] = 612;
+		values[7][1] = 600;
+		values[8][0] = 874;
+		values[8][1] = 700;
+		values[9][0] = 1590;
+		values[9][1] = 800;
+		values[10][0] = 1882;
+		values[10][1] = 900;
+		values[11][0] = 2081;
+		values[11][1] = 1000;
+		values[12][0] = 2466;
+		values[12][1] = 1100;
+		values[13][0] = 2977;
+		values[13][1] = 1200;
+		values[14][0] = 3196;
+		values[14][1] = 1300;
+		values[15][0] = 3311;
+		values[15][1] = 1400;
+		values[16][0] = 3707;
+		values[16][1] = 1500;
+		values[17][0] = 3889;
+		values[17][1] = 1600;
+		values[18][0] = 4072;
+		values[18][1] = 1700;
+		values[19][0] = 4271;
+		values[19][1] = 1800;
+		values[20][0] = 4550;
+		values[20][1] = 1900;
+		values[21][0] = 4753;
+		values[21][1] = 2000;
+		values[22][0] = 4975;
+		values[22][1] = 2100;
+		values[23][0] = 5112;
+		values[23][1] = 2200;
+		values[24][0] = 5605;
+		values[24][1] = 2300;
+		values[25][0] = 5734;
+		values[25][1] = 2400;
+		values[26][0] = 5855;
+		values[26][1] = 2500;
+		values[27][0] = 5959;
+		values[27][1] = 2600;
+		values[28][0] = 6130;
+		values[28][1] = 2700;
+		values[29][0] = 6352;
+		values[29][1] = 2800;
+		values[30][0] = 6481;
+		values[30][1] = 2900;
+		values[31][0] = 6700;
+		values[31][1] = 3000;
+		values[32][0] = 6882;
+		values[32][1] = 3100;
+		values[33][0] = 7247;
+		values[33][1] = 3200;
+		values[34][0] = 7466;
+		values[34][1] = 3300;
+		values[35][0] = 7633;
+		values[35][1] = 3400;
+		values[36][0] = 7749;
+		values[36][1] = 3500;
+		values[37][0] = 8391;
+		values[37][1] = 3600;
+		values[38][0] = 8600;
+		values[38][1] = 3700;
+		values[39][0] = 8804;
+		values[39][1] = 3800;
+		values[40][0] = 8999;
+		values[40][1] = 3900;
+		values[41][0] = 9183;
+		values[41][1] = 4000;
+		values[42][0] = 9362;
+		values[42][1] = 4100;
+		values[43][0] = 9548;
+		values[43][1] = 4200;
+		values[44][0] = 9727;
+		values[44][1] = 4300;
+		values[45][0] = 9911;
+		values[45][1] = 4400;
+		values[46][0] = 10086;
+		values[46][1] = 4500;
+		values[47][0] = 10247;
+		values[47][1] = 4600;
+		values[48][0] = 10403;
+		values[48][1] = 4700;
+		values[49][0] = 10566;
+		values[49][1] = 4800;
+		values[50][0] = 10744;
+		values[50][1] = 4900;
+		values[51][0] = 10935;
+		values[51][1] = 5000;
+
+	}
+	uint32_t count = 52;
+	uint32_t values[52][2];
+
+};
+//constexpr auto ThermalTable = MiniwareThermocoupleLookup();
 //Extrapolate between two points
 // [x1, y1] = point 1
 // [x2, y2] = point 2
@@ -195,43 +312,52 @@ int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2,
 }
 
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
+	//based on new measurements, tip is quite linear at 24.9uV per deg C = 2.49 per 0.1C
+	//
+	tipuVDelta *= 405;
+	tipuVDelta /= 10000;
+	return tipuVDelta;
+
 	//Perform lookup on table of values to find the closest two measurement points, and then linearly interpolate these
 
 	//This assumes results in the table are increasing order
 	// TODO -> Should this be made into a binary search? Is it much faster??
-	for (uint32_t i = 1; i < ThermalTable.count; i++) {
-		if (((uint32_t) ThermalTable.values[i][0]) > tipuVDelta) {
-			//Then extrapolate
-			//Where i= the lower raw sample, i-1 is the higher raw sample
-			return LinearInterpolate(						//
-					ThermalTable.values[i][0],				// x1
-					ThermalTable.values[i][1],				// y1
-					ThermalTable.values[i - 1][0],			// x2
-					ThermalTable.values[i - 1][1],			// y2
-					tipuVDelta) / 10;			// raw sample to be interpolated
-
-		}
-	}
-	return 500;						// fail high -> will turn off heater
+//	for (uint32_t i = 1; i < ThermalTable.count; i++) {
+//		if (((uint32_t) ThermalTable.values[i][0]) > tipuVDelta) {
+//			//Then extrapolate
+//			//Where i= the lower raw sample, i-1 is the higher raw sample
+//			return LinearInterpolate(						//
+//					ThermalTable.values[i][0],				// x1
+//					ThermalTable.values[i][1],				// y1
+//					ThermalTable.values[i - 1][0],			// x2
+//					ThermalTable.values[i - 1][1],			// y2
+//					tipuVDelta) / 10;			// raw sample to be interpolated
+//
+//		}
+//	}
+//	return 500;						// fail high -> will turn off heater
 }
 
 uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
+	tipuVDelta *= 405;
+	tipuVDelta /= 1000;
+	return ((tipuVDelta * 9) / 50) + 32;
 	//(Y °C × 9/5) + 32 =Y°F
-	for (uint32_t i = 1; i < ThermalTable.count; i++) {
-		if (((uint32_t) ThermalTable.values[i][0]) < tipuVDelta) {
-			//Then extrapolate
-			//Where i= the lower raw sample, i-1 is the higher raw sample
-			return ((LinearInterpolate(						//
-					ThermalTable.values[i][0],				// x1
-					ThermalTable.values[i][1],				// y1
-					ThermalTable.values[i - 1][0],			// x2
-					ThermalTable.values[i - 1][1],			// y2
-					tipuVDelta) 				// raw sample to be interpolated
-			* 9) / 50) + 32;					// Convert C ->> F for 'mericans
-
-		}
-	}
-	return 932;								// fail high -> will turn off heater
+//	for (uint32_t i = 1; i < ThermalTable.count; i++) {
+//		if (((uint32_t) ThermalTable.values[i][0]) < tipuVDelta) {
+//			//Then extrapolate
+//			//Where i= the lower raw sample, i-1 is the higher raw sample
+//			return ((LinearInterpolate(						//
+//					ThermalTable.values[i][0],				// x1
+//					ThermalTable.values[i][1],				// y1
+//					ThermalTable.values[i - 1][0],			// x2
+//					ThermalTable.values[i - 1][1],			// y2
+//					tipuVDelta) 				// raw sample to be interpolated
+//			* 9) / 50) + 32;					// Convert C ->> F for 'mericans
+//
+//		}
+//	}
+//	return 932;								// fail high -> will turn off heater
 }
 
 uint32_t TipThermoModel::convertCtoF(uint32_t degC) {

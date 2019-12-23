@@ -276,9 +276,9 @@ void startMOVTask(void const *argument __unused) {
 
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
-		if (currentlyActiveTemperatureTarget) {
-			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
-		}
+//		if (currentlyActiveTemperatureTarget) {
+//			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
+//		}
 #endif
 	}
 }
