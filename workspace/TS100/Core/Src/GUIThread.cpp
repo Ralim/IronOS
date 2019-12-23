@@ -494,7 +494,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		OLED::setFont(0);
 		uint16_t tipTemp = getTipRawTemp(0);
 		if (tipTemp > 32700) {
-			badTipCounter++; // Use a counter so that error has to persist for > 1 second continious so that peak errors dont trip it
+			badTipCounter++; // Use a counter so that error has to persist for > 1 second continuous so that peak errors dont trip it
 		} else {
 			badTipCounter = 0;
 		}
