@@ -710,7 +710,7 @@ void startGUITask(void const *argument __unused) {
 			gui_solderingMode(1);
 	}
 
-#if ACCELDEBUG
+#ifdef ACCELDEBUG
 
 	for (;;) {
 		HAL_IWDG_Refresh(&hiwdg);

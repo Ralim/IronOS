@@ -229,7 +229,7 @@ void startMOVTask(void const *argument __unused) {
 	int32_t avgx = 0, avgy = 0, avgz = 0;
 	if (systemSettings.sensitivity > 9)
 		systemSettings.sensitivity = 9;
-#if ACCELDEBUG
+#ifdef ACCELDEBUG
 	uint32_t max = 0;
 #endif
 	Orientation rotation = ORIENTATION_FLAT;
