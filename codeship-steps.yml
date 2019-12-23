@@ -1,0 +1,11 @@
+- type: parallel
+  name: Build the firmware
+  steps:
+    - name: build
+      service: builder
+      command: /build/ci/buildAll.sh
+
+- name: deploy
+  service: builder
+  command: /ci/deployRelease.sh
+  tag: master

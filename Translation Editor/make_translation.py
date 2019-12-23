@@ -192,7 +192,7 @@ def getLetterCounts(defs, lang):
                 symbolCounts[letter] = symbolCounts.get(letter, 0) + 1
     symbolCounts = sorted(
         symbolCounts.items(),
-        key=lambda kv: kv[1])  # swap to Big -> little sort order
+        key=lambda kv: (kv[1],kv[0]))  # swap to Big -> little sort order
     symbolCounts = list(map(lambda x: x[0], symbolCounts))
     symbolCounts.reverse()
     return symbolCounts

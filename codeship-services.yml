@@ -1,0 +1,8 @@
+builder:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  cached: true
+  encrypted_env_file: ci/secrets/encrypted/deployment.encrypted
+  volumes:
+    - ./ci:/ci
