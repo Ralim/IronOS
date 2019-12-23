@@ -133,7 +133,9 @@ then
     checkLastCommand
 
     echo "Cleaning previous builds"
-    make clean 1>/dev/null
+    rm -rf Hexfile/ >/dev/null
+    rm -rf Objects/ >/dev/null
+    make clean >/dev/null
     checkLastCommand
 
     for model in "${BUILD_MODELS[@]}"
@@ -141,9 +143,9 @@ then
         for lang in "${BUILD_LANGUAGES[@]}"
         do
             echo "Building firmware for $model in $lang"
-            make -j16 lang="$lang" model="$model" 1>/dev/null
+            make -j lang="$lang" model="$model" >/dev/null
             checkLastCommand
-            rm -rf Objects/src 1>/dev/null
+            rm -rf Objects/src>/dev/null
         done
     done
 else
