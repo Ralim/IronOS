@@ -11,11 +11,11 @@
 #include "Translation.h"
 #include "cmsis_os.h"
 
-const uint8_t* OLED::currentFont;  // Pointer to the current font used for
+const uint8_t *OLED::currentFont;  // Pointer to the current font used for
 // rendering to the buffer
-uint8_t* OLED::firstStripPtr;      // Pointers to the strips to allow for buffer
+uint8_t *OLED::firstStripPtr;      // Pointers to the strips to allow for buffer
 // having extra content
-uint8_t* OLED::secondStripPtr;     // Pointers to the strips
+uint8_t *OLED::secondStripPtr;     // Pointers to the strips
 bool OLED::inLeftHandedMode;   // Whether the screen is in left or not (used for
 // offsets in GRAM)
 OLED::DisplayState OLED::displayState;
@@ -81,7 +81,7 @@ void OLED::initialize() {
 
 	setDisplayState(DisplayState::ON);
 	FRToSI2C::Transmit(DEVICEADDR_OLED, &OLED_Setup_Array[0],
-		sizeof(OLED_Setup_Array));
+			sizeof(OLED_Setup_Array));
 }
 
 /*
@@ -98,7 +98,7 @@ void OLED::drawChar(char c) {
 		return;
 	}
 	uint16_t index = c - 2; //First index is \x02
-	uint8_t* charPointer;
+	uint8_t *charPointer;
 	charPointer = ((uint8_t*) currentFont)
 			+ ((fontWidth * (fontHeight / 8)) * index);
 	drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
@@ -132,7 +132,7 @@ void OLED::setRotation(bool leftHanded) {
 }
 
 // print a string to the current cursor location
-void OLED::print(const char* str) {
+void OLED::print(const char *str) {
 	while (str[0]) {
 		drawChar(str[0]);
 		str++;
@@ -185,7 +185,14 @@ void OLED::printNumber(uint16_t number, uint8_t places) {
 	}
 
 	buffer[0] = 2 + number % 10;
-	number /= 10;
+	//Removing the leading zero's by swapping them to SymbolSpace
+	for (int i = 0; i < 7; i++) {
+		if (buffer[i] == 2) {
+			buffer[i] = SymbolSpace[0];
+		} else {
+			break;
+		}
+	}
 	print(buffer);
 }
 
@@ -212,7 +219,7 @@ void OLED::drawSymbol(uint8_t symbolID) {
 
 // Draw an area, but y must be aligned on 0/8 offset
 void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
-		const uint8_t* ptr) {
+		const uint8_t *ptr) {
 	// Splat this from x->x+wide in two strides
 	if (x <= -wide)
 		return;  // cutoffleft
