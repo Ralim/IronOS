@@ -756,7 +756,6 @@ void startGUITask(void const *argument __unused) {
 			break;
 		case BUTTON_B_SHORT:
 			enterSettingsMenu();       // enter the settings menu
-			saveSettings();
 			buttonLockout = true;
 			break;
 		default:
