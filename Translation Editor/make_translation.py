@@ -121,7 +121,7 @@ def getDebugMenu():
     constants.append(datetime.today().strftime('%d-%m-%y'))
     constants.append("HW G ")
     constants.append("HW M ")
-    constants.append("HW P ")
+    constants.append("HW P ") 
     constants.append("Time ")
     constants.append("Move ")
     constants.append("RTip ")
@@ -176,7 +176,6 @@ def getLetterCounts(defs, lang):
     constants = getConstants()  
     for x in constants:
         textList.append(x[1])
-    textList.extend(getDebugMenuHeaders())
     textList.extend(getTipModelEnumTS100())
     textList.extend(getTipModelEnumTS80())  
     textList.extend(getDebugMenu())
@@ -193,7 +192,7 @@ def getLetterCounts(defs, lang):
                 symbolCounts[letter] = symbolCounts.get(letter, 0) + 1
     symbolCounts = sorted(
         symbolCounts.items(),
-        key=lambda kv: kv[1])  # swap to Big -> little sort order
+        key=lambda kv: (kv[1],kv[0]))  # swap to Big -> little sort order
     symbolCounts = list(map(lambda x: x[0], symbolCounts))
     symbolCounts.reverse()
     return symbolCounts

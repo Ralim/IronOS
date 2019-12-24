@@ -11,10 +11,10 @@
 #include "stdlib.h"
 #include "stm32f1xx_hal.h"
 #include "string.h"
-
+#include "TipThermoModel.h"
 uint8_t PCBVersion = 0;
 // File local variables
-uint32_t currentlyActiveTemperatureTarget = 0;
+uint32_t currentTempTargetDegC = 0; // Current temperature target in C
 uint32_t lastMovementTime = 0;
 int16_t idealQCVoltage = 0;
 // FreeRTOS variables
@@ -41,8 +41,8 @@ void startMOVTask(void const *argument);
 // End FreeRTOS
 
 static const int maxPowerIdleTicks = 1000;
-static const int powerPulseTicks = 500;
-static const int powerPulseMilliWatts = 5000;
+static const int powerPulseTicks = 50;
+static const int x10PowerPulseWatts = 3;
 
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
@@ -51,7 +51,7 @@ int main(void) {
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
 	HAL_IWDG_Refresh(&hiwdg);
-	setTipMilliWatts(0);  // force tip off
+	setTipX10Watts(0);  // force tip off
 	FRToSI2C::init(&hi2c1);
 	OLED::initialize();  // start up the LCD
 	OLED::setFont(0);    // default to bigger font
@@ -75,9 +75,7 @@ int main(void) {
 	}
 	HAL_IWDG_Refresh(&hiwdg);
 	restoreSettings();  // load the settings from flash
-	setCalibrationOffset(systemSettings.CalibrationOffset);
-	setTipType((enum TipType) systemSettings.tipType,
-			systemSettings.customTipGain);  // apply tip type selection
+
 	HAL_IWDG_Refresh(&hiwdg);
 
 	/* Create the thread(s) */
@@ -112,11 +110,10 @@ void startPIDTask(void const *argument __unused) {
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM.
 	 */
-	setTipMilliWatts(0); // disable the output driver if the output is set to be off
+	setTipX10Watts(0); // disable the output driver if the output is set to be off
 #ifdef MODEL_TS80
 	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
 #endif
-	uint8_t rawC = ctoTipMeasurement(101) - ctoTipMeasurement(100); // 1*C change in raw.
 
 #ifdef MODEL_TS80
 	//Set power management code to the tip resistance in ohms * 10
@@ -125,32 +122,31 @@ void startPIDTask(void const *argument __unused) {
 #else
 
 #endif
-	history<int32_t, 16> tempError = { { 0 }, 0, 0 };
-	currentlyActiveTemperatureTarget = 0; // Force start with no output (off). If in sleep / soldering this will
-										  // be over-ridden rapidly
+	history<int32_t, PID_TIM_HZ> tempError = { { 0 }, 0, 0 };
+	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
+							   // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	for (;;) {
 
 		if (ulTaskNotifyTake(pdTRUE, 2000)) {
 			// This is a call to block this thread until the ADC does its samples
-			uint16_t rawTemp = getTipRawTemp(1);  // get instantaneous reading
-                        int32_t milliWattsOut = 0;
-			if (currentlyActiveTemperatureTarget) {
+			int32_t x10WattsOut = 0;
+			// Do the reading here to keep the temp calculations churning along
+			uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
+
+			if (currentTempTargetDegC) {
 				// Cap the max set point to 450C
-				if (currentlyActiveTemperatureTarget > ctoTipMeasurement(450)) {
+				if (currentTempTargetDegC > (450)) {
 					//Maximum allowed output
-					currentlyActiveTemperatureTarget = ctoTipMeasurement(450);
-				} else if (currentlyActiveTemperatureTarget > 32400) {
-					//Cap to max adc reading
-					currentlyActiveTemperatureTarget = 32400;
+					currentTempTargetDegC = (450);
 				}
+				// Convert the current tip to degree's C
 
 				// As we get close to our target, temp noise causes the system
 				//  to be unstable. Use a rolling average to dampen it.
-				// We overshoot by roughly 1/2 of 1 degree Fahrenheit.
+				// We overshoot by roughly 1 degree C.
 				//  This helps stabilize the display.
-				int32_t tError = currentlyActiveTemperatureTarget - rawTemp
-						+ (rawC / 4);
+				int32_t tError = currentTempTargetDegC - currentTipTempInC + 1;
 				tError = tError > INT16_MAX ? INT16_MAX : tError;
 				tError = tError < INT16_MIN ? INT16_MIN : tError;
 				tempError.update(tError);
@@ -164,24 +160,17 @@ void startPIDTask(void const *argument __unused) {
 				//  This is necessary because of the temp noise and thermal lag in the system.
 				// Once we have feed-forward temp estimation we should be able to better tune this.
 
-#ifdef MODEL_TS100
-				const uint16_t mass = 2020 / 20; // divide here so division is compile-time.
-#endif
-#ifdef MODEL_TS80
-				const uint16_t mass = 2020 / 50;
-#endif
-
-				int32_t milliWattsNeeded = tempToMilliWatts(tempError.average(),
-						mass);
+				int32_t x10WattsNeeded = tempToX10Watts(tError);
+//						tempError.average());
 				// note that milliWattsNeeded is sometimes negative, this counters overshoot
 				//  from I term's inertia.
-				milliWattsOut += milliWattsNeeded;
+				x10WattsOut += x10WattsNeeded;
 
 				// I term - energy needed to compensate for heat loss.
 				// We track energy put into the system over some window.
 				// Assuming the temp is stable, energy in = energy transfered.
 				//  (If it isn't, P will dominate).
-				milliWattsOut += milliWattHistory.average();
+				x10WattsOut += x10WattHistory.average();
 
 				// D term - use sudden temp change to counter fast cooling/heating.
 				//  In practice, this provides an early boost if temp is dropping
@@ -191,24 +180,23 @@ void startPIDTask(void const *argument __unused) {
 
 			}
 #ifdef MODEL_TS80
-                        //If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
-                        if (((xTaskGetTickCount() - lastPowerPulse) > maxPowerIdleTicks) &&
-                            (milliWattsOut < powerPulseMilliWatts)) {
-                            milliWattsOut = powerPulseMilliWatts;
-                        }
-                        if (((xTaskGetTickCount() - lastPowerPulse) > (maxPowerIdleTicks + powerPulseTicks)) &&
-                            (milliWattsOut >= powerPulseMilliWatts)) {
-                            lastPowerPulse = xTaskGetTickCount();
-                        }
+			//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
+			if (((xTaskGetTickCount() - lastPowerPulse) > maxPowerIdleTicks) &&
+			    (x10WattsOut < x10PowerPulseWatts)) {
+				x10WattsOut = x10PowerPulseWatts;
+			}
+			if (((xTaskGetTickCount() - lastPowerPulse) > (maxPowerIdleTicks + powerPulseTicks)) &&
+			    (x10WattsOut >= x10PowerPulseWatts)) {
+				lastPowerPulse = xTaskGetTickCount();
+			}
 #endif
-                        setTipMilliWatts(milliWattsOut);
+			setTipX10Watts(x10WattsOut);
 
 			HAL_IWDG_Refresh(&hiwdg);
 		} else {
 			asm("bkpt");
 
 //ADC interrupt timeout
-			setTipMilliWatts(0);
 			setTipPWM(0);
 		}
 	}
@@ -239,7 +227,7 @@ void startMOVTask(void const *argument __unused) {
 	int32_t avgx = 0, avgy = 0, avgz = 0;
 	if (systemSettings.sensitivity > 9)
 		systemSettings.sensitivity = 9;
-#if ACCELDEBUG
+#ifdef ACCELDEBUG
 	uint32_t max = 0;
 #endif
 	Orientation rotation = ORIENTATION_FLAT;
@@ -286,9 +274,9 @@ void startMOVTask(void const *argument __unused) {
 
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
-		if (currentlyActiveTemperatureTarget) {
-			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
-		}
+//		if (currentlyActiveTemperatureTarget) {
+//			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
+//		}
 #endif
 	}
 }

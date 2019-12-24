@@ -58,3 +58,10 @@ workspace/TS100/src/Translation.cpp
 *.list
 workspace/TS100/Release/
 workspace/TS100/Hexfile/
+workspace/RemoteSystemsTempFiles/
+workspace/TS100/.settings/
+workspace/TS100/TS80/
+ci/artefacts/
+ci/secrets/unencrypted/
+codeship.aes
+.vscode/settings.json

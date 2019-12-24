@@ -1,0 +1,6 @@
+- type: parallel
+  name: Build the firmware
+  steps:
+    - name: build
+      service: builder
+      command: /build/ci/buildAll.sh

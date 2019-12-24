@@ -1,4 +1,7 @@
+[![Codeship Status for ts100](https://app.codeship.com/projects/c77dbfe0-0764-0138-9520-3eb35bdb2b2c/status?branch=master)](https://app.codeship.com/projects/379118)
+
 # TS100 & TS80 Firmware
+
 
 This firmware is a fresh start for these soldering irons. Designed from the ground up as fully featured control software that leaves nothing to be desired.
 It originally started back at the end of 2016 and has since seen vast improvements, especially some very smart work by community members.

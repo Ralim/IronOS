@@ -37,7 +37,7 @@ function enable_gautomount {
 }
 
 function is_attached {
-    output=`lsblk -b --raw --output NAME,MODEL | grep 'DFU\\\\x20Disk'`
+    output=`lsblk -b --raw --output NAME,MODEL | grep 'DFU.*Disk'`
     if [ $? -ne 0 ]; then
       return 1
     fi

@@ -136,7 +136,7 @@ static void MX_ADC1_Init(void) {
 	 */
 	sConfig.Channel = TMP36_ADC1_CHANNEL;
 	sConfig.Rank = 1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
 	/**Configure Regular Channel
@@ -197,11 +197,10 @@ static void MX_ADC2_Init(void) {
 	 */
 	sConfig.Channel = TIP_TEMP_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 	sConfig.Channel = VIN_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_2;
-	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
 	/**Configure Injected Channel
