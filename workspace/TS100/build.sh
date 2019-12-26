@@ -145,7 +145,11 @@ then
             echo "Building firmware for $model in $lang"
             make -j lang="$lang" model="$model" >/dev/null
             checkLastCommand 
-            rm -rf Objects >/dev/null
+            echo "Cleanup Temp files 1 for $model in $lang"
+            rm -rf Objects/Core >/dev/null
+            checkLastCommand
+            echo "Cleanup Temp files 2 for $model in $lang"
+            rm -rf Objects/Src >/dev/null
             checkLastCommand
         done
     done
