@@ -202,7 +202,7 @@ static bool checkVoltageForExit() {
 				OLED::setCursor(0, 8);
 				OLED::print(InputVoltageString);
 				printVoltage();
-				OLED::print("V");
+				OLED::print(SymbolVolts);
 
 			} else {
 				OLED::setFont(0);
