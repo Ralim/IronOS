@@ -804,7 +804,7 @@ void gui_Menu(const menuitem *menu) {
 			lcdRefresh = false;
 		}
 		if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
-			// If user has not pressed any buttons in 30 seconds, exist back a menu.
+			// If user has not pressed any buttons in 30 seconds, exit back a menu layer
 			// This will trickle the user back to the main screen eventually
 			earlyExit = true;
 			descriptionStart = 0;
