@@ -12,7 +12,7 @@
 #include "TipThermoModel.h"
 #include "string.h"
 extern uint32_t lastButtonTime;
-void gui_Menu(const menuitem* menu);
+void gui_Menu(const menuitem *menu);
 #ifdef MODEL_TS100
 static void settings_setInputVRange(void);
 static void settings_displayInputVRange(void);
@@ -105,9 +105,8 @@ const menuitem rootSettingsMenu[] {
  * Exit
  */
 #ifdef MODEL_TS100
-		{	(const char*)SettingsDescriptions[0],
-			{	settings_setInputVRange},
-			{	settings_displayInputVRange}}, /*Voltage input*/
+		{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
+				settings_displayInputVRange } }, /*Voltage input*/
 #else
 		{ (const char*) SettingsDescriptions[20], { settings_setInputPRange }, {
 				settings_displayInputPRange } }, /*Voltage input*/
@@ -231,7 +230,7 @@ static void printShortDescription(uint32_t shortDescIndex,
 	OLED::setCharCursor(cursorCharPosition, 0);
 }
 
-static int userConfirmation(const char* message) {
+static int userConfirmation(const char *message) {
 	uint16_t messageWidth = FONT_12_WIDTH * (strlen(message) + 7);
 	uint32_t messageStart = xTaskGetTickCount();
 
@@ -697,7 +696,7 @@ static void settings_enterAdvancedMenu(void) {
 	gui_Menu(advancedMenu);
 }
 
-void gui_Menu(const menuitem* menu) {
+void gui_Menu(const menuitem *menu) {
 	// Draw the settings menu and provide iteration support etc
 	uint8_t currentScreen = 0;
 	uint32_t autoRepeatTimer = 0;
@@ -731,11 +730,8 @@ void gui_Menu(const menuitem* menu) {
 							/ (systemSettings.descriptionScrollSpeed == 1 ?
 									1 : 2));
 			descriptionOffset %= descriptionWidth;  // Roll around at the end
-
 			if (lastOffset != descriptionOffset) {
 				OLED::clearScreen();
-
-				//^ Rolling offset based on time
 				OLED::setCursor((OLED_WIDTH - descriptionOffset), 0);
 				OLED::print(menu[currentScreen].description);
 				lastOffset = descriptionOffset;
@@ -806,6 +802,12 @@ void gui_Menu(const menuitem* menu) {
 			OLED::refresh();  // update the LCD
 			osDelay(40);
 			lcdRefresh = false;
+		}
+		if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
+			// If user has not pressed any buttons in 30 seconds, exit back a menu layer
+			// This will trickle the user back to the main screen eventually
+			earlyExit = true;
+			descriptionStart = 0;
 		}
 	}
 }
