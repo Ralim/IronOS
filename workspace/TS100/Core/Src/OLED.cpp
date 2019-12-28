@@ -155,7 +155,17 @@ void OLED::setFont(uint8_t fontNumber) {
 		fontWidth = 12;
 	}
 }
-
+inline void stripLeaderZeros(char *buffer) {
+	//Removing the leading zero's by swapping them to SymbolSpace
+	// Stop 1 short so that we dont blank entire number if its zero
+	for (int i = 0; i < 6; i++) {
+		if (buffer[i] == 2) {
+			buffer[i] = SymbolSpace[0];
+		} else {
+			return;
+		}
+	}
+}
 // maximum places is 5
 void OLED::printNumber(uint16_t number, uint8_t places) {
 	char buffer[7] = { 0 };
@@ -185,14 +195,7 @@ void OLED::printNumber(uint16_t number, uint8_t places) {
 	}
 
 	buffer[0] = 2 + number % 10;
-	//Removing the leading zero's by swapping them to SymbolSpace
-	for (int i = 0; i < 7; i++) {
-		if (buffer[i] == 2) {
-			buffer[i] = SymbolSpace[0];
-		} else {
-			break;
-		}
-	}
+	stripLeaderZeros(buffer);
 	print(buffer);
 }
 
