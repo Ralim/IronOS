@@ -84,11 +84,16 @@ var def =
 		{
 			"id": "ResetOKMessage",
 			"maxLen": 8
-		}, 
+		},
 		{
 			"id": "YourGainMessage",
 			"maxLen": 8,
-			"default":"Your Gain"
+			"default": "Your Gain"
+		},
+		{
+			"id": "SettingsResetMessage",
+			"maxLen": 16,
+			"default": "Settings were\nreset!"
 		}
 	],
 	"characters": [

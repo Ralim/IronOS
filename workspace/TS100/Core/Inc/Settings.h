@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION   ( 0x1A )
+#define SETTINGSVERSION   ( 0x1B )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -53,7 +53,7 @@ typedef struct {
 extern volatile systemSettingsType systemSettings;
 
 void saveSettings();
-void restoreSettings();
+bool restoreSettings();
 uint8_t lookupVoltageLevel(uint8_t level);
 void resetSettings();
 bool showBootLogoIfavailable();
