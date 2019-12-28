@@ -43,6 +43,7 @@ extern const char* SolderingAdvancedPowerPrompt;
 extern const char* OffString;
 extern const char* ResetOKMessage;
 extern const char* YourGainMessage;
+extern const char* SettingsResetMessage;
 
 extern const char* SettingTrueChar;
 extern const char* SettingFalseChar;

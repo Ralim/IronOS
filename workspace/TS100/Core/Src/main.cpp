@@ -17,6 +17,7 @@ uint8_t PCBVersion = 0;
 uint32_t currentTempTargetDegC = 0; // Current temperature target in C
 uint32_t lastMovementTime = 0;
 int16_t idealQCVoltage = 0;
+bool settingsWereReset = false;
 // FreeRTOS variables
 
 osThreadId GUITaskHandle;
@@ -74,7 +75,7 @@ int main(void) {
 		systemSettings.sensitivity = 0;
 	}
 	HAL_IWDG_Refresh(&hiwdg);
-	restoreSettings();  // load the settings from flash
+	settingsWereReset = restoreSettings();  // load the settings from flash
 
 	HAL_IWDG_Refresh(&hiwdg);
 
@@ -291,7 +292,7 @@ bool showBootLogoIfavailable() {
 	uint16_t temp[98];
 
 	for (uint8_t i = 0; i < (98); i++) {
-		temp[i] = *(uint16_t *) (FLASH_LOGOADDR + (i * 2));
+		temp[i] = *(uint16_t*) (FLASH_LOGOADDR + (i * 2));
 	}
 	uint8_t temp8[98 * 2];
 	for (uint8_t i = 0; i < 98; i++) {
@@ -308,7 +309,7 @@ bool showBootLogoIfavailable() {
 	if (temp8[3] != 0x0D)
 		return false;
 
-	OLED::drawArea(0, 0, 96, 16, (uint8_t *) (temp8 + 4));
+	OLED::drawArea(0, 0, 96, 16, (uint8_t*) (temp8 + 4));
 	OLED::refresh();
 	return true;
 }

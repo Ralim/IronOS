@@ -504,7 +504,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			OLED::print(SolderingAdvancedPowerPrompt);  // Power:
 			OLED::printNumber(x10WattHistory.average() / 10, 2);
 			OLED::print(SymbolDot);
-			OLED::printNumber(x10WattHistory.average()% 10, 1);
+			OLED::printNumber(x10WattHistory.average() % 10, 1);
 			OLED::print(SymbolWatts);
 
 			if (systemSettings.sensitivity && systemSettings.SleepTime) {
@@ -702,6 +702,17 @@ void startGUITask(void const *argument __unused) {
 			ticks = xTaskGetTickCount();  // make timeout now so we will exit
 		GUIDelay();
 	}
+
+	if (settingsWereReset) {
+		//Display alert settings were reset
+		OLED::setFont(1);
+		OLED::setCursor(0, 0);
+		OLED::print(SettingsResetMessage);
+		OLED::refresh();
+		waitForButtonPressOrTimeout(1000);
+
+	}
+
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
 		if (systemSettings.autoStartMode == 1)
@@ -756,7 +767,6 @@ void startGUITask(void const *argument __unused) {
 			break;
 		case BUTTON_B_SHORT:
 			enterSettingsMenu();       // enter the settings menu
-			saveSettings();
 			buttonLockout = true;
 			break;
 		default:
