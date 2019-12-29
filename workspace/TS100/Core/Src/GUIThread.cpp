@@ -63,10 +63,19 @@ void gui_drawTipTemp(bool symbol) {
 
 	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
-		if (systemSettings.temperatureInF)
-			OLED::print(SymbolDegF);
-		else
-			OLED::print(SymbolDegC);
+		if (OLED::getFont() == 0) {
+			//Big font, can draw nice symbols
+			if (systemSettings.temperatureInF)
+				OLED::drawSymbol(0);
+			else
+				OLED::drawSymbol(1);
+		} else {
+			//Otherwise fall back to chars
+			if (systemSettings.temperatureInF)
+				OLED::print(SymbolDegF);
+			else
+				OLED::print(SymbolDegC);
+		}
 	}
 }
 ButtonState getButtonState() {
