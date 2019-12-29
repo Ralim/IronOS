@@ -69,6 +69,7 @@ public:
 		cursor_y = y * fontHeight;
 	}
 	static void setFont(uint8_t fontNumber); // (Future) Set the font that is being used
+	static uint8_t getFont();
 	static void drawImage(const uint8_t* buffer, uint8_t x, uint8_t width) {
 		drawArea(x, 0, width, 16, buffer);
 	}

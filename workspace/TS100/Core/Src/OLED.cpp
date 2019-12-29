@@ -155,6 +155,14 @@ void OLED::setFont(uint8_t fontNumber) {
 		fontWidth = 12;
 	}
 }
+uint8_t OLED::getFont() {
+	if (currentFont == USER_FONT_6x8)
+		return 1;
+	else if (currentFont == ExtraFontChars)
+		return 2;
+	else
+		return 0;
+}
 inline void stripLeaderZeros(char *buffer) {
 	//Removing the leading zero's by swapping them to SymbolSpace
 	// Stop 1 short so that we dont blank entire number if its zero
