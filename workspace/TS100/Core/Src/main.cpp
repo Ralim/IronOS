@@ -41,6 +41,10 @@ void startPIDTask(void const *argument);
 void startMOVTask(void const *argument);
 // End FreeRTOS
 
+static const int maxPowerIdleTicks = 1000;
+static const int powerPulseTicks = 50;
+static const int x10PowerPulseWatts = 3;
+
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
@@ -127,6 +131,7 @@ void startPIDTask(void const *argument __unused) {
 
 		if (ulTaskNotifyTake(pdTRUE, 2000)) {
 			// This is a call to block this thread until the ADC does its samples
+			int32_t x10WattsOut = 0;
 			// Do the reading here to keep the temp calculations churning along
 			uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
 
@@ -148,7 +153,6 @@ void startPIDTask(void const *argument __unused) {
 				tempError.update(tError);
 
 				// Now for the PID!
-				int32_t x10WattsOut = 0;
 
 				// P term - total power needed to hit target temp next cycle.
 				// thermal mass = 1690 milliJ/*C for my tip.
@@ -175,25 +179,19 @@ void startPIDTask(void const *argument __unused) {
 				// basically: temp - lastTemp
 				//  Unfortunately, our temp signal is too noisy to really help.
 
-				setTipX10Watts(x10WattsOut);
-			} else {
-
-#ifdef MODEL_TS80
-				//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
-				// This is purely guesswork :'( as everyone implements stuff differently
-				if (xTaskGetTickCount() - lastPowerPulse < 10) {
-					// for the first 100mS turn on for a bit
-					setTipX10Watts(25);	// typically its around 5W to hold the current temp, so this wont raise temp much
-				} else
-					setTipX10Watts(0);
-				//Then wait until the next 0.5 seconds
-				if (xTaskGetTickCount() - lastPowerPulse > 50) {
-					lastPowerPulse = xTaskGetTickCount();
-				}
-#else
-				setTipX10Watts(0);
-#endif
 			}
+#ifdef MODEL_TS80
+			//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
+			if (((xTaskGetTickCount() - lastPowerPulse) > maxPowerIdleTicks) &&
+			    (x10WattsOut < x10PowerPulseWatts)) {
+				x10WattsOut = x10PowerPulseWatts;
+			}
+			if (((xTaskGetTickCount() - lastPowerPulse) > (maxPowerIdleTicks + powerPulseTicks)) &&
+			    (x10WattsOut >= x10PowerPulseWatts)) {
+				lastPowerPulse = xTaskGetTickCount();
+			}
+#endif
+			setTipX10Watts(x10WattsOut);
 
 			HAL_IWDG_Refresh(&hiwdg);
 		} else {
