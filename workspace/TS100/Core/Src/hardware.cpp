@@ -187,19 +187,15 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 		// No continuous mode, so QC2
 		QCMode = 2;
 		// Goto nearest
-		if (Vx10 > 10.5) {
+		if (Vx10 > 110) {
 			// request 12V
 			// D- = 0.6V, D+ = 0.6V
 			// Clamp PB3
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);// pull down D+
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+			QC_Seek12V();
 
 		} else {
 			// request 9V
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+			QC_Seek9V();
 		}
 	}
 #endif
