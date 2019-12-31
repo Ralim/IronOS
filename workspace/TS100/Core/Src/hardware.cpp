@@ -49,7 +49,7 @@ uint16_t getTipInstantTemperature() {
 }
 
 //2 second filter (ADC is PID_TIM_HZ Hz)
-history<uint16_t, PID_TIM_HZ > rawTempFilter = { { 0 }, 0, 0 };
+history<uint16_t, PID_TIM_HZ> rawTempFilter = { { 0 }, 0, 0 };
 
 uint16_t getTipRawTemp(uint8_t refresh) {
 	if (refresh) {
@@ -66,7 +66,12 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 	// Therefore we can divide down from there
 	// Multiplying ADC max by 4 for additional calibration options,
 	// ideal term is 467
+#ifdef MODEL_TS100
 #define BATTFILTERDEPTH 32
+#else
+#define BATTFILTERDEPTH 8
+
+#endif
 	static uint8_t preFillneeded = 10;
 	static uint32_t samples[BATTFILTERDEPTH];
 	static uint8_t index = 0;
@@ -88,6 +93,51 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 	return sum * 4 / divisor;
 }
 #ifdef MODEL_TS80
+inline void DPlusZero_Six() {
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);		// pull down D+
+}
+inline void DNegZero_Six() {
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+}
+inline void DPlusThree_Three() {
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);			// pull up D+
+}
+inline void DNegThree_Three() {
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+}
+
+inline void QC_Seek9V() {
+	DNegZero_Six();
+	DPlusThree_Three();
+}
+inline void QC_Seek12V() {
+	DNegZero_Six();
+	DPlusZero_Six();
+}
+inline void QC_Seek20V() {
+	DNegThree_Three();
+	DPlusThree_Three();
+}
+inline void QC_SeekContMode() {
+	DNegThree_Three();
+	DPlusZero_Six();
+}
+inline void QC_SeekContPlus() {
+	QC_SeekContMode();
+	vTaskDelay(3);
+	QC_Seek20V();
+	vTaskDelay(1);
+	QC_SeekContMode();
+}
+inline void QC_SeekContNeg() {
+	QC_SeekContMode();
+	vTaskDelay(3);
+	QC_Seek12V();
+	vTaskDelay(1);
+	QC_SeekContMode();
+}
 uint8_t QCMode = 0;
 uint8_t QCTries = 0;
 void seekQC(int16_t Vx10, uint16_t divisor) {
@@ -98,52 +148,42 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 
 	if (Vx10 < 45)
 		return;
+	if (xTaskGetTickCount() < 100)
+		return;
 	if (Vx10 > 130)
 		Vx10 = 130;  //Cap max value at 13V
 	// Seek the QC to the Voltage given if this adapter supports continuous mode
 	// try and step towards the wanted value
 
 	// 1. Measure current voltage
-	int16_t vStart = getInputVoltageX10(divisor, 0);
+	int16_t vStart = getInputVoltageX10(divisor, 1);
 	int difference = Vx10 - vStart;
 
 	// 2. calculate ideal steps (0.2V changes)
 
 	int steps = difference / 2;
 	if (QCMode == 3) {
+		if (steps > -2 && steps < 2)
+			return; // dont bother with small steps
 		while (steps < 0) {
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);	//D+0.6
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);	//D-3.3V
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);	// D-3.3Vs
+			QC_SeekContNeg();
 			vTaskDelay(3);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);	//-0.6V
-			HAL_Delay(1);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-
-			HAL_Delay(1);
 			steps++;
 		}
 		while (steps > 0) {
-			// step once up
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+			QC_SeekContPlus();
 			vTaskDelay(3);
-
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-			HAL_Delay(1);
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-
-			HAL_Delay(1);
 			steps--;
 		}
+		vTaskDelay(10);
 	}
+#ifdef ENABLE_QC2
 	// Re-measure
 	/* Disabled due to nothing to test and code space of around 1k*/
-#ifdef QC2_ROUND_DOWN
-	steps = vStart - getInputVoltageX10(195);
-	if (steps < 0) steps = -steps;
-	if (steps > (difference / 2)) {
+	steps = vStart - getInputVoltageX10(divisor, 1);
+	if (steps < 0)
+		steps = -steps;
+	if (steps > 4) {
 		// No continuous mode, so QC2
 		QCMode = 2;
 		// Goto nearest
@@ -164,7 +204,6 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 	}
 #endif
 }
-
 // Must be called after FreeRToS Starts
 void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
@@ -175,65 +214,46 @@ void startQC(uint16_t divisor) {
 		return;
 	}
 	GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitStruct.Pin = GPIO_PIN_3;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_10;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	//Turn off output mode on pins that we can
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	// Tries to negotiate QC for 9V
 	// This is a multiple step process.
 	// 1. Set around 0.6V on D+ for 1.25 Seconds or so
 	// 2. After this It should un-short D+->D- and instead add a 20k pulldown on
 	// D-
-	// 3. Now set D+ to 3.3V and D- to 0.6V to request 9V
-	// OR both at 0.6V for 12V request (if the adapter can do it).
-	// If 12V is implimented then should fallback to 9V after validation
-	// Step 1. We want to pull D+ to 0.6V
-	// Pull PB3 donwn to ground
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);// pull low to put 0.6V on D+
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-	GPIO_InitStruct.Pin = GPIO_PIN_3;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);// pull low to put 0.6V on D+
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	DPlusZero_Six();
 
 	// Delay 1.25 seconds
 	uint8_t enteredQC = 0;
-	for (uint16_t i = 0; i < 130 && enteredQC == 0; i++) {
-		//		HAL_Delay(10);
-		vTaskDelay(1);
-
-	}
+	vTaskDelay(125);
 	// Check if D- is low to spot a QC charger
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET)
 		enteredQC = 1;
 	if (enteredQC) {
 		// We have a QC capable charger
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-
+		QC_Seek9V();
+		GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_10;
 		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_8;
 		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-
+		QC_Seek9V();
 		// Wait for frontend ADC to stabilise
 		QCMode = 4;
 		for (uint8_t i = 0; i < 10; i++) {
 			if (getInputVoltageX10(divisor, 1) > 80) {
 				// yay we have at least QC2.0 or QC3.0
 				QCMode = 3;	// We have at least QC2, pray for 3
-				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 				return;
 			}
 			vTaskDelay(10);  // 100mS
@@ -245,7 +265,6 @@ void startQC(uint16_t divisor) {
 	} else {
 		// no QC
 		QCMode = 0;
-
 	}
 	if (QCTries > 10)
 		QCMode = 0;
