@@ -16,7 +16,7 @@ uint8_t PCBVersion = 0;
 // File local variables
 uint32_t currentTempTargetDegC = 0; // Current temperature target in C
 uint32_t lastMovementTime = 0;
-int16_t idealQCVoltage = 0;
+
 bool settingsWereReset = false;
 // FreeRTOS variables
 
@@ -112,9 +112,6 @@ void startPIDTask(void const *argument __unused) {
 	 * control PWM.
 	 */
 	setTipX10Watts(0); // disable the output driver if the output is set to be off
-#ifdef MODEL_TS80
-	idealQCVoltage = calculateMaxVoltage(systemSettings.cutoutSetting);
-#endif
 
 #ifdef MODEL_TS80
 	//Set power management code to the tip resistance in ohms * 10
@@ -182,12 +179,13 @@ void startPIDTask(void const *argument __unused) {
 			}
 #ifdef MODEL_TS80
 			//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
-			if (((xTaskGetTickCount() - lastPowerPulse) > maxPowerIdleTicks) &&
-			    (x10WattsOut < x10PowerPulseWatts)) {
+			if (((xTaskGetTickCount() - lastPowerPulse) > maxPowerIdleTicks)
+					&& (x10WattsOut < x10PowerPulseWatts)) {
 				x10WattsOut = x10PowerPulseWatts;
 			}
-			if (((xTaskGetTickCount() - lastPowerPulse) > (maxPowerIdleTicks + powerPulseTicks)) &&
-			    (x10WattsOut >= x10PowerPulseWatts)) {
+			if (((xTaskGetTickCount() - lastPowerPulse)
+					> (maxPowerIdleTicks + powerPulseTicks))
+					&& (x10WattsOut >= x10PowerPulseWatts)) {
 				lastPowerPulse = xTaskGetTickCount();
 			}
 #endif
@@ -212,7 +210,8 @@ void startMOVTask(void const *argument __unused) {
 	while (pidTaskNotification == 0)
 		osDelay(30);  // To ensure we return after idealQCVoltage/tip resistance
 
-	seekQC(idealQCVoltage, systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
+	seekQC((systemSettings.cutoutSetting) ? 120 : 90,
+			systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 
 #else
 	osDelay(250);  // wait for accelerometer to stabilize
@@ -275,9 +274,8 @@ void startMOVTask(void const *argument __unused) {
 
 		osDelay(100);  // Slow down update rate
 #ifdef MODEL_TS80
-//		if (currentlyActiveTemperatureTarget) {
-//			seekQC(idealQCVoltage, systemSettings.voltageDiv); // Run the QC seek again to try and compensate for cable V drop
-//		}
+		seekQC((systemSettings.cutoutSetting) ? 120 : 90,
+				systemSettings.voltageDiv); // Run the QC seek again if we have drifted too much
 #endif
 	}
 }
