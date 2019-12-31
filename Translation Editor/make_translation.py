@@ -94,7 +94,7 @@ def getConstants():
     consants.append(('SymbolVolts', 'V'))
     consants.append(('SymbolDC', 'DC'))
     consants.append(('SymbolCellCount', 'S'))
-    consants.append(('SymbolVersionNumber', 'V2.06'))
+    consants.append(('SymbolVersionNumber', 'V2.07'))
     return consants
 
 
