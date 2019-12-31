@@ -96,14 +96,14 @@ static void settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[] {
-/*
- * Power Source
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
+		/*
+		 * Power Source
+		 * Soldering Menu
+		 * Power Saving Menu
+		 * UI Menu
+		 * Advanced Menu
+		 * Exit
+		 */
 #ifdef MODEL_TS100
 		{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
 				settings_displayInputVRange } }, /*Voltage input*/
@@ -418,7 +418,7 @@ static void settings_setSensitivity(void) {
 
 static void settings_displaySensitivity(void) {
 	printShortDescription(4, 7);
-	OLED::printNumber(systemSettings.sensitivity, 1);
+	OLED::printNumber(systemSettings.sensitivity, 1, false);
 }
 
 static void settings_setAdvancedSolderingScreens(void) {
@@ -613,7 +613,7 @@ static void settings_setCalibrateVIN(void) {
 				2);
 		OLED::print(SymbolDot);
 		OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) % 10,
-				1);
+				1, false);
 		OLED::print(SymbolVolts);
 
 		ButtonState buttons = getButtonState();

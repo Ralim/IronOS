@@ -175,7 +175,7 @@ inline void stripLeaderZeros(char *buffer) {
 	}
 }
 // maximum places is 5
-void OLED::printNumber(uint16_t number, uint8_t places) {
+void OLED::printNumber(uint16_t number, uint8_t places, bool noLeaderZeros) {
 	char buffer[7] = { 0 };
 
 	if (places >= 5) {
@@ -203,7 +203,8 @@ void OLED::printNumber(uint16_t number, uint8_t places) {
 	}
 
 	buffer[0] = 2 + number % 10;
-	stripLeaderZeros(buffer);
+	if (noLeaderZeros)
+		stripLeaderZeros(buffer);
 	print(buffer);
 }
 
