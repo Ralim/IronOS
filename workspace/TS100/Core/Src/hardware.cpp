@@ -93,45 +93,45 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 	return sum * 4 / divisor;
 }
 #ifdef MODEL_TS80
-inline void DPlusZero_Six() {
+void DPlusZero_Six() {
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);		// pull down D+
 }
-inline void DNegZero_Six() {
+void DNegZero_Six() {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
 }
-inline void DPlusThree_Three() {
+void DPlusThree_Three() {
 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);			// pull up D+
 }
-inline void DNegThree_Three() {
+void DNegThree_Three() {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
 }
 
-inline void QC_Seek9V() {
+void QC_Seek9V() {
 	DNegZero_Six();
 	DPlusThree_Three();
 }
-inline void QC_Seek12V() {
+void QC_Seek12V() {
 	DNegZero_Six();
 	DPlusZero_Six();
 }
-inline void QC_Seek20V() {
+void QC_Seek20V() {
 	DNegThree_Three();
 	DPlusThree_Three();
 }
-inline void QC_SeekContMode() {
+void QC_SeekContMode() {
 	DNegThree_Three();
 	DPlusZero_Six();
 }
-inline void QC_SeekContPlus() {
+void QC_SeekContPlus() {
 	QC_SeekContMode();
 	vTaskDelay(3);
 	QC_Seek20V();
 	vTaskDelay(1);
 	QC_SeekContMode();
 }
-inline void QC_SeekContNeg() {
+void QC_SeekContNeg() {
 	QC_SeekContMode();
 	vTaskDelay(3);
 	QC_Seek12V();
