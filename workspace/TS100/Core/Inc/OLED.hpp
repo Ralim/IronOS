@@ -74,7 +74,7 @@ public:
 		drawArea(x, 0, width, 16, buffer);
 	}
 	// Draws an image to the buffer, at x offset from top to bottom (fixed height renders)
-	static void printNumber(uint16_t number, uint8_t places);
+	static void printNumber(uint16_t number, uint8_t places,bool noLeaderZeros=true);
 	// Draws a number at the current cursor location
 	// Clears the buffer
 	static void clearScreen() {
