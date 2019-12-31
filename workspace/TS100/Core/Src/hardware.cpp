@@ -206,7 +206,7 @@ void startQC(uint16_t divisor) {
 	// negotiating as someone is feeding in hv
 	uint16_t vin = getInputVoltageX10(divisor, 1);
 	if (vin > 100) {
-		QCMode = 1;  // ALready at ~12V
+		QCMode = 1;  // Already at 12V, user has probably over-ridden this
 		return;
 	}
 	GPIO_InitTypeDef GPIO_InitStruct;
