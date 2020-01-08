@@ -70,7 +70,7 @@
 				"Power",
 				"source"
 			],
-			"desc": "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell>"
+			"desc": "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell, disable power limit>"
 		},
 		"SleepTemperature": {
 			"text": "STMP",
@@ -231,6 +231,22 @@
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
+		},
+		"PowerLimitEnable": {
+			"text": "PLIMEN",
+			"text2": [
+				"P Limit",
+				"Enable"
+			],
+			"desc": "Enable power limit"
+		},
+		"PowerLimit": {
+			"text": "PLIM",
+			"text2": [
+				"Power",
+				"Limit"
+			],
+			"desc": "Maximum power the iron can use <Watts>"
 		}
 	}
 }

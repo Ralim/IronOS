@@ -189,7 +189,11 @@ void startPIDTask(void const *argument __unused) {
 				lastPowerPulse = xTaskGetTickCount();
 			}
 #endif
-			setTipX10Watts(x10WattsOut);
+
+			if (systemSettings.powerLimitEnable && x10WattsOut > (systemSettings.powerLimit * 10))
+				setTipX10Watts(systemSettings.powerLimit * 10);
+			else
+				setTipX10Watts(x10WattsOut);
 
 			HAL_IWDG_Refresh(&hiwdg);
 		} else {
