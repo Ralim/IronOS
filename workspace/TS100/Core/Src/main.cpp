@@ -283,31 +283,21 @@ void startMOVTask(void const *argument __unused) {
 #define FLASH_LOGOADDR \
   (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
 
+/* The header value is (0xAA,0x55,0xF0,0x0D) but is stored in little endian 16
+ * bits words on the flash */
+const uint8_t LOGO_HEADER_VALUE[] = {0x55, 0xAA, 0x0D, 0xF0};
+
 bool showBootLogoIfavailable() {
-	// check if the header is there (0xAA,0x55,0xF0,0x0D)
-	// If so display logo
-	// TODO REDUCE STACK ON THIS ONE, USE DRAWING IN THE READ LOOP
-	uint16_t temp[98];
+    uint8_t *header = (uint8_t*) (FLASH_LOGOADDR);
 
-	for (uint8_t i = 0; i < (98); i++) {
-		temp[i] = *(uint16_t*) (FLASH_LOGOADDR + (i * 2));
-	}
-	uint8_t temp8[98 * 2];
-	for (uint8_t i = 0; i < 98; i++) {
-		temp8[i * 2] = temp[i] >> 8;
-		temp8[i * 2 + 1] = temp[i] & 0xFF;
-	}
+	// check if the header is correct. 
+    for(int i = 0; i < 4; i++) {
+        if(header[i] != LOGO_HEADER_VALUE[i]) {
+            return false;
+        }
+    }
 
-	if (temp8[0] != 0xAA)
-		return false;
-	if (temp8[1] != 0x55)
-		return false;
-	if (temp8[2] != 0xF0)
-		return false;
-	if (temp8[3] != 0x0D)
-		return false;
-
-	OLED::drawArea(0, 0, 96, 16, (uint8_t*) (temp8 + 4));
+	OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t*) (FLASH_LOGOADDR + 4));
 	OLED::refresh();
 	return true;
 }

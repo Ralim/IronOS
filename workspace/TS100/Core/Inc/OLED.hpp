@@ -92,6 +92,8 @@ public:
 	static void drawSymbol(uint8_t symbolID);//Used for drawing symbols of a predictable width
 	static void drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 			const uint8_t* ptr); //Draw an area, but y must be aligned on 0/8 offset
+	static void drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height,
+			const uint8_t* ptr); //Draw an area, but y must be aligned on 0/8 offset
 	static void fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 			const uint8_t value); //Fill an area, but y must be aligned on 0/8 offset
 	static void drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
