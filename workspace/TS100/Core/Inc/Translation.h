@@ -67,6 +67,9 @@ extern const char* SymbolWatts;
 extern const char* SymbolVolts;
 extern const char* SymbolDC;
 extern const char* SymbolCellCount;
+extern const char* SymbolManual;
+extern const char* SymbolAuto;
+extern const char* SymbolSleep;
 extern const char* SymbolVersionNumber;
 
 extern const char* DebugMenu[];

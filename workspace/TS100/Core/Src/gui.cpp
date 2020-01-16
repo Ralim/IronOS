@@ -564,12 +564,26 @@ static void settings_displayBoostTemp(void) {
 
 static void settings_setAutomaticStartMode(void) {
 	systemSettings.autoStartMode++;
-	systemSettings.autoStartMode %= 2;
+	systemSettings.autoStartMode %= 3;
 }
 
 static void settings_displayAutomaticStartMode(void) {
 	printShortDescription(10, 7);
-	OLED::drawCheckbox(systemSettings.autoStartMode);
+
+	switch (systemSettings.autoStartMode) {
+	case 0:
+		OLED::print(SymbolManual);
+		break;
+	case 1:
+		OLED::print(SymbolAuto);
+		break;
+	case 2:
+		OLED::print(SymbolSleep);
+		break;
+	default:
+		OLED::print(SymbolManual);
+		break;
+	}
 }
 
 static void settings_setCoolingBlinkEnabled(void) {
