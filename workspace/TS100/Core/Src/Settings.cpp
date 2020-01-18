@@ -101,16 +101,16 @@ void resetSettings() {
 	systemSettings.coolingTempBlink = 0; // Blink the temperature on the cooling screen when its > 50C
 	systemSettings.temperatureInF = 0;          // default to 0
 	systemSettings.descriptionScrollSpeed = 0;  // default to slow
-
+  systemSettings.powerLimitEnable = 0; // Default to no power limit
 #ifdef MODEL_TS100
-  systemSettings.CalibrationOffset = 900;  // the adc offset in uV
-  systemSettings.pidPowerLimit=70;  // Sets the max pwm power limit
-
+	systemSettings.CalibrationOffset = 900;  // the adc offset in uV
+	systemSettings.pidPowerLimit = 70;  // Sets the max pwm power limit
+	systemSettings.powerLimit = 30; // 30 watts default limit
 #endif
 #ifdef MODEL_TS80
 	systemSettings.pidPowerLimit = 24;  // Sets the max pwm power limit
-
 	systemSettings.CalibrationOffset = 900;  // the adc offset in uV
+	systemSettings.powerLimit = 24; // 24 watts default power limit
 #endif
 	saveSettings();  // Save defaults
 }

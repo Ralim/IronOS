@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION   ( 0x1B )
+#define SETTINGSVERSION   ( 0x1C )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -42,9 +42,11 @@ typedef struct {
 	uint16_t CalibrationOffset; // This stores the temperature offset for this tip
 								// in the iron.
 
-	uint8_t customTipGain;  // Tip gain value if custom tuned, or 0 if using a
-							// tipType param
 	uint8_t pidPowerLimit;
+
+	uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
+	uint8_t powerLimit;       // Maximum power iron allowed to output
+
 	uint8_t version;  // Used to track if a reset is needed on firmware upgrade
 	uint32_t padding;  // This is here for in case we are not an even divisor so
 					   // that nothing gets cut off
