@@ -501,7 +501,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		OLED::setCursor(0, 0);
 		OLED::clearScreen();
 		OLED::setFont(0);
-		uint16_t tipTemp = getTipRawTemp(0);
 		//Draw in the screen details
 		if (systemSettings.detailedSoldering) {
 			OLED::setFont(1);
