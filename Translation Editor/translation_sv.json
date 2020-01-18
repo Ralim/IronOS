@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "SPETS URTAGEN",
 		"SolderingAdvancedPowerPrompt": "Ström: ",
 		"OffString": "Av",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "H",
 		"SettingLeftChar": "V",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "S",
-		"SettingSlowChar": "L"
+		"SettingSlowChar": "L",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {

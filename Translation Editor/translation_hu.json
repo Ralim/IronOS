@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "HEGY LEVÉVE",
 		"SolderingAdvancedPowerPrompt": "Telj: ",
 		"OffString": "Ki",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "J",
 		"SettingLeftChar": "B",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "G",
-		"SettingSlowChar": "L"
+		"SettingSlowChar": "L",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": false,
 	"menuGroups": {

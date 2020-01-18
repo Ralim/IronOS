@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "Жало отключено",
 		"SolderingAdvancedPowerPrompt": "Питание: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "П",
 		"SettingLeftChar": "Л",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "+",
-		"SettingSlowChar": "-"
+		"SettingSlowChar": "-",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {

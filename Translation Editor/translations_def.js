@@ -116,6 +116,18 @@ var def =
 		{
 			"id": "SettingSlowChar",
 			"len": 1
+		},
+		{
+			"id": "SettingStartSolderingChar",
+			"len": 1
+		},
+		{
+			"id": "SettingStartSleepChar",
+			"len": 1
+		},
+		{
+			"id": "SettingStartNoneChar",
+			"len": 1
 		}
 	],
 	"menuGroups": [

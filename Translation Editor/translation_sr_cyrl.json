@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "ВРХ НИЈЕ СПОЈЕН",
 		"SolderingAdvancedPowerPrompt": "Снага: ",
 		"OffString": "Иск",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "Д",
 		"SettingLeftChar": "Л",
 		"SettingAutoChar": "А",
 		"SettingFastChar": "Б",
-		"SettingSlowChar": "С"
+		"SettingSlowChar": "С",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {

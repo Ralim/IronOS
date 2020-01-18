@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",
 		"SettingLeftChar": "G",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "R",
-		"SettingSlowChar": "L"
+		"SettingSlowChar": "L",
+		"SettingStartSolderingChar": "A",
+		"SettingStartSleepChar": "V",
+		"SettingStartNoneChar": "D"
 	},
 	"menuDouble": true,
 	"menuGroups": {

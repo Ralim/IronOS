@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "GROT ODŁĄCZONY",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Wyłącz",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "P",
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "F",
-		"SettingSlowChar": "S"
+		"SettingSlowChar": "S",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "N"
 	},
 	"menuDouble": false,
 	"menuGroups": {

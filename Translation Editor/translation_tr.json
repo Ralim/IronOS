@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "UÇ ÇIKARILDI",
 		"SolderingAdvancedPowerPrompt": "Güç: ",
 		"OffString": "Kapalı",
-		"ResetOKMessage":"Reset Tamam"
+		"ResetOKMessage": "Reset Tamam"
 	},
 	"characters": {
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "F",
-		"SettingSlowChar": "S"
+		"SettingSlowChar": "S",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": false,
 	"menuGroups": {

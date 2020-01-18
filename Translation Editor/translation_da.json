@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "TIP DISCONNECTED",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "H",
 		"SettingLeftChar": "V",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "F",
-		"SettingSlowChar": "S"
+		"SettingSlowChar": "S",
+		"SettingStartSolderingChar": "L",
+		"SettingStartSleepChar": "D",
+		"SettingStartNoneChar": "S"
 	},
 	"menuDouble": false,
 	"menuGroups": {

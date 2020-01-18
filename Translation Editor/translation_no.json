@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "SPISS FRAKOBLET",
 		"SolderingAdvancedPowerPrompt": "Effekt: ",
 		"OffString": "Av",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "H",
 		"SettingLeftChar": "V",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "H",
-		"SettingSlowChar": "L"
+		"SettingSlowChar": "L",
+		"SettingStartSolderingChar": "L",
+		"SettingStartSleepChar": "D",
+		"SettingStartNoneChar": "I"
 	},
 	"menuDouble": false,
 	"menuGroups": {
