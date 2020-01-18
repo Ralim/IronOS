@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "KÄRKI ON IRTI",
 		"SolderingAdvancedPowerPrompt": "Teho: ",
 		"OffString": "OFF",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "O",
 		"SettingLeftChar": "V",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "N",
-		"SettingSlowChar": "H"
+		"SettingSlowChar": "H",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {

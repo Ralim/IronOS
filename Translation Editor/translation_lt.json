@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "ANTGAL ATJUNGTAS",
 		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
 		"OffString": "Išj",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",
 		"SettingLeftChar": "K",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "T",
-		"SettingSlowChar": "N"
+		"SettingSlowChar": "N",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {

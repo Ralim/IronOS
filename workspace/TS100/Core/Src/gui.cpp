@@ -572,16 +572,16 @@ static void settings_displayAutomaticStartMode(void) {
 
 	switch (systemSettings.autoStartMode) {
 	case 0:
-		OLED::print(SymbolManual);
+		OLED::print(SettingStartNoneChar);
 		break;
 	case 1:
-		OLED::print(SymbolAuto);
+		OLED::print(SettingStartSolderingChar);
 		break;
 	case 2:
-		OLED::print(SymbolSleep);
+		OLED::print(SettingStartSleepChar);
 		break;
 	default:
-		OLED::print(SymbolManual);
+		OLED::print(SettingStartNoneChar);
 		break;
 	}
 }

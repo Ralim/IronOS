@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "SIN PUNTA",
 		"SolderingAdvancedPowerPrompt": "POTENCIA: ",
 		"OffString": "Off",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "D",
 		"SettingLeftChar": "I",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "R",
-		"SettingSlowChar": "L"
+		"SettingSlowChar": "L",
+		"SettingStartSolderingChar": "V",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {

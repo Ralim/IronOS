@@ -29,7 +29,10 @@
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "S",
 		"SettingFastChar": "H",
-		"SettingSlowChar": "P"
+		"SettingSlowChar": "P",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {

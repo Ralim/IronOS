@@ -21,14 +21,17 @@
 		"TipDisconnectedString": "Punt ONTKOPPELD",
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
 		"OffString": "Uit",
-		"ResetOKMessage":"Reset OK"
+		"ResetOKMessage": "Reset OK"
 	},
 	"characters": {
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "A",
 		"SettingFastChar": "S",
-		"SettingSlowChar": "T"
+		"SettingSlowChar": "T",
+		"SettingStartSolderingChar": "T",
+		"SettingStartSleepChar": "S",
+		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,
 	"menuGroups": {
