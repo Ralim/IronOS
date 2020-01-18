@@ -138,6 +138,9 @@ void startPIDTask(void const *argument __unused) {
 					//Maximum allowed output
 					currentTempTargetDegC = (450);
 				}
+				if (currentTempTargetDegC > TipThermoModel::getTipMaxInC()) {
+					currentTempTargetDegC = TipThermoModel::getTipMaxInC();
+				}
 				// Convert the current tip to degree's C
 
 				// As we get close to our target, temp noise causes the system
@@ -190,7 +193,8 @@ void startPIDTask(void const *argument __unused) {
 			}
 #endif
 
-			if (systemSettings.powerLimitEnable && x10WattsOut > (systemSettings.powerLimit * 10))
+			if (systemSettings.powerLimitEnable
+					&& x10WattsOut > (systemSettings.powerLimit * 10))
 				setTipX10Watts(systemSettings.powerLimit * 10);
 			else
 				setTipX10Watts(x10WattsOut);
@@ -289,17 +293,17 @@ void startMOVTask(void const *argument __unused) {
 
 /* The header value is (0xAA,0x55,0xF0,0x0D) but is stored in little endian 16
  * bits words on the flash */
-const uint8_t LOGO_HEADER_VALUE[] = {0x55, 0xAA, 0x0D, 0xF0};
+const uint8_t LOGO_HEADER_VALUE[] = { 0x55, 0xAA, 0x0D, 0xF0 };
 
 bool showBootLogoIfavailable() {
-    uint8_t *header = (uint8_t*) (FLASH_LOGOADDR);
+	uint8_t *header = (uint8_t*) (FLASH_LOGOADDR);
 
 	// check if the header is correct. 
-    for(int i = 0; i < 4; i++) {
-        if(header[i] != LOGO_HEADER_VALUE[i]) {
-            return false;
-        }
-    }
+	for (int i = 0; i < 4; i++) {
+		if (header[i] != LOGO_HEADER_VALUE[i]) {
+			return false;
+		}
+	}
 
 	OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t*) (FLASH_LOGOADDR + 4));
 	OLED::refresh();

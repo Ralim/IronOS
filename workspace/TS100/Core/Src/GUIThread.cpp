@@ -453,7 +453,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 	 * --> Double button to exit
 	 */
 	bool boostModeOn = false;
-	uint8_t badTipCounter = 0;
+
 	uint32_t sleepThres = 0;
 	if (systemSettings.SleepTime < 6)
 		sleepThres = systemSettings.SleepTime * 10 * 100;
@@ -502,11 +502,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		OLED::clearScreen();
 		OLED::setFont(0);
 		uint16_t tipTemp = getTipRawTemp(0);
-		if (tipTemp > 32700) {
-			badTipCounter++; // Use a counter so that error has to persist for > 1 second continuous so that peak errors dont trip it
-		} else {
-			badTipCounter = 0;
-		}
 		//Draw in the screen details
 		if (systemSettings.detailedSoldering) {
 			OLED::setFont(1);
@@ -563,15 +558,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 				gui_drawBatteryIcon();
 			}
-		}
-
-		if (badTipCounter > 128) {
-			OLED::print(BadTipString);
-			OLED::refresh();
-			currentTempTargetDegC = 0;
-			waitForButtonPress();
-			currentTempTargetDegC = 0;
-			return;
 		}
 		OLED::refresh();
 

@@ -119,3 +119,10 @@ uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
 	return currentTipTempInF;
 }
+
+uint32_t TipThermoModel::getTipMaxInC() {
+	uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(
+			0x7FFF - 10);
+	maximumTipTemp += getHandleTemperature() / 10; //Add handle offset
+	return maximumTipTemp;
+}
