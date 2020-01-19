@@ -81,7 +81,7 @@
 				"Sleep",
 				"temp"
 			],
-			"desc": "Sleep Temperature <C>"
+			"desc": "Sleep Temperature"
 		},
 		"SleepTimeout": {
 			"text": "STME",
@@ -105,7 +105,7 @@
 				"Motion",
 				"sensitivity"
 			],
-			"desc": "Motion Sensitivity <0.Off 1.least sensitive 9.most sensitive>"
+			"desc": "Motion Sensitivity <0=Off 1=Least Sensitive 9=Most Sensitive>"
 		},
 		"TemperatureUnit": {
 			"text": "TMPUNT",
@@ -129,7 +129,7 @@
 				"Display",
 				"orientation"
 			],
-			"desc": "Display Orientation <A. Automatic L. Left Handed R. Right Handed>"
+			"desc": "Display Orientation <A=Automatic L=Left Handed R=Right Handed>"
 		},
 		"BoostEnabled": {
 			"text": "BOOST",
@@ -137,7 +137,7 @@
 				"Boost mode",
 				"enabled"
 			],
-			"desc": "Enable front key enters boost mode 450C mode when soldering"
+			"desc": "Enable front key long press \"Boost\" mode when soldering"
 		},
 		"BoostTemperature": {
 			"text": "BTMP",
@@ -145,7 +145,7 @@
 				"Boost",
 				"temp"
 			],
-			"desc": "Temperature when in \"boost\" mode"
+			"desc": "Temperature when in \"Boost\" mode"
 		},
 		"AutoStart": {
 			"text": "ASTART",
@@ -153,7 +153,7 @@
 				"Auto",
 				"start"
 			],
-			"desc": "Automatically starts the iron into soldering on power up. T=Soldering, S=Sleep, F=Off"
+			"desc": "Automatically starts the iron into soldering on power up <T=Soldering S=Sleep F=Off>"
 		},
 		"CooldownBlink": {
 			"text": "CLBLNK",
@@ -201,7 +201,7 @@
 				"Scrolling",
 				"Speed"
 			],
-			"desc": "Speed this text scrolls past at"
+			"desc": "Speed this text scrolls past at <S=Slow F=Fast>"
 		},
 		"TipModel": {
 			"text": "TIPMO",
