@@ -710,9 +710,15 @@ void startGUITask(void const *argument __unused) {
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
 		if (systemSettings.autoStartMode == 1)
+		{
 			gui_solderingMode(0);
+			buttonLockout = true;
+		}
 		if (systemSettings.autoStartMode == 2)
+		{
 			gui_solderingMode(1);
+			buttonLockout = true;
+		}
 	}
 
 #ifdef ACCELDEBUG
