@@ -359,7 +359,7 @@ static int gui_SolderingSleepingMode() {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return 0;
-		if ((xTaskGetTickCount() - lastMovementTime < 100)
+		if ((lastMovementTime > 100 && (xTaskGetTickCount() - lastMovementTime < 100))
 				|| (xTaskGetTickCount() - lastButtonTime < 100))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
