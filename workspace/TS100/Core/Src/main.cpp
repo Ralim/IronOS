@@ -15,6 +15,7 @@
 uint8_t PCBVersion = 0;
 // File local variables
 uint32_t currentTempTargetDegC = 0; // Current temperature target in C
+uint8_t accelInit = 0;
 uint32_t lastMovementTime = 0;
 
 bool settingsWereReset = false;
@@ -262,6 +263,15 @@ void startMOVTask(void const *argument __unused) {
 		datax[currentPointer] = (int32_t) tx;
 		datay[currentPointer] = (int32_t) ty;
 		dataz[currentPointer] = (int32_t) tz;
+		if (!accelInit)
+		{
+			for (uint8_t i = currentPointer + 1; i < MOVFilter; i++) {
+				datax[i] = (int32_t) tx;
+				datay[i] = (int32_t) ty;
+				dataz[i] = (int32_t) tz;
+			}
+			accelInit = 1;
+		}
 		currentPointer = (currentPointer + 1) % MOVFilter;
 		avgx = avgy = avgz = 0;
 		// calculate averages

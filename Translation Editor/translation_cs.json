@@ -32,6 +32,7 @@
 		"SettingSlowChar": "P",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
+		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": true,

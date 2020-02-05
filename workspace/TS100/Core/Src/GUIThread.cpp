@@ -20,6 +20,7 @@
 extern uint8_t PCBVersion;
 // File local variables
 extern uint32_t currentTempTargetDegC;
+extern uint8_t accelInit;
 extern uint32_t lastMovementTime;
 extern int16_t idealQCVoltage;
 uint32_t lastButtonTime = 0;
@@ -352,27 +353,28 @@ static void gui_solderingTempAdjust() {
 	}
 }
 
-static int gui_SolderingSleepingMode() {
+static int gui_SolderingSleepingMode(bool stayOff) {
 	// Drop to sleep temperature and display until movement or button press
 
 	for (;;) {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return 0;
-		if ((lastMovementTime > 100 && (xTaskGetTickCount() - lastMovementTime < 100))
-				|| (xTaskGetTickCount() - lastButtonTime < 100))
+		if ((xTaskGetTickCount() > 100)
+			&& ((accelInit && (xTaskGetTickCount() - lastMovementTime < 100))
+				|| (xTaskGetTickCount() - lastButtonTime < 100)))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
 		if (checkVoltageForExit())
 			return 1; // return non-zero on error
 #endif
 		if (systemSettings.temperatureInF) {
-			currentTempTargetDegC = TipThermoModel::convertFtoC(
+			currentTempTargetDegC = stayOff ? 0 : TipThermoModel::convertFtoC(
 					min(systemSettings.SleepTemp,
 							systemSettings.SolderingTemp));
 		} else {
-			currentTempTargetDegC = (min(systemSettings.SleepTemp,
-					systemSettings.SolderingTemp));
+			currentTempTargetDegC = stayOff ? 0 : min(systemSettings.SleepTemp,
+					systemSettings.SolderingTemp);
 		}
 		// draw the lcd
 		uint16_t tipTemp;
@@ -460,7 +462,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 	else
 		sleepThres = (systemSettings.SleepTime - 5) * 60 * 100;
 	if (jumpToSleep) {
-		if (gui_SolderingSleepingMode()) {
+		if (gui_SolderingSleepingMode(jumpToSleep == 2)) {
 			lastButtonTime = xTaskGetTickCount();
 			return;  // If the function returns non-0 then exit
 		}
@@ -594,7 +596,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		if (systemSettings.sensitivity && systemSettings.SleepTime)
 			if (xTaskGetTickCount() - lastMovementTime > sleepThres
 					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
-				if (gui_SolderingSleepingMode()) {
+				if (gui_SolderingSleepingMode(false)) {
 					return;  // If the function returns non-0 then exit
 				}
 			}
@@ -715,9 +717,14 @@ void startGUITask(void const *argument __unused) {
 			gui_solderingMode(0);
 			buttonLockout = true;
 		}
-		if (systemSettings.autoStartMode == 2)
+		else if (systemSettings.autoStartMode == 2)
 		{
 			gui_solderingMode(1);
+			buttonLockout = true;
+		}
+		else if (systemSettings.autoStartMode == 3)
+		{
+			gui_solderingMode(2);
 			buttonLockout = true;
 		}
 	}

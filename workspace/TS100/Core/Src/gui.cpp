@@ -564,7 +564,7 @@ static void settings_displayBoostTemp(void) {
 
 static void settings_setAutomaticStartMode(void) {
 	systemSettings.autoStartMode++;
-	systemSettings.autoStartMode %= 3;
+	systemSettings.autoStartMode %= 4;
 }
 
 static void settings_displayAutomaticStartMode(void) {
@@ -579,6 +579,9 @@ static void settings_displayAutomaticStartMode(void) {
 		break;
 	case 2:
 		OLED::print(SettingStartSleepChar);
+		break;
+	case 3:
+		OLED::print(SettingStartSleepOffChar);
 		break;
 	default:
 		OLED::print(SettingStartNoneChar);
