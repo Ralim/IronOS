@@ -10,6 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: configure
-      run: cd /home/runner/work/ts100/ts100/ci/
+      run: cd /home/runner/work/ts100/ts100/workspace/TS100
+    - name: ls
+      run: ls
     - name: make
-      run: bash buildAll.sh
+      run: make -j3 lang=UK model=TS100
