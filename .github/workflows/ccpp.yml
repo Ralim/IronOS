@@ -10,6 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: cd
-      run: cd ts100/workspace/TS100
+      run: cd workspace/TS100
     - name: run
       run: make -j3 lang=UK model=TS100
