@@ -11,5 +11,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: ls
       run: ls
+    - name: chmod
+      run: chmod +x build.sh
     - name: make
       run: ./build.sh
