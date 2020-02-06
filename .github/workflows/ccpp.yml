@@ -13,6 +13,8 @@ jobs:
       run: ls
     - name: chmod
       run: chmod +x build.sh
+    - name: translation
+      run: python3 Translation\ Editor/make_translation.py
     - name: make
       run: ./build.sh
     - name: Archive production artifacts
