@@ -15,3 +15,8 @@ jobs:
       run: chmod +x build.sh
     - name: make
       run: ./build.sh
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: ci/artefacts
