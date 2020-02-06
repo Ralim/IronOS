@@ -16,7 +16,7 @@ jobs:
     - name: translation cd
       run: cd Translation\ Editor/
     - name: translation
-      run: python3 Translation\ Editor/make_translation.py
+      run: python3 make_translation.py
     - name: translation cd
       run: cd ..
     - name: make
