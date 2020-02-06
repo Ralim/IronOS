@@ -12,4 +12,4 @@ jobs:
     - name: ls
       run: ls
     - name: make
-      run: make -f workspace/TS100/Makefile -j3 lang=UK model=TS100
+      run: bash ci/bashALL.sh
