@@ -180,7 +180,7 @@
 		"VoltageCalibration": {
 			"text": "",
 			"text2": [
-				"Калібровка",
+				"Калібрування",
 				"напруги"
 			],
 			"desc": "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити."
@@ -236,18 +236,18 @@
 		"PowerLimitEnable": {
 			"text": "PLIMEN",
 			"text2": [
-				"P Limit",
-				"Enable"
+				"Ліміт",
+				"потужності"
 			],
-			"desc": "Enable power limit"
+			"desc": "Вмикає обмеження потужності споживання"
 		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [
-				"Power",
-				"Limit"
+				"Максимальна",
+				"потужність"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Макс. потужність, яку може використовувати паяльник <Ват>"
 		}
 	}
 }
