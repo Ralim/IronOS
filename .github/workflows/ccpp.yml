@@ -14,8 +14,9 @@ jobs:
     - name: chmod
       run: chmod +x build.sh
     - name: translation
-      run: python3 make_translation.py
-      working-directory: ./Translation\ Editor
+      run: |
+        cd Translation\ Editor
+        python3 make_translation.py
     - name: make
       run: ./build.sh
     - name: Archive production artifacts
