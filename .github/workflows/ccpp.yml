@@ -14,7 +14,7 @@ jobs:
     - name: chmod
       run: chmod +x build.sh
     - name: translation
-      working-directory: Translation\ Editor
+      working-directory: ./Translation\ Editor
       run: python3 make_translation.py
     - name: make
       run: ./build.sh
