@@ -1,0 +1,24 @@
+name: C/C++ CI
+
+on: [pull_request, push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: chmod
+      run: chmod +x build.sh
+    - name: translation
+      run: |
+        cd Translation\ Editor
+        python3 make_translation.py
+    - name: make
+      run: ./build.sh
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: compiled
+        path: ci/artefacts
