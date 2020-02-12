@@ -699,6 +699,7 @@ void startGUITask(void const *argument __unused) {
 
 	if (settingsWereReset) {
 		//Display alert settings were reset
+		OLED::clearScreen();
 		OLED::setFont(1);
 		OLED::setCursor(0, 0);
 		OLED::print(SettingsResetMessage);
