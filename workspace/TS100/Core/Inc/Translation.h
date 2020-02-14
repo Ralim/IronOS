@@ -52,6 +52,7 @@ extern const char *SettingLeftChar;
 extern const char *SettingAutoChar;
 extern const char *SettingStartSolderingChar;
 extern const char *SettingStartSleepChar;
+extern const char *SettingStartSleepOffChar;
 extern const char *SettingStartNoneChar;
 
 extern const char *SettingFastChar;

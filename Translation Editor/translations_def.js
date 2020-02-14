@@ -126,6 +126,10 @@ var def =
 			"len": 1
 		},
 		{
+			"id": "SettingStartSleepOffChar",
+			"len": 1
+		},
+		{
 			"id": "SettingStartNoneChar",
 			"len": 1
 		}
