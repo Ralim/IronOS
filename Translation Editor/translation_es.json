@@ -10,20 +10,20 @@
 		"UndervoltageString": "Voltaje bajo",
 		"InputVoltageString": "Voltaje: ",
 		"WarningTipTempString": "Temp punta: ",
-		"BadTipString": "PUNTA ROTA",
+		"BadTipString": "PT. ROTA",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "En reposo...",
-		"WarningSimpleString": "¡QUEMA!",
+		"WarningSimpleString": "QUEMA",
 		"WarningAdvancedString": "¡LA PUNTA QUEMA!",
 		"SleepingTipAdvancedString": "Punta:",
 		"IdleTipString": "Punta:",
 		"IdleSetString": " Aj:",
 		"TipDisconnectedString": "NO HAY PUNTA",
 		"SolderingAdvancedPowerPrompt": "Potencia: ",
-		"OffString": "Apagado",
-		"ResetOKMessage": "Restablecido",
-		"YourGainMessage": "Ganancia:",
-		"SettingsResetMessage": "Se han restablecido los ajustes."
+		"OffString": " No",
+		"ResetOKMessage": "Hecho.",
+		"YourGainMessage": "Gananc.:",
+		"SettingsResetMessage": "Restablecidos."
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -74,7 +74,7 @@
 				"Fuente",
 				"de energía"
 			],
-			"desc": "Elige el tipo de fuente para limitar el voltaje <CC 10V> <S 3,3V por pila, ilimitado>"
+			"desc": "Elige el tipo de fuente para limitar el voltaje <DC 10V> <S 3,3V por pila, ilimitado>"
 		},
 		"SleepTemperature": {
 			"text": "STMP",
@@ -87,8 +87,8 @@
 		"SleepTimeout": {
 			"text": "STME",
 			"text2": [
-				"Entrar en",
-				"reposo tras"
+				"Entrar",
+				"en reposo"
 			],
 			"desc": "Tiempo de inactividad para entrar en reposo <min/seg>"
 		},
@@ -138,15 +138,15 @@
 				"Con botón de",
 				"temp. extra"
 			],
-			"desc": "Permite mantener pulsado el primer botón al soldar y calentar momentáneamente un poco más."
+			"desc": "Permite mantener pulsado el primer botón (A) al soldar y calentar momentáneamente un poco más."
 		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [
-				"Ajustar temp.",
-				"modo extra"
+				"Ajustar la",
+				"temp. extra"
 			],
-			"desc": "Temperatura momentánea que se alcanza al apretar el botón de modo extra."
+			"desc": "Temperatura momentánea que se alcanza al apretar el botón del modo extra."
 		},
 		"AutoStart": {
 			"text": "ASTART",
@@ -175,8 +175,8 @@
 		"SettingsReset": {
 			"text": "RESET?",
 			"text2": [
-				"Estado de",
-				"fábrica"
+				"Volver a ajustes",
+				"de fábrica"
 			],
 			"desc": "Restablece todos los ajustes a los valores originales."
 		},
@@ -191,7 +191,7 @@
 		"AdvancedSoldering": {
 			"text": "ADVSLD",
 			"text2": [
-				"Info detallada",
+				"Info extra",
 				"al soldar"
 			],
 			"desc": "Muestra más datos por pantalla cuando se está soldando."
@@ -250,7 +250,7 @@
 				"Ajustar la",
 				"potenc. máx."
 			],
-			"desc": "Elige el tope de potencia del soldador <en vatios>"
+			"desc": "Elige el límite de potencia máxima del soldador <en vatios>"
 		}
 	}
 }
