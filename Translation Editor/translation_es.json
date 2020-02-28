@@ -21,7 +21,7 @@
 		"TipDisconnectedString": "NO HAY PUNTA",
 		"SolderingAdvancedPowerPrompt": "Potencia: ",
 		"OffString": " No",
-		"ResetOKMessage": "Hecho.",
+		"ResetOKMessage": "Hecho.       ",
 		"YourGainMessage": "Gananc.:",
 		"SettingsResetMessage": "Restablecidos."
 	},
@@ -33,7 +33,7 @@
 		"SettingSlowChar": "L",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
-		"SettingStartSleepOffChar": "O",
+		"SettingStartSleepOffChar": "F",
 		"SettingStartNoneChar": "N"
 	},
 	"menuDouble": true,
@@ -154,7 +154,7 @@
 				"Calentar",
 				"al enchufar"
 			],
-			"desc": "Se calienta él solo al arrancar <C=calentar R=solo entrar en reposo N=no>"
+			"desc": "Se calienta él solo al arrancar <S=entrar en modo soldar R=solo entrar en reposo F=en reposo pero mantiene la punta fría N=no>"
 		},
 		"CooldownBlink": {
 			"text": "CLBLNK",
