@@ -1,29 +1,29 @@
 {
 	"languageCode": "ES",
-	"languageLocalName": "Español",
+	"languageLocalName": "Castellano",
 	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "¡Calibración completada!",
-		"SettingsCalibrationWarning": "¡Asegúrese que la punta esté a temperatura ambiente antes de proceder!",
-		"SettingsResetWarning": "¿Está seguro de volver a estado de fábrica?",
-		"UVLOWarningString": "DC BAJO",
-		"UndervoltageString": "Subtensión",
-		"InputVoltageString": "V entrada: ",
-		"WarningTipTempString": "Temp Punta: ",
-		"BadTipString": "ER PUNTA",
+		"SettingsCalibrationDone": "¡Calibrada!",
+		"SettingsCalibrationWarning": "¡Asegúrate que la punta esté a temperatura ambiente antes de empezar!",
+		"SettingsResetWarning": "¿Quieres restablecer los ajustes?",
+		"UVLOWarningString": "CC BAJA",
+		"UndervoltageString": "Voltaje bajo",
+		"InputVoltageString": "Voltaje: ",
+		"WarningTipTempString": "Temp punta: ",
+		"BadTipString": "PT. ROTA",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "En reposo...",
-		"WarningSimpleString": "¡CALIENTE!",
-		"WarningAdvancedString": "¡PUNTA CALIENTE!",
+		"WarningSimpleString": "QUEMA",
+		"WarningAdvancedString": "¡LA PUNTA QUEMA!",
 		"SleepingTipAdvancedString": "Punta:",
 		"IdleTipString": "Punta:",
 		"IdleSetString": " Aj:",
-		"TipDisconnectedString": "PUNTA DESCONECTADA",
+		"TipDisconnectedString": "NO HAY PUNTA",
 		"SolderingAdvancedPowerPrompt": "Potencia: ",
-		"OffString": "Apagado",
-		"ResetOKMessage": "Restablecido",
-		"YourGainMessage": "Your Gain:",
-		"SettingsResetMessage": "¡Configuración/nrestablecido!"
+		"OffString": " No",
+		"ResetOKMessage": "Hecho.       ",
+		"YourGainMessage": "Gananc.:",
+		"SettingsResetMessage": "Restablecidos."
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -33,38 +33,38 @@
 		"SettingSlowChar": "L",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
-		"SettingStartSleepOffChar": "O",
+		"SettingStartSleepOffChar": "F",
 		"SettingStartNoneChar": "N"
 	},
 	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Opciones de",
-				"Soldadura"
+				"Ajustes de",
+				"soldadura"
 			],
-			"desc": "Opciones de Soldadura"
+			"desc": "Ajustes para soldar."
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Modos de",
-				"Reposo"
+				"reposo"
 			],
-			"desc": "Opciones de ahorro energético"
+			"desc": "Ajustes de ahorro energético."
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfaz",
-				"de Usuario"
+				"de usuario"
 			],
-			"desc": "Opciones de interfaz de usuario"
+			"desc": "Ajustes de interfaz de usuario."
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Opciones",
-				"Avanzadas"
+				"Ajustes",
+				"avanzados"
 			],
-			"desc": "Opciones avanzadas"
+			"desc": "Ajustes avanzados."
 		}
 	},
 	"menuOptions": {
@@ -74,39 +74,39 @@
 				"Fuente",
 				"de energía"
 			],
-			"desc": "Fuente de energía. Ajusta el límite inferior de voltaje <DC=10V S=3.3V por celda>"
+			"desc": "Elige el tipo de fuente para limitar el voltaje <DC 10V> <S 3,3V por pila, ilimitado>"
 		},
 		"SleepTemperature": {
 			"text": "STMP",
 			"text2": [
-				"Temp en",
-				"reposo"
+				"Temperatura",
+				"en reposo"
 			],
-			"desc": "Temperatura en reposo"
+			"desc": "Temperatura de la punta en reposo."
 		},
 		"SleepTimeout": {
 			"text": "STME",
 			"text2": [
-				"Tiempo h.",
-				"reposo"
+				"Entrar",
+				"en reposo"
 			],
-			"desc": "Tiempo hasta activar reposo <Minutos>"
+			"desc": "Tiempo de inactividad para entrar en reposo <min/seg>"
 		},
 		"ShutdownTimeout": {
 			"text": "SHTME",
 			"text2": [
-				"Tiempo h.",
+				"Tiempo de",
 				"apagado"
 			],
-			"desc": "Tiempo hasta apagado <Minutos>"
+			"desc": "Tiempo de inactividad para apagarse <en minutos>"
 		},
 		"MotionSensitivity": {
 			"text": "MSENSE",
 			"text2": [
-				"Sensibilidad",
-				"al movimiento"
+				"Detección de",
+				"movimiento"
 			],
-			"desc": "Sensibilidad del movimiento <0=Apagado 1=Menos sensible 9=Más sensible>"
+			"desc": "Tiempo de reacción al agarrar <0=no 1=menos sensible 9=más sensible>"
 		},
 		"TemperatureUnit": {
 			"text": "TMPUNT",
@@ -114,15 +114,15 @@
 				"Unidad de",
 				"temperatura"
 			],
-			"desc": "Unidad de temperatura"
+			"desc": "Unidad de temperatura <C=centígrados F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
 			"text": "ADVIDL",
 			"text2": [
-				"Más info en",
-				"modo inactivo"
+				"Info extra en",
+				"modo reposo"
 			],
-			"desc": "Muestra información detallada pequeño en la pantalla inactiva"
+			"desc": "Muestra información detallada en letra pequeña al reposar."
 		},
 		"DisplayRotation": {
 			"text": "DSPROT",
@@ -130,71 +130,71 @@
 				"Orientación",
 				"de pantalla"
 			],
-			"desc": "Orientación de la pantalla <A=Automático I=Mano Izquierda D=Mano Derecha>"
+			"desc": "Orientación de la pantalla <A=automático I=zurdo D=diestro>"
 		},
 		"BoostEnabled": {
 			"text": "BOOST",
 			"text2": [
-				"Boost botón",
-				"activado"
+				"Con botón de",
+				"temp. extra"
 			],
-			"desc": "Activar el botón \"Boost\" en modo soldadura"
+			"desc": "Permite mantener pulsado el primer botón (A) al soldar y calentar momentáneamente un poco más."
 		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [
-				"Temp en",
-				"Boost"
+				"Ajustar la",
+				"temp. extra"
 			],
-			"desc": "Temperatura en modo \"Boost\""
+			"desc": "Temperatura momentánea que se alcanza al apretar el botón del modo extra."
 		},
 		"AutoStart": {
 			"text": "ASTART",
 			"text2": [
-				"Soldadura",
+				"Calentar",
 				"al enchufar"
 			],
-			"desc": "Iniciar modo soldadura en el encendido <S=Si R=Reposo N=No>"
+			"desc": "Se calienta él solo al arrancar <S=entrar en modo soldar R=solo entrar en reposo F=en reposo pero mantiene la punta fría N=no>"
 		},
 		"CooldownBlink": {
 			"text": "CLBLNK",
 			"text2": [
-				"Parpadea m.",
-				"enfriamiento"
+				"Parpadear",
+				"al enfriar"
 			],
-			"desc": "Parpadea la temperatura en el enfriamiento si la punta sigue caliente"
+			"desc": "La temperatura en pantalla parpadea mientras la punta siga caliente."
 		},
 		"TemperatureCalibration": {
 			"text": "TMP CAL?",
 			"text2": [
-				"Calibrar temp",
+				"Calibrar temp.",
 				"de la punta"
 			],
-			"desc": "Calibrar desviación térmica de la punta"
+			"desc": "Calibra la desviación térmica de la punta."
 		},
 		"SettingsReset": {
 			"text": "RESET?",
 			"text2": [
-				"Estado de",
-				"fábrica"
+				"Volver a ajustes",
+				"de fábrica"
 			],
-			"desc": "Restablecer todos los ajustes"
+			"desc": "Restablece todos los ajustes a los valores originales."
 		},
 		"VoltageCalibration": {
 			"text": "CAL VIN?",
 			"text2": [
-				"Calibrar",
-				"V entrada"
+				"Calibrar voltaje",
+				"de entrada"
 			],
-			"desc": "Calibración VIN (Voltaje de entrada.) Ajuste con ambos botones, pulsación larga para salir"
+			"desc": "Calibra VIN. Ajusta con ambos botones y mantén pulsado para salir."
 		},
 		"AdvancedSoldering": {
 			"text": "ADVSLD",
 			"text2": [
-				"Inf detallada",
-				"del soldadura"
+				"Info extra",
+				"al soldar"
 			],
-			"desc": "Mostrar información detallada mientras suelda"
+			"desc": "Muestra más datos por pantalla cuando se está soldando."
 		},
 		"ScrollingSpeed": {
 			"text": "DESCSP",
@@ -202,55 +202,55 @@
 				"Velocidad",
 				"del texto"
 			],
-			"desc": "Velocidad de desplazamiento del texto <R=Rápido L=Lento>"
+			"desc": "Velocidad de desplazamiento del texto <R=rápida L=lenta>"
 		},
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Modelo",
-				"Punta"
+				"Modelo de",
+				"punta"
 			],
-			"desc": "Selección de modelo de punta"
+			"desc": "Elegir el modelo de punta actual."
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
 				"Calibración",
-				"Simple"
+				"simple"
 			],
-			"desc": "Calibración simple usando agua Caliente"
+			"desc": "Calibración simple con agua caliente."
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
 				"Calibración",
-				"Avanzada"
+				"avanzada"
 			],
-			"desc": "Calibración avanzada usando termopar de la punta"
+			"desc": "Calibrar con un termopar en la punta; más difícil."
 		},
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Potencia",
-				"Vatiaje"
+				"Potencia de",
+				"entrada"
 			],
-			"desc": "Potencia vatiaje del adaptador de corriente utilizado"
+			"desc": "Potencia en vatios del adaptador de corriente utilizado."
 		},
 		"PowerLimitEnable": {
 			"text": "PLIMEN",
 			"text2": [
-				"Límite P",
-				"Habilitar"
+				"Limitar la",
+				"potenc. máx."
 			],
-			"desc": "Habilitar límite de potencia"
+			"desc": "Activa el límite de potencia máxima."
 		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [
-				"Límite de",
-				"potencia"
+				"Ajustar la",
+				"potenc. máx."
 			],
-			"desc": "Potencia máxima que la punta puede usar <Vatios>"
+			"desc": "Elige el límite de potencia máxima del soldador <en vatios>"
 		}
 	}
 }
