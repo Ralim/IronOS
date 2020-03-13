@@ -33,7 +33,7 @@ static const LIS_REG i2c_registers[] = {
 
 void LIS2DH12::initalize() {
     for (size_t index = 0; index < (sizeof(i2c_registers) / sizeof(i2c_registers[0])); index++) {
-    	FRToSI2C::I2C_RegisterWrite(LIS2DH_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].value);
+        FRToSI2C::I2C_RegisterWrite(LIS2DH_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].value);
     }
 }
 

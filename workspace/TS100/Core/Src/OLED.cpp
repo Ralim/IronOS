@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "Translation.h"
 #include "cmsis_os.h"
+#include "../../configuration.h"
 
 const uint8_t *OLED::currentFont;  // Pointer to the current font used for
 // rendering to the buffer
@@ -65,7 +66,7 @@ void OLED::initialize() {
 	cursor_x = cursor_y = 0;
 	currentFont = USER_FONT_12;
 	fontWidth = 12;
-	inLeftHandedMode = false;
+	inLeftHandedMode = IN_LEFT_HANDED_MODE;
 	firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
 	secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
 	fontHeight = 16;
@@ -108,10 +109,11 @@ void OLED::drawChar(char c) {
 void OLED::setRotation(bool leftHanded) {
 #ifdef MODEL_TS80
 	leftHanded = !leftHanded;
-#endif
 	if (inLeftHandedMode == leftHanded) {
 		return;
 	}
+#endif
+
 
 	// send command struct again with changes
 	if (leftHanded) {

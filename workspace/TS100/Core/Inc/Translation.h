@@ -9,7 +9,7 @@
 #define TRANSLATION_H_
 #include "stm32f1xx_hal.h"
 enum ShortNameType {
-	SHORT_NAME_SINGLE_LINE = 1, SHORT_NAME_DOUBLE_LINE = 2,
+  SHORT_NAME_SINGLE_LINE = 1, SHORT_NAME_DOUBLE_LINE = 2,
 };
 extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
@@ -18,8 +18,8 @@ extern const uint8_t USER_FONT_6x8[];
  * use SettingsShortNames as SettingsShortNames[16][1].. second column undefined
  */
 extern const enum ShortNameType SettingsShortNameType;
-extern const char *SettingsShortNames[23][2];
-extern const char *SettingsDescriptions[23];
+extern const char *SettingsShortNames[26][2];
+extern const char *SettingsDescriptions[26];
 extern const char *SettingsMenuEntries[4];
 
 extern const char *SettingsCalibrationDone;

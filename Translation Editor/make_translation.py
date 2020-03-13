@@ -7,7 +7,16 @@ import io
 from datetime import datetime
 import sys
 import fontTables
+import sys
+
+# To cause no confusion with the Original firmware version of TS100,
+# which actually has the latest firmware version 2.18
+# Lets go ahead start with version 2.20.0001 BETA
+# Version String: xx.yy.zzzz TAG --> x:Major y:Minor z:Build TAG: REL | BETA | ALPHA
+BUILD_VERSION = 'v2.20.0001 BETA'
+
 TRANSLATION_CPP = "Translation.cpp"
+
 
 try:
     to_unicode = unicode
@@ -94,7 +103,7 @@ def getConstants():
     consants.append(('SymbolVolts', 'V'))
     consants.append(('SymbolDC', 'DC'))
     consants.append(('SymbolCellCount', 'S'))
-    consants.append(('SymbolVersionNumber', 'V2.08'))
+    consants.append(('SymbolVersionNumber', BUILD_VERSION))
     return consants
 
 
@@ -301,7 +310,7 @@ def writeLanguage(languageCode, defs, f):
     obj = lang['menuOptions']
     f.write(to_unicode("const char* SettingsDescriptions[] = {\n"))
 
-    maxLen = 25
+    maxLen = 27
     for mod in defs['menuOptions']:
         eid = mod['id']
         if 'feature' in mod:
@@ -389,7 +398,7 @@ def writeLanguage(languageCode, defs, f):
     obj = lang['menuOptions']
     f.write(to_unicode("const char* SettingsShortNames[][2] = {\n"))
 
-    maxLen = 25
+    maxLen = 27
     for mod in defs['menuOptions']:
         eid = mod['id']
         if 'feature' in mod:
@@ -419,7 +428,7 @@ def writeLanguage(languageCode, defs, f):
         to_unicode("const char* SettingsMenuEntries[" + str(len(obj)) +
                    "] = {\n"))
 
-    maxLen = 25
+    maxLen = 27
     for mod in defs['menuGroups']:
         eid = mod['id']
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
@@ -436,7 +445,7 @@ def writeLanguage(languageCode, defs, f):
         to_unicode("const char* SettingsMenuEntriesDescriptions[" +
                    str(len(obj)) + "] = {\n"))
 
-    maxLen = 25
+    maxLen = 27
     for mod in defs['menuGroups']:
         eid = mod['id']
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))

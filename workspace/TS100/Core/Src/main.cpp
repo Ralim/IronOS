@@ -116,10 +116,7 @@ void startPIDTask(void const *argument __unused) {
 
 #ifdef MODEL_TS80
 	//Set power management code to the tip resistance in ohms * 10
-
 	TickType_t lastPowerPulse = 0;
-#else
-
 #endif
 	history<int32_t, PID_TIM_HZ> tempError = { { 0 }, 0, 0 };
 	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will

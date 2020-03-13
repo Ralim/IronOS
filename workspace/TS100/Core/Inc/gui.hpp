@@ -22,14 +22,14 @@
 
 //Wrapper for holding a function pointer
 typedef struct state_func_t {
-	void (*func)(void);
+  void (*func)(void);
 } state_func;
 
 //Struct for holding the function pointers and descriptions
 typedef struct {
-	const char *description;
-	const state_func incrementHandler;
-	const state_func draw;
+  const char *description;
+  const state_func incrementHandler;
+  const state_func draw;
 } menuitem;
 
 void enterSettingsMenu();

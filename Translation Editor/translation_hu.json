@@ -1,37 +1,37 @@
 {
-	"languageCode": "HU",
-	"languageLocalName": "Magyar",
-	"cyrillicGlyphs": false,
-	"messages": {
-		"SettingsCalibrationDone": "Kalibráció befejezve!",
-		"SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a hegy szobahőmérsékletű!",
-		"SettingsResetWarning": "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?",
-		"UVLOWarningString": "DC KEVÉS",
-		"UndervoltageString": "Alulfeszültség",
-		"InputVoltageString": "Bemenet V: ",
-		"WarningTipTempString": "Hegy hő: ",
-		"BadTipString": "HEGY HIB",
-		"SleepingSimpleString": "Zzzz",
-		"SleepingAdvancedString": "Alvás...",
-		"WarningSimpleString": "FORR",
-		"WarningAdvancedString": "!! FORRÓ HEGY !!",
-		"SleepingTipAdvancedString": "Hegy:",
-		"IdleTipString": "Hegy:",
-		"IdleSetString": " Cél:",
-		"TipDisconnectedString": "HEGY LEVÉVE",
-		"SolderingAdvancedPowerPrompt": "Telj: ",
-		"OffString": "Ki",
-		"ResetOKMessage": "Reset OK"
-	},
-	"characters": {
-		"SettingRightChar": "J",
-		"SettingLeftChar": "B",
-		"SettingAutoChar": "A",
-		"SettingFastChar": "G",
-		"SettingSlowChar": "L",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
+  "languageCode": "HU",
+  "languageLocalName": "Magyar",
+  "cyrillicGlyphs": false,
+  "messages": {
+    "SettingsCalibrationDone": "Kalibráció befejezve!",
+    "SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a hegy szobahőmérsékletű!",
+    "SettingsResetWarning": "Biztosan visszaállítja a beállításokat az alapértelmezett értékekre?",
+    "UVLOWarningString": "DC KEVÉS",
+    "UndervoltageString": "Alulfeszültség",
+    "InputVoltageString": "Bemenet V: ",
+    "WarningTipTempString": "Hegy hő: ",
+    "BadTipString": "HEGY HIB",
+    "SleepingSimpleString": "Zzzz",
+    "SleepingAdvancedString": "Alvás...",
+    "WarningSimpleString": "FORR",
+    "WarningAdvancedString": "!! FORRÓ HEGY !!",
+    "SleepingTipAdvancedString": "Hegy:",
+    "IdleTipString": "Hegy:",
+    "IdleSetString": " Cél:",
+    "TipDisconnectedString": "HEGY LEVÉVE",
+    "SolderingAdvancedPowerPrompt": "Telj: ",
+    "OffString": "Ki",
+    "ResetOKMessage": "Reset OK"
+  },
+  "characters": {
+    "SettingRightChar": "J",
+    "SettingLeftChar": "B",
+    "SettingAutoChar": "A",
+    "SettingFastChar": "G",
+    "SettingSlowChar": "L",
+    "SettingStartSolderingChar": "T",
+    "SettingStartSleepChar": "S",
+  	"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
 	"menuDouble": false,
@@ -249,6 +249,30 @@
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
-		}
+		},
+    "ReverseButtonTempChange": {
+      "text": "RVTCHG",
+      "text2": [
+        "Key +-",
+        "reverse?"
+      ],
+      "desc": "Reverse the tip temperatur plus minus assingment button."
+    },
+    "TempChangeShortStep": {
+      "text": "TCHGST",
+      "text2": [
+        "Temp change",
+        "short?"
+      ],
+      "desc": "Temp change steps on short button press!"
+    },
+    "TempChangeLongStep": {
+      "text": "TCHGLT",
+      "text2": [
+        "Temp change",
+        "long?"
+      ],
+      "desc": "Temp change steps on long button press!"
+    }
 	}
 }
