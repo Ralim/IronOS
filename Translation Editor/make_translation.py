@@ -7,6 +7,13 @@ import io
 from datetime import datetime
 import sys
 import fontTables
+
+# To cause no confusion with the original firmware version of TS100,
+# which actually has the latest firmware version 2.18
+# Lets go ahead start with version 2.20.0001 BETA
+# Version String: xx.yy.zzzz TAG --> x:Major y:Minor z:Build TAG: REL | BETA | ALPHA
+BUILD_VERSION = 'V2.20.0001 BETA'
+
 TRANSLATION_CPP = "Translation.cpp"
 
 try:
@@ -94,7 +101,7 @@ def getConstants():
     consants.append(('SymbolVolts', 'V'))
     consants.append(('SymbolDC', 'DC'))
     consants.append(('SymbolCellCount', 'S'))
-    consants.append(('SymbolVersionNumber', 'V2.08'))
+    consants.append(('SymbolVersionNumber', BUILD_VERSION))
     return consants
 
 
