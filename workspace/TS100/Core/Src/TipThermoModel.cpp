@@ -8,6 +8,7 @@
 #include "TipThermoModel.h"
 #include "Settings.h"
 #include "hardware.h"
+#include "../../configuration.h"
 
 /*
  * The hardware is laid out  as a non-inverting op-amp
@@ -25,18 +26,6 @@
  *
  * This was bought to my attention by <Kuba Sztandera>
  */
-
-// TIP_GAIN =  TIP_GAIN/1000 == uV per deg C constant of the tip
-#ifdef MODEL_TS100
-#define OP_AMP_Rf 		750*1000 		/*750  Kilo-ohms -> From schematic, R1*/
-#define OP_AMP_Rin 		2370			/*2.37 Kilo-ohms -> From schematic, R2*/
-#define TIP_GAIN 405
-#else
-#define OP_AMP_Rf 		180*1000 		/*180  Kilo-ohms -> From schematic, R6*/
-#define OP_AMP_Rin 		2000			/*2.0  Kilo-ohms -> From schematic, R3*/
-#define TIP_GAIN 115
-
-#endif
 
 #define  op_amp_gain_stage  (1+(OP_AMP_Rf/OP_AMP_Rin))
 uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
