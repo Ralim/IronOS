@@ -121,6 +121,10 @@ void resetSettings() {
   systemSettings.CalibrationOffset              = CALIBRATION_OFFSET;  // the adc offset in uV
   systemSettings.pidPowerLimit                  = PID_POWER_LIMIT;  // Sets the max pwm power limit
   systemSettings.powerLimit                     = POWER_LIMIT;   // 30 watts default limit
+  systemSettings.ReverseButtonTempChangeEnabled = REVERSE_BUTTON_TEMP_CHANGE; //
+  systemSettings.TempChangeShortStep            = TEMP_CHANGE_SHORT_STEP; //
+  systemSettings.TempChangeLongStep             = TEMP_CHANGE_LONG_STEP; //
+
 
   saveSettings();  // Save default settings
 }

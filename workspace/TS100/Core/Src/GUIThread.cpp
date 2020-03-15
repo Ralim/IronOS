@@ -17,6 +17,8 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 #include "TipThermoModel.h"
+#include "../../configuration.h"
+
 extern uint8_t PCBVersion;
 // File local variables
 extern uint32_t currentTempTargetDegC;
@@ -278,27 +280,36 @@ static void gui_solderingTempAdjust() {
 			// exit
 			return;
 			break;
-		case BUTTON_B_LONG:
+case BUTTON_B_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
-				systemSettings.SolderingTemp -= 10;  // sub 10
+        if(systemSettings.ReverseButtonTempChangeEnabled) {
+          systemSettings.SolderingTemp += systemSettings.TempChangeLongStep;
+        } else systemSettings.SolderingTemp -= systemSettings.TempChangeLongStep;
+        
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
+    case BUTTON_B_SHORT:
+       if(systemSettings.ReverseButtonTempChangeEnabled) {
+        systemSettings.SolderingTemp += systemSettings.TempChangeShortStep;
+       } else systemSettings.SolderingTemp -= systemSettings.TempChangeShortStep;
+      break;
 		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
-				systemSettings.SolderingTemp += 10;
+        if(systemSettings.ReverseButtonTempChangeEnabled) {
+          systemSettings.SolderingTemp -= systemSettings.TempChangeLongStep;
+        } else systemSettings.SolderingTemp += systemSettings.TempChangeLongStep;
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_F_SHORT:
-			systemSettings.SolderingTemp += 10;  // add 10
-			break;
-		case BUTTON_B_SHORT:
-			systemSettings.SolderingTemp -= 10;  // sub 10
+      if(systemSettings.ReverseButtonTempChangeEnabled) {
+        systemSettings.SolderingTemp -= systemSettings.TempChangeShortStep;  // add 10
+      } else systemSettings.SolderingTemp += systemSettings.TempChangeShortStep;  // add 10
 			break;
 		default:
 			break;
@@ -325,13 +336,15 @@ static void gui_solderingTempAdjust() {
 			return;  // exit if user just doesn't press anything for a bit
 
 #ifdef MODEL_TS80
-		if (!OLED::getRotation())
+		if (!OLED::getRotation()) {
 #else
-		if (OLED::getRotation())
+		if (OLED::getRotation()) {
 #endif
-			OLED::print(SymbolMinus);
-		else
-			OLED::print(SymbolPlus);
+    	OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolPlus:SymbolMinus);
+		} else { 
+			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolMinus:SymbolPlus);
+		}
+
 
 		OLED::print(SymbolSpace);
 		OLED::printNumber(systemSettings.SolderingTemp, 3);
@@ -341,13 +354,14 @@ static void gui_solderingTempAdjust() {
 			OLED::drawSymbol(1);
 		OLED::print(SymbolSpace);
 #ifdef MODEL_TS80
-		if (!OLED::getRotation())
+		if (!OLED::getRotation()) {
 #else
-		if (OLED::getRotation())
+		if (OLED::getRotation()) {
 #endif
-			OLED::print(SymbolPlus);
-		else
-			OLED::print(SymbolMinus);
+			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolMinus:SymbolPlus);
+		} else {
+			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolPlus:SymbolMinus);
+		}
 		OLED::refresh();
 		GUIDelay();
 	}

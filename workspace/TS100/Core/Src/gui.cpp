@@ -17,13 +17,12 @@ extern uint32_t lastButtonTime;
 void gui_Menu(const menuitem *menu);
 
 #ifdef MODEL_TS100
-	static void settings_setInputVRange(void);
-	static void settings_displayInputVRange(void);
+  static void settings_setInputVRange(void);
+  static void settings_displayInputVRange(void);
 #else
-	static void settings_setInputPRange(void);
-	static void settings_displayInputPRange(void);
+  static void settings_setInputPRange(void);
+  static void settings_displayInputPRange(void);
 #endif
-
 static void settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
 static void settings_setSleepTime(void);
@@ -60,6 +59,12 @@ static void settings_setCalibrate(void);
 static void settings_displayCalibrate(void);
 static void settings_setCalibrateVIN(void);
 static void settings_displayCalibrateVIN(void);
+static void settings_displayReverseButtonTempChangeEnabled(void);
+static void settings_setReverseButtonTempChangeEnabled(void);
+static void settings_displayTempChangeShortStep(void);
+static void settings_setTempChangeShortStep(void);
+static void settings_displayTempChangeLongStep(void);
+static void settings_setTempChangeLongStep(void);
 
 // Menu functions
 static void settings_displaySolderingMenu(void);
@@ -78,6 +83,9 @@ static void settings_enterAdvancedMenu(void);
  * 	Boost Mode Enabled
  * 	Boost Mode Temp
  * 	Auto Start
+ *  Temp change short step
+ *  Temp change long step
+
  *
  * Power Saving
  * 	Sleep Temp
@@ -91,6 +99,7 @@ static void settings_enterAdvancedMenu(void);
  *  Temperature Unit
  *  Display orientation
  *  Cooldown blink
+ *  Reverse Temp change buttons + - 
  *
  * Advanced
  *  Enable Power Limit
@@ -135,6 +144,8 @@ const menuitem solderingMenu[] = {
  * Boost Mode Enabled
  * 	Boost Mode Temp
  * 	Auto Start
+ *  Temp change short step
+ *  Temp change long step
  */
 { (const char*) SettingsDescriptions[8], { settings_setBoostModeEnabled }, {
 		settings_displayBoostModeEnabled } }, /*Enable Boost*/
@@ -142,6 +153,10 @@ const menuitem solderingMenu[] = {
 		settings_displayBoostTemp } }, /*Boost Temp*/
 { (const char*) SettingsDescriptions[10], { settings_setAutomaticStartMode }, {
 		settings_displayAutomaticStartMode } }, /*Auto start*/
+{ (const char*) SettingsDescriptions[24], { settings_setTempChangeShortStep }, {
+    settings_displayTempChangeShortStep } }, /*Temp change short step*/
+{ (const char*) SettingsDescriptions[25], { settings_setTempChangeLongStep }, {
+    settings_displayTempChangeLongStep } }, /*Temp change long step*/
 { NULL, { NULL }, { NULL } }                // end of menu marker. DO NOT REMOVE
 };
 const menuitem UIMenu[] = {
@@ -151,6 +166,7 @@ const menuitem UIMenu[] = {
  *  Temperature Unit
  *  Display orientation
  *  Cooldown blink
+ *  Reverse Temp change buttons + - 
  */
 { (const char*) SettingsDescriptions[5], { settings_setTempF }, {
 		settings_displayTempF } }, /* Temperature units*/
@@ -160,6 +176,8 @@ const menuitem UIMenu[] = {
 		settings_displayCoolingBlinkEnabled } }, /*Cooling blink warning*/
 { (const char*) SettingsDescriptions[16], { settings_setScrollSpeed }, {
 		settings_displayScrollSpeed } }, /*Scroll Speed for descriptions*/
+{ (const char*) SettingsDescriptions[23], { settings_setReverseButtonTempChangeEnabled }, {
+    settings_displayReverseButtonTempChangeEnabled } }, /* Reverse Temp change buttons + - */
 { NULL, { NULL }, { NULL } }           // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerMenu[] = {
@@ -710,6 +728,37 @@ static void settings_setCalibrateVIN(void) {
 		}
 #endif
 	}
+}
+
+static void settings_setReverseButtonTempChangeEnabled(void) {
+  systemSettings.ReverseButtonTempChangeEnabled = !systemSettings.ReverseButtonTempChangeEnabled;
+}
+
+static void settings_displayReverseButtonTempChangeEnabled(void){
+  printShortDescription(23, 7);
+  OLED::drawCheckbox(systemSettings.ReverseButtonTempChangeEnabled);
+}
+
+static void settings_setTempChangeShortStep(void) {
+  systemSettings.TempChangeShortStep += TEMP_CHANGE_SHORT_STEP;
+  if (systemSettings.TempChangeShortStep > TEMP_CHANGE_SHORT_STEP_MAX) {
+    systemSettings.TempChangeShortStep = TEMP_CHANGE_SHORT_STEP;  // loop back at TEMP_CHANGE_SHORT_STEP_MAX
+  }
+}
+static void settings_displayTempChangeShortStep(void) {
+  printShortDescription(24, 5);
+  OLED::printNumber(systemSettings.TempChangeShortStep, 3);
+}
+
+static void settings_setTempChangeLongStep(void) {
+  systemSettings.TempChangeLongStep += TEMP_CHANGE_LONG_STEP;
+  if (systemSettings.TempChangeLongStep > TEMP_CHANGE_LONG_STEP_MAX) {
+    systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP;  // loop back at TEMP_CHANGE_LONG_STEP_MAX
+  }
+}
+static void settings_displayTempChangeLongStep(void) {
+  printShortDescription(25, 5);
+  OLED::printNumber(systemSettings.TempChangeLongStep, 3);
 }
 
 static void displayMenu(size_t index) {
