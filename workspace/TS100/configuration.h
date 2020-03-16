@@ -15,7 +15,7 @@
 #define SOLDERING_TEMP           320        // Default soldering temp is 320.0 °C
 #define SLEEP_TEMP               150        // Default sleep temperature
 #define BOOST_TEMP               420        // Default boost temp. 
-#define BOOST_MODE_ENABLED       0          // 0: Disable 1: Enable
+#define BOOST_MODE_ENABLED       1          // 0: Disable 1: Enable
 
 /**
  * Blink the temperature on the cooling screen when its > 50C 
