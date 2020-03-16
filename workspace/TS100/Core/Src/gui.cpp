@@ -11,16 +11,19 @@
 #include "main.hpp"
 #include "TipThermoModel.h"
 #include "string.h"
+#include "../../configuration.h"
+
 extern uint32_t lastButtonTime;
 void gui_Menu(const menuitem *menu);
-#ifdef MODEL_TS100
-static void settings_setInputVRange(void);
-static void settings_displayInputVRange(void);
-#else
-static void settings_setInputPRange(void);
-static void settings_displayInputPRange(void);
 
+#ifdef MODEL_TS100
+	static void settings_setInputVRange(void);
+	static void settings_displayInputVRange(void);
+#else
+	static void settings_setInputPRange(void);
+	static void settings_displayInputPRange(void);
 #endif
+
 static void settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
 static void settings_setSleepTime(void);
@@ -463,18 +466,10 @@ static void settings_displayPowerLimitEnable(void) {
 }
 
 static void settings_setPowerLimit(void) {
-#ifdef MODEL_TS100
-	if (systemSettings.powerLimit >= 65)
-		systemSettings.powerLimit = 5;
+	if (systemSettings.powerLimit >= MAX_POWER_LIMIT)
+		systemSettings.powerLimit = POWER_LIMIT_STEPS;
 	else
-		systemSettings.powerLimit += 5;
-#endif
-#ifdef MODEL_TS80
-	if(systemSettings.powerLimit >= 30)
-		systemSettings.powerLimit = 2;
-	else
-		systemSettings.powerLimit += 2;
-#endif
+		systemSettings.powerLimit += POWER_LIMIT_STEPS;
 }
 
 static void settings_displayPowerLimit(void) {
