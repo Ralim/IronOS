@@ -8,6 +8,7 @@
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
 #include "stm32f1xx_hal.h"
+#include "../../configuration.h"
 enum ShortNameType {
 	SHORT_NAME_SINGLE_LINE = 1, SHORT_NAME_DOUBLE_LINE = 2,
 };
@@ -64,7 +65,9 @@ extern const char *SymbolMinus;
 extern const char *SymbolSpace;
 extern const char *SymbolDot;
 extern const char *SymbolDegC;
-extern const char *SymbolDegF;
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
+	extern const char *SymbolDegF;
+#endif
 extern const char *SymbolMinutes;
 extern const char *SymbolSeconds;
 extern const char *SymbolWatts;

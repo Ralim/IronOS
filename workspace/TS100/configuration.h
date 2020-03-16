@@ -18,6 +18,16 @@
 #define BOOST_MODE_ENABLED       0          // 0: Disable 1: Enable
 
 /**
+ * °F Fahrenheit Support
+ * Enabled - you can switch in menu settings to Fahrenheit or Celsius.
+ * Disabled - you see only Celsius. All settings are then is in Celsius only.
+ * Usefull for regions where Fahrenheit never used or needed.
+ * 
+ * Uncomment to disable Fahrenheit Support!
+ */
+#define ENABLED_FAHRENHEIT_SUPPORT          // Default - Enabled! Uncomment to Disable! 
+
+/**
  * Blink the temperature on the cooling screen when its > 50C 
  */
 #define COOLING_TEMP_BLINK       1          // 0: Disable 1: Enable
@@ -42,17 +52,16 @@
 /**
  * OLED Orientation
  */
-#define ORIENTATION_MODE            1         // 0: Right 1:Left 2:Automatic - Default right
-#define REVERSE_BUTTON_TEMP_CHANGE  1         // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperatur change
+#define ORIENTATION_MODE            0         // 0: Right 1:Left 2:Automatic - Default right
+#define REVERSE_BUTTON_TEMP_CHANGE  0         // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperatur change
 
 /**
  * Temp change settings
  */
-#define TEMP_CHANGE_SHORT_STEP      1         // Default temp change short step +1
+#define TEMP_CHANGE_SHORT_STEP      5         // Default temp change short step +1
 #define TEMP_CHANGE_LONG_STEP       10        // Default temp change long step +10
 #define TEMP_CHANGE_SHORT_STEP_MAX  50        // Temp change short step MAX value
 #define TEMP_CHANGE_LONG_STEP_MAX   100       // Temp change long step MAX value
-
 
 /**
  * OLED Orientation Sensitivity on Automatic mode!

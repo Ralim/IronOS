@@ -12,7 +12,7 @@ import fontTables
 # which actually has the latest firmware version 2.18
 # Lets go ahead start with version 2.20.0001 BETA
 # Version String: xx.yy.zzzz TAG --> x:Major y:Minor z:Build TAG: REL | BETA | ALPHA
-BUILD_VERSION = 'V2.20.0001 BETA'
+BUILD_VERSION = 'V2.20.0002 BETA'
 
 TRANSLATION_CPP = "Translation.cpp"
 

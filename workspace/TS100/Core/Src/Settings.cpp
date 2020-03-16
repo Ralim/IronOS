@@ -11,7 +11,6 @@
 #include "Settings.h"
 #include "Setup.h"
 #include "string.h"
-#include "../../configuration.h"
 
 volatile systemSettingsType systemSettings;
 
@@ -115,7 +114,9 @@ void resetSettings() {
   systemSettings.BoostTemp                      = BOOST_TEMP;  // default to 400C
   systemSettings.autoStartMode                  = AUTO_START_MODE;  // Auto start off for safety
   systemSettings.coolingTempBlink               = COOLING_TEMP_BLINK; // Blink the temperature on the cooling screen when its > 50C
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
   systemSettings.temperatureInF                 = TEMPERATURE_INF;  // default to 0
+#endif
   systemSettings.descriptionScrollSpeed         = DESCRIPTION_SCROLL_SPEED;  // default to slow
   systemSettings.powerLimitEnable               = POWER_LIMIT_ENABLE; // Default to no power limit
   systemSettings.CalibrationOffset              = CALIBRATION_OFFSET;  // the adc offset in uV

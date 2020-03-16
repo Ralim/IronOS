@@ -8,7 +8,6 @@
 #include "TipThermoModel.h"
 #include "Settings.h"
 #include "hardware.h"
-#include "../../configuration.h"
 
 /*
  * The hardware is laid out  as a non-inverting op-amp
@@ -52,9 +51,11 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 uint32_t TipThermoModel::convertTipRawADCToDegC(uint16_t rawADC) {
 	return convertuVToDegC(convertTipRawADCTouV(rawADC));
 }
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) {
 	return convertuVToDegF(convertTipRawADCTouV(rawADC));
 }
+#endif
 
 //Table that is designed to be walked to find the best sample for the lookup
 
@@ -76,6 +77,7 @@ uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
 	return tipuVDelta;
 }
 
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
 	tipuVDelta *= TIP_GAIN;
 	tipuVDelta /= 1000;
@@ -94,6 +96,7 @@ uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
 		return 0;
 	return ((degF - 32) * 5) / 9;
 }
+#endif
 
 uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 	uint32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(
@@ -101,13 +104,14 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 	currentTipTempInC += getHandleTemperature() / 10; //Add handle offset
 	return currentTipTempInC;
 }
-
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
 			getTipRawTemp(sampleNow));
 	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
 	return currentTipTempInF;
 }
+#endif
 
 uint32_t TipThermoModel::getTipMaxInC() {
 	uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(
