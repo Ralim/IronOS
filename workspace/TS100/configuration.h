@@ -20,7 +20,7 @@
 /**
  * Blink the temperature on the cooling screen when its > 50C 
  */
-#define COOLING_TEMP_BLINK       1          // 0: Disable 1: Enable
+#define COOLING_TEMP_BLINK       0          // 0: Disable 1: Enable
 
 /**
  * How many seconds/minutes we wait until going to sleep/shutdown.
@@ -69,7 +69,7 @@
   #define VOLTAGE_DIV             467       // 467 - Default divider from schematic
   #define CALIBRATION_OFFSET      900       // 900 - Default adc offset in uV
   #define PID_POWER_LIMIT         70        // Sets the max pwm power limit
-  #define POWER_LIMIT             65        // 30 watts default limit
+  #define POWER_LIMIT             30        // 30 watts default limit
   #define MAX_POWER_LIMIT         65        //
   #define POWER_LIMIT_STEPS        5        //
   
