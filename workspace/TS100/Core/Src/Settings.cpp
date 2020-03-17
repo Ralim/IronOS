@@ -97,9 +97,12 @@ void resetSettings() {
 	systemSettings.coolingTempBlink = COOLING_TEMP_BLINK; // Blink the temperature on the cooling screen when its > 50C
 	systemSettings.temperatureInF = TEMPERATURE_INF;          // default to 0
 	systemSettings.descriptionScrollSpeed = DESCRIPTION_SCROLL_SPEED;  // default to slow
-  systemSettings.powerLimitEnable = POWER_LIMIT_ENABLE; // Default to no power limit
+	systemSettings.powerLimitEnable = POWER_LIMIT_ENABLE; // Default to no power limit
 	systemSettings.CalibrationOffset = CALIBRATION_OFFSET;  // the adc offset in uV
 	systemSettings.pidPowerLimit = PID_POWER_LIMIT;  // Sets the max pwm power limit
 	systemSettings.powerLimit = POWER_LIMIT; // 30 watts default limit
+	systemSettings.ReverseButtonTempChangeEnabled = REVERSE_BUTTON_TEMP_CHANGE; //
+	systemSettings.TempChangeShortStep = TEMP_CHANGE_SHORT_STEP; //
+	systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP; //
 	saveSettings();  // Save defaults
 }

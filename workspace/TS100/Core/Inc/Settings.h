@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
-#define SETTINGSVERSION   ( 0x1C )
+#define SETTINGSVERSION   ( 0x1D )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -50,6 +50,10 @@ typedef struct {
 	uint8_t version;  // Used to track if a reset is needed on firmware upgrade
 	uint32_t padding;  // This is here for in case we are not an even divisor so
 					   // that nothing gets cut off
+  uint8_t ReverseButtonTempChangeEnabled;   // Change the plus and minus button assigment
+  uint16_t TempChangeLongStep;              // Change the plus and minus button assigment
+  uint16_t TempChangeShortStep;             // Change the plus and minus button assigment
+
 } systemSettingsType;
 
 extern volatile systemSettingsType systemSettings;
