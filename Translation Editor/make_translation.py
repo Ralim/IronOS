@@ -8,12 +8,6 @@ from datetime import datetime
 import sys
 import fontTables
 
-# To cause no confusion with the original firmware version of TS100,
-# which actually has the latest firmware version 2.18
-# Lets go ahead start with version 2.20.0001 BETA
-# Version String: xx.yy.zzzz TAG --> x:Major y:Minor z:Build TAG: REL | BETA | ALPHA
-BUILD_VERSION = 'V2.20.0001 BETA'
-
 TRANSLATION_CPP = "Translation.cpp"
 
 try:
@@ -101,7 +95,7 @@ def getConstants():
     consants.append(('SymbolVolts', 'V'))
     consants.append(('SymbolDC', 'DC'))
     consants.append(('SymbolCellCount', 'S'))
-    consants.append(('SymbolVersionNumber', BUILD_VERSION))
+    consants.append(('SymbolVersionNumber', buildVersion))
     return consants
 
 
@@ -460,24 +454,26 @@ def writeLanguage(languageCode, defs, f):
 
 def read_opts():
     """ Reading input parameters
-    First parameter = json directory
-    Second parameter = target directory
+    First parameter = build version
+    Second parameter = json directory
+    Third parameter = target directory
     """
     if len(sys.argv) > 1:
-        jsonDir = sys.argv[1]
+        buildVersion = sys.argv[1]
+    else:
+        raise Exception("Could not get build version")
+    if len(sys.argv) > 2:
+        jsonDir = sys.argv[2]
     else:
         jsonDir = "."
-
-    if len(sys.argv) > 2:
-        outFile = sys.argv[2]
+    if len(sys.argv) > 3:
+        outFile = sys.argv[3]
     else:
         outDir = os.path.relpath(jsonDir + "/../workspace/TS100/Core/Src")
         outFile = os.path.join(outDir, TRANSLATION_CPP)
-
-    if len(sys.argv) > 3:
+    if len(sys.argv) > 4:
         raise Exception("Too many parameters!")
-
-    return jsonDir, outFile
+    return jsonDir, outFile, buildVersion
 
 
 def orderOutput(langDict):
@@ -506,11 +502,12 @@ def writeTarget(outFile, defs, langCodes):
 
 if __name__ == "__main__":
     try:
-        jsonDir, outFile = read_opts()
+        jsonDir, outFile, buildVersion = read_opts()
     except:
-        print("usage: make_translation.py {json dir} {cpp dir}")
+        print("usage: make_translation.py {build version} {json dir} {cpp dir}")
         sys.exit(1)
 
+    print("Build version string: " + buildVersion)
     print("Making " + outFile + " from " + jsonDir)
 
     langDict = readTranslations(jsonDir)
