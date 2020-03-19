@@ -7,12 +7,8 @@ import io
 from datetime import datetime
 import sys
 import fontTables
-
-# To cause no confusion with the original firmware version of TS100,
-# which actually has the latest firmware version 2.18
-# Lets go ahead start with version 2.20.0001 BETA
-# Version String: xx.yy.zzzz TAG --> x:Major y:Minor z:Build TAG: REL | BETA | ALPHA
-BUILD_VERSION = 'V2.20.0001 BETA'
+import re
+import subprocess
 
 TRANSLATION_CPP = "Translation.cpp"
 
@@ -101,7 +97,7 @@ def getConstants():
     consants.append(('SymbolVolts', 'V'))
     consants.append(('SymbolDC', 'DC'))
     consants.append(('SymbolCellCount', 'S'))
-    consants.append(('SymbolVersionNumber', BUILD_VERSION))
+    consants.append(('SymbolVersionNumber', buildVersion))
     return consants
 
 
@@ -457,6 +453,22 @@ def writeLanguage(languageCode, defs, f):
     # ----- Block end
     f.write(to_unicode("#endif\n"))
 
+def readVersion():
+    with open(os.path.relpath(jsonDir + 
+    "/../workspace/TS100/version.h"),"r") as version_file:
+        try: 
+            for line in version_file:
+                if re.findall(r'^.*(?<=(#define)).*(?<=(BUILD_VERSION))', line):
+                    line = re.findall(r'\"(.+?)\"',line)
+                    if line: 
+                        version = line[0]
+                        try: version += "."+ subprocess.check_output(
+                            ["git","describe", "--always"]).strip().decode('ascii').upper()
+                        except OSError: version += " git"
+        finally: 
+            if version_file: 
+                version_file.close(); 
+                return version
 
 def read_opts():
     """ Reading input parameters
@@ -503,7 +515,6 @@ def writeTarget(outFile, defs, langCodes):
         for langCode in langCodes:
             writeLanguage(langCode, defs, f)
 
-
 if __name__ == "__main__":
     try:
         jsonDir, outFile = read_opts()
@@ -511,6 +522,10 @@ if __name__ == "__main__":
         print("usage: make_translation.py {json dir} {cpp dir}")
         sys.exit(1)
 
+    try: buildVersion = readVersion()
+    except: print("error: could not get/extract build version"); sys.exit(1)
+
+    print("Build version: " + buildVersion)
     print("Making " + outFile + " from " + jsonDir)
 
     langDict = readTranslations(jsonDir)
