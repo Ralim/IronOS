@@ -7,6 +7,8 @@ import io
 from datetime import datetime
 import sys
 import fontTables
+import re
+import subprocess
 
 TRANSLATION_CPP = "Translation.cpp"
 
@@ -451,29 +453,43 @@ def writeLanguage(languageCode, defs, f):
     # ----- Block end
     f.write(to_unicode("#endif\n"))
 
+def readVersion():
+    with open(os.path.relpath(jsonDir + 
+    "/../workspace/TS100/version.h"),"r") as version_file:
+        try: 
+            for line in version_file:
+                if re.findall(r'^.*(?<=(#define)).*(?<=(BUILD_VERSION))', line):
+                    line = re.findall(r'\"(.+?)\"',line)
+                    if line: 
+                        version = line[0]
+                        try: version += "."+ subprocess.check_output(
+                            ["git","describe", "--always"]).strip().decode('ascii').upper()
+                        except OSError: version += " git"
+        finally: 
+            if version_file: 
+                version_file.close(); 
+                return version
 
 def read_opts():
     """ Reading input parameters
-    First parameter = build version
-    Second parameter = json directory
-    Third parameter = target directory
+    First parameter = json directory
+    Second parameter = target directory
     """
     if len(sys.argv) > 1:
-        buildVersion = sys.argv[1]
-    else:
-        raise Exception("Could not get build version")
-    if len(sys.argv) > 2:
-        jsonDir = sys.argv[2]
+        jsonDir = sys.argv[1]
     else:
         jsonDir = "."
-    if len(sys.argv) > 3:
-        outFile = sys.argv[3]
+
+    if len(sys.argv) > 2:
+        outFile = sys.argv[2]
     else:
         outDir = os.path.relpath(jsonDir + "/../workspace/TS100/Core/Src")
         outFile = os.path.join(outDir, TRANSLATION_CPP)
-    if len(sys.argv) > 4:
+
+    if len(sys.argv) > 3:
         raise Exception("Too many parameters!")
-    return jsonDir, outFile, buildVersion
+
+    return jsonDir, outFile
 
 
 def orderOutput(langDict):
@@ -499,15 +515,17 @@ def writeTarget(outFile, defs, langCodes):
         for langCode in langCodes:
             writeLanguage(langCode, defs, f)
 
-
 if __name__ == "__main__":
     try:
-        jsonDir, outFile, buildVersion = read_opts()
+        jsonDir, outFile = read_opts()
     except:
-        print("usage: make_translation.py {build version} {json dir} {cpp dir}")
+        print("usage: make_translation.py {json dir} {cpp dir}")
         sys.exit(1)
 
-    print("Build version string: " + buildVersion)
+    try: buildVersion = readVersion()
+    except: print("error: could not get/extract build version"); sys.exit(1)
+
+    print("Build version: " + buildVersion)
     print("Making " + outFile + " from " + jsonDir)
 
     langDict = readTranslations(jsonDir)

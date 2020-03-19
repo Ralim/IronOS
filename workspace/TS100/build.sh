@@ -8,7 +8,6 @@ AVAILABLE_LANGUAGES=()
 BUILD_LANGUAGES=()
 AVAILABLE_MODELS=("TS100" "TS80")
 BUILD_MODELS=()
-BUILD_VERSION=()
 
 usage ()
 {
@@ -21,14 +20,6 @@ Parameters :
 
 INFO : By default, without parameters, the build is for all platforms and all languages" 1>&2
   exit 1
-}
-
-buildVersion ()
-{
-    GIT_HASH="$(git describe --always)"
-    VERSION="$(grep '#define BUILD_VERSION' 'version.h' | awk '{print $3}' | sed 's/"//g')"
-    BUILD_VERSION=$VERSION'.'$GIT_HASH
-    echo "Building version: $BUILD_VERSION"
 }
 
 checkLastCommand ()
@@ -90,10 +81,6 @@ echo "                                     by Ralim"
 echo "                                             "
 echo "*********************************************"
 
-#Get and show build version
-buildVersion
-echo "*********************************************"
-
 # Calculate available languages
 for f in "$TRANSLATION_DIR"/translation_*.json
 do
@@ -143,7 +130,7 @@ echo "*********************************************"
 if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]
 then 
     echo "Generating Translation.cpp"
-    python3 "$TRANSLATION_DIR/$TRANSLATION_SCRIPT" "$BUILD_VERSION" "$TRANSLATION_DIR" 
+    python3 "$TRANSLATION_DIR/$TRANSLATION_SCRIPT" "$TRANSLATION_DIR" 
     checkLastCommand
 
     echo "Cleaning previous builds"
