@@ -78,6 +78,7 @@ echo "             Builder for the"
 echo "      Alternate Open Source Firmware"
 echo "        for Miniware TS100 or TS80"
 echo "                                     by Ralim"
+echo "                                             "
 echo "*********************************************"
 
 # Calculate available languages
