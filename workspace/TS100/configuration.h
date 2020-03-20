@@ -44,7 +44,6 @@
  * 
  */
 #define ORIENTATION_MODE            0         // 0: Right 1:Left 2:Automatic - Default right
-#define IN_LEFT_HANDED_MODE         0         // 0:FALSE 1:TRUE - Default false
 #define REVERSE_BUTTON_TEMP_CHANGE  0         // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperatur change
 #define TEMP_CHANGE_SHORT_STEP      1         // Default temp change short step +1
 #define TEMP_CHANGE_LONG_STEP       10        // Default temp change long step +10
