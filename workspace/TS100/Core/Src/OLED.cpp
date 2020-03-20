@@ -66,7 +66,7 @@ void OLED::initialize() {
 	cursor_x = cursor_y = 0;
 	currentFont = USER_FONT_12;
 	fontWidth = 12;
-	inLeftHandedMode = IN_LEFT_HANDED_MODE;
+	inLeftHandedMode = false;
 	firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
 	secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
 	fontHeight = 16;
