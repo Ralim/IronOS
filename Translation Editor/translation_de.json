@@ -2,6 +2,7 @@
 	"languageCode": "DE",
 	"languageLocalName": "Deutsch",
 	"cyrillicGlyphs": false,
+	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibrierung abgeschlossen!",
 		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",

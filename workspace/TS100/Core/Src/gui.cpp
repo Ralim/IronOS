@@ -11,6 +11,7 @@
 #include "main.hpp"
 #include "TipThermoModel.h"
 #include "string.h"
+#include "unit.h"
 #include "../../configuration.h"
 
 extern uint32_t lastButtonTime;
@@ -31,8 +32,10 @@ static void settings_setShutdownTime(void);
 static void settings_displayShutdownTime(void);
 static void settings_setSensitivity(void);
 static void settings_displaySensitivity(void);
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 static void settings_setTempF(void);
 static void settings_displayTempF(void);
+#endif
 static void settings_setAdvancedSolderingScreens(void);
 static void settings_displayAdvancedSolderingScreens(void);
 static void settings_setAdvancedIDLEScreens(void);
@@ -168,8 +171,10 @@ const menuitem UIMenu[] = {
  *  Cooldown blink
  *  Reverse Temp change buttons + - 
  */
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 { (const char*) SettingsDescriptions[5], { settings_setTempF }, {
 		settings_displayTempF } }, /* Temperature units*/
+#endif
 { (const char*) SettingsDescriptions[7], { settings_setDisplayRotation }, {
 		settings_displayDisplayRotation } }, /*Display Rotation*/
 { (const char*) SettingsDescriptions[11], { settings_setCoolingBlinkEnabled }, {
@@ -354,11 +359,15 @@ static void settings_displayInputPRange(void) {
 #endif
 static void settings_setSleepTemp(void) {
 	// If in C, 10 deg, if in F 20 deg
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 	if (systemSettings.temperatureInF) {
 		systemSettings.SleepTemp += 20;
 		if (systemSettings.SleepTemp > 580)
 			systemSettings.SleepTemp = 120;
-	} else {
+	} 
+	else
+#endif
+	{
 		systemSettings.SleepTemp += 10;
 		if (systemSettings.SleepTemp > 300)
 			systemSettings.SleepTemp = 50;
@@ -411,7 +420,7 @@ static void settings_displayShutdownTime(void) {
 		OLED::print(SymbolMinutes);
 	}
 }
-
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 static void settings_setTempF(void) {
 	systemSettings.temperatureInF = !systemSettings.temperatureInF;
 	if (systemSettings.temperatureInF) {
@@ -443,6 +452,7 @@ static void settings_displayTempF(void) {
 
 	OLED::print((systemSettings.temperatureInF) ? SymbolDegF : SymbolDegC);
 }
+#endif
 
 static void settings_setSensitivity(void) {
 	systemSettings.sensitivity++;
@@ -557,12 +567,15 @@ static void settings_displayBoostModeEnabled(void) {
 }
 
 static void settings_setBoostTemp(void) {
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 	if (systemSettings.temperatureInF) {
 		systemSettings.BoostTemp += 20;  // Go up 20F at a time
 		if (systemSettings.BoostTemp > 850) {
 			systemSettings.BoostTemp = 480;  // loop back at 250
 		}
-	} else {
+	} else 
+#endif
+	{
 		systemSettings.BoostTemp += 10;  // Go up 10C at a time
 		if (systemSettings.BoostTemp > 450) {
 			systemSettings.BoostTemp = 250;  // loop back at 250

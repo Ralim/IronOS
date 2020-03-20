@@ -66,6 +66,9 @@ ci/secrets/unencrypted/
 codeship.aes
 .vscode/settings.json
 
+# Auto generated files
+workspace/TS100/Core/Src/Translation.cpp
+workspace/TS100/Core/Inc/unit.h
 # IDE configs
 .vs/*
 .settings/*

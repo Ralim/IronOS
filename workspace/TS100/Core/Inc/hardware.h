@@ -12,6 +12,7 @@
 #include "FreeRTOS.h"
 #include "stm32f1xx_hal.h"
 #include "cmsis_os.h"
+#include "unit.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -124,7 +125,9 @@ void setTipPWM(uint8_t pulse);
 uint16_t ctoTipMeasurement(uint16_t temp);
 uint16_t tipMeasurementToC(uint16_t raw);
 uint16_t ftoTipMeasurement(uint16_t temp);
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 uint16_t tipMeasurementToF(uint16_t raw);
+#endif
 void seekQC(int16_t Vx10, uint16_t divisor);
 void setCalibrationOffset(int16_t offSet);
 void setTipType(enum TipType tipType, uint8_t manualCalGain);

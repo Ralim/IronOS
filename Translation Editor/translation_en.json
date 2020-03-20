@@ -2,6 +2,7 @@
 	"languageCode": "EN",
 	"languageLocalName": "English",
 	"cyrillicGlyphs": false,
+	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
