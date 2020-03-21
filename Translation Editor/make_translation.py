@@ -503,7 +503,8 @@ def readVersion():
                     if line: 
                         version = line[0]
                         try: version += "."+ subprocess.check_output(
-                            ["git","describe", "--always"]).strip().decode('ascii').upper()
+                            ["git","rev-parse", "--short=7", "HEAD"]).strip().decode('ascii').upper()
+                            # --short=7: the shorted hash with 7 digits. Increase/decrease if needed!
                         except OSError: version += " git"
         finally: 
             if version_file: 
