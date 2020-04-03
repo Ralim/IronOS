@@ -24,6 +24,7 @@ extern "C" {
 #endif
 #define DEVICEADDR_OLED   (0x3c<<1)
 #define OLED_WIDTH        96
+#define OLED_HEIGHT       16
 #define FRAMEBUFFER_START 17
 
 class OLED {	

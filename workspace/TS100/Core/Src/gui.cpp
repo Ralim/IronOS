@@ -826,6 +826,11 @@ void gui_Menu(const menuitem *menu) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 	ButtonState lastButtonState = BUTTON_NONE;
+    uint8_t scrollContentSize = 0;
+    
+    for (uint8_t i = 0; menu[i].draw.func != NULL; i++) {
+        scrollContentSize += 1;
+    }
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
 		OLED::setFont(0);
@@ -836,6 +841,9 @@ void gui_Menu(const menuitem *menu) {
 				|| menu[currentScreen].description == NULL) {
 			OLED::clearScreen();
 			menu[currentScreen].draw.func();
+            uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
+            uint8_t position = currentScreen * indicatorHeight;
+            OLED::drawScrollIndicator(position, indicatorHeight);
 			lastOffset = -1;
 			lcdRefresh = true;
 		} else {
