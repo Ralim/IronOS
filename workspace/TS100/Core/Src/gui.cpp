@@ -823,6 +823,15 @@ void gui_Menu(const menuitem *menu) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 	ButtonState lastButtonState = BUTTON_NONE;
+    
+    if (menu[currentScreen].draw.func != NULL) {
+        OLED::use_second_buffer();
+        OLED::setFont(0);
+        OLED::setCursor(0, 0);
+        OLED::clearScreen();
+        menu[currentScreen].draw.func();
+        OLED::presentSecondScreenBufferAnimated();
+    }
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
 		OLED::setFont(0);
@@ -871,10 +880,18 @@ void gui_Menu(const menuitem *menu) {
 		case BUTTON_F_SHORT:
 			// increment
 			if (descriptionStart == 0) {
-				if (menu[currentScreen].incrementHandler.func != NULL)
+                if (menu[currentScreen].incrementHandler.func != NULL) {
 					menu[currentScreen].incrementHandler.func();
-				else
+                    // MARK: Might jump in submenu here
+                    OLED::use_second_buffer();
+                    OLED::setFont(0);
+                    OLED::setCursor(0, 0);
+                    OLED::clearScreen();
+                    menu[currentScreen].draw.func();
+                    OLED::presentSecondScreenBufferAnimatedBack();
+                } else {
 					earlyExit = true;
+                }
 			} else
 				descriptionStart = 0;
 			break;
@@ -920,7 +937,7 @@ void gui_Menu(const menuitem *menu) {
 			osDelay(40);
 			lcdRefresh = false;
 		}
-		if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
+		if ((xTaskGetTickCount() - lastButtonTime) > (100 * 30)) {
 			// If user has not pressed any buttons in 30 seconds, exit back a menu layer
 			// This will trickle the user back to the main screen eventually
 			earlyExit = true;

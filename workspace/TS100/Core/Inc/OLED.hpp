@@ -78,7 +78,7 @@ public:
 	// Draws a number at the current cursor location
 	// Clears the buffer
 	static void clearScreen() {
-		memset(&screenBuffer[FRAMEBUFFER_START], 0, OLED_WIDTH * 2);
+		memset(firstStripPtr, 0, OLED_WIDTH * 2);
 	}
 	// Draws the battery level symbol
 	static void drawBattery(uint8_t state) {
@@ -99,6 +99,10 @@ public:
 	static void drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
 			bool clear);
 	static void drawHeatSymbol(uint8_t state);
+    static void presentSecondScreenBufferAnimatedBack();
+    static void presentSecondScreenBufferAnimated();
+    static void use_first_buffer();
+    static void use_second_buffer();
 private:
 	static void drawChar(char c); // Draw a character to a specific location
 	static const uint8_t* currentFont;// Pointer to the current font used for rendering to the buffer
@@ -110,6 +114,7 @@ private:
 	static int16_t cursor_x, cursor_y;
 	static uint8_t displayOffset;
 	static uint8_t screenBuffer[16 + (OLED_WIDTH * 2) + 10];  // The data buffer
+    static uint8_t secondFrameBuffer[OLED_WIDTH * 2];  // The second frame buffer
 };
 
 #endif /* OLED_HPP_ */

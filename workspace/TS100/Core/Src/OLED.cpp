@@ -24,6 +24,7 @@ uint8_t OLED::fontWidth, OLED::fontHeight;
 int16_t OLED::cursor_x, OLED::cursor_y;
 uint8_t OLED::displayOffset;
 uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10];  // The data buffer
+uint8_t OLED::secondFrameBuffer[OLED_WIDTH * 2];  // The second frame buffer
 
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
@@ -85,6 +86,16 @@ void OLED::initialize() {
 			sizeof(OLED_Setup_Array));
 }
 
+void OLED::use_first_buffer() {
+    firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
+    secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
+}
+
+void OLED::use_second_buffer() {
+    firstStripPtr = &secondFrameBuffer[0];
+    secondStripPtr = &secondFrameBuffer[OLED_WIDTH];
+}
+
 /*
  * Prints a char to the screen.
  * UTF font handling is done using the two input chars.
@@ -104,6 +115,74 @@ void OLED::drawChar(char c) {
 			+ ((fontWidth * (fontHeight / 8)) * index);
 	drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 	cursor_x += fontWidth;
+}
+
+void OLED::presentSecondScreenBufferAnimatedBack() {
+    OLED::use_first_buffer();
+    
+    uint32_t totalDuration = 50;
+    
+    uint32_t duration = 0;
+    uint32_t start = xTaskGetTickCount();
+    uint8_t offset = 0;
+    while (duration <= totalDuration)
+    {
+        duration = xTaskGetTickCount() - start;
+        
+        uint8_t progress = (duration * OLED_WIDTH) / totalDuration;
+        
+        for (uint8_t i = OLED_WIDTH - 1; i > progress; i--) {
+            firstStripPtr[i] = firstStripPtr[(i - progress) + offset];
+            secondStripPtr[i] = secondStripPtr[(i - progress) + offset];
+        }
+        
+        offset = progress;
+
+        uint8_t *firstBackStripPtr = &secondFrameBuffer[0];
+        uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
+
+        for (uint8_t i = 0; i < progress; i++) {
+            firstStripPtr[i] = firstBackStripPtr[(i - progress) + OLED_WIDTH];
+            secondStripPtr[i] = secondBackStripPtr[(i - progress) + OLED_WIDTH];
+        }
+        
+        refresh();
+        osDelay(40);
+    }
+}
+
+void OLED::presentSecondScreenBufferAnimated() {
+    OLED::use_first_buffer();
+    
+    uint32_t totalDuration = 50;
+        
+    uint32_t duration = 0;
+    uint32_t start = xTaskGetTickCount();
+    uint8_t offset = 0;
+    while (duration < totalDuration)
+    {
+        duration = xTaskGetTickCount() - start;
+        
+        uint8_t progress = (duration * OLED_WIDTH) / totalDuration;
+        
+        for (uint8_t i = 0; i < OLED_WIDTH - progress; i++) {
+            firstStripPtr[i] = firstStripPtr[i + progress - offset];
+            secondStripPtr[i] = secondStripPtr[i + progress - offset];
+        }
+        
+        offset = progress;
+
+        uint8_t *firstBackStripPtr = &secondFrameBuffer[0];
+        uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
+        
+        for (uint8_t i = OLED_WIDTH - progress; i < OLED_WIDTH; i++) {
+            firstStripPtr[i] = firstBackStripPtr[i - (OLED_WIDTH - progress)];
+            secondStripPtr[i] = secondBackStripPtr[i - (OLED_WIDTH - progress)];
+        }
+        
+        refresh();
+        osDelay(40);
+    }
 }
 
 void OLED::setRotation(bool leftHanded) {
