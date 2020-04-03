@@ -99,6 +99,7 @@ public:
 	static void drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
 			bool clear);
 	static void drawHeatSymbol(uint8_t state);
+    static void drawScrollIndicator(uint8_t p, uint8_t h); // Draws a scrolling position indicator
 private:
 	static void drawChar(char c); // Draw a character to a specific location
 	static const uint8_t* currentFont;// Pointer to the current font used for rendering to the buffer
