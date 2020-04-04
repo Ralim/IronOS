@@ -253,10 +253,10 @@
 		"ReverseButtonTempChange": {
 			"text": "RVTCHG",
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Інвертувати",
+				"кнопки +-?"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Інвертувати кнопки зміни температури."
 		},
 		"TempChangeShortStep": {
 			"text": "TCHGST",
