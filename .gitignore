@@ -72,7 +72,6 @@ workspace/TS100/Core/Inc/unit.h
 # IDE configs
 .vs/*
 .settings/*
-.project
 ..cproject.swp
 
 # Visual Studios
@@ -103,9 +102,6 @@ local.properties
 
 # PyDev specific (Python IDE for Eclipse)
 *.pydevproject
-
-# CDT-specific (C/C++ Development Tooling)
-.cproject
 
 # CDT- autotools
 .autotools
@@ -193,5 +189,4 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
-.mxproject
 CoreCompileInputs.cache
