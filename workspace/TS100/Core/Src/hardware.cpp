@@ -233,10 +233,25 @@ void startQC(uint16_t divisor) {
 
 	// Delay 1.25 seconds
 	uint8_t enteredQC = 0;
-	vTaskDelay(125);
-	// Check if D- is low to spot a QC charger
-	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET)
-		enteredQC = 1;
+	for (uint16_t i = 0; i < 200 && enteredQC == 0; i++) {
+		vTaskDelay(1);	//10mS pause
+		if (i > 130) {
+			if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET) {
+				enteredQC = 1;
+			}
+			if (i == 140) {
+				//For some marginal QC chargers, we try adding a pulldown
+				GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+				GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+				GPIO_InitStruct.Pin = GPIO_PIN_11;
+				HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+			}
+		}
+	}
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pin = GPIO_PIN_11;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	if (enteredQC) {
 		// We have a QC capable charger
 		QC_Seek9V();
@@ -280,19 +295,19 @@ static unsigned int sqrt32(unsigned long n) {
 	}
 }
 int16_t calculateMaxVoltage(uint8_t useHP) {
-	// This measures the tip resistance, then it calculates the appropriate
-	// voltage To stay under ~18W. Mosfet is "9A", so no issues there
-	// QC3.0 supports up to 18W, which is 2A @9V and 1.5A @12V
+// This measures the tip resistance, then it calculates the appropriate
+// voltage To stay under ~18W. Mosfet is "9A", so no issues there
+// QC3.0 supports up to 18W, which is 2A @9V and 1.5A @12V
 	uint32_t milliOhms = 4500;
-	// Check no tip
+// Check no tip
 	if (milliOhms > 10000)
 		return -1;
-	//Because of tolerance, if a user has asked for the higher power mode, then just goto 12V and call it a day
+//Because of tolerance, if a user has asked for the higher power mode, then just goto 12V and call it a day
 	if (useHP)
 		return 120;
-	//
-	// V = sqrt(18W*R)
-	// Convert this to sqrt(18W)*sqrt(milli ohms)*sqrt(1/1000)
+//
+// V = sqrt(18W*R)
+// Convert this to sqrt(18W)*sqrt(milli ohms)*sqrt(1/1000)
 
 	uint32_t Vx = sqrt32(milliOhms);
 	if (useHP)
@@ -300,17 +315,17 @@ int16_t calculateMaxVoltage(uint8_t useHP) {
 	else
 		Vx *= 1342;	// sqrt(18) * sqrt(1/1000)*10000
 
-	// Round to nearest 200mV,
-	// So divide by 100 to start, to get in Vxx
+// Round to nearest 200mV,
+// So divide by 100 to start, to get in Vxx
 	Vx /= 100;
 	if (Vx % 10 >= 5)
 		Vx += 10;
 	Vx /= 10;
-	// Round to nearest increment of 2
+// Round to nearest increment of 2
 	if (Vx % 2 == 1)
 		Vx++;
-	//Because of how bad the tolerance is on detecting the tip resistance is
-	//Its more functional to bin this
+//Because of how bad the tolerance is on detecting the tip resistance is
+//Its more functional to bin this
 	if (Vx < 90)
 		Vx = 90;
 	else if (Vx >= 105)
@@ -332,7 +347,7 @@ void setTipPWM(uint8_t pulse) {
 // timers.
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	// Period has elapsed
+// Period has elapsed
 	if (htim->Instance == TIM2) {
 		// we want to turn on the output again
 		PWMSafetyTimer--;
@@ -354,7 +369,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
-	// This was a when the PWM for the output has timed out
+// This was a when the PWM for the output has timed out
 	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 	}
