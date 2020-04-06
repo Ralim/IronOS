@@ -261,18 +261,18 @@
 		"TempChangeShortStep": {
 			"text": "TCHGST",
 			"text2": [
-				"Temp change",
-				"short?"
+				"Зміна темп.",
+				"коротко?"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Змінювати температуру при короткому натисканні!"
 		},
 		"TempChangeLongStep": {
 			"text": "TCHGLT",
 			"text2": [
-				"Temp change",
-				"long?"
+				"Зміна темп.",
+				"довго?"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Змінювати температуру при довгому натисканні!"
 		}
 	}
 }
