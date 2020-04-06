@@ -823,6 +823,8 @@ void gui_Menu(const menuitem *menu) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 	ButtonState lastButtonState = BUTTON_NONE;
+    static bool enterGUIMenu = true;
+    enterGUIMenu = true;
     
     if (menu[currentScreen].draw.func != NULL) {
         uint8_t secondFrameBuffer[OLED_WIDTH * 2];
@@ -882,14 +884,18 @@ void gui_Menu(const menuitem *menu) {
 			// increment
 			if (descriptionStart == 0) {
                 if (menu[currentScreen].incrementHandler.func != NULL) {
+                    enterGUIMenu = false;
 					menu[currentScreen].incrementHandler.func();
-                    // MARK: Might jump in submenu here
-                    OLED::use_second_buffer();
-                    OLED::setFont(0);
-                    OLED::setCursor(0, 0);
-                    OLED::clearScreen();
-                    menu[currentScreen].draw.func();
-                    OLED::presentSecondScreenBufferAnimatedBack();
+                    
+                    if (enterGUIMenu) {
+                        uint8_t secondFrameBuffer[OLED_WIDTH * 2];
+                        OLED::set_framebuffer(secondFrameBuffer);
+                        OLED::setFont(0);
+                        OLED::setCursor(0, 0);
+                        OLED::clearScreen();
+                        menu[currentScreen].draw.func();
+                        OLED::presentSecondScreenBufferAnimatedBack();
+                    }
                 } else {
 					earlyExit = true;
                 }
