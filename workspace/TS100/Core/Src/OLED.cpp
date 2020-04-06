@@ -62,6 +62,14 @@ uint8_t OLED_Setup_Array[] = {
 const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
 		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
+static uint8_t easeInOutTiming(uint8_t t) {
+    return t * t * (300 - 2 * t) / 10000;
+}
+
+static uint8_t lerp(uint8_t a, uint8_t b, uint8_t t) {
+    return a + t * (b - a) / 100;
+}
+
 void OLED::initialize() {
 	cursor_x = cursor_y = 0;
 	currentFont = USER_FONT_12;
@@ -123,28 +131,30 @@ void OLED::presentSecondScreenBufferAnimatedBack() {
     set_framebuffer(NULL);
     
     uint32_t totalDuration = 50;
-    
     uint32_t duration = 0;
     uint32_t start = xTaskGetTickCount();
     uint8_t offset = 0;
-    while (duration <= totalDuration)
-    {
+    while (duration <= totalDuration) {
         duration = xTaskGetTickCount() - start;
         
-        uint8_t progress = (duration * OLED_WIDTH) / totalDuration;
-        
-        for (uint8_t i = OLED_WIDTH - 1; i > progress; i--) {
-            firstStripPtr[i] = firstStripPtr[(i - progress) + offset];
-            secondStripPtr[i] = secondStripPtr[(i - progress) + offset];
+        uint8_t progress = (duration * 100) / totalDuration;
+        progress = easeInOutTiming(progress);
+        progress = lerp(0, OLED_WIDTH, progress);
+        if (progress > OLED_WIDTH) {
+            progress = OLED_WIDTH;
         }
         
+        memmove(&firstStripPtr[progress], &firstStripPtr[offset], OLED_WIDTH - progress);
+        memmove(&secondStripPtr[progress], &secondStripPtr[offset], OLED_WIDTH - progress);
         offset = progress;
 
-
-        for (uint8_t i = 0; i < progress; i++) {
-            firstStripPtr[i] = firstBackStripPtr[(i - progress) + OLED_WIDTH];
-            secondStripPtr[i] = secondBackStripPtr[(i - progress) + OLED_WIDTH];
-        }
+        memmove(
+                &firstStripPtr[0],
+                &firstBackStripPtr[OLED_WIDTH - progress],
+                progress);
+        memmove(&secondStripPtr[0],
+                &secondBackStripPtr[OLED_WIDTH - progress],
+                progress);
         
         refresh();
         osDelay(40);
@@ -157,28 +167,30 @@ void OLED::presentSecondScreenBufferAnimated() {
     set_framebuffer(NULL);
     
     uint32_t totalDuration = 50;
-        
     uint32_t duration = 0;
     uint32_t start = xTaskGetTickCount();
     uint8_t offset = 0;
-    while (duration < totalDuration)
-    {
+    while (duration < totalDuration) {
         duration = xTaskGetTickCount() - start;
         
-        uint8_t progress = (duration * OLED_WIDTH) / totalDuration;
-        
-        for (uint8_t i = 0; i < OLED_WIDTH - progress; i++) {
-            firstStripPtr[i] = firstStripPtr[i + progress - offset];
-            secondStripPtr[i] = secondStripPtr[i + progress - offset];
+        uint8_t progress = (duration * 100) / totalDuration;
+        progress = easeInOutTiming(progress);
+        progress = lerp(0, OLED_WIDTH, progress);
+        if (progress > OLED_WIDTH) {
+            progress = OLED_WIDTH;
         }
         
+        memmove(&firstStripPtr[0], &firstStripPtr[progress - offset], OLED_WIDTH - progress);
+        memmove(&secondStripPtr[0], &secondStripPtr[progress - offset], OLED_WIDTH - progress);
         offset = progress;
 
-        
-        for (uint8_t i = OLED_WIDTH - progress; i < OLED_WIDTH; i++) {
-            firstStripPtr[i] = firstBackStripPtr[i - (OLED_WIDTH - progress)];
-            secondStripPtr[i] = secondBackStripPtr[i - (OLED_WIDTH - progress)];
-        }
+        memmove(
+                &firstStripPtr[OLED_WIDTH - progress],
+                &firstBackStripPtr[0],
+                progress);
+        memmove(&secondStripPtr[OLED_WIDTH - progress],
+                &secondBackStripPtr[0],
+                progress);
         
         refresh();
         osDelay(40);
