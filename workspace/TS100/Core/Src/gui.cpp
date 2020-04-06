@@ -903,6 +903,7 @@ void gui_Menu(const menuitem *menu) {
                         OLED::set_framebuffer(NULL);
                         OLED::transitionToContents(secondaryFrameBuffer, false);
                     }
+                    enterGUIMenu = true;
                 } else {
 					earlyExit = true;
                 }
