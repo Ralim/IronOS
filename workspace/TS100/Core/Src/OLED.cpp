@@ -24,7 +24,6 @@ uint8_t OLED::fontWidth, OLED::fontHeight;
 int16_t OLED::cursor_x, OLED::cursor_y;
 uint8_t OLED::displayOffset;
 uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10];  // The data buffer
-uint8_t OLED::secondFrameBuffer[OLED_WIDTH * 2];  // The second frame buffer
 
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
@@ -86,14 +85,15 @@ void OLED::initialize() {
 			sizeof(OLED_Setup_Array));
 }
 
-void OLED::use_first_buffer() {
-    firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
-    secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
-}
-
-void OLED::use_second_buffer() {
-    firstStripPtr = &secondFrameBuffer[0];
-    secondStripPtr = &secondFrameBuffer[OLED_WIDTH];
+void OLED::set_framebuffer(uint8_t *buffer) {
+    if (buffer == NULL) {
+        firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
+        secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
+        return;
+    }
+    
+    firstStripPtr = &buffer[0];
+    secondStripPtr = &buffer[OLED_WIDTH];
 }
 
 /*
@@ -118,7 +118,9 @@ void OLED::drawChar(char c) {
 }
 
 void OLED::presentSecondScreenBufferAnimatedBack() {
-    OLED::use_first_buffer();
+    uint8_t *firstBackStripPtr = &firstStripPtr[0];
+    uint8_t *secondBackStripPtr = &secondStripPtr[0];
+    set_framebuffer(NULL);
     
     uint32_t totalDuration = 50;
     
@@ -138,8 +140,6 @@ void OLED::presentSecondScreenBufferAnimatedBack() {
         
         offset = progress;
 
-        uint8_t *firstBackStripPtr = &secondFrameBuffer[0];
-        uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
 
         for (uint8_t i = 0; i < progress; i++) {
             firstStripPtr[i] = firstBackStripPtr[(i - progress) + OLED_WIDTH];
@@ -152,7 +152,9 @@ void OLED::presentSecondScreenBufferAnimatedBack() {
 }
 
 void OLED::presentSecondScreenBufferAnimated() {
-    OLED::use_first_buffer();
+    uint8_t *firstBackStripPtr = &firstStripPtr[0];
+    uint8_t *secondBackStripPtr = &secondStripPtr[0];
+    set_framebuffer(NULL);
     
     uint32_t totalDuration = 50;
         
@@ -172,8 +174,6 @@ void OLED::presentSecondScreenBufferAnimated() {
         
         offset = progress;
 
-        uint8_t *firstBackStripPtr = &secondFrameBuffer[0];
-        uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
         
         for (uint8_t i = OLED_WIDTH - progress; i < OLED_WIDTH; i++) {
             firstStripPtr[i] = firstBackStripPtr[i - (OLED_WIDTH - progress)];

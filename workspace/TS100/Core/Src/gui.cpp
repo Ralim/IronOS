@@ -825,7 +825,8 @@ void gui_Menu(const menuitem *menu) {
 	ButtonState lastButtonState = BUTTON_NONE;
     
     if (menu[currentScreen].draw.func != NULL) {
-        OLED::use_second_buffer();
+        uint8_t secondFrameBuffer[OLED_WIDTH * 2];
+        OLED::set_framebuffer(secondFrameBuffer);
         OLED::setFont(0);
         OLED::setCursor(0, 0);
         OLED::clearScreen();
