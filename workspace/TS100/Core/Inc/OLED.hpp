@@ -99,8 +99,7 @@ public:
 	static void drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
 			bool clear);
 	static void drawHeatSymbol(uint8_t state);
-    static void presentSecondScreenBufferAnimatedBack();
-    static void presentSecondScreenBufferAnimated();
+    static void transitionToContents(uint8_t *framebuffer, bool forwardNavigation);
     static void set_framebuffer(uint8_t *buffer);
 private:
 	static void drawChar(char c); // Draw a character to a specific location

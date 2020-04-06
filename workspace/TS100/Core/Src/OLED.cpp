@@ -125,72 +125,49 @@ void OLED::drawChar(char c) {
 	cursor_x += fontWidth;
 }
 
-void OLED::presentSecondScreenBufferAnimatedBack() {
-    uint8_t *firstBackStripPtr = &firstStripPtr[0];
-    uint8_t *secondBackStripPtr = &secondStripPtr[0];
-    set_framebuffer(NULL);
+/**
+ * Plays a transition animation between two framebuffers.
+ * @param framebuffer Second framebuffer to use for animation.
+ * @param forward Direction of the navigation animation.
+ *
+ * If forward is true, this displays a forward navigation to the second framebuffer contents.
+ * Otherwise a rewinding navigation animation is shown to the second framebuffer contents.
+ */
+void OLED::transitionToContents(uint8_t *framebuffer, bool forwardNavigation) {
+    uint8_t *firstBackStripPtr = &framebuffer[0];
+    uint8_t *secondBackStripPtr = &framebuffer[OLED_WIDTH];
     
-    uint32_t totalDuration = 50;
+    uint32_t totalDuration = 50; // 500ms
     uint32_t duration = 0;
     uint32_t start = xTaskGetTickCount();
     uint8_t offset = 0;
+    
     while (duration <= totalDuration) {
         duration = xTaskGetTickCount() - start;
-        
-        uint8_t progress = (duration * 100) / totalDuration;
+        uint8_t progress = duration * 100 / totalDuration;
         progress = easeInOutTiming(progress);
         progress = lerp(0, OLED_WIDTH, progress);
         if (progress > OLED_WIDTH) {
             progress = OLED_WIDTH;
         }
         
-        memmove(&firstStripPtr[progress], &firstStripPtr[offset], OLED_WIDTH - progress);
-        memmove(&secondStripPtr[progress], &secondStripPtr[offset], OLED_WIDTH - progress);
+        // When forward, current contents move to the left out.
+        // Otherwise the contents move to the right out.
+        uint8_t oldStart = forwardNavigation ? 0 : progress;
+        uint8_t oldPrevious = forwardNavigation ? progress - offset : offset;
+        
+        // Content from the second framebuffer moves in from the right (forward)
+        // or from the left (not forward).
+        uint8_t newStart = forwardNavigation ? OLED_WIDTH - progress : 0;
+        uint8_t newEnd = forwardNavigation ? 0 : OLED_WIDTH - progress;
+        
         offset = progress;
-
-        memmove(
-                &firstStripPtr[0],
-                &firstBackStripPtr[OLED_WIDTH - progress],
-                progress);
-        memmove(&secondStripPtr[0],
-                &secondBackStripPtr[OLED_WIDTH - progress],
-                progress);
         
-        refresh();
-        osDelay(40);
-    }
-}
-
-void OLED::presentSecondScreenBufferAnimated() {
-    uint8_t *firstBackStripPtr = &firstStripPtr[0];
-    uint8_t *secondBackStripPtr = &secondStripPtr[0];
-    set_framebuffer(NULL);
-    
-    uint32_t totalDuration = 50;
-    uint32_t duration = 0;
-    uint32_t start = xTaskGetTickCount();
-    uint8_t offset = 0;
-    while (duration < totalDuration) {
-        duration = xTaskGetTickCount() - start;
+        memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious], OLED_WIDTH - progress);
+        memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious], OLED_WIDTH - progress);
         
-        uint8_t progress = (duration * 100) / totalDuration;
-        progress = easeInOutTiming(progress);
-        progress = lerp(0, OLED_WIDTH, progress);
-        if (progress > OLED_WIDTH) {
-            progress = OLED_WIDTH;
-        }
-        
-        memmove(&firstStripPtr[0], &firstStripPtr[progress - offset], OLED_WIDTH - progress);
-        memmove(&secondStripPtr[0], &secondStripPtr[progress - offset], OLED_WIDTH - progress);
-        offset = progress;
-
-        memmove(
-                &firstStripPtr[OLED_WIDTH - progress],
-                &firstBackStripPtr[0],
-                progress);
-        memmove(&secondStripPtr[OLED_WIDTH - progress],
-                &secondBackStripPtr[0],
-                progress);
+        memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
+        memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
         
         refresh();
         osDelay(40);
