@@ -3,22 +3,22 @@
 	"languageLocalName": "Nederlands",
 	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
+		"SettingsCalibrationDone": "Kalibratie voltooid!",
 		"SettingsCalibrationWarning": "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!",
 		"SettingsResetWarning": "Ben je zeker dat je alle instellingen naar de standaardwaardes wilt terugzetten?",
 		"UVLOWarningString": "DC LAAG",
 		"UndervoltageString": "Onderspanning",
 		"InputVoltageString": "Input V: ",
-		"WarningTipTempString": "Tip Temp: ",
+		"WarningTipTempString": "Punt Temp: ",
 		"BadTipString": "DEFECT",
 		"SleepingSimpleString": "Zzz ",
 		"SleepingAdvancedString": "Slaapstand...",
 		"WarningSimpleString": "HEET",
-		"WarningAdvancedString": "!!! TIP HEET !!!",
-		"SleepingTipAdvancedString": "Tip:",
-		"IdleTipString": "Tip:",
+		"WarningAdvancedString": "!!! PUNT HEET !!!",
+		"SleepingTipAdvancedString": "PUNT:",
+		"IdleTipString": "Punt:",
 		"IdleSetString": " Set:",
-		"TipDisconnectedString": "TIP LOSGEKOPPELD",
+		"TipDisconnectedString": "PUNT LOSGEKOPPELD",
 		"SolderingAdvancedPowerPrompt": "vermogen: ",
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK"
@@ -62,7 +62,7 @@
 				"geavanceerde",
 				"Instellingen"
 			],
-			"desc": "geavanceerde Instellingen"
+			"desc": "Geavanceerde Instellingen"
 		}
 	},
 	"menuOptions": {
@@ -136,7 +136,7 @@
 				"Boostmodes",
 				"ingeschakeld?"
 			],
-			"desc": "Soldeerbout gaat naar een hogere boost-temperatuur wanneer de voorste knop ingedrukt is."
+			"desc": "Soldeerbout gaat naar een hogere temperatuur wanneer de voorste knop ingedrukt is."
 		},
 		"BoostTemperature": {
 			"text": "",
@@ -158,17 +158,17 @@
 			"text": "",
 			"text2": [
 				"Afkoel",
-				"flikker"
+				"knipper"
 			],
-			"desc": "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is."
+			"desc": "Temperatuur laten knipperen in het hoofdmenu als de soldeerpunt aan het afkoelen is."
 		},
 		"TemperatureCalibration": {
 			"text": "",
 			"text2": [
-				"Calibreer",
+				"Kalibreer",
 				"temperatuur?"
 			],
-			"desc": "Temperatuursafwijking van de soldeerpunt calibreren."
+			"desc": "Temperatuursafwijking van de soldeerpunt kalibreren."
 		},
 		"SettingsReset": {
 			"text": "",
@@ -181,10 +181,10 @@
 		"VoltageCalibration": {
 			"text": "",
 			"text2": [
-				"Calibreer",
+				"Kalibreer",
 				"input-voltage?"
 			],
-			"desc": "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen."
+			"desc": "VIN Kalibreren. Knoppen lang ingedrukt houden om te bevestigen."
 		},
 		"AdvancedSoldering": {
 			"text": "",
@@ -192,7 +192,7 @@
 				"Gedetailleerd",
 				"soldeerscherm"
 			],
-			"desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm."
+			"desc": "Gedetailleerde informatie weergeven op het soldeerscherm."
 		},
 		"ScrollingSpeed": {
 			"text": "",
@@ -205,31 +205,31 @@
 		"TipModel": {
 			"text": "TIPMO",
 			"text2": [
-				"Tip",
+				"Punt",
 				"Model"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Soldeerpunt modelselectie"
 		},
-		"SimpleCalibrationMode": {
+		"SimpleibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Simpele",
+				"Kalibratie"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Simpele kalibratie door middel van heet water"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Geavanceerde",
+				"Kalibratie"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Geavanceerde kalibratie door middel van thermokoppel op soldeerpunt"
 		},
 		"PowerInput": {
 			"text": "PWRW",
 			"text2": [
-				"Power",
+				"Stoom",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
@@ -253,10 +253,10 @@
 		"ReverseButtonTempChange": {
 			"text": "RVTCHG",
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Knop +-",
+				"omkeren?"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Omkeren plus en min knoppen van punttemperatuur."
 		},
 		"TempChangeShortStep": {
 			"text": "TCHGST",
