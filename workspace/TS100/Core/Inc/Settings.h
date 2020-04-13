@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
 #include "unit.h"
-#define SETTINGSVERSION   ( 0x1F )
+#define SETTINGSVERSION   ( 0x20 )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -51,6 +51,8 @@ typedef struct {
 
 	uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
 	uint8_t powerLimit;       // Maximum power iron allowed to output
+	
+	uint16_t TipGain; // uV/C * 10, it can be used to convert tip thermocouple voltage to temperateture TipV/TipGain = TipTemp
 
 	uint8_t ReverseButtonTempChangeEnabled; // Change the plus and minus button assigment
 	uint16_t TempChangeLongStep;   // Change the plus and minus button assigment

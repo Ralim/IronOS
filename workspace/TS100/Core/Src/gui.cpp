@@ -60,6 +60,8 @@ static void settings_setResetSettings(void);
 static void settings_displayResetSettings(void);
 static void settings_setCalibrate(void);
 static void settings_displayCalibrate(void);
+static void settings_setTipGain(void);
+static void settings_displayTipGain(void);
 static void settings_setCalibrateVIN(void);
 static void settings_displayCalibrateVIN(void);
 static void settings_displayReverseButtonTempChangeEnabled(void);
@@ -236,6 +238,8 @@ const menuitem advancedMenu[] = {
 		settings_displayCalibrateVIN } }, /*Voltage input cal*/
 { (const char*) SettingsDescriptions[26], { settings_setPowerPulse }, {
 		settings_displayPowerPulse } }, /*Power Pulse adjustment */
+{ (const char*) SettingsDescriptions[27], { settings_setTipGain }, {
+		settings_displayTipGain } }, /*TipGain*/
 { NULL, { NULL }, { NULL } }  // end of menu marker. DO NOT REMOVE
 };
 
@@ -750,6 +754,53 @@ static void settings_setCalibrateVIN(void) {
 		}
 #endif
 	}
+}
+
+static void settings_setTipGain(void) {
+	OLED::setFont(0);
+	OLED::clearScreen();
+
+	for (;;) {
+		OLED::setCursor(0, 0);
+		OLED::printNumber(systemSettings.TipGain / 10, 2);
+		OLED::print(SymbolDot);
+		OLED::printNumber(systemSettings.TipGain % 10, 1);
+
+		ButtonState buttons = getButtonState();
+		switch (buttons) {
+		case BUTTON_F_SHORT:
+			systemSettings.TipGain -= 1;
+			break;
+
+		case BUTTON_B_SHORT:
+			systemSettings.TipGain += 1;
+			break;
+
+		case BUTTON_BOTH:
+		case BUTTON_F_LONG:
+		case BUTTON_B_LONG:
+			saveSettings();
+			return;
+			break;
+		case BUTTON_NONE:
+		default:
+			break;
+		}
+
+		OLED::refresh();
+		osDelay(40);
+
+		// Cap to sensible values
+		if (systemSettings.TipGain < 150) {
+			systemSettings.TipGain = 150;
+		} else if (systemSettings.TipGain > 300) {
+			systemSettings.TipGain = 300;
+		}
+	}
+}
+
+static void settings_displayTipGain(void) {
+	printShortDescription(27, 5);
 }
 
 static void settings_setReverseButtonTempChangeEnabled(void) {
