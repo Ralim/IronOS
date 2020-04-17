@@ -32,7 +32,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 	// This takes the raw ADC samples, converts these to uV
 	// Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
 	// Then remove the calibration value that is stored as a tip offset
-	uint32_t vddRailmVX10 = 33000;	//TODO use ADC Vref to calculate this
+	uint32_t vddRailmVX10 = 33000;	//The vreg is +-2%, but we have no higher accuracy available
 	// 4096 * 8 readings for full scale
 	// Convert the input ADC reading back into mV times 10 format.
 	uint32_t rawInputmVX10 = (rawADC * vddRailmVX10) / (4096 * 8);
@@ -71,7 +71,7 @@ int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2,
 }
 
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
-	//based on new measurements, tip is quite linear at 24.9uV per deg C = 2.49 per 0.1C
+	//based on new measurements, tip is quite linear
 	//
 	tipuVDelta *= TIP_GAIN;
 	tipuVDelta /= 10000;

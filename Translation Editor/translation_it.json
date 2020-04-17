@@ -21,7 +21,9 @@
 		"TipDisconnectedString": "PUNTA ASSENTE",
 		"SolderingAdvancedPowerPrompt": "Potenz:",
 		"OffString": "OFF",
-		"ResetOKMessage": "Reset OK"
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Guad.: ",
+		"SettingsResetMessage": "Reset effettuato"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -160,7 +162,7 @@
 				"Avviso",
 				"punta calda"
 			],
-			"desc": "Mostra, lampeggiante, la temperatura durante il raffreddamento se la punta è ancora calda"
+			"desc": "Evidenzia il valore di temperatura durante il raffreddamento se la punta è ancora calda"
 		},
 		"TemperatureCalibration": {
 			"text": "",
@@ -237,42 +239,42 @@
 		"PowerLimitEnable": {
 			"text": "PLIMEN",
 			"text2": [
-				"P Limit",
-				"Enable"
+				"Limitatore",
+				"di potenza"
 			],
-			"desc": "Enable power limit"
+			"desc": "Abilita un limitatore per la potenza massima erogabile al saldatore"
 		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [
-				"Power",
-				"Limit"
+				"Limite",
+				"di potenza"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Imposta il valore di potenza massima erogabile al saldatore <watt>"
 		},
 		"ReverseButtonTempChange": {
 			"text": "RVTCHG",
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Inversione",
+				"tasti"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Inverti i tasti per impostare la temperatura della punta "
 		},
 		"TempChangeShortStep": {
 			"text": "TCHGST",
 			"text2": [
-				"Temp change",
-				"short?"
+				"Cambio temp",
+				"pressione breve"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Varia la temperatura della punta attraverso una breve pressione dei tasti"
 		},
 		"TempChangeLongStep": {
 			"text": "TCHGLT",
 			"text2": [
-				"Temp change",
-				"long?"
+				"Cambio temp",
+				"pressione lunga"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Varia la temperatura della punta attraverso una lunga pressione dei tasti"
 		}
 	}
 }
