@@ -826,29 +826,29 @@ void gui_Menu(const menuitem *menu) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 	ButtonState lastButtonState = BUTTON_NONE;
-    static bool enterGUIMenu = true;
-    enterGUIMenu = true;
-    uint8_t scrollContentSize = 0;
-	
+	static bool enterGUIMenu = true;
+	enterGUIMenu = true;
+	uint8_t scrollContentSize = 0;
+
 	for (uint8_t i = 0; menu[i].draw.func != NULL; i++) {
 		scrollContentSize += 1;
 	}
-    
-    // Animated menu opening.
-    if (menu[currentScreen].draw.func != NULL) {
-        // This menu is drawn in a secondary framebuffer.
-        // Then we play a transition from the current primary
-        // framebuffer to the new buffer.
-        // The extra buffer is discarded at the end of the transition.
-        uint8_t secondaryFrameBuffer[OLED_WIDTH * 2];
-        OLED::set_framebuffer(secondaryFrameBuffer);
-        OLED::setFont(0);
-        OLED::setCursor(0, 0);
-        OLED::clearScreen();
-        menu[currentScreen].draw.func();
-        OLED::set_framebuffer(NULL);
-        OLED::transitionToContents(secondaryFrameBuffer, true);
-    }
+
+	// Animated menu opening.
+	if (menu[currentScreen].draw.func != NULL) {
+		// This menu is drawn in a secondary framebuffer.
+		// Then we play a transition from the current primary
+		// framebuffer to the new buffer.
+		// The extra buffer is discarded at the end of the transition.
+		uint8_t secondaryFrameBuffer[OLED_WIDTH * 2];
+		OLED::set_framebuffer(secondaryFrameBuffer);
+		OLED::setFont(0);
+		OLED::setCursor(0, 0);
+		OLED::clearScreen();
+		menu[currentScreen].draw.func();
+		OLED::set_framebuffer(NULL);
+		OLED::transitionToContents(secondaryFrameBuffer, true);
+	}
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
 		OLED::setFont(0);
@@ -900,24 +900,24 @@ void gui_Menu(const menuitem *menu) {
 		case BUTTON_F_SHORT:
 			// increment
 			if (descriptionStart == 0) {
-                if (menu[currentScreen].incrementHandler.func != NULL) {
-                    enterGUIMenu = false;
+				if (menu[currentScreen].incrementHandler.func != NULL) {
+					enterGUIMenu = false;
 					menu[currentScreen].incrementHandler.func();
-                    
-                    if (enterGUIMenu) {
-                        uint8_t secondaryFrameBuffer[OLED_WIDTH * 2];
-                        OLED::set_framebuffer(secondaryFrameBuffer);
-                        OLED::setFont(0);
-                        OLED::setCursor(0, 0);
-                        OLED::clearScreen();
-                        menu[currentScreen].draw.func();
-                        OLED::set_framebuffer(NULL);
-                        OLED::transitionToContents(secondaryFrameBuffer, false);
-                    }
-                    enterGUIMenu = true;
-                } else {
+
+					if (enterGUIMenu) {
+						uint8_t secondaryFrameBuffer[OLED_WIDTH * 2];
+						OLED::set_framebuffer(secondaryFrameBuffer);
+						OLED::setFont(0);
+						OLED::setCursor(0, 0);
+						OLED::clearScreen();
+						menu[currentScreen].draw.func();
+						OLED::set_framebuffer(NULL);
+						OLED::transitionToContents(secondaryFrameBuffer, false);
+					}
+					enterGUIMenu = true;
+				} else {
 					earlyExit = true;
-                }
+				}
 			} else
 				descriptionStart = 0;
 			break;

@@ -63,11 +63,11 @@ const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
 		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
 static uint8_t easeInOutTiming(uint8_t t) {
-    return t * t * (300 - 2 * t) / 10000;
+	return t * t * (300 - 2 * t) / 10000;
 }
 
 static uint8_t lerp(uint8_t a, uint8_t b, uint8_t t) {
-    return a + t * (b - a) / 100;
+	return a + t * (b - a) / 100;
 }
 
 void OLED::initialize() {
@@ -94,14 +94,14 @@ void OLED::initialize() {
 }
 
 void OLED::set_framebuffer(uint8_t *buffer) {
-    if (buffer == NULL) {
-        firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
-        secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
-        return;
-    }
-    
-    firstStripPtr = &buffer[0];
-    secondStripPtr = &buffer[OLED_WIDTH];
+	if (buffer == NULL) {
+		firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
+		secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
+		return;
+	}
+
+	firstStripPtr = &buffer[0];
+	secondStripPtr = &buffer[OLED_WIDTH];
 }
 
 /*
@@ -153,44 +153,44 @@ void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
  * Otherwise a rewinding navigation animation is shown to the second framebuffer contents.
  */
 void OLED::transitionToContents(uint8_t *framebuffer, bool forwardNavigation) {
-    uint8_t *firstBackStripPtr = &framebuffer[0];
-    uint8_t *secondBackStripPtr = &framebuffer[OLED_WIDTH];
-    
-    uint32_t totalDuration = 50; // 500ms
-    uint32_t duration = 0;
-    uint32_t start = xTaskGetTickCount();
-    uint8_t offset = 0;
-    
-    while (duration <= totalDuration) {
-        duration = xTaskGetTickCount() - start;
-        uint8_t progress = duration * 100 / totalDuration;
-        progress = easeInOutTiming(progress);
-        progress = lerp(0, OLED_WIDTH, progress);
-        if (progress > OLED_WIDTH) {
-            progress = OLED_WIDTH;
-        }
-        
-        // When forward, current contents move to the left out.
-        // Otherwise the contents move to the right out.
-        uint8_t oldStart = forwardNavigation ? 0 : progress;
-        uint8_t oldPrevious = forwardNavigation ? progress - offset : offset;
-        
-        // Content from the second framebuffer moves in from the right (forward)
-        // or from the left (not forward).
-        uint8_t newStart = forwardNavigation ? OLED_WIDTH - progress : 0;
-        uint8_t newEnd = forwardNavigation ? 0 : OLED_WIDTH - progress;
-        
-        offset = progress;
-        
-        memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious], OLED_WIDTH - progress);
-        memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious], OLED_WIDTH - progress);
-        
-        memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
-        memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
-        
-        refresh();
-        osDelay(40);
-    }
+	uint8_t *firstBackStripPtr = &framebuffer[0];
+	uint8_t *secondBackStripPtr = &framebuffer[OLED_WIDTH];
+
+	uint32_t totalDuration = 50; // 500ms
+	uint32_t duration = 0;
+	uint32_t start = xTaskGetTickCount();
+	uint8_t offset = 0;
+
+	while (duration <= totalDuration) {
+		duration = xTaskGetTickCount() - start;
+		uint8_t progress = duration * 100 / totalDuration;
+		progress = easeInOutTiming(progress);
+		progress = lerp(0, OLED_WIDTH, progress);
+		if (progress > OLED_WIDTH) {
+			progress = OLED_WIDTH;
+		}
+
+		// When forward, current contents move to the left out.
+		// Otherwise the contents move to the right out.
+		uint8_t oldStart = forwardNavigation ? 0 : progress;
+		uint8_t oldPrevious = forwardNavigation ? progress - offset : offset;
+
+		// Content from the second framebuffer moves in from the right (forward)
+		// or from the left (not forward).
+		uint8_t newStart = forwardNavigation ? OLED_WIDTH - progress : 0;
+		uint8_t newEnd = forwardNavigation ? 0 : OLED_WIDTH - progress;
+
+		offset = progress;
+
+		memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious], OLED_WIDTH - progress);
+		memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious], OLED_WIDTH - progress);
+
+		memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
+		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
+
+		refresh();
+		osDelay(40);
+	}
 }
 
 void OLED::setRotation(bool leftHanded) {
