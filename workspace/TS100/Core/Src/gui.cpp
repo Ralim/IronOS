@@ -264,6 +264,8 @@ static void printShortDescription(uint32_t shortDescIndex,
 	// prepare cursor for value
 	OLED::setFont(0);
 	OLED::setCharCursor(cursorCharPosition, 0);
+	// make room for scroll indicator
+	OLED::setCursor(OLED::getCursorX() - 2, 0);
 }
 
 static int userConfirmation(const char *message) {
@@ -782,7 +784,8 @@ static void displayMenu(size_t index) {
 	OLED::print(SettingsMenuEntries[index]);
 	// Draw symbol
 	// 16 pixel wide image
-	OLED::drawArea(96 - 16, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));
+	// 2 pixel wide scrolling indicator
+	OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));
 }
 
 static void settings_displayCalibrateVIN(void) {
@@ -823,6 +826,11 @@ void gui_Menu(const menuitem *menu) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 	ButtonState lastButtonState = BUTTON_NONE;
+	uint8_t scrollContentSize = 0;
+	
+	for (uint8_t i = 0; menu[i].draw.func != NULL; i++) {
+		scrollContentSize += 1;
+	}
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
 		OLED::setFont(0);
@@ -833,6 +841,9 @@ void gui_Menu(const menuitem *menu) {
 				|| menu[currentScreen].description == NULL) {
 			OLED::clearScreen();
 			menu[currentScreen].draw.func();
+			uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
+			uint8_t position = currentScreen * indicatorHeight;
+			OLED::drawScrollIndicator(position, indicatorHeight);
 			lastOffset = -1;
 			lcdRefresh = true;
 		} else {
