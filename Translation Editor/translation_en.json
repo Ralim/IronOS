@@ -201,7 +201,7 @@
 			"text": "DESCSP",
 			"text2": [
 				"Scrolling",
-				"Speed"
+				"speed"
 			],
 			"desc": "Speed this text scrolls past at <S=Slow F=Fast>"
 		},
@@ -209,23 +209,23 @@
 			"text": "TIPMO",
 			"text2": [
 				"Tip",
-				"Model"
+				"model"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Tip model selection"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
 				"Simple",
-				"Calibration"
+				"calibration"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Simple calibration using hot water"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
 				"Advanced",
-				"Calibration"
+				"calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
@@ -257,9 +257,9 @@
 			"text": "RVTCHG",
 			"text2": [
 				"Reverse",
-				"+- keys"
+				"+ - keys"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment"
+			"desc": "Reverse assignment of temperature adjustment buttons"
 		},
 		"TempChangeShortStep": {
 			"text": "TCHGST",
