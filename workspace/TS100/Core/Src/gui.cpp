@@ -840,14 +840,13 @@ void gui_Menu(const menuitem *menu) {
 		// Then we play a transition from the current primary
 		// framebuffer to the new buffer.
 		// The extra buffer is discarded at the end of the transition.
-		uint8_t secondaryFrameBuffer[OLED_WIDTH * 2];
-		OLED::set_framebuffer(secondaryFrameBuffer);
+		OLED::useSecondaryFramebuffer(true);
 		OLED::setFont(0);
 		OLED::setCursor(0, 0);
 		OLED::clearScreen();
 		menu[currentScreen].draw.func();
-		OLED::set_framebuffer(NULL);
-		OLED::transitionToContents(secondaryFrameBuffer, true);
+		OLED::useSecondaryFramebuffer(false);
+		OLED::transitionSecondaryFramebuffer(true);
 	}
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
@@ -905,14 +904,13 @@ void gui_Menu(const menuitem *menu) {
 					menu[currentScreen].incrementHandler.func();
 
 					if (enterGUIMenu) {
-						uint8_t secondaryFrameBuffer[OLED_WIDTH * 2];
-						OLED::set_framebuffer(secondaryFrameBuffer);
+						OLED::useSecondaryFramebuffer(true);
 						OLED::setFont(0);
 						OLED::setCursor(0, 0);
 						OLED::clearScreen();
 						menu[currentScreen].draw.func();
-						OLED::set_framebuffer(NULL);
-						OLED::transitionToContents(secondaryFrameBuffer, false);
+						OLED::useSecondaryFramebuffer(false);
+						OLED::transitionSecondaryFramebuffer(false);
 					}
 					enterGUIMenu = true;
 				} else {

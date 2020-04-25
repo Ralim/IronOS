@@ -24,6 +24,7 @@ uint8_t OLED::fontWidth, OLED::fontHeight;
 int16_t OLED::cursor_x, OLED::cursor_y;
 uint8_t OLED::displayOffset;
 uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10];  // The data buffer
+uint8_t OLED::secondFrameBuffer[OLED_WIDTH * 2];
 
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
@@ -93,7 +94,7 @@ void OLED::initialize() {
 			sizeof(OLED_Setup_Array));
 }
 
-void OLED::set_framebuffer(uint8_t *buffer) {
+void OLED::setFramebuffer(uint8_t *buffer) {
 	if (buffer == NULL) {
 		firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
 		secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
@@ -146,15 +147,14 @@ void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
 
 /**
  * Plays a transition animation between two framebuffers.
- * @param framebuffer Second framebuffer to use for animation.
- * @param forward Direction of the navigation animation.
+ * @param forwardNavigation Direction of the navigation animation.
  *
  * If forward is true, this displays a forward navigation to the second framebuffer contents.
  * Otherwise a rewinding navigation animation is shown to the second framebuffer contents.
  */
-void OLED::transitionToContents(uint8_t *framebuffer, bool forwardNavigation) {
-	uint8_t *firstBackStripPtr = &framebuffer[0];
-	uint8_t *secondBackStripPtr = &framebuffer[OLED_WIDTH];
+void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
+	uint8_t *firstBackStripPtr = &secondFrameBuffer[0];
+	uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
 
 	uint32_t totalDuration = 50; // 500ms
 	uint32_t duration = 0;
@@ -191,6 +191,14 @@ void OLED::transitionToContents(uint8_t *framebuffer, bool forwardNavigation) {
 		refresh();
 		osDelay(40);
 	}
+}
+
+void OLED::useSecondaryFramebuffer(bool useSecondary) {
+    if (useSecondary) {
+        setFramebuffer(secondFrameBuffer);
+    } else {
+        setFramebuffer(NULL);
+    }
 }
 
 void OLED::setRotation(bool leftHanded) {
