@@ -63,10 +63,23 @@ uint8_t OLED_Setup_Array[] = {
 const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
 		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
+
+/*
+ * Animation timing function that follows a bezier curve.
+ * @param t A given percentage value [0..<100]
+ * Returns a new percentage value with ease in and ease out.
+ * Original floating point formula: t * t * (3.0f - 2.0f * t);
+ */
 static uint8_t easeInOutTiming(uint8_t t) {
 	return t * t * (300 - 2 * t) / 10000;
 }
 
+/*
+ * Returns the value between a and b, using a percentage value t.
+ * @param a The value associated with 0%
+ * @param b The value associated with 100%
+ * @param t The percentage [0..<100]
+ */
 static uint8_t lerp(uint8_t a, uint8_t b, uint8_t t) {
 	return a + t * (b - a) / 100;
 }
