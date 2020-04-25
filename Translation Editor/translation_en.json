@@ -5,12 +5,12 @@
 	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
-		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
+		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before continuing!",
 		"SettingsResetWarning": "Are you sure you want to reset settings to default values?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
 		"InputVoltageString": "Input V: ",
-		"WarningTipTempString": "Tip Temp: ",
+		"WarningTipTempString": "Tip temp: ",
 		"BadTipString": "BAD TIP",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Sleeping...",
@@ -23,7 +23,7 @@
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your Gain:",
+		"YourGainMessage": "Your gain:",
 		"SettingsResetMessage": "Settings were\nreset!"
 	},
 	"characters": {
@@ -42,28 +42,28 @@
 		"SolderingMenu": {
 			"text2": [
 				"Soldering",
-				"Settings"
+				"settings"
 			],
 			"desc": "Soldering settings"
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Sleep",
-				"Modes"
+				"modes"
 			],
 			"desc": "Power saving settings"
 		},
 		"UIMenu": {
 			"text2": [
 				"User",
-				"Interface"
+				"interface"
 			],
 			"desc": "User interface settings"
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Advanced",
-				"Options"
+				"options"
 			],
 			"desc": "Advanced options"
 		}
@@ -83,7 +83,7 @@
 				"Sleep",
 				"temp"
 			],
-			"desc": "Sleep Temperature"
+			"desc": "Sleep temperature"
 		},
 		"SleepTimeout": {
 			"text": "STME",
@@ -91,7 +91,7 @@
 				"Sleep",
 				"timeout"
 			],
-			"desc": "Sleep Timeout <Minutes/Seconds>"
+			"desc": "Sleep timeout <Minutes/Seconds>"
 		},
 		"ShutdownTimeout": {
 			"text": "SHTME",
@@ -99,7 +99,7 @@
 				"Shutdown",
 				"timeout"
 			],
-			"desc": "Shutdown Timeout <Minutes>"
+			"desc": "Shutdown timeout <Minutes>"
 		},
 		"MotionSensitivity": {
 			"text": "MSENSE",
@@ -107,15 +107,15 @@
 				"Motion",
 				"sensitivity"
 			],
-			"desc": "Motion Sensitivity <0=Off 1=Least Sensitive 9=Most Sensitive>"
+			"desc": "Motion sensitivity <0=Off 1=Least sensitive 9=Most sensitive>"
 		},
 		"TemperatureUnit": {
 			"text": "TMPUNT",
 			"text2": [
 				"Temperature",
-				"units"
+				"unit"
 			],
-			"desc": "Temperature Unit <C=Celsius F=Fahrenheit>"
+			"desc": "Temperature unit <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
 			"text": "ADVIDL",
@@ -123,7 +123,7 @@
 				"Detailed",
 				"idle screen"
 			],
-			"desc": "Display detailed information in a smaller font on the idle screen."
+			"desc": "Display detailed information in a smaller font on the idle screen"
 		},
 		"DisplayRotation": {
 			"text": "DSPROT",
@@ -131,15 +131,15 @@
 				"Display",
 				"orientation"
 			],
-			"desc": "Display Orientation <A=Automatic L=Left Handed R=Right Handed>"
+			"desc": "Display orientation <A=Automatic L=Left-handed R=Right-handed>"
 		},
 		"BoostEnabled": {
 			"text": "BOOST",
 			"text2": [
-				"Boost mode",
-				"enabled"
+				"Boost",
+				"mode"
 			],
-			"desc": "Enable front key long press \"Boost\" mode when soldering"
+			"desc": "Enable front key long press \"boost mode\" when soldering"
 		},
 		"BoostTemperature": {
 			"text": "BTMP",
@@ -147,7 +147,7 @@
 				"Boost",
 				"temp"
 			],
-			"desc": "Temperature when in \"Boost\" mode"
+			"desc": "Temperature when in \"boost mode\""
 		},
 		"AutoStart": {
 			"text": "ASTART",
@@ -155,7 +155,7 @@
 				"Auto",
 				"start"
 			],
-			"desc": "Automatically starts the iron into soldering on power up <T=Soldering S=Sleep F=Off>"
+			"desc": "Automatically starts the iron into soldering on power up <T=Soldering S=Sleep O=Sleep at room temperature F=Off>"
 		},
 		"CooldownBlink": {
 			"text": "CLBLNK",
@@ -163,7 +163,7 @@
 				"Cooldown",
 				"blink"
 			],
-			"desc": "Blink the temperature on the cooling screen while the tip is still hot."
+			"desc": "Blink the temperature on the cooling screen while the tip is still hot"
 		},
 		"TemperatureCalibration": {
 			"text": "TMP CAL?",
@@ -171,7 +171,7 @@
 				"Calibrate",
 				"temperature?"
 			],
-			"desc": "Calibrate tip offset."
+			"desc": "Calibrate tip offset?"
 		},
 		"SettingsReset": {
 			"text": "RESET?",
@@ -179,7 +179,7 @@
 				"Factory",
 				"Reset?"
 			],
-			"desc": "Reset all settings"
+			"desc": "Reset all settings!"
 		},
 		"VoltageCalibration": {
 			"text": "CAL VIN?",
@@ -187,7 +187,7 @@
 				"Calibrate",
 				"input voltage?"
 			],
-			"desc": "VIN Calibration. Buttons adjust, long press to exit"
+			"desc": "VIN Calibration <long press to exit>"
 		},
 		"AdvancedSoldering": {
 			"text": "ADVSLD",
@@ -201,7 +201,7 @@
 			"text": "DESCSP",
 			"text2": [
 				"Scrolling",
-				"Speed"
+				"speed"
 			],
 			"desc": "Speed this text scrolls past at <S=Slow F=Fast>"
 		},
@@ -209,23 +209,23 @@
 			"text": "TIPMO",
 			"text2": [
 				"Tip",
-				"Model"
+				"model"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Tip model selection"
 		},
 		"SimpleCalibrationMode": {
 			"text": "SMPCAL",
 			"text2": [
 				"Simple",
-				"Calibration"
+				"calibration"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Simple calibration using hot water"
 		},
 		"AdvancedCalibrationMode": {
 			"text": "ADVCAL",
 			"text2": [
 				"Advanced",
-				"Calibration"
+				"calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
@@ -233,15 +233,15 @@
 			"text": "PWRW",
 			"text2": [
 				"Power",
-				"Wattage"
+				"wattage"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Power wattage of the power adapter used"
 		},
 		"PowerLimitEnable": {
 			"text": "PLIMEN",
 			"text2": [
-				"P Limit",
-				"Enable"
+				"Enable power",
+				"limit"
 			],
 			"desc": "Enable power limit"
 		},
@@ -249,33 +249,33 @@
 			"text": "PLIM",
 			"text2": [
 				"Power",
-				"Limit"
+				"limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
 			"text": "RVTCHG",
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Reverse",
+				"+ - keys"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Reverse assignment of temperature adjustment buttons"
 		},
 		"TempChangeShortStep": {
 			"text": "TCHGST",
 			"text2": [
 				"Temp change",
-				"short?"
+				"short"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Temperature change steps on short button press"
 		},
 		"TempChangeLongStep": {
 			"text": "TCHGLT",
 			"text2": [
 				"Temp change",
-				"long?"
+				"long"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Temperature change steps on long button press"
 		}
 	}
 }
