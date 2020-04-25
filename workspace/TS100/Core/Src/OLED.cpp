@@ -194,11 +194,11 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 }
 
 void OLED::useSecondaryFramebuffer(bool useSecondary) {
-    if (useSecondary) {
-        setFramebuffer(secondFrameBuffer);
-    } else {
-        setFramebuffer(NULL);
-    }
+	if (useSecondary) {
+		setFramebuffer(secondFrameBuffer);
+	} else {
+		setFramebuffer(NULL);
+	}
 }
 
 void OLED::setRotation(bool leftHanded) {
