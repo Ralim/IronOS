@@ -826,10 +826,27 @@ void gui_Menu(const menuitem *menu) {
 	int16_t lastOffset = -1;
 	bool lcdRefresh = true;
 	ButtonState lastButtonState = BUTTON_NONE;
+	static bool enterGUIMenu = true;
+	enterGUIMenu = true;
 	uint8_t scrollContentSize = 0;
-	
+
 	for (uint8_t i = 0; menu[i].draw.func != NULL; i++) {
 		scrollContentSize += 1;
+	}
+
+	// Animated menu opening.
+	if (menu[currentScreen].draw.func != NULL) {
+		// This menu is drawn in a secondary framebuffer.
+		// Then we play a transition from the current primary
+		// framebuffer to the new buffer.
+		// The extra buffer is discarded at the end of the transition.
+		OLED::useSecondaryFramebuffer(true);
+		OLED::setFont(0);
+		OLED::setCursor(0, 0);
+		OLED::clearScreen();
+		menu[currentScreen].draw.func();
+		OLED::useSecondaryFramebuffer(false);
+		OLED::transitionSecondaryFramebuffer(true);
 	}
 
 	while ((menu[currentScreen].draw.func != NULL) && earlyExit == false) {
@@ -882,10 +899,23 @@ void gui_Menu(const menuitem *menu) {
 		case BUTTON_F_SHORT:
 			// increment
 			if (descriptionStart == 0) {
-				if (menu[currentScreen].incrementHandler.func != NULL)
+				if (menu[currentScreen].incrementHandler.func != NULL) {
+					enterGUIMenu = false;
 					menu[currentScreen].incrementHandler.func();
-				else
+
+					if (enterGUIMenu) {
+						OLED::useSecondaryFramebuffer(true);
+						OLED::setFont(0);
+						OLED::setCursor(0, 0);
+						OLED::clearScreen();
+						menu[currentScreen].draw.func();
+						OLED::useSecondaryFramebuffer(false);
+						OLED::transitionSecondaryFramebuffer(false);
+					}
+					enterGUIMenu = true;
+				} else {
 					earlyExit = true;
+				}
 			} else
 				descriptionStart = 0;
 			break;
@@ -931,7 +961,7 @@ void gui_Menu(const menuitem *menu) {
 			osDelay(40);
 			lcdRefresh = false;
 		}
-		if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
+		if ((xTaskGetTickCount() - lastButtonTime) > (100 * 30)) {
 			// If user has not pressed any buttons in 30 seconds, exit back a menu layer
 			// This will trickle the user back to the main screen eventually
 			earlyExit = true;
