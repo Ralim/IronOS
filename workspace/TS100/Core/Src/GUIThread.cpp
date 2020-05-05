@@ -325,21 +325,21 @@ case BUTTON_B_LONG:
 			autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX
 					- PRESS_ACCEL_INTERVAL_MIN;
 		}
-		// constrain between 50-450 C
+		// constrain between 10-450 C
 		#ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF) {
 			if (systemSettings.SolderingTemp > 850)
 				systemSettings.SolderingTemp = 850;
-			if (systemSettings.SolderingTemp < 120)
-				systemSettings.SolderingTemp = 120;
+			if (systemSettings.SolderingTemp < 60)
+				systemSettings.SolderingTemp = 60;
 		} 
 		else 
 		#endif
 		{
 			if (systemSettings.SolderingTemp > 450)
 				systemSettings.SolderingTemp = 450;
-			if (systemSettings.SolderingTemp < 50)
-				systemSettings.SolderingTemp = 50;
+			if (systemSettings.SolderingTemp < 10)
+				systemSettings.SolderingTemp = 10;
 		}
 
 		if (xTaskGetTickCount() - lastChange > 200)

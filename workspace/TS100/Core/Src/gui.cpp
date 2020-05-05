@@ -373,13 +373,13 @@ static void settings_setSleepTemp(void) {
 	if (systemSettings.temperatureInF) {
 		systemSettings.SleepTemp += 20;
 		if (systemSettings.SleepTemp > 580)
-			systemSettings.SleepTemp = 120;
+			systemSettings.SleepTemp = 60;
 	} else
 #endif
 	{
 		systemSettings.SleepTemp += 10;
 		if (systemSettings.SleepTemp > 300)
-			systemSettings.SleepTemp = 50;
+			systemSettings.SleepTemp = 10;
 	}
 }
 
