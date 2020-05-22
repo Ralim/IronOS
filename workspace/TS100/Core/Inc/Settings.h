@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
 #include "unit.h"
-#define SETTINGSVERSION   ( 0x1E )
+#define SETTINGSVERSION   ( 0x1F )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -21,6 +21,8 @@
  * flash in uint16_t chunks
  */
 typedef struct {
+	uint8_t version;   // Used to track if a reset is needed on firmware upgrade
+
 	uint16_t SolderingTemp;  // current set point for the iron
 	uint16_t SleepTemp;      // temp to drop to in sleep
 	uint8_t SleepTime;       // minutes timeout to sleep
@@ -37,25 +39,26 @@ typedef struct {
 	uint8_t detailedIDLE :1;       // Detailed idle screen
 	uint8_t detailedSoldering :1;  // Detailed soldering screens
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-	uint8_t temperatureInF;         // Should the temp be in F or C (true is F)
+	uint8_t temperatureInF :1;       // Should the temp be in F or C (true is F)
 #endif
 	uint8_t descriptionScrollSpeed :1;  // Description scroll speed
+	uint8_t KeepAwakePulse;         // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
+
 	uint16_t voltageDiv;                 // Voltage divisor factor
 	uint16_t BoostTemp;                  // Boost mode set point for the iron
 	uint16_t CalibrationOffset; // This stores the temperature offset for this tip
 								// in the iron.
 
-	uint8_t pidPowerLimit;
-
 	uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
 	uint8_t powerLimit;       // Maximum power iron allowed to output
 
-	uint8_t version;  // Used to track if a reset is needed on firmware upgrade
+	uint8_t ReverseButtonTempChangeEnabled; // Change the plus and minus button assigment
+	uint16_t TempChangeLongStep;   // Change the plus and minus button assigment
+	uint16_t TempChangeShortStep;  // Change the plus and minus button assigment
+
 	uint32_t padding;  // This is here for in case we are not an even divisor so
 					   // that nothing gets cut off
-  uint8_t ReverseButtonTempChangeEnabled;   // Change the plus and minus button assigment
-  uint16_t TempChangeLongStep;              // Change the plus and minus button assigment
-  uint16_t TempChangeShortStep;             // Change the plus and minus button assigment
+					   //MUST BE LAST
 
 } systemSettingsType;
 
