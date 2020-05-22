@@ -273,6 +273,14 @@
 				"Long?"
 			],
 			"desc": "Incrément de changement de température sur appui long."
+		},
+		"PowerPulsePower":{
+			"text": "POWPLS",
+			"text2": [
+				"Power Pulse",
+				"Watts"
+			],
+			"desc": "Keep awake pulse power intensity"
 		}
 	}
 }

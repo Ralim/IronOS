@@ -275,6 +275,14 @@
 				"долго?"
 			],
 			"desc": "Изменять температуру при длинном нажатии!"
+		},
+		"PowerPulsePower":{
+			"text": "POWPLS",
+			"text2": [
+				"Power Pulse",
+				"Watts"
+			],
+			"desc": "Keep awake pulse power intensity"
 		}
 	}
 }
