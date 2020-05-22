@@ -234,7 +234,7 @@ const menuitem advancedMenu[] = {
 		settings_displayCalibrate } }, /*Calibrate tip*/
 { (const char*) SettingsDescriptions[14], { settings_setCalibrateVIN }, {
 		settings_displayCalibrateVIN } }, /*Voltage input cal*/
-{ (const char*) SettingsDescriptions[16], { settings_setPowerPulse }, {
+{ (const char*) SettingsDescriptions[26], { settings_setPowerPulse }, {
 		settings_displayPowerPulse } }, /*Power Pulse adjustment */
 { NULL, { NULL }, { NULL } }  // end of menu marker. DO NOT REMOVE
 };
