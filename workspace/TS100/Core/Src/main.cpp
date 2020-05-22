@@ -302,26 +302,21 @@ void startMOVTask(void const *argument __unused) {
 	}
 }
 
-#define FLASH_LOGOADDR \
-  (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
-
-/* The header value is (0xAA,0x55,0xF0,0x0D) but is stored in little endian 16
- * bits words on the flash */
-const uint8_t LOGO_HEADER_VALUE[] = { 0x55, 0xAA, 0x0D, 0xF0 };
+// Second last page of flash set aside for logo image.
+#define FLASH_LOGOADDR (0x8000000 | 0xF800)
+   
+// Logo header signature.
+#define LOGO_HEADER_VALUE 0xF00DAA55
 
 bool showBootLogoIfavailable() {
-	uint8_t *header = (uint8_t*) (FLASH_LOGOADDR);
+    // Do not show logo data if signature is not found.
+    if (LOGO_HEADER_VALUE != *(reinterpret_cast<const uint32_t *>(FLASH_LOGOADDR))) {
+        return false;
+    }
 
-	// check if the header is correct. 
-	for (int i = 0; i < 4; i++) {
-		if (header[i] != LOGO_HEADER_VALUE[i]) {
-			return false;
-		}
-	}
-
-	OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t*) (FLASH_LOGOADDR + 4));
-	OLED::refresh();
-	return true;
+    OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t*) (FLASH_LOGOADDR + 4));
+    OLED::refresh();
+    return true;
 }
 
 /*
