@@ -278,8 +278,8 @@
 		"PowerPulsePower":{
 			"text": "POWPLS",
 			"text2": [
-				"Power Pulse",
-				"Watts"
+				"Power",
+				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		}
