@@ -105,6 +105,6 @@ void resetSettings() {
 	systemSettings.ReverseButtonTempChangeEnabled = REVERSE_BUTTON_TEMP_CHANGE; //
 	systemSettings.TempChangeShortStep = TEMP_CHANGE_SHORT_STEP; //
 	systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP; //
-	systemSettings.KeepAwakePulse= 3;
+	systemSettings.KeepAwakePulse= POWER_PULSE_DEFAULT;
 	saveSettings();  // Save defaults
 }

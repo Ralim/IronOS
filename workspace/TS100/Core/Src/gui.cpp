@@ -18,8 +18,8 @@ extern uint32_t lastButtonTime;
 void gui_Menu(const menuitem *menu);
 
 #ifdef MODEL_TS100
-  static void settings_setInputVRange(void);
-  static void settings_displayInputVRange(void);
+static void settings_setInputVRange(void);
+static void settings_displayInputVRange(void);
 #else
 static void settings_setInputPRange(void);
 static void settings_displayInputPRange(void);
@@ -118,14 +118,14 @@ static void settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[] {
-		/*
-		 * Power Source
-		 * Soldering Menu
-		 * Power Saving Menu
-		 * UI Menu
-		 * Advanced Menu
-		 * Exit
-		 */
+/*
+ * Power Source
+ * Soldering Menu
+ * Power Saving Menu
+ * UI Menu
+ * Advanced Menu
+ * Exit
+ */
 #ifdef MODEL_TS100
 		{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
 				settings_displayInputVRange } }, /*Voltage input*/
@@ -786,16 +786,15 @@ static void settings_displayTempChangeLongStep(void) {
 
 static void settings_setPowerPulse(void) {
 	systemSettings.KeepAwakePulse += POWER_PULSE_INCREMENT;
-	if (systemSettings.KeepAwakePulse > POWER_PULSE_MAX) {
-		systemSettings.KeepAwakePulse = POWER_PULSE_MAX;  // loop back to 0
-	}
+	systemSettings.KeepAwakePulse %= POWER_PULSE_MAX;
+
 }
 static void settings_displayPowerPulse(void) {
 	printShortDescription(26, 5);
-	if (systemSettings.TempChangeLongStep) {
-		OLED::printNumber(systemSettings.TempChangeLongStep / 10, 1);
+	if (systemSettings.KeepAwakePulse) {
+		OLED::printNumber(systemSettings.KeepAwakePulse / 10, 1);
 		OLED::print(SymbolDot);
-		OLED::printNumber(systemSettings.TempChangeLongStep % 10, 1);
+		OLED::printNumber(systemSettings.KeepAwakePulse % 10, 1);
 	} else {
 		OLED::drawCheckbox(false);
 	}

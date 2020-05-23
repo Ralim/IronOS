@@ -57,6 +57,11 @@
 /* Power pulse for keeping power banks awake*/
 #define POWER_PULSE_INCREMENT 1
 #define POWER_PULSE_MAX 50 // x10 max watts
+#ifdef MODEL_TS100
+#define POWER_PULSE_DEFAULT 0
+#else
+#define POWER_PULSE_DEFAULT 5
+#endif
 /**
  * OLED Orientation Sensitivity on Automatic mode!
  * Motion Sensitivity <0=Off 1=Least Sensitive 9=Most Sensitive>
