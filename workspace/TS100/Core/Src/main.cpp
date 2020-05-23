@@ -43,7 +43,6 @@ void startPIDTask(void const *argument);
 void startMOVTask(void const *argument);
 // End FreeRTOS
 
-
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
@@ -111,15 +110,9 @@ void startPIDTask(void const *argument __unused) {
 	 * control PWM.
 	 */
 	setTipX10Watts(0); // disable the output driver if the output is set to be off
-
-#ifdef MODEL_TS80
-	//Set power management code to the tip resistance in ohms * 10
-
 	TickType_t lastPowerPulseStart = 0;
 	TickType_t lastPowerPulseEnd = 0;
-#else
 
-#endif
 	history<int32_t, PID_TIM_HZ> tempError = { { 0 }, 0, 0 };
 	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
 							   // be over-ridden rapidly
