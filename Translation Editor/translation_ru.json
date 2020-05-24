@@ -275,6 +275,14 @@
 				"длин. наж."
 			],
 			"desc": "Шаг изменения температуры при длинном нажатии кнопок"
+		},
+		"PowerPulsePower":{
+			"text": "POWPLS",
+			"text2": [
+				"Power",
+				"Pulse W"
+			],
+			"desc": "Keep awake pulse power intensity"			
 		}
 	}
 }

@@ -277,6 +277,14 @@
 				"Taste Lang?"
 			],
 			"desc": "Temperaturwechselschritte bei langem Tastendruck!"
+		},
+		"PowerPulsePower":{
+			"text": "POWPLS",
+			"text2": [
+				"Power",
+				"Pulse W"
+			],
+			"desc": "Keep awake pulse power intensity"
 		}
 	}
 }
