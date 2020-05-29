@@ -5,26 +5,11 @@
  *      Author: Ralim
  */
 
-
 //Quick charge 3.0 supporting functions
-
-
-
-#ifdef MODEL_TS80
-void DPlusZero_Six() {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);		// pull down D+
-}
-void DNegZero_Six() {
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-}
-void DPlusThree_Three() {
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);			// pull up D+
-}
-void DNegThree_Three() {
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-}
+#include "QC3.h"
+#include "stdint.h"
+#include "BSP.h"
+#include "cmsis_os.h"
 
 void QC_Seek9V() {
 	DNegZero_Six();
@@ -127,20 +112,7 @@ void startQC(uint16_t divisor) {
 		QCMode = 1;  // Already at 12V, user has probably over-ridden this
 		return;
 	}
-	GPIO_InitTypeDef GPIO_InitStruct;
-	GPIO_InitStruct.Pin = GPIO_PIN_3;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_10;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	//Turn off output mode on pins that we can
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	QC_Init_GPIO();
 
 	// Tries to negotiate QC for 9V
 	// This is a multiple step process.
@@ -154,28 +126,20 @@ void startQC(uint16_t divisor) {
 	for (uint16_t i = 0; i < 200 && enteredQC == 0; i++) {
 		vTaskDelay(1);	//10mS pause
 		if (i > 130) {
-			if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET) {
+			if (QC_DM_PulledDown()) {
 				enteredQC = 1;
 			}
 			if (i == 140) {
 				//For some marginal QC chargers, we try adding a pulldown
-				GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-				GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-				GPIO_InitStruct.Pin = GPIO_PIN_11;
-				HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+				QC_DM_PullDown();
 			}
 		}
 	}
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Pin = GPIO_PIN_11;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	QC_DM_No_PullDown();
 	if (enteredQC) {
 		// We have a QC capable charger
 		QC_Seek9V();
-		GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_10;
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+		QC_Post_Probe_En();
 		QC_Seek9V();
 		// Wait for frontend ADC to stabilise
 		QCMode = 4;
@@ -199,5 +163,3 @@ void startQC(uint16_t divisor) {
 		QCMode = 0;
 }
 
-
-#endif

@@ -1,6 +1,7 @@
 #include "Defines.h"
 #include "stdint.h"
 #include "UnitSettings.h"
+#include "BSP_QC.h"
 /*
  * BSP.h -- Board Support
  *

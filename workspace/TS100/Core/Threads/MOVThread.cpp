@@ -18,7 +18,7 @@
 #include "stdlib.h"
 #include "LIS2DH12.hpp"
 #include <MMA8652FC.hpp>
-
+#include "QC3.h"
 #define MOVFilter 8
 uint8_t accelInit = 0;
 uint32_t lastMovementTime = 0;
