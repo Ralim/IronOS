@@ -287,6 +287,11 @@ var def =
 			"id": "PowerPulsePower",
 			"maxLen": 6,
 			"maxLen2": 16
+		},
+		{
+			"id": "TipGain",
+			"maxLen": 6,
+			"maxLen2": 8
 		}
 	]
 }

@@ -281,6 +281,14 @@
 				"bank üzem W"
 			],
 			"desc": "Powerbank üzemnél nem engedi a powerbankot kikapcsolni idönkénti áram felvételt generál. "
+		},
+		"TipGain": {
+			"text": "TG",
+			"text2": [
+				"Modify",
+				"tip gain"
+			],
+			"desc": "Tip gain"
 		}
 	}
 }

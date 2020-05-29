@@ -283,6 +283,14 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
+		},
+		"TipGain": {
+			"text": "TG",
+			"text2": [
+				"Modify",
+				"tip gain"
+			],
+			"desc": "Tip gain"
 		}
 	}
 }
