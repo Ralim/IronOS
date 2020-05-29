@@ -14,10 +14,10 @@ SOURCES := $(shell find . -type f -name '*.c*')
 S_SRCS := $(shell find . -type f -name '*.s') 
 
 APP_INC_DIR = ./Core/Inc
-CMSIS_DEVICE_INC_DIR = ./Drivers/CMSIS/Device/ST/STM32F1xx/Include
-CMSIS_CORE_INC_DIR = ./Drivers/CMSIS/Include
-HAL_INC_DIR = ./Drivers/STM32F1xx_HAL_Driver/Inc
-HAL_LEGACY_INC_DIR = ./Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+CMSIS_DEVICE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
+CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
+HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
+HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 FRTOS_GCC_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3
