@@ -41,6 +41,10 @@ void unstick_I2C();
 
 //Reboot the IC when things go seriously wrong
 void reboot();
+
+//If the user has programmed in a bootup logo, draw it to the screen from flash
+//Returns 1 if the logo was printed so that the unit waits for the timeout or button
+uint8_t showBootLogoIfavailable();
 #ifdef __cplusplus
 }
 #endif

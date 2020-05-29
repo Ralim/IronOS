@@ -8,12 +8,15 @@
 #include "BSP.h"
 #include "Setup.h"
 #include "Pins.h"
+#include "FRTosI2C.hpp"
 void preRToSInit() {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
 	 */
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
+	FRToSI2C::init(&hi2c1);
 	HAL_Delay(50);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(50);
+
 }

@@ -43,7 +43,6 @@ int main(void) {
 	preRToSInit();
 
 	setTipX10Watts(0);  // force tip off
-	FRToSI2C::init(&hi2c1);
 	OLED::initialize();  // start up the LCD
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
@@ -86,28 +85,5 @@ int main(void) {
 
 	/* Start scheduler */
 	osKernelStart();
-
 	/* We should never get here as control is now taken by the scheduler */
-	while (1) {
-	}
 }
-
-
-// Second last page of flash set aside for logo image.
-#define FLASH_LOGOADDR (0x8000000 | 0xF800)
-
-// Logo header signature.
-#define LOGO_HEADER_VALUE 0xF00DAA55
-
-bool showBootLogoIfavailable() {
-// Do not show logo data if signature is not found.
-	if (LOGO_HEADER_VALUE
-			!= *(reinterpret_cast<const uint32_t*>(FLASH_LOGOADDR))) {
-		return false;
-	}
-
-	OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t*) (FLASH_LOGOADDR + 4));
-	OLED::refresh();
-	return true;
-}
-

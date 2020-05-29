@@ -10,6 +10,14 @@
 #include "stm32f1xx_hal.h"
 #include "cmsis_os.h"
 
+/*
+ * Wrapper class to work with the device I2C bus
+ *
+ * This provides mutex protection of the peripheral
+ * Also allows hardware to use DMA should it want to
+ *
+ *
+ */
 class FRToSI2C {
 public:
 
