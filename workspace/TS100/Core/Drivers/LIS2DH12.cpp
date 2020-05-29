@@ -38,7 +38,7 @@ void LIS2DH12::initalize() {
 void LIS2DH12::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
 	std::array<int16_t, 3> sensorData;
 
-	FRToSI2C::Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8, I2C_MEMADD_SIZE_8BIT,
+	FRToSI2C::Mem_Read(LIS2DH_I2C_ADDRESS, 0xA8,
 			reinterpret_cast<uint8_t*>(sensorData.begin()),
 			sensorData.size() * sizeof(int16_t));
 

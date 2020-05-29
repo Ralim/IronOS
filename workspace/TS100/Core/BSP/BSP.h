@@ -46,6 +46,8 @@ void reboot();
 //If the user has programmed in a bootup logo, draw it to the screen from flash
 //Returns 1 if the logo was printed so that the unit waits for the timeout or button
 uint8_t showBootLogoIfavailable();
+
+void delay_ms(uint16_t count);
 #ifdef __cplusplus
 }
 #endif

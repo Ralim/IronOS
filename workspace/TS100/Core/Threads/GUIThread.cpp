@@ -4,6 +4,9 @@
  *  Created on: 19 Aug 2019
  *      Author: ralim
  */
+extern "C" {
+#include "FreeRTOSConfig.h"
+}
 #include <MMA8652FC.hpp>
 #include <gui.hpp>
 #include <main.hpp>
@@ -14,7 +17,6 @@
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "stdlib.h"
-#include "stm32f1xx_hal.h"
 #include "string.h"
 #include "TipThermoModel.h"
 #include "unit.h"
@@ -30,10 +32,8 @@ extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
 
-// TODO: express time constants in terms of dividends of portTICK_RATE_MS
-
-#define MOVEMENT_INACTIVITY_TIME 6000
-#define BUTTON_INACTIVITY_TIME   6000
+#define MOVEMENT_INACTIVITY_TIME (60*configTICK_RATE_HZ)
+#define BUTTON_INACTIVITY_TIME   (60*configTICK_RATE_HZ)
 
 static uint16_t min(uint16_t a, uint16_t b) {
 	if (a > b)
@@ -58,35 +58,34 @@ void GUIDelay() {
 void gui_drawTipTemp(bool symbol) {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
 	uint16_t Temp = 0;
-	#ifdef ENABLED_FAHRENHEIT_SUPPORT
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF)
 			Temp = TipThermoModel::getTipInF();
 		else
 	#endif
-			Temp = TipThermoModel::getTipInC();
+	Temp = TipThermoModel::getTipInC();
 
 	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
 	if (symbol) {
 		if (OLED::getFont() == 0) {
 			//Big font, can draw nice symbols
-			#ifdef ENABLED_FAHRENHEIT_SUPPORT
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 				if (systemSettings.temperatureInF)
 					OLED::drawSymbol(0);
 				else
 			#endif
-					OLED::drawSymbol(1);
+			OLED::drawSymbol(1);
 		} else {
 			//Otherwise fall back to chars
-			#ifdef ENABLED_FAHRENHEIT_SUPPORT
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 				if (systemSettings.temperatureInF)
 					OLED::print(SymbolDegF);
 				else
 			#endif
-				OLED::print(SymbolDegC);
+			OLED::print(SymbolDegC);
 		}
 	}
 }
-
 
 #ifdef MODEL_TS100
 // returns true if undervoltage has occured
@@ -180,36 +179,48 @@ static void gui_solderingTempAdjust() {
 			// exit
 			return;
 			break;
-case BUTTON_B_LONG:
+		case BUTTON_B_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
-        if(systemSettings.ReverseButtonTempChangeEnabled) {
-          systemSettings.SolderingTemp += systemSettings.TempChangeLongStep;
-        } else systemSettings.SolderingTemp -= systemSettings.TempChangeLongStep;
-        
+				if (systemSettings.ReverseButtonTempChangeEnabled) {
+					systemSettings.SolderingTemp +=
+							systemSettings.TempChangeLongStep;
+				} else
+					systemSettings.SolderingTemp -=
+							systemSettings.TempChangeLongStep;
+
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
-    case BUTTON_B_SHORT:
-       if(systemSettings.ReverseButtonTempChangeEnabled) {
-        systemSettings.SolderingTemp += systemSettings.TempChangeShortStep;
-       } else systemSettings.SolderingTemp -= systemSettings.TempChangeShortStep;
-      break;
+		case BUTTON_B_SHORT:
+			if (systemSettings.ReverseButtonTempChangeEnabled) {
+				systemSettings.SolderingTemp +=
+						systemSettings.TempChangeShortStep;
+			} else
+				systemSettings.SolderingTemp -=
+						systemSettings.TempChangeShortStep;
+			break;
 		case BUTTON_F_LONG:
 			if (xTaskGetTickCount() - autoRepeatTimer
 					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
-        if(systemSettings.ReverseButtonTempChangeEnabled) {
-          systemSettings.SolderingTemp -= systemSettings.TempChangeLongStep;
-        } else systemSettings.SolderingTemp += systemSettings.TempChangeLongStep;
+				if (systemSettings.ReverseButtonTempChangeEnabled) {
+					systemSettings.SolderingTemp -=
+							systemSettings.TempChangeLongStep;
+				} else
+					systemSettings.SolderingTemp +=
+							systemSettings.TempChangeLongStep;
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_F_SHORT:
-      if(systemSettings.ReverseButtonTempChangeEnabled) {
-        systemSettings.SolderingTemp -= systemSettings.TempChangeShortStep;  // add 10
-      } else systemSettings.SolderingTemp += systemSettings.TempChangeShortStep;  // add 10
+			if (systemSettings.ReverseButtonTempChangeEnabled) {
+				systemSettings.SolderingTemp -=
+						systemSettings.TempChangeShortStep;  // add 10
+			} else
+				systemSettings.SolderingTemp +=
+						systemSettings.TempChangeShortStep;  // add 10
 			break;
 		default:
 			break;
@@ -220,7 +231,7 @@ case BUTTON_B_LONG:
 					- PRESS_ACCEL_INTERVAL_MIN;
 		}
 		// constrain between 10-450 C
-		#ifdef ENABLED_FAHRENHEIT_SUPPORT
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF) {
 			if (systemSettings.SolderingTemp > 850)
 				systemSettings.SolderingTemp = 850;
@@ -244,15 +255,18 @@ case BUTTON_B_LONG:
 #else
 		if (OLED::getRotation()) {
 #endif
-    	OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolPlus:SymbolMinus);
-		} else { 
-			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolMinus:SymbolPlus);
+			OLED::print(
+					systemSettings.ReverseButtonTempChangeEnabled ?
+							SymbolPlus : SymbolMinus);
+		} else {
+			OLED::print(
+					systemSettings.ReverseButtonTempChangeEnabled ?
+							SymbolMinus : SymbolPlus);
 		}
-
 
 		OLED::print(SymbolSpace);
 		OLED::printNumber(systemSettings.SolderingTemp, 3);
-		#ifdef ENABLED_FAHRENHEIT_SUPPORT
+#ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF)
 			OLED::drawSymbol(0);
 		else
@@ -266,9 +280,13 @@ case BUTTON_B_LONG:
 #else
 		if (OLED::getRotation()) {
 #endif
-			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolMinus:SymbolPlus);
+			OLED::print(
+					systemSettings.ReverseButtonTempChangeEnabled ?
+							SymbolMinus : SymbolPlus);
 		} else {
-			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolPlus:SymbolMinus);
+			OLED::print(
+					systemSettings.ReverseButtonTempChangeEnabled ?
+							SymbolPlus : SymbolMinus);
 		}
 		OLED::refresh();
 		GUIDelay();
@@ -283,8 +301,8 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 		if (buttons)
 			return 0;
 		if ((xTaskGetTickCount() > 100)
-			&& ((accelInit && (xTaskGetTickCount() - lastMovementTime < 100))
-				|| (xTaskGetTickCount() - lastButtonTime < 100)))
+				&& ((accelInit && (xTaskGetTickCount() - lastMovementTime < 100))
+						|| (xTaskGetTickCount() - lastButtonTime < 100)))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
 		if (checkVoltageForExit())
@@ -298,8 +316,11 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 		} else 
 #endif
 		{
-			currentTempTargetDegC = stayOff ? 0 : min(systemSettings.SleepTemp,
-					systemSettings.SolderingTemp);
+			currentTempTargetDegC =
+					stayOff ?
+							0 :
+							min(systemSettings.SleepTemp,
+									systemSettings.SolderingTemp);
 		}
 		// draw the lcd
 		uint16_t tipTemp;
@@ -656,31 +677,17 @@ void startGUITask(void const *argument __unused) {
 
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
-		if (systemSettings.autoStartMode == 1)
-		{
+		if (systemSettings.autoStartMode == 1) {
 			gui_solderingMode(0);
 			buttonLockout = true;
-		}
-		else if (systemSettings.autoStartMode == 2)
-		{
+		} else if (systemSettings.autoStartMode == 2) {
 			gui_solderingMode(1);
 			buttonLockout = true;
-		}
-		else if (systemSettings.autoStartMode == 3)
-		{
+		} else if (systemSettings.autoStartMode == 3) {
 			gui_solderingMode(2);
 			buttonLockout = true;
 		}
 	}
-
-#ifdef ACCELDEBUG
-
-	for (;;) {
-		HAL_IWDG_Refresh(&hiwdg);
-		osDelay(100);
-	}
-//^ Kept here for a way to block this thread
-#endif
 
 	for (;;) {
 		ButtonState buttons = getButtonState();

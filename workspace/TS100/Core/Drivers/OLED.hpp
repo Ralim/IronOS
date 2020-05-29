@@ -10,7 +10,6 @@
 #ifndef OLED_HPP_
 #define OLED_HPP_
 #include <BSP.h>
-#include "stm32f1xx_hal.h"
 #include <stdbool.h>
 #include <string.h>
 #include "I2C_Wrapper.hpp"
@@ -27,12 +26,11 @@ extern "C" {
 #define OLED_HEIGHT       16
 #define FRAMEBUFFER_START 17
 
-class OLED {	
+class OLED {
 public:
 
 	enum DisplayState : bool {
-		OFF = false,
-		ON  = true
+		OFF = false, ON = true
 	};
 
 	static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
@@ -40,7 +38,7 @@ public:
 	// Draw the buffer out to the LCD using the DMA Channel
 	static void refresh() {
 		FRToSI2C::Transmit( DEVICEADDR_OLED, screenBuffer,
-				FRAMEBUFFER_START + (OLED_WIDTH * 2));
+		FRAMEBUFFER_START + (OLED_WIDTH * 2));
 		//DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
 		//or we need to goto double buffering
 	}
@@ -49,16 +47,16 @@ public:
 		displayState = state;
 		screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
 	}
-	
+
 	static void setRotation(bool leftHanded); // Set the rotation for the screen
 	// Get the current rotation of the LCD
-	static bool getRotation()  {
+	static bool getRotation() {
 		return inLeftHandedMode;
 	}
 	static int16_t getCursorX() {
 		return cursor_x;
 	}
-	static void print(const char* string);// Draw a string to the current location, with current font
+	static void print(const char *string);// Draw a string to the current location, with current font
 	// Set the cursor location by pixels
 	static void setCursor(int16_t x, int16_t y) {
 		cursor_x = x;
@@ -71,11 +69,12 @@ public:
 	}
 	static void setFont(uint8_t fontNumber); // (Future) Set the font that is being used
 	static uint8_t getFont();
-	static void drawImage(const uint8_t* buffer, uint8_t x, uint8_t width) {
+	static void drawImage(const uint8_t *buffer, uint8_t x, uint8_t width) {
 		drawArea(x, 0, width, 16, buffer);
 	}
 	// Draws an image to the buffer, at x offset from top to bottom (fixed height renders)
-	static void printNumber(uint16_t number, uint8_t places,bool noLeaderZeros=true);
+	static void printNumber(uint16_t number, uint8_t places,
+			bool noLeaderZeros = true);
 	// Draws a number at the current cursor location
 	// Clears the buffer
 	static void clearScreen() {
@@ -92,9 +91,9 @@ public:
 	static void debugNumber(int32_t val);
 	static void drawSymbol(uint8_t symbolID);//Used for drawing symbols of a predictable width
 	static void drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
-			const uint8_t* ptr); //Draw an area, but y must be aligned on 0/8 offset
-	static void drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height,
-			const uint8_t* ptr); //Draw an area, but y must be aligned on 0/8 offset
+			const uint8_t *ptr); //Draw an area, but y must be aligned on 0/8 offset
+	static void drawAreaSwapped(int16_t x, int8_t y, uint8_t wide,
+			uint8_t height, const uint8_t *ptr); //Draw an area, but y must be aligned on 0/8 offset
 	static void fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 			const uint8_t value); //Fill an area, but y must be aligned on 0/8 offset
 	static void drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
@@ -106,9 +105,9 @@ public:
 private:
 	static void drawChar(char c); // Draw a character to a specific location
 	static void setFramebuffer(uint8_t *buffer);
-	static const uint8_t* currentFont;// Pointer to the current font used for rendering to the buffer
-	static uint8_t* firstStripPtr; // Pointers to the strips to allow for buffer having extra content
-	static uint8_t* secondStripPtr;	//Pointers to the strips
+	static const uint8_t *currentFont; // Pointer to the current font used for rendering to the buffer
+	static uint8_t *firstStripPtr; // Pointers to the strips to allow for buffer having extra content
+	static uint8_t *secondStripPtr;	//Pointers to the strips
 	static bool inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
 	static DisplayState displayState;
 	static uint8_t fontWidth, fontHeight;

@@ -7,7 +7,7 @@
 
 #ifndef FRTOSI2C_HPP_
 #define FRTOSI2C_HPP_
-#include "stm32f1xx_hal.h"
+
 #include "cmsis_os.h"
 
 /*
@@ -21,8 +21,7 @@
 class FRToSI2C {
 public:
 
-	static void init(I2C_HandleTypeDef *i2chandle) {
-		i2c = i2chandle;
+	static void init() {
 		I2CSemaphore = nullptr;
 	}
 
@@ -34,9 +33,9 @@ public:
 	static void CpltCallback(); //Normal Tx Callback
 
 	static bool Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
-			uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
+			uint8_t *pData, uint16_t Size);
 	static void Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
-			uint16_t MemAddSize, uint8_t *pData, uint16_t Size);
+			uint8_t *pData, uint16_t Size);
 	//Returns true if device ACK's being addressed
 	static bool probe(uint16_t DevAddress);
 
@@ -45,8 +44,7 @@ public:
 	static uint8_t I2C_RegisterRead(uint8_t address, uint8_t reg);
 
 private:
-	static I2C_HandleTypeDef *i2c;
-	static void I2C1_ClearBusyFlagErratum();
+	static void I2C_Unstick();
 	static SemaphoreHandle_t I2CSemaphore;
 	static StaticSemaphore_t xSemaphoreBuffer;
 };

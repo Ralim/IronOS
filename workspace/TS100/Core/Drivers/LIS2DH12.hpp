@@ -7,7 +7,6 @@
 
 #ifndef LIS2DH12_HPP_
 #define LIS2DH12_HPP_
-#include "stm32f1xx_hal.h"
 #include "I2C_Wrapper.hpp"
 #include "LIS2DH12_defines.hpp"
 #include "BSP.h"

@@ -7,7 +7,6 @@
 
 #ifndef MMA8652FC_HPP_
 #define MMA8652FC_HPP_
-#include "stm32f1xx_hal.h"
 #include "MMA8652FC_defines.h"
 #include "I2C_Wrapper.hpp"
 #include "BSP.h"

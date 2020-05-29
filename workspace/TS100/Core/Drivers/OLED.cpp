@@ -63,7 +63,6 @@ uint8_t OLED_Setup_Array[] = {
 const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
 		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
-
 /*
  * Animation timing function that follows a bezier curve.
  * @param t A given percentage value [0..<100]
@@ -144,10 +143,10 @@ void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
 		uint16_t whole;
 		uint8_t strips[2];
 	} column;
-	
+
 	column.whole = (1 << height) - 1;
 	column.whole <<= y;
-	
+
 	// Draw a one pixel wide bar to the left with a single pixel as
 	// the scroll indicator.
 	fillArea(OLED_WIDTH - 1, 0, 1, 8, column.strips[0]);
@@ -191,11 +190,14 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
 		offset = progress;
 
-		memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious], OLED_WIDTH - progress);
-		memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious], OLED_WIDTH - progress);
+		memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious],
+				OLED_WIDTH - progress);
+		memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious],
+				OLED_WIDTH - progress);
 
 		memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
-		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
+		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd],
+				progress);
 
 		refresh();
 		osDelay(40);
@@ -271,7 +273,7 @@ uint8_t OLED::getFont() {
 inline void stripLeaderZeros(char *buffer, uint8_t places) {
 	//Removing the leading zero's by swapping them to SymbolSpace
 	// Stop 1 short so that we dont blank entire number if its zero
-	for (int i = 0; i < (places-1); i++) {
+	for (int i = 0; i < (places - 1); i++) {
 		if (buffer[i] == 2) {
 			buffer[i] = SymbolSpace[0];
 		} else {

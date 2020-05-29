@@ -14,7 +14,7 @@ void preRToSInit() {
 	 */
 	HAL_Init();
 	Setup_HAL();  // Setup all the HAL objects
-	FRToSI2C::init(&hi2c1);
+	FRToSI2C::init();
 	HAL_Delay(50);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(50);

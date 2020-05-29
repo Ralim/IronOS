@@ -12,8 +12,8 @@
 #include "Translation.h"
 
 #define FONT_12_WIDTH   12
-// FONTS ARE NO LONGER HERE, MOVED TO PYTHON AUTO GEN
-
+// THE MAIN FONTS ARE NO LONGER HERE, MOVED TO PYTHON AUTO GEN
+// THESE ARE ONLY THE SYMBOL FONTS
 
 const uint8_t ExtraFontChars[] = {
 		//width = 12

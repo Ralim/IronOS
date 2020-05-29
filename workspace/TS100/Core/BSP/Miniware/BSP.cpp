@@ -250,3 +250,7 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 void reboot() {
 	NVIC_SystemReset();
 }
+
+void delay_ms(uint16_t count) {
+	HAL_Delay(count);
+}
