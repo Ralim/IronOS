@@ -1,4 +1,7 @@
 // By Ben V. Brown - V2.0 of the TS100 firmware
+
+#include "BSP.h"
+
 #include <MMA8652FC.hpp>
 #include <gui.hpp>
 #include <main.hpp>
@@ -45,13 +48,10 @@ void startMOVTask(void const *argument);
 
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
-	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
-	 */
-	HAL_Init();
-	Setup_HAL();  // Setup all the HAL objects
-	HAL_IWDG_Refresh(&hiwdg);
+	preRToSInit();
+
 	setTipX10Watts(0);  // force tip off
-	FRToSI2C::init(&hi2c1);
+	FRToSI2C::init (&hi2c1);
 	OLED::initialize();  // start up the LCD
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
@@ -69,10 +69,10 @@ int main(void) {
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
 	}
-	HAL_IWDG_Refresh(&hiwdg);
+	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
 
-	HAL_IWDG_Refresh(&hiwdg);
+	resetWatchdog();
 
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
@@ -200,7 +200,7 @@ void startPIDTask(void const *argument __unused) {
 				setTipX10Watts(x10WattsOut);
 			}
 
-			HAL_IWDG_Refresh(&hiwdg);
+			HAL_IWDG_Refresh (&hiwdg);
 		} else {
 			//ADC interrupt timeout
 			setTipPWM(0);

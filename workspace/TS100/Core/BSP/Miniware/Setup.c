@@ -5,6 +5,7 @@
  *      Author: Ben V. Brown
  */
 #include "Setup.h"
+#include "Pins.h"
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
@@ -32,12 +33,8 @@ static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
-#ifndef LOCAL_BUILD
 	__HAL_AFIO_REMAP_SWJ_DISABLE()
 	;
-#else
-	__HAL_AFIO_REMAP_SWJ_NOJTAG();
-#endif
 
 	MX_GPIO_Init();
 	MX_DMA_Init();
@@ -49,8 +46,8 @@ void Setup_HAL() {
 	MX_IWDG_Init();
 	HAL_ADC_Start(&hadc2);
 	HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) ADCReadings, 64); // start DMA of normal readings
-	HAL_ADCEx_InjectedStart(&hadc1);   // enable injected  readings
-	HAL_ADCEx_InjectedStart(&hadc2);   // enable injected  readings
+	HAL_ADCEx_InjectedStart(&hadc1);   // enable injected readings
+	HAL_ADCEx_InjectedStart(&hadc2);   // enable injected readings
 }
 
 // channel 0 -> temperature sensor, 1-> VIN
@@ -336,7 +333,7 @@ static void MX_TIM2_Init(void) {
 	HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 255 + 13;//13 -> Delay of 5ms
+	sConfigOC.Pulse = 255 + 13;  //13 -> Delay of 5ms
 	//255 is the largest time period of the drive signal, and then offset ADC sample to be a bit delayed after this
 	/*
 	 * It takes 4 milliseconds for output to be stable after PWM turns off.
