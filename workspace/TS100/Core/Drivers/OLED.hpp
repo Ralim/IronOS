@@ -13,7 +13,7 @@
 #include "stm32f1xx_hal.h"
 #include <stdbool.h>
 #include <string.h>
-#include "FRToSI2C.hpp"
+#include "I2C_Wrapper.hpp"
 #include "Font.h"
 #ifdef __cplusplus
 extern "C" {

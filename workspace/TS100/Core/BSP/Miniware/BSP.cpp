@@ -6,7 +6,7 @@
 #include "Pins.h"
 #include "main.hpp"
 #include "history.hpp"
-#include "FRToSI2C.hpp"
+#include "I2C_Wrapper.hpp"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t pendingPWM = 0;
 

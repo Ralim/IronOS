@@ -14,7 +14,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "Settings.h"
-#include "FRToSI2C.hpp"
+#include "I2C_Wrapper.hpp"
 #include "stdlib.h"
 #include "LIS2DH12.hpp"
 #include <MMA8652FC.hpp>
