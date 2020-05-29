@@ -4,8 +4,8 @@
  *  Created on: 14Apr.,2018
  *      Author: Ralim
  */
+#include <I2C_Wrapper.hpp>
 #include "BSP.h"
-#include "FRToSI2C.hpp"
 #define I2CUSESDMA
 I2C_HandleTypeDef *FRToSI2C::i2c;
 SemaphoreHandle_t FRToSI2C::I2CSemaphore;

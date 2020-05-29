@@ -5,10 +5,10 @@
  *      Author: Ralim
  */
 
+#include <I2C_Wrapper.hpp>
 #include "BSP.h"
 #include "Setup.h"
 #include "Pins.h"
-#include "FRTosI2C.hpp"
 void preRToSInit() {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
 	 */

@@ -1,5 +1,9 @@
 // By Ben V. Brown - V2.0 of the TS100 firmware
 
+/*
+ * Main.cpp bootstraps the device and then hands over to FreeRTOS and the threads
+ */
+
 #include "BSP.h"
 
 #include <gui.hpp>
