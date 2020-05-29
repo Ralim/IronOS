@@ -4,10 +4,11 @@
 #include "Setup.h"
 #include "history.hpp"
 #include "Pins.h"
+#include "main.hpp"
 #include "history.hpp"
+#include "FRToSI2C.hpp"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t pendingPWM = 0;
-
 
 //2 second filter (ADC is PID_TIM_HZ Hz)
 history<uint16_t, PID_TIM_HZ> rawTempFilter = { { 0 }, 0, 0 };
@@ -209,4 +210,43 @@ uint8_t getButtonA() {
 uint8_t getButtonB() {
 	return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ?
 			1 : 0;
+}
+
+/*
+ * Catch the IRQ that says that the conversion is done on the temperature
+ * readings coming in Once these have come in we can unblock the PID so that it
+ * runs again
+ */
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc) {
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+	if (hadc == &hadc1) {
+		if (pidTaskNotification) {
+			vTaskNotifyGiveFromISR(pidTaskNotification,
+					&xHigherPriorityTaskWoken);
+			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		}
+	}
+}
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+	FRToSI2C::CpltCallback();
+}
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+	FRToSI2C::CpltCallback();
+}
+void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+	FRToSI2C::CpltCallback();
+}
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
+
+	FRToSI2C::CpltCallback();
+}
+void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+
+	FRToSI2C::CpltCallback();
+}
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
+	FRToSI2C::CpltCallback();
+}
+void reboot() {
+	NVIC_SystemReset();
 }

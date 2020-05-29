@@ -25,7 +25,9 @@ void vApplicationStackOverflowHook(xTaskHandle *pxTask,
 void startGUITask(void const *argument);
 void startPIDTask(void const *argument);
 void startMOVTask(void const *argument);
-extern TaskHandle_t pidTaskNotification ;
+extern TaskHandle_t pidTaskNotification;
+extern uint8_t accelInit;
+extern uint32_t lastMovementTime;
 #ifdef __cplusplus
 }
 #endif

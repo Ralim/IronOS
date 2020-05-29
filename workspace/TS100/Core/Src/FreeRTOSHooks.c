@@ -22,3 +22,11 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
 	*pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
 	/* place for user code */
 }
+
+void vApplicationStackOverflowHook(xTaskHandle *pxTask,
+		signed portCHAR *pcTaskName) {
+	(void) pxTask;
+	(void) pcTaskName;
+// We dont have a good way to handle a stack overflow at this point in time
+	reboot();
+}

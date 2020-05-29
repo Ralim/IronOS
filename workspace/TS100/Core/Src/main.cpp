@@ -2,10 +2,10 @@
 
 #include "BSP.h"
 
-#include <MMA8652FC.hpp>
 #include <gui.hpp>
 #include <main.hpp>
 #include "LIS2DH12.hpp"
+#include <MMA8652FC.hpp>
 #include <history.hpp>
 #include <power.hpp>
 #include "Settings.h"
@@ -18,8 +18,6 @@
 uint8_t PCBVersion = 0;
 // File local variables
 uint32_t currentTempTargetDegC = 0; // Current temperature target in C
-uint8_t accelInit = 0;
-uint32_t lastMovementTime = 0;
 
 bool settingsWereReset = false;
 // FreeRTOS variables
@@ -94,92 +92,6 @@ int main(void) {
 	}
 }
 
-#define MOVFilter 8
-void startMOVTask(void const *argument __unused) {
-	OLED::setRotation(true);
-
-#ifdef MODEL_TS80
-	startQC(systemSettings.voltageDiv);
-	while (pidTaskNotification == 0)
-		osDelay(30);  // To ensure we return after idealQCVoltage/tip resistance
-
-	seekQC((systemSettings.cutoutSetting) ? 120 : 90,
-			systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
-
-#else
-	osDelay(250);  // wait for accelerometer to stabilize
-#endif
-
-	OLED::setRotation(systemSettings.OrientationMode & 1);
-	lastMovementTime = 0;
-	int16_t datax[MOVFilter] = { 0 };
-	int16_t datay[MOVFilter] = { 0 };
-	int16_t dataz[MOVFilter] = { 0 };
-	uint8_t currentPointer = 0;
-	int16_t tx = 0, ty = 0, tz = 0;
-	int32_t avgx = 0, avgy = 0, avgz = 0;
-	if (systemSettings.sensitivity > 9)
-		systemSettings.sensitivity = 9;
-#ifdef ACCELDEBUG
-	uint32_t max = 0;
-#endif
-	Orientation rotation = ORIENTATION_FLAT;
-	for (;;) {
-		int32_t threshold = 1500 + (9 * 200);
-		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
-
-		if (PCBVersion == 2) {
-			LIS2DH12::getAxisReadings(tx, ty, tz);
-			rotation = LIS2DH12::getOrientation();
-		} else if (PCBVersion == 1) {
-			MMA8652FC::getAxisReadings(tx, ty, tz);
-			rotation = MMA8652FC::getOrientation();
-		}
-		if (systemSettings.OrientationMode == 2) {
-			if (rotation != ORIENTATION_FLAT) {
-				OLED::setRotation(rotation == ORIENTATION_LEFT_HAND); // link the data through
-			}
-		}
-		datax[currentPointer] = (int32_t) tx;
-		datay[currentPointer] = (int32_t) ty;
-		dataz[currentPointer] = (int32_t) tz;
-		if (!accelInit) {
-			for (uint8_t i = currentPointer + 1; i < MOVFilter; i++) {
-				datax[i] = (int32_t) tx;
-				datay[i] = (int32_t) ty;
-				dataz[i] = (int32_t) tz;
-			}
-			accelInit = 1;
-		}
-		currentPointer = (currentPointer + 1) % MOVFilter;
-		avgx = avgy = avgz = 0;
-		// calculate averages
-		for (uint8_t i = 0; i < MOVFilter; i++) {
-			avgx += datax[i];
-			avgy += datay[i];
-			avgz += dataz[i];
-		}
-		avgx /= MOVFilter;
-		avgy /= MOVFilter;
-		avgz /= MOVFilter;
-
-		// Sum the deltas
-		int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
-		// So now we have averages, we want to look if these are different by more
-		// than the threshold
-
-		// If error has occurred then we update the tick timer
-		if (error > threshold) {
-			lastMovementTime = xTaskGetTickCount();
-		}
-
-		osDelay(100);  // Slow down update rate
-#ifdef MODEL_TS80
-		seekQC((systemSettings.cutoutSetting) ? 120 : 90,
-				systemSettings.voltageDiv); // Run the QC seek again if we have drifted too much
-#endif
-	}
-}
 
 // Second last page of flash set aside for logo image.
 #define FLASH_LOGOADDR (0x8000000 | 0xF800)
@@ -199,44 +111,3 @@ bool showBootLogoIfavailable() {
 	return true;
 }
 
-/*
- * Catch the IRQ that says that the conversion is done on the temperature
- * readings coming in Once these have come in we can unblock the PID so that it
- * runs again
- */
-void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc) {
-	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-	if (hadc == &hadc1) {
-		if (pidTaskNotification) {
-			vTaskNotifyGiveFromISR(pidTaskNotification,
-					&xHigherPriorityTaskWoken);
-			portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-		}
-	}
-}
-void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
-
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-
-	FRToSI2C::CpltCallback();
-}
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	FRToSI2C::CpltCallback();
-}
-void vApplicationStackOverflowHook(xTaskHandle *pxTask __unused,
-		signed portCHAR *pcTaskName __unused) {
-
-// We dont have a good way to handle a stack overflow at this point in time
-	NVIC_SystemReset();
-}

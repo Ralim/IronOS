@@ -38,6 +38,8 @@ uint8_t getButtonB();
 // This should toggle the SCL line until SDA goes high to end the current transaction
 void unstick_I2C();
 
+//Reboot the IC when things go seriously wrong
+void reboot();
 #ifdef __cplusplus
 }
 #endif
