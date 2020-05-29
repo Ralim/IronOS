@@ -1,7 +1,6 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#include <MMA8652FC.hpp>
 #include "OLED.hpp"
 #include "Setup.h"
 extern uint8_t PCBVersion;
@@ -22,6 +21,11 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
 void vApplicationStackOverflowHook(xTaskHandle *pxTask,
 		signed portCHAR *pcTaskName);
 
+//Threads
+void startGUITask(void const *argument);
+void startPIDTask(void const *argument);
+void startMOVTask(void const *argument);
+extern TaskHandle_t pidTaskNotification ;
 #ifdef __cplusplus
 }
 #endif

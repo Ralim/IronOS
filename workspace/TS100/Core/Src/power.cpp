@@ -2,7 +2,7 @@
  * power.cpp
  *
  *  Created on: 28 Oct, 2018
- *     Authors: Ben V. Brown, David Hilton
+ *     Authors: Ben V. Brown, David Hilton <- Mostly David
  */
 
 #include <power.hpp>
