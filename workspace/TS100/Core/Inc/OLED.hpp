@@ -9,7 +9,7 @@
 
 #ifndef OLED_HPP_
 #define OLED_HPP_
-#include <hardware.h>
+#include <BSP.h>
 #include "stm32f1xx_hal.h"
 #include <stdbool.h>
 #include <string.h>

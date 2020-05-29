@@ -15,17 +15,16 @@ typedef struct {
 	const uint8_t value;
 } LIS_REG;
 
-static const LIS_REG i2c_registers[] =
-		{ { LIS_CTRL_REG1, 0x17 }, // 25Hz
-				{ LIS_CTRL_REG2, 0b00001000 }, // Highpass filter off
-				{ LIS_CTRL_REG3, 0b01100000 }, // Setup interrupt pins
-				{ LIS_CTRL_REG4, 0b00001000 }, // Block update mode off, HR on
-				{ LIS_CTRL_REG5, 0b00000010 }, { LIS_CTRL_REG6, 0b01100010 },
-				//Basically setup the unit to run, and enable 4D orientation detection
-				{ LIS_INT2_CFG, 0b01111110 }, //setup for movement detection
-				{ LIS_INT2_THS, 0x28 }, { LIS_INT2_DURATION, 64 }, {
-						LIS_INT1_CFG, 0b01111110 }, { LIS_INT1_THS, 0x28 }, {
-						LIS_INT1_DURATION, 64 } };
+static const LIS_REG i2c_registers[] = { { LIS_CTRL_REG1, 0x17 }, // 25Hz
+		{ LIS_CTRL_REG2, 0b00001000 }, // Highpass filter off
+		{ LIS_CTRL_REG3, 0b01100000 }, // Setup interrupt pins
+		{ LIS_CTRL_REG4, 0b00001000 }, // Block update mode off, HR on
+		{ LIS_CTRL_REG5, 0b00000010 }, { LIS_CTRL_REG6, 0b01100010 },
+		//Basically setup the unit to run, and enable 4D orientation detection
+		{ LIS_INT2_CFG, 0b01111110 }, //setup for movement detection
+		{ LIS_INT2_THS, 0x28 }, { LIS_INT2_DURATION, 64 }, {
+		LIS_INT1_CFG, 0b01111110 }, { LIS_INT1_THS, 0x28 }, {
+		LIS_INT1_DURATION, 64 } };
 
 void LIS2DH12::initalize() {
 	for (size_t index = 0;
@@ -49,12 +48,5 @@ void LIS2DH12::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
 }
 
 bool LIS2DH12::detect() {
-	uint8_t buffer[1];
-	if (HAL_I2C_Mem_Read(&hi2c1, 25 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
-			1000) == HAL_OK) {
-		//ACK'd
-		return true;
-	}
-	//NAK'd
-	return false;
+	return FRToSI2C::probe(LIS2DH_I2C_ADDRESS);
 }

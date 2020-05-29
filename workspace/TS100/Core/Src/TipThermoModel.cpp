@@ -7,7 +7,7 @@
 
 #include "TipThermoModel.h"
 #include "Settings.h"
-#include "hardware.h"
+#include "BSP.h"
 #include "../../configuration.h"
 
 /*

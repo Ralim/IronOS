@@ -10,11 +10,8 @@
 #include "stm32f1xx_hal.h"
 #include "FRToSI2C.hpp"
 #include "LIS2DH12_defines.hpp"
-#include "hardware.h"
+#include "BSP.h"
 
-#ifdef MODEL_TS80
-#define LIS_ORI_FLIP
-#endif
 class LIS2DH12 {
 public:
 	static bool detect();

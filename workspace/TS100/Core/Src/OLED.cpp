@@ -95,10 +95,6 @@ void OLED::initialize() {
 	displayOffset = 0;
 	memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
-	HAL_Delay(50);
-	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
-	HAL_Delay(50);
-
 	// Set the display to be ON once the settings block is sent and send the
 	// initialisation data to the OLED.
 

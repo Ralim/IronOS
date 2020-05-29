@@ -8,7 +8,7 @@
 #ifndef SRC_TIPTHERMOMODEL_H_
 #define SRC_TIPTHERMOMODEL_H_
 #include "stdint.h"
-#include "hardware.h"
+#include "BSP.h"
 #include "unit.h"
 class TipThermoModel {
 public:

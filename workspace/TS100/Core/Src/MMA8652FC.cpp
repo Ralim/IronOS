@@ -84,12 +84,5 @@ void MMA8652FC::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
 }
 
 bool MMA8652FC::detect() {
-	uint8_t buffer[1];
-	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
-			1000) == HAL_OK) {
-		//The device ACK'd
-		return true;
-	}
-	//NAK'd
-	return false;
+	return FRToSI2C::probe(MMA8652FC_I2C_ADDRESS);
 }
