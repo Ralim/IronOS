@@ -12,12 +12,16 @@
 #include "LIS2DH12_defines.hpp"
 #include "hardware.h"
 
+#ifdef MODEL_TS80
+#define LIS_ORI_FLIP
+#endif
 class LIS2DH12 {
 public:
+	static bool detect();
 	static void initalize();
 	//1 = rh, 2,=lh, 8=flat
 	static Orientation getOrientation() {
-#ifdef MODEL_TS80
+#ifdef LIS_ORI_FLIP
 		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,
 		LIS_INT2_SRC) >> 2);
 		if (val == 8)

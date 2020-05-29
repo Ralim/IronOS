@@ -30,28 +30,31 @@ static const MMA_REG i2c_registers[] = { { CTRL_REG2, 0 },    //Normal mode
 		{ CTRL_REG1, 0x19 } // ODR=12 Hz, Active mode
 };
 
-
 void MMA8652FC::initalize() {
 	size_t index = 0;
 
 	//send all the init commands to the unit
 
-	FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].val);
+	FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS, i2c_registers[index].reg,
+			i2c_registers[index].val);
 	index++;
-	FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].val);
+	FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS, i2c_registers[index].reg,
+			i2c_registers[index].val);
 	index++;
 
 	HAL_Delay(2);		// ~1ms delay
 
 	while (index < (sizeof(i2c_registers) / sizeof(i2c_registers[0]))) {
-		FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS,i2c_registers[index].reg, i2c_registers[index].val);
+		FRToSI2C::I2C_RegisterWrite(MMA8652FC_I2C_ADDRESS,
+				i2c_registers[index].reg, i2c_registers[index].val);
 		index++;
 	}
 }
 
 Orientation MMA8652FC::getOrientation() {
 	//First read the PL_STATUS register
-	uint8_t plStatus = FRToSI2C::I2C_RegisterRead(MMA8652FC_I2C_ADDRESS,PL_STATUS_REG);
+	uint8_t plStatus = FRToSI2C::I2C_RegisterRead(MMA8652FC_I2C_ADDRESS,
+	PL_STATUS_REG);
 	if ((plStatus & 0b10000000) == 0b10000000) {
 		plStatus >>= 1;    //We don't need the up/down bit
 		plStatus &= 0x03;    //mask to the two lower bits
@@ -65,14 +68,28 @@ Orientation MMA8652FC::getOrientation() {
 	return ORIENTATION_FLAT;
 }
 
-void MMA8652FC::getAxisReadings(int16_t& x, int16_t& y, int16_t& z) {
+void MMA8652FC::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
 	std::array<int16_t, 3> sensorData;
 
-	FRToSI2C::Mem_Read(MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG, I2C_MEMADD_SIZE_8BIT,
-		reinterpret_cast<uint8_t*>(sensorData.begin()),
-		sensorData.size() * sizeof(int16_t));
+	FRToSI2C::Mem_Read(MMA8652FC_I2C_ADDRESS, OUT_X_MSB_REG,
+	I2C_MEMADD_SIZE_8BIT, reinterpret_cast<uint8_t*>(sensorData.begin()),
+			sensorData.size() * sizeof(int16_t));
 
-	x = static_cast<int16_t>(__builtin_bswap16(*reinterpret_cast<uint16_t*>(&sensorData[0])));
-	y = static_cast<int16_t>(__builtin_bswap16(*reinterpret_cast<uint16_t*>(&sensorData[1])));
-	z = static_cast<int16_t>(__builtin_bswap16(*reinterpret_cast<uint16_t*>(&sensorData[2])));
+	x = static_cast<int16_t>(__builtin_bswap16(
+			*reinterpret_cast<uint16_t*>(&sensorData[0])));
+	y = static_cast<int16_t>(__builtin_bswap16(
+			*reinterpret_cast<uint16_t*>(&sensorData[1])));
+	z = static_cast<int16_t>(__builtin_bswap16(
+			*reinterpret_cast<uint16_t*>(&sensorData[2])));
+}
+
+bool MMA8652FC::detect() {
+	uint8_t buffer[1];
+	if (HAL_I2C_Mem_Read(&hi2c1, 29 << 1, 0x0F, I2C_MEMADD_SIZE_8BIT, buffer, 1,
+			1000) == HAL_OK) {
+		//The device ACK'd
+		return true;
+	}
+	//NAK'd
+	return false;
 }
