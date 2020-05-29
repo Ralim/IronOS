@@ -27,7 +27,7 @@
  * This was bought to my attention by <Kuba Sztandera>
  */
 
-#define  op_amp_gain_stage  (1+(OP_AMP_Rf/OP_AMP_Rin))
+
 uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 	// This takes the raw ADC samples, converts these to uV
 	// Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
@@ -39,7 +39,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 
 	uint32_t valueuV = rawInputmVX10 * 100;	// shift into uV
 	//Now to divide this down by the gain
-	valueuV = (valueuV) / op_amp_gain_stage;
+	valueuV = (valueuV) / OP_AMP_GAIN_STAGE;
 	//Remove uV tipOffset
 	if (valueuV >= systemSettings.CalibrationOffset)
 		valueuV -= systemSettings.CalibrationOffset;
@@ -73,17 +73,19 @@ int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2,
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
 	//based on new measurements, tip is quite linear
 	//
-	tipuVDelta *= TIP_GAIN;
-	tipuVDelta /= 10000;
+	tipuVDelta *= 10;
+	tipuVDelta /= systemSettings.TipGain;
+
+#ifdef MODEL_TS80
+	tipuVDelta /= OP_AMP_GAIN_STAGE_TS100 / OP_AMP_GAIN_STAGE_TS80;
+#endif
+
 	return tipuVDelta;
 }
 
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
-	tipuVDelta *= TIP_GAIN;
-	tipuVDelta /= 1000;
-	return ((tipuVDelta * 9) / 50) + 32;
-	//(Y °C × 9/5) + 32 =Y°F
+	return convertCtoF(convertuVToDegC(tipuVDelta));
 }
 
 uint32_t TipThermoModel::convertCtoF(uint32_t degC) {

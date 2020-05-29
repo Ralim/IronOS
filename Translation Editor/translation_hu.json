@@ -235,44 +235,60 @@
 			"desc": "A tápegység által leadott teljesítmény"
 		},
 		"PowerLimitEnable": {
-			"text": "PLIMEN",
+			"text": "TELJH",
 			"text2": [
-				"P Limit",
-				"Enable"
+				"Telj H",
+				"Bekapcsolva"
 			],
-			"desc": "Enable power limit"
+			"desc": "Bemeneti teljesitmény korlátozása"
 		},
 		"PowerLimit": {
-			"text": "PLIM",
+			"text": "TELJM",
 			"text2": [
-				"Power",
-				"Limit"
+				"Telj",
+				"maximum"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Maximális teljesitmény beállitása <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
+			"text": "HÖVÁLT",
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"GOMB +-",
+				"Felcseréled?"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "A páka hömérséklet növelés csökkentési gombok felcserélése."
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
+			"text": "HÖRÖV",
 			"text2": [
-				"Temp change",
-				"short?"
+				"Hömérséklet",
+				"váltás rövid?"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Hömérséklet váltás rövid gombnyomásrs bekapcsolva!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
+			"text": "HÖHOS",
 			"text2": [
-				"Temp change",
-				"long?"
+				"Hömérséklet",
+				"váltás hosszú?"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Hömérséklet váltás hosszú gombnyomásrs bekapcsolva!"
+		},
+		"PowerPulsePower":{
+			"text": "TELJP",
+			"text2": [
+				"Telj power",
+				"bank üzem W"
+			],
+			"desc": "Powerbank üzemnél nem engedi a powerbankot kikapcsolni idönkénti áram felvételt generál. "
+		},
+		"TipGain": {
+			"text": "TG",
+			"text2": [
+				"Modify",
+				"tip gain"
+			],
+			"desc": "Tip gain"
 		}
 	}
 }

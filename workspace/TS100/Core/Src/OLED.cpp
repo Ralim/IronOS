@@ -24,6 +24,7 @@ uint8_t OLED::fontWidth, OLED::fontHeight;
 int16_t OLED::cursor_x, OLED::cursor_y;
 uint8_t OLED::displayOffset;
 uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10];  // The data buffer
+uint8_t OLED::secondFrameBuffer[OLED_WIDTH * 2];
 
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
@@ -62,6 +63,27 @@ uint8_t OLED_Setup_Array[] = {
 const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
 		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
+
+/*
+ * Animation timing function that follows a bezier curve.
+ * @param t A given percentage value [0..<100]
+ * Returns a new percentage value with ease in and ease out.
+ * Original floating point formula: t * t * (3.0f - 2.0f * t);
+ */
+static uint8_t easeInOutTiming(uint8_t t) {
+	return t * t * (300 - 2 * t) / 10000;
+}
+
+/*
+ * Returns the value between a and b, using a percentage value t.
+ * @param a The value associated with 0%
+ * @param b The value associated with 100%
+ * @param t The percentage [0..<100]
+ */
+static uint8_t lerp(uint8_t a, uint8_t b, uint8_t t) {
+	return a + t * (b - a) / 100;
+}
+
 void OLED::initialize() {
 	cursor_x = cursor_y = 0;
 	currentFont = USER_FONT_12;
@@ -83,6 +105,17 @@ void OLED::initialize() {
 	setDisplayState(DisplayState::ON);
 	FRToSI2C::Transmit(DEVICEADDR_OLED, &OLED_Setup_Array[0],
 			sizeof(OLED_Setup_Array));
+}
+
+void OLED::setFramebuffer(uint8_t *buffer) {
+	if (buffer == NULL) {
+		firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
+		secondStripPtr = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
+		return;
+	}
+
+	firstStripPtr = &buffer[0];
+	secondStripPtr = &buffer[OLED_WIDTH];
 }
 
 /*
@@ -123,6 +156,62 @@ void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
 	// the scroll indicator.
 	fillArea(OLED_WIDTH - 1, 0, 1, 8, column.strips[0]);
 	fillArea(OLED_WIDTH - 1, 8, 1, 8, column.strips[1]);
+}
+
+/**
+ * Plays a transition animation between two framebuffers.
+ * @param forwardNavigation Direction of the navigation animation.
+ *
+ * If forward is true, this displays a forward navigation to the second framebuffer contents.
+ * Otherwise a rewinding navigation animation is shown to the second framebuffer contents.
+ */
+void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
+	uint8_t *firstBackStripPtr = &secondFrameBuffer[0];
+	uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
+
+	uint32_t totalDuration = 50; // 500ms
+	uint32_t duration = 0;
+	uint32_t start = xTaskGetTickCount();
+	uint8_t offset = 0;
+
+	while (duration <= totalDuration) {
+		duration = xTaskGetTickCount() - start;
+		uint8_t progress = duration * 100 / totalDuration;
+		progress = easeInOutTiming(progress);
+		progress = lerp(0, OLED_WIDTH, progress);
+		if (progress > OLED_WIDTH) {
+			progress = OLED_WIDTH;
+		}
+
+		// When forward, current contents move to the left out.
+		// Otherwise the contents move to the right out.
+		uint8_t oldStart = forwardNavigation ? 0 : progress;
+		uint8_t oldPrevious = forwardNavigation ? progress - offset : offset;
+
+		// Content from the second framebuffer moves in from the right (forward)
+		// or from the left (not forward).
+		uint8_t newStart = forwardNavigation ? OLED_WIDTH - progress : 0;
+		uint8_t newEnd = forwardNavigation ? 0 : OLED_WIDTH - progress;
+
+		offset = progress;
+
+		memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious], OLED_WIDTH - progress);
+		memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious], OLED_WIDTH - progress);
+
+		memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
+		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
+
+		refresh();
+		osDelay(40);
+	}
+}
+
+void OLED::useSecondaryFramebuffer(bool useSecondary) {
+	if (useSecondary) {
+		setFramebuffer(secondFrameBuffer);
+	} else {
+		setFramebuffer(NULL);
+	}
 }
 
 void OLED::setRotation(bool leftHanded) {

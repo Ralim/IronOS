@@ -13,8 +13,8 @@
 		"BadTipString": "PANNE HS",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "En veille...",
-		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "ATTENTION! CHAUD",
+		"WarningSimpleString": "CHAUD!",
+		"WarningAdvancedString": "ATTENTION! CHAUD!",
 		"SleepingTipAdvancedString": "Panne:",
 		"IdleTipString": "Tip:",
 		"IdleSetString": " Set:",
@@ -238,41 +238,57 @@
 			"text": "PLIMEN",
 			"text2": [
 				"P Limit",
-				"Enable"
+				"Activer?"
 			],
-			"desc": "Enable power limit"
+			"desc": "Activer la limite de puissance"
 		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [
-				"Power",
-				"Limit"
+				"Puissance",
+				"Limite"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Puissance maximale utilisable <Watts>"
 		},
 		"ReverseButtonTempChange": {
 			"text": "RVTCHG",
 			"text2": [
 				"Key +-",
-				"reverse?"
+				"Inverser?"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Inversez l'assignation +/- du bouton de changement de température de la pointe."
 		},
 		"TempChangeShortStep": {
 			"text": "TCHGST",
 			"text2": [
 				"Temp change",
-				"short?"
+				"Court?"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Incrément de changement de température sur appui court."
 		},
 		"TempChangeLongStep": {
 			"text": "TCHGLT",
 			"text2": [
 				"Temp change",
-				"long?"
+				"Long?"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Incrément de changement de température sur appui long."
+		},
+		"PowerPulsePower":{
+			"text": "POWPLS",
+			"text2": [
+				"Power",
+				"Pulse W"
+			],
+			"desc": "Keep awake pulse power intensity"
+		},
+		"TipGain": {
+			"text": "TG",
+			"text2": [
+				"Modify",
+				"tip gain"
+			],
+			"desc": "Tip gain"
 		}
 	}
 }

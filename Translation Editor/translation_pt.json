@@ -273,6 +273,22 @@
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
+		},
+		"PowerPulsePower":{
+			"text": "POWPLS",
+			"text2": [
+				"Power",
+				"Pulse W"
+			],
+			"desc": "Keep awake pulse power intensity"
+		},
+		"TipGain": {
+			"text": "TG",
+			"text2": [
+				"Modify",
+				"tip gain"
+			],
+			"desc": "Tip gain"
 		}
 	}
 }

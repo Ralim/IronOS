@@ -273,6 +273,22 @@
 				"довго?"
 			],
 			"desc": "Змінювати температуру при довгому натисканні!"
+		},
+		"PowerPulsePower":{
+			"text": "POWPLS",
+			"text2": [
+				"Power",
+				"Pulse W"
+			],
+			"desc": "Keep awake pulse power intensity"
+		},
+		"TipGain": {
+			"text": "TG",
+			"text2": [
+				"Modify",
+				"tip gain"
+			],
+			"desc": "Tip gain"
 		}
 	}
 }

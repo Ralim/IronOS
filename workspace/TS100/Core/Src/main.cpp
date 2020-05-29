@@ -36,15 +36,12 @@ uint32_t MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
 
 static TaskHandle_t pidTaskNotification = NULL;
-
+static TickType_t powerPulseRate = 1000;
+static TickType_t powerPulseDuration = 50;
 void startGUITask(void const *argument);
 void startPIDTask(void const *argument);
 void startMOVTask(void const *argument);
 // End FreeRTOS
-
-static const int maxPowerIdleTicks = 1000;
-static const int powerPulseTicks = 50;
-static const int x10PowerPulseWatts = 3;
 
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
@@ -113,14 +110,9 @@ void startPIDTask(void const *argument __unused) {
 	 * control PWM.
 	 */
 	setTipX10Watts(0); // disable the output driver if the output is set to be off
+	TickType_t lastPowerPulseStart = 0;
+	TickType_t lastPowerPulseEnd = 0;
 
-#ifdef MODEL_TS80
-	//Set power management code to the tip resistance in ohms * 10
-
-	TickType_t lastPowerPulse = 0;
-#else
-
-#endif
 	history<int32_t, PID_TIM_HZ> tempError = { { 0 }, 0, 0 };
 	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
 							   // be over-ridden rapidly
@@ -183,18 +175,23 @@ void startPIDTask(void const *argument __unused) {
 				//  Unfortunately, our temp signal is too noisy to really help.
 
 			}
-#ifdef MODEL_TS80
-			//If its a TS80, we want to have the option of using an occasional pulse to keep the power bank on
-			if (((xTaskGetTickCount() - lastPowerPulse) > maxPowerIdleTicks)
-					&& (x10WattsOut < x10PowerPulseWatts)) {
-				x10WattsOut = x10PowerPulseWatts;
+			//If the user turns on the option of using an occasional pulse to keep the power bank on
+			if (systemSettings.KeepAwakePulse) {
+
+				if (xTaskGetTickCount() - lastPowerPulseStart
+						> powerPulseRate) {
+					lastPowerPulseStart = xTaskGetTickCount();
+					lastPowerPulseEnd = lastPowerPulseStart
+							+ powerPulseDuration;
+				}
+
+				//If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor
+				if (x10WattsOut < systemSettings.KeepAwakePulse
+						&& xTaskGetTickCount() < lastPowerPulseEnd) {
+					x10WattsOut = systemSettings.KeepAwakePulse;
+				}
 			}
-			if (((xTaskGetTickCount() - lastPowerPulse)
-					> (maxPowerIdleTicks + powerPulseTicks))
-					&& (x10WattsOut >= x10PowerPulseWatts)) {
-				lastPowerPulse = xTaskGetTickCount();
-			}
-#endif
+
 			//Secondary safety check to forcefully disable header when within ADC noise of top of ADC
 			if (getTipRawTemp(0) > (0x7FFF - 150)) {
 				x10WattsOut = 0;
@@ -263,8 +260,7 @@ void startMOVTask(void const *argument __unused) {
 		datax[currentPointer] = (int32_t) tx;
 		datay[currentPointer] = (int32_t) ty;
 		dataz[currentPointer] = (int32_t) tz;
-		if (!accelInit)
-		{
+		if (!accelInit) {
 			for (uint8_t i = currentPointer + 1; i < MOVFilter; i++) {
 				datax[i] = (int32_t) tx;
 				datay[i] = (int32_t) ty;
@@ -302,21 +298,17 @@ void startMOVTask(void const *argument __unused) {
 	}
 }
 
-#define FLASH_LOGOADDR \
-  (0x8000000 | 0xF800) /*second last page of flash set aside for logo image*/
+// Second last page of flash set aside for logo image.
+#define FLASH_LOGOADDR (0x8000000 | 0xF800)
 
-/* The header value is (0xAA,0x55,0xF0,0x0D) but is stored in little endian 16
- * bits words on the flash */
-const uint8_t LOGO_HEADER_VALUE[] = { 0x55, 0xAA, 0x0D, 0xF0 };
+// Logo header signature.
+#define LOGO_HEADER_VALUE 0xF00DAA55
 
 bool showBootLogoIfavailable() {
-	uint8_t *header = (uint8_t*) (FLASH_LOGOADDR);
-
-	// check if the header is correct. 
-	for (int i = 0; i < 4; i++) {
-		if (header[i] != LOGO_HEADER_VALUE[i]) {
-			return false;
-		}
+// Do not show logo data if signature is not found.
+	if (LOGO_HEADER_VALUE
+			!= *(reinterpret_cast<const uint32_t*>(FLASH_LOGOADDR))) {
+		return false;
 	}
 
 	OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t*) (FLASH_LOGOADDR + 4));
@@ -349,12 +341,10 @@ void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) {
-	asm("bkpt");
 
 	FRToSI2C::CpltCallback();
 }
 void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
-	//asm("bkpt");
 
 	FRToSI2C::CpltCallback();
 }
@@ -363,7 +353,7 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 }
 void vApplicationStackOverflowHook(xTaskHandle *pxTask __unused,
 		signed portCHAR *pcTaskName __unused) {
-	asm("bkpt");
-	// We dont have a good way to handle a stack overflow at this point in time
+
+// We dont have a good way to handle a stack overflow at this point in time
 	NVIC_SystemReset();
 }
