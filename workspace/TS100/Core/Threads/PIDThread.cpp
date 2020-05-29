@@ -17,6 +17,8 @@
 static TickType_t powerPulseRate = 1000;
 static TickType_t powerPulseDuration = 50;
 TaskHandle_t pidTaskNotification = NULL;
+uint32_t currentTempTargetDegC = 0; // Current temperature target in C
+
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
 	/*

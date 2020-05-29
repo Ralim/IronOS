@@ -2,6 +2,7 @@
 #include "stdint.h"
 #include "UnitSettings.h"
 #include "BSP_QC.h"
+#include "BSP_Flash.h"
 /*
  * BSP.h -- Board Support
  *

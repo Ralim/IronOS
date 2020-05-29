@@ -5,23 +5,14 @@
  */
 
 #include "BSP.h"
-
-#include <gui.hpp>
 #include <main.hpp>
 #include "LIS2DH12.hpp"
 #include <MMA8652FC.hpp>
-#include <history.hpp>
 #include <power.hpp>
 #include "Settings.h"
-#include "Translation.h"
 #include "cmsis_os.h"
-#include "stdlib.h"
-#include "stm32f1xx_hal.h"
-#include "string.h"
-#include "TipThermoModel.h"
 uint8_t PCBVersion = 0;
 // File local variables
-uint32_t currentTempTargetDegC = 0; // Current temperature target in C
 
 bool settingsWereReset = false;
 // FreeRTOS variables
@@ -51,6 +42,8 @@ int main(void) {
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
 	resetWatchdog();
+	resetWatchdog();
+	settingsWereReset = restoreSettings();  // load the settings from flash
 	if (MMA8652FC::detect()) {
 		PCBVersion = 1;
 		MMA8652FC::initalize();  // this sets up the I2C registers
@@ -64,8 +57,6 @@ int main(void) {
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
 	}
-	resetWatchdog();
-	settingsWereReset = restoreSettings();  // load the settings from flash
 
 	resetWatchdog();
 
