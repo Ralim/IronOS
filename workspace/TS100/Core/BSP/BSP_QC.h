@@ -32,6 +32,9 @@ void QC_Post_Probe_En();
 // Check if DM was pulled down
 // 1=Pulled down, 0 == pulled high
 uint8_t QC_DM_PulledDown();
+
+// Re-sync if required
+void QC_resync();
 #ifdef __cplusplus
 }
 #endif
