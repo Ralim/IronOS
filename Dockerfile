@@ -12,10 +12,10 @@ RUN apt-get update && \
   bzip2 \
   python3 \
   wget && \
-  apt-get clean && \
-  wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/RC2.1/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2 | tar -xj
+  apt-get clean
+RUN wget -qO- https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 | tar -xj
 
 # Add compiler to the path
-ENV PATH "/build/gcc-arm-none-eabi-9-2019-q4-major/bin:$PATH"
+ENV PATH "/build/gcc-arm-none-eabi-9-2020-q2-update/bin:$PATH"
 COPY . /build/source
 COPY ./ci /build/ci
