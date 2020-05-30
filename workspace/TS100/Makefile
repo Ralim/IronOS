@@ -66,7 +66,6 @@ LDSCRIPT=LinkerScript.ld
 # ------------------------------------------------------------------------------
 COMPILER=gcc
 # arm-none is the general ARM compiler, 
-# arm-atollic is the atollic customised compilers if you have them setup
 COMPILER_PREFIX=arm-none
 # programs ---------------------------------------------------------------------
 CC=$(COMPILER_PREFIX)-eabi-gcc
@@ -84,6 +83,8 @@ SREC_INFO=srec_info
 
 # linker flags -----------------------------------------------------------------
 LINKER_FLAGS=-Wl,--gc-sections 		\
+            -Wl,--wrap=malloc \
+			-Wl,--wrap=free \
 			-o$(OUT_HEXFILE).elf 	\
 			-Wl,-Map=$(OUT_HEXFILE).map \
 			-mcpu=cortex-m3		\
@@ -128,7 +129,8 @@ CHECKOPTIONS=		-Wall 				\
 			-Winline			\
 			-Wshadow			\
 			-Wno-unused-parameter \
-			-Wdouble-promotion
+			-Wdouble-promotion \
+			-Werror
 
 
 CHECKOPTIONS_C=		-Wbad-function-cast
