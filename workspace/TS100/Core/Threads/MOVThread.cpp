@@ -25,6 +25,8 @@ uint32_t lastMovementTime = 0;
 void startMOVTask(void const *argument __unused) {
     OLED::setRotation(true);
     postRToSInit();
+    power_probe();
+    while (pidTaskNotification == 0) osDelay(30);  // Wait for PID to start
 
     OLED::setRotation(systemSettings.OrientationMode & 1);
     lastMovementTime = 0;
@@ -86,6 +88,6 @@ void startMOVTask(void const *argument __unused) {
         }
 
         osDelay(100);  // Slow down update rate
-        QC_resync();
+        power_check();
     }
 }
