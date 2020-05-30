@@ -1,4 +1,4 @@
-FROM ubuntu:rolling
+FROM ubuntu:20.04
 LABEL maintainer="Ben V. Brown <ralim@ralimtek.com>"
 
 WORKDIR /build
