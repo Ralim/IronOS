@@ -31,10 +31,10 @@
 		"SettingAutoChar": "A",
 		"SettingFastChar": "Ш",
 		"SettingSlowChar": "П",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F"
+		"SettingStartSolderingChar": "П",
+		"SettingStartSleepChar": "О",
+		"SettingStartSleepOffChar": "К",
+		"SettingStartNoneChar": "В"
 	},
 	"menuDouble": true,
 	"menuGroups": {
@@ -90,7 +90,7 @@
 				"Тайм-аут",
 				"сну"
 			],
-			"desc": "Час до переходу в режим очікування <Хвилини>"
+			"desc": "Час до переходу в режим очікування <Хвилини/Секунди>"
 		},
 		"ShutdownTimeout": {
 			"text": "",
@@ -106,7 +106,7 @@
 				"Чутл. сенсо-",
 				"ру руху"
 			],
-			"desc": "Акселерометр <0 - Вимк. 1 хв. чутливості 9 - макс. чутливості>"
+			"desc": "Акселерометр <0 - Вимк. 1 - мін. чутливості 9 - макс. чутливості>"
 		},
 		"TemperatureUnit": {
 			"text": "",
@@ -154,7 +154,7 @@
 				"Гарячий",
 				"старт"
 			],
-			"desc": "Автоматичний перехід в режим пайки при ввімкнені живлення."
+			"desc": "Режим з яким запускається паяльник при подачі живлення <П=Пайка, О=Очікування, К=Очікування при кімн. темп., В=Вимк.>"
 		},
 		"CooldownBlink": {
 			"text": "",
@@ -247,8 +247,8 @@
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [
-				"Максимальна",
-				"потужність"
+				"Макс.",
+				"потуж."
 			],
 			"desc": "Макс. потужність, яку може використовувати паяльник <Ват>"
 		},
@@ -263,7 +263,7 @@
 		"TempChangeShortStep": {
 			"text": "TCHGST",
 			"text2": [
-				"Зміна темп.",
+				"Зм. темп.",
 				"коротко?"
 			],
 			"desc": "Змінювати температуру при короткому натисканні!"
@@ -271,7 +271,7 @@
 		"TempChangeLongStep": {
 			"text": "TCHGLT",
 			"text2": [
-				"Зміна темп.",
+				"Зм. темп.",
 				"довго?"
 			],
 			"desc": "Змінювати температуру при довгому натисканні!"
