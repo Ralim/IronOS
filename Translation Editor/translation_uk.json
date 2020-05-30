@@ -279,10 +279,10 @@
 		"PowerPulsePower":{
 			"text": "POWPLS",
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Пульс.",
+				"Навантаж."
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Деякі PowerBank-и з часом вимк. живлення, якщо пристрій споживає дуже мало енергії (це потрібно щоб паяльник не вимкнувся з часом)"
 		},
 		"TipGain": {
 			"text": "TG",
