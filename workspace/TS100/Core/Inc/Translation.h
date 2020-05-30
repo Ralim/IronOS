@@ -7,8 +7,8 @@
 
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
-#include "stm32f1xx_hal.h"
 #include "unit.h"
+#include "stdint.h"
 enum ShortNameType {
 	SHORT_NAME_SINGLE_LINE = 1, SHORT_NAME_DOUBLE_LINE = 2,
 };

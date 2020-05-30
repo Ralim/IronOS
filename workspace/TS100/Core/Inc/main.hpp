@@ -1,31 +1,12 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#include <MMA8652FC.hpp>
 #include "OLED.hpp"
 #include "Setup.h"
 extern uint8_t PCBVersion;
 extern uint32_t currentTempTargetDegC;
 extern bool settingsWereReset;
-enum ButtonState {
-	BUTTON_NONE = 0, /* No buttons pressed / < filter time*/
-	BUTTON_F_SHORT = 1, /* User has pressed the front button*/
-	BUTTON_B_SHORT = 2, /* User has pressed the back  button*/
-	BUTTON_F_LONG = 4, /* User is  holding the front button*/
-	BUTTON_B_LONG = 8, /* User is  holding the back button*/
-	BUTTON_BOTH = 16, /* User has pressed both buttons*/
 
-/*
- * Note:
- * Pressed means press + release, we trigger on a full \__/ pulse
- * holding means it has gone low, and been low for longer than filter time
- */
-};
-
-ButtonState getButtonState();
-void waitForButtonPressOrTimeout(uint32_t timeout);
-void waitForButtonPress();
-void GUIDelay();
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -40,6 +21,13 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
 void vApplicationStackOverflowHook(xTaskHandle *pxTask,
 		signed portCHAR *pcTaskName);
 
+//Threads
+void startGUITask(void const *argument);
+void startPIDTask(void const *argument);
+void startMOVTask(void const *argument);
+extern TaskHandle_t pidTaskNotification;
+extern uint8_t accelInit;
+extern uint32_t lastMovementTime;
 #ifdef __cplusplus
 }
 #endif

@@ -2,12 +2,12 @@
  * power.cpp
  *
  *  Created on: 28 Oct, 2018
- *     Authors: Ben V. Brown, David Hilton
+ *     Authors: Ben V. Brown, David Hilton <- Mostly David
  */
 
 #include <power.hpp>
 #include <Settings.h>
-#include <hardware.h>
+#include <BSP.h>
 
 const uint16_t powerPWM = 255;
 const uint16_t totalPWM = 255 + 17; //htim2.Init.Period, the full PWM cycle

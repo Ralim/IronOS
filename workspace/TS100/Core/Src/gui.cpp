@@ -13,8 +13,8 @@
 #include "string.h"
 #include "unit.h"
 #include "../../configuration.h"
+#include "Buttons.hpp"
 
-extern uint32_t lastButtonTime;
 void gui_Menu(const menuitem *menu);
 
 #ifdef MODEL_TS100

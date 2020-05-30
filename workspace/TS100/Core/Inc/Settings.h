@@ -42,7 +42,7 @@ typedef struct {
 	uint8_t temperatureInF :1;       // Should the temp be in F or C (true is F)
 #endif
 	uint8_t descriptionScrollSpeed :1;  // Description scroll speed
-	uint8_t KeepAwakePulse;         // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
+	uint8_t KeepAwakePulse;  // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
 
 	uint16_t voltageDiv;                 // Voltage divisor factor
 	uint16_t BoostTemp;                  // Boost mode set point for the iron
@@ -51,7 +51,7 @@ typedef struct {
 
 	uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
 	uint8_t powerLimit;       // Maximum power iron allowed to output
-	
+
 	uint16_t TipGain; // uV/C * 10, it can be used to convert tip thermocouple voltage to temperateture TipV/TipGain = TipTemp
 
 	uint8_t ReverseButtonTempChangeEnabled; // Change the plus and minus button assigment
@@ -70,5 +70,5 @@ void saveSettings();
 bool restoreSettings();
 uint8_t lookupVoltageLevel(uint8_t level);
 void resetSettings();
-bool showBootLogoIfavailable();
+
 #endif /* SETTINGS_H_ */

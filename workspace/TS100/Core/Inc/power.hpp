@@ -7,7 +7,7 @@
 
 #include "stdint.h"
 #include <history.hpp>
-#include "hardware.h"
+#include "BSP.h"
 #include "expMovingAverage.h"
 #ifndef POWER_HPP_
 #define POWER_HPP_
