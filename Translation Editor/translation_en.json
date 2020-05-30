@@ -155,7 +155,7 @@
 				"Auto",
 				"start"
 			],
-			"desc": "Automatically starts the iron into soldering on power up <T=Soldering S=Sleep O=Sleep at room temperature F=Off>"
+			"desc": "Automatically starts the iron into soldering on power up <F=Off T=Soldering S=Sleep O=Sleep at room temperature>"
 		},
 		"CooldownBlink": {
 			"text": "CLBLNK",
