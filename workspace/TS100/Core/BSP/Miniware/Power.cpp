@@ -1,6 +1,7 @@
 #include "BSP.h"
 #include "BSP_Power.h"
 #include "QC3.h"
+#include "Settings.h"
 void power_probe() {
 // If TS80 probe for QC
 // If TS100 - noop
