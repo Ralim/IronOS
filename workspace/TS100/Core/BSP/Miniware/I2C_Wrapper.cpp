@@ -30,10 +30,10 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
 		// RToS is active, run threading
 		// Get the mutex so we can use the I2C port
 		// Wait up to 1 second for the mutex
-		if (xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE) {
+		if (xSemaphoreTake(I2CSemaphore, (TickType_t)500) == pdTRUE) {
 #ifdef I2CUSESDMA
 			if (HAL_I2C_Mem_Read(&hi2c1, DevAddress, MemAddress,
-					I2C_MEMADD_SIZE_8BIT, pData, Size, 500) != HAL_OK) {
+			I2C_MEMADD_SIZE_8BIT, pData, Size, 500) != HAL_OK) {
 
 				I2C_Unstick();
 				xSemaphoreGive(I2CSemaphore);
@@ -78,22 +78,15 @@ void FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 		// RToS is active, run threading
 		// Get the mutex so we can use the I2C port
 		// Wait up to 1 second for the mutex
-		if (xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE) {
-#ifdef I2CUSESDMA
+		if (xSemaphoreTake(I2CSemaphore, (TickType_t)500) == pdTRUE) {
 			if (HAL_I2C_Mem_Write(&hi2c1, DevAddress, MemAddress,
-					I2C_MEMADD_SIZE_8BIT, pData, Size, 500) != HAL_OK) {
+			I2C_MEMADD_SIZE_8BIT, pData, Size, 500) != HAL_OK) {
 
 				I2C_Unstick();
 				xSemaphoreGive(I2CSemaphore);
 			}
 			xSemaphoreGive(I2CSemaphore);
-#else
-			if (HAL_I2C_Mem_Write(&hi2c1, DevAddress, MemAddress, I2C_MEMADD_SIZE_8BIT, pData,
-							Size, 5000) != HAL_OK) {
-			}
-			xSemaphoreGive(I2CSemaphore);
-#endif
-		} else {
+
 		}
 	}
 
@@ -130,11 +123,9 @@ void FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
 
 bool FRToSI2C::probe(uint16_t DevAddress) {
 	uint8_t buffer[1];
-	if (Mem_Read(DevAddress, 0,  buffer, 1)) {
-		//ACK'd
-		return true;
-	}
-	return false;
+	return HAL_I2C_Mem_Read(&hi2c1, DevAddress, 0x0F, I2C_MEMADD_SIZE_8BIT,
+			buffer, 1, 1000) == HAL_OK;
+
 }
 
 void FRToSI2C::I2C_Unstick() {

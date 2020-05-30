@@ -10,9 +10,8 @@ extern "C" {
 #include <MMA8652FC.hpp>
 #include <gui.hpp>
 #include <history.hpp>
-#include <main.hpp>
+#include "main.hpp"
 #include <power.hpp>
-
 #include "../../configuration.h"
 #include "Buttons.hpp"
 #include "LIS2DH12.hpp"
@@ -23,7 +22,7 @@ extern "C" {
 #include "stdlib.h"
 #include "string.h"
 #include "unit.h"
-extern uint8_t PCBVersion;
+
 // File local variables
 extern uint32_t currentTempTargetDegC;
 extern uint8_t accelInit;
@@ -597,7 +596,7 @@ void showDebugMenu(void) {
 
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
-    FRToSI2C::FRToSInit();
+
     uint8_t tempWarningState = 0;
     bool buttonLockout = false;
     bool tempOnDisplay = false;
