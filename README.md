@@ -54,13 +54,18 @@ I also want to give a shout out to all of the [Fantastic Contributors](https://g
 
 Especially to the following users, who have helped in various ways that are massively appreciated:
 
-* [dhiltonp](https://github.com/dhiltonp)
+* [Dhiltonp](https://github.com/dhiltonp)
 * [Mrkvozrout](https://github.com/Mrkvozrout)
-* [jonnieZG](https://github.com/jonnieZG)
-* [federck](https://github.com/federck)
-* [jvitkauskas](https://github.com/jvitkauskas)
-* [doegox](https://github.com/doegox)
-* [perillamint](https://github.com/perillamint)
+* [JonnieZG](https://github.com/jonnieZG)
+* [Federck](https://github.com/federck)
+* [Jvitkauskas](https://github.com/jvitkauskas)
+* [Doegox](https://github.com/doegox)
+* [Perillamint](https://github.com/perillamint)
+* [GeminiServer](https://github.com/GeminiServer)
+* [PixelPirate](https://github.com/PixelPirate)
+* [Firebie](https://github.com/Firebie)
+* [Agatti](https://github.com/agatti)
+* [Discip](https://github.com/discip)
 
 ## Licence
 
