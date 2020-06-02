@@ -1,71 +1,29 @@
 /*
-    FreeRTOS V9.0.0 - Copyright (C) 2016 Real Time Engineers Ltd.
-    All rights reserved
-
-    VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
-
-    This file is part of the FreeRTOS distribution.
-
-    FreeRTOS is free software; you can redistribute it and/or modify it under
-    the terms of the GNU General Public License (version 2) as published by the
-    Free Software Foundation >>>> AND MODIFIED BY <<<< the FreeRTOS exception.
-
-    ***************************************************************************
-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
-    >>!   obliged to provide the source code for proprietary components     !<<
-    >>!   outside of the FreeRTOS kernel.                                   !<<
-    ***************************************************************************
-
-    FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
-    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
-    link: http://www.freertos.org/a00114.html
-
-    ***************************************************************************
-     *                                                                       *
-     *    FreeRTOS provides completely free yet professionally developed,    *
-     *    robust, strictly quality controlled, supported, and cross          *
-     *    platform software that is more than just the market leader, it     *
-     *    is the industry's de facto standard.                               *
-     *                                                                       *
-     *    Help yourself get started quickly while simultaneously helping     *
-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
-     *    tutorial book, reference manual, or both:                          *
-     *    http://www.FreeRTOS.org/Documentation                              *
-     *                                                                       *
-    ***************************************************************************
-
-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
-    the FAQ page "My application does not run, what could be wrong?".  Have you
-    defined configASSERT()?
-
-    http://www.FreeRTOS.org/support - In return for receiving this top quality
-    embedded software for free we request you assist our global community by
-    participating in the support forum.
-
-    http://www.FreeRTOS.org/training - Investing in training allows your team to
-    be as productive as possible as early as possible.  Now you can receive
-    FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
-    Ltd, and the world's leading authority on the world's leading RTOS.
-
-    http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
-    including FreeRTOS+Trace - an indispensable productivity tool, a DOS
-    compatible FAT file system, and our tiny thread aware UDP/IP stack.
-
-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
-
-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
-    licenses offer ticketed support, indemnification and commercial middleware.
-
-    http://www.SafeRTOS.com - High Integrity Systems also provide a safety
-    engineered and independently SIL3 certified version for use in safety and
-    mission critical applications that require provable dependability.
-
-    1 tab == 4 spaces!
-*/
+ * FreeRTOS Kernel V10.3.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
+ */
 
 /* Standard includes. */
 #include <stdlib.h>
@@ -81,11 +39,11 @@ task.h is included from an application file. */
 #include "timers.h"
 #include "event_groups.h"
 
-/* Lint e961 and e750 are suppressed as a MISRA exception justified because the
-MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be defined for the
-header files above, but not in this file, in order to generate the correct
-privileged Vs unprivileged linkage and placement. */
-#undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE /*lint !e961 !e750. */
+/* Lint e961, e750 and e9021 are suppressed as a MISRA exception justified
+because the MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be defined
+for the header files above, but not in this file, in order to generate the
+correct privileged Vs unprivileged linkage and placement. */
+#undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE /*lint !e961 !e750 !e9021 See comment above. */
 
 /* The following bit fields convey control information in a task's event list
 item value.  It is important they don't clash with the
@@ -102,7 +60,7 @@ taskEVENT_LIST_ITEM_VALUE_IN_USE definition. */
 	#define eventEVENT_BITS_CONTROL_BYTES	0xff000000UL
 #endif
 
-typedef struct xEventGroupDefinition
+typedef struct EventGroupDef_t
 {
 	EventBits_t uxEventBits;
 	List_t xTasksWaitingForBits;		/*< List of tasks waiting for a bit to be set. */
@@ -139,8 +97,18 @@ static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, co
 		/* A StaticEventGroup_t object must be provided. */
 		configASSERT( pxEventGroupBuffer );
 
+		#if( configASSERT_DEFINED == 1 )
+		{
+			/* Sanity check that the size of the structure used to declare a
+			variable of type StaticEventGroup_t equals the size of the real
+			event group structure. */
+			volatile size_t xSize = sizeof( StaticEventGroup_t );
+			configASSERT( xSize == sizeof( EventGroup_t ) );
+		} /*lint !e529 xSize is referenced if configASSERT() is defined. */
+		#endif /* configASSERT_DEFINED */
+
 		/* The user has provided a statically allocated event group - use it. */
-		pxEventBits = ( EventGroup_t * ) pxEventGroupBuffer; /*lint !e740 EventGroup_t and StaticEventGroup_t are guaranteed to have the same size and alignment requirement - checked by configASSERT(). */
+		pxEventBits = ( EventGroup_t * ) pxEventGroupBuffer; /*lint !e740 !e9087 EventGroup_t and StaticEventGroup_t are deliberately aliased for data hiding purposes and guaranteed to have the same size and alignment requirement - checked by configASSERT(). */
 
 		if( pxEventBits != NULL )
 		{
@@ -160,10 +128,13 @@ static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, co
 		}
 		else
 		{
+			/* xEventGroupCreateStatic should only ever be called with
+			pxEventGroupBuffer pointing to a pre-allocated (compile time
+			allocated) StaticEventGroup_t variable. */
 			traceEVENT_GROUP_CREATE_FAILED();
 		}
 
-		return ( EventGroupHandle_t ) pxEventBits;
+		return pxEventBits;
 	}
 
 #endif /* configSUPPORT_STATIC_ALLOCATION */
@@ -175,8 +146,20 @@ static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, co
 	{
 	EventGroup_t *pxEventBits;
 
-		/* Allocate the event group. */
-		pxEventBits = ( EventGroup_t * ) pvPortMalloc( sizeof( EventGroup_t ) );
+		/* Allocate the event group.  Justification for MISRA deviation as
+		follows:  pvPortMalloc() always ensures returned memory blocks are
+		aligned per the requirements of the MCU stack.  In this case
+		pvPortMalloc() must return a pointer that is guaranteed to meet the
+		alignment requirements of the EventGroup_t structure - which (if you
+		follow it through) is the alignment requirements of the TickType_t type
+		(EventBits_t being of TickType_t itself).  Therefore, whenever the
+		stack alignment requirements are greater than or equal to the
+		TickType_t alignment requirements the cast is safe.  In other cases,
+		where the natural word size of the architecture is less than
+		sizeof( TickType_t ), the TickType_t variables will be accessed in two
+		or more reads operations, and the alignment requirements is only that
+		of each individual read. */
+		pxEventBits = ( EventGroup_t * ) pvPortMalloc( sizeof( EventGroup_t ) ); /*lint !e9087 !e9079 see comment above. */
 
 		if( pxEventBits != NULL )
 		{
@@ -196,10 +179,10 @@ static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, co
 		}
 		else
 		{
-			traceEVENT_GROUP_CREATE_FAILED();
+			traceEVENT_GROUP_CREATE_FAILED(); /*lint !e9063 Else branch only exists to allow tracing and does not generate code if trace macros are not defined. */
 		}
 
-		return ( EventGroupHandle_t ) pxEventBits;
+		return pxEventBits;
 	}
 
 #endif /* configSUPPORT_DYNAMIC_ALLOCATION */
@@ -208,7 +191,7 @@ static BaseType_t prvTestWaitCondition( const EventBits_t uxCurrentEventBits, co
 EventBits_t xEventGroupSync( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, const EventBits_t uxBitsToWaitFor, TickType_t xTicksToWait )
 {
 EventBits_t uxOriginalBitValue, uxReturn;
-EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+EventGroup_t *pxEventBits = xEventGroup;
 BaseType_t xAlreadyYielded;
 BaseType_t xTimeoutOccurred = pdFALSE;
 
@@ -259,6 +242,7 @@ BaseType_t xTimeoutOccurred = pdFALSE;
 				/* The rendezvous bits were not set, but no block time was
 				specified - just return the current event bit value. */
 				uxReturn = pxEventBits->uxEventBits;
+				xTimeoutOccurred = pdTRUE;
 			}
 		}
 	}
@@ -317,13 +301,16 @@ BaseType_t xTimeoutOccurred = pdFALSE;
 
 	traceEVENT_GROUP_SYNC_END( xEventGroup, uxBitsToSet, uxBitsToWaitFor, xTimeoutOccurred );
 
+	/* Prevent compiler warnings when trace macros are not used. */
+	( void ) xTimeoutOccurred;
+
 	return uxReturn;
 }
 /*-----------------------------------------------------------*/
 
 EventBits_t xEventGroupWaitBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToWaitFor, const BaseType_t xClearOnExit, const BaseType_t xWaitForAllBits, TickType_t xTicksToWait )
 {
-EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+EventGroup_t *pxEventBits = xEventGroup;
 EventBits_t uxReturn, uxControlBits = 0;
 BaseType_t xWaitConditionMet, xAlreadyYielded;
 BaseType_t xTimeoutOccurred = pdFALSE;
@@ -368,6 +355,7 @@ BaseType_t xTimeoutOccurred = pdFALSE;
 			/* The wait condition has not been met, but no block time was
 			specified, so just return the current value. */
 			uxReturn = uxCurrentEventBits;
+			xTimeoutOccurred = pdTRUE;
 		}
 		else
 		{
@@ -449,11 +437,9 @@ BaseType_t xTimeoutOccurred = pdFALSE;
 				{
 					mtCOVERAGE_TEST_MARKER();
 				}
+				xTimeoutOccurred = pdTRUE;
 			}
 			taskEXIT_CRITICAL();
-
-			/* Prevent compiler warnings when trace macros are not used. */
-			xTimeoutOccurred = pdFALSE;
 		}
 		else
 		{
@@ -465,13 +451,16 @@ BaseType_t xTimeoutOccurred = pdFALSE;
 	}
 	traceEVENT_GROUP_WAIT_BITS_END( xEventGroup, uxBitsToWaitFor, xTimeoutOccurred );
 
+	/* Prevent compiler warnings when trace macros are not used. */
+	( void ) xTimeoutOccurred;
+
 	return uxReturn;
 }
 /*-----------------------------------------------------------*/
 
 EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear )
 {
-EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+EventGroup_t *pxEventBits = xEventGroup;
 EventBits_t uxReturn;
 
 	/* Check the user is not attempting to clear the bits used by the kernel
@@ -503,7 +492,7 @@ EventBits_t uxReturn;
 		BaseType_t xReturn;
 
 		traceEVENT_GROUP_CLEAR_BITS_FROM_ISR( xEventGroup, uxBitsToClear );
-		xReturn = xTimerPendFunctionCallFromISR( vEventGroupClearBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToClear, NULL );
+		xReturn = xTimerPendFunctionCallFromISR( vEventGroupClearBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToClear, NULL ); /*lint !e9087 Can't avoid cast to void* as a generic callback function not specific to this use case. Callback casts back to original type so safe. */
 
 		return xReturn;
 	}
@@ -514,7 +503,7 @@ EventBits_t uxReturn;
 EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup )
 {
 UBaseType_t uxSavedInterruptStatus;
-EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+EventGroup_t const * const pxEventBits = xEventGroup;
 EventBits_t uxReturn;
 
 	uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
@@ -524,16 +513,16 @@ EventBits_t uxReturn;
 	portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
 
 	return uxReturn;
-}
+} /*lint !e818 EventGroupHandle_t is a typedef used in other functions to so can't be pointer to const. */
 /*-----------------------------------------------------------*/
 
 EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet )
 {
 ListItem_t *pxListItem, *pxNext;
 ListItem_t const *pxListEnd;
-List_t *pxList;
+List_t const * pxList;
 EventBits_t uxBitsToClear = 0, uxBitsWaitedFor, uxControlBits;
-EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+EventGroup_t *pxEventBits = xEventGroup;
 BaseType_t xMatchFound = pdFALSE;
 
 	/* Check the user is not attempting to set the bits used by the kernel
@@ -542,7 +531,7 @@ BaseType_t xMatchFound = pdFALSE;
 	configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
 
 	pxList = &( pxEventBits->xTasksWaitingForBits );
-	pxListEnd = listGET_END_MARKER( pxList ); /*lint !e826 !e740 The mini list structure is used as the list end to save RAM.  This is checked and valid. */
+	pxListEnd = listGET_END_MARKER( pxList ); /*lint !e826 !e740 !e9087 The mini list structure is used as the list end to save RAM.  This is checked and valid. */
 	vTaskSuspendAll();
 	{
 		traceEVENT_GROUP_SET_BITS( xEventGroup, uxBitsToSet );
@@ -602,7 +591,7 @@ BaseType_t xMatchFound = pdFALSE;
 				eventUNBLOCKED_DUE_TO_BIT_SET bit is set so the task knows
 				that is was unblocked due to its required bits matching, rather
 				than because it timed out. */
-				( void ) xTaskRemoveFromUnorderedEventList( pxListItem, pxEventBits->uxEventBits | eventUNBLOCKED_DUE_TO_BIT_SET );
+				vTaskRemoveFromUnorderedEventList( pxListItem, pxEventBits->uxEventBits | eventUNBLOCKED_DUE_TO_BIT_SET );
 			}
 
 			/* Move onto the next list item.  Note pxListItem->pxNext is not
@@ -623,7 +612,7 @@ BaseType_t xMatchFound = pdFALSE;
 
 void vEventGroupDelete( EventGroupHandle_t xEventGroup )
 {
-EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+EventGroup_t *pxEventBits = xEventGroup;
 const List_t *pxTasksWaitingForBits = &( pxEventBits->xTasksWaitingForBits );
 
 	vTaskSuspendAll();
@@ -633,9 +622,9 @@ const List_t *pxTasksWaitingForBits = &( pxEventBits->xTasksWaitingForBits );
 		while( listCURRENT_LIST_LENGTH( pxTasksWaitingForBits ) > ( UBaseType_t ) 0 )
 		{
 			/* Unblock the task, returning 0 as the event list is being deleted
-			and	cannot therefore have any bits set. */
-			configASSERT( pxTasksWaitingForBits->xListEnd.pxNext != ( ListItem_t * ) &( pxTasksWaitingForBits->xListEnd ) );
-			( void ) xTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO_BIT_SET );
+			and cannot therefore have any bits set. */
+			configASSERT( pxTasksWaitingForBits->xListEnd.pxNext != ( const ListItem_t * ) &( pxTasksWaitingForBits->xListEnd ) );
+			vTaskRemoveFromUnorderedEventList( pxTasksWaitingForBits->xListEnd.pxNext, eventUNBLOCKED_DUE_TO_BIT_SET );
 		}
 
 		#if( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configSUPPORT_STATIC_ALLOCATION == 0 ) )
@@ -667,7 +656,7 @@ const List_t *pxTasksWaitingForBits = &( pxEventBits->xTasksWaitingForBits );
 an interrupt. */
 void vEventGroupSetBitsCallback( void *pvEventGroup, const uint32_t ulBitsToSet )
 {
-	( void ) xEventGroupSetBits( pvEventGroup, ( EventBits_t ) ulBitsToSet );
+	( void ) xEventGroupSetBits( pvEventGroup, ( EventBits_t ) ulBitsToSet ); /*lint !e9079 Can't avoid cast to void* as a generic timer callback prototype. Callback casts back to original type so safe. */
 }
 /*-----------------------------------------------------------*/
 
@@ -675,7 +664,7 @@ void vEventGroupSetBitsCallback( void *pvEventGroup, const uint32_t ulBitsToSet 
 an interrupt. */
 void vEventGroupClearBitsCallback( void *pvEventGroup, const uint32_t ulBitsToClear )
 {
-	( void ) xEventGroupClearBits( pvEventGroup, ( EventBits_t ) ulBitsToClear );
+	( void ) xEventGroupClearBits( pvEventGroup, ( EventBits_t ) ulBitsToClear ); /*lint !e9079 Can't avoid cast to void* as a generic timer callback prototype. Callback casts back to original type so safe. */
 }
 /*-----------------------------------------------------------*/
 
@@ -721,7 +710,7 @@ BaseType_t xWaitConditionMet = pdFALSE;
 	BaseType_t xReturn;
 
 		traceEVENT_GROUP_SET_BITS_FROM_ISR( xEventGroup, uxBitsToSet );
-		xReturn = xTimerPendFunctionCallFromISR( vEventGroupSetBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToSet, pxHigherPriorityTaskWoken );
+		xReturn = xTimerPendFunctionCallFromISR( vEventGroupSetBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToSet, pxHigherPriorityTaskWoken ); /*lint !e9087 Can't avoid cast to void* as a generic callback function not specific to this use case. Callback casts back to original type so safe. */
 
 		return xReturn;
 	}
@@ -734,7 +723,7 @@ BaseType_t xWaitConditionMet = pdFALSE;
 	UBaseType_t uxEventGroupGetNumber( void* xEventGroup )
 	{
 	UBaseType_t xReturn;
-	EventGroup_t *pxEventBits = ( EventGroup_t * ) xEventGroup;
+	EventGroup_t const *pxEventBits = ( EventGroup_t * ) xEventGroup; /*lint !e9087 !e9079 EventGroupHandle_t is a pointer to an EventGroup_t, but EventGroupHandle_t is kept opaque outside of this file for data hiding purposes. */
 
 		if( xEventGroup == NULL )
 		{
@@ -748,5 +737,17 @@ BaseType_t xWaitConditionMet = pdFALSE;
 		return xReturn;
 	}
 
-#endif
+#endif /* configUSE_TRACE_FACILITY */
+/*-----------------------------------------------------------*/
+
+#if ( configUSE_TRACE_FACILITY == 1 )
+
+	void vEventGroupSetNumber( void * xEventGroup, UBaseType_t uxEventGroupNumber )
+	{
+		( ( EventGroup_t * ) xEventGroup )->uxEventGroupNumber = uxEventGroupNumber; /*lint !e9087 !e9079 EventGroupHandle_t is a pointer to an EventGroup_t, but EventGroupHandle_t is kept opaque outside of this file for data hiding purposes. */
+	}
+
+#endif /* configUSE_TRACE_FACILITY */
+/*-----------------------------------------------------------*/
+
 
