@@ -1,71 +1,29 @@
 /*
-    FreeRTOS V9.0.0 - Copyright (C) 2016 Real Time Engineers Ltd.
-    All rights reserved
-
-    VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
-
-    This file is part of the FreeRTOS distribution.
-
-    FreeRTOS is free software; you can redistribute it and/or modify it under
-    the terms of the GNU General Public License (version 2) as published by the
-    Free Software Foundation >>>> AND MODIFIED BY <<<< the FreeRTOS exception.
-
-    ***************************************************************************
-    >>!   NOTE: The modification to the GPL is included to allow you to     !<<
-    >>!   distribute a combined work that includes FreeRTOS without being   !<<
-    >>!   obliged to provide the source code for proprietary components     !<<
-    >>!   outside of the FreeRTOS kernel.                                   !<<
-    ***************************************************************************
-
-    FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
-    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    FOR A PARTICULAR PURPOSE.  Full license text is available on the following
-    link: http://www.freertos.org/a00114.html
-
-    ***************************************************************************
-     *                                                                       *
-     *    FreeRTOS provides completely free yet professionally developed,    *
-     *    robust, strictly quality controlled, supported, and cross          *
-     *    platform software that is more than just the market leader, it     *
-     *    is the industry's de facto standard.                               *
-     *                                                                       *
-     *    Help yourself get started quickly while simultaneously helping     *
-     *    to support the FreeRTOS project by purchasing a FreeRTOS           *
-     *    tutorial book, reference manual, or both:                          *
-     *    http://www.FreeRTOS.org/Documentation                              *
-     *                                                                       *
-    ***************************************************************************
-
-    http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
-    the FAQ page "My application does not run, what could be wrong?".  Have you
-    defined configASSERT()?
-
-    http://www.FreeRTOS.org/support - In return for receiving this top quality
-    embedded software for free we request you assist our global community by
-    participating in the support forum.
-
-    http://www.FreeRTOS.org/training - Investing in training allows your team to
-    be as productive as possible as early as possible.  Now you can receive
-    FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
-    Ltd, and the world's leading authority on the world's leading RTOS.
-
-    http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
-    including FreeRTOS+Trace - an indispensable productivity tool, a DOS
-    compatible FAT file system, and our tiny thread aware UDP/IP stack.
-
-    http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
-    Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
-
-    http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
-    Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
-    licenses offer ticketed support, indemnification and commercial middleware.
-
-    http://www.SafeRTOS.com - High Integrity Systems also provide a safety
-    engineered and independently SIL3 certified version for use in safety and
-    mission critical applications that require provable dependability.
-
-    1 tab == 4 spaces!
-*/
+ * FreeRTOS Kernel V10.3.1
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * http://www.FreeRTOS.org
+ * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
+ */
 
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_H
@@ -328,7 +286,7 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * \defgroup xSemaphoreTake xSemaphoreTake
  * \ingroup Semaphores
  */
-#define xSemaphoreTake( xSemaphore, xBlockTime )		xQueueGenericReceive( ( QueueHandle_t ) ( xSemaphore ), NULL, ( xBlockTime ), pdFALSE )
+#define xSemaphoreTake( xSemaphore, xBlockTime )		xQueueSemaphoreTake( ( xSemaphore ), ( xBlockTime ) )
 
 /**
  * semphr. h
@@ -392,23 +350,23 @@ typedef QueueHandle_t SemaphoreHandle_t;
 
             // ...
             // For some reason due to the nature of the code further calls to
-			// xSemaphoreTakeRecursive() are made on the same mutex.  In real
-			// code these would not be just sequential calls as this would make
-			// no sense.  Instead the calls are likely to be buried inside
-			// a more complex call structure.
+            // xSemaphoreTakeRecursive() are made on the same mutex.  In real
+            // code these would not be just sequential calls as this would make
+            // no sense.  Instead the calls are likely to be buried inside
+            // a more complex call structure.
             xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
             xSemaphoreTakeRecursive( xMutex, ( TickType_t ) 10 );
 
             // The mutex has now been 'taken' three times, so will not be
-			// available to another task until it has also been given back
-			// three times.  Again it is unlikely that real code would have
-			// these calls sequentially, but instead buried in a more complex
-			// call structure.  This is just for illustrative purposes.
+            // available to another task until it has also been given back
+            // three times.  Again it is unlikely that real code would have
+            // these calls sequentially, but instead buried in a more complex
+            // call structure.  This is just for illustrative purposes.
             xSemaphoreGiveRecursive( xMutex );
-			xSemaphoreGiveRecursive( xMutex );
-			xSemaphoreGiveRecursive( xMutex );
+            xSemaphoreGiveRecursive( xMutex );
+            xSemaphoreGiveRecursive( xMutex );
 
-			// Now the mutex can be taken by other tasks.
+            // Now the mutex can be taken by other tasks.
         }
         else
         {
@@ -1153,6 +1111,17 @@ typedef QueueHandle_t SemaphoreHandle_t;
  * being tested.
  */
 #define xSemaphoreGetMutexHolder( xSemaphore ) xQueueGetMutexHolder( ( xSemaphore ) )
+
+/**
+ * semphr.h
+ * <pre>TaskHandle_t xSemaphoreGetMutexHolderFromISR( SemaphoreHandle_t xMutex );</pre>
+ *
+ * If xMutex is indeed a mutex type semaphore, return the current mutex holder.
+ * If xMutex is not a mutex type semaphore, or the mutex is available (not held
+ * by a task), return NULL.
+ *
+ */
+#define xSemaphoreGetMutexHolderFromISR( xSemaphore ) xQueueGetMutexHolderFromISR( ( xSemaphore ) )
 
 /**
  * semphr.h
