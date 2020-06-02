@@ -7,7 +7,8 @@
 #include "power.hpp"
 #include "stdlib.h"
 #include "task.h"
-
+#include "I2C_Wrapper.hpp"
 void postRToSInit() {
     // Any after RTos setup
+	FRToSI2C::FRToSInit();
 }

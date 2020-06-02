@@ -38,10 +38,10 @@ int main(void) {
 	preRToSInit();
 
 	setTipX10Watts(0);  // force tip off
+	resetWatchdog();
 	OLED::initialize();  // start up the LCD
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
-	resetWatchdog();
 	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
 	if (MMA8652FC::detect()) {
@@ -72,11 +72,11 @@ int main(void) {
 			PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 
-	if (PCBVersion < 3) {
-		osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0,
-				MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);
-		MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
-	}
+	osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0,
+			MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);
+	MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
+
+	resetWatchdog();
 
 	/* Start scheduler */
 	osKernelStart();
