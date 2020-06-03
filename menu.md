@@ -1,5 +1,6 @@
 # Menu System
 
+In this firmware for these soldering irons, all settings are adjustable on the device itself. This means you do **not** require a computer to change any settings.
 
 ## Soldering mode
 
@@ -24,7 +25,6 @@ Scrolling through the submenu will return you back to its entry location after y
 Due to the tolerance on the resistors used for the input voltage divider, some irons can be up to 0.6V out on the voltage measurement.
 Please calibrate your iron if you have any issues with the cutoff voltage.
 Note that cutoff messages can also be triggered by using a power supply that is too weak and fails under the load of the iron.
-This is more critical than before with the new cell count based cutout voltage.
 
 To calibrate your iron:
 
