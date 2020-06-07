@@ -276,21 +276,21 @@
 			],
 			"desc": "Varia la temperatura della punta attraverso una lunga pressione dei tasti"
 		},
-		"PowerPulsePower":{
+		"PowerPulsePower": {
 			"text": "POWPLS",
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Potenza impulso",
+				"«Keep-Alive»"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Varia la potenza del feedback per redere persistente l'interconnessione tra alimentatore e saldatore <watt>"
 		},
 		"TipGain": {
 			"text": "TG",
 			"text2": [
-				"Modify",
-				"tip gain"
+				"Guadagno",
+				"punta"
 			],
-			"desc": "Tip gain"
+			"desc": "Varia il guadagno della punta"
 		}
 	}
 }
