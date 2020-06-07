@@ -282,7 +282,7 @@
 				"Potenza impulso",
 				"«Keep-Alive»"
 			],
-			"desc": "Varia la potenza del feedback per redere persistente l'interconnessione tra alimentatore e saldatore <watt>"
+			"desc": "Varia la potenza d'impulso per redere persistente l'interconnessione tra alimentatore e saldatore <watt>"
 		},
 		"TipGain": {
 			"text": "TG",
