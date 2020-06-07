@@ -282,7 +282,7 @@
 				"Potenza impulso",
 				"«Keep-Alive»"
 			],
-			"desc": "Varia la potenza d'impulso per redere persistente l'interconnessione tra alimentatore e saldatore <watt>"
+			"desc": "Regola la potenza d'impulso in ingresso al saldatore per prevenire lo standby eventuale dell'alimentatore <watt>"
 		},
 		"TipGain": {
 			"text": "TG",
