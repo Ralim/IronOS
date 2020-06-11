@@ -40,6 +40,9 @@ public:
 	static bool probe(uint16_t DevAddress);
 
 	static void Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+	static void Receive(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+	static void TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx,
+			uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx);
 	static void I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data);
 	static uint8_t I2C_RegisterRead(uint8_t address, uint8_t reg);
 
