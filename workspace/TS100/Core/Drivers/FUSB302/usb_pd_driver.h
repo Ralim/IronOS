@@ -10,7 +10,7 @@
 #define USB_PD_DRIVER_H_
 
 #include "USBC_PD/usb_pd.h"
-
+#include "cmsis_os.h"
 #include <stdint.h>
 
 //#define CONFIG_BBRAM
@@ -64,8 +64,8 @@ PDO_FIXED_COMM_CAP)
 #define CONFIG_USB_PD_IDENTITY_HW_VERS 1
 #define CONFIG_USB_PD_IDENTITY_SW_VERS 1
 
-#define usleep(us) (delay_us(us))
-#define msleep(us) (delay_ms(us))
+#define usleep(us) (osDelay(1))
+#define msleep(us) (osDelay(us))
 
 typedef union {
 	uint64_t val;

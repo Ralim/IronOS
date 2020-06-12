@@ -9,7 +9,7 @@
 #define fusb302_H
 
 #include <stdint.h>
-#include "usb_pd_tcpm.h"
+#include "USBC_TCPM/usb_pd_tcpm.h"
 #include "USBC_PD/usb_pd.h"
 
 /* Chip Device ID - 302A or 302B */
@@ -18,13 +18,13 @@
 
 /* I2C slave address varies by part number */
 /* FUSB302BUCX / FUSB302BMPX */
-#define fusb302_I2C_SLAVE_ADDR 0x22 // 7-bit address for Arduino
+#define fusb302_I2C_SLAVE_ADDR 0x22<<1 // 7-bit address
 /* FUSB302B01MPX */
-#define fusb302_I2C_SLAVE_ADDR_B01 0x23
+#define fusb302_I2C_SLAVE_ADDR_B01 0x23<<1
 /* FUSB302B10MPX */
-#define fusb302_I2C_SLAVE_ADDR_B10 0x24
+#define fusb302_I2C_SLAVE_ADDR_B10 0x24<<1
 /* FUSB302B11MPX */
-#define fusb302_I2C_SLAVE_ADDR_B11 0x25
+#define fusb302_I2C_SLAVE_ADDR_B11 0x25<<1
 
 /* Default retry count for transmitting */
 #define PD_RETRY_COUNT      3
@@ -210,41 +210,8 @@ enum fusb302_txfifo_tokens {
 
 extern const struct tcpm_drv fusb302_tcpm_drv;
 
-/*
-// Common methods for TCPM implementations
-int     fusb302_init(void);
-int     fusb302_get_cc(int *cc1, int *cc2);
-int     fusb302_get_vbus_level(void);
-int     fusb302_select_rp_value(int rp);
-int     fusb302_set_cc(int pull);
-int     fusb302_set_polarity(int polarity);
-int     fusb302_set_vconn(int enable);
-int     fusb302_set_msg_header(int power_role, int data_role);
-int     fusb302_set_rx_enable(int enable);
-int     fusb302_get_message(uint32_t *payload, int *head);
-int     fusb302_transmit(enum tcpm_transmit_type type,
-                uint16_t header, const uint32_t *data);
-//int   alert(void);
-void    fusb302_pd_reset(int port);
-void    fusb302_auto_goodcrc_enable(int enable);
-int     fusb302_convert_bc_lvl(int bc_lvl);
-void    fusb302_detect_cc_pin_source_manual(int *cc1_lvl, int *cc2_lvl);
-int     fusb302_measure_cc_pin_source(int cc_measure);
-void    fusb302_detect_cc_pin_sink(int *cc1, int *cc2);
-int     fusb302_send_message(uint16_t header, const uint32_t *data,
-                uint8_t *buf, int buf_pos);
-void    fusb302_flush_rx_fifo(int port);
-void    fusb302_flush_tx_fifo(int port);
-void    fusb302_clear_int_pin(void);
-void    fusb302_set_bist_test_data(void);
-int     fusb302_get_chip_id(int *id);
-uint32_t fusb302_get_interrupt_reason(void);
-int     fusb302_tcpc_write(int reg, int val);
-int     fusb302_tcpc_read(int reg, int *val);
-int     fusb302_tcpc_xfer(const uint8_t *out, 
-            int out_size, uint8_t *in, 
-            int in_size, int flags);
-*/
+//returns 1 if the FUSB302 is on the I2C bus
+uint8_t fusb302_detect();
 
 #endif /* fusb302_H */
 

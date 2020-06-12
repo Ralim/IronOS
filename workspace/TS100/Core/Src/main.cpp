@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 uint8_t PCBVersion = 0;
 // File local variables
-
+bool usb_pd_available = false;
 bool settingsWereReset = false;
 // FreeRTOS variables
 
@@ -57,7 +57,8 @@ int main(void) {
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
 	}
-
+	resetWatchdog();
+	usb_pd_available = usb_pd_detect();
 	resetWatchdog();
 
 	/* Create the thread(s) */

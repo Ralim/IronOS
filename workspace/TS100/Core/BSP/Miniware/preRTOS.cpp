@@ -9,6 +9,7 @@
 #include "BSP.h"
 #include "Setup.h"
 #include "Pins.h"
+#include "I2CBB.hpp"
 void preRToSInit() {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
 	 */
@@ -18,5 +19,5 @@ void preRToSInit() {
 	HAL_Delay(50);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 	HAL_Delay(50);
-
+	I2CBB::init();
 }

@@ -6,13 +6,16 @@
  */
 
 #include "FUSB302.h"
-#include "usb_pd_tcpm.h"
+#include "USBC_TCPM/usb_pd_tcpm.h"
 #include "USBC_TCPM/tcpm.h"
 #include "USBC_PD/usb_pd.h"
-
+#include <string.h>
+#include "cmsis_os.h"
+#include "I2C_Wrapper.hpp"
 #define PACKET_IS_GOOD_CRC(head) (PD_HEADER_TYPE(head) == PD_CTRL_GOOD_CRC && \
 				 PD_HEADER_CNT(head) == 0)
-
+const struct tcpc_config_t tcpc_config[CONFIG_USB_PD_PORT_COUNT] = { { 0,
+		fusb302_I2C_SLAVE_ADDR, &fusb302_tcpm_drv, TCPC_ALERT_ACTIVE_LOW }, };
 static struct fusb302_chip_state {
 	int cc_polarity;
 	int vconn_enabled;
@@ -44,7 +47,7 @@ static void fusb302_flush_rx_fifo(int port) {
 	 * then we'll have to keep a shadow of what this register
 	 * value should be so we don't clobber it here!
 	 */
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
+
 	tcpc_write(port, TCPC_REG_CONTROL1, TCPC_REG_CONTROL1_RX_FLUSH);
 
 }
@@ -52,7 +55,6 @@ static void fusb302_flush_rx_fifo(int port) {
 static void fusb302_flush_tx_fifo(int port) {
 	int reg;
 
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 	tcpc_read(port, TCPC_REG_CONTROL0, &reg);
 	reg |= TCPC_REG_CONTROL0_TX_FLUSH;
 	tcpc_write(port, TCPC_REG_CONTROL0, reg);
@@ -62,7 +64,6 @@ static void fusb302_flush_tx_fifo(int port) {
 static void fusb302_auto_goodcrc_enable(int port, int enable) {
 	int reg;
 
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 	tcpc_read(port, TCPC_REG_SWITCHES1, &reg);
 
 	if (enable)
@@ -100,8 +101,6 @@ static int measure_cc_pin_source(int port, int cc_measure) {
 	int switches0_reg;
 	int reg;
 	int cc_lvl;
-
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 
 	/* Read status register */
 	tcpc_read(port, TCPC_REG_SWITCHES0, &reg);
@@ -180,8 +179,6 @@ static void detect_cc_pin_sink(int port, int *cc1, int *cc2) {
 	int orig_meas_cc2;
 	int bc_lvl_cc1;
 	int bc_lvl_cc2;
-
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 
 	/*
 	 * Measure CC1 first.
@@ -317,7 +314,7 @@ static int fusb302_send_message(int port, uint16_t header, const uint32_t *data,
 	buf[buf_pos++] = fusb302_TKN_TXON;
 
 	/* burst write for speed! */
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
+
 	rv = tcpc_xfer(port, buf, buf_pos, 0, 0, I2C_XFER_SINGLE);
 
 	return rv;
@@ -327,8 +324,6 @@ static int fusb302_tcpm_select_rp_value(int port, int rp) {
 	int reg;
 	int rv;
 	uint8_t vnc, rd;
-
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 
 	rv = tcpc_read(port, TCPC_REG_CONTROL0, &reg);
 	if (rv)
@@ -372,8 +367,6 @@ static int fusb302_tcpm_init(int port) {
 	state[port].mdac_rd = TCPC_REG_MEASURE_MDAC_MV(PD_SRC_DEF_RD_THRESH_MV);
 
 	/* all other variables assumed to default to 0 */
-
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 
 	/* Restore default settings */
 	tcpc_write(port, TCPC_REG_RESET, TCPC_REG_RESET_SW_RESET);
@@ -448,8 +441,6 @@ static int fusb302_tcpm_get_cc(int port, int *cc1, int *cc2) {
 static int fusb302_tcpm_set_cc(int port, int pull) {
 	int reg;
 
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
-
 	/* NOTE: FUSB302 toggles a single pull-up between CC1 and CC2 */
 	/* NOTE: FUSB302 Does not support Ra. */
 	switch (pull) {
@@ -523,8 +514,6 @@ static int fusb302_tcpm_set_polarity(int port, int polarity) {
 	/* Port polarity : 0 => CC1 is CC line, 1 => CC2 is CC line */
 	int reg;
 
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
-
 	tcpc_read(port, TCPC_REG_SWITCHES0, &reg);
 
 	/* clear VCONN switch bits */
@@ -590,8 +579,6 @@ static int fusb302_tcpm_set_vconn(int port, int enable) {
 		tcpm_set_polarity(port, state[port].cc_polarity);
 	} else {
 
-		i2c_master_lock(tcpc_config[port].i2c_host_port);
-
 		tcpc_read(port, TCPC_REG_SWITCHES0, &reg);
 
 		/* clear VCONN switch bits */
@@ -605,7 +592,8 @@ static int fusb302_tcpm_set_vconn(int port, int enable) {
 	return 0;
 }
 
-static int fusb302_tcpm_set_msg_header(int port, int power_role, int data_role) {
+static int fusb302_tcpm_set_msg_header(int port, int power_role,
+		int data_role) {
 	int reg;
 
 	tcpc_read(port, TCPC_REG_SWITCHES1, &reg);
@@ -627,8 +615,6 @@ static int fusb302_tcpm_set_rx_enable(int port, int enable) {
 	int reg;
 
 	state[port].rx_enable = enable;
-
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 
 	/* Get current switch state */
 	tcpc_read(port, TCPC_REG_SWITCHES0, &reg);
@@ -678,8 +664,6 @@ static int fusb302_tcpm_set_rx_enable(int port, int enable) {
 static int fusb302_rx_fifo_is_empty(int port) {
 	int reg, ret;
 
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
-
 	ret = (!tcpc_read(port, TCPC_REG_STATUS1, &reg))
 			&& (reg & TCPC_REG_STATUS1_RX_EMPTY);
 
@@ -705,7 +689,6 @@ static int fusb302_tcpm_get_message(int port, uint32_t *payload, int *head) {
 	/* Read until we have a non-GoodCRC packet or an empty FIFO */
 	do {
 		buf[0] = TCPC_REG_FIFOS;
-		i2c_master_lock(tcpc_config[port].i2c_host_port);
 
 		/*
 		 * PART 1 OF BURST READ: Write in register address.
@@ -794,10 +777,11 @@ static int fusb302_tcpm_transmit(int port, enum tcpm_transmit_type type,
 		fusb302_send_message(port, header, data, buf, buf_pos);
 		// wait for the GoodCRC to come back before we let the rest
 		// of the code do stuff like change polarity and miss it
-		delay_us(600);
-		return;
+//		delay_us(600);
+		osDelay(1);
+		break;
 	case TCPC_TX_HARD_RESET:
-		i2c_master_lock(tcpc_config[port].i2c_host_port);
+
 		/* Simply hit the SEND_HARD_RESET bit */
 		tcpc_read(port, TCPC_REG_CONTROL3, &reg);
 		reg |= TCPC_REG_CONTROL3_SEND_HARDRESET;
@@ -805,7 +789,7 @@ static int fusb302_tcpm_transmit(int port, enum tcpm_transmit_type type,
 
 		break;
 	case TCPC_TX_BIST_MODE_2:
-		i2c_master_lock(tcpc_config[port].i2c_host_port);
+
 		/* Hit the BIST_MODE2 bit and start TX */
 		tcpc_read(port, TCPC_REG_CONTROL1, &reg);
 		reg |= TCPC_REG_CONTROL1_BIST_MODE2;
@@ -836,7 +820,7 @@ static int fusb302_tcpm_get_vbus_level(int port)
 	int reg;
 
 	/* Read status register */
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
+
 	tcpc_read(port, TCPC_REG_STATUS0, &reg);
 
 
@@ -852,7 +836,6 @@ void fusb302_tcpc_alert(int port) {
 
 	/* reading interrupt registers clears them */
 
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
 	tcpc_read(port, TCPC_REG_INTERRUPT, &interrupt);
 	tcpc_read(port, TCPC_REG_INTERRUPTA, &interrupta);
 	tcpc_read(port, TCPC_REG_INTERRUPTB, &interruptb);
@@ -924,8 +907,6 @@ void fusb302_tcpc_alert(int port) {
 void tcpm_set_bist_test_data(int port) {
 	int reg;
 
-	i2c_master_lock(tcpc_config[port].i2c_host_port);
-
 	/* Read control3 register */
 	tcpc_read(port, TCPC_REG_CONTROL3, &reg);
 
@@ -937,16 +918,20 @@ void tcpm_set_bist_test_data(int port) {
 
 }
 
-const struct tcpm_drv fusb302_tcpm_drv = { .init = &fusb302_tcpm_init,
-		.release = &fusb302_tcpm_release, .get_cc = &fusb302_tcpm_get_cc,
-#ifdef CONFIG_USB_PD_VBUS_DETECT_TCPC
-	.get_vbus_level		= &fusb302_tcpm_get_vbus_level,
-#endif
-		.select_rp_value = &fusb302_tcpm_select_rp_value, .set_cc =
-				&fusb302_tcpm_set_cc,
-		.set_polarity = &fusb302_tcpm_set_polarity, .set_vconn =
-				&fusb302_tcpm_set_vconn, .set_msg_header =
-				&fusb302_tcpm_set_msg_header, .set_rx_enable =
-				&fusb302_tcpm_set_rx_enable, .get_message =
-				&fusb302_tcpm_get_message, .transmit = &fusb302_tcpm_transmit,
-		.tcpc_alert = &fusb302_tcpc_alert, };
+const struct tcpm_drv fusb302_tcpm_drv = { &fusb302_tcpm_init, //init
+		&fusb302_tcpm_release, //.release
+		&fusb302_tcpm_get_cc, //get_cc
+		NULL, //get_vbus_level
+		&fusb302_tcpm_select_rp_value, //select_rp_value
+		&fusb302_tcpm_set_cc, //set_cc
+		&fusb302_tcpm_set_polarity, //set_polarity
+		&fusb302_tcpm_set_vconn, //set_vconn
+		&fusb302_tcpm_set_msg_header, //set_msg_header
+		&fusb302_tcpm_set_rx_enable, //set_rx_enable
+		&fusb302_tcpm_get_message, //get_message
+		&fusb302_tcpm_transmit, //transmit
+		&fusb302_tcpc_alert, //tcpc_alert
+		NULL, //tcpc_discharge_vbus
+		NULL, //get_chip_info
+		};
+

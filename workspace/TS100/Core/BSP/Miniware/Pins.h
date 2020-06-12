@@ -77,6 +77,10 @@
 #define SCL_GPIO_Port GPIOB
 #define SDA_Pin GPIO_PIN_7
 #define SDA_GPIO_Port GPIOB
+#define SCL2_Pin GPIO_PIN_5
+#define SCL2_GPIO_Port GPIOA
+#define SDA2_Pin GPIO_PIN_1
+#define SDA2_GPIO_Port GPIOA
 
 #endif
 
