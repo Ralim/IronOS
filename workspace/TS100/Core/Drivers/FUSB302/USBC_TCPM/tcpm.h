@@ -18,110 +18,93 @@
 #endif
 
 #ifndef CONFIG_USB_PD_TCPC
-extern const struct tcpc_config_t tcpc_config[];
+extern const struct tcpc_config_t tcpc_config;
 
 /* I2C wrapper functions - get I2C port / slave addr from config struct. */
-int tcpc_write(int port, int reg, int val);
-int tcpc_write16(int port, int reg, int val);
-int tcpc_read(int port, int reg, int *val);
-int tcpc_read16(int port, int reg, int *val);
-int tcpc_xfer(int port,
-		const uint8_t *out, int out_size,
-		uint8_t *in, int in_size,
+int tcpc_write(int reg, int val);
+int tcpc_write16(int reg, int val);
+int tcpc_read(int reg, int *val);
+int tcpc_read16(int reg, int *val);
+int tcpc_xfer(const uint8_t *out, int out_size, uint8_t *in, int in_size,
 		int flags);
 
 /* TCPM driver wrapper function */
-static inline int tcpm_init(int port)
-{
+static inline int tcpm_init() {
 	int rv;
 
-	rv = tcpc_config[port].drv->init(port);
+	rv = tcpc_config.drv->init();
 	if (rv)
 		return rv;
 
 	/* Board specific post TCPC init */
 	if (board_tcpc_post_init)
-		rv = board_tcpc_post_init(port);
+		rv = board_tcpc_post_init();
 
 	return rv;
 }
 
-static inline int tcpm_release(int port)
-{
-	return tcpc_config[port].drv->release(port);
+static inline int tcpm_release() {
+	return tcpc_config.drv->release();
 }
 
-static inline int tcpm_get_cc(int port, int *cc1, int *cc2)
-{
-	return tcpc_config[port].drv->get_cc(port, cc1, cc2);
+static inline int tcpm_get_cc(int *cc1, int *cc2) {
+	return tcpc_config.drv->get_cc(cc1, cc2);
 }
 
-static inline int tcpm_get_vbus_level(int port)
-{
-	return tcpc_config[port].drv->get_vbus_level(port);
+static inline int tcpm_get_vbus_level() {
+	return tcpc_config.drv->get_vbus_level();
 }
 
-static inline int tcpm_select_rp_value(int port, int rp)
-{
-	return tcpc_config[port].drv->select_rp_value(port, rp);
+static inline int tcpm_select_rp_value(int rp) {
+	return tcpc_config.drv->select_rp_value(rp);
 }
 
-static inline int tcpm_set_cc(int port, int pull)
-{
-	return tcpc_config[port].drv->set_cc(port, pull);
+static inline int tcpm_set_cc(int pull) {
+	return tcpc_config.drv->set_cc(pull);
 }
 
-static inline int tcpm_set_polarity(int port, int polarity)
-{
-	return tcpc_config[port].drv->set_polarity(port, polarity);
+static inline int tcpm_set_polarity(int polarity) {
+	return tcpc_config.drv->set_polarity(polarity);
 }
 
-static inline int tcpm_set_vconn(int port, int enable)
-{
-	return tcpc_config[port].drv->set_vconn(port, enable);
+static inline int tcpm_set_vconn(int enable) {
+	return tcpc_config.drv->set_vconn(enable);
 }
 
-static inline int tcpm_set_msg_header(int port, int power_role, int data_role)
-{
-	return tcpc_config[port].drv->set_msg_header(port, power_role,
-						     data_role);
+static inline int tcpm_set_msg_header(int power_role, int data_role) {
+	return tcpc_config.drv->set_msg_header(power_role, data_role);
 }
 
-static inline int tcpm_set_rx_enable(int port, int enable)
-{
-	return tcpc_config[port].drv->set_rx_enable(port, enable);
+static inline int tcpm_set_rx_enable(int enable) {
+	return tcpc_config.drv->set_rx_enable(enable);
 }
 
-static inline int tcpm_get_message(int port, uint32_t *payload, int *head)
-{
-	return tcpc_config[port].drv->get_message(port, payload, head);
+static inline int tcpm_get_message(uint32_t *payload, int *head) {
+	return tcpc_config.drv->get_message(payload, head);
 }
 
-static inline int tcpm_transmit(int port, enum tcpm_transmit_type type,
-		  uint16_t header, const uint32_t *data)
-{
-	return tcpc_config[port].drv->transmit(port, type, header, data);
+static inline int tcpm_transmit(enum tcpm_transmit_type type, uint16_t header,
+		const uint32_t *data) {
+	return tcpc_config.drv->transmit(type, header, data);
 }
 
-static inline void tcpc_alert(int port)
-{
-	tcpc_config[port].drv->tcpc_alert(port);
+static inline void tcpc_alert() {
+	tcpc_config.drv->tcpc_alert();
 }
 
-static inline void tcpc_discharge_vbus(int port, int enable)
-{
-	tcpc_config[port].drv->tcpc_discharge_vbus(port, enable);
+static inline void tcpc_discharge_vbus(int enable) {
+	tcpc_config.drv->tcpc_discharge_vbus(enable);
 }
 
 #ifdef CONFIG_USB_PD_DUAL_ROLE_AUTO_TOGGLE
-static inline int tcpm_auto_toggle_supported(int port)
+static inline int tcpm_auto_toggle_supported()
 {
-	return !!tcpc_config[port].drv->drp_toggle;
+	return !!tcpc_config.drv->drp_toggle;
 }
 
-static inline int tcpm_set_drp_toggle(int port, int enable)
+static inline int tcpm_set_drp_toggle( int enable)
 {
-	return tcpc_config[port].drv->drp_toggle(port, enable);
+	return tcpc_config.drv->drp_toggle( enable);
 }
 #endif
 
@@ -129,21 +112,20 @@ static inline int tcpm_set_drp_toggle(int port, int enable)
 static inline int tcpc_i2c_read(const int port, const int addr,
 				const int reg, int *data)
 {
-	return tcpc_read(port, reg, data);
+	return tcpc_read( reg, data);
 }
 
 static inline int tcpc_i2c_write(const int port, const int addr,
 				 const int reg, int data)
 {
-	return tcpc_write(port, reg, data);
+	return tcpc_write( reg, data);
 }
 #endif
 
-static inline int tcpm_get_chip_info(int port, int renew,
-				     struct ec_response_pd_chip_info **info)
-{
-	if (tcpc_config[port].drv->get_chip_info)
-		return tcpc_config[port].drv->get_chip_info(port, renew, info);
+static inline int tcpm_get_chip_info(int renew,
+		struct ec_response_pd_chip_info **info) {
+	if (tcpc_config.drv->get_chip_info)
+		return tcpc_config.drv->get_chip_info(renew, info);
 	return EC_ERROR_UNIMPLEMENTED;
 }
 
@@ -156,7 +138,7 @@ static inline int tcpm_get_chip_info(int port, int renew,
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_init(int port);
+int tcpm_init();
 
 /**
  * Read the CC line status.
@@ -167,7 +149,7 @@ int tcpm_init(int port);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_get_cc(int port, int *cc1, int *cc2);
+int tcpm_get_cc( int *cc1, int *cc2);
 
 /**
  * Read VBUS
@@ -176,7 +158,7 @@ int tcpm_get_cc(int port, int *cc1, int *cc2);
  *
  * @return 0 => VBUS not detected, 1 => VBUS detected
  */
-int tcpm_get_vbus_level(int port);
+int tcpm_get_vbus_level();
 
 /**
  * Set the value of the CC pull-up used when we are a source.
@@ -186,7 +168,7 @@ int tcpm_get_vbus_level(int port);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_select_rp_value(int port, int rp);
+int tcpm_select_rp_value( int rp);
 
 /**
  * Set the CC pull resistor. This sets our role as either source or sink.
@@ -196,7 +178,7 @@ int tcpm_select_rp_value(int port, int rp);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_set_cc(int port, int pull);
+int tcpm_set_cc( int pull);
 
 /**
  * Set polarity
@@ -206,7 +188,7 @@ int tcpm_set_cc(int port, int pull);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_set_polarity(int port, int polarity);
+int tcpm_set_polarity( int polarity);
 
 /**
  * Set Vconn.
@@ -216,7 +198,7 @@ int tcpm_set_polarity(int port, int polarity);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_set_vconn(int port, int enable);
+int tcpm_set_vconn( int enable);
 
 /**
  * Set PD message header to use for goodCRC
@@ -227,7 +209,7 @@ int tcpm_set_vconn(int port, int enable);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_set_msg_header(int port, int power_role, int data_role);
+int tcpm_set_msg_header( int power_role, int data_role);
 
 /**
  * Set RX enable flag
@@ -237,7 +219,7 @@ int tcpm_set_msg_header(int port, int power_role, int data_role);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_set_rx_enable(int port, int enable);
+int tcpm_set_rx_enable( int enable);
 
 /**
  * Read last received PD message.
@@ -248,7 +230,7 @@ int tcpm_set_rx_enable(int port, int enable);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_get_message(int port, uint32_t *payload, int *head);
+int tcpm_get_message( uint32_t *payload, int *head);
 
 /**
  * Transmit PD message
@@ -261,7 +243,7 @@ int tcpm_get_message(int port, uint32_t *payload, int *head);
  *
  * @return EC_SUCCESS or error
  */
-int tcpm_transmit(int port, enum tcpm_transmit_type type, uint16_t header,
+int tcpm_transmit( enum tcpm_transmit_type type, uint16_t header,
 		  const uint32_t *data);
 
 /**
@@ -269,7 +251,7 @@ int tcpm_transmit(int port, enum tcpm_transmit_type type, uint16_t header,
  *
  * @param port Type-C port number
  */
-void tcpc_alert(int port);
+void tcpc_alert();
 
 #endif
 

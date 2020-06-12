@@ -192,17 +192,17 @@ enum pd_rx_errors {
 
 /* function table for entered mode */
 struct amode_fx {
-	int (*status)(int port, uint32_t *payload);
-	int (*config)(int port, uint32_t *payload);
+	int (*status)( uint32_t *payload);
+	int (*config)( uint32_t *payload);
 };
 
 /* function table for alternate mode capable responders */
 struct svdm_response {
-	int (*identity)(int port, uint32_t *payload);
-	int (*svids)(int port, uint32_t *payload);
-	int (*modes)(int port, uint32_t *payload);
-	int (*enter_mode)(int port, uint32_t *payload);
-	int (*exit_mode)(int port, uint32_t *payload);
+	int (*identity)( uint32_t *payload);
+	int (*svids)( uint32_t *payload);
+	int (*modes)( uint32_t *payload);
+	int (*enter_mode)( uint32_t *payload);
+	int (*exit_mode)( uint32_t *payload);
 	struct amode_fx *amode;
 };
 
@@ -214,12 +214,12 @@ struct svdm_svid_data {
 
 struct svdm_amode_fx {
 	uint16_t svid;
-	int (*enter)(int port, uint32_t mode_caps);
-	int (*status)(int port, uint32_t *payload);
-	int (*config)(int port, uint32_t *payload);
-	void (*post_config)(int port);
-	int (*attention)(int port, uint32_t *payload);
-	void (*exit)(int port);
+	int (*enter)( uint32_t mode_caps);
+	int (*status)( uint32_t *payload);
+	int (*config)( uint32_t *payload);
+	void (*post_config)();
+	int (*attention)( uint32_t *payload);
+	void (*exit)();
 };
 
 /* defined in <board>/usb_pd_policy.c */
@@ -251,8 +251,6 @@ enum hpd_event {
 
 /* supported alternate modes */
 enum pd_alternate_modes {
-	PD_AMODE_GOOGLE,
-	PD_AMODE_DISPLAYPORT,
 	/* not a real mode */
 	PD_AMODE_COUNT,
 };
@@ -787,7 +785,7 @@ void pd_set_dual_role(enum pd_dual_role_states state);
  *
  * @param port Port number from which to get role
  */
-int pd_get_role(int port);
+int pd_get_role();
 
 #endif
 
@@ -973,7 +971,7 @@ enum pd_request_type {
  * @param port USB-C port number
  * @return 0 for PD_REV1.0, 1 for PD_REV2.0, 2 for PD_REV3.0
  */
-int pd_get_rev(int port);
+int pd_get_rev();
 
 /**
  * Get current PD VDO Version
@@ -981,7 +979,7 @@ int pd_get_rev(int port);
  * @param port USB-C port number
  * @return 0 for PD_REV1.0, 1 for PD_REV2.0
  */
-int pd_get_vdo_ver(int port);
+int pd_get_vdo_ver();
 #else
 #define pd_get_rev(n)     PD_REV20
 #define pd_get_vdo_ver(n) VDM_VER10
@@ -996,7 +994,7 @@ int pd_get_vdo_ver(int port);
  * @param req_type request type
  * @return <0 if invalid, else EC_SUCCESS
  */
-int pd_build_request(int port, uint32_t *rdo, uint32_t *ma, uint32_t *mv,
+int pd_build_request( uint32_t *rdo, uint32_t *ma, uint32_t *mv,
 		     enum pd_request_type req_type);
 
 /**
@@ -1014,7 +1012,7 @@ int pd_is_max_request_allowed(void);
  * @param cnt  the number of Power Data Objects.
  * @param src_caps Power Data Objects representing the source capabilities.
  */
-void pd_process_source_cap_callback(int port, int cnt, uint32_t *src_caps);
+void pd_process_source_cap_callback( int cnt, uint32_t *src_caps);
 
 /**
  * Process source capabilities packet
@@ -1023,7 +1021,7 @@ void pd_process_source_cap_callback(int port, int cnt, uint32_t *src_caps);
  * @param cnt  the number of Power Data Objects.
  * @param src_caps Power Data Objects representing the source capabilities.
  */
-void pd_process_source_cap(int port, int cnt, uint32_t *src_caps);
+void pd_process_source_cap( int cnt, uint32_t *src_caps);
 
 /**
  * Find PDO index that offers the most amount of power and stays within
@@ -1034,7 +1032,7 @@ void pd_process_source_cap(int port, int cnt, uint32_t *src_caps);
  * @param pdo raw pdo corresponding to index, or index 0 on error (output)
  * @return index of PDO within source cap packet
  */
-int pd_find_pdo_index(int port, int max_mv, uint32_t *pdo);
+int pd_find_pdo_index( int max_mv, uint32_t *pdo);
 
 /**
  * Extract power information out of a Power Data Object (PDO)
@@ -1052,7 +1050,7 @@ void pd_extract_pdo_power(uint32_t pdo, uint32_t *ma, uint32_t *mv);
  * @param ma reduce current to minimum value.
  * @param mv reduce voltage to minimum value.
  */
-void pd_snk_give_back(int port, uint32_t * const ma, uint32_t * const mv);
+void pd_snk_give_back( uint32_t * const ma, uint32_t * const mv);
 
 /**
  * Put a cap on the max voltage requested as a sink.
@@ -1104,7 +1102,7 @@ void pd_transition_voltage(int idx);
  *
  * @param port USB-C port number
  */
-void pd_power_supply_reset(int port);
+void pd_power_supply_reset();
 
 /**
  * Enable or disable VBUS discharge for a given port.
@@ -1112,7 +1110,7 @@ void pd_power_supply_reset(int port);
  * @param port USB-C port number
  * @enable 1 if enabling discharge, 0 if disabling
  */
-void pd_set_vbus_discharge(int port, int enable);
+void pd_set_vbus_discharge( int enable);
 
 /**
  * Enable the power supply output after the ready delay.
@@ -1120,7 +1118,7 @@ void pd_set_vbus_discharge(int port, int enable);
  * @param port USB-C port number
  * @return EC_SUCCESS if the power supply is ready, <0 else.
  */
-int pd_set_power_supply_ready(int port);
+int pd_set_power_supply_ready();
 
 /**
  * Ask the specified voltage from the PD source.
@@ -1129,7 +1127,7 @@ int pd_set_power_supply_ready(int port);
  * @param port USB-C port number
  * @param mv request voltage in millivolts.
  */
-void pd_request_source_voltage(int port, int mv);
+void pd_request_source_voltage( int mv);
 
 /**
  * Set a voltage limit from the PD source.
@@ -1138,7 +1136,7 @@ void pd_request_source_voltage(int port, int mv);
  * @param port USB-C port number
  * @param mv limit voltage in millivolts.
  */
-void pd_set_external_voltage_limit(int port, int mv);
+void pd_set_external_voltage_limit( int mv);
 
 /**
  * Set the PD input current limit.
@@ -1147,7 +1145,7 @@ void pd_set_external_voltage_limit(int port, int mv);
  * @param max_ma Maximum current limit
  * @param supply_voltage Voltage at which current limit is applied
  */
-void pd_set_input_current_limit(int port, uint32_t max_ma,
+void pd_set_input_current_limit( uint32_t max_ma,
 				uint32_t supply_voltage);
 
 
@@ -1156,7 +1154,7 @@ void pd_set_input_current_limit(int port, uint32_t max_ma,
  *
  * @param port USB-C port number.
  */
-void pd_update_contract(int port);
+void pd_update_contract();
 
 /* Encode DTS status of port partner in current limit parameter */
 typedef uint32_t typec_current_t;
@@ -1170,7 +1168,7 @@ typedef uint32_t typec_current_t;
  * @param max_ma Maximum current limit
  * @param supply_voltage Voltage at which current limit is applied
  */
-void typec_set_input_current_limit(int port, typec_current_t max_ma,
+void typec_set_input_current_limit( typec_current_t max_ma,
 				   uint32_t supply_voltage);
 
 /**
@@ -1179,7 +1177,7 @@ void typec_set_input_current_limit(int port, typec_current_t max_ma,
  * @param port USB-C port number
  * @param rp One of enum tcpc_rp_value (eg TYPEC_RP_3A0) defining the limit.
  */
-void typec_set_source_current_limit(int port, int rp);
+void typec_set_source_current_limit( int rp);
 
 /**
  * Verify board specific health status : current, voltages...
@@ -1194,14 +1192,14 @@ int pd_board_checks(void);
  * @param port USB-C port number
  * @return VBUS is detected
  */
-int pd_snk_is_vbus_provided(int port);
+int pd_snk_is_vbus_provided();
 
 /**
  * Notify PD protocol that VBUS has gone low
  *
  * @param port USB-C port number
  */
-void pd_vbus_low(int port);
+void pd_vbus_low();
 
 /**
  * Check if power swap is allowed.
@@ -1209,7 +1207,7 @@ void pd_vbus_low(int port);
  * @param port USB-C port number
  * @return True if power swap is allowed, False otherwise
  */
-int pd_check_power_swap(int port);
+int pd_check_power_swap();
 
 /**
  * Check if data swap is allowed.
@@ -1218,7 +1216,7 @@ int pd_check_power_swap(int port);
  * @param data_role current data role
  * @return True if data swap is allowed, False otherwise
  */
-int pd_check_data_swap(int port, int data_role);
+int pd_check_data_swap( int data_role);
 
 /**
  * Check if vconn swap is allowed.
@@ -1227,7 +1225,7 @@ int pd_check_data_swap(int port, int data_role);
  * @return True if vconn swap is allowed, False otherwise
  */
 
-int pd_check_vconn_swap(int port);
+int pd_check_vconn_swap();
 
 /**
  * Check current power role for potential power swap
@@ -1236,7 +1234,7 @@ int pd_check_vconn_swap(int port);
  * @param pr_role Our power role
  * @param flags PD flags
  */
-void pd_check_pr_role(int port, int pr_role, int flags);
+void pd_check_pr_role( int pr_role, int flags);
 
 /**
  * Check current data role for potential data swap
@@ -1245,7 +1243,7 @@ void pd_check_pr_role(int port, int pr_role, int flags);
  * @param dr_role Our data role
  * @param flags PD flags
  */
-void pd_check_dr_role(int port, int dr_role, int flags);
+void pd_check_dr_role( int dr_role, int flags);
 
 /**
  * Check if we should charge from this device. This is
@@ -1264,7 +1262,7 @@ int pd_charge_from_device(uint16_t vid, uint16_t pid);
  * @param port USB-C port number
  * @param data_role new data role
  */
-void pd_execute_data_swap(int port, int data_role);
+void pd_execute_data_swap( int data_role);
 
 /**
  * Get PD device info used for VDO_CMD_SEND_INFO / VDO_CMD_READ_INFO
@@ -1282,7 +1280,7 @@ void pd_get_info(uint32_t *info_data);
  * @param rpayload pointer to the data to send back.
  * @return if >0, number of VDOs to send back.
  */
-int pd_custom_vdm(int port, int cnt, uint32_t *payload, uint32_t **rpayload);
+int pd_custom_vdm( int cnt, uint32_t *payload, uint32_t **rpayload);
 
 /**
  * Handle Structured Vendor Defined Messages
@@ -1293,7 +1291,7 @@ int pd_custom_vdm(int port, int cnt, uint32_t *payload, uint32_t **rpayload);
  * @param rpayload pointer to the data to send back.
  * @return if >0, number of VDOs to send back.
  */
-int pd_svdm(int port, int cnt, uint32_t *payload, uint32_t **rpayload);
+int pd_svdm( int cnt, uint32_t *payload, uint32_t **rpayload);
 
 /**
  * Handle Custom VDMs for flashing.
@@ -1303,7 +1301,7 @@ int pd_svdm(int port, int cnt, uint32_t *payload, uint32_t **rpayload);
  * @param payload  payload data.
  * @return if >0, number of VDOs to send back.
  */
-int pd_custom_flash_vdm(int port, int cnt, uint32_t *payload);
+int pd_custom_flash_vdm( int cnt, uint32_t *payload);
 
 /**
  * Enter alternate mode on DFP
@@ -1313,7 +1311,7 @@ int pd_custom_flash_vdm(int port, int cnt, uint32_t *payload);
  * @param opos object position of mode to exit.
  * @return vdm for UFP to be sent to enter mode or zero if not.
  */
-uint32_t pd_dfp_enter_mode(int port, uint16_t svid, int opos);
+uint32_t pd_dfp_enter_mode( uint16_t svid, int opos);
 
 /**
  *  Get DisplayPort pin mode for DFP to request from UFP's capabilities.
@@ -1322,7 +1320,7 @@ uint32_t pd_dfp_enter_mode(int port, uint16_t svid, int opos);
  * @param status   DisplayPort Status VDO.
  * @return one-hot PIN config to request.
  */
-int pd_dfp_dp_get_pin_mode(int port, uint32_t status);
+int pd_dfp_dp_get_pin_mode( uint32_t status);
 
 /**
  * Exit alternate mode on DFP
@@ -1332,14 +1330,14 @@ int pd_dfp_dp_get_pin_mode(int port, uint32_t status);
  * @param opos object position of mode to exit.
  * @return 1 if UFP should be sent exit mode VDM.
  */
-int pd_dfp_exit_mode(int port, uint16_t svid, int opos);
+int pd_dfp_exit_mode( uint16_t svid, int opos);
 
 /**
  * Initialize policy engine for DFP
  *
  * @param port     USB-C port number
  */
-void pd_dfp_pe_init(int port);
+void pd_dfp_pe_init();
 
 /**
  * Return the VID of the USB PD accessory connected to a specified port
@@ -1347,7 +1345,7 @@ void pd_dfp_pe_init(int port);
  * @param port  USB-C port number
  * @return      the USB Vendor Identifier or 0 if it doesn't exist
  */
-uint16_t pd_get_identity_vid(int port);
+uint16_t pd_get_identity_vid();
 
 /**
  * Return the PID of the USB PD accessory connected to a specified port
@@ -1355,7 +1353,7 @@ uint16_t pd_get_identity_vid(int port);
  * @param port  USB-C port number
  * @return      the USB Product Identifier or 0 if it doesn't exist
  */
-uint16_t pd_get_identity_pid(int port);
+uint16_t pd_get_identity_pid();
 
 /**
  * Store Device ID & RW hash of device
@@ -1367,7 +1365,7 @@ uint16_t pd_get_identity_pid(int port);
  * @return			true if the dev / hash match an existing hash
  *				in our table, false otherwise
  */
-int pd_dev_store_rw_hash(int port, uint16_t dev_id, uint32_t *rw_hash,
+int pd_dev_store_rw_hash( uint16_t dev_id, uint32_t *rw_hash,
 			 uint32_t ec_current_image);
 
 /**
@@ -1376,7 +1374,7 @@ int pd_dev_store_rw_hash(int port, uint16_t dev_id, uint32_t *rw_hash,
  * @param port	USB-C accessory port number
  * @return	EC_RES_SUCCESS if the VDM was sent properly else error code
  */
-int pd_fetch_acc_log_entry(int port);
+int pd_fetch_acc_log_entry();
 
 /**
  * Analyze the log entry received as the VDO_CMD_GET_LOG payload.
@@ -1385,7 +1383,7 @@ int pd_fetch_acc_log_entry(int port);
  * @param cnt		number of data objects in payload
  * @param payload	payload data
  */
-void pd_log_recv_vdm(int port, int cnt, uint32_t *payload);
+void pd_log_recv_vdm( int cnt, uint32_t *payload);
 
 /**
  * Send Vendor Defined Message
@@ -1396,7 +1394,7 @@ void pd_log_recv_vdm(int port, int cnt, uint32_t *payload);
  * @param data     Pointer to payload to send
  * @param count    number of data objects in payload
  */
-void pd_send_vdm(int port, uint32_t vid, int cmd, const uint32_t *data,
+void pd_send_vdm( uint32_t vid, int cmd, const uint32_t *data,
 		 int count);
 
 /* Power Data Objects for the source and the sink */
@@ -1425,7 +1423,7 @@ static inline void pd_send_host_event(int mask) { }
  * @param svid USB standard or vendor id
  * @return object position of mode chosen in alternate mode otherwise zero.
  */
-int pd_alt_mode(int port, uint16_t svid);
+int pd_alt_mode( uint16_t svid);
 
 /**
  * Send hpd over USB PD.
@@ -1433,7 +1431,7 @@ int pd_alt_mode(int port, uint16_t svid);
  * @param port port number.
  * @param hpd hotplug detect type.
  */
-void pd_send_hpd(int port, enum hpd_event hpd);
+void pd_send_hpd( enum hpd_event hpd);
 
 /**
  * Enable USB Billboard Device.
@@ -1448,7 +1446,7 @@ extern const struct deferred_data pd_usb_billboard_deferred_data;
  *
  * @param port USB-C port number
  */
-void pd_init_dequeue(int port);
+void pd_init_dequeue();
 
 /**
  * Prepare packet reading state machine.
@@ -1459,7 +1457,7 @@ void pd_init_dequeue(int port);
  * @param val  the read bits.
  * @return new position in the packet buffer.
  */
-int pd_dequeue_bits(int port, int off, int len, uint32_t *val);
+int pd_dequeue_bits( int off, int len, uint32_t *val);
 
 /**
  * Advance until the end of the preamble.
@@ -1467,7 +1465,7 @@ int pd_dequeue_bits(int port, int off, int len, uint32_t *val);
  * @param port USB-C port number
  * @return new position in the packet buffer.
  */
-int pd_find_preamble(int port);
+int pd_find_preamble();
 
 /**
  * Write the preamble in the TX buffer.
@@ -1475,7 +1473,7 @@ int pd_find_preamble(int port);
  * @param port USB-C port number
  * @return new position in the packet buffer.
  */
-int pd_write_preamble(int port);
+int pd_write_preamble();
 
 /**
  * Write one 10-period symbol in the TX packet.
@@ -1487,7 +1485,7 @@ int pd_write_preamble(int port);
  * @param val10    the 10-bit integer.
  * @return new position in the packet buffer.
  */
-int pd_write_sym(int port, int bit_off, uint32_t val10);
+int pd_write_sym( int bit_off, uint32_t val10);
 
 
 /**
@@ -1498,7 +1496,7 @@ int pd_write_sym(int port, int bit_off, uint32_t val10);
  * @param bit_off current position in the packet buffer.
  * @return new position in the packet buffer.
  */
-int pd_write_last_edge(int port, int bit_off);
+int pd_write_last_edge( int bit_off);
 
 /**
  * Do 4B5B encoding on a 32-bit word.
@@ -1508,7 +1506,7 @@ int pd_write_last_edge(int port, int bit_off);
  * @param val32 32-bit word value to encode
  * @return new offset in the message in bits.
  */
-int encode_word(int port, int off, uint32_t val32);
+int encode_word( int off, uint32_t val32);
 
 /**
  * Ensure that we have an edge after EOP and we end up at level 0,
@@ -1520,7 +1518,7 @@ int encode_word(int port, int off, uint32_t val32);
  * @param data payload content
  * @return length of the message in bits.
  */
-int prepare_message(int port, uint16_t header, uint8_t cnt,
+int prepare_message( uint16_t header, uint8_t cnt,
 		    const uint32_t *data);
 
 /**
@@ -1529,7 +1527,7 @@ int prepare_message(int port, uint16_t header, uint8_t cnt,
  * @param port USB-C port number
  * @param msg  context string.
  */
-void pd_dump_packet(int port, const char *msg);
+void pd_dump_packet( const char *msg);
 
 /**
  * Change the TX data clock frequency.
@@ -1537,7 +1535,7 @@ void pd_dump_packet(int port, const char *msg);
  * @param port USB-C port number
  * @param freq frequency in hertz.
  */
-void pd_set_clock(int port, int freq);
+void pd_set_clock( int freq);
 
 /* TX/RX callbacks */
 
@@ -1549,7 +1547,7 @@ void pd_set_clock(int port, int freq);
  * @param bit_len size of the packet in bits.
  * @return length transmitted or negative if error
  */
-int pd_start_tx(int port, int polarity, int bit_len);
+int pd_start_tx( int polarity, int bit_len);
 
 /**
  * Set PD TX DMA to use circular mode. Call this before pd_start_tx() to
@@ -1557,14 +1555,14 @@ int pd_start_tx(int port, int polarity, int bit_len);
  *
  * @param port USB-C port number
  */
-void pd_tx_set_circular_mode(int port);
+void pd_tx_set_circular_mode();
 
 /**
  * Stop PD TX DMA circular mode transaction already in progress.
  *
  * @param port USB-C port number
  */
-void pd_tx_clear_circular_mode(int port);
+void pd_tx_clear_circular_mode();
 
 /**
  * Call when we are done sending a packet.
@@ -1572,7 +1570,7 @@ void pd_tx_clear_circular_mode(int port);
  * @param port USB-C port number
  * @param polarity plug polarity (0=CC1, 1=CC2).
  */
-void pd_tx_done(int port, int polarity);
+void pd_tx_done( int polarity);
 
 /**
  * Check whether the PD reception is started.
@@ -1580,14 +1578,14 @@ void pd_tx_done(int port, int polarity);
  * @param port USB-C port number
  * @return true if the reception is on-going.
  */
-int pd_rx_started(int port);
+int pd_rx_started();
 
 /**
  * Suspend the PD task.
  * @param port USB-C port number
  * @param enable pass 0 to resume, anything else to suspend
  */
-void pd_set_suspend(int port, int enable);
+void pd_set_suspend( int enable);
 
 /**
  * Check if the port has been initialized and PD task has not been
@@ -1596,29 +1594,29 @@ void pd_set_suspend(int port, int enable);
  * @param port USB-C port number
  * @return true if the PD task is not suspended.
  */
-int pd_is_port_enabled(int port);
+int pd_is_port_enabled();
 
 /* Callback when the hardware has detected an incoming packet */
-void pd_rx_event(int port);
+void pd_rx_event();
 /* Start sampling the CC line for reception */
-void pd_rx_start(int port);
+void pd_rx_start();
 /* Call when we are done reading a packet */
-void pd_rx_complete(int port);
+void pd_rx_complete();
 
 /* restart listening to the CC wire */
-void pd_rx_enable_monitoring(int port);
+void pd_rx_enable_monitoring();
 /* stop listening to the CC wire during transmissions */
-void pd_rx_disable_monitoring(int port);
+void pd_rx_disable_monitoring();
 
 /* get time since last RX edge interrupt */
-uint64_t get_time_since_last_edge(int port);
+uint64_t get_time_since_last_edge();
 
 /**
  * Deinitialize the hardware used for PD.
  *
  * @param port USB-C port number
  */
-void pd_hw_release(int port);
+void pd_hw_release();
 
 /**
  * Initialize the hardware used for PD RX/TX.
@@ -1626,7 +1624,7 @@ void pd_hw_release(int port);
  * @param port USB-C port number
  * @param role Role to initialize pins in
  */
-void pd_hw_init(int port, int role);
+void pd_hw_init( int role);
 
 /**
  * Initialize the reception side of hardware used for PD.
@@ -1636,19 +1634,19 @@ void pd_hw_init(int port, int role);
  *
  * @param port USB-C port number
  */
-void pd_hw_init_rx(int port);
+void pd_hw_init_rx();
 
 /**
  * Initialize the Power Delivery state machine
  */
-void pd_init(int port);
+void pd_init();
 
 /**
  * Run the state machine. This function must be called regularly
  * to iterate through the state machine. It uses get_time() to 
  * determine what actions to take each call. 
  */
-void pd_run_state_machine(int port);
+void pd_run_state_machine();
 
 /* --- Protocol layer functions --- */
 
@@ -1659,14 +1657,14 @@ void pd_run_state_machine(int port);
  * @param payload buffer to store the packet payload (must be 7x 32-bit)
  * @return the packet header or <0 in case of error
  */
-int pd_analyze_rx(int port, uint32_t *payload);
+int pd_analyze_rx( uint32_t *payload);
 
 /**
  * Check if PD communication is enabled
  *
  * @return true if it's enabled or false otherwise
  */
-int pd_comm_is_enabled(int port);
+int pd_comm_is_enabled();
 
 /**
  * Get connected state
@@ -1674,14 +1672,14 @@ int pd_comm_is_enabled(int port);
  * @param port USB-C port number
  * @return True if port is in connected state
  */
-int pd_is_connected(int port);
+int pd_is_connected();
 
 /**
  * Execute a hard reset
  *
  * @param port USB-C port number
  */
-void pd_execute_hard_reset(int port);
+void pd_execute_hard_reset();
 
 /**
  * Signal to protocol layer that PD transmit is complete
@@ -1689,28 +1687,28 @@ void pd_execute_hard_reset(int port);
  * @param port USB-C port number
  * @param status status of the transmission
  */
-void pd_transmit_complete(int port, int status);
+void pd_transmit_complete( int status);
 
 /**
  * Get port polarity.
  *
  * @param port USB-C port number
  */
-int pd_get_polarity(int port);
+int pd_get_polarity();
 
 /**
  * Get port partner data swap capable status
  *
  * @param port USB-C port number
  */
-int pd_get_partner_data_swap_capable(int port);
+int pd_get_partner_data_swap_capable();
 
 /**
  * Request power swap command to be issued
  *
  * @param port USB-C port number
  */
-void pd_request_power_swap(int port);
+void pd_request_power_swap();
 
 /**
  * Try to become the VCONN source, if we are not already the source and the
@@ -1718,14 +1716,14 @@ void pd_request_power_swap(int port);
  *
  * @param port USB-C port number
  */
-void pd_try_vconn_src(int port);
+void pd_try_vconn_src();
 
 /**
  * Request data swap command to be issued
  *
  * @param port USB-C port number
  */
-void pd_request_data_swap(int port);
+void pd_request_data_swap();
 
 /**
  * Set the PD communication enabled flag. When communication is disabled,
@@ -1735,7 +1733,7 @@ void pd_request_data_swap(int port);
  * @param port USB-C port number
  * @param enable Enable flag to set
  */
-void pd_comm_enable(int port, int enable);
+void pd_comm_enable( int enable);
 
 /**
  * Set the PD pings enabled flag. When source has negotiated power over
@@ -1745,7 +1743,7 @@ void pd_comm_enable(int port, int enable);
  * @param port USB-C port number
  * @param enable Enable flag to set
  */
-void pd_ping_enable(int port, int enable);
+void pd_ping_enable( int enable);
 
 /* Issue PD soft reset */
 void pd_soft_reset(void);
@@ -1758,7 +1756,7 @@ void pd_prepare_reset(void);
  *
  * @param port USB-C port number
  */
-void pd_set_new_power_request(int port);
+void pd_set_new_power_request();
 
 /**
  * Return true if partner port is a DTS or TS capable of entering debug
@@ -1766,7 +1764,7 @@ void pd_set_new_power_request(int port);
  *
  * @param port USB-C port number
  */
-int pd_ts_dts_plugged(int port);
+int pd_ts_dts_plugged();
 
 /* ----- Logging ----- */
 #ifdef CONFIG_USB_PD_LOGGING

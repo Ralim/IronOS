@@ -353,8 +353,7 @@ static void settings_setInputPRange(void) {
 static void settings_displayInputPRange(void) {
 	printShortDescription(0, 5);
 	//0 = 9V, 1=12V (Fixed Voltages, these imply 1.5A limits)
-	//2 = 18W, 2=24W (Auto Adjusting V, estimated from the tip resistance???) # TODO
-	// Need to come back and look at these ^ as there were issues with voltage hunting
+	/// TODO TS80P
 	switch (systemSettings.cutoutSetting) {
 	case 0:
 		OLED::printNumber(9, 2);

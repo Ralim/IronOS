@@ -71,7 +71,7 @@ enum ec_error_list {
 
 	/* Module-internal error codes may use this range.   */
 	EC_ERROR_INTERNAL_FIRST = 0x10000,
-	EC_ERROR_INTERNAL_LAST =  0x1FFFF
+	EC_ERROR_INTERNAL_LAST = 0x1FFFF
 };
 
 /* Flags for i2c_xfer() */
@@ -95,17 +95,11 @@ enum tcpc_cc_voltage_status {
 };
 
 enum tcpc_cc_pull {
-	TYPEC_CC_RA = 0,
-	TYPEC_CC_RP = 1,
-	TYPEC_CC_RD = 2,
-	TYPEC_CC_OPEN = 3,
+	TYPEC_CC_RA = 0, TYPEC_CC_RP = 1, TYPEC_CC_RD = 2, TYPEC_CC_OPEN = 3,
 };
 
 enum tcpc_rp_value {
-	TYPEC_RP_USB = 0,
-	TYPEC_RP_1A5 = 1,
-	TYPEC_RP_3A0 = 2,
-	TYPEC_RP_RESERVED = 3,
+	TYPEC_RP_USB = 0, TYPEC_RP_1A5 = 1, TYPEC_RP_3A0 = 2, TYPEC_RP_RESERVED = 3,
 };
 
 enum tcpm_transmit_type {
@@ -120,9 +114,9 @@ enum tcpm_transmit_type {
 };
 
 enum tcpc_transmit_complete {
-	TCPC_TX_COMPLETE_SUCCESS =   0,
+	TCPC_TX_COMPLETE_SUCCESS = 0,
 	TCPC_TX_COMPLETE_DISCARDED = 1,
-	TCPC_TX_COMPLETE_FAILED =    2,
+	TCPC_TX_COMPLETE_FAILED = 2,
 };
 
 struct tcpm_drv {
@@ -133,7 +127,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*init)(int port);
+	int (*init)();
 
 	/**
 	 * Release the TCPM hardware and disconnect the driver.
@@ -143,7 +137,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*release)(int port);
+	int (*release)();
 
 	/**
 	 * Read the CC line status.
@@ -154,7 +148,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*get_cc)(int port, int *cc1, int *cc2);
+	int (*get_cc)(int *cc1, int *cc2);
 
 	/**
 	 * Read VBUS
@@ -163,7 +157,7 @@ struct tcpm_drv {
 	 *
 	 * @return 0 => VBUS not detected, 1 => VBUS detected
 	 */
-	int (*get_vbus_level)(int port);
+	int (*get_vbus_level)();
 
 	/**
 	 * Set the value of the CC pull-up used when we are a source.
@@ -173,7 +167,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*select_rp_value)(int port, int rp);
+	int (*select_rp_value)(int rp);
 
 	/**
 	 * Set the CC pull resistor. This sets our role as either source or sink.
@@ -183,7 +177,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*set_cc)(int port, int pull);
+	int (*set_cc)(int pull);
 
 	/**
 	 * Set polarity
@@ -193,7 +187,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*set_polarity)(int port, int polarity);
+	int (*set_polarity)(int polarity);
 
 	/**
 	 * Set Vconn.
@@ -203,7 +197,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*set_vconn)(int port, int enable);
+	int (*set_vconn)(int enable);
 
 	/**
 	 * Set PD message header to use for goodCRC
@@ -214,7 +208,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*set_msg_header)(int port, int power_role, int data_role);
+	int (*set_msg_header)(int power_role, int data_role);
 
 	/**
 	 * Set RX enable flag
@@ -224,7 +218,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*set_rx_enable)(int port, int enable);
+	int (*set_rx_enable)(int enable);
 
 	/**
 	 * Read last received PD message.
@@ -235,7 +229,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*get_message)(int port, uint32_t *payload, int *head);
+	int (*get_message)(uint32_t *payload, int *head);
 
 	/**
 	 * Transmit PD message
@@ -248,15 +242,15 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*transmit)(int port, enum tcpm_transmit_type type, uint16_t header,
-					const uint32_t *data);
+	int (*transmit)(enum tcpm_transmit_type type, uint16_t header,
+			const uint32_t *data);
 
 	/**
 	 * TCPC is asserting alert
 	 *
 	 * @param port Type-C port number
 	 */
-	void (*tcpc_alert)(int port);
+	void (*tcpc_alert)();
 
 	/**
 	 * Discharge PD VBUS on src/sink disconnect & power role swap
@@ -264,7 +258,7 @@ struct tcpm_drv {
 	 * @param port Type-C port number
 	 * @param enable Discharge enable or disable
 	 */
-	void (*tcpc_discharge_vbus)(int port, int enable);
+	void (*tcpc_discharge_vbus)(int enable);
 
 #ifdef CONFIG_USB_PD_DUAL_ROLE_AUTO_TOGGLE
 	/**
@@ -275,7 +269,7 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*drp_toggle)(int port, int enable);
+	int (*drp_toggle)( int enable);
 #endif
 
 	/**
@@ -287,20 +281,16 @@ struct tcpm_drv {
 	 *
 	 * @return EC_SUCCESS or error
 	 */
-	int (*get_chip_info)(int port, int renew,
-			struct ec_response_pd_chip_info **info);
+	int (*get_chip_info)(int renew, struct ec_response_pd_chip_info **info);
 };
 
 enum tcpc_alert_polarity {
-	TCPC_ALERT_ACTIVE_LOW,
-	TCPC_ALERT_ACTIVE_HIGH,
+	TCPC_ALERT_ACTIVE_LOW, TCPC_ALERT_ACTIVE_HIGH,
 };
 
 struct tcpc_config_t {
-	int i2c_host_port;
 	int i2c_slave_addr;
 	const struct tcpm_drv *drv;
-	enum tcpc_alert_polarity pol;
 };
 
 /**
@@ -317,21 +307,21 @@ uint16_t tcpc_get_alert_status(void);
  * @param port Type-C port number
  * @param mode 0: off/sleep, 1: on/awake
  */
-void board_set_tcpc_power_mode(int port, int mode) __attribute__((weak));
+void board_set_tcpc_power_mode(int mode) __attribute__((weak));
 
 /**
  * Initialize TCPC.
  *
  * @param port Type-C port number
  */
-void tcpc_init(int port);
+void tcpc_init();
 
 /**
  * TCPC is asserting alert
  *
  * @param port Type-C port number
  */
-void tcpc_alert_clear(int port);
+void tcpc_alert_clear();
 
 /**
  * Run TCPC task once. This checks for incoming messages, processes
@@ -340,7 +330,7 @@ void tcpc_alert_clear(int port);
  * @param port Type-C port number
  * @param evt Event type that woke up this task
  */
-int tcpc_run(int port, int evt);
+int tcpc_run(int evt);
 
 /**
  * Initialize board specific TCPC functions post TCPC initialization.
@@ -349,6 +339,6 @@ int tcpc_run(int port, int evt);
  *
  * @return EC_SUCCESS or error
  */
-int board_tcpc_post_init(int port) __attribute__((weak));
+int board_tcpc_post_init() __attribute__((weak));
 
 #endif /* __CROS_EC_USB_PD_TCPM_H */

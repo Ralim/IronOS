@@ -8,7 +8,14 @@
 #include "stdlib.h"
 #include "task.h"
 #include "I2C_Wrapper.hpp"
+#include "USBC_TCPM/tcpm.h"
 void postRToSInit() {
-    // Any after RTos setup
+	// Any after RTos setup
 	FRToSI2C::FRToSInit();
+#ifdef MODEL_TS80
+	tcpm_init();
+	osDelay(50);
+	pd_init();
+	osDelay(50);
+#endif
 }
