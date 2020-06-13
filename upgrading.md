@@ -20,8 +20,11 @@ Officially the bootloader on the iron only works under Windows. However, users h
 
 
 For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer.
-On the bottom of the MCU riser PCB, there are 4 pads for programming.
+
+On the bottom of the MCU riser PCB, there are 4 pads for programming. On v2.51A PCB revision `USB_D+` is shorted to `SWDIO` and `USB_D-` is shorted to `SWCLK` so debugging works without disassembly (attach while staying in the bootloader). Installing [dapboot from eDesignOSS](https://github.com/eDesignOSS/dapboot) (`make TARGET=TS100 -C src`) is recommended as it allows reliable flashing of binary files with [dfu-util](http://dfu-util.sourceforge.net/).
+
 There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need an SWD programmer to load onto the unit).
+
 For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector.
 
 
