@@ -2,7 +2,8 @@
 #include "BSP_Power.h"
 #include "QC3.h"
 #include "Settings.h"
-#include "FUSB302.h"
+#include "Pins.h"
+#include "fusbpd.h"
 bool FUSB302_present = false;
 void power_probe() {
 // If TS80 probe for QC
@@ -20,13 +21,6 @@ void power_probe() {
 void power_check() {
 #ifdef MODEL_TS80
 	QC_resync();
-	if (FUSB302_present) {
-		pd_run_state_machine();
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_RESET) {
-			tcpc_alert();
-		}
-	}
-
 #endif
 }
 uint8_t usb_pd_detect() {
@@ -43,4 +37,11 @@ uint8_t usb_pd_detect() {
 	return FUSB302_present;
 #endif
 	return false;
+}
+uint8_t pd_irq_read() {
+#ifdef MODEL_TS80
+	return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_SET ?
+			1 : 0;
+#endif
+	return 0;
 }
