@@ -24,10 +24,10 @@
 #include <pdb_msg.h>
 
 /* I2C addresses of the FUSB302B chips */
-#define FUSB302B_ADDR 0x22
-#define FUSB302B01_ADDR 0x23
-#define FUSB302B10_ADDR 0x24
-#define FUSB302B11_ADDR 0x25
+#define FUSB302B_ADDR (0x22<<1)
+#define FUSB302B01_ADDR (0x23<<1)
+#define FUSB302B10_ADDR (0x24<<1)
+#define FUSB302B11_ADDR (0x25<<1)
 
 /* Device ID register */
 #define FUSB_DEVICE_ID 0x01

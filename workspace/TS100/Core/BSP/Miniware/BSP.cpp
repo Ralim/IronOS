@@ -94,6 +94,9 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 		sum += samples[i];
 
 	sum /= BATTFILTERDEPTH;
+	if (divisor == 0) {
+		divisor = 1;
+	}
 	return sum * 4 / divisor;
 }
 

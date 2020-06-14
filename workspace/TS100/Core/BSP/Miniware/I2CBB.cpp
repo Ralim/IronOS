@@ -13,7 +13,7 @@
 #define SDA_LOW() 	HAL_GPIO_WritePin(SDA2_GPIO_Port, SDA2_Pin, GPIO_PIN_RESET)
 #define SDA_READ()  (HAL_GPIO_ReadPin(SDA2_GPIO_Port,SDA2_Pin)==GPIO_PIN_SET?1:0)
 #define SCL_READ()  (HAL_GPIO_ReadPin(SCL2_GPIO_Port,SCL2_Pin)==GPIO_PIN_SET?1:0)
-#define I2C_DELAY() HAL_Delay(1);
+#define I2C_DELAY() {for(int xx=0;xx<100;xx++){asm("nop");}}
 void I2CBB::init() {
 	//Set GPIO's to output open drain
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -70,6 +70,7 @@ bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData,
 		return false;
 	}
 	while (Size) {
+		resetWatchdog();
 		bool ack = send(pData[0]);
 		if (!ack) {
 			stop();
@@ -182,7 +183,7 @@ bool I2CBB::send(uint8_t value) {
 		value <<= 1;
 	}
 
-	bool ack = read_bit()==0;
+	bool ack = read_bit() == 0;
 	return ack;
 }
 
