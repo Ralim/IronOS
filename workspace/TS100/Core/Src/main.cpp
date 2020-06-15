@@ -85,6 +85,9 @@ int main(void) {
 
 	resetWatchdog();
 
+	/* Init the IPC objects */
+	FRToSI2C::FRToSInit();
+
 	/* Start scheduler */
 	osKernelStart();
 	/* We should never get here as control is now taken by the scheduler */
