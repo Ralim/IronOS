@@ -55,6 +55,10 @@ bootldr_size=0x4000
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -DVECT_TAB_OFFSET=$(bootldr_size)U
 
+ifdef swd_enable
+	GLOBAL_DEFINES += -DSWD_ENABLE
+endif
+
 # Enable debug code generation
 DEBUG=-g3
 # Without debug code
