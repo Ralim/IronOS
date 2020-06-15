@@ -9,15 +9,15 @@
 #include "BSP.h"
 #include "string.h"
 #include "stm32f1xx_hal.h"
-/*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
-/*We use the last 1024 byte page*/
-#define FLASH_ADDR (0x8000000 |0xFC00)
+
+static uint16_t settings_page[512] __attribute__ ((section (".settings_page")));
+
 uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 	FLASH_EraseInitTypeDef pEraseInit;
 	pEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
 	pEraseInit.Banks = FLASH_BANK_1;
 	pEraseInit.NbPages = 1;
-	pEraseInit.PageAddress = FLASH_ADDR;
+	pEraseInit.PageAddress = (uint32_t)settings_page;
 	uint32_t failingAddress = 0;
 	resetWatchdog();
 	__HAL_FLASH_CLEAR_FLAG(
@@ -33,7 +33,7 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 	HAL_FLASH_Unlock();
 	for (uint8_t i = 0; i < (length / 2); i++) {
 		resetWatchdog();
-		HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, FLASH_ADDR + (i * 2),
+		HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)&settings_page[i],
 				data[i]);
 	}
 	HAL_FLASH_Lock();
@@ -42,8 +42,5 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length) {
 
-	uint16_t *data = (uint16_t*) buffer;
-	for (uint8_t i = 0; i < (length / 2); i++) {
-		data[i] = *((uint16_t*) (FLASH_ADDR + (i * 2)));
-	}
+	memcpy(buffer, settings_page, length);
 }

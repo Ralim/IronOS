@@ -9,17 +9,15 @@ _estack = 0x20005000;    /* end of RAM */
 _Min_Heap_Size = 0x300;      /* required amount of heap  */
 _Min_Stack_Size = 1024; /* required amount of stack */
 
+__APP_BASE_ADDRESS__ = 0x08000000 + __BOOTLDR_SIZE__;
+__ROM_REGION_LENGTH__ = __FLASH_SIZE__ - __BOOTLDR_SIZE__;
+__FLASH_END_ADDR__ = __APP_BASE_ADDRESS__ + __ROM_REGION_LENGTH__;
+
 /* Memories definition */
 MEMORY
 {
   RAM (xrw)		: ORIGIN = 0x20000000, LENGTH = 20K
- /* LOCAL_BUILD*/
-/*ROM (rx)		: ORIGIN = 0x08000000, LENGTH = 48K*/
-  /* production*/
-  ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 46K
-  
-  
-  
+  ROM (rx)		: ORIGIN = __APP_BASE_ADDRESS__, LENGTH = __ROM_REGION_LENGTH__
 }
 /* ROM is normally 48K after the bootloader, however we allocate the last page for settings, and the second last one for display boot logo*/
 
@@ -118,11 +116,22 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
   } >RAM AT> ROM
 
-  
-  /* Uninitialized data section into RAM memory */
-  . = ALIGN(4);
+  .logo_page (NOLOAD) :
+  {
+    . = ABSOLUTE(__FLASH_END_ADDR__ - 2048);
+    KEEP (*(.logo_page*))
+  } > ROM
+
+  .settings_page (NOLOAD) :
+  {
+    . = ABSOLUTE(__FLASH_END_ADDR__ - 1024);
+    KEEP (*(.settings_page*))
+  } > ROM
+
   .bss :
   {
+    /* Uninitialized data section into RAM memory */
+    . = ALIGN(4);
     /* This is used by the startup in order to initialize the .bss secion */
     _sbss = .;         /* define a global symbol at bss start */
     __bss_start__ = _sbss;

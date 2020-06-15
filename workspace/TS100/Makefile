@@ -49,9 +49,11 @@ OUTPUT_DIR=Objects
 # code optimisation ------------------------------------------------------------
 OPTIM=-Os -flto -ffat-lto-objects -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
+flash_size=64k
+bootldr_size=0x4000
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model)
+GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -DVECT_TAB_OFFSET=$(bootldr_size)U
 
 # Enable debug code generation
 DEBUG=-g3
@@ -93,6 +95,8 @@ LINKER_FLAGS=-Wl,--gc-sections 		\
 			-mthumb			\
 			-mfloat-abi=soft	\
 			-lm -Os -flto -Wl,--undefined=vTaskSwitchContext \
+			-Wl,--defsym=__FLASH_SIZE__=$(flash_size) \
+			-Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 			--specs=nano.specs
 
 # compiler flags ---------------------------------------------------------------
