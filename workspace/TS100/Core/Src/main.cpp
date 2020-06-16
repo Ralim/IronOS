@@ -46,14 +46,14 @@ int main(void) {
 	usb_pd_available = usb_pd_detect();
 	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
-	if (MMA8652FC::detect()) {
-		PCBVersion = 1;
-		MMA8652FC::initalize();  // this sets up the I2C registers
-	} else if (LIS2DH12::detect()) {
-		PCBVersion = 2;
-		// Setup the ST Accelerometer
-		LIS2DH12::initalize();  // startup the accelerometer
-	} else {
+	/*if (MMA8652FC::detect()) {
+	 PCBVersion = 1;
+	 MMA8652FC::initalize();  // this sets up the I2C registers
+	 } else if (LIS2DH12::detect()) {
+	 PCBVersion = 2;
+	 // Setup the ST Accelerometer
+	 LIS2DH12::initalize();  // startup the accelerometer
+	 } else*/{
 		PCBVersion = 3;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep

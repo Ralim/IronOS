@@ -254,16 +254,15 @@ void ProtocolTransmit::thread(const void *args) {
 }
 
 void ProtocolTransmit::notify(uint32_t notification) {
-	xTaskNotify(TaskHandle, notification,
-			eNotifyAction::eSetBits);
+	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
 }
 
 void ProtocolTransmit::init() {
 	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
 			sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
 
-	osThreadStaticDef(pd_txTask, thread,osPriorityAboveNormal, 0, TaskStackSize,
-			TaskBuffer, &TaskControlBlock);
+	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PRL, 0,
+			TaskStackSize, TaskBuffer, &TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(pd_txTask), NULL);
 }
 
@@ -283,5 +282,5 @@ void ProtocolTransmit::getMessage() {
 uint32_t ProtocolTransmit::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
 	uint32_t pulNotificationValue;
 	xTaskNotifyWait(0x00, mask, &pulNotificationValue, ticksToWait);
-	return pulNotificationValue;
+	return pulNotificationValue & mask;
 }

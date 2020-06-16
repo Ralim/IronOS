@@ -91,6 +91,8 @@ void InterruptHandler::Thread(const void *arg) {
 				}
 			}
 
+		} else {
+			osDelay(1);
 		}
 		osDelay(1);
 	}

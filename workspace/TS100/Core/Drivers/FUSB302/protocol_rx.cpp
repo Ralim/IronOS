@@ -98,9 +98,11 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid(
 
 	/* Otherwise, there's either no stored ID or this message has an ID we
 	 * haven't just seen.  Transition to the Store_MessageID state. */
-	if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
+	/*if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
 		return PRLRxWaitPHY;
-	} else {
+	} else*/
+
+	{
 		return PRLRxStoreMessageID;
 	}
 }

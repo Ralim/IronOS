@@ -54,8 +54,7 @@ void PolicyEngine::init() {
 }
 
 void PolicyEngine::notify(uint32_t notification) {
-	xTaskNotify(TaskHandle, notification,
-			eNotifyAction::eSetBits);
+	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
 }
 
 void PolicyEngine::pe_task(const void *arg) {
@@ -242,6 +241,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
 }
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
+	waitForEvent(
+	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET, 0);
 	/* Transmit the request */
 	ProtocolTransmit::pushMessage(&_last_dpm_request);
 //Send indication that there is a message pending
@@ -785,7 +786,7 @@ bool PolicyEngine::heatingAllowed() {
 uint32_t PolicyEngine::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
 	uint32_t pulNotificationValue;
 	xTaskNotifyWait(0x00, mask, &pulNotificationValue, ticksToWait);
-	return pulNotificationValue;
+	return pulNotificationValue & mask;
 }
 
 bool PolicyEngine::isPD3_0() {

@@ -37,11 +37,11 @@ ResetHandler::hardrst_state ResetHandler::hardrst_reset_layer() {
 
 	/* Reset the Protocol RX machine */
 	ProtocolReceive::notify( PDB_EVT_PRLRX_RESET);
-	taskYIELD();
+	osDelay(1);
 
 	/* Reset the Protocol TX machine */
 	ProtocolTransmit::notify(PDB_EVT_PRLTX_RESET);
-	taskYIELD();
+	osDelay(1);
 
 	/* Continue the process based on what event started the reset. */
 	if (evt & PDB_EVT_HARDRST_RESET) {
