@@ -10,6 +10,8 @@
 #include "BSP.h"
 #include "Setup.h"
 #include "Pins.h"
+#include "FreeRTOS.h"
+#include "semphr.h"
 /*
  * Simple static I2C bit-bang class used on the TS80P
  * SCL = PA5
@@ -31,6 +33,10 @@ public:
 	static void TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx,
 			uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx);
 private:
+	static SemaphoreHandle_t I2CSemaphore;
+	static StaticSemaphore_t xSemaphoreBuffer;
+	static void unlock();
+	static bool lock();
 	static void start();
 	static void stop();
 	static bool send(uint8_t value);
