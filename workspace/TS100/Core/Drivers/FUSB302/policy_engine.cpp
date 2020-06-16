@@ -55,7 +55,7 @@ void PolicyEngine::init() {
 
 void PolicyEngine::notify(uint32_t notification) {
 	xTaskNotify(TaskHandle, notification,
-			eNotifyAction::eSetValueWithOverwrite);
+			eNotifyAction::eSetBits);
 }
 
 void PolicyEngine::pe_task(const void *arg) {

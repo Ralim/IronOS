@@ -45,7 +45,9 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_phy_reset() {
 		/* Tell the policy engine that we failed */
 		PolicyEngine::notify( PDB_EVT_PE_TX_ERR);
 		/* Finish failing to send the message */
-		getMessage(); //Discard
+		while (messagePending()) {
+			getMessage(); //Discard
+		}
 	}
 
 	/* Wait for a message request */
@@ -103,7 +105,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_message() {
 	/* Make sure nobody wants us to reset */
 	eventmask_t evt = waitForEvent(
-	PDB_EVT_PRLTX_RESET | PDB_EVT_PRLTX_DISCARD);
+	PDB_EVT_PRLTX_RESET | PDB_EVT_PRLTX_DISCARD, 0);
 
 	if (evt & PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
@@ -119,7 +121,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
 	/* PD 3.0 collision avoidance */
 	if (PolicyEngine::isPD3_0()) {
 		/* If we're starting an AMS, wait for permission to transmit */
-		evt = waitForEvent(PDB_EVT_PRLTX_START_AMS);
+		evt = waitForEvent(PDB_EVT_PRLTX_START_AMS, 0);
 		if (evt & PDB_EVT_PRLTX_START_AMS) {
 			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
 				osDelay(1);
@@ -253,14 +255,14 @@ void ProtocolTransmit::thread(const void *args) {
 
 void ProtocolTransmit::notify(uint32_t notification) {
 	xTaskNotify(TaskHandle, notification,
-			eNotifyAction::eSetValueWithOverwrite);
+			eNotifyAction::eSetBits);
 }
 
 void ProtocolTransmit::init() {
 	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
 			sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
 
-	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PRL, 0, TaskStackSize,
+	osThreadStaticDef(pd_txTask, thread,osPriorityAboveNormal, 0, TaskStackSize,
 			TaskBuffer, &TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(pd_txTask), NULL);
 }

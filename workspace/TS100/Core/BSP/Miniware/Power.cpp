@@ -8,10 +8,9 @@ bool FUSB302_present = false;
 void power_probe() {
 // If TS80 probe for QC
 // If TS100 - noop
-#ifdef MODEL_TS80
+#ifdef defined(MODEL_TS80)+defined(MODEL_TS80P)>0
 
 	startQC(systemSettings.voltageDiv);
-
 	seekQC((systemSettings.cutoutSetting) ? 120 : 90,
 			systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
 
@@ -19,12 +18,12 @@ void power_probe() {
 }
 
 void power_check() {
-#ifdef MODEL_TS80
+#ifdef defined(MODEL_TS80)+defined(MODEL_TS80P)>0
 	QC_resync();
 #endif
 }
 uint8_t usb_pd_detect() {
-#ifdef MODEL_TS80
+#ifdef MODEL_TS80P
 	FUSB302_present = fusb302_detect();
 	if (FUSB302_present) {
 		GPIO_InitTypeDef GPIO_InitStruct;
@@ -39,9 +38,11 @@ uint8_t usb_pd_detect() {
 	return false;
 }
 uint8_t pd_irq_read() {
-#ifdef MODEL_TS80
-	return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_SET ?
-			1 : 0;
+#ifdef MODEL_TS80P
+	if (FUSB302_present) {
+		return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_SET ?
+				1 : 0;
+	}
 #endif
 	return 0;
 }

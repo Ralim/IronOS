@@ -81,6 +81,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 				return true;
 			}
 		}
+#if 0
 		/* If we have a PPS APDO, our desired V lies within its range, and
 		 * its I is at least our desired I */
 		if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED
@@ -108,6 +109,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 //
 //			return true;
 		}
+#endif
 	}
 	/* If there's a PDO in the voltage range, use it */
 //	int8_t i = dpm_get_range_fixed_pdo_index(caps, scfg);

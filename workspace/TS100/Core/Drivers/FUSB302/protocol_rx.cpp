@@ -34,10 +34,12 @@ uint8_t ProtocolReceive::_tx_messageidcounter;
  */
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
 	/* Wait for an event */
+	_rx_messageid = 0;
 	eventmask_t evt = waitForEvent(0xFFFFFFFF);
 
 	/* If we got a reset event, reset */
 	if (evt & PDB_EVT_PRLRX_RESET) {
+		waitForEvent(PDB_EVT_PRLRX_RESET, 0);
 		return PRLRxWaitPHY;
 	}
 	/* If we got an I_GCRCSENT event, read the message and decide what to do */
@@ -75,7 +77,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_reset() {
 	taskYIELD();
 
 	/* If we got a RESET signal, reset the machine */
-	if (waitForEvent(PDB_EVT_PRLRX_RESET) != 0) {
+	if (waitForEvent(PDB_EVT_PRLRX_RESET, 0) != 0) {
 		return PRLRxWaitPHY;
 	}
 
@@ -88,17 +90,16 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_reset() {
  */
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid() {
 	/* If we got a RESET signal, reset the machine */
-	if (waitForEvent(PDB_EVT_PRLRX_RESET) != 0) {
-
+	if (waitForEvent(PDB_EVT_PRLRX_RESET, 0) == PDB_EVT_PRLRX_RESET) {
 		return PRLRxWaitPHY;
 	}
-
 	/* If the message has the stored ID, we've seen this message before.  Free
 	 * it and don't pass it to the policy engine. */
+
+	/* Otherwise, there's either no stored ID or this message has an ID we
+	 * haven't just seen.  Transition to the Store_MessageID state. */
 	if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
 		return PRLRxWaitPHY;
-		/* Otherwise, there's either no stored ID or this message has an ID we
-		 * haven't just seen.  Transition to the Store_MessageID state. */
 	} else {
 		return PRLRxStoreMessageID;
 	}
@@ -160,12 +161,11 @@ void ProtocolReceive::thread(const void *args) {
 }
 
 void ProtocolReceive::notify(uint32_t notification) {
-	xTaskNotify(TaskHandle, notification,
-			eNotifyAction::eSetValueWithOverwrite);
+	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
 }
 
 uint32_t ProtocolReceive::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
 	uint32_t pulNotificationValue;
 	xTaskNotifyWait(0x00, mask, &pulNotificationValue, ticksToWait);
-	return pulNotificationValue;
+	return pulNotificationValue & mask;
 }

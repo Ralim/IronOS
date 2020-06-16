@@ -22,6 +22,7 @@ FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 FRTOS_GCC_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3
 DRIVER_INC_DIR =./Core/Drivers
+FUSB_DRIVERS_INC_DIR = ./Core/Drivers/FUSB302
 BSP_INC_DIR = ./Core/BSP
 MINIWARE_INC_DIR = ./Core/BSP/Miniware
 THREADS_INC_DIR = ./Core/Threads
@@ -37,7 +38,8 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
 	-I$(MINIWARE_INC_DIR) \
-	-I$(THREADS_INC_DIR)
+	-I$(THREADS_INC_DIR) \
+	-I$(FUSB_DRIVERS_INC_DIR)
 # output folder
 HEXFILE_DIR=Hexfile
 

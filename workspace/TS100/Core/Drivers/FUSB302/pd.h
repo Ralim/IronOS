@@ -278,15 +278,13 @@
 #define PD_T_PS_TRANSITION (500)
 #define PD_T_SENDER_RESPONSE (27)
 #define PD_T_SINK_REQUEST (100)
-#define PD_T_TYPEC_SINK_WAIT_CAP (465)
-#define PD_T_PPS_REQUEST TIME_S2I(10)
-/* This is actually from Type-C, not Power Delivery, but who cares? */
+#define PD_T_TYPEC_SINK_WAIT_CAP (465+100)
 #define PD_T_PD_DEBOUNCE (15)
 
 /*
  * Counter maximums
  */
-#define PD_N_HARD_RESET_COUNT 2
+#define PD_N_HARD_RESET_COUNT 10
 
 /*
  * Value parameters

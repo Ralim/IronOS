@@ -22,21 +22,6 @@
 /* Number of messages in the message pool */
 #define PDB_MSG_POOL_SIZE 4
 
-/* Size of the Policy Engine thread's working area */
-#define PDB_PE_WA_SIZE 256
-
-/* Size of the protocol layer RX thread's working area */
-#define PDB_PRLRX_WA_SIZE 256
-
-/* Size of the protocol layer TX thread's working area */
-#define PDB_PRLTX_WA_SIZE 256
-
-/* Size of the protocol layer hard reset thread's working area */
-#define PDB_HARDRST_WA_SIZE 256
-
-/* Size of the INT_N thread's working area */
-#define PDB_INT_N_WA_SIZE 128
-
 #define EVENT_MASK(x) (1<<x)
 #define eventmask_t uint32_t
 /* PD Buddy thread priorities */

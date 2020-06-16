@@ -76,7 +76,6 @@
 #define DETAILED_SOLDERING        0         // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE             0         // 0: Disable 1: Enable - Default 0
 
-
 #define CUT_OUT_SETTING           0         // default to no cut-off voltage (or 18W for TS80)
 #define TEMPERATURE_INF           0         // default to 0
 #define DESCRIPTION_SCROLL_SPEED  0         // 0: Slow 1: Fast - default to slow
@@ -94,6 +93,10 @@
 
 #define OP_AMP_GAIN_STAGE_TS80 (1+(OP_AMP_Rf_TS80/OP_AMP_Rin_TS80))
 
+//Deriving the Voltage div:
+// Vin_max = (3.3*(r1+r2))/(r2)
+//vdiv = (32768*4)/(vin_max*10)
+
 #ifdef MODEL_TS100
   #define VOLTAGE_DIV             467       // 467 - Default divider from schematic
   #define CALIBRATION_OFFSET      900       // 900 - Default adc offset in uV
@@ -105,11 +108,39 @@
 #endif
 
 #ifdef MODEL_TS80
-  #define VOLTAGE_DIV             780       // Default divider from schematic
-  #define PID_POWER_LIMIT         24        // Sets the max pwm power limit
-  #define CALIBRATION_OFFSET      900       // the adc offset in uV
-  #define POWER_LIMIT             24        // 24 watts default power limit
-  #define MAX_POWER_LIMIT         30        //
-  #define POWER_LIMIT_STEPS       2
-  #define OP_AMP_GAIN_STAGE       OP_AMP_GAIN_STAGE_TS80
+#define VOLTAGE_DIV_TS80P		768       // Default for TS80P with slightly different resistors
+#define VOLTAGE_DIV             780       // Default divider from schematic
+#define PID_POWER_LIMIT         24        // Sets the max pwm power limit
+#define CALIBRATION_OFFSET      900       // the adc offset in uV
+#define POWER_LIMIT             24        // 24 watts default power limit
+#define MAX_POWER_LIMIT         30        //
+#define POWER_LIMIT_STEPS       2
+#define OP_AMP_GAIN_STAGE       OP_AMP_GAIN_STAGE_TS80
+#endif
+
+#ifdef MODEL_TS80P
+#define VOLTAGE_DIV		        768       // Default for TS80P with slightly different resistors
+#define PID_POWER_LIMIT         30        // Sets the max pwm power limit
+#define CALIBRATION_OFFSET      900       // the adc offset in uV
+#define POWER_LIMIT             24        // 24 watts default power limit
+#define MAX_POWER_LIMIT         30        //
+#define POWER_LIMIT_STEPS       2
+#define OP_AMP_GAIN_STAGE       OP_AMP_GAIN_STAGE_TS80
+#endif
+
+
+
+#ifdef MODEL_TS100
+const int32_t tipMass = 45; // X10 watts to raise 1 deg C in 1 second
+const uint8_t tipResistance = 85; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
+#endif
+
+#ifdef MODEL_TS80
+const uint32_t tipMass = 40;
+const uint8_t tipResistance = 45; //x10 ohms, 4.5 typical for ts80 tips
+#endif
+
+#ifdef MODEL_TS80P
+const uint32_t tipMass = 40;
+const uint8_t tipResistance = 45; //x10 ohms, 4.5 typical for ts80 tips
 #endif

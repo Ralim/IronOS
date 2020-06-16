@@ -21,7 +21,7 @@ uint8_t fusb302_detect() {
 }
 
 void fusb302_start_processing() {
-
+	HAL_Delay(30);
 	/* Initialize the FUSB302B */
 	fusb_setup();
 

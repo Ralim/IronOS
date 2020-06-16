@@ -42,7 +42,9 @@ static uint8_t fusb_read_byte(uint8_t addr) {
  * buf: The buffer into which data will be read
  */
 static void fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf) {
-	I2CBB::Mem_Read(FUSB302B_ADDR, addr, (uint8_t*) buf, size);
+	if(!I2CBB::Mem_Read(FUSB302B_ADDR, addr, (uint8_t*) buf, size)){
+		asm("bkpt");
+	}
 
 }
 
@@ -54,7 +56,9 @@ static void fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf) {
  * byte: The value to write
  */
 static void fusb_write_byte(uint8_t addr, uint8_t byte) {
-	I2CBB::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) &byte, 1);
+	if(!I2CBB::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) &byte, 1)){
+		asm("bkpt");
+	}
 
 }
 
@@ -67,7 +71,9 @@ static void fusb_write_byte(uint8_t addr, uint8_t byte) {
  * buf: The buffer to write
  */
 static void fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) {
-	I2CBB::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) &buf, size);
+	if(!I2CBB::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) &buf, size)){
+		asm("bkpt");
+	}
 
 }
 

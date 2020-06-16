@@ -9,6 +9,7 @@
 #include <history.hpp>
 #include "BSP.h"
 #include "expMovingAverage.h"
+#include "../../configuration.h"
 #ifndef POWER_HPP_
 #define POWER_HPP_
 
@@ -18,16 +19,6 @@
 //  This is necessary because of the temp noise and thermal lag in the system.
 // Once we have feed-forward temp estimation we should be able to better tune this.
 
-#ifdef MODEL_TS100
-const int32_t tipMass = 45; // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance = 85; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
-
-#endif
-#ifdef MODEL_TS80
-const uint32_t tipMass = 40;
-const uint8_t tipResistance = 45; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
-
-#endif
 const uint8_t wattHistoryFilter = 24; // I term look back weighting
 extern expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory;
 

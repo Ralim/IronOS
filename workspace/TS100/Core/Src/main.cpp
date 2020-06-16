@@ -43,6 +43,8 @@ int main(void) {
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
 	resetWatchdog();
+	usb_pd_available = usb_pd_detect();
+	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
 	if (MMA8652FC::detect()) {
 		PCBVersion = 1;
@@ -57,8 +59,6 @@ int main(void) {
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
 	}
-	resetWatchdog();
-	usb_pd_available = usb_pd_detect();
 	resetWatchdog();
 
 	/* Create the thread(s) */

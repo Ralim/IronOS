@@ -103,7 +103,7 @@ void ResetHandler::init() {
 
 void ResetHandler::notify(uint32_t notification) {
 	xTaskNotify(TaskHandle, notification,
-			eNotifyAction::eSetValueWithOverwrite);
+			eNotifyAction::eSetBits);
 }
 
 void ResetHandler::Thread(const void *arg) {

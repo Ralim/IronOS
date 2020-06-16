@@ -8,7 +8,7 @@
 #ifndef BSP_MINIWARE_UNITSETTINGS_H_
 #define BSP_MINIWARE_UNITSETTINGS_H_
 //On the TS80, the LIS accel is mounted backwards
-#ifdef MODEL_TS80
+#if defined(MODEL_TS80)+defined(MODEL_TS80P)>0
 #define LIS_ORI_FLIP
 #endif
 

@@ -67,7 +67,7 @@ void QC_Post_Probe_En() {
 uint8_t QC_DM_PulledDown() { return HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_RESET ? 1 : 0; }
 
 void QC_resync() {
-#ifdef MODEL_TS80
+#if defined(MODEL_TS80) + defined(MODEL_TS80P) >0
     seekQC((systemSettings.cutoutSetting) ? 120 : 90,
            systemSettings.voltageDiv);  // Run the QC seek again if we have drifted too much
 #endif
