@@ -37,12 +37,10 @@ ResetHandler::hardrst_state ResetHandler::hardrst_reset_layer() {
 
 	/* Reset the Protocol RX machine */
 	ProtocolReceive::notify( PDB_EVT_PRLRX_RESET);
-	osDelay(1);
-
+	taskYIELD();
 	/* Reset the Protocol TX machine */
 	ProtocolTransmit::notify(PDB_EVT_PRLTX_RESET);
-	osDelay(1);
-
+	taskYIELD();
 	/* Continue the process based on what event started the reset. */
 	if (evt & PDB_EVT_HARDRST_RESET) {
 		/* Policy Engine started the reset. */
@@ -96,7 +94,7 @@ ResetHandler::hardrst_state ResetHandler::hardrst_complete() {
 }
 
 void ResetHandler::init() {
-	osThreadStaticDef(Task, Thread, PDB_PRIO_PE, 0, TaskStackSize, TaskBuffer,
+	osThreadStaticDef(Task, Thread, PDB_PRIO_PRL, 0, TaskStackSize, TaskBuffer,
 			&TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(Task), NULL);
 }
