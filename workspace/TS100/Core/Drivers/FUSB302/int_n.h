@@ -24,8 +24,9 @@ class InterruptHandler {
 public:
 	//Creates the thread to handle the Interrupt pin
 	static void init();
-	//TODO handle irq callbacks instead of polling the pin
 
+
+	static void irqCallback();
 private:
 	static void Thread(const void *arg);
 	static osThreadId TaskHandle;

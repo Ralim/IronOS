@@ -41,59 +41,56 @@ void InterruptHandler::Thread(const void *arg) {
 	(void) arg;
 	union fusb_status status;
 	eventmask_t events;
-	//TODO use IRQ task notification to unblock this thread to stop it spinning
 	while (true) {
 		/* If the INT_N line is low */
-		if (pd_irq_read() == 0) {
-			/* Read the FUSB302B status and interrupt registers */
-			fusb_get_status(&status);
-			//Check for rx alerts
-			{
-				/* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
-				if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
-					ProtocolReceive::notify(PDB_EVT_PRLRX_I_GCRCSENT);
-				}
-			}
-			/* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX
-			 * thread */
-			{
-				events = 0;
-				if (status.interrupta & FUSB_INTERRUPTA_I_RETRYFAIL) {
-					events |= PDB_EVT_PRLTX_I_RETRYFAIL;
-				}
-				if (status.interrupta & FUSB_INTERRUPTA_I_TXSENT) {
-					events |= PDB_EVT_PRLTX_I_TXSENT;
-				}
-				if (events) {
-					ProtocolTransmit::notify(events);
-				}
-			}
-			/* If the I_HARDRST or I_HARDSENT flag is set, tell the Hard Reset
-			 * thread */
-			{
-				events = 0;
-				if (status.interrupta & FUSB_INTERRUPTA_I_HARDRST) {
-					events |= PDB_EVT_HARDRST_I_HARDRST;
-				}
-				if (status.interrupta & FUSB_INTERRUPTA_I_HARDSENT) {
-					events |= PDB_EVT_HARDRST_I_HARDSENT;
-				}
-				if (events) {
-					ResetHandler::notify(events);
-				}
-			}
-			{
-				/* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
-				 * Engine thread */
-				if (status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP
-						&& status.status1 & FUSB_STATUS1_OVRTEMP) {
-					PolicyEngine::notify(PDB_EVT_PE_I_OVRTEMP);
-				}
-			}
+		xTaskNotifyWait(0x00, 0x0F, NULL, 5);
+		/* Read the FUSB302B status and interrupt registers */
+		fusb_get_status(&status);
+		//Check for rx alerts
 
-		} else {
-			osDelay(1);
+		/* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
+		if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
+			ProtocolReceive::notify(PDB_EVT_PRLRX_I_GCRCSENT);
 		}
-		osDelay(1);
+
+		/* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX
+		 * thread */
+
+		events = 0;
+		if (status.interrupta & FUSB_INTERRUPTA_I_RETRYFAIL) {
+			events |= PDB_EVT_PRLTX_I_RETRYFAIL;
+		}
+		if (status.interrupta & FUSB_INTERRUPTA_I_TXSENT) {
+			events |= PDB_EVT_PRLTX_I_TXSENT;
+		}
+		if (events) {
+			ProtocolTransmit::notify(events);
+		}
+
+		/* If the I_HARDRST or I_HARDSENT flag is set, tell the Hard Reset
+		 * thread */
+
+		events = 0;
+		if (status.interrupta & FUSB_INTERRUPTA_I_HARDRST) {
+			events |= PDB_EVT_HARDRST_I_HARDRST;
+		}
+		if (status.interrupta & FUSB_INTERRUPTA_I_HARDSENT) {
+			events |= PDB_EVT_HARDRST_I_HARDSENT;
+		}
+		if (events) {
+			ResetHandler::notify(events);
+		}
+
+		/* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
+		 * Engine thread */
+		if (status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP
+				&& status.status1 & FUSB_STATUS1_OVRTEMP) {
+			PolicyEngine::notify(PDB_EVT_PE_I_OVRTEMP);
+		}
+
 	}
+}
+
+void InterruptHandler::irqCallback() {
+	xTaskNotify(TaskHandle, 0x0F, eNotifyAction::eSetBits);
 }

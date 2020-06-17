@@ -6,6 +6,7 @@
  */
 
 #include "IRQ.h"
+#include "int_n.h"
 /*
  * Catch the IRQ that says that the conversion is done on the temperature
  * readings coming in Once these have come in we can unblock the PID so that it
@@ -40,4 +41,8 @@ void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 }
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 	FRToSI2C::CpltCallback();
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	InterruptHandler::irqCallback();
 }
