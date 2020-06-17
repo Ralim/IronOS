@@ -121,6 +121,7 @@ private:
 	static osStaticThreadDef_t TaskControlBlock;
 	static union pd_msg tempMessage;
 	static union pd_msg _last_dpm_request;
+	static policy_engine_state state;
 	//queue of up to PDB_MSG_POOL_SIZE messages to send
 	static StaticQueue_t xStaticQueue;
 	/* The array to use as the queue's storage area.  This must be at least

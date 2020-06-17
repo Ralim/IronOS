@@ -40,6 +40,7 @@ uint32_t PolicyEngine::TaskBuffer[PolicyEngine::TaskStackSize];
 osStaticThreadDef_t PolicyEngine::TaskControlBlock;
 union pd_msg PolicyEngine::tempMessage;
 union pd_msg PolicyEngine::_last_dpm_request;
+PolicyEngine::policy_engine_state PolicyEngine::state = PESinkStartup;
 StaticQueue_t PolicyEngine::xStaticQueue;
 uint8_t PolicyEngine::ucQueueStorageArea[PDB_MSG_POOL_SIZE
 		* sizeof(union pd_msg)];
@@ -67,7 +68,7 @@ void PolicyEngine::pe_task(const void *arg) {
 	_pps_index = 8;
 	/* Initialize the last_pps */
 	_last_pps = 8;
-	PolicyEngine::policy_engine_state state = PESinkStartup;
+
 	for (;;) {
 		//Loop based on state
 		switch (state) {
