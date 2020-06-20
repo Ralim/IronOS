@@ -95,10 +95,7 @@ LINKER_FLAGS=-Wl,--gc-sections 		\
 			-Wl,--wrap=free \
 			-o$(OUT_HEXFILE).elf 	\
 			-Wl,-Map=$(OUT_HEXFILE).map \
-			-mcpu=cortex-m3		\
-			-mthumb			\
-			-mfloat-abi=soft	\
-			-lm -Os -flto -Wl,--undefined=vTaskSwitchContext \
+			-lm -Wl,--undefined=vTaskSwitchContext \
 			-Wl,--defsym=__FLASH_SIZE__=$(flash_size) \
 			-Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 			--specs=nano.specs
