@@ -820,8 +820,8 @@ static void settings_setTempChangeShortStep(void) {
 	}
 }
 static void settings_displayTempChangeShortStep(void) {
-	printShortDescription(24, 5);
-	OLED::printNumber(systemSettings.TempChangeShortStep, 3);
+	printShortDescription(24, 6);
+	OLED::printNumber(systemSettings.TempChangeShortStep, 2);
 }
 
 static void settings_setTempChangeLongStep(void) {
@@ -831,8 +831,8 @@ static void settings_setTempChangeLongStep(void) {
 	}
 }
 static void settings_displayTempChangeLongStep(void) {
-	printShortDescription(25, 5);
-	OLED::printNumber(systemSettings.TempChangeLongStep, 3);
+	printShortDescription(25, 6);
+	OLED::printNumber(systemSettings.TempChangeLongStep, 2);
 }
 
 static void settings_setPowerPulse(void) {
