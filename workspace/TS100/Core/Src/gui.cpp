@@ -935,7 +935,7 @@ void gui_Menu(const menuitem *menu) {
 			OLED::clearScreen();
 			menu[currentScreen].draw.func();
 			uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
-			uint8_t position = currentScreen * indicatorHeight;
+			uint8_t position = OLED_HEIGHT * currentScreen / scrollContentSize;
 			OLED::drawScrollIndicator(position, indicatorHeight);
 			lastOffset = -1;
 			lcdRefresh = true;
