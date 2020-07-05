@@ -279,7 +279,7 @@
 		"PowerPulsePower": {
 			"text": "POWPLS",
 			"text2": [
-				"Pulsos de pot.",
+				"Pulsos bat.",
 				"constantes"
 			],
 			"desc": "Aplica unos pulsos necesarios para mantener encendidas ciertas baterías portátiles. En vatios."
