@@ -23,7 +23,7 @@
 		"OffString": " No",
 		"ResetOKMessage": "Hecho.       ",
 		"YourGainMessage": "Gananc.:",
-		"SettingsResetMessage": "Restablecidos."
+		"SettingsResetMessage": "Ajustes borrados"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -255,42 +255,42 @@
 		"ReverseButtonTempChange": {
 			"text": "RVTCHG",
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Invertir",
+				"botones +/-"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Intercambia las funciones de subir y bajar la temperatura de los botones +/- para que funcionen al revés."
 		},
 		"TempChangeShortStep": {
 			"text": "TCHGST",
 			"text2": [
-				"Temp change",
-				"short?"
+				"Cambio temp.",
+				"puls. cortas"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Subir y bajar X grados de temperatura con cada pulsación corta de los botones +/-."
 		},
 		"TempChangeLongStep": {
 			"text": "TCHGLT",
 			"text2": [
-				"Temp change",
-				"long?"
+				"Cambio temp.",
+				"puls. largas"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Subir y bajar X grados de temperatura con cada pulsación larga de los botones +/-."
 		},
-		"PowerPulsePower":{
+		"PowerPulsePower": {
 			"text": "POWPLS",
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Pulsos bat.",
+				"constantes"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Aplica unos pulsos necesarios para mantener encendidas ciertas baterías portátiles. En vatios."
 		},
 		"TipGain": {
 			"text": "TG",
 			"text2": [
-				"Modify",
-				"tip gain"
+				"Ajustar ganancia",
+				"de punta"
 			],
-			"desc": "Tip gain"
+			"desc": "Modificar el valor de ganancia de la punta."
 		}
 	}
 }
