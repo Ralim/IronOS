@@ -277,12 +277,12 @@
 			"desc": "Шаг изменения температуры при длинном нажатии кнопок"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
+			"text": "МощИмпульса",
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Мощность",
+				"Импульса Вт"
 			],
-			"desc": "Keep awake pulse power intensity"			
+			"desc": "Мощность имульса для бодровствования источника питания"			
 		},
 		"TipGain": {
 			"text": "TG",
