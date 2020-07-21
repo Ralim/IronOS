@@ -39,7 +39,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
 
 	/* If we got a reset event, reset */
 	if (evt & PDB_EVT_PRLRX_RESET) {
-		waitForEvent(PDB_EVT_PRLRX_RESET, 0);
+//		waitForEvent(PDB_EVT_PRLRX_RESET, 0);
 		return PRLRxWaitPHY;
 	}
 	/* If we got an I_GCRCSENT event, read the message and decide what to do */
@@ -73,7 +73,8 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_reset() {
 	_rx_messageid = -1;
 
 	/* TX transitions to its reset state */
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_RESET);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_RESET);
 	taskYIELD();
 
 	/* If we got a RESET signal, reset the machine */
@@ -84,7 +85,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_reset() {
 	/* Go to the Check_MessageID state */
 	return PRLRxCheckMessageID;
 }
-
+volatile uint32_t rxCounter = 0;
 /*
  * PRL_Rx_Check_MessageID state
  */
@@ -99,9 +100,9 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid(
 	/* Otherwise, there's either no stored ID or this message has an ID we
 	 * haven't just seen.  Transition to the Store_MessageID state. */
 	/*if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
-		return PRLRxWaitPHY;
-	} else*/
-
+	 return PRLRxWaitPHY;
+	 } else*/
+	rxCounter++;
 	{
 		return PRLRxStoreMessageID;
 	}
@@ -113,7 +114,8 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid(
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid() {
 	/* Tell ProtocolTX to discard the message being transmitted */
 
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_DISCARD);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_DISCARD);
 	taskYIELD();
 
 	/* Update the stored MessageID */
@@ -122,7 +124,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
 	/* Pass the message to the policy engine. */
 
 	PolicyEngine::handleMessage(&tempMessage);
-	PolicyEngine::notify( PDB_EVT_PE_MSG_RX);
+	PolicyEngine::notify(PDB_EVT_PE_MSG_RX);
 
 	/* Don't check if we got a RESET because we'd do nothing different. */
 
@@ -163,6 +165,9 @@ void ProtocolReceive::thread(const void *args) {
 }
 
 void ProtocolReceive::notify(uint32_t notification) {
+	if (notification == PDB_EVT_PRLRX_I_GCRCSENT) {
+//		asm("bkpt");
+	}
 	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
 }
 

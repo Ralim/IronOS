@@ -300,4 +300,6 @@ void fusb_setup();
  */
 void fusb_reset();
 
+bool fusb_read_id();
+
 #endif /* PDB_FUSB302B_H */

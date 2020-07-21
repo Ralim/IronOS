@@ -43,7 +43,7 @@ int main(void) {
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
 	resetWatchdog();
-	usb_pd_available = usb_pd_detect();
+	usb_pd_available = true;//usb_pd_detect();
 	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
 	/*if (MMA8652FC::detect()) {
@@ -68,10 +68,10 @@ int main(void) {
 			GUITaskStackSize, GUITaskBuffer, &GUITaskControlBlock);
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
-	/* definition and creation of PIDTask */
-	osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0,
-			PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
-	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
+//	/* definition and creation of PIDTask */
+//	osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0,
+//			PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
+//	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 
 	osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0,
 			MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);

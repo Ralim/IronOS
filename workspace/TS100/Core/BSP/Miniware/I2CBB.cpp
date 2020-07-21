@@ -13,9 +13,11 @@
 #define SDA_LOW() 	HAL_GPIO_WritePin(SDA2_GPIO_Port, SDA2_Pin, GPIO_PIN_RESET)
 #define SDA_READ()  (HAL_GPIO_ReadPin(SDA2_GPIO_Port,SDA2_Pin)==GPIO_PIN_SET?1:0)
 #define SCL_READ()  (HAL_GPIO_ReadPin(SCL2_GPIO_Port,SCL2_Pin)==GPIO_PIN_SET?1:0)
-#define I2C_DELAY() {for(int xx=0;xx<100;xx++){asm("nop");}}
+#define I2C_DELAY() {for(int xx=0;xx<1000;xx++){asm("nop");}}
 SemaphoreHandle_t I2CBB::I2CSemaphore = NULL;
 StaticSemaphore_t I2CBB::xSemaphoreBuffer;
+SemaphoreHandle_t I2CBB::I2CSemaphore2 = NULL;
+StaticSemaphore_t I2CBB::xSemaphoreBuffer2;
 void I2CBB::init() {
 	//Set GPIO's to output open drain
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -28,8 +30,14 @@ void I2CBB::init() {
 	SDA_HIGH();
 	SCL_HIGH();
 	I2CSemaphore = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer);
-	xSemaphoreGive(I2CSemaphore);
+	I2CSemaphore2 = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer2);
 	unlock();
+	unlock2();
+	//unstick bus
+	for (int i = 0; i < 8; i++) {
+		read_bit();
+	}
+	stop();
 }
 
 bool I2CBB::probe(uint8_t address) {
@@ -73,8 +81,8 @@ bool I2CBB::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData,
 	return true;
 }
 
-bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData,
-		uint16_t Size) {
+bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
+		const uint8_t *pData, uint16_t Size) {
 	if (!lock())
 		return false;
 	start();
@@ -205,6 +213,7 @@ void I2CBB::start() {
 	I2C_DELAY();
 	SCL_LOW();
 	I2C_DELAY();
+	SDA_HIGH();
 }
 
 void I2CBB::stop() {
@@ -224,6 +233,7 @@ bool I2CBB::send(uint8_t value) {
 		value <<= 1;
 	}
 
+	SDA_HIGH();
 	bool ack = read_bit() == 0;
 	return ack;
 }
@@ -237,6 +247,7 @@ uint8_t I2CBB::read(bool ack) {
 		B |= read_bit();
 	}
 
+	SDA_HIGH();
 	if (ack)
 		write_bit(0);
 	else
@@ -269,7 +280,7 @@ bool I2CBB::lock() {
 	if (I2CSemaphore == NULL) {
 		asm("bkpt");
 	}
-	bool a = xSemaphoreTake(I2CSemaphore, (TickType_t) 50) == pdTRUE;
+	bool a = xSemaphoreTake(I2CSemaphore, (TickType_t) 100) == pdTRUE;
 	if (!a) {
 		asm("bkpt");
 	}
@@ -277,13 +288,29 @@ bool I2CBB::lock() {
 }
 
 void I2CBB::write_bit(uint8_t val) {
-	if (val > 0)
+	if (val) {
 		SDA_HIGH();
-	else
+	} else {
 		SDA_LOW();
+	}
 
 	I2C_DELAY();
 	SCL_HIGH();
 	I2C_DELAY();
 	SCL_LOW();
+}
+
+void I2CBB::unlock2() {
+	xSemaphoreGive(I2CSemaphore2);
+}
+
+bool I2CBB::lock2() {
+	if (I2CSemaphore2 == NULL) {
+		asm("bkpt");
+	}
+	bool a = xSemaphoreTake(I2CSemaphore2, (TickType_t) 500) == pdTRUE;
+	if (!a) {
+		asm("bkpt");
+	}
+	return a;
 }

@@ -24,24 +24,28 @@
 #include <pd.h>
 
 /* Events for the Protocol TX thread */
-#define PDB_EVT_PRLTX_RESET EVENT_MASK(0)
-#define PDB_EVT_PRLTX_I_TXSENT EVENT_MASK(1)
-#define PDB_EVT_PRLTX_I_RETRYFAIL EVENT_MASK(2)
-#define PDB_EVT_PRLTX_DISCARD EVENT_MASK(3)
-#define PDB_EVT_PRLTX_MSG_TX EVENT_MASK(4)
-#define PDB_EVT_PRLTX_START_AMS EVENT_MASK(5)
 
 class ProtocolTransmit {
 public:
 	static void init();
 	//Push a message to the queue to be sent out the pd comms bus
 	static void pushMessage(union pd_msg *msg);
-	static void notify(uint32_t notification);
+
+	enum class Notifications {
+
+		PDB_EVT_PRLTX_RESET = EVENT_MASK(0), //
+		PDB_EVT_PRLTX_I_TXSENT = EVENT_MASK(1), //
+		PDB_EVT_PRLTX_I_RETRYFAIL = EVENT_MASK(2), //
+		PDB_EVT_PRLTX_DISCARD = EVENT_MASK(3), //
+		PDB_EVT_PRLTX_MSG_TX = EVENT_MASK(4), //
+		PDB_EVT_PRLTX_START_AMS = EVENT_MASK(5), //
+	};
+	static void notify(Notifications notification);
 private:
 	static void thread(const void *args);
 
 	static osThreadId TaskHandle;
-	static const size_t TaskStackSize = 512 / 4;
+	static const size_t TaskStackSize = 1024 / 4;
 	static uint32_t TaskBuffer[TaskStackSize];
 	static osStaticThreadDef_t TaskControlBlock;
 	/*
@@ -83,8 +87,8 @@ private:
 	//Reads a message off the queue into the temp message
 	static void getMessage();
 	static union pd_msg temp_msg;
-	static uint32_t waitForEvent(uint32_t mask, uint32_t ticksToWait =
-			portMAX_DELAY);
+	static Notifications waitForEvent(uint32_t mask, uint32_t ticksToWait =
+	portMAX_DELAY);
 
 };
 

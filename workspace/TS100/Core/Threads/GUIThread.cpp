@@ -247,7 +247,7 @@ static void gui_solderingTempAdjust() {
 		if (xTaskGetTickCount() - lastChange > 200)
 			return;  // exit if user just doesn't press anything for a bit
 
-#ifdef MODEL_TS80
+#if defined (MODEL_TS80P)+defined(MODEL_TS80)>0
 		if (!OLED::getRotation()) {
 #else
 		if (OLED::getRotation()) {
@@ -272,7 +272,7 @@ static void gui_solderingTempAdjust() {
 			OLED::drawSymbol(1);
 		}
 		OLED::print(SymbolSpace);
-#ifdef MODEL_TS80
+#if defined (MODEL_TS80P)+defined(MODEL_TS80)>0
 		if (!OLED::getRotation()) {
 #else
 		if (OLED::getRotation()) {
@@ -770,7 +770,7 @@ void startGUITask(void const *argument __unused) {
 
 		} else {
 			OLED::setFont(0);
-#ifdef MODEL_TS80
+#if defined (MODEL_TS80P)+defined(MODEL_TS80)>0
 			if (!OLED::getRotation()) {
 #else
 			if (OLED::getRotation()) {
@@ -791,7 +791,7 @@ void startGUITask(void const *argument __unused) {
 			if (tempOnDisplay) {
 				// draw temp over the start soldering button
 				// Location changes on screen rotation
-#ifdef MODEL_TS80
+#if defined (MODEL_TS80P)+defined(MODEL_TS80)>0
 				if (!OLED::getRotation()) {
 #else
 				if (OLED::getRotation()) {

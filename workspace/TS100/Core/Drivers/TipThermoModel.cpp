@@ -27,12 +27,11 @@
  * This was bought to my attention by <Kuba Sztandera>
  */
 
-
 uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 	// This takes the raw ADC samples, converts these to uV
 	// Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
 	// Then remove the calibration value that is stored as a tip offset
-	uint32_t vddRailmVX10 = 33000;	//The vreg is +-2%, but we have no higher accuracy available
+	uint32_t vddRailmVX10 = 33000;//The vreg is +-2%, but we have no higher accuracy available
 	// 4096 * 8 readings for full scale
 	// Convert the input ADC reading back into mV times 10 format.
 	uint32_t rawInputmVX10 = (rawADC * vddRailmVX10) / (4096 * 8);
@@ -76,7 +75,7 @@ uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
 	tipuVDelta *= 10;
 	tipuVDelta /= systemSettings.TipGain;
 
-#ifdef MODEL_TS80
+#if defined( MODEL_TS80)+defined( MODEL_TS80P)>0
 	tipuVDelta /= OP_AMP_GAIN_STAGE_TS100 / OP_AMP_GAIN_STAGE_TS80;
 #endif
 

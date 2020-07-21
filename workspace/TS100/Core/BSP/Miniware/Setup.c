@@ -33,9 +33,9 @@ static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
-	__HAL_AFIO_REMAP_SWJ_DISABLE()
-	;
-
+//	__HAL_AFIO_REMAP_SWJ_DISABLE()
+//	;
+	__HAL_AFIO_REMAP_SWJ_NOJTAG();
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();
@@ -43,7 +43,7 @@ void Setup_HAL() {
 	MX_ADC2_Init();
 	MX_TIM3_Init();
 	MX_TIM2_Init();
-	MX_IWDG_Init();
+//	MX_IWDG_Init();
 	HAL_ADC_Start(&hadc2);
 	HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t*) ADCReadings, 64); // start DMA of normal readings
 	HAL_ADCEx_InjectedStart(&hadc1);   // enable injected readings
@@ -458,3 +458,8 @@ static void MX_GPIO_Init(void) {
 	HAL_Delay(30);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 }
+#ifdef  USE_FULL_ASSERT
+void assert_failed(uint8_t* file, uint32_t line){
+	asm("bkpt");
+}
+#endif

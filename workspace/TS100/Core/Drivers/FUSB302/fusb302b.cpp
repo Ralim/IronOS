@@ -18,7 +18,7 @@
 #include "fusb302b.h"
 #include "I2CBB.hpp"
 #include <pd.h>
-
+#include "int_n.h"
 /*
  * Read a single byte from the FUSB302B
  *
@@ -29,7 +29,9 @@
  */
 static uint8_t fusb_read_byte(uint8_t addr) {
 	uint8_t data[1];
-	I2CBB::Mem_Read(FUSB302B_ADDR, addr, (uint8_t*) data, 1);
+	if (!I2CBB::Mem_Read(FUSB302B_ADDR, addr, (uint8_t*) data, 1)) {
+		asm("bkpt");
+	}
 	return data[0];
 }
 
@@ -41,11 +43,8 @@ static uint8_t fusb_read_byte(uint8_t addr) {
  * size: The number of bytes to read
  * buf: The buffer into which data will be read
  */
-static void fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf) {
-	if(!I2CBB::Mem_Read(FUSB302B_ADDR, addr, (uint8_t*) buf, size)){
-		asm("bkpt");
-	}
-
+static bool fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf) {
+	return I2CBB::Mem_Read(FUSB302B_ADDR, addr, buf, size);
 }
 
 /*
@@ -55,11 +54,8 @@ static void fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf) {
  * addr: The memory address to which we will write
  * byte: The value to write
  */
-static void fusb_write_byte(uint8_t addr, uint8_t byte) {
-	if(!I2CBB::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) &byte, 1)){
-		asm("bkpt");
-	}
-
+static bool fusb_write_byte(uint8_t addr, uint8_t byte) {
+	return I2CBB::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) &byte, 1);
 }
 
 /*
@@ -70,14 +66,12 @@ static void fusb_write_byte(uint8_t addr, uint8_t byte) {
  * size: The number of bytes to write
  * buf: The buffer to write
  */
-static void fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) {
-	if(!I2CBB::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) &buf, size)){
-		asm("bkpt");
-	}
-
+static bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) {
+	return I2CBB::Mem_Write(FUSB302B_ADDR, addr, buf, size);
 }
 
 void fusb_send_message(const union pd_msg *msg) {
+
 	/* Token sequences for the FUSB302B */
 	static uint8_t sop_seq[5] = {
 	FUSB_FIFO_TX_SOP1,
@@ -98,16 +92,23 @@ void fusb_send_message(const union pd_msg *msg) {
 
 	/* Set the number of bytes to be transmitted in the packet */
 	sop_seq[4] = FUSB_FIFO_TX_PACKSYM | msg_len;
-
+	if (!I2CBB::lock2()) {
+		asm("bkpt");
+	}
 	/* Write all three parts of the message to the TX FIFO */
 	fusb_write_buf( FUSB_FIFOS, 5, sop_seq);
 	fusb_write_buf( FUSB_FIFOS, msg_len, msg->bytes);
 	fusb_write_buf( FUSB_FIFOS, 4, eop_seq);
 
+	I2CBB::unlock2();
+
 }
 
 uint8_t fusb_read_message(union pd_msg *msg) {
-	uint8_t garbage[4];
+	if (!I2CBB::lock2()) {
+		asm("bkpt");
+	}
+	static uint8_t garbage[4];
 	uint8_t numobj;
 
 	/* If this isn't an SOP message, return error.
@@ -115,6 +116,8 @@ uint8_t fusb_read_message(union pd_msg *msg) {
 	 * buffer is empty, and not try to read past a non-SOP message. */
 	if ((fusb_read_byte( FUSB_FIFOS) & FUSB_FIFO_RX_TOKEN_BITS)
 			!= FUSB_FIFO_RX_SOP) {
+
+		I2CBB::unlock2();
 		return 1;
 	}
 	/* Read the message header into msg */
@@ -128,33 +131,56 @@ uint8_t fusb_read_message(union pd_msg *msg) {
 	/* Throw the CRC32 in the garbage, since the PHY already checked it. */
 	fusb_read_buf( FUSB_FIFOS, 4, garbage);
 
+	I2CBB::unlock2();
 	return 0;
 }
 
 void fusb_send_hardrst() {
 
+	if (!I2CBB::lock2()) {
+		asm("bkpt");
+	}
 	/* Send a hard reset */
 	fusb_write_byte( FUSB_CONTROL3, 0x07 | FUSB_CONTROL3_SEND_HARD_RESET);
 
+	I2CBB::unlock2();
 }
 
 void fusb_setup() {
+	GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+	GPIO_InitStruct.Pin = GPIO_PIN_9;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 10, 0);
+	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		if (!I2CBB::lock2()) {
+			asm("bkpt");
+		}
+	}
 	/* Fully reset the FUSB302B */
 	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
-
+	delay_ms(2);
+	if (!fusb_read_id()) {
+		asm("bkpt");
+	}
 	/* Turn on all power */
 	fusb_write_byte( FUSB_POWER, 0x0F);
 
 	/* Set interrupt masks */
+	//Setting to 0 so interrupts are allowed
 	fusb_write_byte( FUSB_MASK1, 0x00);
 	fusb_write_byte( FUSB_MASKA, 0x00);
 	fusb_write_byte( FUSB_MASKB, 0x00);
-	fusb_write_byte( FUSB_CONTROL0, 0x04);
+	fusb_write_byte( FUSB_CONTROL0, 0b11 << 2);
 
 	/* Enable automatic retransmission */
 	fusb_write_byte( FUSB_CONTROL3, 0x07);
-
+	//set defaults
+	fusb_write_byte( FUSB_CONTROL2, 0x00);
 	/* Flush the RX buffer */
 	fusb_write_byte( FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
 
@@ -184,29 +210,48 @@ void fusb_setup() {
 		fusb_write_byte( FUSB_SWITCHES0, 0x0B);
 	}
 	resetWatchdog();
-
-	/* Reset the PD logic */
-	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
-
+	fusb_reset();
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		I2CBB::unlock2();
+	}
 }
 
 void fusb_get_status(union fusb_status *status) {
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		if (!I2CBB::lock2()) {
+			asm("bkpt");
+		}
+	}
 
 	/* Read the interrupt and status flags into status */
 	fusb_read_buf( FUSB_STATUS0A, 7, status->bytes);
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		I2CBB::unlock2();
+	}
 
 }
 
 enum fusb_typec_current fusb_get_typec_current() {
-
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		if (!I2CBB::lock2()) {
+			asm("bkpt");
+		}
+	}
 	/* Read the BC_LVL into a variable */
 	enum fusb_typec_current bc_lvl = (enum fusb_typec_current) (fusb_read_byte(
 	FUSB_STATUS0) & FUSB_STATUS0_BC_LVL);
-
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		I2CBB::unlock2();
+	}
 	return bc_lvl;
 }
 
 void fusb_reset() {
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		if (!I2CBB::lock2()) {
+			asm("bkpt");
+		}
+	}
 
 	/* Flush the TX buffer */
 	fusb_write_byte( FUSB_CONTROL0, 0x44);
@@ -214,5 +259,16 @@ void fusb_reset() {
 	fusb_write_byte( FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
 	/* Reset the PD logic */
 	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		I2CBB::unlock2();
+	}
+}
 
+bool fusb_read_id() {
+	//Return true if read of the revision ID is sane
+	uint8_t version = 0;
+	fusb_read_buf(FUSB_DEVICE_ID, 1, &version);
+	if (version == 0 || version == 0xFF)
+		return false;
+	return true;
 }

@@ -213,7 +213,7 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
 }
 
 void OLED::setRotation(bool leftHanded) {
-#ifdef MODEL_TS80
+#if defined( MODEL_TS80) +defined( MODEL_TS80P) > 0
 	leftHanded = !leftHanded;
 #endif
 	if (inLeftHandedMode == leftHanded) {

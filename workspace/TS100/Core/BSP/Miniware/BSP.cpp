@@ -217,6 +217,7 @@ uint8_t getButtonB() {
 }
 
 void reboot() {
+	asm("bkpt");
 	NVIC_SystemReset();
 }
 

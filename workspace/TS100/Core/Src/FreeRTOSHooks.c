@@ -37,6 +37,7 @@ void vApplicationStackOverflowHook(xTaskHandle *pxTask,
 		signed portCHAR *pcTaskName) {
 	(void) pxTask;
 	(void) pcTaskName;
+	asm("bkpt");
 // We dont have a good way to handle a stack overflow at this point in time
 	reboot();
 }

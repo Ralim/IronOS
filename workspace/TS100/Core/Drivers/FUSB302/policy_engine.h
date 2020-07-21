@@ -116,7 +116,7 @@ private:
 	portMAX_DELAY);
 	//Task resources
 	static osThreadId TaskHandle;
-	static const size_t TaskStackSize = 1024 / 4;
+	static const size_t TaskStackSize = 2048 / 4;
 	static uint32_t TaskBuffer[TaskStackSize];
 	static osStaticThreadDef_t TaskControlBlock;
 	static union pd_msg tempMessage;

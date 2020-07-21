@@ -26,15 +26,7 @@ void power_check() {
 uint8_t usb_pd_detect() {
 #ifdef MODEL_TS80P
 	FUSB302_present = fusb302_detect();
-	GPIO_InitTypeDef GPIO_InitStruct;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
-	GPIO_InitStruct.Pin = GPIO_PIN_9;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 15, 0);
-	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-	InterruptHandler::irqCallback();
+
 	return FUSB302_present;
 #endif
 	return false;

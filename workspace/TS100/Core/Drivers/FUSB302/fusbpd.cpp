@@ -23,6 +23,7 @@ uint8_t fusb302_detect() {
 void fusb302_start_processing() {
 	/* Initialize the FUSB302B */
 	fusb_setup();
+	resetWatchdog();
 	/* Create the policy engine thread. */
 	PolicyEngine::init();
 
@@ -30,7 +31,7 @@ void fusb302_start_processing() {
 	ProtocolReceive::init();
 	ProtocolTransmit::init();
 	ResetHandler::init();
-
+	resetWatchdog();
 	/* Create the INT_N thread. */
 	InterruptHandler::init();
 }

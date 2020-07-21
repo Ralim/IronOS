@@ -108,7 +108,6 @@
 #endif
 
 #ifdef MODEL_TS80
-#define VOLTAGE_DIV_TS80P		768       // Default for TS80P with slightly different resistors
 #define VOLTAGE_DIV             780       // Default divider from schematic
 #define PID_POWER_LIMIT         24        // Sets the max pwm power limit
 #define CALIBRATION_OFFSET      900       // the adc offset in uV

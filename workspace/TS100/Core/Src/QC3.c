@@ -30,16 +30,16 @@ void QC_SeekContMode() {
 }
 void QC_SeekContPlus() {
     QC_SeekContMode();
-    vTaskDelay(3);
+    osDelay(30);
     QC_Seek20V();
-    vTaskDelay(1);
+    osDelay(10);
     QC_SeekContMode();
 }
 void QC_SeekContNeg() {
     QC_SeekContMode();
-    vTaskDelay(3);
+    osDelay(30);
     QC_Seek12V();
-    vTaskDelay(1);
+    osDelay(10);
     QC_SeekContMode();
 }
 uint8_t QCMode = 0;
@@ -65,15 +65,15 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
         if (steps > -2 && steps < 2) return;  // dont bother with small steps
         while (steps < 0) {
             QC_SeekContNeg();
-            vTaskDelay(3);
+            osDelay(30);
             steps++;
         }
         while (steps > 0) {
             QC_SeekContPlus();
-            vTaskDelay(3);
+            osDelay(30);
             steps--;
         }
-        vTaskDelay(10);
+        osDelay(100);
     }
 #ifdef ENABLE_QC2
     // Re-measure
@@ -118,7 +118,7 @@ void startQC(uint16_t divisor) {
     // Delay 1.25 seconds
     uint8_t enteredQC = 0;
     for (uint16_t i = 0; i < 200 && enteredQC == 0; i++) {
-        vTaskDelay(1);  // 10mS pause
+    	osDelay(10);  // 10mS pause
         if (i > 130) {
             if (QC_DM_PulledDown()) {
                 enteredQC = 1;
@@ -143,7 +143,7 @@ void startQC(uint16_t divisor) {
                 QCMode = 3;  // We have at least QC2, pray for 3
                 return;
             }
-            vTaskDelay(10);  // 100mS
+            osDelay(100);  // 100mS
         }
         QCMode = 5;
         QCTries++;

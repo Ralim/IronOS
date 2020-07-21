@@ -34,20 +34,23 @@ ResetHandler::hardrst_state ResetHandler::hardrst_reset_layer() {
 	/* First, wait for the signal to run a hard reset. */
 	eventmask_t evt = waitForEvent(
 	PDB_EVT_HARDRST_RESET | PDB_EVT_HARDRST_I_HARDRST);
-
-	/* Reset the Protocol RX machine */
-	ProtocolReceive::notify( PDB_EVT_PRLRX_RESET);
-	taskYIELD();
-	/* Reset the Protocol TX machine */
-	ProtocolTransmit::notify(PDB_EVT_PRLTX_RESET);
-	taskYIELD();
-	/* Continue the process based on what event started the reset. */
-	if (evt & PDB_EVT_HARDRST_RESET) {
-		/* Policy Engine started the reset. */
-		return PRLHRRequestHardReset;
+	if (evt & (PDB_EVT_HARDRST_RESET | PDB_EVT_HARDRST_I_HARDRST)) {
+		/* Reset the Protocol RX machine */
+		ProtocolReceive::notify( PDB_EVT_PRLRX_RESET);
+		taskYIELD();
+		/* Reset the Protocol TX machine */
+		ProtocolTransmit::notify( ProtocolTransmit::Notifications::PDB_EVT_PRLTX_RESET);
+		taskYIELD();
+		/* Continue the process based on what event started the reset. */
+		if (evt & PDB_EVT_HARDRST_RESET) {
+			/* Policy Engine started the reset. */
+			return PRLHRRequestHardReset;
+		} else {
+			/* PHY started the reset */
+			return PRLHRIndicateHardReset;
+		}
 	} else {
-		/* PHY started the reset */
-		return PRLHRIndicateHardReset;
+		return PRLHRResetLayer;
 	}
 }
 
@@ -100,8 +103,7 @@ void ResetHandler::init() {
 }
 
 void ResetHandler::notify(uint32_t notification) {
-	xTaskNotify(TaskHandle, notification,
-			eNotifyAction::eSetBits);
+	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
 }
 
 void ResetHandler::Thread(const void *arg) {
@@ -134,6 +136,7 @@ void ResetHandler::Thread(const void *arg) {
 		default:
 			/* This is an error.  It really shouldn't happen.  We might
 			 * want to handle it anyway, though. */
+			state = PRLHRResetLayer;
 			break;
 		}
 	}

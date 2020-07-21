@@ -59,18 +59,20 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_phy_reset() {
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_message() {
 	/* Wait for an event */
-	eventmask_t evt = waitForEvent(
-	PDB_EVT_PRLTX_RESET | PDB_EVT_PRLTX_DISCARD | PDB_EVT_PRLTX_MSG_TX);
+	ProtocolTransmit::Notifications evt = waitForEvent(
+			(uint32_t) Notifications::PDB_EVT_PRLTX_RESET
+					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD
+					| (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX);
 
-	if (evt & PDB_EVT_PRLTX_RESET) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
 	}
-	if (evt & PDB_EVT_PRLTX_DISCARD) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
 		return PRLTxDiscardMessage;
 	}
 
 	/* If the policy engine is trying to send a message */
-	if (evt & PDB_EVT_PRLTX_MSG_TX) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX) {
 		/* Get the message */
 		getMessage();
 
@@ -104,13 +106,14 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_message() {
 	/* Make sure nobody wants us to reset */
-	eventmask_t evt = waitForEvent(
-	PDB_EVT_PRLTX_RESET | PDB_EVT_PRLTX_DISCARD, 0);
+	ProtocolTransmit::Notifications evt = waitForEvent(
+			(uint32_t) Notifications::PDB_EVT_PRLTX_RESET
+					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD, 0);
 
-	if (evt & PDB_EVT_PRLTX_RESET) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
 	}
-	if (evt & PDB_EVT_PRLTX_DISCARD) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
 		return PRLTxDiscardMessage;
 	}
 
@@ -121,8 +124,9 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
 	/* PD 3.0 collision avoidance */
 	if (PolicyEngine::isPD3_0()) {
 		/* If we're starting an AMS, wait for permission to transmit */
-		evt = waitForEvent(PDB_EVT_PRLTX_START_AMS, 0);
-		if (evt & PDB_EVT_PRLTX_START_AMS) {
+		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
+				0);
+		if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
 			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
 				osDelay(1);
 			}
@@ -141,23 +145,25 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_response() {
 	/* Wait for an event.  There is no need to run CRCReceiveTimer, since the
 	 * FUSB302B handles that as part of its retry mechanism. */
-	eventmask_t evt = waitForEvent(
-			PDB_EVT_PRLTX_RESET | PDB_EVT_PRLTX_DISCARD | PDB_EVT_PRLTX_I_TXSENT
-					| PDB_EVT_PRLTX_I_RETRYFAIL);
+	ProtocolTransmit::Notifications evt = waitForEvent(
+			(uint32_t) Notifications::PDB_EVT_PRLTX_RESET
+					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD
+					| (uint32_t) Notifications::PDB_EVT_PRLTX_I_TXSENT
+					| (uint32_t) Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
 
-	if (evt & PDB_EVT_PRLTX_RESET) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
 	}
-	if (evt & PDB_EVT_PRLTX_DISCARD) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
 		return PRLTxDiscardMessage;
 	}
 
 	/* If the message was sent successfully */
-	if (evt & PDB_EVT_PRLTX_I_TXSENT) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_TXSENT) {
 		return PRLTxMatchMessageID;
 	}
 	/* If the message failed to be sent */
-	if (evt & PDB_EVT_PRLTX_I_RETRYFAIL) {
+	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_RETRYFAIL) {
 		return PRLTxTransmissionError;
 	}
 
@@ -253,16 +259,16 @@ void ProtocolTransmit::thread(const void *args) {
 	}
 }
 
-void ProtocolTransmit::notify(uint32_t notification) {
-	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
+void ProtocolTransmit::notify(ProtocolTransmit::Notifications notification) {
+	xTaskNotify(TaskHandle, (uint32_t )notification, eNotifyAction::eSetBits);
 }
 
 void ProtocolTransmit::init() {
 	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
 			sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
 
-	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PRL, 0,
-			TaskStackSize, TaskBuffer, &TaskControlBlock);
+	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PE, 0, TaskStackSize,
+			TaskBuffer, &TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(pd_txTask), NULL);
 }
 
@@ -279,8 +285,9 @@ void ProtocolTransmit::getMessage() {
 	xQueueReceive(messagesWaiting, &temp_msg, 1);
 }
 
-uint32_t ProtocolTransmit::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
+ProtocolTransmit::Notifications ProtocolTransmit::waitForEvent(uint32_t mask,
+		uint32_t ticksToWait) {
 	uint32_t pulNotificationValue;
 	xTaskNotifyWait(0x00, mask, &pulNotificationValue, ticksToWait);
-	return pulNotificationValue & mask;
+	return (Notifications) (pulNotificationValue & mask);
 }

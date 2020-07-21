@@ -120,14 +120,14 @@ static void settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[] {
-/*
- * Power Source
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
+		/*
+		 * Power Source
+		 * Soldering Menu
+		 * Power Saving Menu
+		 * UI Menu
+		 * Advanced Menu
+		 * Exit
+		 */
 #ifdef MODEL_TS100
 		{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
 				settings_displayInputVRange } }, /*Voltage input*/
@@ -739,7 +739,7 @@ static void settings_setCalibrateVIN(void) {
 		osDelay(40);
 
 		// Cap to sensible values
-#ifdef MODEL_TS80
+#if defined(MODEL_TS80)+defined(MODEL_TS80P)>0
 		if (systemSettings.voltageDiv < 500) {
 			systemSettings.voltageDiv = 500;
 		} else if (systemSettings.voltageDiv > 900) {

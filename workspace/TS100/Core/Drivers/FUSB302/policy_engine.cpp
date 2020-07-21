@@ -181,13 +181,13 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
 			if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_1_0) {
 				/* If the other end is using at least version 3.0, we'll
 				 * use version 3.0. */
-				if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
-					hdr_template |= PD_SPECREV_3_0;
-					/* Otherwise, use 2.0.  Don't worry about the 1.0 case
-					 * because we don't have hardware for PD 1.0 signaling. */
-				} else {
-					hdr_template |= PD_SPECREV_2_0;
-				}
+//				if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
+//					hdr_template |= PD_SPECREV_3_0;
+//					/* Otherwise, use 2.0.  Don't worry about the 1.0 case
+//					 * because we don't have hardware for PD 1.0 signaling. */
+//				} else {
+				hdr_template |= PD_SPECREV_2_0;
+//				}
 			}
 			return PESinkEvalCap;
 			/* If the message was a Soft_Reset, do the soft reset procedure */
@@ -247,7 +247,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 	/* Transmit the request */
 	ProtocolTransmit::pushMessage(&_last_dpm_request);
 //Send indication that there is a message pending
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_MSG_TX);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
 	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
 	/* Don't free the request; we might need it again */
@@ -396,7 +397,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 	/* If the DPM wants us to, send a Get_Source_Cap message */
 	if (evt & PDB_EVT_PE_GET_SOURCE_CAP) {
 		/* Tell the protocol layer we're starting an AMS */
-		ProtocolTransmit::notify( PDB_EVT_PRLTX_START_AMS);
+		ProtocolTransmit::notify(
+				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
 		return PESinkGetSourceCap;
 	}
 
@@ -406,14 +408,16 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 	 * design of this firmware. */
 	if (evt & PDB_EVT_PE_NEW_POWER) {
 		/* Tell the protocol layer we're starting an AMS */
-		ProtocolTransmit::notify( PDB_EVT_PRLTX_START_AMS);
+		ProtocolTransmit::notify(
+				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
 		return PESinkEvalCap;
 	}
 
 	/* If SinkPPSPeriodicTimer ran out, send a new request */
 	if (evt & PDB_EVT_PE_PPS_REQUEST) {
 		/* Tell the protocol layer we're starting an AMS */
-		ProtocolTransmit::notify( PDB_EVT_PRLTX_START_AMS);
+		ProtocolTransmit::notify(
+				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
 		return PESinkSelectCap;
 	}
 
@@ -538,7 +542,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_get_source_cap() {
 			| PD_NUMOBJ(0);
 	/* Transmit the Get_Source_Cap */
 	ProtocolTransmit::pushMessage(get_source_cap);
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_MSG_TX);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
 	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
 	/* Free the sent message */
@@ -562,7 +567,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_give_sink_cap() {
 
 	/* Transmit our capabilities */
 	ProtocolTransmit::pushMessage(snk_cap);
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_MSG_TX);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
 	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
 
@@ -623,7 +629,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_soft_reset() {
 	accept.hdr = hdr_template | PD_MSGTYPE_ACCEPT | PD_NUMOBJ(0);
 	/* Transmit the Accept */
 	ProtocolTransmit::pushMessage(&accept);
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_MSG_TX);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
 	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
 	/* Free the sent message */
@@ -650,7 +657,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_send_soft_reset() {
 	softrst->hdr = hdr_template | PD_MSGTYPE_SOFT_RESET | PD_NUMOBJ(0);
 	/* Transmit the soft reset */
 	ProtocolTransmit::pushMessage(softrst);
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_MSG_TX);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
 	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
 	/* If we got reset signaling, transition to default */
@@ -711,7 +719,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_send_not_supported() {
 
 	/* Transmit the message */
 	ProtocolTransmit::pushMessage(not_supported);
-	ProtocolTransmit::notify( PDB_EVT_PRLTX_MSG_TX);
+	ProtocolTransmit::notify(
+			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
 	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
 
