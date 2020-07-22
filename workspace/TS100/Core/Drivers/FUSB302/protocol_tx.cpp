@@ -64,15 +64,15 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_message()
 					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD
 					| (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX);
 
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
 	}
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
 		return PRLTxDiscardMessage;
 	}
 
 	/* If the policy engine is trying to send a message */
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX) {
 		/* Get the message */
 		getMessage();
 
@@ -110,10 +110,10 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
 			(uint32_t) Notifications::PDB_EVT_PRLTX_RESET
 					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD, 0);
 
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
 	}
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
 		return PRLTxDiscardMessage;
 	}
 
@@ -126,7 +126,8 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
 		/* If we're starting an AMS, wait for permission to transmit */
 		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
 				0);
-		if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
+		if ((uint32_t) evt
+				& (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
 			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
 				osDelay(1);
 			}
@@ -151,19 +152,19 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_response(
 					| (uint32_t) Notifications::PDB_EVT_PRLTX_I_TXSENT
 					| (uint32_t) Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
 
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
 	}
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
 		return PRLTxDiscardMessage;
 	}
 
 	/* If the message was sent successfully */
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_TXSENT) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_TXSENT) {
 		return PRLTxMatchMessageID;
 	}
 	/* If the message failed to be sent */
-	if ((uint32_t)evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_RETRYFAIL) {
+	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_RETRYFAIL) {
 		return PRLTxTransmissionError;
 	}
 
@@ -259,8 +260,10 @@ void ProtocolTransmit::thread(const void *args) {
 	}
 }
 
+EventGroupHandle_t ProtocolTransmit::xEventGroupHandle;
+StaticEventGroup_t ProtocolTransmit::xCreatedEventGroup;
 void ProtocolTransmit::notify(ProtocolTransmit::Notifications notification) {
-	xTaskNotify(TaskHandle, (uint32_t )notification, eNotifyAction::eSetBits);
+	xEventGroupSetBits(xEventGroupHandle, (uint32_t) notification);
 }
 
 void ProtocolTransmit::init() {
@@ -270,6 +273,7 @@ void ProtocolTransmit::init() {
 	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PE, 0, TaskStackSize,
 			TaskBuffer, &TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(pd_txTask), NULL);
+	xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);
 }
 
 void ProtocolTransmit::pushMessage(union pd_msg *msg) {
@@ -287,7 +291,6 @@ void ProtocolTransmit::getMessage() {
 
 ProtocolTransmit::Notifications ProtocolTransmit::waitForEvent(uint32_t mask,
 		uint32_t ticksToWait) {
-	uint32_t pulNotificationValue;
-	xTaskNotifyWait(0x00, mask, &pulNotificationValue, ticksToWait);
-	return (Notifications) (pulNotificationValue & mask);
+	return (Notifications) xEventGroupWaitBits(xEventGroupHandle, mask, mask,
+	pdFALSE, ticksToWait);
 }

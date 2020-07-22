@@ -22,6 +22,7 @@ uint8_t fusb302_detect() {
 
 void fusb302_start_processing() {
 	/* Initialize the FUSB302B */
+	resetWatchdog();
 	fusb_setup();
 	resetWatchdog();
 	/* Create the policy engine thread. */

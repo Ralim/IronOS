@@ -43,7 +43,8 @@ public:
 	static void notify(Notifications notification);
 private:
 	static void thread(const void *args);
-
+	static EventGroupHandle_t xEventGroupHandle;
+	static StaticEventGroup_t xCreatedEventGroup;
 	static osThreadId TaskHandle;
 	static const size_t TaskStackSize = 1024 / 4;
 	static uint32_t TaskBuffer[TaskStackSize];

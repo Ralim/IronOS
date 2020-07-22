@@ -45,6 +45,8 @@ StaticQueue_t PolicyEngine::xStaticQueue;
 uint8_t PolicyEngine::ucQueueStorageArea[PDB_MSG_POOL_SIZE
 		* sizeof(union pd_msg)];
 QueueHandle_t PolicyEngine::messagesWaiting;
+EventGroupHandle_t PolicyEngine::xEventGroupHandle;
+StaticEventGroup_t PolicyEngine::xCreatedEventGroup;
 void PolicyEngine::init() {
 	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
 			sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
@@ -52,10 +54,21 @@ void PolicyEngine::init() {
 	osThreadStaticDef(Task, pe_task, PDB_PRIO_PE, 0, TaskStackSize, TaskBuffer,
 			&TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(Task), NULL);
+	xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);
 }
 
 void PolicyEngine::notify(uint32_t notification) {
-	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
+	notification = notification
+			& (
+			PDB_EVT_PE_RESET | PDB_EVT_PE_MSG_RX | PDB_EVT_PE_TX_DONE
+					| PDB_EVT_PE_TX_ERR | PDB_EVT_PE_HARD_SENT
+					| PDB_EVT_PE_I_OVRTEMP | PDB_EVT_PE_PPS_REQUEST);
+	if (notification) {
+		xEventGroupSetBits(xEventGroupHandle, notification);
+	} else {
+		asm("bkpt");
+	}
+
 }
 
 void PolicyEngine::pe_task(const void *arg) {
@@ -181,13 +194,13 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
 			if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_1_0) {
 				/* If the other end is using at least version 3.0, we'll
 				 * use version 3.0. */
-//				if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
-//					hdr_template |= PD_SPECREV_3_0;
-//					/* Otherwise, use 2.0.  Don't worry about the 1.0 case
-//					 * because we don't have hardware for PD 1.0 signaling. */
-//				} else {
-				hdr_template |= PD_SPECREV_2_0;
-//				}
+				if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
+					hdr_template |= PD_SPECREV_3_0;
+					/* Otherwise, use 2.0.  Don't worry about the 1.0 case
+					 * because we don't have hardware for PD 1.0 signaling. */
+				} else {
+					hdr_template |= PD_SPECREV_2_0;
+				}
 			}
 			return PESinkEvalCap;
 			/* If the message was a Soft_Reset, do the soft reset procedure */
@@ -242,11 +255,11 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
 }
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
-	waitForEvent(
-	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET, 0);
+
 	/* Transmit the request */
 	ProtocolTransmit::pushMessage(&_last_dpm_request);
-//Send indication that there is a message pending
+	waitForEvent(0xFFFF, 0); //clear pending
+	//Send indication that there is a message pending
 	ProtocolTransmit::notify(
 			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
@@ -257,7 +270,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 		return PESinkTransitionDefault;
 	}
 	/* If the message transmission failed, send a hard reset */
-	if ((evt & PDB_EVT_PE_TX_DONE) == 0) {
+	if ((evt & PDB_EVT_PE_TX_ERR) == PDB_EVT_PE_TX_ERR) {
 		return PESinkHardReset;
 	}
 
@@ -794,9 +807,9 @@ bool PolicyEngine::heatingAllowed() {
 }
 
 uint32_t PolicyEngine::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
-	uint32_t pulNotificationValue;
-	xTaskNotifyWait(0x00, mask, &pulNotificationValue, ticksToWait);
-	return pulNotificationValue & mask;
+	return xEventGroupWaitBits(xEventGroupHandle, mask, mask, pdFALSE,
+			ticksToWait);
+
 }
 
 bool PolicyEngine::isPD3_0() {

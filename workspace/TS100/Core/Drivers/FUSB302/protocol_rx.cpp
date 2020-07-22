@@ -35,11 +35,12 @@ uint8_t ProtocolReceive::_tx_messageidcounter;
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
 	/* Wait for an event */
 	_rx_messageid = 0;
-	eventmask_t evt = waitForEvent(0xFFFFFFFF);
+	eventmask_t evt = waitForEvent(
+	PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT);
 
 	/* If we got a reset event, reset */
 	if (evt & PDB_EVT_PRLRX_RESET) {
-//		waitForEvent(PDB_EVT_PRLRX_RESET, 0);
+		waitForEvent(PDB_EVT_PRLRX_RESET, 0);
 		return PRLRxWaitPHY;
 	}
 	/* If we got an I_GCRCSENT event, read the message and decide what to do */
@@ -99,11 +100,10 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid(
 
 	/* Otherwise, there's either no stored ID or this message has an ID we
 	 * haven't just seen.  Transition to the Store_MessageID state. */
-	/*if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
-	 return PRLRxWaitPHY;
-	 } else*/
-	rxCounter++;
-	{
+	if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
+		return PRLRxWaitPHY;
+	} else {
+		rxCounter++;
 		return PRLRxStoreMessageID;
 	}
 }
@@ -131,9 +131,12 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
 	return PRLRxWaitPHY;
 }
 
+EventGroupHandle_t ProtocolReceive::xEventGroupHandle;
+StaticEventGroup_t ProtocolReceive::xCreatedEventGroup;
 void ProtocolReceive::init() {
 	osThreadStaticDef(Task, thread, PDB_PRIO_PRL, 0, TaskStackSize, TaskBuffer,
 			&TaskControlBlock);
+	xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);
 	TaskHandle = osThreadCreate(osThread(Task), NULL);
 }
 
@@ -165,14 +168,10 @@ void ProtocolReceive::thread(const void *args) {
 }
 
 void ProtocolReceive::notify(uint32_t notification) {
-	if (notification == PDB_EVT_PRLRX_I_GCRCSENT) {
-//		asm("bkpt");
-	}
-	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
+	xEventGroupSetBits(xEventGroupHandle, notification);
 }
 
 uint32_t ProtocolReceive::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
-	uint32_t pulNotificationValue;
-	xTaskNotifyWait(0x00, mask, &pulNotificationValue, ticksToWait);
-	return pulNotificationValue & mask;
+	return xEventGroupWaitBits(xEventGroupHandle, mask, mask,
+	pdFALSE, ticksToWait);
 }

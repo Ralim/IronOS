@@ -33,7 +33,7 @@ public:
 private:
 	static void Thread(const void *arg);
 	static osThreadId TaskHandle;
-	static const size_t TaskStackSize = 1536 / 4;
+	static const size_t TaskStackSize = 1536 / 2;
 	static uint32_t TaskBuffer[TaskStackSize];
 	static osStaticThreadDef_t TaskControlBlock;
 	static uint32_t waitForEvent(uint32_t mask, uint32_t ticksToWait =

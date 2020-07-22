@@ -6,7 +6,7 @@
  */
 #include "pd.h"
 #include "policy_engine.h"
-
+#include "BSP_PD.h"
 /* The current draw when the output is disabled */
 #define DPM_MIN_CURRENT PD_MA2PDI(50)
 /*
@@ -55,32 +55,45 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 
 	/* Make sure we have configuration */
 	/* Look at the PDOs to see if one matches our desires */
-	for (uint8_t i = 0; i < numobj; i++) {
-		/* If we have a fixed PDO, its V equals our desired V, and its I is
-		 * at least our desired I */
-		if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-			//This is a fixed PDO entry
-			int voltage = PD_PDV2MV(
-					PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[i]));
-			int current = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[i]);
-			if (voltage == 9000) {
+//Look against USB_PD_Desired_Levels to select in order of preference
+	for (uint8_t desiredLevel = 0; desiredLevel < USB_PD_Desired_Levels_Len;
+			desiredLevel++) {
+		for (uint8_t i = 0; i < numobj; i++) {
+			/* If we have a fixed PDO, its V equals our desired V, and its I is
+			 * at least our desired I */
+			if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+				//This is a fixed PDO entry
+				int voltage = PD_PDV2MV(
+						PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[i]));
+				int current = PD_PDO_SRC_FIXED_CURRENT_GET(
+						capabilities->obj[i]);
+				uint16_t desiredVoltage = USB_PD_Desired_Levels[(desiredLevel
+						* 2) + 0];
+				uint16_t desiredminCurrent = USB_PD_Desired_Levels[(desiredLevel
+						* 2) + 1];
+				//As pd stores current in 10mA increments, divide by 10
+				desiredminCurrent /= 10;
+				if (voltage == desiredVoltage) {
+					if (current >= desiredminCurrent) {
+						/* We got what we wanted, so build a request for that */
+						request->hdr = hdr_template | PD_MSGTYPE_REQUEST
+								| PD_NUMOBJ(1);
 
-				/* We got what we wanted, so build a request for that */
-				request->hdr = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
+						/* GiveBack disabled */
+						request->obj[0] =
+								PD_RDO_FV_MAX_CURRENT_SET(
+										current) | PD_RDO_FV_CURRENT_SET(current)
+										| PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(i + 1);
 
-				/* GiveBack disabled */
-				request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(
-						current) | PD_RDO_FV_CURRENT_SET(current)
-						| PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(i + 1);
+						request->obj[0] |= PD_RDO_USB_COMMS;
 
-				request->obj[0] |= PD_RDO_USB_COMMS;
+						/* Update requested voltage */
+						_requested_voltage = voltage;
 
-				/* Update requested voltage */
-				_requested_voltage = voltage;
-
-				return true;
+						return true;
+					}
+				}
 			}
-		}
 #if 0
 		/* If we have a PPS APDO, our desired V lies within its range, and
 		 * its I is at least our desired I */
@@ -110,6 +123,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 //			return true;
 		}
 #endif
+		}
 	}
 	/* If there's a PDO in the voltage range, use it */
 //	int8_t i = dpm_get_range_fixed_pdo_index(caps, scfg);
