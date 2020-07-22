@@ -68,10 +68,10 @@ int main(void) {
 			GUITaskStackSize, GUITaskBuffer, &GUITaskControlBlock);
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
-//	/* definition and creation of PIDTask */
-//	osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0,
-//			PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
-//	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
+	/* definition and creation of PIDTask */
+	osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0,
+			PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
+	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 
 	osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0,
 			MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);
