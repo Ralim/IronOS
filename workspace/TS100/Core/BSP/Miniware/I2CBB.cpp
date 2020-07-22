@@ -13,7 +13,7 @@
 #define SDA_LOW() 	HAL_GPIO_WritePin(SDA2_GPIO_Port, SDA2_Pin, GPIO_PIN_RESET)
 #define SDA_READ()  (HAL_GPIO_ReadPin(SDA2_GPIO_Port,SDA2_Pin)==GPIO_PIN_SET?1:0)
 #define SCL_READ()  (HAL_GPIO_ReadPin(SCL2_GPIO_Port,SCL2_Pin)==GPIO_PIN_SET?1:0)
-#define I2C_DELAY() {for(int xx=0;xx<20;xx++){asm("nop");}}
+#define I2C_DELAY() {for(int xx=0;xx<100;xx++){asm("nop");}}
 SemaphoreHandle_t I2CBB::I2CSemaphore = NULL;
 StaticSemaphore_t I2CBB::xSemaphoreBuffer;
 SemaphoreHandle_t I2CBB::I2CSemaphore2 = NULL;
