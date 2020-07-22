@@ -5,6 +5,7 @@
  *      Author: Ralim
  */
 
+#ifdef MODEL_TS80P
 #include <I2CBB.hpp>
 #include "FreeRTOS.h"
 #define SCL_HIGH() 	HAL_GPIO_WritePin(SCL2_GPIO_Port, SCL2_Pin, GPIO_PIN_SET)
@@ -318,3 +319,4 @@ bool I2CBB::lock2() {
 	}
 	return a;
 }
+#endif

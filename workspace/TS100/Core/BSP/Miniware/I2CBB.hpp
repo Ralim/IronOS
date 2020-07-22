@@ -7,6 +7,7 @@
 
 #ifndef BSP_MINIWARE_I2CBB_HPP_
 #define BSP_MINIWARE_I2CBB_HPP_
+#ifdef MODEL_TS80P
 #include "BSP.h"
 #include "Setup.h"
 #include "Pins.h"
@@ -48,5 +49,5 @@ private:
 	static uint8_t read_bit();
 	static void write_bit(uint8_t val);
 };
-
+#endif
 #endif /* BSP_MINIWARE_I2CBB_HPP_ */
