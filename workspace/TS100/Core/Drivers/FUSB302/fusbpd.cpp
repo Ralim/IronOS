@@ -5,8 +5,10 @@
  *      Author: Ralim
  */
 
+#ifdef MODEL_TS80P
 #include <fusbpd.h>
 #include <pd.h>
+#include "BSP.h"
 #include "I2CBB.hpp"
 #include "fusb302b.h"
 #include "policy_engine.h"
@@ -36,3 +38,4 @@ void fusb302_start_processing() {
 	/* Create the INT_N thread. */
 	InterruptHandler::init();
 }
+#endif
