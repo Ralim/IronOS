@@ -46,7 +46,9 @@ void InterruptHandler::Thread(const void *arg) {
 	while (true) {
 		/* If the INT_N line is low */
 		if (!notifSent) {
-			xTaskNotifyWait(0x00, 0x0F, NULL, 25);
+			if (xTaskNotifyWait(0x00, 0x0F, NULL, 25) == pdPASS) {
+							osDelay(1);
+						}
 		}
 		notifSent = false;
 		/* Read the FUSB302B status and interrupt registers */
