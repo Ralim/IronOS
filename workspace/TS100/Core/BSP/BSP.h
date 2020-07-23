@@ -48,7 +48,7 @@ void reboot();
 // Returns 1 if the logo was printed so that the unit waits for the timeout or button
 uint8_t showBootLogoIfavailable();
 //delay wrapper for delay using the hardware timer (used before RTOS)
-void delay_ms(uint16_t count);
+void delay_ms(uint16_t count) ;
 //Used to allow knowledge of if usb_pd is being used
 uint8_t usb_pd_detect();
 //Returns 0 when the irq line is pulled down

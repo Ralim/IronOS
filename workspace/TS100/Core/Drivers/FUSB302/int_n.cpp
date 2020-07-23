@@ -46,9 +46,7 @@ void InterruptHandler::Thread(const void *arg) {
 	while (true) {
 		/* If the INT_N line is low */
 		if (!notifSent) {
-			if (xTaskNotifyWait(0x00, 0x0F, NULL, 25) == pdPASS) {
-				osDelay(1);
-			}
+			xTaskNotifyWait(0x00, 0x0F, NULL, 25);
 		}
 		notifSent = false;
 		/* Read the FUSB302B status and interrupt registers */
@@ -96,9 +94,7 @@ void InterruptHandler::Thread(const void *arg) {
 		}
 	}
 }
-volatile uint8_t irqs = 0;
 void InterruptHandler::irqCallback() {
-	irqs++;
 	BaseType_t taskWoke = pdFALSE;
 	xTaskNotifyFromISR(TaskHandle, 0x01, eNotifyAction::eSetBits, &taskWoke);
 	portYIELD_FROM_ISR(taskWoke);

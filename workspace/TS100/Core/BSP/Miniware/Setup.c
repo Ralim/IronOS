@@ -33,9 +33,9 @@ static void MX_ADC2_Init(void);
 
 void Setup_HAL() {
 	SystemClock_Config();
-//	__HAL_AFIO_REMAP_SWJ_DISABLE()
-//	;
-	__HAL_AFIO_REMAP_SWJ_NOJTAG();
+	__HAL_AFIO_REMAP_SWJ_DISABLE()
+	;
+//	__HAL_AFIO_REMAP_SWJ_NOJTAG();
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();

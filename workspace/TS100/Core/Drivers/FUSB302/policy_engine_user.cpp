@@ -253,17 +253,12 @@ void PolicyEngine::pdbs_dpm_get_sink_capability(union pd_msg *cap) {
 	cap->hdr = hdr_template | PD_MSGTYPE_SINK_CAPABILITIES | PD_NUMOBJ(numobj);
 }
 
-bool PolicyEngine::pdbs_dpm_giveback_enabled() {
-	return false;
-//We do not support giveback
-}
-
 bool PolicyEngine::pdbs_dpm_evaluate_typec_current(
 		enum fusb_typec_current tcc) {
-//This is for evaluating 5V static current advertised by resistors
+	//This is for evaluating 5V static current advertised by resistors
 	/* We don't control the voltage anymore; it will always be 5 V. */
 	current_voltage_mv = _requested_voltage = 5000;
-//For the soldering iron we accept this as a fallback, but it sucks
+	//For the soldering iron we accept this as a fallback, but it sucks
 	return true;
 }
 
@@ -278,27 +273,19 @@ void PolicyEngine::pdbs_dpm_transition_default() {
 	current_voltage_mv = 5000;
 	/* Turn the output off */
 	pdNegotiationComplete = false;
-	pdHasEnteredLowPower = true;
 }
 
 void PolicyEngine::pdbs_dpm_transition_min() {
-	pdHasEnteredLowPower = true;
 }
 
 void PolicyEngine::pdbs_dpm_transition_standby() {
 	/* If the voltage is changing, enter Sink Standby */
-	if (_requested_voltage != current_voltage_mv) {
-		/* For the PD Buddy Sink, entering Sink Standby is equivalent to
-		 * turning the output off.  However, we don't want to change the LED
-		 * state for standby mode. */
-		pdHasEnteredLowPower = true;
-	}
+
 }
 
 void PolicyEngine::pdbs_dpm_transition_requested() {
 	/* Cast the dpm_data to the right type */
 	pdNegotiationComplete = true;
-	pdHasEnteredLowPower = false;
 }
 
 void PolicyEngine::handleMessage(union pd_msg *msg) {
@@ -314,8 +301,7 @@ void PolicyEngine::readMessage() {
 }
 
 void PolicyEngine::pdbs_dpm_transition_typec() {
-//This means PD failed, so we either have a dump 5V only type C or a QC charger
+//This means PD failed, so we either have a dumb 5V only type C or a QC charger
 //For now; treat this as failed neg
 	pdNegotiationComplete = false;
-	pdHasEnteredLowPower = false;
 }

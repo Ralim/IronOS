@@ -23,14 +23,12 @@
 #include "hard_reset.h"
 #include "fusb302b.h"
 bool PolicyEngine::pdNegotiationComplete;
-bool PolicyEngine::pdHasEnteredLowPower;
 int PolicyEngine::current_voltage_mv;
 int PolicyEngine::_requested_voltage;
 bool PolicyEngine::_unconstrained_power;
 union pd_msg PolicyEngine::currentMessage;
 uint16_t PolicyEngine::hdr_template;
 bool PolicyEngine::_explicit_contract;
-bool PolicyEngine::_min_power;
 int8_t PolicyEngine::_hard_reset_counter;
 int8_t PolicyEngine::_old_tcc_match;
 uint8_t PolicyEngine::_pps_index;
@@ -58,17 +56,7 @@ void PolicyEngine::init() {
 }
 
 void PolicyEngine::notify(uint32_t notification) {
-	notification = notification
-			& (
-			PDB_EVT_PE_RESET | PDB_EVT_PE_MSG_RX | PDB_EVT_PE_TX_DONE
-					| PDB_EVT_PE_TX_ERR | PDB_EVT_PE_HARD_SENT
-					| PDB_EVT_PE_I_OVRTEMP | PDB_EVT_PE_PPS_REQUEST);
-	if (notification) {
-		xEventGroupSetBits(xEventGroupHandle, notification);
-	} else {
-		asm("bkpt");
-	}
-
+	xEventGroupSetBits(xEventGroupHandle, notification);
 }
 
 void PolicyEngine::pe_task(const void *arg) {
@@ -310,7 +298,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 				pdbs_dpm_transition_standby();
 			}
 
-			_min_power = false;
 			return PESinkTransitionSink;
 			/* If the message was a Soft_Reset, do the soft reset procedure */
 		} else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOFT_RESET
@@ -325,10 +312,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 				return PESinkWaitCap;
 				/* If we do have an explicit contract, go to the ready state */
 			} else {
-				/* If we got here from a Wait message, we Should run
-				 * SinkRequestTimer in the Ready state. */
-				_min_power = (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_WAIT);
-
 				return PESinkReady;
 			}
 		} else {
@@ -361,9 +344,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_transition_sink() {
 			_explicit_contract = true;
 
 			/* Set the output appropriately */
-			if (!_min_power) {
-				pdbs_dpm_transition_requested();
-			}
+			pdbs_dpm_transition_requested();
 
 			return PESinkReady;
 			/* If there was a protocol error, send a hard reset */
@@ -384,18 +365,9 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 	eventmask_t evt;
 
 	/* Wait for an event */
-	if (_min_power) {
-		evt = waitForEvent(
-				PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP
-						| PDB_EVT_PE_GET_SOURCE_CAP | PDB_EVT_PE_NEW_POWER
-						| PDB_EVT_PE_PPS_REQUEST,
-				PD_T_SINK_REQUEST);
-	} else {
-		evt = waitForEvent(
-				PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP
-						| PDB_EVT_PE_GET_SOURCE_CAP | PDB_EVT_PE_NEW_POWER
-						| PDB_EVT_PE_PPS_REQUEST);
-	}
+	evt = waitForEvent(
+			PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP
+					| PDB_EVT_PE_PPS_REQUEST);
 
 	/* If we got reset signaling, transition to default */
 	if (evt & PDB_EVT_PE_RESET) {
@@ -407,36 +379,11 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 		return PESinkHardReset;
 	}
 
-	/* If the DPM wants us to, send a Get_Source_Cap message */
-	if (evt & PDB_EVT_PE_GET_SOURCE_CAP) {
-		/* Tell the protocol layer we're starting an AMS */
-		ProtocolTransmit::notify(
-				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
-		return PESinkGetSourceCap;
-	}
-
-	/* If the DPM wants new power, let it figure out what power it wants
-	 * exactly.  This isn't exactly the transition from the spec (that would be
-	 * SelectCap, not EvalCap), but this works better with the particular
-	 * design of this firmware. */
-	if (evt & PDB_EVT_PE_NEW_POWER) {
-		/* Tell the protocol layer we're starting an AMS */
-		ProtocolTransmit::notify(
-				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
-		return PESinkEvalCap;
-	}
-
 	/* If SinkPPSPeriodicTimer ran out, send a new request */
 	if (evt & PDB_EVT_PE_PPS_REQUEST) {
 		/* Tell the protocol layer we're starting an AMS */
 		ProtocolTransmit::notify(
 				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
-		return PESinkSelectCap;
-	}
-
-	/* If no event was received, the timer ran out. */
-	if (evt == 0) {
-		/* Repeat our Request message */
 		return PESinkSelectCap;
 	}
 
@@ -488,16 +435,9 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 				/* Handle GotoMin messages */
 			} else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_GOTOMIN
 					&& PD_NUMOBJ_GET(&tempMessage) == 0) {
-				if (pdbs_dpm_giveback_enabled()) {
-					/* Transition to the minimum current level */
-					pdbs_dpm_transition_min();
-					_min_power = true;
-					return PESinkTransitionSink;
-				} else {
-					/* GiveBack is not supported */
+				/* GiveBack is not supported */
+				return PESinkSendNotSupported;
 
-					return PESinkSendNotSupported;
-				}
 				/* Evaluate new Source_Capabilities */
 			} else if (PD_MSGTYPE_GET(&tempMessage)
 					== PD_MSGTYPE_SOURCE_CAPABILITIES
@@ -770,22 +710,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_not_supported_received()
 }
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_source_unresponsive() {
-	/* If the DPM can evaluate the Type-C Current advertisement */
-	//TS80P doesnt
-//	if (cfg->dpm.evaluate_typec_current != NULL) {
-//		/* Make the DPM evaluate the Type-C Current advertisement */
-//		int tcc_match = cfg->dpm.evaluate_typec_current(cfg,
-//				fusb_get_typec_current(&cfg->fusb));
-//
-//		/* If the last two readings are the same, set the output */
-//		if (_old_tcc_match == tcc_match) {
-//			cfg->dpm.transition_typec(cfg);
-//		}
-//
-//		/* Remember whether or not the last measurement succeeded */
-//		_old_tcc_match = tcc_match;
-//	}
-	/* Wait tPDDebounce between measurements */
+//Sit and chill, as PD is not working
 	osDelay(PD_T_PD_DEBOUNCE);
 
 	return PESinkSourceUnresponsive;
@@ -797,13 +722,6 @@ void PolicyEngine::PPSTimerCallBack() {
 
 bool PolicyEngine::pdHasNegotiated() {
 	return pdNegotiationComplete;
-}
-
-bool PolicyEngine::heatingAllowed() {
-	if (pdHasNegotiated())
-		return !pdHasEnteredLowPower;
-	//Not pd -- pass through
-	return true;
 }
 
 uint32_t PolicyEngine::waitForEvent(uint32_t mask, uint32_t ticksToWait) {

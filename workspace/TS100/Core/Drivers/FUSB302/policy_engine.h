@@ -24,10 +24,6 @@
  * Events for the Policy Engine thread, used internally + sent by user code
  *
  */
-/* Tell the PE to send a Get_Source_Cap message */
-#define PDB_EVT_PE_GET_SOURCE_CAP EVENT_MASK(7)
-/* Tell the PE that new power is required */
-#define PDB_EVT_PE_NEW_POWER EVENT_MASK(8)
 
 #define PDB_EVT_PE_RESET EVENT_MASK(0)
 #define PDB_EVT_PE_MSG_RX EVENT_MASK(1)
@@ -51,11 +47,8 @@ public:
 	static void PPSTimerCallBack();
 	//Has pd negotiation completed
 	static bool pdHasNegotiated();
-	//Used in case the USB-C PD source requests minimum power
-	static bool heatingAllowed();
 private:
 	static bool pdNegotiationComplete;
-	static bool pdHasEnteredLowPower;
 	static int current_voltage_mv; //The current voltage PD is expecting
 	static int _requested_voltage; //The voltage the unit wanted to requests
 	static bool _unconstrained_power; // If the source is unconstrained
@@ -65,8 +58,6 @@ private:
 	static uint16_t hdr_template;
 	/* Whether or not we have an explicit contract */
 	static bool _explicit_contract;
-	/* Whether or not we're receiving minimum power */
-	static bool _min_power;
 	/* The number of hard resets we've sent */
 	static int8_t _hard_reset_counter;
 	/* The result of the last Type-C Current match comparison */

@@ -14,9 +14,9 @@ MEMORY
 {
   RAM (xrw)		: ORIGIN = 0x20000000, LENGTH = 20K
  /* LOCAL_BUILD*/
-ROM (rx)		: ORIGIN = 0x08000000, LENGTH = 48K
+/*ROM (rx)		: ORIGIN = 0x08000000, LENGTH = 48K*/
   /* production*/
-/*ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 46K*/
+  ROM (rx)		: ORIGIN = 0x08004000, LENGTH = 46K
   
   
   

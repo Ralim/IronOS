@@ -1041,32 +1041,32 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef* hadc, ADC_I
   /*   conversions is forced to 0x00 for alignment over all STM32 devices.    */
   /* - if scan mode is enabled, injected channels sequence length is set to   */
   /*   parameter "InjectedNbrOfConversion".                                   */
-  if (hadc->Init.ScanConvMode == ADC_SCAN_DISABLE)
-  {
-    if (sConfigInjected->InjectedRank == ADC_INJECTED_RANK_1)
-    {
-      /* Clear the old SQx bits for all injected ranks */
-      MODIFY_REG(hadc->Instance->JSQR                             ,
-                 ADC_JSQR_JL   |
-                 ADC_JSQR_JSQ4 |
-                 ADC_JSQR_JSQ3 |
-                 ADC_JSQR_JSQ2 |
-                 ADC_JSQR_JSQ1                                    ,
-                 ADC_JSQR_RK_JL(sConfigInjected->InjectedChannel,
-                                  ADC_INJECTED_RANK_1,
-                                  0x01U));
-    }
-    /* If another injected rank than rank1 was intended to be set, and could  */
-    /* not due to ScanConvMode disabled, error is reported.                   */
-    else
-    {
-      /* Update ADC state machine to error */
-      SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_CONFIG);
-      
-      tmp_hal_status = HAL_ERROR;
-    }
-  }
-  else
+//  if (hadc->Init.ScanConvMode == ADC_SCAN_DISABLE)
+//  {
+//    if (sConfigInjected->InjectedRank == ADC_INJECTED_RANK_1)
+//    {
+//      /* Clear the old SQx bits for all injected ranks */
+//      MODIFY_REG(hadc->Instance->JSQR                             ,
+//                 ADC_JSQR_JL   |
+//                 ADC_JSQR_JSQ4 |
+//                 ADC_JSQR_JSQ3 |
+//                 ADC_JSQR_JSQ2 |
+//                 ADC_JSQR_JSQ1                                    ,
+//                 ADC_JSQR_RK_JL(sConfigInjected->InjectedChannel,
+//                                  ADC_INJECTED_RANK_1,
+//                                  0x01U));
+//    }
+//    /* If another injected rank than rank1 was intended to be set, and could  */
+//    /* not due to ScanConvMode disabled, error is reported.                   */
+//    else
+//    {
+//      /* Update ADC state machine to error */
+//      SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_CONFIG);
+//
+//      tmp_hal_status = HAL_ERROR;
+//    }
+//  }
+//  else
   {
     /* Since injected channels rank conv. order depends on total number of   */
     /* injected conversions, selected rank must be below or equal to total   */

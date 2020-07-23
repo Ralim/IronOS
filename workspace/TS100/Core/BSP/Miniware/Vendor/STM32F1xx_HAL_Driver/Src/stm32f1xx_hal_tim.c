@@ -3968,129 +3968,129 @@ HAL_StatusTypeDef HAL_TIM_ConfigClockSource(TIM_HandleTypeDef *htim, TIM_ClockCo
     }
     break;
 
-  case TIM_CLOCKSOURCE_ETRMODE1:
-    {
-      /* Check whether or not the timer instance supports external trigger input mode 1 (ETRF)*/
-      assert_param(IS_TIM_CLOCKSOURCE_ETRMODE1_INSTANCE(htim->Instance));
-
-      /* Check ETR input conditioning related parameters */
-      assert_param(IS_TIM_CLOCKPRESCALER(sClockSourceConfig->ClockPrescaler));
-      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
-      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
-      
-      /* Configure the ETR Clock source */
-      TIM_ETR_SetConfig(htim->Instance,
-                        sClockSourceConfig->ClockPrescaler,
-                        sClockSourceConfig->ClockPolarity,
-                        sClockSourceConfig->ClockFilter);
-      /* Get the TIMx SMCR register value */
-      tmpsmcr = htim->Instance->SMCR;
-      /* Reset the SMS and TS Bits */
-      tmpsmcr &= ~(TIM_SMCR_SMS | TIM_SMCR_TS);
-      /* Select the External clock mode1 and the ETRF trigger */
-      tmpsmcr |= (TIM_SLAVEMODE_EXTERNAL1 | TIM_CLOCKSOURCE_ETRMODE1);
-      /* Write to TIMx SMCR */
-      htim->Instance->SMCR = tmpsmcr;
-    }
-    break;
-
-  case TIM_CLOCKSOURCE_ETRMODE2:
-    {
-      /* Check whether or not the timer instance supports external trigger input mode 2 (ETRF)*/
-      assert_param(IS_TIM_CLOCKSOURCE_ETRMODE2_INSTANCE(htim->Instance));
-
-      /* Check ETR input conditioning related parameters */
-      assert_param(IS_TIM_CLOCKPRESCALER(sClockSourceConfig->ClockPrescaler));
-      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
-      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
-      
-      /* Configure the ETR Clock source */
-      TIM_ETR_SetConfig(htim->Instance,
-                        sClockSourceConfig->ClockPrescaler,
-                        sClockSourceConfig->ClockPolarity,
-                        sClockSourceConfig->ClockFilter);
-      /* Enable the External clock mode2 */
-      htim->Instance->SMCR |= TIM_SMCR_ECE;
-    }
-    break;
-
-  case TIM_CLOCKSOURCE_TI1:
-    {
-      /* Check whether or not the timer instance supports external clock mode 1 */
-      assert_param(IS_TIM_CLOCKSOURCE_TIX_INSTANCE(htim->Instance));
-
-      /* Check TI1 input conditioning related parameters */
-      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
-      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
-      
-      TIM_TI1_ConfigInputStage(htim->Instance,
-                               sClockSourceConfig->ClockPolarity,
-                               sClockSourceConfig->ClockFilter);
-      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI1);
-    }
-    break;
-  case TIM_CLOCKSOURCE_TI2:
-    {
-      /* Check whether or not the timer instance supports external clock mode 1 (ETRF)*/
-      assert_param(IS_TIM_CLOCKSOURCE_TIX_INSTANCE(htim->Instance));
-
-       /* Check TI2 input conditioning related parameters */
-      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
-      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
-
-      TIM_TI2_ConfigInputStage(htim->Instance,
-                               sClockSourceConfig->ClockPolarity,
-                               sClockSourceConfig->ClockFilter);
-      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI2);
-    }
-    break;
-  case TIM_CLOCKSOURCE_TI1ED:
-    {
-      /* Check whether or not the timer instance supports external clock mode 1 */
-      assert_param(IS_TIM_CLOCKSOURCE_TIX_INSTANCE(htim->Instance));
-
-      /* Check TI1 input conditioning related parameters */
-      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
-      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
-
-      TIM_TI1_ConfigInputStage(htim->Instance,
-                               sClockSourceConfig->ClockPolarity,
-                               sClockSourceConfig->ClockFilter);
-      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI1ED);
-    }
-    break;
-  case TIM_CLOCKSOURCE_ITR0:
-    {
-      /* Check whether or not the timer instance supports external clock mode 1 */
-      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
-
-      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR0);
-    }
-    break;
-  case TIM_CLOCKSOURCE_ITR1:
-    {
-      /* Check whether or not the timer instance supports external clock mode 1 */
-      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
-
-      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR1);
-    }
-    break;
-  case TIM_CLOCKSOURCE_ITR2:
-    {
-      /* Check whether or not the timer instance supports external clock mode 1 */
-      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
-
-      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR2);
-    }
-    break;
-  case TIM_CLOCKSOURCE_ITR3:
-    {
-      /* Check whether or not the timer instance supports external clock mode 1 */
-      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
-
-      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR3);
-    }
-    break;
+//  case TIM_CLOCKSOURCE_ETRMODE1:
+//    {
+//      /* Check whether or not the timer instance supports external trigger input mode 1 (ETRF)*/
+//      assert_param(IS_TIM_CLOCKSOURCE_ETRMODE1_INSTANCE(htim->Instance));
+//
+//      /* Check ETR input conditioning related parameters */
+//      assert_param(IS_TIM_CLOCKPRESCALER(sClockSourceConfig->ClockPrescaler));
+//      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
+//      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
+//
+//      /* Configure the ETR Clock source */
+//      TIM_ETR_SetConfig(htim->Instance,
+//                        sClockSourceConfig->ClockPrescaler,
+//                        sClockSourceConfig->ClockPolarity,
+//                        sClockSourceConfig->ClockFilter);
+//      /* Get the TIMx SMCR register value */
+//      tmpsmcr = htim->Instance->SMCR;
+//      /* Reset the SMS and TS Bits */
+//      tmpsmcr &= ~(TIM_SMCR_SMS | TIM_SMCR_TS);
+//      /* Select the External clock mode1 and the ETRF trigger */
+//      tmpsmcr |= (TIM_SLAVEMODE_EXTERNAL1 | TIM_CLOCKSOURCE_ETRMODE1);
+//      /* Write to TIMx SMCR */
+//      htim->Instance->SMCR = tmpsmcr;
+//    }
+//    break;
+//
+//  case TIM_CLOCKSOURCE_ETRMODE2:
+//    {
+//      /* Check whether or not the timer instance supports external trigger input mode 2 (ETRF)*/
+//      assert_param(IS_TIM_CLOCKSOURCE_ETRMODE2_INSTANCE(htim->Instance));
+//
+//      /* Check ETR input conditioning related parameters */
+//      assert_param(IS_TIM_CLOCKPRESCALER(sClockSourceConfig->ClockPrescaler));
+//      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
+//      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
+//
+//      /* Configure the ETR Clock source */
+//      TIM_ETR_SetConfig(htim->Instance,
+//                        sClockSourceConfig->ClockPrescaler,
+//                        sClockSourceConfig->ClockPolarity,
+//                        sClockSourceConfig->ClockFilter);
+//      /* Enable the External clock mode2 */
+//      htim->Instance->SMCR |= TIM_SMCR_ECE;
+//    }
+//    break;
+//
+//  case TIM_CLOCKSOURCE_TI1:
+//    {
+//      /* Check whether or not the timer instance supports external clock mode 1 */
+//      assert_param(IS_TIM_CLOCKSOURCE_TIX_INSTANCE(htim->Instance));
+//
+//      /* Check TI1 input conditioning related parameters */
+//      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
+//      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
+//
+//      TIM_TI1_ConfigInputStage(htim->Instance,
+//                               sClockSourceConfig->ClockPolarity,
+//                               sClockSourceConfig->ClockFilter);
+//      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI1);
+//    }
+//    break;
+//  case TIM_CLOCKSOURCE_TI2:
+//    {
+//      /* Check whether or not the timer instance supports external clock mode 1 (ETRF)*/
+//      assert_param(IS_TIM_CLOCKSOURCE_TIX_INSTANCE(htim->Instance));
+//
+//       /* Check TI2 input conditioning related parameters */
+//      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
+//      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
+//
+//      TIM_TI2_ConfigInputStage(htim->Instance,
+//                               sClockSourceConfig->ClockPolarity,
+//                               sClockSourceConfig->ClockFilter);
+//      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI2);
+//    }
+//    break;
+//  case TIM_CLOCKSOURCE_TI1ED:
+//    {
+//      /* Check whether or not the timer instance supports external clock mode 1 */
+//      assert_param(IS_TIM_CLOCKSOURCE_TIX_INSTANCE(htim->Instance));
+//
+//      /* Check TI1 input conditioning related parameters */
+//      assert_param(IS_TIM_CLOCKPOLARITY(sClockSourceConfig->ClockPolarity));
+//      assert_param(IS_TIM_CLOCKFILTER(sClockSourceConfig->ClockFilter));
+//
+//      TIM_TI1_ConfigInputStage(htim->Instance,
+//                               sClockSourceConfig->ClockPolarity,
+//                               sClockSourceConfig->ClockFilter);
+//      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_TI1ED);
+//    }
+//    break;
+//  case TIM_CLOCKSOURCE_ITR0:
+//    {
+//      /* Check whether or not the timer instance supports external clock mode 1 */
+//      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
+//
+//      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR0);
+//    }
+//    break;
+//  case TIM_CLOCKSOURCE_ITR1:
+//    {
+//      /* Check whether or not the timer instance supports external clock mode 1 */
+//      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
+//
+//      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR1);
+//    }
+//    break;
+//  case TIM_CLOCKSOURCE_ITR2:
+//    {
+//      /* Check whether or not the timer instance supports external clock mode 1 */
+//      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
+//
+//      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR2);
+//    }
+//    break;
+//  case TIM_CLOCKSOURCE_ITR3:
+//    {
+//      /* Check whether or not the timer instance supports external clock mode 1 */
+//      assert_param(IS_TIM_CLOCKSOURCE_ITRX_INSTANCE(htim->Instance));
+//
+//      TIM_ITRx_SetConfig(htim->Instance, TIM_CLOCKSOURCE_ITR3);
+//    }
+//    break;
 
   default:
     break;
