@@ -2,7 +2,7 @@
 #include "BSP_Power.h"
 #include "BSP_QC.h"
 #include "Defines.h"
-#include "UnitSettings.h"
+#include "Model_Config.h"
 #include "stdint.h"
 /*
  * BSP.h -- Board Support

@@ -7,17 +7,15 @@
 
 #ifndef BSP_MINIWARE_I2CBB_HPP_
 #define BSP_MINIWARE_I2CBB_HPP_
-#ifdef MODEL_TS80P
+#include "Model_Config.h"
+#ifdef I2C_SOFT
 #include "BSP.h"
 #include "Setup.h"
 #include "Pins.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
-/*
- * Simple static I2C bit-bang class used on the TS80P
- * SCL = PA5
- * SDA = PA1
- */
+#include "Software_I2C.h"
+
 class I2CBB {
 public:
 	static void init();

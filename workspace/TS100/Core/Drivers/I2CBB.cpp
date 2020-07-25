@@ -4,17 +4,10 @@
  *  Created on: 12 Jun 2020
  *      Author: Ralim
  */
-
-#ifdef MODEL_TS80P
+#include "Model_Config.h"
+#ifdef I2C_SOFT
 #include <I2CBB.hpp>
 #include "FreeRTOS.h"
-#define SCL_HIGH() 	HAL_GPIO_WritePin(SCL2_GPIO_Port, SCL2_Pin, GPIO_PIN_SET)
-#define SCL_LOW() 	HAL_GPIO_WritePin(SCL2_GPIO_Port, SCL2_Pin, GPIO_PIN_RESET)
-#define SDA_HIGH() 	HAL_GPIO_WritePin(SDA2_GPIO_Port, SDA2_Pin, GPIO_PIN_SET)
-#define SDA_LOW() 	HAL_GPIO_WritePin(SDA2_GPIO_Port, SDA2_Pin, GPIO_PIN_RESET)
-#define SDA_READ()  (HAL_GPIO_ReadPin(SDA2_GPIO_Port,SDA2_Pin)==GPIO_PIN_SET?1:0)
-#define SCL_READ()  (HAL_GPIO_ReadPin(SCL2_GPIO_Port,SCL2_Pin)==GPIO_PIN_SET?1:0)
-#define I2C_DELAY() {for(int xx=0;xx<100;xx++){asm("nop");}}
 SemaphoreHandle_t I2CBB::I2CSemaphore = NULL;
 StaticSemaphore_t I2CBB::xSemaphoreBuffer;
 SemaphoreHandle_t I2CBB::I2CSemaphore2 = NULL;
@@ -28,8 +21,8 @@ void I2CBB::init() {
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(SDA2_GPIO_Port, &GPIO_InitStruct);
-	SDA_HIGH();
-	SCL_HIGH();
+	SOFT_SDA_HIGH();
+	SOFT_SCL_HIGH();
 	I2CSemaphore = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer);
 	I2CSemaphore2 = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer2);
 	unlock();
@@ -66,8 +59,8 @@ bool I2CBB::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData,
 		unlock();
 		return false;
 	}
-	SCL_LOW();
-	I2C_DELAY();
+	SOFT_SCL_LOW();
+	SOFT_I2C_DELAY();
 //	stop();
 	start();
 	ack = send(DevAddress | 1);
@@ -107,7 +100,7 @@ bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 	}
 	while (Size) {
 		resetWatchdog();
-		bool ack = send(pData[0]);
+		ack = send(pData[0]);
 		if (!ack) {
 			stop();
 			asm("bkpt");
@@ -133,7 +126,7 @@ void I2CBB::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
 		return;
 	}
 	while (Size) {
-		bool ack = send(pData[0]);
+		ack = send(pData[0]);
 		if (!ack) {
 			stop();
 			unlock();
@@ -181,7 +174,7 @@ void I2CBB::TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx,
 			return;
 		}
 		while (Size_tx) {
-			bool ack = send(pData_tx[0]);
+			ack = send(pData_tx[0]);
 			if (!ack) {
 				stop();
 				unlock();
@@ -211,24 +204,24 @@ void I2CBB::TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx,
 
 void I2CBB::start() {
 	/* I2C Start condition, data line goes low when clock is high */
-	SCL_HIGH();
-	SDA_HIGH();
-	I2C_DELAY();
-	SDA_LOW();
-	I2C_DELAY();
-	SCL_LOW();
-	I2C_DELAY();
-	SDA_HIGH();
+	SOFT_SCL_HIGH();
+	SOFT_SDA_HIGH();
+	SOFT_I2C_DELAY();
+	SOFT_SDA_LOW();
+	SOFT_I2C_DELAY();
+	SOFT_SCL_LOW();
+	SOFT_I2C_DELAY();
+	SOFT_SDA_HIGH();
 }
 
 void I2CBB::stop() {
 	/* I2C Stop condition, clock goes high when data is low */
-	SDA_LOW();
-	I2C_DELAY();
-	SCL_HIGH();
-	I2C_DELAY();
-	SDA_HIGH();
-	I2C_DELAY();
+	SOFT_SDA_LOW();
+	SOFT_I2C_DELAY();
+	SOFT_SCL_HIGH();
+	SOFT_I2C_DELAY();
+	SOFT_SDA_HIGH();
+	SOFT_I2C_DELAY();
 }
 
 bool I2CBB::send(uint8_t value) {
@@ -238,7 +231,7 @@ bool I2CBB::send(uint8_t value) {
 		value <<= 1;
 	}
 
-	SDA_HIGH();
+	SOFT_SDA_HIGH();
 	bool ack = (read_bit() == 0);
 	return ack;
 }
@@ -252,7 +245,7 @@ uint8_t I2CBB::read(bool ack) {
 		B |= read_bit();
 	}
 
-	SDA_HIGH();
+	SOFT_SDA_HIGH();
 	if (ack)
 		write_bit(0);
 	else
@@ -263,17 +256,17 @@ uint8_t I2CBB::read(bool ack) {
 uint8_t I2CBB::read_bit() {
 	uint8_t b;
 
-	SDA_HIGH();
-	I2C_DELAY();
-	SCL_HIGH();
-	I2C_DELAY();
+	SOFT_SDA_HIGH();
+	SOFT_I2C_DELAY();
+	SOFT_SCL_HIGH();
+	SOFT_I2C_DELAY();
 
-	if (SDA_READ())
+	if (SOFT_SDA_READ())
 		b = 1;
 	else
 		b = 0;
 
-	SCL_LOW();
+	SOFT_SCL_LOW();
 	return b;
 }
 
@@ -294,15 +287,15 @@ bool I2CBB::lock() {
 
 void I2CBB::write_bit(uint8_t val) {
 	if (val) {
-		SDA_HIGH();
+		SOFT_SDA_HIGH();
 	} else {
-		SDA_LOW();
+		SOFT_SDA_LOW();
 	}
 
-	I2C_DELAY();
-	SCL_HIGH();
-	I2C_DELAY();
-	SCL_LOW();
+	SOFT_I2C_DELAY();
+	SOFT_SCL_HIGH();
+	SOFT_I2C_DELAY();
+	SOFT_SCL_LOW();
 }
 
 void I2CBB::unlock2() {

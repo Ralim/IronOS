@@ -7,12 +7,7 @@
 
 #ifndef BSP_MINIWARE_PINS_H_
 #define BSP_MINIWARE_PINS_H_
-
-#if defined(MODEL_TS100) + defined(MODEL_TS80)+defined(MODEL_TS80P) > 1
-#error "Multiple models defined!"
-#elif defined(MODEL_TS100) + defined(MODEL_TS80)+ defined(MODEL_TS80P) == 0
-#error "No model defined!"
-#endif
+#include "Model_Config.h"
 
 #ifdef MODEL_TS100
 

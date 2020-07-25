@@ -1,4 +1,5 @@
 #pragma once
+#include "Model_Config.h"
 /**
  * Configuration.h
  * Define here your default pre settings for TS80 or TS100

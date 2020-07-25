@@ -6,7 +6,8 @@
  */
 
 #include "BSP_PD.h"
-
+#include "Model_Config.h"
+#ifdef POW_PD
 /*
  * An array of all of the desired voltages & minimum currents in preferred order
  */
@@ -18,3 +19,4 @@ const uint16_t USB_PD_Desired_Levels[] = {
 
 		};
 const uint8_t USB_PD_Desired_Levels_Len = 3;
+#endif

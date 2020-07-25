@@ -14,6 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "Model_Config.h"
+#ifdef POW_PD
 #include "BSP.h"
 #include "fusb302b.h"
 #include "I2CBB.hpp"
@@ -272,3 +274,9 @@ bool fusb_read_id() {
 		return false;
 	return true;
 }
+uint8_t fusb302_detect() {
+	//Probe the I2C bus for its address
+	return I2CBB::probe(FUSB302B_ADDR);
+}
+
+#endif

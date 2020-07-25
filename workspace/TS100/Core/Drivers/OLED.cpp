@@ -191,9 +191,9 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 		offset = progress;
 
 		memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious],
-				OLED_WIDTH - progress);
+		OLED_WIDTH - progress);
 		memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious],
-				OLED_WIDTH - progress);
+		OLED_WIDTH - progress);
 
 		memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
 		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd],
@@ -213,7 +213,7 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
 }
 
 void OLED::setRotation(bool leftHanded) {
-#if defined( MODEL_TS80) +defined( MODEL_TS80P) > 0
+#ifdef OLED_FLIP
 	leftHanded = !leftHanded;
 #endif
 	if (inLeftHandedMode == leftHanded) {

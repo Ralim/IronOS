@@ -7,6 +7,7 @@
 #include "Pins.h"
 #include "main.hpp"
 #include "history.hpp"
+#include "Model_Config.h"
 #include "I2C_Wrapper.hpp"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t pendingPWM = 0;
@@ -16,7 +17,7 @@ history<uint16_t, PID_TIM_HZ> rawTempFilter = { { 0 }, 0, 0 };
 void resetWatchdog() {
 	HAL_IWDG_Refresh(&hiwdg);
 }
-#ifdef MODEL_TS80P
+#ifdef TEMP_NTC
 //Lookup table for the NTC
 //Stored as ADCReading,Temp in degC
 static const uint16_t NTCHandleLookup[] = {
@@ -85,7 +86,7 @@ static const uint16_t NTCHandleLookup[] = {
 		};
 #endif
 uint16_t getHandleTemperature() {
-#ifdef MODEL_TS80P
+#ifdef TEMP_NTC
 	//TS80P uses 100k NTC resistors instead
 	//NTCG104EF104FT1X from TDK
 	//For now not doing interpolation
@@ -97,7 +98,8 @@ uint16_t getHandleTemperature() {
 		}
 	}
 	return 0;
-#else
+#endif
+#ifdef TEMP_TMP36
 	// We return the current handle temperature in X10 C
 	// TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
 	// example) STM32 = 4096 count @ 3.3V input -> But We oversample by 32/(2^2) =
