@@ -8,8 +8,12 @@
 #include "stdlib.h"
 #include "task.h"
 #include "I2C_Wrapper.hpp"
-
+#include "fusbpd.h"
 void postRToSInit() {
 	// Any after RTos setup
 	FRToSI2C::FRToSInit();
+#ifdef POW_PD
+	//Spawn all of the USB-C processors
+	fusb302_start_processing();
+#endif
 }

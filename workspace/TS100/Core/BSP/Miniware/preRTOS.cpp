@@ -25,8 +25,5 @@ void preRToSInit() {
 	I2CBB::init();
 
 #endif
-#ifdef POW_PD
-	//Spawn all of the USB-C processors
-	fusb302_start_processing();
-#endif
+
 }

@@ -119,11 +119,11 @@
 #endif
 
 #ifdef MODEL_TS80P
-#define VOLTAGE_DIV		        768       // Default for TS80P with slightly different resistors
-#define PID_POWER_LIMIT         30        // Sets the max pwm power limit
+#define VOLTAGE_DIV		        650       // Default for TS80P with slightly different resistors
+#define PID_POWER_LIMIT         35        // Sets the max pwm power limit
 #define CALIBRATION_OFFSET      900       // the adc offset in uV
-#define POWER_LIMIT             24        // 24 watts default power limit
-#define MAX_POWER_LIMIT         30        //
+#define POWER_LIMIT             30        // 30 watts default power limit
+#define MAX_POWER_LIMIT         35        //
 #define POWER_LIMIT_STEPS       2
 #define OP_AMP_GAIN_STAGE       OP_AMP_GAIN_STAGE_TS80
 #endif

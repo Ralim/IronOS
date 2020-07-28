@@ -728,6 +728,10 @@ static void settings_setCalibrateVIN(void) {
 		case BUTTON_F_LONG:
 		case BUTTON_B_LONG:
 			saveSettings();
+			OLED::setCursor(0, 0);
+			OLED::printNumber(systemSettings.voltageDiv, 3);
+			OLED::refresh();
+			waitForButtonPressOrTimeout(100);
 			return;
 			break;
 		case BUTTON_NONE:

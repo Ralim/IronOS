@@ -32,7 +32,7 @@
 static uint8_t fusb_read_byte(uint8_t addr) {
 	uint8_t data[1];
 	if (!I2CBB::Mem_Read(FUSB302B_ADDR, addr, (uint8_t*) data, 1)) {
-		asm("bkpt");
+		return 0;
 	}
 	return data[0];
 }
@@ -74,7 +74,7 @@ static bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) {
 
 void fusb_send_message(const union pd_msg *msg) {
 	if (!I2CBB::lock2()) {
-		asm("bkpt");
+		return;
 	}
 	/* Token sequences for the FUSB302B */
 	static uint8_t sop_seq[5] = {
@@ -113,16 +113,9 @@ uint8_t fusb_read_message(union pd_msg *msg) {
 	static uint8_t garbage[4];
 	uint8_t numobj;
 
-	/* If this isn't an SOP message, return error.
-	 * Because of our configuration, we should be able to assume this means the
-	 * buffer is empty, and not try to read past a non-SOP message. */
+	// Read the header. If its not a SOP we dont actually want it at all
+	// But on some revisions of the fusb if you dont both pick them up and read them out of the fifo, it gets stuck
 	fusb_read_byte( FUSB_FIFOS);
-//	if ((fusb_read_byte( FUSB_FIFOS) & FUSB_FIFO_RX_TOKEN_BITS)
-//			!= FUSB_FIFO_RX_SOP) {
-//
-//		I2CBB::unlock2();
-//		return 1;
-//	}
 	/* Read the message header into msg */
 	fusb_read_buf( FUSB_FIFOS, 2, msg->bytes);
 	/* Get the number of data objects */
@@ -141,7 +134,7 @@ uint8_t fusb_read_message(union pd_msg *msg) {
 void fusb_send_hardrst() {
 
 	if (!I2CBB::lock2()) {
-		asm("bkpt");
+		return;
 	}
 	/* Send a hard reset */
 	fusb_write_byte( FUSB_CONTROL3, 0x07 | FUSB_CONTROL3_SEND_HARD_RESET);
@@ -161,14 +154,14 @@ void fusb_setup() {
 
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		if (!I2CBB::lock2()) {
-			asm("bkpt");
+			return;
 		}
 	}
 	/* Fully reset the FUSB302B */
 	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
-	delay_ms(2);
+	osDelay(2);
 	if (!fusb_read_id()) {
-		asm("bkpt");
+		return;
 	}
 	/* Turn on all power */
 	fusb_write_byte( FUSB_POWER, 0x0F);
@@ -192,7 +185,7 @@ void fusb_setup() {
 	/* Measure CC1 */
 	fusb_write_byte( FUSB_SWITCHES0, 0x07);
 	resetWatchdog();
-	delay_ms(1);
+	osDelay(1);
 	resetWatchdog();
 	uint8_t cc1 = fusb_read_byte( FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
 	resetWatchdog();
@@ -201,7 +194,7 @@ void fusb_setup() {
 	resetWatchdog();
 	fusb_write_byte( FUSB_SWITCHES0, 0x0B);
 	resetWatchdog();
-	delay_ms(1);
+	osDelay(1);
 	resetWatchdog();
 	uint8_t cc2 = fusb_read_byte( FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
 
@@ -214,16 +207,16 @@ void fusb_setup() {
 		fusb_write_byte( FUSB_SWITCHES0, 0x0B);
 	}
 	resetWatchdog();
-	fusb_reset();
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		I2CBB::unlock2();
 	}
+	fusb_reset();
 }
 
 void fusb_get_status(union fusb_status *status) {
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		if (!I2CBB::lock2()) {
-			asm("bkpt");
+			return;
 		}
 	}
 
@@ -238,7 +231,7 @@ void fusb_get_status(union fusb_status *status) {
 enum fusb_typec_current fusb_get_typec_current() {
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		if (!I2CBB::lock2()) {
-			asm("bkpt");
+			return fusb_tcc_none;
 		}
 	}
 	/* Read the BC_LVL into a variable */
@@ -253,7 +246,7 @@ enum fusb_typec_current fusb_get_typec_current() {
 void fusb_reset() {
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		if (!I2CBB::lock2()) {
-			asm("bkpt");
+			return;
 		}
 	}
 
