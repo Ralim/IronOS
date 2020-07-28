@@ -171,7 +171,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
 	}
 	/* If we got reset signaling, transition to default */
 	if (evt & PDB_EVT_PE_RESET) {
-		return PESinkTransitionDefault;
+		return PESinkWaitCap;
 	}
 	/* If we're too hot, we shouldn't negotiate power yet */
 	if (evt & PDB_EVT_PE_I_OVRTEMP) {
@@ -187,22 +187,22 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
 					&& PD_NUMOBJ_GET(&tempMessage) > 0) {
 				/* First, determine what PD revision we're using */
 				if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_1_0) {
-					/* If the other end is using at least version 3.0, we'll
-					 * use version 3.0. */
-					if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
-						hdr_template |= PD_SPECREV_3_0;
-						/* Otherwise, use 2.0.  Don't worry about the 1.0 case
-						 * because we don't have hardware for PD 1.0 signaling. */
-					} else {
-						hdr_template |= PD_SPECREV_2_0;
-					}
+//					/* If the other end is using at least version 3.0, we'll
+//					 * use version 3.0. */
+//					if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
+//						hdr_template |= PD_SPECREV_3_0;
+//						/* Otherwise, use 2.0.  Don't worry about the 1.0 case
+//						 * because we don't have hardware for PD 1.0 signaling. */
+//					} else {
+					hdr_template |= PD_SPECREV_2_0;
+//					}
 				}
 				return PESinkEvalCap;
 				/* If the message was a Soft_Reset, do the soft reset procedure */
 			}
 			evt = 0;
 		}
-		return PESinkWaitCap; //unknown message == soft reset
+		return PESinkWaitCap; //wait for more messages?
 
 	}
 

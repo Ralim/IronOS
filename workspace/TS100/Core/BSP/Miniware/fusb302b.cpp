@@ -149,7 +149,7 @@ void fusb_setup() {
 	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 10, 0);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 12, 0);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
@@ -157,12 +157,10 @@ void fusb_setup() {
 			return;
 		}
 	}
-	/* Fully reset the FUSB302B */
-	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
-	osDelay(2);
 	if (!fusb_read_id()) {
 		return;
 	}
+
 	/* Turn on all power */
 	fusb_write_byte( FUSB_POWER, 0x0F);
 
@@ -181,21 +179,14 @@ void fusb_setup() {
 	fusb_write_byte( FUSB_CONTROL1,
 	FUSB_CONTROL1_RX_FLUSH | FUSB_CONTROL1_ENSOP2 | FUSB_CONTROL1_ENSOP1);
 
-	resetWatchdog();
 	/* Measure CC1 */
 	fusb_write_byte( FUSB_SWITCHES0, 0x07);
-	resetWatchdog();
 	osDelay(10);
-	resetWatchdog();
 	uint8_t cc1 = fusb_read_byte( FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
-	resetWatchdog();
 
 	/* Measure CC2 */
-	resetWatchdog();
 	fusb_write_byte( FUSB_SWITCHES0, 0x0B);
-	resetWatchdog();
 	osDelay(10);
-	resetWatchdog();
 	uint8_t cc2 = fusb_read_byte( FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
 
 	/* Select the correct CC line for BMC signaling; also enable AUTO_CRC */
@@ -206,7 +197,6 @@ void fusb_setup() {
 		fusb_write_byte( FUSB_SWITCHES1, 0x26);
 		fusb_write_byte( FUSB_SWITCHES0, 0x0B);
 	}
-	resetWatchdog();
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		I2CBB::unlock2();
 	}

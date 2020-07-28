@@ -27,12 +27,7 @@ void I2CBB::init() {
 	I2CSemaphore2 = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer2);
 	unlock();
 	unlock2();
-	//unstick bus
-//	start();
-//	for (int i = 0; i < 8; i++) {
-//		read_bit();
-//	}
-//	stop();
+
 }
 
 bool I2CBB::probe(uint8_t address) {
