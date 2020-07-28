@@ -124,7 +124,6 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
 
 	ProtocolTransmit::notify(
 			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_DISCARD);
-	taskYIELD();
 
 	/* Update the stored MessageID */
 	_rx_messageid = PD_MESSAGEID_GET(&tempMessage);
