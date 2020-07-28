@@ -17,7 +17,7 @@
 
 #include "policy_engine.h"
 #include <stdbool.h>
-
+#include "int_n.h"
 #include <pd.h>
 #include "protocol_tx.h"
 #include "hard_reset.h"
@@ -49,9 +49,9 @@ void PolicyEngine::init() {
 	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
 			sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
 	//Create static thread at PDB_PRIO_PE priority
-	osThreadStaticDef(Task, pe_task, PDB_PRIO_PE, 0, TaskStackSize, TaskBuffer,
-			&TaskControlBlock);
-	TaskHandle = osThreadCreate(osThread(Task), NULL);
+	osThreadStaticDef(PolEng, pe_task, PDB_PRIO_PE, 0, TaskStackSize,
+			TaskBuffer, &TaskControlBlock);
+	TaskHandle = osThreadCreate(osThread(PolEng), NULL);
 	xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);
 }
 
@@ -73,6 +73,7 @@ void PolicyEngine::pe_task(const void *arg) {
 	for (;;) {
 		//Loop based on state
 		switch (state) {
+
 		case PESinkStartup:
 			state = pe_sink_startup();
 			break;
@@ -155,9 +156,15 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_discovery() {
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
 	/* Fetch a message from the protocol layer */
-	eventmask_t evt = waitForEvent(
-	PDB_EVT_PE_MSG_RX | PDB_EVT_PE_I_OVRTEMP | PDB_EVT_PE_RESET,
-	PD_T_TYPEC_SINK_WAIT_CAP);
+	eventmask_t evt = 0;
+	if (readMessage()) {
+		evt = PDB_EVT_PE_MSG_RX_PEND;
+	} else {
+		evt = waitForEvent(
+		PDB_EVT_PE_MSG_RX | PDB_EVT_PE_I_OVRTEMP | PDB_EVT_PE_RESET,
+		//Wait for cap timeout
+				PD_T_TYPEC_SINK_WAIT_CAP);
+	}
 	/* If we timed out waiting for Source_Capabilities, send a hard reset */
 	if (evt == 0) {
 		return PESinkHardReset;
@@ -172,36 +179,36 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
 	}
 
 	/* If we got a message */
-	if (evt & PDB_EVT_PE_MSG_RX) {
+	if (evt & (PDB_EVT_PE_MSG_RX | PDB_EVT_PE_MSG_RX_PEND)) {
 		/* Get the message */
-		readMessage();
-		/* If we got a Source_Capabilities message, read it. */
-		if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOURCE_CAPABILITIES
-				&& PD_NUMOBJ_GET(&tempMessage) > 0) {
-			/* First, determine what PD revision we're using */
-			if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_1_0) {
-				/* If the other end is using at least version 3.0, we'll
-				 * use version 3.0. */
-				if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
-					hdr_template |= PD_SPECREV_3_0;
-					/* Otherwise, use 2.0.  Don't worry about the 1.0 case
-					 * because we don't have hardware for PD 1.0 signaling. */
-				} else {
-					hdr_template |= PD_SPECREV_2_0;
+		while ((evt & PDB_EVT_PE_MSG_RX_PEND) || readMessage() == true) {
+			/* If we got a Source_Capabilities message, read it. */
+			if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOURCE_CAPABILITIES
+					&& PD_NUMOBJ_GET(&tempMessage) > 0) {
+				/* First, determine what PD revision we're using */
+				if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_1_0) {
+					/* If the other end is using at least version 3.0, we'll
+					 * use version 3.0. */
+//					if ((tempMessage.hdr & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
+//						hdr_template |= PD_SPECREV_3_0;
+//						/* Otherwise, use 2.0.  Don't worry about the 1.0 case
+//						 * because we don't have hardware for PD 1.0 signaling. */
+//					} else {
+						hdr_template |= PD_SPECREV_2_0;
+//					}
 				}
+				return PESinkEvalCap;
+				/* If the message was a Soft_Reset, do the soft reset procedure */
 			}
-			return PESinkEvalCap;
-			/* If the message was a Soft_Reset, do the soft reset procedure */
-		} else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOFT_RESET
-				&& PD_NUMOBJ_GET(&tempMessage) == 0) {
-
-			return PESinkSoftReset;
-			/* If we got an unexpected message, reset */
-		} else {
-			/* Free the received message */
-			return PESinkHardReset;
-
+//			else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOFT_RESET
+//			 && PD_NUMOBJ_GET(&tempMessage) == 0) {
+//
+//			 return PESinkSoftReset; }
+//			 /* If we got an unexpected message, reset */
+			evt = 0;
 		}
+		return PESinkSoftReset; //unknown message == soft reset
+
 	}
 
 	/* If we failed to get a message, send a hard reset */
@@ -245,16 +252,15 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 
 	/* Transmit the request */
-	ProtocolTransmit::pushMessage(&_last_dpm_request);
 	waitForEvent(0xFFFF, 0); //clear pending
+	ProtocolTransmit::pushMessage(&_last_dpm_request);
 	//Send indication that there is a message pending
 	ProtocolTransmit::notify(
 			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
-	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
-	/* Don't free the request; we might need it again */
+	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET, 1000);
 	/* If we got reset signaling, transition to default */
-	if (evt & PDB_EVT_PE_RESET) {
+	if (evt & PDB_EVT_PE_RESET || evt == 0) {
 		return PESinkTransitionDefault;
 	}
 	/* If the message transmission failed, send a hard reset */

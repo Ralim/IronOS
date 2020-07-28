@@ -97,9 +97,9 @@ ResetHandler::hardrst_state ResetHandler::hardrst_complete() {
 }
 
 void ResetHandler::init() {
-	osThreadStaticDef(Task, Thread, PDB_PRIO_PRL, 0, TaskStackSize, TaskBuffer,
+	osThreadStaticDef(rstHand, Thread, PDB_PRIO_PRL, 0, TaskStackSize, TaskBuffer,
 			&TaskControlBlock);
-	TaskHandle = osThreadCreate(osThread(Task), NULL);
+	TaskHandle = osThreadCreate(osThread(rstHand), NULL);
 }
 
 void ResetHandler::notify(uint32_t notification) {
