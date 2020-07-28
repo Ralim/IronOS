@@ -102,7 +102,6 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
  * PRL_Tx_Construct_Message state
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_message() {
-	ProtocolTransmit::Notifications evt;
 	/* Set the correct MessageID in the message */
 	temp_msg.hdr &= ~PD_HDR_MESSAGEID;
 	temp_msg.hdr |= (_tx_messageidcounter % 8) << PD_HDR_MESSAGEID_SHIFT;
