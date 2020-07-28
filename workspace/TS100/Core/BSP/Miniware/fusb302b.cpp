@@ -73,7 +73,9 @@ static bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) {
 }
 
 void fusb_send_message(const union pd_msg *msg) {
-
+	if (!I2CBB::lock2()) {
+		asm("bkpt");
+	}
 	/* Token sequences for the FUSB302B */
 	static uint8_t sop_seq[5] = {
 	FUSB_FIFO_TX_SOP1,
@@ -94,9 +96,7 @@ void fusb_send_message(const union pd_msg *msg) {
 
 	/* Set the number of bytes to be transmitted in the packet */
 	sop_seq[4] = FUSB_FIFO_TX_PACKSYM | msg_len;
-	if (!I2CBB::lock2()) {
-		asm("bkpt");
-	}
+
 	/* Write all three parts of the message to the TX FIFO */
 	fusb_write_buf( FUSB_FIFOS, 5, sop_seq);
 	fusb_write_buf( FUSB_FIFOS, msg_len, msg->bytes);
@@ -116,12 +116,13 @@ uint8_t fusb_read_message(union pd_msg *msg) {
 	/* If this isn't an SOP message, return error.
 	 * Because of our configuration, we should be able to assume this means the
 	 * buffer is empty, and not try to read past a non-SOP message. */
-	if ((fusb_read_byte( FUSB_FIFOS) & FUSB_FIFO_RX_TOKEN_BITS)
-			!= FUSB_FIFO_RX_SOP) {
-
-		I2CBB::unlock2();
-		return 1;
-	}
+	fusb_read_byte( FUSB_FIFOS);
+//	if ((fusb_read_byte( FUSB_FIFOS) & FUSB_FIFO_RX_TOKEN_BITS)
+//			!= FUSB_FIFO_RX_SOP) {
+//
+//		I2CBB::unlock2();
+//		return 1;
+//	}
 	/* Read the message header into msg */
 	fusb_read_buf( FUSB_FIFOS, 2, msg->bytes);
 	/* Get the number of data objects */
@@ -184,7 +185,8 @@ void fusb_setup() {
 	//set defaults
 	fusb_write_byte( FUSB_CONTROL2, 0x00);
 	/* Flush the RX buffer */
-	fusb_write_byte( FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
+	fusb_write_byte( FUSB_CONTROL1,
+	FUSB_CONTROL1_RX_FLUSH | FUSB_CONTROL1_ENSOP2 | FUSB_CONTROL1_ENSOP1);
 
 	resetWatchdog();
 	/* Measure CC1 */
@@ -258,9 +260,10 @@ void fusb_reset() {
 	/* Flush the TX buffer */
 	fusb_write_byte( FUSB_CONTROL0, 0x44);
 	/* Flush the RX buffer */
-	fusb_write_byte( FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
+	fusb_write_byte( FUSB_CONTROL1,
+	FUSB_CONTROL1_RX_FLUSH | FUSB_CONTROL1_ENSOP2 | FUSB_CONTROL1_ENSOP1);
 	/* Reset the PD logic */
-	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
+//	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		I2CBB::unlock2();
 	}
