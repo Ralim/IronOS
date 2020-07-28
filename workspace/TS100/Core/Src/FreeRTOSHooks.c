@@ -22,16 +22,7 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
 	*pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
 	/* place for user code */
 }
-static StaticTask_t xTimerTaskTCBBuffer;
-static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
 
-void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
-		StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize) {
-	*ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
-	*ppxTimerTaskStackBuffer = &xTimerStack[0];
-	*pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-	/* place for user code */
-}
 
 void vApplicationStackOverflowHook(xTaskHandle *pxTask,
 		signed portCHAR *pcTaskName) {

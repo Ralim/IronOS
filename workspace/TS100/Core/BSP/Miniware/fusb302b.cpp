@@ -185,7 +185,7 @@ void fusb_setup() {
 	/* Measure CC1 */
 	fusb_write_byte( FUSB_SWITCHES0, 0x07);
 	resetWatchdog();
-	osDelay(1);
+	osDelay(10);
 	resetWatchdog();
 	uint8_t cc1 = fusb_read_byte( FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
 	resetWatchdog();
@@ -194,7 +194,7 @@ void fusb_setup() {
 	resetWatchdog();
 	fusb_write_byte( FUSB_SWITCHES0, 0x0B);
 	resetWatchdog();
-	osDelay(1);
+	osDelay(10);
 	resetWatchdog();
 	uint8_t cc2 = fusb_read_byte( FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
 
