@@ -49,6 +49,7 @@ private:
 	static const size_t TaskStackSize = 1024 / 4;
 	static uint32_t TaskBuffer[TaskStackSize];
 	static osStaticThreadDef_t TaskControlBlock;
+	static bool messageSending;
 	/*
 	 * Protocol TX machine states
 	 *

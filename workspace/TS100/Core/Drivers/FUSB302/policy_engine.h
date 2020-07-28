@@ -32,6 +32,7 @@
 #define PDB_EVT_PE_HARD_SENT EVENT_MASK(4)
 #define PDB_EVT_PE_I_OVRTEMP EVENT_MASK(5)
 #define PDB_EVT_PE_PPS_REQUEST EVENT_MASK(6)
+#define PDB_EVT_PE_MSG_RX_PEND EVENT_MASK(7) /* Never SEND THIS DIRECTLY*/
 
 class PolicyEngine {
 public:
@@ -123,7 +124,7 @@ private:
 	static QueueHandle_t messagesWaiting;
 	static bool messageWaiting();
 //Read a pending message into the temp message
-	static void readMessage();
+	static bool readMessage();
 	static void start_pps_timer();
 	static void stop_pps_timer();
 
