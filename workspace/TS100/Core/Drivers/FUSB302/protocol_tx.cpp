@@ -26,7 +26,7 @@ osThreadId ProtocolTransmit::TaskHandle;
 uint32_t ProtocolTransmit::TaskBuffer[ProtocolTransmit::TaskStackSize];
 osStaticThreadDef_t ProtocolTransmit::TaskControlBlock;
 StaticQueue_t ProtocolTransmit::xStaticQueue;
-
+bool ProtocolTransmit::messageSending = false;
 uint8_t ProtocolTransmit::ucQueueStorageArea[PDB_MSG_POOL_SIZE
 		* sizeof(union pd_msg)];
 QueueHandle_t ProtocolTransmit::messagesWaiting;
@@ -67,9 +67,6 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_message()
 	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
 		return PRLTxPHYReset;
 	}
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
-		return PRLTxDiscardMessage;
-	}
 
 	/* If the policy engine is trying to send a message */
 	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX) {
@@ -87,7 +84,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_message()
 	}
 
 	/* Silence the compiler warning */
-	return PRLTxDiscardMessage;
+	return PRLTxWaitMessage;
 }
 
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
@@ -105,35 +102,24 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
  * PRL_Tx_Construct_Message state
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_message() {
-	/* Make sure nobody wants us to reset */
-	ProtocolTransmit::Notifications evt = waitForEvent(
-			(uint32_t) Notifications::PDB_EVT_PRLTX_RESET
-					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD, 0);
-
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
-		return PRLTxPHYReset;
-	}
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
-		return PRLTxDiscardMessage;
-	}
-
+	ProtocolTransmit::Notifications evt;
 	/* Set the correct MessageID in the message */
 	temp_msg.hdr &= ~PD_HDR_MESSAGEID;
 	temp_msg.hdr |= (_tx_messageidcounter % 8) << PD_HDR_MESSAGEID_SHIFT;
 
 	/* PD 3.0 collision avoidance */
-	if (PolicyEngine::isPD3_0()) {
-		/* If we're starting an AMS, wait for permission to transmit */
-		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
-				0);
-		if ((uint32_t) evt
-				& (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
-			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
-				osDelay(1);
-			}
-		}
-	}
-
+//	if (PolicyEngine::isPD3_0()) {
+//		/* If we're starting an AMS, wait for permission to transmit */
+//		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
+//				0);
+//		if ((uint32_t) evt
+//				& (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
+//			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
+//				osDelay(1);
+//			}
+//		}
+//	}
+	messageSending = true;
 	/* Send the message to the PHY */
 	fusb_send_message(&temp_msg);
 
@@ -202,6 +188,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_transmission_e
 }
 
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_message_sent() {
+	messageSending = false;
 	/* Increment MessageIDCounter */
 	_tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
@@ -213,11 +200,14 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_message_sent()
 
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_discard_message() {
 	/* If we were working on sending a message, increment MessageIDCounter */
-	_tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
+	if (messageSending) {
+		_tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
-	return PRLTxPHYReset;
+		return PRLTxPHYReset;
+	} else {
+		return PRLTxWaitMessage;
+	}
 }
-
 void ProtocolTransmit::thread(const void *args) {
 	(void) args;
 	ProtocolTransmit::protocol_tx_state state = PRLTxPHYReset;
@@ -270,7 +260,7 @@ void ProtocolTransmit::init() {
 	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
 			sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
 
-	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PE, 0, TaskStackSize,
+	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PRL, 0, TaskStackSize,
 			TaskBuffer, &TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(pd_txTask), NULL);
 	xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);

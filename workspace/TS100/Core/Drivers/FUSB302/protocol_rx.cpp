@@ -18,7 +18,7 @@
 #include "protocol_rx.h"
 
 #include <stdlib.h>
-
+#include "string.h"
 #include <pd.h>
 #include "policy_engine.h"
 #include "protocol_tx.h"
@@ -36,7 +36,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
 	/* Wait for an event */
 	_rx_messageid = 0;
 	eventmask_t evt = waitForEvent(
-	PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT);
+	PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT | PDB_EVT_PRLRX_I_RXPEND);
 
 	/* If we got a reset event, reset */
 	if (evt & PDB_EVT_PRLRX_RESET) {
@@ -48,6 +48,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
 		/* Get a buffer to read the message into.  Guaranteed to not fail
 		 * because we have a big enough pool and are careful. */
 		union pd_msg *_rx_message = &tempMessage;
+		memset(&tempMessage, 0, sizeof(tempMessage));
 		/* Read the message */
 		fusb_read_message(_rx_message);
 		/* If it's a Soft_Reset, go to the soft reset state */
@@ -58,6 +59,12 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
 			/* Otherwise, check the message ID */
 			return PRLRxCheckMessageID;
 		}
+	} else if (evt & PDB_EVT_PRLRX_I_RXPEND) {
+		//There is an RX message pending that is not a Good CRC
+		union pd_msg *_rx_message = &tempMessage;
+		/* Read the message */
+		fusb_read_message(_rx_message);
+		return PRLRxWaitPHY;
 	}
 
 	return PRLRxWaitPHY;
@@ -92,17 +99,18 @@ volatile uint32_t rxCounter = 0;
  */
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid() {
 	/* If we got a RESET signal, reset the machine */
-	if (waitForEvent(PDB_EVT_PRLRX_RESET, 0) == PDB_EVT_PRLRX_RESET) {
-		return PRLRxWaitPHY;
-	}
+//	if (waitForEvent(PDB_EVT_PRLRX_RESET, 0) == PDB_EVT_PRLRX_RESET) {
+//		return PRLRxWaitPHY;
+//	}
 	/* If the message has the stored ID, we've seen this message before.  Free
 	 * it and don't pass it to the policy engine. */
 
 	/* Otherwise, there's either no stored ID or this message has an ID we
 	 * haven't just seen.  Transition to the Store_MessageID state. */
-	if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
-		return PRLRxWaitPHY;
-	} else {
+//	if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
+//		return PRLRxWaitPHY;
+//	} else
+	{
 		rxCounter++;
 		return PRLRxStoreMessageID;
 	}
@@ -125,7 +133,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
 
 	PolicyEngine::handleMessage(&tempMessage);
 	PolicyEngine::notify(PDB_EVT_PE_MSG_RX);
-
+	taskYIELD();
 	/* Don't check if we got a RESET because we'd do nothing different. */
 
 	return PRLRxWaitPHY;
@@ -134,10 +142,10 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
 EventGroupHandle_t ProtocolReceive::xEventGroupHandle;
 StaticEventGroup_t ProtocolReceive::xCreatedEventGroup;
 void ProtocolReceive::init() {
-	osThreadStaticDef(Task, thread, PDB_PRIO_PRL, 0, TaskStackSize, TaskBuffer,
-			&TaskControlBlock);
+	osThreadStaticDef(protRX, thread, PDB_PRIO_PRL, 0, TaskStackSize,
+			TaskBuffer, &TaskControlBlock);
 	xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);
-	TaskHandle = osThreadCreate(osThread(Task), NULL);
+	TaskHandle = osThreadCreate(osThread(protRX), NULL);
 }
 
 void ProtocolReceive::thread(const void *args) {

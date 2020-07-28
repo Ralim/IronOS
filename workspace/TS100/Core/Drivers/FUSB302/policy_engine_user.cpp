@@ -296,12 +296,12 @@ bool PolicyEngine::messageWaiting() {
 	return uxQueueMessagesWaiting(messagesWaiting) > 0;
 }
 
-void PolicyEngine::readMessage() {
-	xQueueReceive(messagesWaiting, &tempMessage, 1);
+bool PolicyEngine::readMessage() {
+	return xQueueReceive(messagesWaiting, &tempMessage, 1) == pdTRUE;
 }
 
 void PolicyEngine::pdbs_dpm_transition_typec() {
-//This means PD failed, so we either have a dumb 5V only type C or a QC charger
+//This means PD failed, so we either have a dump 5V only type C or a QC charger
 //For now; treat this as failed neg
 	pdNegotiationComplete = false;
 }
