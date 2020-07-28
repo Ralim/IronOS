@@ -45,10 +45,9 @@ void InterruptHandler::Thread(const void *arg) {
 	bool notifSent = false;
 	while (true) {
 		/* If the INT_N line is low */
-		if (!notifSent) {
-			if (xTaskNotifyWait(0x00, 0x0F, NULL, 25) == pdPASS) {
-							osDelay(1);
-						}
+		if (xTaskNotifyWait(0x00, 0x0F, NULL, 200) == pdPASS) {
+			//delay slightly so we catch the crc with better timing
+			osDelay(2);
 		}
 		notifSent = false;
 		/* Read the FUSB302B status and interrupt registers */
@@ -76,16 +75,18 @@ void InterruptHandler::Thread(const void *arg) {
 		/* If the I_HARDRST or I_HARDSENT flag is set, tell the Hard Reset
 		 * thread */
 
-		events = 0;
-		if (status.interrupta & FUSB_INTERRUPTA_I_HARDRST) {
-			events |= PDB_EVT_HARDRST_I_HARDRST;
-			notifSent = true;
-		} else if (status.interrupta & FUSB_INTERRUPTA_I_HARDSENT) {
-			events |= PDB_EVT_HARDRST_I_HARDSENT;
-			notifSent = true;
-		}
-		if (events) {
-			ResetHandler::notify(events);
+		if (notifSent == false) {
+			events = 0;
+			if (status.interrupta & FUSB_INTERRUPTA_I_HARDRST) {
+				events |= PDB_EVT_HARDRST_I_HARDRST;
+				notifSent = true;
+			} else if (status.interrupta & FUSB_INTERRUPTA_I_HARDSENT) {
+				events |= PDB_EVT_HARDRST_I_HARDSENT;
+				notifSent = true;
+			}
+			if (events) {
+				ResetHandler::notify(events);
+			}
 		}
 		/* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
 		 * Engine thread */
