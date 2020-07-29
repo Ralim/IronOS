@@ -5,21 +5,22 @@
 #include "Pins.h"
 #include "fusbpd.h"
 #include "Model_Config.h"
+#include "policy_engine.h"
 #include "int_n.h"
 bool FUSB302_present = false;
-void power_probe() {
-// If TS80(p) probe for QC
-// If TS100 - noop
-#ifdef POW_QC
-
-	startQC(systemSettings.voltageDiv);
-	seekQC((systemSettings.cutoutSetting) ? 120 : 90,
-			systemSettings.voltageDiv); // this will move the QC output to the preferred voltage to start with
-
-#endif
-}
 
 void power_check() {
+#ifdef POW_PD
+	if (FUSB302_present) {
+		//Cant start QC until either PD works or fails
+		if (PolicyEngine::setupCompleteOrTimedOut() == false) {
+			return;
+		}
+		if (PolicyEngine::pdHasNegotiated()) {
+			return;
+		}
+	}
+#endif
 #ifdef POW_QC
 	QC_resync();
 #endif
@@ -32,10 +33,4 @@ uint8_t usb_pd_detect() {
 #endif
 	return false;
 }
-uint8_t pd_irq_read() {
-#ifdef POW_PD
-	return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_SET ?
-			1 : 0;
-#endif
-	return 0;
-}
+
