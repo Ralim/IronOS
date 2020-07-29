@@ -31,7 +31,6 @@
 #define PDB_EVT_PE_TX_ERR EVENT_MASK(3)
 #define PDB_EVT_PE_HARD_SENT EVENT_MASK(4)
 #define PDB_EVT_PE_I_OVRTEMP EVENT_MASK(5)
-#define PDB_EVT_PE_PPS_REQUEST EVENT_MASK(6)
 #define PDB_EVT_PE_MSG_RX_PEND EVENT_MASK(7) /* Never SEND THIS DIRECTLY*/
 
 class PolicyEngine {
@@ -44,10 +43,19 @@ public:
 	static void notify(uint32_t notification);
 	//Returns true if headers indicate PD3.0 compliant
 	static bool isPD3_0();
-
-	static void PPSTimerCallBack();
+	static bool setupCompleteOrTimedOut() {
+		if (pdNegotiationComplete)
+			return true;
+		if (state == policy_engine_state::PESinkSourceUnresponsive)
+			return true;
+		if (state == policy_engine_state::PESinkReady)
+			return true;
+		return false;
+	}
 	//Has pd negotiation completed
-	static bool pdHasNegotiated();
+	static bool pdHasNegotiated() {
+		return pdNegotiationComplete;
+	}
 private:
 	static bool pdNegotiationComplete;
 	static int current_voltage_mv; //The current voltage PD is expecting
@@ -125,8 +133,6 @@ private:
 	static bool messageWaiting();
 //Read a pending message into the temp message
 	static bool readMessage();
-	static void start_pps_timer();
-	static void stop_pps_timer();
 
 	// These callbacks are called to implement the logic for the iron to select the desired voltage
 

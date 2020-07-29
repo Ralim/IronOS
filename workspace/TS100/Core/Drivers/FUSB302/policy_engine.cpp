@@ -263,19 +263,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 		return PESinkHardReset;
 	}
 
-	/* If we're using PD 3.0 */
-	if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0) {
-		/* If the request was for a PPS APDO, start SinkPPSPeriodicTimer */
-		if (PD_RDO_OBJPOS_GET(&_last_dpm_request) >= _pps_index) {
-			start_pps_timer();
-			/* Otherwise, stop SinkPPSPeriodicTimer */
-		} else {
-			stop_pps_timer();
-		}
-	}
-	/* This will use a virtual timer to send an event flag to this thread after
-	 * PD_T_PPS_REQUEST */
-
 	/* Wait for a response */
 	evt = waitForEvent(PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET,
 	PD_T_SENDER_RESPONSE);
@@ -367,8 +354,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 
 	/* Wait for an event */
 	evt = waitForEvent(
-			PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP
-					| PDB_EVT_PE_PPS_REQUEST);
+	PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP);
 
 	/* If we got reset signaling, transition to default */
 	if (evt & PDB_EVT_PE_RESET) {
@@ -378,14 +364,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 	/* If we overheated, send a hard reset */
 	if (evt & PDB_EVT_PE_I_OVRTEMP) {
 		return PESinkHardReset;
-	}
-
-	/* If SinkPPSPeriodicTimer ran out, send a new request */
-	if (evt & PDB_EVT_PE_PPS_REQUEST) {
-		/* Tell the protocol layer we're starting an AMS */
-		ProtocolTransmit::notify(
-				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
-		return PESinkSelectCap;
 	}
 
 	/* If we received a message */
@@ -717,14 +695,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_source_unresponsive() {
 	return PESinkSourceUnresponsive;
 }
 
-void PolicyEngine::PPSTimerCallBack() {
-	notify(PDB_EVT_PE_PPS_REQUEST);
-}
-
-bool PolicyEngine::pdHasNegotiated() {
-	return pdNegotiationComplete;
-}
-
 uint32_t PolicyEngine::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
 	return xEventGroupWaitBits(xEventGroupHandle, mask, mask, pdFALSE,
 			ticksToWait);
@@ -735,8 +705,3 @@ bool PolicyEngine::isPD3_0() {
 	return (hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0;
 }
 
-void PolicyEngine::start_pps_timer() {
-}
-
-void PolicyEngine::stop_pps_timer() {
-}

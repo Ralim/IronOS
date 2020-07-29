@@ -84,7 +84,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 								PD_RDO_FV_MAX_CURRENT_SET(
 										current) | PD_RDO_FV_CURRENT_SET(current)
 										| PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(i + 1);
-
+						//We support usb comms (ish)
 						request->obj[0] |= PD_RDO_USB_COMMS;
 
 						/* Update requested voltage */
@@ -94,69 +94,10 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 					}
 				}
 			}
-#if 0
-		/* If we have a PPS APDO, our desired V lies within its range, and
-		 * its I is at least our desired I */
-		if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED
-				&& (capabilities->obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
-			int min_mv = PD_PAV2MV(
-					PD_APDO_PPS_MIN_VOLTAGE_GET(capabilities->obj[i]));
-			int max_mv = PD_PAV2MV(
-					PD_APDO_PPS_MAX_VOLTAGE_GET(capabilities->obj[i]));
-			int current = PD_CA2PAI(
-					PD_APDO_PPS_CURRENT_GET(capabilities->obj[i]));
-			/* We got what we wanted, so build a request for that */
-//
-//			request->hdr = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
-//
-//			/* Build a request */
-//			request->obj[0] =
-//					PD_RDO_PROG_CURRENT_SET(
-//							PD_CA2PAI(current)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2PRV(voltage))
-//							| PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(i + 1);
-//
-//			request->obj[0] |= PD_RDO_USB_COMMS;
-//
-//			/* Update requested voltage */
-//			_requested_voltage = PD_PRV2MV(PD_MV2PRV(voltage));
-//
-//			return true;
-		}
-#endif
+
 		}
 	}
-	/* If there's a PDO in the voltage range, use it */
-//	int8_t i = dpm_get_range_fixed_pdo_index(caps, scfg);
-//	if (i >= 0) {
-//		/* We got what we wanted, so build a request for that */
-//		request->hdr = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
-//		/* Get the current we need at this voltage */
-//		current = dpm_get_current(scfg,
-//				PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(caps->obj[i])));
-//		if (scfg->flags & PDBS_CONFIG_FLAGS_GIVEBACK) {
-//			/* GiveBack enabled */
-//			request->obj[0] =
-//					PD_RDO_FV_MIN_CURRENT_SET(
-//							DPM_MIN_CURRENT) | PD_RDO_FV_CURRENT_SET(current) | PD_RDO_NO_USB_SUSPEND
-//							| PD_RDO_GIVEBACK | PD_RDO_OBJPOS_SET(i + 1);
-//		} else {
-//			/* GiveBack disabled */
-//			request->obj[0] =
-//					PD_RDO_FV_MAX_CURRENT_SET(
-//							current) | PD_RDO_FV_CURRENT_SET(current) | PD_RDO_NO_USB_SUSPEND
-//							| PD_RDO_OBJPOS_SET(i + 1);
-//		}
-//		if (usb_comms) {
-//			request->obj[0] |= PD_RDO_USB_COMMS;
-//		}
-//
-//		/* Update requested voltage */
-//		_requested_voltage = PD_PDV2MV(
-//				PD_PDO_SRC_FIXED_VOLTAGE_GET(caps->obj[i]));
-//
-//		_capability_match = true;
-//		return true;
-//	}
+
 	/* Nothing matched (or no configuration), so get 5 V at low current */
 	request->hdr = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
 	request->obj[0] =
@@ -168,7 +109,6 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 	if (pdNegotiationComplete) {
 		request->obj[0] |= PD_RDO_CAP_MISMATCH;
 	}
-	/* If we can do USB communications, tell the power supply */
 	request->obj[0] |= PD_RDO_USB_COMMS;
 
 	/* Update requested voltage */
@@ -191,8 +131,8 @@ void PolicyEngine::pdbs_dpm_get_sink_capability(union pd_msg *cap) {
 							PD_MV2PDV(5000)) | PD_PDO_SNK_FIXED_CURRENT_SET(DPM_MIN_CURRENT);
 
 	/* Get the current we want */
-	uint16_t current = 100; // In centi-amps
-	uint16_t voltage = 9000; // in mv
+	uint16_t current = USB_PD_Desired_Levels[1] / 10; // In centi-amps
+	uint16_t voltage = USB_PD_Desired_Levels[0]; // in mv
 	/* Add a PDO for the desired power. */
 	cap->obj[numobj++] = PD_PDO_TYPE_FIXED
 			| PD_PDO_SNK_FIXED_VOLTAGE_SET(
@@ -233,15 +173,6 @@ void PolicyEngine::pdbs_dpm_get_sink_capability(union pd_msg *cap) {
 		}
 	}
 
-	/* If we're using PD 3.0, add a PPS APDO for our desired voltage */
-	if (isPD3_0()) {
-		cap->obj[numobj++] =
-				PD_PDO_TYPE_AUGMENTED | PD_APDO_TYPE_PPS
-						| PD_APDO_PPS_MAX_VOLTAGE_SET(
-								PD_MV2PAV(voltage)) | PD_APDO_PPS_MIN_VOLTAGE_SET(PD_MV2PAV(voltage))
-								| PD_APDO_PPS_CURRENT_SET(PD_CA2PAI(current));
-	}
-
 	/* Set the unconstrained power flag. */
 	if (_unconstrained_power) {
 		cap->obj[0] |= PD_PDO_SNK_FIXED_UNCONSTRAINED;
@@ -259,6 +190,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_typec_current(
 	/* We don't control the voltage anymore; it will always be 5 V. */
 	current_voltage_mv = _requested_voltage = 5000;
 	//For the soldering iron we accept this as a fallback, but it sucks
+	pdNegotiationComplete = false;
 	return true;
 }
 

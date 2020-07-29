@@ -45,7 +45,8 @@ void InterruptHandler::Thread(const void *arg) {
 	bool notifSent = false;
 	while (true) {
 		/* If the INT_N line is low */
-		if (xTaskNotifyWait(0x00, 0x0F, NULL, 200) == pdPASS) {
+		if (xTaskNotifyWait(0x00, 0x0F, NULL,
+				PolicyEngine::setupCompleteOrTimedOut() ? 1000 : 200) == pdPASS) {
 			//delay slightly so we catch the crc with better timing
 			osDelay(2);
 		}
