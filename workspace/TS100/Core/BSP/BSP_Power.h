@@ -12,9 +12,6 @@
 extern "C" {
 #endif
 
-// Called once at startup, after RToS
-// This can handle negotiations for QC/PD etc
-void power_probe();
 
 // Called periodically in the movement handling thread
 // Can be used to check any details for the power system

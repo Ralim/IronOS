@@ -51,8 +51,7 @@ uint8_t showBootLogoIfavailable();
 void delay_ms(uint16_t count) ;
 //Used to allow knowledge of if usb_pd is being used
 uint8_t usb_pd_detect();
-//Returns 0 when the irq line is pulled down
-uint8_t pd_irq_read();
+
 #ifdef __cplusplus
 }
 #endif

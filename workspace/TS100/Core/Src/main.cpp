@@ -43,17 +43,23 @@ int main(void) {
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
 	resetWatchdog();
-	usb_pd_available = true;//usb_pd_detect();
+	usb_pd_available = usb_pd_detect();
 	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
-	/*if (MMA8652FC::detect()) {
-	 PCBVersion = 1;
-	 MMA8652FC::initalize();  // this sets up the I2C registers
-	 } else if (LIS2DH12::detect()) {
-	 PCBVersion = 2;
-	 // Setup the ST Accelerometer
-	 LIS2DH12::initalize();  // startup the accelerometer
-	 } else*/{
+#ifdef ACCEL_MMA
+	if (MMA8652FC::detect()) {
+		PCBVersion = 1;
+		MMA8652FC::initalize();  // this sets up the I2C registers
+	} else
+#endif
+#ifdef ACCEL_LIS
+	if (LIS2DH12::detect()) {
+		PCBVersion = 2;
+		// Setup the ST Accelerometer
+		LIS2DH12::initalize();  // startup the accelerometer
+	} else
+#endif
+	{
 		PCBVersion = 3;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
