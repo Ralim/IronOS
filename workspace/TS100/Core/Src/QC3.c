@@ -50,7 +50,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 
 	if (Vx10 < 45)
 		return;
-	if (xTaskGetTickCount() < 100)
+	if (xTaskGetTickCount() < 1000)
 		return;
 	if (Vx10 > 130)
 		Vx10 = 130;  // Cap max value at 13V

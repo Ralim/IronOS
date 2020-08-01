@@ -291,7 +291,7 @@ static int userConfirmation(const char *message) {
 
 	for (;;) {
 		int16_t messageOffset = ((xTaskGetTickCount() - messageStart)
-				/ (systemSettings.descriptionScrollSpeed == 1 ? 1 : 2));
+				/ (systemSettings.descriptionScrollSpeed == 1 ? 10 : 20));
 		messageOffset %= messageWidth;  // Roll around at the end
 
 		if (lastOffset != messageOffset) {
@@ -646,7 +646,7 @@ static void settings_setResetSettings(void) {
 		OLED::print(ResetOKMessage);
 		OLED::refresh();
 
-		waitForButtonPressOrTimeout(200);  // 2 second timeout
+		waitForButtonPressOrTimeout(2000);  // 2 second timeout
 	}
 }
 
@@ -731,7 +731,7 @@ static void settings_setCalibrateVIN(void) {
 			OLED::setCursor(0, 0);
 			OLED::printNumber(systemSettings.voltageDiv, 3);
 			OLED::refresh();
-			waitForButtonPressOrTimeout(100);
+			waitForButtonPressOrTimeout(1000);
 			return;
 			break;
 		case BUTTON_NONE:
@@ -933,7 +933,7 @@ void gui_Menu(const menuitem *menu) {
 		OLED::setCursor(0, 0);
 		// If the user has hesitated for >=3 seconds, show the long text
 		// Otherwise "draw" the option
-		if ((xTaskGetTickCount() - lastButtonTime < 300)
+		if ((xTaskGetTickCount() - lastButtonTime < 3000)
 				|| menu[currentScreen].description == NULL) {
 			OLED::clearScreen();
 			menu[currentScreen].draw.func();
@@ -952,7 +952,7 @@ void gui_Menu(const menuitem *menu) {
 			int16_t descriptionOffset =
 					((xTaskGetTickCount() - descriptionStart)
 							/ (systemSettings.descriptionScrollSpeed == 1 ?
-									1 : 2));
+									10 : 20));
 			descriptionOffset %= descriptionWidth;	// Roll around at the end
 			if (lastOffset != descriptionOffset) {
 				OLED::clearScreen();
@@ -1040,7 +1040,7 @@ void gui_Menu(const menuitem *menu) {
 			osDelay(40);
 			lcdRefresh = false;
 		}
-		if ((xTaskGetTickCount() - lastButtonTime) > (100 * 30)) {
+		if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
 			// If user has not pressed any buttons in 30 seconds, exit back a menu layer
 			// This will trickle the user back to the main screen eventually
 			earlyExit = true;

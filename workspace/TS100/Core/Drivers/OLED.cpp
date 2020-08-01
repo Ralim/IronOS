@@ -171,7 +171,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
 	while (duration <= totalDuration) {
 		duration = xTaskGetTickCount() - start;
-		uint8_t progress = duration * 100 / totalDuration;
+		uint8_t progress = duration * 1000 / totalDuration;
 		progress = easeInOutTiming(progress);
 		progress = lerp(0, OLED_WIDTH, progress);
 		if (progress > OLED_WIDTH) {

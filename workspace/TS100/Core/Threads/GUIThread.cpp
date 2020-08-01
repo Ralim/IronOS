@@ -246,7 +246,7 @@ static void gui_solderingTempAdjust() {
 				systemSettings.SolderingTemp = 10;
 		}
 
-		if (xTaskGetTickCount() - lastChange > 200)
+		if (xTaskGetTickCount() - lastChange > 2000)
 			return;  // exit if user just doesn't press anything for a bit
 
 #ifdef OLED_FLIP
@@ -299,9 +299,10 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			return 0;
-		if ((xTaskGetTickCount() > 100)
-				&& ((accelInit && (xTaskGetTickCount() - lastMovementTime < 100))
-						|| (xTaskGetTickCount() - lastButtonTime < 100)))
+		if ((xTaskGetTickCount() > 1000)
+				&& ((accelInit
+						&& (xTaskGetTickCount() - lastMovementTime < 1000))
+						|| (xTaskGetTickCount() - lastButtonTime < 1000)))
 			return 0;  // user moved or pressed a button, go back to soldering
 #ifdef MODEL_TS100
 		if (checkVoltageForExit())
@@ -366,7 +367,7 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 		if (systemSettings.ShutdownTime) // only allow shutdown exit if time > 0
 			if (lastMovementTime)
 				if (((uint32_t) (xTaskGetTickCount() - lastMovementTime))
-						> (uint32_t) (systemSettings.ShutdownTime * 60 * 100)) {
+						> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
 					// shutdown
 					currentTempTargetDegC = 0;
 					return 1;  // we want to exit soldering mode
@@ -386,11 +387,11 @@ static void display_countdown(int sleepThres) {
 			lastButtonTime < lastMovementTime ?
 					lastMovementTime : lastButtonTime;
 	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
-	if (downCount > 9900) {
-		OLED::printNumber(downCount / 6000 + 1, 2);
+	if (downCount > 99000) {
+		OLED::printNumber(downCount / 60000 + 1, 2);
 		OLED::print(SymbolMinutes);
 	} else {
-		OLED::printNumber(downCount / 100 + 1, 2);
+		OLED::printNumber(downCount / 1000 + 1, 2);
 		OLED::print(SymbolSeconds);
 	}
 }
@@ -413,9 +414,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 	uint32_t sleepThres = 0;
 	if (systemSettings.SleepTime < 6)
-		sleepThres = systemSettings.SleepTime * 10 * 100;
+		sleepThres = systemSettings.SleepTime * 10 * 1000;
 	else
-		sleepThres = (systemSettings.SleepTime - 5) * 60 * 100;
+		sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
 	if (jumpToSleep) {
 		if (gui_SolderingSleepingMode(jumpToSleep == 2)) {
 			lastButtonTime = xTaskGetTickCount();
@@ -473,9 +474,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 			OLED::setCursor(0, 8);
 			OLED::print(SleepingTipAdvancedString);
-			// OLED::printNumber(
-			//		TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)), 5); // Draw the tip temp out finally
-
 			gui_drawTipTemp(true);
 			OLED::print(SymbolSpace);
 			printVoltage();
@@ -543,13 +541,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			lastButtonTime = xTaskGetTickCount();
 			return;
 		}
-#else
-		// on the TS80 we only want to check for over voltage to prevent tip damage
-		/*if (getInputVoltageX10(systemSettings.voltageDiv, 1) > 150) {
-		 lastButtonTime = xTaskGetTickCount();
-		 currentlyActiveTemperatureTarget = 0;
-		 return;  // Over voltage
-		 }*/
 #endif
 
 		if (systemSettings.sensitivity && systemSettings.SleepTime)
@@ -658,7 +649,7 @@ void startGUITask(void const *argument __unused) {
 	getTipRawTemp(1);  // reset filter
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
-	ticks += 400;  // 4 seconds from now
+	ticks += 4000;  // 4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
 		if (showBootLogoIfavailable() == false)
 			ticks = xTaskGetTickCount();
@@ -675,7 +666,7 @@ void startGUITask(void const *argument __unused) {
 		OLED::setCursor(0, 0);
 		OLED::print(SettingsResetMessage);
 		OLED::refresh();
-		waitForButtonPressOrTimeout(1000);
+		waitForButtonPressOrTimeout(10000);
 	}
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
