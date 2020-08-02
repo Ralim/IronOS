@@ -23,7 +23,7 @@
 #include "protocol_tx.h"
 #include "fusb302b.h"
 
-osThreadId ResetHandler::TaskHandle;
+osThreadId ResetHandler::TaskHandle = NULL;
 uint32_t ResetHandler::TaskBuffer[ResetHandler::TaskStackSize];
 osStaticThreadDef_t ResetHandler::TaskControlBlock;
 
@@ -39,7 +39,8 @@ ResetHandler::hardrst_state ResetHandler::hardrst_reset_layer() {
 		ProtocolReceive::notify( PDB_EVT_PRLRX_RESET);
 		taskYIELD();
 		/* Reset the Protocol TX machine */
-		ProtocolTransmit::notify( ProtocolTransmit::Notifications::PDB_EVT_PRLTX_RESET);
+		ProtocolTransmit::notify(
+				ProtocolTransmit::Notifications::PDB_EVT_PRLTX_RESET);
 		taskYIELD();
 		/* Continue the process based on what event started the reset. */
 		if (evt & PDB_EVT_HARDRST_RESET) {
@@ -97,13 +98,15 @@ ResetHandler::hardrst_state ResetHandler::hardrst_complete() {
 }
 
 void ResetHandler::init() {
-	osThreadStaticDef(rstHand, Thread, PDB_PRIO_PRL, 0, TaskStackSize, TaskBuffer,
-			&TaskControlBlock);
+	osThreadStaticDef(rstHand, Thread, PDB_PRIO_PRL, 0, TaskStackSize,
+			TaskBuffer, &TaskControlBlock);
 	TaskHandle = osThreadCreate(osThread(rstHand), NULL);
 }
 
 void ResetHandler::notify(uint32_t notification) {
-	xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
+	if (TaskHandle != NULL) {
+		xTaskNotify(TaskHandle, notification, eNotifyAction::eSetBits);
+	}
 }
 
 void ResetHandler::Thread(const void *arg) {

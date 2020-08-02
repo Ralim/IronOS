@@ -33,7 +33,7 @@ int8_t PolicyEngine::_hard_reset_counter;
 int8_t PolicyEngine::_old_tcc_match;
 uint8_t PolicyEngine::_pps_index;
 uint8_t PolicyEngine::_last_pps;
-osThreadId PolicyEngine::TaskHandle;
+osThreadId PolicyEngine::TaskHandle = NULL;
 uint32_t PolicyEngine::TaskBuffer[PolicyEngine::TaskStackSize];
 osStaticThreadDef_t PolicyEngine::TaskControlBlock;
 union pd_msg PolicyEngine::tempMessage;
@@ -42,8 +42,8 @@ PolicyEngine::policy_engine_state PolicyEngine::state = PESinkStartup;
 StaticQueue_t PolicyEngine::xStaticQueue;
 uint8_t PolicyEngine::ucQueueStorageArea[PDB_MSG_POOL_SIZE
 		* sizeof(union pd_msg)];
-QueueHandle_t PolicyEngine::messagesWaiting;
-EventGroupHandle_t PolicyEngine::xEventGroupHandle;
+QueueHandle_t PolicyEngine::messagesWaiting = NULL;
+EventGroupHandle_t PolicyEngine::xEventGroupHandle = NULL;
 StaticEventGroup_t PolicyEngine::xCreatedEventGroup;
 void PolicyEngine::init() {
 	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
@@ -56,7 +56,9 @@ void PolicyEngine::init() {
 }
 
 void PolicyEngine::notify(uint32_t notification) {
-	xEventGroupSetBits(xEventGroupHandle, notification);
+	if (xEventGroupHandle != NULL) {
+		xEventGroupSetBits(xEventGroupHandle, notification);
+	}
 }
 
 void PolicyEngine::pe_task(const void *arg) {
@@ -228,20 +230,14 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
 	/* New capabilities also means we can't be making a request from the
 	 * same PPS APDO */
 	_last_pps = 8;
-	/* Get a message object for the request if we don't have one already */
-
-	/* Remember the last PDO we requested if it was a PPS APDO */
-	if (PD_RDO_OBJPOS_GET(&_last_dpm_request) >= _pps_index) {
-		_last_pps = PD_RDO_OBJPOS_GET(&_last_dpm_request);
-		/* Otherwise, forget any PPS APDO we had requested */
-	} else {
-		_last_pps = 8;
-	}
 
 	/* Ask the DPM what to request */
-	pdbs_dpm_evaluate_capability(&tempMessage, &_last_dpm_request);
+	if (pdbs_dpm_evaluate_capability(&tempMessage, &_last_dpm_request)) {
 
-	return PESinkSelectCap;
+		return PESinkSelectCap;
+	}
+
+	return PESinkWaitCap;
 }
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
@@ -253,7 +249,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 	ProtocolTransmit::notify(
 			ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
 	eventmask_t evt = waitForEvent(
-	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET, 1000);
+	PDB_EVT_PE_TX_DONE | PDB_EVT_PE_TX_ERR | PDB_EVT_PE_RESET);
 	/* If we got reset signaling, transition to default */
 	if (evt & PDB_EVT_PE_RESET || evt == 0) {
 		return PESinkTransitionDefault;
@@ -281,10 +277,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 		/* If the source accepted our request, wait for the new power */
 		if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_ACCEPT
 				&& PD_NUMOBJ_GET(&tempMessage) == 0) {
-			/* Transition to Sink Standby if necessary */
-			if (PD_RDO_OBJPOS_GET(&_last_dpm_request) != _last_pps) {
-				pdbs_dpm_transition_standby();
-			}
 
 			return PESinkTransitionSink;
 			/* If the message was a Soft_Reset, do the soft reset procedure */

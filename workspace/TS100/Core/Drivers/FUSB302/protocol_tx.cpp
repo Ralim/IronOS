@@ -22,16 +22,18 @@
 #include "fusb302b.h"
 #include "fusbpd.h"
 
-osThreadId ProtocolTransmit::TaskHandle;
+osThreadId ProtocolTransmit::TaskHandle = NULL;
 uint32_t ProtocolTransmit::TaskBuffer[ProtocolTransmit::TaskStackSize];
 osStaticThreadDef_t ProtocolTransmit::TaskControlBlock;
 StaticQueue_t ProtocolTransmit::xStaticQueue;
 bool ProtocolTransmit::messageSending = false;
 uint8_t ProtocolTransmit::ucQueueStorageArea[PDB_MSG_POOL_SIZE
 		* sizeof(union pd_msg)];
-QueueHandle_t ProtocolTransmit::messagesWaiting;
+QueueHandle_t ProtocolTransmit::messagesWaiting = NULL;
 uint8_t ProtocolTransmit::_tx_messageidcounter;
 union pd_msg ProtocolTransmit::temp_msg;
+EventGroupHandle_t ProtocolTransmit::xEventGroupHandle = NULL;
+StaticEventGroup_t ProtocolTransmit::xCreatedEventGroup;
 /*
  * PRL_Tx_PHY_Layer_Reset state
  */
@@ -249,10 +251,10 @@ void ProtocolTransmit::thread(const void *args) {
 	}
 }
 
-EventGroupHandle_t ProtocolTransmit::xEventGroupHandle;
-StaticEventGroup_t ProtocolTransmit::xCreatedEventGroup;
 void ProtocolTransmit::notify(ProtocolTransmit::Notifications notification) {
-	xEventGroupSetBits(xEventGroupHandle, (uint32_t) notification);
+	if (xEventGroupHandle != NULL) {
+		xEventGroupSetBits(xEventGroupHandle, (uint32_t) notification);
+	}
 }
 
 void ProtocolTransmit::init() {
@@ -266,20 +268,29 @@ void ProtocolTransmit::init() {
 }
 
 void ProtocolTransmit::pushMessage(union pd_msg *msg) {
-	xQueueSend(messagesWaiting, msg, 100);
+	if (messagesWaiting) {
+		xQueueSend(messagesWaiting, msg, 100);
+	}
 }
 
 bool ProtocolTransmit::messagePending() {
-	return uxQueueMessagesWaiting(messagesWaiting) > 0;
+	if (messagesWaiting) {
+		return uxQueueMessagesWaiting(messagesWaiting) > 0;
+	}
 }
 
 void ProtocolTransmit::getMessage() {
 	//Loads the pending message into the buffer
-	xQueueReceive(messagesWaiting, &temp_msg, 1);
+	if (messagesWaiting) {
+		xQueueReceive(messagesWaiting, &temp_msg, 1);
+	}
 }
 
 ProtocolTransmit::Notifications ProtocolTransmit::waitForEvent(uint32_t mask,
 		uint32_t ticksToWait) {
-	return (Notifications) xEventGroupWaitBits(xEventGroupHandle, mask, mask,
-	pdFALSE, ticksToWait);
+	if (xEventGroupHandle) {
+		return (Notifications) xEventGroupWaitBits(xEventGroupHandle, mask,
+				mask,
+				pdFALSE, ticksToWait);
+	}
 }

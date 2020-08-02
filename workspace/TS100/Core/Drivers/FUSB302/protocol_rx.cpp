@@ -23,7 +23,9 @@
 #include "policy_engine.h"
 #include "protocol_tx.h"
 #include "fusb302b.h"
-osThreadId ProtocolReceive::TaskHandle;
+osThreadId ProtocolReceive::TaskHandle = NULL;
+EventGroupHandle_t ProtocolReceive::xEventGroupHandle = NULL;
+StaticEventGroup_t ProtocolReceive::xCreatedEventGroup;
 uint32_t ProtocolReceive::TaskBuffer[ProtocolReceive::TaskStackSize];
 osStaticThreadDef_t ProtocolReceive::TaskControlBlock;
 union pd_msg ProtocolReceive::tempMessage;
@@ -138,8 +140,6 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
 	return PRLRxWaitPHY;
 }
 
-EventGroupHandle_t ProtocolReceive::xEventGroupHandle;
-StaticEventGroup_t ProtocolReceive::xCreatedEventGroup;
 void ProtocolReceive::init() {
 	osThreadStaticDef(protRX, thread, PDB_PRIO_PRL, 0, TaskStackSize,
 			TaskBuffer, &TaskControlBlock);
@@ -175,10 +175,15 @@ void ProtocolReceive::thread(const void *args) {
 }
 
 void ProtocolReceive::notify(uint32_t notification) {
-	xEventGroupSetBits(xEventGroupHandle, notification);
+	if (xEventGroupHandle != NULL) {
+		xEventGroupSetBits(xEventGroupHandle, notification);
+	}
 }
 
 uint32_t ProtocolReceive::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
-	return xEventGroupWaitBits(xEventGroupHandle, mask, mask,
-	pdFALSE, ticksToWait);
+	if (xEventGroupHandle != NULL) {
+		return xEventGroupWaitBits(xEventGroupHandle, mask, mask,
+		pdFALSE, ticksToWait);
+	}
+	return 0;
 }

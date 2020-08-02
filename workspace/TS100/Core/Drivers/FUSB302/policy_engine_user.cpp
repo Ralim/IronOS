@@ -114,7 +114,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 	/* Update requested voltage */
 	_requested_voltage = 5000;
 
-	/* At this point, we have a capability match iff the output is disabled */
+
 	return false;
 }
 
@@ -194,9 +194,6 @@ bool PolicyEngine::pdbs_dpm_evaluate_typec_current(
 	return true;
 }
 
-void PolicyEngine::pdbs_dpm_pd_start() {
-//PD neg is starting
-}
 
 void PolicyEngine::pdbs_dpm_transition_default() {
 	/* Cast the dpm_data to the right type */
@@ -207,13 +204,8 @@ void PolicyEngine::pdbs_dpm_transition_default() {
 	pdNegotiationComplete = false;
 }
 
-void PolicyEngine::pdbs_dpm_transition_min() {
-}
 
-void PolicyEngine::pdbs_dpm_transition_standby() {
-	/* If the voltage is changing, enter Sink Standby */
 
-}
 
 void PolicyEngine::pdbs_dpm_transition_requested() {
 	/* Cast the dpm_data to the right type */
@@ -229,7 +221,7 @@ bool PolicyEngine::messageWaiting() {
 }
 
 bool PolicyEngine::readMessage() {
-	return xQueueReceive(messagesWaiting, &tempMessage, 1) == pdTRUE;
+	return xQueueReceive(messagesWaiting, &tempMessage,0) == pdTRUE;
 }
 
 void PolicyEngine::pdbs_dpm_transition_typec() {
