@@ -15,7 +15,7 @@ const uint16_t USB_PD_Desired_Levels[] = {
 //mV desired input, mA minimum required current
 		12000, 2000, //12V @ 2A
 		9000, 2000, //9V @ 2A
-		5000, 1100, //5V @ 1.1A
+		5000, 100, //5V @ whatever
 
 		};
 const uint8_t USB_PD_Desired_Levels_Len = 3;
