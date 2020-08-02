@@ -157,6 +157,9 @@ void fusb_setup() {
 			return;
 		}
 	}
+	/* Fully reset the FUSB302B */
+	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
+	osDelay(2);
 	if (!fusb_read_id()) {
 		return;
 	}
@@ -177,7 +180,7 @@ void fusb_setup() {
 	fusb_write_byte( FUSB_CONTROL2, 0x00);
 	/* Flush the RX buffer */
 	fusb_write_byte( FUSB_CONTROL1,
-	FUSB_CONTROL1_RX_FLUSH | FUSB_CONTROL1_ENSOP2 | FUSB_CONTROL1_ENSOP1);
+	FUSB_CONTROL1_RX_FLUSH);
 
 	/* Measure CC1 */
 	fusb_write_byte( FUSB_SWITCHES0, 0x07);
@@ -243,8 +246,7 @@ void fusb_reset() {
 	/* Flush the TX buffer */
 	fusb_write_byte( FUSB_CONTROL0, 0x44);
 	/* Flush the RX buffer */
-	fusb_write_byte( FUSB_CONTROL1,
-	FUSB_CONTROL1_RX_FLUSH | FUSB_CONTROL1_ENSOP2 | FUSB_CONTROL1_ENSOP1);
+	fusb_write_byte( FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
 	/* Reset the PD logic */
 //	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
