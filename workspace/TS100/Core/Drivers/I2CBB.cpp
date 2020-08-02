@@ -17,14 +17,19 @@ void I2CBB::init() {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
-	GPIO_InitStruct.Pin = SDA2_Pin | SCL2_Pin;
+	GPIO_InitStruct.Pin = SDA2_Pin ;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(SDA2_GPIO_Port, &GPIO_InitStruct);
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+	GPIO_InitStruct.Pin =  SCL2_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(SCL2_GPIO_Port, &GPIO_InitStruct);
 	SOFT_SDA_HIGH();
 	SOFT_SCL_HIGH();
-	I2CSemaphore = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer);
-	I2CSemaphore2 = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer2);
+	I2CSemaphore = xSemaphoreCreateMutexStatic (&xSemaphoreBuffer);
+	I2CSemaphore2 = xSemaphoreCreateMutexStatic (&xSemaphoreBuffer2);
 	unlock();
 	unlock2();
 
@@ -274,9 +279,6 @@ bool I2CBB::lock() {
 		asm("bkpt");
 	}
 	bool a = xSemaphoreTake(I2CSemaphore, (TickType_t) 100) == pdTRUE;
-	if (!a) {
-		asm("bkpt");
-	}
 	return a;
 }
 
@@ -302,9 +304,7 @@ bool I2CBB::lock2() {
 		asm("bkpt");
 	}
 	bool a = xSemaphoreTake(I2CSemaphore2, (TickType_t) 500) == pdTRUE;
-	if (!a) {
-		asm("bkpt");
-	}
+
 	return a;
 }
 #endif
