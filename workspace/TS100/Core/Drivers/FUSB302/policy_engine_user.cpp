@@ -114,7 +114,6 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(
 	/* Update requested voltage */
 	_requested_voltage = 5000;
 
-
 	return false;
 }
 
@@ -186,6 +185,7 @@ void PolicyEngine::pdbs_dpm_get_sink_capability(union pd_msg *cap) {
 
 bool PolicyEngine::pdbs_dpm_evaluate_typec_current(
 		enum fusb_typec_current tcc) {
+	(void) tcc;
 	//This is for evaluating 5V static current advertised by resistors
 	/* We don't control the voltage anymore; it will always be 5 V. */
 	current_voltage_mv = _requested_voltage = 5000;
@@ -193,7 +193,6 @@ bool PolicyEngine::pdbs_dpm_evaluate_typec_current(
 	pdNegotiationComplete = false;
 	return true;
 }
-
 
 void PolicyEngine::pdbs_dpm_transition_default() {
 	/* Cast the dpm_data to the right type */
@@ -203,9 +202,6 @@ void PolicyEngine::pdbs_dpm_transition_default() {
 	/* Turn the output off */
 	pdNegotiationComplete = false;
 }
-
-
-
 
 void PolicyEngine::pdbs_dpm_transition_requested() {
 	/* Cast the dpm_data to the right type */
@@ -221,7 +217,7 @@ bool PolicyEngine::messageWaiting() {
 }
 
 bool PolicyEngine::readMessage() {
-	return xQueueReceive(messagesWaiting, &tempMessage,0) == pdTRUE;
+	return xQueueReceive(messagesWaiting, &tempMessage, 0) == pdTRUE;
 }
 
 void PolicyEngine::pdbs_dpm_transition_typec() {

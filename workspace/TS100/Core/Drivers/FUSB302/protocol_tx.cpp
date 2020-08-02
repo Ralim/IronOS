@@ -277,6 +277,7 @@ bool ProtocolTransmit::messagePending() {
 	if (messagesWaiting) {
 		return uxQueueMessagesWaiting(messagesWaiting) > 0;
 	}
+	return false;
 }
 
 void ProtocolTransmit::getMessage() {
@@ -293,4 +294,5 @@ ProtocolTransmit::Notifications ProtocolTransmit::waitForEvent(uint32_t mask,
 				mask,
 				pdFALSE, ticksToWait);
 	}
+	return (Notifications)0;
 }
