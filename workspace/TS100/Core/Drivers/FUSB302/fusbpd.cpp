@@ -23,7 +23,6 @@ void fusb302_start_processing() {
 	/* Initialize the FUSB302B */
 	resetWatchdog();
 	fusb_setup();
-	osDelay(50);
 	resetWatchdog();
 	/* Create the policy engine thread. */
 	PolicyEngine::init();
