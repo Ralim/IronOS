@@ -6,7 +6,7 @@
 extern uint8_t PCBVersion;
 extern uint32_t currentTempTargetDegC;
 extern bool settingsWereReset;
-
+extern bool usb_pd_available;
 #ifdef __cplusplus
 extern "C" {
 #endif

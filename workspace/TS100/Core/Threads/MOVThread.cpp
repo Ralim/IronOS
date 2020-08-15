@@ -25,7 +25,6 @@ uint32_t lastMovementTime = 0;
 void startMOVTask(void const *argument __unused) {
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	postRToSInit();
-	power_probe();
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
 	int16_t datay[MOVFilter] = { 0 };
@@ -39,13 +38,20 @@ void startMOVTask(void const *argument __unused) {
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
-
+#ifdef ACCEL_LIS
 		if (PCBVersion == 2) {
 			LIS2DH12::getAxisReadings(tx, ty, tz);
 			rotation = LIS2DH12::getOrientation();
-		} else if (PCBVersion == 1) {
+		} else
+#endif
+#ifdef ACCEL_MMA
+			if (PCBVersion == 1) {
 			MMA8652FC::getAxisReadings(tx, ty, tz);
 			rotation = MMA8652FC::getOrientation();
+		}else
+#endif
+		{
+			//do nothing :(
 		}
 		if (systemSettings.OrientationMode == 2) {
 			if (rotation != ORIENTATION_FLAT) {

@@ -24,6 +24,7 @@ void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c);
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
+void HAL_GPIO_EXTI_Callback(uint16_t);
 
 #ifdef __cplusplus
 }

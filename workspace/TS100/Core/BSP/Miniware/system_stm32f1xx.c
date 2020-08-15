@@ -11,6 +11,7 @@
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
 /* #define DATA_IN_ExtSRAM */
 #endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
+//#define LOCAL_BUILD
 #ifndef LOCAL_BUILD
 #define VECT_TAB_OFFSET  0x00004000U /*!< Vector Table base offset field.
                                   This value must be a multiple of 0x200. */

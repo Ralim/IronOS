@@ -14,8 +14,8 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "Settings.h"
-static TickType_t powerPulseRate = 1000;
-static TickType_t powerPulseDuration = 50;
+static TickType_t powerPulseRate = 10000;
+static TickType_t powerPulseDuration = 250;
 TaskHandle_t pidTaskNotification = NULL;
 uint32_t currentTempTargetDegC = 0; // Current temperature target in C
 

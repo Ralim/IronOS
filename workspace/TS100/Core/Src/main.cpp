@@ -13,7 +13,7 @@
 #include "cmsis_os.h"
 uint8_t PCBVersion = 0;
 // File local variables
-
+bool usb_pd_available = false;
 bool settingsWereReset = false;
 // FreeRTOS variables
 
@@ -43,21 +43,28 @@ int main(void) {
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
 	resetWatchdog();
+	usb_pd_available = usb_pd_detect();
+	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
+#ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
 		PCBVersion = 1;
 		MMA8652FC::initalize();  // this sets up the I2C registers
-	} else if (LIS2DH12::detect()) {
+	} else
+#endif
+#ifdef ACCEL_LIS
+	if (LIS2DH12::detect()) {
 		PCBVersion = 2;
 		// Setup the ST Accelerometer
 		LIS2DH12::initalize();  // startup the accelerometer
-	} else {
+	} else
+#endif
+	{
 		PCBVersion = 3;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
 	}
-
 	resetWatchdog();
 
 	/* Create the thread(s) */

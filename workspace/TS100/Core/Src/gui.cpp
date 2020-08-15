@@ -120,14 +120,14 @@ static void settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[] {
-/*
- * Power Source
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
+		/*
+		 * Power Source
+		 * Soldering Menu
+		 * Power Saving Menu
+		 * UI Menu
+		 * Advanced Menu
+		 * Exit
+		 */
 #ifdef MODEL_TS100
 		{ (const char*) SettingsDescriptions[0], { settings_setInputVRange }, {
 				settings_displayInputVRange } }, /*Voltage input*/
@@ -291,7 +291,7 @@ static int userConfirmation(const char *message) {
 
 	for (;;) {
 		int16_t messageOffset = ((xTaskGetTickCount() - messageStart)
-				/ (systemSettings.descriptionScrollSpeed == 1 ? 1 : 2));
+				/ (systemSettings.descriptionScrollSpeed == 1 ? 10 : 20));
 		messageOffset %= messageWidth;  // Roll around at the end
 
 		if (lastOffset != messageOffset) {
@@ -353,8 +353,7 @@ static void settings_setInputPRange(void) {
 static void settings_displayInputPRange(void) {
 	printShortDescription(0, 5);
 	//0 = 9V, 1=12V (Fixed Voltages, these imply 1.5A limits)
-	//2 = 18W, 2=24W (Auto Adjusting V, estimated from the tip resistance???) # TODO
-	// Need to come back and look at these ^ as there were issues with voltage hunting
+	/// TODO TS80P
 	switch (systemSettings.cutoutSetting) {
 	case 0:
 		OLED::printNumber(9, 2);
@@ -647,7 +646,7 @@ static void settings_setResetSettings(void) {
 		OLED::print(ResetOKMessage);
 		OLED::refresh();
 
-		waitForButtonPressOrTimeout(200);  // 2 second timeout
+		waitForButtonPressOrTimeout(2000);  // 2 second timeout
 	}
 }
 
@@ -729,6 +728,10 @@ static void settings_setCalibrateVIN(void) {
 		case BUTTON_F_LONG:
 		case BUTTON_B_LONG:
 			saveSettings();
+			OLED::setCursor(0, 0);
+			OLED::printNumber(systemSettings.voltageDiv, 3);
+			OLED::refresh();
+			waitForButtonPressOrTimeout(1000);
 			return;
 			break;
 		case BUTTON_NONE:
@@ -740,7 +743,7 @@ static void settings_setCalibrateVIN(void) {
 		osDelay(40);
 
 		// Cap to sensible values
-#ifdef MODEL_TS80
+#if defined(MODEL_TS80)+defined(MODEL_TS80P)>0
 		if (systemSettings.voltageDiv < 500) {
 			systemSettings.voltageDiv = 500;
 		} else if (systemSettings.voltageDiv > 900) {
@@ -930,7 +933,7 @@ void gui_Menu(const menuitem *menu) {
 		OLED::setCursor(0, 0);
 		// If the user has hesitated for >=3 seconds, show the long text
 		// Otherwise "draw" the option
-		if ((xTaskGetTickCount() - lastButtonTime < 300)
+		if ((xTaskGetTickCount() - lastButtonTime < 3000)
 				|| menu[currentScreen].description == NULL) {
 			OLED::clearScreen();
 			menu[currentScreen].draw.func();
@@ -949,7 +952,7 @@ void gui_Menu(const menuitem *menu) {
 			int16_t descriptionOffset =
 					((xTaskGetTickCount() - descriptionStart)
 							/ (systemSettings.descriptionScrollSpeed == 1 ?
-									1 : 2));
+									10 : 20));
 			descriptionOffset %= descriptionWidth;	// Roll around at the end
 			if (lastOffset != descriptionOffset) {
 				OLED::clearScreen();
@@ -1037,7 +1040,7 @@ void gui_Menu(const menuitem *menu) {
 			osDelay(40);
 			lcdRefresh = false;
 		}
-		if ((xTaskGetTickCount() - lastButtonTime) > (100 * 30)) {
+		if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
 			// If user has not pressed any buttons in 30 seconds, exit back a menu layer
 			// This will trickle the user back to the main screen eventually
 			earlyExit = true;

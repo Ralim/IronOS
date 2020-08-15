@@ -7,6 +7,7 @@
 #include "Pins.h"
 #include "main.hpp"
 #include "history.hpp"
+#include "Model_Config.h"
 #include "I2C_Wrapper.hpp"
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t pendingPWM = 0;
@@ -16,8 +17,89 @@ history<uint16_t, PID_TIM_HZ> rawTempFilter = { { 0 }, 0, 0 };
 void resetWatchdog() {
 	HAL_IWDG_Refresh(&hiwdg);
 }
-
+#ifdef TEMP_NTC
+//Lookup table for the NTC
+//Stored as ADCReading,Temp in degC
+static const uint16_t NTCHandleLookup[] = {
+//ADC Reading , Temp in C
+		29189, 0, //
+		29014, 1, //
+		28832, 2, //
+		28644, 3, //
+		28450, 4, //
+		28249, 5, //
+		28042, 6, //
+		27828, 7, //
+		27607, 8, //
+		27380, 9, //
+		27146, 10, //
+		26906, 11, //
+		26660, 12, //
+		26407, 13, //
+		26147, 14, //
+		25882, 15, //
+		25610, 16, //
+		25332, 17, //
+		25049, 18, //
+		24759, 19, //
+		24465, 20, //
+		24164, 21, //
+		23859, 22, //
+		23549, 23, //
+		23234, 24, //
+		22915, 25, //
+		22591, 26, //
+		22264, 27, //
+		21933, 28, //
+		21599, 29, //
+//		21261, 30, //
+//		20921, 31, //
+//		20579, 32, //
+//		20234, 33, //
+//		19888, 34, //
+//		19541, 35, //
+//		19192, 36, //
+//		18843, 37, //
+//		18493, 38, //
+//		18143, 39, //
+//		17793, 40, //
+//		17444, 41, //
+//		17096, 42, //
+//		16750, 43, //
+//		16404, 44, //
+//		16061, 45, //
+//		15719, 46, //
+//		15380, 47, //
+//		15044, 48, //
+//		14710, 49, //
+//		14380, 50, //
+//		14053, 51, //
+//		13729, 52, //
+//		13410, 53, //
+//		13094, 54, //
+//		12782, 55, //
+//		12475, 56, //
+//		12172, 57, //
+//		11874, 58, //
+//		11580, 59, //
+//		11292, 60, //
+		};
+#endif
 uint16_t getHandleTemperature() {
+#ifdef TEMP_NTC
+	//TS80P uses 100k NTC resistors instead
+	//NTCG104EF104FT1X from TDK
+	//For now not doing interpolation
+	int32_t result = getADC(0);
+	for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t)));
+			i++) {
+		if (result > NTCHandleLookup[(i * 2) + 0]) {
+			return NTCHandleLookup[(i * 2) + 1] * 10;
+		}
+	}
+	return 0;
+#endif
+#ifdef TEMP_TMP36
 	// We return the current handle temperature in X10 C
 	// TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
 	// example) STM32 = 4096 count @ 3.3V input -> But We oversample by 32/(2^2) =
@@ -32,14 +114,15 @@ uint16_t getHandleTemperature() {
 	result *= 100;
 	result /= 993;
 	return result;
+#endif
 }
 
 uint16_t getTipInstantTemperature() {
 	uint16_t sum = 0;	// 12 bit readings * 8 -> 15 bits
 	uint16_t readings[8];
-	//Looking to reject the highest outlier readings.
-	//As on some hardware these samples can run into the op-amp recovery time
-	//Once this time is up the signal stabilises quickly, so no need to reject minimums
+//Looking to reject the highest outlier readings.
+//As on some hardware these samples can run into the op-amp recovery time
+//Once this time is up the signal stabilises quickly, so no need to reject minimums
 	readings[0] = hadc1.Instance->JDR1;
 	readings[1] = hadc1.Instance->JDR2;
 	readings[2] = hadc1.Instance->JDR3;
@@ -66,10 +149,10 @@ uint16_t getTipRawTemp(uint8_t refresh) {
 }
 
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
-	// ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
-	// Therefore we can divide down from there
-	// Multiplying ADC max by 4 for additional calibration options,
-	// ideal term is 467
+// ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
+// Therefore we can divide down from there
+// Multiplying ADC max by 4 for additional calibration options,
+// ideal term is 467
 #ifdef MODEL_TS100
 #define BATTFILTERDEPTH 32
 #else
@@ -94,6 +177,9 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 		sum += samples[i];
 
 	sum /= BATTFILTERDEPTH;
+	if (divisor == 0) {
+		divisor = 1;
+	}
 	return sum * 4 / divisor;
 }
 
@@ -140,13 +226,13 @@ void unstick_I2C() {
 	int timeout = 100;
 	int timeout_cnt = 0;
 
-	// 1. Clear PE bit.
+// 1. Clear PE bit.
 	hi2c1.Instance->CR1 &= ~(0x0001);
 	/**I2C1 GPIO Configuration
 	 PB6     ------> I2C1_SCL
 	 PB7     ------> I2C1_SDA
 	 */
-	//  2. Configure the SCL and SDA I/Os as General Purpose Output Open-Drain, High level (Write 1 to GPIOx_ODR).
+//  2. Configure the SCL and SDA I/Os as General Purpose Output Open-Drain, High level (Write 1 to GPIOx_ODR).
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -173,7 +259,7 @@ void unstick_I2C() {
 			return;
 	}
 
-	// 12. Configure the SCL and SDA I/Os as Alternate function Open-Drain.
+// 12. Configure the SCL and SDA I/Os as Alternate function Open-Drain.
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -187,20 +273,20 @@ void unstick_I2C() {
 	HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(SDA_GPIO_Port, SDA_Pin, GPIO_PIN_SET);
 
-	// 13. Set SWRST bit in I2Cx_CR1 register.
+// 13. Set SWRST bit in I2Cx_CR1 register.
 	hi2c1.Instance->CR1 |= 0x8000;
 
 	asm("nop");
 
-	// 14. Clear SWRST bit in I2Cx_CR1 register.
+// 14. Clear SWRST bit in I2Cx_CR1 register.
 	hi2c1.Instance->CR1 &= ~0x8000;
 
 	asm("nop");
 
-	// 15. Enable the I2C peripheral by setting the PE bit in I2Cx_CR1 register
+// 15. Enable the I2C peripheral by setting the PE bit in I2Cx_CR1 register
 	hi2c1.Instance->CR1 |= 0x0001;
 
-	// Call initialization function.
+// Call initialization function.
 	HAL_I2C_Init(&hi2c1);
 }
 
@@ -214,6 +300,7 @@ uint8_t getButtonB() {
 }
 
 void reboot() {
+
 	NVIC_SystemReset();
 }
 

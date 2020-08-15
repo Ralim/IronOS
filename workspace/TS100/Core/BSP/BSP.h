@@ -2,7 +2,7 @@
 #include "BSP_Power.h"
 #include "BSP_QC.h"
 #include "Defines.h"
-#include "UnitSettings.h"
+#include "Model_Config.h"
 #include "stdint.h"
 /*
  * BSP.h -- Board Support
@@ -47,8 +47,11 @@ void reboot();
 // If the user has programmed in a bootup logo, draw it to the screen from flash
 // Returns 1 if the logo was printed so that the unit waits for the timeout or button
 uint8_t showBootLogoIfavailable();
+//delay wrapper for delay using the hardware timer (used before RTOS)
+void delay_ms(uint16_t count) ;
+//Used to allow knowledge of if usb_pd is being used
+uint8_t usb_pd_detect();
 
-void delay_ms(uint16_t count);
 #ifdef __cplusplus
 }
 #endif

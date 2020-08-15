@@ -3479,6 +3479,7 @@ void HAL_I2C_EV_IRQHandler(I2C_HandleTypeDef *hi2c)
     }
   }
   /* Slave mode selected */
+#if 0
   else
   {
     /* ADDR set --------------------------------------------------------------*/
@@ -3520,6 +3521,7 @@ void HAL_I2C_EV_IRQHandler(I2C_HandleTypeDef *hi2c)
       }
     }
   }
+#endif
 }
 
 /**

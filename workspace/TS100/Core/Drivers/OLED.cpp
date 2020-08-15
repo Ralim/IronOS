@@ -171,7 +171,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
 	while (duration <= totalDuration) {
 		duration = xTaskGetTickCount() - start;
-		uint8_t progress = duration * 100 / totalDuration;
+		uint8_t progress = duration * 1000 / totalDuration;
 		progress = easeInOutTiming(progress);
 		progress = lerp(0, OLED_WIDTH, progress);
 		if (progress > OLED_WIDTH) {
@@ -191,9 +191,9 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 		offset = progress;
 
 		memmove(&firstStripPtr[oldStart], &firstStripPtr[oldPrevious],
-				OLED_WIDTH - progress);
+		OLED_WIDTH - progress);
 		memmove(&secondStripPtr[oldStart], &secondStripPtr[oldPrevious],
-				OLED_WIDTH - progress);
+		OLED_WIDTH - progress);
 
 		memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
 		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd],
@@ -213,7 +213,7 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
 }
 
 void OLED::setRotation(bool leftHanded) {
-#ifdef MODEL_TS80
+#ifdef OLED_FLIP
 	leftHanded = !leftHanded;
 #endif
 	if (inLeftHandedMode == leftHanded) {

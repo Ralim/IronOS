@@ -338,7 +338,6 @@
  #include "stm32f1xx_hal_hcd.h"
 #endif /* HAL_HCD_MODULE_ENABLED */   
    
-
 /* Exported macro ------------------------------------------------------------*/
 #ifdef  USE_FULL_ASSERT
 /**

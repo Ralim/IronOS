@@ -12,8 +12,8 @@
 #include "BSP.h"
 
 #define PRESS_ACCEL_STEP			3
-#define PRESS_ACCEL_INTERVAL_MIN	10
-#define PRESS_ACCEL_INTERVAL_MAX	30
+#define PRESS_ACCEL_INTERVAL_MIN	100
+#define PRESS_ACCEL_INTERVAL_MAX	300
 
 //GUI holds the menu structure and all its methods for the menu itself
 
