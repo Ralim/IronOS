@@ -126,7 +126,6 @@ GCOV=$(COMPILER_PREFIX)-gcov
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
-GDB=./tools/riscv-none-embed-gcc/8.3.0-1.1/bin/riscv-none-embed-gdb
 SREC=srec_cat
 SREC_INFO=srec_info
 
