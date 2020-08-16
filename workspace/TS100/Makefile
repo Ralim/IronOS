@@ -7,39 +7,84 @@ ifndef lang
 lang:= EN
 endif
 
-# Discover the source files to build
-SOURCE := $(shell find . -type f -name '*.c')
-SOURCE_CPP := $(shell find . -type f -name '*.cpp')
-SOURCES := $(shell find . -type f -name '*.c*')
-S_SRCS := $(shell find . -type f -name '*.s') 
 
+
+# Discover the source files to build
+
+
+# Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
-CMSIS_DEVICE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
+INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
 HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
 HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
-FRTOS_GCC_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3
 DRIVER_INC_DIR =./Core/Drivers
-FUSB_DRIVERS_INC_DIR = ./Core/Drivers/FUSB302
 BSP_INC_DIR = ./Core/BSP
-MINIWARE_INC_DIR = ./Core/BSP/Miniware
 THREADS_INC_DIR = ./Core/Threads
+MINIWARE_INC_DIR = ./Core/BSP/Miniware
+PINE_INC_DIR = ./Core/BSP/Pine64
+PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/Lib
+PINE_RISCV_INC_DIR = ./Core/BSP/Pine64/Vendor/RISCV
+SOURCE_THREADS_DIR = ./Core/Threads
+SOURCE_CORE_DIR = ./Core/Src
+SOURCE_DRIVERS_DIR = ./Core/Drivers
+INC_PD_DRIVERS_DIR = ./Core/Drivers/FUSB302
+SOURCE_MIDDLEWARES_DIR = ./Middlewares
 
-INCLUDES = -I$(APP_INC_DIR)	\
-	-I$(CMSIS_DEVICE_INC_DIR)\
+# Device dependent settings
+ifeq ($(model),$(filter $(model),TS100 TS80))
+$(info Building for Miniware )
+DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
+	-I$(INC_CMSIS_DEVICE)\
 	-I$(CMSIS_CORE_INC_DIR)	\
 	-I$(HAL_INC_DIR)	\
 	-I$(HAL_LEGACY_INC_DIR)	\
+	-I$(INC_PD_DRIVERS_DIR)
+DEVICE_BSP_DIR = ./Core/BSP/Miniware
+S_SRCS := ./Startup/startup_stm32f103t8ux.S
+LDSCRIPT=stm32f103.ld
+DEV_LDFLAGS=
+DEV_AFLAGS= 
+DEV_CFLAGS= 
+DEV_CXXFLAGS= 
+endif
+
+ifeq ($(model),Pinecil)
+DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
+-I$(PINE_INC_DIR)/N200 \
+	-I$(PINE_VENDOR_INC_DIR) \
+	-I$(PINE_RISCV_INC_DIR)
+	
+DEVICE_BSP_DIR = ./Core/BSP/Pine64
+S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.s')
+ASM_INC = -I$(PINE_RISCV_INC_DIR)
+LDSCRIPT=GD32VF103x8.ld
+DEV_LDFLAGS=-nostartfiles
+DEV_AFLAGS = -msmall-data-limit=8 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
+DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
+DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
+endif
+
+INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(FRTOS_CMIS_INC_DIR)	\
 	-I$(FRTOS_INC_DIR)	\
-	-I$(FRTOS_GCC_INC_DIR) \
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
-	-I$(MINIWARE_INC_DIR) \
 	-I$(THREADS_INC_DIR) \
-	-I$(FUSB_DRIVERS_INC_DIR)
+	  $(DEVICE_INCLUDES) 
+	  
+SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
+$(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
+$(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
+$(shell find $(DEVICE_BSP_DIR) -type f -name '*.c') \
+$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') 
+SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
+$(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
+$(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.cpp') \
+$(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
+$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp') 
 # output folder
 HEXFILE_DIR=Hexfile
 
@@ -47,61 +92,75 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
+OPTIM_AS= -Wall 
 OPTIM=-Os -flto -ffat-lto-objects -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model)
+GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD		\
 
 # Enable debug code generation
 DEBUG=-g3
-# Without debug code
-#DEBUG=
-
 	
 # libs -------------------------------------------------------------------------
 LIBS=
 
-# linker script ----------------------------------------------------------------
-LDSCRIPT=LinkerScript.ld
 
 # ------------------------------------------------------------------------------
 COMPILER=gcc
-# arm-none is the general ARM compiler, 
-COMPILER_PREFIX=arm-none
+# arm-none-eabi is the general ARM compiler, 
+#riscv-none-embed- is the riscv compiler
+ifeq ($(model),$(filter $(model),TS100 TS80))
+COMPILER_PREFIX=arm-none-eabi
+endif
+ifeq ($(model),Pinecil)
+COMPILER_PREFIX=riscv-nuclei-elf
+endif
 # programs ---------------------------------------------------------------------
-CC=$(COMPILER_PREFIX)-eabi-gcc
-CPP=$(COMPILER_PREFIX)-eabi-g++
-AS=$(COMPILER_PREFIX)-eabi-as
-GCOV=$(COMPILER_PREFIX)-eabi-gcov
-OBJCOPY=$(COMPILER_PREFIX)-eabi-objcopy
-OBJDUMP=$(COMPILER_PREFIX)-eabi-objdump
-SIZE=$(COMPILER_PREFIX)-eabi-size
+CC=$(COMPILER_PREFIX)-gcc
+CPP=$(COMPILER_PREFIX)-g++
+AS=$(COMPILER_PREFIX)-as
+GCOV=$(COMPILER_PREFIX)-gcov
+OBJCOPY=$(COMPILER_PREFIX)-objcopy
+OBJDUMP=$(COMPILER_PREFIX)-objdump
+SIZE=$(COMPILER_PREFIX)-size
+GDB=./tools/riscv-none-embed-gcc/8.3.0-1.1/bin/riscv-none-embed-gdb
 SREC=srec_cat
 SREC_INFO=srec_info
 
+ifeq ($(model),Pinecil)
+AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
+endif
+# compiler flags ---------------------------------------------------------------
+ifeq ($(model),$(filter $(model),TS100 TS80))
+CPUFLAGS=		-mthumb 			\
+		-mcpu=cortex-m3 	\
+		-mfloat-abi=soft
+endif
+ifeq ($(model),Pinecil)
+CPUFLAGS= 	-march=rv32imac \
+			-mabi=ilp32 \
+			-mcmodel=medany  \
+			-DGD32VF103C_START \
+			-DUSE_STDPERIPH_DRIVER
+endif
 
 
 
 # linker flags -----------------------------------------------------------------
+LD_FILE = $(PINE_VENDOR_INC_DIR)/GD32VF103xB.lds
 LINKER_FLAGS=-Wl,--gc-sections 		\
             -Wl,--wrap=malloc \
 			-Wl,--wrap=free \
 			-o$(OUT_HEXFILE).elf 	\
 			-Wl,-Map=$(OUT_HEXFILE).map \
-			-mcpu=cortex-m3		\
-			-mthumb			\
-			-mfloat-abi=soft	\
-			-lm -Os -flto -Wl,--undefined=vTaskSwitchContext \
-			--specs=nano.specs
-
-# compiler flags ---------------------------------------------------------------
-CPUFLAGS=-D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD		\
-		-mthumb 			\
-		-mcpu=cortex-m3 	\
-		-mfloat-abi=soft
+			$(CPUFLAGS) \
+			-lm -Og -flto -Wl,--undefined=vTaskSwitchContext \
+			 -T$(LDSCRIPT) \
+			--specs=nano.specs \
+			 $(DEV_LDFLAGS)
 
 
 
@@ -157,39 +216,37 @@ CXXFLAGS=$(CPUFLAGS) \
 		-fno-rtti 			\
 		-fno-exceptions		\
 		-fno-threadsafe-statics \
-		-T$(LDSCRIPT)
+		$(DEV_CXXFLAGS)
 
 
-CFLAGS=$(CPUFLAGS) \
+CFLAGS=$(CPUFLAGS)          \
 		$(DEBUG) 			\
-		$(INCLUDES) 			\
-		$(CHECKOPTIONS_C) 		\
-		$(GLOBAL_DEFINES) 		\
-		-D${COMPILER}  			\
+		$(INCLUDES) 		\
+		$(CHECKOPTIONS_C) 	\
+		$(GLOBAL_DEFINES) 	\
+		-D${COMPILER}  		\
 		-MMD 				\
 		-std=gnu99			\
 		$(OPTIM) 			\
+		$(DEV_CFLAGS)       \
 		-fno-common			\
-		-ffreestanding			\
-		-T$(LDSCRIPT)			\
-		-c
+		-ffreestanding		\
+		-c 
 		
 		
 AFLAGS=$(CPUFLAGS) \
-		$(DEBUG) 			\
-		$(INCLUDES)
+		$(OPTIM_AS) \
+		$(DEBUG) \
+		$(ASM_INC) \
+		$(DEV_AFLAGS)
 
 
-ifeq (${COMPILER}, gcc)
-AFLAGS += -ffunction-sections -fdata-sections
-CFLAGS += -ffunction-sections -fdata-sections
-endif
 
 
 
 OBJS = $(SOURCE:.c=.o)
 OBJS_CPP = $(SOURCE_CPP:.cpp=.o)
-OBJS_S = $(S_SRCS:.s=.o)
+OBJS_S = $(S_SRCS:.S=.o)
 
 
 
@@ -213,15 +270,14 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 	$(SIZE) $^
 	$(OBJCOPY) $^ -O binary $@
 
-$(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
+$(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)  Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) $(LINKER_FLAGS)
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
-#	@echo $(CFLAGS)
 	@$(CC) -c $(CFLAGS) $< -o $@
 	@$(OBJDUMP) -d -S $@ > $@.lst
 
@@ -231,11 +287,11 @@ $(OUT_OBJS_CPP): $(OUTPUT_DIR)/%.o : %.cpp Makefile
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
 	@$(OBJDUMP) -d -S $@ > $@.lst
 
-$(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.s Makefile
+$(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Assembler'
-	@$(AS) -mcpu=cortex-m3 -mthumb -mfloat-abi=soft $(INCLUDES) -g $< -o $@
+	@$(AS) -c $(AFLAGS)  $< -o $@
 	@echo 'Finished building: $<'
 	@echo ' '
 
@@ -243,6 +299,7 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.s Makefile
 clean :
 	rm -Rf $(OUTPUT_DIR)
 	rm -Rf $(HEXFILE_DIR)
+
 
 # pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
