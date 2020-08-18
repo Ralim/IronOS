@@ -35,7 +35,7 @@ INC_PD_DRIVERS_DIR = ./Core/Drivers/FUSB302
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 
 # Device dependent settings
-ifeq ($(model),$(filter $(model),TS100 TS80))
+ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 $(info Building for Miniware )
 DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
 	-I$(INC_CMSIS_DEVICE)\
@@ -116,7 +116,7 @@ LIBS=
 COMPILER=gcc
 # arm-none-eabi is the general ARM compiler, 
 #riscv-none-embed- is the riscv compiler
-ifeq ($(model),$(filter $(model),TS100 TS80))
+ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 COMPILER_PREFIX=arm-none-eabi
 endif
 ifeq ($(model),Pinecil)
@@ -137,7 +137,7 @@ ifeq ($(model),Pinecil)
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 endif
 # compiler flags ---------------------------------------------------------------
-ifeq ($(model),$(filter $(model),TS100 TS80))
+ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 CPUFLAGS=		-mthumb 			\
 		-mcpu=cortex-m3 	\
 		-mfloat-abi=soft

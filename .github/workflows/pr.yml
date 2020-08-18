@@ -1,12 +1,10 @@
-name: C/C++ CI
+name: CI PR
 
-on: [pull_request, push]
+on: [pull_request]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest    
     steps:
     - uses: actions/checkout@v2
     - name: chmod
