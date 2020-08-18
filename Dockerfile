@@ -18,6 +18,6 @@ RUN wget -qO- https://github.com/riscv-mcu/riscv-gnu-toolchain/releases/download
 
 # Add compiler to the path
 ENV PATH "/build/gcc-arm-none-eabi-9-2020-q2-update/bin:$PATH"
-ENV PATH "/build/rv_linux_bare_1908291308/bin:$PATH"
+ENV PATH "/build/rv_linux_bare_1908312208/bin/:$PATH"
 COPY . /build/source
 COPY ./ci /build/ci

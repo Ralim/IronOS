@@ -27,6 +27,7 @@ MINIWARE_INC_DIR = ./Core/BSP/Miniware
 PINE_INC_DIR = ./Core/BSP/Pine64
 PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/Lib
 PINE_RISCV_INC_DIR = ./Core/BSP/Pine64/Vendor/RISCV
+PINE_N200_INC_DIR = ./Core/BSP/Pine64/N200
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
 SOURCE_DRIVERS_DIR = ./Core/Drivers
@@ -45,6 +46,9 @@ DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
 DEVICE_BSP_DIR = ./Core/BSP/Miniware
 S_SRCS := ./Startup/startup_stm32f103t8ux.S
 LDSCRIPT=stm32f103.ld
+DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD		
 DEV_LDFLAGS=
 DEV_AFLAGS= 
 DEV_CFLAGS= 
@@ -55,12 +59,14 @@ ifeq ($(model),Pinecil)
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_INC_DIR)/N200 \
 	-I$(PINE_VENDOR_INC_DIR) \
-	-I$(PINE_RISCV_INC_DIR)
+	-I$(PINE_RISCV_INC_DIR) \
+	-I$(PINE_N200_INC_DIR)\
+	-I$(INC_PD_DRIVERS_DIR)
 	
 DEVICE_BSP_DIR = ./Core/BSP/Pine64
-S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.s')
+S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S')
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
-LDSCRIPT=GD32VF103x8.ld
+LDSCRIPT=GD32VF103xB.ld
 DEV_LDFLAGS=-nostartfiles
 DEV_AFLAGS = -msmall-data-limit=8 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
@@ -97,9 +103,7 @@ OPTIM=-Os -flto -ffat-lto-objects -finline-small-functions -findirect-inlining -
 
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD		\
+GLOBAL_DEFINES +=  -D LANG_$(lang) -D LANG -D MODEL_$(model) $(DEV_GLOBAL_DEFS)
 
 # Enable debug code generation
 DEBUG=-g3
@@ -277,6 +281,7 @@ $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)  Makefile $(LDSCR
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
+	@echo @$(CC) -c $(CFLAGS) $< -o $@
 	@$(CC) -c $(CFLAGS) $< -o $@
 	@$(OBJDUMP) -d -S $@ > $@.lst
 
