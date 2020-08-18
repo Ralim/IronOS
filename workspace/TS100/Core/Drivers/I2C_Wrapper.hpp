@@ -48,6 +48,10 @@ public:
 	static void I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data);
 	static uint8_t I2C_RegisterRead(uint8_t address, uint8_t reg);
 
+	//These are public locks that let code lock the bus for back-to-back operations
+	static bool lock2();
+	static void unlock2();
+
 private:
 	static bool lock();
 	static void unlock();

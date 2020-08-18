@@ -21,7 +21,7 @@
 #define ACCEL_LIS
 #define TEMP_TMP36
 #define POW_QC
-#define POW_PD
+// #define POW_PD
 #endif
 
 #endif /* BSP_MINIWARE_MODEL_CONFIG_H_ */
