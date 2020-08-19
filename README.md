@@ -3,6 +3,8 @@
 
 # Flexible Soldering iron control Firmware
 
+*Please Note, this repo will likely be renaming soon to unire - See issue #639. Old links willcontinue to work, and should redirect. So dont panic :) This is just to better account for the newer soldeing irons being added.*
+
 Originally concieved as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
 The firmware implements all of the standard features of a "smart" soldering iron, with lots of little extras and tweaks.
