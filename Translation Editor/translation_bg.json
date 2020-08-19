@@ -3,10 +3,10 @@
 	"languageLocalName": "Български",
 	"cyrillicGlyphs": true,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
-		"SettingsCalibrationWarning": "Уверете се, че човката на поялника е със стайна температура преди да продължите!",
+		"SettingsCalibrationDone": "Калибрацията завършена!",
+		"SettingsCalibrationWarning": "Уверете се, че върха на поялника е със стайна температура преди да продължите!",
 		"SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
-		"UVLOWarningString": "Ниско V!",
+		"UVLOWarningString": "Ниско DC Напрежение",
 		"UndervoltageString": "Ниско Напрежение",
 		"InputVoltageString": "Входно V: ",
 		"WarningTipTempString": "Темп.: ",
@@ -17,11 +17,13 @@
 		"WarningAdvancedString": "ВНИМАНИЕ! ТОПЛО!",
 		"SleepingTipAdvancedString": "Връх:",
 		"IdleTipString": "Връх:",
-		"IdleSetString": " Set:",
-		"TipDisconnectedString": "ВРЪХ ЛОША ВРЪЗКА",
+		"IdleSetString": " Настройка:",
+		"TipDisconnectedString": "ПРЕКЪСНАТ ВРЪХ",
 		"SolderingAdvancedPowerPrompt": "Захранване: ",
-		"OffString": "Off",
-		"ResetOKMessage": "Reset OK"
+		"OffString": "Изкл.",
+		"ResetOKMessage": "Нулиране завършено",
+		"YourGainMessage": "Усилване:",
+		"SettingsResetMessage": "Настройките бяха\nнулирани!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -184,7 +186,7 @@
 				"Калибриране",
 				"напрежение?"
 			],
-			"desc": "Калибриране на входното напрежение (VIN). Задръжте бутонa за изход"
+			"desc": "Калибриране на входното напрежение. Задръжте бутонa за изход"
 		},
 		"AdvancedSoldering": {
 			"text": "",
@@ -203,92 +205,92 @@
 			"desc": "Скорост на движение на този текст"
 		},
 		"TipModel": {
-			"text": "TIPMO",
+			"text": "",
 			"text2": [
-				"Tip",
-				"Model"
+				"Модел",
+				"на връх"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Избор на модел на връх"
 		},
 		"SimpleCalibrationMode": {
-			"text": "SMPCAL",
+			"text": "",
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Бърза",
+				"калибрация"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Бърза калибрация с използване на гореща вода"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "ADVCAL",
+			"text": "",
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Прецизна",
+				"калибрация"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Прецизна калибрация с използване на термо-двойка на върха на поялника"
 		},
 		"PowerInput": {
-			"text": "PWRW",
+			"text": "",
 			"text2": [
-				"Power",
-				"Wattage"
+				"Мощност на",
+				"захранване"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Мощност на избраното захранване"
 		},
 		"PowerLimitEnable": {
-			"text": "PLIMEN",
+			"text": "",
 			"text2": [
-				"P Limit",
-				"Enable"
+				"Вкл. лимит",
+				"на мощност?"
 			],
-			"desc": "Enable power limit"
+			"desc": "Включване на лимит на мощност"
 		},
 		"PowerLimit": {
-			"text": "PLIM",
+			"text": "",
 			"text2": [
-				"Power",
-				"Limit"
+				"Лимит на",
+				"мощност"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Максимална мощност на поялника <W>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
+			"text": "",
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Размяна",
+				"бутони +-?"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Обръщане на бутоните \"+\" и \"-\" за промяна на температурата на върха на поялника"
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
+			"text": "",
 			"text2": [
-				"Temp change",
-				"short?"
+				"Промяна T",
+				"бързо?"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Промяна на температура при бързо натискане на бутон!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
+			"text": "",
 			"text2": [
-				"Temp change",
-				"long?"
+				"Промяна Т",
+				"задържане?"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Промяна на температура при задържане на бутон!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
+			"text": "",
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Захранващ",
+				"импулс"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Поддържане на интензивност на захранващия импулс"
 		},
 		"TipGain": {
-			"text": "TG",
+			"text": "",
 			"text2": [
-				"Modify",
-				"tip gain"
+				"Промяна",
+				"сила връх"
 			],
-			"desc": "Tip gain"
+			"desc": "Усилване на върха на поялника"
 		}
 	}
 }
