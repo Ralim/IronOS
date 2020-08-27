@@ -11,16 +11,13 @@
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
 /* #define DATA_IN_ExtSRAM */
 #endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
-//#define LOCAL_BUILD
-#ifndef LOCAL_BUILD
+
+#ifndef VECT_TAB_OFFSET
 #define VECT_TAB_OFFSET  0x00004000U /*!< Vector Table base offset field.
                                   This value must be a multiple of 0x200. */
-#else
-#define VECT_TAB_OFFSET  0x00000000U /*!< Vector Table base offset field.
-                                  This value must be a multiple of 0x200. */
-#warning LOCAL_BUILD SETUP
-                                  #endif
 //We offset this by 0x4000 to because of the bootloader
+#endif
+
 /*******************************************************************************
 *  Clock Definitions
 *******************************************************************************/
