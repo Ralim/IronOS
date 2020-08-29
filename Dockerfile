@@ -10,6 +10,7 @@ RUN apt-get update && \
   apt-get install -y \
   make \
   bzip2 \
+  git \
   python3 \
   wget && \
   apt-get clean
