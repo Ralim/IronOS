@@ -30,7 +30,7 @@ static void MX_TIM2_Init(void);
 static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC2_Init(void);
-
+#define SWD_ENABLE
 void Setup_HAL() {
 	SystemClock_Config();
 

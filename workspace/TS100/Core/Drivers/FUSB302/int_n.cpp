@@ -28,7 +28,7 @@
 #include "task.h"
 #include "BSP.h"
 
-osThreadId InterruptHandler::TaskHandle=NULL;
+osThreadId InterruptHandler::TaskHandle = NULL;
 uint32_t InterruptHandler::TaskBuffer[InterruptHandler::TaskStackSize];
 osStaticThreadDef_t InterruptHandler::TaskControlBlock;
 
@@ -41,7 +41,7 @@ void InterruptHandler::init() {
 void InterruptHandler::Thread(const void *arg) {
 	(void) arg;
 	union fusb_status status;
-	volatile uint32_t events;
+	uint32_t events;
 	bool notifSent = false;
 	while (true) {
 		/* If the INT_N line is low */
