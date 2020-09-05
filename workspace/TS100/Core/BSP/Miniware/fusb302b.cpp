@@ -152,10 +152,8 @@ void fusb_setup() {
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 12, 0);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		if (!I2CBB::lock2()) {
-			return;
-		}
+	if (!I2CBB::lock2()) {
+		return;
 	}
 	/* Fully reset the FUSB302B */
 	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
@@ -200,9 +198,7 @@ void fusb_setup() {
 		fusb_write_byte( FUSB_SWITCHES1, 0x26);
 		fusb_write_byte( FUSB_SWITCHES0, 0x0B);
 	}
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		I2CBB::unlock2();
-	}
+	I2CBB::unlock2();
 	fusb_reset();
 }
 
