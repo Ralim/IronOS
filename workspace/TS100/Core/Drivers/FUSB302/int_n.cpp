@@ -40,8 +40,6 @@ void InterruptHandler::init() {
 void InterruptHandler::Thread(const void *arg) {
 	(void) arg;
 	union fusb_status status;
-	uint32_t events;
-	bool notifSent = false;
 	while (true) {
 		/* If the INT_N line is low */
 		if (xTaskNotifyWait(0x00, 0x0F, NULL,
@@ -49,7 +47,6 @@ void InterruptHandler::Thread(const void *arg) {
 			//delay slightly so we catch the crc with better timing
 			osDelay(1);
 		}
-		notifSent = false;
 		/* Read the FUSB302B status and interrupt registers */
 		fusb_get_status(&status);
 		/* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX
@@ -57,19 +54,16 @@ void InterruptHandler::Thread(const void *arg) {
 		if (status.interrupta & FUSB_INTERRUPTA_I_TXSENT) {
 			ProtocolTransmit::notify(
 					ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_TXSENT);
-			notifSent = true;
 		}
 		if (status.interrupta & FUSB_INTERRUPTA_I_RETRYFAIL) {
 			ProtocolTransmit::notify(
 					ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
-			notifSent = true;
 		}
 
 		/* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
 		//This means a message was recieved with a good CRC
 		if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
 			ProtocolReceive::notify(PDB_EVT_PRLRX_I_GCRCSENT);
-			notifSent = true;
 		}
 
 		/* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
@@ -77,7 +71,6 @@ void InterruptHandler::Thread(const void *arg) {
 		if (status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP
 				&& status.status1 & FUSB_STATUS1_OVRTEMP) {
 			PolicyEngine::notify(PDB_EVT_PE_I_OVRTEMP);
-			notifSent = true;
 		}
 	}
 }
