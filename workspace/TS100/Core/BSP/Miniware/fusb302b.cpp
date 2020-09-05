@@ -143,21 +143,13 @@ void fusb_send_hardrst() {
 }
 
 void fusb_setup() {
-	GPIO_InitTypeDef GPIO_InitStruct;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-	GPIO_InitStruct.Pin = GPIO_PIN_9;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 10, 0);
-	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 	if (!I2CBB::lock2()) {
 		return;
 	}
 	/* Fully reset the FUSB302B */
-	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
-	osDelay(2);
+//	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
+//	osDelay(2);
 	if (!fusb_read_id()) {
 		return;
 	}
@@ -200,6 +192,14 @@ void fusb_setup() {
 	}
 	I2CBB::unlock2();
 	fusb_reset();
+	GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStruct.Pin = GPIO_PIN_9;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 10, 0);
+	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 }
 
 void fusb_get_status(union fusb_status *status) {
