@@ -10,7 +10,6 @@ endif
 # Discover the source files to build
 SOURCE := $(shell find . -type f -name '*.c')
 SOURCE_CPP := $(shell find . -type f -name '*.cpp')
-SOURCES := $(shell find . -type f -name '*.c*')
 S_SRCS := $(shell find . -type f -name '*.s') 
 
 APP_INC_DIR = ./Core/Inc
@@ -47,7 +46,7 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -ffat-lto-objects -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 flash_size=64k
 bootldr_size=0x4000
@@ -64,7 +63,7 @@ DEBUG=-g3
 # Without debug code
 #DEBUG=
 
-	
+
 # libs -------------------------------------------------------------------------
 LIBS=
 
