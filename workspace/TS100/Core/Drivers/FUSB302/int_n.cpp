@@ -21,7 +21,6 @@
 #include "fusb302b.h"
 #include "protocol_rx.h"
 #include "protocol_tx.h"
-#include "hard_reset.h"
 #include "policy_engine.h"
 #include "protocol_rx.h"
 #include "protocol_tx.h"
@@ -73,22 +72,6 @@ void InterruptHandler::Thread(const void *arg) {
 			notifSent = true;
 		}
 
-		/* If the I_HARDRST or I_HARDSENT flag is set, tell the Hard Reset
-		 * thread */
-
-		if (notifSent == false) {
-			events = 0;
-			if (status.interrupta & FUSB_INTERRUPTA_I_HARDRST) {
-				events |= PDB_EVT_HARDRST_I_HARDRST;
-				notifSent = true;
-			} else if (status.interrupta & FUSB_INTERRUPTA_I_HARDSENT) {
-				events |= PDB_EVT_HARDRST_I_HARDSENT;
-				notifSent = true;
-			}
-			if (events) {
-				ResetHandler::notify(events);
-			}
-		}
 		/* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
 		 * Engine thread */
 		if (status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP

@@ -20,7 +20,6 @@
 #include "int_n.h"
 #include <pd.h>
 #include "protocol_tx.h"
-#include "hard_reset.h"
 #include "fusb302b.h"
 bool PolicyEngine::pdNegotiationComplete;
 int PolicyEngine::current_voltage_mv;
@@ -516,11 +515,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_hard_reset() {
 	if (_hard_reset_counter > PD_N_HARD_RESET_COUNT) {
 		return PESinkSourceUnresponsive;
 	}
-
-	/* Generate a hard reset signal */
-	ResetHandler::notify(PDB_EVT_HARDRST_RESET);
-	waitForEvent(PDB_EVT_PE_HARD_SENT);
-
+	//So, we could send a hardreset here; however that will cause a power cycle on the PSU end.. Which will then reset this MCU
+	//So therefore we went get anywhere :)
 	/* Increment HardResetCounter */
 	_hard_reset_counter++;
 
@@ -536,9 +532,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_transition_default() {
 	/* There is no local hardware to reset. */
 	/* Since we never change our data role from UFP, there is no reason to set
 	 * it here. */
-
-	/* Tell the protocol layer we're done with the reset */
-	ResetHandler::notify( PDB_EVT_HARDRST_DONE);
 
 	return PESinkStartup;
 }

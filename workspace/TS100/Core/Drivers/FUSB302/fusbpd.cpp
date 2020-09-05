@@ -15,12 +15,10 @@
 #include "protocol_rx.h"
 #include "protocol_tx.h"
 #include "int_n.h"
-#include "hard_reset.h"
 
 void fusb302_start_processing() {
 	/* Initialize the FUSB302B */
 	fusb_setup();
-	ResetHandler::init();
 	PolicyEngine::init();
 	ProtocolTransmit::init();
 	ProtocolReceive::init();
