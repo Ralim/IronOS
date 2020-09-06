@@ -34,7 +34,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "I"
 	},
-	"menuDouble": false,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -67,208 +66,182 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "Kilde",
-			"text2": [
-				"",
+						"text2": [
+				"Kilde",
 				""
 			],
 			"desc": "Strømforsyning. Sett nedre spenning for automatisk nedstenging. <DC 10V <S 3.3V per celle"
 		},
 		"SleepTemperature": {
-			"text": "DTmp",
-			"text2": [
-				"",
+						"text2": [
+				"DTmp",
 				""
 			],
-			"desc": "Dvaletemperatur <C"
+			"desc": "Dvaletemperatur <C>"
 		},
 		"SleepTimeout": {
-			"text": "DTid",
-			"text2": [
+						"text2": [
 				"",
 				""
 			],
 			"desc": "Tid før dvale <Minutter/Sekunder"
 		},
 		"ShutdownTimeout": {
-			"text": "AvTid",
-			"text2": [
-				"",
+						"text2": [
+				"AvTid",
 				""
 			],
 			"desc": "Tid før automatisk nedstenging <Minutter"
 		},
 		"MotionSensitivity": {
-			"text": "BSensr",
-			"text2": [
-				"",
+						"text2": [
+				"BSensr",
 				""
 			],
 			"desc": "Bevegelsesfølsomhet <0.Inaktiv 1.Minst følsom 9.Mest følsom"
 		},
 		"TemperatureUnit": {
-			"text": "TmpEnh",
-			"text2": [
-				"",
+						"text2": [
+				"TmpEnh",
 				""
 			],
 			"desc": "Temperaturskala <C=Celsius F=Fahrenheit"
 		},
 		"AdvancedIdle": {
-			"text": "AvDvSk",
-			"text2": [
-				"",
+						"text2": [
+				"AvDvSk",
 				""
 			],
 			"desc": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
 		},
 		"DisplayRotation": {
-			"text": "SkRetn",
-			"text2": [
-				"",
+						"text2": [
+				"SkRetn",
 				""
 			],
 			"desc": "Skjermretning <A. Automatisk V. Venstrehendt H. Høyrehendt"
 		},
 		"BoostTemperature": {
-			"text": "KTmp",
-			"text2": [
-				"",
+						"text2": [
+				"KTmp",
 				""
 			],
 			"desc": "Temperatur i \"kraft\"-modus"
 		},
 		"AutoStart": {
-			"text": "AStart",
-			"text2": [
-				"",
+						"text2": [
+				"AStart",
 				""
 			],
 			"desc": "Start automatisk med lodding når strøm kobles til. L=Lodding, D=Dvale, I=Inaktiv"
 		},
 		"CooldownBlink": {
-			"text": "KjBlnk",
-			"text2": [
-				"",
+						"text2": [
+				"KjBlnk",
 				""
 			],
 			"desc": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
 		},
 		"TemperatureCalibration": {
-			"text": "TempKal?",
-			"text2": [
-				"",
+						"text2": [
+				"TempKal?",
 				""
 			],
 			"desc": "Kalibrer spiss-temperatur."
 		},
 		"SettingsReset": {
-			"text": "TilbStl?",
-			"text2": [
-				"",
+						"text2": [
+				"TilbStl?",
 				""
 			],
 			"desc": "Tilbakestill alle innstillinger"
 		},
 		"VoltageCalibration": {
-			"text": "KalSpIn?",
-			"text2": [
-				"",
+						"text2": [
+				"KalSpIn?",
 				""
 			],
 			"desc": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
 		},
 		"AdvancedSoldering": {
-			"text": "AvLdSk",
-			"text2": [
-				"",
+						"text2": [
+				"AvLdSk",
 				""
 			],
 			"desc": "Vis detaljert informasjon ved lodding"
 		},
 		"ScrollingSpeed": {
-			"text": "RullHa",
-			"text2": [
-				"",
+						"text2": [
+				"RullHa",
 				""
 			],
 			"desc": "Hastigheten på rulletekst"
 		},
 		"TipModel": {
-			"text": "TIPMO",
-			"text2": [
+						"text2": [
 				"Tip",
 				"Model"
 			],
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-			"text": "SMPCAL",
-			"text2": [
+						"text2": [
 				"Simple",
 				"Calibration"
 			],
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "ADVCAL",
-			"text2": [
+						"text2": [
 				"Advanced",
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-			"text": "PWRW",
-			"text2": [
+						"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
 		"PowerLimit": {
-			"text": "PLIM",
-			"text2": [
+						"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
-			"text2": [
+						"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
-			"text2": [
+						"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-			"text": "TG",
-			"text2": [
+						"text2": [
 				"Modify",
 				"tip gain"
 			],

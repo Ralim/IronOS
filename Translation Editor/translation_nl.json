@@ -34,7 +34,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
-	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -67,208 +66,182 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Spannings-",
 				"bron"
 			],
 			"desc": "Spanningsbron. Stelt drempelspanning in. <DC 10V> <S 3.3V per cel>"
 		},
 		"SleepTemperature": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Slaap",
 				"temp"
 			],
 			"desc": "Temperatuur in slaapstand <C>"
 		},
 		"SleepTimeout": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Slaap",
 				"time-out"
 			],
 			"desc": "Slaapstand time-out <Minuten/Seconden>"
 		},
 		"ShutdownTimeout": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Uitschakel",
 				"time-out"
 			],
 			"desc": "Automatisch afsluiten time-out <Minuten>"
 		},
 		"MotionSensitivity": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Bewegings-",
 				"gevoeligheid"
 			],
 			"desc": "Bewegingsgevoeligheid <0.uit 1.minst gevoelig 9.meest gevoelig>"
 		},
 		"TemperatureUnit": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Temperatuur",
 				"eenheid"
 			],
 			"desc": "Temperatuureenheid <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Gedetailleerd",
 				"slaapscherm"
 			],
 			"desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het slaapscherm."
 		},
 		"DisplayRotation": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Scherm-",
 				"oriëntatie"
 			],
 			"desc": "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>"
 		},
 		"BoostTemperature": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Boost",
 				"temp"
 			],
 			"desc": "Temperatuur in boostmodes"
 		},
 		"AutoStart": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Auto",
 				"start"
 			],
 			"desc": "Breng de soldeerbout direct op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit"
 		},
 		"CooldownBlink": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Afkoel",
 				"flikker"
 			],
 			"desc": "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is."
 		},
 		"TemperatureCalibration": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Calibreer",
 				"temperatuur?"
 			],
 			"desc": "Temperatuursafwijking van de soldeerpunt calibreren."
 		},
 		"SettingsReset": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Instellingen",
 				"resetten?"
 			],
 			"desc": "Alle instellingen terugzetten."
 		},
 		"VoltageCalibration": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Calibreer",
 				"input-voltage?"
 			],
 			"desc": "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen."
 		},
 		"AdvancedSoldering": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Gedetailleerd",
 				"soldeerscherm"
 			],
 			"desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm."
 		},
 		"ScrollingSpeed": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Scroll",
 				"snelheid"
 			],
 			"desc": "Snelheid waarmee de tekst scrolt."
 		},
 		"TipModel": {
-			"text": "TIPMO",
-			"text2": [
+						"text2": [
 				"Tip",
 				"Model"
 			],
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-			"text": "SMPCAL",
-			"text2": [
+						"text2": [
 				"Simple",
 				"Calibration"
 			],
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "ADVCAL",
-			"text2": [
+						"text2": [
 				"Advanced",
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-			"text": "PWRW",
-			"text2": [
+						"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
 		"PowerLimit": {
-			"text": "PLIM",
-			"text2": [
+						"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
-			"text2": [
+						"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
-			"text2": [
+						"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-			"text": "TG",
-			"text2": [
+						"text2": [
 				"Modify",
 				"tip gain"
 			],

@@ -34,7 +34,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
-	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -67,208 +66,182 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Ström-",
 				"källa"
 			],
 			"desc": "Strömkälla. Anger lägsta spänning. <DC 10V> <S 3.3V per cell>"
 		},
 		"SleepTemperature": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Vilo-",
 				"temp"
 			],
 			"desc": "Vilotemperatur <C>"
 		},
 		"SleepTimeout": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Vilo-",
 				"timeout"
 			],
 			"desc": "Vilo-timeout <Minuter/Seconder>"
 		},
 		"ShutdownTimeout": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Avstängn.",
 				"timeout"
 			],
 			"desc": "Avstängnings-timeout <Minuter>"
 		},
 		"MotionSensitivity": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Rörelse-",
 				"känslighet"
 			],
 			"desc": "Rörelsekänslighet <0.Av 1.minst känslig 9.mest känslig>"
 		},
 		"TemperatureUnit": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Temperatur-",
 				"enheter"
 			],
 			"desc": "Temperaturenhet <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Detaljerad",
 				"vid inaktiv"
 			],
 			"desc": "Visa detaljerad information i mindre typsnitt när inaktiv."
 		},
 		"DisplayRotation": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Visnings",
 				"läge"
 			],
 			"desc": "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>"
 		},
 		"BoostTemperature": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Turbo-",
 				"temp"
 			],
 			"desc": "Temperatur i \"turbo\"-läge"
 		},
 		"AutoStart": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Auto",
 				"start"
 			],
 			"desc": "Startar automatiskt lödpennan vid uppstart. T=Lödning, S=Viloläge, F=Av"
 		},
 		"CooldownBlink": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Nedkylnings-",
 				"blink"
 			],
 			"desc": "Blinka temperaturen medan spetsen kyls av och fortfarande är varm."
 		},
 		"TemperatureCalibration": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Kalibrera",
 				"temperatur?"
 			],
 			"desc": "Kalibrera spets-kompensation."
 		},
 		"SettingsReset": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Fabriks-",
 				"inställ?"
 			],
 			"desc": "Återställ alla inställningar"
 		},
 		"VoltageCalibration": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Kalibrera",
 				"inspänning?"
 			],
 			"desc": "Inspänningskalibrering. Knapparna justerar, håll inne för avslut"
 		},
 		"AdvancedSoldering": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Detaljerad",
 				"lödng.skärm"
 			],
 			"desc": "Visa detaljerad information vid lödning"
 		},
 		"ScrollingSpeed": {
-			"text": "",
-			"text2": [
+						"text2": [
 				"Beskrivning",
 				"rullhast."
 			],
 			"desc": "Hastighet som den här texten rullar i"
 		},
 		"TipModel": {
-			"text": "TIPMO",
-			"text2": [
+						"text2": [
 				"Tip",
 				"Model"
 			],
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-			"text": "SMPCAL",
-			"text2": [
+						"text2": [
 				"Simple",
 				"Calibration"
 			],
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "ADVCAL",
-			"text2": [
+						"text2": [
 				"Advanced",
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-			"text": "PWRW",
-			"text2": [
+						"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
 		"PowerLimit": {
-			"text": "PLIM",
-			"text2": [
+						"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
-			"text2": [
+						"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
-			"text2": [
+						"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-			"text": "TG",
-			"text2": [
+						"text2": [
 				"Modify",
 				"tip gain"
 			],
