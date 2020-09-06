@@ -10,9 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: chmod
-      run: chmod +x setup.sh 
-    - name: chmod
-      run: chmod +x workspace/TS100/build.sh
+      run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
     - name: translation
       run: |
         cd Translation\ Editor
@@ -22,10 +20,10 @@ jobs:
     - name: cd
       run: cd workspace/TS100
     - name: build TS80
-      run: ./build.sh -m TS80
+      run: cd workspace/TS100 && ./build.sh -m TS80
     - name: Archive TS80 artifacts
       uses: actions/upload-artifact@v2
       with:
         name: TS80
-        path: Hexfile/TS80_*
+        path: workspace/TS100/Hexfile/TS80_*
         if-no-files-found: error
