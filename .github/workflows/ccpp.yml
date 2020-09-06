@@ -20,7 +20,6 @@ jobs:
       working-directory: $GITHUB_WORKSPACE
     - name: Archive TS80 artifacts
       uses: actions/upload-artifact@v2
-      working-directory: $GITHUB_WORKSPACE
       with:
         name: TS80
         path: workspace/TS100/Hexfile/TS80_*
