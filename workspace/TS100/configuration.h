@@ -80,7 +80,6 @@
 #define CUT_OUT_SETTING           0         // default to no cut-off voltage (or 18W for TS80)
 #define TEMPERATURE_INF           0         // default to 0
 #define DESCRIPTION_SCROLL_SPEED  0         // 0: Slow 1: Fast - default to slow
-#define POWER_LIMIT_ENABLE        0         // 0: Disable 1: Enable - Default disabled power limit
 
 #define TIP_GAIN                210       // 21 uV/C * 10, uV per deg C constant of the tip, Tip uV * 10 / coeff = tip temp
 

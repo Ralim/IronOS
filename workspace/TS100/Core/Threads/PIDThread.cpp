@@ -112,7 +112,7 @@ void startPIDTask(void const *argument __unused) {
 			if (getTipRawTemp(0) > (0x7FFF - 150)) {
 				x10WattsOut = 0;
 			}
-			if (systemSettings.powerLimitEnable
+			if (systemSettings.powerLimit
 					&& x10WattsOut > (systemSettings.powerLimit * 10)) {
 				setTipX10Watts(systemSettings.powerLimit * 10);
 			} else {

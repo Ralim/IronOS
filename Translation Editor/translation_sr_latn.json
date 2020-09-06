@@ -34,7 +34,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
-	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -67,224 +66,182 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "Npjnj",
-			"text2": [
+						"text2": [
 				"Vrsta",
 				"napajanja"
 			],
 			"desc": "Tip napajanja; određuje najniži radni napon. <DC=adapter (10V), S=baterija (3,3V po ćeliji)>"
 		},
 		"SleepTemperature": {
-			"text": "TSpv",
-			"text2": [
+						"text2": [
 				"Temp.",
 				"spavanja"
 			],
 			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. <C/F>"
 		},
 		"SleepTimeout": {
-			"text": "VSpv",
-			"text2": [
+						"text2": [
 				"Vreme do",
 				"spavanja"
 			],
 			"desc": "Vreme mirovanja nakon koga lemilica spušta temperaturu. <M=minuti, S=sekunde>"
 		},
 		"ShutdownTimeout": {
-			"text": "VGšnj",
-			"text2": [
+						"text2": [
 				"Vreme do",
 				"gašenja"
 			],
 			"desc": "Vreme mirovanja nakon koga se lemilica gasi. <M=minuti>"
 		},
 		"MotionSensitivity": {
-			"text": "OstPkr",
-			"text2": [
+						"text2": [
 				"Osetljivost",
 				"na pokret"
 			],
 			"desc": "Osetljivost senzora pokreta. <0=isključeno, 1=najmanje osetljivo, 9=najosetljivije>"
 		},
 		"TemperatureUnit": {
-			"text": "JedTmp",
-			"text2": [
+						"text2": [
 				"Jedinica",
 				"temperature"
 			],
 			"desc": "Jedinice u kojima se prikazuje temperatura. <C=celzijus, F=farenhajt>"
 		},
 		"AdvancedIdle": {
-			"text": "DtlMir",
-			"text2": [
+						"text2": [
 				"Detalji tokom",
 				"mirovanja"
 			],
 			"desc": "Prikazivanje detaljnih informacija na ekranu tokom mirovanja."
 		},
 		"DisplayRotation": {
-			"text": "OrjEkr",
-			"text2": [
+						"text2": [
 				"Orijentacija",
 				"ekrana"
 			],
 			"desc": "Kako je okrenut ekran. <A=automatski, L=za levoruke, D=za desnoruke>"
 		},
-		"BoostEnabled": {
-			"text": "Pjčnj",
-			"text2": [
-				"Pojačanje",
-				"omogućeno"
-			],
-			"desc": "Držanje prednjeg tastera tokom lemljenja dodatno pojačava temperaturu vrha."
-		},
 		"BoostTemperature": {
-			"text": "TPjč",
-			"text2": [
+						"text2": [
 				"Temp.",
 				"pojačanja"
 			],
 			"desc": "Temperatura vrha lemilice u toku pojačanja."
 		},
 		"AutoStart": {
-			"text": "VrćSta",
-			"text2": [
+						"text2": [
 				"Vrući",
 				"start"
 			],
 			"desc": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se."
 		},
 		"CooldownBlink": {
-			"text": "UpzHla",
-			"text2": [
+						"text2": [
 				"Upozorenje",
 				"pri hlađenju"
 			],
 			"desc": "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć."
 		},
 		"TemperatureCalibration": {
-			"text": "KalbrTmp",
-			"text2": [
+						"text2": [
 				"Kalibracija",
 				"temperature"
 			],
 			"desc": "Kalibrisanje odstupanja temperature vrha u odnosu na dršku."
 		},
 		"SettingsReset": {
-			"text": "FabrPost",
-			"text2": [
+						"text2": [
 				"Fabričke",
 				"postavke"
 			],
 			"desc": "Vraćanje svih postavki na fabričke vrednosti."
 		},
 		"VoltageCalibration": {
-			"text": "KalbrNap",
-			"text2": [
+						"text2": [
 				"Kalibracija",
 				"ulaznog napona"
 			],
 			"desc": "Kalibrisanje ulaznog napona. Podešava se na tastere; dugi pritisak za kraj."
 		},
 		"AdvancedSoldering": {
-			"text": "DtlLem",
-			"text2": [
+						"text2": [
 				"Detalji tokom",
 				"lemljenja"
 			],
 			"desc": "Prikazivanje detaljnih informacija na ekranu tokom lemljenja."
 		},
 		"ScrollingSpeed": {
-			"text": "BrzPor",
-			"text2": [
+						"text2": [
 				"Brzina",
 				"poruka"
 			],
 			"desc": "Brzina kretanja opisnih poruka poput ove. <S=sporo, B=brzo>"
 		},
 		"TipModel": {
-			"text": "ModelVrh",
-			"text2": [
+						"text2": [
 				"Model",
 				"vrha"
 			],
 			"desc": "Odabir modela lemnog vrha."
 		},
 		"SimpleCalibrationMode": {
-			"text": "JedKalbr",
-			"text2": [
+						"text2": [
 				"Jednostavna",
 				"kalibracija"
 			],
 			"desc": "Jednostavna kalibracija kipućom vodom."
 		},
 		"AdvancedCalibrationMode": {
-			"text": "NapKalbr",
-			"text2": [
+						"text2": [
 				"Napredna",
 				"kalibracija"
 			],
 			"desc": "Napredna kalibracija pomoću termopara."
 		},
 		"PowerInput": {
-			"text": "UlazSnag",
-			"text2": [
+						"text2": [
 				"Ulazna",
 				"snaga"
 			],
 			"desc": "Snaga napajanja u vatima."
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
-			"text": "PLIM",
-			"text2": [
+						"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
-			"text2": [
+						"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
-			"text2": [
+						"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-			"text": "TG",
-			"text2": [
+						"text2": [
 				"Modify",
 				"tip gain"
 			],

@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
 #include "unit.h"
-#define SETTINGSVERSION   ( 0x20 )
+#define SETTINGSVERSION   ( 0x21 )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -32,8 +32,7 @@ typedef struct {
 	uint8_t autoStartMode :2;  // Should the unit automatically jump straight
 							   // into soldering mode when power is applied
 	uint8_t ShutdownTime;          // Time until unit shuts down if left alone
-	uint8_t boostModeEnabled :1;  // Boost mode swaps BUT_A in soldering mode to
-								  // temporary soldering temp over-ride
+
 	uint8_t coolingTempBlink :1;  // Should the temperature blink on the cool
 								  // down screen until its <50C
 	uint8_t detailedIDLE :1;       // Detailed idle screen
@@ -49,7 +48,6 @@ typedef struct {
 	uint16_t CalibrationOffset; // This stores the temperature offset for this tip
 								// in the iron.
 
-	uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
 	uint8_t powerLimit;       // Maximum power iron allowed to output
 
 	uint16_t TipGain; // uV/C * 10, it can be used to convert tip thermocouple voltage to temperateture TipV/TipGain = TipTemp

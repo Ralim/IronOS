@@ -34,7 +34,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
-	"menuDouble": false,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -67,224 +66,182 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "PWRSC",
-			"text2": [
-				"",
+						"text2": [
+				"PWRSC",
 				""
 			],
 			"desc": "Zdroj napatia. Nastavit napatie pre vypnutie (cutoff)  <DC=10V, nS=n*3.3V pre LiIon clanky>"
 		},
 		"SleepTemperature": {
-			"text": "STMP",
-			"text2": [
-				"",
+						"text2": [
+				"STMP",
 				""
 			],
 			"desc": "Kludova teplota (v nastavenych jednotkach)"
 		},
 		"SleepTimeout": {
-			"text": "STME",
-			"text2": [
-				"",
+						"text2": [
+				"STME",
 				""
 			],
 			"desc": "Kludovy rezim po <sekundach/minutach>"
 		},
 		"ShutdownTimeout": {
-			"text": "SHTME",
-			"text2": [
-				"",
+						"text2": [
+				"SHTME",
 				""
 			],
 			"desc": "Cas na vypnutie <minuty>"
 		},
 		"MotionSensitivity": {
-			"text": "MSENSE",
-			"text2": [
-				"",
+						"text2": [
+				"MSENSE",
 				""
 			],
 			"desc": "Citlivost detekcie pohybu <0=Vyp, 1=Min ... 9=Max>"
 		},
 		"TemperatureUnit": {
-			"text": "TMPUNT",
-			"text2": [
-				"",
+						"text2": [
+				"TMPUNT",
 				""
 			],
 			"desc": "Jednotky merania teploty <C=stupne Celzia, F=stupne Fahrenheita>"
 		},
 		"AdvancedIdle": {
-			"text": "ADVIDL",
-			"text2": [
-				"",
+						"text2": [
+				"ADVIDL",
 				""
 			],
 			"desc": "Zobrazit detailne informacie v kludovom rezime <T=Zap, F=Vyp>"
 		},
 		"DisplayRotation": {
-			"text": "DSPROT",
-			"text2": [
-				"",
+						"text2": [
+				"DSPROT",
 				""
 			],
 			"desc": "Orientacia displeja <A=Auto, L=Lavak, R=Pravak>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"",
-				""
-			],
-			"desc": "Povolit tlacidlo pre prudky nahrev <T=Zap, F=Vyp>"
-		},
 		"BoostTemperature": {
-			"text": "BTMP",
-			"text2": [
-				"",
+						"text2": [
+				"BTMP",
 				""
 			],
 			"desc": "Cielova teplota pre prudky nahrev (v nastavenych jednotkach)"
 		},
 		"AutoStart": {
-			"text": "ASTART",
-			"text2": [
-				"",
+						"text2": [
+				"ASTART",
 				""
 			],
 			"desc": "Pri starte spustit rezim spajkovania <T=Zap, F=Vyp, S=Spanok>"
 		},
 		"CooldownBlink": {
-			"text": "CLBLNK",
-			"text2": [
-				"",
+						"text2": [
+				"CLBLNK",
 				""
 			],
 			"desc": "Blikanie ukazovatela teploty pocas chladnutia hrotu <T=Zap, F=Vyp>"
 		},
 		"TemperatureCalibration": {
-			"text": "TMP CAL?",
-			"text2": [
-				"",
+						"text2": [
+				"TMP CAL?",
 				""
 			],
 			"desc": "Kalibracia posunu hrotu"
 		},
 		"SettingsReset": {
-			"text": "RESET?",
-			"text2": [
-				"",
+						"text2": [
+				"RESET?",
 				""
 			],
 			"desc": "Tovarenske nastavenia"
 		},
 		"VoltageCalibration": {
-			"text": "CAL VIN?",
-			"text2": [
-				"",
+						"text2": [
+				"CAL VIN?",
 				""
 			],
 			"desc": "Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat"
 		},
 		"AdvancedSoldering": {
-			"text": "ADVSLD",
-			"text2": [
-				"",
+						"text2": [
+				"ADVSLD",
 				""
 			],
 			"desc": "Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>"
 		},
 		"ScrollingSpeed": {
-			"text": "DESCSP",
-			"text2": [
-				"",
+						"text2": [
+				"DESCSP",
 				""
 			],
 			"desc": "Speed this text scrolls past at"
 		},
 		"TipModel": {
-			"text": "TIPMO",
-			"text2": [
+						"text2": [
 				"Tip",
 				"Model"
 			],
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-			"text": "SMPCAL",
-			"text2": [
+						"text2": [
 				"Simple",
 				"Calibration"
 			],
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "ADVCAL",
-			"text2": [
+						"text2": [
 				"Advanced",
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-			"text": "PWRW",
-			"text2": [
+						"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
-			"text": "PLIM",
-			"text2": [
+						"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
-			"text2": [
+						"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
-			"text2": [
+						"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
-			"text2": [
+						"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-			"text": "TG",
-			"text2": [
+						"text2": [
 				"Modify",
 				"tip gain"
 			],

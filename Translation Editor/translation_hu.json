@@ -34,7 +34,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
-	"menuDouble": false,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -67,224 +66,182 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "ÁRAMF",
-			"text2": [
+						"text2": [
 				"Áram",
 				"forrás"
 			],
 			"desc": "Áramforrás. Beállítja a lekapcsolási feszültséget. <DC 10V> <S 3.3V cellánként>"
 		},
 		"SleepTemperature": {
-			"text": "AHŐM",
-			"text2": [
+						"text2": [
 				"Alvási",
 				"hőfok"
 			],
 			"desc": "Alvási hőmérséklet <C>"
 		},
 		"SleepTimeout": {
-			"text": "AIDŐ",
-			"text2": [
+						"text2": [
 				"Alvás",
 				"időzítő"
 			],
 			"desc": "Alvás időzítő <perc/másodperc>"
 		},
 		"ShutdownTimeout": {
-			"text": "KIIDŐ",
-			"text2": [
+						"text2": [
 				"Kikapcsolás",
 				"időzítő"
 			],
 			"desc": "Kikapcsolási időzítő <perc>"
 		},
 		"MotionSensitivity": {
-			"text": "MOZGÉR",
-			"text2": [
+						"text2": [
 				"Mozgás",
 				"érzékenység"
 			],
 			"desc": "Mozgás érzékenység beállítása. <0.kikapcsolva 1.legkevésbé érzékeny 9.legérzékenyebb>"
 		},
 		"TemperatureUnit": {
-			"text": "HŐEGYS",
-			"text2": [
+						"text2": [
 				"Hőmérséklet",
 				"mértékegysége"
 			],
 			"desc": "Hőmérséklet mértékegysége <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-			"text": "RÉSZLI",
-			"text2": [
+						"text2": [
 				"Részletes",
 				"készenlét"
 			],
 			"desc": "Részletes információ megjelenítése kisebb betűméretben a készenléti képernyőn."
 		},
 		"DisplayRotation": {
-			"text": "KIJTÁJ",
-			"text2": [
+						"text2": [
 				"Kijelző",
 				"tájolása"
 			],
 			"desc": "Kijelző tájolása <A. automatikus B. balkezes J. jobbkezes>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Boost",
-				"mód"
-			],
-			"desc": "Elülső gombbal boost módba (450C) lép forrasztás közben"
-		},
 		"BoostTemperature": {
-			"text": "BHŐ",
-			"text2": [
+						"text2": [
 				"Boost",
 				"hőfok"
 			],
 			"desc": "Hőmérséklet \"boost\" módban"
 		},
 		"AutoStart": {
-			"text": "ASTART",
-			"text2": [
+						"text2": [
 				"Automatikus",
 				"indítás"
 			],
 			"desc": "Bekapcsolás után automatikusan lépjen forrasztás módba. T=forrasztás, S=alvó mód, F=ki"
 		},
 		"CooldownBlink": {
-			"text": "HŰLÉSV",
-			"text2": [
+						"text2": [
 				"Villogás",
 				"hűléskor"
 			],
 			"desc": "Villogjon a hőmérséklet hűlés közben, amíg a hegy forró."
 		},
 		"TemperatureCalibration": {
-			"text": "HŐM KAL?",
-			"text2": [
+						"text2": [
 				"Hőmérséklet",
 				"kalibrálása?"
 			],
 			"desc": "Hegy hőmérséklet-különbségének kalibrálása."
 		},
 		"SettingsReset": {
-			"text": "RESET?",
-			"text2": [
+						"text2": [
 				"Gyári",
 				"beállítások?"
 			],
 			"desc": "Beállítások alaphelyzetbe állítása"
 		},
 		"VoltageCalibration": {
-			"text": "VIN KAL?",
-			"text2": [
+						"text2": [
 				"Bemeneti fesz",
 				"kalibrálása?"
 			],
 			"desc": "Bemeneti feszültség kalibrálása. Röviden megnyomva módosítás, hosszan megnyomva kilépés"
 		},
 		"AdvancedSoldering": {
-			"text": "HALKÉP",
-			"text2": [
+						"text2": [
 				"Részletes",
 				"forr. kép."
 			],
 			"desc": "Részletes információk megjelenítése forrasztás közben"
 		},
 		"ScrollingSpeed": {
-			"text": "GÖRGS",
-			"text2": [
+						"text2": [
 				"Görgetés",
 				"sebessége"
 			],
 			"desc": "Szöveggörgetés sebessége"
 		},
 		"TipModel": {
-			"text": "HEGYMOD",
-			"text2": [
+						"text2": [
 				"Forrasztóhegy",
 				"modell"
 			],
 			"desc": "Forrasztóhegy modell kiválasztása"
 		},
 		"SimpleCalibrationMode": {
-			"text": "EGYSZKAL",
-			"text2": [
+						"text2": [
 				"Egyszerű",
 				"kalibráció"
 			],
 			"desc": "Egyszerű kalibrálás forró víz segítségével"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "HALKAL",
-			"text2": [
+						"text2": [
 				"Haladó",
 				"Kalibráció"
 			],
 			"desc": "Haladó kalibrálás hegyre helyezett hőelem segítségével"
 		},
 		"PowerInput": {
-			"text": "TELJW",
-			"text2": [
+						"text2": [
 				"Bemeneti",
 				"teljesítmény"
 			],
 			"desc": "A tápegység által leadott teljesítmény"
 		},
-		"PowerLimitEnable": {
-			"text": "TELJH",
-			"text2": [
-				"Telj H",
-				"Bekapcsolva"
-			],
-			"desc": "Bemeneti teljesitmény korlátozása"
-		},
 		"PowerLimit": {
-			"text": "TELJM",
-			"text2": [
+						"text2": [
 				"Telj",
 				"maximum"
 			],
 			"desc": "Maximális teljesitmény beállitása <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "HÖVÁLT",
-			"text2": [
+						"text2": [
 				"GOMB +-",
 				"Felcseréled?"
 			],
 			"desc": "A páka hömérséklet növelés csökkentési gombok felcserélése."
 		},
 		"TempChangeShortStep": {
-			"text": "HÖRÖV",
-			"text2": [
+						"text2": [
 				"Hömérséklet",
 				"váltás rövid?"
 			],
 			"desc": "Hömérséklet váltás rövid gombnyomásrs bekapcsolva!"
 		},
 		"TempChangeLongStep": {
-			"text": "HÖHOS",
-			"text2": [
+						"text2": [
 				"Hömérséklet",
 				"váltás hosszú?"
 			],
 			"desc": "Hömérséklet váltás hosszú gombnyomásrs bekapcsolva!"
 		},
 		"PowerPulsePower":{
-			"text": "TELJP",
-			"text2": [
+						"text2": [
 				"Telj power",
 				"bank üzem W"
 			],
 			"desc": "Powerbank üzemnél nem engedi a powerbankot kikapcsolni idönkénti áram felvételt generál. "
 		},
 		"TipGain": {
-			"text": "TG",
-			"text2": [
+						"text2": [
 				"Modify",
 				"tip gain"
 			],
