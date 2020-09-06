@@ -23,10 +23,11 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: TS80
+        if-no-files-found: error
         path: |
         workspace/TS100/Hexfile/TS80_*.hex
         workspace/TS100/Hexfile/TS80_*.bin
-        if-no-files-found: error
+
   build_TS80P:
 
     runs-on: ubuntu-latest
@@ -47,10 +48,11 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: TS80P
+        if-no-files-found: error
         path: |
         workspace/TS100/Hexfile/TS80P_*.hex
         workspace/TS100/Hexfile/TS80P_*.bin
-        if-no-files-found: error
+
   build_TS100:
 
     runs-on: ubuntu-latest
@@ -71,7 +73,8 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: TS100
+        if-no-files-found: error
         path: |
         workspace/TS100/Hexfile/TS100_*.hex
         workspace/TS100/Hexfile/TS100_*.bin
-        if-no-files-found: error
+        
