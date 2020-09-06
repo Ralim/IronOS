@@ -53,7 +53,7 @@
 #define TEMP_CHANGE_SHORT_STEP      1         // Default temp change short step +1
 #define TEMP_CHANGE_LONG_STEP       10        // Default temp change long step +10
 #define TEMP_CHANGE_SHORT_STEP_MAX  50        // Temp change short step MAX value
-#define TEMP_CHANGE_LONG_STEP_MAX   100       // Temp change long step MAX value
+#define TEMP_CHANGE_LONG_STEP_MAX   90       // Temp change long step MAX value
 
 /* Power pulse for keeping power banks awake*/
 #define POWER_PULSE_INCREMENT 1
