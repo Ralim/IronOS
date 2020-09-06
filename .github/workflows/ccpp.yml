@@ -3,7 +3,7 @@ name: C/C++ CI
 on: [pull_request, push]
 
 jobs:
-  build:
+  build_TS80:
 
     runs-on: ubuntu-latest
     
@@ -16,19 +16,47 @@ jobs:
         cd Translation\ Editor
         python3 make_translation.py
     - name: make
-      run: ./build.sh
+      run: ./build.sh -m TS80
     - name: Archive TS80 artifacts
       uses: actions/upload-artifact@v2
       with:
         name: TS80
         path: ci/artefacts/TS80_*
         if-no-files-found: error
+  build_TS80P:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: chmod
+      run: chmod +x build.sh
+    - name: translation
+      run: |
+        cd Translation\ Editor
+        python3 make_translation.py
+    - name: make
+      run: ./build.sh -m TS80P
     - name: Archive TS80P artifacts
       uses: actions/upload-artifact@v2
       with:
         name: TS80P
         path: ci/artefacts/TS80P_*
         if-no-files-found: error
+  build_TS100:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: chmod
+      run: chmod +x build.sh
+    - name: translation
+      run: |
+        cd Translation\ Editor
+        python3 make_translation.py
+    - name: make
+      run: ./build.sh -m TS100
     - name: Archive TS100 artifacts
       uses: actions/upload-artifact@v2
       with:
