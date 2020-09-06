@@ -17,8 +17,21 @@ jobs:
         python3 make_translation.py
     - name: make
       run: ./build.sh
-    - name: Archive production artifacts
-      uses: actions/upload-artifact@v1
+    - name: Archive TS80 artifacts
+      uses: actions/upload-artifact@v2
       with:
-        name: compiled
-        path: ci/artefacts
+        name: TS80
+        path: ci/artefacts/TS80_*
+        if-no-files-found: error
+    - name: Archive TS80P artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: TS80P
+        path: ci/artefacts/TS80P_*
+        if-no-files-found: error
+    - name: Archive TS100 artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: TS100
+        path: ci/artefacts/TS100_*
+        if-no-files-found: error
