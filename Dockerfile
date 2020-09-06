@@ -6,7 +6,6 @@ WORKDIR /build
 
 # Install any needed packages specified in requirements.txt
 RUN apt-get update && \
-  apt-get upgrade -y && \
   apt-get install -y \
   make \
   bzip2 \

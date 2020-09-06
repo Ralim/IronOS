@@ -10,56 +10,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: chmod
-      run: chmod +x build.sh
+      run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
     - name: translation
       run: |
         cd Translation\ Editor
         python3 make_translation.py
-    - name: make
+    - name: setup
+      run: ./setup.sh
+    - name: cd
+      run: cd workspace/TS100
+    - name: build TS80
       run: ./build.sh -m TS80
     - name: Archive TS80 artifacts
       uses: actions/upload-artifact@v2
       with:
         name: TS80
-        path: ci/artefacts/TS80_*
-        if-no-files-found: error
-  build_TS80P:
-
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-    - name: chmod
-      run: chmod +x build.sh
-    - name: translation
-      run: |
-        cd Translation\ Editor
-        python3 make_translation.py
-    - name: make
-      run: ./build.sh -m TS80P
-    - name: Archive TS80P artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: TS80P
-        path: ci/artefacts/TS80P_*
-        if-no-files-found: error
-  build_TS100:
-
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-    - name: chmod
-      run: chmod +x build.sh
-    - name: translation
-      run: |
-        cd Translation\ Editor
-        python3 make_translation.py
-    - name: make
-      run: ./build.sh -m TS100
-    - name: Archive TS100 artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: TS100
-        path: ci/artefacts/TS100_*
+        path: Hexfile/TS80_*
         if-no-files-found: error
