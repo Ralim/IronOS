@@ -3,35 +3,75 @@ name: C/C++ CI
 on: [pull_request, push]
 
 jobs:
-  build:
+  build_TS80:
 
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v2
+
     - name: chmod
-      run: chmod +x build.sh
-    - name: translation
-      run: |
-        cd Translation\ Editor
-        python3 make_translation.py
-    - name: make
-      run: ./build.sh
+      run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+
+    - name: setup
+      run: ./setup.sh
+
+    - name: build TS80
+      run: cd workspace/TS100 && ./build.sh -m TS80
+
     - name: Archive TS80 artifacts
       uses: actions/upload-artifact@v2
       with:
         name: TS80
-        path: ci/artefacts/TS80_*
+        path: |
+          workspace/TS100/Hexfile/TS80_*.hex
+          workspace/TS100/Hexfile/TS80_*.bin
         if-no-files-found: error
+  build_TS80P:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: chmod
+      run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+
+    - name: setup
+      run: ./setup.sh
+
+    - name: build TS80P
+      run: cd workspace/TS100 && ./build.sh -m TS80P
+
     - name: Archive TS80P artifacts
       uses: actions/upload-artifact@v2
       with:
         name: TS80P
-        path: ci/artefacts/TS80P_*
+        path: |
+          workspace/TS100/Hexfile/TS80P_*.hex
+          workspace/TS100/Hexfile/TS80P_*.bin
         if-no-files-found: error
+  build_TS100:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: chmod
+      run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+
+    - name: setup
+      run: ./setup.sh
+
+    - name: build TS100
+      run: cd workspace/TS100 && ./build.sh -m TS100
+
     - name: Archive TS100 artifacts
       uses: actions/upload-artifact@v2
       with:
         name: TS100
-        path: ci/artefacts/TS100_*
+        path: |
+          workspace/TS100/Hexfile/TS100_*.hex
+          workspace/TS100/Hexfile/TS100_*.bin
         if-no-files-found: error
