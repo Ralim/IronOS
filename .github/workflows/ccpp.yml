@@ -6,23 +6,23 @@ jobs:
   build_TS80:
 
     runs-on: ubuntu-latest
-    
+    env:
+      working-directory: /build
     steps:
     - uses: actions/checkout@v2
+      working-directory: ${{env.working-directory}}
     - name: chmod
       run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
-    - name: translation
-      run: |
-        cd Translation\ Editor
-        python3 make_translation.py
+      working-directory: ${{env.working-directory}}
     - name: setup
       run: ./setup.sh
-    - name: cd
-      run: cd workspace/TS100
+      working-directory: ${{env.working-directory}}  
     - name: build TS80
       run: cd workspace/TS100 && ./build.sh -m TS80
+      working-directory: ${{env.working-directory}}
     - name: Archive TS80 artifacts
       uses: actions/upload-artifact@v2
+      working-directory: ${{env.working-directory}}
       with:
         name: TS80
         path: workspace/TS100/Hexfile/TS80_*
