@@ -10,7 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: chmod
-      run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+      run: chmod +x setup.sh 
+    - name: chmod
+      run: chmod +x workspace/TS100/build.sh
     - name: translation
       run: |
         cd Translation\ Editor
