@@ -130,14 +130,6 @@
 			],
 			"desc": "Skærm Orientering <A. Automatisk V. Venstre Håndet H. Højre Håndet"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"",
-				""
-			],
-			"desc": "Ved tryk på front knap Aktiveres boost-funktionen, 450C tilstand når der loddes"
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

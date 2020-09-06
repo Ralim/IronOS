@@ -32,8 +32,7 @@ typedef struct {
 	uint8_t autoStartMode :2;  // Should the unit automatically jump straight
 							   // into soldering mode when power is applied
 	uint8_t ShutdownTime;          // Time until unit shuts down if left alone
-	uint8_t boostModeEnabled :1;  // Boost mode swaps BUT_A in soldering mode to
-								  // temporary soldering temp over-ride
+
 	uint8_t coolingTempBlink :1;  // Should the temperature blink on the cool
 								  // down screen until its <50C
 	uint8_t detailedIDLE :1;       // Detailed idle screen

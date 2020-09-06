@@ -130,14 +130,6 @@
 			],
 			"desc": "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>"
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Temperatuurverhoging",
-				"ingeschakeld?"
-			],
-			"desc": "Temperatuur verhoogt als voorste knop is ingedrukt"
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

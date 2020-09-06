@@ -132,14 +132,6 @@
 			],
 			"desc": "Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>"
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Funzione",
-				"«Turbo»"
-			],
-			"desc": "Attiva la funzione «Turbo», durante la modalità Saldatura, tenendo premuto il tasto superiore"
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

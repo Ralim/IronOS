@@ -130,14 +130,6 @@
 			],
 			"desc": "Skjermretning <A. Automatisk V. Venstrehendt H. Høyrehendt"
 		},
-		"BoostEnabled": {
-			"text": "Kraft",
-			"text2": [
-				"",
-				""
-			],
-			"desc": "Frontknappen aktiverer kraftfunksjonen, 450C ved lodding"
-		},
 		"BoostTemperature": {
 			"text": "KTmp",
 			"text2": [

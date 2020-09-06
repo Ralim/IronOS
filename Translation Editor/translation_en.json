@@ -133,14 +133,6 @@
 			],
 			"desc": "Display orientation <A=Automatic L=Left-handed R=Right-handed>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Boost",
-				"mode"
-			],
-			"desc": "Enable front key long press \"boost mode\" when soldering"
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

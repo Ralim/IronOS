@@ -130,14 +130,6 @@
 			],
 			"desc": "Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>"
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Activation du",
-				"mode Boost"
-			],
-			"desc": "Activer le mode \"Boost\" en maintenant le bouton de devant pendant la soudure"
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

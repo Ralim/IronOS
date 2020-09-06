@@ -130,14 +130,6 @@
 			],
 			"desc": "Orientação da tela <A.utomática C.anhoto D.estro>"
 		},
-		"BoostEnabled": {
-			"text": "TURBO",
-			"text2": [
-				"Modo turbo",
-				"activado"
-			],
-			"desc": "Tecla frontal activa modo \"turbo\""
-		},
 		"BoostTemperature": {
 			"text": "TTMP",
 			"text2": [

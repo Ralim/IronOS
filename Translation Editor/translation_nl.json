@@ -130,14 +130,6 @@
 			],
 			"desc": "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>"
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Boostmodes",
-				"ingeschakeld?"
-			],
-			"desc": "Soldeerbout gaat naar een hogere boost-temperatuur wanneer de voorste knop ingedrukt is."
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

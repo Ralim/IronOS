@@ -131,14 +131,6 @@
 			],
 			"desc": "Orientacija zaslona <S. samodejno L. levo D. desno>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Omogoči",
-				"boost mode"
-			],
-			"desc": "Omogoči, da tipka za naprej zagreje konico na 450C."
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

@@ -132,14 +132,6 @@
 			],
 			"desc": "Orientación de la pantalla <A=automático I=zurdo D=diestro>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Con botón de",
-				"temp. extra"
-			],
-			"desc": "Permite mantener pulsado el primer botón (A) al soldar y calentar momentáneamente un poco más."
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

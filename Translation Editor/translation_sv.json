@@ -130,14 +130,6 @@
 			],
 			"desc": "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>"
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Turboläge",
-				"aktiverat"
-			],
-			"desc": "Aktivera främre knappen för turboläge (temperaturhöjning) vid lödning"
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

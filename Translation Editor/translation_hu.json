@@ -130,14 +130,6 @@
 			],
 			"desc": "Kijelző tájolása <A. automatikus B. balkezes J. jobbkezes>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Boost",
-				"mód"
-			],
-			"desc": "Elülső gombbal boost módba (450C) lép forrasztás közben"
-		},
 		"BoostTemperature": {
 			"text": "BHŐ",
 			"text2": [

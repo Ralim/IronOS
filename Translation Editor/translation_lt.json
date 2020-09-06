@@ -130,14 +130,6 @@
 			],
 			"desc": "Ekrano orientacija <A - automatinė, K - kairiarankiams, D - dešiniarankiams>"
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Turbo režimas",
-				"įjungtas"
-			],
-			"desc": "Ar lituojant viršutinis mygtukas įjungia turbo režimą"
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

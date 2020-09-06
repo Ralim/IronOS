@@ -130,14 +130,6 @@
 			],
 			"desc": "Kako je okrenut ekran. <A=automatski, L=za levoruke, D=za desnoruke>"
 		},
-		"BoostEnabled": {
-			"text": "Pjčnj",
-			"text2": [
-				"Pojačanje",
-				"omogućeno"
-			],
-			"desc": "Držanje prednjeg tastera tokom lemljenja dodatno pojačava temperaturu vrha."
-		},
 		"BoostTemperature": {
 			"text": "TPjč",
 			"text2": [

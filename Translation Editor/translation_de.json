@@ -133,14 +133,6 @@
 			],
 			"desc": "Ausrichtung der Anzeige <A=Automatisch, L=Linkshändig, R=Rechtshändig>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Boosttaste",
-				"aktiv?"
-			],
-			"desc": "Vordere Taste lange drücken für Temperatur-Boostmodus beim Löten"
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

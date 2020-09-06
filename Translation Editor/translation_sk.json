@@ -130,14 +130,6 @@
 			],
 			"desc": "Orientacia displeja <A=Auto, L=Lavak, R=Pravak>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"",
-				""
-			],
-			"desc": "Povolit tlacidlo pre prudky nahrev <T=Zap, F=Vyp>"
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

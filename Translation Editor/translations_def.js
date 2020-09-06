@@ -194,11 +194,6 @@ var def =
 			"maxLen2": 13
 		},
 		{
-			"id": "BoostEnabled",
-			"maxLen": 6,
-			"maxLen2": 13
-		},
-		{
 			"id": "BoostTemperature",
 			"maxLen": 4,
 			"maxLen2": 9

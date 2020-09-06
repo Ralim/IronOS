@@ -130,14 +130,6 @@
 			],
 			"desc": "Görüntü Yönlendirme <A. Otomatik L. Solak R. Sağlak>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"",
-				""
-			],
-			"desc": "Lehimleme yaparken ön tuşa basmak Boost moduna sokar(450C)"
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

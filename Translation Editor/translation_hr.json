@@ -130,14 +130,6 @@
 			],
 			"desc": "Orijentacija ekrana. <A=Automatski, L=Ljevoruki, D=Desnoruki>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Boost",
-				"način"
-			],
-			"desc": "Držanjem prednjeg gumba prilikom lemljenja aktivira se pojačani (Boost) način."
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

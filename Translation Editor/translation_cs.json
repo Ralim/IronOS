@@ -132,14 +132,6 @@
 			],
 			"desc": "Orientace obrazovky <A=Auto, L=Levák, P=Pravák>."
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Povolit",
-				"boost"
-			],
-			"desc": "Povolit boost podržením předního tlačítka při pájení?"
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

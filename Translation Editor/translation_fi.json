@@ -130,14 +130,6 @@
 			],
 			"desc": "Näytön kierto. <A=automaattinen O=oikeakätinen V=vasenkätinen>"
 		},
-		"BoostEnabled": {
-			"text": "",
-			"text2": [
-				"Tehostus",
-				"käytössä"
-			],
-			"desc": "Etupainikeella siirrytään juotettaessa tehostustilaan."
-		},
 		"BoostTemperature": {
 			"text": "",
 			"text2": [

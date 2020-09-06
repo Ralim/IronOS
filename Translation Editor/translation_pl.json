@@ -133,14 +133,6 @@
 			],
 			"desc": "Orientacja wyświetlacza <A - automatyczna, L - leworęczna, P - praworęczna>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Tryb",
-				"boost"
-			],
-			"desc": "Przytrzymaj przedni przycisk podczas lutowania w celu zwiększenia temperatury"
-		},
 		"BoostTemperature": {
 			"text": "BTMP",
 			"text2": [

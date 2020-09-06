@@ -439,7 +439,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			break;
 		case BUTTON_F_LONG:
 			// if boost mode is enabled turn it on
-			if (systemSettings.boostModeEnabled)
+			if (systemSettings.BoostTemp)
 				boostModeOn = true;
 			break;
 		case BUTTON_F_SHORT:
