@@ -235,14 +235,6 @@
 			],
 			"desc": "Moč v W napajalnega vira"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

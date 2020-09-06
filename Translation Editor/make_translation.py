@@ -125,27 +125,6 @@ def getConstants():
     return consants
 
 
-def getTipModelEnumTS80():
-    constants = []
-    constants.append("B02")
-    constants.append("D25")
-    constants.append("TS80")  # end of miniware
-    constants.append("User")  # User
-    return constants
-
-
-def getTipModelEnumTS100():
-    constants = []
-    constants.append("B02")
-    constants.append("D24")
-    constants.append("BC2")
-    constants.append(" C1")
-    constants.append("TS100")  # end of miniware
-    constants.append("BC2")
-    constants.append("Hakko")  # end of hakko
-    constants.append("User")
-    return constants
-
 
 def getDebugMenu():
     constants = []
@@ -207,8 +186,6 @@ def getLetterCounts(defs, lang):
     constants = getConstants()
     for x in constants:
         textList.append(x[1])
-    textList.extend(getTipModelEnumTS100())
-    textList.extend(getTipModelEnumTS80())
     textList.extend(getDebugMenu())
 
     # collapse all strings down into the composite letters and store totals for these
@@ -329,17 +306,19 @@ def writeLanguage(languageCode, defs, f):
     f.write(to_unicode("const char* SettingsDescriptions[] = {\n"))
 
     maxLen = 25
+    index =0
     for mod in defs['menuOptions']:
         eid = mod['id']
         if 'feature' in mod:
             f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
-        f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
+        f.write(to_unicode("  /* ["+"{:02d}".format(index)+"] " + eid.ljust(maxLen)[:maxLen] + " */ "))
         f.write(
             to_unicode("\"" +
                        convStr(symbolConversionTable, (obj[eid]['desc'])) +
                        "\"," + "//{} \n".format(obj[eid]['desc'])))
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
+        index=index+1
 
     f.write(to_unicode("};\n\n"))
 
@@ -381,20 +360,6 @@ def writeLanguage(languageCode, defs, f):
                        convStr(symbolConversionTable, x[1]) + "\";" + "//{} \n".format(x[1])))
 
     f.write(to_unicode("\n"))
-    # Write out tip model strings
-
-    f.write(to_unicode("const char* TipModelStrings[] = {\n"))
-    f.write(to_unicode("#ifdef MODEL_TS100\n"))
-    for c in getTipModelEnumTS100():
-        f.write(to_unicode("\t \"" + convStr(symbolConversionTable,
-                                             c) + "\"," + "//{} \n".format(c)))
-    f.write(to_unicode("#else\n"))
-    for c in getTipModelEnumTS80():
-        f.write(to_unicode("\t \"" + convStr(symbolConversionTable,
-                                             c) + "\"," + "//{} \n".format(c)))
-    f.write(to_unicode("#endif\n"))
-
-    f.write(to_unicode("};\n\n"))
 
     # Debug Menu
     f.write(to_unicode("const char* DebugMenu[] = {\n"))
@@ -417,11 +382,12 @@ def writeLanguage(languageCode, defs, f):
     f.write(to_unicode("const char* SettingsShortNames[][2] = {\n"))
 
     maxLen = 25
+    index = 0
     for mod in defs['menuOptions']:
         eid = mod['id']
         if 'feature' in mod:
             f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
-        f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
+        f.write(to_unicode("  /* ["+"{:02d}".format(index)+"] "   + eid.ljust(maxLen)[:maxLen] + " */ "))
         if lang['menuDouble']:
             f.write(
                 to_unicode(
@@ -437,6 +403,7 @@ def writeLanguage(languageCode, defs, f):
                            "\" }," + "//{} \n".format(obj[eid]['text'])))
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
+        index = index + 1 
 
     f.write(to_unicode("};\n\n"))
 

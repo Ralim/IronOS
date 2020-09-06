@@ -236,14 +236,6 @@
 			],
 			"desc": "Výkon použítého napájecího adaptéru ve wattech."
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"Omez. výk.",
-				"Aktivovat"
-			],
-			"desc": "Aktivovat omezení výkonu"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

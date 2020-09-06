@@ -236,14 +236,6 @@
 			],
 			"desc": "Potencia en vatios del adaptador de corriente utilizado."
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"Limitar la",
-				"potenc. máx."
-			],
-			"desc": "Activa el límite de potencia máxima."
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

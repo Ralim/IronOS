@@ -234,14 +234,6 @@
 			],
 			"desc": "Puissance de l'alimentation utilisée"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Activer?"
-			],
-			"desc": "Activer la limite de puissance"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

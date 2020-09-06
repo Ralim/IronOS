@@ -234,14 +234,6 @@
 			],
 			"desc": "Snaga modula za napajanje"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

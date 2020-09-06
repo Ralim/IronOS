@@ -71,7 +71,6 @@ void resetSettings() {
 	systemSettings.temperatureInF = TEMPERATURE_INF;          // default to 0
 #endif
 	systemSettings.descriptionScrollSpeed = DESCRIPTION_SCROLL_SPEED; // default to slow
-	systemSettings.powerLimitEnable = POWER_LIMIT_ENABLE; // Default to no power limit
 	systemSettings.CalibrationOffset = CALIBRATION_OFFSET; // the adc offset in uV
 	systemSettings.powerLimit = POWER_LIMIT; // 30 watts default limit
 	systemSettings.ReverseButtonTempChangeEnabled = REVERSE_BUTTON_TEMP_CHANGE; //

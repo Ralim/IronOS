@@ -236,14 +236,6 @@
 			],
 			"desc": "Imposta la potenza massima erogabile dall'alimentatore in uso"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"Limitatore",
-				"di potenza"
-			],
-			"desc": "Abilita un limitatore per la potenza massima erogabile al saldatore"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

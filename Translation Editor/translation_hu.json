@@ -234,14 +234,6 @@
 			],
 			"desc": "A tápegység által leadott teljesítmény"
 		},
-		"PowerLimitEnable": {
-			"text": "TELJH",
-			"text2": [
-				"Telj H",
-				"Bekapcsolva"
-			],
-			"desc": "Bemeneti teljesitmény korlátozása"
-		},
 		"PowerLimit": {
 			"text": "TELJM",
 			"text2": [

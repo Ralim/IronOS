@@ -237,14 +237,6 @@
 			],
 			"desc": "Moc używanego zasilacza w Wattach"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"Włącz limit",
-				"mocy"
-			],
-			"desc": "Włącza limit mocy"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

@@ -234,14 +234,6 @@
 			],
 			"desc": "Vermogen van de adapter"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

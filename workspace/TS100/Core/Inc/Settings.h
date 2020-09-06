@@ -49,7 +49,6 @@ typedef struct {
 	uint16_t CalibrationOffset; // This stores the temperature offset for this tip
 								// in the iron.
 
-	uint8_t powerLimitEnable; // Allow toggling of power limit without changing value
 	uint8_t powerLimit;       // Maximum power iron allowed to output
 
 	uint16_t TipGain; // uV/C * 10, it can be used to convert tip thermocouple voltage to temperateture TipV/TipGain = TipTemp

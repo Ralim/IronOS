@@ -237,14 +237,6 @@
 			],
 			"desc": "Leistungsaufnahme der verwendeten Spannungsversorgung"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"Leistungs-",
-				"Limit An"
-			],
-			"desc": "Leistungslimit aktivieren"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

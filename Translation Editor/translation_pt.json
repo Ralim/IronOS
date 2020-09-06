@@ -234,14 +234,6 @@
 			],
 			"desc": "Potência da fonte usada (Watt)"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

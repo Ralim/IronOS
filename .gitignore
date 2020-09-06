@@ -190,3 +190,4 @@ fabric.properties
 .idea/httpRequests
 
 CoreCompileInputs.cache
+.vscode/settings.json

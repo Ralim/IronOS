@@ -234,14 +234,6 @@
 			],
 			"desc": "Kullanılan adaptörün güç miktarı"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [

@@ -237,14 +237,6 @@
 			],
 			"desc": "Power wattage of the power adapter used"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"Enable power",
-				"limit"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
 			"text": "PLIM",
 			"text2": [
