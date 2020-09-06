@@ -9,15 +9,16 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
+    
     - name: chmod
       run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
-      working-directory: $GITHUB_WORKSPACE
+
     - name: setup
       run: ./setup.sh
-      working-directory: $GITHUB_WORKSPACE  
+
     - name: build TS80
       run: cd workspace/TS100 && ./build.sh -m TS80
-      working-directory: $GITHUB_WORKSPACE
+
     - name: Archive TS80 artifacts
       uses: actions/upload-artifact@v2
       with:

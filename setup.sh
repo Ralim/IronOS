@@ -9,7 +9,8 @@ apt-get update && \
   python3 \
   wget && \
   apt-get clean
-
+mkdir /build
+cd /build
 wget -qO- https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 | tar -xj
 
 # Add compiler to the path
