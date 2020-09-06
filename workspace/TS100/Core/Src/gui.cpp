@@ -230,12 +230,6 @@ const menuitem advancedMenu[] = {
 { NULL, NULL, NULL }  // end of menu marker. DO NOT REMOVE
 };
 
-static void printShortDescriptionSingleLine(uint32_t shortDescIndex) {
-	OLED::setFont(0);
-	OLED::setCharCursor(0, 0);
-	OLED::print(SettingsShortNames[shortDescIndex][0]);
-}
-
 static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
 	OLED::setFont(1);
 	OLED::setCharCursor(0, 0);
@@ -254,11 +248,7 @@ static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
 static void printShortDescription(uint32_t shortDescIndex,
 		uint16_t cursorCharPosition) {
 	// print short description (default single line, explicit double line)
-	if (SettingsShortNameType == SHORT_NAME_DOUBLE_LINE) {
-		printShortDescriptionDoubleLine(shortDescIndex);
-	} else {
-		printShortDescriptionSingleLine(shortDescIndex);
-	}
+	printShortDescriptionDoubleLine(shortDescIndex);
 
 	// prepare cursor for value
 	OLED::setFont(0);

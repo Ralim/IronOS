@@ -106,17 +106,14 @@
 		if (!isDefined(mode) || mode == 0) {
 			// return direct length
 			return obj.length;
-		} else if (mode == 1) {
-			// return length of text property
-			return obj.text.length;
-		} else if (mode == 2) {
-			// return the longest length in text2 array
-			return Math.max(isDefinedNN(obj.text2[0]) ? obj.text2[0].length : 0, isDefinedNN(obj.text2[1]) ? obj.text2[1].length : 0);
-		}
+		} 
+		// return the longest length in text2 array
+		return Math.max(isDefinedNN(obj.text2[0]) ? obj.text2[0].length : 0, isDefinedNN(obj.text2[1]) ? obj.text2[1].length : 0);
+	
 	}
 	
-	function getAttribute(obj, attribute, isDouble) {
-		var d = isDouble ? "2" : "";
+	function getAttribute(obj, attribute) {
+		var d =  "2";
 		var v = obj[attribute+d];
 		if (isDefined(v))
 			return v;
@@ -140,7 +137,6 @@
 					loaded: false,
 				},
 				obsolete : {},
-				menuDouble : false
 			},
 			methods : {
 				validateInput: function(valMap, id, mode) {
@@ -170,16 +166,11 @@
 					}
 				},
 				
-				constraintString: function(e, d) {
+				constraintString: function(e) {
 					var str = "";
 					var delim = "";
 					var v;
-					if (!isDefined(d) || d == false) {
-						d = "";
-					} else {
-						d = "2";
-					}
-
+					d = "2";
 					if (isDefinedNN(e.lenSum)) {
 						str = "len("+(e.lenSum.fields+"").replace(/,/g," + ")+") -> ";
 						e = e.lenSum;
@@ -312,27 +303,12 @@
 
 				<h2>Menu Options</h2>
 				<table class="data">
-					<tr>
-						<td class="label">Menu Type</td>
-						<td class="value">
-							<select v-model="current.menuDouble" v-on:change="current.menuDouble = current.menuDouble=='true'">
-								<option value="false">Single-Line</option>
-								<option value="true">Double-Line</option>
-							</select>
-						</td>
-					</tr>
-					<tr v-for="menu in def.menuOptions" v-bind:class="validateInput(current.menuOptions, menu.id, (current.menuDouble ? 2 : 1))">
+					<tr v-for="menu in def.menuOptions" v-bind:class="validateInput(current.menuOptions, menu.id, 2)">
 						<td class="label"><div class="stringId">{{menu.id}}</div></td>
 						<td class="value">
-							<div v-bind:class="{hidden : current.menuDouble}">
-								<div class="label">Menu Name (Single-Line)</div>
-								<div class="constraint">{{constraintString(menu, current.menuDouble)}}</div>
-								<div class="ref">{{referent.menuOptions[menu.id].text}}</div>
-								<div class="tran"><input type="text" v-model="current.menuOptions[menu.id].text" v-bind:class="{unchanged : current.menuOptions[menu.id].text == referent.menuOptions[menu.id].text, empty : current.menuOptions[menu.id].text == ''}"></div>
-							</div>
-							<div v-bind:class="{hidden : !current.menuDouble}">
+							<div v-bind:class="{hidden : false}">
 								<div class="label">Menu Name (Double-Line)</div>
-								<div class="constraint">{{constraintString(menu, current.menuDouble)}}</div>
+								<div class="constraint">{{constraintString(menu)}}</div>
 								<div class="ref">{{referent.menuOptions[menu.id].text2}}</div>
 								<div class="tran" v-bind:class="{unchanged : current.menuOptions[menu.id].text2[0] == referent.menuOptions[menu.id].text2[0] && current.menuOptions[menu.id].text2[1] == referent.menuOptions[menu.id].text2[1], empty : current.menuOptions[menu.id].text2[0] == '' || current.menuOptions[menu.id].text2[1] == ''}"><input type="text" v-model="current.menuOptions[menu.id].text2[0]"><input type="text" v-model="current.menuOptions[menu.id].text2[1]"></div>
 							</div>

@@ -87,7 +87,6 @@
 						cyrillicGlyphs: false,
 						messages: {},
 						characters: {},
-						menuDouble : false,
 						menuGroups: {},
 						menuOptions: {}
 					};
@@ -109,7 +108,6 @@
 			reMenuMode.lastIndex = 0;
 			match = reMenuMode.exec(line);
 			if (match) {
-				lang.menuDouble = match[1] == 'DOUBLE';
 				entryIndex = 0;
 				continue;
 			}
@@ -234,7 +232,6 @@
 		if (!isDefined(entry)) {
 			entry =
 			{
-				"text": "",
 				"text2": ["", ""],
 				"desc": ""
 			}

@@ -9,16 +9,12 @@
 #define TRANSLATION_H_
 #include "unit.h"
 #include "stdint.h"
-enum ShortNameType {
-	SHORT_NAME_SINGLE_LINE = 1, SHORT_NAME_DOUBLE_LINE = 2,
-};
 extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
 /*
  * When SettingsShortNameType is SHORT_NAME_SINGLE_LINE
  * use SettingsShortNames as SettingsShortNames[16][1].. second column undefined
  */
-extern const enum ShortNameType SettingsShortNameType;
 extern const char *SettingsShortNames[28][2];
 extern const char *SettingsDescriptions[28];
 extern const char *SettingsMenuEntries[4];

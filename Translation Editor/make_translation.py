@@ -167,11 +167,8 @@ def getLetterCounts(defs, lang):
     obj = lang['menuOptions']
     for mod in defs['menuOptions']:
         eid = mod['id']
-        if lang['menuDouble']:
-            textList.append(obj[eid]['text2'][0])
-            textList.append(obj[eid]['text2'][1])
-        else:
-            textList.append(obj[eid]['text'])
+        textList.append(obj[eid]['text2'][0])
+        textList.append(obj[eid]['text2'][1])
 
     obj = lang['menuGroups']
     for mod in defs['menuGroups']:
@@ -369,14 +366,6 @@ def writeLanguage(languageCode, defs, f):
                                              c) + "\"," + "//{} \n".format(c)))
     f.write(to_unicode("};\n\n"))
 
-    # ----- Menu Options
-
-    # Menu type
-    f.write(
-        to_unicode(
-            "const enum ShortNameType SettingsShortNameType = SHORT_NAME_" +
-            ("DOUBLE" if lang['menuDouble'] else "SINGLE") + "_LINE;\n"))
-
     # ----- Writing SettingsDescriptions
     obj = lang['menuOptions']
     f.write(to_unicode("const char* SettingsShortNames[][2] = {\n"))
@@ -388,19 +377,14 @@ def writeLanguage(languageCode, defs, f):
         if 'feature' in mod:
             f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
         f.write(to_unicode("  /* ["+"{:02d}".format(index)+"] "   + eid.ljust(maxLen)[:maxLen] + " */ "))
-        if lang['menuDouble']:
-            f.write(
-                to_unicode(
-                    "{ \"" +
-                    convStr(symbolConversionTable, (obj[eid]['text2'][0])) +
-                    "\", \"" +
-                    convStr(symbolConversionTable, (obj[eid]['text2'][1])) +
-                    "\" }," + "//{} \n".format(obj[eid]['text2'])))
-        else:
-            f.write(
-                to_unicode("{ \"" +
-                           convStr(symbolConversionTable, (obj[eid]['text'])) +
-                           "\" }," + "//{} \n".format(obj[eid]['text'])))
+        f.write(
+            to_unicode(
+                "{ \"" +
+                convStr(symbolConversionTable, (obj[eid]['text2'][0])) +
+                "\", \"" +
+                convStr(symbolConversionTable, (obj[eid]['text2'][1])) +
+                "\" }," + "//{} \n".format(obj[eid]['text2'])))
+        
         if 'feature' in mod:
             f.write(to_unicode("#endif\n"))
         index = index + 1 
