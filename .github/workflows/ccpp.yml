@@ -24,9 +24,7 @@ jobs:
       with:
         name: TS80
         if-no-files-found: error
-        path: |
-        workspace/TS100/Hexfile/TS80_*.hex
-        workspace/TS100/Hexfile/TS80_*.bin
+        path: workspace/TS100/Hexfile/TS80_*.hex workspace/TS100/Hexfile/TS80_*.bin
 
   build_TS80P:
 
@@ -49,9 +47,7 @@ jobs:
       with:
         name: TS80P
         if-no-files-found: error
-        path: |
-        workspace/TS100/Hexfile/TS80P_*.hex
-        workspace/TS100/Hexfile/TS80P_*.bin
+        path:  workspace/TS100/Hexfile/TS80P_*.hex workspace/TS100/Hexfile/TS80P_*.bin
 
   build_TS100:
 
@@ -74,7 +70,5 @@ jobs:
       with:
         name: TS100
         if-no-files-found: error
-        path: |
-        workspace/TS100/Hexfile/TS100_*.hex
-        workspace/TS100/Hexfile/TS100_*.bin
-        
+        path: workspace/TS100/Hexfile/TS100_*.hex workspace/TS100/Hexfile/TS100_*.bin
+
