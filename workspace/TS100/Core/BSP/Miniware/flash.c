@@ -23,7 +23,7 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 	__HAL_FLASH_CLEAR_FLAG(
 			FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGERR | FLASH_FLAG_BSY);
 	HAL_FLASH_Unlock();
-	HAL_Delay(10);
+	HAL_Delay(1);
 	resetWatchdog();
 	HAL_FLASHEx_Erase(&pEraseInit, &failingAddress);
 	//^ Erase the page of flash (1024 bytes on this stm32)

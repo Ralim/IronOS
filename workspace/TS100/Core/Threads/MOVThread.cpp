@@ -23,8 +23,28 @@
 uint8_t accelInit = 0;
 uint32_t lastMovementTime = 0;
 void startMOVTask(void const *argument __unused) {
-	OLED::setRotation(systemSettings.OrientationMode & 1);
+#ifdef ACCEL_MMA
+	if (MMA8652FC::detect()) {
+		PCBVersion = 1;
+		MMA8652FC::initalize();  // this sets up the I2C registers
+	} else
+#endif
+#ifdef ACCEL_LIS
+	if (LIS2DH12::detect()) {
+		PCBVersion = 2;
+		// Setup the ST Accelerometer
+		LIS2DH12::initalize();  // startup the accelerometer
+	} else
+#endif
+	{
+		PCBVersion = 3;
+		systemSettings.SleepTime = 0;
+		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
+		systemSettings.sensitivity = 0;
+	}
 	postRToSInit();
+	OLED::setRotation(systemSettings.OrientationMode & 1);
+
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
 	int16_t datay[MOVFilter] = { 0 };

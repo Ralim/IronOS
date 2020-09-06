@@ -12,8 +12,6 @@
 #include "Settings.h"
 #include "cmsis_os.h"
 uint8_t PCBVersion = 0;
-// File local variables
-bool usb_pd_available = false;
 bool settingsWereReset = false;
 // FreeRTOS variables
 
@@ -32,44 +30,17 @@ uint32_t MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
 
 // End FreeRTOS
-
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
 	preRToSInit();
-
 	setTipX10Watts(0);  // force tip off
 	resetWatchdog();
-	OLED::initialize();  // start up the LCD
 	OLED::setFont(0);    // default to bigger font
 	// Testing for which accelerometer is mounted
-	resetWatchdog();
-	usb_pd_available = usb_pd_detect();
-	resetWatchdog();
 	settingsWereReset = restoreSettings();  // load the settings from flash
-#ifdef ACCEL_MMA
-	if (MMA8652FC::detect()) {
-		PCBVersion = 1;
-		MMA8652FC::initalize();  // this sets up the I2C registers
-	} else
-#endif
-#ifdef ACCEL_LIS
-	if (LIS2DH12::detect()) {
-		PCBVersion = 2;
-		// Setup the ST Accelerometer
-		LIS2DH12::initalize();  // startup the accelerometer
-	} else
-#endif
-	{
-		PCBVersion = 3;
-		systemSettings.SleepTime = 0;
-		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
-		systemSettings.sensitivity = 0;
-	}
 	resetWatchdog();
-
 	/* Create the thread(s) */
 	/* definition and creation of GUITask */
-
 	osThreadStaticDef(GUITask, startGUITask, osPriorityBelowNormal, 0,
 			GUITaskStackSize, GUITaskBuffer, &GUITaskControlBlock);
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);

@@ -21,14 +21,13 @@
 #include "fusb302b.h"
 #include "protocol_rx.h"
 #include "protocol_tx.h"
-#include "hard_reset.h"
 #include "policy_engine.h"
 #include "protocol_rx.h"
 #include "protocol_tx.h"
 #include "task.h"
 #include "BSP.h"
 
-osThreadId InterruptHandler::TaskHandle=NULL;
+osThreadId InterruptHandler::TaskHandle = NULL;
 uint32_t InterruptHandler::TaskBuffer[InterruptHandler::TaskStackSize];
 osStaticThreadDef_t InterruptHandler::TaskControlBlock;
 
@@ -41,8 +40,6 @@ void InterruptHandler::init() {
 void InterruptHandler::Thread(const void *arg) {
 	(void) arg;
 	union fusb_status status;
-	volatile uint32_t events;
-	bool notifSent = false;
 	while (true) {
 		/* If the INT_N line is low */
 		if (xTaskNotifyWait(0x00, 0x0F, NULL,
@@ -50,7 +47,6 @@ void InterruptHandler::Thread(const void *arg) {
 			//delay slightly so we catch the crc with better timing
 			osDelay(1);
 		}
-		notifSent = false;
 		/* Read the FUSB302B status and interrupt registers */
 		fusb_get_status(&status);
 		/* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX
@@ -58,43 +54,23 @@ void InterruptHandler::Thread(const void *arg) {
 		if (status.interrupta & FUSB_INTERRUPTA_I_TXSENT) {
 			ProtocolTransmit::notify(
 					ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_TXSENT);
-			notifSent = true;
 		}
 		if (status.interrupta & FUSB_INTERRUPTA_I_RETRYFAIL) {
 			ProtocolTransmit::notify(
 					ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
-			notifSent = true;
 		}
 
 		/* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
 		//This means a message was recieved with a good CRC
 		if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
 			ProtocolReceive::notify(PDB_EVT_PRLRX_I_GCRCSENT);
-			notifSent = true;
 		}
 
-		/* If the I_HARDRST or I_HARDSENT flag is set, tell the Hard Reset
-		 * thread */
-
-		if (notifSent == false) {
-			events = 0;
-			if (status.interrupta & FUSB_INTERRUPTA_I_HARDRST) {
-				events |= PDB_EVT_HARDRST_I_HARDRST;
-				notifSent = true;
-			} else if (status.interrupta & FUSB_INTERRUPTA_I_HARDSENT) {
-				events |= PDB_EVT_HARDRST_I_HARDSENT;
-				notifSent = true;
-			}
-			if (events) {
-				ResetHandler::notify(events);
-			}
-		}
 		/* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
 		 * Engine thread */
 		if (status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP
 				&& status.status1 & FUSB_STATUS1_OVRTEMP) {
 			PolicyEngine::notify(PDB_EVT_PE_I_OVRTEMP);
-			notifSent = true;
 		}
 	}
 }

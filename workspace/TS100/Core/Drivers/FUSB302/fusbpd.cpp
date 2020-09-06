@@ -15,24 +15,13 @@
 #include "protocol_rx.h"
 #include "protocol_tx.h"
 #include "int_n.h"
-#include "hard_reset.h"
-
-
 
 void fusb302_start_processing() {
 	/* Initialize the FUSB302B */
-	resetWatchdog();
 	fusb_setup();
-	resetWatchdog();
-	/* Create the policy engine thread. */
 	PolicyEngine::init();
-
-	/* Create the protocol layer threads. */
-	ProtocolReceive::init();
 	ProtocolTransmit::init();
-	ResetHandler::init();
-	resetWatchdog();
-	/* Create the INT_N thread. */
+	ProtocolReceive::init();
 	InterruptHandler::init();
 }
 #endif
