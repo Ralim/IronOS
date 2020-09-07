@@ -128,7 +128,7 @@
 				"Temp",
 				"«Turbo»"
 			],
-			"desc": "Imposta la temperatura della funzione «Turbo»"
+			"desc": "Imposta la temperatura della funzione «Turbo» <°C/°F>"
 		},
 		"AutoStart": {
 						"text2": [
@@ -210,7 +210,7 @@
 		"PowerLimit": {
 						"text2": [
 				"Limite",
-				"di potenza"
+				"potenza"
 			],
 			"desc": "Imposta il valore di potenza massima erogabile al saldatore <watt>"
 		},
@@ -219,28 +219,28 @@
 				"Inversione",
 				"tasti"
 			],
-			"desc": "Inverti i tasti per impostare la temperatura della punta "
+			"desc": "Inverti i tasti per aumentare o diminuire la temperatura della punta"
 		},
 		"TempChangeShortStep": {
 						"text2": [
-				"Cambio temp",
-				"pressione breve"
+				"Temp passo",
+				"breve"
 			],
-			"desc": "Varia la temperatura della punta attraverso una breve pressione dei tasti"
+			"desc": "Imposta il «passo» dei valori di temperatura ad una breve pressione dei tasti"
 		},
 		"TempChangeLongStep": {
 						"text2": [
-				"Cambio temp",
-				"pressione lunga"
+				"Temp passo",
+				"lungo"
 			],
-			"desc": "Varia la temperatura della punta attraverso una lunga pressione dei tasti"
+			"desc": "Imposta il «passo» dei valori di temperatura ad una lunga pressione dei tasti"
 		},
 		"PowerPulsePower": {
 						"text2": [
-				"Potenza impulso",
-				"«Keep-Alive»"
+				"Potenza",
+				"impulso"
 			],
-			"desc": "Regola la potenza d'impulso in ingresso al saldatore per prevenire lo standby eventuale dell'alimentatore <watt>"
+			"desc": "Regola la potenza d'impulso per prevenire lo standby eventuale dell'alimentatore <watt>"
 		},
 		"TipGain": {
 						"text2": [
