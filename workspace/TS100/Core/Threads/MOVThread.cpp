@@ -45,6 +45,12 @@ void startMOVTask(void const *argument __unused) {
 	postRToSInit();
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 
+	if ((PCBVersion == 1
+		|| PCBVersion == 2)
+		&& (systemSettings.autoStartMode == 2
+			|| systemSettings.autoStartMode == 3))
+		osDelay(2000);
+
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
 	int16_t datay[MOVFilter] = { 0 };
