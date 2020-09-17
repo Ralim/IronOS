@@ -12,9 +12,7 @@
 #include "Setup.h"
 #include "../../configuration.h"
 #include "BSP.h"
-#define FLASH_ADDR \
-  (0x8000000 |     \
-   0xFC00) /*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
+
 #include "string.h"
 volatile systemSettingsType systemSettings;
 
@@ -65,7 +63,6 @@ void resetSettings() {
 	systemSettings.sensitivity = SENSITIVITY;      // Default high sensitivity
 	systemSettings.voltageDiv = VOLTAGE_DIV;  // Default divider from schematic
 	systemSettings.ShutdownTime = SHUTDOWN_TIME; // How many minutes until the unit turns itself off
-	systemSettings.boostModeEnabled = BOOST_MODE_ENABLED; // Default to having boost mode on as most people prefer it
 	systemSettings.BoostTemp = BOOST_TEMP;    // default to 400C
 	systemSettings.autoStartMode = AUTO_START_MODE; // Auto start off for safety
 	systemSettings.coolingTempBlink = COOLING_TEMP_BLINK; // Blink the temperature on the cooling screen when its > 50C
@@ -73,7 +70,6 @@ void resetSettings() {
 	systemSettings.temperatureInF = TEMPERATURE_INF;          // default to 0
 #endif
 	systemSettings.descriptionScrollSpeed = DESCRIPTION_SCROLL_SPEED; // default to slow
-	systemSettings.powerLimitEnable = POWER_LIMIT_ENABLE; // Default to no power limit
 	systemSettings.CalibrationOffset = CALIBRATION_OFFSET; // the adc offset in uV
 	systemSettings.powerLimit = POWER_LIMIT; // 30 watts default limit
 	systemSettings.ReverseButtonTempChangeEnabled = REVERSE_BUTTON_TEMP_CHANGE; //

@@ -20,8 +20,7 @@ TaskHandle_t pidTaskNotification = NULL;
 uint32_t currentTempTargetDegC = 0; // Current temperature target in C
 
 /* StartPIDTask function */
-void startPIDTask(void const *argument __unused)
-{
+void startPIDTask(void const *argument __unused) {
 	/*
 	 * We take the current tip temperature & evaluate the next step for the tip
 	 * control PWM.
@@ -30,32 +29,27 @@ void startPIDTask(void const *argument __unused)
 	TickType_t lastPowerPulseStart = 0;
 	TickType_t lastPowerPulseEnd = 0;
 
-	history<int32_t, PID_TIM_HZ> tempError = {{0}, 0, 0};
+	history<int32_t, PID_TIM_HZ> tempError = { { 0 }, 0, 0 };
 	currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
 							   // be over-ridden rapidly
 	pidTaskNotification = xTaskGetCurrentTaskHandle();
 	uint32_t PIDTempTarget = 0;
-	for (;;)
-	{
+	for (;;) {
 
-		if (ulTaskNotifyTake(pdTRUE, 2000))
-		{
+		if (ulTaskNotifyTake(pdTRUE, 2000)) {
 			// This is a call to block this thread until the ADC does its samples
 			int32_t x10WattsOut = 0;
 			// Do the reading here to keep the temp calculations churning along
 			uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
 			PIDTempTarget = currentTempTargetDegC;
-			if (PIDTempTarget)
-			{
+			if (PIDTempTarget) {
 				// Cap the max set point to 450C
-				if (PIDTempTarget > (450))
-				{
+				if (PIDTempTarget > (450)) {
 					//Maximum allowed output
 					PIDTempTarget = (450);
 				}
 				//Safety check that not aiming higher than current tip can measure
-				if (PIDTempTarget > TipThermoModel::getTipMaxInC())
-				{
+				if (PIDTempTarget > TipThermoModel::getTipMaxInC()) {
 					PIDTempTarget = TipThermoModel::getTipMaxInC();
 				}
 				// Convert the current tip to degree's C
@@ -79,7 +73,7 @@ void startPIDTask(void const *argument __unused)
 				// Once we have feed-forward temp estimation we should be able to better tune this.
 
 				int32_t x10WattsNeeded = tempToX10Watts(tError);
-				//						tempError.average());
+//						tempError.average());
 				// note that milliWattsNeeded is sometimes negative, this counters overshoot
 				//  from I term's inertia.
 				x10WattsOut += x10WattsNeeded;
@@ -95,41 +89,38 @@ void startPIDTask(void const *argument __unused)
 				//  and counters extra power if the iron is no longer losing temp.
 				// basically: temp - lastTemp
 				//  Unfortunately, our temp signal is too noisy to really help.
+
 			}
 			//If the user turns on the option of using an occasional pulse to keep the power bank on
-			if (systemSettings.KeepAwakePulse)
-			{
+			if (systemSettings.KeepAwakePulse) {
 
-				if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseRate)
-				{
+				if (xTaskGetTickCount() - lastPowerPulseStart
+						> powerPulseRate) {
 					lastPowerPulseStart = xTaskGetTickCount();
-					lastPowerPulseEnd = lastPowerPulseStart + powerPulseDuration;
+					lastPowerPulseEnd = lastPowerPulseStart
+							+ powerPulseDuration;
 				}
 
 				//If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor
-				if (x10WattsOut < systemSettings.KeepAwakePulse && xTaskGetTickCount() < lastPowerPulseEnd)
-				{
+				if (x10WattsOut < systemSettings.KeepAwakePulse
+						&& xTaskGetTickCount() < lastPowerPulseEnd) {
 					x10WattsOut = systemSettings.KeepAwakePulse;
 				}
 			}
 
 			//Secondary safety check to forcefully disable header when within ADC noise of top of ADC
-			if (getTipRawTemp(0) > (0x7FFF - 150))
-			{
+			if (getTipRawTemp(0) > (0x7FFF - 150)) {
 				x10WattsOut = 0;
 			}
-			if (systemSettings.powerLimitEnable && x10WattsOut > (systemSettings.powerLimit * 10))
-			{
+			if (systemSettings.powerLimit
+					&& x10WattsOut > (systemSettings.powerLimit * 10)) {
 				setTipX10Watts(systemSettings.powerLimit * 10);
-			}
-			else
-			{
+			} else {
 				setTipX10Watts(x10WattsOut);
 			}
+
 			resetWatchdog();
-		}
-		else
-		{
+		} else {
 			//ADC interrupt timeout
 			setTipPWM(0);
 		}

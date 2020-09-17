@@ -18,46 +18,42 @@
  *
  *
  */
-class FRToSI2C
-{
+class FRToSI2C {
 public:
-	static void init()
-	{
-		I2CSemaphore = nullptr;
-	}
 
-	static void FRToSInit()
-	{
+	static void FRToSInit() {
 		I2CSemaphore = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer);
 		xSemaphoreGive(I2CSemaphore);
+		I2CSemaphore2 = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer2);
+		xSemaphoreGive(I2CSemaphore2);
 	}
 
 	static void CpltCallback(); //Normal Tx Callback
 
 	static bool Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
-						 uint8_t *pData, uint16_t Size);
-	static void Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
-						  uint8_t *pData, uint16_t Size);
+			uint8_t *pData, uint16_t Size);
+	static bool Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
+			uint8_t *pData, uint16_t Size);
 	//Returns true if device ACK's being addressed
 	static bool probe(uint16_t DevAddress);
 
-	static void Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+	static bool Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
 	static void Receive(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
 	static void TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx,
-								uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx);
-	static void I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data);
+			uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx);
+	static bool I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data);
 	static uint8_t I2C_RegisterRead(uint8_t address, uint8_t reg);
 
-	//These are public locks that let code lock the bus for back-to-back operations
-	static bool lock2();
 	static void unlock2();
-
+	static bool lock2();
 private:
-	static bool lock();
 	static void unlock();
+	static bool lock();
 	static void I2C_Unstick();
 	static SemaphoreHandle_t I2CSemaphore;
 	static StaticSemaphore_t xSemaphoreBuffer;
+	static SemaphoreHandle_t I2CSemaphore2;
+	static StaticSemaphore_t xSemaphoreBuffer2;
 };
 
 #endif /* FRTOSI2C_HPP_ */

@@ -439,7 +439,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			break;
 		case BUTTON_F_LONG:
 			// if boost mode is enabled turn it on
-			if (systemSettings.boostModeEnabled)
+			if (systemSettings.BoostTemp)
 				boostModeOn = true;
 			break;
 		case BUTTON_F_SHORT:
@@ -632,6 +632,7 @@ void showDebugMenu(void) {
 uint8_t idleScreenBGF[sizeof(idleScreenBG)];
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
+	OLED::initialize();  // start up the LCD
 
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
