@@ -11,17 +11,14 @@
  * Lookup for mapping features <-> Models
  */
 
-#if defined(MODEL_Pinecil) > 1
-#error "Multiple models defined!"
-#elif defined(MODEL_Pinecil) == 0
+#if defined(MODEL_Pinecil) == 0
 #error "No model defined!"
 #endif
 
 #ifdef MODEL_Pinecil
-#define ACCEL_LIS
-#define TEMP_TMP36
+#define POW_PD
 #define POW_QC
-// #define POW_PD
+#define TEMP_TMP36
 #endif
 
 #endif /* BSP_MINIWARE_MODEL_CONFIG_H_ */

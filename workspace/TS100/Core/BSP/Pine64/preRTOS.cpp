@@ -14,7 +14,7 @@ void preRToSInit() {
 	eclic_priority_group_set(ECLIC_PRIGROUP_LEVEL4_PRIO0);
 	eclic_global_interrupt_enable();
 	hardware_init();
-	FRToSI2C::init();
+	FRToSI2C::FRToSInit();
 	gpio_bit_reset(OLED_RESET_GPIO_Port, OLED_RESET_Pin);
 	delay_ms(50);
 	gpio_bit_set(OLED_RESET_GPIO_Port, OLED_RESET_Pin);

@@ -14,7 +14,7 @@ extern uint32_t SystemCoreClock;
 #define configUSE_TICKLESS_IDLE 0
 #define configCPU_CLOCK_HZ ((uint32_t)SystemCoreClock)
 #define configRTC_CLOCK_HZ ((uint32_t)TIMER_FREQ)
-#define configTICK_RATE_HZ ((TickType_t)100)
+#define configTICK_RATE_HZ ((TickType_t)1000)
 #define configMAX_PRIORITIES (4) //0 - 3 å…±6ç­‰çº§ï¼Œidleç‹¬å� 0ï¼ŒTmr_svcç‹¬å� 3
 #define configMINIMAL_STACK_SIZE ((unsigned short)128)
 #define configMAX_TASK_NAME_LEN 24
