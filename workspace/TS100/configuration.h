@@ -101,7 +101,7 @@
 #define VOLTAGE_DIV 467        // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT 70     // Sets the max pwm power limit
-#define POWER_LIMIT 30         // 30 watts default limit
+#define POWER_LIMIT 0         // 0 watts default limit
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
@@ -111,7 +111,7 @@
 #define VOLTAGE_DIV 467        // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT 70     // Sets the max pwm power limit
-#define POWER_LIMIT 30         // 30 watts default limit
+#define POWER_LIMIT 0         // 0 watts default limit
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100

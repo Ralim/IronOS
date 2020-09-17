@@ -146,22 +146,22 @@ void setup_adc() {
 	adc_channel_length_config(ADC0, ADC_REGULAR_CHANNEL, 2);
 	adc_channel_length_config(ADC1, ADC_REGULAR_CHANNEL, 2);
 	//Setup the two channels
-	adc_regular_channel_config(ADC0, 0, TMP36_ADC1_CHANNEL,
+	adc_regular_channel_config(ADC0, 0, TMP36_ADC0_CHANNEL,
 	ADC_SAMPLETIME_71POINT5); //temp sensor
-	adc_regular_channel_config(ADC1, 0, TMP36_ADC2_CHANNEL,
+	adc_regular_channel_config(ADC1, 0, TMP36_ADC1_CHANNEL,
 	ADC_SAMPLETIME_71POINT5); //temp sensor
-	adc_regular_channel_config(ADC0, 1, VIN_ADC1_CHANNEL,
+	adc_regular_channel_config(ADC0, 1, VIN_ADC0_CHANNEL,
 	ADC_SAMPLETIME_71POINT5);   //DC Input voltage
-	adc_regular_channel_config(ADC1, 1, VIN_ADC2_CHANNEL,
+	adc_regular_channel_config(ADC1, 1, VIN_ADC1_CHANNEL,
 	ADC_SAMPLETIME_71POINT5);   //DC Input voltage
 	//Setup that we want all 4 inserted readings to be the tip temp
 	adc_channel_length_config(ADC0, ADC_INSERTED_CHANNEL, 4);
 	adc_channel_length_config(ADC1, ADC_INSERTED_CHANNEL, 4);
 	for (int rank = 0; rank < 4; rank++) {
-		adc_inserted_channel_config(ADC0, rank, TIP_TEMP_ADC1_CHANNEL,
-				ADC_SAMPLETIME_1POINT5);
-		adc_inserted_channel_config(ADC1, rank, TIP_TEMP_ADC2_CHANNEL,
-				ADC_SAMPLETIME_1POINT5);
+		adc_inserted_channel_config(ADC0, rank, TIP_TEMP_ADC0_CHANNEL,
+		ADC_SAMPLETIME_1POINT5);
+		adc_inserted_channel_config(ADC1, rank, TIP_TEMP_ADC1_CHANNEL,
+		ADC_SAMPLETIME_1POINT5);
 	}
 	// Enable triggers for the ADC
 	adc_external_trigger_config(ADC0, ADC_INSERTED_CHANNEL, ENABLE);
