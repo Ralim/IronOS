@@ -30,12 +30,16 @@ static void MX_TIM2_Init(void);
 static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC2_Init(void);
-
+#define SWD_ENABLE
 void Setup_HAL() {
 	SystemClock_Config();
-	__HAL_AFIO_REMAP_SWJ_DISABLE()
-	;
-//	__HAL_AFIO_REMAP_SWJ_NOJTAG();
+
+#ifndef SWD_ENABLE
+	__HAL_AFIO_REMAP_SWJ_DISABLE();
+#else
+	__HAL_AFIO_REMAP_SWJ_NOJTAG();
+#endif
+
 	MX_GPIO_Init();
 	MX_DMA_Init();
 	MX_I2C1_Init();
@@ -244,7 +248,7 @@ static void MX_IWDG_Init(void) {
 	hiwdg.Instance = IWDG;
 	hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
 	hiwdg.Init.Reload = 100;
-#ifndef LOCAL_BUILD
+#ifndef SWD_ENABLE
 	HAL_IWDG_Init(&hiwdg);
 #endif
 }
@@ -425,8 +429,10 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 #ifdef MODEL_TS100
-	/* Pull USB lines low to disable, pull down debug too*/
-	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
+#ifndef SWD_ENABLE
+	/* Pull USB and SWD lines low to prevent enumeration attempts and EMI affecting
+	 * the debug core */
+	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -434,6 +440,12 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
+#else
+	/* Make all lines affecting SWD floating to allow debugging */
+	GPIO_InitStruct.Pin = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+#endif
 #else
 	/* TS80 */
 	/* Leave USB lines open circuit*/

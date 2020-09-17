@@ -194,11 +194,6 @@ var def =
 			"maxLen2": 13
 		},
 		{
-			"id": "BoostEnabled",
-			"maxLen": 6,
-			"maxLen2": 13
-		},
-		{
 			"id": "BoostTemperature",
 			"maxLen": 4,
 			"maxLen2": 9
@@ -257,11 +252,6 @@ var def =
 			"id": "PowerInput",
 			"maxLen": 8,
 			"maxLen2": 16
-		},
-		{
-			"id": "PowerLimitEnable",
-			"maxLen": 6,
-			"maxLen2": 13
 		},
 		{
 			"id": "PowerLimit",

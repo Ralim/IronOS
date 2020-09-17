@@ -37,7 +37,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F"
 	},
-	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -70,200 +69,161 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "PWRSC",
-			"text2": [
+						"text2": [
 				"Spannungs-",
 				"quelle"
 			],
 			"desc": "Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>"
 		},
 		"SleepTemperature": {
-			"text": "STMP",
-			"text2": [
+						"text2": [
 				"Ruhetemp-",
 				"eratur"
 			],
 			"desc": "Ruhetemperatur"
 		},
 		"SleepTimeout": {
-			"text": "STME",
-			"text2": [
+						"text2": [
 				"Ruhever-",
 				"zögerung"
 			],
 			"desc": "Ruhemodus nach <Sekunden/Minuten>"
 		},
 		"ShutdownTimeout": {
-			"text": "SHTME",
-			"text2": [
+						"text2": [
 				"Abschalt-",
 				"zeit"
 			],
 			"desc": "Abschalten nach <Minuten>"
 		},
 		"MotionSensitivity": {
-			"text": "MSENSE",
-			"text2": [
+						"text2": [
 				"Bewegungs-",
 				"empfindlichk."
 			],
 			"desc": "Bewegungsempfindlichkeit <0=Aus, 1=Minimal ... 9=Maximal>"
 		},
 		"TemperatureUnit": {
-			"text": "TMPUNT",
-			"text2": [
+						"text2": [
 				"Temperatur-",
 				"einheit"
 			],
 			"desc": "Temperatureinheit <C=Celsius, F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-			"text": "ADVIDL",
-			"text2": [
+						"text2": [
 				"Detaillierte",
 				"Ruheansicht"
 			],
 			"desc": "Detaillierte Anzeige im Ruhemodus"
 		},
 		"DisplayRotation": {
-			"text": "DSPROT",
-			"text2": [
+						"text2": [
 				"Anzeige-",
 				"ausrichtung"
 			],
 			"desc": "Ausrichtung der Anzeige <A=Automatisch, L=Linkshändig, R=Rechtshändig>"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"Boosttaste",
-				"aktiv?"
-			],
-			"desc": "Vordere Taste lange drücken für Temperatur-Boostmodus beim Löten"
-		},
 		"BoostTemperature": {
-			"text": "BTMP",
-			"text2": [
+						"text2": [
 				"Boosttemp-",
 				"eratur"
 			],
 			"desc": "Temperatur im Boostmodus  (In der eingestellten Einheit)"
 		},
 		"AutoStart": {
-			"text": "ASTART",
-			"text2": [
+						"text2": [
 				"Start im",
 				"Lötmodus?"
 			],
 			"desc": "Automatischer Start-Modus beim Einschalten der Spannungsversorgung. <T=Lötmodus S=Ruhezustand F=Aus>"
 		},
 		"CooldownBlink": {
-			"text": "CLBLNK",
-			"text2": [
+						"text2": [
 				"Abkühl-",
 				"blinken?"
 			],
 			"desc": "Blinkende Temperaturanzeige beim Abkühlen, solange heiß ist."
 		},
 		"TemperatureCalibration": {
-			"text": "TMP CAL?",
-			"text2": [
+						"text2": [
 				"Temperatur",
 				"kalibrieren?"
 			],
 			"desc": "Kalibrierung der Lötspitzentemperatur"
 		},
 		"SettingsReset": {
-			"text": "RESET?",
-			"text2": [
+						"text2": [
 				"Einstellungen",
 				"zurücksetzen?"
 			],
 			"desc": "Einstellungen auf werkseinstellungen zurück setzen"
 		},
 		"VoltageCalibration": {
-			"text": "CAL VIN?",
-			"text2": [
+						"text2": [
 				"Eingangsspannung",
 				"kalibrieren?"
 			],
 			"desc": "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen."
 		},
 		"AdvancedSoldering": {
-			"text": "ADVSLD",
-			"text2": [
+						"text2": [
 				"Detaillierte",
 				"Lötansicht"
 			],
 			"desc": "Detaillierte Anzeige im Lötmodus"
 		},
 		"ScrollingSpeed": {
-			"text": "DESCSP",
-			"text2": [
+						"text2": [
 				"Scroll-",
 				"geschw."
 			],
 			"desc": "Scrollgeschwindigkeit der Texte <S=Langsam F=Schnell>"
 		},
 		"TipModel": {
-			"text": "TIPMO",
-			"text2": [
+						"text2": [
 				"Löt-",
 				"spitze"
 			],
 			"desc": "Auswahl der Lötspitze"
 		},
 		"SimpleCalibrationMode": {
-			"text": "SMPCAL",
-			"text2": [
+						"text2": [
 				"Einfache",
 				"Kalibrierung"
 			],
 			"desc": "Einfache Kalibrierung mittels heißem Wasser"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "ADVCAL",
-			"text2": [
+						"text2": [
 				"Erweiterte",
 				"Kalibrierung"
 			],
 			"desc": "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze"
 		},
 		"PowerInput": {
-			"text": "PWRW",
-			"text2": [
+						"text2": [
 				"Leistungs-",
 				"Aufnahme"
 			],
 			"desc": "Leistungsaufnahme der verwendeten Spannungsversorgung"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"Leistungs-",
-				"Limit An"
-			],
-			"desc": "Leistungslimit aktivieren"
-		},
 		"PowerLimit": {
-			"text": "PLIM",
-			"text2": [
+						"text2": [
 				"Leistungs-",
 				"Limit"
 			],
 			"desc": "Maximale aufnahme der Lötspitze <Watt>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
-			"text2": [
+						"text2": [
 				"Taste +-",
 				"Umkehren?"
 			],
 			"desc": "Temperatur-Änderungs-Tasten-Belegung Plus-Minus umkehren?"
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
-			"text2": [
+						"text2": [
 				"T. Schritt",
 				"Taste kurz?"
 			],
@@ -271,24 +231,21 @@
 		}
 		,
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
-			"text2": [
+						"text2": [
 				"T. Schritt",
 				"Taste Lang?"
 			],
 			"desc": "Temperaturwechselschritte bei langem Tastendruck!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
-			"text2": [
+						"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-			"text": "TG",
-			"text2": [
+						"text2": [
 				"Modify",
 				"tip gain"
 			],

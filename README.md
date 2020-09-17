@@ -1,7 +1,8 @@
-[![Codeship Status for ts100](https://app.codeship.com/projects/c77dbfe0-0764-0138-9520-3eb35bdb2b2c/status?branch=master)](https://app.codeship.com/projects/379118)
 ![C/C++ CI](https://github.com/Ralim/ts100/workflows/C/C++%20CI/badge.svg)
 
 # Flexible Soldering iron control Firmware
+
+*Please Note, this repo will likely be renaming soon to unire - See issue #639. Old links willcontinue to work, and should redirect. So dont panic :) This is just to better account for the newer soldeing irons being added.*
 
 Originally concieved as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
@@ -31,7 +32,7 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods of time)
 * (TS100) Battery charge level indicator if power source set to a lipo cell count
 * (TS80) Power bank operating voltage is displayed
-* [Custom boot up logo support](upgrading.md)
+* [Custom boot up logo support](Documentation/upgrading.md)
 * Automatic LCD rotation based on the orientation
 * Supports both the version 1 and version 2 hardware (different accelerometers)
 
@@ -45,7 +46,7 @@ When on the main screen, the unit shows prompts for the two most common operatio
 * Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
 * Holding the button near the USB end will show the firmware version details
 
-Detailed operation details are over in the [Menu information.](menu.md)
+Detailed operation details are over in the [Menu information.](Documentation/menu.md)
 
 ## Thanks
 
@@ -62,11 +63,11 @@ Especially to the following users, who have helped in various ways that are mass
 * [Doegox](https://github.com/doegox)
 * [Perillamint](https://github.com/perillamint)
 * [GeminiServer](https://github.com/GeminiServer)
-* [PixelPirate](https://github.com/PixelPirate)
+* [Patrick Horlebein](https://github.com/PixelPirate)
 * [Firebie](https://github.com/Firebie)
 * [Agatti](https://github.com/agatti)
 * [Discip](https://github.com/discip)
-
+* [Paul Fertser](https://github.com/paulfertser)
 ## Licence
 
 The code created by the community is GNU GPLv3. Unless noted elsewhere.

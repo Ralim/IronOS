@@ -34,7 +34,6 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "S"
 	},
-	"menuDouble": false,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -67,143 +66,118 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text": "PWRSC",
 			"text2": [
-				"",
-				""
+				"Power",
+				"source"
 			],
 			"desc": "Strømforsyning. Indstil Cutoff Spændingen. <DC 10V <S 3.3V per cell"
 		},
 		"SleepTemperature": {
-			"text": "STMP",
 			"text2": [
-				"",
-				""
+				"Sleep",
+				"temp"
 			],
-			"desc": "Dvale Temperatur <C"
+			"desc": "Dvale Temperatur <C>"
 		},
 		"SleepTimeout": {
-			"text": "STME",
 			"text2": [
-				"",
-				""
+				"Sleep",
+				"timeout"
 			],
 			"desc": "Dvale Timeout <Minutter/Sekunder"
 		},
 		"ShutdownTimeout": {
-			"text": "SHTME",
 			"text2": [
-				"",
-				""
+				"Shutdown",
+				"timeout"
 			],
 			"desc": "sluknings Timeout <Minutter"
 		},
 		"MotionSensitivity": {
-			"text": "MSENSE",
 			"text2": [
-				"",
-				""
+				"Motion",
+				"sensitivity"
 			],
 			"desc": "Bevægelsesfølsomhed <0.Slukket 1.Mindst følsom 9.Mest følsom"
 		},
 		"TemperatureUnit": {
-			"text": "TMPUNT",
 			"text2": [
-				"",
-				""
+				"Temperature",
+				"unit"
 			],
 			"desc": "Temperatur Enhed <C=Celsius F=Fahrenheit"
 		},
 		"AdvancedIdle": {
-			"text": "ADVIDL",
 			"text2": [
-				"",
-				""
+				"Detailed",
+				"idle screen"
 			],
 			"desc": "Vis detialieret information med en mindre skriftstørrelse på standby skærmen."
 		},
 		"DisplayRotation": {
-			"text": "DSPROT",
 			"text2": [
-				"",
-				""
+				"Display",
+				"orientation"
 			],
 			"desc": "Skærm Orientering <A. Automatisk V. Venstre Håndet H. Højre Håndet"
 		},
-		"BoostEnabled": {
-			"text": "BOOST",
-			"text2": [
-				"",
-				""
-			],
-			"desc": "Ved tryk på front knap Aktiveres boost-funktionen, 450C tilstand når der loddes"
-		},
 		"BoostTemperature": {
-			"text": "BTMP",
 			"text2": [
-				"",
-				""
+				"Boost",
+				"temp"
 			],
 			"desc": "Temperatur i \"boost\" mode"
 		},
 		"AutoStart": {
-			"text": "ASTART",
 			"text2": [
-				"",
-				""
+				"Auto",
+				"start"
 			],
 			"desc": "Start automatisk med lodning når strøm sættes til. L=Lodning, D= Dvale tilstand,S=Slukket"
 		},
 		"CooldownBlink": {
-			"text": "CLBLNK",
 			"text2": [
-				"",
-				""
+				"Cooldown",
+				"blink"
 			],
 			"desc": "Blink temperaturen på skærmen, mens spidsen stadig er varm."
 		},
 		"TemperatureCalibration": {
-			"text": "TMP CAL?",
 			"text2": [
-				"",
-				""
+				"Calibrate",
+				"temperature?"
 			],
 			"desc": "kalibrere spids temperatur."
 		},
 		"SettingsReset": {
-			"text": "RESET?",
 			"text2": [
-				"",
-				""
+				"Factory",
+				"Reset?"
 			],
 			"desc": "Gendan alle indstillinger"
 		},
 		"VoltageCalibration": {
-			"text": "CAL VIN?",
 			"text2": [
-				"",
-				""
+				"Calibrate",
+				"input voltage?"
 			],
 			"desc": "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud"
 		},
 		"AdvancedSoldering": {
-			"text": "ADVSLD",
 			"text2": [
-				"",
-				""
+				"Detailed",
+				"solder screen"
 			],
 			"desc": "Vis detialieret information mens der loddes"
 		},
 		"ScrollingSpeed": {
-			"text": "DESCSP",
 			"text2": [
-				"",
-				""
+				"Scrolling",
+				"speed"
 			],
 			"desc": "Speed this text scrolls past at"
 		},
 		"TipModel": {
-			"text": "TIPMO",
 			"text2": [
 				"Tip",
 				"Model"
@@ -211,7 +185,6 @@
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-			"text": "SMPCAL",
 			"text2": [
 				"Simple",
 				"Calibration"
@@ -219,7 +192,6 @@
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "ADVCAL",
 			"text2": [
 				"Advanced",
 				"Calibration"
@@ -227,23 +199,13 @@
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-			"text": "PWRW",
 			"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
-		"PowerLimitEnable": {
-			"text": "PLIMEN",
-			"text2": [
-				"P Limit",
-				"Enable"
-			],
-			"desc": "Enable power limit"
-		},
 		"PowerLimit": {
-			"text": "PLIM",
 			"text2": [
 				"Power",
 				"Limit"
@@ -251,7 +213,6 @@
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "RVTCHG",
 			"text2": [
 				"Key +-",
 				"reverse?"
@@ -259,7 +220,6 @@
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-			"text": "TCHGST",
 			"text2": [
 				"Temp change",
 				"short?"
@@ -267,7 +227,6 @@
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-			"text": "TCHGLT",
 			"text2": [
 				"Temp change",
 				"long?"
@@ -275,7 +234,6 @@
 			"desc": "Temperature change steps on long button press!"
 		},
 		"PowerPulsePower":{
-			"text": "POWPLS",
 			"text2": [
 				"Power",
 				"Pulse W"
@@ -283,7 +241,6 @@
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-			"text": "TG",
 			"text2": [
 				"Modify",
 				"tip gain"

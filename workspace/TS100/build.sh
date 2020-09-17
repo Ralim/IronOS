@@ -10,7 +10,7 @@ AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil")
 BUILD_MODELS=()
 
 usage() {
-    echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80>] [-h]
+    echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80|TS80P>] [-h]
 
 Parameters :
     -l LANG_CODE : Force a specific language (E.g. : EN, FR, NL_BE, ...)

@@ -50,10 +50,10 @@
 /**
  * Temp change settings
  */
-#define TEMP_CHANGE_SHORT_STEP 1      // Default temp change short step +1
-#define TEMP_CHANGE_LONG_STEP 10      // Default temp change long step +10
-#define TEMP_CHANGE_SHORT_STEP_MAX 50 // Temp change short step MAX value
-#define TEMP_CHANGE_LONG_STEP_MAX 100 // Temp change long step MAX value
+#define TEMP_CHANGE_SHORT_STEP      1         // Default temp change short step +1
+#define TEMP_CHANGE_LONG_STEP       10        // Default temp change long step +10
+#define TEMP_CHANGE_SHORT_STEP_MAX  50        // Temp change short step MAX value
+#define TEMP_CHANGE_LONG_STEP_MAX   90       // Temp change long step MAX value
 
 /* Power pulse for keeping power banks awake*/
 #define POWER_PULSE_INCREMENT 1
@@ -77,10 +77,9 @@
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE 0      // 0: Disable 1: Enable - Default 0
 
-#define CUT_OUT_SETTING 0          // default to no cut-off voltage (or 18W for TS80)
-#define TEMPERATURE_INF 0          // default to 0
-#define DESCRIPTION_SCROLL_SPEED 0 // 0: Slow 1: Fast - default to slow
-#define POWER_LIMIT_ENABLE 0       // 0: Disable 1: Enable - Default disabled power limit
+#define CUT_OUT_SETTING           0         // default to no cut-off voltage (or 18W for TS80)
+#define TEMPERATURE_INF           0         // default to 0
+#define DESCRIPTION_SCROLL_SPEED  0         // 0: Slow 1: Fast - default to slow
 
 #define TIP_GAIN 210 // 21 uV/C * 10, uV per deg C constant of the tip, Tip uV * 10 / coeff = tip temp
 

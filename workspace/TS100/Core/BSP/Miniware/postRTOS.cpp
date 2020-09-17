@@ -9,11 +9,13 @@
 #include "task.h"
 #include "I2C_Wrapper.hpp"
 #include "fusbpd.h"
+
+// Initialisation to be performed with scheduler active
 void postRToSInit() {
-	// Any after RTos setup
-	FRToSI2C::FRToSInit();
 #ifdef POW_PD
-	//Spawn all of the USB-C processors
-	fusb302_start_processing();
+	if (usb_pd_detect() == true) {
+		//Spawn all of the USB-C processors
+		fusb302_start_processing();
+	}
 #endif
 }

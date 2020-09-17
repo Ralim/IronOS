@@ -99,11 +99,17 @@ OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
 OPTIM_AS= -Wall 
-OPTIM=-Os -flto -ffat-lto-objects -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
+OPTIM=-Os -flto  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
+flash_size=64k
+bootldr_size=0x4000
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES +=  -D LANG_$(lang) -D LANG -D MODEL_$(model) $(DEV_GLOBAL_DEFS)
+
+ifdef swd_enable
+	GLOBAL_DEFINES += -DSWD_ENABLE
+endif
 
 # Enable debug code generation
 DEBUG=-g3
@@ -162,6 +168,8 @@ LINKER_FLAGS=-Wl,--gc-sections 		\
 			$(CPUFLAGS) \
 			-lm -Og -flto -Wl,--undefined=vTaskSwitchContext \
 			 -T$(LDSCRIPT) \
+			-Wl,--defsym=__FLASH_SIZE__=$(flash_size) \
+			-Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 			--specs=nano.specs \
 			 $(DEV_LDFLAGS)
 
