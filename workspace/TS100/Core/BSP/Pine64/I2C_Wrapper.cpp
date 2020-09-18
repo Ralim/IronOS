@@ -7,9 +7,9 @@
 #include "BSP.h"
 #include "Setup.h"
 #include <I2C_Wrapper.hpp>
-SemaphoreHandle_t FRToSI2C::I2CSemaphore;
+SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
-SemaphoreHandle_t FRToSI2C::I2CSemaphore2;
+SemaphoreHandle_t FRToSI2C::I2CSemaphore2 = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer2;
 #define FLAG_TIMEOUT 1000
 
