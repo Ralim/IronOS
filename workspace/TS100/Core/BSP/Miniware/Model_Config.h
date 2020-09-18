@@ -27,7 +27,7 @@
 #define ACCEL_LIS
 #define POW_QC
 #define TEMP_TMP36
-#define LIS_ORI_FLIP
+#define ACCEL_ORI_FLIP
 #define OLED_FLIP
 #endif
 
@@ -37,7 +37,7 @@
 #define POW_QC
 #define TEMP_NTC
 #define I2C_SOFT
-#define LIS_ORI_FLIP
+#define ACCEL_ORI_FLIP
 #define OLED_FLIP
 #endif
 

@@ -1,23 +1,24 @@
 /*
- * LIS2DH12.hpp
+ * BMA223.hpp
  *
- *  Created on: 27Feb.,2018
+ *  Created on: 18 Sep. 2020
  *      Author: Ralim
  */
 
-#ifndef LIS2DH12_HPP_
-#define LIS2DH12_HPP_
+#ifndef CORE_DRIVERS_BMA223_HPP_
+#define CORE_DRIVERS_BMA223_HPP_
 #include "I2C_Wrapper.hpp"
 #include "LIS2DH12_defines.hpp"
 #include "BSP.h"
 
-class LIS2DH12 {
+
+class BMA223 {
 public:
 	static bool detect();
 	static void initalize();
 	//1 = rh, 2,=lh, 8=flat
 	static Orientation getOrientation() {
-#ifdef LIS_ORI_FLIP
+#ifdef ACCEL_ORI_FLIP
 		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,
 		LIS_INT2_SRC) >> 2);
 		if (val == 8)
@@ -38,4 +39,4 @@ public:
 private:
 };
 
-#endif /* LIS2DH12_HPP_ */
+#endif /* CORE_DRIVERS_BMA223_HPP_ */

@@ -121,8 +121,7 @@ int i2c_byte_write(int data) {
 
 	/* wait until the byte is transmitted */
 	timeout = FLAG_TIMEOUT;
-	while (((i2c_flag_get(I2C0, I2C_FLAG_TBE)) == RESET)
-			|| ((i2c_flag_get(I2C0, I2C_FLAG_BTC)) == RESET)) {
+	while (((i2c_flag_get(I2C0, I2C_FLAG_TBE)) == RESET) || ((i2c_flag_get(I2C0, I2C_FLAG_BTC)) == RESET)) {
 		if ((timeout--) == 0) {
 			return 2;
 		}
@@ -131,8 +130,7 @@ int i2c_byte_write(int data) {
 	return 1;
 }
 
-bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress,
-		uint8_t *pData, uint16_t Size) {
+bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
 	if (!lock())
 		return false;
 
@@ -253,8 +251,7 @@ uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
 	Mem_Read(add, reg, &temp, 1);
 	return temp;
 }
-bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
-		uint8_t *pData, uint16_t Size) {
+bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
 	if (!lock())
 		return false;
 
@@ -397,8 +394,7 @@ bool FRToSI2C::probe(uint16_t DevAddress) {
 	/* wait until ADDSEND bit is set */
 	int timeout = FLAG_TIMEOUT;
 	while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
-		if (i2c_flag_get(I2C0, I2C_FLAG_AERR)
-				|| i2c_flag_get(I2C0, I2C_FLAG_BERR)) {
+		if (i2c_flag_get(I2C0, I2C_FLAG_AERR) || i2c_flag_get(I2C0, I2C_FLAG_BERR)) {
 			i2c_stop();
 			unlock();
 			return false;
@@ -450,4 +446,15 @@ void FRToSI2C::unlock2() {
 	if (I2CSemaphore2 == nullptr)
 		return;
 	xSemaphoreGive(I2CSemaphore2);
+}
+
+bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG* registers, const uint8_t registersLength) {
+	for (int index = 0; index < registersLength; index++) {
+		if (!I2C_RegisterWrite(address, registers[index].reg, registers[index].val)) {
+			return false;
+		}
+		if (registers[index].pause_ms)
+			delay_ms(registers[index].pause_ms);
+	}
+	return true;
 }
