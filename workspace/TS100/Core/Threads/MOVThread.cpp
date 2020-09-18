@@ -18,11 +18,12 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "stdlib.h"
+#include "BMA223.hpp"
 #include "task.h"
 #define MOVFilter 8
 uint8_t accelInit = 0;
 uint32_t lastMovementTime = 0;
-void startMOVTask(void const *argument __unused) {
+void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
 		PCBVersion = 1;
@@ -33,22 +34,53 @@ void startMOVTask(void const *argument __unused) {
 	if (LIS2DH12::detect()) {
 		PCBVersion = 2;
 		// Setup the ST Accelerometer
-		LIS2DH12::initalize();  // startup the accelerometer
+		LIS2DH12::initalize();// startup the accelerometer
+	} else
+#endif
+#ifdef ACCEL_BMA
+	if (BMA223::detect()) {
+		PCBVersion = 3;
+		// Setup the ST Accelerometer
+		BMA223::initalize();  // startup the accelerometer
 	} else
 #endif
 	{
-		PCBVersion = 3;
+		PCBVersion = 99;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
 	}
+
+}
+inline void readAccelerometer(int16_t& tx, int16_t& ty, int16_t& tz, Orientation &rotation) {
+#ifdef ACCEL_LIS
+	if (PCBVersion == 2) {
+		LIS2DH12::getAxisReadings(tx, ty, tz);
+		rotation = LIS2DH12::getOrientation();
+	} else
+#endif
+#ifdef ACCEL_MMA
+	if (PCBVersion == 1) {
+		MMA8652FC::getAxisReadings(tx, ty, tz);
+		rotation = MMA8652FC::getOrientation();
+	} else
+#endif
+#ifdef ACCEL_BMA
+	if (PCBVersion == 3) {
+		BMA223::getAxisReadings(tx, ty, tz);
+		rotation = BMA223::getOrientation();
+	} else
+#endif
+	{
+		//do nothing :(
+	}
+}
+void startMOVTask(void const *argument __unused) {
+
 	postRToSInit();
 	OLED::setRotation(systemSettings.OrientationMode & 1);
-
-	if ((PCBVersion == 1
-		|| PCBVersion == 2)
-		&& (systemSettings.autoStartMode == 2
-			|| systemSettings.autoStartMode == 3))
+	detectAccelerometerVersion();
+	if ((systemSettings.autoStartMode == 2 || systemSettings.autoStartMode == 3))
 		osDelay(2000);
 
 	lastMovementTime = 0;
@@ -64,21 +96,7 @@ void startMOVTask(void const *argument __unused) {
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
-#ifdef ACCEL_LIS
-		if (PCBVersion == 2) {
-			LIS2DH12::getAxisReadings(tx, ty, tz);
-			rotation = LIS2DH12::getOrientation();
-		} else
-#endif
-#ifdef ACCEL_MMA
-			if (PCBVersion == 1) {
-			MMA8652FC::getAxisReadings(tx, ty, tz);
-			rotation = MMA8652FC::getOrientation();
-		}else
-#endif
-		{
-			//do nothing :(
-		}
+		readAccelerometer(tx, ty, tz, rotation);
 		if (systemSettings.OrientationMode == 2) {
 			if (rotation != ORIENTATION_FLAT) {
 				OLED::setRotation(rotation == ORIENTATION_LEFT_HAND); // link the data through
