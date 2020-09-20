@@ -19,6 +19,7 @@ extern "C" {
 #endif
 void ADC0_1_IRQHandler(void);
 void TIMER1_IRQHandler(void);
+void EXTI5_9_IRQHandler(void);
 #ifdef __cplusplus
 }
 #endif

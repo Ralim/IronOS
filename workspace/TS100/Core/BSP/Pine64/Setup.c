@@ -35,11 +35,12 @@ void hardware_init() {
 	//Timers
 	setup_timers();
 	//Watchdog
-	// setup_iwdg();
+	 setup_iwdg();
 
 	/* enable TIMER1 - PWM control timing*/
 	timer_enable(TIMER1);
 	timer_enable(TIMER2);
+	eclic_priority_group_set(ECLIC_PRIGROUP_LEVEL4_PRIO0);
 	eclic_global_interrupt_enable();
 }
 // channel 0 -> temperature sensor, 1-> VIN
@@ -64,8 +65,8 @@ void setup_gpio() {
 	gpio_init(OLED_RESET_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ,
 	OLED_RESET_Pin);
 	//I2C as AF Open Drain
-	gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_2MHZ, SDA_Pin);
-	gpio_init(SCL_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_2MHZ, SCL_Pin);
+	gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin);
+	gpio_init(SCL_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SCL_Pin);
 	//PWM output as AF Push Pull
 	gpio_init(PWM_Out_GPIO_Port, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ,
 	PWM_Out_Pin);
@@ -78,6 +79,16 @@ void setup_gpio() {
 
 	//Remap PB4 away from JTAG NJRST
 	gpio_pin_remap_config(GPIO_SWJ_NONJTRST_REMAP, ENABLE);
+	//Setup IRQ for USB-PD
+	gpio_init(FUSB302_IRQ_GPIO_Port, GPIO_MODE_IPU, GPIO_OSPEED_2MHZ, FUSB302_IRQ_Pin);
+	eclic_irq_enable(EXTI5_9_IRQn, 1, 1);
+	/* connect key EXTI line to key GPIO pin */
+	gpio_exti_source_select(GPIO_PORT_SOURCE_GPIOB, GPIO_PIN_SOURCE_5);
+
+	/* configure key EXTI line */
+	exti_init(EXTI_5, EXTI_INTERRUPT, EXTI_TRIG_FALLING);
+	exti_interrupt_flag_clear(EXTI_5);
+
 	//TODO - rest of pins as floating
 }
 void setup_dma() {
@@ -114,7 +125,7 @@ void setup_i2c() {
 	//TODO - DMA
 	/* enable I2C0 clock */
 	rcu_periph_clock_enable(RCU_I2C0);
-	//Setup I20 at 100kHz with DMA?
+	//Setup I20 at 400kHz
 	i2c_clock_config(I2C0, 100 * 1000, I2C_DTCY_16_9);
 	i2c_mode_addr_config(I2C0, I2C_I2CMODE_ENABLE, I2C_ADDFORMAT_7BITS, 0x00);
 	i2c_enable(I2C0);
@@ -189,8 +200,8 @@ void setup_adc() {
 	adc_interrupt_flag_clear(ADC0, ADC_INT_FLAG_EOIC);
 	adc_interrupt_enable(ADC0, ADC_INT_EOIC);
 	eclic_irq_enable(ADC0_1_IRQn, 2, 0);
-//	adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
-//	adc_software_trigger_enable(ADC1, ADC_REGULAR_CHANNEL);
+	adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
+	adc_software_trigger_enable(ADC1, ADC_REGULAR_CHANNEL);
 	adc_tempsensor_vrefint_disable();
 }
 void setup_timers() {
@@ -266,7 +277,6 @@ void setup_timers() {
 		timer_ocintpara.ocidlestate = TIMER_OC_IDLE_STATE_LOW;
 		timer_ocintpara.ocnidlestate = TIMER_OCN_IDLE_STATE_LOW;
 		timer_channel_output_config(TIMER2, TIMER_CH_0, &timer_ocintpara);
-//todo
 		timer_channel_output_pulse_value_config(TIMER2, TIMER_CH_0, 50);
 		timer_channel_output_mode_config(TIMER2, TIMER_CH_0,
 		TIMER_OC_MODE_PWM0);

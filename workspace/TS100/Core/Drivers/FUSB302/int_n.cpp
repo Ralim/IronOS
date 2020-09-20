@@ -70,9 +70,11 @@ void InterruptHandler::Thread(const void *arg) {
 	}
 }
 void InterruptHandler::irqCallback() {
-	if (TaskHandle != NULL) {
-		BaseType_t taskWoke = pdFALSE;
-		xTaskNotifyFromISR(TaskHandle, 0x01, eNotifyAction::eSetBits, &taskWoke);
-		portYIELD_FROM_ISR(taskWoke);
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		if (TaskHandle != NULL) {
+			BaseType_t taskWoke = pdFALSE;
+			xTaskNotifyFromISR(TaskHandle, 0x01, eNotifyAction::eSetBits, &taskWoke);
+			portYIELD_FROM_ISR(taskWoke);
+		}
 	}
 }

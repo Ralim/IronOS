@@ -6,7 +6,8 @@
  */
 
 #include "IRQ.h"
-
+#include "Pins.h"
+#include "int_n.h"
 void ADC0_1_IRQHandler(void) {
 
 	adc_interrupt_flag_clear(ADC0, ADC_INT_FLAG_EOIC);
@@ -50,4 +51,18 @@ void setTipPWM(uint8_t pulse) {
 // disabled if the PID task is not scheduled often enough.
 
 	pendingPWM = pulse;
+}
+
+
+void EXTI5_9_IRQHandler(void)
+{
+#ifdef POW_PD
+    if (RESET != exti_interrupt_flag_get(EXTI_5)){
+        exti_interrupt_flag_clear(EXTI_5);
+
+        if(RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin)){
+        	InterruptHandler::irqCallback();
+        }
+    }
+#endif
 }

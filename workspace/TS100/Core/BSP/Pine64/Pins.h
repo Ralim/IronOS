@@ -35,4 +35,7 @@
 #define SDA_Pin BIT(7)
 #define SDA_GPIO_Port GPIOB
 
+#define FUSB302_IRQ_Pin BIT(5)
+#define FUSB302_IRQ_GPIO_Port GPIOB
+
 #endif /* BSP_MINIWARE_PINS_H_ */
