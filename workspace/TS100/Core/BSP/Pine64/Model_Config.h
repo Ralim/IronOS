@@ -17,9 +17,11 @@
 
 #ifdef MODEL_Pinecil
 #define POW_PD
-#define POW_QC
+//#define POW_QC
 #define TEMP_TMP36
-#define ACCEL_BMA
+//#define ACCEL_BMA
+
+#define BATTFILTERDEPTH 32
 #endif
 
 #endif /* BSP_MINIWARE_MODEL_CONFIG_H_ */

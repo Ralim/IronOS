@@ -70,14 +70,12 @@ static bool fusb_write_byte(uint8_t addr, uint8_t byte) {
  * buf: The buffer to write
  */
 static bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) {
-	FRToSI2C::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*)buf, size);
+	FRToSI2C::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*) buf, size);
 	return true; //TODO
 }
 
 void fusb_send_message(const union pd_msg *msg) {
-	if (!FRToSI2C::lock2()) {
-		return;
-	}
+
 	/* Token sequences for the FUSB302B */
 	static uint8_t sop_seq[5] = {
 	FUSB_FIFO_TX_SOP1,
@@ -104,14 +102,10 @@ void fusb_send_message(const union pd_msg *msg) {
 	fusb_write_buf( FUSB_FIFOS, msg_len, msg->bytes);
 	fusb_write_buf( FUSB_FIFOS, 4, eop_seq);
 
-	FRToSI2C::unlock2();
-
 }
 
 uint8_t fusb_read_message(union pd_msg *msg) {
-	if (!FRToSI2C::lock2()) {
-		return 1;
-	}
+
 	static uint8_t garbage[4];
 	uint8_t numobj;
 
@@ -129,33 +123,23 @@ uint8_t fusb_read_message(union pd_msg *msg) {
 	/* Throw the CRC32 in the garbage, since the PHY already checked it. */
 	fusb_read_buf( FUSB_FIFOS, 4, garbage);
 
-	FRToSI2C::unlock2();
 	return 0;
 }
 
 void fusb_send_hardrst() {
 
-	if (!FRToSI2C::lock2()) {
-		return;
-	}
 	/* Send a hard reset */
 	fusb_write_byte( FUSB_CONTROL3, 0x07 | FUSB_CONTROL3_SEND_HARD_RESET);
 
-	FRToSI2C::unlock2();
 }
 
 void fusb_setup() {
 
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		if (!FRToSI2C::lock2()) {
-			return;
-		}
-	}
 	/* Fully reset the FUSB302B */
 	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
 	osDelay(2);
-	if (!fusb_read_id()) {
-		return;
+	while (!fusb_read_id()) {
+		osDelay(10);
 	}
 
 	/* Turn on all power */
@@ -194,48 +178,27 @@ void fusb_setup() {
 		fusb_write_byte( FUSB_SWITCHES1, 0x26);
 		fusb_write_byte( FUSB_SWITCHES0, 0x0B);
 	}
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		FRToSI2C::unlock2();
-	}
+
 	fusb_reset();
 }
 
 void fusb_get_status(union fusb_status *status) {
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		if (!FRToSI2C::lock2()) {
-			return;
-		}
-	}
 
 	/* Read the interrupt and status flags into status */
 	fusb_read_buf( FUSB_STATUS0A, 7, status->bytes);
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		FRToSI2C::unlock2();
-	}
 
 }
 
 enum fusb_typec_current fusb_get_typec_current() {
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		if (!FRToSI2C::lock2()) {
-			return fusb_tcc_none;
-		}
-	}
+
 	/* Read the BC_LVL into a variable */
 	enum fusb_typec_current bc_lvl = (enum fusb_typec_current) (fusb_read_byte(
 	FUSB_STATUS0) & FUSB_STATUS0_BC_LVL);
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		FRToSI2C::unlock2();
-	}
+
 	return bc_lvl;
 }
 
 void fusb_reset() {
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		if (!FRToSI2C::lock2()) {
-			return;
-		}
-	}
 
 	/* Flush the TX buffer */
 	fusb_write_byte( FUSB_CONTROL0, 0x44);
@@ -243,9 +206,6 @@ void fusb_reset() {
 	fusb_write_byte( FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
 	/* Reset the PD logic */
 //	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
-	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-		FRToSI2C::unlock2();
-	}
 }
 
 bool fusb_read_id() {

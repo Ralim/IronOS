@@ -11,37 +11,32 @@
 #include <IRQ.h>
 
 //2 second filter (ADC is PID_TIM_HZ Hz)
-history<uint16_t, PID_TIM_HZ> rawTempFilter = {{0}, 0, 0};
+history<uint16_t, PID_TIM_HZ> rawTempFilter = { { 0 }, 0, 0 };
 void resetWatchdog() {
-  //TODO
+	//TODO
 }
 
 uint16_t getTipInstantTemperature() {
-  uint16_t sum = 0; // 12 bit readings * 8 -> 15 bits
+	uint16_t sum = 0; // 12 bit readings * 8 -> 15 bits
 
-  for (int i = 0; i < 4; i++) {
-    sum += adc_inserted_data_read(ADC0, i);
-    sum += adc_inserted_data_read(ADC1, i);
-  }
-  return sum; // 8x over sample
+	for (int i = 0; i < 4; i++) {
+		sum += adc_inserted_data_read(ADC0, i);
+		sum += adc_inserted_data_read(ADC1, i);
+	}
+	return sum; // 8x over sample
 }
 
-uint16_t getTipRawTemp(uint8_t refresh)
-{
-	if (refresh)
-	{
+uint16_t getTipRawTemp(uint8_t refresh) {
+	if (refresh) {
 		uint16_t lastSample = getTipInstantTemperature();
 		rawTempFilter.update(lastSample);
 		return lastSample;
-	}
-	else
-	{
+	} else {
 		return rawTempFilter.average();
 	}
 }
 
-uint16_t getHandleTemperature()
-{
+uint16_t getHandleTemperature() {
 #ifdef TEMP_TMP36
 	// We return the current handle temperature in X10 C
 	// TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
@@ -61,29 +56,21 @@ uint16_t getHandleTemperature()
 #error
 #endif
 }
-uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample)
-{
+uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 // ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
 // Therefore we can divide down from there
 // Multiplying ADC max by 4 for additional calibration options,
 // ideal term is 467
-#ifdef MODEL_TS100
-#define BATTFILTERDEPTH 32
-#else
-#define BATTFILTERDEPTH 8
 
-#endif
 	static uint8_t preFillneeded = 10;
 	static uint32_t samples[BATTFILTERDEPTH];
 	static uint8_t index = 0;
-	if (preFillneeded)
-	{
+	if (preFillneeded) {
 		for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
 			samples[i] = getADC(1);
 		preFillneeded--;
 	}
-	if (sample)
-	{
+	if (sample) {
 		samples[index] = getADC(1);
 		index = (index + 1) % BATTFILTERDEPTH;
 	}
@@ -93,28 +80,29 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample)
 		sum += samples[i];
 
 	sum /= BATTFILTERDEPTH;
-	if (divisor == 0)
-	{
+	if (divisor == 0) {
 		divisor = 1;
 	}
 	return sum * 4 / divisor;
 }
 
 void unstick_I2C() {
-  // TODO
+	// TODO
 }
 
 uint8_t getButtonA() {
-  return (gpio_input_bit_get(KEY_A_GPIO_Port, KEY_A_Pin) == SET) ? 1 : 0;
+	return (gpio_input_bit_get(KEY_A_GPIO_Port, KEY_A_Pin) == SET) ? 1 : 0;
 }
 uint8_t getButtonB() {
-  return (gpio_input_bit_get(KEY_B_GPIO_Port, KEY_B_Pin) == SET) ? 1 : 0;
+	return (gpio_input_bit_get(KEY_B_GPIO_Port, KEY_B_Pin) == SET) ? 1 : 0;
 }
 
 void reboot() {
-  // TODO
-  for (;;) {
-  }
+	// TODO
+	for (;;) {
+	}
 }
 
-void delay_ms(uint16_t count) { delay_1ms(count); }
+void delay_ms(uint16_t count) {
+	delay_1ms(count);
+}
