@@ -22,10 +22,10 @@ class FRToSI2C {
 public:
 
 	static void FRToSInit() {
-		I2CSemaphore = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer);
-		xSemaphoreGive(I2CSemaphore);
-		I2CSemaphore2 = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer2);
-		xSemaphoreGive(I2CSemaphore2);
+		if (I2CSemaphore == nullptr) {
+			I2CSemaphore = xSemaphoreCreateBinaryStatic(&xSemaphoreBuffer);
+			xSemaphoreGive(I2CSemaphore);
+		}
 	}
 
 	static void CpltCallback(); //Normal Tx Callback
@@ -41,12 +41,9 @@ public:
 	static bool I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data);
 	static uint8_t I2C_RegisterRead(uint8_t address, uint8_t reg);
 
-	static void unlock2();
-	static bool lock2();
-
 	typedef struct {
 		const uint8_t reg; // The register to write to
-		const uint8_t val; // The value to write to this register
+		uint8_t val; // The value to write to this register
 		const uint8_t pause_ms; //How many ms to pause _after_ writing this reg
 	} I2C_REG;
 	static bool writeRegistersBulk(const uint8_t address, const I2C_REG* registers, const uint8_t registersLength);
@@ -56,8 +53,6 @@ private:
 	static void I2C_Unstick();
 	static SemaphoreHandle_t I2CSemaphore;
 	static StaticSemaphore_t xSemaphoreBuffer;
-	static SemaphoreHandle_t I2CSemaphore2;
-	static StaticSemaphore_t xSemaphoreBuffer2;
 };
 
 #endif /* FRTOSI2C_HPP_ */

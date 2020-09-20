@@ -9,8 +9,6 @@
 #include <I2C_Wrapper.hpp>
 SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
-SemaphoreHandle_t FRToSI2C::I2CSemaphore2 = nullptr;
-StaticSemaphore_t FRToSI2C::xSemaphoreBuffer2;
 #define FLAG_TIMEOUT 1000
 
 void FRToSI2C::CpltCallback() {
@@ -28,8 +26,7 @@ int i2c_start() {
 	i2c_flag_clear(I2C0, I2C_FLAG_AERR);
 
 	/* wait until I2C_FLAG_I2CBSY flag is reset */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) == SET) {
 		if ((timeout--) == 0) {
 
@@ -38,8 +35,7 @@ int i2c_start() {
 	}
 
 	/* ensure the i2c has been stopped */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((I2C_CTL0(I2C0) & I2C_CTL0_STOP) == I2C_CTL0_STOP) {
 		if ((timeout--) == 0) {
 			return (int) -1;
@@ -50,8 +46,7 @@ int i2c_start() {
 	i2c_start_on_bus(I2C0);
 
 	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
 		if ((timeout--) == 0) {
 			return (int) -1;
@@ -154,8 +149,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData
 	i2c_start_on_bus(I2C0);
 
 	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
 		if ((timeout--) == 0) {
 			i2c_stop();
@@ -200,8 +194,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData
 	i2c_start_on_bus(I2C0);
 
 	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
 		if ((timeout--) == 0) {
 			i2c_stop();
@@ -259,8 +252,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pDat
 	int timeout = 0;
 
 	/* wait until I2C_FLAG_I2CBSY flag is reset */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) == SET) {
 		if ((timeout--) == 0) {
 			i2c_stop();
@@ -276,8 +268,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pDat
 	i2c_start_on_bus(I2C0);
 
 	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
 		if ((timeout--) == 0) {
 			i2c_stop();
@@ -342,8 +333,7 @@ bool FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
 	i2c_start_on_bus(I2C0);
 
 	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT
-	;
+	timeout = FLAG_TIMEOUT;
 	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
 		if ((timeout--) == 0) {
 			i2c_stop();
@@ -426,8 +416,10 @@ void FRToSI2C::I2C_Unstick() {
 }
 
 bool FRToSI2C::lock() {
-	if (I2CSemaphore == nullptr)
-		return true;
+	if (I2CSemaphore == nullptr) {
+		for (;;) { //
+		}
+	}
 	return xSemaphoreTake(I2CSemaphore,1000) == pdTRUE;
 }
 
@@ -436,25 +428,15 @@ void FRToSI2C::unlock() {
 		return;
 	xSemaphoreGive(I2CSemaphore);
 }
-bool FRToSI2C::lock2() {
-	if (I2CSemaphore2 == nullptr)
-		return true;
-	return xSemaphoreTake(I2CSemaphore2,1000) == pdTRUE;
-}
-
-void FRToSI2C::unlock2() {
-	if (I2CSemaphore2 == nullptr)
-		return;
-	xSemaphoreGive(I2CSemaphore2);
-}
 
 bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG* registers, const uint8_t registersLength) {
 	for (int index = 0; index < registersLength; index++) {
 		if (!I2C_RegisterWrite(address, registers[index].reg, registers[index].val)) {
 			return false;
 		}
-		if (registers[index].pause_ms)
+		if (registers[index].pause_ms) {
 			delay_ms(registers[index].pause_ms);
+		}
 	}
 	return true;
 }
