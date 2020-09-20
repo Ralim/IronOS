@@ -228,9 +228,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData
 	for (count = 0; count < Size; count++) {
 		pData[count] = i2c_byte_read(count == (Size - 1));
 	}
-
-	/* if not sequential write, then send stop */
-
+	//Have nacked last data, so have to generate the stop sequence
 	i2c_stop();
 	unlock();
 	return true;
@@ -376,39 +374,8 @@ bool FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
 }
 
 bool FRToSI2C::probe(uint16_t DevAddress) {
-	if (!lock())
-		return false;
-	i2c_start();
-	/* send slave address to I2C bus */
-	i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
-	/* wait until ADDSEND bit is set */
-	int timeout = FLAG_TIMEOUT;
-	while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
-		if (i2c_flag_get(I2C0, I2C_FLAG_AERR) || i2c_flag_get(I2C0, I2C_FLAG_BERR)) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-		if (timeout-- == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* clear ADDSEND bit */
-	i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-	/* wait until the transmit data buffer is empty */
-	while (!i2c_flag_get(I2C0, I2C_FLAG_TBE))
-		;
-	bool no_ack = i2c_flag_get(I2C0, I2C_FLAG_AERR);
-	/* send a stop condition to I2C bus */
-	i2c_stop_on_bus(I2C0);
-	/* wait until stop condition generate */
-	while (I2C_CTL0(I2C0) & 0x0200)
-		;
-	unlock();
-	return !no_ack;
+	uint8_t temp = 0;
+	return Mem_Read(DevAddress, 0x00, &temp, 1);
 }
 
 void FRToSI2C::I2C_Unstick() {
