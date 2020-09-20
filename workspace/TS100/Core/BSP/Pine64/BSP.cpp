@@ -57,10 +57,7 @@ uint16_t getHandleTemperature() {
 #endif
 }
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
-// ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
-// Therefore we can divide down from there
-// Multiplying ADC max by 4 for additional calibration options,
-// ideal term is 467
+
 
 	static uint8_t preFillneeded = 10;
 	static uint32_t samples[BATTFILTERDEPTH];
