@@ -24,8 +24,8 @@ static const FRToSI2C::I2C_REG i2c_registers[] = { { LIS_CTRL_REG1, 0x17, 0 }, /
 		{ LIS_INT1_THS, 0x28, 0 }, //
 		{ LIS_INT1_DURATION, 64, 0 } };
 
-void LIS2DH12::initalize() {
-	FRToSI2C::writeRegistersBulk(LIS2DH_I2C_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
+bool LIS2DH12::initalize() {
+	return FRToSI2C::writeRegistersBulk(LIS2DH_I2C_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
 }
 
 void LIS2DH12::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {

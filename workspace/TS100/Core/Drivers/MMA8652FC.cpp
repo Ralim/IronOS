@@ -26,8 +26,8 @@ static const FRToSI2C::I2C_REG i2c_registers[] = { { CTRL_REG2, 0, 0 },    //Nor
 		{ CTRL_REG1, 0x19, 0 } // ODR=12 Hz, Active mode
 };
 
-void MMA8652FC::initalize() {
-	FRToSI2C::writeRegistersBulk(MMA8652FC_I2C_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
+bool MMA8652FC::initalize() {
+	return FRToSI2C::writeRegistersBulk(MMA8652FC_I2C_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
 
 }
 

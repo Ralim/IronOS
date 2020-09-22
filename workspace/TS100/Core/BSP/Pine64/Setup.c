@@ -65,8 +65,7 @@ void setup_gpio() {
 	gpio_init(OLED_RESET_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ,
 	OLED_RESET_Pin);
 	//I2C as AF Open Drain
-	gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin);
-	gpio_init(SCL_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SCL_Pin);
+    gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);
 	//PWM output as AF Push Pull
 	gpio_init(PWM_Out_GPIO_Port, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ,
 	PWM_Out_Pin);
@@ -126,11 +125,13 @@ void setup_i2c() {
 	/* enable I2C0 clock */
 	rcu_periph_clock_enable(RCU_I2C0);
 	//Setup I20 at 400kHz
-	i2c_clock_config(I2C0, 100 * 1000, I2C_DTCY_16_9);
+	i2c_clock_config(I2C0, 400 * 1000, I2C_DTCY_2);
 	i2c_mode_addr_config(I2C0, I2C_I2CMODE_ENABLE, I2C_ADDFORMAT_7BITS, 0x00);
 	i2c_enable(I2C0);
 	/* enable acknowledge */
 	i2c_ack_config(I2C0, I2C_ACK_ENABLE);
+    eclic_irq_enable(I2C0_EV_IRQn,1,0);
+    eclic_irq_enable(I2C0_ER_IRQn,2,0);
 }
 void setup_adc() {
 

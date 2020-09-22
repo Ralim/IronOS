@@ -27,21 +27,27 @@ void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
 		PCBVersion = 1;
-		MMA8652FC::initalize();  // this sets up the I2C registers
+		if(!MMA8652FC::initalize()) {
+			PCBVersion = 99;
+		}
 	} else
 #endif
 #ifdef ACCEL_LIS
 	if (LIS2DH12::detect()) {
 		PCBVersion = 2;
 		// Setup the ST Accelerometer
-		LIS2DH12::initalize();// startup the accelerometer
+		if(!LIS2DH12::initalize()) {
+			PCBVersion = 99;
+		}
 	} else
 #endif
 #ifdef ACCEL_BMA
 	if (BMA223::detect()) {
 		PCBVersion = 3;
 		// Setup the ST Accelerometer
-		BMA223::initalize();  // startup the accelerometer
+		if (!BMA223::initalize()) {
+			PCBVersion = 99;
+		}
 	} else
 #endif
 	{
@@ -76,7 +82,7 @@ inline void readAccelerometer(int16_t& tx, int16_t& ty, int16_t& tz, Orientation
 	}
 }
 void startMOVTask(void const *argument __unused) {
-
+	osDelay(10);//Make oled init happen first
 	postRToSInit();
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	detectAccelerometerVersion();
@@ -93,6 +99,17 @@ void startMOVTask(void const *argument __unused) {
 	if (systemSettings.sensitivity > 9)
 		systemSettings.sensitivity = 9;
 	Orientation rotation = ORIENTATION_FLAT;
+//	OLED::setFont(1);
+//	for (;;) {
+//		OLED::clearScreen();
+//		OLED::setCursor(0, 0);
+//		readAccelerometer(tx, ty, tz, rotation);
+//		OLED::printNumber(tx, 5, 0);
+//		OLED::setCursor(0, 8);
+//		OLED::printNumber(xTaskGetTickCount() / 10, 5, 1);
+//		OLED::refresh();
+//		osDelay(50);
+//	}
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size

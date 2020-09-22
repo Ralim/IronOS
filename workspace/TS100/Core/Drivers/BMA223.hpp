@@ -15,7 +15,7 @@
 class BMA223 {
 public:
 	static bool detect();
-	static void initalize();
+	static bool initalize();
 	//1 = rh, 2,=lh, 8=flat
 	static Orientation getOrientation() {
 #ifdef ACCEL_ORI_FLIP

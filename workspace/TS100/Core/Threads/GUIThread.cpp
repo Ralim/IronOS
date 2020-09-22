@@ -603,7 +603,9 @@ uint8_t idleScreenBGF[sizeof(idleScreenBG)];
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
 	OLED::initialize();  // start up the LCD
-
+//	for (;;) {
+//		osDelay(2000);
+//	}
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;

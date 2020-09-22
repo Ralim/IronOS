@@ -6,233 +6,15 @@
  */
 #include "BSP.h"
 #include "Setup.h"
+#include "IRQ.h"
 #include <I2C_Wrapper.hpp>
 SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 #define FLAG_TIMEOUT 1000
-
 void FRToSI2C::CpltCallback() {
 	//TODO
 }
 
-/** Send START command
- *
- *  @param obj The I2C object
- */
-int i2c_start() {
-	int timeout;
-
-	/* clear I2C_FLAG_AERR Flag */
-	i2c_flag_clear(I2C0, I2C_FLAG_AERR);
-
-	/* wait until I2C_FLAG_I2CBSY flag is reset */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) == SET) {
-		if ((timeout--) == 0) {
-
-			return (int) -1;
-		}
-	}
-
-	/* ensure the i2c has been stopped */
-	timeout = FLAG_TIMEOUT;
-	while ((I2C_CTL0(I2C0) & I2C_CTL0_STOP) == I2C_CTL0_STOP) {
-		if ((timeout--) == 0) {
-			return (int) -1;
-		}
-	}
-
-	/* generate a START condition */
-	i2c_start_on_bus(I2C0);
-
-	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
-		if ((timeout--) == 0) {
-			return (int) -1;
-		}
-	}
-
-	return (int) 0;
-}
-
-/** Send STOP command
- *
- *  @param obj The I2C object
- */
-int i2c_stop() {
-
-	/* generate a STOP condition */
-	i2c_stop_on_bus(I2C0);
-
-	/* wait for STOP bit reset */
-	int timeout = FLAG_TIMEOUT;
-	while ((I2C_CTL0(I2C0) & I2C_CTL0_STOP)) {
-		if ((timeout--) == 0) {
-			return -1;
-		}
-	}
-
-	return 0;
-}
-
-/** Read one byte
- *
- *  @param obj The I2C object
- *  @param last Acknoledge
- *  @return The read byte
- */
-int i2c_byte_read(int last) {
-	int timeout;
-
-	if (last) {
-		/* disable acknowledge */
-		i2c_ack_config(I2C0, I2C_ACK_DISABLE);
-	} else {
-		/* enable acknowledge */
-		i2c_ack_config(I2C0, I2C_ACK_ENABLE);
-	}
-
-	/* wait until the byte is received */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_RBNE)) == RESET) {
-		if ((timeout--) == 0) {
-			return -1;
-		}
-	}
-
-	return (int) i2c_data_receive(I2C0);
-}
-
-/** Write one byte
- *
- *  @param obj The I2C object
- *  @param data Byte to be written
- *  @return 0 if NAK was received, 1 if ACK was received, 2 for timeout.
- */
-int i2c_byte_write(int data) {
-	int timeout;
-	i2c_data_transmit(I2C0, data);
-
-	/* wait until the byte is transmitted */
-	timeout = FLAG_TIMEOUT;
-	while (((i2c_flag_get(I2C0, I2C_FLAG_TBE)) == RESET) || ((i2c_flag_get(I2C0, I2C_FLAG_BTC)) == RESET)) {
-		if ((timeout--) == 0) {
-			return 2;
-		}
-	}
-
-	return 1;
-}
-
-bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
-	if (!lock())
-		return false;
-
-	uint32_t count = 0;
-	int timeout = 0;
-
-	/* wait until I2C_FLAG_I2CBSY flag is reset */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) == SET) {
-		if ((timeout--) == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		} else {
-			if (timeout % 5 == 0) {
-				i2c_stop();
-			}
-		}
-	}
-	/* generate a START condition */
-	i2c_start_on_bus(I2C0);
-
-	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
-		if ((timeout--) == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* send slave address */
-	i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
-
-	timeout = 0;
-	/* wait until I2C_FLAG_ADDSEND flag is set */
-	while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
-		timeout++;
-		if (timeout > 100000) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-	bool no_ack = i2c_flag_get(I2C0, I2C_FLAG_AERR);
-	no_ack |= i2c_flag_get(I2C0, I2C_FLAG_BERR);
-	if (no_ack) {
-		i2c_stop();
-		unlock();
-		return false;
-	}
-	/* clear ADDSEND */
-	i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-	int status = i2c_byte_write(MemAddress);
-	no_ack |= i2c_flag_get(I2C0, I2C_FLAG_BERR);
-	no_ack |= i2c_flag_get(I2C0, I2C_FLAG_LOSTARB);
-	if (status == 2 || no_ack) {
-		i2c_stop();
-		unlock();
-		return false;
-	}
-////////////////////////////	//Restart into read
-
-	/* generate a START condition */
-	i2c_start_on_bus(I2C0);
-
-	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
-		if ((timeout--) == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* send slave address */
-	i2c_master_addressing(I2C0, DevAddress, I2C_RECEIVER);
-
-	timeout = 0;
-	/* wait until I2C_FLAG_ADDSEND flag is set */
-	while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
-		timeout++;
-		if (timeout > 100000) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* clear ADDSEND */
-	i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-	no_ack = i2c_flag_get(I2C0, I2C_FLAG_AERR);
-	if (no_ack) {
-		i2c_stop();
-		unlock();
-		return false;
-	}
-	for (count = 0; count < Size; count++) {
-		pData[count] = i2c_byte_read(count == (Size - 1));
-	}
-	//Have nacked last data, so have to generate the stop sequence
-	i2c_stop();
-	unlock();
-	return true;
-}
 bool FRToSI2C::I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data) {
 	return Mem_Write(address, reg, &data, 1);
 }
@@ -242,140 +24,114 @@ uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
 	Mem_Read(add, reg, &temp, 1);
 	return temp;
 }
-bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
+
+bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
+	if (!lock())
+		return false;
+	i2c_interrupt_disable(I2C0, I2C_INT_ERR);
+	i2c_interrupt_disable(I2C0, I2C_INT_BUF);
+	i2c_interrupt_disable(I2C0, I2C_INT_EV);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_AERR);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_SMBALT);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_SMBTO);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_OUERR);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_LOSTARB);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_BERR);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_PECERR);
+	/* wait until I2C bus is idle */
+	uint8_t timeout = 0;
+	while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) {
+		timeout++;
+		osDelay(1);
+		if (timeout > 20) {
+			unlock();
+			return false;
+		}
+	}
+	i2c_slave_address = DevAddress;
+	i2c_read = p_buffer;
+	i2c_read_dress = read_address;
+	i2c_nbytes = number_of_byte;
+	i2c_error_code = 0;
+	i2c_process_flag = 1;
+	i2c_write_process = I2C_SEND_ADDRESS_FIRST;
+	i2c_read_process = I2C_SEND_ADDRESS_FIRST;
+
+//	if (2 == number_of_byte) {
+//		i2c_ackpos_config(I2C0, I2C_ACKPOS_NEXT);
+//	}
+	/* enable the I2C0 interrupt */
+	i2c_interrupt_enable(I2C0, I2C_INT_ERR);
+	i2c_interrupt_enable(I2C0, I2C_INT_EV);
+	i2c_interrupt_enable(I2C0, I2C_INT_BUF);
+	/* send a start condition to I2C bus */
+	i2c_start_on_bus(I2C0);
+	while ((i2c_nbytes > 0)) {
+		osDelay(1);
+		if (i2c_error_code != 0) {
+			unlock();
+			return false;
+		}
+	}
+	unlock();
+	return true;
+}
+
+bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
 	if (!lock())
 		return false;
 
-	uint32_t count = 0;
-	int timeout = 0;
-
-	/* wait until I2C_FLAG_I2CBSY flag is reset */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) == SET) {
-		if ((timeout--) == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		} else {
-			if (timeout % 5 == 0) {
-				i2c_stop();
-			}
-		}
-	}
-	/* generate a START condition */
-	i2c_start_on_bus(I2C0);
-
-	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
-		if ((timeout--) == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* send slave address */
-	i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
-
-	timeout = 0;
-	/* wait until I2C_FLAG_ADDSEND flag is set */
-	while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
+	i2c_slave_address = DevAddress;
+	i2c_write = p_buffer;
+	i2c_write_dress = MemAddress;
+	i2c_nbytes = number_of_byte;
+	i2c_error_code = 0;
+	i2c_process_flag = 0;
+	i2c_write_process = I2C_SEND_ADDRESS_FIRST;
+	i2c_read_process = I2C_SEND_ADDRESS_FIRST;
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_AERR);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_SMBALT);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_SMBTO);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_OUERR);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_LOSTARB);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_BERR);
+	i2c_interrupt_flag_clear(I2C0, I2C_INT_FLAG_PECERR);
+	/* enable the I2C0 interrupt */
+	i2c_interrupt_enable(I2C0, I2C_INT_ERR);
+	i2c_interrupt_enable(I2C0, I2C_INT_EV);
+	i2c_interrupt_enable(I2C0, I2C_INT_BUF);
+	/* wait until I2C bus is idle */
+	uint8_t timeout = 0;
+	while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) {
 		timeout++;
-		if (timeout > 100000) {
-			i2c_stop();
+		osDelay(1);
+		if (timeout > 20) {
 			unlock();
 			return false;
 		}
 	}
 
-	/* clear ADDSEND */
-	i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-	int status = i2c_byte_write(MemAddress);
-	for (count = 0; count < Size; count++) {
-		status = i2c_byte_write(pData[count]);
-		if (status != 1) {
-			i2c_stop();
+	/* send a start condition to I2C bus */
+	//This sending will kickoff the IRQ's
+	i2c_start_on_bus(I2C0);
+	while ((i2c_nbytes > 0)) {
+		osDelay(1);
+		if (i2c_error_code != 0) {
 			unlock();
 			return false;
 		}
 	}
-
-	/* if not sequential write, then send stop */
-
-	i2c_stop();
 	unlock();
 	return true;
 }
 
 bool FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
-	if (!lock())
-		return false;
-	uint32_t count = 0;
-	int timeout = 0;
-
-	/* wait until I2C_FLAG_I2CBSY flag is reset */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) == SET) {
-		if ((timeout--) == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		} else {
-			if (timeout % 5 == 0) {
-				i2c_stop();
-			}
-		}
-	}
-	/* generate a START condition */
-	i2c_start_on_bus(I2C0);
-
-	/* ensure the i2c has been started successfully */
-	timeout = FLAG_TIMEOUT;
-	while ((i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) == RESET) {
-		if ((timeout--) == 0) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* send slave address */
-	i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
-
-	timeout = 0;
-	/* wait until I2C_FLAG_ADDSEND flag is set */
-	while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
-		timeout++;
-		if (timeout > 100000) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* clear ADDSEND */
-	i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-
-	for (count = 0; count < Size; count++) {
-		int status = i2c_byte_write(pData[count]);
-		if (status != 1) {
-			i2c_stop();
-			unlock();
-			return false;
-		}
-	}
-
-	/* if not sequential write, then send stop */
-
-	i2c_stop();
-	unlock();
-	return true;
+	return Mem_Write(DevAddress, pData[0], pData + 1, Size - 1);
 }
 
 bool FRToSI2C::probe(uint16_t DevAddress) {
-	uint8_t temp = 0;
-	return Mem_Read(DevAddress, 0x00, &temp, 1);
+	uint8_t temp[1];
+	return Mem_Read(DevAddress, 0x00, temp, sizeof(temp));
 }
 
 void FRToSI2C::I2C_Unstick() {
@@ -384,15 +140,12 @@ void FRToSI2C::I2C_Unstick() {
 
 bool FRToSI2C::lock() {
 	if (I2CSemaphore == nullptr) {
-		for (;;) { //
-		}
+		return false;
 	}
 	return xSemaphoreTake(I2CSemaphore,1000) == pdTRUE;
 }
 
 void FRToSI2C::unlock() {
-	if (I2CSemaphore == nullptr)
-		return;
 	xSemaphoreGive(I2CSemaphore);
 }
 

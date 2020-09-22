@@ -20,6 +20,8 @@
 #define POW_QC
 #define TEMP_TMP36
 #define ACCEL_BMA
+
+
 #define BATTFILTERDEPTH 32
 #endif
 

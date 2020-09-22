@@ -134,12 +134,19 @@ void fusb_send_hardrst() {
 }
 
 void fusb_setup() {
-
+	if (!FRToSI2C::probe(FUSB302B_ADDR)) {
+		return;
+	}
 	/* Fully reset the FUSB302B */
 	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
 	osDelay(2);
+	uint8_t tries = 0;
 	while (!fusb_read_id()) {
 		osDelay(10);
+		tries++;
+		if (tries > 5) {
+			return;	//Welp :(
+		}
 	}
 
 	/* Turn on all power */
