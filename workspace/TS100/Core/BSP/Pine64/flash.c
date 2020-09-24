@@ -9,15 +9,39 @@
 #include "BSP_Flash.h"
 #include "gd32vf103_libopt.h"
 #include "string.h"
-/*Flash start OR'ed with the maximum amount of flash - 1024 bytes*/
-/*We use the last 1024 byte page*/
-#define FLASH_ADDR (0x8000000 | 0xFC00)
+#define FMC_PAGE_SIZE           ((uint16_t)0x400U)
+//static uint16_t settings_page[FMC_PAGE_SIZE] __attribute__ ((section (".settings_page")));
+//Linker script doesnt want to play, so for now its hard coded
+#define SETTINGS_START_PAGE (0x08000000 +(63*1024))
 uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
-  //TODO
-  return 1;
+
+	/* unlock the flash program/erase controller */
+	fmc_unlock();
+
+	/* clear all pending flags */
+	fmc_flag_clear(FMC_FLAG_END);
+	fmc_flag_clear(FMC_FLAG_WPERR);
+	fmc_flag_clear(FMC_FLAG_PGERR);
+	resetWatchdog();
+	fmc_page_erase((uint32_t) SETTINGS_START_PAGE);
+	resetWatchdog();
+	uint16_t *data = (uint16_t*) buffer;
+	for (uint8_t i = 0; i < (length / 2); i++) {
+		fmc_halfword_program((uint32_t) SETTINGS_START_PAGE + (i * 2), data[i]);
+        fmc_flag_clear(FMC_FLAG_END);
+        fmc_flag_clear(FMC_FLAG_WPERR);
+        fmc_flag_clear(FMC_FLAG_PGERR);
+		resetWatchdog();
+	}
+	fmc_lock();
+	return 1;
 }
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length) {
+	uint32_t* b = (uint32_t*) buffer;
+	uint32_t* b2 = (uint32_t*) SETTINGS_START_PAGE;
+	for (int i = 0; i < length / 4; i++) {
+		b[i] = b2[i];
+	}
 
-  //TODO
 }

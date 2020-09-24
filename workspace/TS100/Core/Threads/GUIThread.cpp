@@ -27,7 +27,6 @@ extern "C" {
 extern uint32_t currentTempTargetDegC;
 extern uint8_t accelInit;
 extern uint32_t lastMovementTime;
-extern int16_t idealQCVoltage;
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
