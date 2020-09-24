@@ -107,13 +107,17 @@ void I2C0_EV_IRQHandler(void) {
 			}
 			break;
 		case I2C_TRANSMIT_DATA:
-			if (i2c_interrupt_flag_get(I2C0, I2C_INT_FLAG_TBE)) {
-				/* the master sends a data byte */
-				i2c_data_transmit(I2C0, *i2c_write++);
-				i2c_nbytes--;
-				if (RESET == i2c_nbytes) {
-					i2c_write_process = I2C_STOP;
+			if (i2c_nbytes) {
+				if (i2c_interrupt_flag_get(I2C0, I2C_INT_FLAG_TBE)) {
+					/* the master sends a data byte */
+					i2c_data_transmit(I2C0, *i2c_write++);
+					i2c_nbytes--;
+					if (0 == i2c_nbytes) {
+						i2c_write_process = I2C_STOP;
+					}
 				}
+			} else {
+				i2c_write_process = I2C_STOP;
 			}
 			break;
 		case I2C_STOP:
@@ -180,25 +184,27 @@ void I2C0_EV_IRQHandler(void) {
 			break;
 		case I2C_TRANSMIT_DATA:
 			if (i2c_nbytes > 0) {
-				/* read a byte from the EEPROM */
-				if (i2c_nbytes == 2) {
-					/* wait until BTC bit is set */
-					i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
-					/* clear the ACKEN before the ADDSEND is cleared */
-					i2c_ack_config(I2C0, I2C_ACK_DISABLE);
-				}
-				*i2c_read = i2c_data_receive(I2C0);
-				i2c_read++;
-				i2c_nbytes--;
-				if (i2c_nbytes == 0) {
-					/* the master sends a stop condition to I2C bus */
-					i2c_stop_on_bus(I2C0);
-					/* disable the I2C0 interrupt */
-					i2c_interrupt_disable(I2C0, I2C_INT_ERR);
-					i2c_interrupt_disable(I2C0, I2C_INT_BUF);
-					i2c_interrupt_disable(I2C0, I2C_INT_EV);
-					i2c_process_flag = RESET;
-					i2c_read_process = I2C_DONE;
+				if (i2c_interrupt_flag_get(I2C0, I2C_INT_FLAG_RBNE)) {
+					/* read a byte from the EEPROM */
+					if (i2c_nbytes == 2) {
+						/* wait until BTC bit is set */
+						i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
+						/* clear the ACKEN before the ADDSEND is cleared */
+						i2c_ack_config(I2C0, I2C_ACK_DISABLE);
+					}
+					*i2c_read = i2c_data_receive(I2C0);
+					i2c_read++;
+					i2c_nbytes--;
+					if (i2c_nbytes == 0) {
+						/* the master sends a stop condition to I2C bus */
+						i2c_stop_on_bus(I2C0);
+						/* disable the I2C0 interrupt */
+						i2c_interrupt_disable(I2C0, I2C_INT_ERR);
+						i2c_interrupt_disable(I2C0, I2C_INT_BUF);
+						i2c_interrupt_disable(I2C0, I2C_INT_EV);
+						i2c_process_flag = RESET;
+						i2c_read_process = I2C_DONE;
+					}
 				}
 			} else {
 				i2c_read_process = I2C_STOP;

@@ -8,9 +8,8 @@
 #ifndef CORE_DRIVERS_BMA223_HPP_
 #define CORE_DRIVERS_BMA223_HPP_
 #include "I2C_Wrapper.hpp"
-#include "LIS2DH12_defines.hpp"
 #include "BSP.h"
-
+#include "BMA223_defines.h"
 
 class BMA223 {
 public:
@@ -18,21 +17,19 @@ public:
 	static bool initalize();
 	//1 = rh, 2,=lh, 8=flat
 	static Orientation getOrientation() {
-#ifdef ACCEL_ORI_FLIP
-		uint8_t val = (FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,
-		LIS_INT2_SRC) >> 2);
-		if (val == 8)
-			val = 3;
-		else if (val == 1)
-			val = 1;
-		else if (val == 2)
-			val = 0;
-		else
-			val = 3;
-		return static_cast<Orientation>(val);
-#else
-		return static_cast<Orientation>((FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,LIS_INT2_SRC) >> 2) - 1);
-#endif
+		uint8_t val = FRToSI2C::I2C_RegisterRead(BMA223_ADDRESS,
+		BMA223_INT_STATUS_3);
+		val >>= 4; //we dont need high values
+		val &= 0b11;
+		if(val &0b10){
+			return ORIENTATION_FLAT;
+		}else{
+			return static_cast<Orientation>(!val);
+		}
+		//0 = rhs
+		//1 =lhs
+		//2 & 3 == ignore
+
 	}
 	static void getAxisReadings(int16_t& x, int16_t& y, int16_t& z);
 
