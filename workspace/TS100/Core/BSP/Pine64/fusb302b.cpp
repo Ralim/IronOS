@@ -16,6 +16,7 @@
  */
 #include "Model_Config.h"
 #ifdef POW_PD
+#include "Setup.h"
 #include "BSP.h"
 #include "fusb302b.h"
 #include "I2C_Wrapper.hpp"
@@ -133,9 +134,9 @@ void fusb_send_hardrst() {
 
 }
 
-void fusb_setup() {
+bool fusb_setup() {
 	if (!FRToSI2C::probe(FUSB302B_ADDR)) {
-		return;
+		return false;
 	}
 	/* Fully reset the FUSB302B */
 	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
@@ -145,7 +146,7 @@ void fusb_setup() {
 		osDelay(10);
 		tries++;
 		if (tries > 5) {
-			return;	//Welp :(
+			return false;	//Welp :(
 		}
 	}
 
@@ -187,6 +188,8 @@ void fusb_setup() {
 	}
 
 	fusb_reset();
+	setupFUSBIRQ();
+	return true;
 }
 
 void fusb_get_status(union fusb_status *status) {

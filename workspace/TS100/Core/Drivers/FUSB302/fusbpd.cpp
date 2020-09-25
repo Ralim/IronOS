@@ -18,10 +18,11 @@
 
 void fusb302_start_processing() {
 	/* Initialize the FUSB302B */
-	fusb_setup();
-	PolicyEngine::init();
-	ProtocolTransmit::init();
-	ProtocolReceive::init();
-	InterruptHandler::init();
+	if (fusb_setup()) {
+		PolicyEngine::init();
+		ProtocolTransmit::init();
+		ProtocolReceive::init();
+		InterruptHandler::init();
+	}
 }
 #endif

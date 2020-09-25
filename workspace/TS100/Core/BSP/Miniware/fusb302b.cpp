@@ -78,16 +78,16 @@ void fusb_send_message(const union pd_msg *msg) {
 	}
 	/* Token sequences for the FUSB302B */
 	static uint8_t sop_seq[5] = {
-	FUSB_FIFO_TX_SOP1,
-	FUSB_FIFO_TX_SOP1,
-	FUSB_FIFO_TX_SOP1,
-	FUSB_FIFO_TX_SOP2,
-	FUSB_FIFO_TX_PACKSYM };
+		FUSB_FIFO_TX_SOP1,
+		FUSB_FIFO_TX_SOP1,
+		FUSB_FIFO_TX_SOP1,
+		FUSB_FIFO_TX_SOP2,
+		FUSB_FIFO_TX_PACKSYM};
 	static const uint8_t eop_seq[4] = {
-	FUSB_FIFO_TX_JAM_CRC,
-	FUSB_FIFO_TX_EOP,
-	FUSB_FIFO_TX_TXOFF,
-	FUSB_FIFO_TX_TXON };
+		FUSB_FIFO_TX_JAM_CRC,
+		FUSB_FIFO_TX_EOP,
+		FUSB_FIFO_TX_TXOFF,
+		FUSB_FIFO_TX_TXON};
 
 	/* Take the I2C2 mutex now so there can't be a race condition on sop_seq */
 	/* Get the length of the message: a two-octet header plus NUMOBJ four-octet
@@ -142,16 +142,16 @@ void fusb_send_hardrst() {
 	I2CBB::unlock2();
 }
 
-void fusb_setup() {
+bool fusb_setup() {
 
 	if (!I2CBB::lock2()) {
-		return;
+		return false;
 	}
 	/* Fully reset the FUSB302B */
 //	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
 //	osDelay(2);
 	if (!fusb_read_id()) {
-		return;
+		return false;
 	}
 
 	/* Turn on all power */
@@ -170,7 +170,7 @@ void fusb_setup() {
 	fusb_write_byte( FUSB_CONTROL2, 0x00);
 	/* Flush the RX buffer */
 	fusb_write_byte( FUSB_CONTROL1,
-	FUSB_CONTROL1_RX_FLUSH);
+			FUSB_CONTROL1_RX_FLUSH);
 
 	/* Measure CC1 */
 	fusb_write_byte( FUSB_SWITCHES0, 0x07);
@@ -200,6 +200,7 @@ void fusb_setup() {
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 10, 0);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	return true;
 }
 
 void fusb_get_status(union fusb_status *status) {
@@ -225,7 +226,7 @@ enum fusb_typec_current fusb_get_typec_current() {
 	}
 	/* Read the BC_LVL into a variable */
 	enum fusb_typec_current bc_lvl = (enum fusb_typec_current) (fusb_read_byte(
-	FUSB_STATUS0) & FUSB_STATUS0_BC_LVL);
+					FUSB_STATUS0) & FUSB_STATUS0_BC_LVL);
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		I2CBB::unlock2();
 	}
@@ -255,7 +256,7 @@ bool fusb_read_id() {
 	uint8_t version = 0;
 	fusb_read_buf(FUSB_DEVICE_ID, 1, &version);
 	if (version == 0 || version == 0xFF)
-		return false;
+	return false;
 	return true;
 }
 uint8_t fusb302_detect() {

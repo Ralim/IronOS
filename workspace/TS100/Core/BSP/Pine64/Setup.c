@@ -35,7 +35,7 @@ void hardware_init() {
 	//Timers
 	setup_timers();
 	//Watchdog
-	 setup_iwdg();
+	setup_iwdg();
 
 	/* enable TIMER1 - PWM control timing*/
 	timer_enable(TIMER1);
@@ -65,7 +65,7 @@ void setup_gpio() {
 	gpio_init(OLED_RESET_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ,
 	OLED_RESET_Pin);
 	//I2C as AF Open Drain
-    gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);
+	gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);
 	//PWM output as AF Push Pull
 	gpio_init(PWM_Out_GPIO_Port, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ,
 	PWM_Out_Pin);
@@ -78,15 +78,6 @@ void setup_gpio() {
 
 	//Remap PB4 away from JTAG NJRST
 	gpio_pin_remap_config(GPIO_SWJ_NONJTRST_REMAP, ENABLE);
-	//Setup IRQ for USB-PD
-	gpio_init(FUSB302_IRQ_GPIO_Port, GPIO_MODE_IPU, GPIO_OSPEED_2MHZ, FUSB302_IRQ_Pin);
-	eclic_irq_enable(EXTI5_9_IRQn, 1, 1);
-	/* connect key EXTI line to key GPIO pin */
-	gpio_exti_source_select(GPIO_PORT_SOURCE_GPIOB, GPIO_PIN_SOURCE_5);
-
-	/* configure key EXTI line */
-	exti_init(EXTI_5, EXTI_INTERRUPT, EXTI_TRIG_FALLING);
-	exti_interrupt_flag_clear(EXTI_5);
 
 	//TODO - rest of pins as floating
 }
@@ -121,7 +112,6 @@ void setup_dma() {
 	}
 }
 void setup_i2c() {
-	//TODO - DMA
 	/* enable I2C0 clock */
 	rcu_periph_clock_enable(RCU_I2C0);
 	//Setup I20 at 400kHz
@@ -130,8 +120,8 @@ void setup_i2c() {
 	i2c_enable(I2C0);
 	/* enable acknowledge */
 	i2c_ack_config(I2C0, I2C_ACK_ENABLE);
-    eclic_irq_enable(I2C0_EV_IRQn,1,0);
-    eclic_irq_enable(I2C0_ER_IRQn,2,0);
+	eclic_irq_enable(I2C0_EV_IRQn, 1, 0);
+	eclic_irq_enable(I2C0_ER_IRQn, 2, 0);
 }
 void setup_adc() {
 
@@ -289,4 +279,16 @@ void setup_timers() {
 }
 void setup_iwdg() {
 	//TODO
+}
+
+void setupFUSBIRQ() {
+	//Setup IRQ for USB-PD
+	gpio_init(FUSB302_IRQ_GPIO_Port, GPIO_MODE_IPU, GPIO_OSPEED_2MHZ, FUSB302_IRQ_Pin);
+	eclic_irq_enable(EXTI5_9_IRQn, 1, 1);
+	/* connect key EXTI line to key GPIO pin */
+	gpio_exti_source_select(GPIO_PORT_SOURCE_GPIOB, GPIO_PIN_SOURCE_5);
+
+	/* configure key EXTI line */
+	exti_init(EXTI_5, EXTI_INTERRUPT, EXTI_TRIG_FALLING);
+	exti_interrupt_flag_clear(EXTI_5);
 }

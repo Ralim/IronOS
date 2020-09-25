@@ -34,6 +34,11 @@ typedef enum {
 	I2C_STOP, //Send stop
 	I2C_ABORTED, //
 	I2C_DONE,// I2C transfer is complete
+    I2C_START ,
+	I2C_END,
+	I2C_OK,
+    I2C_SEND_ADDRESS,
+    I2C_CLEAR_ADDRESS_FLAG,
 } i2c_process_enum;
 extern volatile uint8_t i2c_slave_address;
 extern volatile uint8_t i2c_read_process;

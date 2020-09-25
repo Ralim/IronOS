@@ -15,6 +15,7 @@ extern "C" {
 #endif
 uint16_t getADC(uint8_t channel);
 void hardware_init();
+void setupFUSBIRQ();
 #ifdef __cplusplus
 }
 #endif
