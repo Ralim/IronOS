@@ -6,7 +6,7 @@
 extern uint32_t SystemCoreClock;
 #endif
 //RISC-V configuration
-
+#include "n200_timer.h"
 #define USER_MODE_TASKS 0
 
 #define configUSE_PREEMPTION 1
@@ -69,30 +69,30 @@ extern uint32_t SystemCoreClock;
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
 
 /* Define to trap errors during development. */
-#define configASSERT(x)       \
-  if ((x) == 0) {             \
-    taskDISABLE_INTERRUPTS(); \
-    for (;;)                  \
-      ;                       \
-  }
+#define configASSERT(x)           \
+    if ((x) == 0) {               \
+        taskDISABLE_INTERRUPTS(); \
+        for (;;)                  \
+            ;                     \
+    }
 
-#define INCLUDE_vTaskPrioritySet                1
-#define INCLUDE_uxTaskPriorityGet               1
-#define INCLUDE_vTaskDelete                     1
-#define INCLUDE_vTaskSuspend                    1
-#define INCLUDE_xResumeFromISR                  1
-#define INCLUDE_vTaskDelayUntil                 1
-#define INCLUDE_vTaskDelay                      1
-#define INCLUDE_xTaskGetSchedulerState          1
-#define INCLUDE_xTaskGetCurrentTaskHandle       1
-#define INCLUDE_uxTaskGetStackHighWaterMark     1
-#define INCLUDE_xTaskGetIdleTaskHandle          1
-#define INCLUDE_eTaskGetState                   0
-#define INCLUDE_xEventGroupSetBitFromISR        1
-#define INCLUDE_xTimerPendFunctionCall          0
-#define INCLUDE_xTaskAbortDelay                 0
-#define INCLUDE_xTaskGetHandle                  1
-#define INCLUDE_xTaskResumeFromISR              1
+#define INCLUDE_vTaskPrioritySet 1
+#define INCLUDE_uxTaskPriorityGet 1
+#define INCLUDE_vTaskDelete 1
+#define INCLUDE_vTaskSuspend 1
+#define INCLUDE_xResumeFromISR 1
+#define INCLUDE_vTaskDelayUntil 1
+#define INCLUDE_vTaskDelay 1
+#define INCLUDE_xTaskGetSchedulerState 1
+#define INCLUDE_xTaskGetCurrentTaskHandle 1
+#define INCLUDE_uxTaskGetStackHighWaterMark 1
+#define INCLUDE_xTaskGetIdleTaskHandle 1
+#define INCLUDE_eTaskGetState 0
+#define INCLUDE_xEventGroupSetBitFromISR 1
+#define INCLUDE_xTimerPendFunctionCall 0
+#define INCLUDE_xTaskAbortDelay 0
+#define INCLUDE_xTaskGetHandle 1
+#define INCLUDE_xTaskResumeFromISR 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif /* FREERTOS_CONFIG_H */
