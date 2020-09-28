@@ -35,6 +35,19 @@
 #define SDA_Pin BIT(7)
 #define SDA_GPIO_Port GPIOB
 
+
+#define USB_DM_Pin BIT(11)
+#define USB_DM_LOW_GPIO_Port GPIOA
+
+#define QC_DP_LOW_Pin BIT(7)
+#define QC_DP_LOW_GPIO_Port GPIOA
+
+// LOW = low resistance, HIGH = high resistance
+#define QC_DM_LOW_Pin BIT(8)
+#define QC_DM_LOW_GPIO_Port GPIOA
+#define QC_DM_HIGH_Pin BIT(10)
+#define QC_DM_HIGH_GPIO_Port GPIOA
+
 #define FUSB302_IRQ_Pin BIT(5)
 #define FUSB302_IRQ_GPIO_Port GPIOB
 
