@@ -366,7 +366,25 @@ static void display_countdown(int sleepThres) {
 		OLED::print(SymbolSeconds);
 	}
 }
+static uint32_t getSleepTimeout() {
+	if (systemSettings.sensitivity && systemSettings.SleepTime) {
 
+		uint32_t sleepThres = 0;
+		if (systemSettings.SleepTime < 6)
+			sleepThres = systemSettings.SleepTime * 10 * 1000;
+		else
+			sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
+		return sleepThres;
+	}
+	return 0;
+}
+static bool shouldBeSleeping() {
+//Return true if the iron should be in sleep mode
+	if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
+		return true;
+	}
+	return false;
+}
 static void gui_solderingMode(uint8_t jumpToSleep) {
 	/*
 	 * * Soldering (gui_solderingMode)
@@ -383,11 +401,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 	 */
 	bool boostModeOn = false;
 
-	uint32_t sleepThres = 0;
-	if (systemSettings.SleepTime < 6)
-		sleepThres = systemSettings.SleepTime * 10 * 1000;
-	else
-		sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
 	if (jumpToSleep) {
 		if (gui_SolderingSleepingMode(jumpToSleep == 2)) {
 			lastButtonTime = xTaskGetTickCount();
@@ -440,7 +453,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 			if (systemSettings.sensitivity && systemSettings.SleepTime) {
 				OLED::print(SymbolSpace);
-				display_countdown(sleepThres);
+				display_countdown(getSleepTimeout());
 			}
 
 			OLED::setCursor(0, 8);
@@ -515,7 +528,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 #endif
 
 		if (systemSettings.sensitivity && systemSettings.SleepTime)
-			if (xTaskGetTickCount() - lastMovementTime > sleepThres && xTaskGetTickCount() - lastButtonTime > sleepThres) {
+			if (shouldBeSleeping()) {
 				if (gui_SolderingSleepingMode(false)) {
 					return;  // If the function returns non-0 then exit
 				}
