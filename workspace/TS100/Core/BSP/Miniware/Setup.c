@@ -231,7 +231,7 @@ static void MX_ADC2_Init(void) {
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.ClockSpeed = 75000;
+	hi2c1.Init.ClockSpeed = 50000;
 	// OLED doesnt handle >100k when its asleep (off).
 	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	hi2c1.Init.OwnAddress1 = 0;
