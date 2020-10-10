@@ -17,6 +17,7 @@ enum ButtonState {
 	BUTTON_F_LONG = 4, /* User is  holding the front button*/
 	BUTTON_B_LONG = 8, /* User is  holding the back button*/
 	BUTTON_BOTH = 16, /* User has pressed both buttons*/
+	BUTTON_BOTH_LONG = 32, /* User is holding both buttons*/
 
 /*
  * Note:

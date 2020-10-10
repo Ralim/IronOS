@@ -24,7 +24,10 @@
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!"
+		"SettingsResetMessage": "Settings were\nreset!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -35,7 +38,10 @@
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F"
+		"SettingStartNoneChar": "F",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -249,6 +255,13 @@
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"LockingMode": {
+						"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

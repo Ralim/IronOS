@@ -23,7 +23,10 @@
 		"OffString": "Выкл.",
 		"ResetOKMessage": "Сброс OK",
 		"YourGainMessage": "Прирост:",
-		"SettingsResetMessage": "Настройки сброшены!"
+		"SettingsResetMessage": "Настройки сброшены!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "П",
@@ -34,7 +37,10 @@
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",
-		"SettingStartNoneChar": "В"
+		"SettingStartNoneChar": "В",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -68,186 +74,193 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Источник",
 				"питания"
 			],
 			"desc": "Источник питания. Устанавливает напряжение отсечки. <DC 10В> <S 3.3В на ячейку, без лимита мощности>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Темп.",
 				"ожидания"
 			],
 			"desc": "Температура режима ожидания"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Таймаут",
 				"ожидания"
 			],
 			"desc": "Время до перехода в режим ожидания <Минуты/Секунды>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Таймаут",
 				"выключения"
 			],
 			"desc": "Время до отключения паяльника <Минуты>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Чувствительн.",
 				"акселерометра"
 			],
 			"desc": "Чувствительность акселерометра <0=Выкл., 1=Мин., 9=Макс.>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Единицы",
 				"температуры"
 			],
 			"desc": "Единицы измерения температуры <C=Цельcия, F=Фаренгейта>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Подробный",
 				"реж. ожидания"
 			],
 			"desc": "Отображать детальную информацию уменьшенным шрифтом на экране ожидания"
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Ориентация",
 				"экрана"
 			],
 			"desc": "Ориентация экрана <А=Авто, Л=Левая рука, П=Правая рука>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"t° турбо",
 				"режима"
 			],
 			"desc": "Температура жала в турбо-режиме"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Авто",
 				"старт"
 			],
 			"desc": "Режим, в котором запускается паяльник при подаче питания <П=Пайка, О=Ожидание, К=Ожидание при комн. темп., В=Выкл.>"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Мигание t°",
 				"при остывании"
 			],
 			"desc": "Мигать температурой на экране охлаждения, пока жало еще горячее"
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Калибровка",
 				"температуры"
 			],
 			"desc": "Калибровка термодатчика жала"
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Сброс",
 				"Настроек"
 			],
 			"desc": "Сброс настроек к значеням по умолчанию"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Калибровка",
 				"напряжения"
 			],
 			"desc": "Калибровка входного напряжения <длинное нажатие для выхода>"
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Подробный",
 				"экран пайки"
 			],
 			"desc": "Показывать детальную информацию на экране пайки"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Скорость",
 				"текста"
 			],
 			"desc": "Скорость прокрутки текста <М=медленно, Б=быстро>"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Модель",
 				"жала"
 			],
 			"desc": "Выбор модели жала"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Упрощенная",
 				"калибровка"
 			],
 			"desc": "Упрощенная калибровка с использованием горячей воды"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Улучшенная",
 				"калибровка"
 			],
 			"desc": "Улучшенная калибровка с импользованием термопары жала"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Мощность",
 				"питания"
 			],
 			"desc": "Мощность используемого источника питания"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Максимальная",
 				"мощность"
 			],
 			"desc": "Максимальная мощность, которую может использовать паяльник <Ватт>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Инвертировать",
 				"кнопки"
 			],
 			"desc": "Инвертировать кнопки изменения температуры"
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Шаг темп.",
 				"кор. наж."
 			],
 			"desc": "Шаг изменения температуры при коротком нажатии кнопок"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Шаг темп.",
 				"длин. наж."
 			],
 			"desc": "Шаг изменения температуры при длинном нажатии кнопок"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
-			"desc": "Keep awake pulse power intensity"			
+			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }
