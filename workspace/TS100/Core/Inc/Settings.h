@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "unit.h"
-#define SETTINGSVERSION   ( 0x21 )
+#define SETTINGSVERSION   ( 0x22 )
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -40,6 +40,7 @@ typedef struct {
 	uint8_t temperatureInF :1;       // Should the temp be in F or C (true is F)
 #endif
 	uint8_t descriptionScrollSpeed :1;  // Description scroll speed
+	uint8_t lockingMode :2;		// Store the locking mode
 	uint8_t KeepAwakePulse;  // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
 
 	uint16_t voltageDiv;                 // Voltage divisor factor
@@ -54,6 +55,7 @@ typedef struct {
 	uint8_t ReverseButtonTempChangeEnabled; // Change the plus and minus button assigment
 	uint16_t TempChangeLongStep;   // Change the plus and minus button assigment
 	uint16_t TempChangeShortStep;  // Change the plus and minus button assigment
+
 
 	uint32_t padding;  // This is here for in case we are not an even divisor so
 					   // that nothing gets cut off

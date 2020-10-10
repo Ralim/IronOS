@@ -21,7 +21,12 @@
 		"TipDisconnectedString": "TIP DISCONNECTED",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset OK"
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Your gain:",
+		"SettingsResetMessage": "Settings were\nreset!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "H",
@@ -32,7 +37,10 @@
 		"SettingStartSolderingChar": "L",
 		"SettingStartSleepChar": "D",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "S"
+		"SettingStartNoneChar": "S",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -233,7 +241,7 @@
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
-		"PowerPulsePower":{
+		"PowerPulsePower": {
 			"text2": [
 				"Power",
 				"Pulse W"
@@ -246,6 +254,13 @@
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

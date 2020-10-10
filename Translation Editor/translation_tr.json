@@ -21,7 +21,12 @@
 		"TipDisconnectedString": "UÇ ÇIKARILDI",
 		"SolderingAdvancedPowerPrompt": "Güç: ",
 		"OffString": "Kapalı",
-		"ResetOKMessage": "Reset Tamam"
+		"ResetOKMessage": "Reset Tamam",
+		"YourGainMessage": "Your gain:",
+		"SettingsResetMessage": "Settings were\nreset!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -32,7 +37,10 @@
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F"
+		"SettingStartNoneChar": "F",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -66,186 +74,193 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"PWRSC",
 				""
 			],
 			"desc": "Güç Kaynağı. kesim geriliminı ayarlar. <DC 10V> <S 3.3V hücre başına>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"STMP",
 				""
 			],
 			"desc": "Uyku Sıcaklığı <C>"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"STME",
 				""
 			],
 			"desc": "Uyku Zaman Aşımı <Dakika/Saniye>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"SHTME",
 				""
 			],
 			"desc": "Kapatma Zaman Aşımı <Dakika>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"MSENSE",
 				""
 			],
 			"desc": "Hareket Hassasiyeti <0.Kapalı 1.En az duyarlı 9.En duyarlı>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"TMPUNT",
 				""
 			],
 			"desc": "Sıcaklık Ünitesi <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"ADVIDL",
 				""
 			],
 			"desc": "Boş ekranda ayrıntılı bilgileri daha küçük bir yazı tipi ile göster."
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"DSPROT",
 				""
 			],
 			"desc": "Görüntü Yönlendirme <A. Otomatik L. Solak R. Sağlak>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"BTMP",
 				""
 			],
 			"desc": "\"boost\" Modu Derecesi"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"ASTART",
 				""
 			],
 			"desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. T=Lehimleme Modu, S= Uyku Modu,F=Kapalı"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"CLBLNK",
 				""
 			],
 			"desc": "Soğutma ekranında uç hala sıcakken derece yanıp sönsün."
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"TMP CAL?",
 				""
 			],
 			"desc": "Ucu kalibre et."
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"RESET?",
 				""
 			],
 			"desc": "Bütün ayarları sıfırla"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"CAL VIN?",
 				""
 			],
 			"desc": "VIN Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas."
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"ADVSLD",
 				""
 			],
 			"desc": "Lehimleme yaparken detaylı bilgi göster"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"DESCSP",
 				""
 			],
 			"desc": "Speed this text scrolls past at"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Uç",
 				"Modeli"
 			],
 			"desc": "Uç Modeli seçimi"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Basit",
 				"Kalibrasyon"
 			],
 			"desc": "Sıcak su kullanarak basit kalibrasyon"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Gelişmiş",
 				"Kalibrasyon"
 			],
 			"desc": "Uçtaki ısı sensörünü kullanarak gelişmiş kalibrasyon"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Güç",
 				"Miktarı(W)"
 			],
 			"desc": "Kullanılan adaptörün güç miktarı"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

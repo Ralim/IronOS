@@ -65,6 +65,7 @@ void resetSettings() {
 	systemSettings.ShutdownTime = SHUTDOWN_TIME; // How many minutes until the unit turns itself off
 	systemSettings.BoostTemp = BOOST_TEMP;    // default to 400C
 	systemSettings.autoStartMode = AUTO_START_MODE; // Auto start off for safety
+	systemSettings.lockingMode = LOCKING_MODE; // Disable locking for safety
 	systemSettings.coolingTempBlink = COOLING_TEMP_BLINK; // Blink the temperature on the cooling screen when its > 50C
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 	systemSettings.temperatureInF = TEMPERATURE_INF;          // default to 0

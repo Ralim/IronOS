@@ -21,7 +21,12 @@
 		"TipDisconnectedString": "TIP DISCONNECTED",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset OK"
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Your gain:",
+		"SettingsResetMessage": "Settings were\nreset!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -32,7 +37,10 @@
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F"
+		"SettingStartNoneChar": "F",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -66,186 +74,193 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"PWRSC",
 				""
 			],
 			"desc": "Zdroj napatia. Nastavit napatie pre vypnutie (cutoff)  <DC=10V, nS=n*3.3V pre LiIon clanky>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"STMP",
 				""
 			],
 			"desc": "Kludova teplota (v nastavenych jednotkach)"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"STME",
 				""
 			],
 			"desc": "Kludovy rezim po <sekundach/minutach>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"SHTME",
 				""
 			],
 			"desc": "Cas na vypnutie <minuty>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"MSENSE",
 				""
 			],
 			"desc": "Citlivost detekcie pohybu <0=Vyp, 1=Min ... 9=Max>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"TMPUNT",
 				""
 			],
 			"desc": "Jednotky merania teploty <C=stupne Celzia, F=stupne Fahrenheita>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"ADVIDL",
 				""
 			],
 			"desc": "Zobrazit detailne informacie v kludovom rezime <T=Zap, F=Vyp>"
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"DSPROT",
 				""
 			],
 			"desc": "Orientacia displeja <A=Auto, L=Lavak, R=Pravak>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"BTMP",
 				""
 			],
 			"desc": "Cielova teplota pre prudky nahrev (v nastavenych jednotkach)"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"ASTART",
 				""
 			],
 			"desc": "Pri starte spustit rezim spajkovania <T=Zap, F=Vyp, S=Spanok>"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"CLBLNK",
 				""
 			],
 			"desc": "Blikanie ukazovatela teploty pocas chladnutia hrotu <T=Zap, F=Vyp>"
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"TMP CAL?",
 				""
 			],
 			"desc": "Kalibracia posunu hrotu"
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"RESET?",
 				""
 			],
 			"desc": "Tovarenske nastavenia"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"CAL VIN?",
 				""
 			],
 			"desc": "Kalibracia VIN. Kratke stlacenie meni nastavenie, dlhe stlacenie pre navrat"
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"ADVSLD",
 				""
 			],
 			"desc": "Zobrazenie detailov pocas spajkovania <T=Zap, F=Vyp>"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"DESCSP",
 				""
 			],
 			"desc": "Speed this text scrolls past at"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Tip",
 				"Model"
 			],
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Simple",
 				"Calibration"
 			],
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Advanced",
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

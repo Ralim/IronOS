@@ -15,8 +15,8 @@ extern const uint8_t USER_FONT_6x8[];
  * When SettingsShortNameType is SHORT_NAME_SINGLE_LINE
  * use SettingsShortNames as SettingsShortNames[16][1].. second column undefined
  */
-extern const char *SettingsShortNames[28][2];
-extern const char *SettingsDescriptions[28];
+extern const char *SettingsShortNames[29][2];
+extern const char *SettingsDescriptions[29];
 extern const char *SettingsMenuEntries[4];
 
 extern const char *SettingsCalibrationDone;
@@ -41,6 +41,9 @@ extern const char *OffString;
 extern const char *ResetOKMessage;
 extern const char *YourGainMessage;
 extern const char *SettingsResetMessage;
+extern const char *LockingKeysString;
+extern const char *UnlockingKeysString;
+extern const char *WarningKeysLockedString;
 
 extern const char *SettingTrueChar;
 extern const char *SettingFalseChar;
@@ -51,6 +54,9 @@ extern const char *SettingStartSolderingChar;
 extern const char *SettingStartSleepChar;
 extern const char *SettingStartSleepOffChar;
 extern const char *SettingStartNoneChar;
+extern const char *SettingLockDisableChar;
+extern const char *SettingLockBoostChar;
+extern const char *SettingLockFullChar;
 
 extern const char *SettingFastChar;
 extern const char *SettingSlowChar;
