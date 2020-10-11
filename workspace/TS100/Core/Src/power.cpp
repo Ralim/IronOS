@@ -9,8 +9,7 @@
 #include <Settings.h>
 #include <BSP.h>
 
-const uint16_t powerPWM = 255;
-const uint16_t totalPWM = 255 + 17; //htim2.Init.Period, the full PWM cycle
+static int32_t PWMToX10Watts(uint8_t pwm, uint8_t sample);
 
 expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory = { 0 };
 
@@ -30,7 +29,7 @@ void setTipX10Watts(int32_t mw) {
 	x10WattHistory.update(actualMilliWatts);
 }
 
-uint32_t availableW10(uint8_t sample) {
+static uint32_t availableW10(uint8_t sample) {
 	//P = V^2 / R, v*v = v^2 * 100
 	//				R = R*10
 	// P therefore is in V^2*100/R*10 = W*10.
@@ -56,15 +55,22 @@ uint8_t X10WattsToPWM(int32_t milliWatts, uint8_t sample) {
 	}
 	//	if (milliWatts > (int(systemSettings.pidPowerLimit) * 10))
 //		milliWatts = (int(systemSettings.pidPowerLimit) * 10);
+
 	//Calculate desired milliwatts as a percentage of availableW10
-	uint32_t pwm = (powerPWM * milliWatts) / availableW10(sample);
-	if (pwm > powerPWM) {
-		pwm = powerPWM;	//constrain to max PWM counter, shouldnt be possible, but small cost for safety to avoid wraps
-	}
+	uint32_t pwm;
+	do {
+		pwm = (powerPWM * milliWatts) / availableW10(sample);
+		if (pwm > powerPWM) {
+			// constrain to max PWM counter, shouldn't be possible,
+			// but small cost for safety to avoid wraps
+			pwm = powerPWM;
+		}
+	} while (tryBetterPWM(pwm));
+
 	return pwm;
 }
 
-int32_t PWMToX10Watts(uint8_t pwm, uint8_t sample) {
+static int32_t PWMToX10Watts(uint8_t pwm, uint8_t sample) {
 	uint32_t maxMW = availableW10(sample); //Get the milliwatts for the max pwm period
 	//Then convert pwm into percentage of powerPWM to get the percentage of the max mw
 	return (((uint32_t) pwm) * maxMW) / powerPWM;

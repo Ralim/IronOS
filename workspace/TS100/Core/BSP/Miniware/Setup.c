@@ -315,13 +315,15 @@ static void MX_TIM2_Init(void) {
 	// Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC
 	// in the PWM off time.
 	htim2.Instance = TIM2;
-	htim2.Init.Prescaler = 4000; //1mhz tick rate/800 = 1.25 KHz tick rate
+	// dummy value, will be reconfigured by BSPInit()
+	htim2.Init.Prescaler = 2000; // 2 MHz timer clock/2000 = 1 kHz tick rate
 
 	// pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
-	// These values give a rate of around 8Hz
+	// These values give a rate of around 3.5 Hz for "fast" mode and 1.84 Hz for "slow"
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim2.Init.Period = 255 + 17;
-	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 4mhz before divide
+	// dummy value, will be reconfigured by BSPInit()
+	htim2.Init.Period = 255 + 17 * 2;
+	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 8 MHz (x2 APB1) before divide
 	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	htim2.Init.RepetitionCounter = 0;
 	HAL_TIM_Base_Init(&htim2);
@@ -337,7 +339,8 @@ static void MX_TIM2_Init(void) {
 	HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 255 + 13;  //13 -> Delay of 5ms
+	// dummy value, will be reconfigured by BSPInit()
+	sConfigOC.Pulse = 255 + 13 * 2;  // 13 -> Delay of 7 ms
 	//255 is the largest time period of the drive signal, and then offset ADC sample to be a bit delayed after this
 	/*
 	 * It takes 4 milliseconds for output to be stable after PWM turns off.

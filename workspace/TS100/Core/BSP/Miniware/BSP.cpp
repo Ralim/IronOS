@@ -12,6 +12,14 @@
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t pendingPWM = 0;
 
+const uint16_t powerPWM = 255;
+static const uint8_t holdoffTicks = 13; // delay of 7 ms
+static const uint8_t tempMeasureTicks = 17;
+
+uint16_t totalPWM; //htim2.Init.Period, the full PWM cycle
+
+static bool fastPWM;
+
 //2 second filter (ADC is PID_TIM_HZ Hz)
 history<uint16_t, PID_TIM_HZ> rawTempFilter = { { 0 }, 0, 0 };
 void resetWatchdog() {
@@ -190,6 +198,41 @@ void setTipPWM(uint8_t pulse) {
 	pendingPWM = pulse;
 }
 
+static void switchToFastPWM(void) {
+	fastPWM = true;
+	totalPWM = powerPWM + tempMeasureTicks * 2;
+	htim2.Instance->ARR = totalPWM;
+	// ~3.5 Hz rate
+	htim2.Instance->CCR1 = powerPWM + holdoffTicks * 2;
+	// 2 MHz timer clock/2000 = 1 kHz tick rate
+	htim2.Instance->PSC = 2000;
+}
+
+static void switchToSlowPWM(void) {
+	fastPWM = false;
+	totalPWM = powerPWM + tempMeasureTicks;
+	htim2.Instance->ARR = totalPWM;
+	// ~1.84 Hz rate
+	htim2.Instance->CCR1 = powerPWM + holdoffTicks;
+	// 2 MHz timer clock/4000 = 500 Hz tick rate
+	htim2.Instance->PSC = 4000;
+}
+
+bool tryBetterPWM(uint8_t pwm) {
+	if (fastPWM && pwm == powerPWM) {
+		// maximum power for fast PWM reached, need to go slower to get more
+		switchToSlowPWM();
+		return true;
+	} else if (!fastPWM && pwm < 230) {
+		// 254 in fast PWM mode gives the same power as 239 in slow
+		// allow for some reasonable hysteresis by switching only when it goes
+		// below 230 (equivalent to 245 in fast mode)
+		switchToFastPWM();
+		return true;
+	}
+	return false;
+}
+
 // These are called by the HAL after the corresponding events from the system
 // timers.
 
@@ -297,6 +340,10 @@ uint8_t getButtonA() {
 uint8_t getButtonB() {
 	return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ?
 			1 : 0;
+}
+
+void BSPInit(void) {
+	switchToFastPWM();
 }
 
 void reboot() {
