@@ -32,7 +32,7 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods of time)
 * (TS100) Battery charge level indicator if power source set to a lipo cell count
 * (TS80) Power bank operating voltage is displayed
-* [Custom boot up logo support](Documentation/upgrading.md)
+* [Custom boot up logo support](Documentation/Upgrading.md)
 * Automatic LCD rotation based on the orientation
 * Supports both the version 1 and version 2 hardware (different accelerometers)
 
@@ -46,7 +46,7 @@ When on the main screen, the unit shows prompts for the two most common operatio
 * Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
 * Holding the button near the USB end will show the firmware version details
 
-Detailed operation details are over in the [Menu information.](Documentation/menu.md)
+Detailed operation details are over in the [Menu information.](Documentation/Menu.md)
 
 ## Thanks
 
