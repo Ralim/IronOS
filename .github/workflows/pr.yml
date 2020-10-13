@@ -75,3 +75,29 @@ jobs:
           workspace/TS100/Hexfile/TS100_*.hex
           workspace/TS100/Hexfile/TS100_*.bin
         if-no-files-found: error
+
+  build_Pinecil:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: chmod
+      run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+
+    - name: setup
+      run: ./setup.sh
+
+    - name: build Pinecil
+      run: cd workspace/TS100 && ./build.sh -m Pinecil
+
+    - name: Archive Pinecil artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Pinecil
+        path: |
+          workspace/TS100/Hexfile/Pinecil_*.hex
+          workspace/TS100/Hexfile/Pinecil_*.bin
+        if-no-files-found: error
+      
