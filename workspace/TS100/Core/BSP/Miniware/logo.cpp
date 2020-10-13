@@ -15,8 +15,7 @@ static uint8_t logo_page[1024] __attribute__ ((section (".logo_page")));
 
 uint8_t showBootLogoIfavailable() {
 // Do not show logo data if signature is not found.
-	if (LOGO_HEADER_VALUE
-			!= *(reinterpret_cast<const uint32_t*>(logo_page))) {
+	if (LOGO_HEADER_VALUE != *(reinterpret_cast<const uint32_t*>(logo_page))) {
 		return 0;
 	}
 

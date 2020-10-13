@@ -22,6 +22,4 @@
 
 #endif
 
-
-
 #endif /* BSP_MINIWARE_SOFTWARE_I2C_H_ */

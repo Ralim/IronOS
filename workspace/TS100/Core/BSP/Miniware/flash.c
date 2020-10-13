@@ -17,7 +17,7 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 	pEraseInit.TypeErase = FLASH_TYPEERASE_PAGES;
 	pEraseInit.Banks = FLASH_BANK_1;
 	pEraseInit.NbPages = 1;
-	pEraseInit.PageAddress = (uint32_t)settings_page;
+	pEraseInit.PageAddress = (uint32_t) settings_page;
 	uint32_t failingAddress = 0;
 	resetWatchdog();
 	__HAL_FLASH_CLEAR_FLAG(
@@ -33,8 +33,8 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 	HAL_FLASH_Unlock();
 	for (uint8_t i = 0; i < (length / 2); i++) {
 		resetWatchdog();
-		HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)&settings_page[i],
-				data[i]);
+		HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD,
+				(uint32_t) &settings_page[i], data[i]);
 	}
 	HAL_FLASH_Lock();
 	return 1;
