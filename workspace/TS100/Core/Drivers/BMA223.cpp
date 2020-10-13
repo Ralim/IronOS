@@ -45,12 +45,12 @@ void BMA223::getAxisReadings(int16_t& x, int16_t& y, int16_t& z) {
 	uint8_t sensorData[6] = { 0, 0, 0, 0, 0, 0 };
 
 	if (FRToSI2C::Mem_Read(BMA223_ADDRESS, BMA223_ACCD_X_LSB, sensorData, 6) == false) {
-		x = 0xAAFF;
+		x = y = z = 0;
 		return;
 	}
 
-	x = sensorData[1] << 4;
-	y = sensorData[3] << 4;
-	z = sensorData[5] << 4;
+	x = sensorData[1] << 5;
+	y = sensorData[3] << 5;
+	z = sensorData[5] << 5;
 
 }

@@ -53,6 +53,8 @@ DEV_LDFLAGS=
 DEV_AFLAGS= 
 DEV_CFLAGS= 
 DEV_CXXFLAGS= 
+flash_size=64k
+bootldr_size=0x4000
 endif
 
 ifeq ($(model),Pinecil)
@@ -67,10 +69,12 @@ DEVICE_BSP_DIR = ./Core/BSP/Pine64
 S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S')
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
 LDSCRIPT=GD32VF103xB.ld
-DEV_LDFLAGS=-nostartfiles
-DEV_GLOBAL_DEFS=-mtune=size  -msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common
+DEV_LDFLAGS=-nostartfiles -Xlinker
+DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
+flash_size=128k
+bootldr_size=0x0
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
@@ -99,10 +103,8 @@ OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
 OPTIM_AS= -Wall 
-OPTIM=-Os -flto  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
-flash_size=64k
-bootldr_size=0x4000
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES +=  -D LANG_$(lang) -D LANG -D MODEL_$(model) $(DEV_GLOBAL_DEFS)
@@ -151,7 +153,8 @@ endif
 ifeq ($(model),Pinecil)
 CPUFLAGS= 	-march=rv32imac \
 			-mabi=ilp32 \
-			-mcmodel=medany  \
+			-mtune=size  \
+			-mcmodel=medlow  \
 			-DGD32VF103C_START \
 			-DUSE_STDPERIPH_DRIVER
 endif
@@ -159,7 +162,6 @@ endif
 
 
 # linker flags -----------------------------------------------------------------
-LD_FILE = $(PINE_VENDOR_INC_DIR)/GD32VF103xB.lds
 LINKER_FLAGS=-Wl,--gc-sections 		\
             -Wl,--wrap=malloc \
 			-Wl,--wrap=free \
@@ -284,7 +286,8 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)  Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) $(LINKER_FLAGS)
+	@echo $(CPP) $(CXXFLAGS) $(LINKER_FLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) 
+	@$(CPP) $(CXXFLAGS) $(LINKER_FLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) 
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
