@@ -50,10 +50,10 @@
 /**
  * Temp change settings
  */
-#define TEMP_CHANGE_SHORT_STEP      1         // Default temp change short step +1
-#define TEMP_CHANGE_LONG_STEP       10        // Default temp change long step +10
-#define TEMP_CHANGE_SHORT_STEP_MAX  50        // Temp change short step MAX value
-#define TEMP_CHANGE_LONG_STEP_MAX   90       // Temp change long step MAX value
+#define TEMP_CHANGE_SHORT_STEP 1      // Default temp change short step +1
+#define TEMP_CHANGE_LONG_STEP 10      // Default temp change long step +10
+#define TEMP_CHANGE_SHORT_STEP_MAX 50 // Temp change short step MAX value
+#define TEMP_CHANGE_LONG_STEP_MAX 90  // Temp change long step MAX value
 
 /* Power pulse for keeping power banks awake*/
 #define POWER_PULSE_INCREMENT 1
@@ -77,9 +77,9 @@
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE 0      // 0: Disable 1: Enable - Default 0
 
-#define CUT_OUT_SETTING           0         // default to no cut-off voltage (or 18W for TS80)
-#define TEMPERATURE_INF           0         // default to 0
-#define DESCRIPTION_SCROLL_SPEED  0         // 0: Slow 1: Fast - default to slow
+#define CUT_OUT_SETTING 0          // default to no cut-off voltage (or 18W for TS80)
+#define TEMPERATURE_INF 0          // default to 0
+#define DESCRIPTION_SCROLL_SPEED 0 // 0: Slow 1: Fast - default to slow
 
 #define TIP_GAIN 210 // 21 uV/C * 10, uV per deg C constant of the tip, Tip uV * 10 / coeff = tip temp
 
@@ -101,7 +101,7 @@
 #define VOLTAGE_DIV 467        // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT 70     // Sets the max pwm power limit
-#define POWER_LIMIT 0         // 0 watts default limit
+#define POWER_LIMIT 0          // 0 watts default limit
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
@@ -111,7 +111,7 @@
 #define VOLTAGE_DIV 467        // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT 70     // Sets the max pwm power limit
-#define POWER_LIMIT 0         // 0 watts default limit
+#define POWER_LIMIT 0          // 0 watts default limit
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
@@ -139,12 +139,12 @@
 
 #ifdef MODEL_TS100
 const int32_t tipMass = 45;       // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance = 85; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
+const uint8_t tipResistance = 75; //x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_Pinecil
 const int32_t tipMass = 45;       // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance = 85; //x10 ohms, 8.5 typical for ts100, 4.5 typical for ts80
+const uint8_t tipResistance = 75; //x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_TS80

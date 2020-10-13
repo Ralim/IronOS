@@ -10,7 +10,7 @@
 		"UndervoltageString": "DC INSUFFICIENTE",
 		"InputVoltageString": "V ingresso:",
 		"WarningTipTempString": "Temp punta:",
-		"BadTipString": "PUNTA NO",
+		"BadTipString": "PUNTA KO",
 		"SleepingSimpleString": "Zzz ",
 		"SleepingAdvancedString": "Standby",
 		"WarningSimpleString": "HOT!",

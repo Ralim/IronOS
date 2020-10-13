@@ -1,9 +1,10 @@
+#include <stdint.h>
+#include <stdbool.h>
 #include "BSP_Flash.h"
 #include "BSP_Power.h"
 #include "BSP_QC.h"
 #include "Defines.h"
 #include "Model_Config.h"
-#include "stdint.h"
 /*
  * BSP.h -- Board Support
  *
@@ -16,10 +17,18 @@
 extern "C" {
 #endif
 
+// maximum htim2 PWM value
+extern const uint16_t powerPWM;
+// htim2.Init.Period, the full PWM cycle
+extern uint16_t totalPWM;
+
 // Called first thing in main() to init the hardware
 void preRToSInit();
 // Called once the RToS has started for any extra work
 void postRToSInit();
+
+// Called once from preRToSInit()
+void BSPInit(void);
 
 // Called to reset the hardware watchdog unit
 void resetWatchdog();
@@ -31,6 +40,9 @@ uint16_t getHandleTemperature();
 uint16_t getTipRawTemp(uint8_t refresh);
 // Returns the main DC input voltage, using the adjustable divisor + sample flag
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample);
+// Switch to the most suitable PWM freq given the desired period;
+// returns true if the switch was performed and totalPWM changed
+bool tryBetterPWM(uint8_t pwm);
 
 // Readers for the two buttons
 // !! Returns 1 if held down, 0 if released
