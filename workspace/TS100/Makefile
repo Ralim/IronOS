@@ -68,7 +68,7 @@ S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S')
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
 LDSCRIPT=GD32VF103xB.ld
 DEV_LDFLAGS=-nostartfiles
-DEV_AFLAGS = -msmall-data-limit=8 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
+DEV_GLOBAL_DEFS=-mtune=size  -msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 endif
