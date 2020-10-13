@@ -9,7 +9,6 @@
 #include "OLED.hpp"
 // Second last page of flash set aside for logo image.
 #define FLASH_LOGOADDR (0x8000000 | 0xF800)
-//TODO
 // Logo header signature.
 #define LOGO_HEADER_VALUE 0xF00DAA55
 

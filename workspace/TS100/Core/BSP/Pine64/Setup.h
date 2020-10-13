@@ -19,5 +19,6 @@ void setupFUSBIRQ();
 #ifdef __cplusplus
 }
 #endif
-
+extern const uint8_t holdoffTicks;
+extern const uint8_t tempMeasureTicks;
 #endif /* SETUP_H_ */

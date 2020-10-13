@@ -55,11 +55,52 @@ void TIMER1_IRQHandler(void) {
 }
 
 void setTipPWM(uint8_t pulse) {
-	PWMSafetyTimer = 10;
-// This is decremented in the handler for PWM so that the tip pwm is
-// disabled if the PID task is not scheduled often enough.
-
+	PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
+						 // disabled if the PID task is not scheduled often enough.
 	pendingPWM = pulse;
+}
+
+static bool fastPWM;
+static void switchToFastPWM(void) {
+	fastPWM = true;
+	totalPWM = powerPWM + tempMeasureTicks * 2;
+	TIMER_CAR(TIMER1) = (uint32_t)totalPWM;
+
+	// ~3.5 Hz rate
+	TIMER_CH0CV(TIMER1) = powerPWM + holdoffTicks * 2;
+	//1 kHz tick rate
+	TIMER_PSC(TIMER1) = 12000;
+	/* generate an update event */
+	TIMER_SWEVG(TIMER1) |= (uint32_t) TIMER_SWEVG_UPG;
+
+}
+
+static void switchToSlowPWM(void) {
+	fastPWM = false;
+	totalPWM = powerPWM + tempMeasureTicks;
+	TIMER_CAR(TIMER1) = (uint32_t)totalPWM;
+	// ~1.84 Hz rate
+	TIMER_CH0CV(TIMER1) = powerPWM + holdoffTicks;
+	// 500 Hz tick rate
+	TIMER_PSC(TIMER1) = 24000;
+	/* generate an update event */
+	TIMER_SWEVG(TIMER1) |= (uint32_t) TIMER_SWEVG_UPG;
+
+}
+
+bool tryBetterPWM(uint8_t pwm) {
+	if (fastPWM && pwm == powerPWM) {
+		// maximum power for fast PWM reached, need to go slower to get more
+		switchToSlowPWM();
+		return true;
+	} else if (!fastPWM && pwm < 230) {
+		// 254 in fast PWM mode gives the same power as 239 in slow
+		// allow for some reasonable hysteresis by switching only when it goes
+		// below 230 (equivalent to 245 in fast mode)
+		switchToFastPWM();
+		return true;
+	}
+	return false;
 }
 
 void EXTI5_9_IRQHandler(void) {
