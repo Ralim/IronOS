@@ -69,8 +69,8 @@ DEVICE_BSP_DIR = ./Core/BSP/Pine64
 S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S')
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
 LDSCRIPT=GD32VF103xB.ld
-DEV_LDFLAGS=-nostartfiles -Xlinker
-DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common
+DEV_LDFLAGS=-nostartfiles -Xlinker 
+DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -fabi-version=0
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 flash_size=128k
@@ -154,7 +154,7 @@ ifeq ($(model),Pinecil)
 CPUFLAGS= 	-march=rv32imac \
 			-mabi=ilp32 \
 			-mtune=size  \
-			-mcmodel=medlow  \
+			-mcmodel=medany  \
 			-DGD32VF103C_START \
 			-DUSE_STDPERIPH_DRIVER
 endif
@@ -292,7 +292,6 @@ $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)  Makefile $(LDSCR
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
-	@echo @$(CC) -c $(CFLAGS) $< -o $@
 	@$(CC) -c $(CFLAGS) $< -o $@
 	@$(OBJDUMP) -d -S $@ > $@.lst
 
