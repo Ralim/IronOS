@@ -383,6 +383,11 @@ static bool shouldBeSleeping() {
 	if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
 		return true;
 	}
+#ifdef HALL_SENSOR
+//If the hall effect sensor is enabled in the build, check if its over threshold, and if so then we force sleep
+
+
+#endif
 	return false;
 }
 static void gui_solderingMode(uint8_t jumpToSleep) {

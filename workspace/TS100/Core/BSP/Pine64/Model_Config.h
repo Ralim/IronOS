@@ -20,7 +20,8 @@
 #define POW_QC
 #define TEMP_TMP36
 #define ACCEL_BMA
-
+#define HALL_SENSOR
+#define HALL_SI7210
 
 #define BATTFILTERDEPTH 32
 #endif

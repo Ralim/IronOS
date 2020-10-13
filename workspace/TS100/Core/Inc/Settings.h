@@ -54,7 +54,8 @@ typedef struct {
 	uint8_t ReverseButtonTempChangeEnabled; // Change the plus and minus button assigment
 	uint16_t TempChangeLongStep;   // Change the plus and minus button assigment
 	uint16_t TempChangeShortStep;  // Change the plus and minus button assigment
-
+	uint8_t hallEffectMode; //Operating mode of the hall effect sensor
+	int16_t hallEffectThreshold; //Threshold of the halleffect sensor
 	uint32_t padding;  // This is here for in case we are not an even divisor so
 					   // that nothing gets cut off
 					   //MUST BE LAST
