@@ -49,7 +49,7 @@ LDSCRIPT=stm32f103.ld
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD		
-DEV_LDFLAGS=
+DEV_LDFLAGS=-lm -Wl,--gc-sections 		
 DEV_AFLAGS= 
 DEV_CFLAGS= 
 DEV_CXXFLAGS= 
@@ -69,8 +69,8 @@ DEVICE_BSP_DIR = ./Core/BSP/Pine64
 S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S')
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
 LDSCRIPT=GD32VF103xB.ld
-DEV_LDFLAGS=-nostartfiles -Xlinker 
-DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -fabi-version=0
+DEV_LDFLAGS=-nostartfiles -Xlinker --gc-sections
+DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char  -fabi-version=0
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 flash_size=128k
@@ -162,18 +162,32 @@ endif
 
 
 # linker flags -----------------------------------------------------------------
-LINKER_FLAGS=-Wl,--gc-sections 		\
-            -Wl,--wrap=malloc \
-			-Wl,--wrap=free \
-			-o$(OUT_HEXFILE).elf 	\
-			-Wl,-Map=$(OUT_HEXFILE).map \
-			$(CPUFLAGS) \
-			-lm -Og -flto -Wl,--undefined=vTaskSwitchContext \
-			 -T$(LDSCRIPT) \
-			-Wl,--defsym=__FLASH_SIZE__=$(flash_size) \
-			-Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
-			--specs=nano.specs \
-			 $(DEV_LDFLAGS)
+LINKER_FLAGS=$(CPUFLAGS) \
+		$(GLOBAL_DEFINES) 	\
+		-D${COMPILER}  		\
+		-MMD 				\
+		-std=c++11			\
+		$(OPTIM) 			\
+		-fno-common			\
+		-ffreestanding		\
+		-fno-rtti 			\
+		-fno-exceptions 	\
+		-fno-non-call-exceptions \
+		-fno-use-cxa-atexit		\
+		-fno-strict-aliasing 		\
+		-fno-rtti 			\
+		-fno-exceptions		\
+		-fno-threadsafe-statics \
+		-Wl,--wrap=malloc \
+		-Wl,--wrap=free \
+		-Wl,-Map=$(OUT_HEXFILE).map \
+		-Wl,--undefined=vTaskSwitchContext \
+		-T $(LDSCRIPT) \
+		-Wl,--defsym=__FLASH_SIZE__=$(flash_size) \
+		-Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
+		--specs=nano.specs \
+		$(DEV_LDFLAGS) \
+		-o$(OUT_HEXFILE).elf 	\
 
 
 
@@ -286,8 +300,8 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)  Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@echo $(CPP) $(CXXFLAGS) $(LINKER_FLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) 
-	@$(CPP) $(CXXFLAGS) $(LINKER_FLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) 
+	@echo $(CPP) $(LINKER_FLAGS) 
+	@$(CPP) $(LINKER_FLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) 
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
