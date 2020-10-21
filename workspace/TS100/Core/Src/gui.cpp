@@ -50,6 +50,8 @@ static bool settings_setBoostTemp(void);
 static void settings_displayBoostTemp(void);
 static bool settings_setAutomaticStartMode(void);
 static void settings_displayAutomaticStartMode(void);
+static bool settings_setLockingMode(void);
+static void settings_displayLockingMode(void);
 static bool settings_setCoolingBlinkEnabled(void);
 static void settings_displayCoolingBlinkEnabled(void);
 static bool settings_setResetSettings(void);
@@ -88,6 +90,7 @@ static bool settings_enterAdvancedMenu(void);
  * 	Auto Start
  *  Temp change short step
  *  Temp change long step
+ *	Locking Mode
 
  *
  * Power Saving
@@ -156,6 +159,8 @@ const menuitem solderingMenu[] = {
 		settings_displayTempChangeShortStep }, /*Temp change short step*/
 { (const char*) SettingsDescriptions[23], settings_setTempChangeLongStep,
 		settings_displayTempChangeLongStep }, /*Temp change long step*/
+{ (const char*) SettingsDescriptions[26], settings_setLockingMode,
+		settings_displayLockingMode }, /*Locking Mode*/
 { NULL, NULL, NULL }                // end of menu marker. DO NOT REMOVE
 };
 const menuitem UIMenu[] = {
@@ -616,6 +621,31 @@ static void settings_displayAutomaticStartMode(void) {
 		break;
 	default:
 		OLED::print(SettingStartNoneChar);
+		break;
+	}
+}
+
+static bool settings_setLockingMode(void) {
+	systemSettings.lockingMode++;
+	systemSettings.lockingMode %= 3;
+	return systemSettings.lockingMode == 2;
+}
+
+static void settings_displayLockingMode(void) {
+	printShortDescription(26, 7);
+
+	switch (systemSettings.lockingMode) {
+	case 0:
+		OLED::print(SettingLockDisableChar);
+		break;
+	case 1:
+		OLED::print(SettingLockBoostChar);
+		break;
+	case 2:
+		OLED::print(SettingLockFullChar);
+		break;
+	default:
+		OLED::print(SettingLockDisableChar);
 		break;
 	}
 }

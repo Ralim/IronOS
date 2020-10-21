@@ -42,7 +42,7 @@ ButtonState getButtonState() {
 			else if (currentState == 0x02)
 				return BUTTON_B_LONG;
 			else
-				return BUTTON_NONE; // Both being held case, we dont long hold this
+				return BUTTON_BOTH_LONG; // Both being held case
 		} else
 			return BUTTON_NONE;
 	} else {

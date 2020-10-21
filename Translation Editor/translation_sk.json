@@ -23,7 +23,10 @@
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:",
-		"SettingsResetMessage": "Nast. Obnovené!"
+		"SettingsResetMessage": "Nast. Obnovené!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -34,7 +37,10 @@
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "K",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "N"
+		"SettingStartNoneChar": "N",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -248,6 +254,13 @@
 				"hrotu"
 			],
 			"desc": "Úprava zisku hrotu"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }
