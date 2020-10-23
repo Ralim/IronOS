@@ -3,30 +3,30 @@
 	"languageLocalName": "Nederlands",
 	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
-		"SettingsCalibrationWarning": "Zorg ervoor dat de soldeerpunt op kamertemperatuur is voor je verdergaat!",
-		"SettingsResetWarning": "Ben je zeker dat je alle instellingen naar de standaardwaardes wilt terugzetten?",
-		"UVLOWarningString": "DC LAAG",
+		"SettingsCalibrationDone": "Calibratie klaar!",
+		"SettingsCalibrationWarning": "Zorg ervoor dat te punt op kamertemperatuur is voor je verder gaat!",
+		"SettingsResetWarning": "Weet je zeker dat je de fabrieksinstellingen terug wil zetten?",
+		"UVLOWarningString": "DC Laag",
 		"UndervoltageString": "Onderspanning",
 		"InputVoltageString": "Input V: ",
-		"WarningTipTempString": "Tip Temp: ",
-		"BadTipString": "DEFECT",
-		"SleepingSimpleString": "Zzz ",
+		"WarningTipTempString": "Punt temp: ",
+		"BadTipString": "DEFECTE PUNT",
+		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Slaapstand...",
-		"WarningSimpleString": "HEET",
-		"WarningAdvancedString": "!!! TIP HEET !!!",
-		"SleepingTipAdvancedString": "Tip:",
-		"IdleTipString": "Tip:",
-		"IdleSetString": " Set:",
-		"TipDisconnectedString": "TIP LOSGEKOPPELD",
-		"SolderingAdvancedPowerPrompt": "vermogen: ",
-		"OffString": "Off",
+		"WarningSimpleString": "HEET!",
+		"WarningAdvancedString": "!!! PUNT HOT !!!",
+		"SleepingTipAdvancedString": "Punt:",
+		"IdleTipString": "Punt:",
+		"IdleSetString": " Zet:",
+		"TipDisconnectedString": "PUNT LOSGEKOPPELT",
+		"SolderingAdvancedPowerPrompt": "Vermogen: ",
+		"OffString": "Uit",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"YourGainMessage": "Niveau:",
+		"SettingsResetMessage": "Instellingen zijn\ngereset!",
+		"LockingKeysString": " GEBLOKKEERD",
+		"UnlockingKeysString": "GEDEBLOKKEERD",
+		"WarningKeysLockedString": "!GEBLOKKEERD!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -38,9 +38,9 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
-		"SettingLockDisableChar": "D",
+		"SettingLockDisableChar": "U",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingLockFullChar": "V"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -48,54 +48,54 @@
 				"Soldeer",
 				"Instellingen"
 			],
-			"desc": "Soldeerinstellingen"
+			"desc": "Soldeer instellingen"
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Slaap",
 				"Modes"
 			],
-			"desc": "Batterijbesparingsinstellingen"
+			"desc": "Stroom besparings instellingen"
 		},
 		"UIMenu": {
 			"text2": [
 				"Gebruikers-",
-				"Interface"
+				"interface"
 			],
-			"desc": "Gebruikersinterface Instellingen"
+			"desc": "Gebruikers-interface instellingen"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"geavanceerde",
+				"Geavanceerde",
 				"Instellingen"
 			],
-			"desc": "geavanceerde Instellingen"
+			"desc": "Geavanceerde Instellingen"
 		}
 	},
 	"menuOptions": {
 		"PowerSource": {
-			"text2": [
+						"text2": [
 				"Spannings-",
 				"bron"
 			],
 			"desc": "Spanningsbron. Stelt drempelspanning in. <DC 10V> <S 3.3V per cel>"
 		},
 		"SleepTemperature": {
-			"text2": [
+						"text2": [
 				"Slaap",
 				"temp"
 			],
-			"desc": "Temperatuur in slaapstand <C>"
+			"desc": "Temperatuur in slaapstand"
 		},
 		"SleepTimeout": {
-			"text2": [
+						"text2": [
 				"Slaap",
 				"time-out"
 			],
-			"desc": "Slaapstand time-out <Minuten/Seconden>"
+			"desc": "Slaap time-out <Minuten/Seconden>"
 		},
 		"ShutdownTimeout": {
-			"text2": [
+						"text2": [
 				"Uitschakel",
 				"time-out"
 			],
@@ -106,7 +106,7 @@
 				"Bewegings-",
 				"gevoeligheid"
 			],
-			"desc": "Bewegingsgevoeligheid <0.uit 1.minst gevoelig 9.meest gevoelig>"
+			"desc": "Bewegingsgevoeligheid <0=uit 1=minst gevoelig 9=meest gevoelig>"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -118,30 +118,30 @@
 		"AdvancedIdle": {
 			"text2": [
 				"Gedetailleerd",
-				"slaapscherm"
+				"startscherm"
 			],
-			"desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het slaapscherm."
+			"desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het startscherm."
 		},
 		"DisplayRotation": {
 			"text2": [
 				"Scherm-",
 				"oriëntatie"
 			],
-			"desc": "Schermoriëntatie <A. Automatisch L. Linkshandig R. Rechtshandig>"
+			"desc": "Schermoriëntatie <A=Automatisch L=Linkshandig R=Rechtshandig>"
 		},
 		"BoostTemperature": {
 			"text2": [
 				"Boost",
 				"temp"
 			],
-			"desc": "Temperatuur in boostmodes"
+			"desc": "Temperatuur in boostmode"
 		},
 		"AutoStart": {
 			"text2": [
 				"Auto",
 				"start"
 			],
-			"desc": "Breng de soldeerbout direct op temperatuur bij het opstarten. T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit"
+			"desc": "Breng de soldeerbout direct op temperatuur bij het opstarten. <T=Soldeertemperatuur, S=Slaapstand-temperatuur, F=Uit>"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -169,7 +169,7 @@
 				"Calibreer",
 				"input-voltage?"
 			],
-			"desc": "VIN Calibreren. Knoppen lang ingedrukt houden om te bevestigen."
+			"desc": "VIN Calibreren. <druk lang om te sluiten>."
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -187,80 +187,80 @@
 		},
 		"TipModel": {
 			"text2": [
-				"Tip",
+				"Punt",
 				"Model"
 			],
-			"desc": "Tip Model selection"
+			"desc": "Punt Model selecteren"
 		},
 		"SimpleCalibrationMode": {
 			"text2": [
-				"Simple",
-				"Calibration"
+				"Simpele",
+				"Calibratie"
 			],
-			"desc": "Simple Calibration using Hot water"
+			"desc": "Simpele Calibratie met warm water"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
-				"Advanced",
-				"Calibration"
+				"Geavanceerde",
+				"Calibratie"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Geavanceerde calibratie met een thermokoppel op de punt"
 		},
 		"PowerInput": {
 			"text2": [
 				"Power",
 				"Wattage"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Wattage van de gebruikte voeding"
 		},
 		"PowerLimit": {
-			"text2": [
-				"Power",
-				"Limit"
+						"text2": [
+				"Vermogen",
+				"limiet"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Maximaal vermogen <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text2": [
-				"Key +-",
-				"reverse?"
+						"text2": [
+				"Draai",
+				"+ - knoppen om"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Keer de +- knoppen om de termperatuur van de punt te regelen om."
 		},
 		"TempChangeShortStep": {
-			"text2": [
-				"Temp change",
-				"short?"
+						"text2": [
+				"Temp veranderen",
+				"kort"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Temperatuur verandering bij kort drukken"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Temp change",
-				"long?"
+				"Temp veranderen",
+				"lang"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Temperatuur verandering bij lang drukken"
 		},
-		"PowerPulsePower": {
-			"text2": [
-				"Power",
-				"Pulse W"
+		"PowerPulsePower":{
+						"text2": [
+				"Vermogen",
+				"Puls W"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Vermogen van puls om soldeerbout aan te houden"
 		},
 		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
+						"text2": [
+				"Verander",
+				"punt gain"
 			],
-			"desc": "Tip gain"
+			"desc": "Punt gain"
 		},
 		"LockingMode": {
-			"text2": [
-				"Allow buttons",
-				"locking"
+						"text2": [
+				"Blokkeer",
+				"knoppen"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Tijdens solderen lang op beide knoppen drukken, blokkeert ze. <U=Uit, B=Alleen boost, V=Volledig blokkeren>"
 		}
 	}
 }
