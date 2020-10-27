@@ -31,3 +31,7 @@ int16_t getRawHallEffect() {
 	return 0;
 
 }
+
+bool getHallSensorFitted() {
+	return hall_effect_present;
+}

@@ -63,6 +63,7 @@ uint8_t showBootLogoIfavailable();
 void delay_ms(uint16_t count) ;
 //Used to allow knowledge of if usb_pd is being used
 uint8_t usb_pd_detect();
+bool getHallSensorFitted();
 // If the iron has a hall effect sensor in the handle, return an signed count of the reading
 // If the sensor is single polarity (or polarity insensitive) just return 0..32768
 int16_t getRawHallEffect();
