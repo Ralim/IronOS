@@ -34,7 +34,7 @@ public:
 	static bool Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size);
 	//Returns true if device ACK's being addressed
 	static bool probe(uint16_t DevAddress);
-
+	static bool wakePart(uint16_t DevAddress);
 	static bool Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
 	static void Receive(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
 	static void TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx, uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx);

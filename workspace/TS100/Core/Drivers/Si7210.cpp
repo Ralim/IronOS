@@ -10,8 +10,8 @@
 #include "I2C_Wrapper.hpp"
 bool Si7210::detect() {
 	uint8_t temp;
-	return FRToSI2C::Mem_Read(SI7210_ADDRESS, SI7210_REG_ID, &temp, 1);
-	//Cant use normal probe as reg 0x00 is not used
+	return FRToSI2C::wakePart(SI7210_ADDRESS);
+
 }
 
 bool Si7210::init() {

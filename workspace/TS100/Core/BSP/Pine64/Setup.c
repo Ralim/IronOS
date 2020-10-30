@@ -115,7 +115,7 @@ void setup_i2c() {
 	/* enable I2C0 clock */
 	rcu_periph_clock_enable(RCU_I2C0);
 	//Setup I20 at 400kHz
-	i2c_clock_config(I2C0, 400 * 1000, I2C_DTCY_2);
+	i2c_clock_config(I2C0, 400 * 1000, I2C_DTCY_16_9);
 	i2c_mode_addr_config(I2C0, I2C_I2CMODE_ENABLE, I2C_ADDFORMAT_7BITS, 0x00);
 	i2c_enable(I2C0);
 	/* enable acknowledge */
