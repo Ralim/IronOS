@@ -14,15 +14,16 @@
 bool hall_effect_present = false;
 void postRToSInit() {
 	// Any after RTos setup
-#ifdef POW_PD
-	//Spawn all of the USB-C processors
-	fusb302_start_processing();
-#endif
 #ifdef HALL_SI7210
 	if (Si7210::detect()) {
 		hall_effect_present = Si7210::init();
 	}
 #endif
+#ifdef POW_PD
+	//Spawn all of the USB-C processors
+	fusb302_start_processing();
+#endif
+
 }
 int16_t getRawHallEffect() {
 	if (hall_effect_present) {

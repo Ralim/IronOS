@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include "n200_func.h"
 #include "riscv_encoding.h"
 
 /*-----------------------------------------------------------

@@ -386,7 +386,6 @@ static bool shouldBeSleeping() {
 #ifdef HALL_SENSOR
 //If the hall effect sensor is enabled in the build, check if its over threshold, and if so then we force sleep
 
-
 #endif
 	return false;
 }
@@ -620,9 +619,7 @@ uint8_t idleScreenBGF[sizeof(idleScreenBG)];
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
 	OLED::initialize();  // start up the LCD
-//	for (;;) {
-//		osDelay(2000);
-//	}
+
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
@@ -654,6 +651,14 @@ void startGUITask(void const *argument __unused) {
 		OLED::setFont(1);
 		OLED::setCursor(0, 0);
 		OLED::print(SettingsResetMessage);
+		OLED::refresh();
+		waitForButtonPressOrTimeout(10000);
+	}
+	if (getHallSensorFitted()) {
+		OLED::clearScreen();
+		OLED::setFont(1);
+		OLED::setCursor(0, 0);
+		OLED::printNumber(5000, 4, 0);
 		OLED::refresh();
 		waitForButtonPressOrTimeout(10000);
 	}

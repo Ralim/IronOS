@@ -3,7 +3,7 @@
 #ifndef N200_FUNC_H
 #define N200_FUNC_H
 
-
+#include <stdio.h>
 #include <stddef.h>
 #include "n200_timer.h"
 #include "n200_eclic.h"

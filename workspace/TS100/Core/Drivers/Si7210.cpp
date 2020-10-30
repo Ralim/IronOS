@@ -9,7 +9,9 @@
 #include "Si7210_defines.h"
 #include "I2C_Wrapper.hpp"
 bool Si7210::detect() {
-	return FRToSI2C::probe(SI7210_ADDRESS);
+	uint8_t temp;
+	return FRToSI2C::Mem_Read(SI7210_ADDRESS, SI7210_REG_ID, &temp, 1);
+	//Cant use normal probe as reg 0x00 is not used
 }
 
 bool Si7210::init() {
@@ -30,6 +32,6 @@ bool Si7210::init() {
 int16_t Si7210::read() {
 	//Read the two regs
 	int16_t temp = 0;
-	FRToSI2C::Mem_Read(SI7210_ADDRESS, SI7210_REG_DATAH,(uint8_t*) &temp, 2);
+	FRToSI2C::Mem_Read(SI7210_ADDRESS, SI7210_REG_DATAH, (uint8_t*) &temp, 2);
 	return __builtin_bswap16(temp);
 }
