@@ -51,6 +51,9 @@ extern const char *SettingStartSolderingChar;
 extern const char *SettingStartSleepChar;
 extern const char *SettingStartSleepOffChar;
 extern const char *SettingStartNoneChar;
+extern const char* SettingSensitivityLow;
+extern const char* SettingSensitivityMedium;
+extern const char* SettingSensitivityHigh;
 
 extern const char *SettingFastChar;
 extern const char *SettingSlowChar;
@@ -62,7 +65,7 @@ extern const char *SymbolSpace;
 extern const char *SymbolDot;
 extern const char *SymbolDegC;
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-	extern const char *SymbolDegF;
+extern const char *SymbolDegF;
 #endif
 extern const char *SymbolMinutes;
 extern const char *SymbolSeconds;
