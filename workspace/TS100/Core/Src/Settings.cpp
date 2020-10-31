@@ -67,7 +67,7 @@ void resetSettings() {
 	systemSettings.autoStartMode = AUTO_START_MODE; // Auto start off for safety
 	systemSettings.coolingTempBlink = COOLING_TEMP_BLINK; // Blink the temperature on the cooling screen when its > 50C
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-	systemSettings.temperatureInF = TEMPERATURE_INF;          // default to 0
+			systemSettings.temperatureInF = TEMPERATURE_INF;          // default to 0
 #endif
 	systemSettings.descriptionScrollSpeed = DESCRIPTION_SCROLL_SPEED; // default to slow
 	systemSettings.CalibrationOffset = CALIBRATION_OFFSET; // the adc offset in uV
@@ -77,5 +77,22 @@ void resetSettings() {
 	systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP; //
 	systemSettings.KeepAwakePulse = POWER_PULSE_DEFAULT;
 	systemSettings.TipGain = TIP_GAIN;
+	systemSettings.hallEffectSensitivity=1;
 	saveSettings();  // Save defaults
+}
+
+uint16_t lookupHallEffectThreshold() {
+	// Return the threshold above which the hall effect sensor is "activated"
+	switch (systemSettings.hallEffectSensitivity) {
+	case 0:
+		return 0;
+	case 1:  //Low
+		return 1000;
+	case 2:  //Medium
+		return 500;
+	case 3:  //High
+		return 100;
+	default:
+		return 0;  //Off
+	}
 }
