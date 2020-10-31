@@ -34,7 +34,10 @@
 		"SettingStartSolderingChar": "A",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "D"
+		"SettingStartNoneChar": "D",
+		"SettingSensitivityLow":"L",
+		"SettingSensitivityMedium":"M",
+		"SettingSensitivityHigh":"H"
 	},
 	"menuGroups": {
 		"SolderingMenu": {

@@ -34,7 +34,10 @@
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",
-		"SettingStartNoneChar": "В"
+		"SettingStartNoneChar": "В",
+		"SettingSensitivityLow":"L",
+		"SettingSensitivityMedium":"M",
+		"SettingSensitivityHigh":"H"
 	},
 	"menuGroups": {
 		"SolderingMenu": {

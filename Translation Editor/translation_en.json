@@ -35,7 +35,10 @@
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F"
+		"SettingStartNoneChar": "F",
+		"SettingSensitivityLow":"L",
+		"SettingSensitivityMedium":"M",
+		"SettingSensitivityHigh":"H"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -249,6 +252,13 @@
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"HallEffSensitivity": {
+						"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting the stand"
 		}
 	}
 }

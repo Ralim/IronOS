@@ -132,6 +132,18 @@ var def =
 		{
 			"id": "SettingStartNoneChar",
 			"len": 1
+		},
+		{
+			"id": "SettingSensitivityLow",
+			"len": 1
+		},
+		{
+			"id": "SettingSensitivityMedium",
+			"len": 1
+		},
+		{
+			"id": "SettingSensitivityHigh",
+			"len": 1
 		}
 	],
 	"menuGroups": [
@@ -280,6 +292,11 @@ var def =
 		},
 		{
 			"id": "TipGain",
+			"maxLen": 6,
+			"maxLen2": 8
+		},
+		{
+			"id": "HallEffSensitivity",
 			"maxLen": 6,
 			"maxLen2": 8
 		}
