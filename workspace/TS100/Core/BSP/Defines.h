@@ -15,5 +15,7 @@ enum Orientation {
 
 //It is assumed that all hardware implements an 8Hz update period at this time
 #define PID_TIM_HZ (8)
-
+#define TICKS_SECOND configTICK_RATE_HZ
+#define TICKS_MIN (60*TICKS_SECOND)
+#define TICKS_100MS (TICKS_SECOND/10)
 #endif /* BSP_DEFINES_H_ */
