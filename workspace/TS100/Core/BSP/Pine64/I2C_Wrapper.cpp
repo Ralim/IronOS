@@ -293,9 +293,9 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
 					return false;
 				}
 			}
+			timeout = 0;
 			if (timeout < I2C_TIME_OUT) {
 				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-				timeout = 0;
 				state = I2C_TRANSMIT_DATA;
 			} else {
 				//Dont retry as this means a NAK
@@ -416,106 +416,106 @@ bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *register
 bool FRToSI2C::wakePart(uint16_t DevAddress) {
 	//wakepart is a special case  where only the device address is sent
 	if (!lock())
-			return false;
+		return false;
 
-		i2c_interrupt_disable(I2C0, I2C_INT_ERR);
-		i2c_interrupt_disable(I2C0, I2C_INT_EV);
-		i2c_interrupt_disable(I2C0, I2C_INT_BUF);
-		dma_parameter_struct dma_init_struct;
+	i2c_interrupt_disable(I2C0, I2C_INT_ERR);
+	i2c_interrupt_disable(I2C0, I2C_INT_EV);
+	i2c_interrupt_disable(I2C0, I2C_INT_BUF);
+	dma_parameter_struct dma_init_struct;
 
-		uint8_t state = I2C_START;
-		uint16_t timeout = 0;
-		bool done = false;
-		bool timedout = false;
-		while (!(done || timedout)) {
-			switch (state) {
-			case I2C_START:
-				/* i2c master sends start signal only when the bus is idle */
-				while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY) && (timeout < I2C_TIME_OUT )) {
-					timeout++;
-				}
-				if (timeout < I2C_TIME_OUT) {
-					i2c_start_on_bus(I2C0);
-					timeout = 0;
-					state = I2C_SEND_ADDRESS;
-				} else {
-					I2C_Unstick();
-					timeout = 0;
-					state = I2C_START;
-				}
-				break;
-			case I2C_SEND_ADDRESS:
-				/* i2c master sends START signal successfully */
-				while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) && (timeout < I2C_TIME_OUT )) {
-					timeout++;
-				}
-				if (timeout < I2C_TIME_OUT) {
-					i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
-					timeout = 0;
-					state = I2C_CLEAR_ADDRESS_FLAG;
-				} else {
-					timedout = true;
-					done = true;
-					timeout = 0;
-					state = I2C_START;
-				}
-				break;
-			case I2C_CLEAR_ADDRESS_FLAG:
-				/* address flag set means i2c slave sends ACK */
-				while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) && (timeout < I2C_TIME_OUT )) {
-					timeout++;
-					if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
-						i2c_flag_clear(I2C0, I2C_FLAG_AERR);
-						i2c_stop_on_bus(I2C0);
-						/* i2c master sends STOP signal successfully */
-						while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
-							timeout++;
-						}
-						//Address NACK'd
-						unlock();
-						return false;
-					}
-				}
-				if (timeout < I2C_TIME_OUT) {
-					i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-					timeout = 0;
-					state = I2C_STOP;
-				} else {
-					//Dont retry as this means a NAK
+	uint8_t state = I2C_START;
+	uint16_t timeout = 0;
+	bool done = false;
+	bool timedout = false;
+	while (!(done || timedout)) {
+		switch (state) {
+		case I2C_START:
+			/* i2c master sends start signal only when the bus is idle */
+			while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY) && (timeout < I2C_TIME_OUT )) {
+				timeout++;
+			}
+			if (timeout < I2C_TIME_OUT) {
+				i2c_start_on_bus(I2C0);
+				timeout = 0;
+				state = I2C_SEND_ADDRESS;
+			} else {
+				I2C_Unstick();
+				timeout = 0;
+				state = I2C_START;
+			}
+			break;
+		case I2C_SEND_ADDRESS:
+			/* i2c master sends START signal successfully */
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) && (timeout < I2C_TIME_OUT )) {
+				timeout++;
+			}
+			if (timeout < I2C_TIME_OUT) {
+				i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
+				timeout = 0;
+				state = I2C_CLEAR_ADDRESS_FLAG;
+			} else {
+				timedout = true;
+				done = true;
+				timeout = 0;
+				state = I2C_START;
+			}
+			break;
+		case I2C_CLEAR_ADDRESS_FLAG:
+			/* address flag set means i2c slave sends ACK */
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) && (timeout < I2C_TIME_OUT )) {
+				timeout++;
+				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
+					i2c_flag_clear(I2C0, I2C_FLAG_AERR);
 					i2c_stop_on_bus(I2C0);
 					/* i2c master sends STOP signal successfully */
 					while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
 						timeout++;
 					}
+					//Address NACK'd
 					unlock();
 					return false;
 				}
-				break;
-
-			case I2C_STOP:
-				/* send a stop condition to I2C bus */
+			}
+			if (timeout < I2C_TIME_OUT) {
+				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+				timeout = 0;
+				state = I2C_STOP;
+			} else {
+				//Dont retry as this means a NAK
 				i2c_stop_on_bus(I2C0);
 				/* i2c master sends STOP signal successfully */
 				while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
 					timeout++;
 				}
-				if (timeout < I2C_TIME_OUT) {
-					timeout = 0;
-					state = I2C_END;
-					done = true;
-				} else {
-					timedout = true;
-					done = true;
-					timeout = 0;
-					state = I2C_START;
-				}
-				break;
-			default:
-				state = I2C_START;
-				timeout = 0;
-				break;
+				unlock();
+				return false;
 			}
+			break;
+
+		case I2C_STOP:
+			/* send a stop condition to I2C bus */
+			i2c_stop_on_bus(I2C0);
+			/* i2c master sends STOP signal successfully */
+			while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
+				timeout++;
+			}
+			if (timeout < I2C_TIME_OUT) {
+				timeout = 0;
+				state = I2C_END;
+				done = true;
+			} else {
+				timedout = true;
+				done = true;
+				timeout = 0;
+				state = I2C_START;
+			}
+			break;
+		default:
+			state = I2C_START;
+			timeout = 0;
+			break;
 		}
-		unlock();
-		return timedout == false;
+	}
+	unlock();
+	return timedout == false;
 }
