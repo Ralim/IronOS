@@ -156,7 +156,7 @@ const menuitem solderingMenu[] = {
 { (const char *) SettingsDescriptions[9], settings_setAutomaticStartMode, settings_displayAutomaticStartMode }, /*Auto start*/
 { (const char *) SettingsDescriptions[22], settings_setTempChangeShortStep, settings_displayTempChangeShortStep }, /*Temp change short step*/
 { (const char *) SettingsDescriptions[23], settings_setTempChangeLongStep, settings_displayTempChangeLongStep }, /*Temp change long step*/
-{ (const char *) SettingsDescriptions[26], settings_setLockingMode, settings_displayLockingMode }, /*Locking Mode*/
+{ (const char *) SettingsDescriptions[27], settings_setLockingMode, settings_displayLockingMode }, /*Locking Mode*/
 { NULL, NULL, NULL }																								// end of menu marker. DO NOT REMOVE
 };
 const menuitem UIMenu[] = {
@@ -626,7 +626,7 @@ static bool settings_setLockingMode(void) {
 }
 
 static void settings_displayLockingMode(void) {
-	printShortDescription(26, 7);
+	printShortDescription(27, 7);
 
 	switch (systemSettings.lockingMode) {
 	case 0:
