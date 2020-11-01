@@ -273,7 +273,7 @@ void setup_timers() {
     timer_ocintpara.ocidlestate = TIMER_OC_IDLE_STATE_LOW;
     timer_ocintpara.ocnidlestate = TIMER_OCN_IDLE_STATE_LOW;
     timer_channel_output_config(TIMER2, TIMER_CH_0, &timer_ocintpara);
-    timer_channel_output_pulse_value_config(TIMER2, TIMER_CH_0, 50);
+    timer_channel_output_pulse_value_config(TIMER2, TIMER_CH_0, 0);
     timer_channel_output_mode_config(TIMER2, TIMER_CH_0, TIMER_OC_MODE_PWM0);
     timer_channel_output_shadow_config(TIMER2, TIMER_CH_0,
                                        TIMER_OC_SHADOW_DISABLE);
