@@ -213,10 +213,10 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Power",
-				"wattage"
+				"QC",
+				"Voltage"
 			],
-			"desc": "Power wattage of the power adapter used"
+			"desc": "Desired max QC Voltage negotiated for"
 		},
 		"PowerLimit": {
 			"text2": [
