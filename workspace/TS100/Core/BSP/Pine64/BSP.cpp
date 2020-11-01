@@ -19,7 +19,7 @@ uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
 // 2 second filter (ADC is PID_TIM_HZ Hz)
 history<uint16_t, PID_TIM_HZ> rawTempFilter = {{0}, 0, 0};
 void resetWatchdog() {
-  // TODO
+ fwdgt_counter_reload();
 }
 
 uint16_t getTipInstantTemperature() {
