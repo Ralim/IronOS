@@ -68,6 +68,8 @@ bool getHallSensorFitted();
 // If the sensor is single polarity (or polarity insensitive) just return 0..32768
 int16_t getRawHallEffect();
 
+//Returns true if power is from dumb "DC" input rather than "smart" QC or PD
+bool getIsPoweredByDCIN();
 
 #ifdef __cplusplus
 }

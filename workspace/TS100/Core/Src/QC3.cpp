@@ -52,8 +52,14 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 		return;
 	if (xTaskGetTickCount() < 1000)
 		return;
-	if (Vx10 > 130)
-		Vx10 = 130;  // Cap max value at 13V
+#ifdef POW_QC_20V
+	if (Vx10 > 200)
+		Vx10 = 200;  // Cap max value at 20V
+#else
+				if (Vx10 > 130)
+				Vx10 =130;  // Cap max value at 13V
+
+#endif
 	// Seek the QC to the Voltage given if this adapter supports continuous mode
 	// try and step towards the wanted value
 
@@ -80,25 +86,25 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 		osDelay(100);
 	}
 #ifdef ENABLE_QC2
-    // Re-measure
-    /* Disabled due to nothing to test and code space of around 1k*/
-    steps = vStart - getInputVoltageX10(divisor, 1);
-    if (steps < 0) steps = -steps;
-    if (steps > 4) {
-        // No continuous mode, so QC2
-        QCMode = 2;
-        // Goto nearest
-        if (Vx10 > 110) {
-            // request 12V
-            // D- = 0.6V, D+ = 0.6V
-            // Clamp PB3
-            QC_Seek12V();
-
-        } else {
-            // request 9V
-            QC_Seek9V();
-        }
-    }
+	// Re-measure
+	/* Disabled due to nothing to test and code space of around 1k*/
+	steps = vStart - getInputVoltageX10(divisor, 1);
+	if (steps < 0) steps = -steps;
+	if (steps > 4) {
+		// No continuous mode, so QC2
+		QCMode = 2;
+		// Goto nearest
+		if (Vx10 > 190) {
+			// request 20V
+			QC_Seek20V();
+		} else if (Vx10 > 110) {
+			// request 12V
+			QC_Seek12V();
+		} else {
+			// request 9V
+			QC_Seek9V();
+		}
+	}
 #endif
 }
 // Must be called after FreeRToS Starts
@@ -106,8 +112,8 @@ void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
 	uint16_t vin = getInputVoltageX10(divisor, 1);
-	if (vin > 100) {
-		QCMode = 1;  // Already at 12V, user has probably over-ridden this
+	if (vin > 80) {
+		QCMode = 0;	//If over 8V something else has already negotiated
 		return;
 	}
 	if (QCTries > 10) {
@@ -160,4 +166,8 @@ void startQC(uint16_t divisor) {
 		QCMode = 0;
 	}
 
+}
+
+bool hasQCNegotiated() {
+	return QCMode > 0;
 }

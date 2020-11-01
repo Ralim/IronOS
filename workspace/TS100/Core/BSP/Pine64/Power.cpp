@@ -34,3 +34,16 @@ uint8_t usb_pd_detect() {
 	return false;
 }
 
+bool getIsPoweredByDCIN() {
+	//We return false until we are sure we are not using PD
+	if (PolicyEngine::setupCompleteOrTimedOut() == false) {
+		return false;
+	}
+	if (PolicyEngine::pdHasNegotiated()) {
+		return false;	// We are using PD
+	}
+	if (hasQCNegotiated()) {
+		return false; // We are using QC
+	}
+	return true;
+}

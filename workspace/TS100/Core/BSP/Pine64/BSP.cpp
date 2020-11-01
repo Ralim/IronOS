@@ -119,7 +119,7 @@ uint8_t getButtonB() {
 }
 
 void reboot() {
-	// TODO
+	//Spin for watchdog
 	for (;;) {
 	}
 }
@@ -127,3 +127,4 @@ void reboot() {
 void delay_ms(uint16_t count) {
 	delay_1ms(count);
 }
+
