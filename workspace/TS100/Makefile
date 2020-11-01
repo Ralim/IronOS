@@ -7,11 +7,6 @@ ifndef lang
 lang:= EN
 endif
 
-
-
-# Discover the source files to build
-
-
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
 INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
@@ -48,16 +43,17 @@ S_SRCS := ./Startup/startup_stm32f103t8ux.S
 LDSCRIPT=stm32f103.ld
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD		
-DEV_LDFLAGS=-lm -Wl,--gc-sections 		
-DEV_AFLAGS= 
-DEV_CFLAGS= 
-DEV_CXXFLAGS= 
+		-D STM32F10X_MD 
+DEV_LDFLAGS=-lm -Wl,--gc-sections -flto
+DEV_AFLAGS=-flto
+DEV_CFLAGS=-flto
+DEV_CXXFLAGS=-flto
 flash_size=64k
 bootldr_size=0x4000
 endif
 
 ifeq ($(model),Pinecil)
+$(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_INC_DIR)/N200 \
 	-I$(PINE_VENDOR_INC_DIR) \
@@ -103,7 +99,7 @@ OUTPUT_DIR=Objects
 
 # code optimisation ------------------------------------------------------------
 OPTIM_AS= -Wall 
-OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
+OPTIM=-Os  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 
 # global defines ---------------------------------------------------------------
@@ -134,7 +130,6 @@ endif
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
 AS=$(COMPILER_PREFIX)-as
-GCOV=$(COMPILER_PREFIX)-gcov
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
@@ -168,8 +163,8 @@ LINKER_FLAGS=$(CPUFLAGS) \
 		-MMD 				\
 		-std=c++11			\
 		$(OPTIM) 			\
+		-ffreestanding      \
 		-fno-common			\
-		-ffreestanding		\
 		-fno-rtti 			\
 		-fno-exceptions 	\
 		-fno-non-call-exceptions \
@@ -230,8 +225,8 @@ CXXFLAGS=$(CPUFLAGS) \
 		$(CHECKOPTIONS)		\
 		-std=c++11			\
 		$(OPTIM) 			\
+		-ffreestanding      \
 		-fno-common			\
-		-ffreestanding		\
 		-fno-rtti 			\
 		-fno-exceptions 	\
 		-fno-non-call-exceptions \
@@ -248,11 +243,11 @@ CFLAGS=$(CPUFLAGS)          \
 		$(GLOBAL_DEFINES) 	\
 		-D${COMPILER}  		\
 		-MMD 				\
+		-ffreestanding      \
 		-std=gnu99			\
 		$(OPTIM) 			\
 		$(DEV_CFLAGS)       \
 		-fno-common			\
-		-ffreestanding		\
 		-c 
 		
 		
