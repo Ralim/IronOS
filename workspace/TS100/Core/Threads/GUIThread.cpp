@@ -88,15 +88,18 @@ void gui_drawTipTemp(bool symbol) {
 	}
 }
 
-#ifdef MODEL_TS100
+#ifdef POW_DC
 // returns true if undervoltage has occured
 static bool checkVoltageForExit() {
+	if (!getIsPoweredByDCIN()) {
+		return false;
+	}
 	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv, 0);
 
-	// Dont check for first 1.5 seconds while the ADC stabilizes and the DMA fills the buffer
-	if (xTaskGetTickCount() > 150) {
-		if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
-			GUIDelay();
+	// Dont check for first 2 seconds while the ADC stabilizes and the DMA fills the buffer
+	if (xTaskGetTickCount() > (TICKS_SECOND * 2)) {
+		if ((v < lookupVoltageLevel())) {
+			currentTempTargetDegC = 0;
 			OLED::clearScreen();
 			OLED::setCursor(0, 0);
 			if (systemSettings.detailedSoldering) {
@@ -106,14 +109,13 @@ static bool checkVoltageForExit() {
 				OLED::print(InputVoltageString);
 				printVoltage();
 				OLED::print(SymbolVolts);
-
 			} else {
 				OLED::setFont(0);
 				OLED::print(UVLOWarningString);
 			}
 
 			OLED::refresh();
-			currentTempTargetDegC = 0;
+			GUIDelay();
 			waitForButtonPress();
 			return true;
 		}
@@ -466,7 +468,8 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				if (systemSettings.BoostTemp && (systemSettings.lockingMode == 1)) {
 					boostModeOn = true;
 					break;
-				};
+				}
+				;
 				// fall through
 			case BUTTON_BOTH:
 			case BUTTON_B_LONG:
@@ -485,44 +488,44 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			}
 		} else { // Button not locked
 			switch (buttons) {
-				case BUTTON_NONE:
+			case BUTTON_NONE:
 				// stay
 				boostModeOn = false;
 				break;
-				case BUTTON_BOTH:
+			case BUTTON_BOTH:
 				// exit
 				return;
 				break;
-				case BUTTON_B_LONG:
+			case BUTTON_B_LONG:
 				return;  // exit on back long hold
 				break;
-				case BUTTON_F_LONG:
+			case BUTTON_F_LONG:
 				// if boost mode is enabled turn it on
 				if (systemSettings.BoostTemp)
-				boostModeOn = true;
+					boostModeOn = true;
 				break;
-				case BUTTON_F_SHORT:
-				case BUTTON_B_SHORT: {
-					uint16_t oldTemp = systemSettings.SolderingTemp;
-					gui_solderingTempAdjust();  // goto adjust temp mode
-					if (oldTemp != systemSettings.SolderingTemp) {
-						saveSettings();  // only save on change
-					}
+			case BUTTON_F_SHORT:
+			case BUTTON_B_SHORT: {
+				uint16_t oldTemp = systemSettings.SolderingTemp;
+				gui_solderingTempAdjust();  // goto adjust temp mode
+				if (oldTemp != systemSettings.SolderingTemp) {
+					saveSettings();  // only save on change
+				}
+			}
+				break;
+			case BUTTON_BOTH_LONG:
+				if (systemSettings.lockingMode != 0) {
+					// Lock buttons
+					buttonsLocked = true;
+					OLED::setCursor(0, 0);
+					OLED::clearScreen();
+					OLED::setFont(0);
+					OLED::print(LockingKeysString);
+					OLED::refresh();
+					waitForButtonPressOrTimeout(1000);
 				}
 				break;
-				case BUTTON_BOTH_LONG:
-					if (systemSettings.lockingMode != 0) {
-						// Lock buttons
-						buttonsLocked = true;
-						OLED::setCursor(0, 0);
-						OLED::clearScreen();
-						OLED::setFont(0);
-						OLED::print(LockingKeysString);
-						OLED::refresh();
-						waitForButtonPressOrTimeout(1000);
-					}
-					break;
-				default:
+			default:
 				break;
 			}
 		}
@@ -607,7 +610,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			}
 		}
 
-#ifdef MODEL_TS100
+#ifdef POW_DC
 		// Undervoltage test
 		if (checkVoltageForExit()) {
 			lastButtonTime = xTaskGetTickCount();
