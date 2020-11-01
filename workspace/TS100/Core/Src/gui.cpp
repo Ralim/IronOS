@@ -68,9 +68,10 @@ static void settings_displayTempChangeLongStep(void);
 static bool settings_setTempChangeLongStep(void);
 static void settings_displayPowerPulse(void);
 static bool settings_setPowerPulse(void);
+#ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
-
+#endif
 // Menu functions
 static void settings_displaySolderingMenu(void);
 static bool settings_enterSolderingMenu(void);
@@ -828,7 +829,7 @@ static void settings_displayPowerPulse(void) {
 	}
 
 }
-
+#ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
 	printShortDescription(26, 7);
 	switch (systemSettings.hallEffectSensitivity) {
@@ -852,10 +853,9 @@ static bool settings_setHallEffect(void) {
 	// Off, Low, Medium, High
 	systemSettings.hallEffectSensitivity++;
 	systemSettings.hallEffectSensitivity %= 4;
-
 	return systemSettings.hallEffectSensitivity == 3;
-
 }
+#endif
 static void displayMenu(size_t index) {
 // Call into the menu
 	OLED::setFont(1);

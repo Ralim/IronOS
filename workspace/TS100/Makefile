@@ -70,7 +70,7 @@ S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S')
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
 LDSCRIPT=GD32VF103xB.ld
 DEV_LDFLAGS=-nostartfiles -Xlinker --gc-sections
-DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fsigned-char  -fabi-version=0
+DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fabi-version=0 
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 flash_size=128k
@@ -173,10 +173,7 @@ LINKER_FLAGS=$(CPUFLAGS) \
 		-fno-rtti 			\
 		-fno-exceptions 	\
 		-fno-non-call-exceptions \
-		-fno-use-cxa-atexit		\
 		-fno-strict-aliasing 		\
-		-fno-rtti 			\
-		-fno-exceptions		\
 		-fno-threadsafe-statics \
 		-Wl,--wrap=malloc \
 		-Wl,--wrap=free \
@@ -240,8 +237,6 @@ CXXFLAGS=$(CPUFLAGS) \
 		-fno-non-call-exceptions \
 		-fno-use-cxa-atexit		\
 		-fno-strict-aliasing 		\
-		-fno-rtti 			\
-		-fno-exceptions		\
 		-fno-threadsafe-statics \
 		$(DEV_CXXFLAGS)
 

@@ -629,7 +629,7 @@ uint16_t adc_inserted_data_read(uint32_t adc_periph, uint8_t inserted_channel)
         idata = 0U;
         break;
     }
-    return (uint16_t)idata;
+    return (uint16_t)idata& 0xFFFF;
 }
 
 /*!
