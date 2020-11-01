@@ -42,11 +42,11 @@ bool restoreSettings() {
  * 3=5S
  * 4=6S
  */
-uint8_t lookupVoltageLevel(uint8_t level) {
-	if (level == 0)
+uint8_t lookupVoltageLevel() {
+	if (systemSettings.minDCVoltageCells == 0)
 		return 90;  // 9V since iron does not function effectively below this
 	else
-		return (level * 33) + (33 * 2);
+		return (systemSettings.minDCVoltageCells * 33) + (33 * 2);
 }
 void resetSettings() {
 	memset((void*) &systemSettings, 0, sizeof(systemSettingsType));
@@ -54,9 +54,9 @@ void resetSettings() {
 	systemSettings.SleepTime = SLEEP_TIME; // How many seconds/minutes we wait until going
 	// to sleep - default 1 min
 	systemSettings.SolderingTemp = SOLDERING_TEMP; // Default soldering temp is 320.0 C
-	systemSettings.cutoutSetting = CUT_OUT_SETTING; // default to no cut-off voltage (or 18W for TS80)
-	systemSettings.version =
-	SETTINGSVERSION;  // Store the version number to allow for easier upgrades
+	systemSettings.minDCVoltageCells = CUT_OUT_SETTING; // default to no cut-off voltage
+	systemSettings.QCIdealVoltage = 0; // Default to 9V for QC3.0 Voltage
+	systemSettings.version = SETTINGSVERSION;  // Store the version number to allow for easier upgrades
 	systemSettings.detailedSoldering = DETAILED_SOLDERING; // Detailed soldering screen
 	systemSettings.detailedIDLE = DETAILED_IDLE; // Detailed idle screen (off for first time users)
 	systemSettings.OrientationMode = ORIENTATION_MODE;  // Default to automatic
@@ -78,7 +78,7 @@ void resetSettings() {
 	systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP; //
 	systemSettings.KeepAwakePulse = POWER_PULSE_DEFAULT;
 	systemSettings.TipGain = TIP_GAIN;
-	systemSettings.hallEffectSensitivity=1;
+	systemSettings.hallEffectSensitivity = 1;
 	saveSettings();  // Save defaults
 }
 

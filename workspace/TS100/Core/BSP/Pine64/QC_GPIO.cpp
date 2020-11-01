@@ -53,6 +53,13 @@ uint8_t QC_DM_PulledDown() {
 #endif
 void QC_resync() {
 #ifdef POW_QC
-	seekQC((systemSettings.cutoutSetting) ? 120 : 90, systemSettings.voltageDiv);  // Run the QC seek again if we have drifted too much
+	uint8_t targetvoltage = 90;
+	if (systemSettings.QCIdealVoltage == 1) {
+		targetvoltage = 120;
+	} else if (systemSettings.QCIdealVoltage == 2) {
+		targetvoltage = 200;
+	}
+
+	seekQC(targetvoltage, systemSettings.voltageDiv);  // Run the QC seek again if we have drifted too much
 #endif
 }

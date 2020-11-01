@@ -18,6 +18,8 @@
 #ifdef MODEL_Pinecil
 #define POW_PD
 #define POW_QC
+#define POW_DC
+#define POW_QC_20V
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define HALL_SENSOR

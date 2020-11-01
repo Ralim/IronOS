@@ -18,6 +18,7 @@
 #endif
 
 #ifdef MODEL_TS100
+#define POW_DC
 #define ACCEL_MMA
 #define ACCEL_LIS
 #define TEMP_TMP36

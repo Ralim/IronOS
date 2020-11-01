@@ -87,7 +87,7 @@
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE 0      // 0: Disable 1: Enable - Default 0
 
-#define CUT_OUT_SETTING 0          // default to no cut-off voltage (or 18W for TS80)
+#define CUT_OUT_SETTING 0          // default to no cut-off voltage
 #define TEMPERATURE_INF 0          // default to 0
 #define DESCRIPTION_SCROLL_SPEED 0 // 0: Slow 1: Fast - default to slow
 

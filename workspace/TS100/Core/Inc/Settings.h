@@ -19,35 +19,35 @@
  * This struct must be a multiple of 2 bytes as it is saved / restored from
  * flash in uint16_t chunks
  */
-typedef struct
-{
+typedef struct {
 	uint8_t version; // Used to track if a reset is needed on firmware upgrade
 
-	uint16_t SolderingTemp;		 // current set point for the iron
-	uint16_t SleepTemp;			 // temp to drop to in sleep
-	uint8_t SleepTime;			 // minutes timeout to sleep
-	uint8_t cutoutSetting;		 // The voltage we cut out at for under voltage OR Power level for TS80
-	uint8_t OrientationMode : 2; // If true we want to invert the display for lefties
-	uint8_t sensitivity : 4;	 // Sensitivity of accelerometer (5 bits)
-	uint8_t autoStartMode : 2;	 // Should the unit automatically jump straight
-								 // into soldering mode when power is applied
-	uint8_t ShutdownTime;		 // Time until unit shuts down if left alone
+	uint16_t SolderingTemp;		  // current set point for the iron
+	uint16_t SleepTemp;			  // temp to drop to in sleep
+	uint8_t SleepTime;			  // minutes timeout to sleep
+	uint8_t minDCVoltageCells;	  // The voltage we cut out at for under voltage when powered by DC jack
+	uint8_t QCIdealVoltage; 	  // Desired QC3.0 voltage (9,12,20V)
+	uint8_t OrientationMode :2;   // Selects between Auto,Right and left handed layouts
+	uint8_t sensitivity :4;	      // Sensitivity of accelerometer (5 bits)
+	uint8_t autoStartMode :2;	  // Should the unit automatically jump straight
+								  // into soldering mode when power is applied
+	uint8_t ShutdownTime;		  // Time until unit shuts down if left alone
 
-	uint8_t coolingTempBlink : 1;  // Should the temperature blink on the cool
-								   // down screen until its <50C
-	uint8_t detailedIDLE : 1;	   // Detailed idle screen
-	uint8_t detailedSoldering : 1; // Detailed soldering screens
+	uint8_t coolingTempBlink :1;  // Should the temperature blink on the cool
+								  // down screen until its <50C
+	uint8_t detailedIDLE :1;	  // Detailed idle screen
+	uint8_t detailedSoldering :1; // Detailed soldering screens
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-	uint8_t temperatureInF : 1; // Should the temp be in F or C (true is F)
+	uint8_t temperatureInF : 1;   // Should the temp be in F or C (true is F)
 #endif
-	uint8_t descriptionScrollSpeed : 1; // Description scroll speed
-	uint8_t lockingMode : 2;			// Store the locking mode
-	uint8_t KeepAwakePulse;				// Keep Awake pulse power in 0.1 watts (10 = 1Watt)
+	uint8_t descriptionScrollSpeed :1; // Description scroll speed
+	uint8_t lockingMode :2;	      // Store the locking mode
+	uint8_t KeepAwakePulse;		  // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
 
-	uint16_t voltageDiv;		// Voltage divisor factor
-	uint16_t BoostTemp;			// Boost mode set point for the iron
-	uint16_t CalibrationOffset; // This stores the temperature offset for this tip
-								// in the iron.
+	uint16_t voltageDiv;		  // Voltage divisor factor
+	uint16_t BoostTemp;			  // Boost mode set point for the iron
+	uint16_t CalibrationOffset;   // This stores the temperature offset for this tip
+								  // in the iron.
 
 	uint8_t powerLimit; // Maximum power iron allowed to output
 
@@ -68,7 +68,7 @@ extern volatile systemSettingsType systemSettings;
 
 void saveSettings();
 bool restoreSettings();
-uint8_t lookupVoltageLevel(uint8_t level);
+uint8_t lookupVoltageLevel();
 uint16_t lookupHallEffectThreshold();
 void resetSettings();
 
