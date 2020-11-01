@@ -304,7 +304,7 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 			return 0;
 		}
 
-#ifdef POW_PD
+#ifdef POW_DC
 		if (checkVoltageForExit())
 			return 1; // return non-zero on error
 #endif
