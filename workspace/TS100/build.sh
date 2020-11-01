@@ -10,7 +10,7 @@ AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil")
 BUILD_MODELS=()
 
 usage() {
-    echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80|TS80P>] [-h]
+    echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80|TS80P|Pinecil>] [-h]
 
 Parameters :
     -l LANG_CODE : Force a specific language (E.g. : EN, FR, NL_BE, ...)
@@ -132,7 +132,9 @@ if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
             make -j lang="$lang" model="$model" >/dev/null
             checkLastCommand
             echo "Cleanup Temp files for $model in $lang"
-            rm -rf Objects/Core/ >/dev/null
+            rm -rf Objects/Core/Threads >/dev/null
+            checkLastCommand
+            rm -rf Objects/Core/Src >/dev/null
             checkLastCommand
         done
         echo "Cleanup model change"
