@@ -199,7 +199,7 @@ var def =
 	],
 	"menuOptions": [
 		{
-			"id": "PowerSource",
+			"id": "DCInCutoff",
 			"maxLen": 5,
 			"maxLen2": 11
 		},
@@ -294,7 +294,7 @@ var def =
 			"maxLen2": 16
 		},
 		{
-			"id": "PowerInput",
+			"id": "QCMaxVoltage",
 			"maxLen": 8,
 			"maxLen2": 16
 		},

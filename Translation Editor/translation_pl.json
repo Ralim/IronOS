@@ -78,7 +78,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Źródło",
 				"zasilania"
@@ -211,7 +211,7 @@
 			],
 			"desc": "Zaawansowana kalibracja za pomocą termoelementu na grocie"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Moc",
 				"w W"

@@ -78,7 +78,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Spannungs-",
 				"quelle"
@@ -211,7 +211,7 @@
 			],
 			"desc": "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Leistungs-",
 				"Aufnahme"

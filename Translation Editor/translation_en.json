@@ -78,7 +78,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Power",
 				"source"
@@ -211,7 +211,7 @@
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Power",
 				"wattage"

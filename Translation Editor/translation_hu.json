@@ -77,7 +77,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Áram",
 				"forrás"
@@ -210,7 +210,7 @@
 			],
 			"desc": "Haladó kalibrálás hegyre helyezett hőelem segítségével"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Bemeneti",
 				"teljesítmény"

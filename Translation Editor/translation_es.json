@@ -77,7 +77,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Fuente",
 				"de energía"
@@ -210,7 +210,7 @@
 			],
 			"desc": "Calibrar con un termopar en la punta; más difícil."
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Potencia de",
 				"entrada"
