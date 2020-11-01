@@ -34,3 +34,17 @@ uint8_t usb_pd_detect() {
 	return false;
 }
 
+bool getIsPoweredByDCIN() {
+#ifdef MODEL_TS80
+	return false;
+#endif
+
+#ifdef MODEL_TS80P
+	return false;
+#endif
+
+#ifdef MODEL_TS100
+	return true;
+#endif
+}
+

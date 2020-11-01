@@ -126,42 +126,45 @@ static bool checkVoltageForExit() {
 #endif
 static void gui_drawBatteryIcon() {
 #if defined(POW_PD) || defined(POW_QC)
-
-	// On TS80 we replace this symbol with the voltage we are operating on
-	// If <9V then show single digit, if not show duals
-	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
-	if (V % 10 >= 5)
-		V = V / 10 + 1; // round up
-	else
-		V = V / 10;
-	if (V >= 10) {
-		int16_t xPos = OLED::getCursorX();
-		OLED::setFont(1);
-		OLED::printNumber(V / 10, 1);
-		OLED::setCursor(xPos, 8);
-		OLED::printNumber(V % 10, 1);
-		OLED::setFont(0);
-		OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
-	} else {
-		OLED::printNumber(V, 1);
+	if (!getIsPoweredByDCIN()) {
+		// On TS80 we replace this symbol with the voltage we are operating on
+		// If <9V then show single digit, if not show dual small ones vertically stacked
+		uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
+		if (V % 10 >= 5)
+			V = V / 10 + 1; // round up
+		else
+			V = V / 10;
+		if (V >= 10) {
+			int16_t xPos = OLED::getCursorX();
+			OLED::setFont(1);
+			OLED::printNumber(V / 10, 1);
+			OLED::setCursor(xPos, 8);
+			OLED::printNumber(V % 10, 1);
+			OLED::setFont(0);
+			OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
+		} else {
+			OLED::printNumber(V, 1);
+		}
+		return;
 	}
-#else
-	if (systemSettings.cutoutSetting) {
+#endif
+#ifdef POW_DC
+	if (systemSettings.minDCVoltageCells) {
 		// User is on a lithium battery
 		// we need to calculate which of the 10 levels they are on
-		uint8_t cellCount = systemSettings.cutoutSetting + 2;
-		uint32_t cellV =
-		getInputVoltageX10(systemSettings.voltageDiv, 0) / cellCount;
+		uint8_t cellCount = systemSettings.minDCVoltageCells + 2;
+		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0) / cellCount;
 		// Should give us approx cell voltage X10
-		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
+		// Range is 42 -> 33 = 9 steps therefore we will use battery 0-9
 		if (cellV < 33)
-		cellV = 33;
-		cellV -= 33;// Should leave us a number of 0-9
+			cellV = 33;
+		cellV -= 33;		// Should leave us a number of 0-9
 		if (cellV > 9)
-		cellV = 9;
+			cellV = 9;
 		OLED::drawBattery(cellV + 1);
-	} else
-	OLED::drawSymbol(15); // Draw the DC Logo
+	} else {
+		OLED::drawSymbol(15); // Draw the DC Logo
+	}
 #endif
 }
 static void gui_solderingTempAdjust() {
@@ -410,6 +413,7 @@ static bool shouldBeSleeping() {
 			return true;
 		}
 	}
+
 #ifdef HALL_SENSOR
 	// If the hall effect sensor is enabled in the build, check if its over
 	// threshold, and if so then we force sleep

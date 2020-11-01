@@ -50,7 +50,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 
 	if (Vx10 < 45)
 		return;
-	if (xTaskGetTickCount() < 1000)
+	if (xTaskGetTickCount() < TICKS_SECOND)
 		return;
 #ifdef POW_QC_20V
 	if (Vx10 > 200)
@@ -89,7 +89,8 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 	// Re-measure
 	/* Disabled due to nothing to test and code space of around 1k*/
 	steps = vStart - getInputVoltageX10(divisor, 1);
-	if (steps < 0) steps = -steps;
+	if (steps < 0)
+		steps = -steps;
 	if (steps > 4) {
 		// No continuous mode, so QC2
 		QCMode = 2;
@@ -111,11 +112,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
-	uint16_t vin = getInputVoltageX10(divisor, 1);
-	if (vin > 80) {
-		QCMode = 0;	//If over 8V something else has already negotiated
-		return;
-	}
+	QCMode=0;
 	if (QCTries > 10) {
 		return;
 	}
