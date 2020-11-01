@@ -23,7 +23,10 @@
 		"OffString": "Вимк",
 		"ResetOKMessage": "Скидання OK",
 		"YourGainMessage": "Приріст:",
-		"SettingsResetMessage": "Налаштування скинуті!"
+		"SettingsResetMessage": "Налаштування скинуті!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "П",
@@ -35,10 +38,13 @@
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",
 		"SettingStartNoneChar": "В",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -72,193 +78,200 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Джерело",
 				"живлення"
 			],
 			"desc": "Встановлення напруги відключення. <DC - 10V, 3S - 9.9V, 4S - 13.2V, 5S - 16.5V, 6S - 19.8V>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Темпер.",
 				"сну"
 			],
 			"desc": "Температура режиму очікування <C°/F°>"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Тайм-аут",
 				"сну"
 			],
 			"desc": "Час до переходу в режим очікування <Хвилини/Секунди>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Часу до",
 				"вимкнення"
 			],
 			"desc": "Час до відключення <Хвилини>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Чутл. сенсо-",
 				"ру руху"
 			],
 			"desc": "Акселерометр <0 - Вимк. 1 - мін. чутливості 9 - макс. чутливості>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Формат темпе-",
 				"ратури(C°/F°)"
 			],
 			"desc": "Одиниця виміру температури <C - Цельсій, F - Фаренгейт>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Детальний ре-",
 				"жим очікуван."
 			],
 			"desc": "Показувати детальну інформацію маленьким шрифтом на домашньому екрані"
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Автоповорот",
 				"екрану"
 			],
 			"desc": "Орієнтація дисплея <A - Автоповорот, Л - Лівша, П - Правша>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Темпер.",
 				"Турбо"
 			],
 			"desc": "Температура в Турбо-режимі"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Гарячий",
 				"старт"
 			],
 			"desc": "Режим з яким запускається паяльник при подачі живлення <П=Пайка, О=Очікування, К=Очікування при кімн. темп., В=Вимк.>"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Показ t° при",
 				"охолодж."
 			],
 			"desc": "Показувати температуру на екрані охолодження, поки жало залишається гарячим, при цьому екран моргає"
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Калібровка",
 				"температури"
 			],
 			"desc": "Калібрування температурного датчика."
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Скинути всі",
 				"налаштування?"
 			],
 			"desc": "Скидання всіх параметрів до стандартних значень."
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Калібрування",
 				"напруги"
 			],
 			"desc": "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити."
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Детальний ре-",
 				"жим пайки"
 			],
 			"desc": "Показувати детальну інформацію при пайці."
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Швидкість",
 				"тексту"
 			],
 			"desc": "Швидкість прокрутки тексту <П=повільно, Ш=швидко>"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Модель",
 				"Жало"
 			],
 			"desc": "Вибір моделі жала"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Просте",
 				"Калібрування"
 			],
 			"desc": "Просте калібрування з використанням гарячої води"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Детальне",
 				"Калібрування"
 			],
 			"desc": "Калібрування за допомогою термопари"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Потужність",
 				"дж. живл."
 			],
 			"desc": "Потужність джерела живлення в Ватах"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Макс.",
 				"потуж."
 			],
 			"desc": "Макс. потужність, яку може використовувати паяльник <Ват>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Інвертувати",
 				"кнопки +-?"
 			],
 			"desc": "Інвертувати кнопки зміни температури."
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Зм. темп.",
 				"коротко?"
 			],
 			"desc": "Змінювати температуру при короткому натисканні!"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Зм. темп.",
 				"довго?"
 			],
 			"desc": "Змінювати температуру при довгому натисканні!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Пульс.",
 				"Навантаж."
 			],
 			"desc": "Деякі PowerBank-и з часом вимк. живлення, якщо пристрій споживає дуже мало енергії (це потрібно щоб паяльник не вимкнувся з часом)"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

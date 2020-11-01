@@ -23,7 +23,10 @@
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:",
-		"SettingsResetMessage": "Nast. Obnovené!"
+		"SettingsResetMessage": "Nast. Obnovené!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -35,10 +38,13 @@
 		"SettingStartSleepChar": "K",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "N",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -254,11 +260,18 @@
 			"desc": "Úprava zisku hrotu"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

@@ -23,7 +23,10 @@
 		"OffString": "Изкл.",
 		"ResetOKMessage": "Нулиране завършено",
 		"YourGainMessage": "Усилване:",
-		"SettingsResetMessage": "Настройките бяха\nнулирани!"
+		"SettingsResetMessage": "Настройките бяха\nнулирани!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -35,10 +38,13 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -72,193 +78,200 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Източник",
 				"захранване"
 			],
 			"desc": "Източник на захранване. Минимално напрежение. <DC 10V> <S 3.3V за клетка>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Темп.",
 				"сън"
 			],
 			"desc": "Температура при режим \"сън\" <C>"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Време",
 				"сън"
 			],
 			"desc": "Включване в режим \"сън\" след: <Минути/Секунди>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Време",
 				"изкл."
 			],
 			"desc": "Изключване след <Минути>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Усещане",
 				"за движение"
 			],
 			"desc": "Усещане за движение <0.Изключено 1.Слабо 9.Силно>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Единици за",
 				"температура"
 			],
 			"desc": "Единици за температура <C=Целзии F=Фаренхайт>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Детайлен",
 				"екран в покой"
 			],
 			"desc": "Покажи детайлна информация със ситен шрифт на екрана в режим на покой."
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Ориентация",
 				"на дисплея"
 			],
 			"desc": "Ориентация на дисплея <A. Автоматично L. Лява Ръка R. Дясна Ръка>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Турбо",
 				"темп."
 			],
 			"desc": "Температура за \"турбо\" режим"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Автоматичен",
 				"работен режим"
 			],
 			"desc": "Режим на поялника при включване на захранването. T=Работен, S=Сън, F=Изключен"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Мигай при",
 				"топъл поялник"
 			],
 			"desc": "След изключване от работен режим, индикатора за температура да мига докато човката на поялника все още е топла"
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Калибриране",
 				"температура?"
 			],
 			"desc": "Калибриране на температурата"
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Фабрични",
 				"настройки?"
 			],
 			"desc": "Връщане на фабрични настройки"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Калибриране",
 				"напрежение?"
 			],
 			"desc": "Калибриране на входното напрежение. Задръжте бутонa за изход"
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Детайлен",
 				"работен екран"
 			],
 			"desc": "Детайлна информация в работен режим при запояване"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Скорост",
 				"на текста"
 			],
 			"desc": "Скорост на движение на този текст"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Модел",
 				"на връх"
 			],
 			"desc": "Избор на модел на връх"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Бърза",
 				"калибрация"
 			],
 			"desc": "Бърза калибрация с използване на гореща вода"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Прецизна",
 				"калибрация"
 			],
 			"desc": "Прецизна калибрация с използване на термо-двойка на върха на поялника"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Мощност на",
 				"захранване"
 			],
 			"desc": "Мощност на избраното захранване"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Лимит на",
 				"мощност"
 			],
 			"desc": "Максимална мощност на поялника <W>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Размяна",
 				"бутони +-?"
 			],
 			"desc": "Обръщане на бутоните \"+\" и \"-\" за промяна на температурата на върха на поялника"
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Промяна T",
 				"бързо?"
 			],
 			"desc": "Промяна на температура при бързо натискане на бутон!"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Промяна Т",
 				"задържане?"
 			],
 			"desc": "Промяна на температура при задържане на бутон!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Захранващ",
 				"импулс"
 			],
 			"desc": "Поддържане на интензивност на захранващия импулс"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Промяна",
 				"сила връх"
 			],
 			"desc": "Усилване на върха на поялника"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

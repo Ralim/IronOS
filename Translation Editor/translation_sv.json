@@ -21,7 +21,12 @@
 		"TipDisconnectedString": "SPETS URTAGEN",
 		"SolderingAdvancedPowerPrompt": "Ström: ",
 		"OffString": "Av",
-		"ResetOKMessage": "Reset OK"
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Your gain:",
+		"SettingsResetMessage": "Settings were\nreset!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "H",
@@ -33,10 +38,13 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -70,193 +78,200 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Ström-",
 				"källa"
 			],
 			"desc": "Strömkälla. Anger lägsta spänning. <DC 10V> <S 3.3V per cell>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Vilo-",
 				"temp"
 			],
 			"desc": "Vilotemperatur <C>"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Vilo-",
 				"timeout"
 			],
 			"desc": "Vilo-timeout <Minuter/Seconder>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Avstängn.",
 				"timeout"
 			],
 			"desc": "Avstängnings-timeout <Minuter>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Rörelse-",
 				"känslighet"
 			],
 			"desc": "Rörelsekänslighet <0.Av 1.minst känslig 9.mest känslig>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Temperatur-",
 				"enheter"
 			],
 			"desc": "Temperaturenhet <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Detaljerad",
 				"vid inaktiv"
 			],
 			"desc": "Visa detaljerad information i mindre typsnitt när inaktiv."
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Visnings",
 				"läge"
 			],
 			"desc": "Visningsläge <A. Automatisk V. Vänsterhänt H. Högerhänt>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Turbo-",
 				"temp"
 			],
 			"desc": "Temperatur i \"turbo\"-läge"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Auto",
 				"start"
 			],
 			"desc": "Startar automatiskt lödpennan vid uppstart. T=Lödning, S=Viloläge, F=Av"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Nedkylnings-",
 				"blink"
 			],
 			"desc": "Blinka temperaturen medan spetsen kyls av och fortfarande är varm."
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibrera",
 				"temperatur?"
 			],
 			"desc": "Kalibrera spets-kompensation."
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Fabriks-",
 				"inställ?"
 			],
 			"desc": "Återställ alla inställningar"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibrera",
 				"inspänning?"
 			],
 			"desc": "Inspänningskalibrering. Knapparna justerar, håll inne för avslut"
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Detaljerad",
 				"lödng.skärm"
 			],
 			"desc": "Visa detaljerad information vid lödning"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Beskrivning",
 				"rullhast."
 			],
 			"desc": "Hastighet som den här texten rullar i"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Tip",
 				"Model"
 			],
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Simple",
 				"Calibration"
 			],
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Advanced",
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

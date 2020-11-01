@@ -21,7 +21,12 @@
 		"TipDisconnectedString": "VRH NIJE SPOJEN!",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset OK"
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Your gain:",
+		"SettingsResetMessage": "Settings were\nreset!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -33,10 +38,13 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -70,193 +78,200 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Izvor",
 				"napajanja"
 			],
 			"desc": "Izvor napajanja. Postavlja napon isključivanja. <DC 10V> <S 3.3V po ćeliji>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Temp",
 				"spavanja"
 			],
 			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. <C/F>"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Vrijeme",
 				"spavanja"
 			],
 			"desc": "Vrijeme mirovanja nakon kojega lemilica spušta temperaturu. <Minute/Sekunde>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Vrijeme",
 				"gašenja"
 			],
 			"desc": "Vrijeme mirovanja nakon kojega će se lemilica ugasiti. <Minute>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Osjetljivost",
 				"pokreta"
 			],
 			"desc": "Osjetljivost prepoznavanja pokreta. <0=Ugašeno, 1=Najmanje osjetljivo, 9=Najosjetljivije>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Jedinica",
 				"temperature"
 			],
 			"desc": "Jedinica temperature. <C=Celzij, F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Detalji",
 				"pri čekanju"
 			],
 			"desc": "Prikazivanje detaljnih informacija tijekom čekanja."
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Rotacija",
 				"ekrana"
 			],
 			"desc": "Orijentacija ekrana. <A=Automatski, L=Ljevoruki, D=Desnoruki>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Boost",
 				"temp"
 			],
 			"desc": "Temperatura u pojačanom (Boost) načinu."
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Auto",
 				"start"
 			],
 			"desc": "Ako je aktivno, lemilica po uključivanju napajanja odmah počinje grijati."
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Upozorenje",
 				"pri hlađenju"
 			],
 			"desc": "Bljeskanje temperature prilikom hlađenja, ako je lemilica vruća."
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibracija",
 				"temperature"
 			],
 			"desc": "Kalibriranje temperature mjeri razliku temperatura vrška i drške, dok je lemilica hladna."
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Tvorničke",
 				"postavke"
 			],
 			"desc": "Vraćanje svih postavki na tvorničke vrijednosti."
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibracija",
 				"napona napajanja"
 			],
 			"desc": "Kalibracija ulaznog napona. Podešavanje gumbima, dugački pritisak za kraj."
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Detalji",
 				"pri lemljenju"
 			],
 			"desc": "Prikazivanje detaljnih informacija tijekom lemljenja."
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Brzina",
 				"poruka"
 			],
 			"desc": "Brzina kretanja dugačkih poruka. <B=brzo, S=sporo>"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Model",
 				"Vrha"
 			],
 			"desc": "Odabir modela lemnog vrha"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Jednostavna",
 				"kalibracija"
 			],
 			"desc": "Kalibracija kipućom vodom"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Napredna",
 				"kalibracija"
 			],
 			"desc": "Kalibracija korištenjem termo-elementa"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Snaga",
 				"napajanja"
 			],
 			"desc": "Snaga modula za napajanje"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

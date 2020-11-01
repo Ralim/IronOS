@@ -94,6 +94,21 @@ var def =
 			"id": "SettingsResetMessage",
 			"maxLen": 16,
 			"default": "Settings were\nreset!"
+		},
+		{
+			"id": "LockingKeysString",
+			"maxLen": 8,
+			"default": "LOCKING"
+		},
+		{
+			"id": "UnlockingKeysString",
+			"maxLen": 8,
+			"default": "UNLOCK"
+		},
+		{
+			"id": "WarningKeysLockedString",
+			"maxLen": 8,
+			"default": "LOCKED!"
 		}
 	],
 	"characters": [
@@ -148,6 +163,20 @@ var def =
 		{
 			"id": "SettingSensitivityHigh",
 			"len": 1
+		}, {
+			"id": "SettingLockDisableChar",
+			"len": 1,
+			"default": "D"
+		},
+		{
+			"id": "SettingLockBoostChar",
+			"len": 1,
+			"default": "B"
+		},
+		{
+			"id": "SettingLockFullChar",
+			"len": 1,
+			"default": "F"
 		}
 	],
 	"menuGroups": [
@@ -303,6 +332,10 @@ var def =
 			"id": "HallEffSensitivity",
 			"maxLen": 6,
 			"maxLen2": 8
+		}, {
+			"id": "LockingMode",
+			"maxLen": 6,
+			"maxLen2": 13
 		}
 	]
 }

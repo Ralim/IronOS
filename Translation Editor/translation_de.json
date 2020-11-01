@@ -24,7 +24,10 @@
 		"OffString": "Aus",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your Gain:",
-		"SettingsResetMessage": "Einstellungen\nzurück gesetzt!"
+		"SettingsResetMessage": "Einstellungen\nzurück gesetzt!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -36,10 +39,13 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -73,194 +79,200 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Spannungs-",
 				"quelle"
 			],
 			"desc": "Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Ruhetemp-",
 				"eratur"
 			],
 			"desc": "Ruhetemperatur"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Ruhever-",
 				"zögerung"
 			],
 			"desc": "Ruhemodus nach <Sekunden/Minuten>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Abschalt-",
 				"zeit"
 			],
 			"desc": "Abschalten nach <Minuten>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Bewegungs-",
 				"empfindlichk."
 			],
 			"desc": "Bewegungsempfindlichkeit <0=Aus, 1=Minimal ... 9=Maximal>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Temperatur-",
 				"einheit"
 			],
 			"desc": "Temperatureinheit <C=Celsius, F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Detaillierte",
 				"Ruheansicht"
 			],
 			"desc": "Detaillierte Anzeige im Ruhemodus"
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Anzeige-",
 				"ausrichtung"
 			],
 			"desc": "Ausrichtung der Anzeige <A=Automatisch, L=Linkshändig, R=Rechtshändig>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Boosttemp-",
 				"eratur"
 			],
 			"desc": "Temperatur im Boostmodus  (In der eingestellten Einheit)"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Start im",
 				"Lötmodus?"
 			],
 			"desc": "Automatischer Start-Modus beim Einschalten der Spannungsversorgung. <T=Lötmodus S=Ruhezustand F=Aus>"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Abkühl-",
 				"blinken?"
 			],
 			"desc": "Blinkende Temperaturanzeige beim Abkühlen, solange heiß ist."
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Temperatur",
 				"kalibrieren?"
 			],
 			"desc": "Kalibrierung der Lötspitzentemperatur"
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Einstellungen",
 				"zurücksetzen?"
 			],
 			"desc": "Einstellungen auf werkseinstellungen zurück setzen"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Eingangsspannung",
 				"kalibrieren?"
 			],
 			"desc": "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen."
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Detaillierte",
 				"Lötansicht"
 			],
 			"desc": "Detaillierte Anzeige im Lötmodus"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Scroll-",
 				"geschw."
 			],
 			"desc": "Scrollgeschwindigkeit der Texte <S=Langsam F=Schnell>"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Löt-",
 				"spitze"
 			],
 			"desc": "Auswahl der Lötspitze"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Einfache",
 				"Kalibrierung"
 			],
 			"desc": "Einfache Kalibrierung mittels heißem Wasser"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Erweiterte",
 				"Kalibrierung"
 			],
 			"desc": "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Leistungs-",
 				"Aufnahme"
 			],
 			"desc": "Leistungsaufnahme der verwendeten Spannungsversorgung"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Leistungs-",
 				"Limit"
 			],
 			"desc": "Maximale aufnahme der Lötspitze <Watt>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Taste +-",
 				"Umkehren?"
 			],
 			"desc": "Temperatur-Änderungs-Tasten-Belegung Plus-Minus umkehren?"
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"T. Schritt",
 				"Taste kurz?"
 			],
 			"desc": "Temperaturwechselschritte bei kurzem Tastendruck!"
-		}
-		,
+		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"T. Schritt",
 				"Taste Lang?"
 			],
 			"desc": "Temperaturwechselschritte bei langem Tastendruck!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

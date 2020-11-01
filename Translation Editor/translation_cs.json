@@ -23,7 +23,10 @@
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:",
-		"SettingsResetMessage": "Tov. nas. obnov."
+		"SettingsResetMessage": "Tov. nas. obnov.",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -35,10 +38,13 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -72,112 +78,112 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Zdroj",
 				"napájení"
 			],
 			"desc": "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo, LiIon...>."
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Teplota v",
 				"r. spánku"
 			],
 			"desc": "Teplota v režimu spánku."
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Čas do",
 				"r. spánku"
 			],
 			"desc": "Čas do režimu spánku <Minut/Sekund>."
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Čas do",
 				"vypnutí"
 			],
 			"desc": "Čas do automatického vypnutí <Minut>."
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Citlivost",
 				"det. pohybu"
 			],
 			"desc": "Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>."
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Jednotky",
 				"teploty"
 			],
 			"desc": "Jednotky měření teploty <C=Celsius, F=Fahrenheit>."
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Podrobnosti",
 				"na vých. obr."
 			],
 			"desc": "Zobrazit podrobnosti na výchozí obrazovce?"
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Orientace",
 				"obrazovky"
 			],
 			"desc": "Orientace obrazovky <A=Auto, L=Levák, P=Pravák>."
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Teplota v",
 				"r. boost"
 			],
 			"desc": "Teplota v režimu boost."
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Automatický",
 				"start"
 			],
 			"desc": "Při startu ihned nahřát hrot?"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Blikáni při",
 				"chladnutí"
 			],
 			"desc": "Blikání teploty při chladnutí, dokud je hrot horký?"
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibrovat",
 				"teplotu?"
 			],
 			"desc": "Kalibrace měření teploty."
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Tovární",
 				"nastavení?"
 			],
 			"desc": "Obnovení továrního nastavení."
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibrovat",
 				"vstupní napětí?"
 			],
 			"desc": "Kalibrace vstupního napětí. Tlačítky uprav, podržením potvrď."
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Podrobnosti",
 				"při pájení"
 			],
 			"desc": "Zobrazit podrobnosti při pájení?"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Rychlost",
 				"popisků"
 			],
@@ -254,11 +260,18 @@
 			"desc": "Zisk hrotu (měření)"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }

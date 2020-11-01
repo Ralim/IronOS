@@ -21,7 +21,12 @@
 		"TipDisconnectedString": "KÄRKI ON IRTI",
 		"SolderingAdvancedPowerPrompt": "Teho: ",
 		"OffString": "OFF",
-		"ResetOKMessage": "Reset OK"
+		"ResetOKMessage": "Reset OK",
+		"YourGainMessage": "Your gain:",
+		"SettingsResetMessage": "Settings were\nreset!",
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "O",
@@ -33,10 +38,13 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff":"O",
-		"SettingSensitivityLow":"L",
-		"SettingSensitivityMedium":"M",
-		"SettingSensitivityHigh":"H"
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -70,193 +78,200 @@
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text2": [
 				"Virtalähde",
 				"DC"
 			],
 			"desc": "Käytettävä virtalähde. Asettaa katkaisujänniteen. <DC 10V, 3S=9.9V, 4S=13.2V, 5S=16.5V, 6S=19.8V>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Lepotilan",
 				"lämpötila"
 			],
 			"desc": "Lepotilan lämpötila. <C>"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Lepotilan",
 				"viive"
 			],
 			"desc": "Lepotilan viive. <minuuttia/sekuntia>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Sammutus",
 				"viive"
 			],
 			"desc": "Automaattisen sammutuksen aikaviive. <minuuttia>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Liikkeen",
 				"herkkyys"
 			],
 			"desc": "Liikkeentunnistuksen herkkyys. <0=pois, 1=epäherkin, 9=herkin>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Lämpötilan",
 				"yksikkö"
 			],
 			"desc": "Lämpötilan yksikkö. <C=celsius, F=fahrenheit>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Tiedot",
 				"lepotilassa"
 			],
 			"desc": "Näyttää yksityiskohtaisemmat tiedot lepotilassa."
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Näytön",
 				"kierto"
 			],
 			"desc": "Näytön kierto. <A=automaattinen O=oikeakätinen V=vasenkätinen>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Tehostus-",
 				"lämpötila"
 			],
 			"desc": "Tehostustilan lämpötila"
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Autom.",
 				"käynnistys"
 			],
 			"desc": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. T=juotostila, S=Lepotila, F=Ei käytössä"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Jäähdytyksen",
 				"vilkutus"
 			],
 			"desc": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma."
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibroi",
 				"lämpötila?"
 			],
 			"desc": "Kalibroi kärjen lämpötilaeron."
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Palauta",
 				"tehdasasetukset?"
 			],
 			"desc": "Palauta kaikki asetukset oletusarvoihin."
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Kalibroi",
 				"tulojännite?"
 			],
 			"desc": "Tulojännitten kalibrointi (VIN). Painikkeilla säädetään ja pitkään painamalla poistutaan."
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Tarkempi",
 				"juotosnäyttö"
 			],
 			"desc": "Näyttää yksityiskohtaisemmat tiedot juotostilassa."
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Tietojen",
 				"näyttönopeus"
 			],
 			"desc": "Näiden selitetekstien vieritysnopeus."
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Tip",
 				"Model"
 			],
 			"desc": "Tip Model selection"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Simple",
 				"Calibration"
 			],
 			"desc": "Simple Calibration using Hot water"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Advanced",
 				"Calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
 		"PowerInput": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Wattage"
 			],
 			"desc": "Power Wattage of the power adapter used"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Power",
 				"Limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Key +-",
 				"reverse?"
 			],
 			"desc": "Reverse the tip temperature change buttons plus minus assignment."
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"short?"
 			],
 			"desc": "Temperature change steps on short button press!"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"long?"
 			],
 			"desc": "Temperature change steps on long button press!"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
-						"text2": [
+			"text2": [
 				"Hall Eff",
 				"Sensitivity"
 			],
 			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }
