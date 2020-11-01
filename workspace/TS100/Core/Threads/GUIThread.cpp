@@ -25,15 +25,15 @@ extern "C" {
 #include "I2CBB.hpp"
 // File local variables
 extern uint32_t currentTempTargetDegC;
-extern uint8_t accelInit;
-extern uint32_t lastMovementTime;
+extern TickType_t lastMovementTime;
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
-
+static bool shouldBeSleeping();
+static bool shouldShutdown();
 #define MOVEMENT_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
 #define BUTTON_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
-
+static TickType_t lastHallEffectSleepStart = 0;
 static uint16_t min(uint16_t a, uint16_t b) {
 	if (a > b)
 		return b;
@@ -272,19 +272,33 @@ static void gui_solderingTempAdjust() {
 		GUIDelay();
 	}
 }
-
+static bool shouldShutdown() {
+	if (systemSettings.ShutdownTime) { // only allow shutdown exit if time > 0
+		if (lastMovementTime) {
+			if (((TickType_t) (xTaskGetTickCount() - lastMovementTime)) > (TickType_t) (systemSettings.ShutdownTime * TICKS_MIN)) {
+				return true;
+			}
+		}
+		if (lastHallEffectSleepStart) {
+			if (((TickType_t) (xTaskGetTickCount() - lastHallEffectSleepStart)) > (TickType_t) (systemSettings.ShutdownTime * TICKS_MIN)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
 static int gui_SolderingSleepingMode(bool stayOff) {
 	// Drop to sleep temperature and display until movement or button press
 
 	for (;;) {
-		ButtonState buttons = getButtonState();
-		if (buttons)
+		// user moved or pressed a button, go back to soldering
+		if (!shouldBeSleeping()) {
 			return 0;
-		if ((xTaskGetTickCount() > 1000) && ((accelInit && (xTaskGetTickCount() - lastMovementTime < 1000)) || (xTaskGetTickCount() - lastButtonTime < 1000)))
-			return 0;  // user moved or pressed a button, go back to soldering
+		}
+
 #ifdef MODEL_TS100
-			if (checkVoltageForExit())
-			return 1;  // return non-zero on error
+		if (checkVoltageForExit())
+		return 1;  // return non-zero on error
 #endif
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF) {
@@ -338,15 +352,14 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 				OLED::drawSymbol(1);
 			}
 		}
-		if (systemSettings.ShutdownTime) // only allow shutdown exit if time > 0
-			if (lastMovementTime)
-				if (((uint32_t) (xTaskGetTickCount() - lastMovementTime)) > (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
-					// shutdown
-					currentTempTargetDegC = 0;
-					return 1;  // we want to exit soldering mode
-				}
+
 		OLED::refresh();
 		GUIDelay();
+		if (shouldShutdown()) {
+			// shutdown
+			currentTempTargetDegC = 0;
+			return 1;  // we want to exit soldering mode
+		}
 	}
 	return 0;
 }
@@ -380,12 +393,29 @@ static uint32_t getSleepTimeout() {
 }
 static bool shouldBeSleeping() {
 //Return true if the iron should be in sleep mode
-	if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
-		return true;
+	if (systemSettings.sensitivity && systemSettings.SleepTime) {
+		if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
+			return true;
+		}
 	}
 #ifdef HALL_SENSOR
-//If the hall effect sensor is enabled in the build, check if its over threshold, and if so then we force sleep
-
+	//If the hall effect sensor is enabled in the build, check if its over threshold, and if so then we force sleep
+	if (lookupHallEffectThreshold()) {
+		int16_t hallEffectStrength = getRawHallEffect();
+		if (hallEffectStrength < 0)
+			hallEffectStrength = -hallEffectStrength;
+		//Have absolute value of measure of magnetic field strength
+		if (hallEffectStrength > lookupHallEffectThreshold()) {
+			if (lastHallEffectSleepStart == 0) {
+				lastHallEffectSleepStart = xTaskGetTickCount();
+			}
+			if ((xTaskGetTickCount() - lastHallEffectSleepStart) > TICKS_SECOND) {
+				return true;
+			}
+		} else {
+			lastHallEffectSleepStart = 0;
+		}
+	}
 #endif
 	return false;
 }
@@ -531,12 +561,11 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		}
 #endif
 
-		if (systemSettings.sensitivity && systemSettings.SleepTime)
-			if (shouldBeSleeping()) {
-				if (gui_SolderingSleepingMode(false)) {
-					return;  // If the function returns non-0 then exit
-				}
+		if (shouldBeSleeping()) {
+			if (gui_SolderingSleepingMode(false)) {
+				return;  // If the function returns non-0 then exit
 			}
+		}
 		// slow down ui update rate
 		GUIDelay();
 	}
@@ -598,7 +627,7 @@ void showDebugMenu(void) {
 			break;
 		case 10:
 			// Print PCB ID number
-			OLED::printNumber(PCBVersion, 1);
+			OLED::printNumber(PCBVersion, 2);
 			break;
 		default:
 			break;
@@ -651,14 +680,6 @@ void startGUITask(void const *argument __unused) {
 		OLED::setFont(1);
 		OLED::setCursor(0, 0);
 		OLED::print(SettingsResetMessage);
-		OLED::refresh();
-		waitForButtonPressOrTimeout(10000);
-	}
-	if (getHallSensorFitted()) {
-		OLED::clearScreen();
-		OLED::setFont(1);
-		OLED::setCursor(0, 0);
-		OLED::printNumber(5000, 4, 0);
 		OLED::refresh();
 		waitForButtonPressOrTimeout(10000);
 	}

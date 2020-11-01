@@ -22,7 +22,7 @@
 #include "task.h"
 #define MOVFilter 8
 uint8_t accelInit = 0;
-uint32_t lastMovementTime = 0;
+TickType_t lastMovementTime = 0;
 void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
