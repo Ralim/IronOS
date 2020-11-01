@@ -95,8 +95,8 @@ $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 HEXFILE_DIR=Hexfile
 
 # temporary objects folder
-OUTPUT_DIR=Objects
-
+OUTPUT_BASE_DIR=Objects
+OUTPUT_DIR=$(OUTPUT_BASE_DIR)/$(model)
 # code optimisation ------------------------------------------------------------
 OPTIM_AS= -Wall 
 OPTIM=-Os  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
@@ -284,7 +284,6 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 	$(OBJCOPY) $^ -O ihex $@
 
 %.bin : %.elf
-	$(SIZE) $^
 	$(OBJCOPY) $^ -O binary $@
 
 $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)  Makefile $(LDSCRIPT)
@@ -315,7 +314,7 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 
 
 clean :
-	rm -Rf $(OUTPUT_DIR)
+	rm -Rf $(OUTPUT_BASE_DIR)
 	rm -Rf $(HEXFILE_DIR)
 
 
