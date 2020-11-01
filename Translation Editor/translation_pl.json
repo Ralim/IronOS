@@ -36,6 +36,7 @@
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "B",
+		"SettingSensitivityOff":"O",
 		"SettingSensitivityLow":"L",
 		"SettingSensitivityMedium":"M",
 		"SettingSensitivityHigh":"H"
@@ -252,6 +253,13 @@
 				"zysk grotu"
 			],
 			"desc": "Zysk grotu"
+		},
+		"HallEffSensitivity": {
+						"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		}
 	}
 }

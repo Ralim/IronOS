@@ -35,6 +35,7 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "D",
+		"SettingSensitivityOff":"O",
 		"SettingSensitivityLow":"L",
 		"SettingSensitivityMedium":"M",
 		"SettingSensitivityHigh":"H"
@@ -251,6 +252,13 @@
 				"punta"
 			],
 			"desc": "Varia il guadagno della punta"
+		},
+		"HallEffSensitivity": {
+						"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		}
 	}
 }

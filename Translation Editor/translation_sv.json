@@ -33,6 +33,7 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
+		"SettingSensitivityOff":"O",
 		"SettingSensitivityLow":"L",
 		"SettingSensitivityMedium":"M",
 		"SettingSensitivityHigh":"H"
@@ -249,6 +250,13 @@
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"HallEffSensitivity": {
+						"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		}
 	}
 }

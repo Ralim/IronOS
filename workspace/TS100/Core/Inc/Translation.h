@@ -51,9 +51,10 @@ extern const char *SettingStartSolderingChar;
 extern const char *SettingStartSleepChar;
 extern const char *SettingStartSleepOffChar;
 extern const char *SettingStartNoneChar;
-extern const char* SettingSensitivityLow;
-extern const char* SettingSensitivityMedium;
-extern const char* SettingSensitivityHigh;
+extern const char *SettingSensitivityOff;
+extern const char *SettingSensitivityLow;
+extern const char *SettingSensitivityMedium;
+extern const char *SettingSensitivityHigh;
 
 extern const char *SettingFastChar;
 extern const char *SettingSlowChar;

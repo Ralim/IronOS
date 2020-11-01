@@ -134,6 +134,10 @@ var def =
 			"len": 1
 		},
 		{
+			"id": "SettingSensitivityOff",
+			"len": 1
+		},
+		{
 			"id": "SettingSensitivityLow",
 			"len": 1
 		},

@@ -36,6 +36,7 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
+		"SettingSensitivityOff":"O",
 		"SettingSensitivityLow":"L",
 		"SettingSensitivityMedium":"M",
 		"SettingSensitivityHigh":"H"
@@ -258,7 +259,7 @@
 				"Hall Eff",
 				"Sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting the stand"
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		}
 	}
 }
