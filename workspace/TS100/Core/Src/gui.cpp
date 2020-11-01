@@ -318,7 +318,7 @@ static bool settings_setQCInputV(void) {
 }
 
 static void settings_displayQCInputV(void) {
-	printShortDescription(0, 5);
+	printShortDescription(19, 5);
 	//0 = 9V, 1=12V, 2=20V (Fixed Voltages)
 	// These are only used in QC modes
 	switch (systemSettings.QCIdealVoltage) {
