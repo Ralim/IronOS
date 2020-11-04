@@ -2,7 +2,7 @@
 
 # Flexible Soldering iron control Firmware
 
-*Please Note, this repo will likely be renaming soon to unire - See issue #639. Old links willcontinue to work, and should redirect. So dont panic :) This is just to better account for the newer soldeing irons being added.*
+*Please Note, this repo will likely be renaming soon to unire or IronOS - See issue [#639](https://github.com/Ralim/ts100/issues/639). Old links willcontinue to work, and should redirect. So dont panic :) This is just to better account for the newer soldeing irons being added.*
 
 Originally concieved as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
