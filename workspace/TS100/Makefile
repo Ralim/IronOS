@@ -15,6 +15,7 @@ HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
 HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
+MINIWARE_STARTUP_DIR = ./Startup
 DRIVER_INC_DIR =./Core/Drivers
 BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
@@ -39,15 +40,22 @@ DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
 	-I$(HAL_LEGACY_INC_DIR)	\
 	-I$(INC_PD_DRIVERS_DIR)
 DEVICE_BSP_DIR = ./Core/BSP/Miniware
-S_SRCS := ./Startup/startup_stm32f103t8ux.S
+S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=stm32f103.ld
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
 DEV_LDFLAGS=-lm -Wl,--gc-sections -flto
 DEV_AFLAGS=
-DEV_CFLAGS=-flto
-DEV_CXXFLAGS=-flto
+DEV_CFLAGS=-flto -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD		
+DEV_CXXFLAGS=-flto -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD		
+CPUFLAGS= -mcpu=cortex-m3     \
+		  -mthumb 			\
+		  -mfloat-abi=soft
 flash_size=64k
 bootldr_size=0x4000
 endif
@@ -62,15 +70,24 @@ DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 	-I$(INC_PD_DRIVERS_DIR)
 	
 DEVICE_BSP_DIR = ./Core/BSP/Pine64
-S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S')
+S_SRCS := ./Core/BSP/Pine64/N200/portasm.S  
+$(info $(S_SRCS) )
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
 LDSCRIPT=GD32VF103xB.ld
-DEV_LDFLAGS=-nostartfiles -Xlinker --gc-sections
+flash_size=128k
+bootldr_size=0x0
+# Flags
+CPUFLAGS= -march=rv32imac \
+			-mabi=ilp32 \
+			-mtune=size  \
+			-mcmodel=medany  \
+			-DGD32VF103C_START \
+			-DUSE_STDPERIPH_DRIVER 
+DEV_LDFLAGS= -nostartfiles -Xlinker --gc-sections
+DEV_AFLAGS= -nostartfiles -ffreestanding
 DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fabi-version=0 
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
-flash_size=128k
-bootldr_size=0x0
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
@@ -95,15 +112,14 @@ $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 HEXFILE_DIR=Hexfile
 
 # temporary objects folder
-OUTPUT_BASE_DIR=Objects
-OUTPUT_DIR=$(OUTPUT_BASE_DIR)/$(model)
+OUTPUT_DIR=Objects
+
 # code optimisation ------------------------------------------------------------
-OPTIM_AS= -Wall 
 OPTIM=-Os  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES +=  -D LANG_$(lang) -D LANG -D MODEL_$(model) $(DEV_GLOBAL_DEFS)
+GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
 
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
@@ -111,10 +127,12 @@ endif
 
 # Enable debug code generation
 DEBUG=-g3
-	
+# Without debug code
+#DEBUG=
+
+
 # libs -------------------------------------------------------------------------
 LIBS=
-
 
 # ------------------------------------------------------------------------------
 COMPILER=gcc
@@ -136,51 +154,26 @@ SIZE=$(COMPILER_PREFIX)-size
 SREC=srec_cat
 SREC_INFO=srec_info
 
+# For the Pinecil, use GCC rather than as? (Copying other makefiles)
 ifeq ($(model),Pinecil)
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 endif
-# compiler flags ---------------------------------------------------------------
-ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
-CPUFLAGS=		-mthumb 			\
-		-mcpu=cortex-m3 	\
-		-mfloat-abi=soft
-endif
-ifeq ($(model),Pinecil)
-CPUFLAGS= 	-march=rv32imac \
-			-mabi=ilp32 \
-			-mtune=size  \
-			-mcmodel=medany  \
-			-DGD32VF103C_START \
-			-DUSE_STDPERIPH_DRIVER
-endif
-
-
 
 # linker flags -----------------------------------------------------------------
-LINKER_FLAGS=$(CPUFLAGS) \
-		$(GLOBAL_DEFINES) 	\
-		-D${COMPILER}  		\
-		-MMD 				\
-		-std=c++11			\
-		$(OPTIM) 			\
-		-ffreestanding      \
-		-fno-common			\
-		-fno-rtti 			\
-		-fno-exceptions 	\
-		-fno-non-call-exceptions \
-		-fno-strict-aliasing 		\
-		-fno-threadsafe-statics \
-		-Wl,--wrap=malloc \
-		-Wl,--wrap=free \
-		-Wl,-Map=$(OUT_HEXFILE).map \
-		-Wl,--undefined=vTaskSwitchContext \
-		-T $(LDSCRIPT) \
-		-Wl,--defsym=__FLASH_SIZE__=$(flash_size) \
-		-Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
-		--specs=nano.specs \
-		$(DEV_LDFLAGS) \
-		-o$(OUT_HEXFILE).elf 	\
+LINKER_FLAGS=   -Wl,--gc-sections 		                      \
+                -Wl,--wrap=malloc                             \
+			    -Wl,--wrap=free                               \
+			    -o$(OUT_HEXFILE).elf 	                      \
+			    -Wl,-Map=$(OUT_HEXFILE).map                   \
+			    -lm                                           \
+			    -Wl,--undefined=vTaskSwitchContext            \
+			    -Wl,--undefined=pxCurrentTCB                  \
+			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
+			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
+				$(DEV_LDFLAGS)                                \
+			    --specs=nano.specs
 
+# compiler flags ---------------------------------------------------------------
 
 
 CHECKOPTIONS=		-Wall 				\
@@ -210,13 +203,15 @@ CHECKOPTIONS=		-Wall 				\
 			-Wshadow			\
 			-Wno-unused-parameter \
 			-Wdouble-promotion \
-			-Werror
+			-Werror 
+			
 
 
 CHECKOPTIONS_C=		-Wbad-function-cast
 
 
-CXXFLAGS=$(CPUFLAGS) \
+CXXFLAGS=$(DEV_CXXFLAGS) \
+        $(CPUFLAGS) \
 		$(DEBUG) 			\
 		$(INCLUDES) \
 		$(GLOBAL_DEFINES) 	\
@@ -225,39 +220,44 @@ CXXFLAGS=$(CPUFLAGS) \
 		$(CHECKOPTIONS)		\
 		-std=c++11			\
 		$(OPTIM) 			\
-		-ffreestanding      \
 		-fno-common			\
+		-ffreestanding		\
 		-fno-rtti 			\
 		-fno-exceptions 	\
 		-fno-non-call-exceptions \
 		-fno-use-cxa-atexit		\
 		-fno-strict-aliasing 		\
+		-fno-rtti 			\
+		-fno-exceptions		\
 		-fno-threadsafe-statics \
-		$(DEV_CXXFLAGS)
+		-T$(LDSCRIPT)
 
 
-CFLAGS=$(CPUFLAGS)          \
+CFLAGS=$(DEV_CFLAGS) \
+        $(CPUFLAGS) \
 		$(DEBUG) 			\
-		$(INCLUDES) 		\
-		$(CHECKOPTIONS_C) 	\
-		$(GLOBAL_DEFINES) 	\
-		-D${COMPILER}  		\
+		$(INCLUDES) 			\
+		$(CHECKOPTIONS_C) 		\
+		$(GLOBAL_DEFINES) 		\
+		-D${COMPILER}  			\
 		-MMD 				\
-		-ffreestanding      \
 		-std=gnu99			\
 		$(OPTIM) 			\
-		$(DEV_CFLAGS)       \
 		-fno-common			\
-		-c 
+		-ffreestanding			\
+		-T$(LDSCRIPT)			\
+		-c                      
 		
 		
-AFLAGS=$(CPUFLAGS) \
-		$(OPTIM_AS) \
-		$(DEBUG) \
-		$(ASM_INC) \
-		$(DEV_AFLAGS)
+AFLAGS= $(CPUFLAGS)   \
+		$(DEV_AFLAGS) \
+		$(DEBUG)      \
+		$(ASM_INC)    \
+		$(INCLUDES)
 
 
+CFLAGS += -ffunction-sections -fdata-sections
+CXXFLAGS += -ffunction-sections -fdata-sections
 
 
 
@@ -284,13 +284,14 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 	$(OBJCOPY) $^ -O ihex $@
 
 %.bin : %.elf
+	$(SIZE) $^
 	$(OBJCOPY) $^ -O binary $@
 
-$(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)  Makefile $(LDSCRIPT)
+$(OUT_HEXFILE).elf : $(OUT_OBJS_S)  $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@echo $(CPP) $(LINKER_FLAGS) 
-	@$(CPP) $(LINKER_FLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) $(LIBS) 
+	@echo $(LINKER_FLAGS)
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
@@ -303,20 +304,20 @@ $(OUT_OBJS_CPP): $(OUTPUT_DIR)/%.o : %.cpp Makefile
 	@echo Compiling ${<}
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
 	@$(OBJDUMP) -d -S $@ > $@.lst
-
+	
 $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Assembler'
-	@$(AS) -c $(AFLAGS)  $< -o $@
+	@echo @$(AS) -c $(AFLAGS) $< -o $@
+	@$(AS) -c $(AFLAGS) $< -o $@
 	@echo 'Finished building: $<'
 	@echo ' '
 
 
 clean :
-	rm -Rf $(OUTPUT_BASE_DIR)
+	rm -Rf $(OUTPUT_DIR)
 	rm -Rf $(HEXFILE_DIR)
-
 
 # pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
