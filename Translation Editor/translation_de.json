@@ -39,6 +39,10 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
 		"SettingLockFullChar": "F"
@@ -74,7 +78,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Spannungs-",
 				"quelle"
@@ -207,7 +211,7 @@
 			],
 			"desc": "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Leistungs-",
 				"Aufnahme"
@@ -255,6 +259,13 @@
 				"tip gain"
 			],
 			"desc": "Tip gain"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		},
 		"LockingMode": {
 			"text2": [

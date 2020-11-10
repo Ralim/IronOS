@@ -142,16 +142,16 @@ void fusb_send_hardrst() {
 	I2CBB::unlock2();
 }
 
-void fusb_setup() {
+bool fusb_setup() {
 
 	if (!I2CBB::lock2()) {
-		return;
+		return false;
 	}
 	/* Fully reset the FUSB302B */
 //	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
 //	osDelay(2);
 	if (!fusb_read_id()) {
-		return;
+		return false;
 	}
 
 	/* Turn on all power */
@@ -200,6 +200,7 @@ void fusb_setup() {
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 10, 0);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	return true;
 }
 
 void fusb_get_status(union fusb_status *status) {

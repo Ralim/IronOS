@@ -31,7 +31,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 	// This takes the raw ADC samples, converts these to uV
 	// Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
 	// Then remove the calibration value that is stored as a tip offset
-	uint32_t vddRailmVX10 = 33000;//The vreg is +-2%, but we have no higher accuracy available
+	uint32_t vddRailmVX10 = 33000;	//The vreg is +-2%, but we have no higher accuracy available
 	// 4096 * 8 readings for full scale
 	// Convert the input ADC reading back into mV times 10 format.
 	uint32_t rawInputmVX10 = (rawADC * vddRailmVX10) / (4096 * 8);
@@ -64,8 +64,7 @@ uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) {
 // [x2, y2] = point 2
 //  x = input value
 // output is x's extrapolated y value
-int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2,
-		int32_t x) {
+int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x) {
 	return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000;
 }
 
@@ -95,15 +94,16 @@ uint32_t TipThermoModel::convertCtoF(uint32_t degC) {
 uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
 	//(Y°F − 32) × 5/9 = Y°C
 	if (degF < 32)
-		return 0;
+	return 0;
 	return ((degF - 32) * 5) / 9;
 }
 #endif
 
 uint32_t TipThermoModel::getTipInC(bool sampleNow) {
-	uint32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(
-			getTipRawTemp(sampleNow));
+	int32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(sampleNow));
 	currentTipTempInC += getHandleTemperature() / 10; //Add handle offset
+	if (currentTipTempInC < 0)
+		return 0;
 	return currentTipTempInC;
 }
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
@@ -116,8 +116,7 @@ uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 #endif
 
 uint32_t TipThermoModel::getTipMaxInC() {
-	uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(
-			0x7FFF - (80 * 5)); //back off approx 5 deg c from ADC max
+	uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(0x7FFF - (80 * 5)); //back off approx 5 deg c from ADC max
 	maximumTipTemp += getHandleTemperature() / 10; //Add handle offset
 	return maximumTipTemp - 1;
 }

@@ -14,8 +14,10 @@ RUN apt-get update && \
   wget && \
   apt-get clean
 RUN wget -qO- https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 | tar -xj
+RUN wget -qO- https://github.com/Ralim/nuclei-compiler/releases/download/2020.08/nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2 | tar -xj
 
 # Add compiler to the path
 ENV PATH "/build/gcc-arm-none-eabi-9-2020-q2-update/bin:$PATH"
+ENV PATH "/build/gcc/bin/:$PATH"
 COPY . /build/source
 COPY ./ci /build/ci

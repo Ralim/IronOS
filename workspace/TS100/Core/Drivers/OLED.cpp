@@ -30,38 +30,37 @@ uint8_t OLED::secondFrameBuffer[OLED_WIDTH * 2];
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
 /*Data packets are prefixed with 0x40*/
-uint8_t OLED_Setup_Array[] = {
+FRToSI2C::I2C_REG OLED_Setup_Array[] = {
 /**/
-0x80, 0xAE, /*Display off*/
-0x80, 0xD5, /*Set display clock divide ratio / osc freq*/
-0x80, 0x52, /*Divide ratios*/
-0x80, 0xA8, /*Set Multiplex Ratio*/
-0x80, 0x0F, /*16 == max brightness,39==dimmest*/
-0x80, 0xC0, /*Set COM Scan direction*/
-0x80, 0xD3, /*Set vertical Display offset*/
-0x80, 0x00, /*0 Offset*/
-0x80, 0x40, /*Set Display start line to 0*/
-0x80, 0xA0, /*Set Segment remap to normal*/
-0x80, 0x8D, /*Charge Pump*/
-0x80, 0x14, /*Charge Pump settings*/
-0x80, 0xDA, /*Set VCOM Pins hardware config*/
-0x80, 0x02, /*Combination 2*/
-0x80, 0x81, /*Contrast*/
-0x80, 0x33, /*^51*/
-0x80, 0xD9, /*Set pre-charge period*/
-0x80, 0xF1, /*Pre charge period*/
-0x80, 0xDB, /*Adjust VCOMH regulator ouput*/
-0x80, 0x30, /*VCOM level*/
-0x80, 0xA4, /*Enable the display GDDR*/
-0x80, 0XA6, /*Normal display*/
-0x80, 0x20, /*Memory Mode*/
-0x80, 0x00, /*Wrap memory*/
-0x80, 0xAF /*Display on*/
+{ 0x80, 0xAE, 0 }, /*Display off*/
+{ 0x80, 0xD5, 0 }, /*Set display clock divide ratio / osc freq*/
+{ 0x80, 0x52, 0 }, /*Divide ratios*/
+{ 0x80, 0xA8, 0 }, /*Set Multiplex Ratio*/
+{ 0x80, 0x0F, 0 }, /*16 == max brightness,39==dimmest*/
+{ 0x80, 0xC0, 0 }, /*Set COM Scan direction*/
+{ 0x80, 0xD3, 0 }, /*Set vertical Display offset*/
+{ 0x80, 0x00, 0 }, /*0 Offset*/
+{ 0x80, 0x40, 0 }, /*Set Display start line to 0*/
+{ 0x80, 0xA0, 0 }, /*Set Segment remap to normal*/
+{ 0x80, 0x8D, 0 }, /*Charge Pump*/
+{ 0x80, 0x14, 0 }, /*Charge Pump settings*/
+{ 0x80, 0xDA, 0 }, /*Set VCOM Pins hardware config*/
+{ 0x80, 0x02, 0 }, /*Combination 2*/
+{ 0x80, 0x81, 0 }, /*Contrast*/
+{ 0x80, 0x33, 0 }, /*^51*/
+{ 0x80, 0xD9, 0 }, /*Set pre-charge period*/
+{ 0x80, 0xF1, 0 }, /*Pre charge period*/
+{ 0x80, 0xDB, 0 }, /*Adjust VCOMH regulator ouput*/
+{ 0x80, 0x30, 0 }, /*VCOM level*/
+{ 0x80, 0xA4, 0 }, /*Enable the display GDDR*/
+{ 0x80, 0XA6, 0 }, /*Normal display*/
+{ 0x80, 0x20, 0 }, /*Memory Mode*/
+{ 0x80, 0x00, 0 }, /*Wrap memory*/
+{ 0x80, 0xAF, 0 }, /*Display on*/
 };
 // Setup based on the SSD1307 and modified for the SSD1306
 
-const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80,
-		0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
+const uint8_t REFRESH_COMMANDS[17] = { 0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80, 0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40 };
 
 /*
  * Animation timing function that follows a bezier curve.
@@ -98,8 +97,8 @@ void OLED::initialize() {
 	// initialisation data to the OLED.
 
 	setDisplayState(DisplayState::ON);
-	FRToSI2C::Transmit(DEVICEADDR_OLED, &OLED_Setup_Array[0],
-			sizeof(OLED_Setup_Array));
+	FRToSI2C::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
+
 }
 
 void OLED::setFramebuffer(uint8_t *buffer) {
@@ -128,8 +127,7 @@ void OLED::drawChar(char c) {
 	}
 	uint16_t index = c - 2; //First index is \x02
 	uint8_t *charPointer;
-	charPointer = ((uint8_t*) currentFont)
-			+ ((fontWidth * (fontHeight / 8)) * index);
+	charPointer = ((uint8_t*) currentFont) + ((fontWidth * (fontHeight / 8)) * index);
 	drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
 	cursor_x += fontWidth;
 }
@@ -196,8 +194,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 		OLED_WIDTH - progress);
 
 		memmove(&firstStripPtr[newStart], &firstBackStripPtr[newEnd], progress);
-		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd],
-				progress);
+		memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
 
 		refresh();
 		osDelay(40);
@@ -222,14 +219,14 @@ void OLED::setRotation(bool leftHanded) {
 
 	// send command struct again with changes
 	if (leftHanded) {
-		OLED_Setup_Array[11] = 0xC8;  // c1?
-		OLED_Setup_Array[19] = 0xA1;
+		OLED_Setup_Array[5].val = 0xC8;  // c1?
+		OLED_Setup_Array[9].val = 0xA1;
 	} else {
-		OLED_Setup_Array[11] = 0xC0;
-		OLED_Setup_Array[19] = 0xA0;
+		OLED_Setup_Array[5].val = 0xC0;
+		OLED_Setup_Array[9].val = 0xA0;
 	}
-	FRToSI2C::Transmit(DEVICEADDR_OLED, (uint8_t*) OLED_Setup_Array,
-			sizeof(OLED_Setup_Array));
+	FRToSI2C::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
+
 	inLeftHandedMode = leftHanded;
 
 	screenBuffer[5] = inLeftHandedMode ? 0 : 32; // display is shifted by 32 in left handed
@@ -337,8 +334,7 @@ void OLED::drawSymbol(uint8_t symbolID) {
 }
 
 // Draw an area, but y must be aligned on 0/8 offset
-void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
-		const uint8_t *ptr) {
+void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
 	// Splat this from x->x+wide in two strides
 	if (x <= -wide)
 		return;  // cutoffleft
@@ -372,8 +368,7 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 
 // Draw an area, but y must be aligned on 0/8 offset
 // For data which has octets swapped in a 16-bit word.
-void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height,
-		const uint8_t *ptr) {
+void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
 	// Splat this from x->x+wide in two strides
 	if (x <= -wide)
 		return;  // cutoffleft
@@ -407,8 +402,7 @@ void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 	}
 }
 
-void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
-		const uint8_t value) {
+void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t value) {
 	// Splat this from x->x+wide in two strides
 	if (x <= -wide)
 		return;  // cutoffleft
@@ -440,8 +434,7 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height,
 	}
 }
 
-void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
-		bool clear) {
+void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool clear) {
 	// Draw this in 3 sections
 	// This is basically a N wide version of vertical line
 

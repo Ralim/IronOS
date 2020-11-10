@@ -18,17 +18,20 @@
 #endif
 
 #ifdef MODEL_TS100
+#define POW_DC
 #define ACCEL_MMA
 #define ACCEL_LIS
 #define TEMP_TMP36
+#define BATTFILTERDEPTH 32
 #endif
 
 #ifdef MODEL_TS80
 #define ACCEL_LIS
 #define POW_QC
 #define TEMP_TMP36
-#define LIS_ORI_FLIP
+#define ACCEL_ORI_FLIP
 #define OLED_FLIP
+#define BATTFILTERDEPTH 8
 #endif
 
 #ifdef MODEL_TS80P
@@ -37,8 +40,9 @@
 #define POW_QC
 #define TEMP_NTC
 #define I2C_SOFT
-#define LIS_ORI_FLIP
+#define ACCEL_ORI_FLIP
 #define OLED_FLIP
+#define BATTFILTERDEPTH 8
 #endif
 
 #endif /* BSP_MINIWARE_MODEL_CONFIG_H_ */

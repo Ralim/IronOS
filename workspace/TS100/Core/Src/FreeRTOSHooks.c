@@ -24,11 +24,11 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
 }
 
 
-void vApplicationStackOverflowHook(xTaskHandle *pxTask,
+void vApplicationStackOverflowHook(TaskHandle_t *pxTask,
 		signed portCHAR *pcTaskName) {
 	(void) pxTask;
 	(void) pcTaskName;
-	asm("bkpt");
+
 // We dont have a good way to handle a stack overflow at this point in time
 	reboot();
 }

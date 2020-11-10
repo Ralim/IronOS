@@ -40,7 +40,11 @@
 		"SettingStartNoneChar": "F",
 		"SettingLockDisableChar": "U",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "V"
+		"SettingLockFullChar": "V",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -73,29 +77,29 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
-						"text2": [
+		"DCInCutoff": {
+			"text2": [
 				"Spannings-",
 				"bron"
 			],
 			"desc": "Spanningsbron. Stelt drempelspanning in. <DC 10V> <S 3.3V per cel>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Slaap",
 				"temp"
 			],
 			"desc": "Temperatuur in slaapstand"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Slaap",
 				"time-out"
 			],
 			"desc": "Slaap time-out <Minuten/Seconden>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Uitschakel",
 				"time-out"
 			],
@@ -206,7 +210,7 @@
 			],
 			"desc": "Geavanceerde calibratie met een thermokoppel op de punt"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Power",
 				"Wattage"
@@ -214,21 +218,21 @@
 			"desc": "Wattage van de gebruikte voeding"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Vermogen",
 				"limiet"
 			],
 			"desc": "Maximaal vermogen <Watts>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Draai",
 				"+ - knoppen om"
 			],
 			"desc": "Keer de +- knoppen om de termperatuur van de punt te regelen om."
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Temp veranderen",
 				"kort"
 			],
@@ -241,22 +245,29 @@
 			],
 			"desc": "Temperatuur verandering bij lang drukken"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Vermogen",
 				"Puls W"
 			],
 			"desc": "Vermogen van puls om soldeerbout aan te houden"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Verander",
 				"punt gain"
 			],
 			"desc": "Punt gain"
 		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
 		"LockingMode": {
-						"text2": [
+			"text2": [
 				"Blokkeer",
 				"knoppen"
 			],

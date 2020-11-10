@@ -323,7 +323,7 @@ static void MX_TIM2_Init(void) {
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
 	// dummy value, will be reconfigured by BSPInit()
 	htim2.Init.Period = 255 + 17 * 2;
-	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;  // 8 MHz (x2 APB1) before divide
+	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4; // 8 MHz (x2 APB1) before divide
 	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	htim2.Init.RepetitionCounter = 0;
 	HAL_TIM_Base_Init(&htim2);

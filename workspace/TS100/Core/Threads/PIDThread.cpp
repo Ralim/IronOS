@@ -119,7 +119,7 @@ void startPIDTask(void const *argument __unused) {
 				setTipX10Watts(x10WattsOut);
 			}
 
-			HAL_IWDG_Refresh(&hiwdg);
+			resetWatchdog();
 		} else {
 			//ADC interrupt timeout
 			setTipPWM(0);

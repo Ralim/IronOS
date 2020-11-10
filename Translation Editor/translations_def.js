@@ -149,6 +149,21 @@ var def =
 			"len": 1
 		},
 		{
+			"id": "SettingSensitivityOff",
+			"len": 1
+		},
+		{
+			"id": "SettingSensitivityLow",
+			"len": 1
+		},
+		{
+			"id": "SettingSensitivityMedium",
+			"len": 1
+		},
+		{
+			"id": "SettingSensitivityHigh",
+			"len": 1
+		}, {
 			"id": "SettingLockDisableChar",
 			"len": 1,
 			"default": "D"
@@ -184,7 +199,7 @@ var def =
 	],
 	"menuOptions": [
 		{
-			"id": "PowerSource",
+			"id": "DCInCutoff",
 			"maxLen": 5,
 			"maxLen2": 11
 		},
@@ -279,7 +294,7 @@ var def =
 			"maxLen2": 16
 		},
 		{
-			"id": "PowerInput",
+			"id": "QCMaxVoltage",
 			"maxLen": 8,
 			"maxLen2": 16
 		},
@@ -314,6 +329,10 @@ var def =
 			"maxLen2": 8
 		},
 		{
+			"id": "HallEffSensitivity",
+			"maxLen": 6,
+			"maxLen2": 8
+		}, {
 			"id": "LockingMode",
 			"maxLen": 6,
 			"maxLen2": 13

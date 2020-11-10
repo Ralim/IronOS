@@ -39,6 +39,10 @@
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "B",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
 		"SettingLockFullChar": "F"
@@ -74,7 +78,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Źródło",
 				"zasilania"
@@ -207,7 +211,7 @@
 			],
 			"desc": "Zaawansowana kalibracja za pomocą termoelementu na grocie"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Moc",
 				"w W"
@@ -255,6 +259,13 @@
 				"zysk grotu"
 			],
 			"desc": "Zysk grotu"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		},
 		"LockingMode": {
 			"text2": [

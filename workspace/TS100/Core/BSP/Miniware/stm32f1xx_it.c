@@ -82,6 +82,6 @@ void DMA1_Channel6_IRQHandler(void) {
 void DMA1_Channel7_IRQHandler(void) {
 	HAL_DMA_IRQHandler(&hdma_i2c1_rx);
 }
-void EXTI9_5_IRQHandler(void){
+void EXTI9_5_IRQHandler(void) {
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);
 }

@@ -14,7 +14,7 @@
 class LIS2DH12 {
 public:
 	static bool detect();
-	static void initalize();
+	static bool initalize();
 	//1 = rh, 2,=lh, 8=flat
 	static Orientation getOrientation() {
 #ifdef LIS_ORI_FLIP
@@ -29,8 +29,7 @@ public:
 		else
 			val = 3;
 		return static_cast<Orientation>(val);
-#endif
-#ifdef MODEL_TS100
+#else
 		return static_cast<Orientation>((FRToSI2C::I2C_RegisterRead(LIS2DH_I2C_ADDRESS,LIS_INT2_SRC) >> 2) - 1);
 #endif
 	}

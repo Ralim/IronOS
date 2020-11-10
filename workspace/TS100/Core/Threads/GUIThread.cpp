@@ -7,34 +7,33 @@
 extern "C" {
 #include "FreeRTOSConfig.h"
 }
-#include <MMA8652FC.hpp>
-#include <gui.hpp>
-#include <history.hpp>
-#include "main.hpp"
-#include <power.hpp>
 #include "../../configuration.h"
 #include "Buttons.hpp"
+#include "I2CBB.hpp"
 #include "LIS2DH12.hpp"
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"
 #include "cmsis_os.h"
+#include "main.hpp"
 #include "stdlib.h"
 #include "string.h"
 #include "unit.h"
-#include "I2CBB.hpp"
+#include <MMA8652FC.hpp>
+#include <gui.hpp>
+#include <history.hpp>
+#include <power.hpp>
 // File local variables
 extern uint32_t currentTempTargetDegC;
-extern uint8_t accelInit;
-extern uint32_t lastMovementTime;
-extern int16_t idealQCVoltage;
+extern TickType_t lastMovementTime;
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
-
+static bool shouldBeSleeping();
+static bool shouldShutdown();
 #define MOVEMENT_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
 #define BUTTON_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
-
+static TickType_t lastHallEffectSleepStart = 0;
 static uint16_t min(uint16_t a, uint16_t b) {
 	if (a > b)
 		return b;
@@ -57,47 +56,51 @@ void GUIDelay() {
 }
 void gui_drawTipTemp(bool symbol) {
 	// Draw tip temp handling unit conversion & tolerance near setpoint
-	uint16_t Temp = 0;
+	uint32_t Temp = 0;
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-    if (systemSettings.temperatureInF){
-        Temp = TipThermoModel::getTipInF();
-    }else
+	if (systemSettings.temperatureInF) {
+		Temp = TipThermoModel::getTipInF();
+	} else
 #endif
 	{
 		Temp = TipThermoModel::getTipInC();
 	}
 
-	OLED::printNumber(Temp, 3);  // Draw the tip temp out finally
+	OLED::printNumber(Temp, 3); // Draw the tip temp out finally
 	if (symbol) {
 		if (OLED::getFont() == 0) {
 			// Big font, can draw nice symbols
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-            if (systemSettings.temperatureInF)
-                OLED::drawSymbol(0);
-            else
+			if (systemSettings.temperatureInF)
+			OLED::drawSymbol(0);
+			else
 #endif
 			OLED::drawSymbol(1);
 		} else {
 			// Otherwise fall back to chars
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-            if (systemSettings.temperatureInF)
-                OLED::print(SymbolDegF);
-            else
+			if (systemSettings.temperatureInF)
+			OLED::print(SymbolDegF);
+			else
 #endif
 			OLED::print(SymbolDegC);
 		}
 	}
 }
 
-#ifdef MODEL_TS100
+#ifdef POW_DC
 // returns true if undervoltage has occured
 static bool checkVoltageForExit() {
+	if (!getIsPoweredByDCIN()) {
+		return false;
+	}
 	uint16_t v = getInputVoltageX10(systemSettings.voltageDiv, 0);
 
-	// Dont check for first 1.5 seconds while the ADC stabilizes and the DMA fills the buffer
-	if (xTaskGetTickCount() > 150) {
-		if ((v < lookupVoltageLevel(systemSettings.cutoutSetting))) {
-			GUIDelay();
+	// Dont check for first 2 seconds while the ADC stabilizes and the DMA fills
+	// the buffer
+	if (xTaskGetTickCount() > (TICKS_SECOND * 2)) {
+		if ((v < lookupVoltageLevel())) {
+			currentTempTargetDegC = 0;
 			OLED::clearScreen();
 			OLED::setCursor(0, 0);
 			if (systemSettings.detailedSoldering) {
@@ -107,14 +110,13 @@ static bool checkVoltageForExit() {
 				OLED::print(InputVoltageString);
 				printVoltage();
 				OLED::print(SymbolVolts);
-
 			} else {
 				OLED::setFont(0);
 				OLED::print(UVLOWarningString);
 			}
 
 			OLED::refresh();
-			currentTempTargetDegC = 0;
+			GUIDelay();
 			waitForButtonPress();
 			return true;
 		}
@@ -123,41 +125,45 @@ static bool checkVoltageForExit() {
 }
 #endif
 static void gui_drawBatteryIcon() {
-#ifdef MODEL_TS100
-	if (systemSettings.cutoutSetting) {
+#if defined(POW_PD) || defined(POW_QC)
+	if (!getIsPoweredByDCIN()) {
+		// On TS80 we replace this symbol with the voltage we are operating on
+		// If <9V then show single digit, if not show dual small ones vertically stacked
+		uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
+		if (V % 10 >= 5)
+			V = V / 10 + 1; // round up
+		else
+			V = V / 10;
+		if (V >= 10) {
+			int16_t xPos = OLED::getCursorX();
+			OLED::setFont(1);
+			OLED::printNumber(V / 10, 1);
+			OLED::setCursor(xPos, 8);
+			OLED::printNumber(V % 10, 1);
+			OLED::setFont(0);
+			OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
+		} else {
+			OLED::printNumber(V, 1);
+		}
+		return;
+	}
+#endif
+#ifdef POW_DC
+	if (systemSettings.minDCVoltageCells) {
 		// User is on a lithium battery
 		// we need to calculate which of the 10 levels they are on
-		uint8_t cellCount = systemSettings.cutoutSetting + 2;
-		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0)
-				/ cellCount;
+		uint8_t cellCount = systemSettings.minDCVoltageCells + 2;
+		uint32_t cellV = getInputVoltageX10(systemSettings.voltageDiv, 0) / cellCount;
 		// Should give us approx cell voltage X10
-		// Range is 42 -> 33 = 9 steps therefore we will use battery 1-10
+		// Range is 42 -> 33 = 9 steps therefore we will use battery 0-9
 		if (cellV < 33)
 			cellV = 33;
-		cellV -= 33;  // Should leave us a number of 0-9
+		cellV -= 33;		// Should leave us a number of 0-9
 		if (cellV > 9)
 			cellV = 9;
 		OLED::drawBattery(cellV + 1);
-	} else
-		OLED::drawSymbol(15);  // Draw the DC Logo
-#else
-	// On TS80 we replace this symbol with the voltage we are operating on
-	// If <9V then show single digit, if not show duals
-	uint8_t V = getInputVoltageX10(systemSettings.voltageDiv, 0);
-	if (V % 10 >= 5)
-		V = V / 10 + 1;  // round up
-	else
-		V = V / 10;
-	if (V >= 10) {
-		int16_t xPos = OLED::getCursorX();
-		OLED::setFont(1);
-		OLED::printNumber(1, 1);
-		OLED::setCursor(xPos, 8);
-		OLED::printNumber(V % 10, 1);
-		OLED::setFont(0);
-		OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
 	} else {
-		OLED::printNumber(V, 1);
+		OLED::drawSymbol(15); // Draw the DC Logo
 	}
 #endif
 }
@@ -182,14 +188,12 @@ static void gui_solderingTempAdjust() {
 			return;
 			break;
 		case BUTTON_B_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer
-					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
+			if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration >
+			PRESS_ACCEL_INTERVAL_MAX) {
 				if (systemSettings.ReverseButtonTempChangeEnabled) {
-					systemSettings.SolderingTemp +=
-							systemSettings.TempChangeLongStep;
+					systemSettings.SolderingTemp += systemSettings.TempChangeLongStep;
 				} else
-					systemSettings.SolderingTemp -=
-							systemSettings.TempChangeLongStep;
+					systemSettings.SolderingTemp -= systemSettings.TempChangeLongStep;
 
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
@@ -197,47 +201,43 @@ static void gui_solderingTempAdjust() {
 			break;
 		case BUTTON_B_SHORT:
 			if (systemSettings.ReverseButtonTempChangeEnabled) {
-				systemSettings.SolderingTemp +=
-						systemSettings.TempChangeShortStep;
+				systemSettings.SolderingTemp += systemSettings.TempChangeShortStep;
 			} else
-				systemSettings.SolderingTemp -=
-						systemSettings.TempChangeShortStep;
+				systemSettings.SolderingTemp -= systemSettings.TempChangeShortStep;
 			break;
 		case BUTTON_F_LONG:
-			if (xTaskGetTickCount() - autoRepeatTimer
-					+ autoRepeatAcceleration> PRESS_ACCEL_INTERVAL_MAX) {
+			if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration >
+			PRESS_ACCEL_INTERVAL_MAX) {
 				if (systemSettings.ReverseButtonTempChangeEnabled) {
-					systemSettings.SolderingTemp -=
-							systemSettings.TempChangeLongStep;
+					systemSettings.SolderingTemp -= systemSettings.TempChangeLongStep;
 				} else
-					systemSettings.SolderingTemp +=
-							systemSettings.TempChangeLongStep;
+					systemSettings.SolderingTemp += systemSettings.TempChangeLongStep;
 				autoRepeatTimer = xTaskGetTickCount();
 				autoRepeatAcceleration += PRESS_ACCEL_STEP;
 			}
 			break;
 		case BUTTON_F_SHORT:
 			if (systemSettings.ReverseButtonTempChangeEnabled) {
-				systemSettings.SolderingTemp -=
-						systemSettings.TempChangeShortStep;  // add 10
+				systemSettings.SolderingTemp -= systemSettings.TempChangeShortStep; // add 10
 			} else
-				systemSettings.SolderingTemp +=
-						systemSettings.TempChangeShortStep;  // add 10
+				systemSettings.SolderingTemp += systemSettings.TempChangeShortStep; // add 10
 			break;
 		default:
 			break;
 		}
-		if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration)
-				< PRESS_ACCEL_INTERVAL_MIN) {
-			autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX
-					- PRESS_ACCEL_INTERVAL_MIN;
+		if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration) <
+		PRESS_ACCEL_INTERVAL_MIN) {
+			autoRepeatAcceleration =
+			PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
 		}
 		// constrain between 10-450 C
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-        if (systemSettings.temperatureInF) {
-            if (systemSettings.SolderingTemp > 850) systemSettings.SolderingTemp = 850;
-            if (systemSettings.SolderingTemp < 60) systemSettings.SolderingTemp = 60;
-        } else
+		if (systemSettings.temperatureInF) {
+			if (systemSettings.SolderingTemp > 850)
+			systemSettings.SolderingTemp = 850;
+			if (systemSettings.SolderingTemp < 60)
+			systemSettings.SolderingTemp = 60;
+		} else
 #endif
 		{
 			if (systemSettings.SolderingTemp > 450)
@@ -247,28 +247,24 @@ static void gui_solderingTempAdjust() {
 		}
 
 		if (xTaskGetTickCount() - lastChange > 2000)
-			return;  // exit if user just doesn't press anything for a bit
+			return; // exit if user just doesn't press anything for a bit
 
 #ifdef OLED_FLIP
 		if (!OLED::getRotation()) {
 #else
 		if (OLED::getRotation()) {
 #endif
-			OLED::print(
-					systemSettings.ReverseButtonTempChangeEnabled ?
-							SymbolPlus : SymbolMinus);
+			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolPlus : SymbolMinus);
 		} else {
-			OLED::print(
-					systemSettings.ReverseButtonTempChangeEnabled ?
-							SymbolMinus : SymbolPlus);
+			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolMinus : SymbolPlus);
 		}
 
 		OLED::print(SymbolSpace);
 		OLED::printNumber(systemSettings.SolderingTemp, 3);
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-        if (systemSettings.temperatureInF)
-            OLED::drawSymbol(0);
-        else
+		if (systemSettings.temperatureInF)
+		OLED::drawSymbol(0);
+		else
 #endif
 		{
 			OLED::drawSymbol(1);
@@ -279,53 +275,60 @@ static void gui_solderingTempAdjust() {
 #else
 		if (OLED::getRotation()) {
 #endif
-			OLED::print(
-					systemSettings.ReverseButtonTempChangeEnabled ?
-							SymbolMinus : SymbolPlus);
+			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolMinus : SymbolPlus);
 		} else {
-			OLED::print(
-					systemSettings.ReverseButtonTempChangeEnabled ?
-							SymbolPlus : SymbolMinus);
+			OLED::print(systemSettings.ReverseButtonTempChangeEnabled ? SymbolPlus : SymbolMinus);
 		}
 		OLED::refresh();
 		GUIDelay();
 	}
 }
-
+static bool shouldShutdown() {
+	if (systemSettings.ShutdownTime) { // only allow shutdown exit if time > 0
+		if (lastMovementTime) {
+			if (((TickType_t) (xTaskGetTickCount() - lastMovementTime)) > (TickType_t) (systemSettings.ShutdownTime * TICKS_MIN)) {
+				return true;
+			}
+		}
+		if (lastHallEffectSleepStart) {
+			if (((TickType_t) (xTaskGetTickCount() - lastHallEffectSleepStart)) > (TickType_t) (systemSettings.ShutdownTime * TICKS_MIN)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
 static int gui_SolderingSleepingMode(bool stayOff) {
 	// Drop to sleep temperature and display until movement or button press
 
 	for (;;) {
-		ButtonState buttons = getButtonState();
-		if (buttons)
+		// user moved or pressed a button, go back to soldering
+		if (!shouldBeSleeping()) {
 			return 0;
-		if ((xTaskGetTickCount() > 1000)
-				&& ((accelInit
-						&& (xTaskGetTickCount() - lastMovementTime < 1000))
-						|| (xTaskGetTickCount() - lastButtonTime < 1000)))
-			return 0;  // user moved or pressed a button, go back to soldering
-#ifdef MODEL_TS100
+		}
+
+#ifdef POW_DC
 		if (checkVoltageForExit())
-			return 1;  // return non-zero on error
+			return 1; // return non-zero on error
 #endif
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-        if (systemSettings.temperatureInF) {
-            currentTempTargetDegC = stayOff ? 0 : TipThermoModel::convertFtoC(min(systemSettings.SleepTemp, systemSettings.SolderingTemp));
-        } else
+		if (systemSettings.temperatureInF) {
+			currentTempTargetDegC =
+			stayOff
+			? 0
+			: TipThermoModel::convertFtoC(min(systemSettings.SleepTemp,
+							systemSettings.SolderingTemp));
+		} else
 #endif
 		{
-			currentTempTargetDegC =
-					stayOff ?
-							0 :
-							min(systemSettings.SleepTemp,
-									systemSettings.SolderingTemp);
+			currentTempTargetDegC = stayOff ? 0 : min(systemSettings.SleepTemp, systemSettings.SolderingTemp);
 		}
 		// draw the lcd
 		uint16_t tipTemp;
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-        if (systemSettings.temperatureInF)
-            tipTemp = TipThermoModel::getTipInF();
-        else
+		if (systemSettings.temperatureInF)
+		tipTemp = TipThermoModel::getTipInF();
+		else
 #endif
 		{
 			tipTemp = TipThermoModel::getTipInC();
@@ -340,9 +343,9 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 			OLED::print(SleepingTipAdvancedString);
 			OLED::printNumber(tipTemp, 3);
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-            if (systemSettings.temperatureInF)
-                OLED::print(SymbolDegF);
-            else
+			if (systemSettings.temperatureInF)
+			OLED::print(SymbolDegF);
+			else
 #endif
 			{
 				OLED::print(SymbolDegC);
@@ -356,24 +359,22 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 			OLED::print(SleepingSimpleString);
 			OLED::printNumber(tipTemp, 3);
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-            if (systemSettings.temperatureInF)
-                OLED::drawSymbol(0);
-            else
+			if (systemSettings.temperatureInF)
+			OLED::drawSymbol(0);
+			else
 #endif
 			{
 				OLED::drawSymbol(1);
 			}
 		}
-		if (systemSettings.ShutdownTime) // only allow shutdown exit if time > 0
-			if (lastMovementTime)
-				if (((uint32_t) (xTaskGetTickCount() - lastMovementTime))
-						> (uint32_t) (systemSettings.ShutdownTime * 60 * 1000)) {
-					// shutdown
-					currentTempTargetDegC = 0;
-					return 1;  // we want to exit soldering mode
-				}
+
 		OLED::refresh();
 		GUIDelay();
+		if (shouldShutdown()) {
+			// shutdown
+			currentTempTargetDegC = 0;
+			return 1; // we want to exit soldering mode
+		}
 	}
 	return 0;
 }
@@ -383,9 +384,7 @@ static void display_countdown(int sleepThres) {
 	 * Print seconds or minutes (if > 99 seconds) until sleep
 	 * mode is triggered.
 	 */
-	int lastEventTime =
-			lastButtonTime < lastMovementTime ?
-					lastMovementTime : lastButtonTime;
+	int lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
 	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
 	if (downCount > 99000) {
 		OLED::printNumber(downCount / 60000 + 1, 2);
@@ -395,7 +394,48 @@ static void display_countdown(int sleepThres) {
 		OLED::print(SymbolSeconds);
 	}
 }
+static uint32_t getSleepTimeout() {
+	if (systemSettings.sensitivity && systemSettings.SleepTime) {
 
+		uint32_t sleepThres = 0;
+		if (systemSettings.SleepTime < 6)
+			sleepThres = systemSettings.SleepTime * 10 * 1000;
+		else
+			sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
+		return sleepThres;
+	}
+	return 0;
+}
+static bool shouldBeSleeping() {
+	// Return true if the iron should be in sleep mode
+	if (systemSettings.sensitivity && systemSettings.SleepTime) {
+		if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
+			return true;
+		}
+	}
+
+#ifdef HALL_SENSOR
+	// If the hall effect sensor is enabled in the build, check if its over
+	// threshold, and if so then we force sleep
+	if (lookupHallEffectThreshold()) {
+		int16_t hallEffectStrength = getRawHallEffect();
+		if (hallEffectStrength < 0)
+			hallEffectStrength = -hallEffectStrength;
+		// Have absolute value of measure of magnetic field strength
+		if (hallEffectStrength > lookupHallEffectThreshold()) {
+			if (lastHallEffectSleepStart == 0) {
+				lastHallEffectSleepStart = xTaskGetTickCount();
+			}
+			if ((xTaskGetTickCount() - lastHallEffectSleepStart) > TICKS_SECOND) {
+				return true;
+			}
+		} else {
+			lastHallEffectSleepStart = 0;
+		}
+	}
+#endif
+	return false;
+}
 static void gui_solderingMode(uint8_t jumpToSleep) {
 	/*
 	 * * Soldering (gui_solderingMode)
@@ -414,15 +454,10 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 	bool boostModeOn = false;
 	bool buttonsLocked = false;
 
-	uint32_t sleepThres = 0;
-	if (systemSettings.SleepTime < 6)
-		sleepThres = systemSettings.SleepTime * 10 * 1000;
-	else
-		sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
 	if (jumpToSleep) {
 		if (gui_SolderingSleepingMode(jumpToSleep == 2)) {
 			lastButtonTime = xTaskGetTickCount();
-			return;  // If the function returns non-0 then exit
+			return; // If the function returns non-0 then exit
 		}
 	}
 	for (;;) {
@@ -439,7 +474,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				OLED::setCursor(0, 0);
 				OLED::clearScreen();
 				OLED::setFont(0);
-				OLED::print(UnlockingKeysString);
+				OLED::print (UnlockingKeysString);
 				OLED::refresh();
 				waitForButtonPressOrTimeout(1000);
 				break;
@@ -448,7 +483,8 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				if (systemSettings.BoostTemp && (systemSettings.lockingMode == 1)) {
 					boostModeOn = true;
 					break;
-				};
+				}
+				;
 				// fall through
 			case BUTTON_BOTH:
 			case BUTTON_B_LONG:
@@ -458,7 +494,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				OLED::setCursor(0, 0);
 				OLED::clearScreen();
 				OLED::setFont(0);
-				OLED::print(WarningKeysLockedString);
+				OLED::print (WarningKeysLockedString);
 				OLED::refresh();
 				waitForButtonPressOrTimeout(500);
 				break;
@@ -467,44 +503,44 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			}
 		} else { // Button not locked
 			switch (buttons) {
-				case BUTTON_NONE:
+			case BUTTON_NONE:
 				// stay
 				boostModeOn = false;
 				break;
-				case BUTTON_BOTH:
+			case BUTTON_BOTH:
 				// exit
 				return;
 				break;
-				case BUTTON_B_LONG:
-				return;  // exit on back long hold
+			case BUTTON_B_LONG:
+				return; // exit on back long hold
 				break;
-				case BUTTON_F_LONG:
+			case BUTTON_F_LONG:
 				// if boost mode is enabled turn it on
 				if (systemSettings.BoostTemp)
-				boostModeOn = true;
+					boostModeOn = true;
 				break;
-				case BUTTON_F_SHORT:
-				case BUTTON_B_SHORT: {
-					uint16_t oldTemp = systemSettings.SolderingTemp;
-					gui_solderingTempAdjust();  // goto adjust temp mode
-					if (oldTemp != systemSettings.SolderingTemp) {
-						saveSettings();  // only save on change
-					}
+			case BUTTON_F_SHORT:
+			case BUTTON_B_SHORT: {
+				uint16_t oldTemp = systemSettings.SolderingTemp;
+				gui_solderingTempAdjust(); // goto adjust temp mode
+				if (oldTemp != systemSettings.SolderingTemp) {
+					saveSettings(); // only save on change
+				}
+			}
+				break;
+			case BUTTON_BOTH_LONG:
+				if (systemSettings.lockingMode != 0) {
+					// Lock buttons
+					buttonsLocked = true;
+					OLED::setCursor(0, 0);
+					OLED::clearScreen();
+					OLED::setFont(0);
+					OLED::print (LockingKeysString);
+					OLED::refresh();
+					waitForButtonPressOrTimeout(1000);
 				}
 				break;
-				case BUTTON_BOTH_LONG:
-					if (systemSettings.lockingMode != 0) {
-						// Lock buttons
-						buttonsLocked = true;
-						OLED::setCursor(0, 0);
-						OLED::clearScreen();
-						OLED::setFont(0);
-						OLED::print(LockingKeysString);
-						OLED::refresh();
-						waitForButtonPressOrTimeout(1000);
-					}
-					break;
-				default:
+			default:
 				break;
 			}
 		}
@@ -515,7 +551,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		// Draw in the screen details
 		if (systemSettings.detailedSoldering) {
 			OLED::setFont(1);
-			OLED::print(SolderingAdvancedPowerPrompt);  // Power:
+			OLED::print(SolderingAdvancedPowerPrompt); // Power:
 			OLED::printNumber(x10WattHistory.average() / 10, 2);
 			OLED::print(SymbolDot);
 			OLED::printNumber(x10WattHistory.average() % 10, 1);
@@ -523,7 +559,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 			if (systemSettings.sensitivity && systemSettings.SleepTime) {
 				OLED::print(SymbolSpace);
-				display_countdown(sleepThres);
+				display_countdown(getSleepTimeout());
 			}
 
 			OLED::setCursor(0, 8);
@@ -539,7 +575,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				// battery
 				gui_drawBatteryIcon();
 				OLED::print(SymbolSpace); // Space out gap between battery <-> temp
-				gui_drawTipTemp(true);     // Draw current tip temp
+				gui_drawTipTemp(true);    // Draw current tip temp
 
 				// We draw boost arrow if boosting, or else gap temp <-> heat
 				// indicator
@@ -559,7 +595,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 					OLED::drawSymbol(2);
 				else
 					OLED::print(SymbolSpace);
-				gui_drawTipTemp(true);  // Draw current tip temp
+				gui_drawTipTemp(true); // Draw current tip temp
 
 				OLED::print(SymbolSpace); // Space out gap between battery <-> temp
 
@@ -571,25 +607,27 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		// Update the setpoints for the temperature
 		if (boostModeOn) {
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-            if (systemSettings.temperatureInF)
-                currentTempTargetDegC = TipThermoModel::convertFtoC(systemSettings.BoostTemp);
-            else
+			if (systemSettings.temperatureInF)
+			currentTempTargetDegC =
+			TipThermoModel::convertFtoC(systemSettings.BoostTemp);
+			else
 #endif
 			{
 				currentTempTargetDegC = (systemSettings.BoostTemp);
 			}
 		} else {
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-            if (systemSettings.temperatureInF)
-                currentTempTargetDegC = TipThermoModel::convertFtoC(systemSettings.SolderingTemp);
-            else
+			if (systemSettings.temperatureInF)
+			currentTempTargetDegC =
+			TipThermoModel::convertFtoC(systemSettings.SolderingTemp);
+			else
 #endif
 			{
 				currentTempTargetDegC = (systemSettings.SolderingTemp);
 			}
 		}
 
-#ifdef MODEL_TS100
+#ifdef POW_DC
 		// Undervoltage test
 		if (checkVoltageForExit()) {
 			lastButtonTime = xTaskGetTickCount();
@@ -597,13 +635,11 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		}
 #endif
 
-		if (systemSettings.sensitivity && systemSettings.SleepTime)
-			if (xTaskGetTickCount() - lastMovementTime > sleepThres
-					&& xTaskGetTickCount() - lastButtonTime > sleepThres) {
-				if (gui_SolderingSleepingMode(false)) {
-					return;  // If the function returns non-0 then exit
-				}
+		if (shouldBeSleeping()) {
+			if (gui_SolderingSleepingMode(false)) {
+				return; // If the function returns non-0 then exit
 			}
+		}
 		// slow down ui update rate
 		GUIDelay();
 	}
@@ -613,14 +649,14 @@ void showDebugMenu(void) {
 	uint8_t screen = 0;
 	ButtonState b;
 	for (;;) {
-		OLED::clearScreen();               // Ensure the buffer starts clean
-		OLED::setCursor(0, 0);      // Position the cursor at the 0,0 (top left)
-		OLED::setFont(1);                  // small font
-		OLED::print(SymbolVersionNumber);  // Print version number
-		OLED::setCursor(0, 8);             // second line
+		OLED::clearScreen();   // Ensure the buffer starts clean
+		OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
+		OLED::setFont(1);      // small font
+		OLED::print(SymbolVersionNumber); // Print version number
+		OLED::setCursor(0, 8);            // second line
 		OLED::print(DebugMenu[screen]);
 		switch (screen) {
-		case 0:  // Just prints date
+		case 0: // Just prints date
 			break;
 		case 1:
 			// High water mark for GUI
@@ -647,14 +683,13 @@ void showDebugMenu(void) {
 		{
 			uint32_t temp = systemSettings.CalibrationOffset;
 			systemSettings.CalibrationOffset = 0;
-			OLED::printNumber(
-					TipThermoModel::convertTipRawADCTouV(getTipRawTemp(1)), 6);
+			OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)), 6);
 			systemSettings.CalibrationOffset = temp;
 		}
 			break;
 		case 7:
 			// Temp in C
-			OLED::printNumber(TipThermoModel::getTipInC(1), 5);
+			OLED::printNumber(TipThermoModel::getTipInC(), 5);
 			break;
 		case 8:
 			// Handle Temp
@@ -666,7 +701,7 @@ void showDebugMenu(void) {
 			break;
 		case 10:
 			// Print PCB ID number
-			OLED::printNumber(PCBVersion, 1);
+			OLED::printNumber(PCBVersion, 2);
 			break;
 		default:
 			break;
@@ -686,31 +721,30 @@ void showDebugMenu(void) {
 uint8_t idleScreenBGF[sizeof(idleScreenBG)];
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
-	OLED::initialize();  // start up the LCD
+	OLED::initialize(); // start up the LCD
 
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
 	{
-		//Generate the flipped screen into ram for later use
-//flipped is generated by flipping each row
+		// Generate the flipped screen into ram for later use
+		// flipped is generated by flipping each row
 		for (int row = 0; row < 2; row++) {
 			for (int x = 0; x < 84; x++) {
-				idleScreenBGF[(row * 84) + x] = idleScreenBG[(row * 84)
-						+ (83 - x)];
+				idleScreenBGF[(row * 84) + x] = idleScreenBG[(row * 84) + (83 - x)];
 			}
 		}
 	}
-	getTipRawTemp(1);  // reset filter
+	getTipRawTemp(1); // reset filter
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	uint32_t ticks = xTaskGetTickCount();
-	ticks += 4000;  // 4 seconds from now
+	ticks += 4000; // 4 seconds from now
 	while (xTaskGetTickCount() < ticks) {
 		if (showBootLogoIfavailable() == false)
 			ticks = xTaskGetTickCount();
 		ButtonState buttons = getButtonState();
 		if (buttons)
-			ticks = xTaskGetTickCount();  // make timeout now so we will exit
+			ticks = xTaskGetTickCount(); // make timeout now so we will exit
 		GUIDelay();
 	}
 
@@ -769,20 +803,20 @@ void startGUITask(void const *argument __unused) {
 			saveSettings();
 			break;
 		case BUTTON_F_SHORT:
-			gui_solderingMode(0);  // enter soldering mode
+			gui_solderingMode(0); // enter soldering mode
 			buttonLockout = true;
 			break;
 		case BUTTON_B_SHORT:
-			enterSettingsMenu();  // enter the settings menu
+			enterSettingsMenu(); // enter the settings menu
 			buttonLockout = true;
 			break;
 		default:
 			break;
 		}
 
-		currentTempTargetDegC = 0;  // ensure tip is off
+		currentTempTargetDegC = 0; // ensure tip is off
 		getInputVoltageX10(systemSettings.voltageDiv, 0);
-		uint16_t tipTemp = TipThermoModel::getTipInC();
+		uint32_t tipTemp = TipThermoModel::getTipInC();
 
 		// Preemptively turn the display on.  Turn it off if and only if
 		// the tip temperature is below 50 degrees C *and* motion sleep
@@ -790,11 +824,8 @@ void startGUITask(void const *argument __unused) {
 		// button presses) in a while.
 		OLED::setDisplayState(OLED::DisplayState::ON);
 
-		if ((tipTemp < 50) && systemSettings.sensitivity
-				&& (((xTaskGetTickCount() - lastMovementTime)
-						> MOVEMENT_INACTIVITY_TIME)
-						&& ((xTaskGetTickCount() - lastButtonTime)
-								> BUTTON_INACTIVITY_TIME))) {
+		if ((tipTemp < 50) && systemSettings.sensitivity && (((xTaskGetTickCount() - lastMovementTime) >
+		MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
 			OLED::setDisplayState(OLED::DisplayState::OFF);
 		}
 
@@ -849,13 +880,12 @@ void startGUITask(void const *argument __unused) {
 					OLED::setCursor(56, 0);
 
 				} else {
-					OLED::fillArea(0, 0, 41, 16, 0);  // clear the area
+					OLED::fillArea(0, 0, 41, 16, 0); // clear the area
 					OLED::setCursor(0, 0);
 				}
 				// draw in the temp
-				if (!(systemSettings.coolingTempBlink
-						&& (xTaskGetTickCount() % 25 < 16)))
-					gui_drawTipTemp(false);  // draw in the temp
+				if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 25 < 16)))
+					gui_drawTipTemp(false); // draw in the temp
 			}
 		}
 		OLED::refresh();

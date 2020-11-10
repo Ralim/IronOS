@@ -44,6 +44,6 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) {
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	(void)GPIO_Pin;
+	(void) GPIO_Pin;
 	InterruptHandler::irqCallback();
 }

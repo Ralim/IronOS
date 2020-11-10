@@ -11,7 +11,7 @@ extern bool usb_pd_available;
 extern "C" {
 #endif
 
-void vApplicationStackOverflowHook(xTaskHandle *pxTask,
+void vApplicationStackOverflowHook(TaskHandle_t *pxTask,
 		signed portCHAR *pcTaskName);
 
 //Threads

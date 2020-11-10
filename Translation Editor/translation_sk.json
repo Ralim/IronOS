@@ -38,6 +38,10 @@
 		"SettingStartSleepChar": "K",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "N",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
 		"SettingLockFullChar": "F"
@@ -73,7 +77,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Zdroj",
 				"napätia"
@@ -206,7 +210,7 @@
 			],
 			"desc": "Pokročilá kalibrácia meraním teploty hrotu"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Obmedzenie",
 				"výkonu"
@@ -254,6 +258,13 @@
 				"hrotu"
 			],
 			"desc": "Úprava zisku hrotu"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		},
 		"LockingMode": {
 			"text2": [

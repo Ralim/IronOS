@@ -39,6 +39,10 @@
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "F",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
 		"SettingLockFullChar": "F"
@@ -74,190 +78,197 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
-						"text2": [
+		"DCInCutoff": {
+			"text2": [
 				"Power",
 				"source"
 			],
 			"desc": "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell, disable power limit>"
 		},
 		"SleepTemperature": {
-						"text2": [
+			"text2": [
 				"Sleep",
 				"temp"
 			],
 			"desc": "Sleep temperature"
 		},
 		"SleepTimeout": {
-						"text2": [
+			"text2": [
 				"Sleep",
 				"timeout"
 			],
 			"desc": "Sleep timeout <Minutes/Seconds>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
+			"text2": [
 				"Shutdown",
 				"timeout"
 			],
 			"desc": "Shutdown timeout <Minutes>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text2": [
 				"Motion",
 				"sensitivity"
 			],
 			"desc": "Motion sensitivity <0=Off 1=Least sensitive 9=Most sensitive>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text2": [
 				"Temperature",
 				"unit"
 			],
 			"desc": "Temperature unit <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-						"text2": [
+			"text2": [
 				"Detailed",
 				"idle screen"
 			],
 			"desc": "Display detailed information in a smaller font on the idle screen"
 		},
 		"DisplayRotation": {
-						"text2": [
+			"text2": [
 				"Display",
 				"orientation"
 			],
 			"desc": "Display orientation <A=Automatic L=Left-handed R=Right-handed>"
 		},
 		"BoostTemperature": {
-						"text2": [
+			"text2": [
 				"Boost",
 				"temp"
 			],
 			"desc": "Temperature when in \"boost mode\""
 		},
 		"AutoStart": {
-						"text2": [
+			"text2": [
 				"Auto",
 				"start"
 			],
 			"desc": "Automatically starts the iron into soldering on power up <F=Off T=Soldering S=Sleep O=Sleep at room temperature>"
 		},
 		"CooldownBlink": {
-						"text2": [
+			"text2": [
 				"Cooldown",
 				"blink"
 			],
 			"desc": "Blink the temperature on the cooling screen while the tip is still hot"
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text2": [
 				"Calibrate",
 				"temperature?"
 			],
 			"desc": "Calibrate tip offset?"
 		},
 		"SettingsReset": {
-						"text2": [
+			"text2": [
 				"Factory",
 				"Reset?"
 			],
 			"desc": "Reset all settings!"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text2": [
 				"Calibrate",
 				"input voltage?"
 			],
 			"desc": "VIN Calibration <long press to exit>"
 		},
 		"AdvancedSoldering": {
-						"text2": [
+			"text2": [
 				"Detailed",
 				"solder screen"
 			],
 			"desc": "Display detailed information while soldering"
 		},
 		"ScrollingSpeed": {
-						"text2": [
+			"text2": [
 				"Scrolling",
 				"speed"
 			],
 			"desc": "Speed this text scrolls past at <S=Slow F=Fast>"
 		},
 		"TipModel": {
-						"text2": [
+			"text2": [
 				"Tip",
 				"model"
 			],
 			"desc": "Tip model selection"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Simple",
 				"calibration"
 			],
 			"desc": "Simple calibration using hot water"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text2": [
 				"Advanced",
 				"calibration"
 			],
 			"desc": "Advanced calibration using thermocouple on the tip"
 		},
-		"PowerInput": {
-						"text2": [
-				"Power",
-				"wattage"
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"Voltage"
 			],
-			"desc": "Power wattage of the power adapter used"
+			"desc": "Desired max QC Voltage negotiated for"
 		},
 		"PowerLimit": {
-						"text2": [
+			"text2": [
 				"Power",
 				"limit"
 			],
 			"desc": "Maximum power the iron can use <Watts>"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
+			"text2": [
 				"Reverse",
 				"+ - keys"
 			],
 			"desc": "Reverse assignment of temperature adjustment buttons"
 		},
 		"TempChangeShortStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"short"
 			],
 			"desc": "Temperature change steps on short button press"
 		},
 		"TempChangeLongStep": {
-						"text2": [
+			"text2": [
 				"Temp change",
 				"long"
 			],
 			"desc": "Temperature change steps on long button press"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text2": [
 				"Power",
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
 		},
 		"TipGain": {
-						"text2": [
+			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Tip gain"
 		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
 		"LockingMode": {
-						"text2": [
+			"text2": [
 				"Allow buttons",
 				"locking"
 			],

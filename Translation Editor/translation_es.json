@@ -38,6 +38,10 @@
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "F",
 		"SettingStartNoneChar": "N",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
 		"SettingLockFullChar": "F"
@@ -73,7 +77,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Fuente",
 				"de energía"
@@ -206,7 +210,7 @@
 			],
 			"desc": "Calibrar con un termopar en la punta; más difícil."
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Potencia de",
 				"entrada"
@@ -254,6 +258,13 @@
 				"de punta"
 			],
 			"desc": "Modificar el valor de ganancia de la punta."
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		},
 		"LockingMode": {
 			"text2": [

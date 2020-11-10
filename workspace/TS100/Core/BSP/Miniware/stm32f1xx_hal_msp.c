@@ -26,10 +26,9 @@ void HAL_MspInit(void) {
 	/* SysTick_IRQn interrupt configuration */
 	HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 
-
 }
 
-void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc) {
+void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 	if (hadc->Instance == ADC1) {
@@ -72,7 +71,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc) {
 
 }
 
-void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c) {
+void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 	/**I2C1 GPIO Configuration
@@ -123,7 +122,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c) {
 
 }
 
-void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base) {
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base) {
 	if (htim_base->Instance == TIM3) {
 		/* Peripheral clock enable */
 		__HAL_RCC_TIM3_CLK_ENABLE()

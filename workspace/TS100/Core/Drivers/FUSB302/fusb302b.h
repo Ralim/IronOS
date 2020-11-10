@@ -293,7 +293,7 @@ enum fusb_typec_current fusb_get_typec_current();
 /*
  * Initialization routine for the FUSB302B
  */
-void fusb_setup();
+bool fusb_setup();
 
 /*
  * Reset the FUSB302B

@@ -38,6 +38,10 @@
 		"SettingStartSleepChar": "V",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "D",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
 		"SettingLockFullChar": "V"
@@ -73,7 +77,7 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
+		"DCInCutoff": {
 			"text2": [
 				"Source",
 				"d'alim"
@@ -206,7 +210,7 @@
 			],
 			"desc": "Calibration avancées à l'aide d'un thermocouple sur la panne"
 		},
-		"PowerInput": {
+		"QCMaxVoltage": {
 			"text2": [
 				"Puissance de",
 				"l'alimentation"
@@ -261,6 +265,13 @@
 				"verrouillage"
 			],
 			"desc": "Permet de verrouiller les touches pendant la soudure sur un appuis long des 2 bouttons <D=Désactiver, B=Boost seulement, V=Verr. total>"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
 		}
 	}
 }
