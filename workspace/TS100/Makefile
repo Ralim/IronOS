@@ -80,12 +80,12 @@ bootldr_size=0x0
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
 			-mtune=size  \
-			-mcmodel=medany  \
+			-mcmodel=medlow  \
 			-DGD32VF103C_START \
 			-DUSE_STDPERIPH_DRIVER 
 DEV_LDFLAGS= -nostartfiles -Xlinker --gc-sections
 DEV_AFLAGS= -nostartfiles -ffreestanding
-DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fabi-version=0 
+DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fabi-version=11 
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 endif
@@ -112,8 +112,8 @@ $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 HEXFILE_DIR=Hexfile
 
 # temporary objects folder
-OUTPUT_DIR=Objects
-
+OUTPUT_DIR_BASE=Objects
+OUTPUT_DIR=Objects/$(model)
 # code optimisation ------------------------------------------------------------
 OPTIM=-Os  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
@@ -287,7 +287,7 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 	$(SIZE) $^
 	$(OBJCOPY) $^ -O binary $@
 
-$(OUT_HEXFILE).elf : $(OUT_OBJS_S)  $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRIPT)
+$(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
 	@echo $(LINKER_FLAGS)
@@ -316,7 +316,7 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 
 
 clean :
-	rm -Rf $(OUTPUT_DIR)
+	rm -Rf $(OUTPUT_DIR_BASE)
 	rm -Rf $(HEXFILE_DIR)
 
 # pull in dependency info for *existing* .o files
