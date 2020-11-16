@@ -66,7 +66,7 @@ function wait_for_ts100 {
 
 function mount_ts100 {
     mkdir -p "$DIR_TMP"
-    sudo mount -t msdos -o uid=$UID "$DEVICE" "$DIR_TMP"
+    sudo mount -t vfat -o uid=$UID,sync "$DEVICE" "$DIR_TMP"
     if [ $? -ne 0 ]; then
         echo "Failed to mount $DEVICE on $DIR_TMP"
         exit 1
