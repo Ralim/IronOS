@@ -269,7 +269,7 @@
 		"LockingMode": {
 			"text2": [
 				"Blocco",
-				"pulsanti"
+				"tasti"
 			],
 			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare/sbloccare <D: disattiva; T: blocca «Turbo»; C: blocco completo>"
 		}
