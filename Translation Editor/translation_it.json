@@ -12,7 +12,7 @@
 		"WarningTipTempString": "Temp punta:",
 		"BadTipString": "PUNTA KO",
 		"SleepingSimpleString": "Zzz ",
-		"SleepingAdvancedString": "Standby",
+		"SleepingAdvancedString": "Riposo",
 		"WarningSimpleString": "HOT!",
 		"WarningAdvancedString": "PUNTA CALDA!",
 		"SleepingTipAdvancedString": "Punta:",
@@ -24,9 +24,9 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Guad.: ",
 		"SettingsResetMessage": "Reset effettuato",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"LockingKeysString": "Blocc.",
+		"UnlockingKeysString": "Sblocc.",
+		"WarningKeysLockedString": "BLOCCATO"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -34,17 +34,17 @@
 		"SettingAutoChar": "A",
 		"SettingFastChar": "V",
 		"SettingSlowChar": "L",
-		"SettingStartSolderingChar": "A",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
+		"SettingStartSolderingChar": "S",
+		"SettingStartSleepChar": "R",
+		"SettingStartSleepOffChar": "A",
 		"SettingStartNoneChar": "D",
 		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
+		"SettingSensitivityLow": "B",
 		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
+		"SettingSensitivityHigh": "A",
 		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingLockBoostChar": "T",
+		"SettingLockFullChar": "C"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -87,16 +87,16 @@
 		"SleepTemperature": {
 			"text2": [
 				"Temp",
-				"standby"
+				"riposo"
 			],
-			"desc": "Imposta la temperatura da mantenere in modalità Standby <°C/°F>"
+			"desc": "Imposta la temperatura da mantenere in modalità Riposo <°C/°F>"
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Timer",
-				"standby"
+				"riposo"
 			],
-			"desc": "Imposta il timer per entrare in modalità Standby <minuti/secondi>"
+			"desc": "Imposta il timer per entrare in modalità Riposo <minuti/secondi>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
@@ -110,7 +110,7 @@
 				"Sensibilità",
 				"al movimento"
 			],
-			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Standby <0: nessuna; 1: minima; 9: massima>"
+			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo <0: nessuna; 1: minima; 9: massima>"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -145,7 +145,7 @@
 				"Avvio",
 				"automatico"
 			],
-			"desc": "Attiva automaticamente il saldatore quando viene alimentato <A: saldatura; S: standby; D: disattiva>"
+			"desc": "Attiva automaticamente il saldatore quando viene alimentato <D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente>"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -212,10 +212,10 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Potenza",
-				"alimentaz"
+				"Voltaggio",
+				"Quick Charge"
 			],
-			"desc": "Imposta la potenza massima erogabile dall'alimentatore in uso"
+			"desc": "Imposta il massimo voltaggio necessario alla negoziazione con un alimentatore Quick Charge"
 		},
 		"PowerLimit": {
 			"text2": [
@@ -261,17 +261,17 @@
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Effetto",
+				"Hall"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Regola la sensibilità alla rilevazione di supporti metallici per entrare in modalità Riposo <O: OFF; B: bassa; M: media; A: alta>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Blocco",
+				"tasti"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare/sbloccare <D: disattiva; T: blocca «Turbo»; C: blocco completo>"
 		}
 	}
 }
