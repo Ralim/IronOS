@@ -24,9 +24,9 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:",
 		"SettingsResetMessage": "Settings were\nreset!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"LockingKeysString": " UŽRAKINTA",
+		"UnlockingKeysString": "ATRAKINTA",
+		"WarningKeysLockedString": "!UŽRAKINTA!"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -35,16 +35,16 @@
 		"SettingFastChar": "T",
 		"SettingSlowChar": "N",
 		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F",
+		"SettingStartSleepChar": "M",
+		"SettingStartSleepOffChar": "K",
+		"SettingStartNoneChar": "N",
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "L",
 		"SettingSensitivityMedium": "M",
 		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingLockDisableChar": "I",
+		"SettingLockBoostChar": "T",
+		"SettingLockFullChar": "V"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -103,7 +103,7 @@
 				"Išjungimo",
 				"laikas"
 			],
-			"desc": "Išjungimo laikas <minutės>"
+			"desc": "Išsijungimo laikas <minutės>"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -145,7 +145,7 @@
 				"Auto",
 				"paleidimas"
 			],
-			"desc": "Ar pradėti kaitininti iš karto įjungus lituoklį"
+			"desc": "Ar pradėti kaitininti iš karto įjungus lituoklį <N=Ne, T=Taip, M=Miegas, K=Miegoti kambario temperatūroje>"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -198,31 +198,31 @@
 		},
 		"SimpleCalibrationMode": {
 			"text2": [
-				"Paprasta",
-				"kalibracija"
+				"Paprastas",
+				"kalibravimas"
 			],
-			"desc": "Paprasta kalibracija naudojant karštą vandienį"
+			"desc": "Paprastas kalibravimas naudojant karštą vandienį"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
-				"Išplėstinė",
-				"kalibracija"
+				"Išplėstinis",
+				"kalibravimas"
 			],
-			"desc": "Išplėstinė kalibracija naudojant termoelementą"
+			"desc": "Išplėstinis kalibravimas naudojant termoelementą"
 		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Galia",
 				"vatais"
 			],
-			"desc": "Maitinimo bloko galia vatais"
+			"desc": "Maitinimo bloko galia"
 		},
 		"PowerLimit": {
 			"text2": [
-				"Power",
-				"Limit"
+				"Galios",
+				"riba"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Didžiausia galia, kurią gali naudoti lituoklis <Vatai>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -268,10 +268,10 @@
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Mygtukų",
+				"užraktas"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte <I=Išjungta, T=Tik turbo, V=Visiškas užrakinimas>"
 		}
 	}
 }
