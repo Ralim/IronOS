@@ -9,7 +9,7 @@
 		"UVLOWarningString": "MAŽ VOLT",
 		"UndervoltageString": "Žema įtampa",
 		"InputVoltageString": "Įvestis V: ",
-		"WarningTipTempString": "Antgl Temp: ",
+		"WarningTipTempString": "Angal Temp: ",
 		"BadTipString": "BLOG ANT",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Miegu...",
@@ -70,7 +70,7 @@
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Išplėstin.",
+				"Išplėsti.",
 				"nustatymai"
 			],
 			"desc": "Išplėstiniai nustatymai"
@@ -212,10 +212,10 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Galia",
-				"vatais"
+				"QC maitinimo",
+				"bloko įtampa"
 			],
-			"desc": "Maitinimo bloko galia"
+			"desc": "Maksimali QC maitinimo bloko įtampa"
 		},
 		"PowerLimit": {
 			"text2": [
