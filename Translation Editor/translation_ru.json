@@ -247,31 +247,31 @@
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Питание",
+				"удержать пит."
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Интенсивность импульса удерживающего от сна источник питания"
 		},
 		"TipGain": {
 			"text2": [
-				"Modify",
-				"tip gain"
+				"Изменить",
+				"усиление жала"
 			],
-			"desc": "Tip gain"
+			"desc": "Усиление жала"
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Эффект Холла",
+				"чувствительность"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Чувствительность датчика холла в режиме сна <O=Выкл,L=Низкий,M=Средний,H=Высокий>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Кнопки активны",
+				"заблокировать"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "При работе, длинное нажатие обеих кнопок блокирует их <D=Отключено, B=Только турбо, F=Полная блокировка>"
 		}
 	}
 }
