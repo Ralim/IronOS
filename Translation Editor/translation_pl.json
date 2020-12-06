@@ -5,26 +5,26 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracja udana!",
-		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnęła temperaturę pokojową!",
+		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnęla temperaturę pokojową!",
 		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
 		"UVLOWarningString": "NISKIE DC",
-		"UndervoltageString": "Pod napięciem",
-		"InputVoltageString": "Wejściowe V: ",
+		"UndervoltageString": "Zbyt niskie napięcie",
+		"InputVoltageString": "Wej V: ",
 		"WarningTipTempString": "Temperatura grota: ",
-		"BadTipString": "ZŁY GROT",
+		"BadTipString": "ZLY GROT",
 		"SleepingSimpleString": "Zzz!",
 		"SleepingAdvancedString": "Uśpienie...",
 		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "GORĄCA KOŃCÓWKA!",
+		"WarningAdvancedString": "GORĄCY GROT!",
 		"SleepingTipAdvancedString": "Grot:",
 		"IdleTipString": "Grot:",
 		"IdleSetString": " Ustaw:",
-		"TipDisconnectedString": "GROT ODŁĄCZONY",
-		"SolderingAdvancedPowerPrompt": "Power: ",
-		"OffString": "Wyłącz",
+		"TipDisconnectedString": "GROT ODLĄCZONY",
+		"SolderingAdvancedPowerPrompt": "Moc: ",
+		"OffString": "Wylącz",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Twój zysk:",
-		"SettingsResetMessage": "Ustawienia zostały\nzresetowane!",
+		"SettingsResetMessage": "Ustawienia zostaly\nzresetowane!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -50,8 +50,8 @@
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
-				"Lutowanie",
-				"Ustawienia"
+				"Ustawienia",
+				"Lutowania"
 			],
 			"desc": "Ustawienia lutownicy"
 		},
@@ -64,15 +64,15 @@
 		},
 		"UIMenu": {
 			"text2": [
-				"Użytkownik",
-				"Interfejs"
+				"Interfejs",
+				"Użytkownika"
 			],
 			"desc": "Ustawienia interfejsu użytkownika"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Zaawansowane",
-				"Opcje"
+				"Opcje",
+				"Zaawansowane"
 			],
 			"desc": "Opcje zaawansowane"
 		}
@@ -80,38 +80,38 @@
 	"menuOptions": {
 		"DCInCutoff": {
 			"text2": [
-				"Źródło",
+				"Źródlo",
 				"zasilania"
 			],
-			"desc": "Źródło zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw Li>"
+			"desc": "Źródlo zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw Li>"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Temperatura",
 				"uśpienia"
 			],
-			"desc": "Temperatura uśpienia <°C>"
+			"desc": "Temperatura podczas uśpienia <°C>"
 		},
 		"SleepTimeout": {
 			"text2": [
-				"Czas",
+				"Czas do",
 				"uśpienia"
 			],
-			"desc": "Czas uśpienia <minuty/sekundy>"
+			"desc": "Czas bezczynności do uśpienia <minuty/sekundy>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
-				"Czas",
-				"wyłączenia"
+				"Czas do",
+				"wylączenia"
 			],
-			"desc": "Czas wyłączenia <minuty>"
+			"desc": "Czas bezczynności do wylączenia <minuty>"
 		},
 		"MotionSensitivity": {
 			"text2": [
-				"Czułość",
+				"Czulość",
 				"ruchu"
 			],
-			"desc": "Czułość ruchu <0.Wyłączona 1.Minimalna 9.Maksymalna>"
+			"desc": "Czulość ruchu <0.Wylączona 1.Minimalna 9.Maksymalna>"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -122,10 +122,10 @@
 		},
 		"AdvancedIdle": {
 			"text2": [
-				"Mniejsza",
+				"mala",
 				"czcionka"
 			],
-			"desc": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
+			"desc": "Wyświetla szczególowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
 		},
 		"DisplayRotation": {
 			"text2": [
@@ -146,7 +146,7 @@
 				"Automatyczne",
 				"uruchamianie"
 			],
-			"desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania.<B - wyłączone, T - lutowanie, Z - uśpienie, O - uśpienie w temp. pokojowej"
+			"desc": "Automatyczne uruchamianie trybu lutowania po wlączeniu zasilania.<B - wylączone, T - lutowanie, Z - uśpienie, O - uśpienie w temp. pokojowej"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -178,10 +178,10 @@
 		},
 		"AdvancedSoldering": {
 			"text2": [
-				"Szczegółowe",
+				"Szczególowe",
 				"informacje"
 			],
-			"desc": "Wyświetl szczegółowe informacje podczas lutowania"
+			"desc": "Wyświetl szczególowe informacje podczas lutowania"
 		},
 		"ScrollingSpeed": {
 			"text2": [
@@ -202,7 +202,7 @@
 				"Prosta",
 				"kalibracja"
 			],
-			"desc": "Prosta kalibracja, używając gorącej wody"
+			"desc": "Prosta kalibracja, z użyciem gorącej wody"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
@@ -213,7 +213,7 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Moc",
+				"Moc zas.",
 				"w W"
 			],
 			"desc": "Moc używanego zasilacza w Wattach"
@@ -230,21 +230,21 @@
 				"Zamień przyciski",
 				"+ -"
 			],
-			"desc": "Zamienia działanie przycisków zmiany temperatury grotu"
+			"desc": "Zamienia miejscami dzialanie przycisków zmiany temperatury grotu"
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"Szybka zmiana",
+				"Dokladna zmiana",
 				"temperatury"
 			],
 			"desc": "Zmiany temperatury krok po korku, po krótkim naciśnięciu przycisku"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Wolna zmiana",
+				"Szybka zmiana",
 				"temperatury"
 			],
-			"desc": "Zmiany temperatury krok po korku, po długim naciśnięciu przycisku"
+			"desc": "Zmiany temperatury krok po korku, po dlugim naciśnięciu przycisku"
 		},
 		"PowerPulsePower": {
 			"text2": [
@@ -255,24 +255,24 @@
 		},
 		"TipGain": {
 			"text2": [
-				"Zmodyfikowany",
+				"Zmień",
 				"zysk grotu"
 			],
 			"desc": "Zysk grotu"
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Czulość",
+				"Efektu Halla"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Czulośc czujnika Halla podczas wykrywania braku ruchu <O=Wylączona,L=Niska,M=Średnia,H=Wysoka>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Blokada",
+				"przycisków"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Podczas lutowania, dlugie naciśnięcie obu przycisków <D=Wylączone, B=Boost, F=Blokada>"
 		}
 	}
 }
