@@ -136,8 +136,8 @@
 		},
 		"BoostTemperature": {
 			"text2": [
-				"Temperatura",
-				"w trybie boost"
+				"Temp.",
+				"boost"
 			],
 			"desc": "Temperatura w trybie \"boost\" "
 		},
@@ -227,21 +227,21 @@
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
-				"Zamień przyciski",
-				"+ -"
+				"Zamień",
+				"przyc. + -"
 			],
 			"desc": "Zamienia miejscami dzialanie przycisków zmiany temperatury grotu"
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"Dokladna zmiana",
+				"Maly skok",
 				"temperatury"
 			],
 			"desc": "Zmiany temperatury krok po korku, po krótkim naciśnięciu przycisku"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Szybka zmiana",
+				"Duży skok",
 				"temperatury"
 			],
 			"desc": "Zmiany temperatury krok po korku, po dlugim naciśnięciu przycisku"
