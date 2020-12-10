@@ -10,7 +10,7 @@
 #include <I2C_Wrapper.hpp>
 SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
-#define I2C_TIME_OUT (uint16_t)(5000)
+#define I2C_TIME_OUT (uint16_t)(12000)
 void FRToSI2C::CpltCallback() {
   // TODO
 }
@@ -353,7 +353,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
       dma_channel_enable(DMA0, DMA_CH5);
       /* wait until BTC bit is set */
       while (!dma_flag_get(DMA0, DMA_CH5, DMA_FLAG_FTF)) {
-        osDelay(1);
+        osDelay(2);
       }
       /* wait until BTC bit is set */
       while (!i2c_flag_get(I2C0, I2C_FLAG_BTC))

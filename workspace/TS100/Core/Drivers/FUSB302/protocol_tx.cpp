@@ -16,19 +16,18 @@
  */
 
 #include "protocol_tx.h"
-#include <pd.h>
-#include "policy_engine.h"
-#include "protocol_rx.h"
 #include "fusb302b.h"
 #include "fusbpd.h"
+#include "policy_engine.h"
+#include "protocol_rx.h"
+#include <pd.h>
 
 osThreadId ProtocolTransmit::TaskHandle = NULL;
 uint32_t ProtocolTransmit::TaskBuffer[ProtocolTransmit::TaskStackSize];
 osStaticThreadDef_t ProtocolTransmit::TaskControlBlock;
 StaticQueue_t ProtocolTransmit::xStaticQueue;
 bool ProtocolTransmit::messageSending = false;
-uint8_t ProtocolTransmit::ucQueueStorageArea[PDB_MSG_POOL_SIZE
-		* sizeof(union pd_msg)];
+uint8_t ProtocolTransmit::ucQueueStorageArea[PDB_MSG_POOL_SIZE * sizeof(union pd_msg)];
 QueueHandle_t ProtocolTransmit::messagesWaiting = NULL;
 uint8_t ProtocolTransmit::_tx_messageidcounter;
 union pd_msg ProtocolTransmit::temp_msg;
@@ -38,261 +37,253 @@ StaticEventGroup_t ProtocolTransmit::xCreatedEventGroup;
  * PRL_Tx_PHY_Layer_Reset state
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_phy_reset() {
-	/* Reset the PHY */
-	fusb_reset();
+    /* Reset the PHY */
+    fusb_reset();
 
-	/* If a message was pending when we got here, tell the policy engine that
+    /* If a message was pending when we got here, tell the policy engine that
 	 * we failed to send it */
-	if (messagePending()) {
-		/* Tell the policy engine that we failed */
-		PolicyEngine::notify( PDB_EVT_PE_TX_ERR);
-		/* Finish failing to send the message */
-		while (messagePending()) {
-			getMessage(); //Discard
-		}
-	}
+    if (messagePending()) {
+        /* Tell the policy engine that we failed */
+        PolicyEngine::notify(PDB_EVT_PE_TX_ERR);
+        /* Finish failing to send the message */
+        while (messagePending()) {
+            getMessage(); //Discard
+        }
+    }
 
-	/* Wait for a message request */
-	return PRLTxWaitMessage;
+    /* Wait for a message request */
+    return PRLTxWaitMessage;
 }
 
 /*
  * PRL_Tx_Wait_for_Message_Request state
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_message() {
-	/* Wait for an event */
-	ProtocolTransmit::Notifications evt = waitForEvent(
-			(uint32_t) Notifications::PDB_EVT_PRLTX_RESET
-					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD
-					| (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX);
+    /* Wait for an event */
+    ProtocolTransmit::Notifications evt = waitForEvent(
+        (uint32_t)Notifications::PDB_EVT_PRLTX_RESET | (uint32_t)Notifications::PDB_EVT_PRLTX_DISCARD | (uint32_t)Notifications::PDB_EVT_PRLTX_MSG_TX);
 
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
-		return PRLTxPHYReset;
-	}
+    if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_PRLTX_RESET) {
+        return PRLTxPHYReset;
+    }
 
-	/* If the policy engine is trying to send a message */
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_MSG_TX) {
-		/* Get the message */
-		getMessage();
+    /* If the policy engine is trying to send a message */
+    if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_PRLTX_MSG_TX) {
+        /* Get the message */
+        getMessage();
 
-		/* If it's a Soft_Reset, reset the TX layer first */
-		if (PD_MSGTYPE_GET(&temp_msg) == PD_MSGTYPE_SOFT_RESET
-				&& PD_NUMOBJ_GET(&(temp_msg)) == 0) {
-			return PRLTxReset;
-			/* Otherwise, just send the message */
-		} else {
-			return PRLTxConstructMessage;
-		}
-	}
+        /* If it's a Soft_Reset, reset the TX layer first */
+        if (PD_MSGTYPE_GET(&temp_msg) == PD_MSGTYPE_SOFT_RESET && PD_NUMOBJ_GET(&(temp_msg)) == 0) {
+            return PRLTxReset;
+            /* Otherwise, just send the message */
+        } else {
+            return PRLTxConstructMessage;
+        }
+    }
 
-	/* Silence the compiler warning */
-	return PRLTxWaitMessage;
+    /* Silence the compiler warning */
+    return PRLTxWaitMessage;
 }
 
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
-	/* Clear MessageIDCounter */
-	_tx_messageidcounter = 0;
+    /* Clear MessageIDCounter */
+    _tx_messageidcounter = 0;
 
-	/* Tell the Protocol RX thread to reset */
-	ProtocolReceive::notify( PDB_EVT_PRLRX_RESET);
-	taskYIELD();
+    /* Tell the Protocol RX thread to reset */
+    ProtocolReceive::notify(PDB_EVT_PRLRX_RESET);
+    taskYIELD();
 
-	return PRLTxConstructMessage;
+    return PRLTxConstructMessage;
 }
 
 /*
  * PRL_Tx_Construct_Message state
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_message() {
-	/* Set the correct MessageID in the message */
-	temp_msg.hdr &= ~PD_HDR_MESSAGEID;
-	temp_msg.hdr |= (_tx_messageidcounter % 8) << PD_HDR_MESSAGEID_SHIFT;
+    /* Set the correct MessageID in the message */
+    temp_msg.hdr &= ~PD_HDR_MESSAGEID;
+    temp_msg.hdr |= (_tx_messageidcounter % 8) << PD_HDR_MESSAGEID_SHIFT;
 
-	/* PD 3.0 collision avoidance */
-//	if (PolicyEngine::isPD3_0()) {
-//		/* If we're starting an AMS, wait for permission to transmit */
-//		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
-//				0);
-//		if ((uint32_t) evt
-//				& (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
-//			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
-//				osDelay(1);
-//			}
-//		}
-//	}
-	messageSending = true;
-	/* Send the message to the PHY */
-	fusb_send_message(&temp_msg);
+    /* PD 3.0 collision avoidance */
+    //	if (PolicyEngine::isPD3_0()) {
+    //		/* If we're starting an AMS, wait for permission to transmit */
+    //		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
+    //				0);
+    //		if ((uint32_t) evt
+    //				& (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
+    //			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
+    //				osDelay(1);
+    //			}
+    //		}
+    //	}
+    messageSending = true;
+    /* Send the message to the PHY */
+    fusb_send_message(&temp_msg);
 
-	return PRLTxWaitResponse;
+    return PRLTxWaitResponse;
 }
 
 /*
  * PRL_Tx_Wait_for_PHY_Response state
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_response() {
-	/* Wait for an event.  There is no need to run CRCReceiveTimer, since the
+    /* Wait for an event.  There is no need to run CRCReceiveTimer, since the
 	 * FUSB302B handles that as part of its retry mechanism. */
-	ProtocolTransmit::Notifications evt = waitForEvent(
-			(uint32_t) Notifications::PDB_EVT_PRLTX_RESET
-					| (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD
-					| (uint32_t) Notifications::PDB_EVT_PRLTX_I_TXSENT
-					| (uint32_t) Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
+    ProtocolTransmit::Notifications evt = waitForEvent(
+        (uint32_t)Notifications::PDB_EVT_PRLTX_RESET | (uint32_t)Notifications::PDB_EVT_PRLTX_DISCARD | (uint32_t)Notifications::PDB_EVT_PRLTX_I_TXSENT | (uint32_t)Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
 
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_RESET) {
-		return PRLTxPHYReset;
-	}
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_DISCARD) {
-		return PRLTxDiscardMessage;
-	}
+    if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_PRLTX_RESET) {
+        return PRLTxPHYReset;
+    }
+    if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_PRLTX_DISCARD) {
+        return PRLTxDiscardMessage;
+    }
 
-	/* If the message was sent successfully */
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_TXSENT) {
-		return PRLTxMatchMessageID;
-	}
-	/* If the message failed to be sent */
-	if ((uint32_t) evt & (uint32_t) Notifications::PDB_EVT_PRLTX_I_RETRYFAIL) {
-		return PRLTxTransmissionError;
-	}
+    /* If the message was sent successfully */
+    if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_PRLTX_I_TXSENT) {
+        return PRLTxMatchMessageID;
+    }
+    /* If the message failed to be sent */
+    if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_PRLTX_I_RETRYFAIL) {
+        return PRLTxTransmissionError;
+    }
 
-	/* Silence the compiler warning */
-	return PRLTxDiscardMessage;
+    /* Silence the compiler warning */
+    return PRLTxDiscardMessage;
 }
 
 /*
  * PRL_Tx_Match_MessageID state
  */
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_match_messageid() {
-	union pd_msg goodcrc;
+    union pd_msg goodcrc;
 
-	/* Read the GoodCRC */
-	fusb_read_message(&goodcrc);
+    /* Read the GoodCRC */
+    fusb_read_message(&goodcrc);
 
-	/* Check that the message is correct */
-	if (PD_MSGTYPE_GET(&goodcrc) == PD_MSGTYPE_GOODCRC
-			&& PD_NUMOBJ_GET(&goodcrc) == 0
-			&& PD_MESSAGEID_GET(&goodcrc) == _tx_messageidcounter) {
-		return PRLTxMessageSent;
-	} else {
-		return PRLTxTransmissionError;
-	}
+    /* Check that the message is correct */
+    if (PD_MSGTYPE_GET(&goodcrc) == PD_MSGTYPE_GOODCRC && PD_NUMOBJ_GET(&goodcrc) == 0 && PD_MESSAGEID_GET(&goodcrc) == _tx_messageidcounter) {
+        return PRLTxMessageSent;
+    } else {
+        return PRLTxTransmissionError;
+    }
 }
 
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_transmission_error() {
-	/* Increment MessageIDCounter */
-	_tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
+    /* Increment MessageIDCounter */
+    _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
-	/* Tell the policy engine that we failed */
-	PolicyEngine::notify( PDB_EVT_PE_TX_ERR);
+    /* Tell the policy engine that we failed */
+    PolicyEngine::notify(PDB_EVT_PE_TX_ERR);
 
-	return PRLTxWaitMessage;
+    return PRLTxWaitMessage;
 }
 
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_message_sent() {
-	messageSending = false;
-	/* Increment MessageIDCounter */
-	_tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
+    messageSending = false;
+    /* Increment MessageIDCounter */
+    _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
-	/* Tell the policy engine that we succeeded */
-	PolicyEngine::notify( PDB_EVT_PE_TX_DONE);
+    /* Tell the policy engine that we succeeded */
+    PolicyEngine::notify(PDB_EVT_PE_TX_DONE);
 
-	return PRLTxWaitMessage;
+    return PRLTxWaitMessage;
 }
 
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_discard_message() {
-	/* If we were working on sending a message, increment MessageIDCounter */
-	if (messageSending) {
-		_tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
+    /* If we were working on sending a message, increment MessageIDCounter */
+    if (messageSending) {
+        _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
-		return PRLTxPHYReset;
-	} else {
-		return PRLTxWaitMessage;
-	}
+        return PRLTxPHYReset;
+    } else {
+        return PRLTxWaitMessage;
+    }
 }
 void ProtocolTransmit::thread(const void *args) {
-	(void) args;
-	ProtocolTransmit::protocol_tx_state state = PRLTxPHYReset;
+    (void)args;
+    ProtocolTransmit::protocol_tx_state state = PRLTxPHYReset;
 
-	//Init the incoming message queue
+    //Init the incoming message queue
 
-	while (true) {
-		switch (state) {
-		case PRLTxPHYReset:
-			state = protocol_tx_phy_reset();
-			break;
-		case PRLTxWaitMessage:
-			state = protocol_tx_wait_message();
-			break;
-		case PRLTxReset:
-			state = protocol_tx_reset();
-			break;
-		case PRLTxConstructMessage:
-			state = protocol_tx_construct_message();
-			break;
-		case PRLTxWaitResponse:
-			state = protocol_tx_wait_response();
-			break;
-		case PRLTxMatchMessageID:
-			state = protocol_tx_match_messageid();
-			break;
-		case PRLTxTransmissionError:
-			state = protocol_tx_transmission_error();
-			break;
-		case PRLTxMessageSent:
-			state = protocol_tx_message_sent();
-			break;
-		case PRLTxDiscardMessage:
-			state = protocol_tx_discard_message();
-			break;
-		default:
-			state = PRLTxPHYReset;
-			break;
-		}
-	}
+    while (true) {
+        switch (state) {
+        case PRLTxPHYReset:
+            state = protocol_tx_phy_reset();
+            break;
+        case PRLTxWaitMessage:
+            state = protocol_tx_wait_message();
+            break;
+        case PRLTxReset:
+            state = protocol_tx_reset();
+            break;
+        case PRLTxConstructMessage:
+            state = protocol_tx_construct_message();
+            break;
+        case PRLTxWaitResponse:
+            state = protocol_tx_wait_response();
+            break;
+        case PRLTxMatchMessageID:
+            state = protocol_tx_match_messageid();
+            break;
+        case PRLTxTransmissionError:
+            state = protocol_tx_transmission_error();
+            break;
+        case PRLTxMessageSent:
+            state = protocol_tx_message_sent();
+            break;
+        case PRLTxDiscardMessage:
+            state = protocol_tx_discard_message();
+            break;
+        default:
+            state = PRLTxPHYReset;
+            break;
+        }
+    }
 }
 
 void ProtocolTransmit::notify(ProtocolTransmit::Notifications notification) {
-	if (xEventGroupHandle != NULL) {
-		xEventGroupSetBits(xEventGroupHandle, (uint32_t) notification);
-	}
+    if (xEventGroupHandle != NULL) {
+        xEventGroupSetBits(xEventGroupHandle, (uint32_t)notification);
+    }
 }
 
 void ProtocolTransmit::init() {
-	messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
-			sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
+    messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE,
+                                         sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
 
-	osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PRL, 0, TaskStackSize,
-			TaskBuffer, &TaskControlBlock);
-	TaskHandle = osThreadCreate(osThread(pd_txTask), NULL);
-	xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);
+    osThreadStaticDef(pd_txTask, thread, PDB_PRIO_PRL, 0, TaskStackSize,
+                      TaskBuffer, &TaskControlBlock);
+    TaskHandle = osThreadCreate(osThread(pd_txTask), NULL);
+    xEventGroupHandle = xEventGroupCreateStatic(&xCreatedEventGroup);
 }
 
 void ProtocolTransmit::pushMessage(union pd_msg *msg) {
-	if (messagesWaiting) {
-		xQueueSend(messagesWaiting, msg, 100);
-	}
+    if (messagesWaiting) {
+        xQueueSend(messagesWaiting, msg, 100);
+    }
 }
 
 bool ProtocolTransmit::messagePending() {
-	if (messagesWaiting) {
-		return uxQueueMessagesWaiting(messagesWaiting) > 0;
-	}
-	return false;
+    if (messagesWaiting) {
+        return uxQueueMessagesWaiting(messagesWaiting) > 0;
+    }
+    return false;
 }
 
 void ProtocolTransmit::getMessage() {
-	//Loads the pending message into the buffer
-	if (messagesWaiting) {
-		xQueueReceive(messagesWaiting, &temp_msg, 1);
-	}
+    //Loads the pending message into the buffer
+    if (messagesWaiting) {
+        xQueueReceive(messagesWaiting, &temp_msg, 1);
+    }
 }
 
 ProtocolTransmit::Notifications ProtocolTransmit::waitForEvent(uint32_t mask,
-		uint32_t ticksToWait) {
-	if (xEventGroupHandle) {
-		return (Notifications) xEventGroupWaitBits(xEventGroupHandle, mask,
-				mask,
-				pdFALSE, ticksToWait);
-	}
-	return (Notifications)0;
+                                                               TickType_t ticksToWait) {
+    if (xEventGroupHandle) {
+        return (Notifications)xEventGroupWaitBits(xEventGroupHandle, mask,
+                                                  mask,
+                                                  pdFALSE, ticksToWait);
+    }
+    return (Notifications)0;
 }

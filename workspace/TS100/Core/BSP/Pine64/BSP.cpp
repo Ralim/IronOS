@@ -7,7 +7,6 @@
 #include "gd32vf103_timer.h"
 #include "history.hpp"
 #include "main.hpp"
-#include "systick.h"
 #include <IRQ.h>
 
 const uint16_t powerPWM = 255;

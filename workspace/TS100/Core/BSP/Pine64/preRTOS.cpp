@@ -5,6 +5,7 @@
  *      Author: Ralim
  */
 
+#include "gd32vf103_libopt.h"
 #include "BSP.h"
 #include "Pins.h"
 #include "Setup.h"

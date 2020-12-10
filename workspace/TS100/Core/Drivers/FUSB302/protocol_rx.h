@@ -28,37 +28,40 @@
 #define PDB_EVT_PRLRX_I_RXPEND EVENT_MASK(2)
 
 class ProtocolReceive {
-public:
-	static void init();
-	static void notify(uint32_t notification);
-private:
-	static void thread(const void *args);
+  public:
+    static void init();
+    static void notify(uint32_t notification);
 
-	static EventGroupHandle_t xEventGroupHandle;
-	static StaticEventGroup_t xCreatedEventGroup;
-	static osThreadId TaskHandle;
-	static const size_t TaskStackSize = 1024 / 4;
-	static uint32_t TaskBuffer[TaskStackSize];
-	static osStaticThreadDef_t TaskControlBlock;
-	/*
+  private:
+    static void thread(const void *args);
+
+    static EventGroupHandle_t xEventGroupHandle;
+    static StaticEventGroup_t xCreatedEventGroup;
+    static osThreadId TaskHandle;
+    static const size_t TaskStackSize = 1024 / 4;
+    static uint32_t TaskBuffer[TaskStackSize];
+    static osStaticThreadDef_t TaskControlBlock;
+    /*
 	 * Protocol RX machine states
 	 *
 	 * There is no Send_GoodCRC state because the PHY sends the GoodCRC for us.
 	 * All transitions that would go to that state instead go to Check_MessageID.
 	 */
-	enum protocol_rx_state {
-		PRLRxWaitPHY, PRLRxReset, PRLRxCheckMessageID, PRLRxStoreMessageID
-	};
-	static protocol_rx_state protocol_rx_store_messageid();
-	static protocol_rx_state protocol_rx_check_messageid();
-	static protocol_rx_state protocol_rx_reset();
-	static protocol_rx_state protocol_rx_wait_phy();
-	static union pd_msg tempMessage;
-	static uint8_t _rx_messageid;
-	static uint8_t _tx_messageidcounter;
-	static uint32_t waitForEvent(uint32_t mask, uint32_t ticksToWait =
-	portMAX_DELAY);
-
+    enum protocol_rx_state {
+        PRLRxWaitPHY,
+        PRLRxReset,
+        PRLRxCheckMessageID,
+        PRLRxStoreMessageID
+    };
+    static protocol_rx_state protocol_rx_store_messageid();
+    static protocol_rx_state protocol_rx_check_messageid();
+    static protocol_rx_state protocol_rx_reset();
+    static protocol_rx_state protocol_rx_wait_phy();
+    static union pd_msg tempMessage;
+    static uint8_t _rx_messageid;
+    static uint8_t _tx_messageidcounter;
+    static uint32_t waitForEvent(uint32_t mask, TickType_t ticksToWait =
+                                                    portMAX_DELAY);
 };
 
 #endif /* PDB_PROTOCOL_RX_H */

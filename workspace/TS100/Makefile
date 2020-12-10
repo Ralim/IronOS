@@ -9,10 +9,10 @@ endif
 
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
-INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
-CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
-HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
-HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
+MINIWARE_INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
+MINIWARE_CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
+MINIWARE_HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
+MINIWARE_HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 MINIWARE_STARTUP_DIR = ./Startup
@@ -21,9 +21,11 @@ BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
 MINIWARE_INC_DIR = ./Core/BSP/Miniware
 PINE_INC_DIR = ./Core/BSP/Pine64
-PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/Lib
-PINE_RISCV_INC_DIR = ./Core/BSP/Pine64/Vendor/RISCV
-PINE_N200_INC_DIR = ./Core/BSP/Pine64/N200
+PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include
+PINE_BOARD_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Include
+PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include/Usb
+PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
+PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
 SOURCE_DRIVERS_DIR = ./Core/Drivers
@@ -34,11 +36,10 @@ SOURCE_MIDDLEWARES_DIR = ./Middlewares
 ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 $(info Building for Miniware )
 DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
-	-I$(INC_CMSIS_DEVICE)\
-	-I$(CMSIS_CORE_INC_DIR)	\
-	-I$(HAL_INC_DIR)	\
-	-I$(HAL_LEGACY_INC_DIR)	\
-	-I$(INC_PD_DRIVERS_DIR)
+	-I$(MINIWARE_INC_CMSIS_DEVICE)\
+	-I$(MINIWARE_CMSIS_CORE_INC_DIR)	\
+	-I$(MINIWARE_HAL_INC_DIR)	\
+	-I$(MINIWARE_HAL_LEGACY_INC_DIR)
 DEVICE_BSP_DIR = ./Core/BSP/Miniware
 S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=stm32f103.ld
@@ -63,17 +64,16 @@ endif
 ifeq ($(model),Pinecil)
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
--I$(PINE_INC_DIR)/N200 \
-	-I$(PINE_VENDOR_INC_DIR) \
-	-I$(PINE_RISCV_INC_DIR) \
-	-I$(PINE_N200_INC_DIR)\
-	-I$(INC_PD_DRIVERS_DIR)
+-I$(PINE_VENDOR_INC_DIR) \
+-I$(PINE_BOARD_INC_DIR) \
+-I$(PINE_VENDOR_USB_INC_DIR) \
+-I$(PINE_NMSIS_INC_DIR) \
+-I$(PINE_FREERTOS_PORT_INC_DIR) 
 	
 DEVICE_BSP_DIR = ./Core/BSP/Pine64
-S_SRCS := ./Core/BSP/Pine64/N200/portasm.S  
-$(info $(S_SRCS) )
+S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
-LDSCRIPT=GD32VF103xB.ld
+LDSCRIPT=./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
 flash_size=128k
 bootldr_size=0x0
 # Flags
@@ -96,6 +96,7 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
 	-I$(THREADS_INC_DIR) \
+	-I$(INC_PD_DRIVERS_DIR) \
 	  $(DEVICE_INCLUDES) 
 	  
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
