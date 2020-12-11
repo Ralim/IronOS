@@ -258,13 +258,13 @@ SECTIONS
   {
     . = ABSOLUTE(__FLASH_END_ADDR__ - 2048);
     KEEP (*(.logo_page*))
-  } > ROM
+  } > flash
 
   .settings_page (NOLOAD) :
   {
     . = ABSOLUTE(__FLASH_END_ADDR__ - 1024);
     KEEP (*(.settings_page*))
-  } > ROM
+  } > flash
   . = ALIGN(4);
   PROVIDE( _edata = . );
   PROVIDE( edata = . );

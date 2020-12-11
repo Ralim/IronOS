@@ -285,12 +285,6 @@ _start0800:
 
     /* ===== Startup Stage 2 ===== */
 
-#ifdef __riscv_flen
-    /* Enable FPU */
-    li t0, MSTATUS_FS
-    csrs mstatus, t0
-    csrw fcsr, x0
-#endif
 
     /* Enable mcycle and minstret counter */
     csrci CSR_MCOUNTINHIBIT, 0x5
@@ -356,12 +350,8 @@ _start0800:
     li a0, 0
     li a1, 0
 
-#ifdef RTOS_RTTHREAD
-    // Call entry function when using RT-Thread
-    call entry
-#else
     call main
-#endif
+
     /* do post-main steps after main */
     call _postmain_fini
 
