@@ -25,6 +25,7 @@
  * 1 tab == 4 spaces!
  */
 
+
 #ifndef PORTMACRO_H
 #define PORTMACRO_H
 
@@ -45,92 +46,90 @@ extern "C" {
  */
 
 /* Type definitions. */
-#define portCHAR char
-#define portFLOAT float
-#define portDOUBLE double
-#define portLONG long
-#define portSHORT short
-#define portSTACK_TYPE unsigned long
-#define portBASE_TYPE long
-#define portPOINTER_SIZE_TYPE unsigned long
+#define portCHAR                    char
+#define portFLOAT                   float
+#define portDOUBLE                  double
+#define portLONG                    long
+#define portSHORT                   short
+#define portSTACK_TYPE              unsigned long
+#define portBASE_TYPE               long
+#define portPOINTER_SIZE_TYPE       unsigned long
 
 typedef portSTACK_TYPE StackType_t;
 typedef long BaseType_t;
 typedef unsigned long UBaseType_t;
 
-#if (configUSE_16_BIT_TICKS == 1)
-typedef uint16_t TickType_t;
-#define portMAX_DELAY (TickType_t)0xffff
+#if( configUSE_16_BIT_TICKS == 1 )
+    typedef uint16_t TickType_t;
+    #define portMAX_DELAY           ( TickType_t )0xffff
 #else
-/* RISC-V TIMER is 64-bit long */
-typedef uint64_t TickType_t;
-#define portMAX_DELAY (TickType_t)0xFFFFFFFFFFFFFFFFULL
+    /* RISC-V TIMER is 64-bit long */
+    typedef uint64_t TickType_t;
+    #define portMAX_DELAY           ( TickType_t )0xFFFFFFFFFFFFFFFFULL
 #endif
 /*-----------------------------------------------------------*/
 
 /* Architecture specifics. */
-#define portSTACK_GROWTH (-1)
-#define portTICK_PERIOD_MS ((TickType_t)1000 / configTICK_RATE_HZ)
-#define portBYTE_ALIGNMENT 8
+#define portSTACK_GROWTH            ( -1 )
+#define portTICK_PERIOD_MS          ( ( TickType_t ) 1000 / configTICK_RATE_HZ )
+#define portBYTE_ALIGNMENT          8
 /*-----------------------------------------------------------*/
 
 /* Scheduler utilities. */
-#define portYIELD()                                                                \
-    {                                                                              \
-        /* Set a software interrupt(SWI) request to request a context switch. */   \
-        SysTimer_SetSWIRQ();                                                       \
-        /* Barriers are normally not required but do ensure the code is completely \
-        within the specified behaviour for the architecture. */                    \
-        __RWMB();                                                                  \
-    }
+#define portYIELD()                                                             \
+{                                                                               \
+    /* Set a software interrupt(SWI) request to request a context switch. */    \
+    SysTimer_SetSWIRQ();                                                        \
+    /* Barriers are normally not required but do ensure the code is completely  \
+    within the specified behaviour for the architecture. */                     \
+    __RWMB();                                                                   \
+}
 
-#define portEND_SWITCHING_ISR(xSwitchRequired) \
-    if (xSwitchRequired != pdFALSE)            \
-    portYIELD()
-#define portYIELD_FROM_ISR(x) portEND_SWITCHING_ISR(x)
+#define portEND_SWITCHING_ISR( xSwitchRequired )    if ( xSwitchRequired != pdFALSE ) portYIELD()
+#define portYIELD_FROM_ISR( x )                     portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
 /* Critical section management. */
-extern void vPortEnterCritical(void);
-extern void vPortExitCritical(void);
+extern void vPortEnterCritical( void );
+extern void vPortExitCritical( void );
 
-#define portSET_INTERRUPT_MASK_FROM_ISR() ulPortRaiseBASEPRI()
-#define portCLEAR_INTERRUPT_MASK_FROM_ISR(x) vPortSetBASEPRI(x)
-#define portDISABLE_INTERRUPTS() vPortRaiseBASEPRI()
-#define portENABLE_INTERRUPTS() vPortSetBASEPRI(0)
-#define portENTER_CRITICAL() vPortEnterCritical()
-#define portEXIT_CRITICAL() vPortExitCritical()
+#define portSET_INTERRUPT_MASK_FROM_ISR()       ulPortRaiseBASEPRI()
+#define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)    vPortSetBASEPRI(x)
+#define portDISABLE_INTERRUPTS()                vPortRaiseBASEPRI()
+#define portENABLE_INTERRUPTS()                 vPortSetBASEPRI(0)
+#define portENTER_CRITICAL()                    vPortEnterCritical()
+#define portEXIT_CRITICAL()                     vPortExitCritical()
 
 /*-----------------------------------------------------------*/
 
 /* Task function macros as described on the FreeRTOS.org WEB site.  These are
 not necessary for to use this port.  They are defined so the common demo files
 (which build with all the ports) will build. */
-#define portTASK_FUNCTION_PROTO(vFunction, pvParameters) void vFunction(void *pvParameters)
-#define portTASK_FUNCTION(vFunction, pvParameters) void vFunction(void *pvParameters)
+#define portTASK_FUNCTION_PROTO( vFunction, pvParameters )      void vFunction( void *pvParameters )
+#define portTASK_FUNCTION( vFunction, pvParameters )            void vFunction( void *pvParameters )
 /*-----------------------------------------------------------*/
 
 /* Tickless idle/low power functionality. */
 #ifndef portSUPPRESS_TICKS_AND_SLEEP
-extern void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime);
-#define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime) vPortSuppressTicksAndSleep(xExpectedIdleTime)
+    extern void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime );
+    #define portSUPPRESS_TICKS_AND_SLEEP( xExpectedIdleTime )   vPortSuppressTicksAndSleep( xExpectedIdleTime )
 #endif
 /*-----------------------------------------------------------*/
 
 /*-----------------------------------------------------------*/
 
 #ifdef configASSERT
-extern void vPortValidateInterruptPriority(void);
-#define portASSERT_IF_INTERRUPT_PRIORITY_INVALID() vPortValidateInterruptPriority()
+    extern void vPortValidateInterruptPriority( void );
+    #define portASSERT_IF_INTERRUPT_PRIORITY_INVALID()          vPortValidateInterruptPriority()
 #endif
 
 /* portNOP() is not required by this port. */
-#define portNOP() __NOP()
+#define portNOP()                   __NOP()
 
-#define portINLINE __inline
+#define portINLINE                  __inline
 
 #ifndef portFORCE_INLINE
-#define portFORCE_INLINE inline __attribute__((always_inline))
+    #define portFORCE_INLINE        inline __attribute__(( always_inline))
 #endif
 
 /* This variable should not be set in any of the FreeRTOS application
@@ -138,14 +137,16 @@ extern void vPortValidateInterruptPriority(void);
 extern uint8_t uxMaxSysCallMTH;
 
 /*-----------------------------------------------------------*/
-portFORCE_INLINE static void vPortRaiseBASEPRI(void) {
+portFORCE_INLINE static void vPortRaiseBASEPRI( void )
+{
     ECLIC_SetMth(uxMaxSysCallMTH);
     __RWMB();
 }
 
 /*-----------------------------------------------------------*/
 
-portFORCE_INLINE static uint8_t ulPortRaiseBASEPRI(void) {
+portFORCE_INLINE static uint8_t ulPortRaiseBASEPRI( void )
+{
     uint8_t ulOriginalBASEPRI;
 
     ulOriginalBASEPRI = ECLIC_GetMth();
@@ -158,17 +159,18 @@ portFORCE_INLINE static uint8_t ulPortRaiseBASEPRI(void) {
 }
 /*-----------------------------------------------------------*/
 
-portFORCE_INLINE static void vPortSetBASEPRI(uint8_t ulNewMaskValue) {
+portFORCE_INLINE static void vPortSetBASEPRI( uint8_t ulNewMaskValue )
+{
     ECLIC_SetMth(ulNewMaskValue);
     __RWMB();
 }
 /*-----------------------------------------------------------*/
 
-#define portMEMORY_BARRIER() __asm volatile("" :: \
-                                                : "memory")
+#define portMEMORY_BARRIER()        __asm volatile( "" ::: "memory" )
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* PORTMACRO_H */
+

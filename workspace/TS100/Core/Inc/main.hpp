@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 void vApplicationStackOverflowHook(TaskHandle_t *pxTask,
-                                   signed portCHAR *pcTaskName);
+		signed portCHAR *pcTaskName);
 
 //Threads
 void startGUITask(void const *argument);
