@@ -89,12 +89,3 @@ void eclic_system_reset(void) {
   REG32(REG_DBGMCU2) = 0x1;
 }
 
-/*!
-    \brief      send event(SEV)
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
-void eclic_send_event(void) {
-  set_csr(0x812, 0x1);
-}

@@ -46,12 +46,12 @@ LDSCRIPT=stm32f103.ld
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
-DEV_LDFLAGS=-lm -Wl,--gc-sections -flto
+DEV_LDFLAGS=-lm -Wl,--gc-sections 
 DEV_AFLAGS=
-DEV_CFLAGS=-flto -D GCC_ARMCM3		\
+DEV_CFLAGS= -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD		
-DEV_CXXFLAGS=-flto -D GCC_ARMCM3		\
+DEV_CXXFLAGS= -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD		
 CPUFLAGS= -mcpu=cortex-m3     \
@@ -79,13 +79,12 @@ bootldr_size=0x0
 # Flags
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
-			-mtune=size  \
-			-mcmodel=medlow  \
-			-DGD32VF103C_START \
-			-DUSE_STDPERIPH_DRIVER 
-DEV_LDFLAGS= -nostartfiles -Xlinker --gc-sections
-DEV_AFLAGS= -nostartfiles -ffreestanding
-DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fabi-version=11 
+			-mcmodel=medany -fsigned-char -fno-builtin -fsingle-precision-constant \
+			-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+
+DEV_LDFLAGS= -lstdc++ -nostartfiles -Xlinker --gc-sections --specs=nosys.specs -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek
+DEV_AFLAGS= -nostartfiles -ffreestanding -fno-common -Os -flto 
+DEV_GLOBAL_DEFS=
 DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
 endif
@@ -116,8 +115,7 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
-
+OPTIM=-Os -flto  -fdiagnostics-color -ffunction-sections -fdata-sections -finline-small-functions -findirect-inlining
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
@@ -127,7 +125,7 @@ ifdef swd_enable
 endif
 
 # Enable debug code generation
-DEBUG=-g3
+DEBUG=-g
 # Without debug code
 #DEBUG=
 
@@ -281,14 +279,13 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 
 # Create hexfile
 %.hex : %.elf
-	$(SIZE) $^
 	$(OBJCOPY) $^ -O ihex $@
 
 %.bin : %.elf
-	$(SIZE) $^
+	$(SIZE)  --format=berkeley  $^
 	$(OBJCOPY) $^ -O binary $@
 
-$(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
+$(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
 	@echo $(LINKER_FLAGS)

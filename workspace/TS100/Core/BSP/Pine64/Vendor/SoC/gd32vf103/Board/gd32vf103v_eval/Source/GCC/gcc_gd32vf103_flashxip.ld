@@ -254,7 +254,17 @@ SECTIONS
     *(.sdata .sdata.* .sdata*)
     *(.gnu.linkonce.s.*)
   } >ram AT>flash
+  .logo_page (NOLOAD) :
+  {
+    . = ABSOLUTE(__FLASH_END_ADDR__ - 2048);
+    KEEP (*(.logo_page*))
+  } > ROM
 
+  .settings_page (NOLOAD) :
+  {
+    . = ABSOLUTE(__FLASH_END_ADDR__ - 1024);
+    KEEP (*(.settings_page*))
+  } > ROM
   . = ALIGN(4);
   PROVIDE( _edata = . );
   PROVIDE( edata = . );

@@ -126,4 +126,6 @@ void reboot() {
 void delay_ms(uint16_t count) {
 	delay_1ms(count);
 }
-
+uint32_t __get_IPSR(void) {
+	return 0;	// To shut-up CMSIS
+}
