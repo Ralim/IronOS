@@ -61,16 +61,20 @@ void setup_gpio() {
 	// OLED reset as output
 	gpio_init(OLED_RESET_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ,
 	OLED_RESET_Pin);
+	gpio_bit_set(SDA_GPIO_Port, SDA_Pin);
+	gpio_bit_set(SDA_GPIO_Port, SCL_Pin);
 	// I2C as AF Open Drain
-	gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ,
+	gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_2MHZ,
 	SDA_Pin | SCL_Pin);
 	// PWM output as AF Push Pull
-	gpio_init(PWM_Out_GPIO_Port, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, PWM_Out_Pin);
+	gpio_init(PWM_Out_GPIO_Port, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ,
+			PWM_Out_Pin);
 	// Analog Inputs ... as analog inputs
-	gpio_init(TMP36_INPUT_GPIO_Port, GPIO_MODE_AIN, GPIO_OSPEED_50MHZ,
+	gpio_init(TMP36_INPUT_GPIO_Port, GPIO_MODE_AIN, GPIO_OSPEED_2MHZ,
 	TMP36_INPUT_Pin);
-	gpio_init(TIP_TEMP_GPIO_Port, GPIO_MODE_AIN, GPIO_OSPEED_50MHZ, TIP_TEMP_Pin);
-	gpio_init(VIN_GPIO_Port, GPIO_MODE_AIN, GPIO_OSPEED_50MHZ, VIN_Pin);
+	gpio_init(TIP_TEMP_GPIO_Port, GPIO_MODE_AIN, GPIO_OSPEED_2MHZ,
+			TIP_TEMP_Pin);
+	gpio_init(VIN_GPIO_Port, GPIO_MODE_AIN, GPIO_OSPEED_2MHZ, VIN_Pin);
 
 	// Remap PB4 away from JTAG NJRST
 	gpio_pin_remap_config(GPIO_SWJ_NONJTRST_REMAP, ENABLE);
@@ -111,7 +115,7 @@ void setup_i2c() {
 	/* enable I2C0 clock */
 	rcu_periph_clock_enable(RCU_I2C0);
 	// Setup I20 at 400kHz
-	i2c_clock_config(I2C0, 400 * 1000, I2C_DTCY_16_9);
+	i2c_clock_config(I2C0, 400 * 1000, I2C_DTCY_2);
 	i2c_mode_addr_config(I2C0, I2C_I2CMODE_ENABLE, I2C_ADDFORMAT_7BITS, 0x00);
 	i2c_enable(I2C0);
 	/* enable acknowledge */
@@ -132,7 +136,7 @@ void setup_adc() {
 	/* config ADC clock */
 	rcu_adc_clock_config(RCU_CKADC_CKAPB2_DIV16);
 	// Run in normal parallel + inserted parallel
-	adc_mode_config(ADC0,ADC_DAUL_REGULAL_PARALLEL_INSERTED_PARALLEL);
+	adc_mode_config(ADC0, ADC_DAUL_REGULAL_PARALLEL_INSERTED_PARALLEL);
 	adc_special_function_config(ADC0, ADC_CONTINUOUS_MODE, ENABLE);
 	adc_special_function_config(ADC0, ADC_SCAN_MODE, ENABLE);
 	adc_special_function_config(ADC1, ADC_CONTINUOUS_MODE, ENABLE);
@@ -225,8 +229,10 @@ void setup_timers() {
 		timer_ocintpara.outputstate = TIMER_CCX_ENABLE;
 		timer_channel_output_config(TIMER1, TIMER_CH_0, &timer_ocintpara);
 
-		timer_channel_output_pulse_value_config(TIMER1, TIMER_CH_0, powerPWM + holdoffTicks);
-		timer_channel_output_mode_config(TIMER1, TIMER_CH_0, TIMER_OC_MODE_PWM1);
+		timer_channel_output_pulse_value_config(TIMER1, TIMER_CH_0,
+				powerPWM + holdoffTicks);
+		timer_channel_output_mode_config(TIMER1, TIMER_CH_0,
+				TIMER_OC_MODE_PWM1);
 		timer_channel_output_shadow_config(TIMER1, TIMER_CH_0,
 		TIMER_OC_SHADOW_DISABLE);
 		/* CH1 used for irq */
@@ -236,7 +242,8 @@ void setup_timers() {
 		timer_channel_output_config(TIMER1, TIMER_CH_1, &timer_ocintpara);
 
 		timer_channel_output_pulse_value_config(TIMER1, TIMER_CH_1, 0);
-		timer_channel_output_mode_config(TIMER1, TIMER_CH_1, TIMER_OC_MODE_PWM0);
+		timer_channel_output_mode_config(TIMER1, TIMER_CH_1,
+				TIMER_OC_MODE_PWM0);
 		timer_channel_output_shadow_config(TIMER1, TIMER_CH_1,
 		TIMER_OC_SHADOW_DISABLE);
 		// IRQ
@@ -269,7 +276,8 @@ void setup_timers() {
 		timer_ocintpara.ocnidlestate = TIMER_OCN_IDLE_STATE_LOW;
 		timer_channel_output_config(TIMER2, TIMER_CH_0, &timer_ocintpara);
 		timer_channel_output_pulse_value_config(TIMER2, TIMER_CH_0, 0);
-		timer_channel_output_mode_config(TIMER2, TIMER_CH_0, TIMER_OC_MODE_PWM0);
+		timer_channel_output_mode_config(TIMER2, TIMER_CH_0,
+				TIMER_OC_MODE_PWM0);
 		timer_channel_output_shadow_config(TIMER2, TIMER_CH_0,
 		TIMER_OC_SHADOW_DISABLE);
 		timer_auto_reload_shadow_enable(TIMER2);

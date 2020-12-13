@@ -96,12 +96,12 @@ void OLED::initialize() {
 	// Set the display to be ON once the settings block is sent and send the
 	// initialisation data to the OLED.
 
-	setDisplayState(DisplayState::ON);
 	for (int tries = 0; tries < 10; tries++) {
 		if (FRToSI2C::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]))) {
 			return;
 		}
 	}
+	setDisplayState(DisplayState::ON);
 }
 void OLED::setFramebuffer(uint8_t *buffer) {
 	if (buffer == NULL) {
@@ -171,7 +171,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
 	while (duration <= totalDuration) {
 		duration = xTaskGetTickCount() - start;
-		uint8_t progress = duration * 1000 / totalDuration;
+		uint8_t progress = duration * TICKS_SECOND / totalDuration;
 		progress = easeInOutTiming(progress);
 		progress = lerp(0, OLED_WIDTH, progress);
 		if (progress > OLED_WIDTH) {
