@@ -150,8 +150,6 @@ AS=$(COMPILER_PREFIX)-as
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
-SREC=srec_cat
-SREC_INFO=srec_info
 
 # For the Pinecil, use GCC rather than as? (Copying other makefiles)
 ifeq ($(model),Pinecil)
@@ -246,6 +244,7 @@ CFLAGS=$(DEV_CFLAGS) \
 		-ffreestanding			\
 		-T$(LDSCRIPT)			\
 		-c                      
+
 		
 		
 AFLAGS= $(CPUFLAGS)   \
@@ -254,9 +253,6 @@ AFLAGS= $(CPUFLAGS)   \
 		$(ASM_INC)    \
 		$(INCLUDES)
 
-
-CFLAGS += -ffunction-sections -fdata-sections
-CXXFLAGS += -ffunction-sections -fdata-sections
 
 
 
@@ -289,7 +285,7 @@ $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRI
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
 	@echo $(LINKER_FLAGS)
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP)  $(OUT_OBJS_S)  $(LIBS) $(LINKER_FLAGS)	
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
