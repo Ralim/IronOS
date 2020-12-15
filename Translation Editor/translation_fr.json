@@ -268,10 +268,10 @@
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Sensibilité",
+				"capteur effet hall"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <O=Off,L=Low,M=Medium,H=High>"
 		}
 	}
 }
