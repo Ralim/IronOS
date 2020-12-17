@@ -62,8 +62,8 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 	if (Vx10 > 200)
 		Vx10 = 200;  // Cap max value at 20V
 #else
-				if (Vx10 > 130)
-				Vx10 =130;  // Cap max value at 13V
+	if (Vx10 > 130)
+		Vx10 = 130;  // Cap max value at 13V
 
 #endif
 	// Seek the QC to the Voltage given if this adapter supports continuous mode
@@ -99,7 +99,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 		steps = -steps;
 	if (steps > 4) {
 		// No continuous mode, so QC2
-		QCMode = 2;
+		QCMode = QCState::QC_2;
 		// Goto nearest
 		if (Vx10 > 190) {
 			// request 20V

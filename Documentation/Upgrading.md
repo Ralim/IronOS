@@ -27,10 +27,31 @@ There is a complete device flash backup included in this repository. (Note this 
 
 For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector.
 
+## Pinecil (Pine64)
+
+The MCU used in the Pinecil supports usb-dfu.
+To enter DFU mode, hold the button at the back of the iron while connecting to usb over usb-c.
+Generally all usb controllers work, but some hubs have issues so avoiding hubs may be best.
+Once the device is connected while holding the button, the screen will stay **off**.
+This is normal, and then you can use the appropriate tool to load the .hex or .bin file as per your OS. 
+
+You can also refer to the Pine64 [Wiki](https://wiki.pine64.org/wiki/Pinecil)
+
+### Linux and Mac
+Using `dfu-util` you can flash the firmware using a command line as such:
+
+```
+dfu-util -d 28e9:0189 -a 0 -D Pinecil_EN.bin -s 0x08000000:mass-erase:force
+```
+
+### Windows
+
+For windows the easiest tool to use is the vendors gui tool from [here](http://www.gd32mcu.com/download/down/document_id/176/path_type/1)
+Should the link break, its called "GD32 MCU Dfu Tool" and can be grabbed from http://www.gd32mcu.com/en/download/
 
 ### FAQ
 
-#### The file is showing up with the extension `.ERR`
+#### [Miniware] The file is showing up with the extension `.ERR`
 
 This can occur duing the programming process if any of the checks in the bootloader fail. This is often triggered by anti-virus software or using a non-windows host OS.
 
@@ -48,20 +69,20 @@ If this fails, if you are on Mac or Linux reading the wiki page about programmin
 
 If you are on windows, its often to try another computer (friends, work, partners etc).
 
-#### Device randomly disconnects or does not show up in DFU mode
+#### [Miniware] Device randomly disconnects or does not show up in DFU mode
 
 First, check the USB cable your using has the data pins; test it on another device. There are a surprisingly large number of usb-micro cables that are power _only_.
 
 Secondly, try other USB ports. Often different USB controllers will interact with the units differently due to design quirks in the miniware design.
 
-## Setting a custom bootup image
+## [Miniware] Setting a custom bootup image
 
 This firmware uses a different method of updating the bootup image.
 This removes the need for emulating a USB drive on the iron just to allow for a bootup image to be setup.
 There are further instructions on the [wiki](https://github.com/Ralim/ts100/wiki/Logo-Editor).
 Instructions are kept on the wiki so that users can update the information if they find extra helpful information.
 
-## Alternative bootloader
+## [Miniware] Alternative bootloader
 
 If you are an advanced user, and you have used `usb-dfu` tools before, or you would like to learn; there is an alternative bootloader for these irons.
 This will **NOT** show up as a USB storage drive, but instead show up using a standard DFU protocol device. You can then use dfu tools or GUI's to upgrade the iron using the `.bin` files that are posted to the releases page.
