@@ -85,8 +85,8 @@ CPUFLAGS= -march=rv32imac \
 DEV_LDFLAGS= -lstdc++ -nostartfiles -Xlinker --gc-sections --specs=nosys.specs -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek
 DEV_AFLAGS= -nostartfiles -ffreestanding -fno-common -Os -flto 
 DEV_GLOBAL_DEFS=
-DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
-DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
+DEV_CFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$(@:%.o=%.d)" 
+DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$(@:%.o=%.d)" 
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
@@ -115,19 +115,19 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto  -fdiagnostics-color -ffunction-sections -fdata-sections -finline-small-functions -findirect-inlining
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
 
+# Without debug code
+DEBUG=
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
+	# Enable debug code generation
+	DEBUG=-g
 endif
 
-# Enable debug code generation
-DEBUG=-g
-# Without debug code
-#DEBUG=
 
 
 # libs -------------------------------------------------------------------------
@@ -136,7 +136,8 @@ LIBS=
 # ------------------------------------------------------------------------------
 COMPILER=gcc
 # arm-none-eabi is the general ARM compiler, 
-#riscv-none-embed- is the riscv compiler
+# riscv-none-embed is the riscv compiler
+# riscv-nuclei-elf is the nuclei tuned one for their cores
 ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 COMPILER_PREFIX=arm-none-eabi
 endif
@@ -151,7 +152,7 @@ OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
 
-# For the Pinecil, use GCC rather than as? (Copying other makefiles)
+# For the Pinecil, use gcc in assembler mode
 ifeq ($(model),Pinecil)
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 endif
@@ -168,6 +169,7 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 				$(DEV_LDFLAGS)                                \
+				-flto 										  \
 			    --specs=nano.specs
 
 # compiler flags ---------------------------------------------------------------
@@ -207,26 +209,26 @@ CHECKOPTIONS=		-Wall 				\
 CHECKOPTIONS_C=		-Wbad-function-cast
 
 
-CXXFLAGS=$(DEV_CXXFLAGS) \
-        $(CPUFLAGS) \
-		$(DEBUG) 			\
-		$(INCLUDES) \
-		$(GLOBAL_DEFINES) 	\
-		-D${COMPILER}  		\
-		-MMD 				\
-		$(CHECKOPTIONS)		\
-		-std=c++11			\
-		$(OPTIM) 			\
-		-fno-common			\
-		-ffreestanding		\
-		-fno-rtti 			\
-		-fno-exceptions 	\
+CXXFLAGS=$(DEV_CXXFLAGS)         \
+        $(CPUFLAGS)              \
+		$(DEBUG) 			     \
+		$(INCLUDES)              \
+		$(GLOBAL_DEFINES) 	     \
+		-D${COMPILER}  		     \
+		-MMD 				     \
+		$(CHECKOPTIONS)		     \
+		-std=c++11			     \
+		$(OPTIM) 			     \
+		-fno-common			     \
+		-ffreestanding		     \
+		-fno-rtti 			     \
+		-fno-exceptions 	     \
 		-fno-non-call-exceptions \
-		-fno-use-cxa-atexit		\
-		-fno-strict-aliasing 		\
-		-fno-rtti 			\
-		-fno-exceptions		\
-		-fno-threadsafe-statics \
+		-fno-use-cxa-atexit		 \
+		-fno-strict-aliasing 	 \
+		-fno-rtti 			     \
+		-fno-exceptions		     \
+		-fno-threadsafe-statics  \
 		-T$(LDSCRIPT)
 
 
@@ -284,29 +286,22 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@echo $(LINKER_FLAGS)
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS) $(OUT_OBJS_CPP)  $(OUT_OBJS_S)  $(LIBS) $(LINKER_FLAGS)	
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CC) -c $(CFLAGS) $< -o $@
-	@$(OBJDUMP) -d -S $@ > $@.lst
 
 $(OUT_OBJS_CPP): $(OUTPUT_DIR)/%.o : %.cpp Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
-	@$(OBJDUMP) -d -S $@ > $@.lst
 	
 $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Building file: $<'
-	@echo 'Invoking: MCU GCC Assembler'
-	@echo @$(AS) -c $(AFLAGS) $< -o $@
 	@$(AS) -c $(AFLAGS) $< -o $@
-	@echo 'Finished building: $<'
-	@echo ' '
 
 
 clean :
