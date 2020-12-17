@@ -1,6 +1,5 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
-/* Ensure stdint is only used by the compiler, and not the assembler. */
 #include <stdint.h>
 #include "nuclei_sdk_soc.h"
 //RISC-V configuration
@@ -55,7 +54,7 @@
 
 /* Software timer related definitions. */
 #define configUSE_TIMERS 0
-#define configTIMER_TASK_PRIORITY3
+#define configTIMER_TASK_PRIORITY 3
 #define configTIMER_QUEUE_LENGTH 5
 #define configTIMER_TASK_STACK_DEPTH configMINIMAL_STACK_SIZE
 
@@ -68,7 +67,8 @@
 
 /* Define to trap errors during development. */
 #define configASSERT(x)           \
-    if ((x) == 0) {               \
+    if ((x) == 0)                 \
+    {                             \
         taskDISABLE_INTERRUPTS(); \
         for (;;)                  \
             ;                     \
