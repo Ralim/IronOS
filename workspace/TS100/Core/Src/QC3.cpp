@@ -11,7 +11,13 @@
 #include "BSP.h"
 #include "cmsis_os.h"
 #include "stdint.h"
+enum QCState {
+	NOT_STARTED = 0, // Have not checked
+	QC_3 = 1,
+	QC_2 = 2,
+	NO_QC = 3,
 
+};
 void QC_Seek9V() {
 	QC_DNegZero_Six();
 	QC_DPlusThree_Three();
@@ -42,10 +48,10 @@ void QC_SeekContNeg() {
 	osDelay(10);
 	QC_SeekContMode();
 }
-uint8_t QCMode = 0;
+QCState QCMode = QCState::NOT_STARTED;
 uint8_t QCTries = 0;
 void seekQC(int16_t Vx10, uint16_t divisor) {
-	if (QCMode == 0)
+	if (QCMode == QCState::NOT_STARTED)
 		startQC(divisor);
 
 	if (Vx10 < 45)
@@ -112,10 +118,16 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
-	QCMode=0;
-	if (QCTries > 10) {
+	if (getInputVoltageX10(divisor, 1) > 85) {
+		QCTries = 11;
+		QCMode = QCState::NO_QC;
 		return;
 	}
+	if (QCTries > 10) {
+		QCMode = QCState::NO_QC;
+		return;
+	}
+	QCMode = QCState::NOT_STARTED;
 	QC_Init_GPIO();
 
 	// Tries to negotiate QC for 9V
@@ -146,25 +158,26 @@ void startQC(uint16_t divisor) {
 		QC_Post_Probe_En();
 		QC_Seek9V();
 		// Wait for frontend ADC to stabilise
-		QCMode = 4;
+		QCMode = QCState::QC_2;
 		for (uint8_t i = 0; i < 10; i++) {
 			if (getInputVoltageX10(divisor, 1) > 80) {
 				// yay we have at least QC2.0 or QC3.0
-				QCMode = 3;  // We have at least QC2, pray for 3
+				QCMode = QCState::QC_3;  // We have at least QC2, pray for 3
 				return;
 			}
 			osDelay(100);  // 100mS
 		}
-		QCMode = 0;
+		QCMode = QCState::NOT_STARTED;
 		QCTries++;
 
 	} else {
 		// no QC
-		QCMode = 0;
+		QCTries++;
+		QCMode = QCState::NO_QC;
 	}
 
 }
 
 bool hasQCNegotiated() {
-	return QCMode > 0;
+	return QCMode != QCState::NO_QC;
 }
