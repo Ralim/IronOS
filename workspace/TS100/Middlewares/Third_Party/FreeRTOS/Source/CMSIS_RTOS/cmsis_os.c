@@ -117,7 +117,7 @@
 #define __ASM __asm     /*!< asm keyword for GNU Compiler          */
 #define __INLINE inline /*!< inline keyword for GNU Compiler       */
 #define __STATIC_INLINE static inline
-
+uint32_t __get_IPSR(void);
 // #include "cmsis_gcc.h"
 
 /*

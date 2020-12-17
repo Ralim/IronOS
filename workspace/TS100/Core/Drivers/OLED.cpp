@@ -96,11 +96,13 @@ void OLED::initialize() {
 	// Set the display to be ON once the settings block is sent and send the
 	// initialisation data to the OLED.
 
+	for (int tries = 0; tries < 10; tries++) {
+		if (FRToSI2C::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]))) {
+			return;
+		}
+	}
 	setDisplayState(DisplayState::ON);
-	FRToSI2C::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
-
 }
-
 void OLED::setFramebuffer(uint8_t *buffer) {
 	if (buffer == NULL) {
 		firstStripPtr = &screenBuffer[FRAMEBUFFER_START];
@@ -169,20 +171,20 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
 	while (duration <= totalDuration) {
 		duration = xTaskGetTickCount() - start;
-		uint8_t progress = duration * 1000 / totalDuration;
+		uint8_t progress = duration * TICKS_SECOND / totalDuration;
 		progress = easeInOutTiming(progress);
 		progress = lerp(0, OLED_WIDTH, progress);
 		if (progress > OLED_WIDTH) {
 			progress = OLED_WIDTH;
 		}
 
-		// When forward, current contents move to the left out.
-		// Otherwise the contents move to the right out.
+// When forward, current contents move to the left out.
+// Otherwise the contents move to the right out.
 		uint8_t oldStart = forwardNavigation ? 0 : progress;
 		uint8_t oldPrevious = forwardNavigation ? progress - offset : offset;
 
-		// Content from the second framebuffer moves in from the right (forward)
-		// or from the left (not forward).
+// Content from the second framebuffer moves in from the right (forward)
+// or from the left (not forward).
 		uint8_t newStart = forwardNavigation ? OLED_WIDTH - progress : 0;
 		uint8_t newEnd = forwardNavigation ? 0 : OLED_WIDTH - progress;
 
@@ -231,7 +233,7 @@ void OLED::setRotation(bool leftHanded) {
 
 	screenBuffer[5] = inLeftHandedMode ? 0 : 32; // display is shifted by 32 in left handed
 												 // mode as driver ram is 128 wide
-	screenBuffer[7] = inLeftHandedMode ? 95 : 0x7F; // End address of the ram segment we are writing to (96 wide)
+	screenBuffer[7] = inLeftHandedMode ? 95 : 0x7F;													 // End address of the ram segment we are writing to (96 wide)
 	screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
 }
 
@@ -245,7 +247,7 @@ void OLED::print(const char *str) {
 
 void OLED::setFont(uint8_t fontNumber) {
 	if (fontNumber == 1) {
-		// small font
+// small font
 		currentFont = USER_FONT_6x8;
 		fontHeight = 8;
 		fontWidth = 6;
@@ -337,9 +339,9 @@ void OLED::drawSymbol(uint8_t symbolID) {
 void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
 	// Splat this from x->x+wide in two strides
 	if (x <= -wide)
-		return;  // cutoffleft
+		return; // cutoffleft
 	if (x > 96)
-		return;      // cutoff right
+		return; // cutoff right
 
 	uint8_t visibleStart = 0;
 	uint8_t visibleEnd = wide;
@@ -353,13 +355,13 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
 	}
 
 	if (y == 0) {
-		// Splat first line of data
+// Splat first line of data
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			firstStripPtr[xx + x] = ptr[xx];
 		}
 	}
 	if (y == 8 || height == 16) {
-		// Splat the second line
+// Splat the second line
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			secondStripPtr[x + xx] = ptr[xx + (height == 16 ? wide : 0)];
 		}
@@ -373,7 +375,7 @@ void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, co
 	if (x <= -wide)
 		return;  // cutoffleft
 	if (x > 96)
-		return;      // cutoff right
+		return;  // cutoff right
 
 	uint8_t visibleStart = 0;
 	uint8_t visibleEnd = wide;
@@ -387,14 +389,14 @@ void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, co
 	}
 
 	if (y == 0) {
-		// Splat first line of data
+// Splat first line of data
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
 			firstStripPtr[xx + x] = ptr[xx + 1];
 			firstStripPtr[xx + x + 1] = ptr[xx];
 		}
 	}
 	if (y == 8 || height == 16) {
-		// Splat the second line
+// Splat the second line
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
 			secondStripPtr[x + xx] = ptr[xx + 1 + (height == 16 ? wide : 0)];
 			secondStripPtr[x + xx + 1] = ptr[xx + (height == 16 ? wide : 0)];
@@ -407,7 +409,7 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
 	if (x <= -wide)
 		return;  // cutoffleft
 	if (x > 96)
-		return;      // cutoff right
+		return;  // cutoff right
 
 	uint8_t visibleStart = 0;
 	uint8_t visibleEnd = wide;
@@ -421,13 +423,13 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
 	}
 
 	if (y == 0) {
-		// Splat first line of data
+// Splat first line of data
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			firstStripPtr[xx + x] = value;
 		}
 	}
 	if (y == 8 || height == 16) {
-		// Splat the second line
+// Splat the second line
 		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			secondStripPtr[x + xx] = value;
 		}
@@ -473,7 +475,7 @@ void OLED::drawHeatSymbol(uint8_t state) {
 	// Draw symbol 14
 	// Then draw over it, the bottom 5 pixels always stay. 8 pixels above that are
 	// the levels masks the symbol nicely
-	state /= 31;  // 0-> 8 range
+	state /= 31;	// 0-> 8 range
 	// Then we want to draw down (16-(5+state)
 	uint8_t cursor_x_temp = cursor_x;
 	drawSymbol(14);

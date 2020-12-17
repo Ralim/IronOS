@@ -180,7 +180,7 @@ void ProtocolReceive::notify(uint32_t notification) {
 	}
 }
 
-uint32_t ProtocolReceive::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
+uint32_t ProtocolReceive::waitForEvent(uint32_t mask, TickType_t ticksToWait) {
 	if (xEventGroupHandle != NULL) {
 		return xEventGroupWaitBits(xEventGroupHandle, mask, mask,
 		pdFALSE, ticksToWait);

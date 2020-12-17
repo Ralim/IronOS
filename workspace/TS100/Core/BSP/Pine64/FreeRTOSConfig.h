@@ -1,21 +1,17 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
-/* Ensure stdint is only used by the compiler, and not the assembler. */
-#if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
 #include <stdint.h>
-extern uint32_t SystemCoreClock;
-#endif
+#include "nuclei_sdk_soc.h"
 //RISC-V configuration
-#include "n200_timer.h"
 #define USER_MODE_TASKS 0
 
 #define configUSE_PREEMPTION 1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
 #define configUSE_TICKLESS_IDLE 0
 #define configCPU_CLOCK_HZ ((uint32_t)SystemCoreClock)
-#define configRTC_CLOCK_HZ ((uint32_t)TIMER_FREQ)
+#define configRTC_CLOCK_HZ ((uint32_t)32768)
 #define configTICK_RATE_HZ ((TickType_t)1000)
-#define configMAX_PRIORITIES (4) //0 - 3 å…±6ç­‰çº§ï¼Œidleç‹¬å� 0ï¼ŒTmr_svcç‹¬å� 3
+#define configMAX_PRIORITIES (4)
 #define configMINIMAL_STACK_SIZE ((unsigned short)128)
 #define configMAX_TASK_NAME_LEN 24
 #define configUSE_16_BIT_TICKS 0
@@ -30,12 +26,13 @@ extern uint32_t SystemCoreClock;
 #define configUSE_NEWLIB_REENTRANT 0
 #define configENABLE_BACKWARD_COMPATIBILITY 0
 #define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
+
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
 #define INCLUDE_xTaskGetSchedulerState 1
 #define INCLUDE_vTaskDelay 1
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION 1
-#define configSUPPORT_DYNAMIC_ALLOCATION 1
+#define configSUPPORT_DYNAMIC_ALLOCATION 0
 #define configTOTAL_HEAP_SIZE 1024
 #define configAPPLICATION_ALLOCATED_HEAP 0
 
@@ -57,7 +54,7 @@ extern uint32_t SystemCoreClock;
 
 /* Software timer related definitions. */
 #define configUSE_TIMERS 0
-#define configTIMER_TASK_PRIORITY (configMAX_PRIORITIES - 1) //Tmr_svc ç‹¬å� æœ€é«˜ä¼˜å…ˆçº§
+#define configTIMER_TASK_PRIORITY 3
 #define configTIMER_QUEUE_LENGTH 5
 #define configTIMER_TASK_STACK_DEPTH configMINIMAL_STACK_SIZE
 
@@ -70,7 +67,8 @@ extern uint32_t SystemCoreClock;
 
 /* Define to trap errors during development. */
 #define configASSERT(x)           \
-    if ((x) == 0) {               \
+    if ((x) == 0)                 \
+    {                             \
         taskDISABLE_INTERRUPTS(); \
         for (;;)                  \
             ;                     \

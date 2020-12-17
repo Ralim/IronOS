@@ -7,8 +7,8 @@
 
 #ifndef BSP_MINIWARE_PINS_H_
 #define BSP_MINIWARE_PINS_H_
-#include "Vendor/Lib/gd32vf103_gpio.h"
-//TODO
+#include "gd32vf103_gpio.h"
+
 #define KEY_B_Pin BIT(1)
 #define KEY_B_GPIO_Port GPIOB
 #define TMP36_INPUT_Pin BIT(4)

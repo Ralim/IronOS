@@ -7,7 +7,6 @@
 #include "gd32vf103_timer.h"
 #include "history.hpp"
 #include "main.hpp"
-#include "systick.h"
 #include <IRQ.h>
 
 const uint16_t powerPWM = 255;
@@ -127,4 +126,6 @@ void reboot() {
 void delay_ms(uint16_t count) {
 	delay_1ms(count);
 }
-
+uint32_t __get_IPSR(void) {
+	return 0;	// To shut-up CMSIS
+}

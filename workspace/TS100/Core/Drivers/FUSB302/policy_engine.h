@@ -114,7 +114,7 @@ private:
 	static enum policy_engine_state pe_sink_source_unresponsive();
 	static EventGroupHandle_t xEventGroupHandle;
 	static StaticEventGroup_t xCreatedEventGroup;
-	static uint32_t waitForEvent(uint32_t mask, uint32_t ticksToWait =
+	static uint32_t waitForEvent(uint32_t mask, TickType_t ticksToWait =
 	portMAX_DELAY);
 	//Task resources
 	static osThreadId TaskHandle;

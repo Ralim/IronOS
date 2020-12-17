@@ -7,7 +7,7 @@
 
 #ifndef SETUP_H_
 #define SETUP_H_
-#include "Vendor/Lib/gd32vf103_libopt.h"
+#include "gd32vf103_libopt.h"
 #include <stdint.h>
 
 #ifdef __cplusplus
