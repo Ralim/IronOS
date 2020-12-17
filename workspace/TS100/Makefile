@@ -9,10 +9,10 @@ endif
 
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
-INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
-CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
-HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
-HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
+MINIWARE_INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
+MINIWARE_CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
+MINIWARE_HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
+MINIWARE_HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 MINIWARE_STARTUP_DIR = ./Startup
@@ -21,9 +21,11 @@ BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
 MINIWARE_INC_DIR = ./Core/BSP/Miniware
 PINE_INC_DIR = ./Core/BSP/Pine64
-PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/Lib
-PINE_RISCV_INC_DIR = ./Core/BSP/Pine64/Vendor/RISCV
-PINE_N200_INC_DIR = ./Core/BSP/Pine64/N200
+PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include
+PINE_BOARD_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Include
+PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include/Usb
+PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
+PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
 SOURCE_DRIVERS_DIR = ./Core/Drivers
@@ -34,23 +36,22 @@ SOURCE_MIDDLEWARES_DIR = ./Middlewares
 ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 $(info Building for Miniware )
 DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
-	-I$(INC_CMSIS_DEVICE)\
-	-I$(CMSIS_CORE_INC_DIR)	\
-	-I$(HAL_INC_DIR)	\
-	-I$(HAL_LEGACY_INC_DIR)	\
-	-I$(INC_PD_DRIVERS_DIR)
+	-I$(MINIWARE_INC_CMSIS_DEVICE)\
+	-I$(MINIWARE_CMSIS_CORE_INC_DIR)	\
+	-I$(MINIWARE_HAL_INC_DIR)	\
+	-I$(MINIWARE_HAL_LEGACY_INC_DIR)
 DEVICE_BSP_DIR = ./Core/BSP/Miniware
 S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=stm32f103.ld
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
-DEV_LDFLAGS=-lm -Wl,--gc-sections -flto
+DEV_LDFLAGS=-lm -Wl,--gc-sections 
 DEV_AFLAGS=
-DEV_CFLAGS=-flto -D GCC_ARMCM3		\
+DEV_CFLAGS= -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD		
-DEV_CXXFLAGS=-flto -D GCC_ARMCM3		\
+DEV_CXXFLAGS= -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD		
 CPUFLAGS= -mcpu=cortex-m3     \
@@ -63,31 +64,29 @@ endif
 ifeq ($(model),Pinecil)
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
--I$(PINE_INC_DIR)/N200 \
-	-I$(PINE_VENDOR_INC_DIR) \
-	-I$(PINE_RISCV_INC_DIR) \
-	-I$(PINE_N200_INC_DIR)\
-	-I$(INC_PD_DRIVERS_DIR)
+-I$(PINE_VENDOR_INC_DIR) \
+-I$(PINE_BOARD_INC_DIR) \
+-I$(PINE_VENDOR_USB_INC_DIR) \
+-I$(PINE_NMSIS_INC_DIR) \
+-I$(PINE_FREERTOS_PORT_INC_DIR) 
 	
 DEVICE_BSP_DIR = ./Core/BSP/Pine64
-S_SRCS := ./Core/BSP/Pine64/N200/portasm.S  
-$(info $(S_SRCS) )
+S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
-LDSCRIPT=GD32VF103xB.ld
+LDSCRIPT=./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
 flash_size=128k
 bootldr_size=0x0
 # Flags
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
-			-mtune=size  \
-			-mcmodel=medlow  \
-			-DGD32VF103C_START \
-			-DUSE_STDPERIPH_DRIVER 
-DEV_LDFLAGS= -nostartfiles -Xlinker --gc-sections
-DEV_AFLAGS= -nostartfiles -ffreestanding
-DEV_GLOBAL_DEFS=-msmall-data-limit=8 -mno-save-restore -Os -fmessage-length=0 -fabi-version=11 
-DEV_CFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
-DEV_CXXFLAGS= -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" 
+			-mcmodel=medany -fsigned-char -fno-builtin -fsingle-precision-constant \
+			-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+
+DEV_LDFLAGS= -lstdc++ -nostartfiles -Xlinker --gc-sections --specs=nosys.specs -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek
+DEV_AFLAGS= -nostartfiles -ffreestanding -fno-common -Os -flto 
+DEV_GLOBAL_DEFS=
+DEV_CFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$(@:%.o=%.d)" 
+DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$(@:%.o=%.d)" 
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
@@ -96,6 +95,7 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
 	-I$(THREADS_INC_DIR) \
+	-I$(INC_PD_DRIVERS_DIR) \
 	  $(DEVICE_INCLUDES) 
 	  
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
@@ -115,20 +115,19 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
-
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
 
+# Without debug code
+DEBUG=
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
+	# Enable debug code generation
+	DEBUG=-g
 endif
 
-# Enable debug code generation
-DEBUG=-g3
-# Without debug code
-#DEBUG=
 
 
 # libs -------------------------------------------------------------------------
@@ -137,7 +136,8 @@ LIBS=
 # ------------------------------------------------------------------------------
 COMPILER=gcc
 # arm-none-eabi is the general ARM compiler, 
-#riscv-none-embed- is the riscv compiler
+# riscv-none-embed is the riscv compiler
+# riscv-nuclei-elf is the nuclei tuned one for their cores
 ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 COMPILER_PREFIX=arm-none-eabi
 endif
@@ -151,10 +151,8 @@ AS=$(COMPILER_PREFIX)-as
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
-SREC=srec_cat
-SREC_INFO=srec_info
 
-# For the Pinecil, use GCC rather than as? (Copying other makefiles)
+# For the Pinecil, use gcc in assembler mode
 ifeq ($(model),Pinecil)
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 endif
@@ -171,6 +169,7 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 				$(DEV_LDFLAGS)                                \
+				-flto 										  \
 			    --specs=nano.specs
 
 # compiler flags ---------------------------------------------------------------
@@ -210,26 +209,26 @@ CHECKOPTIONS=		-Wall 				\
 CHECKOPTIONS_C=		-Wbad-function-cast
 
 
-CXXFLAGS=$(DEV_CXXFLAGS) \
-        $(CPUFLAGS) \
-		$(DEBUG) 			\
-		$(INCLUDES) \
-		$(GLOBAL_DEFINES) 	\
-		-D${COMPILER}  		\
-		-MMD 				\
-		$(CHECKOPTIONS)		\
-		-std=c++11			\
-		$(OPTIM) 			\
-		-fno-common			\
-		-ffreestanding		\
-		-fno-rtti 			\
-		-fno-exceptions 	\
+CXXFLAGS=$(DEV_CXXFLAGS)         \
+        $(CPUFLAGS)              \
+		$(DEBUG) 			     \
+		$(INCLUDES)              \
+		$(GLOBAL_DEFINES) 	     \
+		-D${COMPILER}  		     \
+		-MMD 				     \
+		$(CHECKOPTIONS)		     \
+		-std=c++11			     \
+		$(OPTIM) 			     \
+		-fno-common			     \
+		-ffreestanding		     \
+		-fno-rtti 			     \
+		-fno-exceptions 	     \
 		-fno-non-call-exceptions \
-		-fno-use-cxa-atexit		\
-		-fno-strict-aliasing 		\
-		-fno-rtti 			\
-		-fno-exceptions		\
-		-fno-threadsafe-statics \
+		-fno-use-cxa-atexit		 \
+		-fno-strict-aliasing 	 \
+		-fno-rtti 			     \
+		-fno-exceptions		     \
+		-fno-threadsafe-statics  \
 		-T$(LDSCRIPT)
 
 
@@ -247,6 +246,7 @@ CFLAGS=$(DEV_CFLAGS) \
 		-ffreestanding			\
 		-T$(LDSCRIPT)			\
 		-c                      
+
 		
 		
 AFLAGS= $(CPUFLAGS)   \
@@ -255,9 +255,6 @@ AFLAGS= $(CPUFLAGS)   \
 		$(ASM_INC)    \
 		$(INCLUDES)
 
-
-CFLAGS += -ffunction-sections -fdata-sections
-CXXFLAGS += -ffunction-sections -fdata-sections
 
 
 
@@ -280,39 +277,31 @@ all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
 
 # Create hexfile
 %.hex : %.elf
-	$(SIZE) $^
 	$(OBJCOPY) $^ -O ihex $@
 
 %.bin : %.elf
-	$(SIZE) $^
+	$(SIZE)  --format=berkeley  $^
 	$(OBJCOPY) $^ -O binary $@
 
-$(OUT_HEXFILE).elf : $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUT_OBJS_S) Makefile $(LDSCRIPT)
+$(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $(OUTPUT_EXE).elf
-	@echo $(LINKER_FLAGS)
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CC) -c $(CFLAGS) $< -o $@
-	@$(OBJDUMP) -d -S $@ > $@.lst
 
 $(OUT_OBJS_CPP): $(OUTPUT_DIR)/%.o : %.cpp Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
-	@$(OBJDUMP) -d -S $@ > $@.lst
 	
 $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Building file: $<'
-	@echo 'Invoking: MCU GCC Assembler'
-	@echo @$(AS) -c $(AFLAGS) $< -o $@
 	@$(AS) -c $(AFLAGS) $< -o $@
-	@echo 'Finished building: $<'
-	@echo ' '
 
 
 clean :

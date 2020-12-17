@@ -56,7 +56,7 @@ private:
 	static union pd_msg tempMessage;
 	static uint8_t _rx_messageid;
 	static uint8_t _tx_messageidcounter;
-	static uint32_t waitForEvent(uint32_t mask, uint32_t ticksToWait =
+	static uint32_t waitForEvent(uint32_t mask, TickType_t ticksToWait =
 	portMAX_DELAY);
 
 };

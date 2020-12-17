@@ -20,7 +20,7 @@ void startPIDTask(void const *argument);
 void startMOVTask(void const *argument);
 extern TaskHandle_t pidTaskNotification;
 extern uint8_t accelInit;
-extern uint32_t lastMovementTime;
+extern TickType_t lastMovementTime;
 #ifdef __cplusplus
 }
 #endif

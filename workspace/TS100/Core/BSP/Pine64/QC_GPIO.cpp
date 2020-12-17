@@ -4,11 +4,12 @@
  *  Created on: 29 May 2020
  *      Author: Ralim
  */
+#include "gd32vf103_libopt.h"
 #include "BSP.h"
 #include "Pins.h"
 #include "QC3.h"
 #include "Settings.h"
-#include "gd32vf103.h"
+
 #ifdef POW_QC
 void QC_DPlusZero_Six() {
 	// pull down D+

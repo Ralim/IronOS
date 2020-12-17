@@ -288,7 +288,7 @@ void ProtocolTransmit::getMessage() {
 }
 
 ProtocolTransmit::Notifications ProtocolTransmit::waitForEvent(uint32_t mask,
-		uint32_t ticksToWait) {
+		TickType_t ticksToWait) {
 	if (xEventGroupHandle) {
 		return (Notifications) xEventGroupWaitBits(xEventGroupHandle, mask,
 				mask,

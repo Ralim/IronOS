@@ -680,7 +680,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_source_unresponsive() {
 	return PESinkSourceUnresponsive;
 }
 
-uint32_t PolicyEngine::waitForEvent(uint32_t mask, uint32_t ticksToWait) {
+uint32_t PolicyEngine::waitForEvent(uint32_t mask, TickType_t ticksToWait) {
 	return xEventGroupWaitBits(xEventGroupHandle, mask, mask, pdFALSE,
 			ticksToWait);
 

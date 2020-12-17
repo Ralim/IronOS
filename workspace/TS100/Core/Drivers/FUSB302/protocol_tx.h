@@ -89,7 +89,7 @@ private:
 	//Reads a message off the queue into the temp message
 	static void getMessage();
 	static union pd_msg temp_msg;
-	static Notifications waitForEvent(uint32_t mask, uint32_t ticksToWait =
+	static Notifications waitForEvent(uint32_t mask, TickType_t ticksToWait =
 	portMAX_DELAY);
 
 };
