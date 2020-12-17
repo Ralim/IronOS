@@ -76,7 +76,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 	// 2. calculate ideal steps (0.2V changes)
 
 	int steps = difference / 2;
-	if (QCMode == 3) {
+	if (QCMode == QCState::QC_3) {
 		if (steps > -2 && steps < 2)
 			return;  // dont bother with small steps
 		while (steps < 0) {
@@ -118,7 +118,7 @@ void seekQC(int16_t Vx10, uint16_t divisor) {
 void startQC(uint16_t divisor) {
 	// Pre check that the input could be >5V already, and if so, dont both
 	// negotiating as someone is feeding in hv
-	if (getInputVoltageX10(divisor, 1) > 85) {
+	if (getInputVoltageX10(divisor, 1) > 80) {
 		QCTries = 11;
 		QCMode = QCState::NO_QC;
 		return;
@@ -179,5 +179,5 @@ void startQC(uint16_t divisor) {
 }
 
 bool hasQCNegotiated() {
-	return QCMode != QCState::NO_QC;
+	return QCMode == QCState::QC_3 || QCMode == QCState::QC_2;
 }
