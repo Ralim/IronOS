@@ -51,7 +51,6 @@ typedef struct {
 
 	uint8_t powerLimit; // Maximum power iron allowed to output
 
-	uint16_t TipGain; // uV/C * 10, it can be used to convert tip thermocouple voltage to temperateture TipV/TipGain = TipTemp
 
 	uint8_t ReverseButtonTempChangeEnabled; // Change the plus and minus button assigment
 	uint16_t TempChangeLongStep;			// Change the plus and minus button assigment

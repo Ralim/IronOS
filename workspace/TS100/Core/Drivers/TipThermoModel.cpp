@@ -39,6 +39,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 	uint32_t valueuV = rawInputmVX10 * 100;	// shift into uV
 	//Now to divide this down by the gain
 	valueuV = (valueuV) / OP_AMP_GAIN_STAGE;
+
 	//Remove uV tipOffset
 	if (valueuV >= systemSettings.CalibrationOffset)
 		valueuV -= systemSettings.CalibrationOffset;
@@ -68,17 +69,71 @@ int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_
 	return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000;
 }
 
+const uint16_t uVtoDegC[] = { 0, 0,	//
+		175, 10,	//
+		381, 20,	//
+		587, 30,	//
+		804, 40,	//
+		1005, 50,	//
+		1007, 60,	//
+		1107, 70,	//
+		1310, 80,	//
+		1522, 90,	//
+		1731, 100,	//
+		1939, 110,	//
+		2079, 120,	//
+		2265, 130,	//
+		2470, 140,	//
+		2676, 150,	//
+		2899, 160,	//
+		3081, 170,	//
+		3186, 180,	//
+		3422, 190,	//
+		3622, 200,	//
+		3830, 210,	//
+		4044, 220,	//
+		4400, 230,	//
+		4691, 240,	//
+		4989, 250,	//
+		5289, 260,	//
+		5583, 270,	//
+		5879, 280,	//
+		6075, 290,	//
+		6332, 300,	//
+		6521, 310,	//
+		6724, 320,	//
+		6929, 330,	//
+		7132, 340,	//
+		7356, 350,	//
+		7561, 360,	//
+		7774, 370,	//
+		7992, 380,	//
+		8200, 390,	//
+		8410, 400,	//
+		8626, 410,	//
+		8849, 420,	//
+		9060, 430,	//
+		9271, 440,	//
+		9531, 450,	//
+		9748, 460,	//
+		10210, 470,	//
+		10219, 480,	//
+		10429, 490,	//
+		10649, 500,	//
+
+		};
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
-	//based on new measurements, tip is quite linear
-	//
-	tipuVDelta *= 10;
-	tipuVDelta /= systemSettings.TipGain;
-
-#if defined( MODEL_TS80)+defined( MODEL_TS80P)>0
-	tipuVDelta /= OP_AMP_GAIN_STAGE_TS100 / OP_AMP_GAIN_STAGE_TS80;
-#endif
-
-	return tipuVDelta;
+	if (tipuVDelta) {
+		int noItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));
+		for (int i = 1; i < (noItems - 1); i++) {
+			//If current tip temp is less than current lookup, then this current loopup is the higher point to interpolate
+			if (tipuVDelta < uVtoDegC[i * 2]) {
+				return LinearInterpolate(uVtoDegC[(i - 1) * 2], uVtoDegC[((i - 1) * 2) + 1], uVtoDegC[i * 2], uVtoDegC[(i * 2) + 1], tipuVDelta);
+			}
+		}
+		return LinearInterpolate(uVtoDegC[(noItems - 2) * 2], uVtoDegC[((noItems - 2) * 2) + 1], uVtoDegC[(noItems - 1) * 2], uVtoDegC[((noItems - 1) * 2) + 1], tipuVDelta);
+	}
+	return 0;
 }
 
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
