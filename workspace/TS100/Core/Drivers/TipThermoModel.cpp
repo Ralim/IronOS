@@ -8,6 +8,7 @@
 #include "TipThermoModel.h"
 #include "Settings.h"
 #include "BSP.h"
+#include "power.hpp"
 #include "../../configuration.h"
 #include "main.hpp"
 /*
@@ -171,6 +172,10 @@ uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
 uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 	int32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(sampleNow));
 	currentTipTempInC += getHandleTemperature() / 10; //Add handle offset
+	// Power usage indicates that our tip temp is lower than our thermocouple temp.
+	// I found a number that doesn't unbalance the existing PID, causing overshoot.
+	// This could be tuned in concert with PID parameters...
+	currentTipTempInC -= x10WattHistory.average() / 25;
 	if (currentTipTempInC < 0)
 		return 0;
 	return currentTipTempInC;
@@ -180,6 +185,7 @@ uint32_t TipThermoModel::getTipInF(bool sampleNow, uint16_t currentTargetTempCx1
 	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
 			getTipRawTemp(sampleNow));
 	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
+	currentTipTempInF += x10WattHistory.average() / 45; // 25 * 9 / 5, see getTipInC
 	return currentTipTempInF;
 }
 #endif
