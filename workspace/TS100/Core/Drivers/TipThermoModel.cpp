@@ -41,19 +41,21 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 	//Now to divide this down by the gain
 	valueuV /= OP_AMP_GAIN_STAGE;
 
-	//Remove uV tipOffset
-	if (valueuV >= systemSettings.CalibrationOffset)
-		valueuV -= systemSettings.CalibrationOffset;
-	else
-		valueuV = 0;
+	if (systemSettings.CalibrationOffset) {
+		//Remove uV tipOffset
+		if (valueuV >= systemSettings.CalibrationOffset)
+			valueuV -= systemSettings.CalibrationOffset;
+		else
+			valueuV = 0;
+	}
 	// Bias removal (Compensating for a temperature related non-linearity
 	// This uses the target temperature for the tip to calculate a compensation value for temperature related bias
 	// This is not entirely ideal as this means we will be wrong on heat up, but will settle to the correct value
 	// This will cause us to underread on the heatup until we reach the target temp
-	// Compensation (uV)==  ((((80+150*(target_temp_c_x10-1000)/3000)*33000)/4096)*100)/GAIN
+	// Compensation (uV)==  ((((80+150*(target_temp_c_x10-1000)/3000)*vddRailmVX10)/4096)*100)/GAIN
 	// Reordered with Wolframalpha
 	if (currentTempTargetDegC > 0) {
-		uint32_t compensation = (20625 * ((currentTempTargetDegC*10) + 600)) / 512;
+		uint32_t compensation = (20625 * ((currentTempTargetDegC * 10) + 600)) / 512;
 		compensation /= OP_AMP_GAIN_STAGE;
 		if (valueuV > compensation) {
 			valueuV -= compensation;
