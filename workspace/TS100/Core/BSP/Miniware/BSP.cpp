@@ -13,8 +13,8 @@ volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t pendingPWM = 0;
 
 const uint16_t powerPWM = 255;
-static const uint8_t holdoffTicks = 13; // delay of 7 ms
-static const uint8_t tempMeasureTicks = 17;
+static const uint8_t holdoffTicks = 14; // delay of 8 ms
+static const uint8_t tempMeasureTicks = 25;
 
 uint16_t totalPWM; //htim2.Init.Period, the full PWM cycle
 
@@ -119,9 +119,9 @@ uint16_t getHandleTemperature() {
 	int32_t result = getADC(0);
 	result -= 4965; // remove 0.5V offset
 	// 10mV per C
-	// 99.29 counts per Deg C above 0C
+	// 99.29 counts per Deg C above 0C. Tends to read a tad over across all of my sample units
 	result *= 100;
-	result /= 993;
+	result /= 994;
 	return result;
 #endif
 }
@@ -201,7 +201,7 @@ void setTipPWM(uint8_t pulse) {
 
 static void switchToFastPWM(void) {
 	fastPWM = true;
-	totalPWM = powerPWM + tempMeasureTicks * 2;
+	totalPWM = powerPWM + tempMeasureTicks * 2 + holdoffTicks;
 	htim2.Instance->ARR = totalPWM;
 	// ~3.5 Hz rate
 	htim2.Instance->CCR1 = powerPWM + holdoffTicks * 2;
@@ -211,7 +211,7 @@ static void switchToFastPWM(void) {
 
 static void switchToSlowPWM(void) {
 	fastPWM = false;
-	totalPWM = powerPWM + tempMeasureTicks;
+	totalPWM = powerPWM + tempMeasureTicks + holdoffTicks;
 	htim2.Instance->ARR = totalPWM;
 	// ~1.84 Hz rate
 	htim2.Instance->CCR1 = powerPWM + holdoffTicks;
@@ -335,12 +335,10 @@ void unstick_I2C() {
 }
 
 uint8_t getButtonA() {
-	return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ?
-			1 : 0;
+	return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0;
 }
 uint8_t getButtonB() {
-	return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ?
-			1 : 0;
+	return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ? 1 : 0;
 }
 
 void BSPInit(void) {
