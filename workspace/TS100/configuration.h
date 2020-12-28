@@ -91,7 +91,6 @@
 #define TEMPERATURE_INF 0          // default to 0
 #define DESCRIPTION_SCROLL_SPEED 0 // 0: Slow 1: Fast - default to slow
 
-#define TIP_GAIN 210 // 21 uV/C * 10, uV per deg C constant of the tip, Tip uV * 10 / coeff = tip temp
 
 #define OP_AMP_Rf_TS100 750 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_TS100 2370      // 2.37 Kilo-ohms -> From schematic, R2
@@ -101,15 +100,15 @@
 #define OP_AMP_Rf_TS80 180 * 1000 //  180  Kilo-ohms -> From schematic, R6
 #define OP_AMP_Rin_TS80 2000      //  2.0  Kilo-ohms -> From schematic, R3
 
-#define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
-
+#define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))*3
+//The *3 here is a fudge factor that I dont like, but havent tracked down root cause _yet_
 //Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
 //vdiv = (32768*4)/(vin_max*10)
 
 #ifdef MODEL_TS100
 #define VOLTAGE_DIV 467        // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
+#define CALIBRATION_OFFSET 1200 // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT 70     // Sets the max pwm power limit
 #define POWER_LIMIT 0          // 0 watts default limit
 #define MAX_POWER_LIMIT 65     //

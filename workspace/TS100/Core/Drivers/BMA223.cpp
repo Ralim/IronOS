@@ -39,7 +39,7 @@ bool BMA223::initalize() {
 
 }
 
-void BMA223::getAxisReadings(int16_t& x, int16_t& y, int16_t& z) {
+void BMA223::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
 	//The BMA is odd in that its output data width is only 8 bits
 	//And yet there are MSB and LSB registers _sigh_.
 	uint8_t sensorData[6] = { 0, 0, 0, 0, 0, 0 };
@@ -48,9 +48,9 @@ void BMA223::getAxisReadings(int16_t& x, int16_t& y, int16_t& z) {
 		x = y = z = 0;
 		return;
 	}
-
-	x = sensorData[1] << 5;
-	y = sensorData[3] << 5;
-	z = sensorData[5] << 5;
+	//Shift 6 to make its range ~= the other accelerometers
+	x = sensorData[1] << 6;
+	y = sensorData[3] << 6;
+	z = sensorData[5] << 6;
 
 }

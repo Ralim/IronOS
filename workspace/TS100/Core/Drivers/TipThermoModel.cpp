@@ -9,7 +9,7 @@
 #include "Settings.h"
 #include "BSP.h"
 #include "../../configuration.h"
-
+#include "main.hpp"
 /*
  * The hardware is laid out  as a non-inverting op-amp
  * There is a pullup of 39k(TS100) from the +ve input to 3.9V (1M pulup on TS100)
@@ -38,14 +38,26 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 
 	uint32_t valueuV = rawInputmVX10 * 100;	// shift into uV
 	//Now to divide this down by the gain
-	valueuV = (valueuV) / OP_AMP_GAIN_STAGE;
+	valueuV /= OP_AMP_GAIN_STAGE;
 
 	//Remove uV tipOffset
 	if (valueuV >= systemSettings.CalibrationOffset)
 		valueuV -= systemSettings.CalibrationOffset;
 	else
 		valueuV = 0;
-
+	// Bias removal (Compensating for a temperature related non-linearity
+	// This uses the target temperature for the tip to calculate a compensation value for temperature related bias
+	// This is not entirely ideal as this means we will be wrong on heat up, but will settle to the correct value
+	// This will cause us to underread on the heatup until we reach the target temp
+	// Compensation (uV)==  ((((80+150*(target_temp_c_x10-1000)/3000)*33000)/4096)*100)/GAIN
+	// Reordered with Wolframalpha
+	if (currentTempTargetDegC > 0) {
+		uint32_t compensation = (20625 * ((currentTempTargetDegC*10) + 600)) / 512;
+		compensation /= OP_AMP_GAIN_STAGE;
+		if (valueuV > compensation) {
+			valueuV -= compensation;
+		}
+	}
 	return valueuV;
 }
 
@@ -69,57 +81,59 @@ int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_
 	return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000;
 }
 
-const uint16_t uVtoDegC[] = { 0, 0,	//
-		175, 10,	//
-		381, 20,	//
-		587, 30,	//
-		804, 40,	//
-		1005, 50,	//
-		1007, 60,	//
-		1107, 70,	//
-		1310, 80,	//
-		1522, 90,	//
-		1731, 100,	//
-		1939, 110,	//
-		2079, 120,	//
-		2265, 130,	//
-		2470, 140,	//
-		2676, 150,	//
-		2899, 160,	//
-		3081, 170,	//
-		3186, 180,	//
-		3422, 190,	//
-		3622, 200,	//
-		3830, 210,	//
-		4044, 220,	//
-		4400, 230,	//
-		4691, 240,	//
-		4989, 250,	//
-		5289, 260,	//
-		5583, 270,	//
-		5879, 280,	//
-		6075, 290,	//
-		6332, 300,	//
-		6521, 310,	//
-		6724, 320,	//
-		6929, 330,	//
-		7132, 340,	//
-		7356, 350,	//
-		7561, 360,	//
-		7774, 370,	//
-		7992, 380,	//
-		8200, 390,	//
-		8410, 400,	//
-		8626, 410,	//
-		8849, 420,	//
-		9060, 430,	//
-		9271, 440,	//
-		9531, 450,	//
-		9748, 460,	//
-		10210, 470,	//
-		10219, 480,	//
-		10429, 490,	//
-		10649, 500,	//
+const uint16_t uVtoDegC[] = { //
+		//
+				0, 0,	//
+				175, 10,	//
+				381, 20,	//
+				587, 30,	//
+				804, 40,	//
+				1005, 50,	//
+				1007, 60,	//
+				1107, 70,	//
+				1310, 80,	//
+				1522, 90,	//
+				1731, 100,	//
+				1939, 110,	//
+				2079, 120,	//
+				2265, 130,	//
+				2470, 140,	//
+				2676, 150,	//
+				2899, 160,	//
+				3081, 170,	//
+				3186, 180,	//
+				3422, 190,	//
+				3622, 200,	//
+				3830, 210,	//
+				4044, 220,	//
+				4400, 230,	//
+				4691, 240,	//
+				4989, 250,	//
+				5289, 260,	//
+				5583, 270,	//
+				5879, 280,	//
+				6075, 290,	//
+				6332, 300,	//
+				6521, 310,	//
+				6724, 320,	//
+				6929, 330,	//
+				7132, 340,	//
+				7356, 350,	//
+				7561, 360,	//
+				7774, 370,	//
+				7992, 380,	//
+				8200, 390,	//
+				8410, 400,	//
+				8626, 410,	//
+				8849, 420,	//
+				9060, 430,	//
+				9271, 440,	//
+				9531, 450,	//
+				9748, 460,	//
+				10210, 470,	//
+				10219, 480,	//
+				10429, 490,	//
+				10649, 500,	//
 
 		};
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
@@ -162,7 +176,7 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 	return currentTipTempInC;
 }
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-uint32_t TipThermoModel::getTipInF(bool sampleNow) {
+uint32_t TipThermoModel::getTipInF(bool sampleNow, uint16_t currentTargetTempCx10) {
 	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
 			getTipRawTemp(sampleNow));
 	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
