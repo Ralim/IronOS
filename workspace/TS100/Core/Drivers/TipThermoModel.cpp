@@ -183,7 +183,7 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 	return currentTipTempInC;
 }
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-uint32_t TipThermoModel::getTipInF(bool sampleNow, uint16_t currentTargetTempCx10) {
+uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
 			getTipRawTemp(sampleNow));
 	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
