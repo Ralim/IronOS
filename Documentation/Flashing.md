@@ -1,4 +1,4 @@
-# Upgrading your iron
+# Flashing / Upgrading your iron
 
 ## Miniware irons (TS100, TS80, TS80P)
 
