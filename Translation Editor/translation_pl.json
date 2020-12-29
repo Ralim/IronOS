@@ -7,24 +7,24 @@
 		"SettingsCalibrationDone": "Kalibracja udana!",
 		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnęła temperaturę pokojową!",
 		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
-		"UVLOWarningString": "NISKIE DC",
-		"UndervoltageString": "Pod napięciem",
-		"InputVoltageString": "Wejściowe V: ",
-		"WarningTipTempString": "Temperatura grota: ",
+		"UVLOWarningString": "NIS. NAP",
+		"UndervoltageString": "Zbyt niskie nap.",
+		"InputVoltageString": "Nap. wej.: ",
+		"WarningTipTempString": "Temp. grotu:",
 		"BadTipString": "ZŁY GROT",
-		"SleepingSimpleString": "Zzz!",
+		"SleepingSimpleString": "Zzz",
 		"SleepingAdvancedString": "Uśpienie...",
 		"WarningSimpleString": "HOT!",
 		"WarningAdvancedString": "GORĄCA KOŃCÓWKA!",
 		"SleepingTipAdvancedString": "Grot:",
 		"IdleTipString": "Grot:",
-		"IdleSetString": " Ustaw:",
+		"IdleSetString": " ust:",
 		"TipDisconnectedString": "GROT ODŁĄCZONY",
-		"SolderingAdvancedPowerPrompt": "Power: ",
-		"OffString": "Wyłącz",
+		"SolderingAdvancedPowerPrompt": "Moc:",
+		"OffString": "Wył",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Twój zysk:",
-		"SettingsResetMessage": "Ustawienia zostały\nzresetowane!"
+		"YourGainMessage": "Us.zysk:",
+		"SettingsResetMessage": "Ust. zresetowane"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -37,218 +37,245 @@
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "B"
 	},
+	"menuDouble": true,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
 				"Lutowanie",
-				"Ustawienia"
+				""
 			],
-			"desc": "Ustawienia lutownicy"
+			"desc": "Ustawienia trybu lutowania"
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Uśpienie",
-				"Tryby"
+				"Oszcz.",
+				"energii"
 			],
 			"desc": "Ustawienia oszczędzania energii"
 		},
 		"UIMenu": {
 			"text2": [
-				"Użytkownik",
-				"Interfejs"
+				"Interfejs",
+				"użytkownika"
 			],
 			"desc": "Ustawienia interfejsu użytkownika"
 		},
 		"AdvancedMenu": {
 			"text2": [
-				"Zaawansowane",
-				"Opcje"
+				"Ustawienia",
+				"zaawans."
 			],
-			"desc": "Opcje zaawansowane"
+			"desc": "Ustawienia zaawansowane"
 		}
 	},
 	"menuOptions": {
 		"PowerSource": {
-						"text2": [
+			"text": "PWRSC",
+			"text2": [
 				"Źródło",
 				"zasilania"
 			],
-			"desc": "Źródło zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw Li>"
+			"desc": "Źródło zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw, wyłącz limit mocy>"
 		},
 		"SleepTemperature": {
-						"text2": [
-				"Temperatura",
+			"text": "STMP",
+			"text2": [
+				"Temp.",
 				"uśpienia"
 			],
-			"desc": "Temperatura uśpienia <°C>"
+			"desc": "Temperatura w tr. uśpienia <°C>"
 		},
 		"SleepTimeout": {
-						"text2": [
-				"Czas",
+			"text": "STME",
+			"text2": [
+				"Czas do",
 				"uśpienia"
 			],
 			"desc": "Czas uśpienia <minuty/sekundy>"
 		},
 		"ShutdownTimeout": {
-						"text2": [
-				"Czas",
-				"wyłączenia"
+			"text": "SHTME",
+			"text2": [
+				"Czas do",
+				"wył."
 			],
 			"desc": "Czas wyłączenia <minuty>"
 		},
 		"MotionSensitivity": {
-						"text2": [
+			"text": "MSENSE",
+			"text2": [
 				"Czułość",
-				"ruchu"
+				"wykr. ruchu"
 			],
-			"desc": "Czułość ruchu <0.Wyłączona 1.Minimalna 9.Maksymalna>"
+			"desc": "Czułość wykrywania ruchu <0-Wyłączona, 1-Minimalna, 9-Maksymalna>"
 		},
 		"TemperatureUnit": {
-						"text2": [
+			"text": "TMPUNT",
+			"text2": [
 				"Jednostka",
 				"temperatury"
 			],
-			"desc": "Jednostka temperatury <C=Celsius F=Fahrenheit>"
+			"desc": "Jednostka temperatury <C-Celsius, F-Fahrenheit>"
 		},
 		"AdvancedIdle": {
-						"text2": [
-				"Mniejsza",
-				"czcionka"
+			"text": "ADVIDL",
+			"text2": [
+				"Szeczegółowy",
+				"ekran bezczy."
 			],
 			"desc": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
 		},
 		"DisplayRotation": {
-						"text2": [
-				"Orientacja",
-				"wyświetlacza"
+			"text": "DSPROT",
+			"text2": [
+				"Obrót",
+				"ekranu"
 			],
-			"desc": "Orientacja wyświetlacza <A - automatyczna, L - leworęczna, P - praworęczna>"
+			"desc": "Obrót ekranu <A-automatycznie, L-dla leworęcznych, P-dla praworęcznych>"
 		},
 		"BoostTemperature": {
-						"text2": [
-				"Temperatura",
-				"w trybie boost"
+			"text": "BTMP",
+			"text2": [
+				"Temp.",
+				"boost"
 			],
 			"desc": "Temperatura w trybie \"boost\" "
 		},
 		"AutoStart": {
-						"text2": [
-				"Automatyczne",
-				"uruchamianie"
+			"text": "ASTART",
+			"text2": [
+				"Aut. uruch.",
+				"tr. lutow."
 			],
-			"desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania.<B - wyłączone, T - lutowanie, Z - uśpienie, O - uśpienie w temp. pokojowej"
+			"desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania <B-wyłączone, T-lutowanie, Z-uśpienie, O-uśpienie w temp. pokojowej>"
 		},
 		"CooldownBlink": {
-						"text2": [
-				"Migająca",
-				"temperatura"
+			"text": "CLBLNK",
+			"text2": [
+				"Mig. podczas",
+				"wychładzania"
 			],
-			"desc": "Temperatura na ekranie miga, gdy grot jest jeszcze gorący."
+			"desc": "Temperatura miga podczas wychładzania, gdy grot jest wciąż gorący"
 		},
 		"TemperatureCalibration": {
-						"text2": [
+			"text": "TMP CAL?",
+			"text2": [
 				"Kalibracja",
-				"temp. grota"
+				"temp. grotu"
 			],
-			"desc": "Kalibracja temperatury grota lutownicy"
+			"desc": "Kalibracja temperatury grotu lutownicy"
 		},
 		"SettingsReset": {
-						"text2": [
+			"text": "RESET?",
+			"text2": [
 				"Ustawienia",
 				"fabryczne"
 			],
-			"desc": "Zresetuje wszystkie ustawienia!"
+			"desc": "Resetuje wszystkie ustawienia"
 		},
 		"VoltageCalibration": {
-						"text2": [
+			"text": "CAL VIN?",
+			"text2": [
 				"Kalibracja",
 				"napięcia"
 			],
-			"desc": "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść."
+			"desc": "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść"
 		},
 		"AdvancedSoldering": {
-						"text2": [
-				"Szczegółowe",
-				"informacje"
+			"text": "ADVSLD",
+			"text2": [
+				"Sz. inf. na",
+				"ek. lutowania"
 			],
 			"desc": "Wyświetl szczegółowe informacje podczas lutowania"
 		},
 		"ScrollingSpeed": {
-						"text2": [
-				"Szybkość",
+			"text": "DESCSP",
+			"text2": [
+				"Sz. przew.",
 				"tekstu"
 			],
 			"desc": "Szybkość przewijania tekstu"
 		},
 		"TipModel": {
-						"text2": [
+			"text": "TIPMO",
+			"text2": [
 				"Model",
-				"grota"
+				"grotu"
 			],
-			"desc": "Wybór grotu"
+			"desc": "Wybór modelu grotu"
 		},
 		"SimpleCalibrationMode": {
-						"text2": [
+			"text": "SMPCAL",
+			"text2": [
 				"Prosta",
 				"kalibracja"
 			],
 			"desc": "Prosta kalibracja, używając gorącej wody"
 		},
 		"AdvancedCalibrationMode": {
-						"text2": [
+			"text": "ADVCAL",
+			"text2": [
 				"Zaawansowana",
 				"kalibracja"
 			],
 			"desc": "Zaawansowana kalibracja za pomocą termoelementu na grocie"
 		},
 		"PowerInput": {
-						"text2": [
+			"text": "PWRW",
+			"text2": [
 				"Moc",
 				"w W"
 			],
-			"desc": "Moc używanego zasilacza w Wattach"
+			"desc": "Moc używanego zasilacza w watach"
 		},
 		"PowerLimit": {
-						"text2": [
-				"Limit",
+			"text": "PLIM",
+			"text2": [
+				"Ogr.",
 				"mocy"
 			],
-			"desc": "Maksymalna moc w W, jakiej może użyć lutownica"
+			"desc": "Maksymalna moc <W>, jakiej może użyć lutownica"
 		},
 		"ReverseButtonTempChange": {
-						"text2": [
-				"Zamień przyciski",
+			"text": "RVTCHG",
+			"text2": [
+				"Zamień przyc.",
 				"+ -"
 			],
 			"desc": "Zamienia działanie przycisków zmiany temperatury grotu"
 		},
 		"TempChangeShortStep": {
-						"text2": [
-				"Szybka zmiana",
-				"temperatury"
+			"text": "TCHGST",
+			"text2": [
+				"Zm. temp.",
+				"kr. przyc."
 			],
-			"desc": "Zmiany temperatury krok po korku, po krótkim naciśnięciu przycisku"
+			"desc": "Wartość zmiany temperatury, po krótkim przyciśnięciu"
 		},
 		"TempChangeLongStep": {
-						"text2": [
-				"Wolna zmiana",
-				"temperatury"
+			"text": "TCHGLT",
+			"text2": [
+				"Zm. temp.",
+				"dł. przyc."
 			],
-			"desc": "Zmiany temperatury krok po korku, po długim naciśnięciu przycisku"
+			"desc": "Wartość zmiany temperatury, po długim przyciśnięciu"
 		},
-		"PowerPulsePower":{
-						"text2": [
+		"PowerPulsePower": {
+			"text": "POWPLS",
+			"text2": [
 				"Moc pulsu",
 				"w W"
 			],
 			"desc": "Utrzymuj intensywność mocy pulsu"
 		},
 		"TipGain": {
-						"text2": [
-				"Zmodyfikowany",
-				"zysk grotu"
+			"text": "TG",
+			"text2": [
+				"Zm. zysk",
+				"grotu"
 			],
-			"desc": "Zysk grotu"
+			"desc": "Własne ustawienia zysku grotu, celem lepszej kalibracji wysokich temperatur <uV/°C>"
 		}
 	}
 }
