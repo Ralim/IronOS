@@ -66,7 +66,7 @@ void gui_drawTipTemp(bool symbol) {
 		Temp = TipThermoModel::getTipInC();
 	}
 
-	OLED::printNumber(Temp, 3); // Draw the tip temp out finally
+	OLED::printNumber(Temp, 3); // Draw the tip temp out
 	if (symbol) {
 		if (OLED::getFont() == 0) {
 			// Big font, can draw nice symbols

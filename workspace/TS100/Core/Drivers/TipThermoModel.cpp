@@ -160,14 +160,14 @@ uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
 
 uint32_t TipThermoModel::convertCtoF(uint32_t degC) {
 	//(Y °C × 9/5) + 32 =Y°F
-
-	return (320 + ((degC * 90) / 5))/10;
+	return (32 + ((degC * 9) / 5));
 }
 
 uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
 	//(Y°F − 32) × 5/9 = Y°C
-	if (degF < 32)
-	return 0;
+	if (degF < 32) {
+		return 0;
+	}
 	return ((degF - 32) * 5) / 9;
 }
 #endif
@@ -185,10 +185,8 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 }
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 uint32_t TipThermoModel::getTipInF(bool sampleNow) {
-	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
-			getTipRawTemp(sampleNow));
-	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
-	currentTipTempInF += x10WattHistory.average() / 45; // 25 * 9 / 5, see getTipInC
+	uint32_t currentTipTempInF = getTipInC(sampleNow);
+	currentTipTempInF = convertCtoF(currentTipTempInF);
 	return currentTipTempInF;
 }
 #endif
