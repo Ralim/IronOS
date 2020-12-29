@@ -160,7 +160,8 @@ uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
 
 uint32_t TipThermoModel::convertCtoF(uint32_t degC) {
 	//(Y °C × 9/5) + 32 =Y°F
-	return 32 + ((degC * 9) / 5);
+
+	return (320 + ((degC * 90) / 5))/10
 }
 
 uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
