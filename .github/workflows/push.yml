@@ -1,6 +1,6 @@
-name: CI PR
+name: CI Build all
 
-on: [push]
+on: [push,pull_request]
 
 jobs:
   build_TS80:
@@ -11,6 +11,17 @@ jobs:
 
       - name: chmod
         run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+      
+      - name: Cached compiler source files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-compilers
+        with:
+          # we deliberately persist a cache folder forwards
+          path: /build/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-
 
       - name: setup
         run: ./setup.sh
@@ -35,6 +46,17 @@ jobs:
       - name: chmod
         run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
 
+      - name: Cached compiler source files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-compilers
+        with:
+          # we deliberately persist a cache folder forwards
+          path: /build/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-
+
       - name: setup
         run: ./setup.sh
 
@@ -57,6 +79,17 @@ jobs:
 
       - name: chmod
         run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+        
+      - name: Cached compiler source files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-compilers
+        with:
+          # we deliberately persist a cache folder forwards
+          path: /build/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-
 
       - name: setup
         run: ./setup.sh
@@ -81,6 +114,17 @@ jobs:
 
       - name: chmod
         run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh
+        
+      - name: Cached compiler source files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-compilers
+        with:
+          # we deliberately persist a cache folder forwards
+          path: /build/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-
 
       - name: setup
         run: ./setup.sh
