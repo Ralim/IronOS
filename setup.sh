@@ -14,14 +14,14 @@ if md5sum -c /build/source/ci/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.ta
     echo "Good MD5 ARM"
 else
     echo "ARM MD5 Mismatch, downloading fresh"
-    sudo wget  https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 -O gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2
+    sudo wget -q https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 -O gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2
 fi
 
 if md5sum -c /build/source/ci/nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2.md5; then
     echo "Good MD5 RISCV"
 else
     echo "RISCV MD5 Mismatch, downloading fresh"
-    sudo wget  https://github.com/Ralim/nuclei-compiler/releases/download/2020.08/nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2 -O nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2
+    sudo wget -q https://github.com/Ralim/nuclei-compiler/releases/download/2020.08/nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2 -O nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2
 fi
 
 echo "Extracting compilers"
