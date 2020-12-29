@@ -7,6 +7,7 @@ sudo mkdir -p /build
 cd /build
 
 #Download source files to cache folder
+# Remember if these are updated, you need to update the md5 file respectively
 sudo mkdir -p /build/cache
 cd /build/cache/
 if md5sum -c /build/source/ci/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2.md5; then
