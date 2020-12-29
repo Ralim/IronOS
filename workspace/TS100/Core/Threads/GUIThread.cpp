@@ -23,6 +23,9 @@ extern "C" {
 #include <gui.hpp>
 #include <history.hpp>
 #include <power.hpp>
+#ifdef POW_PD
+#include "policy_engine.h"
+#endif
 // File local variables
 extern uint32_t currentTempTargetDegC;
 extern TickType_t lastMovementTime;
