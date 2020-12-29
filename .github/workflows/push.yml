@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache
+        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R a+rwx /build
       
       - name: Cached compiler source files
         uses: actions/cache@v2
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache
+        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R a+rwx /build
 
       - name: Cached compiler source files
         uses: actions/cache@v2
@@ -78,7 +78,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache
+        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R a+rwx /build
         
       - name: Cached compiler source files
         uses: actions/cache@v2
@@ -113,7 +113,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache
+        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R a+rwx /build
         
       - name: Cached compiler source files
         uses: actions/cache@v2
