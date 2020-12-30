@@ -10,7 +10,7 @@
 #include "BSP.h"
 #include "power.hpp"
 #include "../../configuration.h"
-
+#include "main.hpp"
 /*
  * The hardware is laid out  as a non-inverting op-amp
  * There is a pullup of 39k(TS100) from the +ve input to 3.9V (1M pulup on TS100)
@@ -39,12 +39,15 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 
 	uint32_t valueuV = rawInputmVX10 * 100;	// shift into uV
 	//Now to divide this down by the gain
-	valueuV = (valueuV) / OP_AMP_GAIN_STAGE;
-	//Remove uV tipOffset
-	if (valueuV >= systemSettings.CalibrationOffset)
-		valueuV -= systemSettings.CalibrationOffset;
-	else
-		valueuV = 0;
+	valueuV /= OP_AMP_GAIN_STAGE;
+
+	if (systemSettings.CalibrationOffset) {
+		//Remove uV tipOffset
+		if (valueuV >= systemSettings.CalibrationOffset)
+			valueuV -= systemSettings.CalibrationOffset;
+		else
+			valueuV = 0;
+	}
 
 	return valueuV;
 }
@@ -64,22 +67,137 @@ uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) {
 // [x1, y1] = point 1
 // [x2, y2] = point 2
 //  x = input value
-// output is x's extrapolated y value
+// output is x's interpolated y value
 int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x) {
 	return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000;
 }
+#ifdef TEMP_uV_LOOKUP_HAKKO
+const uint16_t uVtoDegC[] = { //
+		//
+				0, 0,	//
+				266, 10,	//
+				522, 20,	//
+				770, 30,	//
+				1010, 40,	//
+				1244, 50,	//
+				1473, 60,	//
+				1697, 70,	//
+				1917, 80,	//
+				2135, 90,	//
+				2351, 100,	//
+				2566, 110,	//
+				2780, 120,	//
+				2994, 130,	//
+				3209, 140,	//
+				3426, 150,	//
+				3644, 160,	//
+				3865, 170,	//
+				4088, 180,	//
+				4314, 190,	//
+				4544, 200,	//
+				4777, 210,	//
+				5014, 220,	//
+				5255, 230,	//
+				5500, 240,	//
+				5750, 250,	//
+				6003, 260,	//
+				6261, 270,	//
+				6523, 280,	//
+				6789, 290,	//
+				7059, 300,	//
+				7332, 310,	//
+				7609, 320,	//
+				7889, 330,	//
+				8171, 340,	//
+				8456, 350,	//
+				8742, 360,	//
+				9030, 370,	//
+				9319, 380,	//
+				9607, 390,	//
+				9896, 400,	//
+				10183, 410,	//
+				10468, 420,	//
+				10750, 430,	//
+				11029, 440,	//
+				11304, 450,	//
+				11573, 460,	//
+				11835, 470,	//
+				12091, 480,	//
+				12337, 490,	//
+				12575, 500,	//
 
-uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
-	//based on new measurements, tip is quite linear
-	//
-	tipuVDelta *= 10;
-	tipuVDelta /= systemSettings.TipGain;
-
-#if defined( MODEL_TS80)+defined( MODEL_TS80P)>0
-	tipuVDelta /= OP_AMP_GAIN_STAGE_TS100 / OP_AMP_GAIN_STAGE_TS80;
+		};
 #endif
 
-	return tipuVDelta;
+#ifdef TEMP_uV_LOOKUP_TS80
+
+const uint16_t uVtoDegC[] = {	//
+		//
+        530 , 0,	//
+		1282 , 10,	//
+		2034 , 20,	//
+		2786 , 30,	//
+		3538 , 40,	//
+		4290 , 50,	//
+		5043 , 60,	//
+		5795 , 70,	//
+		6547 , 80,	//
+		7299 , 90,	//
+		8051 , 100,	//
+		8803 , 110,	//
+		9555 , 120,	//
+		10308 , 130,	//
+		11060 , 140,	//
+		11812 , 150,	//
+		12564 , 160,	//
+		13316 , 170,	//
+		14068 , 180,	//
+		14820 , 190,	//
+		15573 , 200,	//
+		16325 , 210,	//
+		17077 , 220,	//
+		17829 , 230,	//
+		18581 , 240,	//
+		19333 , 250,	//
+		20085 , 260,	//
+		20838 , 270,	//
+		21590 , 280,	//
+		22342 , 290,	//
+		23094 , 300,	//
+		23846 , 310,	//
+		24598 , 320,	//
+		25350 , 330,	//
+		26103 , 340,	//
+		26855 , 350,	//
+		27607 , 360,	//
+		28359 , 370,	//
+		29111 , 380,	//
+		29863 , 390,	//
+		30615 , 400,	//
+		31368 , 410,	//
+		32120 , 420,	//
+		32872 , 430,	//
+		33624 , 440,	//
+		34376 , 450,	//
+		35128 , 460,	//
+		35880 , 470,	//
+		36632 , 480,	//
+		37385 , 490,	//
+		38137 , 500,	//
+		};
+#endif
+uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
+	if (tipuVDelta) {
+		int noItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));
+		for (int i = 1; i < (noItems - 1); i++) {
+			//If current tip temp is less than current lookup, then this current lookup is the higher point to interpolate
+			if (tipuVDelta < uVtoDegC[i * 2]) {
+				return LinearInterpolate(uVtoDegC[(i - 1) * 2], uVtoDegC[((i - 1) * 2) + 1], uVtoDegC[i * 2], uVtoDegC[(i * 2) + 1], tipuVDelta);
+			}
+		}
+		return LinearInterpolate(uVtoDegC[(noItems - 2) * 2], uVtoDegC[((noItems - 2) * 2) + 1], uVtoDegC[(noItems - 1) * 2], uVtoDegC[((noItems - 1) * 2) + 1], tipuVDelta);
+	}
+	return 0;
 }
 
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
@@ -89,13 +207,14 @@ uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) {
 
 uint32_t TipThermoModel::convertCtoF(uint32_t degC) {
 	//(Y °C × 9/5) + 32 =Y°F
-	return 32 + ((degC * 9) / 5);
+	return (32 + ((degC * 9) / 5));
 }
 
 uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
 	//(Y°F − 32) × 5/9 = Y°C
-	if (degF < 32)
-	return 0;
+	if (degF < 32) {
+		return 0;
+	}
 	return ((degF - 32) * 5) / 9;
 }
 #endif
@@ -113,10 +232,8 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
 }
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 uint32_t TipThermoModel::getTipInF(bool sampleNow) {
-	uint32_t currentTipTempInF = TipThermoModel::convertTipRawADCToDegF(
-			getTipRawTemp(sampleNow));
-	currentTipTempInF += convertCtoF(getHandleTemperature() / 10); //Add handle offset
-	currentTipTempInF += x10WattHistory.average() / 45; // 25 * 9 / 5, see getTipInC
+	uint32_t currentTipTempInF = getTipInC(sampleNow);
+	currentTipTempInF = convertCtoF(currentTipTempInF);
 	return currentTipTempInF;
 }
 #endif

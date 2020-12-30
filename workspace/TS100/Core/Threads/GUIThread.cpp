@@ -23,6 +23,9 @@ extern "C" {
 #include <gui.hpp>
 #include <history.hpp>
 #include <power.hpp>
+#ifdef POW_PD
+#include "policy_engine.h"
+#endif
 // File local variables
 extern uint32_t currentTempTargetDegC;
 extern TickType_t lastMovementTime;
@@ -66,24 +69,24 @@ void gui_drawTipTemp(bool symbol) {
 		Temp = TipThermoModel::getTipInC();
 	}
 
-	OLED::printNumber(Temp, 3); // Draw the tip temp out finally
+	OLED::printNumber(Temp, 3); // Draw the tip temp out
 	if (symbol) {
 		if (OLED::getFont() == 0) {
 			// Big font, can draw nice symbols
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 			if (systemSettings.temperatureInF)
-			OLED::drawSymbol(0);
+				OLED::drawSymbol(0);
 			else
 #endif
-			OLED::drawSymbol(1);
+				OLED::drawSymbol(1);
 		} else {
 			// Otherwise fall back to chars
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 			if (systemSettings.temperatureInF)
-			OLED::print(SymbolDegF);
+				OLED::print(SymbolDegF);
 			else
 #endif
-			OLED::print(SymbolDegC);
+				OLED::print(SymbolDegC);
 		}
 	}
 }
@@ -234,9 +237,9 @@ static void gui_solderingTempAdjust() {
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF) {
 			if (systemSettings.SolderingTemp > 850)
-			systemSettings.SolderingTemp = 850;
+				systemSettings.SolderingTemp = 850;
 			if (systemSettings.SolderingTemp < 60)
-			systemSettings.SolderingTemp = 60;
+				systemSettings.SolderingTemp = 60;
 		} else
 #endif
 		{
@@ -263,7 +266,7 @@ static void gui_solderingTempAdjust() {
 		OLED::printNumber(systemSettings.SolderingTemp, 3);
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF)
-		OLED::drawSymbol(0);
+			OLED::drawSymbol(0);
 		else
 #endif
 		{
@@ -313,11 +316,7 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 #endif
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF) {
-			currentTempTargetDegC =
-			stayOff
-			? 0
-			: TipThermoModel::convertFtoC(min(systemSettings.SleepTemp,
-							systemSettings.SolderingTemp));
+			currentTempTargetDegC = stayOff ? 0 : TipThermoModel::convertFtoC(min(systemSettings.SleepTemp, systemSettings.SolderingTemp));
 		} else
 #endif
 		{
@@ -327,7 +326,7 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 		uint16_t tipTemp;
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 		if (systemSettings.temperatureInF)
-		tipTemp = TipThermoModel::getTipInF();
+			tipTemp = TipThermoModel::getTipInF();
 		else
 #endif
 		{
@@ -344,7 +343,7 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 			OLED::printNumber(tipTemp, 3);
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 			if (systemSettings.temperatureInF)
-			OLED::print(SymbolDegF);
+				OLED::print(SymbolDegF);
 			else
 #endif
 			{
@@ -360,7 +359,7 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 			OLED::printNumber(tipTemp, 3);
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 			if (systemSettings.temperatureInF)
-			OLED::drawSymbol(0);
+				OLED::drawSymbol(0);
 			else
 #endif
 			{
@@ -474,7 +473,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				OLED::setCursor(0, 0);
 				OLED::clearScreen();
 				OLED::setFont(0);
-				OLED::print (UnlockingKeysString);
+				OLED::print(UnlockingKeysString);
 				OLED::refresh();
 				waitForButtonPressOrTimeout(1000);
 				break;
@@ -494,7 +493,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				OLED::setCursor(0, 0);
 				OLED::clearScreen();
 				OLED::setFont(0);
-				OLED::print (WarningKeysLockedString);
+				OLED::print(WarningKeysLockedString);
 				OLED::refresh();
 				waitForButtonPressOrTimeout(500);
 				break;
@@ -535,7 +534,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 					OLED::setCursor(0, 0);
 					OLED::clearScreen();
 					OLED::setFont(0);
-					OLED::print (LockingKeysString);
+					OLED::print(LockingKeysString);
 					OLED::refresh();
 					waitForButtonPressOrTimeout(1000);
 				}
@@ -608,8 +607,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		if (boostModeOn) {
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 			if (systemSettings.temperatureInF)
-			currentTempTargetDegC =
-			TipThermoModel::convertFtoC(systemSettings.BoostTemp);
+				currentTempTargetDegC = TipThermoModel::convertFtoC(systemSettings.BoostTemp);
 			else
 #endif
 			{
@@ -618,8 +616,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		} else {
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
 			if (systemSettings.temperatureInF)
-			currentTempTargetDegC =
-			TipThermoModel::convertFtoC(systemSettings.SolderingTemp);
+				currentTempTargetDegC = TipThermoModel::convertFtoC(systemSettings.SolderingTemp);
 			else
 #endif
 			{
@@ -703,6 +700,35 @@ void showDebugMenu(void) {
 			// Print PCB ID number
 			OLED::printNumber(PCBVersion, 2);
 			break;
+		case 11:
+			// Power negotiation status
+			if (getIsPoweredByDCIN()) {
+				OLED::printNumber(0, 1);
+			} else {
+				//We are not powered via DC, so want to display the appropriate state for PD or QC
+				bool poweredbyPD = false;
+#ifdef POW_PD
+				if (usb_pd_detect()){
+					//We are PD capable
+					if (PolicyEngine::pdHasNegotiated()) {
+						//We are powered via PD
+						poweredbyPD=true;
+					}
+				}
+#endif
+				if (poweredbyPD) {
+
+					OLED::printNumber(2, 1);
+				} else {
+
+					OLED::printNumber(1, 1);
+				}
+			}
+			break;
+		case 12:
+			//Max deg C limit
+			OLED::printNumber(TipThermoModel::getTipMaxInC(), 3);
+			break;
 		default:
 			break;
 		}
@@ -713,7 +739,7 @@ void showDebugMenu(void) {
 			return;
 		else if (b == BUTTON_F_SHORT) {
 			screen++;
-			screen = screen % 11;
+			screen = screen % 13;
 		}
 		GUIDelay();
 	}
@@ -726,6 +752,7 @@ void startGUITask(void const *argument __unused) {
 	uint8_t tempWarningState = 0;
 	bool buttonLockout = false;
 	bool tempOnDisplay = false;
+	bool tipDisconnectedDisplay = false;
 	{
 		// Generate the flipped screen into ram for later use
 		// flipped is generated by flipping each row
@@ -822,19 +849,20 @@ void startGUITask(void const *argument __unused) {
 		// the tip temperature is below 50 degrees C *and* motion sleep
 		// detection is enabled *and* there has been no activity (movement or
 		// button presses) in a while.
+		// This is zero cost really as state is only changed on display updates
 		OLED::setDisplayState(OLED::DisplayState::ON);
 
 		if ((tipTemp < 50) && systemSettings.sensitivity && (((xTaskGetTickCount() - lastMovementTime) >
 		MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
 			OLED::setDisplayState(OLED::DisplayState::OFF);
 		}
-
+		uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
 		// Clear the lcd buffer
 		OLED::clearScreen();
 		OLED::setCursor(0, 0);
 		if (systemSettings.detailedIDLE) {
 			OLED::setFont(1);
-			if (tipTemp > 470) {
+			if (tipTemp > tipDisconnectedThres) {
 				OLED::print(TipDisconnectedString);
 			} else {
 				OLED::print(IdleTipString);
@@ -863,11 +891,16 @@ void startGUITask(void const *argument __unused) {
 				OLED::setCursor(84, 0);
 				gui_drawBatteryIcon();
 			}
+			tipDisconnectedDisplay = false;
 			if (tipTemp > 55)
 				tempOnDisplay = true;
 			else if (tipTemp < 45)
 				tempOnDisplay = false;
-			if (tempOnDisplay) {
+			if (tipTemp > tipDisconnectedThres) {
+				tempOnDisplay = false;
+				tipDisconnectedDisplay = true;
+			}
+			if (tempOnDisplay || tipDisconnectedDisplay) {
 				// draw temp over the start soldering button
 				// Location changes on screen rotation
 #ifdef OLED_FLIP
@@ -883,11 +916,15 @@ void startGUITask(void const *argument __unused) {
 					OLED::fillArea(0, 0, 41, 16, 0); // clear the area
 					OLED::setCursor(0, 0);
 				}
-				// draw in the temp
-				if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 25 < 16)))
-					gui_drawTipTemp(false); // draw in the temp
+				//If we have a tip connected draw the temp, if not we leave it blank
+				if (!tipDisconnectedDisplay) {
+					// draw in the temp
+					if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 250 < 160)))
+						gui_drawTipTemp(false); // draw in the temp
+				}
 			}
 		}
+
 		OLED::refresh();
 		GUIDelay();
 	}

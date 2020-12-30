@@ -77,7 +77,6 @@ void resetSettings() {
 	systemSettings.TempChangeShortStep = TEMP_CHANGE_SHORT_STEP; //
 	systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP; //
 	systemSettings.KeepAwakePulse = POWER_PULSE_DEFAULT;
-	systemSettings.TipGain = TIP_GAIN;
 	systemSettings.hallEffectSensitivity = 1;
 	saveSettings();  // Save defaults
 }

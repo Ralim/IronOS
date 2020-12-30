@@ -13,8 +13,8 @@ volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t pendingPWM = 0;
 
 const uint16_t powerPWM = 255;
-static const uint8_t holdoffTicks = 13; // delay of 7 ms
-static const uint8_t tempMeasureTicks = 17;
+static const uint8_t holdoffTicks = 14; // delay of 8 ms
+static const uint8_t tempMeasureTicks = 14;
 
 uint16_t totalPWM; //htim2.Init.Period, the full PWM cycle
 
@@ -60,37 +60,37 @@ static const uint16_t NTCHandleLookup[] = {
 		22264, 27, //
 		21933, 28, //
 		21599, 29, //
-					//		21261, 30, //
-					//		20921, 31, //
-					//		20579, 32, //
-					//		20234, 33, //
-					//		19888, 34, //
-					//		19541, 35, //
-					//		19192, 36, //
-					//		18843, 37, //
-					//		18493, 38, //
-					//		18143, 39, //
-					//		17793, 40, //
-					//		17444, 41, //
-					//		17096, 42, //
-					//		16750, 43, //
-					//		16404, 44, //
-					//		16061, 45, //
-					//		15719, 46, //
-					//		15380, 47, //
-					//		15044, 48, //
-					//		14710, 49, //
-					//		14380, 50, //
-					//		14053, 51, //
-					//		13729, 52, //
-					//		13410, 53, //
-					//		13094, 54, //
-					//		12782, 55, //
-					//		12475, 56, //
-					//		12172, 57, //
-					//		11874, 58, //
-					//		11580, 59, //
-					//		11292, 60, //
+		21261, 30, //
+		20921, 31, //
+		20579, 32, //
+		20234, 33, //
+		19888, 34, //
+		19541, 35, //
+		19192, 36, //
+		18843, 37, //
+		18493, 38, //
+		18143, 39, //
+		17793, 40, //
+		17444, 41, //
+		17096, 42, //
+		16750, 43, //
+		16404, 44, //
+		16061, 45, //
+		//		15719, 46, //
+		//		15380, 47, //
+		//		15044, 48, //
+		//		14710, 49, //
+		//		14380, 50, //
+		//		14053, 51, //
+		//		13729, 52, //
+		//		13410, 53, //
+		//		13094, 54, //
+		//		12782, 55, //
+		//		12475, 56, //
+		//		12172, 57, //
+		//		11874, 58, //
+		//		11580, 59, //
+		//		11292, 60, //
 		};
 #endif
 
@@ -100,13 +100,12 @@ uint16_t getHandleTemperature() {
 	//NTCG104EF104FT1X from TDK
 	//For now not doing interpolation
 	int32_t result = getADC(0);
-	for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t)));
-			i++) {
+	for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t))); i++) {
 		if (result > NTCHandleLookup[(i * 2) + 0]) {
 			return NTCHandleLookup[(i * 2) + 1] * 10;
 		}
 	}
-	return 0;
+	return 45 * 10;
 #endif
 #ifdef TEMP_TMP36
 	// We return the current handle temperature in X10 C
@@ -119,9 +118,9 @@ uint16_t getHandleTemperature() {
 	int32_t result = getADC(0);
 	result -= 4965; // remove 0.5V offset
 	// 10mV per C
-	// 99.29 counts per Deg C above 0C
+	// 99.29 counts per Deg C above 0C. Tends to read a tad over across all of my sample units
 	result *= 100;
-	result /= 993;
+	result /= 994;
 	return result;
 #endif
 }
@@ -201,7 +200,7 @@ void setTipPWM(uint8_t pulse) {
 
 static void switchToFastPWM(void) {
 	fastPWM = true;
-	totalPWM = powerPWM + tempMeasureTicks * 2;
+	totalPWM = powerPWM + tempMeasureTicks * 2 + holdoffTicks;
 	htim2.Instance->ARR = totalPWM;
 	// ~3.5 Hz rate
 	htim2.Instance->CCR1 = powerPWM + holdoffTicks * 2;
@@ -211,7 +210,7 @@ static void switchToFastPWM(void) {
 
 static void switchToSlowPWM(void) {
 	fastPWM = false;
-	totalPWM = powerPWM + tempMeasureTicks;
+	totalPWM = powerPWM + tempMeasureTicks + holdoffTicks;
 	htim2.Instance->ARR = totalPWM;
 	// ~1.84 Hz rate
 	htim2.Instance->CCR1 = powerPWM + holdoffTicks;
@@ -335,12 +334,10 @@ void unstick_I2C() {
 }
 
 uint8_t getButtonA() {
-	return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ?
-			1 : 0;
+	return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0;
 }
 uint8_t getButtonB() {
-	return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ?
-			1 : 0;
+	return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ? 1 : 0;
 }
 
 void BSPInit(void) {

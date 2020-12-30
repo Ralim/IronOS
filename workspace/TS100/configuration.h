@@ -91,7 +91,6 @@
 #define TEMPERATURE_INF 0          // default to 0
 #define DESCRIPTION_SCROLL_SPEED 0 // 0: Slow 1: Fast - default to slow
 
-#define TIP_GAIN 210 // 21 uV/C * 10, uV per deg C constant of the tip, Tip uV * 10 / coeff = tip temp
 
 #define OP_AMP_Rf_TS100 750 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_TS100 2370      // 2.37 Kilo-ohms -> From schematic, R2
@@ -102,6 +101,7 @@
 #define OP_AMP_Rin_TS80 2000      //  2.0  Kilo-ohms -> From schematic, R3
 
 #define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
+
 
 //Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
@@ -115,6 +115,7 @@
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
+#define TEMP_uV_LOOKUP_HAKKO
 #endif
 
 #ifdef MODEL_Pinecil
@@ -125,6 +126,7 @@
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
+#define TEMP_uV_LOOKUP_HAKKO
 #endif
 
 #ifdef MODEL_TS80
@@ -135,20 +137,22 @@
 #define MAX_POWER_LIMIT 30     //
 #define POWER_LIMIT_STEPS 2
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS80
+#define TEMP_uV_LOOKUP_TS80
 #endif
 
 #ifdef MODEL_TS80P
 #define VOLTAGE_DIV 650        // Default for TS80P with slightly different resistors
 #define PID_POWER_LIMIT 35     // Sets the max pwm power limit
-#define CALIBRATION_OFFSET 900 // the adc offset in uV
+#define CALIBRATION_OFFSET 1500 // the adc offset in uV
 #define POWER_LIMIT 30         // 30 watts default power limit
 #define MAX_POWER_LIMIT 35     //
 #define POWER_LIMIT_STEPS 2
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS80
+#define TEMP_uV_LOOKUP_TS80
 #endif
 
 #ifdef MODEL_TS100
-const int32_t tipMass = 45;       // X10 watts to raise 1 deg C in 1 second
+const int32_t tipMass = 65;       // X10 watts to raise 1 deg C in 1 second
 const uint8_t tipResistance = 75; //x10 ohms, 7.5 typical for ts100 tips
 #endif
 

@@ -54,19 +54,20 @@ def readTranslations(jsonDir):
             langCode = fileName[12:-5].upper()
             # ...and the one specified in the JSON file...
             try:
-                langCodeFromJson = lang['languageCode']
+                langCodeFromJson = lang["languageCode"]
             except KeyError:
                 langCodeFromJson = "(missing)"
 
             try:
-                TempUnitF_FromJson = lang['tempUnitFahrenheit']
+                TempUnitF_FromJson = lang["tempUnitFahrenheit"]
             except KeyError:
-                TempUnitF_FromJson = True # Default to true.
-            
+                TempUnitF_FromJson = True  # Default to true.
+
             # ...cause they should be the same!
             if langCode != langCodeFromJson:
-                raise ValueError("Invalid languageCode " + langCodeFromJson +
-                                 " in file " + fileName)
+                raise ValueError(
+                    "Invalid languageCode " + langCodeFromJson + " in file " + fileName
+                )
 
             langDict[langCode] = lang
             UnitDict[langCode] = TempUnitF_FromJson
@@ -82,7 +83,9 @@ def writeStart(f):
 #ifndef LANG
 #define LANG_EN
 #endif
-"""))
+"""
+        )
+    )
 
 
 def writeStartUnit(f):
@@ -100,86 +103,91 @@ def writeStartUnit(f):
 
 #ifndef _UNIT_H
 #define _UNIT_H\n
-"""))
+"""
+        )
+    )
+
 
 def escapeC(s):
-    return s.replace("\"", "\\\"")
+    return s.replace('"', '\\"')
 
 
 def getConstants():
     # Extra constants that are used in the firmware that are shared across all languages
     consants = []
-    consants.append(('SymbolPlus', '+'))
-    consants.append(('SymbolMinus', '-'))
-    consants.append(('SymbolSpace', ' '))
-    consants.append(('SymbolDot', '.'))
-    consants.append(('SymbolDegC', 'C'))
-    consants.append(('SymbolDegF', 'F'))
-    consants.append(('SymbolMinutes', 'M'))
-    consants.append(('SymbolSeconds', 'S'))
-    consants.append(('SymbolWatts', 'W'))
-    consants.append(('SymbolVolts', 'V'))
-    consants.append(('SymbolDC', 'DC'))
-    consants.append(('SymbolCellCount', 'S'))
-    consants.append(('SymbolVersionNumber', buildVersion))
+    consants.append(("SymbolPlus", "+"))
+    consants.append(("SymbolMinus", "-"))
+    consants.append(("SymbolSpace", " "))
+    consants.append(("SymbolDot", "."))
+    consants.append(("SymbolDegC", "C"))
+    consants.append(("SymbolDegF", "F"))
+    consants.append(("SymbolMinutes", "M"))
+    consants.append(("SymbolSeconds", "S"))
+    consants.append(("SymbolWatts", "W"))
+    consants.append(("SymbolVolts", "V"))
+    consants.append(("SymbolDC", "DC"))
+    consants.append(("SymbolCellCount", "S"))
+    consants.append(("SymbolVersionNumber", buildVersion))
     return consants
-
 
 
 def getDebugMenu():
     constants = []
-    constants.append(datetime.today().strftime('%d-%m-%y'))
-    constants.append("HW G ")
-    constants.append("HW M ")
-    constants.append("HW P ")
-    constants.append("Time ")
-    constants.append("Move ")
-    constants.append("RTip ")
-    constants.append("CTip ")
-    constants.append("CHan ")
-    constants.append("Vin  ")
+    constants.append(datetime.today().strftime("%d-%m-%y"))
+    constants.append("HW G ")  # High Water marker for GUI task
+    constants.append("HW M ")  # High Water marker for MOV task
+    constants.append("HW P ")  # High Water marker for PID task
+    constants.append("Time ")  # Uptime (aka timestamp)
+    constants.append("Move ")  # Time of last significant movement
+    constants.append("RTip ")  # Tip reading in uV
+    constants.append("CTip ")  # Tip temp in C
+    constants.append("CHan ")  # Handle temp in C
+    constants.append("Vin  ")  # Input voltage
     constants.append("PCB  ")  # PCB Version AKA IMU version
+    constants.append("PWR  ")  # Power Negotiation State
+    constants.append("Max  ")  # Max deg C limit
+
     return constants
 
 
 def getLetterCounts(defs, lang):
     textList = []
     # iterate over all strings
-    obj = lang['menuOptions']
-    for mod in defs['menuOptions']:
-        eid = mod['id']
-        textList.append(obj[eid]['desc'])
+    obj = lang["menuOptions"]
+    for mod in defs["menuOptions"]:
+        eid = mod["id"]
+        textList.append(obj[eid]["desc"])
 
-    obj = lang['messages']
-    for mod in defs['messages']:
-        eid = mod['id']
+    obj = lang["messages"]
+    for mod in defs["messages"]:
+        eid = mod["id"]
         if eid not in obj:
-            textList.append(mod['default'])
+            textList.append(mod["default"])
         else:
             textList.append(obj[eid])
 
-    obj = lang['characters']
+    obj = lang["characters"]
 
-    for mod in defs['characters']:
-        eid = mod['id']
+    for mod in defs["characters"]:
+        eid = mod["id"]
         textList.append(obj[eid])
 
-    obj = lang['menuOptions']
-    for mod in defs['menuOptions']:
-        eid = mod['id']
-        textList.append(obj[eid]['text2'][0])
-        textList.append(obj[eid]['text2'][1])
+    obj = lang["menuOptions"]
+    for mod in defs["menuOptions"]:
+        eid = mod["id"]
+        textList.append(obj[eid]["text2"][0])
+        textList.append(obj[eid]["text2"][1])
 
-    obj = lang['menuGroups']
-    for mod in defs['menuGroups']:
-        eid = mod['id']
-        textList.append(obj[eid]['text2'][0])
-        textList.append(obj[eid]['text2'][1])
+    obj = lang["menuGroups"]
+    for mod in defs["menuGroups"]:
+        eid = mod["id"]
+        textList.append(obj[eid]["text2"][0])
+        textList.append(obj[eid]["text2"][1])
 
-    obj = lang['menuGroups']
-    for mod in defs['menuGroups']:
-        eid = mod['id']
-        textList.append(obj[eid]['desc'])
+    obj = lang["menuGroups"]
+    for mod in defs["menuGroups"]:
+        eid = mod["id"]
+        textList.append(obj[eid]["desc"])
     constants = getConstants()
     for x in constants:
         textList.append(x[1])
@@ -189,15 +197,15 @@ def getLetterCounts(defs, lang):
 
     symbolCounts = {}
     for line in textList:
-        line = line.replace('\n', '').replace('\r', '')
-        line = line.replace('\\n', '').replace('\\r', '')
+        line = line.replace("\n", "").replace("\r", "")
+        line = line.replace("\\n", "").replace("\\r", "")
         if len(line):
             # print(line)
             for letter in line:
                 symbolCounts[letter] = symbolCounts.get(letter, 0) + 1
     symbolCounts = sorted(
-        symbolCounts.items(),
-        key=lambda kv: (kv[1], kv[0]))  # swap to Big -> little sort order
+        symbolCounts.items(), key=lambda kv: (kv[1], kv[0])
+    )  # swap to Big -> little sort order
     symbolCounts = list(map(lambda x: x[0], symbolCounts))
     symbolCounts.reverse()
     return symbolCounts
@@ -207,17 +215,17 @@ def getFontMapAndTable(textList):
     # the text list is sorted
     # allocate out these in their order as number codes
     symbolMap = {}
-    symbolMap['\n'] = '\\x01'  # Force insert the newline char
+    symbolMap["\n"] = "\\x01"  # Force insert the newline char
     index = 2  # start at 2, as 0= null terminator,1 = new line
-    forcedFirstSymbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    forcedFirstSymbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     # enforce numbers are first
     for sym in forcedFirstSymbols:
         symbolMap[sym] = "\\x%0.2X" % index
         index = index + 1
     if len(textList) > (253 - len(forcedFirstSymbols)):
-        print('Error, too many used symbols for this version')
+        print("Error, too many used symbols for this version")
         exit(1)
-    print('Generating fonts for {} symbols'.format(len(textList)))
+    print("Generating fonts for {} symbols".format(len(textList)))
 
     for sym in textList:
         if sym not in symbolMap:
@@ -230,39 +238,38 @@ def getFontMapAndTable(textList):
     fontSmallTable = fontTables.getSmallFontMap()
     for sym in forcedFirstSymbols:
         if sym not in fontTable:
-            print('Missing Large font element for {}'.format(sym))
+            print("Missing Large font element for {}".format(sym))
             exit(1)
         fontLine = fontTable[sym]
-        fontTableStrings.append(
-            fontLine + "//{} -> {}".format(symbolMap[sym], sym))
+        fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
         if sym not in fontSmallTable:
-            print('Missing Small font element for {}'.format(sym))
+            print("Missing Small font element for {}".format(sym))
             exit(1)
         fontLine = fontSmallTable[sym]
         fontSmallTableStrings.append(
-            fontLine + "//{} -> {}".format(symbolMap[sym], sym))
+            fontLine + "//{} -> {}".format(symbolMap[sym], sym)
+        )
 
     for sym in textList:
         if sym not in fontTable:
-            print('Missing Large font element for {}'.format(sym))
+            print("Missing Large font element for {}".format(sym))
             exit(1)
         if sym not in forcedFirstSymbols:
             fontLine = fontTable[sym]
-            fontTableStrings.append(
-                fontLine + "//{} -> {}".format(symbolMap[sym], sym))
+            fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
             if sym not in fontSmallTable:
-                print('Missing Small font element for {}'.format(sym))
+                print("Missing Small font element for {}".format(sym))
                 exit(1)
             fontLine = fontSmallTable[sym]
             fontSmallTableStrings.append(
-                fontLine + "//{} -> {}".format(symbolMap[sym], sym))
+                fontLine + "//{} -> {}".format(symbolMap[sym], sym)
+            )
     outputTable = "const uint8_t USER_FONT_12[] = {" + to_unicode("\n")
     for line in fontTableStrings:
         # join font table int one large string
         outputTable = outputTable + line + to_unicode("\n")
     outputTable = outputTable + "};" + to_unicode("\n")
-    outputTable = outputTable + "const uint8_t USER_FONT_6x8[] = {" + to_unicode(
-        "\n")
+    outputTable = outputTable + "const uint8_t USER_FONT_6x8[] = {" + to_unicode("\n")
     for line in fontSmallTableStrings:
         # join font table int one large string
         outputTable = outputTable + line + to_unicode("\n")
@@ -273,9 +280,9 @@ def getFontMapAndTable(textList):
 def convStr(symbolConversionTable, text):
     # convert all of the symbols from the string into escapes for their content
     outputString = ""
-    for c in text.replace('\\r', '').replace('\\n', '\n'):
+    for c in text.replace("\\r", "").replace("\\n", "\n"):
         if c not in symbolConversionTable:
-            print('Missing font definition for {}'.format(c))
+            print("Missing font definition for {}".format(c))
         else:
             outputString = outputString + symbolConversionTable[c]
     return outputString
@@ -292,60 +299,86 @@ def writeLanguage(languageCode, defs, f):
     f.write(to_unicode("\n#ifdef LANG_" + languageCode + "\n"))
     f.write(fontTableText)
     try:
-        langName = lang['languageLocalName']
+        langName = lang["languageLocalName"]
     except KeyError:
         langName = languageCode
 
     f.write(to_unicode("// ---- " + langName + " ----\n\n"))
 
     # ----- Writing SettingsDescriptions
-    obj = lang['menuOptions']
+    obj = lang["menuOptions"]
     f.write(to_unicode("const char* SettingsDescriptions[] = {\n"))
 
     maxLen = 25
-    index =0
-    for mod in defs['menuOptions']:
-        eid = mod['id']
-        if 'feature' in mod:
-            f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
-        f.write(to_unicode("  /* ["+"{:02d}".format(index)+"] " + eid.ljust(maxLen)[:maxLen] + " */ "))
+    index = 0
+    for mod in defs["menuOptions"]:
+        eid = mod["id"]
+        if "feature" in mod:
+            f.write(to_unicode("#ifdef " + mod["feature"] + "\n"))
         f.write(
-            to_unicode("\"" +
-                       convStr(symbolConversionTable, (obj[eid]['desc'])) +
-                       "\"," + "//{} \n".format(obj[eid]['desc'])))
-        if 'feature' in mod:
+            to_unicode(
+                "  /* ["
+                + "{:02d}".format(index)
+                + "] "
+                + eid.ljust(maxLen)[:maxLen]
+                + " */ "
+            )
+        )
+        f.write(
+            to_unicode(
+                '"'
+                + convStr(symbolConversionTable, (obj[eid]["desc"]))
+                + '",'
+                + "//{} \n".format(obj[eid]["desc"])
+            )
+        )
+        if "feature" in mod:
             f.write(to_unicode("#endif\n"))
-        index=index+1
+        index = index + 1
 
     f.write(to_unicode("};\n\n"))
 
     # ----- Writing Message strings
 
-    obj = lang['messages']
+    obj = lang["messages"]
 
-    for mod in defs['messages']:
-        eid = mod['id']
+    for mod in defs["messages"]:
+        eid = mod["id"]
         sourceText = ""
-        if 'default' in mod:
-            sourceText = (mod['default'])
+        if "default" in mod:
+            sourceText = mod["default"]
         if eid in obj:
-            sourceText = (obj[eid])
+            sourceText = obj[eid]
         translatedText = convStr(symbolConversionTable, sourceText)
         f.write(
-            to_unicode("const char* " + eid + " = \"" +
-                       translatedText + "\";" + "//{} \n".format(sourceText.replace('\n', '_'))))
+            to_unicode(
+                "const char* "
+                + eid
+                + ' = "'
+                + translatedText
+                + '";'
+                + "//{} \n".format(sourceText.replace("\n", "_"))
+            )
+        )
 
     f.write(to_unicode("\n"))
 
     # ----- Writing Characters
 
-    obj = lang['characters']
+    obj = lang["characters"]
 
-    for mod in defs['characters']:
-        eid = mod['id']
+    for mod in defs["characters"]:
+        eid = mod["id"]
         f.write(
-            to_unicode("const char* " + eid + " = \"" +
-                       convStr(symbolConversionTable, obj[eid]) + "\";" + "//{} \n".format(obj[eid])))
+            to_unicode(
+                "const char* "
+                + eid
+                + ' = "'
+                + convStr(symbolConversionTable, obj[eid])
+                + '";'
+                + "//{} \n".format(obj[eid])
+            )
+        )
 
     f.write(to_unicode("\n"))
 
@@ -353,8 +386,15 @@ def writeLanguage(languageCode, defs, f):
     constants = getConstants()
     for x in constants:
         f.write(
-            to_unicode("const char* " + x[0] + " = \"" +
-                       convStr(symbolConversionTable, x[1]) + "\";" + "//{} \n".format(x[1])))
+            to_unicode(
+                "const char* "
+                + x[0]
+                + ' = "'
+                + convStr(symbolConversionTable, x[1])
+                + '";'
+                + "//{} \n".format(x[1])
+            )
+        )
 
     f.write(to_unicode("\n"))
 
@@ -362,66 +402,91 @@ def writeLanguage(languageCode, defs, f):
     f.write(to_unicode("const char* DebugMenu[] = {\n"))
 
     for c in getDebugMenu():
-        f.write(to_unicode("\t \"" + convStr(symbolConversionTable,
-                                             c) + "\"," + "//{} \n".format(c)))
+        f.write(
+            to_unicode(
+                '\t "' + convStr(symbolConversionTable, c) + '",' + "//{} \n".format(c)
+            )
+        )
     f.write(to_unicode("};\n\n"))
 
     # ----- Writing SettingsDescriptions
-    obj = lang['menuOptions']
+    obj = lang["menuOptions"]
     f.write(to_unicode("const char* SettingsShortNames[][2] = {\n"))
 
     maxLen = 25
     index = 0
-    for mod in defs['menuOptions']:
-        eid = mod['id']
-        if 'feature' in mod:
-            f.write(to_unicode("#ifdef " + mod['feature'] + "\n"))
-        f.write(to_unicode("  /* ["+"{:02d}".format(index)+"] "   + eid.ljust(maxLen)[:maxLen] + " */ "))
+    for mod in defs["menuOptions"]:
+        eid = mod["id"]
+        if "feature" in mod:
+            f.write(to_unicode("#ifdef " + mod["feature"] + "\n"))
         f.write(
             to_unicode(
-                "{ \"" +
-                convStr(symbolConversionTable, (obj[eid]['text2'][0])) +
-                "\", \"" +
-                convStr(symbolConversionTable, (obj[eid]['text2'][1])) +
-                "\" }," + "//{} \n".format(obj[eid]['text2'])))
-        
-        if 'feature' in mod:
+                "  /* ["
+                + "{:02d}".format(index)
+                + "] "
+                + eid.ljust(maxLen)[:maxLen]
+                + " */ "
+            )
+        )
+        f.write(
+            to_unicode(
+                '{ "'
+                + convStr(symbolConversionTable, (obj[eid]["text2"][0]))
+                + '", "'
+                + convStr(symbolConversionTable, (obj[eid]["text2"][1]))
+                + '" },'
+                + "//{} \n".format(obj[eid]["text2"])
+            )
+        )
+
+        if "feature" in mod:
             f.write(to_unicode("#endif\n"))
-        index = index + 1 
+        index = index + 1
 
     f.write(to_unicode("};\n\n"))
 
     # ----- Writing Menu Groups
-    obj = lang['menuGroups']
-    f.write(
-        to_unicode("const char* SettingsMenuEntries[" + str(len(obj)) +
-                   "] = {\n"))
+    obj = lang["menuGroups"]
+    f.write(to_unicode("const char* SettingsMenuEntries[" + str(len(obj)) + "] = {\n"))
 
     maxLen = 25
-    for mod in defs['menuGroups']:
-        eid = mod['id']
+    for mod in defs["menuGroups"]:
+        eid = mod["id"]
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         f.write(
-            to_unicode("\"" +
-                       convStr(symbolConversionTable, (obj[eid]['text2'][0]) +
-                               "\\n" + obj[eid]['text2'][1]) + "\"," + "//{} \n".format(obj[eid]['text2'])))
+            to_unicode(
+                '"'
+                + convStr(
+                    symbolConversionTable,
+                    (obj[eid]["text2"][0]) + "\\n" + obj[eid]["text2"][1],
+                )
+                + '",'
+                + "//{} \n".format(obj[eid]["text2"])
+            )
+        )
 
     f.write(to_unicode("};\n\n"))
 
     # ----- Writing Menu Groups Descriptions
-    obj = lang['menuGroups']
+    obj = lang["menuGroups"]
     f.write(
-        to_unicode("const char* SettingsMenuEntriesDescriptions[" +
-                   str(len(obj)) + "] = {\n"))
+        to_unicode(
+            "const char* SettingsMenuEntriesDescriptions[" + str(len(obj)) + "] = {\n"
+        )
+    )
 
     maxLen = 25
-    for mod in defs['menuGroups']:
-        eid = mod['id']
+    for mod in defs["menuGroups"]:
+        eid = mod["id"]
         f.write(to_unicode("  /* " + eid.ljust(maxLen)[:maxLen] + " */ "))
         f.write(
-            to_unicode("\"" +
-                       convStr(symbolConversionTable, (obj[eid]['desc'])) +
-                       "\"," + "//{} \n".format(obj[eid]['desc'])))
+            to_unicode(
+                '"'
+                + convStr(symbolConversionTable, (obj[eid]["desc"]))
+                + '",'
+                + "//{} \n".format(obj[eid]["desc"])
+            )
+        )
 
     f.write(to_unicode("};\n\n"))
 
@@ -434,36 +499,49 @@ def writeUnit(languageCode, defs, f, UnitCodes):
     lang = langDict[languageCode]
     unit = UnitDict[UnitCodes]
     try:
-        langName = lang['languageLocalName']
+        langName = lang["languageLocalName"]
     except KeyError:
         langName = languageCode
     f.write(to_unicode("  #ifdef LANG_" + languageCode + "\n"))
-    if unit: 
+    if unit:
         f.write(to_unicode("    #define  ENABLED_FAHRENHEIT_SUPPORT" + "\n"))
-    else: f.write(to_unicode("    //#define  ENABLED_FAHRENHEIT_SUPPORT" + "\n"))
+    else:
+        f.write(to_unicode("    //#define  ENABLED_FAHRENHEIT_SUPPORT" + "\n"))
     # ----- Block end
     f.write(to_unicode("  #endif /* ---- " + langName + " ---- */\n"))
 
+
 def readVersion():
-    with open(os.path.relpath(jsonDir + 
-    "/../workspace/TS100/version.h"),"r") as version_file:
-        try: 
+    with open(
+        os.path.relpath(jsonDir + "/../workspace/TS100/version.h"), "r"
+    ) as version_file:
+        try:
             for line in version_file:
-                if re.findall(r'^.*(?<=(#define)).*(?<=(BUILD_VERSION))', line):
-                    line = re.findall(r'\"(.+?)\"',line)
-                    if line: 
+                if re.findall(r"^.*(?<=(#define)).*(?<=(BUILD_VERSION))", line):
+                    line = re.findall(r"\"(.+?)\"", line)
+                    if line:
                         version = line[0]
-                        try: version += "."+ subprocess.check_output(
-                            ["git","rev-parse", "--short=7", "HEAD"]).strip().decode('ascii').upper()
-                            # --short=7: the shorted hash with 7 digits. Increase/decrease if needed!
-                        except OSError: version += " git"
-        finally: 
-            if version_file: 
-                version_file.close(); 
+                        try:
+                            version += (
+                                "."
+                                + subprocess.check_output(
+                                    ["git", "rev-parse", "--short=7", "HEAD"]
+                                )
+                                .strip()
+                                .decode("ascii")
+                                .upper()
+                            )
+                        # --short=7: the shorted hash with 7 digits. Increase/decrease if needed!
+                        except OSError:
+                            version += " git"
+        finally:
+            if version_file:
+                version_file.close()
                 return version
 
+
 def read_opts():
-    """ Reading input parameters
+    """Reading input parameters
     First parameter = json directory
     Second parameter = translation directory
     Third paramter = unit directory
@@ -478,12 +556,12 @@ def read_opts():
     else:
         outDir = os.path.relpath(jsonDir + "/../workspace/TS100/Core/Src")
         outFileTranslationCPP = os.path.join(outDir, TRANSLATION_CPP)
-    
+
     if len(sys.argv) > 3:
         outFileUnitH = sys.argv[3]
     else:
         outDir = os.path.relpath(jsonDir + "/../workspace/TS100/Core/Inc")
-        outFileUnitH = os.path.join(outDir,UNIT_H)
+        outFileUnitH = os.path.join(outDir, UNIT_H)
 
     if len(sys.argv) > 4:
         raise Exception("Too many parameters!")
@@ -493,7 +571,7 @@ def read_opts():
 
 def orderOutput(langDict):
     # These languages go first
-    mandatoryOrder = ['EN']
+    mandatoryOrder = ["EN"]
 
     # Then add all others in alphabetical order
     sortedKeys = sorted(langDict.keys())
@@ -508,16 +586,17 @@ def orderOutput(langDict):
 
 def writeTarget(outFileTranslationCPP, outFileUnitH, defs, langCodes, UnitCodes):
     # Start writing the file
-    with io.open(outFileTranslationCPP, 'w', encoding='utf-8', newline="\n") as f:
+    with io.open(outFileTranslationCPP, "w", encoding="utf-8", newline="\n") as f:
         writeStart(f)
         for langCode in langCodes:
             writeLanguage(langCode, defs, f)
 
-    with io.open(outFileUnitH, 'w', encoding='utf-8', newline="\n") as f:
+    with io.open(outFileUnitH, "w", encoding="utf-8", newline="\n") as f:
         writeStartUnit(f)
         for langCode, UnitCode in zip(langCodes, UnitCodes):
             writeUnit(langCode, defs, f, UnitCode)
         f.write(to_unicode("\n#endif /* _UNIT_H */\n"))
+
 
 if __name__ == "__main__":
     try:
@@ -526,8 +605,11 @@ if __name__ == "__main__":
         print("usage: make_translation.py {json dir} {cpp dir}")
         sys.exit(1)
 
-    try: buildVersion = readVersion()
-    except: print("error: could not get/extract build version"); sys.exit(1)
+    try:
+        buildVersion = readVersion()
+    except:
+        print("error: could not get/extract build version")
+        sys.exit(1)
 
     print("Build version: " + buildVersion)
     print("Making " + outFileTranslationCPP + " from " + jsonDir)
