@@ -32,7 +32,7 @@ extern TickType_t lastMovementTime;
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
-static bool shouldBeSleeping();
+static bool shouldBeSleeping(bool inAutoStart = false);
 static bool shouldShutdown();
 #define MOVEMENT_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
 #define BUTTON_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
@@ -301,17 +301,12 @@ static bool shouldShutdown() {
 	}
 	return false;
 }
-static int gui_SolderingSleepingMode(bool stayOff) {
+static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
 	// Drop to sleep temperature and display until movement or button press
 
 	for (;;) {
 		// user moved or pressed a button, go back to soldering
 		//If in the first two seconds we disable this to let accelerometer warm up
-		if (xTaskGetTickCount() > TICKS_SECOND * 2) {
-			if (!shouldBeSleeping()) {
-				return 0;
-			}
-		}
 
 #ifdef POW_DC
 		if (checkVoltageForExit())
@@ -372,6 +367,9 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 
 		OLED::refresh();
 		GUIDelay();
+		if (!shouldBeSleeping(autoStarted)) {
+			return 0;
+		}
 		if (shouldShutdown()) {
 			// shutdown
 			currentTempTargetDegC = 0;
@@ -408,11 +406,19 @@ static uint32_t getSleepTimeout() {
 	}
 	return 0;
 }
-static bool shouldBeSleeping() {
-	// Return true if the iron should be in sleep mode
+static bool shouldBeSleeping(bool inAutoStart) {
+// Return true if the iron should be in sleep mode
 	if (systemSettings.sensitivity && systemSettings.SleepTime) {
-		if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
-			return true;
+		if (inAutoStart) {
+			//In auto start we are asleep until movement
+			if (lastMovementTime == 0 && lastButtonTime == 0) {
+				return true;
+			}
+		}
+		if (lastMovementTime > 0 || lastButtonTime > 0) {
+			if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
+				return true;
+			}
 		}
 	}
 
@@ -457,7 +463,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 	bool buttonsLocked = false;
 
 	if (jumpToSleep) {
-		if (gui_SolderingSleepingMode(jumpToSleep == 2)) {
+		if (gui_SolderingSleepingMode(jumpToSleep == 2, true) == 1) {
 			lastButtonTime = xTaskGetTickCount();
 			return; // If the function returns non-0 then exit
 		}
@@ -636,7 +642,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 #endif
 
 		if (shouldBeSleeping()) {
-			if (gui_SolderingSleepingMode(false)) {
+			if (gui_SolderingSleepingMode(false, false)) {
 				return; // If the function returns non-0 then exit
 			}
 		}
@@ -789,16 +795,8 @@ void startGUITask(void const *argument __unused) {
 	}
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
-		if (systemSettings.autoStartMode == 1) {
-			gui_solderingMode(0);
-			buttonLockout = true;
-		} else if (systemSettings.autoStartMode == 2) {
-			gui_solderingMode(1);
-			buttonLockout = true;
-		} else if (systemSettings.autoStartMode == 3) {
-			gui_solderingMode(2);
-			buttonLockout = true;
-		}
+		gui_solderingMode(systemSettings.autoStartMode - 1);
+		buttonLockout = true;
 	}
 
 	for (;;) {

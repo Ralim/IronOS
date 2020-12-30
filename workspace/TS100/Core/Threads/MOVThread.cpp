@@ -27,7 +27,7 @@ void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
 		PCBVersion = 1;
-		if(!MMA8652FC::initalize()) {
+		if (!MMA8652FC::initalize()) {
 			PCBVersion = 99;
 		}
 	} else
@@ -36,7 +36,7 @@ void detectAccelerometerVersion() {
 	if (LIS2DH12::detect()) {
 		PCBVersion = 2;
 		// Setup the ST Accelerometer
-		if(!LIS2DH12::initalize()) {
+		if (!LIS2DH12::initalize()) {
 			PCBVersion = 99;
 		}
 	} else
@@ -58,7 +58,7 @@ void detectAccelerometerVersion() {
 	}
 
 }
-inline void readAccelerometer(int16_t& tx, int16_t& ty, int16_t& tz, Orientation &rotation) {
+inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
 #ifdef ACCEL_LIS
 	if (PCBVersion == 2) {
 		LIS2DH12::getAxisReadings(tx, ty, tz);
@@ -82,12 +82,13 @@ inline void readAccelerometer(int16_t& tx, int16_t& ty, int16_t& tz, Orientation
 	}
 }
 void startMOVTask(void const *argument __unused) {
-	osDelay(10);//Make oled init happen first
+	osDelay(1);  //Make oled init happen first
 	postRToSInit();
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	detectAccelerometerVersion();
+	lastMovementTime = 0;
 	if ((systemSettings.autoStartMode == 2 || systemSettings.autoStartMode == 3))
-		osDelay(2000);
+		osDelay(2 * TICKS_SECOND);
 
 	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
