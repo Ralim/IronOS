@@ -577,8 +577,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			printVoltage();
 			OLED::print(SymbolVolts);
 		} else {
-			// We switch the layout direction depending on the orientation of the
-			// OLED::
+			// We switch the layout direction depending on the orientation of the oled
 			if (OLED::getRotation()) {
 				// battery
 				gui_drawBatteryIcon();
@@ -922,6 +921,20 @@ void startGUITask(void const *argument __unused) {
 					// draw in the temp
 					if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 250 < 160)))
 						gui_drawTipTemp(false); // draw in the temp
+				} else {
+					//Draw in missing tip symbol
+
+#ifdef OLED_FLIP
+				if (!OLED::getRotation()) {
+#else
+					if (OLED::getRotation()) {
+#endif
+						// in right handed mode we want to draw over the first part
+						OLED::drawArea(55, 0, 41, 16, disconnectedTipIcon);
+
+					} else {
+						OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
+					}
 				}
 			}
 		}
