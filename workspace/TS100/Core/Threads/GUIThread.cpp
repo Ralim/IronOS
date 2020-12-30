@@ -306,8 +306,11 @@ static int gui_SolderingSleepingMode(bool stayOff) {
 
 	for (;;) {
 		// user moved or pressed a button, go back to soldering
-		if (!shouldBeSleeping()) {
-			return 0;
+		//If in the first two seconds we disable this to let accelerometer warm up
+		if (xTaskGetTickCount() > TICKS_SECOND * 2) {
+			if (!shouldBeSleeping()) {
+				return 0;
+			}
 		}
 
 #ifdef POW_DC
@@ -708,11 +711,11 @@ void showDebugMenu(void) {
 				//We are not powered via DC, so want to display the appropriate state for PD or QC
 				bool poweredbyPD = false;
 #ifdef POW_PD
-				if (usb_pd_detect()){
+				if (usb_pd_detect()) {
 					//We are PD capable
 					if (PolicyEngine::pdHasNegotiated()) {
 						//We are powered via PD
-						poweredbyPD=true;
+						poweredbyPD = true;
 					}
 				}
 #endif
