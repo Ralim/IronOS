@@ -48,6 +48,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 		else
 			valueuV = 0;
 	}
+#ifndef TEMP_uV_LOOKUP_TS80
 	// Bias removal (Compensating for a temperature related non-linearity
 	// This uses the target temperature for the tip to calculate a compensation value for temperature related bias
 	// This is not entirely ideal as this means we will be wrong on heat up, but will settle to the correct value
@@ -61,6 +62,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 			valueuV -= compensation;
 		}
 	}
+#endif
 	return valueuV;
 }
 
@@ -83,7 +85,7 @@ uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) {
 int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x) {
 	return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000;
 }
-
+#ifdef TEMP_uV_LOOKUP_HAKKO
 const uint16_t uVtoDegC[] = { //
 		//
 				0, 0,	//
@@ -139,11 +141,71 @@ const uint16_t uVtoDegC[] = { //
 				10649, 500,	//
 
 		};
+#endif
+
+#ifdef TEMP_uV_LOOKUP_TS80
+
+const uint16_t uVtoDegC[] = {	//
+		//
+
+        2337 , 0,		//
+		3008 , 10,		//
+		3693 , 20,		//
+		4390 , 30,		//
+		5101 , 40,		//
+		5825 , 50,		//
+		6562 , 60,		//
+		7312 , 70,		//
+		8076 , 80,		//
+		8852 , 90,		//
+		9642 , 100,		//
+		10445 , 110,		//
+		11261 , 120,		//
+		12090 , 130,		//
+		12932 , 140,		//
+		13787 , 150,		//
+		14656 , 160,		//
+		15537 , 170,		//
+		16432 , 180,		//
+		17340 , 190,		//
+		18261 , 200,		//
+		19195 , 210,		//
+		20143 , 220,		//
+		21103 , 230,		//
+		22077 , 240,		//
+		23063 , 250,		//
+		24063 , 260,		//
+		25076 , 270,		//
+		26102 , 280,		//
+		27142 , 290,		//
+		28194 , 300,		//
+		29260 , 310,		//
+		30339 , 320,		//
+		31430 , 330,		//
+		32535 , 340,		//
+		33654 , 350,		//
+		34785 , 360,		//
+		35929 , 370,		//
+		37087 , 380,		//
+		38258 , 390,		//
+		39441 , 400,		//
+		40638 , 410,		//
+		41849 , 420,		//
+		43072 , 430,		//
+		44308 , 440,		//
+		45558 , 450,		//
+		46820 , 460,		//
+		48096 , 470,		//
+		49385 , 480,		//
+		50687 , 490,		//
+		52003 , 500,		//
+		};
+#endif
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
 	if (tipuVDelta) {
 		int noItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));
 		for (int i = 1; i < (noItems - 1); i++) {
-			//If current tip temp is less than current lookup, then this current loopup is the higher point to interpolate
+			//If current tip temp is less than current lookup, then this current lookup is the higher point to interpolate
 			if (tipuVDelta < uVtoDegC[i * 2]) {
 				return LinearInterpolate(uVtoDegC[(i - 1) * 2], uVtoDegC[((i - 1) * 2) + 1], uVtoDegC[i * 2], uVtoDegC[(i * 2) + 1], tipuVDelta);
 			}

@@ -100,20 +100,22 @@
 #define OP_AMP_Rf_TS80 180 * 1000 //  180  Kilo-ohms -> From schematic, R6
 #define OP_AMP_Rin_TS80 2000      //  2.0  Kilo-ohms -> From schematic, R3
 
-#define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))*3
-//The *3 here is a fudge factor that I dont like, but havent tracked down root cause _yet_
+#define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
+
+
 //Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
 //vdiv = (32768*4)/(vin_max*10)
 
 #ifdef MODEL_TS100
 #define VOLTAGE_DIV 467        // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET 1200 // 900 - Default adc offset in uV
+#define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT 70     // Sets the max pwm power limit
 #define POWER_LIMIT 0          // 0 watts default limit
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
+#define TEMP_uV_LOOKUP_HAKKO
 #endif
 
 #ifdef MODEL_Pinecil
@@ -124,6 +126,7 @@
 #define MAX_POWER_LIMIT 65     //
 #define POWER_LIMIT_STEPS 5    //
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
+#define TEMP_uV_LOOKUP_HAKKO
 #endif
 
 #ifdef MODEL_TS80
@@ -134,16 +137,18 @@
 #define MAX_POWER_LIMIT 30     //
 #define POWER_LIMIT_STEPS 2
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS80
+#define TEMP_uV_LOOKUP_TS80
 #endif
 
 #ifdef MODEL_TS80P
 #define VOLTAGE_DIV 650        // Default for TS80P with slightly different resistors
 #define PID_POWER_LIMIT 35     // Sets the max pwm power limit
-#define CALIBRATION_OFFSET 900 // the adc offset in uV
+#define CALIBRATION_OFFSET 0 // the adc offset in uV
 #define POWER_LIMIT 30         // 30 watts default power limit
 #define MAX_POWER_LIMIT 35     //
 #define POWER_LIMIT_STEPS 2
 #define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS80
+#define TEMP_uV_LOOKUP_TS80
 #endif
 
 #ifdef MODEL_TS100
