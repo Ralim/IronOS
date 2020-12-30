@@ -48,21 +48,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
 		else
 			valueuV = 0;
 	}
-#ifndef TEMP_uV_LOOKUP_TS80
-	// Bias removal (Compensating for a temperature related non-linearity
-	// This uses the target temperature for the tip to calculate a compensation value for temperature related bias
-	// This is not entirely ideal as this means we will be wrong on heat up, but will settle to the correct value
-	// This will cause us to underread on the heatup until we reach the target temp
-	// Compensation (uV)==  ((((80+150*(target_temp_c_x10-1000)/3000)*vddRailmVX10)/4096)*100)/GAIN
-	// Reordered with Wolframalpha
-	if (currentTempTargetDegC > 0) {
-		uint32_t compensation = (20625 * ((currentTempTargetDegC * 10) + 600)) / 512;
-		compensation /= OP_AMP_GAIN_STAGE;
-		if (valueuV > compensation) {
-			valueuV -= compensation;
-		}
-	}
-#endif
+
 	return valueuV;
 }
 
@@ -89,56 +75,56 @@ int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_
 const uint16_t uVtoDegC[] = { //
 		//
 				0, 0,	//
-				175, 10,	//
-				381, 20,	//
-				587, 30,	//
-				804, 40,	//
-				1005, 50,	//
-				1007, 60,	//
-				1107, 70,	//
-				1310, 80,	//
-				1522, 90,	//
-				1731, 100,	//
-				1939, 110,	//
-				2079, 120,	//
-				2265, 130,	//
-				2470, 140,	//
-				2676, 150,	//
-				2899, 160,	//
-				3081, 170,	//
-				3186, 180,	//
-				3422, 190,	//
-				3622, 200,	//
-				3830, 210,	//
-				4044, 220,	//
-				4400, 230,	//
-				4691, 240,	//
-				4989, 250,	//
-				5289, 260,	//
-				5583, 270,	//
-				5879, 280,	//
-				6075, 290,	//
-				6332, 300,	//
-				6521, 310,	//
-				6724, 320,	//
-				6929, 330,	//
-				7132, 340,	//
-				7356, 350,	//
-				7561, 360,	//
-				7774, 370,	//
-				7992, 380,	//
-				8200, 390,	//
-				8410, 400,	//
-				8626, 410,	//
-				8849, 420,	//
-				9060, 430,	//
-				9271, 440,	//
-				9531, 450,	//
-				9748, 460,	//
-				10210, 470,	//
-				10219, 480,	//
-				10429, 490,	//
-				10649, 500,	//
+				266, 10,	//
+				522, 20,	//
+				770, 30,	//
+				1010, 40,	//
+				1244, 50,	//
+				1473, 60,	//
+				1697, 70,	//
+				1917, 80,	//
+				2135, 90,	//
+				2351, 100,	//
+				2566, 110,	//
+				2780, 120,	//
+				2994, 130,	//
+				3209, 140,	//
+				3426, 150,	//
+				3644, 160,	//
+				3865, 170,	//
+				4088, 180,	//
+				4314, 190,	//
+				4544, 200,	//
+				4777, 210,	//
+				5014, 220,	//
+				5255, 230,	//
+				5500, 240,	//
+				5750, 250,	//
+				6003, 260,	//
+				6261, 270,	//
+				6523, 280,	//
+				6789, 290,	//
+				7059, 300,	//
+				7332, 310,	//
+				7609, 320,	//
+				7889, 330,	//
+				8171, 340,	//
+				8456, 350,	//
+				8742, 360,	//
+				9030, 370,	//
+				9319, 380,	//
+				9607, 390,	//
+				9896, 400,	//
+				10183, 410,	//
+				10468, 420,	//
+				10750, 430,	//
+				11029, 440,	//
+				11304, 450,	//
+				11573, 460,	//
+				11835, 470,	//
+				12091, 480,	//
+				12337, 490,	//
+				12575, 500,	//
 
 		};
 #endif
