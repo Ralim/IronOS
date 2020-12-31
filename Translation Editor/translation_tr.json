@@ -34,9 +34,15 @@
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F"
+		"SettingStartNoneChar": "F",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
 	},
-	"menuDouble": false,
 	"menuGroups": {
 		"SolderingMenu": {
 			"text2": [
@@ -68,144 +74,126 @@
 		}
 	},
 	"menuOptions": {
-		"PowerSource": {
-			"text": "GÇKYN",
+		"DCInCutoff": {
 			"text2": [
-				"",
+				"GÇKYN",
 				""
 			],
 			"desc": "\"Güç Kaynağı\". En düşük çalışma voltajını ayarlar. <DC 10V> <S 3.3V hücre başına>"
 		},
 		"SleepTemperature": {
-			"text": "BKSC",
 			"text2": [
-				"",
+				"BKSC",
 				""
 			],
 			"desc": "Bekleme Modu Sıcaklığı <C>"
 		},
 		"SleepTimeout": {
-			"text": "BMZA",
 			"text2": [
-				"",
+				"BMZA",
 				""
 			],
 			"desc": "Bekleme Modu Zaman Aşımı <Dakika/Saniye>"
 		},
 		"ShutdownTimeout": {
-			"text": "KPTZA",
 			"text2": [
-				"",
+				"KPTZA",
 				""
 			],
 			"desc": "Kapatma Zaman Aşımı <Dakika>"
 		},
 		"MotionSensitivity": {
-			"text": "HARHAS",
 			"text2": [
-				"",
+				"HARHAS",
 				""
 			],
 			"desc": "Hareket Hassasiyeti <0.Kapalı 1.En az duyarlı 9.En duyarlı>"
 		},
 		"TemperatureUnit": {
-			"text": "SCKBRM",
 			"text2": [
-				"",
+				"SCKBRM",
 				""
 			],
 			"desc": "Sıcaklık Birimi <C=Celsius F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
-			"text": "AYRBİL",
 			"text2": [
-				"",
+				"AYRBİL",
 				""
 			],
 			"desc": "Boş ekranda ayrıntılı bilgileri daha küçük bir yazı tipi ile göster."
 		},
 		"DisplayRotation": {
-			"text": "GRNYÖN",
 			"text2": [
-				"",
+				"GRNYÖN",
 				""
 			],
 			"desc": "Görüntü Yönlendirme <A. Otomatik L. Solak R. Sağlak>"
 		},
 		"BoostEnabled": {
-			"text": "YÜKPER",
 			"text2": [
-				"",
+				"YÜKPER",
 				""
 			],
 			"desc": "Lehimleme yaparken ön tuşa basmak anlık sıcaklık yükselişi sağlar. (450C)"
 		},
 		"BoostTemperature": {
-			"text": "YKSC",
 			"text2": [
-				"",
+				"YKSC",
 				""
 			],
 			"desc": "Yüksek Performans Modu Sıcaklığı"
 		},
 		"AutoStart": {
-			"text": "OTOBAŞ",
 			"text2": [
-				"",
+				"OTOBAŞ",
 				""
 			],
 			"desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. T=Lehimleme Modu, S= Uyku Modu,F=Kapalı"
 		},
 		"CooldownBlink": {
-			"text": "SĞGÖST",
 			"text2": [
-				"",
+				"SĞGÖST",
 				""
 			],
 			"desc": "Soğutma ekranında uç hala sıcakken derece gösterilsin."
 		},
 		"TemperatureCalibration": {
-			"text": "SCK KAL?",
 			"text2": [
-				"",
+				"SCK KAL?",
 				""
 			],
 			"desc": "Ucu kalibre et."
 		},
 		"SettingsReset": {
-			"text": "SIFIRLA?",
 			"text2": [
-				"",
+				"SIFIRLA?",
 				""
 			],
 			"desc": "Bütün ayarları sıfırlar"
 		},
 		"VoltageCalibration": {
-			"text": "VOL KAL?",
 			"text2": [
-				"",
+				"VOL KAL?",
 				""
 			],
 			"desc": "Voltaj Girişi Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas."
 		},
 		"AdvancedSoldering": {
-			"text": "GELLHM",
 			"text2": [
-				"",
+				"GELLHM",
 				""
 			],
 			"desc": "\"Gelişmiş Lehimleme\" Lehimleme yaparken detaylı bilgi göster"
 		},
 		"ScrollingSpeed": {
-			"text": "YZKYHZ",
 			"text2": [
-				"",
+				"YZKYHZ",
 				""
 			],
 			"desc": "Bu yazının kayma hızı S= Yavaş, F= Hızlı"
 		},
 		"TipModel": {
-			"text": "UÇMODELİ",
 			"text2": [
 				"Uç",
 				"Modeli"
@@ -213,7 +201,6 @@
 			"desc": "Uç Modeli seçimi"
 		},
 		"SimpleCalibrationMode": {
-			"text": "BSTKAL",
 			"text2": [
 				"Basit",
 				"Kalibrasyon"
@@ -221,15 +208,20 @@
 			"desc": "Sıcak su kullanarak basit kalibrasyon"
 		},
 		"AdvancedCalibrationMode": {
-			"text": "GELKAL",
 			"text2": [
 				"Gelişmiş",
 				"Kalibrasyon"
 			],
 			"desc": "Uçtaki ısı sensörünü kullanarak gelişmiş kalibrasyon"
 		},
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"Voltage"
+			],
+			"desc": "Desired max QC Voltage negotiated for"
+		},
 		"PowerInput": {
-			"text": "GÜÇWAT",
 			"text2": [
 				"Güç",
 				"Miktarı(W)"
@@ -237,7 +229,6 @@
 			"desc": "Kullanılan adaptörün watt biriminden güç miktarı"
 		},
 		"PowerLimitEnable": {
-			"text": "GCSNAÇ",
 			"text2": [
 				"P Limit",
 				"Enable"
@@ -245,7 +236,6 @@
 			"desc": "Güç sınırlamayı aç"
 		},
 		"PowerLimit": {
-			"text": "GCSNR",
 			"text2": [
 				"Power",
 				"Limit"
@@ -253,7 +243,6 @@
 			"desc": "Havyanın kullanacağı en yüksek güç <Watts>"
 		},
 		"ReverseButtonTempChange": {
-			"text": "DÜĞRTS",
 			"text2": [
 				"Key +-",
 				"reverse?"
@@ -261,7 +250,6 @@
 			"desc": "\"Düğme Yerleri Rotasyonu\" Sıcaklık ayar düğmelerinin yerini değiştirin"
 		},
 		"TempChangeShortStep": {
-			"text": "KSBSKD",
 			"text2": [
 				"Temp change",
 				"short?"
@@ -269,7 +257,6 @@
 			"desc": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
 		},
 		"TempChangeLongStep": {
-			"text": "UZBSKD",
 			"text2": [
 				"Temp change",
 				"long?"
@@ -277,7 +264,6 @@
 			"desc": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
 		},
 		"PowerPulsePower": {
-			"text": "GÇGRY",
 			"text2": [
 				"Power",
 				"Pulse W"
@@ -285,12 +271,25 @@
 			"desc": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
 		},
 		"TipGain": {
-			"text": "KZ",
 			"text2": [
 				"Modify",
 				"tip gain"
 			],
 			"desc": "Kazancınız"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall Eff",
+				"Sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow buttons",
+				"locking"
+			],
+			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
 		}
 	}
 }
