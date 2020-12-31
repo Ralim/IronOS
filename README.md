@@ -1,4 +1,6 @@
 ![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
+![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
+![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
 
 # IronOS - Flexible Soldering iron control Firmware
 
@@ -18,6 +20,7 @@ This project is considered feature complete for use as a soldering iron, *so ple
 
 *This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode.*
 
+
 ## Key Features
 
 * PID style iron temperature control
@@ -34,10 +37,14 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods of time)
 * (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
 * (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
-* [Custom boot up logo support](Documentation/Flashing.md)
+* [Custom boot up logo support](Documentation/Logo.md)
 * Automatic LCD rotation based on the orientation
 
-# Menu System
+## Installation
+
+For installation for your device, please refer to the [Flashing Guide](Documentation/Flashing.md).
+
+## Menu System
 
 This new firmware uses a new menu system to allow access to the settings on the device.
 When on the main screen, the unit shows prompts for the two most common operations.
