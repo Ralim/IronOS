@@ -1,5 +1,33 @@
 # Version Changes
 
+## V2.13
+
+* First _official_ Pinecil release
+* All of the wire for Pinecil releases added
+* Updated Translations
+* Delay accelerometer to help with entering sleep on startup
+* Dual speed PWM to help with power limit control
+* Improve heat up time
+* Adds locking mode
+* Improved docs all over the place
+* Repo rename occured TS100 -> IronOS
+* Hall effect sensor support added (not fitted in Pinecil but optional)
+* QC 20V support for Pinecil
+* CI upgrades for faster builds
+* Fixed bug with accelerometer model on Pinecil
+* Rework of all of the temperature curves for better accuracy
+
+
+
+## V2.12
+
+* Only released as pre-release
+* [TS80P] Improvements to the PD negotiation to handle a few more adapters cleanly
+* Pause on the last item in a list
+* Clean up the menu (removed both enables and settings, so that you can turn things off easier)
+* Removing the very old single line menu style.
+
+
 ## V2.11
 
 * First TS80P support

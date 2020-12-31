@@ -1,18 +1,18 @@
-![C/C++ CI](https://github.com/Ralim/ts100/workflows/C/C++%20CI/badge.svg)
+![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
 
-# Flexible Soldering iron control Firmware
+# IronOS - Flexible Soldering iron control Firmware
 
-*Please Note, this repo will likely be renaming soon to unire or IronOS - See issue [#639](https://github.com/Ralim/ts100/issues/639). Old links willcontinue to work, and should redirect. So dont panic :) This is just to better account for the newer soldeing irons being added.*
+*This repository was formerly known as TS100, its the same great code. Just with more supported devices*
 
 Originally concieved as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
 The firmware implements all of the standard features of a "smart" soldering iron, with lots of little extras and tweaks.
-I highly reccomend reading the installation guide fully when installing on your iron.
+I highly reccomend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
 
 For soldering irons that are designed to be powered by "smart" power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100), settings for a cutoff voltage for battery protection are supported.
 
-There are 25 languages currently supported as of present. When downloading the firmware for your soldering iron take node of the language code in the file name.
+There are 25 languages currently supported as of present. When downloading the firmware for your soldering iron take note of the language code in the file name.
 
 This project is considered feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
 
@@ -26,15 +26,16 @@ This project is considered feature complete for use as a soldering iron, *so ple
 * All settings exposed in intuitive menu
 * (TS100) Set a voltage lower limit for Lithium batteries so you don't kill your battery pack
 * (TS80) Set 18W or 24W settings for your power bank
-* Improved readability Fonts
+* (TS80P) Automatically negotiates appropriate PD and falls back to QC mode like TS80
+* (Pinecil) Supports all 3 power modes (PD,QC, DC In).
+* Improved readability Fonts, supporting multiple languages
 * Use hardware features to improve reliability
 * Can disable movement detection if desired
 * Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods of time)
-* (TS100) Battery charge level indicator if power source set to a lipo cell count
-* (TS80) Power bank operating voltage is displayed
-* [Custom boot up logo support](Documentation/Upgrading.md)
+* (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
+* (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
+* [Custom boot up logo support](Documentation/Flashing.md)
 * Automatic LCD rotation based on the orientation
-* Supports both the version 1 and version 2 hardware (different accelerometers)
 
 # Menu System
 
@@ -44,7 +45,7 @@ When on the main screen, the unit shows prompts for the two most common operatio
 * Pressing the button near the tip enters soldering mode
 * Pressing the button near the USB enters the settings menu
 * Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
-* Holding the button near the USB end will show the firmware version details
+* Holding the button near the USB end will show the [debug menu](Documentation/DebugMenu.md)
 
 Detailed operation details are over in the [Menu information.](Documentation/Menu.md)
 
@@ -68,12 +69,16 @@ Especially to the following users, who have helped in various ways that are mass
 * [Agatti](https://github.com/agatti)
 * [Discip](https://github.com/discip)
 * [Paul Fertser](https://github.com/paulfertser)
+
+Plus the huge number of people who have contributed translations, your effort is massively appreciated.
+
 ## Licence
 
 The code created by the community is GNU GPLv3. Unless noted elsewhere.
-Other components such as FreeRTOS have their own licence.
+Other components such as FreeRTOS/USB-PD have their own licence.
 
 ## Commercial Use
 
-This software is provided as-is, so I cannot provide any commercial support for the firmware. However, you are more than welcome to distribute links to the firmware, or provide irons with this software on them.
+This software is provided as-is, so I cannot provide any commercial support for the firmware. 
+However, you are more than welcome to distribute links to the firmware, or provide irons with this software on them.
 Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around.

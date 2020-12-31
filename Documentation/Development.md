@@ -18,3 +18,9 @@ To build a release instead, run the build.sh script. This will update translatio
 ## Updating languages
 
 To update the language translation files & associated font map, execute the `make_translation.py` code from the translations directory.
+
+## Building Pinecil
+
+I highly reccomend using the command line tools and using docker to run the compiler.
+Its a bit more fussy on setup than the STM tooling and this is by far the easiest way.
+If you _need_ an IDE I have used [Nuclei's IDE](https://nucleisys.com/download.php)
