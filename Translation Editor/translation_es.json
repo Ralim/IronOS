@@ -24,6 +24,8 @@
 		"ResetOKMessage": "Hecho.       ",
 		"YourGainMessage": "Gananc.:",
 		"SettingsResetMessage": "Ajustes borrados",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"

@@ -24,6 +24,8 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Gain:",
 		"SettingsResetMessage": "Nust. atstatyti!",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " UŽRAKIN",
 		"UnlockingKeysString": "ATRAKIN",
 		"WarningKeysLockedString": "!UŽRAK!"

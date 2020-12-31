@@ -24,6 +24,8 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Gain :",
 		"SettingsResetMessage": "Réglage réinit. !",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": "VERROUIL",
 		"UnlockingKeysString": "DEVERROU",
 		"WarningKeysLockedString": "! VERR. !"

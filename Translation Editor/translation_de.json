@@ -25,6 +25,8 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your Gain:",
 		"SettingsResetMessage": "Einstellungen\nzurück gesetzt!",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
