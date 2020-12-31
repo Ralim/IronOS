@@ -134,13 +134,6 @@ First, check the USB cable your using has the data pins; test it on another devi
 
 Secondly, try other USB ports. Often different USB controllers will interact with the units differently due to design quirks in the miniware design.
 
-## [Miniware] Setting a custom bootup image
-
-This firmware uses a different method of updating the bootup image.
-This removes the need for emulating a USB drive on the iron just to allow for a bootup image to be setup.
-There are further instructions on the [wiki](https://github.com/Ralim/ts100/wiki/Logo-Editor).
-Instructions are kept on the wiki so that users can update the information if they find extra helpful information.
-
 ## [Miniware] Alternative bootloader
 
 If you are an advanced user, and you have used `usb-dfu` tools before, or you would like to learn; there is an alternative bootloader for these irons.

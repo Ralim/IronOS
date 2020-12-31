@@ -27,3 +27,14 @@ Upload the HEX file to the iron in DFU mode and, if the file's extension changes
 You perform this the same way as if you were flashing a new firmware, and all of the existing notes around this apply.
 
 ### Pinecil
+
+For the Pinecil, we require to flash the logo using dfu-util instead, which will only take `.bin` files rather than `.hex`.
+To flash the logo, use the following steps:
+
+
+ - `python3 img2ts100.py input.png logo.hex`
+ - `riscv-nuclei-elf-objcopy -I ihex -O binary logo.hex logo.bin`
+ - `dfu-util -d 28e9:0189 -a 0 -D logo.bin -s 0x0800f800`
+
+ This will use the objcopy tool to convert the hex to a binary file, and then use dfu-util to flash it in the right location.
+ If you do not have `riscv-nuclei-elf-objcopy` installed, you can generally use any objcopy tool from any toolchain you do have.
