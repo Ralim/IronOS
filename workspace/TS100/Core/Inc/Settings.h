@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "unit.h"
-#define SETTINGSVERSION (0x22)
+#define SETTINGSVERSION (0x23)
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
