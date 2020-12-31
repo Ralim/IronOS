@@ -19,7 +19,7 @@
 		"IdleTipString": "Ant:",
 		"IdleSetString": " Nust:",
 		"TipDisconnectedString": "NĖRA ANTGALIO",
-		"SolderingAdvancedPowerPrompt": "Maitinimas: ",
+		"SolderingAdvancedPowerPrompt": "Galia: ",
 		"OffString": "Išj",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Gain:",
