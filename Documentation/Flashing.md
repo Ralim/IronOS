@@ -1,5 +1,23 @@
 # Flashing / Upgrading your iron
 
+## Downloading source file
+
+### Main release
+
+Main releases are made to the [releases page](/releases).
+Download the zip file that matches your model of soldering iron, and extract it.
+You then need to use the appropriate file type for your unit, in general Miniware irons are `.hex` and Pinecil is `.bin.`
+Flash according to details below
+
+### Bleeding edge / latest
+
+For the _latest_ code, you will need to download the zip file from the artefacts page on the build for what you want.
+Head to the [Actions](/actions) page and then select the run for the appropriate branch you would like.
+In general you probably want `master`.
+
+Once you click on a run, scroll down to the "Artifacts" section and then click on your model to download a zip file.
+Then this works the same as a production release (use the correct file).
+
 ## Miniware irons (TS100, TS80, TS80P)
 
 This is completely safe, but if it goes wrong just put the .hex file from the official website onto the unit and you're back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
@@ -26,6 +44,47 @@ On the bottom of the MCU riser PCB, there are 4 pads for programming. On v2.51A 
 There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need an SWD programmer to load onto the unit).
 
 For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector.
+
+
+# Mac
+
+sgr1ff1n (Shane) commented in [issue 11](https://github.com/Ralim/ts100/issues/11) that upgrading worked on their Mac as per normal:
+
+> I just wanted to say that I was able to update the firmware on my ts100 from the stock version to 1.08 found in this repository using my Mac. I simply followed the same steps however through Finder. I have a MacBook Pro (13-inch, Mid 2012) running Sierra 10.12.4 (16E195).
+
+# Linux
+
+While in past there were reports of unreliable upgrades, the consensus in [issue 11](https://github.com/Ralim/ts100/issues/11) is that things work mostly as expected in Linux.
+
+@awigen has contributed a script [flash_ts100_linux.sh](https://raw.githubusercontent.com/Ralim/ts100/master/Flashing/flash_ts100_linux.sh) that works on Ubuntu 16.04 as well as other distro's.
+
+If you want to do it manually (or if the script does not work for some reason) the general procedure is the same as for Windows, the differences are in the way to mount the unit and copy the firmware.
+Remember that after flashing, the firmware filename will have changed to end in `.RDY` or `.ERR` or `.NOT` and only `.RDY` means the flashing was successful!
+
+* The unit has to be mounted as ```msdos``` type (thanks @balrog-kun for having spotted it). You may disable automount, but unmounting the automounted drive and remounting as `msdos` works fine.  You do not need to turn off automounting, but you do need to unmount the device with `umount`.
+* It is recommended to use an all-caps filename for the firmware, even if successful flashing were done with lower case names.
+* Avoid USB hubs, plug directly in your computer.
+* If it fails, try again several times without unplugging. Just let it remount.
+
+Example, to be run as root, once the unit has been plugged in DFU mode and auto-mounted:
+
+```bash
+FW=ts100.hex
+unset NAME
+eval $(lsblk -P -p -d --output NAME,MODEL|grep "DFU Disk")
+[ -z ${NAME+x} ] && exit 1  # Could not find DFU device
+umount "$NAME"
+mkdir /tmp/mntdfu
+mount -t msdos "$NAME" /tmp/mntdfu
+cp "$FW" "/tmp/mntdfu/$(basename $FW|tr a-z A-Z)"
+sync
+umount /tmp/mntdfu
+rmdir /tmp/mntdfu
+```
+
+Device will reboot and automount will rerun if not disabled.
+Check the extension of your firmware, it should be `.RDY` now.
+
 
 ## Pinecil (Pine64)
 

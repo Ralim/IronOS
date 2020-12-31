@@ -36,11 +36,6 @@ To calibrate your iron:
 6. Use the front and back buttons to adjust the displayed voltage to minimize the error to your original measurement
 7. Hold both buttons to save and exit to the menu
 
-### Tip Model Selection
-
-The menu now lets you select which tip you are using with your iron. This lets the unit know which gain value to use for your tip, this varies slightly between models and can help with temperature accuracy.
-There is also an option for a *custom* tip. This basically means that you will tune the tip parameters yourself.
-
 ### Calibrating tip offset (Set tip model)
 
 Some tips will have an offset on their readings, to calibrate this out perform the following steps:
@@ -53,22 +48,9 @@ Some tips will have an offset on their readings, to calibrate this out perform t
 6. The display will start to scroll a warning message to check that the tip is at ambient temperature!
 7. Press the button near the tip of the iron to confirm
 8. The display will go to "...." for a short period of time as the unit measures the tip temperature and the handle temperature and compares them
-9. The display will then go back to *TMP CAL*
+9. The display will then go back to *TMP CAL* and it will display a number, this is your offset number. You generally dont need it unless debugging issues
 10. Calibration is done, just exit the settings menu as normal
 11. You're done, enjoy your iron!
-
-### Calibration of custom tip
-
-There are two methods to calibrate the tip, the simple mode which requires boiling water, and an advanced mode that requires a method of measuring the actual tip of the tip.
-
-Advanced mode is preffered.
-
-In simple mode you first need to have the tip at room temperature to start, and then when prompted place the tip into a cup of boiling water, wait a few seconds and then press a button to confirm.
-
-In advanced mode, follow instructions on the screen, you will need to adjust the ranges to find two calibration points by measuring the tip temperature directly. This tends to be significantly more accurate.
-
-If you do calibrate your own values for a tip because it's missing from the menu or because you think the one in the menu is really wrong, raise an issue on github and I'll be happy to look at adding it or revising the existing settings.
-
 
 ### Boost mode
 
