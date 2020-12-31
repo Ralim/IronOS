@@ -34,6 +34,7 @@ extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
 static bool shouldBeSleeping(bool inAutoStart = false);
 static bool shouldShutdown();
+void showWarnings();
 #define MOVEMENT_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
 #define BUTTON_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
 static TickType_t lastHallEffectSleepStart = 0;
@@ -42,6 +43,14 @@ static uint16_t min(uint16_t a, uint16_t b) {
 		return b;
 	else
 		return a;
+}
+void warnUser(const char *warning, const int font, const int timeout) {
+	OLED::setFont(font);
+	OLED::clearScreen();
+	OLED::setCursor(0, 0);
+	OLED::print(warning);
+	OLED::refresh();
+	waitForButtonPressOrTimeout(timeout);
 }
 
 void printVoltage() {
@@ -473,38 +482,26 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 		if (buttonsLocked && (systemSettings.lockingMode != 0)) { // If buttons locked
 			switch (buttons) {
 			case BUTTON_NONE:
-				// stay
 				boostModeOn = false;
 				break;
 			case BUTTON_BOTH_LONG:
 				// Unlock buttons
 				buttonsLocked = false;
-				OLED::setCursor(0, 0);
-				OLED::clearScreen();
-				OLED::setFont(0);
-				OLED::print(UnlockingKeysString);
-				OLED::refresh();
-				waitForButtonPressOrTimeout(1000);
+				warnUser(UnlockingKeysString, 0, TICKS_SECOND);
 				break;
 			case BUTTON_F_LONG:
 				// if boost mode is enabled turn it on
 				if (systemSettings.BoostTemp && (systemSettings.lockingMode == 1)) {
 					boostModeOn = true;
-					break;
 				}
-				;
+				break;
 				// fall through
 			case BUTTON_BOTH:
 			case BUTTON_B_LONG:
 			case BUTTON_F_SHORT:
 			case BUTTON_B_SHORT:
 				// Do nothing and display a lock warming
-				OLED::setCursor(0, 0);
-				OLED::clearScreen();
-				OLED::setFont(0);
-				OLED::print(WarningKeysLockedString);
-				OLED::refresh();
-				waitForButtonPressOrTimeout(500);
+				warnUser(WarningKeysLockedString, 0, TICKS_SECOND / 2);
 				break;
 			default:
 				break;
@@ -540,12 +537,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				if (systemSettings.lockingMode != 0) {
 					// Lock buttons
 					buttonsLocked = true;
-					OLED::setCursor(0, 0);
-					OLED::clearScreen();
-					OLED::setFont(0);
-					OLED::print(LockingKeysString);
-					OLED::refresh();
-					waitForButtonPressOrTimeout(1000);
+					warnUser(LockingKeysString, 0, TICKS_SECOND);
 				}
 				break;
 			default:
@@ -706,7 +698,7 @@ void showDebugMenu(void) {
 			break;
 		case 10:
 			// Print PCB ID number
-			OLED::printNumber(PCBVersion, 2);
+			OLED::printNumber(DetectedAccelerometerVersion, 2);
 			break;
 		case 11:
 			// Power negotiation status
@@ -752,6 +744,40 @@ void showDebugMenu(void) {
 		GUIDelay();
 	}
 }
+
+void showWarnings() {
+	// Display alert if settings were reset
+	if (settingsWereReset) {
+		warnUser(SettingsResetMessage, 1, 10 * TICKS_SECOND);
+	}
+#ifndef NO_WARN_MISSING
+	//We also want to alert if accel or pd is not detected / not responding
+	// In this case though, we dont want to nag the user _too_ much
+	// So only show first 2 times
+	while (DetectedAccelerometerVersion == ACCELEROMETERS_SCANNING) {
+		osDelay(1);
+	}
+	// Display alert if accelerometer is not detected
+	if (DetectedAccelerometerVersion == NO_DETECTED_ACCELEROMETER) {
+		if (systemSettings.accelMissingWarningCounter < 2) {
+			systemSettings.accelMissingWarningCounter++;
+			saveSettings();
+			warnUser(NoAccelerometerMessage, 1, 10 * TICKS_SECOND);
+		}
+	}
+#ifdef POW_PD
+//We expect pd to be present
+	if (!usb_pd_detect()) {
+		if (systemSettings.pdMissingWarningCounter < 2) {
+			systemSettings.pdMissingWarningCounter++;
+			saveSettings();
+			warnUser(NoPowerDeliveryMessage, 1, 10 * TICKS_SECOND);
+		}
+	}
+#endif
+#endif
+}
+
 uint8_t idleScreenBGF[sizeof(idleScreenBG)];
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
@@ -783,15 +809,8 @@ void startGUITask(void const *argument __unused) {
 		GUIDelay();
 	}
 
-	if (settingsWereReset) {
-		// Display alert settings were reset
-		OLED::clearScreen();
-		OLED::setFont(1);
-		OLED::setCursor(0, 0);
-		OLED::print(SettingsResetMessage);
-		OLED::refresh();
-		waitForButtonPressOrTimeout(10000);
-	}
+	showWarnings();
+
 	if (systemSettings.autoStartMode) {
 		// jump directly to the autostart mode
 		gui_solderingMode(systemSettings.autoStartMode - 1);
@@ -925,7 +944,7 @@ void startGUITask(void const *argument __unused) {
 					//Draw in missing tip symbol
 
 #ifdef OLED_FLIP
-				if (!OLED::getRotation()) {
+					if (!OLED::getRotation()) {
 #else
 					if (OLED::getRotation()) {
 #endif
