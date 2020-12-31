@@ -14,6 +14,7 @@ extern "C" {
 void vApplicationStackOverflowHook(TaskHandle_t *pxTask,
 		signed portCHAR *pcTaskName);
 
+#define NO_DETECTED_ACCELEROMETER 99
 //Threads
 void startGUITask(void const *argument);
 void startPIDTask(void const *argument);

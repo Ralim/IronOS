@@ -28,7 +28,7 @@ void detectAccelerometerVersion() {
 	if (MMA8652FC::detect()) {
 		DetectedAccelerometerVersion = 1;
 		if (!MMA8652FC::initalize()) {
-			DetectedAccelerometerVersion = 99;
+			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		}
 	} else
 #endif
@@ -37,7 +37,7 @@ void detectAccelerometerVersion() {
 		DetectedAccelerometerVersion = 2;
 		// Setup the ST Accelerometer
 		if (!LIS2DH12::initalize()) {
-			DetectedAccelerometerVersion = 99;
+			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		}
 	} else
 #endif
@@ -46,12 +46,12 @@ void detectAccelerometerVersion() {
 		DetectedAccelerometerVersion = 3;
 		// Setup the ST Accelerometer
 		if (!BMA223::initalize()) {
-			DetectedAccelerometerVersion = 99;
+			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		}
 	} else
 #endif
 	{
-		DetectedAccelerometerVersion = 99;
+		DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
@@ -82,8 +82,10 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 	}
 }
 void startMOVTask(void const *argument __unused) {
-	osDelay(1);  //Make oled init happen first
 	postRToSInit();
+	while (OLED::isInitDone() == false) {
+		osDelay(1);  //Make oled init happen first
+	}
 	OLED::setRotation(systemSettings.OrientationMode & 1);
 	detectAccelerometerVersion();
 	lastMovementTime = 0;
@@ -148,7 +150,7 @@ void startMOVTask(void const *argument __unused) {
 		// So now we have averages, we want to look if these are different by more
 		// than the threshold
 
-		// If error has occurred then we update the tick timer
+		// If movement has occurred then we update the tick timer
 		if (error > threshold) {
 			lastMovementTime = xTaskGetTickCount();
 		}
