@@ -3,7 +3,7 @@
 
 #include "OLED.hpp"
 #include "Setup.h"
-extern uint8_t PCBVersion;
+extern uint8_t DetectedAccelerometerVersion;
 extern uint32_t currentTempTargetDegC;
 extern bool settingsWereReset;
 extern bool usb_pd_available;

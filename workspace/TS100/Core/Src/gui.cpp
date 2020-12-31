@@ -371,7 +371,7 @@ static bool settings_setSleepTime(void) {
 		systemSettings.SleepTime = 0; // can't set time over 10 mins
 	}
 	// Remember that ^ is the time of no movement
-	if (PCBVersion == 99)
+	if (DetectedAccelerometerVersion == 99)
 		systemSettings.SleepTime = 0; // Disable sleep on no accel
 	return systemSettings.SleepTime == 15;
 }
@@ -394,7 +394,7 @@ static bool settings_setShutdownTime(void) {
 	if (systemSettings.ShutdownTime > 60) {
 		systemSettings.ShutdownTime = 0; // wrap to off
 	}
-	if (PCBVersion == 99)
+	if (DetectedAccelerometerVersion == 99)
 		systemSettings.ShutdownTime = 0; // Disable shutdown on no accel
 	return systemSettings.ShutdownTime == 60;
 }

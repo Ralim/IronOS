@@ -26,32 +26,32 @@ TickType_t lastMovementTime = 0;
 void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
-		PCBVersion = 1;
+		DetectedAccelerometerVersion = 1;
 		if (!MMA8652FC::initalize()) {
-			PCBVersion = 99;
+			DetectedAccelerometerVersion = 99;
 		}
 	} else
 #endif
 #ifdef ACCEL_LIS
 	if (LIS2DH12::detect()) {
-		PCBVersion = 2;
+		DetectedAccelerometerVersion = 2;
 		// Setup the ST Accelerometer
 		if (!LIS2DH12::initalize()) {
-			PCBVersion = 99;
+			DetectedAccelerometerVersion = 99;
 		}
 	} else
 #endif
 #ifdef ACCEL_BMA
 	if (BMA223::detect()) {
-		PCBVersion = 3;
+		DetectedAccelerometerVersion = 3;
 		// Setup the ST Accelerometer
 		if (!BMA223::initalize()) {
-			PCBVersion = 99;
+			DetectedAccelerometerVersion = 99;
 		}
 	} else
 #endif
 	{
-		PCBVersion = 99;
+		DetectedAccelerometerVersion = 99;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
@@ -60,19 +60,19 @@ void detectAccelerometerVersion() {
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
 #ifdef ACCEL_LIS
-	if (PCBVersion == 2) {
+	if (DetectedAccelerometerVersion == 2) {
 		LIS2DH12::getAxisReadings(tx, ty, tz);
 		rotation = LIS2DH12::getOrientation();
 	} else
 #endif
 #ifdef ACCEL_MMA
-	if (PCBVersion == 1) {
+	if (DetectedAccelerometerVersion == 1) {
 		MMA8652FC::getAxisReadings(tx, ty, tz);
 		rotation = MMA8652FC::getOrientation();
 	} else
 #endif
 #ifdef ACCEL_BMA
-	if (PCBVersion == 3) {
+	if (DetectedAccelerometerVersion == 3) {
 		BMA223::getAxisReadings(tx, ty, tz);
 		rotation = BMA223::getOrientation();
 	} else
