@@ -85,8 +85,10 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 void startMOVTask(void const *argument __unused) {
 	postRToSInit();
 	detectAccelerometerVersion();
+	osDelay(50);  //wait ~50ms for setup of accel to finalise
 	lastMovementTime = 0;
-	if ((systemSettings.autoStartMode == 2 || systemSettings.autoStartMode == 3))
+	//Mask 2 seconds if we are in autostart so that if user is plugging in and then putting in stand it doesnt wake instantly
+	if (systemSettings.autoStartMode)
 		osDelay(2 * TICKS_SECOND);
 
 	int16_t datax[MOVFilter] = { 0 };
