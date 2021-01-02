@@ -40,15 +40,17 @@ This is the raw tip reading in uV. This can be used when assessing the calibrati
 
 ### CTip
 
-This is the tip temperature in deg C. This can be used with RTip for assessing temperature processing performance.
+This is the tip temperature in deg C. 
+This can be used with RTip for assessing temperature processing performance.
 
 ### CHan
 
 This is the handle temperature in C. This is used for cold junction compensation of the tip temp.
+This is shown in degrees C x10, so 200 == 20.0C
 
 ### Vin 
 
-The input voltage reading. 
+The input voltage as read by the internal ADC. Can be used to sanity check its being read correctly.
 
 ### PCB 
 
