@@ -6,7 +6,7 @@
 	"messages": {
 		"SettingsCalibrationDone": "Kalibrierung abgeschlossen!",
 		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
-		"SettingsResetWarning": "Sind Sie sicher, dass Sie alle Werte zurücksetzen wollen?",
+		"SettingsResetWarning": "Bist du sicher, dass du alle Werte zurücksetzen willst?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",
 		"InputVoltageString": "V Eingang: ",
@@ -14,7 +14,7 @@
 		"BadTipString": "Spitze Defekt",
 		"SleepingSimpleString": "Zzz ",
 		"SleepingAdvancedString": "Ruhemodus...",
-		"WarningSimpleString": "HEIß",
+		"WarningSimpleString": "HEIß!",
 		"WarningAdvancedString": "! Achtung Heiß !",
 		"SleepingTipAdvancedString": "Temp:",
 		"IdleTipString": "Ist:",
@@ -23,29 +23,29 @@
 		"SolderingAdvancedPowerPrompt": "Leistung: ",
 		"OffString": "Aus",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your Gain:",
-		"SettingsResetMessage": "Einstellungen\nzurück gesetzt!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"YourGainMessage": "Dein Faktor:",
+		"SettingsResetMessage": "Einstellungen zurückgesetzt!",
+		"LockingKeysString": "GESPERRT",
+		"UnlockingKeysString": "ENTSPERRT",
+		"WarningKeysLockedString": "!GESPERRT!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "F",
-		"SettingSlowChar": "S",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
+		"SettingFastChar": "S",
+		"SettingSlowChar": "L",
+		"SettingStartSolderingChar": "L",
+		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
+		"SettingStartNoneChar": "A",
+		"SettingSensitivityOff": "A",
+		"SettingSensitivityLow": "N",
 		"SettingSensitivityMedium": "M",
 		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingLockFullChar": "V"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -90,7 +90,7 @@
 				"Ruhetemp-",
 				"eratur"
 			],
-			"desc": "Ruhetemperatur"
+			"desc": "Ruhetemperatur der Spitze"
 		},
 		"SleepTimeout": {
 			"text2": [
@@ -146,7 +146,7 @@
 				"Start im",
 				"Lötmodus?"
 			],
-			"desc": "Automatischer Start-Modus beim Einschalten der Spannungsversorgung. <T=Lötmodus S=Ruhezustand F=Aus>"
+			"desc": "Automatischer Start-Modus beim Einschalten der Spannungsversorgung. <L=Lötmodus R=Ruhezustand O=Ruhezustand bei Raumtemperatur A=Aus>"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -167,7 +167,7 @@
 				"Einstellungen",
 				"zurücksetzen?"
 			],
-			"desc": "Einstellungen auf werkseinstellungen zurück setzen"
+			"desc": "Einstellungen auf Werkseinstellungen zurücksetzen"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -188,7 +188,7 @@
 				"Scroll-",
 				"geschw."
 			],
-			"desc": "Scrollgeschwindigkeit der Texte <S=Langsam F=Schnell>"
+			"desc": "Scrollgeschwindigkeit der Texte <L=Langsam S=Schnell>"
 		},
 		"TipModel": {
 			"text2": [
@@ -223,12 +223,12 @@
 				"Leistungs-",
 				"Limit"
 			],
-			"desc": "Maximale aufnahme der Lötspitze <Watt>"
+			"desc": "Maximale Leistungsaufnahme des Lötkolbens <Watt>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
 				"Taste +-",
-				"Umkehren?"
+				"umkehren?"
 			],
 			"desc": "Temperatur-Änderungs-Tasten-Belegung Plus-Minus umkehren?"
 		},
@@ -248,31 +248,31 @@
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Leistungs-",
+				"impuls in Watt"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Halte das Netzteil mit einem Leistungsimpuls wach"
 		},
 		"TipGain": {
 			"text2": [
-				"Modify",
-				"tip gain"
+				"Ändere",
+				"Spitzen Faktor"
 			],
-			"desc": "Tip gain"
+			"desc": "Spitzen Faktor"
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Hall Sensor",
+				"Empfindlichkeit"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Empfindlichkeit des Hall Effekt Sensors beim erkennen des Ruhemodus <A=Aus,N=Niedrig,M=Mittel,H=Hoch>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Erlaube Knopf-",
+				"Sperre"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Langes drücken beider Knöpfe beim Löten, sperrt diese <D=Deaktiviert, B=nur Boost, V=Vollständige sperre>"
 		}
 	}
 }
