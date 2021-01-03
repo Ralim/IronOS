@@ -6,7 +6,7 @@
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before continuing!",
-		"SettingsResetWarning": "Are you sure you want to reset settings to default values?",
+		"SettingsResetWarning": "Sure you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
 		"InputVoltageString": "Input V: ",
@@ -15,17 +15,17 @@
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Sleeping...",
 		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "!!! TIP HOT !!!",
+		"WarningAdvancedString": "!!! HOT TIP !!!",
 		"SleepingTipAdvancedString": "Tip:",
 		"IdleTipString": "Tip:",
 		"IdleSetString": " Set:",
-		"TipDisconnectedString": "TIP DISCONNECTED",
+		"TipDisconnectedString": "NO TIP",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset OK",
+		"ResetOKMessage": "Reset done!",
 		"YourGainMessage": "Your gain:",
 		"SettingsResetMessage": "Settings were\nreset!",
-		"LockingKeysString": " LOCKED",
+		"LockingKeysString": "LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
 	},
@@ -58,7 +58,7 @@
 		"PowerSavingMenu": {
 			"text2": [
 				"Sleep",
-				"modes"
+				"mode"
 			],
 			"desc": "Power saving settings"
 		},
@@ -90,35 +90,35 @@
 				"Sleep",
 				"temp"
 			],
-			"desc": "Sleep temperature"
+			"desc": "Tip temperature while in sleep mode"
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Sleep",
 				"timeout"
 			],
-			"desc": "Sleep timeout <Minutes/Seconds>"
+			"desc": "Interval before sleep mode kicks in <S=seconds M=minutes>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Shutdown",
 				"timeout"
 			],
-			"desc": "Shutdown timeout <Minutes>"
+			"desc": "Interval before the iron shuts down <M=minutes>"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Motion",
 				"sensitivity"
 			],
-			"desc": "Motion sensitivity <0=Off 1=Least sensitive 9=Most sensitive>"
+			"desc": "0=off 1=least sensitive ... 9=most sensitive"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Temperature",
 				"unit"
 			],
-			"desc": "Temperature unit <C=Celsius F=Fahrenheit>"
+			"desc": "C=Celsius F=Fahrenheit"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -132,7 +132,7 @@
 				"Display",
 				"orientation"
 			],
-			"desc": "Display orientation <A=Automatic L=Left-handed R=Right-handed>"
+			"desc": "A=automatic L=left-handed R=right-handed"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -146,28 +146,28 @@
 				"Auto",
 				"start"
 			],
-			"desc": "Automatically starts the iron into soldering on power up <F=Off T=Soldering S=Sleep O=Sleep at room temperature>"
+			"desc": "Automatically starts the iron into soldering mode on power up <F=off T=soldering S=sleep O=sleep at room temperature>"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Cooldown",
 				"blink"
 			],
-			"desc": "Blink the temperature on the cooling screen while the tip is still hot"
+			"desc": "Flash the temperature after heating was halted, while the tip is still hot."
 		},
 		"TemperatureCalibration": {
 			"text2": [
 				"Calibrate",
 				"temperature?"
 			],
-			"desc": "Calibrate tip offset?"
+			"desc": "Start tip offset calibrating procedure"
 		},
 		"SettingsReset": {
 			"text2": [
 				"Factory",
-				"Reset?"
+				"reset?"
 			],
-			"desc": "Reset all settings!"
+			"desc": "Reset settings to default!"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -181,14 +181,14 @@
 				"Detailed",
 				"solder screen"
 			],
-			"desc": "Display detailed information while soldering"
+			"desc": "Display detailed information in a smaller font on soldering screen"
 		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Scrolling",
 				"speed"
 			],
-			"desc": "Speed this text scrolls past at <S=Slow F=Fast>"
+			"desc": "Speed info text scrolls past at <S=slow F=fast>"
 		},
 		"TipModel": {
 			"text2": [
@@ -202,28 +202,28 @@
 				"Simple",
 				"calibration"
 			],
-			"desc": "Simple calibration using hot water"
+			"desc": "Using hot water to calibrate tip"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
 				"Advanced",
 				"calibration"
 			],
-			"desc": "Advanced calibration using thermocouple on the tip"
+			"desc": "Using a thermocouple on the tip to calibrate it"
 		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
-				"Voltage"
+				"voltage"
 			],
-			"desc": "Desired max QC Voltage negotiated for"
+			"desc": "Desired max QC voltage the iron negotiates for"
 		},
 		"PowerLimit": {
 			"text2": [
 				"Power",
 				"limit"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Maximum power the iron can use <W=watt>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -249,9 +249,9 @@
 		"PowerPulsePower": {
 			"text2": [
 				"Power",
-				"Pulse W"
+				"pulse"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Intensity of power of keep-awake-pulse <W=watt>"
 		},
 		"TipGain": {
 			"text2": [
@@ -262,17 +262,17 @@
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Hall sensor",
+				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=off L=low M=medium H=high>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Allow locking",
+				"buttons"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "When soldering, long press on both buttons, to lock them <D=disable B=\"boost mode\" only F=full locking>"
 		}
 	}
 }
