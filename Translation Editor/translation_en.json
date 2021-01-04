@@ -22,7 +22,7 @@
 		"TipDisconnectedString": "NO TIP",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset done!",
+		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:",
 		"SettingsResetMessage": "Settings were\nreset!",
 		"NoAccelerometerMessage": "No accelerometer\ndetected!",
@@ -92,14 +92,14 @@
 				"Sleep",
 				"temp"
 			],
-			"desc": "Tip temperature while in sleep mode"
+			"desc": "Tip temperature while in \"sleep mode\""
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Sleep",
 				"timeout"
 			],
-			"desc": "Interval before sleep mode kicks in <S=seconds M=minutes>"
+			"desc": "Interval before \"sleep mode\" kicks in <S=seconds | M=minutes>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
@@ -113,14 +113,14 @@
 				"Motion",
 				"sensitivity"
 			],
-			"desc": "0=off 1=least sensitive ... 9=most sensitive"
+			"desc": "0=off | 1=least sensitive | ... | 9=most sensitive"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Temperature",
 				"unit"
 			],
-			"desc": "C=Celsius F=Fahrenheit"
+			"desc": "C=Celsius | F=Fahrenheit"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -134,28 +134,28 @@
 				"Display",
 				"orientation"
 			],
-			"desc": "A=automatic L=left-handed R=right-handed"
+			"desc": "A=automatic | L=left-handed | R=right-handed"
 		},
 		"BoostTemperature": {
 			"text2": [
 				"Boost",
 				"temp"
 			],
-			"desc": "Temperature when in \"boost mode\""
+			"desc": "Temperature used in \"boost mode\""
 		},
 		"AutoStart": {
 			"text2": [
 				"Auto",
 				"start"
 			],
-			"desc": "Starts the iron into soldering mode on power up <O=off S=soldering Z=sleep R=sleep at room temperature>"
+			"desc": "Starts the iron into soldering mode on power up <O=off | S=soldering | Z=sleep | R=sleep at room temperature>"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Cooldown",
 				"blink"
 			],
-			"desc": "Flash the temperature after heating was halted, while the tip is still hot."
+			"desc": "Flash the temperature after heating was halted, while the tip is still hot"
 		},
 		"TemperatureCalibration": {
 			"text2": [
@@ -190,7 +190,7 @@
 				"Scrolling",
 				"speed"
 			],
-			"desc": "Speed info text scrolls past at <S=slow F=fast>"
+			"desc": "Speed info text scrolls past at <S=slow | F=fast>"
 		},
 		"TipModel": {
 			"text2": [
@@ -267,14 +267,14 @@
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep <O=off L=low M=medium H=high>"
+			"desc": "Sensitivity of the Hall effect sensor to detect sleep <O=off | L=low | M=medium | H=high>"
 		},
 		"LockingMode": {
 			"text2": [
 				"Allow locking",
 				"buttons"
 			],
-			"desc": "When soldering, long press on both buttons, to lock them <D=disable B=\"boost mode\" only F=full locking>"
+			"desc": "When soldering, long press on both buttons, to lock them <D=disable | B=\"boost mode\" only | F=full locking>"
 		}
 	}
 }
