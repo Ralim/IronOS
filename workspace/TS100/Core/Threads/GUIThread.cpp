@@ -937,7 +937,7 @@ void startGUITask(void const *argument __unused) {
 				//If we have a tip connected draw the temp, if not we leave it blank
 				if (!tipDisconnectedDisplay) {
 					// draw in the temp
-					if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 250 < 160)))
+					if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 26 < 16)))
 						gui_drawTipTemp(false); // draw in the temp
 				} else {
 					//Draw in missing tip symbol
