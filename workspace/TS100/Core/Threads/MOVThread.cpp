@@ -5,11 +5,13 @@
  *      Author: Ralim
  */
 
+#include "BMA223.hpp"
 #include "BSP.h"
 #include "FreeRTOS.h"
 #include "I2C_Wrapper.hpp"
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
+#include "MSA301.h"
 #include "QC3.h"
 #include "Settings.h"
 #include "TipThermoModel.h"
@@ -18,46 +20,47 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "stdlib.h"
-#include "BMA223.hpp"
 #include "task.h"
 #define MOVFilter 8
 uint8_t accelInit = 0;
 TickType_t lastMovementTime = 0;
 void detectAccelerometerVersion() {
-	DetectedAccelerometerVersion = ACCELEROMETERS_SCANNING;
+	DetectedAccelerometerVersion = 99;
 #ifdef ACCEL_MMA
-	if (MMA8652FC::detect()) {
-		DetectedAccelerometerVersion = 1;
-		if (!MMA8652FC::initalize()) {
-			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
-		}
-	} else
+  if (MMA8652FC::detect()) {
+    if (MMA8652FC::initalize()) {
+    	DetectedAccelerometerVersion = 1;
+    }
+  } else
 #endif
 #ifdef ACCEL_LIS
 	if (LIS2DH12::detect()) {
-		DetectedAccelerometerVersion = 2;
 		// Setup the ST Accelerometer
-		if (!LIS2DH12::initalize()) {
-			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
+		if (LIS2DH12::initalize()) {
+			DetectedAccelerometerVersion = 2;
 		}
 	} else
 #endif
 #ifdef ACCEL_BMA
-	if (BMA223::detect()) {
-		DetectedAccelerometerVersion = 3;
-		// Setup the ST Accelerometer
-		if (!BMA223::initalize()) {
-			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
+      if (BMA223::detect()) {
+    // Setup the ST Accelerometer
+    if (BMA223::initalize()) {
+    	DetectedAccelerometerVersion = 3;
+    }
+  } else
+#endif
+#ifdef ACCEL_MSA
+	if (MSA301::detect()) {
+		// Setup the MSA301 Accelerometer
+		if (MSA301::initalize()) {
+			DetectedAccelerometerVersion = 4;
 		}
 	} else
 #endif
 	{
-		DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
-		systemSettings.SleepTime = 0;
-		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
+		// disable imu sensitivity
 		systemSettings.sensitivity = 0;
 	}
-
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
 #ifdef ACCEL_LIS
@@ -67,27 +70,34 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 	} else
 #endif
 #ifdef ACCEL_MMA
-	if (DetectedAccelerometerVersion == 1) {
-		MMA8652FC::getAxisReadings(tx, ty, tz);
-		rotation = MMA8652FC::getOrientation();
-	} else
+      if (DetectedAccelerometerVersion == 1) {
+    MMA8652FC::getAxisReadings(tx, ty, tz);
+    rotation = MMA8652FC::getOrientation();
+  } else
 #endif
 #ifdef ACCEL_BMA
-	if (DetectedAccelerometerVersion == 3) {
-		BMA223::getAxisReadings(tx, ty, tz);
-		rotation = BMA223::getOrientation();
+      if (DetectedAccelerometerVersion == 3) {
+    BMA223::getAxisReadings(tx, ty, tz);
+    rotation = BMA223::getOrientation();
+  } else
+#endif
+#ifdef ACCEL_MSA
+	if (DetectedAccelerometerVersion == 4) {
+		MSA301::getAxisReadings(tx, ty, tz);
+		rotation = MSA301::getOrientation();
 	} else
 #endif
 	{
-		//do nothing :(
+		// do nothing :(
 	}
 }
 void startMOVTask(void const *argument __unused) {
 	postRToSInit();
 	detectAccelerometerVersion();
-	osDelay(50);  //wait ~50ms for setup of accel to finalise
+	osDelay(TICKS_100MS / 2); // wait ~50ms for setup of accel to finalise
 	lastMovementTime = 0;
-	//Mask 2 seconds if we are in autostart so that if user is plugging in and then putting in stand it doesnt wake instantly
+	// Mask 2 seconds if we are in autostart so that if user is plugging in and
+	// then putting in stand it doesnt wake instantly
 	if (systemSettings.autoStartMode)
 		osDelay(2 * TICKS_SECOND);
 
@@ -102,7 +112,7 @@ void startMOVTask(void const *argument __unused) {
 	Orientation rotation = ORIENTATION_FLAT;
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
-		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
+		threshold -= systemSettings.sensitivity * 200; // 200 is the step size
 		readAccelerometer(tx, ty, tz, rotation);
 		if (systemSettings.OrientationMode == 2) {
 			if (rotation != ORIENTATION_FLAT) {
@@ -142,7 +152,7 @@ void startMOVTask(void const *argument __unused) {
 			lastMovementTime = xTaskGetTickCount();
 		}
 
-		osDelay(100);  // Slow down update rate
+		osDelay(TICKS_100MS); // Slow down update rate
 		power_check();
 	}
 }
