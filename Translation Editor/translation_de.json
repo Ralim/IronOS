@@ -24,7 +24,7 @@
 		"OffString": "Aus",
 		"NoAccelerometerMessage": "Kein Bewegungssensor\nerkannt!",
 		"NoPowerDeliveryMessage": "Kein USB-PD IC\nerkannt!",
-		"ResetOKMessage": "Reset abgeschlossen!",
+		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Dein Faktor:",
 		"SettingsResetMessage": "Einstellungen\nzurückgesetzt!",
 		"LockingKeysString": "GESPERRT",
