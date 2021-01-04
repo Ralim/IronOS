@@ -36,6 +36,7 @@
 
 #ifdef MODEL_TS80P
 #define ACCEL_LIS
+#define ACCEL_MSA
 #define POW_PD
 #define POW_QC
 #define TEMP_NTC

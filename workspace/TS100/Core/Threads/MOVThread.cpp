@@ -10,6 +10,7 @@
 #include "I2C_Wrapper.hpp"
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
+#include "MSA301.h"
 #include "QC3.h"
 #include "Settings.h"
 #include "TipThermoModel.h"
@@ -24,36 +25,41 @@
 uint8_t accelInit = 0;
 TickType_t lastMovementTime = 0;
 void detectAccelerometerVersion() {
+	PCBVersion = 99;
 #ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
-		PCBVersion = 1;
-		if (!MMA8652FC::initalize()) {
-			PCBVersion = 99;
+
+		if (MMA8652FC::initalize()) {
+			PCBVersion = 1;
 		}
 	} else
 #endif
 #ifdef ACCEL_LIS
 	if (LIS2DH12::detect()) {
-		PCBVersion = 2;
 		// Setup the ST Accelerometer
-		if (!LIS2DH12::initalize()) {
-			PCBVersion = 99;
+		if (LIS2DH12::initalize()) {
+			PCBVersion = 2;
 		}
 	} else
 #endif
 #ifdef ACCEL_BMA
 	if (BMA223::detect()) {
-		PCBVersion = 3;
 		// Setup the ST Accelerometer
-		if (!BMA223::initalize()) {
-			PCBVersion = 99;
+		if (BMA223::initalize()) {
+			PCBVersion = 3;
+		}
+	} else
+#endif
+#ifdef ACCEL_MSA
+	if (MSA301::detect()) {
+		// Setup the MSA301 Accelerometer
+		if (MSA301::initalize()) {
+			PCBVersion = 4;
 		}
 	} else
 #endif
 	{
-		PCBVersion = 99;
-		systemSettings.SleepTime = 0;
-		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
+		//disable imu sensitivity
 		systemSettings.sensitivity = 0;
 	}
 
