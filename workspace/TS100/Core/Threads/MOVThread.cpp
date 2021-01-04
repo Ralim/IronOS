@@ -83,6 +83,12 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 		rotation = BMA223::getOrientation();
 	} else
 #endif
+#ifdef ACCEL_MSA
+	if (PCBVersion == 3) {
+		MSA301::getAxisReadings(tx, ty, tz);
+		rotation = MSA301::getOrientation();
+	} else
+#endif
 	{
 		//do nothing :(
 	}
