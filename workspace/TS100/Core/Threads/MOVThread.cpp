@@ -24,34 +24,35 @@
 uint8_t accelInit = 0;
 TickType_t lastMovementTime = 0;
 void detectAccelerometerVersion() {
+	DetectedAccelerometerVersion = ACCELEROMETERS_SCANNING;
 #ifdef ACCEL_MMA
 	if (MMA8652FC::detect()) {
-		PCBVersion = 1;
+		DetectedAccelerometerVersion = 1;
 		if (!MMA8652FC::initalize()) {
-			PCBVersion = 99;
+			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		}
 	} else
 #endif
 #ifdef ACCEL_LIS
 	if (LIS2DH12::detect()) {
-		PCBVersion = 2;
+		DetectedAccelerometerVersion = 2;
 		// Setup the ST Accelerometer
 		if (!LIS2DH12::initalize()) {
-			PCBVersion = 99;
+			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		}
 	} else
 #endif
 #ifdef ACCEL_BMA
 	if (BMA223::detect()) {
-		PCBVersion = 3;
+		DetectedAccelerometerVersion = 3;
 		// Setup the ST Accelerometer
 		if (!BMA223::initalize()) {
-			PCBVersion = 99;
+			DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		}
 	} else
 #endif
 	{
-		PCBVersion = 99;
+		DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
 		systemSettings.SleepTime = 0;
 		systemSettings.ShutdownTime = 0;  // No accel -> disable sleep
 		systemSettings.sensitivity = 0;
@@ -60,19 +61,19 @@ void detectAccelerometerVersion() {
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
 #ifdef ACCEL_LIS
-	if (PCBVersion == 2) {
+	if (DetectedAccelerometerVersion == 2) {
 		LIS2DH12::getAxisReadings(tx, ty, tz);
 		rotation = LIS2DH12::getOrientation();
 	} else
 #endif
 #ifdef ACCEL_MMA
-	if (PCBVersion == 1) {
+	if (DetectedAccelerometerVersion == 1) {
 		MMA8652FC::getAxisReadings(tx, ty, tz);
 		rotation = MMA8652FC::getOrientation();
 	} else
 #endif
 #ifdef ACCEL_BMA
-	if (PCBVersion == 3) {
+	if (DetectedAccelerometerVersion == 3) {
 		BMA223::getAxisReadings(tx, ty, tz);
 		rotation = BMA223::getOrientation();
 	} else
@@ -82,15 +83,14 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 	}
 }
 void startMOVTask(void const *argument __unused) {
-	osDelay(1);  //Make oled init happen first
 	postRToSInit();
-	OLED::setRotation(systemSettings.OrientationMode & 1);
 	detectAccelerometerVersion();
+	osDelay(50);  //wait ~50ms for setup of accel to finalise
 	lastMovementTime = 0;
-	if ((systemSettings.autoStartMode == 2 || systemSettings.autoStartMode == 3))
+	//Mask 2 seconds if we are in autostart so that if user is plugging in and then putting in stand it doesnt wake instantly
+	if (systemSettings.autoStartMode)
 		osDelay(2 * TICKS_SECOND);
 
-	lastMovementTime = 0;
 	int16_t datax[MOVFilter] = { 0 };
 	int16_t datay[MOVFilter] = { 0 };
 	int16_t dataz[MOVFilter] = { 0 };
@@ -100,17 +100,6 @@ void startMOVTask(void const *argument __unused) {
 	if (systemSettings.sensitivity > 9)
 		systemSettings.sensitivity = 9;
 	Orientation rotation = ORIENTATION_FLAT;
-//	OLED::setFont(1);
-//	for (;;) {
-//		OLED::clearScreen();
-//		OLED::setCursor(0, 0);
-//		readAccelerometer(tx, ty, tz, rotation);
-//		OLED::printNumber(tx, 5, 0);
-//		OLED::setCursor(0, 8);
-//		OLED::printNumber(xTaskGetTickCount() / 10, 5, 1);
-//		OLED::refresh();
-//		osDelay(50);
-//	}
 	for (;;) {
 		int32_t threshold = 1500 + (9 * 200);
 		threshold -= systemSettings.sensitivity * 200;  // 200 is the step size
@@ -148,7 +137,7 @@ void startMOVTask(void const *argument __unused) {
 		// So now we have averages, we want to look if these are different by more
 		// than the threshold
 
-		// If error has occurred then we update the tick timer
+		// If movement has occurred then we update the tick timer
 		if (error > threshold) {
 			lastMovementTime = xTaskGetTickCount();
 		}

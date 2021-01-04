@@ -24,6 +24,8 @@
 		"ResetOKMessage": "Нулиране завършено",
 		"YourGainMessage": "Усилване:",
 		"SettingsResetMessage": "Настройките бяха\nнулирани!",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"

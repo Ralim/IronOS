@@ -96,6 +96,16 @@ var def =
 			"default": "Settings were\nreset!"
 		},
 		{
+			"id": "NoAccelerometerMessage",
+			"maxLen": 16,
+			"default": "No accelerometer\ndetected!"
+		},
+		{
+			"id": "NoPowerDeliveryMessage",
+			"maxLen": 16,
+			"default": "No USB-PD IC\ndetected!"
+		},
+		{
 			"id": "LockingKeysString",
 			"maxLen": 8,
 			"default": "LOCKING"

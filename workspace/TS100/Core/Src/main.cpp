@@ -11,7 +11,7 @@
 #include <power.hpp>
 #include "Settings.h"
 #include "cmsis_os.h"
-uint8_t PCBVersion = 0;
+uint8_t DetectedAccelerometerVersion = 0;
 bool settingsWereReset = false;
 // FreeRTOS variables
 

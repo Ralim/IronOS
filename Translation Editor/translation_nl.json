@@ -24,6 +24,8 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Niveau:",
 		"SettingsResetMessage": "Instellingen zijn\ngereset!",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " GEBLOKKEERD",
 		"UnlockingKeysString": "GEDEBLOKKEERD",
 		"WarningKeysLockedString": "!GEBLOKKEERD!"

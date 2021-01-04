@@ -22,6 +22,8 @@
 		"TipDisconnectedString": "Spitze fehlt",
 		"SolderingAdvancedPowerPrompt": "Leistung: ",
 		"OffString": "Aus",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"ResetOKMessage": "Reset abgeschlossen!",
 		"YourGainMessage": "Dein Faktor:",
 		"SettingsResetMessage": "Einstellungen \nzurückgesetzt!",

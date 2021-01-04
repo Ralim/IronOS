@@ -22,6 +22,7 @@ bool OLED::inLeftHandedMode;   // Whether the screen is in left or not (used for
 OLED::DisplayState OLED::displayState;
 uint8_t OLED::fontWidth, OLED::fontHeight;
 int16_t OLED::cursor_x, OLED::cursor_y;
+bool OLED::initDone = false;
 uint8_t OLED::displayOffset;
 uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10];  // The data buffer
 uint8_t OLED::secondFrameBuffer[OLED_WIDTH * 2];
@@ -102,6 +103,7 @@ void OLED::initialize() {
 		}
 	}
 	setDisplayState(DisplayState::ON);
+	initDone = true;
 }
 void OLED::setFramebuffer(uint8_t *buffer) {
 	if (buffer == NULL) {
@@ -390,16 +392,14 @@ void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, co
 
 	if (y == 0) {
 // Splat first line of data
-		for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx ++) {
 			firstStripPtr[xx + x] = ptr[xx + 1];
-			firstStripPtr[xx + x + 1] = ptr[xx];
 		}
 	}
 	if (y == 8 || height == 16) {
 // Splat the second line
-		for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
 			secondStripPtr[x + xx] = ptr[xx + 1 + (height == 16 ? wide : 0)];
-			secondStripPtr[x + xx + 1] = ptr[xx + (height == 16 ? wide : 0)];
 		}
 	}
 }
@@ -480,4 +480,8 @@ void OLED::drawHeatSymbol(uint8_t state) {
 	uint8_t cursor_x_temp = cursor_x;
 	drawSymbol(14);
 	drawFilledRect(cursor_x_temp, 0, cursor_x_temp + 12, 2 + (8 - state), true);
+}
+
+bool OLED::isInitDone() {
+	return initDone;
 }
