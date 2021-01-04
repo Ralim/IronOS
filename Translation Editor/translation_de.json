@@ -87,7 +87,7 @@
 		},
 		"SleepTemperature": {
 			"text2": [
-				"Ruhe-
+				"Ruhe-",
 				"temperatur"
 			],
 			"desc": "Ruhetemperatur der Spitze"
