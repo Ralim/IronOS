@@ -6,7 +6,7 @@
 	"messages": {
 		"SettingsCalibrationDone": "Kalibrierung abgeschlossen!",
 		"SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
-		"SettingsResetWarning": "Bist du sicher, dass du alle Werte zurücksetzen willst?",
+		"SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",
 		"InputVoltageString": "V Eingang: ",
@@ -22,9 +22,9 @@
 		"TipDisconnectedString": "Spitze fehlt",
 		"SolderingAdvancedPowerPrompt": "Leistung: ",
 		"OffString": "Aus",
-		"ResetOKMessage": "Reset OK",
+		"ResetOKMessage": "Reset abgeschlossen!",
 		"YourGainMessage": "Dein Faktor:",
-		"SettingsResetMessage": "Einstellungen zurückgesetzt!",
+		"SettingsResetMessage": "Einstellungen \nzurückgesetzt!",
 		"LockingKeysString": "GESPERRT",
 		"UnlockingKeysString": "ENTSPERRT",
 		"WarningKeysLockedString": "!GESPERRT!"
@@ -57,7 +57,7 @@
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Schlaf-",
+				"Ruhe-",
 				"modus"
 			],
 			"desc": "Energiespareinstellungen"
@@ -87,8 +87,8 @@
 		},
 		"SleepTemperature": {
 			"text2": [
-				"Ruhetemp-",
-				"eratur"
+				"Ruhe-
+				"temperatur"
 			],
 			"desc": "Ruhetemperatur der Spitze"
 		},
@@ -111,7 +111,7 @@
 				"Bewegungs-",
 				"empfindlichk."
 			],
-			"desc": "Bewegungsempfindlichkeit <0=Aus, 1=Minimal ... 9=Maximal>"
+			"desc": "Bewegungsempfindlichkeit <0=aus, 1=minimal ... 9=maximal>"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -132,28 +132,28 @@
 				"Anzeige-",
 				"ausrichtung"
 			],
-			"desc": "Ausrichtung der Anzeige <A=Automatisch, L=Linkshändig, R=Rechtshändig>"
+			"desc": "Ausrichtung der Anzeige <A=automatisch, L=linkshändig, R=rechtshändig>"
 		},
 		"BoostTemperature": {
 			"text2": [
-				"Boosttemp-",
-				"eratur"
+				"Boost-",
+				"temperatur"
 			],
-			"desc": "Temperatur im Boostmodus  (In der eingestellten Einheit)"
+			"desc": "Temperatur im Boostmodus"
 		},
 		"AutoStart": {
 			"text2": [
 				"Start im",
-				"Lötmodus?"
+				"Lötmodus"
 			],
-			"desc": "Automatischer Start-Modus beim Einschalten der Spannungsversorgung. <L=Lötmodus R=Ruhezustand O=Ruhezustand bei Raumtemperatur A=Aus>"
+			"desc": "Bestimmt das Heizverhalten beim Einschalten der Spannungsversorgung. <L=Lötmodus R=Ruhemodus O=Ruhemodus bei Raumtemperatur A=aus>"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Abkühl-",
-				"blinken?"
+				"blinken"
 			],
-			"desc": "Blinkende Temperaturanzeige beim Abkühlen, solange heiß ist."
+			"desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist."
 		},
 		"TemperatureCalibration": {
 			"text2": [
@@ -167,7 +167,7 @@
 				"Einstellungen",
 				"zurücksetzen?"
 			],
-			"desc": "Einstellungen auf Werkseinstellungen zurücksetzen"
+			"desc": "Werte werden auf Werkseinstellungen zurückgesetzt"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -188,7 +188,7 @@
 				"Scroll-",
 				"geschw."
 			],
-			"desc": "Scrollgeschwindigkeit der Texte <L=Langsam S=Schnell>"
+			"desc": "Scrollgeschwindigkeit der Erläuterungen <L=langsam S=schnell>"
 		},
 		"TipModel": {
 			"text2": [
@@ -202,7 +202,7 @@
 				"Einfache",
 				"Kalibrierung"
 			],
-			"desc": "Einfache Kalibrierung mittels heißem Wasser"
+			"desc": "Einfache Kalibrierung mittels heißen Wassers"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
@@ -221,37 +221,37 @@
 		"PowerLimit": {
 			"text2": [
 				"Leistungs-",
-				"Limit"
+				"limit"
 			],
 			"desc": "Maximale Leistungsaufnahme des Lötkolbens <Watt>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
-				"Taste +-",
+				"+- Tasten",
 				"umkehren?"
 			],
-			"desc": "Temperatur-Änderungs-Tasten-Belegung Plus-Minus umkehren?"
+			"desc": "Tastenbelegung zur Temperaturänderung umkehren"
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"T. Schritt",
-				"Taste kurz?"
+				"Temp-Schritt",
+				"kurzer Druck"
 			],
-			"desc": "Temperaturwechselschritte bei kurzem Tastendruck!"
+			"desc": "Schrittweite für Temperaturwechsel bei kurzem Tastendruck"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"T. Schritt",
-				"Taste Lang?"
+				"Temp-Schritt",
+				"langer Druck"
 			],
-			"desc": "Temperaturwechselschritte bei langem Tastendruck!"
+			"desc": "Schrittweite für Temperaturwechsel bei langem Tastendruck"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Leistungs-",
-				"impuls in Watt"
+				"impuls"
 			],
-			"desc": "Halte das Netzteil mit einem Leistungsimpuls wach"
+			"desc": "Powerbank wird mittels eines Impulses wach gehalten <Watt>"
 		},
 		"TipGain": {
 			"text2": [
@@ -265,14 +265,14 @@
 				"Hall Sensor",
 				"Empfindlichkeit"
 			],
-			"desc": "Empfindlichkeit des Hall Effekt Sensors beim erkennen des Ruhemodus <A=Aus,N=Niedrig,M=Mittel,H=Hoch>"
+			"desc": "Empfindlichkeit des Hall Effekt Sensors beim Erkennen des Ruhemodus <A=aus,N=niedrig,M=mittel,H=hoch>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Erlaube Knopf-",
-				"Sperre"
+				"Knopf-",
+				"sperre"
 			],
-			"desc": "Langes drücken beider Knöpfe beim Löten, sperrt diese <D=Deaktiviert, B=nur Boost, V=Vollständige sperre>"
+			"desc": "Langes drücken beider Knöpfe im Lötmodus, sperrt diese <D=deaktiviert, B=nur Boost, V=vollständig gesperrt>"
 		}
 	}
 }
