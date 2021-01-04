@@ -25,6 +25,8 @@
 		"ResetOKMessage": "Reset done!",
 		"YourGainMessage": "Your gain:",
 		"SettingsResetMessage": "Settings were\nreset!",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": "LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -35,10 +37,10 @@
 		"SettingAutoChar": "A",
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F",
+		"SettingStartSolderingChar": "S",
+		"SettingStartSleepChar": "Z",
+		"SettingStartSleepOffChar": "R",
+		"SettingStartNoneChar": "O",
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "L",
 		"SettingSensitivityMedium": "M",
@@ -146,7 +148,7 @@
 				"Auto",
 				"start"
 			],
-			"desc": "Automatically starts the iron into soldering mode on power up <F=off T=soldering S=sleep O=sleep at room temperature>"
+			"desc": "Starts the iron into soldering mode on power up <O=off S=soldering Z=sleep R=sleep at room temperature>"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -160,21 +162,21 @@
 				"Calibrate",
 				"temperature?"
 			],
-			"desc": "Start tip offset calibrating procedure"
+			"desc": "Start tip temperature offset calibration"
 		},
 		"SettingsReset": {
 			"text2": [
 				"Factory",
 				"reset?"
 			],
-			"desc": "Reset settings to default!"
+			"desc": "Reset settings to default"
 		},
 		"VoltageCalibration": {
 			"text2": [
 				"Calibrate",
 				"input voltage?"
 			],
-			"desc": "VIN Calibration <long press to exit>"
+			"desc": "Start VIN calibration <long press to exit>"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -237,21 +239,21 @@
 				"Temp change",
 				"short"
 			],
-			"desc": "Temperature change steps on short button press"
+			"desc": "Temperature change increment on short button press"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Temp change",
 				"long"
 			],
-			"desc": "Temperature change steps on long button press"
+			"desc": "Temperature change increment on long button press"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse <W=watt>"
+			"desc": "Intensity of power of keep-awake-pulse <watt>"
 		},
 		"TipGain": {
 			"text2": [
@@ -265,7 +267,7 @@
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=off L=low M=medium H=high>"
+			"desc": "Sensitivity of the Hall effect sensor to detect sleep <O=off L=low M=medium H=high>"
 		},
 		"LockingMode": {
 			"text2": [

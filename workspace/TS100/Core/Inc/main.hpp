@@ -3,7 +3,7 @@
 
 #include "OLED.hpp"
 #include "Setup.h"
-extern uint8_t PCBVersion;
+extern uint8_t DetectedAccelerometerVersion;
 extern uint32_t currentTempTargetDegC;
 extern bool settingsWereReset;
 extern bool usb_pd_available;
@@ -14,6 +14,8 @@ extern "C" {
 void vApplicationStackOverflowHook(TaskHandle_t *pxTask,
 		signed portCHAR *pcTaskName);
 
+#define NO_DETECTED_ACCELEROMETER 99
+#define ACCELEROMETERS_SCANNING 100
 //Threads
 void startGUITask(void const *argument);
 void startPIDTask(void const *argument);

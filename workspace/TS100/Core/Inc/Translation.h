@@ -38,6 +38,8 @@ extern const char *OffString;
 extern const char *ResetOKMessage;
 extern const char *YourGainMessage;
 extern const char *SettingsResetMessage;
+extern const char *NoAccelerometerMessage;
+extern const char *NoPowerDeliveryMessage;
 extern const char *LockingKeysString;
 extern const char *UnlockingKeysString;
 extern const char *WarningKeysLockedString;

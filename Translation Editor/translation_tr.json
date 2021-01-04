@@ -23,7 +23,9 @@
 		"OffString": "Kapalı",
 		"ResetOKMessage": "Sıfırlama Tamam",
 		"YourGainMessage": "Kazancınız:",
-		"SettingsResetMessage": "Ayarlar Sıfırlandı"
+		"SettingsResetMessage": "Ayarlar Sıfırlandı",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!"
 	},
 	"characters": {
 		"SettingRightChar": "R",

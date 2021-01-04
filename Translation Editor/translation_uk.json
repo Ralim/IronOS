@@ -24,6 +24,8 @@
 		"ResetOKMessage": "Скидання OK",
 		"YourGainMessage": "Приріст:",
 		"SettingsResetMessage": "Налаштування скинуті!",
+		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"

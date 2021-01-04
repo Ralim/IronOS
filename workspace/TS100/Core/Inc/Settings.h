@@ -11,7 +11,7 @@
 #define SETTINGS_H_
 #include <stdint.h>
 #include "unit.h"
-#define SETTINGSVERSION (0x23)
+#define SETTINGSVERSION (0x24)
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -38,7 +38,7 @@ typedef struct {
 	uint8_t detailedIDLE :1;	  // Detailed idle screen
 	uint8_t detailedSoldering :1; // Detailed soldering screens
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
-	uint8_t temperatureInF : 1;   // Should the temp be in F or C (true is F)
+	uint8_t temperatureInF :1;   // Should the temp be in F or C (true is F)
 #endif
 	uint8_t descriptionScrollSpeed :1; // Description scroll speed
 	uint8_t lockingMode :2;	      // Store the locking mode
@@ -51,11 +51,12 @@ typedef struct {
 
 	uint8_t powerLimit; // Maximum power iron allowed to output
 
-
 	uint8_t ReverseButtonTempChangeEnabled; // Change the plus and minus button assigment
 	uint16_t TempChangeLongStep;			// Change the plus and minus button assigment
 	uint16_t TempChangeShortStep;			// Change the plus and minus button assigment
 	uint8_t hallEffectSensitivity;			//Operating mode of the hall effect sensor
+	uint8_t accelMissingWarningCounter; // Counter of how many times we have warned we cannot detect the accelerometer
+	uint8_t pdMissingWarningCounter; // Counter of how many times we have warned we cannot detect the pd interface
 
 	uint32_t padding; // This is here for in case we are not an even divisor so
 					  // that nothing gets cut off
