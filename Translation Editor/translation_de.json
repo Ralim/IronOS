@@ -39,7 +39,7 @@
 		"SettingSlowChar": "L",
 		"SettingStartSolderingChar": "L",
 		"SettingStartSleepChar": "R",
-		"SettingStartSleepOffChar": "O",
+		"SettingStartSleepOffChar": "K",
 		"SettingStartNoneChar": "A",
 		"SettingSensitivityOff": "A",
 		"SettingSensitivityLow": "N",
@@ -99,28 +99,28 @@
 				"Ruhever-",
 				"zögerung"
 			],
-			"desc": "Ruhemodus nach <Sekunden/Minuten>"
+			"desc": "System wechselt in Ruhemodus, wenn innerhalb dieser Dauer nicht bewegt <S=Sekunden | M=Minuten>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Abschalt-",
 				"zeit"
 			],
-			"desc": "Abschalten nach <Minuten>"
+			"desc": "System schaltet ab, wenn innerhalb dieser Dauer nicht bewegt <M=Minuten>"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Bewegungs-",
 				"empfindlichk."
 			],
-			"desc": "Bewegungsempfindlichkeit <0=aus, 1=minimal ... 9=maximal>"
+			"desc": "0=aus | 1=minimal | ... | 9=maximal"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Temperatur-",
 				"einheit"
 			],
-			"desc": "Temperatureinheit <C=Celsius, F=Fahrenheit>"
+			"desc": "C=Celsius | F=Fahrenheit"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -134,28 +134,28 @@
 				"Anzeige-",
 				"ausrichtung"
 			],
-			"desc": "Ausrichtung der Anzeige <A=automatisch, L=linkshändig, R=rechtshändig>"
+			"desc": "A=automatisch | L=linkshändig | R=rechtshändig"
 		},
 		"BoostTemperature": {
 			"text2": [
 				"Boost-",
 				"temperatur"
 			],
-			"desc": "Temperatur im Boostmodus"
+			"desc": "Temperatur der Lötspitze im Boostmodus"
 		},
 		"AutoStart": {
 			"text2": [
 				"Start im",
 				"Lötmodus"
 			],
-			"desc": "Bestimmt das Heizverhalten beim Einschalten der Spannungsversorgung. <L=Lötmodus R=Ruhemodus O=Ruhemodus bei Raumtemperatur A=aus>"
+			"desc": "Bestimmt das Heizverhalten beim Einschalten der Spannungsversorgung <A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit klater Spitze>"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Abkühl-",
 				"blinken"
 			],
-			"desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist."
+			"desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist"
 		},
 		"TemperatureCalibration": {
 			"text2": [
@@ -169,7 +169,7 @@
 				"Einstellungen",
 				"zurücksetzen?"
 			],
-			"desc": "Werte werden auf Werkseinstellungen zurückgesetzt"
+			"desc": "Werte werden auf Werkseinstellungen zurückgesetzt!"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -190,7 +190,7 @@
 				"Scroll-",
 				"geschw."
 			],
-			"desc": "Scrollgeschwindigkeit der Erläuterungen <L=langsam S=schnell>"
+			"desc": "Scrollgeschwindigkeit der Erläuterungen <L=langsam | S=schnell>"
 		},
 		"TipModel": {
 			"text2": [
@@ -215,17 +215,17 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Leistungs-",
-				"Aufnahme"
+				"Spannungs-",
+				"grenze"
 			],
-			"desc": "Leistungsaufnahme der verwendeten Spannungsversorgung"
+			"desc": "Maximal zulässige Spannung der verwendeten Spannungsversorgung <V=Volt>"
 		},
 		"PowerLimit": {
 			"text2": [
 				"Leistungs-",
-				"limit"
+				"grenze"
 			],
-			"desc": "Maximale Leistungsaufnahme des Lötkolbens <Watt>"
+			"desc": "Maximale zulässige Leistungsaufnahme des Lötkolbens <W=Watt>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -237,14 +237,14 @@
 		"TempChangeShortStep": {
 			"text2": [
 				"Temp-Schritt",
-				"kurzer Druck"
+				"Druck kurz"
 			],
 			"desc": "Schrittweite für Temperaturwechsel bei kurzem Tastendruck"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Temp-Schritt",
-				"langer Druck"
+				"Druck lang"
 			],
 			"desc": "Schrittweite für Temperaturwechsel bei langem Tastendruck"
 		},
@@ -267,14 +267,14 @@
 				"Hall Sensor",
 				"Empfindlichkeit"
 			],
-			"desc": "Empfindlichkeit des Hall Effekt Sensors beim Erkennen des Ruhemodus <A=aus,N=niedrig,M=mittel,H=hoch>"
+			"desc": "Empfindlichkeit des Hall Effekt Sensors beim Erkennen des Ruhemodus <A=aus | N=niedrig | M=mittel | H=hoch>"
 		},
 		"LockingMode": {
 			"text2": [
 				"Knopf-",
 				"sperre"
 			],
-			"desc": "Langes drücken beider Knöpfe im Lötmodus, sperrt diese <D=deaktiviert, B=nur Boost, V=vollständig gesperrt>"
+			"desc": "Langes drücken beider Knöpfe im Lötmodus, sperrt diese <D=deaktiviert | B=nur Boost | V=vollständig gesperrt>"
 		}
 	}
 }
