@@ -394,8 +394,8 @@ static void display_countdown(int sleepThres) {
 	 * mode is triggered.
 	 */
 	int lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
-	int downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
-	if (downCount > 99000) {
+	TickType_t downCount = sleepThres - xTaskGetTickCount() + lastEventTime;
+	if (downCount > (99 * TICKS_SECOND)) {
 		OLED::printNumber(downCount / 60000 + 1, 2);
 		OLED::print(SymbolMinutes);
 	} else {
@@ -645,10 +645,10 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 void showDebugMenu(void) {
 	uint8_t screen = 0;
 	ButtonState b;
+	OLED::setFont(1);      // small font
 	for (;;) {
 		OLED::clearScreen();   // Ensure the buffer starts clean
 		OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
-		OLED::setFont(1);      // small font
 		OLED::print(SymbolVersionNumber); // Print version number
 		OLED::setCursor(0, 8);            // second line
 		OLED::print(DebugMenu[screen]);
@@ -717,7 +717,6 @@ void showDebugMenu(void) {
 				}
 #endif
 				if (poweredbyPD) {
-
 					OLED::printNumber(2, 1);
 				} else {
 

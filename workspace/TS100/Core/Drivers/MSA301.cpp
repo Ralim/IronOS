@@ -34,8 +34,9 @@ Orientation MSA301::getOrientation() {
 		return Orientation::ORIENTATION_LEFT_HAND;
 	case 96:
 		return Orientation::ORIENTATION_RIGHT_HAND;
+	default:
+		return Orientation::ORIENTATION_FLAT;
 	}
-	return Orientation::ORIENTATION_FLAT;
 }
 
 void MSA301::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
