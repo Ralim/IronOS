@@ -24,8 +24,8 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Guad.: ",
 		"SettingsResetMessage": "Reset effettuato",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"NoAccelerometerMessage": "Accelerometro\nnon rilevato",
+		"NoPowerDeliveryMessage": "USB-PD non\ndisponibile",
 		"LockingKeysString": "Blocc.",
 		"UnlockingKeysString": "Sblocc.",
 		"WarningKeysLockedString": "BLOCCATO"
