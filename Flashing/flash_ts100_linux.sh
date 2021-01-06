@@ -13,13 +13,13 @@ function usage() {
     echo
     echo "This script has been tested to work on Fedora."
     echo "If you experience any issues please open a ticket at:"
-    echo "https://github.com/Ralim/ts100/issues/new"
+    echo "https://github.com/Ralim/IronOS/issues/new"
     echo
 }
 
 GAUTOMOUNT=0
 function disable_gautomount {
-    GSETTINGS=`which gsettings`
+    GSETTINGS=$(which gsettings)
     if [ $? -ne 0 ]; then
         return 1
     fi
@@ -37,11 +37,11 @@ function enable_gautomount {
 }
 
 function is_attached {
-    output=`lsblk -b --raw --output NAME,MODEL | grep 'DFU.*Disk'`
+    output=$(lsblk -b --raw --output NAME,MODEL | grep 'DFU.*Disk')
     if [ $? -ne 0 ]; then
       return 1
     fi
-    DEVICE=`echo $output | awk '{print "/dev/"$1}'`
+    DEVICE=$(echo $output | awk '{print "/dev/"$1}')
 }
 
 instructions="not printed"
@@ -102,7 +102,7 @@ if [ ! -f "$1" ]; then
     exit 1
 fi
 
-if [ `head -c1 "$1"` != ":" ] || [ `tail -n1 "$1" | head -c1` != ":" ]; then
+if [ $(head -c1 "$1") != ":" ] || [ $(tail -n1 "$1" | head -c1) != ":" ]; then
     echo "'$1' doesn't look like a valid HEX file. Please provide a HEX file to flash"
     usage
     exit 1
