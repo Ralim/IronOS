@@ -8,21 +8,21 @@
 		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine ?",
 		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
-		"InputVoltageString": "V d'entrée :",
-		"WarningTipTempString": "Temp. Panne :",
+		"InputVoltageString": "V d'entrée : ",
+		"WarningTipTempString": "Temp. Panne : ",
 		"BadTipString": "PANNE HS",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "En veille...",
 		"WarningSimpleString": "CHAUD !",
 		"WarningAdvancedString": "ATTENTION ! CHAUD !",
-		"SleepingTipAdvancedString": "Panne :",
+		"SleepingTipAdvancedString": "Panne : ",
 		"IdleTipString": "Act :",
 		"IdleSetString": " Reg :",
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance : ",
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Gain :",
+		"YourGainMessage": "Gain : ",
 		"SettingsResetMessage": "Réglage réinit. !",
 		"NoAccelerometerMessage": "Pas d'accéléromètre\ndétecté!",
 		"NoPowerDeliveryMessage": "Aucune interface USB-PD\ndétectée!",
@@ -82,9 +82,9 @@
 		"DCInCutoff": {
 			"text2": [
 				"Source",
-				"d'alim"
+				"d'alim."
 			],
-			"desc": "Source d'alimentation. Règle la tension de coupure <DC=10V S=3.3V par cellules>"
+			"desc": "Source d'alimentation. Règle la tension de coupure <DC=10V> <S=3.3V par cellules>"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -98,42 +98,42 @@
 				"Délai",
 				"veille"
 			],
-			"desc": "Délai avant mise en veille <Minutes>"
+			"desc": "Délai avant mise en veille <S=secondes | M=minutes>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Délai",
 				"extinction"
 			],
-			"desc": "Délai avant extinction <Minutes>"
+			"desc": "Délai avant extinction <M=minutes>"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Sensibilité",
 				"au mouvement"
 			],
-			"desc": "Sensibilité du capteur de mouvement <0=Inactif 1=Peu sensible 9=Tres sensible>"
+			"desc": "0=inactif | 1=peu sensible | ... | 9=très sensible"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Unité de",
 				"température"
 			],
-			"desc": "Unité de température <C=Celsius F=Fahrenheit>"
+			"desc": "Unité de température <C=Celsius | F=Fahrenheit>"
 		},
 		"AdvancedIdle": {
 			"text2": [
 				"Écran veille",
 				"détaillé"
 			],
-			"desc": "Afficher des informations détaillées lors de la veille."
+			"desc": "Afficher les informations détaillées lors de la veille."
 		},
 		"DisplayRotation": {
 			"text2": [
 				"Orientation",
 				"de l'écran"
 			],
-			"desc": "Orientation de l'affichage <A=Automatique G=Gaucher D=Droitier>"
+			"desc": "Orientation de l'affichage <A=automatique | G=gaucher | D=droitier>"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -147,7 +147,7 @@
 				"Démarrage",
 				"automatique"
 			],
-			"desc": "Démarrer automatiquement la soudure a l'allumage <A=Activé, V=Mode Veille, D=Désactivé>"
+			"desc": "Démarrer automatiquement la soudure à l'allumage <D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante>"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,21 +175,21 @@
 				"Étalonner",
 				"tension d'entrée"
 			],
-			"desc": "Étalonner tension d'entrée. Boutons pour ajuster, appui long pour quitter"
+			"desc": "Étalonner tension d'entrée <appui long pour quitter>"
 		},
 		"AdvancedSoldering": {
 			"text2": [
 				"Écran soudure",
 				"détaillé"
 			],
-			"desc": "Afficher des informations détaillées pendant la soudure"
+			"desc": "Afficher les informations détaillées pendant la soudure"
 		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Vitesse de",
 				"défilement"
 			],
-			"desc": "Vitesse de défilement de ce texte en <R=Rapide L=Lent>"
+			"desc": "Vitesse de défilement du texte <R=rapide | L=lent>"
 		},
 		"TipModel": {
 			"text2": [
@@ -208,30 +208,30 @@
 		"AdvancedCalibrationMode": {
 			"text2": [
 				"Calibration",
-				"avancées"
+				"avancée"
 			],
-			"desc": "Calibration avancées à l'aide d'un thermocouple sur la panne"
+			"desc": "Calibration avancée à l'aide d'un thermocouple sur la panne"
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Puissance de",
-				"l'alimentation"
+				"Tension max.",
+				"QC"
 			],
-			"desc": "Puissance de l'alimentation utilisée"
+			"desc": "Tension maximale désirée avec une alimentation QC"
 		},
 		"PowerLimit": {
 			"text2": [
-				"Puissance",
-				"limite"
+				"Limite de",
+				"puissance"
 			],
-			"desc": "Puissance maximale utilisable <Watts>"
+			"desc": "Puissance maximale utilisable <W=watts>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
 				"Inverser les",
-				"touches + - ?"
+				"touches + -"
 			],
-			"desc": "Inversez l'assignation +/- du bouton de changement de température de la pointe."
+			"desc": "Inverser l'assignation des boutons d'ajustement de température de la panne."
 		},
 		"TempChangeShortStep": {
 			"text2": [
@@ -250,9 +250,9 @@
 		"PowerPulsePower": {
 			"text2": [
 				"Puissance des",
-				"impulsion W"
+				"impulsions"
 			],
-			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries"
+			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries <watt>"
 		},
 		"TipGain": {
 			"text2": [
@@ -266,14 +266,14 @@
 				"Autoriser le",
 				"verrouillage"
 			],
-			"desc": "Permet de verrouiller les touches pendant la soudure sur un appuis long des 2 bouttons <D=Désactiver, B=Boost seulement, V=Verr. total>"
+			"desc": "Permet de verrouiller les touches pendant la soudure sur un appui long des 2 bouttons <D=désactiver | B=boost seulement | V=verr. total>"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Sensibilité",
 				"capteur effet hall"
 			],
-			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <O=Off | L=Low | M=Medium | H=High>"
 		}
 	}
 }
