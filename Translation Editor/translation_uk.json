@@ -24,11 +24,11 @@
 		"ResetOKMessage": "Скидання OK",
 		"YourGainMessage": "Приріст:",
 		"SettingsResetMessage": "Налаштування скинуті!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"NoAccelerometerMessage": "Акселерометр\nне виявлено!",
+		"NoPowerDeliveryMessage": "USB-PD IC\nне виявлено!",
+		"LockingKeysString": " ЗАБЛОКОВАНО",
+		"UnlockingKeysString": "РОЗБЛОКОВАНО",
+		"WarningKeysLockedString": "!ЗАБЛОКОВАНО!"
 	},
 	"characters": {
 		"SettingRightChar": "П",
@@ -40,13 +40,13 @@
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",
 		"SettingStartNoneChar": "В",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingSensitivityOff": "В",
+		"SettingSensitivityLow": "Н",
+		"SettingSensitivityMedium": "С",
+		"SettingSensitivityHigh": "М",
+		"SettingLockDisableChar": "В",
+		"SettingLockBoostChar": "Т",
+		"SettingLockFullChar": "П"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -263,17 +263,17 @@
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Чутливість",
+				"Ефекту Холла"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Чутливість датчика ефекту Холла при виявленні сну <В=Вимк,Н=Низький,С=Середній,М=Макс>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Дозволити",
+				"блокування кнопок"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Під час пайки тривале натискання обох кнопок заблокує їх <В=Вимк, Т=Тільки турбо, П=Повне>"
 		}
 	}
 }
