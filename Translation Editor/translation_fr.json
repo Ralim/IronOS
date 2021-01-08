@@ -5,7 +5,7 @@
 	"messages": {
 		"SettingsCalibrationDone": "Calibration effectuée !",
 		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer !",
-		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine ?",
+		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
 		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
 		"InputVoltageString": "V d'entrée : ",
@@ -263,8 +263,8 @@
 		},
 		"LockingMode": {
 			"text2": [
-				"Verrouiller les",
-				"boutons"
+				"Verrouiller",
+				"les boutons"
 			],
 			"desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller <D=désactivé | B=boost seulement | V=verr. total>"
 		},
