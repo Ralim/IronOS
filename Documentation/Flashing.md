@@ -4,7 +4,7 @@
 
 ### Main release
 
-Main releases are made to the [releases page](/releases).
+Main releases are made to the [releases page](https://github.com/Ralim/IronOS/releases).
 Download the zip file that matches your model of soldering iron, and extract it.
 You then need to use the appropriate file type for your unit, in general Miniware irons are `.hex` and Pinecil is `.bin.`
 Flash according to details below
@@ -12,7 +12,7 @@ Flash according to details below
 ### Bleeding edge / latest
 
 For the _latest_ code, you will need to download the zip file from the artefacts page on the build for what you want.
-Head to the [Actions](/actions) page and then select the run for the appropriate branch you would like.
+Head to the [Actions](https://github.com/Ralim/IronOS/actions) page and then select the run for the appropriate branch you would like.
 In general you probably want `master`.
 
 Once you click on a run, scroll down to the "Artifacts" section and then click on your model to download a zip file.
@@ -20,7 +20,7 @@ Then this works the same as a production release (use the correct file).
 
 ## Miniware irons (TS100, TS80, TS80P)
 
-This is completely safe, but if it goes wrong just put the .hex file from the official website onto the unit and you're back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/ts100/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
+This is completely safe, but if it goes wrong just put the .hex file from the official website onto the unit and you're back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called *(MODEL)_EN.hex* unless you want the translations, they are (MODEL)_*language short name*.hex. Where (MODEL) is either TS100 or TS80.
 
 Officially the bootloader on the iron only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under Mac, and can be made to work under Linux *sometimes*. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware). 
 
