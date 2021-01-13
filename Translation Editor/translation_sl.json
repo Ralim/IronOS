@@ -1,34 +1,34 @@
 {
 	"languageCode": "SL",
-	"languageLocalName": "Slovensko",
+	"languageLocalName": "Slovenščina",
 	"cyrillicGlyphs": false,
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracija opravljena!",
-		"SettingsCalibrationWarning": "Preden nadaljujete, mora biti konica na sobni temperaturi!",
-		"SettingsResetWarning": "Ste prepričani, da želite ponastaviti nastavitve na privzete vrednosti?",
+		"SettingsCalibrationWarning": "Pred nadaljevanjem mora biti konica segreta na sobno temperaturo!",
+		"SettingsResetWarning": "Res želite ponastaviti na privzete nastavitve?",
 		"UVLOWarningString": "NIZKA U",
 		"UndervoltageString": "Nizka napetost",
 		"InputVoltageString": "Vhodna U: ",
 		"WarningTipTempString": "Temp. kon.: ",
-		"BadTipString": "OKVARA K",
+		"BadTipString": "KONICA?",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Spim...",
-		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "!!!VROČA KON.!!!",
-		"SleepingTipAdvancedString": "Knica:",
+		"WarningSimpleString": "VROČ",
+		"WarningAdvancedString": "!!VROČA KONICA!!",
+		"SleepingTipAdvancedString": "Konica",
 		"IdleTipString": "Kon:",
-		"IdleSetString": " nst.:",
-		"TipDisconnectedString": "KONICA ODSTRANJ.",
+		"IdleSetString": " temp:",
+		"TipDisconnectedString": "NI KONICE",
 		"SolderingAdvancedPowerPrompt": "Moč: ",
-		"OffString": "Izk",
+		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Ojačan.:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"YourGainMessage": "Ojačenje",
+		"SettingsResetMessage": "Nastavitve OK!",
+		"NoAccelerometerMessage": "Ni pospeševalnik",
+		"NoPowerDeliveryMessage": "Ni USB-PD čipa!",
+		"LockingKeysString": "ZAKLENJ.",
+		"UnlockingKeysString": "ODKLENJ.",
+		"WarningKeysLockedString": "ZAKLENJ."
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -36,17 +36,17 @@
 		"SettingAutoChar": "S",
 		"SettingFastChar": "H",
 		"SettingSlowChar": "P",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingStartSolderingChar": "S",
+		"SettingStartSleepChar": "Z",
+		"SettingStartSleepOffChar": "V",
+		"SettingStartNoneChar": "U",
+		"SettingSensitivityOff": "U",
+		"SettingSensitivityLow": "N",
+		"SettingSensitivityMedium": "S",
+		"SettingSensitivityHigh": "V",
+		"SettingLockDisableChar": "O",
+		"SettingLockBoostChar": "L",
+		"SettingLockFullChar": "P"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -58,7 +58,7 @@
 		},
 		"PowerSavingMenu": {
 			"text2": [
-				"Načini",
+				"Način",
 				"spanja"
 			],
 			"desc": "Nastavitve varčevanja z energijo"
@@ -91,70 +91,70 @@
 				"Temp. med",
 				"spanjem"
 			],
-			"desc": "Temperatura med spanjem <C>"
+			"desc": "Temperatura med spanjem"
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Čas do",
 				"spanja"
 			],
-			"desc": "Čas pred spanjem <minute/sekunde>"
+			"desc": "Čas pred spanjem <S=sekunde | M=minute>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Čas do",
 				"izklopa"
 			],
-			"desc": "Čas pred izklopom <minute>"
+			"desc": "Čas do izklopa <M=minute>"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Občutljivost",
 				"premikanja"
 			],
-			"desc": "Občutljivost premikanja <0.izklopljeno 1.najmanj 9.najbolj občutljivo>"
+			"desc": "0=izklopljeno | 1=najmanjša | ... | 9=največja"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Enota za",
 				"temperaturo"
 			],
-			"desc": "Enota za temperaturo <C=celzija F=fahrenheita>"
+			"desc": "Enota za temperaturo <C=celzij | F=fahrenheit>"
 		},
 		"AdvancedIdle": {
 			"text2": [
-				"Več info na",
-				"zaslonu v mir"
+				"Več info. na",
+				"mir. zaslonu"
 			],
-			"desc": "Prikaže več informacij z manjšo pisavo na zaslonu med mirovanjem."
+			"desc": "Prikaži več informacij z manjšo pisavo na mirovalnem zaslonu."
 		},
 		"DisplayRotation": {
 			"text2": [
 				"Orientacija",
 				"zaslona"
 			],
-			"desc": "Orientacija zaslona <S. samodejno L. levo D. desno>"
+			"desc": "S=samodejno | L=levičar | D=desničar"
 		},
 		"BoostTemperature": {
 			"text2": [
-				"Temperat.",
-				"v boost"
+				"Pospešena",
+				"temp."
 			],
-			"desc": "Temperatura v \"boost\" načinu"
+			"desc": "Temperatura v pospešenem načinu"
 		},
 		"AutoStart": {
 			"text2": [
 				"Samodejni",
 				"zagon"
 			],
-			"desc": "Samodejno segrej konico ob vklopu. T=segrej, S=spanje, F=izklop"
+			"desc": "Samodejno gretje konice ob vklopu <U=ugasnjeno | S=spajkanje | Z=spanje | V=spanje na sobni temperaturi>"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Utripanje med",
 				"hlajenjem"
 			],
-			"desc": "Utripaj temperaturo med hlajenjem, ko je konica še vroča."
+			"desc": "Ko je konica še vroča, utripaj prikaz temperature med hlajenjem."
 		},
 		"TemperatureCalibration": {
 			"text2": [
@@ -175,7 +175,7 @@
 				"Kalibriram",
 				"vhodno napetost?"
 			],
-			"desc": "Kalibracija VIN. Nastavitve z gumbi, dolgi pritisk za izhod."
+			"desc": "Kalibracija VIN <nastavitve z gumbi, dolg pritisk za izhod>"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -189,11 +189,11 @@
 				"Hitrost",
 				"besedila"
 			],
-			"desc": "Hitrost, s katero se prikazuje besedilo"
+			"desc": "Hitrost, s katero se prikazuje besedilo <P=počasi | H=hitro>"
 		},
 		"TipModel": {
 			"text2": [
-				"Model",
+				"Tip",
 				"konice"
 			],
 			"desc": "Izbira tipa konice"
@@ -214,66 +214,66 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Moč napajalnega",
-				"vira"
+				"QC",
+				"napetost"
 			],
-			"desc": "Moč v W napajalnega vira"
+			"desc": "Moč napajalnega vira v vatih [W]"
 		},
 		"PowerLimit": {
 			"text2": [
-				"Power",
-				"Limit"
+				"Meja",
+				"moči"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Največja dovoljena moč v vatih [W]"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Obrni",
+				"tipki + -?"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Zamenjaj funkciji gumbov."
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"Temp change",
-				"short?"
+				"Kratka sprememba",
+				"temperature?"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Temperatura se spremeni ob kratkem pritisku na gumb."
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Temp change",
-				"long?"
+				"Dolga sprememba",
+				"temperature?"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Temperatura se spremeni ob dolgem pritisku na gumb."
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Pulz",
+				"moči"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Velikost moči za vzdrževanje budnosti."
 		},
 		"TipGain": {
 			"text2": [
-				"Modify",
-				"tip gain"
+				"Nastavi",
+				"moč kon."
 			],
-			"desc": "Tip gain"
+			"desc": "Nastavi moč konice."
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Občut.",
+				"Hall son"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Občutljivost Hallove sonde za zaznavanje spanja <U=ugasnjen | N=nizka | S=srednja | V=visoka>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Omogoči",
+				"zaklep gumbov"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Za zaklep med spajkanjem drži oba gumba <O=onemogoči | L=le pospešeno | P=polno>"
 		}
 	}
 }
