@@ -253,7 +253,7 @@
 				"Moc",
 				"impulsu"
 			],
-			"desc": "Utrzymuj moc impulsu na wybranym poziomie <W>"
+			"desc": "W przypadku używania powerbanku, utrzymuj moc na poziomie <W> aby nie uśpić powerbanku"
 		},
 		"TipGain": {
 			"text2": [
