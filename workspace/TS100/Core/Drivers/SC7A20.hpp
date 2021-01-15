@@ -19,12 +19,11 @@ public:
 	static Orientation getOrientation() {
 		uint8_t val = ((FRToSI2C::I2C_RegisterRead(SC7A20_ADDRESS, SC7A20_INT2_SOURCE) >> 2) - 1);
 		if (val == 1)
-			val = 0;
-		else if (val == 0)
-			val = 1;
+			return Orientation::ORIENTATION_LEFT_HAND;
+		else if (val == 4 || val == 0)
+			return Orientation::ORIENTATION_RIGHT_HAND;
 		else
-			val = 3;
-		return static_cast<Orientation>(val);
+			return Orientation::ORIENTATION_FLAT;
 	}
 	static void getAxisReadings(int16_t &x, int16_t &y, int16_t &z);
 
