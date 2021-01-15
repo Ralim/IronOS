@@ -18,12 +18,10 @@ public:
 	//1 = rh, 2,=lh, 8=flat
 	static Orientation getOrientation() {
 		uint8_t val = ((FRToSI2C::I2C_RegisterRead(SC7A20_ADDRESS, SC7A20_INT2_SOURCE) >> 2) - 1);
-		if (val == 8)
-			val = 3;
-		else if (val == 1)
-			val = 1;
-		else if (val == 2)
+		if (val == 1)
 			val = 0;
+		else if (val == 0)
+			val = 1;
 		else
 			val = 3;
 		return static_cast<Orientation>(val);
