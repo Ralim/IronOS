@@ -6,6 +6,7 @@
  */
 
 #include "BMA223.hpp"
+#include "SC7A20.hpp"
 #include "BSP.h"
 #include "FreeRTOS.h"
 #include "I2C_Wrapper.hpp"
@@ -21,7 +22,6 @@
 #include "power.hpp"
 #include "stdlib.h"
 #include "task.h"
-#include "SC7A20.hpp"
 #define MOVFilter 8
 uint8_t accelInit = 0;
 TickType_t lastMovementTime = 0;

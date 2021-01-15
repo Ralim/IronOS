@@ -5,8 +5,8 @@
  *      Author: Ralim
  */
 
-#ifndef CORE_DRIVERS_BMA223_HPP_
-#define CORE_DRIVERS_BMA223_HPP_
+#ifndef CORE_DRIVERS_SC7A20_HPP_
+#define CORE_DRIVERS_SC7A20_HPP_
 #include "I2C_Wrapper.hpp"
 #include "BSP.h"
 #include "SC7A20_defines.h"
