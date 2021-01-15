@@ -9,7 +9,15 @@
 #include <array>
 
 bool BMA223::detect() {
-	return FRToSI2C::probe(BMA223_ADDRESS);
+	if (FRToSI2C::probe(BMA223_ADDRESS)) {
+		//Read chip id to ensure its not an address collision
+		uint8_t id = 0;
+		if (FRToSI2C::Mem_Read(BMA223_ADDRESS, BMA223_BGW_CHIPID, &id, 1)) {
+			return id == 0b11111000;
+		}
+	}
+
+	return false;
 }
 
 static const FRToSI2C::I2C_REG i2c_registers[] = { //
