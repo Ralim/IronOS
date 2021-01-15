@@ -98,6 +98,8 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(INC_PD_DRIVERS_DIR) \
 	  $(DEVICE_INCLUDES) 
 	  
+TRANSLATION_FILES=$(wildcard ../../Translations/translation_*.json)
+GENERATED_TRANSLATION_SOURCE=Core/Gen/Translation.cpp
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
@@ -107,7 +109,8 @@ SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.cpp') \
 $(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
-$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp') 
+$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp') \
+$(GENERATED_TRANSLATION_SOURCE)
 # output folder
 HEXFILE_DIR=Hexfile
 
@@ -288,12 +291,12 @@ $(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRI
 	@echo Linking $(OUTPUT_EXE).elf
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
 
-$(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
+$(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile $(APP_INC_DIR)/unit.h
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CC) -c $(CFLAGS) $< -o $@
 
-$(OUT_OBJS_CPP): $(OUTPUT_DIR)/%.o : %.cpp Makefile
+$(OUT_OBJS_CPP): $(OUTPUT_DIR)/%.o : %.cpp Makefile $(APP_INC_DIR)/unit.h
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
@@ -303,8 +306,13 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@echo 'Building file: $<'
 	@$(AS) -c $(AFLAGS) $< -o $@
 
+$(APP_INC_DIR)/unit.h $(GENERATED_TRANSLATION_SOURCE): $(TRANSLATION_FILES) Makefile ../../Translations/make_translation.py
+	@echo 'Building translations'
+	@cd ../../Translations && python3 make_translation.py
+
 
 clean :
+	rm -f $(GENERATED_TRANSLATION_SOURCE) $(SOURCE_CORE_DIR)/Translation.cpp
 	rm -Rf $(OUTPUT_DIR_BASE)
 	rm -Rf $(HEXFILE_DIR)
 

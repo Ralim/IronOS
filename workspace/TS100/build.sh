@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TRANSLATION_DIR="../../Translation Editor"
+TRANSLATION_DIR="../../Translations"
 TRANSLATION_SCRIPT="make_translation.py"
 
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
@@ -116,10 +116,6 @@ fi
 echo "*********************************************"
 
 if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
-    echo "Generating Translation.cpp"
-    python3 "$TRANSLATION_DIR/$TRANSLATION_SCRIPT" "$TRANSLATION_DIR"
-    checkLastCommand
-
     echo "Cleaning previous builds"
     rm -rf Hexfile/ >/dev/null
     rm -rf Objects/ >/dev/null
