@@ -244,8 +244,6 @@ void fusb_reset() {
 	fusb_write_byte( FUSB_CONTROL0, 0x44);
 	/* Flush the RX buffer */
 	fusb_write_byte( FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
-	/* Reset the PD logic */
-//	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
 	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
 		I2CBB::unlock2();
 	}

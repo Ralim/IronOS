@@ -107,7 +107,6 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 	}
 }
 void startMOVTask(void const *argument __unused) {
-	postRToSInit();
 	detectAccelerometerVersion();
 	osDelay(TICKS_100MS / 2); // wait ~50ms for setup of accel to finalise
 	lastMovementTime = 0;
@@ -168,6 +167,5 @@ void startMOVTask(void const *argument __unused) {
 		}
 
 		osDelay(TICKS_100MS); // Slow down update rate
-		power_check();
 	}
 }
