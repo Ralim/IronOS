@@ -25,8 +25,7 @@ uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
 	return temp;
 }
 
-bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address,
-		uint8_t *p_buffer, uint16_t number_of_byte) {
+bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
 	if (!lock())
 		return false;
 	i2c_interrupt_disable(I2C0, I2C_INT_ERR);
@@ -61,8 +60,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address,
 				/* enable acknowledge */
 				i2c_ack_config(I2C0, I2C_ACK_ENABLE);
 				/* i2c master sends start signal only when the bus is idle */
-				while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)
-						&& (timeout < I2C_TIME_OUT )) {
+				while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY) && (timeout < I2C_TIME_OUT )) {
 					timeout++;
 				}
 				if (timeout < I2C_TIME_OUT) {
@@ -83,8 +81,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address,
 			break;
 		case I2C_SEND_ADDRESS:
 			/* i2c master sends START signal successfully */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND))
-					&& (timeout < I2C_TIME_OUT )) {
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 			}
 			if (timeout < I2C_TIME_OUT) {
@@ -104,15 +101,13 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address,
 			break;
 		case I2C_CLEAR_ADDRESS_FLAG:
 			/* address flag set means i2c slave sends ACK */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND))
-					&& (timeout < I2C_TIME_OUT )) {
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
 					i2c_flag_clear(I2C0, I2C_FLAG_AERR);
 					i2c_stop_on_bus(I2C0);
 					/* i2c master sends STOP signal successfully */
-					while ((I2C_CTL0(I2C0) & 0x0200)
-							&& (timeout < I2C_TIME_OUT )) {
+					while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
 						timeout++;
 					}
 					// Address NACK'd
@@ -138,8 +133,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address,
 		case I2C_TRANSMIT_DATA:
 			if (0 == in_rx_cycle) {
 				/* wait until the transmit data buffer is empty */
-				while ((!i2c_flag_get(I2C0, I2C_FLAG_TBE))
-						&& (timeout < I2C_TIME_OUT )) {
+				while ((!i2c_flag_get(I2C0, I2C_FLAG_TBE)) && (timeout < I2C_TIME_OUT )) {
 					timeout++;
 				}
 				if (timeout < I2C_TIME_OUT) {
@@ -152,8 +146,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address,
 					in_rx_cycle = 0;
 				}
 				/* wait until BTC bit is set */
-				while ((!i2c_flag_get(I2C0, I2C_FLAG_BTC))
-						&& (timeout < I2C_TIME_OUT )) {
+				while ((!i2c_flag_get(I2C0, I2C_FLAG_BTC)) && (timeout < I2C_TIME_OUT )) {
 					timeout++;
 				}
 				if (timeout < I2C_TIME_OUT) {
@@ -239,8 +232,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address,
 	return true;
 }
 
-bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
-		uint8_t *p_buffer, uint16_t number_of_byte) {
+bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
 	if (!lock())
 		return false;
 
@@ -257,8 +249,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 		switch (state) {
 		case I2C_START:
 			/* i2c master sends start signal only when the bus is idle */
-			while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)
-					&& (timeout < I2C_TIME_OUT )) {
+			while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 			}
 			if (timeout < I2C_TIME_OUT) {
@@ -273,8 +264,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 			break;
 		case I2C_SEND_ADDRESS:
 			/* i2c master sends START signal successfully */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND))
-					&& (timeout < I2C_TIME_OUT )) {
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 			}
 			if (timeout < I2C_TIME_OUT) {
@@ -290,15 +280,13 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 			break;
 		case I2C_CLEAR_ADDRESS_FLAG:
 			/* address flag set means i2c slave sends ACK */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND))
-					&& (timeout < I2C_TIME_OUT )) {
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
 					i2c_flag_clear(I2C0, I2C_FLAG_AERR);
 					i2c_stop_on_bus(I2C0);
 					/* i2c master sends STOP signal successfully */
-					while ((I2C_CTL0(I2C0) & 0x0200)
-							&& (timeout < I2C_TIME_OUT )) {
+					while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
 						timeout++;
 					}
 					// Address NACK'd
@@ -323,8 +311,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress,
 			break;
 		case I2C_TRANSMIT_DATA:
 			/* wait until the transmit data buffer is empty */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_TBE))
-					&& (timeout < I2C_TIME_OUT )) {
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_TBE)) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 			}
 			if (timeout < I2C_TIME_OUT) {
@@ -409,18 +396,22 @@ bool FRToSI2C::lock() {
 	if (I2CSemaphore == nullptr) {
 		return false;
 	}
+	if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
+		return true;
+	}
 	return xSemaphoreTake(I2CSemaphore, TICKS_SECOND) == pdTRUE;
 }
 
 void FRToSI2C::unlock() {
+	if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
+		return;
+	}
 	xSemaphoreGive(I2CSemaphore);
 }
 
-bool FRToSI2C::writeRegistersBulk(const uint8_t address,
-		const I2C_REG *registers, const uint8_t registersLength) {
+bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength) {
 	for (int index = 0; index < registersLength; index++) {
-		if (!I2C_RegisterWrite(address, registers[index].reg,
-				registers[index].val)) {
+		if (!I2C_RegisterWrite(address, registers[index].reg, registers[index].val)) {
 			return false;
 		}
 		if (registers[index].pause_ms) {
@@ -447,8 +438,7 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
 		switch (state) {
 		case I2C_START:
 			/* i2c master sends start signal only when the bus is idle */
-			while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)
-					&& (timeout < I2C_TIME_OUT )) {
+			while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 			}
 			if (timeout < I2C_TIME_OUT) {
@@ -463,8 +453,7 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
 			break;
 		case I2C_SEND_ADDRESS:
 			/* i2c master sends START signal successfully */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND))
-					&& (timeout < I2C_TIME_OUT )) {
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 			}
 			if (timeout < I2C_TIME_OUT) {
@@ -480,15 +469,13 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
 			break;
 		case I2C_CLEAR_ADDRESS_FLAG:
 			/* address flag set means i2c slave sends ACK */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND))
-					&& (timeout < I2C_TIME_OUT )) {
+			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) && (timeout < I2C_TIME_OUT )) {
 				timeout++;
 				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
 					i2c_flag_clear(I2C0, I2C_FLAG_AERR);
 					i2c_stop_on_bus(I2C0);
 					/* i2c master sends STOP signal successfully */
-					while ((I2C_CTL0(I2C0) & 0x0200)
-							&& (timeout < I2C_TIME_OUT )) {
+					while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
 						timeout++;
 					}
 					// Address NACK'd
