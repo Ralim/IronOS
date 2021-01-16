@@ -28,7 +28,6 @@ void power_check() {
 uint8_t usb_pd_detect() {
 #ifdef POW_PD
 	FUSB302_present = fusb302_detect();
-
 	return FUSB302_present;
 #endif
 	return false;
