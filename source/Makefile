@@ -31,7 +31,12 @@ SOURCE_CORE_DIR = ./Core/Src
 SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/FUSB302
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
+# Find-all's used for formatting
+ALL_INCLUDES = $(shell find ./ -type f -name '*.h') \
+			   $(shell find ./ -type f -name '*.hpp') 
 
+ALL_SOURCE = $(shell find ./ -type f -name '*.c') \
+			   $(shell find ./ -type f -name '*.cpp') 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
 $(info Building for Miniware )
@@ -315,6 +320,15 @@ clean :
 	rm -f $(GENERATED_TRANSLATION_SOURCE) $(SOURCE_CORE_DIR)/Translation.cpp
 	rm -Rf $(OUTPUT_DIR_BASE)
 	rm -Rf $(HEXFILE_DIR)
+
+style:
+	@for src in $(ALL_SOURCE) $(ALL_INCLUDES); do \
+		echo "Formatting $$src..." ; \
+		clang-format -i "$$src" ; \
+	done
+	@echo "Done"
+
+.PHONY: style
 
 # pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
