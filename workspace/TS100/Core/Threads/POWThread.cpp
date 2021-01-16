@@ -16,8 +16,6 @@
 
 // Small worker thread to handle power (mostly QC) related steps
 
-
-
 void startPOWTask(void const *argument __unused) {
 	postRToSInit();
 	for (;;) {

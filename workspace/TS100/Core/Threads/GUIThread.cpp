@@ -805,6 +805,7 @@ void startGUITask(void const *argument __unused) {
 		ButtonState buttons = getButtonState();
 		if (buttons)
 			ticks = xTaskGetTickCount(); // make timeout now so we will exit
+		OLED::refresh();
 		GUIDelay();
 	}
 

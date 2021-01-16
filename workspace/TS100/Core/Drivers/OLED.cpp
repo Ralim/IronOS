@@ -391,15 +391,17 @@ void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, co
 	}
 
 	if (y == 0) {
-// Splat first line of data
-		for (uint8_t xx = visibleStart; xx < visibleEnd; xx ++) {
+		// Splat first line of data
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
 			firstStripPtr[xx + x] = ptr[xx + 1];
+			firstStripPtr[xx + x + 1] = ptr[xx];
 		}
 	}
 	if (y == 8 || height == 16) {
-// Splat the second line
-		for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
+		// Splat the second line
+		for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
 			secondStripPtr[x + xx] = ptr[xx + 1 + (height == 16 ? wide : 0)];
+			secondStripPtr[x + xx + 1] = ptr[xx + (height == 16 ? wide : 0)];
 		}
 	}
 }
