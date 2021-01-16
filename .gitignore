@@ -53,6 +53,7 @@ codeship.aes
 
 # Auto generated files
 source/Core/Inc/unit.h
+source/Core/Gen/
 # IDE configs
 .vs/*
 .settings/*

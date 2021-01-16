@@ -550,6 +550,8 @@ def read_opts():
         outFileTranslationCPP = sys.argv[2]
     else:
         outDir = os.path.relpath(jsonDir + "/../source/Core/Gen")
+        if not os.path.exists(outDir):
+            os.makedirs(outDir)
         outFileTranslationCPP = os.path.join(outDir, TRANSLATION_CPP)
 
     if len(sys.argv) > 3:
