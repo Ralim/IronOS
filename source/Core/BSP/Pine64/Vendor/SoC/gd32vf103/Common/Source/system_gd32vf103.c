@@ -23,9 +23,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "nuclei_sdk_hal.h"
 #include <stdint.h>
 #include <stdio.h>
-#include "nuclei_sdk_hal.h"
 
 /*----------------------------------------------------------------------------
  Define clocks
@@ -33,7 +33,7 @@
 /* ToDo: add here your necessary defines for device initialization
  following is an example for different system frequencies */
 #ifndef SYSTEM_CLOCK
-#define SYSTEM_CLOCK    __SYSTEM_CLOCK_108M_PLL_HXTAL
+#define SYSTEM_CLOCK __SYSTEM_CLOCK_108M_PLL_HXTAL
 #endif
 
 /**
@@ -94,87 +94,76 @@ uint32_t SystemCoreClock = __SYSTEM_CLOCK_108M_PLL_HXTAL; /* System Clock Freque
  */
 
 static void system_clock_108m_hxtal(void) {
-	uint32_t timeout = 0U;
-	uint32_t stab_flag = 0U;
+  uint32_t timeout   = 0U;
+  uint32_t stab_flag = 0U;
 
-	/* enable HXTAL */
-	RCU_CTL |= RCU_CTL_HXTALEN;
+  /* enable HXTAL */
+  RCU_CTL |= RCU_CTL_HXTALEN;
 
-	/* wait until HXTAL is stable or the startup time is longer than
-	 * HXTAL_STARTUP_TIMEOUT */
-	do {
-		timeout++;
-		stab_flag = (RCU_CTL & RCU_CTL_HXTALSTB);
-	} while ((0U == stab_flag) && (HXTAL_STARTUP_TIMEOUT != timeout));
+  /* wait until HXTAL is stable or the startup time is longer than
+   * HXTAL_STARTUP_TIMEOUT */
+  do {
+    timeout++;
+    stab_flag = (RCU_CTL & RCU_CTL_HXTALSTB);
+  } while ((0U == stab_flag) && (HXTAL_STARTUP_TIMEOUT != timeout));
 
-	/* if fail */
-	if (0U == (RCU_CTL & RCU_CTL_HXTALSTB)) {
-		while (1) {
-		}
-	}
+  /* if fail */
+  if (0U == (RCU_CTL & RCU_CTL_HXTALSTB)) {
+    while (1) {}
+  }
 
-	/* HXTAL is stable */
-	/* AHB = SYSCLK */
-	RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
-	/* APB2 = AHB/1 */
-	RCU_CFG0 |= RCU_APB2_CKAHB_DIV1;
-	/* APB1 = AHB/2 */
-	RCU_CFG0 |= RCU_APB1_CKAHB_DIV2;
+  /* HXTAL is stable */
+  /* AHB = SYSCLK */
+  RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+  /* APB2 = AHB/1 */
+  RCU_CFG0 |= RCU_APB2_CKAHB_DIV1;
+  /* APB1 = AHB/2 */
+  RCU_CFG0 |= RCU_APB1_CKAHB_DIV2;
 
-	/* CK_PLL = (CK_PREDIV0) * 27 = 108 MHz */
-	RCU_CFG0 &= ~(RCU_CFG0_PLLMF | RCU_CFG0_PLLMF_4);
-	RCU_CFG0 |= (RCU_PLLSRC_HXTAL | RCU_PLL_MUL27);
+  /* CK_PLL = (CK_PREDIV0) * 27 = 108 MHz */
+  RCU_CFG0 &= ~(RCU_CFG0_PLLMF | RCU_CFG0_PLLMF_4);
+  RCU_CFG0 |= (RCU_PLLSRC_HXTAL | RCU_PLL_MUL27);
 
-	if (HXTAL_VALUE == 25000000) {
-		/* CK_PREDIV0 = (CK_HXTAL)/5 *8 /10 = 4 MHz */
-		RCU_CFG1 &= ~(RCU_CFG1_PREDV0SEL | RCU_CFG1_PREDV1 | RCU_CFG1_PLL1MF |
-		RCU_CFG1_PREDV0);
-		RCU_CFG1 |= (RCU_PREDV0SRC_CKPLL1 | RCU_PREDV1_DIV5 | RCU_PLL1_MUL8 |
-		RCU_PREDV0_DIV10);
+  if (HXTAL_VALUE == 25000000) {
+    /* CK_PREDIV0 = (CK_HXTAL)/5 *8 /10 = 4 MHz */
+    RCU_CFG1 &= ~(RCU_CFG1_PREDV0SEL | RCU_CFG1_PREDV1 | RCU_CFG1_PLL1MF | RCU_CFG1_PREDV0);
+    RCU_CFG1 |= (RCU_PREDV0SRC_CKPLL1 | RCU_PREDV1_DIV5 | RCU_PLL1_MUL8 | RCU_PREDV0_DIV10);
 
-		/* enable PLL1 */
-		RCU_CTL |= RCU_CTL_PLL1EN;
-		/* wait till PLL1 is ready */
-		while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {
-		}
+    /* enable PLL1 */
+    RCU_CTL |= RCU_CTL_PLL1EN;
+    /* wait till PLL1 is ready */
+    while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {}
 
-		/* enable PLL1 */
-		RCU_CTL |= RCU_CTL_PLL2EN;
-		/* wait till PLL1 is ready */
-		while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {
-		}
-	} else if (HXTAL_VALUE == 8000000) {
-		RCU_CFG1 &= ~(RCU_CFG1_PREDV0SEL | RCU_CFG1_PREDV1 | RCU_CFG1_PLL1MF |
-		RCU_CFG1_PREDV0);
-		RCU_CFG1 |= (RCU_PREDV0SRC_HXTAL | RCU_PREDV0_DIV2 | RCU_PREDV1_DIV2 |
-		RCU_PLL1_MUL20 | RCU_PLL2_MUL20);
+    /* enable PLL1 */
+    RCU_CTL |= RCU_CTL_PLL2EN;
+    /* wait till PLL1 is ready */
+    while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {}
+  } else if (HXTAL_VALUE == 8000000) {
+    RCU_CFG1 &= ~(RCU_CFG1_PREDV0SEL | RCU_CFG1_PREDV1 | RCU_CFG1_PLL1MF | RCU_CFG1_PREDV0);
+    RCU_CFG1 |= (RCU_PREDV0SRC_HXTAL | RCU_PREDV0_DIV2 | RCU_PREDV1_DIV2 | RCU_PLL1_MUL20 | RCU_PLL2_MUL20);
 
-		/* enable PLL1 */
-		RCU_CTL |= RCU_CTL_PLL1EN;
-		/* wait till PLL1 is ready */
-		while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {
-		}
+    /* enable PLL1 */
+    RCU_CTL |= RCU_CTL_PLL1EN;
+    /* wait till PLL1 is ready */
+    while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {}
 
-		/* enable PLL2 */
-		RCU_CTL |= RCU_CTL_PLL2EN;
-		/* wait till PLL1 is ready */
-		while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {
-		}
-	}
-	/* enable PLL */
-	RCU_CTL |= RCU_CTL_PLLEN;
+    /* enable PLL2 */
+    RCU_CTL |= RCU_CTL_PLL2EN;
+    /* wait till PLL1 is ready */
+    while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {}
+  }
+  /* enable PLL */
+  RCU_CTL |= RCU_CTL_PLLEN;
 
-	/* wait until PLL is stable */
-	while (0U == (RCU_CTL & RCU_CTL_PLLSTB)) {
-	}
+  /* wait until PLL is stable */
+  while (0U == (RCU_CTL & RCU_CTL_PLLSTB)) {}
 
-	/* select PLL as system clock */
-	RCU_CFG0 &= ~RCU_CFG0_SCS;
-	RCU_CFG0 |= RCU_CKSYSSRC_PLL;
+  /* select PLL as system clock */
+  RCU_CFG0 &= ~RCU_CFG0_SCS;
+  RCU_CFG0 |= RCU_CKSYSSRC_PLL;
 
-	/* wait until PLL is selected as system clock */
-	while (0U == (RCU_CFG0 & RCU_SCSS_PLL)) {
-	}
+  /* wait until PLL is selected as system clock */
+  while (0U == (RCU_CFG0 & RCU_SCSS_PLL)) {}
 }
 
 /*!
@@ -183,9 +172,7 @@ static void system_clock_108m_hxtal(void) {
  \param[out] none
  \retval     none
  */
-static void system_clock_config(void) {
-	system_clock_108m_hxtal();
-}
+static void system_clock_config(void) { system_clock_108m_hxtal(); }
 
 /**
  * \brief      Function to update the variable \ref SystemCoreClock
@@ -196,82 +183,82 @@ static void system_clock_config(void) {
  */
 void SystemCoreClockUpdate(void) /* Get Core Clock Frequency */
 {
-	/* ToDo: add code to calculate the system frequency based upon the current
-	 *    register settings.
-	 * Note: This function can be used to retrieve the system core clock
-	 * frequeny after user changed register settings.
-	 */
-	uint32_t scss;
-	uint32_t pllsel, predv0sel, pllmf, ck_src;
-	uint32_t predv0, predv1, pll1mf;
+  /* ToDo: add code to calculate the system frequency based upon the current
+   *    register settings.
+   * Note: This function can be used to retrieve the system core clock
+   * frequeny after user changed register settings.
+   */
+  uint32_t scss;
+  uint32_t pllsel, predv0sel, pllmf, ck_src;
+  uint32_t predv0, predv1, pll1mf;
 
-	scss = GET_BITS(RCU_CFG0, 2, 3);
+  scss = GET_BITS(RCU_CFG0, 2, 3);
 
-	switch (scss) {
-	/* IRC8M is selected as CK_SYS */
-	case SEL_IRC8M:
-		SystemCoreClock = IRC8M_VALUE;
-		break;
+  switch (scss) {
+  /* IRC8M is selected as CK_SYS */
+  case SEL_IRC8M:
+    SystemCoreClock = IRC8M_VALUE;
+    break;
 
-		/* HXTAL is selected as CK_SYS */
-	case SEL_HXTAL:
-		SystemCoreClock = HXTAL_VALUE;
-		break;
+    /* HXTAL is selected as CK_SYS */
+  case SEL_HXTAL:
+    SystemCoreClock = HXTAL_VALUE;
+    break;
 
-		/* PLL is selected as CK_SYS */
-	case SEL_PLL:
-		/* PLL clock source selection, HXTAL or IRC8M/2 */
-		pllsel = (RCU_CFG0 & RCU_CFG0_PLLSEL);
+    /* PLL is selected as CK_SYS */
+  case SEL_PLL:
+    /* PLL clock source selection, HXTAL or IRC8M/2 */
+    pllsel = (RCU_CFG0 & RCU_CFG0_PLLSEL);
 
-		if (RCU_PLLSRC_IRC8M_DIV2 == pllsel) {
-			/* PLL clock source is IRC8M/2 */
-			ck_src = IRC8M_VALUE / 2U;
-		} else {
-			/* PLL clock source is HXTAL */
-			ck_src = HXTAL_VALUE;
+    if (RCU_PLLSRC_IRC8M_DIV2 == pllsel) {
+      /* PLL clock source is IRC8M/2 */
+      ck_src = IRC8M_VALUE / 2U;
+    } else {
+      /* PLL clock source is HXTAL */
+      ck_src = HXTAL_VALUE;
 
-			predv0sel = (RCU_CFG1 & RCU_CFG1_PREDV0SEL);
+      predv0sel = (RCU_CFG1 & RCU_CFG1_PREDV0SEL);
 
-			/* source clock use PLL1 */
-			if (RCU_PREDV0SRC_CKPLL1 == predv0sel) {
-				predv1 = ((RCU_CFG1 & RCU_CFG1_PREDV1) >> 4) + 1U;
-				pll1mf = ((RCU_CFG1 & RCU_CFG1_PLL1MF) >> 8) + 2U;
-				if (17U == pll1mf) {
-					pll1mf = 20U;
-				}
-				ck_src = (ck_src / predv1) * pll1mf;
-			}
-			predv0 = (RCU_CFG1 & RCU_CFG1_PREDV0) + 1U;
-			ck_src /= predv0;
-		}
+      /* source clock use PLL1 */
+      if (RCU_PREDV0SRC_CKPLL1 == predv0sel) {
+        predv1 = ((RCU_CFG1 & RCU_CFG1_PREDV1) >> 4) + 1U;
+        pll1mf = ((RCU_CFG1 & RCU_CFG1_PLL1MF) >> 8) + 2U;
+        if (17U == pll1mf) {
+          pll1mf = 20U;
+        }
+        ck_src = (ck_src / predv1) * pll1mf;
+      }
+      predv0 = (RCU_CFG1 & RCU_CFG1_PREDV0) + 1U;
+      ck_src /= predv0;
+    }
 
-		/* PLL multiplication factor */
-		pllmf = GET_BITS(RCU_CFG0, 18, 21);
+    /* PLL multiplication factor */
+    pllmf = GET_BITS(RCU_CFG0, 18, 21);
 
-		if ((RCU_CFG0 & RCU_CFG0_PLLMF_4)) {
-			pllmf |= 0x10U;
-		}
+    if ((RCU_CFG0 & RCU_CFG0_PLLMF_4)) {
+      pllmf |= 0x10U;
+    }
 
-		if (pllmf >= 15U) {
-			pllmf += 1U;
-		} else {
-			pllmf += 2U;
-		}
+    if (pllmf >= 15U) {
+      pllmf += 1U;
+    } else {
+      pllmf += 2U;
+    }
 
-		SystemCoreClock = ck_src * pllmf;
+    SystemCoreClock = ck_src * pllmf;
 
-		if (15U == pllmf) {
-			/* PLL source clock multiply by 6.5 */
-			SystemCoreClock = ck_src * 6U + ck_src / 2U;
-		}
+    if (15U == pllmf) {
+      /* PLL source clock multiply by 6.5 */
+      SystemCoreClock = ck_src * 6U + ck_src / 2U;
+    }
 
-		break;
+    break;
 
-		/* IRC8M is selected as CK_SYS */
-	default:
-		SystemCoreClock = IRC8M_VALUE;
-		break;
-	}
+    /* IRC8M is selected as CK_SYS */
+  default:
+    SystemCoreClock = IRC8M_VALUE;
+    break;
+  }
 }
 
 /**
@@ -283,39 +270,35 @@ void SystemCoreClockUpdate(void) /* Get Core Clock Frequency */
  * SystemInit is called from the file <b>startup<i>_device</i></b>.
  */
 void SystemInit(void) {
-	/* ToDo: add code to initialize the system
-	 * Warn: do not use global variables because this function is called before
-	 * reaching pre-main. RW section maybe overwritten afterwards.
-	 */
-	/* reset the RCC clock configuration to the default reset state */
-	/* enable IRC8M */
-	RCU_CTL |= RCU_CTL_IRC8MEN;
+  /* ToDo: add code to initialize the system
+   * Warn: do not use global variables because this function is called before
+   * reaching pre-main. RW section maybe overwritten afterwards.
+   */
+  /* reset the RCC clock configuration to the default reset state */
+  /* enable IRC8M */
+  RCU_CTL |= RCU_CTL_IRC8MEN;
 
-	/* reset SCS, AHBPSC, APB1PSC, APB2PSC, ADCPSC, CKOUT0SEL bits */
-	RCU_CFG0 &= ~(RCU_CFG0_SCS | RCU_CFG0_AHBPSC | RCU_CFG0_APB1PSC
-			| RCU_CFG0_APB2PSC |
-			RCU_CFG0_ADCPSC | RCU_CFG0_ADCPSC_2 | RCU_CFG0_CKOUT0SEL);
+  /* reset SCS, AHBPSC, APB1PSC, APB2PSC, ADCPSC, CKOUT0SEL bits */
+  RCU_CFG0 &= ~(RCU_CFG0_SCS | RCU_CFG0_AHBPSC | RCU_CFG0_APB1PSC | RCU_CFG0_APB2PSC | RCU_CFG0_ADCPSC | RCU_CFG0_ADCPSC_2 | RCU_CFG0_CKOUT0SEL);
 
-	/* reset HXTALEN, CKMEN, PLLEN bits */
-	RCU_CTL &= ~(RCU_CTL_HXTALEN | RCU_CTL_CKMEN | RCU_CTL_PLLEN);
+  /* reset HXTALEN, CKMEN, PLLEN bits */
+  RCU_CTL &= ~(RCU_CTL_HXTALEN | RCU_CTL_CKMEN | RCU_CTL_PLLEN);
 
-	/* Reset HXTALBPS bit */
-	RCU_CTL &= ~(RCU_CTL_HXTALBPS);
+  /* Reset HXTALBPS bit */
+  RCU_CTL &= ~(RCU_CTL_HXTALBPS);
 
-	/* reset PLLSEL, PREDV0_LSB, PLLMF, USBFSPSC bits */
+  /* reset PLLSEL, PREDV0_LSB, PLLMF, USBFSPSC bits */
 
-	RCU_CFG0 &= ~(RCU_CFG0_PLLSEL | RCU_CFG0_PREDV0_LSB | RCU_CFG0_PLLMF |
-	RCU_CFG0_USBFSPSC | RCU_CFG0_PLLMF_4);
-	RCU_CFG1 = 0x00000000U;
+  RCU_CFG0 &= ~(RCU_CFG0_PLLSEL | RCU_CFG0_PREDV0_LSB | RCU_CFG0_PLLMF | RCU_CFG0_USBFSPSC | RCU_CFG0_PLLMF_4);
+  RCU_CFG1 = 0x00000000U;
 
-	/* Reset HXTALEN, CKMEN, PLLEN, PLL1EN and PLL2EN bits */
-	RCU_CTL &= ~(RCU_CTL_PLLEN | RCU_CTL_PLL1EN | RCU_CTL_PLL2EN | RCU_CTL_CKMEN
-			| RCU_CTL_HXTALEN);
-	/* disable all interrupts */
-	RCU_INT = 0x00FF0000U;
+  /* Reset HXTALEN, CKMEN, PLLEN, PLL1EN and PLL2EN bits */
+  RCU_CTL &= ~(RCU_CTL_PLLEN | RCU_CTL_PLL1EN | RCU_CTL_PLL2EN | RCU_CTL_CKMEN | RCU_CTL_HXTALEN);
+  /* disable all interrupts */
+  RCU_INT = 0x00FF0000U;
 
-	/* Configure the System clock source, PLL Multiplier, AHB/APBx prescalers and Flash settings */
-	system_clock_config();
+  /* Configure the System clock source, PLL Multiplier, AHB/APBx prescalers and Flash settings */
+  system_clock_config();
 }
 
 /**
@@ -329,7 +312,7 @@ void SystemInit(void) {
  * @{
  */
 /** \brief Max exception handler number, don't include the NMI(0xFFF) one */
-#define MAX_SYSTEM_EXCEPTION_NUM        12
+#define MAX_SYSTEM_EXCEPTION_NUM 12
 /**
  * \brief      Store the exception handlers for each exception ID
  * \note
@@ -354,14 +337,13 @@ typedef void (*EXC_HANDLER)(unsigned long mcause, unsigned long sp);
  * This function provided a default exception and NMI handling code for all exception ids.
  * By default, It will just print some information for debug, Vendor can customize it according to its requirements.
  */
-static void system_default_exception_handler(unsigned long mcause,
-		unsigned long sp) {
-	/* TODO: Uncomment this if you have implement printf function */
-	printf("MCAUSE: 0x%lx\r\n", mcause);
-	printf("MEPC  : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
-	printf("MTVAL : 0x%lx\r\n", __RV_CSR_READ(CSR_MBADADDR));
-	while (1)
-		;
+static void system_default_exception_handler(unsigned long mcause, unsigned long sp) {
+  /* TODO: Uncomment this if you have implement printf function */
+  printf("MCAUSE: 0x%lx\r\n", mcause);
+  printf("MEPC  : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
+  printf("MTVAL : 0x%lx\r\n", __RV_CSR_READ(CSR_MBADADDR));
+  while (1)
+    ;
 }
 
 /**
@@ -372,10 +354,9 @@ static void system_default_exception_handler(unsigned long mcause,
  * Called in \ref _init function, used to initialize default exception handlers for all exception IDs
  */
 static void Exception_Init(void) {
-	for (int i = 0; i < MAX_SYSTEM_EXCEPTION_NUM + 1; i++) {
-		SystemExceptionHandlers[i] =
-				(unsigned long) system_default_exception_handler;
-	}
+  for (int i = 0; i < MAX_SYSTEM_EXCEPTION_NUM + 1; i++) {
+    SystemExceptionHandlers[i] = (unsigned long)system_default_exception_handler;
+  }
 }
 
 /**
@@ -387,11 +368,11 @@ static void Exception_Init(void) {
  * \param   exc_handler     The exception handler for this exception code EXCn
  */
 void Exception_Register_EXC(uint32_t EXCn, unsigned long exc_handler) {
-	if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM)) {
-		SystemExceptionHandlers[EXCn] = exc_handler;
-	} else if (EXCn == NMI_EXCn) {
-		SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM] = exc_handler;
-	}
+  if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM)) {
+    SystemExceptionHandlers[EXCn] = exc_handler;
+  } else if (EXCn == NMI_EXCn) {
+    SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM] = exc_handler;
+  }
 }
 
 /**
@@ -403,13 +384,13 @@ void Exception_Register_EXC(uint32_t EXCn, unsigned long exc_handler) {
  * \return  Current exception handler for exception code EXCn, if not found, return 0.
  */
 unsigned long Exception_Get_EXC(uint32_t EXCn) {
-	if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM)) {
-		return SystemExceptionHandlers[EXCn];
-	} else if (EXCn == NMI_EXCn) {
-		return SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
-	} else {
-		return 0;
-	}
+  if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM)) {
+    return SystemExceptionHandlers[EXCn];
+  } else if (EXCn == NMI_EXCn) {
+    return SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
+  } else {
+    return 0;
+  }
 }
 
 /**
@@ -424,33 +405,32 @@ unsigned long Exception_Get_EXC(uint32_t EXCn) {
  *   which can help developer to register your exception handler for specific exception number.
  */
 uint32_t core_exception_handler(unsigned long mcause, unsigned long sp) {
-	uint32_t EXCn = (uint32_t) (mcause & 0X00000fff);
-	EXC_HANDLER exc_handler;
+  uint32_t    EXCn = (uint32_t)(mcause & 0X00000fff);
+  EXC_HANDLER exc_handler;
 
-	if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM)) {
-		exc_handler = (EXC_HANDLER) SystemExceptionHandlers[EXCn];
-	} else if (EXCn == NMI_EXCn) {
-		exc_handler =
-				(EXC_HANDLER) SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
-	} else {
-		exc_handler = (EXC_HANDLER) system_default_exception_handler;
-	}
-	if (exc_handler != NULL) {
-		exc_handler(mcause, sp);
-	}
-	return 0;
+  if ((EXCn < MAX_SYSTEM_EXCEPTION_NUM)) {
+    exc_handler = (EXC_HANDLER)SystemExceptionHandlers[EXCn];
+  } else if (EXCn == NMI_EXCn) {
+    exc_handler = (EXC_HANDLER)SystemExceptionHandlers[MAX_SYSTEM_EXCEPTION_NUM];
+  } else {
+    exc_handler = (EXC_HANDLER)system_default_exception_handler;
+  }
+  if (exc_handler != NULL) {
+    exc_handler(mcause, sp);
+  }
+  return 0;
 }
-/** @} *//* End of Doxygen Group NMSIS_Core_ExceptionAndNMI */
+/** @} */ /* End of Doxygen Group NMSIS_Core_ExceptionAndNMI */
 
 void SystemBannerPrint(void) {
 #if defined(NUCLEI_BANNER) && (NUCLEI_BANNER == 1)
 #ifndef DOWNLOAD_MODE
 #error DOWNLOAD_MODE is not defined via build system, please check!
 #endif
-	const char* download_modes[] = {"FLASHXIP", "FLASH", "ILM", "DDR"};
-	printf("Nuclei SDK Build Time: %s, %s\r\n", __DATE__, __TIME__);
-	printf("Download Mode: %s\r\n", download_modes[DOWNLOAD_MODE]);
-	printf("CPU Frequency %d Hz\r\n", SystemCoreClock);
+  const char *download_modes[] = {"FLASHXIP", "FLASH", "ILM", "DDR"};
+  printf("Nuclei SDK Build Time: %s, %s\r\n", __DATE__, __TIME__);
+  printf("Download Mode: %s\r\n", download_modes[DOWNLOAD_MODE]);
+  printf("CPU Frequency %d Hz\r\n", SystemCoreClock);
 #endif
 }
 
@@ -461,9 +441,9 @@ void SystemBannerPrint(void) {
  * configuration.
  */
 void ECLIC_Init(void) {
-	/* TODO: Add your own initialization code here. This function will be called by main */
-	ECLIC_SetMth(0);
-	ECLIC_SetCfgNlbits(__ECLIC_INTCTLBITS);
+  /* TODO: Add your own initialization code here. This function will be called by main */
+  ECLIC_SetMth(0);
+  ECLIC_SetCfgNlbits(__ECLIC_INTCTLBITS);
 }
 
 /**
@@ -482,31 +462,28 @@ void ECLIC_Init(void) {
  * - This function use to configure specific eclic interrupt and register its interrupt handler and enable its interrupt.
  * - If the vector table is placed in read-only section(FLASHXIP mode), handler could not be installed
  */
-int32_t ECLIC_Register_IRQ(IRQn_Type IRQn, uint8_t shv,
-		ECLIC_TRIGGER_Type trig_mode, uint8_t lvl, uint8_t priority,
-		void *handler) {
-	if ((IRQn > SOC_INT_MAX) || (shv > ECLIC_VECTOR_INTERRUPT)
-			|| (trig_mode > ECLIC_NEGTIVE_EDGE_TRIGGER)) {
-		return -1;
-	}
+int32_t ECLIC_Register_IRQ(IRQn_Type IRQn, uint8_t shv, ECLIC_TRIGGER_Type trig_mode, uint8_t lvl, uint8_t priority, void *handler) {
+  if ((IRQn > SOC_INT_MAX) || (shv > ECLIC_VECTOR_INTERRUPT) || (trig_mode > ECLIC_NEGTIVE_EDGE_TRIGGER)) {
+    return -1;
+  }
 
-	/* set interrupt vector mode */
-	ECLIC_SetShvIRQ(IRQn, shv);
-	/* set interrupt trigger mode and polarity */
-	ECLIC_SetTrigIRQ(IRQn, trig_mode);
-	/* set interrupt level */
-	ECLIC_SetLevelIRQ(IRQn, lvl);
-	/* set interrupt priority */
-	ECLIC_SetPriorityIRQ(IRQn, priority);
-	if (handler != NULL) {
-		/* set interrupt handler entry to vector table */
-		ECLIC_SetVector(IRQn, (rv_csr_t) handler);
-	}
-	/* enable interrupt */
-	ECLIC_EnableIRQ(IRQn);
-	return 0;
+  /* set interrupt vector mode */
+  ECLIC_SetShvIRQ(IRQn, shv);
+  /* set interrupt trigger mode and polarity */
+  ECLIC_SetTrigIRQ(IRQn, trig_mode);
+  /* set interrupt level */
+  ECLIC_SetLevelIRQ(IRQn, lvl);
+  /* set interrupt priority */
+  ECLIC_SetPriorityIRQ(IRQn, priority);
+  if (handler != NULL) {
+    /* set interrupt handler entry to vector table */
+    ECLIC_SetVector(IRQn, (rv_csr_t)handler);
+  }
+  /* enable interrupt */
+  ECLIC_EnableIRQ(IRQn);
+  return 0;
 }
-/** @} *//* End of Doxygen Group NMSIS_Core_ExceptionAndNMI */
+/** @} */ /* End of Doxygen Group NMSIS_Core_ExceptionAndNMI */
 
 /**
  * \brief early init function before main
@@ -517,12 +494,12 @@ int32_t ECLIC_Register_IRQ(IRQn_Type IRQn, uint8_t shv,
  * to do initialization
  */
 void _premain_init(void) {
-	/* TODO: Add your own initialization code here, called before main */
-	SystemCoreClock = get_cpu_freq();
-	/* Initialize exception default handlers */
-	Exception_Init();
-	/* ECLIC initialization, mainly MTH and NLBIT */
-	ECLIC_Init();
+  /* TODO: Add your own initialization code here, called before main */
+  SystemCoreClock = get_cpu_freq();
+  /* Initialize exception default handlers */
+  Exception_Init();
+  /* ECLIC initialization, mainly MTH and NLBIT */
+  ECLIC_Init();
 }
 
 /**
@@ -534,9 +511,7 @@ void _premain_init(void) {
  * by __libc_fini_array function, so we defined a new function
  * to do initialization
  */
-void _postmain_fini(int status) {
-	/* TODO: Add your own finishing code here, called after main */
-}
+void _postmain_fini(int status) { /* TODO: Add your own finishing code here, called after main */ }
 
 /**
  * \brief _init function called in __libc_init_array()
@@ -547,9 +522,7 @@ void _postmain_fini(int status) {
  * \note
  * Please use \ref _premain_init function now
  */
-void _init(void) {
-	/* Don't put any code here, please use _premain_init now */
-}
+void _init(void) { /* Don't put any code here, please use _premain_init now */ }
 
 /**
  * \brief _fini function called in __libc_fini_array()
@@ -560,8 +533,6 @@ void _init(void) {
  * \note
  * Please use \ref _postmain_fini function now
  */
-void _fini(void) {
-	/* Don't put any code here, please use _postmain_fini now */
-}
+void _fini(void) { /* Don't put any code here, please use _postmain_fini now */ }
 
-/** @} *//* End of Doxygen Group NMSIS_Core_SystemAndClock */
+/** @} */ /* End of Doxygen Group NMSIS_Core_SystemAndClock */

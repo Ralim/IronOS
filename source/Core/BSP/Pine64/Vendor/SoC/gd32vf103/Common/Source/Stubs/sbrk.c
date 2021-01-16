@@ -1,19 +1,18 @@
 /* See LICENSE of license details. */
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <unistd.h>
 
-void *_sbrk(ptrdiff_t incr)
-{
-    extern char _end[];
-    extern char _heap_end[];
-    static char *curbrk = _end;
+void *_sbrk(ptrdiff_t incr) {
+  extern char  _end[];
+  extern char  _heap_end[];
+  static char *curbrk = _end;
 
-    if ((curbrk + incr < _end) || (curbrk + incr > _heap_end)) {
-        return NULL - 1;
-    }
+  if ((curbrk + incr < _end) || (curbrk + incr > _heap_end)) {
+    return NULL - 1;
+  }
 
-    curbrk += incr;
-    return curbrk - incr;
+  curbrk += incr;
+  return curbrk - incr;
 }

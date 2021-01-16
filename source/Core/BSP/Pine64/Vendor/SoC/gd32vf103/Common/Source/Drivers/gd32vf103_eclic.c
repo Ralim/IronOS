@@ -34,9 +34,8 @@ OF SUCH DAMAGE.
 
 #include "gd32vf103_eclic.h"
 #include "riscv_encoding.h"
-#define REG_DBGMCU2 ((uint32_t)0xE0042008)
+#define REG_DBGMCU2   ((uint32_t)0xE0042008)
 #define REG_DBGMCU2EN ((uint32_t)0xE004200C)
-
 
 /*!
     \brief      set the priority group
@@ -49,10 +48,7 @@ OF SUCH DAMAGE.
     \param[out] none
     \retval     none
 */
-void eclic_priority_group_set(uint32_t prigroup) {
-	ECLIC_SetCfgNlbits(prigroup);
-
-}
+void eclic_priority_group_set(uint32_t prigroup) { ECLIC_SetCfgNlbits(prigroup); }
 
 /*!
     \brief      enable the interrupt request
@@ -63,9 +59,9 @@ void eclic_priority_group_set(uint32_t prigroup) {
     \retval     none
 */
 void eclic_irq_enable(uint32_t source, uint8_t level, uint8_t priority) {
-	ECLIC_EnableIRQ(source);
-	ECLIC_SetLevelIRQ(source, level);
-	ECLIC_SetPriorityIRQ(source, priority);
+  ECLIC_EnableIRQ(source);
+  ECLIC_SetLevelIRQ(source, level);
+  ECLIC_SetPriorityIRQ(source, priority);
 }
 
 /*!
@@ -74,9 +70,7 @@ void eclic_irq_enable(uint32_t source, uint8_t level, uint8_t priority) {
     \param[out] none
     \retval     none
 */
-void eclic_irq_disable(uint32_t source) {
-  ECLIC_DisableIRQ(source);
-}
+void eclic_irq_disable(uint32_t source) { ECLIC_DisableIRQ(source); }
 
 /*!
     \brief      reset system
@@ -86,6 +80,5 @@ void eclic_irq_disable(uint32_t source) {
 */
 void eclic_system_reset(void) {
   REG32(REG_DBGMCU2EN) = 0x4b5a6978;
-  REG32(REG_DBGMCU2) = 0x1;
+  REG32(REG_DBGMCU2)   = 0x1;
 }
-

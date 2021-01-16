@@ -1,7 +1,4 @@
-#include <errno.h>
 #include "stub.h"
+#include <errno.h>
 
-int _close(int fd)
-{
-    return _stub(EBADF);
-}
+int _close(int fd) { return _stub(EBADF); }

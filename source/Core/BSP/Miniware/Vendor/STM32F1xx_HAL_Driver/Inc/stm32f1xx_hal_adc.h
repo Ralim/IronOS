@@ -105,7 +105,8 @@ typedef struct {
  *         ADC can be either disabled or enabled without conversion on going on regular group.
  */
 typedef struct {
-  uint32_t Channel;      /*!< Specifies the channel to configure into ADC regular group.
+  uint32_t
+      Channel;           /*!< Specifies the channel to configure into ADC regular group.
                               This parameter can be a value of @ref ADC_channels
                               Note: Depending on devices, some channels may not be available on package pins. Refer to device datasheet for channels availability.
                               Note: On STM32F1 devices with several ADC: Only ADC1 can access internal measurement channels (VrefInt/TempSensor)
