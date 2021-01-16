@@ -274,7 +274,7 @@
 				"Allow locking",
 				"buttons"
 			],
-			"desc": "When soldering, long press on both buttons, to lock them <D=disable | B=\"boost mode\" only | F=full locking>"
+			"desc": "When soldering, long press both buttons, to lock them <D=disable | B=\"boost mode\" only | F=full locking>"
 		}
 	}
 }

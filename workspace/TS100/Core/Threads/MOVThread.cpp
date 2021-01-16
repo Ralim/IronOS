@@ -6,6 +6,7 @@
  */
 
 #include "BMA223.hpp"
+#include "SC7A20.hpp"
 #include "BSP.h"
 #include "FreeRTOS.h"
 #include "I2C_Wrapper.hpp"
@@ -57,6 +58,14 @@ void detectAccelerometerVersion() {
 		}
 	} else
 #endif
+#ifdef ACCEL_SC7
+	if (SC7A20::detect()) {
+		// Setup the SC7A20 Accelerometer
+		if (SC7A20::initalize()) {
+			DetectedAccelerometerVersion = 5;
+		}
+	} else
+#endif
 	{
 		// disable imu sensitivity
 		systemSettings.sensitivity = 0;
@@ -87,12 +96,17 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 		rotation = MSA301::getOrientation();
 	} else
 #endif
+#ifdef ACCEL_SC7
+	if (DetectedAccelerometerVersion == 5) {
+		SC7A20::getAxisReadings(tx, ty, tz);
+		rotation = SC7A20::getOrientation();
+	} else
+#endif
 	{
 		// do nothing :(
 	}
 }
 void startMOVTask(void const *argument __unused) {
-	postRToSInit();
 	detectAccelerometerVersion();
 	osDelay(TICKS_100MS / 2); // wait ~50ms for setup of accel to finalise
 	lastMovementTime = 0;
@@ -153,6 +167,5 @@ void startMOVTask(void const *argument __unused) {
 		}
 
 		osDelay(TICKS_100MS); // Slow down update rate
-		power_check();
 	}
 }

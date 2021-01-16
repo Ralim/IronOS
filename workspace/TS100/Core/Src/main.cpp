@@ -24,10 +24,16 @@ osThreadId PIDTaskHandle;
 static const size_t PIDTaskStackSize = 512 / 4;
 uint32_t PIDTaskBuffer[PIDTaskStackSize];
 osStaticThreadDef_t PIDTaskControlBlock;
+
 osThreadId MOVTaskHandle;
 static const size_t MOVTaskStackSize = 1024 / 4;
 uint32_t MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
+
+osThreadId POWTaskHandle;
+static const size_t POWTaskStackSize = 512 / 4;
+uint32_t POWTaskBuffer[POWTaskStackSize];
+osStaticThreadDef_t POWTaskControlBlock;
 
 // End FreeRTOS
 // Main sets up the hardware then hands over to the FreeRTOS kernel
@@ -40,20 +46,21 @@ int main(void) {
 	settingsWereReset = restoreSettings();  // load the settings from flash
 	resetWatchdog();
 	/* Create the thread(s) */
-	/* definition and creation of GUITask */
-	osThreadStaticDef(GUITask, startGUITask, osPriorityBelowNormal, 0,
-			GUITaskStackSize, GUITaskBuffer, &GUITaskControlBlock);
+	/* definition and creation of POWTask - Power management for QC */
+	osThreadStaticDef(POWTask, startPOWTask, osPriorityAboveNormal, 0, POWTaskStackSize, POWTaskBuffer, &POWTaskControlBlock);
+	POWTaskHandle = osThreadCreate(osThread(POWTask), NULL);
+
+	/* definition and creation of GUITask - The OLED control & update*/
+	osThreadStaticDef(GUITask, startGUITask, osPriorityBelowNormal, 0, GUITaskStackSize, GUITaskBuffer, &GUITaskControlBlock);
 	GUITaskHandle = osThreadCreate(osThread(GUITask), NULL);
 
-	/* definition and creation of PIDTask */
-	osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0,
-			PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
+	/* definition and creation of PIDTask - Heating control*/
+	osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0, PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
 	PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 
-	osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0,
-			MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);
+	/* definition and creation of MOVTask - Accelerometer management */
+	osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0, MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);
 	MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
-
 	resetWatchdog();
 
 	/* Start scheduler */

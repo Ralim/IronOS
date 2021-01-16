@@ -85,8 +85,8 @@ CPUFLAGS= -march=rv32imac \
 DEV_LDFLAGS= -lstdc++ -nostartfiles -Xlinker --gc-sections --specs=nosys.specs -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek
 DEV_AFLAGS= -nostartfiles -ffreestanding -fno-common -Os -flto 
 DEV_GLOBAL_DEFS=
-DEV_CFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$(@:%.o=%.d)" 
-DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$(@:%.o=%.d)" 
+DEV_CFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
+DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\

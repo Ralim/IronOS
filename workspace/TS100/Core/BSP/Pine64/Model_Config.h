@@ -23,6 +23,7 @@
 #define ENABLE_QC2
 #define TEMP_TMP36
 #define ACCEL_BMA
+#define ACCEL_SC7
 #define HALL_SENSOR
 #define HALL_SI7210
 #define BATTFILTERDEPTH 32
