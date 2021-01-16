@@ -17,9 +17,9 @@
 // Small worker thread to handle power (mostly QC) related steps
 
 void startPOWTask(void const *argument __unused) {
-	postRToSInit();
-	for (;;) {
-		osDelay(TICKS_100MS); // Slow down update rate
-		power_check();
-	}
+  postRToSInit();
+  for (;;) {
+    osDelay(TICKS_100MS); // Slow down update rate
+    power_check();
+  }
 }
