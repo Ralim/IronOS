@@ -27,46 +27,33 @@
 *.app
 *.i*86
 *.x86_64
-workspace/*.hex
 
 # Debug files
 *.dSYM/
 *.su
-workspace/ts100/Debug/*
-workspace/.metadata/*
+source/.metadata/*
 
-workspace/ts100/.settings/language.settings.xml
-workspace/ts100/.cproject
 TS100/KiCad/TS100.bak
 Logo GUI/TS100 Logo Editor/TS100 Logo Editor/obj/
 Logo GUI/TS100 Logo Editor/TS100 Logo Editor/bin/
-workspace/ts100/ts100.xml
-workspace/ts100_old/*
 *.cache
-workspace/TS100/.settings/language.settings.xml
-workspace/TS100A/Release/TS100A.map
-workspace/TS100A/Release/TS100A.list
-workspace/TS100A/Release/TS100A.hex
-workspace/TS100A/.settings/language.settings.xml
-workspace/TS100A/.metadata/
 Translation Editor/.vscode/
 Translation Editor/__pycache__/
 *.pyc
 *.lst
 *.mk
 *.list
-workspace/TS100/Release/
-workspace/TS100/Hexfile/
-workspace/RemoteSystemsTempFiles/
-workspace/TS100/.settings/
-workspace/TS100/TS80/
+source/Hexfile/
+source/Objects/
+
 ci/artefacts/
 ci/secrets/unencrypted/
 codeship.aes
 .vscode/settings.json
 
 # Auto generated files
-workspace/TS100/Core/Inc/unit.h
+source/Core/Inc/unit.h
+source/Core/Gen/
 # IDE configs
 .vs/*
 .settings/*
@@ -189,4 +176,3 @@ fabric.properties
 
 CoreCompileInputs.cache
 .vscode/settings.json
-workspace/TS100/TS100/

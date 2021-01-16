@@ -4,11 +4,14 @@ Building this software can be performed two ways, using the STMCubeIDE or using 
 
 ## STM Cube IDE
 
-The repository is setup to try and make this painless, when starting the IDE you can import the project by pointing the internal search to the workspace folder of this repository. If you start with a fresh installation, close the welcome screen tab, and then in the left sidebar, there is an option to "import". Select General -> Import existing projects -> Set the top location option to this repositories workspace -> Should find the TS100 project.
+The easiest way to start working using the STM Cube IDE is to create a new project for the STM32F103RCTx.
+Then once this is created remove the auto-generated source code.
+Next drag the contents of the `source` folder into the project and choose to link to files.
+You will need to update the build settings for include paths & point to the new `.ld` linker file
 
 ## Developing with command line tools & building a release
 
-In the `workspace/TS100` folder there is a makefile that can be used to build the repository using command line tools.
+In the `source` folder there is a makefile that can be used to build the repository using command line tools.
 when running the `make` command, specify which model of the device & the language you would like to use.
 
 `make -j8 lang=EN model=TS80`
@@ -24,3 +27,4 @@ To update the language translation files & associated font map, execute the `mak
 I highly reccomend using the command line tools and using docker to run the compiler.
 Its a bit more fussy on setup than the STM tooling and this is by far the easiest way.
 If you _need_ an IDE I have used [Nuclei's IDE](https://nucleisys.com/download.php)
+And follow same idea as the STM Cube IDE notes above.

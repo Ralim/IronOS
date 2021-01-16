@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TRANSLATION_DIR="../../Translations"
+TRANSLATION_DIR="../Translations"
 TRANSLATION_SCRIPT="make_translation.py"
 
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
