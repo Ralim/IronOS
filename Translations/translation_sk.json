@@ -24,7 +24,7 @@
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:",
 		"SettingsResetMessage": "Tov. nas. obnov.",
-		"NoAccelerometerMessage": "Chýba akcelerom!",
+		"NoAccelerometerMessage": "Bez pohyb. senz.",
 		"NoPowerDeliveryMessage": "Chýba čip USB-PD",
 		"LockingKeysString": " ZABLOK.",
 		"UnlockingKeysString": "ODBLOK.",
@@ -189,7 +189,7 @@
 				"Rýchlost",
 				"skrolovania"
 			],
-			"desc": "Rychlost pohybu tohto textu"
+			"desc": "Rýchlosť pohybu tohto textu"
 		},
 		"TipModel": {
 			"text2": [
