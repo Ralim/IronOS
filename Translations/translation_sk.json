@@ -5,30 +5,30 @@
 	"messages": {
 		"SettingsCalibrationDone": "Kalibrácia hotová!",
 		"SettingsCalibrationWarning": "Najprv sa prosím uistite, že hrot má izbovú teplotu!",
-		"SettingsResetWarning": "Naozaj chcete obnovit nastavenia?",
+		"SettingsResetWarning": "Naozaj chcete obnovit továrenské nastavenia?",
 		"UVLOWarningString": "Nízke U!",
 		"UndervoltageString": "Nízke napätie",
 		"InputVoltageString": "Vstupné U: ",
 		"WarningTipTempString": "Tep. hrotu: ",
 		"BadTipString": "ZLÝ HROT",
 		"SleepingSimpleString": "Chrr",
-		"SleepingAdvancedString": "Kľudový režim...",
-		"WarningSimpleString": "HOT!",
+		"SleepingAdvancedString": "Pokojový režim..",
+		"WarningSimpleString": "PÁLI",
 		"WarningAdvancedString": "HROT JE HORÚCI !",
 		"SleepingTipAdvancedString": "Hrot:",
 		"IdleTipString": "Hrot:",
-		"IdleSetString": " Set:",
+		"IdleSetString": "Cieľ:",
 		"TipDisconnectedString": "HROT ODPOJENÝ",
 		"SolderingAdvancedPowerPrompt": "Výkon: ",
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:",
-		"SettingsResetMessage": "Nast. Obnovené!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"SettingsResetMessage": "Tov. nas. obnov.",
+		"NoAccelerometerMessage": "Bez pohyb. senz.",
+		"NoPowerDeliveryMessage": "Chýba čip USB-PD",
+		"LockingKeysString": " ZABLOK.",
+		"UnlockingKeysString": "ODBLOK.",
+		"WarningKeysLockedString": "!ZABLOK!"
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -40,13 +40,13 @@
 		"SettingStartSleepChar": "K",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "N",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
+		"SettingSensitivityOff": "Z",
+		"SettingSensitivityLow": "N",
+		"SettingSensitivityMedium": "S",
+		"SettingSensitivityHigh": "V",
+		"SettingLockDisableChar": "Z",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingLockFullChar": "P"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -88,24 +88,24 @@
 		},
 		"SleepTemperature": {
 			"text2": [
-				"Kľudová",
+				"Pokojová",
 				"teplota"
 			],
-			"desc": "Kľudová teplota (v nastavených jednotkách)"
+			"desc": "Pokojová teplota (v nastavených jednotkách)"
 		},
 		"SleepTimeout": {
 			"text2": [
-				"Kľudový",
+				"Pokojový",
 				"režim po"
 			],
-			"desc": "Kludovy rezim po <sekundach/minutach>"
+			"desc": "Pokojový režim po <S=sekundách/M=minútach>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Vypnutie",
 				"po"
 			],
-			"desc": "Čas na vypnutie <minuty>"
+			"desc": "Čas na vypnutie <minúty>"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -124,9 +124,9 @@
 		"AdvancedIdle": {
 			"text2": [
 				"Detaily v",
-				"kľud. režime"
+				"pokoj. režime"
 			],
-			"desc": "Zobraziť detailné informácie v kľudovom režime <T=Zap, F=Vyp>"
+			"desc": "Zobraziť detailné informácie v pokojovom režime <T=Zap, F=Vyp>"
 		},
 		"DisplayRotation": {
 			"text2": [
@@ -173,9 +173,9 @@
 		"VoltageCalibration": {
 			"text2": [
 				"Kalibrácia",
-				"vst. napätia"
+				"nap. napätia"
 			],
-			"desc": "Kalibrácia napätia. Krátke stlačenie mení nastavenie, dlhé stlačenie pre návrat"
+			"desc": "Kalibrácia napájacieho napätia. Krátke stlačenie mení nastavenie, dlhé stlačenie pre návrat"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -189,7 +189,7 @@
 				"Rýchlost",
 				"skrolovania"
 			],
-			"desc": "Rychlost pohybu tohoto textu"
+			"desc": "Rýchlosť pohybu tohto textu"
 		},
 		"TipModel": {
 			"text2": [
@@ -249,31 +249,31 @@
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Impulz",
-				"W"
+				"Intenzita",
+				"impulzu"
 			],
-			"desc": "Impulz udržujúci napájací zdroj zapnutý <watt>"
+			"desc": "Impulz udržujúci napájací zdroj zapnutý (power banky) <watt>"
 		},
 		"TipGain": {
 			"text2": [
 				"Zisk",
 				"hrotu"
 			],
-			"desc": "Úprava zisku hrotu"
+			"desc": "Úprava zisku hrotu (meranie)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Citliv.",
+				"Hall"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Citlivosť Halloveho senzora pre detekciu spánku <Z=Zakázať,N=Nízka,S=Stredná,V=Vysoká>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Povoliť zámok",
+				"tlačidiel"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania <Z=Zakázať, B=Okrem boost, P=Plné zamknutie>"
 		}
 	}
 }
