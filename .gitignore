@@ -52,7 +52,6 @@ workspace/TS100A/.metadata/
 Translation Editor/.vscode/
 Translation Editor/__pycache__/
 *.pyc
-workspace/TS100/src/Translation.cpp
 *.lst
 *.mk
 *.list
@@ -67,7 +66,6 @@ codeship.aes
 .vscode/settings.json
 
 # Auto generated files
-workspace/TS100/Core/Src/Translation.cpp
 workspace/TS100/Core/Inc/unit.h
 # IDE configs
 .vs/*
