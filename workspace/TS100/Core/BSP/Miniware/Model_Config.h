@@ -29,7 +29,7 @@
 #define ACCEL_LIS
 #define POW_QC
 #define TEMP_TMP36
-#define ACCEL_ORI_FLIP
+#define LIS_ORI_FLIP
 #define OLED_FLIP
 #define BATTFILTERDEPTH 8
 #endif
@@ -41,7 +41,7 @@
 #define POW_QC
 #define TEMP_NTC
 #define I2C_SOFT
-#define ACCEL_ORI_FLIP
+#define LIS_ORI_FLIP
 #define OLED_FLIP
 #define BATTFILTERDEPTH 8
 #endif
