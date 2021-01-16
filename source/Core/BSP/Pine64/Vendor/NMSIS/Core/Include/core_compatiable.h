@@ -22,7 +22,7 @@
  * @brief    ARM compatiable function definitions header file
  */
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* ===== ARM Compatiable Functions ===== */
@@ -37,27 +37,27 @@
  * @{
  */
 /** \brief Instruction Synchronization Barrier, compatiable with ARM */
-#define __ISB()                             __RWMB()
+#define __ISB() __RWMB()
 
 /** \brief Data Synchronization Barrier, compatiable with ARM */
-#define __DSB()                             __RWMB()
+#define __DSB() __RWMB()
 
 /** \brief Data Memory Barrier, compatiable with ARM */
-#define __DMB()                             __RWMB()
+#define __DMB() __RWMB()
 
 /** \brief LDRT Unprivileged (8 bit), ARM Compatiable */
-#define __LDRBT(ptr)                        __LB((ptr))
+#define __LDRBT(ptr) __LB((ptr))
 /** \brief LDRT Unprivileged (16 bit), ARM Compatiable */
-#define __LDRHT(ptr)                        __LH((ptr))
+#define __LDRHT(ptr) __LH((ptr))
 /** \brief LDRT Unprivileged (32 bit), ARM Compatiable */
-#define __LDRT(ptr)                         __LW((ptr))
+#define __LDRT(ptr) __LW((ptr))
 
 /** \brief STRT Unprivileged (8 bit), ARM Compatiable */
-#define __STRBT(ptr)                        __SB((ptr))
+#define __STRBT(ptr) __SB((ptr))
 /** \brief STRT Unprivileged (16 bit), ARM Compatiable */
-#define __STRHT(ptr)                        __SH((ptr))
+#define __STRHT(ptr) __SH((ptr))
 /** \brief STRT Unprivileged (32 bit), ARM Compatiable */
-#define __STRT(ptr)                         __SW((ptr))
+#define __STRT(ptr) __SW((ptr))
 
 /* ===== Saturation Operations ===== */
 /**
@@ -68,20 +68,19 @@
  * \return             Saturated value
  */
 #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1)
-#define __SSAT(val, sat)          __RV_SCLIP32((val), (sat-1))
+#define __SSAT(val, sat) __RV_SCLIP32((val), (sat - 1))
 #else
-__STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
-{
-    if ((sat >= 1U) && (sat <= 32U)) {
-        const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
-        const int32_t min = -1 - max ;
-        if (val > max) {
-            return max;
-        } else if (val < min) {
-            return min;
-        }
+__STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat) {
+  if ((sat >= 1U) && (sat <= 32U)) {
+    const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
+    const int32_t min = -1 - max;
+    if (val > max) {
+      return max;
+    } else if (val < min) {
+      return min;
     }
-    return val;
+  }
+  return val;
 }
 #endif
 
@@ -93,19 +92,18 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
  * \return             Saturated value
  */
 #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1)
-#define __USAT(val, sat)        __RV_UCLIP32((val), (sat-1))
+#define __USAT(val, sat) __RV_UCLIP32((val), (sat - 1))
 #else
-__STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
-{
-    if (sat <= 31U) {
-        const uint32_t max = ((1U << sat) - 1U);
-        if (val > (int32_t)max) {
-            return max;
-        } else if (val < 0) {
-            return 0U;
-        }
+__STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat) {
+  if (sat <= 31U) {
+    const uint32_t max = ((1U << sat) - 1U);
+    if (val > (int32_t)max) {
+      return max;
+    } else if (val < 0) {
+      return 0U;
     }
-    return (uint32_t)val;
+  }
+  return (uint32_t)val;
 }
 #endif
 
@@ -117,15 +115,11 @@ __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
  * \param [in]    value  Value to reverse
  * \return               Reversed value
  */
-__STATIC_FORCEINLINE uint32_t __REV(uint32_t value)
-{
-    uint32_t result;
+__STATIC_FORCEINLINE uint32_t __REV(uint32_t value) {
+  uint32_t result;
 
-    result =  ((value & 0xff000000) >> 24)
-        | ((value & 0x00ff0000) >> 8 )
-        | ((value & 0x0000ff00) << 8 )
-        | ((value & 0x000000ff) << 24);
-    return result;
+  result = ((value & 0xff000000) >> 24) | ((value & 0x00ff0000) >> 8) | ((value & 0x0000ff00) << 8) | ((value & 0x000000ff) << 24);
+  return result;
 }
 
 /**
@@ -135,15 +129,11 @@ __STATIC_FORCEINLINE uint32_t __REV(uint32_t value)
  * \param [in]    value  Value to reverse
  * \return               Reversed value
  */
-__STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
-{
-    uint32_t result;
-    result =  ((value & 0xff000000) >> 8)
-        | ((value & 0x00ff00000) << 8 )
-        | ((value & 0x0000ff00) >> 8 )
-        | ((value & 0x000000ff) << 8) ;
+__STATIC_FORCEINLINE uint32_t __REV16(uint32_t value) {
+  uint32_t result;
+  result = ((value & 0xff000000) >> 8) | ((value & 0x00ff00000) << 8) | ((value & 0x0000ff00) >> 8) | ((value & 0x000000ff) << 8);
 
-    return result;
+  return result;
 }
 
 /**
@@ -154,11 +144,10 @@ __STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
  * \param [in]    value  Value to reverse
  * \return               Reversed value
  */
-__STATIC_FORCEINLINE int16_t __REVSH(int16_t value)
-{
-    int16_t result;
-    result = ((value & 0xff00) >> 8) | ((value & 0x00ff) << 8);
-    return result;
+__STATIC_FORCEINLINE int16_t __REVSH(int16_t value) {
+  int16_t result;
+  result = ((value & 0xff00) >> 8) | ((value & 0x00ff) << 8);
+  return result;
 }
 
 /**
@@ -169,13 +158,12 @@ __STATIC_FORCEINLINE int16_t __REVSH(int16_t value)
  * \param [in]    op2  Number of Bits to rotate(0-31)
  * \return               Rotated value
  */
-__STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
-{
-    op2 = op2 & 0x1F;
-    if (op2 == 0U) {
-      return op1;
-    }
-    return (op1 >> op2) | (op1 << (32U - op2));
+__STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2) {
+  op2 = op2 & 0x1F;
+  if (op2 == 0U) {
+    return op1;
+  }
+  return (op1 >> op2) | (op1 << (32U - op2));
 }
 
 /**
@@ -185,21 +173,20 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
  * \return               Reversed value
  */
 #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1)
-#define __RBIT(value)           __RV_BITREVI((value), 31)
+#define __RBIT(value) __RV_BITREVI((value), 31)
 #else
-__STATIC_FORCEINLINE uint32_t __RBIT(uint32_t value)
-{
-    uint32_t result;
-    uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
+__STATIC_FORCEINLINE uint32_t __RBIT(uint32_t value) {
+  uint32_t result;
+  uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
 
-    result = value; /* r will be reversed bits of v; first get LSB of v */
-    for (value >>= 1U; value != 0U; value >>= 1U) {
-        result <<= 1U;
-        result |= value & 1U;
-        s--;
-    }
-    result <<= s; /* shift when v's highest bits are zero */
-    return result;
+  result = value; /* r will be reversed bits of v; first get LSB of v */
+  for (value >>= 1U; value != 0U; value >>= 1U) {
+    result <<= 1U;
+    result |= value & 1U;
+    s--;
+  }
+  result <<= s; /* shift when v's highest bits are zero */
+  return result;
 }
 #endif /* defined(__DSP_PRESENT) && (__DSP_PRESENT == 1) */
 
@@ -210,17 +197,16 @@ __STATIC_FORCEINLINE uint32_t __RBIT(uint32_t value)
  * \return             number of leading zeros in value
  */
 #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1)
-#define __CLZ(data)         __RV_CLZ32(data)
+#define __CLZ(data) __RV_CLZ32(data)
 #else
-__STATIC_FORCEINLINE uint8_t __CLZ(uint32_t data)
-{
-    uint8_t ret = 0;
-    uint32_t temp = ~data;
-    while (temp & 0x80000000) {
-          temp <<= 1;
-          ret++;
-    }
-    return ret;
+__STATIC_FORCEINLINE uint8_t __CLZ(uint32_t data) {
+  uint8_t  ret  = 0;
+  uint32_t temp = ~data;
+  while (temp & 0x80000000) {
+    temp <<= 1;
+    ret++;
+  }
+  return ret;
 }
 #endif /* defined(__DSP_PRESENT) && (__DSP_PRESENT == 1) */
 

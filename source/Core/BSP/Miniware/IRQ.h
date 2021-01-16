@@ -9,10 +9,10 @@
 #define BSP_MINIWARE_IRQ_H_
 
 #include "BSP.h"
-#include "stm32f1xx_hal.h"
 #include "I2C_Wrapper.hpp"
 #include "Setup.h"
 #include "main.hpp"
+#include "stm32f1xx_hal.h"
 
 #ifdef __cplusplus
 extern "C" {

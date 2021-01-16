@@ -29,7 +29,7 @@
 #define EVENT_GROUPS_H
 
 #ifndef INC_FREERTOS_H
-	#error "include FreeRTOS.h" must appear in source files before "include event_groups.h"
+#error "include FreeRTOS.h" must appear in source files before "include event_groups.h"
 #endif
 
 /* FreeRTOS includes. */
@@ -66,8 +66,6 @@ extern "C" {
  * \defgroup EventGroup
  */
 
-
-
 /**
  * event_groups.h
  *
@@ -79,7 +77,7 @@ extern "C" {
  * \ingroup EventGroup
  */
 struct EventGroupDef_t;
-typedef struct EventGroupDef_t * EventGroupHandle_t;
+typedef struct EventGroupDef_t *EventGroupHandle_t;
 
 /*
  * The type that holds event bits always matches TickType_t - therefore the
@@ -123,28 +121,28 @@ typedef TickType_t EventBits_t;
  *
  * Example usage:
    <pre>
-	// Declare a variable to hold the created event group.
-	EventGroupHandle_t xCreatedEventGroup;
+        // Declare a variable to hold the created event group.
+        EventGroupHandle_t xCreatedEventGroup;
 
-	// Attempt to create the event group.
-	xCreatedEventGroup = xEventGroupCreate();
+        // Attempt to create the event group.
+        xCreatedEventGroup = xEventGroupCreate();
 
-	// Was the event group created successfully?
-	if( xCreatedEventGroup == NULL )
-	{
-		// The event group was not created because there was insufficient
-		// FreeRTOS heap available.
-	}
-	else
-	{
-		// The event group was created.
-	}
+        // Was the event group created successfully?
+        if( xCreatedEventGroup == NULL )
+        {
+                // The event group was not created because there was insufficient
+                // FreeRTOS heap available.
+        }
+        else
+        {
+                // The event group was created.
+        }
    </pre>
  * \defgroup xEventGroupCreate xEventGroupCreate
  * \ingroup EventGroup
  */
-#if( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
-	EventGroupHandle_t xEventGroupCreate( void ) PRIVILEGED_FUNCTION;
+#if (configSUPPORT_DYNAMIC_ALLOCATION == 1)
+EventGroupHandle_t xEventGroupCreate(void) PRIVILEGED_FUNCTION;
 #endif
 
 /**
@@ -182,32 +180,32 @@ typedef TickType_t EventBits_t;
  *
  * Example usage:
    <pre>
-	// StaticEventGroup_t is a publicly accessible structure that has the same
-	// size and alignment requirements as the real event group structure.  It is
-	// provided as a mechanism for applications to know the size of the event
-	// group (which is dependent on the architecture and configuration file
-	// settings) without breaking the strict data hiding policy by exposing the
-	// real event group internals.  This StaticEventGroup_t variable is passed
-	// into the xSemaphoreCreateEventGroupStatic() function and is used to store
-	// the event group's data structures
-	StaticEventGroup_t xEventGroupBuffer;
+        // StaticEventGroup_t is a publicly accessible structure that has the same
+        // size and alignment requirements as the real event group structure.  It is
+        // provided as a mechanism for applications to know the size of the event
+        // group (which is dependent on the architecture and configuration file
+        // settings) without breaking the strict data hiding policy by exposing the
+        // real event group internals.  This StaticEventGroup_t variable is passed
+        // into the xSemaphoreCreateEventGroupStatic() function and is used to store
+        // the event group's data structures
+        StaticEventGroup_t xEventGroupBuffer;
 
-	// Create the event group without dynamically allocating any memory.
-	xEventGroup = xEventGroupCreateStatic( &xEventGroupBuffer );
+        // Create the event group without dynamically allocating any memory.
+        xEventGroup = xEventGroupCreateStatic( &xEventGroupBuffer );
    </pre>
  */
-#if( configSUPPORT_STATIC_ALLOCATION == 1 )
-	EventGroupHandle_t xEventGroupCreateStatic( StaticEventGroup_t *pxEventGroupBuffer ) PRIVILEGED_FUNCTION;
+#if (configSUPPORT_STATIC_ALLOCATION == 1)
+EventGroupHandle_t xEventGroupCreateStatic(StaticEventGroup_t *pxEventGroupBuffer) PRIVILEGED_FUNCTION;
 #endif
 
 /**
  * event_groups.h
  *<pre>
-	EventBits_t xEventGroupWaitBits( 	EventGroupHandle_t xEventGroup,
-										const EventBits_t uxBitsToWaitFor,
-										const BaseType_t xClearOnExit,
-										const BaseType_t xWaitForAllBits,
-										const TickType_t xTicksToWait );
+        EventBits_t xEventGroupWaitBits( 	EventGroupHandle_t xEventGroup,
+                                                                                const EventBits_t uxBitsToWaitFor,
+                                                                                const BaseType_t xClearOnExit,
+                                                                                const BaseType_t xWaitForAllBits,
+                                                                                const TickType_t xTicksToWait );
  </pre>
  *
  * [Potentially] block to wait for one or more bits to be set within a
@@ -261,43 +259,44 @@ typedef TickType_t EventBits_t;
    EventBits_t uxBits;
    const TickType_t xTicksToWait = 100 / portTICK_PERIOD_MS;
 
-		// Wait a maximum of 100ms for either bit 0 or bit 4 to be set within
-		// the event group.  Clear the bits before exiting.
-		uxBits = xEventGroupWaitBits(
-					xEventGroup,	// The event group being tested.
-					BIT_0 | BIT_4,	// The bits within the event group to wait for.
-					pdTRUE,			// BIT_0 and BIT_4 should be cleared before returning.
-					pdFALSE,		// Don't wait for both bits, either bit will do.
-					xTicksToWait );	// Wait a maximum of 100ms for either bit to be set.
+                // Wait a maximum of 100ms for either bit 0 or bit 4 to be set within
+                // the event group.  Clear the bits before exiting.
+                uxBits = xEventGroupWaitBits(
+                                        xEventGroup,	// The event group being tested.
+                                        BIT_0 | BIT_4,	// The bits within the event group to wait for.
+                                        pdTRUE,			// BIT_0 and BIT_4 should be cleared before returning.
+                                        pdFALSE,		// Don't wait for both bits, either bit will do.
+                                        xTicksToWait );	// Wait a maximum of 100ms for either bit to be set.
 
-		if( ( uxBits & ( BIT_0 | BIT_4 ) ) == ( BIT_0 | BIT_4 ) )
-		{
-			// xEventGroupWaitBits() returned because both bits were set.
-		}
-		else if( ( uxBits & BIT_0 ) != 0 )
-		{
-			// xEventGroupWaitBits() returned because just BIT_0 was set.
-		}
-		else if( ( uxBits & BIT_4 ) != 0 )
-		{
-			// xEventGroupWaitBits() returned because just BIT_4 was set.
-		}
-		else
-		{
-			// xEventGroupWaitBits() returned because xTicksToWait ticks passed
-			// without either BIT_0 or BIT_4 becoming set.
-		}
+                if( ( uxBits & ( BIT_0 | BIT_4 ) ) == ( BIT_0 | BIT_4 ) )
+                {
+                        // xEventGroupWaitBits() returned because both bits were set.
+                }
+                else if( ( uxBits & BIT_0 ) != 0 )
+                {
+                        // xEventGroupWaitBits() returned because just BIT_0 was set.
+                }
+                else if( ( uxBits & BIT_4 ) != 0 )
+                {
+                        // xEventGroupWaitBits() returned because just BIT_4 was set.
+                }
+                else
+                {
+                        // xEventGroupWaitBits() returned because xTicksToWait ticks passed
+                        // without either BIT_0 or BIT_4 becoming set.
+                }
    }
    </pre>
  * \defgroup xEventGroupWaitBits xEventGroupWaitBits
  * \ingroup EventGroup
  */
-EventBits_t xEventGroupWaitBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToWaitFor, const BaseType_t xClearOnExit, const BaseType_t xWaitForAllBits, TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
+EventBits_t xEventGroupWaitBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToWaitFor, const BaseType_t xClearOnExit, const BaseType_t xWaitForAllBits,
+                                TickType_t xTicksToWait) PRIVILEGED_FUNCTION;
 
 /**
  * event_groups.h
  *<pre>
-	EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear );
+        EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear );
  </pre>
  *
  * Clear bits within an event group.  This function cannot be called from an
@@ -320,41 +319,41 @@ EventBits_t xEventGroupWaitBits( EventGroupHandle_t xEventGroup, const EventBits
    {
    EventBits_t uxBits;
 
-		// Clear bit 0 and bit 4 in xEventGroup.
-		uxBits = xEventGroupClearBits(
-								xEventGroup,	// The event group being updated.
-								BIT_0 | BIT_4 );// The bits being cleared.
+                // Clear bit 0 and bit 4 in xEventGroup.
+                uxBits = xEventGroupClearBits(
+                                                                xEventGroup,	// The event group being updated.
+                                                                BIT_0 | BIT_4 );// The bits being cleared.
 
-		if( ( uxBits & ( BIT_0 | BIT_4 ) ) == ( BIT_0 | BIT_4 ) )
-		{
-			// Both bit 0 and bit 4 were set before xEventGroupClearBits() was
-			// called.  Both will now be clear (not set).
-		}
-		else if( ( uxBits & BIT_0 ) != 0 )
-		{
-			// Bit 0 was set before xEventGroupClearBits() was called.  It will
-			// now be clear.
-		}
-		else if( ( uxBits & BIT_4 ) != 0 )
-		{
-			// Bit 4 was set before xEventGroupClearBits() was called.  It will
-			// now be clear.
-		}
-		else
-		{
-			// Neither bit 0 nor bit 4 were set in the first place.
-		}
+                if( ( uxBits & ( BIT_0 | BIT_4 ) ) == ( BIT_0 | BIT_4 ) )
+                {
+                        // Both bit 0 and bit 4 were set before xEventGroupClearBits() was
+                        // called.  Both will now be clear (not set).
+                }
+                else if( ( uxBits & BIT_0 ) != 0 )
+                {
+                        // Bit 0 was set before xEventGroupClearBits() was called.  It will
+                        // now be clear.
+                }
+                else if( ( uxBits & BIT_4 ) != 0 )
+                {
+                        // Bit 4 was set before xEventGroupClearBits() was called.  It will
+                        // now be clear.
+                }
+                else
+                {
+                        // Neither bit 0 nor bit 4 were set in the first place.
+                }
    }
    </pre>
  * \defgroup xEventGroupClearBits xEventGroupClearBits
  * \ingroup EventGroup
  */
-EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear ) PRIVILEGED_FUNCTION;
+EventBits_t xEventGroupClearBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear) PRIVILEGED_FUNCTION;
 
 /**
  * event_groups.h
  *<pre>
-	BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet );
+        BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet );
  </pre>
  *
  * A version of xEventGroupClearBits() that can be called from an interrupt.
@@ -390,30 +389,30 @@ EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBit
 
    void anInterruptHandler( void )
    {
-		// Clear bit 0 and bit 4 in xEventGroup.
-		xResult = xEventGroupClearBitsFromISR(
-							xEventGroup,	 // The event group being updated.
-							BIT_0 | BIT_4 ); // The bits being set.
+                // Clear bit 0 and bit 4 in xEventGroup.
+                xResult = xEventGroupClearBitsFromISR(
+                                                        xEventGroup,	 // The event group being updated.
+                                                        BIT_0 | BIT_4 ); // The bits being set.
 
-		if( xResult == pdPASS )
-		{
-			// The message was posted successfully.
-		}
+                if( xResult == pdPASS )
+                {
+                        // The message was posted successfully.
+                }
   }
    </pre>
  * \defgroup xEventGroupClearBitsFromISR xEventGroupClearBitsFromISR
  * \ingroup EventGroup
  */
-#if( configUSE_TRACE_FACILITY == 1 )
-	BaseType_t xEventGroupClearBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear ) PRIVILEGED_FUNCTION;
+#if (configUSE_TRACE_FACILITY == 1)
+BaseType_t xEventGroupClearBitsFromISR(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToClear) PRIVILEGED_FUNCTION;
 #else
-	#define xEventGroupClearBitsFromISR( xEventGroup, uxBitsToClear ) xTimerPendFunctionCallFromISR( vEventGroupClearBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToClear, NULL )
+#define xEventGroupClearBitsFromISR(xEventGroup, uxBitsToClear) xTimerPendFunctionCallFromISR(vEventGroupClearBitsCallback, (void *)xEventGroup, (uint32_t)uxBitsToClear, NULL)
 #endif
 
 /**
  * event_groups.h
  *<pre>
-	EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet );
+        EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet );
  </pre>
  *
  * Set bits within an event group.
@@ -448,46 +447,46 @@ EventBits_t xEventGroupClearBits( EventGroupHandle_t xEventGroup, const EventBit
    {
    EventBits_t uxBits;
 
-		// Set bit 0 and bit 4 in xEventGroup.
-		uxBits = xEventGroupSetBits(
-							xEventGroup,	// The event group being updated.
-							BIT_0 | BIT_4 );// The bits being set.
+                // Set bit 0 and bit 4 in xEventGroup.
+                uxBits = xEventGroupSetBits(
+                                                        xEventGroup,	// The event group being updated.
+                                                        BIT_0 | BIT_4 );// The bits being set.
 
-		if( ( uxBits & ( BIT_0 | BIT_4 ) ) == ( BIT_0 | BIT_4 ) )
-		{
-			// Both bit 0 and bit 4 remained set when the function returned.
-		}
-		else if( ( uxBits & BIT_0 ) != 0 )
-		{
-			// Bit 0 remained set when the function returned, but bit 4 was
-			// cleared.  It might be that bit 4 was cleared automatically as a
-			// task that was waiting for bit 4 was removed from the Blocked
-			// state.
-		}
-		else if( ( uxBits & BIT_4 ) != 0 )
-		{
-			// Bit 4 remained set when the function returned, but bit 0 was
-			// cleared.  It might be that bit 0 was cleared automatically as a
-			// task that was waiting for bit 0 was removed from the Blocked
-			// state.
-		}
-		else
-		{
-			// Neither bit 0 nor bit 4 remained set.  It might be that a task
-			// was waiting for both of the bits to be set, and the bits were
-			// cleared as the task left the Blocked state.
-		}
+                if( ( uxBits & ( BIT_0 | BIT_4 ) ) == ( BIT_0 | BIT_4 ) )
+                {
+                        // Both bit 0 and bit 4 remained set when the function returned.
+                }
+                else if( ( uxBits & BIT_0 ) != 0 )
+                {
+                        // Bit 0 remained set when the function returned, but bit 4 was
+                        // cleared.  It might be that bit 4 was cleared automatically as a
+                        // task that was waiting for bit 4 was removed from the Blocked
+                        // state.
+                }
+                else if( ( uxBits & BIT_4 ) != 0 )
+                {
+                        // Bit 4 remained set when the function returned, but bit 0 was
+                        // cleared.  It might be that bit 0 was cleared automatically as a
+                        // task that was waiting for bit 0 was removed from the Blocked
+                        // state.
+                }
+                else
+                {
+                        // Neither bit 0 nor bit 4 remained set.  It might be that a task
+                        // was waiting for both of the bits to be set, and the bits were
+                        // cleared as the task left the Blocked state.
+                }
    }
    </pre>
  * \defgroup xEventGroupSetBits xEventGroupSetBits
  * \ingroup EventGroup
  */
-EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet ) PRIVILEGED_FUNCTION;
+EventBits_t xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet) PRIVILEGED_FUNCTION;
 
 /**
  * event_groups.h
  *<pre>
-	BaseType_t xEventGroupSetBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, BaseType_t *pxHigherPriorityTaskWoken );
+        BaseType_t xEventGroupSetBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, BaseType_t *pxHigherPriorityTaskWoken );
  </pre>
  *
  * A version of xEventGroupSetBits() that can be called from an interrupt.
@@ -533,42 +532,43 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_
    {
    BaseType_t xHigherPriorityTaskWoken, xResult;
 
-		// xHigherPriorityTaskWoken must be initialised to pdFALSE.
-		xHigherPriorityTaskWoken = pdFALSE;
+                // xHigherPriorityTaskWoken must be initialised to pdFALSE.
+                xHigherPriorityTaskWoken = pdFALSE;
 
-		// Set bit 0 and bit 4 in xEventGroup.
-		xResult = xEventGroupSetBitsFromISR(
-							xEventGroup,	// The event group being updated.
-							BIT_0 | BIT_4   // The bits being set.
-							&xHigherPriorityTaskWoken );
+                // Set bit 0 and bit 4 in xEventGroup.
+                xResult = xEventGroupSetBitsFromISR(
+                                                        xEventGroup,	// The event group being updated.
+                                                        BIT_0 | BIT_4   // The bits being set.
+                                                        &xHigherPriorityTaskWoken );
 
-		// Was the message posted successfully?
-		if( xResult == pdPASS )
-		{
-			// If xHigherPriorityTaskWoken is now set to pdTRUE then a context
-			// switch should be requested.  The macro used is port specific and
-			// will be either portYIELD_FROM_ISR() or portEND_SWITCHING_ISR() -
-			// refer to the documentation page for the port being used.
-			portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
-		}
+                // Was the message posted successfully?
+                if( xResult == pdPASS )
+                {
+                        // If xHigherPriorityTaskWoken is now set to pdTRUE then a context
+                        // switch should be requested.  The macro used is port specific and
+                        // will be either portYIELD_FROM_ISR() or portEND_SWITCHING_ISR() -
+                        // refer to the documentation page for the port being used.
+                        portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+                }
   }
    </pre>
  * \defgroup xEventGroupSetBitsFromISR xEventGroupSetBitsFromISR
  * \ingroup EventGroup
  */
-#if( configUSE_TRACE_FACILITY == 1 )
-	BaseType_t xEventGroupSetBitsFromISR( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, BaseType_t *pxHigherPriorityTaskWoken ) PRIVILEGED_FUNCTION;
+#if (configUSE_TRACE_FACILITY == 1)
+BaseType_t xEventGroupSetBitsFromISR(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, BaseType_t *pxHigherPriorityTaskWoken) PRIVILEGED_FUNCTION;
 #else
-	#define xEventGroupSetBitsFromISR( xEventGroup, uxBitsToSet, pxHigherPriorityTaskWoken ) xTimerPendFunctionCallFromISR( vEventGroupSetBitsCallback, ( void * ) xEventGroup, ( uint32_t ) uxBitsToSet, pxHigherPriorityTaskWoken )
+#define xEventGroupSetBitsFromISR(xEventGroup, uxBitsToSet, pxHigherPriorityTaskWoken) \
+  xTimerPendFunctionCallFromISR(vEventGroupSetBitsCallback, (void *)xEventGroup, (uint32_t)uxBitsToSet, pxHigherPriorityTaskWoken)
 #endif
 
 /**
  * event_groups.h
  *<pre>
-	EventBits_t xEventGroupSync(	EventGroupHandle_t xEventGroup,
-									const EventBits_t uxBitsToSet,
-									const EventBits_t uxBitsToWaitFor,
-									TickType_t xTicksToWait );
+        EventBits_t xEventGroupSync(	EventGroupHandle_t xEventGroup,
+                                                                        const EventBits_t uxBitsToSet,
+                                                                        const EventBits_t uxBitsToWaitFor,
+                                                                        TickType_t xTicksToWait );
  </pre>
  *
  * Atomically set bits within an event group, then wait for a combination of
@@ -625,74 +625,73 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup, const EventBits_
  EventBits_t uxReturn;
  TickType_t xTicksToWait = 100 / portTICK_PERIOD_MS;
 
-	 for( ;; )
-	 {
-		// Perform task functionality here.
+         for( ;; )
+         {
+                // Perform task functionality here.
 
-		// Set bit 0 in the event flag to note this task has reached the
-		// sync point.  The other two tasks will set the other two bits defined
-		// by ALL_SYNC_BITS.  All three tasks have reached the synchronisation
-		// point when all the ALL_SYNC_BITS are set.  Wait a maximum of 100ms
-		// for this to happen.
-		uxReturn = xEventGroupSync( xEventBits, TASK_0_BIT, ALL_SYNC_BITS, xTicksToWait );
+                // Set bit 0 in the event flag to note this task has reached the
+                // sync point.  The other two tasks will set the other two bits defined
+                // by ALL_SYNC_BITS.  All three tasks have reached the synchronisation
+                // point when all the ALL_SYNC_BITS are set.  Wait a maximum of 100ms
+                // for this to happen.
+                uxReturn = xEventGroupSync( xEventBits, TASK_0_BIT, ALL_SYNC_BITS, xTicksToWait );
 
-		if( ( uxReturn & ALL_SYNC_BITS ) == ALL_SYNC_BITS )
-		{
-			// All three tasks reached the synchronisation point before the call
-			// to xEventGroupSync() timed out.
-		}
-	}
+                if( ( uxReturn & ALL_SYNC_BITS ) == ALL_SYNC_BITS )
+                {
+                        // All three tasks reached the synchronisation point before the call
+                        // to xEventGroupSync() timed out.
+                }
+        }
  }
 
  void vTask1( void *pvParameters )
  {
-	 for( ;; )
-	 {
-		// Perform task functionality here.
+         for( ;; )
+         {
+                // Perform task functionality here.
 
-		// Set bit 1 in the event flag to note this task has reached the
-		// synchronisation point.  The other two tasks will set the other two
-		// bits defined by ALL_SYNC_BITS.  All three tasks have reached the
-		// synchronisation point when all the ALL_SYNC_BITS are set.  Wait
-		// indefinitely for this to happen.
-		xEventGroupSync( xEventBits, TASK_1_BIT, ALL_SYNC_BITS, portMAX_DELAY );
+                // Set bit 1 in the event flag to note this task has reached the
+                // synchronisation point.  The other two tasks will set the other two
+                // bits defined by ALL_SYNC_BITS.  All three tasks have reached the
+                // synchronisation point when all the ALL_SYNC_BITS are set.  Wait
+                // indefinitely for this to happen.
+                xEventGroupSync( xEventBits, TASK_1_BIT, ALL_SYNC_BITS, portMAX_DELAY );
 
-		// xEventGroupSync() was called with an indefinite block time, so
-		// this task will only reach here if the syncrhonisation was made by all
-		// three tasks, so there is no need to test the return value.
-	 }
+                // xEventGroupSync() was called with an indefinite block time, so
+                // this task will only reach here if the syncrhonisation was made by all
+                // three tasks, so there is no need to test the return value.
+         }
  }
 
  void vTask2( void *pvParameters )
  {
-	 for( ;; )
-	 {
-		// Perform task functionality here.
+         for( ;; )
+         {
+                // Perform task functionality here.
 
-		// Set bit 2 in the event flag to note this task has reached the
-		// synchronisation point.  The other two tasks will set the other two
-		// bits defined by ALL_SYNC_BITS.  All three tasks have reached the
-		// synchronisation point when all the ALL_SYNC_BITS are set.  Wait
-		// indefinitely for this to happen.
-		xEventGroupSync( xEventBits, TASK_2_BIT, ALL_SYNC_BITS, portMAX_DELAY );
+                // Set bit 2 in the event flag to note this task has reached the
+                // synchronisation point.  The other two tasks will set the other two
+                // bits defined by ALL_SYNC_BITS.  All three tasks have reached the
+                // synchronisation point when all the ALL_SYNC_BITS are set.  Wait
+                // indefinitely for this to happen.
+                xEventGroupSync( xEventBits, TASK_2_BIT, ALL_SYNC_BITS, portMAX_DELAY );
 
-		// xEventGroupSync() was called with an indefinite block time, so
-		// this task will only reach here if the syncrhonisation was made by all
-		// three tasks, so there is no need to test the return value.
-	}
+                // xEventGroupSync() was called with an indefinite block time, so
+                // this task will only reach here if the syncrhonisation was made by all
+                // three tasks, so there is no need to test the return value.
+        }
  }
 
  </pre>
  * \defgroup xEventGroupSync xEventGroupSync
  * \ingroup EventGroup
  */
-EventBits_t xEventGroupSync( EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, const EventBits_t uxBitsToWaitFor, TickType_t xTicksToWait ) PRIVILEGED_FUNCTION;
-
+EventBits_t xEventGroupSync(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet, const EventBits_t uxBitsToWaitFor, TickType_t xTicksToWait) PRIVILEGED_FUNCTION;
 
 /**
  * event_groups.h
  *<pre>
-	EventBits_t xEventGroupGetBits( EventGroupHandle_t xEventGroup );
+        EventBits_t xEventGroupGetBits( EventGroupHandle_t xEventGroup );
  </pre>
  *
  * Returns the current value of the bits in an event group.  This function
@@ -705,12 +704,12 @@ EventBits_t xEventGroupSync( EventGroupHandle_t xEventGroup, const EventBits_t u
  * \defgroup xEventGroupGetBits xEventGroupGetBits
  * \ingroup EventGroup
  */
-#define xEventGroupGetBits( xEventGroup ) xEventGroupClearBits( xEventGroup, 0 )
+#define xEventGroupGetBits(xEventGroup) xEventGroupClearBits(xEventGroup, 0)
 
 /**
  * event_groups.h
  *<pre>
-	EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup );
+        EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup );
  </pre>
  *
  * A version of xEventGroupGetBits() that can be called from an ISR.
@@ -722,12 +721,12 @@ EventBits_t xEventGroupSync( EventGroupHandle_t xEventGroup, const EventBits_t u
  * \defgroup xEventGroupGetBitsFromISR xEventGroupGetBitsFromISR
  * \ingroup EventGroup
  */
-EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup ) PRIVILEGED_FUNCTION;
+EventBits_t xEventGroupGetBitsFromISR(EventGroupHandle_t xEventGroup) PRIVILEGED_FUNCTION;
 
 /**
  * event_groups.h
  *<pre>
-	void xEventGroupDelete( EventGroupHandle_t xEventGroup );
+        void xEventGroupDelete( EventGroupHandle_t xEventGroup );
  </pre>
  *
  * Delete an event group that was previously created by a call to
@@ -736,16 +735,15 @@ EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup ) PRIVILEG
  *
  * @param xEventGroup The event group being deleted.
  */
-void vEventGroupDelete( EventGroupHandle_t xEventGroup ) PRIVILEGED_FUNCTION;
+void vEventGroupDelete(EventGroupHandle_t xEventGroup) PRIVILEGED_FUNCTION;
 
 /* For internal use only. */
-void vEventGroupSetBitsCallback( void *pvEventGroup, const uint32_t ulBitsToSet ) PRIVILEGED_FUNCTION;
-void vEventGroupClearBitsCallback( void *pvEventGroup, const uint32_t ulBitsToClear ) PRIVILEGED_FUNCTION;
-
+void vEventGroupSetBitsCallback(void *pvEventGroup, const uint32_t ulBitsToSet) PRIVILEGED_FUNCTION;
+void vEventGroupClearBitsCallback(void *pvEventGroup, const uint32_t ulBitsToClear) PRIVILEGED_FUNCTION;
 
 #if (configUSE_TRACE_FACILITY == 1)
-	UBaseType_t uxEventGroupGetNumber( void* xEventGroup ) PRIVILEGED_FUNCTION;
-	void vEventGroupSetNumber( void* xEventGroup, UBaseType_t uxEventGroupNumber ) PRIVILEGED_FUNCTION;
+UBaseType_t uxEventGroupGetNumber(void *xEventGroup) PRIVILEGED_FUNCTION;
+void        vEventGroupSetNumber(void *xEventGroup, UBaseType_t uxEventGroupNumber) PRIVILEGED_FUNCTION;
 #endif
 
 #ifdef __cplusplus
@@ -753,5 +751,3 @@ void vEventGroupClearBitsCallback( void *pvEventGroup, const uint32_t ulBitsToCl
 #endif
 
 #endif /* EVENT_GROUPS_H */
-
-

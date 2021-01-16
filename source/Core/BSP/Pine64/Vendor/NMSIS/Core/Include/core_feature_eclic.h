@@ -33,7 +33,7 @@
  *
  */
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #if defined(__ECLIC_PRESENT) && (__ECLIC_PRESENT == 1)
@@ -48,86 +48,85 @@
 /**
  * \brief  Union type to access CLICFG configure register.
  */
-typedef union
-{
-    struct {
-        uint8_t _reserved0:1;                   /*!< bit:     0   Overflow condition code flag */
-        uint8_t nlbits:4;                       /*!< bit:     29  Carry condition code flag */
-        uint8_t _reserved1:2;                   /*!< bit:     30  Zero condition code flag */
-        uint8_t _reserved2:1;                   /*!< bit:     31  Negative condition code flag */
-    } b;                                        /*!< Structure used for bit  access */
-    uint8_t w;                                  /*!< Type      used for byte access */
+typedef union {
+  struct {
+    uint8_t _reserved0 : 1; /*!< bit:     0   Overflow condition code flag */
+    uint8_t nlbits : 4;     /*!< bit:     29  Carry condition code flag */
+    uint8_t _reserved1 : 2; /*!< bit:     30  Zero condition code flag */
+    uint8_t _reserved2 : 1; /*!< bit:     31  Negative condition code flag */
+  } b;                      /*!< Structure used for bit  access */
+  uint8_t w;                /*!< Type      used for byte access */
 } CLICCFG_Type;
 
 /**
  * \brief  Union type to access CLICINFO information register.
  */
 typedef union {
-    struct {
-        uint32_t numint:13;                     /*!< bit:  0..12   number of maximum interrupt inputs supported */
-        uint32_t version:8;                     /*!< bit:  13..20  20:17 for architecture version,16:13 for implementation version */
-        uint32_t intctlbits:4;                  /*!< bit:  21..24  specifies how many hardware bits are actually implemented in the clicintctl registers */
-        uint32_t _reserved0:8;                  /*!< bit:  25..31  Reserved */
-    } b;                                        /*!< Structure used for bit  access */
-    uint32_t w;                                 /*!< Type      used for word access */
+  struct {
+    uint32_t numint : 13;    /*!< bit:  0..12   number of maximum interrupt inputs supported */
+    uint32_t version : 8;    /*!< bit:  13..20  20:17 for architecture version,16:13 for implementation version */
+    uint32_t intctlbits : 4; /*!< bit:  21..24  specifies how many hardware bits are actually implemented in the clicintctl registers */
+    uint32_t _reserved0 : 8; /*!< bit:  25..31  Reserved */
+  } b;                       /*!< Structure used for bit  access */
+  uint32_t w;                /*!< Type      used for word access */
 } CLICINFO_Type;
 
 /**
  * \brief Access to the structure of a vector interrupt controller.
  */
 typedef struct {
-    __IOM uint8_t  INTIP;                       /*!< Offset: 0x000 (R/W)  Interrupt set pending register */
-    __IOM uint8_t  INTIE;                       /*!< Offset: 0x001 (R/W)  Interrupt set enable register */
-    __IOM uint8_t  INTATTR;                     /*!< Offset: 0x002 (R/W)  Interrupt set attributes register */
-    __IOM uint8_t  INTCTRL;                     /*!< Offset: 0x003 (R/W)  Interrupt configure register */
+  __IOM uint8_t INTIP;   /*!< Offset: 0x000 (R/W)  Interrupt set pending register */
+  __IOM uint8_t INTIE;   /*!< Offset: 0x001 (R/W)  Interrupt set enable register */
+  __IOM uint8_t INTATTR; /*!< Offset: 0x002 (R/W)  Interrupt set attributes register */
+  __IOM uint8_t INTCTRL; /*!< Offset: 0x003 (R/W)  Interrupt configure register */
 } CLIC_CTRL_Type;
 
 typedef struct {
-    __IOM uint8_t   CFG;                        /*!< Offset: 0x000 (R/W)  CLIC configuration register */
-    uint8_t RESERVED0[3];
-    __IM uint32_t  INFO;                        /*!< Offset: 0x004 (R/ )  CLIC information register */
-    uint8_t RESERVED1[3];
-    __IOM uint8_t  MTH;                         /*!< Offset: 0x00B (R/W)  CLIC machine mode threshold register */
-    uint32_t RESERVED2[0x3FD];
-    CLIC_CTRL_Type CTRL[4096];                  /*!< Offset: 0x1000 (R/W) CLIC register structure for INTIP, INTIE, INTATTR, INTCTL */
+  __IOM uint8_t  CFG; /*!< Offset: 0x000 (R/W)  CLIC configuration register */
+  uint8_t        RESERVED0[3];
+  __IM uint32_t  INFO; /*!< Offset: 0x004 (R/ )  CLIC information register */
+  uint8_t        RESERVED1[3];
+  __IOM uint8_t  MTH; /*!< Offset: 0x00B (R/W)  CLIC machine mode threshold register */
+  uint32_t       RESERVED2[0x3FD];
+  CLIC_CTRL_Type CTRL[4096]; /*!< Offset: 0x1000 (R/W) CLIC register structure for INTIP, INTIE, INTATTR, INTCTL */
 } CLIC_Type;
 
-#define CLIC_CLICCFG_NLBIT_Pos                 1U                                       /*!< CLIC CLICCFG: NLBIT Position */
-#define CLIC_CLICCFG_NLBIT_Msk                 (0xFUL << CLIC_CLICCFG_NLBIT_Pos)        /*!< CLIC CLICCFG: NLBIT Mask */
+#define CLIC_CLICCFG_NLBIT_Pos 1U                                /*!< CLIC CLICCFG: NLBIT Position */
+#define CLIC_CLICCFG_NLBIT_Msk (0xFUL << CLIC_CLICCFG_NLBIT_Pos) /*!< CLIC CLICCFG: NLBIT Mask */
 
-#define CLIC_CLICINFO_CTLBIT_Pos                21U                                     /*!< CLIC INTINFO: __ECLIC_GetInfoCtlbits() Position */
-#define CLIC_CLICINFO_CTLBIT_Msk                (0xFUL << CLIC_CLICINFO_CTLBIT_Pos)     /*!< CLIC INTINFO: __ECLIC_GetInfoCtlbits() Mask */
+#define CLIC_CLICINFO_CTLBIT_Pos 21U                                 /*!< CLIC INTINFO: __ECLIC_GetInfoCtlbits() Position */
+#define CLIC_CLICINFO_CTLBIT_Msk (0xFUL << CLIC_CLICINFO_CTLBIT_Pos) /*!< CLIC INTINFO: __ECLIC_GetInfoCtlbits() Mask */
 
-#define CLIC_CLICINFO_VER_Pos                  13U                                      /*!< CLIC CLICINFO: VERSION Position */
-#define CLIC_CLICINFO_VER_Msk                  (0xFFUL << CLIC_CLICCFG_NLBIT_Pos)       /*!< CLIC CLICINFO: VERSION Mask */
+#define CLIC_CLICINFO_VER_Pos 13U                                /*!< CLIC CLICINFO: VERSION Position */
+#define CLIC_CLICINFO_VER_Msk (0xFFUL << CLIC_CLICCFG_NLBIT_Pos) /*!< CLIC CLICINFO: VERSION Mask */
 
-#define CLIC_CLICINFO_NUM_Pos                  0U                                       /*!< CLIC CLICINFO: NUM Position */
-#define CLIC_CLICINFO_NUM_Msk                  (0xFFFUL << CLIC_CLICINFO_NUM_Pos)       /*!< CLIC CLICINFO: NUM Mask */
+#define CLIC_CLICINFO_NUM_Pos 0U                                 /*!< CLIC CLICINFO: NUM Position */
+#define CLIC_CLICINFO_NUM_Msk (0xFFFUL << CLIC_CLICINFO_NUM_Pos) /*!< CLIC CLICINFO: NUM Mask */
 
-#define CLIC_INTIP_IP_Pos                      0U                                       /*!< CLIC INTIP: IP Position */
-#define CLIC_INTIP_IP_Msk                      (0x1UL << CLIC_INTIP_IP_Pos)             /*!< CLIC INTIP: IP Mask */
+#define CLIC_INTIP_IP_Pos 0U                           /*!< CLIC INTIP: IP Position */
+#define CLIC_INTIP_IP_Msk (0x1UL << CLIC_INTIP_IP_Pos) /*!< CLIC INTIP: IP Mask */
 
-#define CLIC_INTIE_IE_Pos                      0U                                       /*!< CLIC INTIE: IE Position */
-#define CLIC_INTIE_IE_Msk                      (0x1UL << CLIC_INTIE_IE_Pos)             /*!< CLIC INTIE: IE Mask */
+#define CLIC_INTIE_IE_Pos 0U                           /*!< CLIC INTIE: IE Position */
+#define CLIC_INTIE_IE_Msk (0x1UL << CLIC_INTIE_IE_Pos) /*!< CLIC INTIE: IE Mask */
 
-#define CLIC_INTATTR_TRIG_Pos                  1U                                       /*!< CLIC INTATTR: TRIG Position */
-#define CLIC_INTATTR_TRIG_Msk                  (0x3UL << CLIC_INTATTR_TRIG_Pos)         /*!< CLIC INTATTR: TRIG Mask */
+#define CLIC_INTATTR_TRIG_Pos 1U                               /*!< CLIC INTATTR: TRIG Position */
+#define CLIC_INTATTR_TRIG_Msk (0x3UL << CLIC_INTATTR_TRIG_Pos) /*!< CLIC INTATTR: TRIG Mask */
 
-#define CLIC_INTATTR_SHV_Pos                   0U                                       /*!< CLIC INTATTR: SHV Position */
-#define CLIC_INTATTR_SHV_Msk                   (0x1UL << CLIC_INTATTR_SHV_Pos)          /*!< CLIC INTATTR: SHV Mask */
+#define CLIC_INTATTR_SHV_Pos 0U                              /*!< CLIC INTATTR: SHV Position */
+#define CLIC_INTATTR_SHV_Msk (0x1UL << CLIC_INTATTR_SHV_Pos) /*!< CLIC INTATTR: SHV Mask */
 
-#define ECLIC_MAX_NLBITS                       8U                                       /*!< Max nlbit of the CLICINTCTLBITS */
-#define ECLIC_MODE_MTVEC_Msk                   3U                                       /*!< ECLIC Mode mask for MTVT CSR Register */
+#define ECLIC_MAX_NLBITS     8U /*!< Max nlbit of the CLICINTCTLBITS */
+#define ECLIC_MODE_MTVEC_Msk 3U /*!< ECLIC Mode mask for MTVT CSR Register */
 
-#define ECLIC_NON_VECTOR_INTERRUPT             0x0                                      /*!< Non-Vector Interrupt Mode of ECLIC */
-#define ECLIC_VECTOR_INTERRUPT                 0x1                                      /*!< Vector Interrupt Mode of ECLIC */
+#define ECLIC_NON_VECTOR_INTERRUPT 0x0 /*!< Non-Vector Interrupt Mode of ECLIC */
+#define ECLIC_VECTOR_INTERRUPT     0x1 /*!< Vector Interrupt Mode of ECLIC */
 
 /**\brief ECLIC Trigger Enum for different Trigger Type */
 typedef enum ECLIC_TRIGGER {
-    ECLIC_LEVEL_TRIGGER = 0x0,          /*!< Level Triggerred, trig[0] = 0 */
-    ECLIC_POSTIVE_EDGE_TRIGGER = 0x1,   /*!< Postive/Rising Edge Triggered, trig[1] = 1, trig[0] = 0 */
-    ECLIC_NEGTIVE_EDGE_TRIGGER = 0x3,   /*!< Negtive/Falling Edge Triggered, trig[1] = 1, trig[0] = 0 */
-    ECLIC_MAX_TRIGGER = 0x3             /*!< MAX Supported Trigger Mode */
+  ECLIC_LEVEL_TRIGGER        = 0x0, /*!< Level Triggerred, trig[0] = 0 */
+  ECLIC_POSTIVE_EDGE_TRIGGER = 0x1, /*!< Postive/Rising Edge Triggered, trig[1] = 1, trig[0] = 0 */
+  ECLIC_NEGTIVE_EDGE_TRIGGER = 0x3, /*!< Negtive/Falling Edge Triggered, trig[1] = 1, trig[0] = 0 */
+  ECLIC_MAX_TRIGGER          = 0x3  /*!< MAX Supported Trigger Mode */
 } ECLIC_TRIGGER_Type;
 
 #ifndef __ECLIC_BASEADDR
@@ -137,12 +136,12 @@ typedef enum ECLIC_TRIGGER {
 
 #ifndef __ECLIC_INTCTLBITS
 /* Define __ECLIC_INTCTLBITS to get via ECLIC->INFO if not defined */
-#define __ECLIC_INTCTLBITS                  (__ECLIC_GetInfoCtlbits())
+#define __ECLIC_INTCTLBITS (__ECLIC_GetInfoCtlbits())
 #endif
 
 /* ECLIC Memory mapping of Device */
-#define ECLIC_BASE                          __ECLIC_BASEADDR                            /*!< ECLIC Base Address */
-#define ECLIC                               ((CLIC_Type *) ECLIC_BASE)                  /*!< CLIC configuration struct */
+#define ECLIC_BASE __ECLIC_BASEADDR          /*!< ECLIC Base Address */
+#define ECLIC      ((CLIC_Type *)ECLIC_BASE) /*!< CLIC configuration struct */
 
 /** @} */ /* end of group NMSIS_Core_ECLIC_Registers */
 
@@ -170,80 +169,80 @@ typedef enum ECLIC_TRIGGER {
  */
 #if defined(__ONLY_FOR_DOXYGEN_DOCUMENT_GENERATION__)
 typedef enum IRQn {
-    /* ========= Nuclei N/NX Core Specific Interrupt Numbers  =========== */
-    /* Core Internal Interrupt IRQn definitions */
-    Reserved0_IRQn            =   0,              /*!<  Internal reserved */
-    Reserved1_IRQn            =   1,              /*!<  Internal reserved */
-    Reserved2_IRQn            =   2,              /*!<  Internal reserved */
-    SysTimerSW_IRQn           =   3,              /*!<  System Timer SW interrupt */
-    Reserved3_IRQn            =   4,              /*!<  Internal reserved */
-    Reserved4_IRQn            =   5,              /*!<  Internal reserved */
-    Reserved5_IRQn            =   6,              /*!<  Internal reserved */
-    SysTimer_IRQn             =   7,              /*!<  System Timer Interrupt */
-    Reserved6_IRQn            =   8,              /*!<  Internal reserved */
-    Reserved7_IRQn            =   9,              /*!<  Internal reserved */
-    Reserved8_IRQn            =  10,              /*!<  Internal reserved */
-    Reserved9_IRQn            =  11,              /*!<  Internal reserved */
-    Reserved10_IRQn           =  12,              /*!<  Internal reserved */
-    Reserved11_IRQn           =  13,              /*!<  Internal reserved */
-    Reserved12_IRQn           =  14,              /*!<  Internal reserved */
-    Reserved13_IRQn           =  15,              /*!<  Internal reserved */
-    Reserved14_IRQn           =  16,              /*!<  Internal reserved */
-    Reserved15_IRQn           =  17,              /*!<  Internal reserved */
-    Reserved16_IRQn           =  18,              /*!<  Internal reserved */
+  /* ========= Nuclei N/NX Core Specific Interrupt Numbers  =========== */
+  /* Core Internal Interrupt IRQn definitions */
+  Reserved0_IRQn  = 0,  /*!<  Internal reserved */
+  Reserved1_IRQn  = 1,  /*!<  Internal reserved */
+  Reserved2_IRQn  = 2,  /*!<  Internal reserved */
+  SysTimerSW_IRQn = 3,  /*!<  System Timer SW interrupt */
+  Reserved3_IRQn  = 4,  /*!<  Internal reserved */
+  Reserved4_IRQn  = 5,  /*!<  Internal reserved */
+  Reserved5_IRQn  = 6,  /*!<  Internal reserved */
+  SysTimer_IRQn   = 7,  /*!<  System Timer Interrupt */
+  Reserved6_IRQn  = 8,  /*!<  Internal reserved */
+  Reserved7_IRQn  = 9,  /*!<  Internal reserved */
+  Reserved8_IRQn  = 10, /*!<  Internal reserved */
+  Reserved9_IRQn  = 11, /*!<  Internal reserved */
+  Reserved10_IRQn = 12, /*!<  Internal reserved */
+  Reserved11_IRQn = 13, /*!<  Internal reserved */
+  Reserved12_IRQn = 14, /*!<  Internal reserved */
+  Reserved13_IRQn = 15, /*!<  Internal reserved */
+  Reserved14_IRQn = 16, /*!<  Internal reserved */
+  Reserved15_IRQn = 17, /*!<  Internal reserved */
+  Reserved16_IRQn = 18, /*!<  Internal reserved */
 
-    /* ========= Device Specific Interrupt Numbers  =================== */
-    /* ToDo: add here your device specific external interrupt numbers.
-     * 19~max(NUM_INTERRUPT, 1023) is reserved number for user.
-     * Maxmum interrupt supported could get from clicinfo.NUM_INTERRUPT.
-     * According the interrupt handlers defined in startup_Device.S
-     * eg.: Interrupt for Timer#1       eclic_tim1_handler   ->   TIM1_IRQn */
-    FirstDeviceSpecificInterrupt_IRQn    = 19,    /*!< First Device Specific Interrupt */
-    SOC_INT_MAX,                                  /*!< Number of total interrupts */
+  /* ========= Device Specific Interrupt Numbers  =================== */
+  /* ToDo: add here your device specific external interrupt numbers.
+   * 19~max(NUM_INTERRUPT, 1023) is reserved number for user.
+   * Maxmum interrupt supported could get from clicinfo.NUM_INTERRUPT.
+   * According the interrupt handlers defined in startup_Device.S
+   * eg.: Interrupt for Timer#1       eclic_tim1_handler   ->   TIM1_IRQn */
+  FirstDeviceSpecificInterrupt_IRQn = 19, /*!< First Device Specific Interrupt */
+  SOC_INT_MAX,                            /*!< Number of total interrupts */
 } IRQn_Type;
 #endif /* __ONLY_FOR_DOXYGEN_DOCUMENT_GENERATION__ */
 
 #ifdef NMSIS_ECLIC_VIRTUAL
-    #ifndef NMSIS_ECLIC_VIRTUAL_HEADER_FILE
-        #define NMSIS_ECLIC_VIRTUAL_HEADER_FILE "nmsis_eclic_virtual.h"
-    #endif
-    #include NMSIS_ECLIC_VIRTUAL_HEADER_FILE
+#ifndef NMSIS_ECLIC_VIRTUAL_HEADER_FILE
+#define NMSIS_ECLIC_VIRTUAL_HEADER_FILE "nmsis_eclic_virtual.h"
+#endif
+#include NMSIS_ECLIC_VIRTUAL_HEADER_FILE
 #else
-    #define ECLIC_SetCfgNlbits            __ECLIC_SetCfgNlbits
-    #define ECLIC_GetCfgNlbits            __ECLIC_GetCfgNlbits
-    #define ECLIC_GetInfoVer              __ECLIC_GetInfoVer
-    #define ECLIC_GetInfoCtlbits          __ECLIC_GetInfoCtlbits
-    #define ECLIC_GetInfoNum              __ECLIC_GetInfoNum
-    #define ECLIC_SetMth                  __ECLIC_SetMth
-    #define ECLIC_GetMth                  __ECLIC_GetMth
-    #define ECLIC_EnableIRQ               __ECLIC_EnableIRQ
-    #define ECLIC_GetEnableIRQ            __ECLIC_GetEnableIRQ
-    #define ECLIC_DisableIRQ              __ECLIC_DisableIRQ
-    #define ECLIC_SetPendingIRQ           __ECLIC_SetPendingIRQ
-    #define ECLIC_GetPendingIRQ           __ECLIC_GetPendingIRQ
-    #define ECLIC_ClearPendingIRQ         __ECLIC_ClearPendingIRQ
-    #define ECLIC_SetTrigIRQ              __ECLIC_SetTrigIRQ
-    #define ECLIC_GetTrigIRQ              __ECLIC_GetTrigIRQ
-    #define ECLIC_SetShvIRQ               __ECLIC_SetShvIRQ
-    #define ECLIC_GetShvIRQ               __ECLIC_GetShvIRQ
-    #define ECLIC_SetCtrlIRQ              __ECLIC_SetCtrlIRQ
-    #define ECLIC_GetCtrlIRQ              __ECLIC_GetCtrlIRQ
-    #define ECLIC_SetLevelIRQ             __ECLIC_SetLevelIRQ
-    #define ECLIC_GetLevelIRQ             __ECLIC_GetLevelIRQ
-    #define ECLIC_SetPriorityIRQ          __ECLIC_SetPriorityIRQ
-    #define ECLIC_GetPriorityIRQ          __ECLIC_GetPriorityIRQ
+#define ECLIC_SetCfgNlbits    __ECLIC_SetCfgNlbits
+#define ECLIC_GetCfgNlbits    __ECLIC_GetCfgNlbits
+#define ECLIC_GetInfoVer      __ECLIC_GetInfoVer
+#define ECLIC_GetInfoCtlbits  __ECLIC_GetInfoCtlbits
+#define ECLIC_GetInfoNum      __ECLIC_GetInfoNum
+#define ECLIC_SetMth          __ECLIC_SetMth
+#define ECLIC_GetMth          __ECLIC_GetMth
+#define ECLIC_EnableIRQ       __ECLIC_EnableIRQ
+#define ECLIC_GetEnableIRQ    __ECLIC_GetEnableIRQ
+#define ECLIC_DisableIRQ      __ECLIC_DisableIRQ
+#define ECLIC_SetPendingIRQ   __ECLIC_SetPendingIRQ
+#define ECLIC_GetPendingIRQ   __ECLIC_GetPendingIRQ
+#define ECLIC_ClearPendingIRQ __ECLIC_ClearPendingIRQ
+#define ECLIC_SetTrigIRQ      __ECLIC_SetTrigIRQ
+#define ECLIC_GetTrigIRQ      __ECLIC_GetTrigIRQ
+#define ECLIC_SetShvIRQ       __ECLIC_SetShvIRQ
+#define ECLIC_GetShvIRQ       __ECLIC_GetShvIRQ
+#define ECLIC_SetCtrlIRQ      __ECLIC_SetCtrlIRQ
+#define ECLIC_GetCtrlIRQ      __ECLIC_GetCtrlIRQ
+#define ECLIC_SetLevelIRQ     __ECLIC_SetLevelIRQ
+#define ECLIC_GetLevelIRQ     __ECLIC_GetLevelIRQ
+#define ECLIC_SetPriorityIRQ  __ECLIC_SetPriorityIRQ
+#define ECLIC_GetPriorityIRQ  __ECLIC_GetPriorityIRQ
 
 #endif /* NMSIS_ECLIC_VIRTUAL */
 
 #ifdef NMSIS_VECTAB_VIRTUAL
-    #ifndef NMSIS_VECTAB_VIRTUAL_HEADER_FILE
-        #define NMSIS_VECTAB_VIRTUAL_HEADER_FILE "nmsis_vectab_virtual.h"
-    #endif
-    #include NMSIS_VECTAB_VIRTUAL_HEADER_FILE
+#ifndef NMSIS_VECTAB_VIRTUAL_HEADER_FILE
+#define NMSIS_VECTAB_VIRTUAL_HEADER_FILE "nmsis_vectab_virtual.h"
+#endif
+#include NMSIS_VECTAB_VIRTUAL_HEADER_FILE
 #else
-    #define ECLIC_SetVector              __ECLIC_SetVector
-    #define ECLIC_GetVector              __ECLIC_GetVector
-#endif  /* (NMSIS_VECTAB_VIRTUAL) */
+#define ECLIC_SetVector __ECLIC_SetVector
+#define ECLIC_GetVector __ECLIC_GetVector
+#endif /* (NMSIS_VECTAB_VIRTUAL) */
 
 /**
  * \brief  Set nlbits value
@@ -255,10 +254,9 @@ typedef enum IRQn {
  * \sa
  * - \ref ECLIC_GetCfgNlbits
  */
-__STATIC_FORCEINLINE void __ECLIC_SetCfgNlbits(uint32_t nlbits)
-{
-    ECLIC->CFG &= ~CLIC_CLICCFG_NLBIT_Msk;
-    ECLIC->CFG |= (uint8_t)((nlbits <<CLIC_CLICCFG_NLBIT_Pos) & CLIC_CLICCFG_NLBIT_Msk);
+__STATIC_FORCEINLINE void __ECLIC_SetCfgNlbits(uint32_t nlbits) {
+  ECLIC->CFG &= ~CLIC_CLICCFG_NLBIT_Msk;
+  ECLIC->CFG |= (uint8_t)((nlbits << CLIC_CLICCFG_NLBIT_Pos) & CLIC_CLICCFG_NLBIT_Msk);
 }
 
 /**
@@ -271,10 +269,7 @@ __STATIC_FORCEINLINE void __ECLIC_SetCfgNlbits(uint32_t nlbits)
  * \sa
  * - \ref ECLIC_SetCfgNlbits
  */
-__STATIC_FORCEINLINE uint32_t __ECLIC_GetCfgNlbits(void)
-{
-    return ((uint32_t)((ECLIC->CFG & CLIC_CLICCFG_NLBIT_Msk) >> CLIC_CLICCFG_NLBIT_Pos));
-}
+__STATIC_FORCEINLINE uint32_t __ECLIC_GetCfgNlbits(void) { return ((uint32_t)((ECLIC->CFG & CLIC_CLICCFG_NLBIT_Msk) >> CLIC_CLICCFG_NLBIT_Pos)); }
 
 /**
  * \brief  Get the ECLIC version number
@@ -286,11 +281,8 @@ __STATIC_FORCEINLINE uint32_t __ECLIC_GetCfgNlbits(void)
  * - Bit 20:17 for architecture version, bit 16:13 for implementation version.
  * \sa
  * - \ref ECLIC_GetInfoNum
-*/
-__STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoVer(void)
-{
-    return ((uint32_t)((ECLIC->INFO & CLIC_CLICINFO_VER_Msk) >> CLIC_CLICINFO_VER_Pos));
-}
+ */
+__STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoVer(void) { return ((uint32_t)((ECLIC->INFO & CLIC_CLICINFO_VER_Msk) >> CLIC_CLICINFO_VER_Pos)); }
 
 /**
  * \brief  Get CLICINTCTLBITS
@@ -304,10 +296,7 @@ __STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoVer(void)
  * \sa
  * - \ref ECLIC_GetInfoNum
  */
-__STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoCtlbits(void)
-{
-    return ((uint32_t)((ECLIC->INFO & CLIC_CLICINFO_CTLBIT_Msk) >> CLIC_CLICINFO_CTLBIT_Pos));
-}
+__STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoCtlbits(void) { return ((uint32_t)((ECLIC->INFO & CLIC_CLICINFO_CTLBIT_Msk) >> CLIC_CLICINFO_CTLBIT_Pos)); }
 
 /**
  * \brief  Get number of maximum interrupt inputs supported
@@ -320,10 +309,7 @@ __STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoCtlbits(void)
  * \sa
  * - \ref ECLIC_GetInfoCtlbits
  */
-__STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoNum(void)
-{
-    return ((uint32_t)((ECLIC->INFO & CLIC_CLICINFO_NUM_Msk) >> CLIC_CLICINFO_NUM_Pos));
-}
+__STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoNum(void) { return ((uint32_t)((ECLIC->INFO & CLIC_CLICINFO_NUM_Msk) >> CLIC_CLICINFO_NUM_Pos)); }
 
 /**
  * \brief  Set Machine Mode Interrupt Level Threshold
@@ -333,10 +319,7 @@ __STATIC_FORCEINLINE uint32_t __ECLIC_GetInfoNum(void)
  * \sa
  * - \ref ECLIC_GetMth
  */
-__STATIC_FORCEINLINE void __ECLIC_SetMth(uint8_t mth)
-{
-    ECLIC->MTH = mth;
-}
+__STATIC_FORCEINLINE void __ECLIC_SetMth(uint8_t mth) { ECLIC->MTH = mth; }
 
 /**
  * \brief  Get Machine Mode Interrupt Level Threshold
@@ -346,11 +329,7 @@ __STATIC_FORCEINLINE void __ECLIC_SetMth(uint8_t mth)
  * \sa
  * - \ref ECLIC_SetMth
  */
-__STATIC_FORCEINLINE uint8_t __ECLIC_GetMth(void)
-{
-    return (ECLIC->MTH);
-}
-
+__STATIC_FORCEINLINE uint8_t __ECLIC_GetMth(void) { return (ECLIC->MTH); }
 
 /**
  * \brief  Enable a specific interrupt
@@ -362,10 +341,7 @@ __STATIC_FORCEINLINE uint8_t __ECLIC_GetMth(void)
  * \sa
  * - \ref ECLIC_DisableIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_EnableIRQ(IRQn_Type IRQn)
-{
-    ECLIC->CTRL[IRQn].INTIE |= CLIC_INTIE_IE_Msk;
-}
+__STATIC_FORCEINLINE void __ECLIC_EnableIRQ(IRQn_Type IRQn) { ECLIC->CTRL[IRQn].INTIE |= CLIC_INTIE_IE_Msk; }
 
 /**
  * \brief  Get a specific interrupt enable status
@@ -381,10 +357,7 @@ __STATIC_FORCEINLINE void __ECLIC_EnableIRQ(IRQn_Type IRQn)
  * - \ref ECLIC_EnableIRQ
  * - \ref ECLIC_DisableIRQ
  */
-__STATIC_FORCEINLINE uint32_t __ECLIC_GetEnableIRQ(IRQn_Type IRQn)
-{
-    return((uint32_t) (ECLIC->CTRL[IRQn].INTIE) & CLIC_INTIE_IE_Msk);
-}
+__STATIC_FORCEINLINE uint32_t __ECLIC_GetEnableIRQ(IRQn_Type IRQn) { return ((uint32_t)(ECLIC->CTRL[IRQn].INTIE) & CLIC_INTIE_IE_Msk); }
 
 /**
  * \brief  Disable a specific interrupt
@@ -396,10 +369,7 @@ __STATIC_FORCEINLINE uint32_t __ECLIC_GetEnableIRQ(IRQn_Type IRQn)
  * \sa
  * - \ref ECLIC_EnableIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_DisableIRQ(IRQn_Type IRQn)
-{
-    ECLIC->CTRL[IRQn].INTIE &= ~CLIC_INTIE_IE_Msk;
-}
+__STATIC_FORCEINLINE void __ECLIC_DisableIRQ(IRQn_Type IRQn) { ECLIC->CTRL[IRQn].INTIE &= ~CLIC_INTIE_IE_Msk; }
 
 /**
  * \brief  Get the pending specific interrupt
@@ -415,10 +385,7 @@ __STATIC_FORCEINLINE void __ECLIC_DisableIRQ(IRQn_Type IRQn)
  * - \ref ECLIC_SetPendingIRQ
  * - \ref ECLIC_ClearPendingIRQ
  */
-__STATIC_FORCEINLINE int32_t __ECLIC_GetPendingIRQ(IRQn_Type IRQn)
-{
-    return((uint32_t)(ECLIC->CTRL[IRQn].INTIP) & CLIC_INTIP_IP_Msk);
-}
+__STATIC_FORCEINLINE int32_t __ECLIC_GetPendingIRQ(IRQn_Type IRQn) { return ((uint32_t)(ECLIC->CTRL[IRQn].INTIP) & CLIC_INTIP_IP_Msk); }
 
 /**
  * \brief  Set a specific interrupt to pending
@@ -431,10 +398,7 @@ __STATIC_FORCEINLINE int32_t __ECLIC_GetPendingIRQ(IRQn_Type IRQn)
  * - \ref ECLIC_GetPendingIRQ
  * - \ref ECLIC_ClearPendingIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_SetPendingIRQ(IRQn_Type IRQn)
-{
-    ECLIC->CTRL[IRQn].INTIP |= CLIC_INTIP_IP_Msk;
-}
+__STATIC_FORCEINLINE void __ECLIC_SetPendingIRQ(IRQn_Type IRQn) { ECLIC->CTRL[IRQn].INTIP |= CLIC_INTIP_IP_Msk; }
 
 /**
  * \brief  Clear a specific interrupt from pending
@@ -448,10 +412,7 @@ __STATIC_FORCEINLINE void __ECLIC_SetPendingIRQ(IRQn_Type IRQn)
  * - \ref ECLIC_SetPendingIRQ
  * - \ref ECLIC_GetPendingIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_ClearPendingIRQ(IRQn_Type IRQn)
-{
-    ECLIC->CTRL[IRQn].INTIP &= ~ CLIC_INTIP_IP_Msk;
-}
+__STATIC_FORCEINLINE void __ECLIC_ClearPendingIRQ(IRQn_Type IRQn) { ECLIC->CTRL[IRQn].INTIP &= ~CLIC_INTIP_IP_Msk; }
 
 /**
  * \brief  Set trigger mode and polarity for a specific interrupt
@@ -469,10 +430,9 @@ __STATIC_FORCEINLINE void __ECLIC_ClearPendingIRQ(IRQn_Type IRQn)
  * \sa
  * - \ref ECLIC_GetTrigIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_SetTrigIRQ(IRQn_Type IRQn, uint32_t trig)
-{
-    ECLIC->CTRL[IRQn].INTATTR &= ~CLIC_INTATTR_TRIG_Msk;
-    ECLIC->CTRL[IRQn].INTATTR |= (uint8_t)(trig<<CLIC_INTATTR_TRIG_Pos);
+__STATIC_FORCEINLINE void __ECLIC_SetTrigIRQ(IRQn_Type IRQn, uint32_t trig) {
+  ECLIC->CTRL[IRQn].INTATTR &= ~CLIC_INTATTR_TRIG_Msk;
+  ECLIC->CTRL[IRQn].INTATTR |= (uint8_t)(trig << CLIC_INTATTR_TRIG_Pos);
 }
 
 /**
@@ -490,10 +450,7 @@ __STATIC_FORCEINLINE void __ECLIC_SetTrigIRQ(IRQn_Type IRQn, uint32_t trig)
  * \sa
  *     - \ref ECLIC_SetTrigIRQ
  */
-__STATIC_FORCEINLINE uint32_t __ECLIC_GetTrigIRQ(IRQn_Type IRQn)
-{
-    return ((int32_t)(((ECLIC->CTRL[IRQn].INTATTR) & CLIC_INTATTR_TRIG_Msk)>>CLIC_INTATTR_TRIG_Pos));
-}
+__STATIC_FORCEINLINE uint32_t __ECLIC_GetTrigIRQ(IRQn_Type IRQn) { return ((int32_t)(((ECLIC->CTRL[IRQn].INTATTR) & CLIC_INTATTR_TRIG_Msk) >> CLIC_INTATTR_TRIG_Pos)); }
 
 /**
  * \brief  Set interrupt working mode for a specific interrupt
@@ -508,10 +465,9 @@ __STATIC_FORCEINLINE uint32_t __ECLIC_GetTrigIRQ(IRQn_Type IRQn)
  * \sa
  * - \ref ECLIC_GetShvIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_SetShvIRQ(IRQn_Type IRQn, uint32_t shv)
-{
-    ECLIC->CTRL[IRQn].INTATTR &= ~CLIC_INTATTR_SHV_Msk;
-    ECLIC->CTRL[IRQn].INTATTR |= (uint8_t)(shv<<CLIC_INTATTR_SHV_Pos);
+__STATIC_FORCEINLINE void __ECLIC_SetShvIRQ(IRQn_Type IRQn, uint32_t shv) {
+  ECLIC->CTRL[IRQn].INTATTR &= ~CLIC_INTATTR_SHV_Msk;
+  ECLIC->CTRL[IRQn].INTATTR |= (uint8_t)(shv << CLIC_INTATTR_SHV_Pos);
 }
 
 /**
@@ -527,10 +483,7 @@ __STATIC_FORCEINLINE void __ECLIC_SetShvIRQ(IRQn_Type IRQn, uint32_t shv)
  * \sa
  * - \ref ECLIC_SetShvIRQ
  */
-__STATIC_FORCEINLINE uint32_t __ECLIC_GetShvIRQ(IRQn_Type IRQn)
-{
-    return ((int32_t)(((ECLIC->CTRL[IRQn].INTATTR) & CLIC_INTATTR_SHV_Msk)>>CLIC_INTATTR_SHV_Pos));
-}
+__STATIC_FORCEINLINE uint32_t __ECLIC_GetShvIRQ(IRQn_Type IRQn) { return ((int32_t)(((ECLIC->CTRL[IRQn].INTATTR) & CLIC_INTATTR_SHV_Msk) >> CLIC_INTATTR_SHV_Pos)); }
 
 /**
  * \brief  Modify ECLIC Interrupt Input Control Register for a specific interrupt
@@ -543,10 +496,7 @@ __STATIC_FORCEINLINE uint32_t __ECLIC_GetShvIRQ(IRQn_Type IRQn)
  * \sa
  * - \ref ECLIC_GetCtrlIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_SetCtrlIRQ(IRQn_Type IRQn, uint8_t intctrl)
-{
-    ECLIC->CTRL[IRQn].INTCTRL = intctrl;
-}
+__STATIC_FORCEINLINE void __ECLIC_SetCtrlIRQ(IRQn_Type IRQn, uint8_t intctrl) { ECLIC->CTRL[IRQn].INTCTRL = intctrl; }
 
 /**
  * \brief  Get ECLIC Interrupt Input Control Register value for a specific interrupt
@@ -559,10 +509,7 @@ __STATIC_FORCEINLINE void __ECLIC_SetCtrlIRQ(IRQn_Type IRQn, uint8_t intctrl)
  * \sa
  * - \ref ECLIC_SetCtrlIRQ
  */
-__STATIC_FORCEINLINE uint8_t __ECLIC_GetCtrlIRQ(IRQn_Type IRQn)
-{
-    return (ECLIC->CTRL[IRQn].INTCTRL);
-}
+__STATIC_FORCEINLINE uint8_t __ECLIC_GetCtrlIRQ(IRQn_Type IRQn) { return (ECLIC->CTRL[IRQn].INTCTRL); }
 
 /**
  * \brief  Set ECLIC Interrupt level of a specific interrupt
@@ -579,27 +526,26 @@ __STATIC_FORCEINLINE uint8_t __ECLIC_GetCtrlIRQ(IRQn_Type IRQn)
  * \sa
  * - \ref ECLIC_GetLevelIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_SetLevelIRQ(IRQn_Type IRQn, uint8_t lvl_abs)
-{
-    uint8_t nlbits = __ECLIC_GetCfgNlbits();
-    uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
+__STATIC_FORCEINLINE void __ECLIC_SetLevelIRQ(IRQn_Type IRQn, uint8_t lvl_abs) {
+  uint8_t nlbits     = __ECLIC_GetCfgNlbits();
+  uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
 
-    if (nlbits == 0) {
-        return;
-    }
+  if (nlbits == 0) {
+    return;
+  }
 
-    if (nlbits > intctlbits) {
-        nlbits = intctlbits;
-    }
-    uint8_t maxlvl = ((1 << nlbits) - 1);
-    if (lvl_abs > maxlvl) {
-        lvl_abs = maxlvl;
-    }
-    uint8_t lvl = lvl_abs << (ECLIC_MAX_NLBITS - nlbits);
-    uint8_t cur_ctrl = __ECLIC_GetCtrlIRQ(IRQn);
-    cur_ctrl = cur_ctrl << nlbits;
-    cur_ctrl = cur_ctrl >> nlbits;
-    __ECLIC_SetCtrlIRQ(IRQn, (cur_ctrl | lvl));
+  if (nlbits > intctlbits) {
+    nlbits = intctlbits;
+  }
+  uint8_t maxlvl = ((1 << nlbits) - 1);
+  if (lvl_abs > maxlvl) {
+    lvl_abs = maxlvl;
+  }
+  uint8_t lvl      = lvl_abs << (ECLIC_MAX_NLBITS - nlbits);
+  uint8_t cur_ctrl = __ECLIC_GetCtrlIRQ(IRQn);
+  cur_ctrl         = cur_ctrl << nlbits;
+  cur_ctrl         = cur_ctrl >> nlbits;
+  __ECLIC_SetCtrlIRQ(IRQn, (cur_ctrl | lvl));
 }
 
 /**
@@ -613,21 +559,20 @@ __STATIC_FORCEINLINE void __ECLIC_SetLevelIRQ(IRQn_Type IRQn, uint8_t lvl_abs)
  * \sa
  * - \ref ECLIC_SetLevelIRQ
  */
-__STATIC_FORCEINLINE uint8_t __ECLIC_GetLevelIRQ(IRQn_Type IRQn)
-{
-    uint8_t nlbits = __ECLIC_GetCfgNlbits();
-    uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
+__STATIC_FORCEINLINE uint8_t __ECLIC_GetLevelIRQ(IRQn_Type IRQn) {
+  uint8_t nlbits     = __ECLIC_GetCfgNlbits();
+  uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
 
-    if (nlbits == 0) {
-        return 0;
-    }
+  if (nlbits == 0) {
+    return 0;
+  }
 
-    if (nlbits > intctlbits) {
-        nlbits = intctlbits;
-    }
-    uint8_t intctrl = __ECLIC_GetCtrlIRQ(IRQn);
-    uint8_t lvl_abs = intctrl >> (ECLIC_MAX_NLBITS - nlbits);
-    return lvl_abs;
+  if (nlbits > intctlbits) {
+    nlbits = intctlbits;
+  }
+  uint8_t intctrl = __ECLIC_GetCtrlIRQ(IRQn);
+  uint8_t lvl_abs = intctrl >> (ECLIC_MAX_NLBITS - nlbits);
+  return lvl_abs;
 }
 
 /**
@@ -644,23 +589,22 @@ __STATIC_FORCEINLINE uint8_t __ECLIC_GetLevelIRQ(IRQn_Type IRQn)
  * \sa
  * - \ref ECLIC_GetPriorityIRQ
  */
-__STATIC_FORCEINLINE void __ECLIC_SetPriorityIRQ(IRQn_Type IRQn, uint8_t pri)
-{
-    uint8_t nlbits = __ECLIC_GetCfgNlbits();
-    uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
-    if (nlbits < intctlbits) {
-        uint8_t maxpri = ((1 << (intctlbits - nlbits)) - 1);
-        if (pri > maxpri) {
-            pri = maxpri;
-        }
-        pri = pri << (ECLIC_MAX_NLBITS - intctlbits);
-        uint8_t mask = ((uint8_t)(-1)) >> intctlbits;
-        pri = pri | mask;
-        uint8_t cur_ctrl = __ECLIC_GetCtrlIRQ(IRQn);
-        cur_ctrl = cur_ctrl >> (ECLIC_MAX_NLBITS - nlbits);
-        cur_ctrl = cur_ctrl << (ECLIC_MAX_NLBITS - nlbits);
-        __ECLIC_SetCtrlIRQ(IRQn, (cur_ctrl | pri));
+__STATIC_FORCEINLINE void __ECLIC_SetPriorityIRQ(IRQn_Type IRQn, uint8_t pri) {
+  uint8_t nlbits     = __ECLIC_GetCfgNlbits();
+  uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
+  if (nlbits < intctlbits) {
+    uint8_t maxpri = ((1 << (intctlbits - nlbits)) - 1);
+    if (pri > maxpri) {
+      pri = maxpri;
     }
+    pri              = pri << (ECLIC_MAX_NLBITS - intctlbits);
+    uint8_t mask     = ((uint8_t)(-1)) >> intctlbits;
+    pri              = pri | mask;
+    uint8_t cur_ctrl = __ECLIC_GetCtrlIRQ(IRQn);
+    cur_ctrl         = cur_ctrl >> (ECLIC_MAX_NLBITS - nlbits);
+    cur_ctrl         = cur_ctrl << (ECLIC_MAX_NLBITS - nlbits);
+    __ECLIC_SetCtrlIRQ(IRQn, (cur_ctrl | pri));
+  }
 }
 
 /**
@@ -674,19 +618,18 @@ __STATIC_FORCEINLINE void __ECLIC_SetPriorityIRQ(IRQn_Type IRQn, uint8_t pri)
  * \sa
  * - \ref ECLIC_SetPriorityIRQ
  */
-__STATIC_FORCEINLINE uint8_t __ECLIC_GetPriorityIRQ(IRQn_Type IRQn)
-{
-    uint8_t nlbits = __ECLIC_GetCfgNlbits();
-    uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
-    if (nlbits < intctlbits) {
-        uint8_t cur_ctrl = __ECLIC_GetCtrlIRQ(IRQn);
-        uint8_t pri = cur_ctrl << nlbits;
-        pri = pri >> nlbits;
-        pri = pri >> (ECLIC_MAX_NLBITS - intctlbits);
-        return pri;
-    } else {
-        return 0;
-    }
+__STATIC_FORCEINLINE uint8_t __ECLIC_GetPriorityIRQ(IRQn_Type IRQn) {
+  uint8_t nlbits     = __ECLIC_GetCfgNlbits();
+  uint8_t intctlbits = (uint8_t)__ECLIC_INTCTLBITS;
+  if (nlbits < intctlbits) {
+    uint8_t cur_ctrl = __ECLIC_GetCtrlIRQ(IRQn);
+    uint8_t pri      = cur_ctrl << nlbits;
+    pri              = pri >> nlbits;
+    pri              = pri >> (ECLIC_MAX_NLBITS - intctlbits);
+    return pri;
+  } else {
+    return 0;
+  }
 }
 
 /**
@@ -705,20 +648,19 @@ __STATIC_FORCEINLINE uint8_t __ECLIC_GetPriorityIRQ(IRQn_Type IRQn)
  * \sa
  * - \ref ECLIC_GetVector
  */
-__STATIC_FORCEINLINE void __ECLIC_SetVector(IRQn_Type IRQn, rv_csr_t vector)
-{
+__STATIC_FORCEINLINE void __ECLIC_SetVector(IRQn_Type IRQn, rv_csr_t vector) {
 #if __RISCV_XLEN == 32
-    volatile uint32_t vec_base;
-    vec_base = ((uint32_t)__RV_CSR_READ(CSR_MTVT));
-    (* (unsigned long *) (vec_base + ((int32_t)IRQn) * 4)) = vector;
+  volatile uint32_t vec_base;
+  vec_base                                             = ((uint32_t)__RV_CSR_READ(CSR_MTVT));
+  (*(unsigned long *)(vec_base + ((int32_t)IRQn) * 4)) = vector;
 #elif __RISCV_XLEN == 64
-    volatile uint64_t vec_base;
-    vec_base = ((uint64_t)__RV_CSR_READ(CSR_MTVT));
-    (* (unsigned long *) (vec_base + ((int32_t)IRQn) * 8)) = vector;
+  volatile uint64_t vec_base;
+  vec_base                                             = ((uint64_t)__RV_CSR_READ(CSR_MTVT));
+  (*(unsigned long *)(vec_base + ((int32_t)IRQn) * 8)) = vector;
 #else // TODO Need cover for XLEN=128 case in future
-    volatile uint64_t vec_base;
-    vec_base = ((uint64_t)__RV_CSR_READ(CSR_MTVT));
-    (* (unsigned long *) (vec_base + ((int32_t)IRQn) * 8)) = vector;
+  volatile uint64_t vec_base;
+  vec_base                                             = ((uint64_t)__RV_CSR_READ(CSR_MTVT));
+  (*(unsigned long *)(vec_base + ((int32_t)IRQn) * 8)) = vector;
 #endif
 }
 
@@ -734,14 +676,13 @@ __STATIC_FORCEINLINE void __ECLIC_SetVector(IRQn_Type IRQn, rv_csr_t vector)
  * \sa
  *     - \ref ECLIC_SetVector
  */
-__STATIC_FORCEINLINE rv_csr_t __ECLIC_GetVector(IRQn_Type IRQn)
-{
+__STATIC_FORCEINLINE rv_csr_t __ECLIC_GetVector(IRQn_Type IRQn) {
 #if __RISCV_XLEN == 32
-    return (*(uint32_t *)(__RV_CSR_READ(CSR_MTVT)+IRQn*4));
+  return (*(uint32_t *)(__RV_CSR_READ(CSR_MTVT) + IRQn * 4));
 #elif __RISCV_XLEN == 64
-    return (*(uint64_t *)(__RV_CSR_READ(CSR_MTVT)+IRQn*8));
+  return (*(uint64_t *)(__RV_CSR_READ(CSR_MTVT) + IRQn * 8));
 #else // TODO Need cover for XLEN=128 case in future
-    return (*(uint64_t *)(__RV_CSR_READ(CSR_MTVT)+IRQn*8));
+  return (*(uint64_t *)(__RV_CSR_READ(CSR_MTVT) + IRQn * 8));
 #endif
 }
 
@@ -755,11 +696,10 @@ __STATIC_FORCEINLINE rv_csr_t __ECLIC_GetVector(IRQn_Type IRQn)
  * \sa
  * - \ref __get_exc_entry
  */
-__STATIC_FORCEINLINE void __set_exc_entry(rv_csr_t addr)
-{
-    addr &= (rv_csr_t)(~0x3F);
-    addr |= ECLIC_MODE_MTVEC_Msk;
-    __RV_CSR_WRITE(CSR_MTVEC, addr);
+__STATIC_FORCEINLINE void __set_exc_entry(rv_csr_t addr) {
+  addr &= (rv_csr_t)(~0x3F);
+  addr |= ECLIC_MODE_MTVEC_Msk;
+  __RV_CSR_WRITE(CSR_MTVEC, addr);
 }
 
 /**
@@ -772,10 +712,9 @@ __STATIC_FORCEINLINE void __set_exc_entry(rv_csr_t addr)
  * \sa
  * - \ref __set_exc_entry
  */
-__STATIC_FORCEINLINE rv_csr_t __get_exc_entry(void)
-{
-    unsigned long addr = __RV_CSR_READ(CSR_MTVEC);
-    return (addr & ~ECLIC_MODE_MTVEC_Msk);
+__STATIC_FORCEINLINE rv_csr_t __get_exc_entry(void) {
+  unsigned long addr = __RV_CSR_READ(CSR_MTVEC);
+  return (addr & ~ECLIC_MODE_MTVEC_Msk);
 }
 
 /**
@@ -789,15 +728,14 @@ __STATIC_FORCEINLINE rv_csr_t __get_exc_entry(void)
  * \sa
  * - \ref __get_nonvec_entry
  */
-__STATIC_FORCEINLINE void __set_nonvec_entry(rv_csr_t addr)
-{
-    if (__RV_CSR_READ(CSR_MTVT2) & 0x1){
-        __RV_CSR_WRITE(CSR_MTVT2, addr | 0x01);
-    } else {
-        addr &= (rv_csr_t)(~0x3F);
-        addr |= ECLIC_MODE_MTVEC_Msk;
-        __RV_CSR_WRITE(CSR_MTVEC, addr);
-    }
+__STATIC_FORCEINLINE void __set_nonvec_entry(rv_csr_t addr) {
+  if (__RV_CSR_READ(CSR_MTVT2) & 0x1) {
+    __RV_CSR_WRITE(CSR_MTVT2, addr | 0x01);
+  } else {
+    addr &= (rv_csr_t)(~0x3F);
+    addr |= ECLIC_MODE_MTVEC_Msk;
+    __RV_CSR_WRITE(CSR_MTVEC, addr);
+  }
 }
 
 /**
@@ -811,14 +749,13 @@ __STATIC_FORCEINLINE void __set_nonvec_entry(rv_csr_t addr)
  * \sa
  * - \ref __set_nonvec_entry
  */
-__STATIC_FORCEINLINE rv_csr_t __get_nonvec_entry(void)
-{
-    if (__RV_CSR_READ(CSR_MTVT2) & 0x1) {
-        return __RV_CSR_READ(CSR_MTVT2) & (~(rv_csr_t)(0x1));
-    } else {
-        rv_csr_t addr = __RV_CSR_READ(CSR_MTVEC);
-        return (addr & ~ECLIC_MODE_MTVEC_Msk);
-    }
+__STATIC_FORCEINLINE rv_csr_t __get_nonvec_entry(void) {
+  if (__RV_CSR_READ(CSR_MTVT2) & 0x1) {
+    return __RV_CSR_READ(CSR_MTVT2) & (~(rv_csr_t)(0x1));
+  } else {
+    rv_csr_t addr = __RV_CSR_READ(CSR_MTVEC);
+    return (addr & ~ECLIC_MODE_MTVEC_Msk);
+  }
 }
 
 /**
@@ -831,10 +768,7 @@ __STATIC_FORCEINLINE rv_csr_t __get_nonvec_entry(void)
  * - will be equal as mtvec. If CSR_MMISC_CTL[9] = 0 'CSR_MNVEC' will be equal as reset vector.
  * - NMI entry is defined via \ref CSR_MMISC_CTL, writing to \ref CSR_MNVEC will be ignored.
  */
-__STATIC_FORCEINLINE rv_csr_t __get_nmi_entry(void)
-{
-    return __RV_CSR_READ(CSR_MNVEC);
-}
+__STATIC_FORCEINLINE rv_csr_t __get_nmi_entry(void) { return __RV_CSR_READ(CSR_MNVEC); }
 
 /**
  * \brief   Save necessary CSRs into variables for vector interrupt nesting
@@ -866,11 +800,11 @@ __STATIC_FORCEINLINE rv_csr_t __get_nmi_entry(void)
  * }
  * \endcode
  */
-#define SAVE_IRQ_CSR_CONTEXT()                                              \
-        rv_csr_t __mcause = __RV_CSR_READ(CSR_MCAUSE);                      \
-        rv_csr_t __mepc = __RV_CSR_READ(CSR_MEPC);                          \
-        rv_csr_t __msubm = __RV_CSR_READ(CSR_MSUBM);                        \
-        __enable_irq();
+#define SAVE_IRQ_CSR_CONTEXT()                   \
+  rv_csr_t __mcause = __RV_CSR_READ(CSR_MCAUSE); \
+  rv_csr_t __mepc   = __RV_CSR_READ(CSR_MEPC);   \
+  rv_csr_t __msubm  = __RV_CSR_READ(CSR_MSUBM);  \
+  __enable_irq();
 
 /**
  * \brief   Restore necessary CSRs from variables for vector interrupt nesting
@@ -881,11 +815,11 @@ __STATIC_FORCEINLINE rv_csr_t __get_nmi_entry(void)
  * - Interrupt will be disabled after this macro is called
  * - It need to be used together with \ref SAVE_IRQ_CSR_CONTEXT
  */
-#define RESTORE_IRQ_CSR_CONTEXT()                                           \
-        __disable_irq();                                                    \
-        __RV_CSR_WRITE(CSR_MSUBM, __msubm);                                 \
-        __RV_CSR_WRITE(CSR_MEPC, __mepc);                                   \
-        __RV_CSR_WRITE(CSR_MCAUSE, __mcause);
+#define RESTORE_IRQ_CSR_CONTEXT()     \
+  __disable_irq();                    \
+  __RV_CSR_WRITE(CSR_MSUBM, __msubm); \
+  __RV_CSR_WRITE(CSR_MEPC, __mepc);   \
+  __RV_CSR_WRITE(CSR_MCAUSE, __mcause);
 
 /** @} */ /* End of Doxygen Group NMSIS_Core_IntExc */
 

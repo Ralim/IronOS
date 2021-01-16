@@ -29,7 +29,7 @@
  *   * 2: Double precision FPU present, __RISCV_FLEN == 64
  */
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* ===== FPU Operations ===== */
@@ -53,29 +53,29 @@
 #if defined(__FPU_PRESENT) && (__FPU_PRESENT > 0)
 
 #if __FPU_PRESENT == 1
-  /** \brief Refer to the width of the floating point register in bits(either 32 or 64) */
-  #define __RISCV_FLEN          32
+/** \brief Refer to the width of the floating point register in bits(either 32 or 64) */
+#define __RISCV_FLEN 32
 #elif __FPU_PRESENT == 2
-  #define __RISCV_FLEN          64
+#define __RISCV_FLEN 64
 #else
-  #define __RISCV_FLEN          __riscv_flen
+#define __RISCV_FLEN __riscv_flen
 #endif /* __FPU_PRESENT == 1 */
 
 /** \brief Get FCSR CSR Register */
-#define __get_FCSR()            __RV_CSR_READ(CSR_FCSR)
+#define __get_FCSR() __RV_CSR_READ(CSR_FCSR)
 /** \brief Set FCSR CSR Register with val */
-#define __set_FCSR(val)         __RV_CSR_WRITE(CSR_FCSR, (val))
+#define __set_FCSR(val) __RV_CSR_WRITE(CSR_FCSR, (val))
 /** \brief Get FRM CSR Register */
-#define __get_FRM()             __RV_CSR_READ(CSR_FRM)
+#define __get_FRM() __RV_CSR_READ(CSR_FRM)
 /** \brief Set FRM CSR Register with val */
-#define __set_FRM(val)          __RV_CSR_WRITE(CSR_FRM, (val))
+#define __set_FRM(val) __RV_CSR_WRITE(CSR_FRM, (val))
 /** \brief Get FFLAGS CSR Register */
-#define __get_FFLAGS()          __RV_CSR_READ(CSR_FFLAGS)
+#define __get_FFLAGS() __RV_CSR_READ(CSR_FFLAGS)
 /** \brief Set FFLAGS CSR Register with val */
-#define __set_FFLAGS(val)       __RV_CSR_WRITE(CSR_FFLAGS, (val))
+#define __set_FFLAGS(val) __RV_CSR_WRITE(CSR_FFLAGS, (val))
 
 /** \brief Enable FPU Unit */
-#define __enable_FPU()          __RV_CSR_SET(CSR_MSTATUS, MSTATUS_FS)
+#define __enable_FPU() __RV_CSR_SET(CSR_MSTATUS, MSTATUS_FS)
 /**
  * \brief Disable FPU Unit
  * \details
@@ -83,8 +83,7 @@
  * * When FPU Unit is disabled, any access to FPU related CSR registers
  * and FPU instructions will cause illegal Instuction Exception.
  * */
-#define __disable_FPU()         __RV_CSR_CLEAR(CSR_MSTATUS, MSTATUS_FS)
-
+#define __disable_FPU() __RV_CSR_CLEAR(CSR_MSTATUS, MSTATUS_FS)
 
 /**
  * \brief   Load a single-precision value from memory into float point register freg using flw instruction
@@ -100,13 +99,11 @@
  * NaNs are preserved
  *
  */
-#define __RV_FLW(freg, addr, ofs)                              \
-    ({                                                         \
-        register rv_csr_t __addr = (rv_csr_t)(addr);           \
-        __ASM volatile("flw " STRINGIFY(freg) ", %0(%1)  "     \
-                     : : "I"(ofs), "r"(__addr)                 \
-                     : "memory");                              \
-    })
+#define __RV_FLW(freg, addr, ofs)                                                             \
+  ({                                                                                          \
+    register rv_csr_t __addr = (rv_csr_t)(addr);                                              \
+    __ASM volatile("flw " STRINGIFY(freg) ", %0(%1)  " : : "I"(ofs), "r"(__addr) : "memory"); \
+  })
 
 /**
  * \brief   Store a single-precision value from float point freg into memory using fsw instruction
@@ -121,13 +118,11 @@
  * NaNs are preserved
  *
  */
-#define __RV_FSW(freg, addr, ofs)                              \
-    ({                                                         \
-        register rv_csr_t __addr = (rv_csr_t)(addr);           \
-        __ASM volatile("fsw " STRINGIFY(freg) ", %0(%1)  "     \
-                     : : "I"(ofs), "r"(__addr)                 \
-                     : "memory");                              \
-    })
+#define __RV_FSW(freg, addr, ofs)                                                             \
+  ({                                                                                          \
+    register rv_csr_t __addr = (rv_csr_t)(addr);                                              \
+    __ASM volatile("fsw " STRINGIFY(freg) ", %0(%1)  " : : "I"(ofs), "r"(__addr) : "memory"); \
+  })
 
 /**
  * \brief   Load a double-precision value from memory into float point register freg using fld instruction
@@ -144,13 +139,11 @@
  * * FLD and FSD do not modify the bits being transferred; in particular, the payloads of non-canonical
  * NaNs are preserved.
  */
-#define __RV_FLD(freg, addr, ofs)                              \
-    ({                                                         \
-        register rv_csr_t __addr = (rv_csr_t)(addr);           \
-        __ASM volatile("fld " STRINGIFY(freg) ", %0(%1)  "     \
-                     : : "I"(ofs), "r"(__addr)                 \
-                     : "memory");                              \
-    })
+#define __RV_FLD(freg, addr, ofs)                                                             \
+  ({                                                                                          \
+    register rv_csr_t __addr = (rv_csr_t)(addr);                                              \
+    __ASM volatile("fld " STRINGIFY(freg) ", %0(%1)  " : : "I"(ofs), "r"(__addr) : "memory"); \
+  })
 
 /**
  * \brief   Store a double-precision value from float point freg into memory using fsd instruction
@@ -167,13 +160,11 @@
  * NaNs are preserved.
  *
  */
-#define __RV_FSD(freg, addr, ofs)                              \
-    ({                                                         \
-        register rv_csr_t __addr = (rv_csr_t)(addr);           \
-        __ASM volatile("fsd " STRINGIFY(freg) ", %0(%1)  "     \
-                     : : "I"(ofs), "r"(__addr)                 \
-                     : "memory");                              \
-    })
+#define __RV_FSD(freg, addr, ofs)                                                             \
+  ({                                                                                          \
+    register rv_csr_t __addr = (rv_csr_t)(addr);                                              \
+    __ASM volatile("fsd " STRINGIFY(freg) ", %0(%1)  " : : "I"(ofs), "r"(__addr) : "memory"); \
+  })
 
 /**
  * \def __RV_FLOAD
@@ -200,13 +191,13 @@
  * Function behaviour is different for __FPU_PRESENT = 1 or 2, please see the real function this macro represent
  */
 #if __FPU_PRESENT == 1
-#define __RV_FLOAD              __RV_FLW
-#define __RV_FSTORE             __RV_FSW
+#define __RV_FLOAD  __RV_FLW
+#define __RV_FSTORE __RV_FSW
 /** \brief Type of FPU register, depends on the FLEN defined in RISC-V */
 typedef uint32_t rv_fpu_t;
 #elif __FPU_PRESENT == 2
-#define __RV_FLOAD              __RV_FLD
-#define __RV_FSTORE             __RV_FSD
+#define __RV_FLOAD  __RV_FLD
+#define __RV_FSTORE __RV_FSD
 /** \brief Type of FPU register, depends on the FLEN defined in RISC-V */
 typedef uint64_t rv_fpu_t;
 #endif /* __FPU_PRESENT == 2 */
@@ -240,28 +231,28 @@ typedef uint64_t rv_fpu_t;
  * }
  * \endcode
  */
-#define SAVE_FPU_CONTEXT()                                                  \
-        rv_fpu_t __fpu_context[20];                                         \
-        __RV_FSTORE(FREG(0),  __fpu_context, 0  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(1),  __fpu_context, 1  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(2),  __fpu_context, 2  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(3),  __fpu_context, 3  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(4),  __fpu_context, 4  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(5),  __fpu_context, 5  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(6),  __fpu_context, 6  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(7),  __fpu_context, 7  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(10), __fpu_context, 8  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(11), __fpu_context, 9  << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(12), __fpu_context, 10 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(13), __fpu_context, 11 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(14), __fpu_context, 12 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(15), __fpu_context, 13 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(16), __fpu_context, 14 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(17), __fpu_context, 15 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(28), __fpu_context, 16 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(29), __fpu_context, 17 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(30), __fpu_context, 18 << LOG_FPREGBYTES);         \
-        __RV_FSTORE(FREG(31), __fpu_context, 19 << LOG_FPREGBYTES);
+#define SAVE_FPU_CONTEXT()                                    \
+  rv_fpu_t __fpu_context[20];                                 \
+  __RV_FSTORE(FREG(0), __fpu_context, 0 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(1), __fpu_context, 1 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(2), __fpu_context, 2 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(3), __fpu_context, 3 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(4), __fpu_context, 4 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(5), __fpu_context, 5 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(6), __fpu_context, 6 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(7), __fpu_context, 7 << LOG_FPREGBYTES);   \
+  __RV_FSTORE(FREG(10), __fpu_context, 8 << LOG_FPREGBYTES);  \
+  __RV_FSTORE(FREG(11), __fpu_context, 9 << LOG_FPREGBYTES);  \
+  __RV_FSTORE(FREG(12), __fpu_context, 10 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(13), __fpu_context, 11 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(14), __fpu_context, 12 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(15), __fpu_context, 13 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(16), __fpu_context, 14 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(17), __fpu_context, 15 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(28), __fpu_context, 16 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(29), __fpu_context, 17 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(30), __fpu_context, 18 << LOG_FPREGBYTES); \
+  __RV_FSTORE(FREG(31), __fpu_context, 19 << LOG_FPREGBYTES);
 
 /**
  * \brief   Restore necessary fpu registers from variables for interrupt nesting
@@ -271,31 +262,31 @@ typedef uint64_t rv_fpu_t;
  * \remarks
  * - It need to be used together with \ref SAVE_FPU_CONTEXT
  */
-#define RESTORE_FPU_CONTEXT()                                               \
-        __RV_FLOAD(FREG(0),  __fpu_context, 0  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(1),  __fpu_context, 1  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(2),  __fpu_context, 2  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(3),  __fpu_context, 3  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(4),  __fpu_context, 4  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(5),  __fpu_context, 5  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(6),  __fpu_context, 6  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(7),  __fpu_context, 7  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(10), __fpu_context, 8  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(11), __fpu_context, 9  << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(12), __fpu_context, 10 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(13), __fpu_context, 11 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(14), __fpu_context, 12 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(15), __fpu_context, 13 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(16), __fpu_context, 14 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(17), __fpu_context, 15 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(28), __fpu_context, 16 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(29), __fpu_context, 17 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(30), __fpu_context, 18 << LOG_FPREGBYTES);          \
-        __RV_FLOAD(FREG(31), __fpu_context, 19 << LOG_FPREGBYTES);
+#define RESTORE_FPU_CONTEXT()                                \
+  __RV_FLOAD(FREG(0), __fpu_context, 0 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(1), __fpu_context, 1 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(2), __fpu_context, 2 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(3), __fpu_context, 3 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(4), __fpu_context, 4 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(5), __fpu_context, 5 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(6), __fpu_context, 6 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(7), __fpu_context, 7 << LOG_FPREGBYTES);   \
+  __RV_FLOAD(FREG(10), __fpu_context, 8 << LOG_FPREGBYTES);  \
+  __RV_FLOAD(FREG(11), __fpu_context, 9 << LOG_FPREGBYTES);  \
+  __RV_FLOAD(FREG(12), __fpu_context, 10 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(13), __fpu_context, 11 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(14), __fpu_context, 12 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(15), __fpu_context, 13 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(16), __fpu_context, 14 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(17), __fpu_context, 15 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(28), __fpu_context, 16 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(29), __fpu_context, 17 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(30), __fpu_context, 18 << LOG_FPREGBYTES); \
+  __RV_FLOAD(FREG(31), __fpu_context, 19 << LOG_FPREGBYTES);
 #else
 #define SAVE_FPU_CONTEXT()
 #define RESTORE_FPU_CONTEXT()
-#endif /* __FPU_PRESENT > 0 */
+#endif    /* __FPU_PRESENT > 0 */
 /** @} */ /* End of Doxygen Group NMSIS_Core_FPU_Functions */
 
 #ifdef __cplusplus

@@ -55,7 +55,7 @@
  * The NMSIS major version can be used to
  * differentiate between NMSIS major releases.
  * */
-#define __NMSIS_VERSION_MAJOR            (1U)
+#define __NMSIS_VERSION_MAJOR (1U)
 
 /**
  * \brief   Represent the NMSIS minor version
@@ -64,7 +64,7 @@
  * query a NMSIS release update including new features.
  *
  **/
-#define __NMSIS_VERSION_MINOR            (0U)
+#define __NMSIS_VERSION_MINOR (0U)
 
 /**
  * \brief   Represent the NMSIS patch version
@@ -72,7 +72,7 @@
  * The NMSIS patch version can be used to
  * show bug fixes in this package.
  **/
-#define __NMSIS_VERSION_PATCH            (0U)
+#define __NMSIS_VERSION_PATCH (0U)
 /**
  * \brief   Represent the NMSIS Version
  * \details
@@ -81,7 +81,7 @@
  * * MINOR: \ref __NMSIS_VERSION_MINOR, stored in `bits [15:8]` of \ref __NMSIS_VERSION
  * * PATCH: \ref __NMSIS_VERSION_PATCH, stored in `bits [7:0]` of \ref __NMSIS_VERSION
  **/
-#define __NMSIS_VERSION                  ((__NMSIS_VERSION_MAJOR << 16U) | (__NMSIS_VERSION_MINOR << 8) | __NMSIS_VERSION_PATCH)
+#define __NMSIS_VERSION ((__NMSIS_VERSION_MAJOR << 16U) | (__NMSIS_VERSION_MINOR << 8) | __NMSIS_VERSION_PATCH)
 
 /** @} */ /* End of Doxygen Group NMSIS_Core_VersionControl */
 #endif

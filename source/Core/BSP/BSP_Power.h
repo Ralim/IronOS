@@ -12,7 +12,6 @@
 extern "C" {
 #endif
 
-
 // Called periodically in the movement handling thread
 // Can be used to check any details for the power system
 void power_check();

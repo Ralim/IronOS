@@ -37,26 +37,26 @@ OF SUCH DAMAGE.
 #define GD32VF103_CRC_H
 
 #include "gd32vf103.h"
-#include "gd32vf103_rcu.h"
 #include "gd32vf103_dbg.h"
+#include "gd32vf103_rcu.h"
 
 /* CRC definitions */
-#define CRC                            CRC_BASE
+#define CRC CRC_BASE
 
 /* registers definitions */
-#define CRC_DATA                       REG32(CRC + 0x00U)              /*!< CRC data register */
-#define CRC_FDATA                      REG32(CRC + 0x04U)              /*!< CRC free data register */
-#define CRC_CTL                        REG32(CRC + 0x08U)              /*!< CRC control register */
+#define CRC_DATA  REG32(CRC + 0x00U) /*!< CRC data register */
+#define CRC_FDATA REG32(CRC + 0x04U) /*!< CRC free data register */
+#define CRC_CTL   REG32(CRC + 0x08U) /*!< CRC control register */
 
 /* bits definitions */
 /* CRC_DATA */
-#define CRC_DATA_DATA                  BITS(0, 31)                     /*!< CRC calculation result bits */
+#define CRC_DATA_DATA BITS(0, 31) /*!< CRC calculation result bits */
 
 /* CRC_FDATA */
-#define CRC_FDATA_FDATA                BITS(0, 7)                      /*!< CRC free data bits */
+#define CRC_FDATA_FDATA BITS(0, 7) /*!< CRC free data bits */
 
 /* CRC_CTL */
-#define CRC_CTL_RST                    BIT(0)                          /*!< CRC reset CRC_DATA register bit */
+#define CRC_CTL_RST BIT(0) /*!< CRC reset CRC_DATA register bit */
 
 /* function declarations */
 /* deinit CRC calculation unit */

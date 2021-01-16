@@ -7,8 +7,8 @@
 
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
-#include "unit.h"
 #include "stdint.h"
+#include "unit.h"
 extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
 

@@ -31,7 +31,7 @@
  *   * 1: Present
  */
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1)
@@ -59,11 +59,8 @@
  * - This \ref CSR_MCACHE_CTL register control I Cache enable.
  * \sa
  * - \ref DisableICache
-*/
-__STATIC_FORCEINLINE void EnableICache (void)
-{
-    __RV_CSR_SET(CSR_MCACHE_CTL, CSR_MCACHE_CTL_IE);
-}
+ */
+__STATIC_FORCEINLINE void EnableICache(void) { __RV_CSR_SET(CSR_MCACHE_CTL, CSR_MCACHE_CTL_IE); }
 
 /**
  * \brief  Disable ICache
@@ -74,12 +71,9 @@ __STATIC_FORCEINLINE void EnableICache (void)
  * \sa
  * - \ref EnableICache
  */
-__STATIC_FORCEINLINE void DisableICache (void)
-{
-    __RV_CSR_CLEAR(CSR_MCACHE_CTL, CSR_MCACHE_CTL_IE);
-}
+__STATIC_FORCEINLINE void DisableICache(void) { __RV_CSR_CLEAR(CSR_MCACHE_CTL, CSR_MCACHE_CTL_IE); }
 /** @} */ /* End of Doxygen Group NMSIS_Core_ICache */
-#endif /* defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1) */
+#endif    /* defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1) */
 
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1)
 /**
@@ -96,11 +90,8 @@ __STATIC_FORCEINLINE void DisableICache (void)
  * - This \ref CSR_MCACHE_CTL register control D Cache enable.
  * \sa
  * - \ref DisableDCache
-*/
-__STATIC_FORCEINLINE void EnableDCache (void)
-{
-    __RV_CSR_SET(CSR_MCACHE_CTL, CSR_MCACHE_CTL_DE);
-}
+ */
+__STATIC_FORCEINLINE void EnableDCache(void) { __RV_CSR_SET(CSR_MCACHE_CTL, CSR_MCACHE_CTL_DE); }
 
 /**
  * \brief  Disable DCache
@@ -111,12 +102,9 @@ __STATIC_FORCEINLINE void EnableDCache (void)
  * \sa
  * - \ref EnableDCache
  */
-__STATIC_FORCEINLINE void DisableDCache (void)
-{
-    __RV_CSR_CLEAR(CSR_MCACHE_CTL, CSR_MCACHE_CTL_DE);
-}
+__STATIC_FORCEINLINE void DisableDCache(void) { __RV_CSR_CLEAR(CSR_MCACHE_CTL, CSR_MCACHE_CTL_DE); }
 /** @} */ /* End of Doxygen Group NMSIS_Core_DCache */
-#endif /* defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1) */
+#endif    /* defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1) */
 
 #ifdef __cplusplus
 }
