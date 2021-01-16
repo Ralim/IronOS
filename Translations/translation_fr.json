@@ -5,7 +5,7 @@
 	"messages": {
 		"SettingsCalibrationDone": "Calibration effectuée !",
 		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer !",
-		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs d'usine ?",
+		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
 		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
 		"InputVoltageString": "V d'entrée : ",
@@ -16,16 +16,16 @@
 		"WarningSimpleString": "CHAUD !",
 		"WarningAdvancedString": "ATTENTION ! CHAUD !",
 		"SleepingTipAdvancedString": "Panne : ",
-		"IdleTipString": "Act :",
-		"IdleSetString": " Reg :",
+		"IdleTipString": "Act : ",
+		"IdleSetString": "Reg : ",
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance : ",
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Gain : ",
 		"SettingsResetMessage": "Réglage réinit. !",
-		"NoAccelerometerMessage": "Pas d'accéléromètre\ndétecté!",
-		"NoPowerDeliveryMessage": "Aucune interface USB-PD\ndétectée!",
+		"NoAccelerometerMessage": "Accéléromètre\nnon détecté !",
+		"NoPowerDeliveryMessage": "Pas d'USB-PD\ndétecté !",
 		"LockingKeysString": "VERROUIL",
 		"UnlockingKeysString": "DEVERROU",
 		"WarningKeysLockedString": "! VERR. !"
@@ -40,8 +40,8 @@
 		"SettingStartSleepChar": "V",
 		"SettingStartSleepOffChar": "O",
 		"SettingStartNoneChar": "D",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
+		"SettingSensitivityOff": "D",
+		"SettingSensitivityLow": "B",
 		"SettingSensitivityMedium": "M",
 		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
@@ -263,17 +263,17 @@
 		},
 		"LockingMode": {
 			"text2": [
-				"Autoriser le",
-				"verrouillage"
+				"Verrouiller",
+				"les boutons"
 			],
-			"desc": "Permet de verrouiller les touches pendant la soudure sur un appui long des 2 bouttons <D=désactiver | B=boost seulement | V=verr. total>"
+			"desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller <D=désactivé | B=boost seulement | V=verr. total>"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Sensibilité",
 				"capteur effet hall"
 			],
-			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <O=Off | L=Low | M=Medium | H=High>"
+			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <D=désactivé | B=basse | M=moyenne | H=haute>"
 		}
 	}
 }
