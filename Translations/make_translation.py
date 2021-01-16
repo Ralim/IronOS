@@ -509,9 +509,7 @@ def writeUnit(languageCode, defs, f, UnitCodes):
 
 
 def readVersion():
-    with open(
-        os.path.relpath(jsonDir + "/../workspace/TS100/version.h"), "r"
-    ) as version_file:
+    with open(os.path.relpath(jsonDir + "/../source/version.h"), "r") as version_file:
         try:
             for line in version_file:
                 if re.findall(r"^.*(?<=(#define)).*(?<=(BUILD_VERSION))", line):
@@ -551,13 +549,13 @@ def read_opts():
     if len(sys.argv) > 2:
         outFileTranslationCPP = sys.argv[2]
     else:
-        outDir = os.path.relpath(jsonDir + "/../workspace/TS100/Core/Gen")
+        outDir = os.path.relpath(jsonDir + "/../source/Core/Gen")
         outFileTranslationCPP = os.path.join(outDir, TRANSLATION_CPP)
 
     if len(sys.argv) > 3:
         outFileUnitH = sys.argv[3]
     else:
-        outDir = os.path.relpath(jsonDir + "/../workspace/TS100/Core/Inc")
+        outDir = os.path.relpath(jsonDir + "/../source/Core/Inc")
         outFileUnitH = os.path.join(outDir, UNIT_H)
 
     if len(sys.argv) > 4:

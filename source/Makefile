@@ -306,9 +306,9 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@echo 'Building file: $<'
 	@$(AS) -c $(AFLAGS) $< -o $@
 
-$(APP_INC_DIR)/unit.h $(GENERATED_TRANSLATION_SOURCE): $(TRANSLATION_FILES) Makefile ../../Translations/make_translation.py
+$(APP_INC_DIR)/unit.h $(GENERATED_TRANSLATION_SOURCE): $(TRANSLATION_FILES) Makefile ../Translations/make_translation.py
 	@echo 'Building translations'
-	@cd ../../Translations && python3 make_translation.py
+	@cd ../Translations && python3 make_translation.py
 
 
 clean :

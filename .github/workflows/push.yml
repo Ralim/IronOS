@@ -1,6 +1,6 @@
 name: CI
 
-on: [push,pull_request]
+on: [push, pull_request]
 
 jobs:
   build_TS80:
@@ -10,8 +10,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-      
+        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
+
       - name: Cached compiler source files
         uses: actions/cache@v2
         env:
@@ -27,15 +27,15 @@ jobs:
         run: ./setup.sh
 
       - name: build TS80
-        run: cd workspace/TS100 && ./build.sh -m TS80
+        run: cd source && ./build.sh -m TS80
 
       - name: Archive TS80 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: TS80
           path: |
-            workspace/TS100/Hexfile/TS80_*.hex
-            workspace/TS100/Hexfile/TS80_*.bin
+            source/Hexfile/TS80_*.hex
+            source/Hexfile/TS80_*.bin
           if-no-files-found: error
   build_TS80P:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
+        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
 
       - name: Cached compiler source files
         uses: actions/cache@v2
@@ -61,15 +61,15 @@ jobs:
         run: ./setup.sh
 
       - name: build TS80P
-        run: cd workspace/TS100 && ./build.sh -m TS80P
+        run: cd source && ./build.sh -m TS80P
 
       - name: Archive TS80P artifacts
         uses: actions/upload-artifact@v2
         with:
           name: TS80P
           path: |
-            workspace/TS100/Hexfile/TS80P_*.hex
-            workspace/TS100/Hexfile/TS80P_*.bin
+            source/Hexfile/TS80P_*.hex
+            source/Hexfile/TS80P_*.bin
           if-no-files-found: error
   build_TS100:
     runs-on: ubuntu-latest
@@ -78,8 +78,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-        
+        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
+
       - name: Cached compiler source files
         uses: actions/cache@v2
         env:
@@ -95,15 +95,15 @@ jobs:
         run: ./setup.sh
 
       - name: build TS100
-        run: cd workspace/TS100 && ./build.sh -m TS100
+        run: cd source && ./build.sh -m TS100
 
       - name: Archive TS100 artifacts
         uses: actions/upload-artifact@v2
         with:
           name: TS100
           path: |
-            workspace/TS100/Hexfile/TS100_*.hex
-            workspace/TS100/Hexfile/TS100_*.bin
+            source/Hexfile/TS100_*.hex
+            source/Hexfile/TS100_*.bin
           if-no-files-found: error
 
   build_Pinecil:
@@ -113,8 +113,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: chmod
-        run: chmod +x setup.sh && chmod +x workspace/TS100/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-        
+        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
+
       - name: Cached compiler source files
         uses: actions/cache@v2
         env:
@@ -130,13 +130,13 @@ jobs:
         run: ./setup.sh
 
       - name: build Pinecil
-        run: cd workspace/TS100 && ./build.sh -m Pinecil
+        run: cd source && ./build.sh -m Pinecil
 
       - name: Archive Pinecil artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Pinecil
           path: |
-            workspace/TS100/Hexfile/Pinecil_*.hex
-            workspace/TS100/Hexfile/Pinecil_*.bin
+            source/Hexfile/Pinecil_*.hex
+            source/Hexfile/Pinecil_*.bin
           if-no-files-found: error
