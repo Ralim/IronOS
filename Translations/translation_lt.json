@@ -15,17 +15,17 @@
 		"SleepingAdvancedString": "Miegu...",
 		"WarningSimpleString": "KRŠ!",
 		"WarningAdvancedString": "ANTGALIS KARŠTAS",
-		"SleepingTipAdvancedString": "Angal:",
+		"SleepingTipAdvancedString": "Antg: ",
 		"IdleTipString": "Ant:",
 		"IdleSetString": " Nust:",
 		"TipDisconnectedString": "NĖRA ANTGALIO",
 		"SolderingAdvancedPowerPrompt": "Galia: ",
 		"OffString": "Išj",
-		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Gain:",
+		"ResetOKMessage": "Atstatytas OK",
+		"YourGainMessage": "Greitis:",
 		"SettingsResetMessage": "Nust. atstatyti!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"NoAccelerometerMessage": "Nerastas\nakselerometras!",
+		"NoPowerDeliveryMessage": "Nerastas\nUSB-PD IC !",
 		"LockingKeysString": " UŽRAKIN",
 		"UnlockingKeysString": "ATRAKIN",
 		"WarningKeysLockedString": "!UŽRAK!"
@@ -214,8 +214,8 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"QC maitinimo",
-				"bloko įtampa"
+				"QC mait.",
+				"įtampa"
 			],
 			"desc": "Maksimali QC maitinimo bloko įtampa"
 		},
@@ -235,31 +235,31 @@
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"Temp. keitimas",
-				"trumpas spust."
+				"Temp.keitim.",
+				"trump.spust."
 			],
 			"desc": "Temperatūros keitimo žingsnis trumpai spustėlėjus mygtuką!"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Temp. keitimas",
+				"Temp.keitim.",
 				"ilgas pasp."
 			],
 			"desc": "Temperatūros keitimo žingsnis ilgai paspaudus mygtuką!"
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Galios",
+				"Pulso W"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Periodinis galios pulso intensyvumas maitinblokiui, neleidžiantis jam užmigti."
 		},
 		"TipGain": {
 			"text2": [
-				"Modify",
-				"tip gain"
+				"Keisti",
+				"antgreit"
 			],
-			"desc": "Tip gain"
+			"desc": "Antgalio pokyčio greitis"
 		},
 		"HallEffSensitivity": {
 			"text2": [
