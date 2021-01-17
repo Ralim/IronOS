@@ -38,6 +38,9 @@ OF SUCH DAMAGE.
 #include "gd32vf103.h"
 #include "gd32vf103_dbg.h"
 #include "gd32vf103_rcu.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* GPIOx(x=A,B,C,D,E) definitions */
 #define GPIOA (GPIO_BASE + 0x00000000U)
@@ -419,5 +422,8 @@ void gpio_event_output_disable(void);
 
 /* lock GPIO pin bit */
 void gpio_pin_lock(uint32_t gpio_periph, uint32_t pin);
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* GD32VF103_GPIO_H */
