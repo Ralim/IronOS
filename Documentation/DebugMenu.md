@@ -58,9 +58,11 @@ This is slightly miss-named, but preserving the name for now.
 This indicates the PCB "version" number, which comes from the TS100 changing the model of accelerometer without warning.
 This indicates the accelerometer that is fitted inside the unit.
 
-- 0 = MMA8652
-- 1 = LIS2DH12
-- 2 = BMA223
+- 1 = MMA8652
+- 2 = LIS2DH12
+- 3 = BMA223
+- 4 = MSA301
+- 5 = SC7A20
 - 99 = None detected (running in fallback without movement detection)
 
 ### PWR 
