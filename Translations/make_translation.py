@@ -491,6 +491,18 @@ def writeLanguage(languageCode, defs, f):
     f.write(to_unicode("#endif\n"))
 
 
+def writeUsageGuard(languageCodes, f):
+    f.write("\n")
+    f.write("#if \\\n")
+    for languageCode in languageCodes:
+        f.write("  !defined(LANG_")
+        f.write(languageCode)
+        f.write(") && \\\n")
+    f.write("  true\n")
+    f.write("#error No valid language code\n")
+    f.write("#endif")
+
+
 def writeUnit(languageCode, defs, f, UnitCodes):
     print("Generating unit block for " + languageCode)
     lang = langDict[languageCode]
@@ -587,11 +599,13 @@ def writeTarget(outFileTranslationCPP, outFileUnitH, defs, langCodes, UnitCodes)
         writeStart(f)
         for langCode in langCodes:
             writeLanguage(langCode, defs, f)
+        writeUsageGuard(langCodes, f)
 
     with io.open(outFileUnitH, "w", encoding="utf-8", newline="\n") as f:
         writeStartUnit(f)
         for langCode, UnitCode in zip(langCodes, UnitCodes):
             writeUnit(langCode, defs, f, UnitCode)
+        writeUsageGuard(langCodes, f)
         f.write(to_unicode("\n#endif /* _UNIT_H */\n"))
 
 
