@@ -38,24 +38,24 @@ OF SUCH DAMAGE.
 #include "usb_conf.h"
 
 /* configure USB clock */
-void usb_rcu_config (void);
+void usb_rcu_config(void);
 
 /* configure USB interrupt */
-void usb_intr_config (void);
+void usb_intr_config(void);
 
 /* initializes delay unit using Timer2 */
-void usb_timer_init (void);
+void usb_timer_init(void);
 
 /* delay in micro seconds */
-void usb_udelay (const uint32_t usec);
+void usb_udelay(const uint32_t usec);
 
 /* delay in milli seconds */
-void usb_mdelay (const uint32_t msec);
+void usb_mdelay(const uint32_t msec);
 
 // Functions for USE_HOST_MODE
 /* configure USB VBus */
-void usb_vbus_config (void);
+void usb_vbus_config(void);
 /* drive usb VBus */
-void usb_vbus_drive (uint8_t State);
+void usb_vbus_drive(uint8_t State);
 
 #endif /* __DRV_USB_HW_H */

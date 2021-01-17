@@ -36,7 +36,7 @@ OF SUCH DAMAGE.
 #define GD32VF103V_EVAL_H
 
 #ifdef cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #include "nuclei_sdk_soc.h"

@@ -3,27 +3,26 @@
 
 #include "OLED.hpp"
 #include "Setup.h"
-extern uint8_t DetectedAccelerometerVersion;
+extern uint8_t  DetectedAccelerometerVersion;
 extern uint32_t currentTempTargetDegC;
-extern bool settingsWereReset;
-extern bool usb_pd_available;
+extern bool     settingsWereReset;
+extern bool     usb_pd_available;
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void vApplicationStackOverflowHook(TaskHandle_t *pxTask,
-		signed portCHAR *pcTaskName);
+void vApplicationStackOverflowHook(TaskHandle_t *pxTask, signed portCHAR *pcTaskName);
 
 #define NO_DETECTED_ACCELEROMETER 99
-#define ACCELEROMETERS_SCANNING 100
-//Threads
-void startGUITask(void const *argument);
-void startPIDTask(void const *argument);
-void startMOVTask(void const *argument);
-void startPOWTask(void const *argument);
+#define ACCELEROMETERS_SCANNING   100
+// Threads
+void                startGUITask(void const *argument);
+void                startPIDTask(void const *argument);
+void                startMOVTask(void const *argument);
+void                startPOWTask(void const *argument);
 extern TaskHandle_t pidTaskNotification;
-extern uint8_t accelInit;
-extern TickType_t lastMovementTime;
+extern uint8_t      accelInit;
+extern TickType_t   lastMovementTime;
 #ifdef __cplusplus
 }
 #endif

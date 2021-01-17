@@ -12,14 +12,14 @@
  * An array of all of the desired voltages & minimum currents in preferred order
  */
 const uint16_t USB_PD_Desired_Levels[] = {
-//mV desired input, mA minimum required current
-		//Tip is ~ 7.5 ohms
-		20000, 2666, // 20V, 2.6A
-		15000, 2000, // 15V 2A
-		12000, 1600, //12V @ 1.6A
-		9000, 1200, //9V @ 1.2A
-		5000, 100, //5V @ whatever
+    // mV desired input, mA minimum required current
+    // Tip is ~ 7.5 ohms
+    20000, 2666, // 20V, 2.6A
+    15000, 2000, // 15V 2A
+    12000, 1600, // 12V @ 1.6A
+    9000,  1200, // 9V @ 1.2A
+    5000,  100,  // 5V @ whatever
 
-		};
+};
 const uint8_t USB_PD_Desired_Levels_Len = 5;
 #endif

@@ -29,7 +29,7 @@
  * 2. __SYSTIMER_BASEADDR:  Define the base address of the System Timer.
  */
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #if defined(__SYSTIMER_PRESENT) && (__SYSTIMER_PRESENT == 1)
@@ -50,42 +50,42 @@
  * - CMPCLREN and CLKSRC bit in MTIMECTL register is introduced in Nuclei N Core version 1.4(\ref __NUCLEI_N_REV >= 0x0104)
  */
 typedef struct {
-    __IOM uint64_t MTIMER;                  /*!< Offset: 0x000 (R/W)  System Timer current value 64bits Register */
-    __IOM uint64_t MTIMERCMP;               /*!< Offset: 0x008 (R/W)  System Timer compare Value 64bits Register */
-    __IOM uint32_t RESERVED0[0x3F8];        /*!< Offset: 0x010 - 0xFEC Reserved */
-    __IOM uint32_t MSFTRST;                 /*!< Offset: 0xFF0 (R/W)  System Timer Software Core Reset Register */
-    __IOM uint32_t RESERVED1;               /*!< Offset: 0xFF4 Reserved */
-    __IOM uint32_t MTIMECTL;                /*!< Offset: 0xFF8 (R/W)  System Timer Control Register, previously MSTOP register */
-    __IOM uint32_t MSIP;                    /*!< Offset: 0xFFC (R/W)  System Timer SW interrupt Register */
+  __IOM uint64_t MTIMER;           /*!< Offset: 0x000 (R/W)  System Timer current value 64bits Register */
+  __IOM uint64_t MTIMERCMP;        /*!< Offset: 0x008 (R/W)  System Timer compare Value 64bits Register */
+  __IOM uint32_t RESERVED0[0x3F8]; /*!< Offset: 0x010 - 0xFEC Reserved */
+  __IOM uint32_t MSFTRST;          /*!< Offset: 0xFF0 (R/W)  System Timer Software Core Reset Register */
+  __IOM uint32_t RESERVED1;        /*!< Offset: 0xFF4 Reserved */
+  __IOM uint32_t MTIMECTL;         /*!< Offset: 0xFF8 (R/W)  System Timer Control Register, previously MSTOP register */
+  __IOM uint32_t MSIP;             /*!< Offset: 0xFFC (R/W)  System Timer SW interrupt Register */
 } SysTimer_Type;
 
 /* Timer Control / Status Register Definitions */
-#define SysTimer_MTIMECTL_TIMESTOP_Pos      0U                                          /*!< SysTick Timer MTIMECTL: TIMESTOP bit Position */
-#define SysTimer_MTIMECTL_TIMESTOP_Msk      (1UL << SysTimer_MTIMECTL_TIMESTOP_Pos)     /*!< SysTick Timer MTIMECTL: TIMESTOP Mask */
-#define SysTimer_MTIMECTL_CMPCLREN_Pos      1U                                          /*!< SysTick Timer MTIMECTL: CMPCLREN bit Position */
-#define SysTimer_MTIMECTL_CMPCLREN_Msk      (1UL << SysTimer_MTIMECTL_CMPCLREN_Pos)     /*!< SysTick Timer MTIMECTL: CMPCLREN Mask */
-#define SysTimer_MTIMECTL_CLKSRC_Pos        2U                                          /*!< SysTick Timer MTIMECTL: CLKSRC bit Position */
-#define SysTimer_MTIMECTL_CLKSRC_Msk        (1UL << SysTimer_MTIMECTL_CLKSRC_Pos)       /*!< SysTick Timer MTIMECTL: CLKSRC Mask */
+#define SysTimer_MTIMECTL_TIMESTOP_Pos 0U                                      /*!< SysTick Timer MTIMECTL: TIMESTOP bit Position */
+#define SysTimer_MTIMECTL_TIMESTOP_Msk (1UL << SysTimer_MTIMECTL_TIMESTOP_Pos) /*!< SysTick Timer MTIMECTL: TIMESTOP Mask */
+#define SysTimer_MTIMECTL_CMPCLREN_Pos 1U                                      /*!< SysTick Timer MTIMECTL: CMPCLREN bit Position */
+#define SysTimer_MTIMECTL_CMPCLREN_Msk (1UL << SysTimer_MTIMECTL_CMPCLREN_Pos) /*!< SysTick Timer MTIMECTL: CMPCLREN Mask */
+#define SysTimer_MTIMECTL_CLKSRC_Pos   2U                                      /*!< SysTick Timer MTIMECTL: CLKSRC bit Position */
+#define SysTimer_MTIMECTL_CLKSRC_Msk   (1UL << SysTimer_MTIMECTL_CLKSRC_Pos)   /*!< SysTick Timer MTIMECTL: CLKSRC Mask */
 
-#define SysTimer_MSIP_MSIP_Pos              0U                                          /*!< SysTick Timer MSIP: MSIP bit Position */
-#define SysTimer_MSIP_MSIP_Msk              (1UL << SysTimer_MSIP_MSIP_Pos)             /*!< SysTick Timer MSIP: MSIP Mask */
+#define SysTimer_MSIP_MSIP_Pos 0U                              /*!< SysTick Timer MSIP: MSIP bit Position */
+#define SysTimer_MSIP_MSIP_Msk (1UL << SysTimer_MSIP_MSIP_Pos) /*!< SysTick Timer MSIP: MSIP Mask */
 
-#define SysTimer_MTIMER_Msk                 (0xFFFFFFFFFFFFFFFFULL)                     /*!< SysTick Timer MTIMER value Mask */
-#define SysTimer_MTIMERCMP_Msk              (0xFFFFFFFFFFFFFFFFULL)                     /*!< SysTick Timer MTIMERCMP value Mask */
-#define SysTimer_MTIMECTL_Msk               (0xFFFFFFFFUL)                              /*!< SysTick Timer MTIMECTL/MSTOP value Mask */
-#define SysTimer_MSIP_Msk                   (0xFFFFFFFFUL)                              /*!< SysTick Timer MSIP   value Mask */
-#define SysTimer_MSFTRST_Msk                (0xFFFFFFFFUL)                              /*!< SysTick Timer MSFTRST value Mask */
+#define SysTimer_MTIMER_Msk    (0xFFFFFFFFFFFFFFFFULL) /*!< SysTick Timer MTIMER value Mask */
+#define SysTimer_MTIMERCMP_Msk (0xFFFFFFFFFFFFFFFFULL) /*!< SysTick Timer MTIMERCMP value Mask */
+#define SysTimer_MTIMECTL_Msk  (0xFFFFFFFFUL)          /*!< SysTick Timer MTIMECTL/MSTOP value Mask */
+#define SysTimer_MSIP_Msk      (0xFFFFFFFFUL)          /*!< SysTick Timer MSIP   value Mask */
+#define SysTimer_MSFTRST_Msk   (0xFFFFFFFFUL)          /*!< SysTick Timer MSFTRST value Mask */
 
-#define SysTimer_MSFRST_KEY                 (0x80000A5FUL)                              /*!< SysTick Timer Software Reset Request Key */
+#define SysTimer_MSFRST_KEY (0x80000A5FUL) /*!< SysTick Timer Software Reset Request Key */
 
 #ifndef __SYSTIMER_BASEADDR
 /* Base address of SYSTIMER(__SYSTIMER_BASEADDR) should be defined in <Device.h> */
 #error "__SYSTIMER_BASEADDR is not defined, please check!"
 #endif
 /* System Timer Memory mapping of Device  */
-#define SysTimer_BASE                       __SYSTIMER_BASEADDR                         /*!< SysTick Base Address */
-#define SysTimer                            ((SysTimer_Type *) SysTimer_BASE)           /*!< SysTick configuration struct */
-/** @} */ /* end of group NMSIS_Core_SysTimer_Registers */
+#define SysTimer_BASE __SYSTIMER_BASEADDR              /*!< SysTick Base Address */
+#define SysTimer      ((SysTimer_Type *)SysTimer_BASE) /*!< SysTick configuration struct */
+/** @} */                                              /* end of group NMSIS_Core_SysTimer_Registers */
 
 /* ##################################    SysTimer function  ############################################ */
 /**
@@ -102,10 +102,7 @@ typedef struct {
  * - Load value is 64bits wide.
  * - \ref SysTimer_GetLoadValue
  */
-__STATIC_FORCEINLINE void SysTimer_SetLoadValue(uint64_t value)
-{
-    SysTimer->MTIMER = value;
-}
+__STATIC_FORCEINLINE void SysTimer_SetLoadValue(uint64_t value) { SysTimer->MTIMER = value; }
 
 /**
  * \brief  Get system timer load value
@@ -116,10 +113,7 @@ __STATIC_FORCEINLINE void SysTimer_SetLoadValue(uint64_t value)
  * - Load value is 64bits wide.
  * - \ref SysTimer_SetLoadValue
  */
-__STATIC_FORCEINLINE uint64_t SysTimer_GetLoadValue(void)
-{
-    return SysTimer->MTIMER;
-}
+__STATIC_FORCEINLINE uint64_t SysTimer_GetLoadValue(void) { return SysTimer->MTIMER; }
 
 /**
  * \brief  Set system timer compare value
@@ -132,10 +126,7 @@ __STATIC_FORCEINLINE uint64_t SysTimer_GetLoadValue(void)
  * - Modify the load value or compare value less to clear the interrupt.
  * - \ref SysTimer_GetCompareValue
  */
-__STATIC_FORCEINLINE void SysTimer_SetCompareValue(uint64_t value)
-{
-    SysTimer->MTIMERCMP = value;
-}
+__STATIC_FORCEINLINE void SysTimer_SetCompareValue(uint64_t value) { SysTimer->MTIMERCMP = value; }
 
 /**
  * \brief  Get system timer compare value
@@ -146,10 +137,7 @@ __STATIC_FORCEINLINE void SysTimer_SetCompareValue(uint64_t value)
  * - Compare value is 64bits wide.
  * - \ref SysTimer_SetCompareValue
  */
-__STATIC_FORCEINLINE uint64_t SysTimer_GetCompareValue(void)
-{
-    return SysTimer->MTIMERCMP;
-}
+__STATIC_FORCEINLINE uint64_t SysTimer_GetCompareValue(void) { return SysTimer->MTIMERCMP; }
 
 /**
  * \brief  Enable system timer counter running
@@ -157,10 +145,7 @@ __STATIC_FORCEINLINE uint64_t SysTimer_GetCompareValue(void)
  * Enable system timer counter running by clear
  * TIMESTOP bit in MTIMECTL register.
  */
-__STATIC_FORCEINLINE void SysTimer_Start(void)
-{
-    SysTimer->MTIMECTL &= ~(SysTimer_MTIMECTL_TIMESTOP_Msk);
-}
+__STATIC_FORCEINLINE void SysTimer_Start(void) { SysTimer->MTIMECTL &= ~(SysTimer_MTIMECTL_TIMESTOP_Msk); }
 
 /**
  * \brief  Stop system timer counter running
@@ -168,10 +153,7 @@ __STATIC_FORCEINLINE void SysTimer_Start(void)
  * Stop system timer counter running by set
  * TIMESTOP bit in MTIMECTL register.
  */
-__STATIC_FORCEINLINE void SysTimer_Stop(void)
-{
-    SysTimer->MTIMECTL |= SysTimer_MTIMECTL_TIMESTOP_Msk;
-}
+__STATIC_FORCEINLINE void SysTimer_Stop(void) { SysTimer->MTIMECTL |= SysTimer_MTIMECTL_TIMESTOP_Msk; }
 
 /**
  * \brief  Set system timer control value
@@ -187,10 +169,7 @@ __STATIC_FORCEINLINE void SysTimer_Stop(void)
  *   Clear CLKSRC bit to 0 to use *mtime_toggle_a*, otherwise use *core_clk_aon*
  * - \ref SysTimer_GetControlValue
  */
-__STATIC_FORCEINLINE void SysTimer_SetControlValue(uint32_t mctl)
-{
-    SysTimer->MTIMECTL = (mctl & SysTimer_MTIMECTL_Msk);
-}
+__STATIC_FORCEINLINE void SysTimer_SetControlValue(uint32_t mctl) { SysTimer->MTIMECTL = (mctl & SysTimer_MTIMECTL_Msk); }
 
 /**
  * \brief  Get system timer control value
@@ -200,10 +179,7 @@ __STATIC_FORCEINLINE void SysTimer_SetControlValue(uint32_t mctl)
  * \remarks
  * - \ref SysTimer_SetControlValue
  */
-__STATIC_FORCEINLINE uint32_t SysTimer_GetControlValue(void)
-{
-    return (SysTimer->MTIMECTL & SysTimer_MTIMECTL_Msk);
-}
+__STATIC_FORCEINLINE uint32_t SysTimer_GetControlValue(void) { return (SysTimer->MTIMECTL & SysTimer_MTIMECTL_Msk); }
 
 /**
  * \brief  Trigger or set software interrupt via system timer
@@ -214,10 +190,7 @@ __STATIC_FORCEINLINE uint32_t SysTimer_GetControlValue(void)
  * - \ref SysTimer_ClearSWIRQ
  * - \ref SysTimer_GetMsipValue
  */
-__STATIC_FORCEINLINE void SysTimer_SetSWIRQ(void)
-{
-    SysTimer->MSIP |= SysTimer_MSIP_MSIP_Msk;
-}
+__STATIC_FORCEINLINE void SysTimer_SetSWIRQ(void) { SysTimer->MSIP |= SysTimer_MSIP_MSIP_Msk; }
 
 /**
  * \brief  Clear system timer software interrupt pending request
@@ -228,10 +201,7 @@ __STATIC_FORCEINLINE void SysTimer_SetSWIRQ(void)
  * - \ref SysTimer_SetSWIRQ
  * - \ref SysTimer_GetMsipValue
  */
-__STATIC_FORCEINLINE void SysTimer_ClearSWIRQ(void)
-{
-    SysTimer->MSIP &= ~SysTimer_MSIP_MSIP_Msk;
-}
+__STATIC_FORCEINLINE void SysTimer_ClearSWIRQ(void) { SysTimer->MSIP &= ~SysTimer_MSIP_MSIP_Msk; }
 
 /**
  * \brief  Get system timer MSIP register value
@@ -244,10 +214,7 @@ __STATIC_FORCEINLINE void SysTimer_ClearSWIRQ(void)
  * - \ref SysTimer_SetSWIRQ
  * - \ref SysTimer_ClearSWIRQ
  */
-__STATIC_FORCEINLINE uint32_t SysTimer_GetMsipValue(void)
-{
-    return (uint32_t)(SysTimer->MSIP & SysTimer_MSIP_Msk);
-}
+__STATIC_FORCEINLINE uint32_t SysTimer_GetMsipValue(void) { return (uint32_t)(SysTimer->MSIP & SysTimer_MSIP_Msk); }
 
 /**
  * \brief  Set system timer MSIP register value
@@ -255,10 +222,7 @@ __STATIC_FORCEINLINE uint32_t SysTimer_GetMsipValue(void)
  * This function set the system timer MSIP register value.
  * \param [in]  msip   value to set MSIP register
  */
-__STATIC_FORCEINLINE void SysTimer_SetMsipValue(uint32_t msip)
-{
-    SysTimer->MSIP = (msip & SysTimer_MSIP_Msk);
-}
+__STATIC_FORCEINLINE void SysTimer_SetMsipValue(uint32_t msip) { SysTimer->MSIP = (msip & SysTimer_MSIP_Msk); }
 
 /**
  * \brief  Do software reset request
@@ -270,13 +234,13 @@ __STATIC_FORCEINLINE void SysTimer_SetMsipValue(uint32_t msip)
  * - The software reset is sent to SoC, SoC need to generate reset signal and send back to Core
  * - This function will not return, it will do while(1) to wait the Core reset happened
  */
-__STATIC_FORCEINLINE void SysTimer_SoftwareReset(void)
-{
-    SysTimer->MSFTRST = SysTimer_MSFRST_KEY;
-    while(1);
+__STATIC_FORCEINLINE void SysTimer_SoftwareReset(void) {
+  SysTimer->MSFTRST = SysTimer_MSFRST_KEY;
+  while (1)
+    ;
 }
 
-#if defined (__Vendor_SysTickConfig) && (__Vendor_SysTickConfig == 0U) && defined(__ECLIC_PRESENT) && (__ECLIC_PRESENT == 1)
+#if defined(__Vendor_SysTickConfig) && (__Vendor_SysTickConfig == 0U) && defined(__ECLIC_PRESENT) && (__ECLIC_PRESENT == 1)
 /**
  * \brief   System Tick Configuration
  * \details Initializes the System Timer and its non-vector interrupt, and starts the System Tick Timer.
@@ -301,14 +265,13 @@ __STATIC_FORCEINLINE void SysTimer_SoftwareReset(void)
  * \sa
  * - \ref SysTimer_SetCompareValue; SysTimer_SetLoadValue
  */
-__STATIC_INLINE uint32_t SysTick_Config(uint64_t ticks)
-{
-    SysTimer_SetLoadValue(0);
-    SysTimer_SetCompareValue(ticks);
-    ECLIC_SetShvIRQ(SysTimer_IRQn, ECLIC_NON_VECTOR_INTERRUPT);
-    ECLIC_SetLevelIRQ(SysTimer_IRQn, 0);
-    ECLIC_EnableIRQ(SysTimer_IRQn);
-    return (0UL);
+__STATIC_INLINE uint32_t SysTick_Config(uint64_t ticks) {
+  SysTimer_SetLoadValue(0);
+  SysTimer_SetCompareValue(ticks);
+  ECLIC_SetShvIRQ(SysTimer_IRQn, ECLIC_NON_VECTOR_INTERRUPT);
+  ECLIC_SetLevelIRQ(SysTimer_IRQn, 0);
+  ECLIC_EnableIRQ(SysTimer_IRQn);
+  return (0UL);
 }
 
 /**
@@ -334,25 +297,24 @@ __STATIC_INLINE uint32_t SysTick_Config(uint64_t ticks)
  * - \ref SysTimer_SetCompareValue
  * - \ref SysTimer_SetLoadValue
  */
-__STATIC_FORCEINLINE uint32_t SysTick_Reload(uint64_t ticks)
-{
-    uint64_t cur_ticks = SysTimer->MTIMER;
-    uint64_t reload_ticks = ticks + cur_ticks;
+__STATIC_FORCEINLINE uint32_t SysTick_Reload(uint64_t ticks) {
+  uint64_t cur_ticks    = SysTimer->MTIMER;
+  uint64_t reload_ticks = ticks + cur_ticks;
 
-    if (__USUALLY(reload_ticks > cur_ticks)) {
-        SysTimer->MTIMERCMP = reload_ticks;
-    } else {
-        /* When added the ticks value, then the MTIMERCMP < TIMER,
-         * which means the MTIMERCMP is overflowed,
-         * so we need to reset the counter to zero */
-        SysTimer->MTIMER = 0;
-        SysTimer->MTIMERCMP = ticks;
-    }
+  if (__USUALLY(reload_ticks > cur_ticks)) {
+    SysTimer->MTIMERCMP = reload_ticks;
+  } else {
+    /* When added the ticks value, then the MTIMERCMP < TIMER,
+     * which means the MTIMERCMP is overflowed,
+     * so we need to reset the counter to zero */
+    SysTimer->MTIMER    = 0;
+    SysTimer->MTIMERCMP = ticks;
+  }
 
-    return (0UL);
+  return (0UL);
 }
 
-#endif /* defined(__Vendor_SysTickConfig) && (__Vendor_SysTickConfig == 0U) */
+#endif    /* defined(__Vendor_SysTickConfig) && (__Vendor_SysTickConfig == 0U) */
 /** @} */ /* End of Doxygen Group NMSIS_Core_SysTimer */
 
 #endif /* defined(__SYSTIMER_PRESENT) && (__SYSTIMER_PRESENT == 1) */
@@ -361,4 +323,3 @@ __STATIC_FORCEINLINE uint32_t SysTick_Reload(uint64_t ticks)
 }
 #endif
 #endif /** __CORE_FEATURE_TIMER_H__  */
-

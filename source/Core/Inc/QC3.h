@@ -13,7 +13,7 @@ extern "C" {
 #endif
 void seekQC(int16_t Vx10, uint16_t divisor);
 void startQC(uint16_t divisor); // Tries to negotiate QC for highest voltage, must be run after
-bool hasQCNegotiated();// Returns true if a QC negotiation worked (we are using QC)
+bool hasQCNegotiated();         // Returns true if a QC negotiation worked (we are using QC)
 #ifdef __cplusplus
 }
 #endif

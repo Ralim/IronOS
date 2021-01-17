@@ -29,7 +29,7 @@
  *   * 1: Present
  */
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1)
@@ -71,7 +71,6 @@
  *   @{
  */
 /** @} */ /* End of Doxygen Group NMSIS_Core_DSP_Intrinsic */
-
 
 /**
  * \defgroup NMSIS_Core_DSP_Intrinsic_SIMD_DATA_PROCESS      SIMD Data Processing Instructions
@@ -438,11 +437,10 @@
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ADD8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("add8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ADD8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("add8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.1. ADD8 ===== */
 
@@ -479,11 +477,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ADD8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ADD16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("add16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ADD16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("add16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.2. ADD16 ===== */
 
@@ -532,11 +529,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ADD16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_ADD64(unsigned long long a, unsigned long long b)
-{
-    register unsigned long long result;
-    __ASM volatile("add64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_ADD64(unsigned long long a, unsigned long long b) {
+  register unsigned long long result;
+  __ASM volatile("add64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.3. ADD64 ===== */
 
@@ -571,11 +567,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_ADD64(unsigned long long a, unsigne
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_AVE(long a, long b)
-{
-    register long result;
-    __ASM volatile("ave %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_AVE(long a, long b) {
+  register long result;
+  __ASM volatile("ave %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.4. AVE ===== */
 
@@ -612,11 +607,10 @@ __STATIC_FORCEINLINE long __RV_AVE(long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_BITREV(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("bitrev %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_BITREV(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("bitrev %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.5. BITREV ===== */
 
@@ -654,13 +648,13 @@ __STATIC_FORCEINLINE unsigned long __RV_BITREV(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_BITREVI(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("bitrevi %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_BITREVI(a, b)                                                  \
+  ({                                                                        \
+    register unsigned long result;                                          \
+    register unsigned long __a = (unsigned long)(a);                        \
+    __ASM volatile("bitrevi %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.6. BITREVI ===== */
 
 /* ===== Inline Function Start for 3.7. BPICK ===== */
@@ -695,11 +689,10 @@ __STATIC_FORCEINLINE unsigned long __RV_BITREV(unsigned long a, unsigned long b)
  * \param [in]  c    unsigned long type of value stored in c
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_BPICK(unsigned long a, unsigned long b, unsigned long c)
-{
-    register unsigned long result;
-    __ASM volatile("bpick %0, %1, %2, %3" : "=r"(result) : "r"(a), "r"(b), "r"(c));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_BPICK(unsigned long a, unsigned long b, unsigned long c) {
+  register unsigned long result;
+  __ASM volatile("bpick %0, %1, %2, %3" : "=r"(result) : "r"(a), "r"(b), "r"(c));
+  return result;
 }
 /* ===== Inline Function End for 3.7. BPICK ===== */
 
@@ -720,10 +713,7 @@ __STATIC_FORCEINLINE unsigned long __RV_BPICK(unsigned long a, unsigned long b, 
  *
  *
  */
-__STATIC_FORCEINLINE void __RV_CLROV(void)
-{
-    __ASM volatile("clrov ");
-}
+__STATIC_FORCEINLINE void __RV_CLROV(void) { __ASM volatile("clrov "); }
 /* ===== Inline Function End for 3.8. CLROV ===== */
 
 /* ===== Inline Function Start for 3.9. CLRS8 ===== */
@@ -765,11 +755,10 @@ __STATIC_FORCEINLINE void __RV_CLROV(void)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLRS8(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clrs8 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLRS8(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clrs8 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.9. CLRS8 ===== */
 
@@ -812,11 +801,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLRS8(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLRS16(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clrs16 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLRS16(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clrs16 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.10. CLRS16 ===== */
 
@@ -859,11 +847,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLRS16(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLRS32(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clrs32 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLRS32(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clrs32 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.11. CLRS32 ===== */
 
@@ -906,11 +893,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLRS32(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLO8(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clo8 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLO8(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clo8 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.12. CLO8 ===== */
 
@@ -953,11 +939,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLO8(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLO16(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clo16 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLO16(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clo16 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.13. CLO16 ===== */
 
@@ -1000,11 +985,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLO16(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLO32(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clo32 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLO32(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clo32 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.14. CLO32 ===== */
 
@@ -1047,11 +1031,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLO32(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLZ8(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clz8 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLZ8(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clz8 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.15. CLZ8 ===== */
 
@@ -1094,11 +1077,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLZ8(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLZ16(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clz16 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLZ16(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clz16 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.16. CLZ16 ===== */
 
@@ -1141,11 +1123,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLZ16(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CLZ32(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("clz32 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CLZ32(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("clz32 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.17. CLZ32 ===== */
 
@@ -1183,11 +1164,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CLZ32(unsigned long a)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CMPEQ8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("cmpeq8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CMPEQ8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("cmpeq8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.18. CMPEQ8 ===== */
 
@@ -1225,11 +1205,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CMPEQ8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CMPEQ16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("cmpeq16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CMPEQ16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("cmpeq16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.19. CMPEQ16 ===== */
 
@@ -1271,11 +1250,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CMPEQ16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CRAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("cras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CRAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("cras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.20. CRAS16 ===== */
 
@@ -1317,11 +1295,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CRAS16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CRSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("crsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CRSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("crsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.21. CRSA16 ===== */
 
@@ -1357,13 +1334,13 @@ __STATIC_FORCEINLINE unsigned long __RV_CRSA16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_INSB(t, a, b)    \
-    ({    \
-        register unsigned long __t = (unsigned long)(t);    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("insb %0, %1, %2" : "+r"(__t) : "r"(__a), "K"(b));    \
-        __t;    \
-    })
+#define __RV_INSB(t, a, b)                                            \
+  ({                                                                  \
+    register unsigned long __t = (unsigned long)(t);                  \
+    register unsigned long __a = (unsigned long)(a);                  \
+    __ASM volatile("insb %0, %1, %2" : "+r"(__t) : "r"(__a), "K"(b)); \
+    __t;                                                              \
+  })
 /* ===== Inline Function End for 3.22. INSB ===== */
 
 /* ===== Inline Function Start for 3.23. KABS8 ===== */
@@ -1403,11 +1380,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CRSA16(unsigned long a, unsigned long b)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KABS8(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("kabs8 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KABS8(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("kabs8 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.23. KABS8 ===== */
 
@@ -1448,11 +1424,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KABS8(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KABS16(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("kabs16 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KABS16(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("kabs16 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.24. KABS16 ===== */
 
@@ -1495,11 +1470,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KABS16(unsigned long a)
  * \param [in]  a    signed long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KABSW(signed long a)
-{
-    register unsigned long result;
-    __ASM volatile("kabsw %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KABSW(signed long a) {
+  register unsigned long result;
+  __ASM volatile("kabsw %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.25. KABSW ===== */
 
@@ -1542,11 +1516,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KABSW(signed long a)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KADD8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kadd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KADD8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kadd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.26. KADD8 ===== */
 
@@ -1589,11 +1562,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KADD8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KADD16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kadd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KADD16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kadd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.27. KADD16 ===== */
 
@@ -1655,11 +1627,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KADD16(unsigned long a, unsigned long b)
  * \param [in]  b    long long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_KADD64(long long a, long long b)
-{
-    register long long result;
-    __ASM volatile("kadd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long long __RV_KADD64(long long a, long long b) {
+  register long long result;
+  __ASM volatile("kadd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.28. KADD64 ===== */
 
@@ -1702,11 +1673,10 @@ __STATIC_FORCEINLINE long long __RV_KADD64(long long a, long long b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KADDH(int a, int b)
-{
-    register long result;
-    __ASM volatile("kaddh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KADDH(int a, int b) {
+  register long result;
+  __ASM volatile("kaddh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.29. KADDH ===== */
 
@@ -1750,11 +1720,10 @@ __STATIC_FORCEINLINE long __RV_KADDH(int a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KADDW(int a, int b)
-{
-    register long result;
-    __ASM volatile("kaddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KADDW(int a, int b) {
+  register long result;
+  __ASM volatile("kaddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.30. KADDW ===== */
 
@@ -1807,11 +1776,10 @@ __STATIC_FORCEINLINE long __RV_KADDW(int a, int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KCRAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KCRAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.31. KCRAS16 ===== */
 
@@ -1864,11 +1832,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KCRAS16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KCRSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KCRSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.32. KCRSA16 ===== */
 
@@ -1919,11 +1886,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KCRSA16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KDMBB(unsigned int a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("kdmbb %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KDMBB(unsigned int a, unsigned int b) {
+  register long result;
+  __ASM volatile("kdmbb %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.33.1. KDMBB ===== */
 
@@ -1974,11 +1940,10 @@ __STATIC_FORCEINLINE long __RV_KDMBB(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KDMBT(unsigned int a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("kdmbt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KDMBT(unsigned int a, unsigned int b) {
+  register long result;
+  __ASM volatile("kdmbt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.33.2. KDMBT ===== */
 
@@ -2029,11 +1994,10 @@ __STATIC_FORCEINLINE long __RV_KDMBT(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KDMTT(unsigned int a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("kdmtt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KDMTT(unsigned int a, unsigned int b) {
+  register long result;
+  __ASM volatile("kdmtt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.33.3. KDMTT ===== */
 
@@ -2094,10 +2058,9 @@ __STATIC_FORCEINLINE long __RV_KDMTT(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KDMABB(long t, unsigned int a, unsigned int b)
-{
-    __ASM volatile("kdmabb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KDMABB(long t, unsigned int a, unsigned int b) {
+  __ASM volatile("kdmabb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.34.1. KDMABB ===== */
 
@@ -2158,10 +2121,9 @@ __STATIC_FORCEINLINE long __RV_KDMABB(long t, unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KDMABT(long t, unsigned int a, unsigned int b)
-{
-    __ASM volatile("kdmabt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KDMABT(long t, unsigned int a, unsigned int b) {
+  __ASM volatile("kdmabt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.34.2. KDMABT ===== */
 
@@ -2222,10 +2184,9 @@ __STATIC_FORCEINLINE long __RV_KDMABT(long t, unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KDMATT(long t, unsigned int a, unsigned int b)
-{
-    __ASM volatile("kdmatt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KDMATT(long t, unsigned int a, unsigned int b) {
+  __ASM volatile("kdmatt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.34.3. KDMATT ===== */
 
@@ -2283,11 +2244,10 @@ __STATIC_FORCEINLINE long __RV_KDMATT(long t, unsigned int a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KHM8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("khm8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KHM8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("khm8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.35.1. KHM8 ===== */
 
@@ -2345,11 +2305,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KHM8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KHMX8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("khmx8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KHMX8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("khmx8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.35.2. KHMX8 ===== */
 
@@ -2408,11 +2367,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KHMX8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KHM16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("khm16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KHM16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("khm16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.36.1. KHM16 ===== */
 
@@ -2471,11 +2429,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KHM16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KHMX16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("khmx16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KHMX16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("khmx16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.36.2. KHMX16 ===== */
 
@@ -2524,11 +2481,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KHMX16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KHMBB(unsigned int a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("khmbb %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KHMBB(unsigned int a, unsigned int b) {
+  register long result;
+  __ASM volatile("khmbb %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.37.1. KHMBB ===== */
 
@@ -2577,11 +2533,10 @@ __STATIC_FORCEINLINE long __RV_KHMBB(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KHMBT(unsigned int a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("khmbt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KHMBT(unsigned int a, unsigned int b) {
+  register long result;
+  __ASM volatile("khmbt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.37.2. KHMBT ===== */
 
@@ -2630,11 +2585,10 @@ __STATIC_FORCEINLINE long __RV_KHMBT(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KHMTT(unsigned int a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("khmtt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KHMTT(unsigned int a, unsigned int b) {
+  register long result;
+  __ASM volatile("khmtt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.37.3. KHMTT ===== */
 
@@ -2694,10 +2648,9 @@ __STATIC_FORCEINLINE long __RV_KHMTT(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMABB(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmabb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMABB(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmabb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.38.1. KMABB ===== */
 
@@ -2757,10 +2710,9 @@ __STATIC_FORCEINLINE long __RV_KMABB(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMABT(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmabt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMABT(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmabt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.38.2. KMABT ===== */
 
@@ -2820,10 +2772,9 @@ __STATIC_FORCEINLINE long __RV_KMABT(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMATT(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmatt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMATT(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmatt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.38.3. KMATT ===== */
 
@@ -2884,10 +2835,9 @@ __STATIC_FORCEINLINE long __RV_KMATT(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMADA(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmada %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMADA(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmada %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.39.1. KMADA ===== */
 
@@ -2948,10 +2898,9 @@ __STATIC_FORCEINLINE long __RV_KMADA(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMAXDA(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmaxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMAXDA(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmaxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.39.2. KMAXDA ===== */
 
@@ -3020,10 +2969,9 @@ __STATIC_FORCEINLINE long __RV_KMAXDA(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMADS(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmads %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMADS(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmads %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.40.1. KMADS ===== */
 
@@ -3092,10 +3040,9 @@ __STATIC_FORCEINLINE long __RV_KMADS(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMADRS(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmadrs %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMADRS(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmadrs %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.40.2. KMADRS ===== */
 
@@ -3164,10 +3111,9 @@ __STATIC_FORCEINLINE long __RV_KMADRS(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMAXDS(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmaxds %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMAXDS(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmaxds %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.40.3. KMAXDS ===== */
 
@@ -3232,10 +3178,9 @@ __STATIC_FORCEINLINE long __RV_KMAXDS(long t, unsigned long a, unsigned long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_KMAR64(long long t, long a, long b)
-{
-    __ASM volatile("kmar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_KMAR64(long long t, long a, long b) {
+  __ASM volatile("kmar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.41. KMAR64 ===== */
 
@@ -3282,11 +3227,10 @@ __STATIC_FORCEINLINE long long __RV_KMAR64(long long t, long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMDA(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmda %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMDA(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmda %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.42.1. KMDA ===== */
 
@@ -3333,11 +3277,10 @@ __STATIC_FORCEINLINE long __RV_KMDA(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMXDA(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmxda %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMXDA(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmxda %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.42.2. KMXDA ===== */
 
@@ -3395,10 +3338,9 @@ __STATIC_FORCEINLINE long __RV_KMXDA(unsigned long a, unsigned long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAC(long t, long a, long b)
-{
-    __ASM volatile("kmmac %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAC(long t, long a, long b) {
+  __ASM volatile("kmmac %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.43.1. KMMAC ===== */
 
@@ -3456,10 +3398,9 @@ __STATIC_FORCEINLINE long __RV_KMMAC(long t, long a, long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAC_U(long t, long a, long b)
-{
-    __ASM volatile("kmmac.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAC_U(long t, long a, long b) {
+  __ASM volatile("kmmac.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.43.2. KMMAC.u ===== */
 
@@ -3518,10 +3459,9 @@ __STATIC_FORCEINLINE long __RV_KMMAC_U(long t, long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWB(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWB(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.44.1. KMMAWB ===== */
 
@@ -3580,10 +3520,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWB(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWB_U(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawb.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWB_U(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawb.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.44.2. KMMAWB.u ===== */
 
@@ -3648,10 +3587,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWB_U(long t, unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWB2(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawb2 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWB2(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawb2 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.45.1. KMMAWB2 ===== */
 
@@ -3716,10 +3654,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWB2(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWB2_U(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawb2.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWB2_U(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawb2.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.45.2. KMMAWB2.u ===== */
 
@@ -3778,10 +3715,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWB2_U(long t, unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWT(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWT(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.46.1. KMMAWT ===== */
 
@@ -3840,10 +3776,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWT(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWT_U(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawt.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWT_U(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawt.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.46.2. KMMAWT.u ===== */
 
@@ -3908,10 +3843,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWT_U(long t, unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWT2(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawt2 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWT2(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawt2 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.47.1. KMMAWT2 ===== */
 
@@ -3976,10 +3910,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWT2(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMAWT2_U(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmmawt2.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMAWT2_U(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmmawt2.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.47.2. KMMAWT2.u ===== */
 
@@ -4036,10 +3969,9 @@ __STATIC_FORCEINLINE long __RV_KMMAWT2_U(long t, unsigned long a, unsigned long 
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMSB(long t, long a, long b)
-{
-    __ASM volatile("kmmsb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMSB(long t, long a, long b) {
+  __ASM volatile("kmmsb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.48.1. KMMSB ===== */
 
@@ -4096,10 +4028,9 @@ __STATIC_FORCEINLINE long __RV_KMMSB(long t, long a, long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMSB_U(long t, long a, long b)
-{
-    __ASM volatile("kmmsb.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMMSB_U(long t, long a, long b) {
+  __ASM volatile("kmmsb.u %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.48.2. KMMSB.u ===== */
 
@@ -4151,11 +4082,10 @@ __STATIC_FORCEINLINE long __RV_KMMSB_U(long t, long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMWB2(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmmwb2 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMMWB2(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmmwb2 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.49.1. KMMWB2 ===== */
 
@@ -4207,11 +4137,10 @@ __STATIC_FORCEINLINE long __RV_KMMWB2(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMWB2_U(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmmwb2.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMMWB2_U(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmmwb2.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.49.2. KMMWB2.u ===== */
 
@@ -4263,11 +4192,10 @@ __STATIC_FORCEINLINE long __RV_KMMWB2_U(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMWT2(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmmwt2 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMMWT2(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmmwt2 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.50.1. KMMWT2 ===== */
 
@@ -4319,11 +4247,10 @@ __STATIC_FORCEINLINE long __RV_KMMWT2(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMMWT2_U(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmmwt2.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMMWT2_U(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmmwt2.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.50.2. KMMWT2.u ===== */
 
@@ -4382,10 +4309,9 @@ __STATIC_FORCEINLINE long __RV_KMMWT2_U(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMSDA(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmsda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMSDA(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmsda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.51.1. KMSDA ===== */
 
@@ -4444,10 +4370,9 @@ __STATIC_FORCEINLINE long __RV_KMSDA(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMSXDA(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmsxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMSXDA(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmsxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.51.2. KMSXDA ===== */
 
@@ -4512,10 +4437,9 @@ __STATIC_FORCEINLINE long __RV_KMSXDA(long t, unsigned long a, unsigned long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_KMSR64(long long t, long a, long b)
-{
-    __ASM volatile("kmsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_KMSR64(long long t, long a, long b) {
+  __ASM volatile("kmsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.52. KMSR64 ===== */
 
@@ -4559,11 +4483,10 @@ __STATIC_FORCEINLINE long long __RV_KMSR64(long long t, long a, long b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KSLLW(long a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("ksllw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KSLLW(long a, unsigned int b) {
+  register long result;
+  __ASM volatile("ksllw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.53. KSLLW ===== */
 
@@ -4606,13 +4529,13 @@ __STATIC_FORCEINLINE long __RV_KSLLW(long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-#define __RV_KSLLIW(a, b)    \
-    ({    \
-        register long result;    \
-        register long __a = (long)(a);    \
-        __ASM volatile("kslliw %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_KSLLIW(a, b)                                                  \
+  ({                                                                       \
+    register long result;                                                  \
+    register long __a = (long)(a);                                         \
+    __ASM volatile("kslliw %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.54. KSLLIW ===== */
 
 /* ===== Inline Function Start for 3.55. KSLL8 ===== */
@@ -4660,11 +4583,10 @@ __STATIC_FORCEINLINE long __RV_KSLLW(long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLL8(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("ksll8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLL8(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("ksll8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.55. KSLL8 ===== */
 
@@ -4712,13 +4634,13 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLL8(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_KSLLI8(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("kslli8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_KSLLI8(a, b)                                                  \
+  ({                                                                       \
+    register unsigned long result;                                         \
+    register unsigned long __a = (unsigned long)(a);                       \
+    __ASM volatile("kslli8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.56. KSLLI8 ===== */
 
 /* ===== Inline Function Start for 3.57. KSLL16 ===== */
@@ -4766,11 +4688,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLL8(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLL16(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("ksll16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLL16(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("ksll16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.57. KSLL16 ===== */
 
@@ -4818,13 +4739,13 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLL16(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_KSLLI16(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("kslli16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_KSLLI16(a, b)                                                  \
+  ({                                                                        \
+    register unsigned long result;                                          \
+    register unsigned long __a = (unsigned long)(a);                        \
+    __ASM volatile("kslli16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.58. KSLLI16 ===== */
 
 /* ===== Inline Function Start for 3.59.1. KSLRA8 ===== */
@@ -4886,11 +4807,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLL16(unsigned long a, unsigned int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLRA8(unsigned long a, int b)
-{
-    register unsigned long result;
-    __ASM volatile("kslra8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLRA8(unsigned long a, int b) {
+  register unsigned long result;
+  __ASM volatile("kslra8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.59.1. KSLRA8 ===== */
 
@@ -4953,11 +4873,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLRA8(unsigned long a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLRA8_U(unsigned long a, int b)
-{
-    register unsigned long result;
-    __ASM volatile("kslra8.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLRA8_U(unsigned long a, int b) {
+  register unsigned long result;
+  __ASM volatile("kslra8.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.59.2. KSLRA8.u ===== */
 
@@ -5020,11 +4939,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLRA8_U(unsigned long a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLRA16(unsigned long a, int b)
-{
-    register unsigned long result;
-    __ASM volatile("kslra16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLRA16(unsigned long a, int b) {
+  register unsigned long result;
+  __ASM volatile("kslra16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.60.1. KSLRA16 ===== */
 
@@ -5087,11 +5005,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLRA16(unsigned long a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLRA16_U(unsigned long a, int b)
-{
-    register unsigned long result;
-    __ASM volatile("kslra16.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLRA16_U(unsigned long a, int b) {
+  register unsigned long result;
+  __ASM volatile("kslra16.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.60.2. KSLRA16.u ===== */
 
@@ -5147,11 +5064,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLRA16_U(unsigned long a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KSLRAW(int a, int b)
-{
-    register long result;
-    __ASM volatile("kslraw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KSLRAW(int a, int b) {
+  register long result;
+  __ASM volatile("kslraw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.61. KSLRAW ===== */
 
@@ -5210,11 +5126,10 @@ __STATIC_FORCEINLINE long __RV_KSLRAW(int a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KSLRAW_U(int a, int b)
-{
-    register long result;
-    __ASM volatile("kslraw.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KSLRAW_U(int a, int b) {
+  register long result;
+  __ASM volatile("kslraw.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.62. KSLRAW.u ===== */
 
@@ -5267,11 +5182,10 @@ __STATIC_FORCEINLINE long __RV_KSLRAW_U(int a, int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSTAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSTAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.63. KSTAS16 ===== */
 
@@ -5324,11 +5238,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSTAS16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSTSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSTSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.64. KSTSA16 ===== */
 
@@ -5371,11 +5284,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSTSA16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSUB8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ksub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSUB8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ksub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.65. KSUB8 ===== */
 
@@ -5419,11 +5331,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSUB8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSUB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ksub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSUB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ksub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.66. KSUB16 ===== */
 
@@ -5485,11 +5396,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSUB16(unsigned long a, unsigned long b)
  * \param [in]  b    long long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_KSUB64(long long a, long long b)
-{
-    register long long result;
-    __ASM volatile("ksub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long long __RV_KSUB64(long long a, long long b) {
+  register long long result;
+  __ASM volatile("ksub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.67. KSUB64 ===== */
 
@@ -5532,11 +5442,10 @@ __STATIC_FORCEINLINE long long __RV_KSUB64(long long a, long long b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KSUBH(int a, int b)
-{
-    register long result;
-    __ASM volatile("ksubh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KSUBH(int a, int b) {
+  register long result;
+  __ASM volatile("ksubh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.68. KSUBH ===== */
 
@@ -5580,11 +5489,10 @@ __STATIC_FORCEINLINE long __RV_KSUBH(int a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KSUBW(int a, int b)
-{
-    register long result;
-    __ASM volatile("ksubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KSUBW(int a, int b) {
+  register long result;
+  __ASM volatile("ksubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.69. KSUBW ===== */
 
@@ -5636,11 +5544,10 @@ __STATIC_FORCEINLINE long __RV_KSUBW(int a, int b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KWMMUL(long a, long b)
-{
-    register long result;
-    __ASM volatile("kwmmul %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KWMMUL(long a, long b) {
+  register long result;
+  __ASM volatile("kwmmul %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.70.1. KWMMUL ===== */
 
@@ -5692,11 +5599,10 @@ __STATIC_FORCEINLINE long __RV_KWMMUL(long a, long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KWMMUL_U(long a, long b)
-{
-    register long result;
-    __ASM volatile("kwmmul.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KWMMUL_U(long a, long b) {
+  register long result;
+  __ASM volatile("kwmmul.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.70.2. KWMMUL.u ===== */
 
@@ -5738,10 +5644,9 @@ __STATIC_FORCEINLINE long __RV_KWMMUL_U(long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_MADDR32(unsigned long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("maddr32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long __RV_MADDR32(unsigned long t, unsigned long a, unsigned long b) {
+  __ASM volatile("maddr32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.71. MADDR32 ===== */
 
@@ -5777,11 +5682,10 @@ __STATIC_FORCEINLINE unsigned long __RV_MADDR32(unsigned long t, unsigned long a
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_MAXW(int a, int b)
-{
-    register long result;
-    __ASM volatile("maxw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_MAXW(int a, int b) {
+  register long result;
+  __ASM volatile("maxw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.72. MAXW ===== */
 
@@ -5813,11 +5717,10 @@ __STATIC_FORCEINLINE long __RV_MAXW(int a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_MINW(int a, int b)
-{
-    register long result;
-    __ASM volatile("minw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_MINW(int a, int b) {
+  register long result;
+  __ASM volatile("minw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.73. MINW ===== */
 
@@ -5860,10 +5763,9 @@ __STATIC_FORCEINLINE long __RV_MINW(int a, int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_MSUBR32(unsigned long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("msubr32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long __RV_MSUBR32(unsigned long t, unsigned long a, unsigned long b) {
+  __ASM volatile("msubr32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.74. MSUBR32 ===== */
 
@@ -5911,11 +5813,10 @@ __STATIC_FORCEINLINE unsigned long __RV_MSUBR32(unsigned long t, unsigned long a
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_MULR64(unsigned long a, unsigned long b)
-{
-    register unsigned long long result;
-    __ASM volatile("mulr64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_MULR64(unsigned long a, unsigned long b) {
+  register unsigned long long result;
+  __ASM volatile("mulr64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.75. MULR64 ===== */
 
@@ -5963,11 +5864,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_MULR64(unsigned long a, unsigned lo
  * \param [in]  b    long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_MULSR64(long a, long b)
-{
-    register long long result;
-    __ASM volatile("mulsr64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long long __RV_MULSR64(long a, long b) {
+  register long long result;
+  __ASM volatile("mulsr64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.76. MULSR64 ===== */
 
@@ -6002,11 +5902,10 @@ __STATIC_FORCEINLINE long long __RV_MULSR64(long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PBSAD(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pbsad %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PBSAD(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pbsad %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.77. PBSAD ===== */
 
@@ -6044,10 +5943,9 @@ __STATIC_FORCEINLINE unsigned long __RV_PBSAD(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PBSADA(unsigned long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("pbsada %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long __RV_PBSADA(unsigned long t, unsigned long a, unsigned long b) {
+  __ASM volatile("pbsada %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.78. PBSADA ===== */
 
@@ -6094,11 +5992,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PBSADA(unsigned long t, unsigned long a,
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKBB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pkbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKBB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pkbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.79.1. PKBB16 ===== */
 
@@ -6145,11 +6042,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKBB16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKBT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pkbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKBT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pkbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.79.2. PKBT16 ===== */
 
@@ -6196,11 +6092,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKBT16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKTT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pktt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKTT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pktt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.79.3. PKTT16 ===== */
 
@@ -6247,11 +6142,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKTT16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKTB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pktb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKTB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pktb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.79.4. PKTB16 ===== */
 
@@ -6292,11 +6186,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKTB16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RADD8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("radd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RADD8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("radd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.80. RADD8 ===== */
 
@@ -6337,11 +6230,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RADD8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RADD16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("radd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RADD16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("radd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.81. RADD16 ===== */
 
@@ -6390,11 +6282,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RADD16(unsigned long a, unsigned long b)
  * \param [in]  b    long long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_RADD64(long long a, long long b)
-{
-    register long long result;
-    __ASM volatile("radd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long long __RV_RADD64(long long a, long long b) {
+  register long long result;
+  __ASM volatile("radd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.82. RADD64 ===== */
 
@@ -6438,11 +6329,10 @@ __STATIC_FORCEINLINE long long __RV_RADD64(long long a, long long b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_RADDW(int a, int b)
-{
-    register long result;
-    __ASM volatile("raddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_RADDW(int a, int b) {
+  register long result;
+  __ASM volatile("raddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.83. RADDW ===== */
 
@@ -6487,11 +6377,10 @@ __STATIC_FORCEINLINE long __RV_RADDW(int a, int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RCRAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RCRAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.84. RCRAS16 ===== */
 
@@ -6536,11 +6425,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RCRAS16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RCRSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RCRSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.85. RCRSA16 ===== */
 
@@ -6563,11 +6451,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RCRSA16(unsigned long a, unsigned long b
  *
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RDOV(void)
-{
-    register unsigned long result;
-    __ASM volatile("rdov %0" : "=r"(result));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RDOV(void) {
+  register unsigned long result;
+  __ASM volatile("rdov %0" : "=r"(result));
+  return result;
 }
 /* ===== Inline Function End for 3.86. RDOV ===== */
 
@@ -6612,11 +6499,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RDOV(void)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RSTAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RSTAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.87. RSTAS16 ===== */
 
@@ -6661,11 +6547,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RSTAS16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RSTSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RSTSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.88. RSTSA16 ===== */
 
@@ -6708,11 +6593,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RSTSA16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RSUB8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rsub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RSUB8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rsub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.89. RSUB8 ===== */
 
@@ -6755,11 +6639,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RSUB8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RSUB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rsub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RSUB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rsub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.90. RSUB16 ===== */
 
@@ -6809,11 +6692,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RSUB16(unsigned long a, unsigned long b)
  * \param [in]  b    long long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_RSUB64(long long a, long long b)
-{
-    register long long result;
-    __ASM volatile("rsub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long long __RV_RSUB64(long long a, long long b) {
+  register long long result;
+  __ASM volatile("rsub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.91. RSUB64 ===== */
 
@@ -6857,11 +6739,10 @@ __STATIC_FORCEINLINE long long __RV_RSUB64(long long a, long long b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_RSUBW(int a, int b)
-{
-    register long result;
-    __ASM volatile("rsubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_RSUBW(int a, int b) {
+  register long result;
+  __ASM volatile("rsubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.92. RSUBW ===== */
 
@@ -6905,13 +6786,13 @@ __STATIC_FORCEINLINE long __RV_RSUBW(int a, int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SCLIP8(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("sclip8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SCLIP8(a, b)                                                  \
+  ({                                                                       \
+    register unsigned long result;                                         \
+    register unsigned long __a = (unsigned long)(a);                       \
+    __ASM volatile("sclip8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.93. SCLIP8 ===== */
 
 /* ===== Inline Function Start for 3.94. SCLIP16 ===== */
@@ -6954,13 +6835,13 @@ __STATIC_FORCEINLINE long __RV_RSUBW(int a, int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SCLIP16(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("sclip16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SCLIP16(a, b)                                                  \
+  ({                                                                        \
+    register unsigned long result;                                          \
+    register unsigned long __a = (unsigned long)(a);                        \
+    __ASM volatile("sclip16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.94. SCLIP16 ===== */
 
 /* ===== Inline Function Start for 3.95. SCLIP32 ===== */
@@ -7003,13 +6884,13 @@ __STATIC_FORCEINLINE long __RV_RSUBW(int a, int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-#define __RV_SCLIP32(a, b)    \
-    ({    \
-        register long result;    \
-        register long __a = (long)(a);    \
-        __ASM volatile("sclip32 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SCLIP32(a, b)                                                  \
+  ({                                                                        \
+    register long result;                                                   \
+    register long __a = (long)(a);                                          \
+    __ASM volatile("sclip32 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.95. SCLIP32 ===== */
 
 /* ===== Inline Function Start for 3.96. SCMPLE8 ===== */
@@ -7044,11 +6925,10 @@ __STATIC_FORCEINLINE long __RV_RSUBW(int a, int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SCMPLE8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("scmple8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SCMPLE8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("scmple8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.96. SCMPLE8 ===== */
 
@@ -7084,11 +6964,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SCMPLE8(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SCMPLE16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("scmple16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SCMPLE16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("scmple16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.97. SCMPLE16 ===== */
 
@@ -7123,11 +7002,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SCMPLE16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SCMPLT8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("scmplt8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SCMPLT8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("scmplt8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.98. SCMPLT8 ===== */
 
@@ -7162,11 +7040,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SCMPLT8(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SCMPLT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("scmplt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SCMPLT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("scmplt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.99. SCMPLT16 ===== */
 
@@ -7203,11 +7080,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SCMPLT16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SLL8(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("sll8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SLL8(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("sll8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.100. SLL8 ===== */
 
@@ -7243,13 +7119,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SLL8(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SLLI8(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("slli8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SLLI8(a, b)                                                  \
+  ({                                                                      \
+    register unsigned long result;                                        \
+    register unsigned long __a = (unsigned long)(a);                      \
+    __ASM volatile("slli8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                               \
+  })
 /* ===== Inline Function End for 3.101. SLLI8 ===== */
 
 /* ===== Inline Function Start for 3.102. SLL16 ===== */
@@ -7285,11 +7161,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SLL8(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SLL16(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("sll16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SLL16(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("sll16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.102. SLL16 ===== */
 
@@ -7325,13 +7200,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SLL16(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SLLI16(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("slli16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SLLI16(a, b)                                                  \
+  ({                                                                       \
+    register unsigned long result;                                         \
+    register unsigned long __a = (unsigned long)(a);                       \
+    __ASM volatile("slli16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.103. SLLI16 ===== */
 
 /* ===== Inline Function Start for 3.104. SMAL ===== */
@@ -7386,11 +7261,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SLL16(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMAL(long long a, unsigned long b)
-{
-    register long long result;
-    __ASM volatile("smal %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long long __RV_SMAL(long long a, unsigned long b) {
+  register long long result;
+  __ASM volatile("smal %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.104. SMAL ===== */
 
@@ -7469,10 +7343,9 @@ __STATIC_FORCEINLINE long long __RV_SMAL(long long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALBB(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smalbb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALBB(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smalbb %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.105.1. SMALBB ===== */
 
@@ -7551,10 +7424,9 @@ __STATIC_FORCEINLINE long long __RV_SMALBB(long long t, unsigned long a, unsigne
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALBT(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smalbt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALBT(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smalbt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.105.2. SMALBT ===== */
 
@@ -7633,10 +7505,9 @@ __STATIC_FORCEINLINE long long __RV_SMALBT(long long t, unsigned long a, unsigne
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALTT(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smaltt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALTT(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smaltt %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.105.3. SMALTT ===== */
 
@@ -7717,10 +7588,9 @@ __STATIC_FORCEINLINE long long __RV_SMALTT(long long t, unsigned long a, unsigne
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALDA(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smalda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALDA(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smalda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.106.1. SMALDA ===== */
 
@@ -7801,10 +7671,9 @@ __STATIC_FORCEINLINE long long __RV_SMALDA(long long t, unsigned long a, unsigne
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALXDA(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smalxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALXDA(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smalxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.106.2. SMALXDA ===== */
 
@@ -7892,10 +7761,9 @@ __STATIC_FORCEINLINE long long __RV_SMALXDA(long long t, unsigned long a, unsign
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALDS(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smalds %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALDS(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smalds %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.107.1. SMALDS ===== */
 
@@ -7983,10 +7851,9 @@ __STATIC_FORCEINLINE long long __RV_SMALDS(long long t, unsigned long a, unsigne
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALDRS(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smaldrs %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALDRS(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smaldrs %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.107.2. SMALDRS ===== */
 
@@ -8074,10 +7941,9 @@ __STATIC_FORCEINLINE long long __RV_SMALDRS(long long t, unsigned long a, unsign
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMALXDS(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smalxds %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMALXDS(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smalxds %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.107.3. SMALXDS ===== */
 
@@ -8126,10 +7992,9 @@ __STATIC_FORCEINLINE long long __RV_SMALXDS(long long t, unsigned long a, unsign
  * \param [in]  b    long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMAR64(long long t, long a, long b)
-{
-    __ASM volatile("smar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMAR64(long long t, long a, long b) {
+  __ASM volatile("smar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.108. SMAR64 ===== */
 
@@ -8170,10 +8035,9 @@ __STATIC_FORCEINLINE long long __RV_SMAR64(long long t, long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMAQA(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smaqa %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_SMAQA(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smaqa %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.109. SMAQA ===== */
 
@@ -8215,10 +8079,9 @@ __STATIC_FORCEINLINE long __RV_SMAQA(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMAQA_SU(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smaqa.su %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_SMAQA_SU(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smaqa.su %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.110. SMAQA.SU ===== */
 
@@ -8253,11 +8116,10 @@ __STATIC_FORCEINLINE long __RV_SMAQA_SU(long t, unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SMAX8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("smax8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SMAX8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("smax8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.111. SMAX8 ===== */
 
@@ -8292,11 +8154,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SMAX8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SMAX16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("smax16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SMAX16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("smax16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.112. SMAX16 ===== */
 
@@ -8344,11 +8205,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SMAX16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMBB16(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMBB16(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.113.1. SMBB16 ===== */
 
@@ -8396,11 +8256,10 @@ __STATIC_FORCEINLINE long __RV_SMBB16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMBT16(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMBT16(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.113.2. SMBT16 ===== */
 
@@ -8448,11 +8307,10 @@ __STATIC_FORCEINLINE long __RV_SMBT16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMTT16(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smtt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMTT16(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smtt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.113.3. SMTT16 ===== */
 
@@ -8507,11 +8365,10 @@ __STATIC_FORCEINLINE long __RV_SMTT16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMDS(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smds %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMDS(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smds %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.114.1. SMDS ===== */
 
@@ -8566,11 +8423,10 @@ __STATIC_FORCEINLINE long __RV_SMDS(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMDRS(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smdrs %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMDRS(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smdrs %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.114.2. SMDRS ===== */
 
@@ -8625,11 +8481,10 @@ __STATIC_FORCEINLINE long __RV_SMDRS(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMXDS(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smxds %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMXDS(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smxds %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.114.3. SMXDS ===== */
 
@@ -8664,11 +8519,10 @@ __STATIC_FORCEINLINE long __RV_SMXDS(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SMIN8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("smin8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SMIN8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("smin8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.115. SMIN8 ===== */
 
@@ -8703,11 +8557,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SMIN8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SMIN16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("smin16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SMIN16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("smin16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.116. SMIN16 ===== */
 
@@ -8754,11 +8607,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SMIN16(unsigned long a, unsigned long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMMUL(long a, long b)
-{
-    register long result;
-    __ASM volatile("smmul %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMMUL(long a, long b) {
+  register long result;
+  __ASM volatile("smmul %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.117.1. SMMUL ===== */
 
@@ -8805,11 +8657,10 @@ __STATIC_FORCEINLINE long __RV_SMMUL(long a, long b)
  * \param [in]  b    long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMMUL_U(long a, long b)
-{
-    register long result;
-    __ASM volatile("smmul.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMMUL_U(long a, long b) {
+  register long result;
+  __ASM volatile("smmul.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.117.2. SMMUL.u ===== */
 
@@ -8855,11 +8706,10 @@ __STATIC_FORCEINLINE long __RV_SMMUL_U(long a, long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMMWB(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smmwb %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMMWB(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smmwb %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.118.1. SMMWB ===== */
 
@@ -8905,11 +8755,10 @@ __STATIC_FORCEINLINE long __RV_SMMWB(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMMWB_U(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smmwb.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMMWB_U(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smmwb.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.118.2. SMMWB.u ===== */
 
@@ -8955,11 +8804,10 @@ __STATIC_FORCEINLINE long __RV_SMMWB_U(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMMWT(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smmwt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMMWT(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smmwt %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.119.1. SMMWT ===== */
 
@@ -9005,11 +8853,10 @@ __STATIC_FORCEINLINE long __RV_SMMWT(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMMWT_U(long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smmwt.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMMWT_U(long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smmwt.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.119.2. SMMWT.u ===== */
 
@@ -9088,10 +8935,9 @@ __STATIC_FORCEINLINE long __RV_SMMWT_U(long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMSLDA(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smslda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMSLDA(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smslda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.120.1. SMSLDA ===== */
 
@@ -9170,10 +9016,9 @@ __STATIC_FORCEINLINE long long __RV_SMSLDA(long long t, unsigned long a, unsigne
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMSLXDA(long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("smslxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMSLXDA(long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("smslxda %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.120.2. SMSLXDA ===== */
 
@@ -9223,10 +9068,9 @@ __STATIC_FORCEINLINE long long __RV_SMSLXDA(long long t, unsigned long a, unsign
  * \param [in]  b    long type of value stored in b
  * \return value stored in long long type
  */
-__STATIC_FORCEINLINE long long __RV_SMSR64(long long t, long a, long b)
-{
-    __ASM volatile("smsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long long __RV_SMSR64(long long t, long a, long b) {
+  __ASM volatile("smsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.121. SMSR64 ===== */
 
@@ -9305,11 +9149,10 @@ __STATIC_FORCEINLINE long long __RV_SMSR64(long long t, long a, long b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_SMUL8(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("smul8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_SMUL8(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("smul8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.122.1. SMUL8 ===== */
 
@@ -9388,11 +9231,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_SMUL8(unsigned int a, unsigned int 
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_SMULX8(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("smulx8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_SMULX8(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("smulx8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.122.2. SMULX8 ===== */
 
@@ -9473,11 +9315,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_SMULX8(unsigned int a, unsigned int
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_SMUL16(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("smul16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_SMUL16(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("smul16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.123.1. SMUL16 ===== */
 
@@ -9558,11 +9399,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_SMUL16(unsigned int a, unsigned int
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_SMULX16(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("smulx16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_SMULX16(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("smulx16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.123.2. SMULX16 ===== */
 
@@ -9612,11 +9452,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_SMULX16(unsigned int a, unsigned in
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SRA_U(long a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("sra.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SRA_U(long a, unsigned int b) {
+  register long result;
+  __ASM volatile("sra.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.124. SRA.u ===== */
 
@@ -9667,13 +9506,13 @@ __STATIC_FORCEINLINE long __RV_SRA_U(long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-#define __RV_SRAI_U(a, b)    \
-    ({    \
-        register long result;    \
-        register long __a = (long)(a);    \
-        __ASM volatile("srai.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRAI_U(a, b)                                                  \
+  ({                                                                       \
+    register long result;                                                  \
+    register long __a = (long)(a);                                         \
+    __ASM volatile("srai.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.125. SRAI.u ===== */
 
 /* ===== Inline Function Start for 3.126.1. SRA8 ===== */
@@ -9722,11 +9561,10 @@ __STATIC_FORCEINLINE long __RV_SRA_U(long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRA8(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("sra8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRA8(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("sra8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.126.1. SRA8 ===== */
 
@@ -9776,11 +9614,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA8(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRA8_U(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("sra8.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRA8_U(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("sra8.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.126.2. SRA8.u ===== */
 
@@ -9829,13 +9666,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA8_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRAI8(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srai8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRAI8(a, b)                                                  \
+  ({                                                                      \
+    register unsigned long result;                                        \
+    register unsigned long __a = (unsigned long)(a);                      \
+    __ASM volatile("srai8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                               \
+  })
 /* ===== Inline Function End for 3.127.1. SRAI8 ===== */
 
 /* ===== Inline Function Start for 3.127.2. SRAI8.u ===== */
@@ -9883,13 +9720,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA8_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRAI8_U(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srai8.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRAI8_U(a, b)                                                  \
+  ({                                                                        \
+    register unsigned long result;                                          \
+    register unsigned long __a = (unsigned long)(a);                        \
+    __ASM volatile("srai8.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.127.2. SRAI8.u ===== */
 
 /* ===== Inline Function Start for 3.128.1. SRA16 ===== */
@@ -9938,11 +9775,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA8_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("sra16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("sra16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.128.1. SRA16 ===== */
 
@@ -9992,11 +9828,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRA16_U(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("sra16.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRA16_U(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("sra16.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.128.2. SRA16.u ===== */
 
@@ -10046,13 +9881,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA16_U(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRAI16(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srai16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRAI16(a, b)                                                  \
+  ({                                                                       \
+    register unsigned long result;                                         \
+    register unsigned long __a = (unsigned long)(a);                       \
+    __ASM volatile("srai16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.129.1. SRAI16 ===== */
 
 /* ===== Inline Function Start for 3.129.2. SRAI16.u ===== */
@@ -10101,13 +9936,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA16_U(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRAI16_U(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srai16.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRAI16_U(a, b)                                                  \
+  ({                                                                         \
+    register unsigned long result;                                           \
+    register unsigned long __a = (unsigned long)(a);                         \
+    __ASM volatile("srai16.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                  \
+  })
 /* ===== Inline Function End for 3.129.2. SRAI16.u ===== */
 
 /* ===== Inline Function Start for 3.130.1. SRL8 ===== */
@@ -10155,11 +9990,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA16_U(unsigned long a, unsigned long b
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRL8(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srl8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRL8(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srl8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.130.1. SRL8 ===== */
 
@@ -10208,11 +10042,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL8(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRL8_U(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srl8.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRL8_U(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srl8.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.130.2. SRL8.u ===== */
 
@@ -10260,13 +10093,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL8_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRLI8(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srli8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRLI8(a, b)                                                  \
+  ({                                                                      \
+    register unsigned long result;                                        \
+    register unsigned long __a = (unsigned long)(a);                      \
+    __ASM volatile("srli8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                               \
+  })
 /* ===== Inline Function End for 3.131.1. SRLI8 ===== */
 
 /* ===== Inline Function Start for 3.131.2. SRLI8.u ===== */
@@ -10313,13 +10146,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL8_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRLI8_U(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srli8.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRLI8_U(a, b)                                                  \
+  ({                                                                        \
+    register unsigned long result;                                          \
+    register unsigned long __a = (unsigned long)(a);                        \
+    __ASM volatile("srli8.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.131.2. SRLI8.u ===== */
 
 /* ===== Inline Function Start for 3.132.1. SRL16 ===== */
@@ -10366,11 +10199,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL8_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRL16(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srl16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRL16(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srl16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.132.1. SRL16 ===== */
 
@@ -10418,11 +10250,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL16(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRL16_U(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srl16.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRL16_U(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srl16.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.132.2. SRL16.u ===== */
 
@@ -10470,13 +10301,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL16_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRLI16(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srli16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRLI16(a, b)                                                  \
+  ({                                                                       \
+    register unsigned long result;                                         \
+    register unsigned long __a = (unsigned long)(a);                       \
+    __ASM volatile("srli16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.133.1. SRLI16 ===== */
 
 /* ===== Inline Function Start for 3.133.2. SRLI16.u ===== */
@@ -10523,13 +10354,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL16_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_SRLI16_U(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("srli16.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_SRLI16_U(a, b)                                                  \
+  ({                                                                         \
+    register unsigned long result;                                           \
+    register unsigned long __a = (unsigned long)(a);                         \
+    __ASM volatile("srli16.u %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                  \
+  })
 /* ===== Inline Function End for 3.133.2. SRLI16.u ===== */
 
 /* ===== Inline Function Start for 3.134. STAS16 ===== */
@@ -10570,11 +10401,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL16_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_STAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("stas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_STAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("stas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.134. STAS16 ===== */
 
@@ -10616,11 +10446,10 @@ __STATIC_FORCEINLINE unsigned long __RV_STAS16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_STSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("stsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_STSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("stsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.135. STSA16 ===== */
 
@@ -10657,11 +10486,10 @@ __STATIC_FORCEINLINE unsigned long __RV_STSA16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUB8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("sub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUB8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("sub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.136. SUB8 ===== */
 
@@ -10698,11 +10526,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUB8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("sub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("sub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.137. SUB16 ===== */
 
@@ -10752,11 +10579,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUB16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_SUB64(unsigned long long a, unsigned long long b)
-{
-    register unsigned long long result;
-    __ASM volatile("sub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_SUB64(unsigned long long a, unsigned long long b) {
+  register unsigned long long result;
+  __ASM volatile("sub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.138. SUB64 ===== */
 
@@ -10798,11 +10624,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_SUB64(unsigned long long a, unsigne
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUNPKD810(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("sunpkd810 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUNPKD810(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("sunpkd810 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.139.1. SUNPKD810 ===== */
 
@@ -10844,11 +10669,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUNPKD810(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUNPKD820(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("sunpkd820 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUNPKD820(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("sunpkd820 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.139.2. SUNPKD820 ===== */
 
@@ -10890,11 +10714,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUNPKD820(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUNPKD830(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("sunpkd830 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUNPKD830(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("sunpkd830 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.139.3. SUNPKD830 ===== */
 
@@ -10936,11 +10759,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUNPKD830(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUNPKD831(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("sunpkd831 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUNPKD831(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("sunpkd831 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.139.4. SUNPKD831 ===== */
 
@@ -10982,11 +10804,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUNPKD831(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUNPKD832(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("sunpkd832 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUNPKD832(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("sunpkd832 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.139.5. SUNPKD832 ===== */
 
@@ -11019,11 +10840,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUNPKD832(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SWAP8(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("swap8 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SWAP8(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("swap8 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.140. SWAP8 ===== */
 
@@ -11056,11 +10876,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SWAP8(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SWAP16(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("swap16 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SWAP16(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("swap16 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.141. SWAP16 ===== */
 
@@ -11103,13 +10922,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SWAP16(unsigned long a)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_UCLIP8(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("uclip8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_UCLIP8(a, b)                                                  \
+  ({                                                                       \
+    register unsigned long result;                                         \
+    register unsigned long __a = (unsigned long)(a);                       \
+    __ASM volatile("uclip8 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                \
+  })
 /* ===== Inline Function End for 3.142. UCLIP8 ===== */
 
 /* ===== Inline Function Start for 3.143. UCLIP16 ===== */
@@ -11152,13 +10971,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SWAP16(unsigned long a)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_UCLIP16(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("uclip16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_UCLIP16(a, b)                                                  \
+  ({                                                                        \
+    register unsigned long result;                                          \
+    register unsigned long __a = (unsigned long)(a);                        \
+    __ASM volatile("uclip16 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.143. UCLIP16 ===== */
 
 /* ===== Inline Function Start for 3.144. UCLIP32 ===== */
@@ -11202,13 +11021,13 @@ __STATIC_FORCEINLINE unsigned long __RV_SWAP16(unsigned long a)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_UCLIP32(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register unsigned long __a = (unsigned long)(a);    \
-        __ASM volatile("uclip32 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_UCLIP32(a, b)                                                  \
+  ({                                                                        \
+    register unsigned long result;                                          \
+    register unsigned long __a = (unsigned long)(a);                        \
+    __ASM volatile("uclip32 %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                                 \
+  })
 /* ===== Inline Function End for 3.144. UCLIP32 ===== */
 
 /* ===== Inline Function Start for 3.145. UCMPLE8 ===== */
@@ -11243,11 +11062,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SWAP16(unsigned long a)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UCMPLE8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ucmple8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UCMPLE8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ucmple8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.145. UCMPLE8 ===== */
 
@@ -11283,11 +11101,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UCMPLE8(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UCMPLE16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ucmple16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UCMPLE16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ucmple16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.146. UCMPLE16 ===== */
 
@@ -11322,11 +11139,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UCMPLE16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UCMPLT8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ucmplt8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UCMPLT8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ucmplt8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.147. UCMPLT8 ===== */
 
@@ -11361,11 +11177,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UCMPLT8(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UCMPLT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ucmplt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UCMPLT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ucmplt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.148. UCMPLT16 ===== */
 
@@ -11406,11 +11221,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UCMPLT16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKADD8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukadd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKADD8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukadd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.149. UKADD8 ===== */
 
@@ -11451,11 +11265,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKADD8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKADD16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukadd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKADD16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukadd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.150. UKADD16 ===== */
 
@@ -11513,11 +11326,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKADD16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UKADD64(unsigned long long a, unsigned long long b)
-{
-    register unsigned long long result;
-    __ASM volatile("ukadd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_UKADD64(unsigned long long a, unsigned long long b) {
+  register unsigned long long result;
+  __ASM volatile("ukadd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.151. UKADD64 ===== */
 
@@ -11555,11 +11367,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UKADD64(unsigned long long a, unsig
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKADDH(unsigned int a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("ukaddh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKADDH(unsigned int a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("ukaddh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.152. UKADDH ===== */
 
@@ -11598,11 +11409,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKADDH(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKADDW(unsigned int a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("ukaddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKADDW(unsigned int a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("ukaddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.153. UKADDW ===== */
 
@@ -11654,11 +11464,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKADDW(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKCRAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKCRAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.154. UKCRAS16 ===== */
 
@@ -11709,11 +11518,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKCRAS16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKCRSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKCRSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.155. UKCRSA16 ===== */
 
@@ -11774,10 +11582,9 @@ __STATIC_FORCEINLINE unsigned long __RV_UKCRSA16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UKMAR64(unsigned long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("ukmar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long long __RV_UKMAR64(unsigned long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("ukmar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.156. UKMAR64 ===== */
 
@@ -11839,10 +11646,9 @@ __STATIC_FORCEINLINE unsigned long long __RV_UKMAR64(unsigned long long t, unsig
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UKMSR64(unsigned long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("ukmsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long long __RV_UKMSR64(unsigned long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("ukmsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.157. UKMSR64 ===== */
 
@@ -11894,11 +11700,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UKMSR64(unsigned long long t, unsig
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSTAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSTAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.158. UKSTAS16 ===== */
 
@@ -11949,11 +11754,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSTAS16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSTSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSTSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.159. UKSTSA16 ===== */
 
@@ -11994,11 +11798,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSTSA16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSUB8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("uksub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSUB8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("uksub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.160. UKSUB8 ===== */
 
@@ -12039,11 +11842,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSUB8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSUB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("uksub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSUB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("uksub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.161. UKSUB16 ===== */
 
@@ -12102,11 +11904,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSUB16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UKSUB64(unsigned long long a, unsigned long long b)
-{
-    register unsigned long long result;
-    __ASM volatile("uksub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_UKSUB64(unsigned long long a, unsigned long long b) {
+  register unsigned long long result;
+  __ASM volatile("uksub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.162. UKSUB64 ===== */
 
@@ -12148,11 +11949,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UKSUB64(unsigned long long a, unsig
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSUBH(unsigned int a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("uksubh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSUBH(unsigned int a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("uksubh %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.163. UKSUBH ===== */
 
@@ -12192,11 +11992,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSUBH(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSUBW(unsigned int a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("uksubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSUBW(unsigned int a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("uksubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.164. UKSUBW ===== */
 
@@ -12246,10 +12045,9 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSUBW(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UMAR64(unsigned long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("umar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long long __RV_UMAR64(unsigned long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("umar64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.165. UMAR64 ===== */
 
@@ -12290,10 +12088,9 @@ __STATIC_FORCEINLINE unsigned long long __RV_UMAR64(unsigned long long t, unsign
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UMAQA(unsigned long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("umaqa %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long __RV_UMAQA(unsigned long t, unsigned long a, unsigned long b) {
+  __ASM volatile("umaqa %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.166. UMAQA ===== */
 
@@ -12328,11 +12125,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UMAQA(unsigned long t, unsigned long a, 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UMAX8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("umax8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UMAX8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("umax8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.167. UMAX8 ===== */
 
@@ -12367,11 +12163,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UMAX8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UMAX16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("umax16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UMAX16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("umax16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.168. UMAX16 ===== */
 
@@ -12406,11 +12201,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UMAX16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UMIN8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("umin8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UMIN8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("umin8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.169. UMIN8 ===== */
 
@@ -12445,11 +12239,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UMIN8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UMIN16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("umin16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UMIN16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("umin16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.170. UMIN16 ===== */
 
@@ -12499,10 +12292,9 @@ __STATIC_FORCEINLINE unsigned long __RV_UMIN16(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UMSR64(unsigned long long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("umsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long long __RV_UMSR64(unsigned long long t, unsigned long a, unsigned long b) {
+  __ASM volatile("umsr64 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 3.171. UMSR64 ===== */
 
@@ -12582,11 +12374,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UMSR64(unsigned long long t, unsign
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UMUL8(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("umul8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_UMUL8(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("umul8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.172.1. UMUL8 ===== */
 
@@ -12666,11 +12457,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UMUL8(unsigned int a, unsigned int 
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UMULX8(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("umulx8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_UMULX8(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("umulx8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.172.2. UMULX8 ===== */
 
@@ -12751,11 +12541,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UMULX8(unsigned int a, unsigned int
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UMUL16(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("umul16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_UMUL16(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("umul16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.173.1. UMUL16 ===== */
 
@@ -12836,11 +12625,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UMUL16(unsigned int a, unsigned int
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_UMULX16(unsigned int a, unsigned int b)
-{
-    register unsigned long long result;
-    __ASM volatile("umulx16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_UMULX16(unsigned int a, unsigned int b) {
+  register unsigned long long result;
+  __ASM volatile("umulx16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.173.2. UMULX16 ===== */
 
@@ -12883,11 +12671,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_UMULX16(unsigned int a, unsigned in
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URADD8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("uradd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URADD8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("uradd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.174. URADD8 ===== */
 
@@ -12930,11 +12717,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URADD8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URADD16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("uradd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URADD16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("uradd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.175. URADD16 ===== */
 
@@ -12982,11 +12768,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URADD16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_URADD64(unsigned long long a, unsigned long long b)
-{
-    register unsigned long long result;
-    __ASM volatile("uradd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_URADD64(unsigned long long a, unsigned long long b) {
+  register unsigned long long result;
+  __ASM volatile("uradd64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.176. URADD64 ===== */
 
@@ -13030,11 +12815,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_URADD64(unsigned long long a, unsig
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URADDW(unsigned int a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("uraddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URADDW(unsigned int a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("uraddw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.177. URADDW ===== */
 
@@ -13079,11 +12863,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URADDW(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URCRAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URCRAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urcras16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.178. URCRAS16 ===== */
 
@@ -13128,11 +12911,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URCRAS16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URCRSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URCRSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urcrsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.179. URCRSA16 ===== */
 
@@ -13177,11 +12959,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URCRSA16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSTAS16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSTAS16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urstas16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.180. URSTAS16 ===== */
 
@@ -13226,11 +13007,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URSTAS16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSTSA16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSTSA16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urstsa16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.181. URSTSA16 ===== */
 
@@ -13273,11 +13053,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URSTSA16(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSUB8(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ursub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSUB8(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ursub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.182. URSUB8 ===== */
 
@@ -13320,11 +13099,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URSUB8(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSUB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ursub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSUB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ursub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.183. URSUB16 ===== */
 
@@ -13374,11 +13152,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URSUB16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_URSUB64(unsigned long long a, unsigned long long b)
-{
-    register unsigned long long result;
-    __ASM volatile("ursub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_URSUB64(unsigned long long a, unsigned long long b) {
+  register unsigned long long result;
+  __ASM volatile("ursub64 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.184. URSUB64 ===== */
 
@@ -13422,11 +13199,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_URSUB64(unsigned long long a, unsig
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSUBW(unsigned int a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("ursubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSUBW(unsigned int a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("ursubw %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.185. URSUBW ===== */
 
@@ -13475,13 +13251,13 @@ __STATIC_FORCEINLINE unsigned long __RV_URSUBW(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-#define __RV_WEXTI(a, b)    \
-    ({    \
-        register unsigned long result;    \
-        register long long __a = (long long)(a);    \
-        __ASM volatile("wexti %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b));    \
-        result;    \
-    })
+#define __RV_WEXTI(a, b)                                                  \
+  ({                                                                      \
+    register unsigned long result;                                        \
+    register long long     __a = (long long)(a);                          \
+    __ASM volatile("wexti %0, %1, %2" : "=r"(result) : "r"(__a), "K"(b)); \
+    result;                                                               \
+  })
 /* ===== Inline Function End for 3.186. WEXTI ===== */
 
 /* ===== Inline Function Start for 3.187. WEXT ===== */
@@ -13526,11 +13302,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URSUBW(unsigned int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_WEXT(long long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("wext %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_WEXT(long long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("wext %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 3.187. WEXT ===== */
 
@@ -13572,11 +13347,10 @@ __STATIC_FORCEINLINE unsigned long __RV_WEXT(long long a, unsigned int b)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD810(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("zunpkd810 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD810(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("zunpkd810 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.188.1. ZUNPKD810 ===== */
 
@@ -13618,11 +13392,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ZUNPKD810(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD820(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("zunpkd820 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD820(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("zunpkd820 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.188.2. ZUNPKD820 ===== */
 
@@ -13664,11 +13437,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ZUNPKD820(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD830(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("zunpkd830 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD830(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("zunpkd830 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.188.3. ZUNPKD830 ===== */
 
@@ -13710,11 +13482,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ZUNPKD830(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD831(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("zunpkd831 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD831(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("zunpkd831 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.188.4. ZUNPKD831 ===== */
 
@@ -13756,11 +13527,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ZUNPKD831(unsigned long a)
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD832(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("zunpkd832 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ZUNPKD832(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("zunpkd832 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 3.188.5. ZUNPKD832 ===== */
 
@@ -13798,11 +13568,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ZUNPKD832(unsigned long a)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_ADD32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("add32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_ADD32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("add32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.1. ADD32 ===== */
 
@@ -13841,11 +13610,10 @@ __STATIC_FORCEINLINE unsigned long __RV_ADD32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CRAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("cras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CRAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("cras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.2. CRAS32 ===== */
 
@@ -13883,11 +13651,10 @@ __STATIC_FORCEINLINE unsigned long __RV_CRAS32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_CRSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("crsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_CRSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("crsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.3. CRSA32 ===== */
 
@@ -13943,11 +13710,10 @@ GE80B
  * \param [in]  a    unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KABS32(unsigned long a)
-{
-    register unsigned long result;
-    __ASM volatile("kabs32 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KABS32(unsigned long a) {
+  register unsigned long result;
+  __ASM volatile("kabs32 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for 4.4. KABS32 ===== */
 
@@ -13989,11 +13755,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KABS32(unsigned long a)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KADD32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kadd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KADD32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kadd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.5. KADD32 ===== */
 
@@ -14040,11 +13805,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KADD32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KCRAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KCRAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.6. KCRAS32 ===== */
 
@@ -14090,11 +13854,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KCRAS32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KCRSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KCRSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.7. KCRSA32 ===== */
 
@@ -14142,11 +13905,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KCRSA32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KDMBB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kdmbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KDMBB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kdmbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.8.1. KDMBB16 ===== */
 
@@ -14194,11 +13956,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KDMBB16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KDMBT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kdmbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KDMBT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kdmbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.8.2. KDMBT16 ===== */
 
@@ -14246,11 +14007,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KDMBT16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KDMTT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kdmtt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KDMTT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kdmtt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.8.3. KDMTT16 ===== */
 
@@ -14312,10 +14072,9 @@ __STATIC_FORCEINLINE unsigned long __RV_KDMTT16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KDMABB16(unsigned long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kdmabb16 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long __RV_KDMABB16(unsigned long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kdmabb16 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.9.1. KDMABB16 ===== */
 
@@ -14377,10 +14136,9 @@ __STATIC_FORCEINLINE unsigned long __RV_KDMABB16(unsigned long t, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KDMABT16(unsigned long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kdmabt16 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long __RV_KDMABT16(unsigned long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kdmabt16 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.9.2. KDMABT16 ===== */
 
@@ -14442,10 +14200,9 @@ __STATIC_FORCEINLINE unsigned long __RV_KDMABT16(unsigned long t, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KDMATT16(unsigned long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kdmatt16 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE unsigned long __RV_KDMATT16(unsigned long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kdmatt16 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.9.3. KDMATT16 ===== */
 
@@ -14494,11 +14251,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KDMATT16(unsigned long t, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KHMBB16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("khmbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KHMBB16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("khmbb16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.10.1. KHMBB16 ===== */
 
@@ -14547,11 +14303,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KHMBB16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KHMBT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("khmbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KHMBT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("khmbt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.10.2. KHMBT16 ===== */
 
@@ -14600,11 +14355,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KHMBT16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KHMTT16(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("khmtt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KHMTT16(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("khmtt16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.10.3. KHMTT16 ===== */
 
@@ -14663,10 +14417,9 @@ __STATIC_FORCEINLINE unsigned long __RV_KHMTT16(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMABB32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmabb32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMABB32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmabb32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.11.1. KMABB32 ===== */
 
@@ -14725,10 +14478,9 @@ __STATIC_FORCEINLINE long __RV_KMABB32(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMABT32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmabt32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMABT32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmabt32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.11.2. KMABT32 ===== */
 
@@ -14787,10 +14539,9 @@ __STATIC_FORCEINLINE long __RV_KMABT32(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMATT32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmatt32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMATT32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmatt32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.11.3. KMATT32 ===== */
 
@@ -14843,10 +14594,9 @@ __STATIC_FORCEINLINE long __RV_KMATT32(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMADA32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmada32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMADA32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmada32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.12.1. KMADA32 ===== */
 
@@ -14899,10 +14649,9 @@ __STATIC_FORCEINLINE long __RV_KMADA32(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMAXDA32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmaxda32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMAXDA32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmaxda32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.12.2. KMAXDA32 ===== */
 
@@ -14950,11 +14699,10 @@ __STATIC_FORCEINLINE long __RV_KMAXDA32(long t, unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMDA32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmda32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMDA32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmda32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.13.1. KMDA32 ===== */
 
@@ -15002,11 +14750,10 @@ __STATIC_FORCEINLINE long __RV_KMDA32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMXDA32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("kmxda32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_KMXDA32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("kmxda32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.13.2. KMXDA32 ===== */
 
@@ -15067,10 +14814,9 @@ __STATIC_FORCEINLINE long __RV_KMXDA32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMADS32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmads32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMADS32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmads32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.14.1. KMADS32 ===== */
 
@@ -15131,10 +14877,9 @@ __STATIC_FORCEINLINE long __RV_KMADS32(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMADRS32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmadrs32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMADRS32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmadrs32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.14.2. KMADRS32 ===== */
 
@@ -15195,10 +14940,9 @@ __STATIC_FORCEINLINE long __RV_KMADRS32(long t, unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMAXDS32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmaxds32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMAXDS32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmaxds32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.14.3. KMAXDS32 ===== */
 
@@ -15250,10 +14994,9 @@ __STATIC_FORCEINLINE long __RV_KMAXDS32(long t, unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMSDA32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmsda32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMSDA32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmsda32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.15.1. KMSDA32 ===== */
 
@@ -15305,10 +15048,9 @@ __STATIC_FORCEINLINE long __RV_KMSDA32(long t, unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_KMSXDA32(long t, unsigned long a, unsigned long b)
-{
-    __ASM volatile("kmsxda32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
-    return t;
+__STATIC_FORCEINLINE long __RV_KMSXDA32(long t, unsigned long a, unsigned long b) {
+  __ASM volatile("kmsxda32 %0, %1, %2" : "+r"(t) : "r"(a), "r"(b));
+  return t;
 }
 /* ===== Inline Function End for 4.15.2. KMSXDA32 ===== */
 
@@ -15356,11 +15098,10 @@ __STATIC_FORCEINLINE long __RV_KMSXDA32(long t, unsigned long a, unsigned long b
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLL32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("ksll32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLL32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("ksll32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.16. KSLL32 ===== */
 
@@ -15407,11 +15148,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLL32(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLLI32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("kslli32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLLI32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("kslli32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.17. KSLLI32 ===== */
 
@@ -15473,11 +15213,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLLI32(unsigned long a, unsigned int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLRA32(unsigned long a, int b)
-{
-    register unsigned long result;
-    __ASM volatile("kslra32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLRA32(unsigned long a, int b) {
+  register unsigned long result;
+  __ASM volatile("kslra32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.18.1. KSLRA32 ===== */
 
@@ -15539,11 +15278,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLRA32(unsigned long a, int b)
  * \param [in]  b    int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSLRA32_U(unsigned long a, int b)
-{
-    register unsigned long result;
-    __ASM volatile("kslra32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSLRA32_U(unsigned long a, int b) {
+  register unsigned long result;
+  __ASM volatile("kslra32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.18.2. KSLRA32.u ===== */
 
@@ -15591,11 +15329,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSLRA32_U(unsigned long a, int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSTAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSTAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.19. KSTAS32 ===== */
 
@@ -15642,11 +15379,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSTAS32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSTSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("kstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSTSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("kstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.20. KSTSA32 ===== */
 
@@ -15689,11 +15425,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSTSA32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_KSUB32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ksub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_KSUB32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ksub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.21. KSUB32 ===== */
 
@@ -15737,11 +15472,10 @@ __STATIC_FORCEINLINE unsigned long __RV_KSUB32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKBB32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pkbb32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKBB32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pkbb32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.22.1. PKBB32 ===== */
 
@@ -15785,11 +15519,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKBB32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKBT32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pkbt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKBT32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pkbt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.22.2. PKBT32 ===== */
 
@@ -15833,11 +15566,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKBT32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKTT32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pktt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKTT32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pktt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.22.3. PKTT32 ===== */
 
@@ -15881,11 +15613,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKTT32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_PKTB32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("pktb32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_PKTB32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("pktb32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.22.4. PKTB32 ===== */
 
@@ -15927,11 +15658,10 @@ __STATIC_FORCEINLINE unsigned long __RV_PKTB32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RADD32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("radd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RADD32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("radd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.23. RADD32 ===== */
 
@@ -15974,11 +15704,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RADD32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RCRAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RCRAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.24. RCRAS32 ===== */
 
@@ -16021,11 +15750,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RCRAS32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RCRSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RCRSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.25. RCRSA32 ===== */
 
@@ -16068,11 +15796,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RCRSA32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RSTAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RSTAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.26. RSTAS32 ===== */
 
@@ -16114,11 +15841,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RSTAS32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RSTSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RSTSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.27. RSTSA32 ===== */
 
@@ -16160,11 +15886,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RSTSA32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_RSUB32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("rsub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_RSUB32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("rsub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.28. RSUB32 ===== */
 
@@ -16200,11 +15925,10 @@ __STATIC_FORCEINLINE unsigned long __RV_RSUB32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SLL32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("sll32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SLL32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("sll32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.29. SLL32 ===== */
 
@@ -16239,11 +15963,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SLL32(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SLLI32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("slli32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SLLI32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("slli32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.30. SLLI32 ===== */
 
@@ -16277,11 +16000,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SLLI32(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SMAX32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("smax32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SMAX32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("smax32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.31. SMAX32 ===== */
 
@@ -16326,11 +16048,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SMAX32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMBB32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smbb32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMBB32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smbb32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.32.1. SMBB32 ===== */
 
@@ -16375,11 +16096,10 @@ __STATIC_FORCEINLINE long __RV_SMBB32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMBT32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smbt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMBT32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smbt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.32.2. SMBT32 ===== */
 
@@ -16424,11 +16144,10 @@ __STATIC_FORCEINLINE long __RV_SMBT32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMTT32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smtt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMTT32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smtt32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.32.3. SMTT32 ===== */
 
@@ -16477,11 +16196,10 @@ __STATIC_FORCEINLINE long __RV_SMTT32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMDS32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smds32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMDS32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smds32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.33.1. SMDS32 ===== */
 
@@ -16530,11 +16248,10 @@ __STATIC_FORCEINLINE long __RV_SMDS32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMDRS32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smdrs32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMDRS32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smdrs32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.33.2. SMDRS32 ===== */
 
@@ -16583,11 +16300,10 @@ __STATIC_FORCEINLINE long __RV_SMDRS32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SMXDS32(unsigned long a, unsigned long b)
-{
-    register long result;
-    __ASM volatile("smxds32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SMXDS32(unsigned long a, unsigned long b) {
+  register long result;
+  __ASM volatile("smxds32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.33.3. SMXDS32 ===== */
 
@@ -16621,11 +16337,10 @@ __STATIC_FORCEINLINE long __RV_SMXDS32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SMIN32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("smin32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SMIN32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("smin32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.34. SMIN32 ===== */
 
@@ -16674,11 +16389,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SMIN32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRA32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("sra32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRA32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("sra32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.35.1. SRA32 ===== */
 
@@ -16727,11 +16441,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA32(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRA32_U(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("sra32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRA32_U(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("sra32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.35.2. SRA32.u ===== */
 
@@ -16780,11 +16493,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRA32_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRAI32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srai32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRAI32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srai32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.36.1. SRAI32 ===== */
 
@@ -16833,11 +16545,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRAI32(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRAI32_U(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srai32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRAI32_U(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srai32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.36.2. SRAI32.u ===== */
 
@@ -16878,11 +16589,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRAI32_U(unsigned long a, unsigned int b
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in long type
  */
-__STATIC_FORCEINLINE long __RV_SRAIW_U(int a, unsigned int b)
-{
-    register long result;
-    __ASM volatile("sraiw.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE long __RV_SRAIW_U(int a, unsigned int b) {
+  register long result;
+  __ASM volatile("sraiw.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.37. SRAIW.u ===== */
 
@@ -16931,11 +16641,10 @@ __STATIC_FORCEINLINE long __RV_SRAIW_U(int a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRL32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srl32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRL32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srl32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.38.1. SRL32 ===== */
 
@@ -16984,11 +16693,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL32(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRL32_U(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srl32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRL32_U(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srl32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.38.2. SRL32.u ===== */
 
@@ -17035,11 +16743,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRL32_U(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRLI32(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srli32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRLI32(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srli32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.39.1. SRLI32 ===== */
 
@@ -17086,11 +16793,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRLI32(unsigned long a, unsigned int b)
  * \param [in]  b    unsigned int type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SRLI32_U(unsigned long a, unsigned int b)
-{
-    register unsigned long result;
-    __ASM volatile("srli32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SRLI32_U(unsigned long a, unsigned int b) {
+  register unsigned long result;
+  __ASM volatile("srli32.u %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.39.2. SRLI32.u ===== */
 
@@ -17129,11 +16835,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SRLI32_U(unsigned long a, unsigned int b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_STAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("stas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_STAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("stas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.40. STAS32 ===== */
 
@@ -17171,11 +16876,10 @@ __STATIC_FORCEINLINE unsigned long __RV_STAS32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_STSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("stsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_STSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("stsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.41. STSA32 ===== */
 
@@ -17211,11 +16915,10 @@ __STATIC_FORCEINLINE unsigned long __RV_STSA32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_SUB32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("sub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_SUB32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("sub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.42. SUB32 ===== */
 
@@ -17255,11 +16958,10 @@ __STATIC_FORCEINLINE unsigned long __RV_SUB32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKADD32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukadd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKADD32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukadd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.43. UKADD32 ===== */
 
@@ -17308,11 +17010,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKADD32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKCRAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKCRAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.44. UKCRAS32 ===== */
 
@@ -17360,11 +17061,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKCRAS32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKCRSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKCRSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.45. UKCRSA32 ===== */
 
@@ -17413,11 +17113,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKCRSA32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSTAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSTAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.46. UKSTAS32 ===== */
 
@@ -17465,11 +17164,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSTAS32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSTSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ukstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSTSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ukstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.47. UKSTSA32 ===== */
 
@@ -17509,11 +17207,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSTSA32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UKSUB32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("uksub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UKSUB32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("uksub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.48. UKSUB32 ===== */
 
@@ -17547,11 +17244,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UKSUB32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UMAX32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("umax32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UMAX32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("umax32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.49. UMAX32 ===== */
 
@@ -17585,11 +17281,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UMAX32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_UMIN32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("umin32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_UMIN32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("umin32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.50. UMIN32 ===== */
 
@@ -17631,11 +17326,10 @@ __STATIC_FORCEINLINE unsigned long __RV_UMIN32(unsigned long a, unsigned long b)
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URADD32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("uradd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URADD32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("uradd32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.51. URADD32 ===== */
 
@@ -17678,11 +17372,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URADD32(unsigned long a, unsigned long b
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URCRAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URCRAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urcras32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.52. URCRAS32 ===== */
 
@@ -17725,11 +17418,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URCRAS32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URCRSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URCRSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urcrsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.53. URCRSA32 ===== */
 
@@ -17772,11 +17464,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URCRSA32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSTAS32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSTAS32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urstas32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.54. URSTAS32 ===== */
 
@@ -17819,11 +17510,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URSTAS32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSTSA32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("urstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSTSA32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("urstsa32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.55. URSTSA32 ===== */
 
@@ -17865,16 +17555,14 @@ __STATIC_FORCEINLINE unsigned long __RV_URSTSA32(unsigned long a, unsigned long 
  * \param [in]  b    unsigned long type of value stored in b
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_URSUB32(unsigned long a, unsigned long b)
-{
-    register unsigned long result;
-    __ASM volatile("ursub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_URSUB32(unsigned long a, unsigned long b) {
+  register unsigned long result;
+  __ASM volatile("ursub32 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for 4.56. URSUB32 ===== */
 
 #endif /* __RISCV_XLEN == 64 */
-
 
 #if (__RISCV_XLEN == 32) || defined(__ONLY_FOR_DOXYGEN_DOCUMENT_GENERATION__)
 /* XXXXX Nuclei Extended DSP Instructions for RV32 XXXXX */
@@ -17930,11 +17618,10 @@ __STATIC_FORCEINLINE unsigned long __RV_URSUB32(unsigned long a, unsigned long b
  * \param [in]  b unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKHM8(unsigned long long a, unsigned long long b)
-{
-    unsigned long long result;
-    __ASM volatile("dkhm8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKHM8(unsigned long long a, unsigned long long b) {
+  unsigned long long result;
+  __ASM volatile("dkhm8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.1. DKHM8 ===== */
 
@@ -17985,11 +17672,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKHM8(unsigned long long a, unsigne
  * \param [in]  b unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKHM16(unsigned long long a, unsigned long long b)
-{
-    unsigned long long result;
-    __ASM volatile("dkhm16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKHM16(unsigned long long a, unsigned long long b) {
+  unsigned long long result;
+  __ASM volatile("dkhm16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.2. DKHM16 ===== */
 
@@ -18030,11 +17716,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKHM16(unsigned long long a, unsign
  * \param [in]  a unsigned long long type of value stored in a
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKABS8(unsigned long long a)
-{
-    unsigned long long result;
-    __ASM volatile("dkabs8 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKABS8(unsigned long long a) {
+  unsigned long long result;
+  __ASM volatile("dkabs8 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for A.3. DKABS8 ===== */
 
@@ -18075,11 +17760,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKABS8(unsigned long long a)
  * \param [in]  a unsigned long long type of value stored in a
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKABS16(unsigned long long a)
-{
-    unsigned long long result;
-    __ASM volatile("dkabs16 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKABS16(unsigned long long a) {
+  unsigned long long result;
+  __ASM volatile("dkabs16 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for A.4. DKABS16 ===== */
 
@@ -18133,11 +17817,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKABS16(unsigned long long a)
  * \param [in]  b int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKSLRA8(unsigned long long a, int b)
-{
-    unsigned long long result;
-    __ASM volatile("dkslra8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKSLRA8(unsigned long long a, int b) {
+  unsigned long long result;
+  __ASM volatile("dkslra8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.5. DKSLRA8 ===== */
 
@@ -18192,11 +17875,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKSLRA8(unsigned long long a, int b
  * \param [in]  b int type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKSLRA16(unsigned long long a, int b)
-{
-    unsigned long long result;
-    __ASM volatile("dkslra16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKSLRA16(unsigned long long a, int b) {
+  unsigned long long result;
+  __ASM volatile("dkslra16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.6. DKSLRA16 ===== */
 
@@ -18239,11 +17921,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKSLRA16(unsigned long long a, int 
  * \param [in]  b unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKADD8(unsigned long long a, unsigned long long b)
-{
-    unsigned long long result;
-    __ASM volatile("dkadd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKADD8(unsigned long long a, unsigned long long b) {
+  unsigned long long result;
+  __ASM volatile("dkadd8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.7. DKADD8 ===== */
 
@@ -18286,11 +17967,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKADD8(unsigned long long a, unsign
  * \param [in]  b unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKADD16(unsigned long long a, unsigned long long b)
-{
-    unsigned long long result;
-    __ASM volatile("dkadd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKADD16(unsigned long long a, unsigned long long b) {
+  unsigned long long result;
+  __ASM volatile("dkadd16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.8. DKADD16 ===== */
 
@@ -18333,11 +18013,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKADD16(unsigned long long a, unsig
  * \param [in]  b unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKSUB8(unsigned long long a, unsigned long long b)
-{
-    unsigned long long result;
-    __ASM volatile("dksub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKSUB8(unsigned long long a, unsigned long long b) {
+  unsigned long long result;
+  __ASM volatile("dksub8 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.9. DKSUB8 ===== */
 
@@ -18381,11 +18060,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKSUB8(unsigned long long a, unsign
  * \param [in]  b unsigned long long type of value stored in b
  * \return value stored in unsigned long long type
  */
-__STATIC_FORCEINLINE unsigned long long __RV_DKSUB16(unsigned long long a, unsigned long long b)
-{
-    unsigned long long result;
-    __ASM volatile("dksub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
-    return result;
+__STATIC_FORCEINLINE unsigned long long __RV_DKSUB16(unsigned long long a, unsigned long long b) {
+  unsigned long long result;
+  __ASM volatile("dksub16 %0, %1, %2" : "=r"(result) : "r"(a), "r"(b));
+  return result;
 }
 /* ===== Inline Function End for A.10. DKSUB16 ===== */
 
@@ -18416,11 +18094,10 @@ __STATIC_FORCEINLINE unsigned long long __RV_DKSUB16(unsigned long long a, unsig
  * \param [in]  a unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_EXPD80(unsigned long a)
-{
-    unsigned long result;
-    __ASM volatile("expd80 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_EXPD80(unsigned long a) {
+  unsigned long result;
+  __ASM volatile("expd80 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for A11.1. EXPD80 ===== */
 
@@ -18451,11 +18128,10 @@ __STATIC_FORCEINLINE unsigned long __RV_EXPD80(unsigned long a)
  * \param [in]  a unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_EXPD81(unsigned long a)
-{
-    unsigned long result;
-    __ASM volatile("expd81 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_EXPD81(unsigned long a) {
+  unsigned long result;
+  __ASM volatile("expd81 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for A11.2. EXPD81 ===== */
 
@@ -18486,11 +18162,10 @@ __STATIC_FORCEINLINE unsigned long __RV_EXPD81(unsigned long a)
  * \param [in]  a unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_EXPD82(unsigned long a)
-{
-    unsigned long result;
-    __ASM volatile("expd82 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_EXPD82(unsigned long a) {
+  unsigned long result;
+  __ASM volatile("expd82 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for A11.3. EXPD82 ===== */
 
@@ -18521,11 +18196,10 @@ __STATIC_FORCEINLINE unsigned long __RV_EXPD82(unsigned long a)
  * \param [in]  a unsigned long type of value stored in a
  * \return value stored in unsigned long type
  */
-__STATIC_FORCEINLINE unsigned long __RV_EXPD83(unsigned long a)
-{
-    unsigned long result;
-    __ASM volatile("expd83 %0, %1" : "=r"(result) : "r"(a));
-    return result;
+__STATIC_FORCEINLINE unsigned long __RV_EXPD83(unsigned long a) {
+  unsigned long result;
+  __ASM volatile("expd83 %0, %1" : "=r"(result) : "r"(a));
+  return result;
 }
 /* ===== Inline Function End for A11.4. EXPD83 ===== */
 #endif /* __RISCV_XLEN == 32 */
@@ -18533,124 +18207,94 @@ __STATIC_FORCEINLINE unsigned long __RV_EXPD83(unsigned long a)
 #if defined(__RISCV_FEATURE_DSP) && (__RISCV_FEATURE_DSP == 1)
 /* XXXXX ARM Compatiable SIMD API XXXXX */
 /** \brief Q setting quad 8-bit saturating addition. */
-#define __QADD8(x, y)               __RV_KADD8(x, y)
+#define __QADD8(x, y) __RV_KADD8(x, y)
 /** \brief Q setting quad 8-bit saturating subtract. */
-#define __QSUB8(x, y)               __RV_KSUB8((x), (y))
+#define __QSUB8(x, y) __RV_KSUB8((x), (y))
 /** \brief Q setting dual 16-bit saturating addition. */
-#define __QADD16(x, y)              __RV_KADD16((x), (y))
+#define __QADD16(x, y) __RV_KADD16((x), (y))
 /** \brief Dual 16-bit signed addition with halved results. */
-#define __SHADD16(x, y)             __RV_RADD16((x), (y))
+#define __SHADD16(x, y) __RV_RADD16((x), (y))
 /** \brief Q setting dual 16-bit saturating subtract. */
-#define __QSUB16(x, y)              __RV_KSUB16((x), (y))
+#define __QSUB16(x, y) __RV_KSUB16((x), (y))
 /** \brief Dual 16-bit signed subtraction with halved results. */
-#define __SHSUB16(x, y)             __RV_RSUB16((x), (y))
+#define __SHSUB16(x, y) __RV_RSUB16((x), (y))
 /** \brief Q setting dual 16-bit add and subtract with exchange. */
-#define __QASX(x, y)                __RV_KCRAS16((x), (y))
+#define __QASX(x, y) __RV_KCRAS16((x), (y))
 /** \brief Dual 16-bit signed addition and subtraction with halved results.*/
-#define __SHASX(x, y)               __RV_RCRAS16((x), (y))
+#define __SHASX(x, y) __RV_RCRAS16((x), (y))
 /** \brief Q setting dual 16-bit subtract and add with exchange. */
-#define __QSAX(x, y)                __RV_KCRSA16((x), (y))
+#define __QSAX(x, y) __RV_KCRSA16((x), (y))
 /** \brief Dual 16-bit signed subtraction and addition with halved results.*/
-#define __SHSAX(x, y)               __RV_RCRSA16((x), (y))
+#define __SHSAX(x, y) __RV_RCRSA16((x), (y))
 /** \brief Dual 16-bit signed multiply with exchange returning difference. */
-#define __SMUSDX(x, y)              __RV_SMXDS((y), (x))
+#define __SMUSDX(x, y) __RV_SMXDS((y), (x))
 /** \brief Q setting sum of dual 16-bit signed multiply with exchange. */
-__STATIC_FORCEINLINE int32_t __SMUADX (int32_t op1, int32_t op2)
-{
-    return (int32_t)__RV_KMXDA(op1, op2);
-}
+__STATIC_FORCEINLINE int32_t __SMUADX(int32_t op1, int32_t op2) { return (int32_t)__RV_KMXDA(op1, op2); }
 /** \brief Q setting saturating add. */
-#define __QADD(x, y)                __RV_KADDW((x), (y))
+#define __QADD(x, y) __RV_KADDW((x), (y))
 /** \brief Q setting saturating subtract. */
-#define __QSUB(x, y)                __RV_KSUBW((x), (y))
+#define __QSUB(x, y) __RV_KSUBW((x), (y))
 /** \brief Q setting dual 16-bit signed multiply with single 32-bit accumulator. */
-__STATIC_FORCEINLINE int32_t __SMLAD(int32_t op1, int32_t op2, int32_t op3)
-{
-    return (int32_t)__RV_KMADA(op3, op1, op2);
-}
+__STATIC_FORCEINLINE int32_t __SMLAD(int32_t op1, int32_t op2, int32_t op3) { return (int32_t)__RV_KMADA(op3, op1, op2); }
 /** \brief Q setting pre-exchanged dual 16-bit signed multiply with single 32-bit accumulator.  */
-__STATIC_FORCEINLINE int32_t __SMLADX(int32_t op1, int32_t op2, int32_t op3)
-{
-    return (int32_t)__RV_KMAXDA(op3, op1, op2);
-}
+__STATIC_FORCEINLINE int32_t __SMLADX(int32_t op1, int32_t op2, int32_t op3) { return (int32_t)__RV_KMAXDA(op3, op1, op2); }
 /** \brief Q setting dual 16-bit signed multiply with exchange subtract with 32-bit accumulate.  */
-__STATIC_FORCEINLINE int32_t __SMLSDX(int32_t op1, int32_t op2, int32_t op3)
-{
-    return (op3 - (int32_t)__RV_SMXDS(op1, op2));
-}
+__STATIC_FORCEINLINE int32_t __SMLSDX(int32_t op1, int32_t op2, int32_t op3) { return (op3 - (int32_t)__RV_SMXDS(op1, op2)); }
 /** \brief Dual 16-bit signed multiply with single 64-bit accumulator. */
-__STATIC_FORCEINLINE int64_t __SMLALD(int32_t op1, int32_t op2, int64_t acc)
-{
-    return (int64_t)__RV_SMALDA(acc, op1, op2);
-}
+__STATIC_FORCEINLINE int64_t __SMLALD(int32_t op1, int32_t op2, int64_t acc) { return (int64_t)__RV_SMALDA(acc, op1, op2); }
 /** \brief Dual 16-bit signed multiply with exchange with single 64-bit accumulator.  */
-__STATIC_FORCEINLINE int64_t __SMLALDX(int32_t op1, int32_t op2, int64_t acc)
-{
-    return (int64_t)__RV_SMALXDA(acc, op1, op2);
-}
+__STATIC_FORCEINLINE int64_t __SMLALDX(int32_t op1, int32_t op2, int64_t acc) { return (int64_t)__RV_SMALXDA(acc, op1, op2); }
 /** \brief Q setting sum of dual 16-bit signed multiply. */
-__STATIC_FORCEINLINE int32_t __SMUAD(int32_t op1, int32_t op2)
-{
-    return (int32_t)__RV_KMDA(op1, op2);
-}
+__STATIC_FORCEINLINE int32_t __SMUAD(int32_t op1, int32_t op2) { return (int32_t)__RV_KMDA(op1, op2); }
 /** \brief Dual 16-bit signed multiply returning difference. */
-__STATIC_FORCEINLINE int32_t __SMUSD(int32_t op1, int32_t op2)
-{
-    return (int32_t)__RV_SMDRS(op1, op2);
-}
+__STATIC_FORCEINLINE int32_t __SMUSD(int32_t op1, int32_t op2) { return (int32_t)__RV_SMDRS(op1, op2); }
 /** \brief Dual extract 8-bits and sign extend each to 16-bits. */
-#define __SXTB16(x)             __RV_SUNPKD820(x)
+#define __SXTB16(x) __RV_SUNPKD820(x)
 /** \brief Dual extracted 8-bit to 16-bit signed addition. TODO Need test */
-__STATIC_FORCEINLINE int32_t __SXTAB16(uint32_t op1, uint32_t op2)
-{
-    return __RV_ADD16(op1, __RV_SUNPKD830(op2));
-}
+__STATIC_FORCEINLINE int32_t __SXTAB16(uint32_t op1, uint32_t op2) { return __RV_ADD16(op1, __RV_SUNPKD830(op2)); }
 /** \brief 32-bit signed multiply with 32-bit truncated accumulator. */
-__STATIC_FORCEINLINE int32_t __SMMLA(int32_t op1, int32_t op2, int32_t op3)
-{
-    int32_t mul;
-    mul = (int32_t)__RV_SMMUL(op1, op2);
-    return (op3 + mul);
+__STATIC_FORCEINLINE int32_t __SMMLA(int32_t op1, int32_t op2, int32_t op3) {
+  int32_t mul;
+  mul = (int32_t)__RV_SMMUL(op1, op2);
+  return (op3 + mul);
 }
-#define __DKHM8                 __RV_DKHM8
-#define __DKHM16                __RV_DKHM16
-#define __DKSUB16               __RV_DKSUB16
-#define __SMAQA                 __RV_SMAQA
-#define __MULSR64               __RV_MULSR64
-#define __DQADD8                __RV_DKADD8
-#define __DQSUB8                __RV_DKSUB8
-#define __DKADD16               __RV_DKADD16
-#define __PKBB16                __RV_PKBB16
-#define __DKSLRA16              __RV_DKSLRA16
-#define __DKSLRA8               __RV_DKSLRA8
-#define __KABSW                 __RV_KABSW
-#define __DKABS8                __RV_DKABS8
-#define __DKABS16               __RV_DKABS16
-#define __SMALDA                __RV_SMALDA
-#define __SMSLDA                __RV_SMSLDA
-#define __SMALBB                __RV_SMALBB
-#define __SUB64                 __RV_SUB64
-#define __ADD64                 __RV_ADD64
-#define __SMBB16                __RV_SMBB16
-#define __SMBT16                __RV_SMBT16
-#define __SMTT16                __RV_SMTT16
-#define __EXPD80                __RV_EXPD80
-#define __SMAX8                 __RV_SMAX8
-#define __SMAX16                __RV_SMAX16
-#define __PKTT16                __RV_PKTT16
-#define __KADD16                __RV_KADD16
-#define __SADD16                __RV_ADD16
+#define __DKHM8    __RV_DKHM8
+#define __DKHM16   __RV_DKHM16
+#define __DKSUB16  __RV_DKSUB16
+#define __SMAQA    __RV_SMAQA
+#define __MULSR64  __RV_MULSR64
+#define __DQADD8   __RV_DKADD8
+#define __DQSUB8   __RV_DKSUB8
+#define __DKADD16  __RV_DKADD16
+#define __PKBB16   __RV_PKBB16
+#define __DKSLRA16 __RV_DKSLRA16
+#define __DKSLRA8  __RV_DKSLRA8
+#define __KABSW    __RV_KABSW
+#define __DKABS8   __RV_DKABS8
+#define __DKABS16  __RV_DKABS16
+#define __SMALDA   __RV_SMALDA
+#define __SMSLDA   __RV_SMSLDA
+#define __SMALBB   __RV_SMALBB
+#define __SUB64    __RV_SUB64
+#define __ADD64    __RV_ADD64
+#define __SMBB16   __RV_SMBB16
+#define __SMBT16   __RV_SMBT16
+#define __SMTT16   __RV_SMTT16
+#define __EXPD80   __RV_EXPD80
+#define __SMAX8    __RV_SMAX8
+#define __SMAX16   __RV_SMAX16
+#define __PKTT16   __RV_PKTT16
+#define __KADD16   __RV_KADD16
+#define __SADD16   __RV_ADD16
 
 #endif /* (__RISCV_FEATURE_DSP == 1) */
 
 #endif /* defined(__DSP_PRESENT) && (__DSP_PRESENT == 1) */
 
 /** \brief Halfword packing instruction. Combines bits[15:0] of val1 with bits[31:16] of val2 levitated with the val3. */
-#define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
-                                           ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
+#define __PKHBT(ARG1, ARG2, ARG3) (((((uint32_t)(ARG1))) & 0x0000FFFFUL) | ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL))
 /** \brief Halfword packing instruction. Combines bits[31:16] of val1 with bits[15:0] of val2 right-shifted with the val3. */
-#define __PKHTB(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0xFFFF0000UL) |  \
-                                           ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
+#define __PKHTB(ARG1, ARG2, ARG3) (((((uint32_t)(ARG1))) & 0xFFFF0000UL) | ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL))
 
 #ifdef __cplusplus
 }

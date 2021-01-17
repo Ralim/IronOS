@@ -1,10 +1,10 @@
-#include <stdint.h>
-#include <stdbool.h>
 #include "BSP_Flash.h"
 #include "BSP_Power.h"
 #include "BSP_QC.h"
 #include "Defines.h"
 #include "Model_Config.h"
+#include <stdbool.h>
+#include <stdint.h>
 /*
  * BSP.h -- Board Support
  *
@@ -59,16 +59,16 @@ void reboot();
 // If the user has programmed in a bootup logo, draw it to the screen from flash
 // Returns 1 if the logo was printed so that the unit waits for the timeout or button
 uint8_t showBootLogoIfavailable();
-//delay wrapper for delay using the hardware timer (used before RTOS)
-void delay_ms(uint16_t count) ;
-//Used to allow knowledge of if usb_pd is being used
+// delay wrapper for delay using the hardware timer (used before RTOS)
+void delay_ms(uint16_t count);
+// Used to allow knowledge of if usb_pd is being used
 uint8_t usb_pd_detect();
-bool getHallSensorFitted();
+bool    getHallSensorFitted();
 // If the iron has a hall effect sensor in the handle, return an signed count of the reading
 // If the sensor is single polarity (or polarity insensitive) just return 0..32768
 int16_t getRawHallEffect();
 
-//Returns true if power is from dumb "DC" input rather than "smart" QC or PD
+// Returns true if power is from dumb "DC" input rather than "smart" QC or PD
 bool getIsPoweredByDCIN();
 
 #ifdef __cplusplus

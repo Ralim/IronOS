@@ -22,36 +22,28 @@
 
 class InterruptHandler {
 public:
-	//Creates the thread to handle the Interrupt pin
-	static void init();
+  // Creates the thread to handle the Interrupt pin
+  static void init();
 
+  static void irqCallback();
 
-	static void irqCallback();
 private:
-	static void Thread(const void *arg);
-	static osThreadId TaskHandle;
-	static const size_t TaskStackSize = 1536 / 3;
-	static uint32_t TaskBuffer[TaskStackSize];
-	static osStaticThreadDef_t TaskControlBlock;
-	/*
-	 * Hard Reset machine states
-	 */
-	enum hardrst_state {
-		PRLHRResetLayer,
-		PRLHRIndicateHardReset,
-		PRLHRRequestHardReset,
-		PRLHRWaitPHY,
-		PRLHRHardResetRequested,
-		PRLHRWaitPE,
-		PRLHRComplete
-	};
-	static enum hardrst_state hardrst_reset_layer();
-	static enum hardrst_state hardrst_indicate_hard_reset();
-	static enum hardrst_state hardrst_request_hard_reset();
-	static enum hardrst_state hardrst_wait_phy();
-	static enum hardrst_state hardrst_hard_reset_requested();
-	static enum hardrst_state hardrst_wait_pe();
-	static enum hardrst_state hardrst_complete();
+  static void                Thread(const void *arg);
+  static osThreadId          TaskHandle;
+  static const size_t        TaskStackSize = 1536 / 3;
+  static uint32_t            TaskBuffer[TaskStackSize];
+  static osStaticThreadDef_t TaskControlBlock;
+  /*
+   * Hard Reset machine states
+   */
+  enum hardrst_state { PRLHRResetLayer, PRLHRIndicateHardReset, PRLHRRequestHardReset, PRLHRWaitPHY, PRLHRHardResetRequested, PRLHRWaitPE, PRLHRComplete };
+  static enum hardrst_state hardrst_reset_layer();
+  static enum hardrst_state hardrst_indicate_hard_reset();
+  static enum hardrst_state hardrst_request_hard_reset();
+  static enum hardrst_state hardrst_wait_phy();
+  static enum hardrst_state hardrst_hard_reset_requested();
+  static enum hardrst_state hardrst_wait_pe();
+  static enum hardrst_state hardrst_complete();
 };
 
 #endif /* PDB_INT_N_OLD_H */

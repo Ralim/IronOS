@@ -1,9 +1,10 @@
 #pragma once
 #include "Model_Config.h"
+#include <stdint.h>
 /**
  * Configuration.h
  * Define here your default pre settings for TS80 or TS100
- * 
+ *
  */
 
 //===========================================================================
@@ -13,30 +14,30 @@
  * Default soldering temp is 320.0 C
  * Temperature the iron sleeps at - default 150.0 C
  */
-#define SOLDERING_TEMP 320   // Default soldering temp is 320.0 °C
-#define SLEEP_TEMP 150       // Default sleep temperature
-#define BOOST_TEMP 420       // Default boost temp.
-#define BOOST_MODE_ENABLED 1 // 0: Disable 1: Enable
+#define SOLDERING_TEMP     320 // Default soldering temp is 320.0 °C
+#define SLEEP_TEMP         150 // Default sleep temperature
+#define BOOST_TEMP         420 // Default boost temp.
+#define BOOST_MODE_ENABLED 1   // 0: Disable 1: Enable
 
 /**
- * Blink the temperature on the cooling screen when its > 50C 
+ * Blink the temperature on the cooling screen when its > 50C
  */
 #define COOLING_TEMP_BLINK 0 // 0: Disable 1: Enable
 
 /**
  * How many seconds/minutes we wait until going to sleep/shutdown.
- * Values -> SLEEP_TIME * 10; i.e. 5*10 = 50 Seconds! 
+ * Values -> SLEEP_TIME * 10; i.e. 5*10 = 50 Seconds!
  */
-#define SLEEP_TIME 5     // x10 Seconds
+#define SLEEP_TIME    5  // x10 Seconds
 #define SHUTDOWN_TIME 10 // Minutes
 
 /**
  * Auto start off for safety.
- * Pissible values are:  
- *  0 - none 
+ * Pissible values are:
+ *  0 - none
  *  1 - Soldering Temperature
- *  2 - Sleep Temperature 
- *  3 - Sleep Off Temperature 
+ *  2 - Sleep Temperature
+ *  3 - Sleep Off Temperature
  */
 #define AUTO_START_MODE 0 // Default to none
 
@@ -48,26 +49,26 @@
  *  1 - Lock except boost
  *  2 - Full lock
  */
-#define LOCKING_MODE           0         // Default to desactivated for safety
+#define LOCKING_MODE 0 // Default to desactivated for safety
 
 /**
  * OLED Orientation
- * 
+ *
  */
-#define ORIENTATION_MODE 0           // 0: Right 1:Left 2:Automatic - Default right
+#define ORIENTATION_MODE           0 // 0: Right 1:Left 2:Automatic - Default right
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperatur change
 
 /**
  * Temp change settings
  */
-#define TEMP_CHANGE_SHORT_STEP 1      // Default temp change short step +1
-#define TEMP_CHANGE_LONG_STEP 10      // Default temp change long step +10
+#define TEMP_CHANGE_SHORT_STEP     1  // Default temp change short step +1
+#define TEMP_CHANGE_LONG_STEP      10 // Default temp change long step +10
 #define TEMP_CHANGE_SHORT_STEP_MAX 50 // Temp change short step MAX value
-#define TEMP_CHANGE_LONG_STEP_MAX 90  // Temp change long step MAX value
+#define TEMP_CHANGE_LONG_STEP_MAX  90 // Temp change long step MAX value
 
 /* Power pulse for keeping power banks awake*/
 #define POWER_PULSE_INCREMENT 1
-#define POWER_PULSE_MAX 50 // x10 max watts
+#define POWER_PULSE_MAX       50 // x10 max watts
 #ifdef MODEL_TS100
 #define POWER_PULSE_DEFAULT 0
 #else
@@ -85,88 +86,86 @@
  * Detailed idle screen (off for first time users)
  */
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
-#define DETAILED_IDLE 0      // 0: Disable 1: Enable - Default 0
+#define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
-#define CUT_OUT_SETTING 0          // default to no cut-off voltage
-#define TEMPERATURE_INF 0          // default to 0
+#define CUT_OUT_SETTING          0 // default to no cut-off voltage
+#define TEMPERATURE_INF          0 // default to 0
 #define DESCRIPTION_SCROLL_SPEED 0 // 0: Slow 1: Fast - default to slow
 
-
-#define OP_AMP_Rf_TS100 750 * 1000 // 750  Kilo-ohms -> From schematic, R1
-#define OP_AMP_Rin_TS100 2370      // 2.37 Kilo-ohms -> From schematic, R2
+#define OP_AMP_Rf_TS100  750 * 1000 // 750  Kilo-ohms -> From schematic, R1
+#define OP_AMP_Rin_TS100 2370       // 2.37 Kilo-ohms -> From schematic, R2
 
 #define OP_AMP_GAIN_STAGE_TS100 (1 + (OP_AMP_Rf_TS100 / OP_AMP_Rin_TS100))
 
-#define OP_AMP_Rf_TS80 180 * 1000 //  180  Kilo-ohms -> From schematic, R6
-#define OP_AMP_Rin_TS80 2000      //  2.0  Kilo-ohms -> From schematic, R3
+#define OP_AMP_Rf_TS80  180 * 1000 //  180  Kilo-ohms -> From schematic, R6
+#define OP_AMP_Rin_TS80 2000       //  2.0  Kilo-ohms -> From schematic, R3
 
 #define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
 
-
-//Deriving the Voltage div:
+// Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
-//vdiv = (32768*4)/(vin_max*10)
+// vdiv = (32768*4)/(vin_max*10)
 
 #ifdef MODEL_TS100
-#define VOLTAGE_DIV 467        // 467 - Default divider from schematic
+#define VOLTAGE_DIV        467 // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
-#define PID_POWER_LIMIT 70     // Sets the max pwm power limit
-#define POWER_LIMIT 0          // 0 watts default limit
-#define MAX_POWER_LIMIT 65     //
-#define POWER_LIMIT_STEPS 5    //
-#define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    65  //
+#define POWER_LIMIT_STEPS  5   //
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
 #define TEMP_uV_LOOKUP_HAKKO
 #endif
 
 #ifdef MODEL_Pinecil
-#define VOLTAGE_DIV 467        // 467 - Default divider from schematic
+#define VOLTAGE_DIV        467 // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
-#define PID_POWER_LIMIT 70     // Sets the max pwm power limit
-#define POWER_LIMIT 0          // 0 watts default limit
-#define MAX_POWER_LIMIT 65     //
-#define POWER_LIMIT_STEPS 5    //
-#define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS100
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    65  //
+#define POWER_LIMIT_STEPS  5   //
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
 #define TEMP_uV_LOOKUP_HAKKO
 #endif
 
 #ifdef MODEL_TS80
-#define VOLTAGE_DIV 780        // Default divider from schematic
-#define PID_POWER_LIMIT 24     // Sets the max pwm power limit
+#define VOLTAGE_DIV        780 // Default divider from schematic
+#define PID_POWER_LIMIT    24  // Sets the max pwm power limit
 #define CALIBRATION_OFFSET 900 // the adc offset in uV
-#define POWER_LIMIT 24         // 24 watts default power limit
-#define MAX_POWER_LIMIT 30     //
-#define POWER_LIMIT_STEPS 2
-#define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS80
+#define POWER_LIMIT        24  // 24 watts default power limit
+#define MAX_POWER_LIMIT    30  //
+#define POWER_LIMIT_STEPS  2
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS80
 #define TEMP_uV_LOOKUP_TS80
 #endif
 
 #ifdef MODEL_TS80P
-#define VOLTAGE_DIV 650        // Default for TS80P with slightly different resistors
-#define PID_POWER_LIMIT 35     // Sets the max pwm power limit
+#define VOLTAGE_DIV        650  // Default for TS80P with slightly different resistors
+#define PID_POWER_LIMIT    35   // Sets the max pwm power limit
 #define CALIBRATION_OFFSET 1500 // the adc offset in uV
-#define POWER_LIMIT 30         // 30 watts default power limit
-#define MAX_POWER_LIMIT 35     //
-#define POWER_LIMIT_STEPS 2
-#define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS80
+#define POWER_LIMIT        30   // 30 watts default power limit
+#define MAX_POWER_LIMIT    35   //
+#define POWER_LIMIT_STEPS  2
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS80
 #define TEMP_uV_LOOKUP_TS80
 #endif
 
 #ifdef MODEL_TS100
-const int32_t tipMass = 65;       // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance = 75; //x10 ohms, 7.5 typical for ts100 tips
+const int32_t tipMass       = 65; // X10 watts to raise 1 deg C in 1 second
+const uint8_t tipResistance = 75; // x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_Pinecil
-const int32_t tipMass = 45;       // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance = 75; //x10 ohms, 7.5 typical for ts100 tips
+const int32_t tipMass       = 45; // X10 watts to raise 1 deg C in 1 second
+const uint8_t tipResistance = 75; // x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_TS80
-const uint32_t tipMass = 40;
-const uint8_t tipResistance = 45; //x10 ohms, 4.5 typical for ts80 tips
+const uint32_t tipMass       = 40;
+const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 #endif
 
 #ifdef MODEL_TS80P
-const uint32_t tipMass = 40;
-const uint8_t tipResistance = 45; //x10 ohms, 4.5 typical for ts80 tips
+const uint32_t tipMass       = 40;
+const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 #endif

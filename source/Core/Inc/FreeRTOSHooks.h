@@ -17,12 +17,10 @@ extern "C" {
 #endif
 
 // RToS
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
-		StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize);
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize);
 void vApplicationIdleHook(void);
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif /* INC_FREERTOSHOOKS_H_ */

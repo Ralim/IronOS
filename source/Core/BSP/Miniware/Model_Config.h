@@ -11,9 +11,9 @@
  * Lookup for mapping features <-> Models
  */
 
-#if defined(MODEL_TS100) + defined(MODEL_TS80)+defined(MODEL_TS80P) > 1
+#if defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) > 1
 #error "Multiple models defined!"
-#elif defined(MODEL_TS100) + defined(MODEL_TS80)+ defined(MODEL_TS80P) == 0
+#elif defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) == 0
 #error "No model defined!"
 #endif
 

@@ -5,11 +5,11 @@
  *     Authors: Ben V. Brown, David Hilton (David's Idea)
  */
 
-#include "stdint.h"
-#include <history.hpp>
+#include "../../configuration.h"
 #include "BSP.h"
 #include "expMovingAverage.h"
-#include "../../configuration.h"
+#include "stdint.h"
+#include <history.hpp>
 #ifndef POWER_HPP_
 #define POWER_HPP_
 
@@ -19,10 +19,10 @@
 //  This is necessary because of the temp noise and thermal lag in the system.
 // Once we have feed-forward temp estimation we should be able to better tune this.
 
-const uint8_t wattHistoryFilter = 24; // I term look back weighting
+const uint8_t                                        wattHistoryFilter = 24; // I term look back weighting
 extern expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory;
 
 int32_t tempToX10Watts(int32_t rawTemp);
-void setTipX10Watts(int32_t mw);
+void    setTipX10Watts(int32_t mw);
 uint8_t X10WattsToPWM(int32_t milliWatts, uint8_t sample = 0);
 #endif /* POWER_HPP_ */

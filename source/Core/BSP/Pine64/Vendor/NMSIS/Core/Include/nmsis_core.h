@@ -23,7 +23,7 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #include "nmsis_version.h"
@@ -44,7 +44,7 @@
  * \attention
  * This define is exclusive with \ref __NUCLEI_NX_REV
  */
-#define __NUCLEI_N_REV                   (0x0104)
+#define __NUCLEI_N_REV (0x0104)
 /**
  * \brief Nuclei NX class core revision number
  * \details
@@ -52,11 +52,11 @@
  * \attention
  * This define is exclusive with \ref __NUCLEI_N_REV
  */
-#define __NUCLEI_NX_REV                  (0x0100)
-#endif /* __ONLY_FOR_DOXYGEN_DOCUMENT_GENERATION__ */
+#define __NUCLEI_NX_REV (0x0100)
+#endif    /* __ONLY_FOR_DOXYGEN_DOCUMENT_GENERATION__ */
 /** @} */ /* End of Group NMSIS_Core_VersionControl */
 
-#include "nmsis_compiler.h"     /* NMSIS compiler specific defines */
+#include "nmsis_compiler.h" /* NMSIS compiler specific defines */
 
 /* === Include Nuclei Core Related Headers === */
 /* Include core base feature header file */
