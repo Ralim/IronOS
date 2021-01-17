@@ -5,8 +5,8 @@
  *      Author: Ralim
  */
 
-#ifndef BSP_MINIWARE_MODEL_CONFIG_H_
-#define BSP_MINIWARE_MODEL_CONFIG_H_
+#ifndef BSP_PINE64_MODEL_CONFIG_H_
+#define BSP_PINE64_MODEL_CONFIG_H_
 /*
  * Lookup for mapping features <-> Models
  */
@@ -29,4 +29,4 @@
 #define BATTFILTERDEPTH 32
 #endif
 
-#endif /* BSP_MINIWARE_MODEL_CONFIG_H_ */
+#endif /* BSP_PINE64_MODEL_CONFIG_H_ */

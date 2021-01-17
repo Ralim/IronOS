@@ -749,7 +749,7 @@ void showWarnings() {
   // In this case though, we dont want to nag the user _too_ much
   // So only show first 2 times
   while (DetectedAccelerometerVersion == ACCELEROMETERS_SCANNING) {
-    osDelay(1);
+    osDelay(5);
   }
   // Display alert if accelerometer is not detected
   if (DetectedAccelerometerVersion == NO_DETECTED_ACCELEROMETER) {
@@ -800,7 +800,6 @@ void startGUITask(void const *argument __unused) {
     ButtonState buttons = getButtonState();
     if (buttons)
       ticks = xTaskGetTickCount(); // make timeout now so we will exit
-    OLED::refresh();
     GUIDelay();
   }
 

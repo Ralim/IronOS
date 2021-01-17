@@ -385,18 +385,10 @@ bool FRToSI2C::lock() {
   if (I2CSemaphore == nullptr) {
     return false;
   }
-  if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
-    return true;
-  }
   return xSemaphoreTake(I2CSemaphore, TICKS_SECOND) == pdTRUE;
 }
 
-void FRToSI2C::unlock() {
-  if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING) {
-    return;
-  }
-  xSemaphoreGive(I2CSemaphore);
-}
+void FRToSI2C::unlock() { xSemaphoreGive(I2CSemaphore); }
 
 bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength) {
   for (int index = 0; index < registersLength; index++) {

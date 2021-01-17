@@ -5,8 +5,8 @@
  *      Author: Ralim
  */
 
-#ifndef BSP_MINIWARE_IRQ_H_
-#define BSP_MINIWARE_IRQ_H_
+#ifndef BSP_PINE64_IRQ_H_
+#define BSP_PINE64_IRQ_H_
 
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
@@ -53,4 +53,4 @@ extern volatile uint8_t  i2c_process_flag;
 #ifdef __cplusplus
 }
 #endif
-#endif /* BSP_MINIWARE_IRQ_H_ */
+#endif /* BSP_PINE64_IRQ_H_ */

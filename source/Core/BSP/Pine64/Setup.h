@@ -5,8 +5,8 @@
  *      Author: Ben V. Brown
  */
 
-#ifndef SETUP_H_
-#define SETUP_H_
+#ifndef PINE_SETUP_H_
+#define PINE_SETUP_H_
 #include "gd32vf103_libopt.h"
 #include <stdint.h>
 
@@ -21,4 +21,4 @@ void     setupFUSBIRQ();
 #endif
 extern const uint8_t holdoffTicks;
 extern const uint8_t tempMeasureTicks;
-#endif /* SETUP_H_ */
+#endif /* PINE_SETUP_H_ */

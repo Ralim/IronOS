@@ -5,8 +5,8 @@
  *      Author: Ralim
  */
 
-#ifndef BSP_MINIWARE_PINS_H_
-#define BSP_MINIWARE_PINS_H_
+#ifndef BSP_PINE64_PINS_H_
+#define BSP_PINE64_PINS_H_
 #include "gd32vf103_gpio.h"
 
 #define KEY_B_Pin             BIT(1)
@@ -50,4 +50,4 @@
 #define FUSB302_IRQ_Pin       BIT(5)
 #define FUSB302_IRQ_GPIO_Port GPIOB
 
-#endif /* BSP_MINIWARE_PINS_H_ */
+#endif /* BSP_PINE64_PINS_H_ */

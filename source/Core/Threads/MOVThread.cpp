@@ -12,6 +12,7 @@
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
 #include "MSA301.h"
+#include "Model_Config.h"
 #include "QC3.h"
 #include "SC7A20.hpp"
 #include "Settings.h"
@@ -25,8 +26,9 @@
 #define MOVFilter 8
 uint8_t    accelInit        = 0;
 TickType_t lastMovementTime = 0;
-void       detectAccelerometerVersion() {
-  DetectedAccelerometerVersion = 99;
+
+void detectAccelerometerVersion() {
+  DetectedAccelerometerVersion = ACCELEROMETERS_SCANNING;
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
     if (MMA8652FC::initalize()) {
@@ -44,7 +46,7 @@ void       detectAccelerometerVersion() {
 #endif
 #ifdef ACCEL_BMA
       if (BMA223::detect()) {
-    // Setup the ST Accelerometer
+    // Setup the BMA223 Accelerometer
     if (BMA223::initalize()) {
       DetectedAccelerometerVersion = 3;
     }
@@ -68,7 +70,8 @@ void       detectAccelerometerVersion() {
 #endif
   {
     // disable imu sensitivity
-    systemSettings.sensitivity = 0;
+    systemSettings.sensitivity   = 0;
+    DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
   }
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
@@ -107,6 +110,7 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
   }
 }
 void startMOVTask(void const *argument __unused) {
+  osDelay(TICKS_100MS / 5);// This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
   detectAccelerometerVersion();
   osDelay(TICKS_100MS / 2); // wait ~50ms for setup of accel to finalise
   lastMovementTime = 0;
