@@ -4,22 +4,22 @@
 	"cyrillicGlyphs": false,
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
-		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before continuing!",
-		"SettingsResetWarning": "Sure you want to restore default settings?",
+		"SettingsCalibrationDone": "U FUCK MY WIFE ???? U FUCK MY WIFE ????",
+		"SettingsCalibrationWarning": "Please ensure the "<<tip>>" ;) is at room temperature, before continuing!",
+		"SettingsResetWarning": "U TALK TO ME ? YOU TALK TO ME ???",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
-		"InputVoltageString": "Input V: ",
+		"InputVoltageString": "Input kOk: ",
 		"WarningTipTempString": "Tip temp: ",
-		"BadTipString": "BAD TIP",
+		"BadTipString": "BAD BOY BAD BOYS WHAT U GONNA DO",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Sleeping...",
-		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "!!! HOT TIP !!!",
+		"WarningSimpleString": "HOT! U SO HOOOOT BBBAAAAABE",
+		"WarningAdvancedString": "!!! HOT "<<<TIP>>>" ;) !!!",
 		"SleepingTipAdvancedString": "Tip:",
 		"IdleTipString": "Tip:",
 		"IdleSetString": " Set:",
-		"TipDisconnectedString": "NO TIP",
+		"TipDisconnectedString": "NO TIP :D pussy",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
@@ -27,7 +27,7 @@
 		"SettingsResetMessage": "Settings were\nreset!",
 		"NoAccelerometerMessage": "No accelerometer\ndetected!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": "LOCKED",
+		"LockingKeysString": "DREAD LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
 	},
@@ -60,14 +60,14 @@
 		"PowerSavingMenu": {
 			"text2": [
 				"Sleep",
-				"mode"
+				"awake"
 			],
 			"desc": "Power saving settings"
 		},
 		"UIMenu": {
 			"text2": [
 				"User",
-				"interface"
+				"face"
 			],
 			"desc": "User interface settings"
 		},
@@ -83,7 +83,7 @@
 		"DCInCutoff": {
 			"text2": [
 				"Power",
-				"source"
+				"rangers"
 			],
 			"desc": "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell, disable power limit>"
 		},
@@ -153,14 +153,14 @@
 		"CooldownBlink": {
 			"text2": [
 				"Cooldown",
-				"blink"
+				"calmdown"
 			],
 			"desc": "Flash the temperature after heating was halted, while the tip is still hot"
 		},
 		"TemperatureCalibration": {
 			"text2": [
 				"Calibrate",
-				"temperature?"
+				"lilkok?"
 			],
 			"desc": "Start tip temperature offset calibration"
 		},
@@ -174,14 +174,14 @@
 		"VoltageCalibration": {
 			"text2": [
 				"Calibrate",
-				"input voltage?"
+				"input kok?"
 			],
 			"desc": "Start VIN calibration <long press to exit>"
 		},
 		"AdvancedSoldering": {
 			"text2": [
 				"Detailed",
-				"solder screen"
+				"toy screen"
 			],
 			"desc": "Display detailed information in a smaller font on soldering screen"
 		},
@@ -202,14 +202,14 @@
 		"SimpleCalibrationMode": {
 			"text2": [
 				"Simple",
-				"calibration"
+				"tools"
 			],
 			"desc": "Using hot water to calibrate tip"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
 				"Advanced",
-				"calibration"
+				"unadvanced"
 			],
 			"desc": "Using a thermocouple on the tip to calibrate it"
 		},
@@ -230,7 +230,7 @@
 		"ReverseButtonTempChange": {
 			"text2": [
 				"Reverse",
-				"+ - keys"
+				"+ + keys"
 			],
 			"desc": "Reverse assignment of temperature adjustment buttons"
 		},
@@ -270,11 +270,10 @@
 			"desc": "Sensitivity of the Hall effect sensor to detect sleep <O=off | L=low | M=medium | H=high>"
 		},
 		"LockingMode": {
-			"text2": [
-				"Allow locking",
+			"text2": [				"Allow locking",
 				"buttons"
 			],
-			"desc": "When soldering, long press both buttons, to lock them <D=disable | B=\"boost mode\" only | F=full locking>"
+			"desc": "When soldering, piss"
 		}
 	}
 }
