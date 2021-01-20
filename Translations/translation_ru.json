@@ -24,7 +24,7 @@
 		"ResetOKMessage": "Сброс OK",
 		"YourGainMessage": "Прирост:",
 		"SettingsResetMessage": "Настройки сброшены!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
+		"NoAccelerometerMessage": "Нет акселерометра\не определен!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
@@ -40,13 +40,13 @@
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",
 		"SettingStartNoneChar": "В",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingSensitivityOff": "О",
+		"SettingSensitivityLow": "Н",
+		"SettingSensitivityMedium": "С",
+		"SettingSensitivityHigh": "В",
+		"SettingLockDisableChar": "О",
+		"SettingLockBoostChar": "Т",
+		"SettingLockFullChar": "П"
 	},
 	"menuGroups": {
 		"SolderingMenu": {
@@ -221,8 +221,8 @@
 		},
 		"PowerLimit": {
 			"text2": [
-				"Максимальная",
-				"мощность"
+				"Предел",
+				"мощности"
 			],
 			"desc": "Максимальная мощность, которую может использовать паяльник <Ватт>"
 		},
@@ -249,10 +249,10 @@
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Мощность импульса",
+				"Сила имп.",
 				"питания Вт"
 			],
-			"desc": "Мощность импульса удерживающего от сна источник питания"
+			"desc": "Сила импульса удерживающего от сна повербанк или другой источник питания"
 		},
 		"TipGain": {
 			"text2": [
@@ -266,14 +266,14 @@
 				"Эффект Холла",
 				"чувствительность"
 			],
-			"desc": "Уровень чувствительности датчика холла в режиме сна <O=Выкл,L=Низкий,M=Средний,H=Высокий>"
+			"desc": "Уровень чувствительности датчика холла в режиме сна <О=Отключено, Н=Низкий, С=Средний,В=Высокий>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Разрешить блокировку",
-				"кнопок"
+				"Разрешить",
+				"блок. кнопок"
 			],
-			"desc": "При работе длинное нажатие обеих кнопок блокирует их <D=Отключено, B=Только турбо, F=Полная блокировка>"
+			"desc": "При работе длинное нажатие обеих кнопок блокирует их <О=Отключено, Т=Только турбо, П=Полная блокировка>"
 		}
 	}
 }
