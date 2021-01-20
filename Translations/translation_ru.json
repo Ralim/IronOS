@@ -24,7 +24,7 @@
 		"ResetOKMessage": "Сброс OK",
 		"YourGainMessage": "Прирост:",
 		"SettingsResetMessage": "Настройки сброшены!",
-		"NoAccelerometerMessage": "Нет акселерометра\не определен!",
+		"NoAccelerometerMessage": "Не определен\nакселерометр!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
