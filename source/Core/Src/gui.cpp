@@ -211,15 +211,22 @@ const menuitem advancedMenu[] = {
 };
 
 static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
-  OLED::setFont(1);
-  OLED::setCharCursor(0, 0);
-  OLED::print(SettingsShortNames[shortDescIndex][0]);
-  OLED::setCharCursor(0, 1);
-  OLED::print(SettingsShortNames[shortDescIndex][1]);
+  if (SettingsShortNames[shortDescIndex][0][0] == '\x00') {
+    // Empty first line means that this uses large font (for CJK).
+    OLED::setFont(0);
+    OLED::setCharCursor(0, 0);
+    OLED::print(SettingsShortNames[shortDescIndex][1]);
+  } else {
+    OLED::setFont(1);
+    OLED::setCharCursor(0, 0);
+    OLED::print(SettingsShortNames[shortDescIndex][0]);
+    OLED::setCharCursor(0, 1);
+    OLED::print(SettingsShortNames[shortDescIndex][1]);
+  }
 }
 
 /**
- * Prints two small lines of short description
+ * Prints two small lines (or one line for CJK) of short description
  * and prepares cursor in big font after it.
  * @param shortDescIndex Index to of short description.
  * @param cursorCharPosition Custom cursor char position to set after printing
@@ -632,6 +639,7 @@ static bool settings_setResetSettings(void) {
     resetSettings();
 
     OLED::setFont(0);
+    OLED::clearScreen();
     OLED::setCursor(0, 0);
     OLED::print(ResetOKMessage);
     OLED::refresh();
@@ -871,10 +879,17 @@ static bool settings_setHallEffect(void) {
 #endif
 static void displayMenu(size_t index) {
   // Call into the menu
-  OLED::setFont(1);
+  const char *textPtr = SettingsMenuEntries[index];
+  if (textPtr[0] == '\x01') { // `\x01` is used as newline.
+    // Empty first line means that this uses large font (for CJK).
+    OLED::setFont(0);
+    textPtr++;
+  } else {
+    OLED::setFont(1);
+  }
   OLED::setCursor(0, 0);
   // Draw title
-  OLED::print(SettingsMenuEntries[index]);
+  OLED::print(textPtr);
   // Draw symbol
   // 16 pixel wide image
   // 2 pixel wide scrolling indicator

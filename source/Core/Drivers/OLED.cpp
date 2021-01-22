@@ -125,7 +125,7 @@ void OLED::drawChar(char c) {
   } else if (c == 0) {
     return;
   }
-  uint16_t index = c - 2; // First index is \x02
+  uint16_t index = static_cast<unsigned char>(c) - 2; // First index is \x02
   uint8_t *charPointer;
   charPointer = ((uint8_t *)currentFont) + ((fontWidth * (fontHeight / 8)) * index);
   drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);

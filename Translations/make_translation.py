@@ -10,6 +10,7 @@ import sys
 import fontTables
 import re
 import subprocess
+from bdflib import reader as bdfreader
 
 HERE = os.path.dirname(__file__)
 
@@ -17,6 +18,10 @@ try:
     to_unicode = unicode
 except NameError:
     to_unicode = str
+
+
+with open(os.path.join(HERE, "wqy-bitmapsong/wenquanyi_9pt.bdf"), "rb") as handle:
+    cjkFont = bdfreader.read_bdf(handle)
 
 
 def log(message):
@@ -176,6 +181,49 @@ def getLetterCounts(defs, lang):
     symbolCounts.reverse()
     return symbolCounts
 
+def getCJKGlyph(sym):
+    from bdflib.model import Glyph
+    try:
+        glyph: Glyph = cjkFont[ord(sym)]
+    except:
+        return None
+    data = glyph.data
+    (srcLeft, srcBottom, srcW, srcH) = glyph.get_bounding_box()
+    dstW = 12
+    dstH = 16
+    # The source data is a per-row list of ints. The first item is the bottom-
+    # most row. For each row, the LSB is the right-most pixel.
+    # Here, (x, y) is the coordinates with origin at the top-left.
+    def getCell(x, y):
+        # Adjust x coordinates by actual bounding box.
+        adjX = x - srcLeft
+        if adjX < 0 or adjX >= srcW:
+            return False
+        # Adjust y coordinates by actual bounding box, then place the glyph
+        # baseline 3px above the bottom edge to make it centre-ish.
+        # This metric is optimized for WenQuanYi Bitmap Song 9pt and assumes
+        # each glyph is to be placed in a 12x12px box.
+        adjY = y - (dstH - srcH - srcBottom - 3)
+        if adjY < 0 or adjY >= srcH:
+            return False
+        if data[srcH - adjY - 1] & (1 << (srcW - adjX - 1)):
+            return True
+        else:
+            return False
+    # A glyph in the font table is divided into upper and lower parts, each by
+    # 8px high. Each byte represents half if a column, with the LSB being the
+    # top-most pixel. The data goes from the left-most to the right-most column
+    # of the top half, then from the left-most to the right-most column of the
+    # bottom half.
+    s = ""
+    for block in range(2):
+        for c in range(dstW):
+            b = 0
+            for r in range(8):
+                if getCell(c, r + 8 * block):
+                    b |= 0x01 << r
+            s += f"0x{b:02X},"
+    return s
 
 def getFontMapAndTable(textList):
     # the text list is sorted
@@ -188,10 +236,13 @@ def getFontMapAndTable(textList):
     for sym in forcedFirstSymbols:
         symbolMap[sym] = "\\x%0.2X" % index
         index = index + 1
-    if len(textList) > (253 - len(forcedFirstSymbols)):
-        log("Error, too many used symbols for this version")
+    totalSymbolCount = len(set(textList) | set(forcedFirstSymbols))
+    # \x00 is for NULL termination and \x01 is for newline, so the maximum
+    # number of symbols allowed with 8 bits is `256 - 2`.
+    if totalSymbolCount > (256 - 2):
+        log(f"Error, too many used symbols for this version (total {totalSymbolCount})")
         exit(1)
-    log("Generating fonts for {} symbols".format(len(textList)))
+    log("Generating fonts for {} symbols".format(totalSymbolCount))
 
     for sym in textList:
         if sym not in symbolMap:
@@ -218,8 +269,16 @@ def getFontMapAndTable(textList):
 
     for sym in textList:
         if sym not in fontTable:
-            log("Missing Large font element for {}".format(sym))
-            exit(1)
+            # Assume this is a CJK character.
+            fromFont = getCJKGlyph(sym)
+            if fromFont is None:
+                log("Missing Large font element for {}".format(sym))
+                exit(1)
+            # We store the glyph back to the fontTable.
+            fontTable[sym] = fromFont
+            # We also put a "replacement character" in the small font table
+            # for sanity. (It is a question mark with inverted colour.)
+            fontSmallTable[sym] = "0xFD, 0xFE, 0xAE, 0xF6, 0xF9, 0xFF,"
         if sym not in forcedFirstSymbols:
             fontLine = fontTable[sym]
             fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
