@@ -194,6 +194,7 @@ static void gui_solderingTempAdjust() {
     switch (buttons) {
     case BUTTON_NONE:
       // stay
+      autoRepeatAcceleration = 0;
       break;
     case BUTTON_BOTH:
       // exit
