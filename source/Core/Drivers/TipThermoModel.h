@@ -26,7 +26,7 @@ public:
   static uint32_t convertTipRawADCToDegF(uint16_t rawADC);
 #endif
   // Returns the uV of the tip reading before the op-amp compensating for pullups
-  static uint32_t convertTipRawADCTouV(uint16_t rawADC);
+  static uint32_t convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset = false);
 #ifdef ENABLED_FAHRENHEIT_SUPPORT
   static uint32_t convertCtoF(uint32_t degC);
   static uint32_t convertFtoC(uint32_t degF);

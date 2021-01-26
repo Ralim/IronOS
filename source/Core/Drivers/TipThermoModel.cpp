@@ -28,7 +28,7 @@
  * This was bought to my attention by <Kuba Sztandera>
  */
 
-uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
+uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset) {
   // This takes the raw ADC samples, converts these to uV
   // Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
   // Then remove the calibration value that is stored as a tip offset
@@ -41,9 +41,9 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC) {
   // Now to divide this down by the gain
   valueuV /= OP_AMP_GAIN_STAGE;
 
-  if (systemSettings.CalibrationOffset) {
+  if (systemSettings.CalibrationOffset && skipCalOffset == false) {
     // Remove uV tipOffset
-    if (valueuV >= systemSettings.CalibrationOffset)
+    if (valueuV > systemSettings.CalibrationOffset)
       valueuV -= systemSettings.CalibrationOffset;
     else
       valueuV = 0;
