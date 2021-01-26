@@ -180,20 +180,33 @@ static void gui_drawBatteryIcon() {
 #endif
 }
 static void gui_solderingTempAdjust() {
-  uint32_t lastChange             = xTaskGetTickCount();
-  currentTempTargetDegC           = 0;
-  uint32_t autoRepeatTimer        = 0;
-  uint8_t  autoRepeatAcceleration = 0;
+  uint32_t lastChange                = xTaskGetTickCount();
+  currentTempTargetDegC              = 0;
+  uint32_t    autoRepeatTimer        = 0;
+  uint8_t     autoRepeatAcceleration = 0;
+  bool        waitForRelease         = false;
+  ButtonState buttons                = getButtonState();
+  if (buttons != BUTTON_NONE) {
+    // Temp adjust entered by long-pressing F button.
+    waitForRelease = true;
+  }
   for (;;) {
     OLED::setCursor(0, 0);
     OLED::clearScreen();
     OLED::setFont(0);
-    ButtonState buttons = getButtonState();
-    if (buttons)
+    buttons = getButtonState();
+    if (buttons) {
+      if (waitForRelease) {
+        buttons = BUTTON_NONE;
+      }
       lastChange = xTaskGetTickCount();
+    } else {
+      waitForRelease = false;
+    }
     switch (buttons) {
     case BUTTON_NONE:
       // stay
+      autoRepeatAcceleration = 0;
       break;
     case BUTTON_BOTH:
       // exit
