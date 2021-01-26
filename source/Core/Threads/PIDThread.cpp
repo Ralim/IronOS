@@ -113,7 +113,9 @@ void startPIDTask(void const *argument __unused) {
       } else {
         setTipX10Watts(x10WattsOut);
       }
-
+#ifdef DEBUG_UART_OUTPUT
+      log_system_state(x10WattsOut);
+#endif
       resetWatchdog();
     } else {
       // ADC interrupt timeout

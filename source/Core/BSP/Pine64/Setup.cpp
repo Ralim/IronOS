@@ -65,7 +65,7 @@ void setup_uart() {
 
   /* USART configure */
   usart_deinit(UART_PERIF);
-  usart_baudrate_set(UART_PERIF, 115200U);
+  usart_baudrate_set(UART_PERIF, 2 * 1000 * 1000U);
   usart_word_length_set(UART_PERIF, USART_WL_8BIT);
   usart_stop_bit_set(UART_PERIF, USART_STB_1BIT);
   usart_parity_config(UART_PERIF, USART_PM_NONE);
@@ -73,7 +73,7 @@ void setup_uart() {
   usart_hardware_flow_cts_config(UART_PERIF, USART_CTS_DISABLE);
   usart_receive_config(UART_PERIF, USART_RECEIVE_DISABLE); // Dont use rx for now
   usart_transmit_config(UART_PERIF, USART_TRANSMIT_ENABLE);
-  eclic_irq_enable(USART1_IRQn, 3, 0);
+  eclic_irq_enable(USART1_IRQn, 15, 15);
   usart_enable(UART_PERIF);
 }
 

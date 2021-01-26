@@ -19,11 +19,14 @@ void              log_system_state(uint32_t PWMWattsx10) {
     // Tip_Temp_C,Handle_Temp_C,Output_Power_Wattx10,PWM,Tip_Raw\r\n
     // 3+1+3+1+3+1+3+1+5+2 = 23, so sizing at 32 for now
 
-    outputLength = snprintf(uartOutputBuffer, uartOutputBufferLength, "A%lu,%u,%lu,%u,%lu", //
-                            TipThermoModel::getTipInC(false),                               // Tip temp in C
-                            getHandleTemperature(),                                         // Handle temp in C X10
-                            PWMWattsx10, 0,                                                 // PWM
-                            TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true));
+    outputLength = snprintf(uartOutputBuffer, uartOutputBufferLength, "%lu,%u,%lu,%u,%lu\r\n", //
+                            TipThermoModel::getTipInC(false),                                  // Tip temp in C
+                            getHandleTemperature(),                                            // Handle temp in C X10
+                            PWMWattsx10,                                                       // Output Wattage
+                            0,                                                                 // PWM
+                            TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true)       // Tip temp in uV
+    );
+
     // Now print this out the uart via IRQ (DMA cant be used as oled has it)
     currentOutputPos = 0;
     /* enable USART1 Transmit Buffer Empty interrupt */
@@ -36,7 +39,7 @@ void USART1_IRQHandler(void) {
     /* write one byte to the transmit data register */
     usart_data_transmit(UART_PERIF, uartOutputBuffer[currentOutputPos++]);
     if (currentOutputPos >= outputLength) {
-      //				currentOutputPos = 0xFF;	//Mark done
+      currentOutputPos = 0xFF; // Mark done
       usart_interrupt_disable(UART_PERIF, USART_INT_TBE);
     }
   }
