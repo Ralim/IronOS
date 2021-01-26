@@ -180,12 +180,12 @@ static void gui_drawBatteryIcon() {
 #endif
 }
 static void gui_solderingTempAdjust() {
-  uint32_t lastChange             = xTaskGetTickCount();
-  currentTempTargetDegC           = 0;
-  uint32_t autoRepeatTimer        = 0;
-  uint8_t  autoRepeatAcceleration = 0;
-  bool waitForRelease = false;
-  ButtonState buttons = getButtonState();
+  uint32_t lastChange                = xTaskGetTickCount();
+  currentTempTargetDegC              = 0;
+  uint32_t    autoRepeatTimer        = 0;
+  uint8_t     autoRepeatAcceleration = 0;
+  bool        waitForRelease         = false;
+  ButtonState buttons                = getButtonState();
   if (buttons != BUTTON_NONE) {
     // Temp adjust entered by long-pressing F button.
     waitForRelease = true;
