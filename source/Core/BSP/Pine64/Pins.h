@@ -50,4 +50,11 @@
 #define FUSB302_IRQ_Pin       BIT(5)
 #define FUSB302_IRQ_GPIO_Port GPIOB
 
+// uart
+#define UART_TX_Pin       BIT(2)
+#define UART_TX_GPIO_Port GPIOA
+#define UART_RX_Pin       BIT(3)
+#define UART_RX_GPIO_Port GPIOA
+#define UART_PERIF        USART1
+
 #endif /* BSP_PINE64_PINS_H_ */
