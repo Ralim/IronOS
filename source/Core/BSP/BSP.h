@@ -72,7 +72,7 @@ int16_t getRawHallEffect();
 bool getIsPoweredByDCIN();
 
 // Logs the system state to a debug interface if supported
-void log_system_state(uint32_t PWMWattsx10);
+void log_system_state(int32_t PWMWattsx10);
 
 #ifdef __cplusplus
 }
