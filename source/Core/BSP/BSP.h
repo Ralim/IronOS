@@ -71,6 +71,9 @@ int16_t getRawHallEffect();
 // Returns true if power is from dumb "DC" input rather than "smart" QC or PD
 bool getIsPoweredByDCIN();
 
+// Logs the system state to a debug interface if supported
+void log_system_state(int32_t PWMWattsx10);
+
 #ifdef __cplusplus
 }
 #endif

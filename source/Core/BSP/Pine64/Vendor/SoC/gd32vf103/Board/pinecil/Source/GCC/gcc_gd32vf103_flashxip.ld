@@ -32,7 +32,7 @@ OUTPUT_ARCH( "riscv" )
  * </h>
  */
 __ROM_BASE = 0x08000000;
-__ROM_SIZE = 0x00020000;
+__ROM_SIZE = 0x0001F400;
 
 /*--------------------- ILM RAM Configuration ---------------------------
  * <h> ILM RAM Configuration

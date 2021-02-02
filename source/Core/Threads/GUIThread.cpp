@@ -655,12 +655,7 @@ void showDebugMenu(void) {
       break;
     case 6:
       // Raw Tip
-      {
-        uint32_t temp                    = systemSettings.CalibrationOffset;
-        systemSettings.CalibrationOffset = 0;
-        OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)), 6);
-        systemSettings.CalibrationOffset = temp;
-      }
+      { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6); }
       break;
     case 7:
       // Temp in C

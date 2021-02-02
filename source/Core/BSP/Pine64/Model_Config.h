@@ -27,6 +27,7 @@
 #define HALL_SENSOR
 #define HALL_SI7210
 #define BATTFILTERDEPTH 32
+#define DEBUG_UART_OUTPUT
 #endif
 
 #endif /* BSP_PINE64_MODEL_CONFIG_H_ */

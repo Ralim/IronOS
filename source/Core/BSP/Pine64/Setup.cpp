@@ -6,6 +6,7 @@
  */
 #include "Setup.h"
 #include "BSP.h"
+#include "Debug.h"
 #include "Pins.h"
 #include "gd32vf103.h"
 #include <string.h>
@@ -20,6 +21,7 @@ void setup_i2c();
 void setup_adc();
 void setup_timers();
 void setup_iwdg();
+void setup_uart();
 
 void hardware_init() {
   // GPIO
@@ -35,6 +37,8 @@ void hardware_init() {
   // Watchdog
   setup_iwdg();
 
+  // uart for debugging
+  setup_uart();
   /* enable TIMER1 - PWM control timing*/
   timer_enable(TIMER1);
   timer_enable(TIMER2);
@@ -45,6 +49,32 @@ uint16_t getADC(uint8_t channel) {
   for (uint8_t i = 0; i < ADC_NORM_SAMPLES; i++)
     sum += ADCReadings[channel + (i * ADC_NORM_CHANNELS)];
   return sum >> 2;
+}
+
+void setup_uart() {
+  // Setup the uart pins as a uart with dma
+
+  /* enable USART clock */
+  rcu_periph_clock_enable(RCU_USART1);
+
+  /* connect port to USARTx_Tx */
+  gpio_init(UART_TX_GPIO_Port, GPIO_MODE_AF_PP, GPIO_OSPEED_10MHZ, UART_TX_Pin);
+
+  /* connect port to USARTx_Rx */
+  gpio_init(UART_RX_GPIO_Port, GPIO_MODE_IPU, GPIO_OSPEED_10MHZ, UART_RX_Pin);
+
+  /* USART configure */
+  usart_deinit(UART_PERIF);
+  usart_baudrate_set(UART_PERIF, 2 * 1000 * 1000U);
+  usart_word_length_set(UART_PERIF, USART_WL_8BIT);
+  usart_stop_bit_set(UART_PERIF, USART_STB_1BIT);
+  usart_parity_config(UART_PERIF, USART_PM_NONE);
+  usart_hardware_flow_rts_config(UART_PERIF, USART_RTS_DISABLE);
+  usart_hardware_flow_cts_config(UART_PERIF, USART_CTS_DISABLE);
+  usart_receive_config(UART_PERIF, USART_RECEIVE_DISABLE); // Dont use rx for now
+  usart_transmit_config(UART_PERIF, USART_TRANSMIT_ENABLE);
+  eclic_irq_enable(USART1_IRQn, 15, 15);
+  usart_enable(UART_PERIF);
 }
 
 void setup_gpio() {

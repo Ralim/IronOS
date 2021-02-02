@@ -21,7 +21,7 @@ uint32_t            GUITaskBuffer[GUITaskStackSize];
 osStaticThreadDef_t GUITaskControlBlock;
 
 osThreadId          PIDTaskHandle;
-static const size_t PIDTaskStackSize = 512 / 4;
+static const size_t PIDTaskStackSize = 1024 / 4;
 uint32_t            PIDTaskBuffer[PIDTaskStackSize];
 osStaticThreadDef_t PIDTaskControlBlock;
 

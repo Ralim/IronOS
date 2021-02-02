@@ -110,7 +110,7 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
   }
 }
 void startMOVTask(void const *argument __unused) {
-  osDelay(TICKS_100MS / 5);// This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
+  osDelay(TICKS_100MS / 5); // This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
   detectAccelerometerVersion();
   osDelay(TICKS_100MS / 2); // wait ~50ms for setup of accel to finalise
   lastMovementTime = 0;
