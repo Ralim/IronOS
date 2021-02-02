@@ -2,10 +2,9 @@
 ifndef model
 model:=TS100
 endif
-OUTPUT_EXE=$(model)_$(lang)
-ifndef lang
-lang:= EN
-endif
+
+ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK
+
 
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
@@ -104,7 +103,6 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	  $(DEVICE_INCLUDES) 
 	  
 TRANSLATION_FILES=$(wildcard ../../Translations/translation_*.json)
-GENERATED_TRANSLATION_SOURCE=Core/Gen/Translation.cpp
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
@@ -114,8 +112,7 @@ SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.cpp') \
 $(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
-$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp') \
-$(GENERATED_TRANSLATION_SOURCE)
+$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 # output folder
 HEXFILE_DIR=Hexfile
 
@@ -126,7 +123,7 @@ OUTPUT_DIR=Objects/$(model)
 OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D LANG_$(lang) -D LANG -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
+GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
 
 # Without debug code
 DEBUG=
@@ -169,8 +166,6 @@ endif
 LINKER_FLAGS=   -Wl,--gc-sections 		                      \
                 -Wl,--wrap=malloc                             \
 			    -Wl,--wrap=free                               \
-			    -o$(OUT_HEXFILE).elf 	                      \
-			    -Wl,-Map=$(OUT_HEXFILE).map                   \
 			    -lm                                           \
 			    -Wl,--undefined=vTaskSwitchContext            \
 			    -Wl,--undefined=pxCurrentTCB                  \
@@ -275,49 +270,55 @@ OBJS_S = $(S_SRCS:.S=.o)
 OUT_OBJS=$(addprefix $(OUTPUT_DIR)/,$(OBJS))
 OUT_OBJS_CPP=$(addprefix $(OUTPUT_DIR)/,$(OBJS_CPP))
 OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
-OUT_HEXFILE=$(addprefix $(HEXFILE_DIR)/,$(OUTPUT_EXE))
 
-all: $(OUT_HEXFILE).hex $(OUT_HEXFILE).bin
+
+default : firmware-EN
+
+firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin
+	@true
+
+ALL_FIRMWARE_TARGETS=$(addprefix firmware-,$(ALL_LANGUAGES))
+all: $(ALL_FIRMWARE_TARGETS)
 
 #
 # The rule to create the target directory
 #
 
 # Create hexfile
-%.hex : %.elf
-	$(OBJCOPY) $^ -O ihex $@
+%.hex : %.elf Makefile
+	$(OBJCOPY) $< -O ihex $@
 
-%.bin : %.elf
-	$(SIZE)  --format=berkeley  $^
-	$(OBJCOPY) $^ -O binary $@
+%.bin : %.elf Makefile
+	$(SIZE)  --format=berkeley  $<
+	$(OBJCOPY) $< -O binary $@
 
-$(OUT_HEXFILE).elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) Makefile $(LDSCRIPT)
+$(HEXFILE_DIR)/$(model)_%.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/Gen/Translation.%.o Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $(OUTPUT_EXE).elf
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(LIBS) $(LINKER_FLAGS)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/Gen/Translation.$*.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
-$(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile $(APP_INC_DIR)/unit.h
+$(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CC) -c $(CFLAGS) $< -o $@
 
-$(OUT_OBJS_CPP): $(OUTPUT_DIR)/%.o : %.cpp Makefile $(APP_INC_DIR)/unit.h
+$(OUTPUT_DIR)/%.o : %.cpp Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
-	
+
 $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Building file: $<'
 	@$(AS) -c $(AFLAGS) $< -o $@
 
-$(APP_INC_DIR)/unit.h $(GENERATED_TRANSLATION_SOURCE): $(TRANSLATION_FILES) Makefile ../Translations/make_translation.py
-	@echo 'Building translations'
-	@cd ../Translations && python3 make_translation.py
-
+Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Translations/make_translation.py ../Translations/translations_commons.js
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo 'Generating translations for language $*'
+	@python3 ../Translations/make_translation.py -o $(PWD)/$@ $*
 
 clean :
-	rm -f $(GENERATED_TRANSLATION_SOURCE) $(SOURCE_CORE_DIR)/Translation.cpp
+	rm -Rf $(SOURCE_CORE_DIR)/Translation.cpp Core/Gen
 	rm -Rf $(OUTPUT_DIR_BASE)
 	rm -Rf $(HEXFILE_DIR)
 
@@ -328,7 +329,8 @@ style:
 	done
 	@echo "Done"
 
-.PHONY: style
+.PHONY: style all clean default
+.SECONDARY:
 
 # pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)

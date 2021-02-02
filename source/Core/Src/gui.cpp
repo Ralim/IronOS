@@ -13,7 +13,6 @@
 #include "cmsis_os.h"
 #include "main.hpp"
 #include "string.h"
-#include "unit.h"
 
 void gui_Menu(const menuitem *menu);
 
@@ -33,10 +32,8 @@ static bool settings_setShutdownTime(void);
 static void settings_displayShutdownTime(void);
 static bool settings_setSensitivity(void);
 static void settings_displaySensitivity(void);
-#ifdef ENABLED_FAHRENHEIT_SUPPORT
 static bool settings_setTempF(void);
 static void settings_displayTempF(void);
-#endif
 static bool settings_setAdvancedSolderingScreens(void);
 static void settings_displayAdvancedSolderingScreens(void);
 static bool settings_setAdvancedIDLEScreens(void);
@@ -168,9 +165,7 @@ const menuitem UIMenu[] = {
  *  Cooldown blink
  *  Reverse Temp change buttons + -
  */
-#ifdef ENABLED_FAHRENHEIT_SUPPORT
-    {(const char *)SettingsDescriptions[5], settings_setTempF, settings_displayTempF}, /* Temperature units*/
-#endif
+    {(const char *)SettingsDescriptions[5], settings_setTempF, settings_displayTempF}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
     {(const char *)SettingsDescriptions[7], settings_setDisplayRotation, settings_displayDisplayRotation},                                /*Display Rotation*/
     {(const char *)SettingsDescriptions[10], settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                       /*Cooling blink warning*/
     {(const char *)SettingsDescriptions[15], settings_setScrollSpeed, settings_displayScrollSpeed},                                       /*Scroll Speed for descriptions*/
@@ -341,15 +336,12 @@ static void settings_displayQCInputV(void) {
 #endif
 static bool settings_setSleepTemp(void) {
   // If in C, 10 deg, if in F 20 deg
-#ifdef ENABLED_FAHRENHEIT_SUPPORT
   if (systemSettings.temperatureInF) {
     systemSettings.SleepTemp += 20;
     if (systemSettings.SleepTemp > 580)
       systemSettings.SleepTemp = 60;
     return systemSettings.SleepTemp == 580;
-  } else
-#endif
-  {
+  } else {
     systemSettings.SleepTemp += 10;
     if (systemSettings.SleepTemp > 300)
       systemSettings.SleepTemp = 10;
@@ -405,7 +397,6 @@ static void settings_displayShutdownTime(void) {
     OLED::print(SymbolMinutes);
   }
 }
-#ifdef ENABLED_FAHRENHEIT_SUPPORT
 static bool settings_setTempF(void) {
   systemSettings.temperatureInF = !systemSettings.temperatureInF;
   if (systemSettings.temperatureInF) {
@@ -436,7 +427,6 @@ static void settings_displayTempF(void) {
 
   OLED::print((systemSettings.temperatureInF) ? SymbolDegF : SymbolDegC);
 }
-#endif
 
 static bool settings_setSensitivity(void) {
   systemSettings.sensitivity++;
@@ -540,7 +530,6 @@ static void settings_displayDisplayRotation(void) {
 }
 
 static bool settings_setBoostTemp(void) {
-#ifdef ENABLED_FAHRENHEIT_SUPPORT
   if (systemSettings.temperatureInF) {
     if (systemSettings.BoostTemp == 0) {
       systemSettings.BoostTemp = 480; // loop back at 480
@@ -552,9 +541,7 @@ static bool settings_setBoostTemp(void) {
       systemSettings.BoostTemp = 0; // jump to off
     }
     return systemSettings.BoostTemp == 840;
-  } else
-#endif
-  {
+  } else {
     if (systemSettings.BoostTemp == 0) {
       systemSettings.BoostTemp = 250; // loop back at 250
     } else {
@@ -907,7 +894,7 @@ static bool settings_enterPowerMenu(void) {
 }
 static void settings_displayUIMenu(void) { displayMenu(2); }
 static bool settings_enterUIMenu(void) {
-  gui_Menu(UIMenu);
+  gui_Menu(HasFahrenheit ? UIMenu : UIMenu + 1);
   return false;
 }
 static void settings_displayAdvancedMenu(void) { displayMenu(3); }

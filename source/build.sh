@@ -123,16 +123,8 @@ if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
     checkLastCommand
 
     for model in "${BUILD_MODELS[@]}"; do
-        for lang in "${BUILD_LANGUAGES[@]}"; do
-            echo "Building firmware for $model in $lang"
-            make -j lang="$lang" model="$model" >/dev/null
-            checkLastCommand
-            echo "Cleanup Temp files for $model in $lang"
-            rm -rf Objects/*/Core/ >/dev/null
-            checkLastCommand
-        done
-        echo "Cleanup model change"
-        rm -rf Objects/ >/dev/null
+        echo "Building firmware for $model in ${BUILD_LANGUAGES[@]}"
+        make -j$(nproc) model="$model" "${BUILD_LANGUAGES[@]/#/firmware-}" >/dev/null
         checkLastCommand
     done
 else
