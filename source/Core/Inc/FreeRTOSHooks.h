@@ -10,7 +10,6 @@
 
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
-#include "unit.h"
 
 #ifdef __cplusplus
 extern "C" {

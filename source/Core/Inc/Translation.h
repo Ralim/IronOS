@@ -8,9 +8,9 @@
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
 #include "stdint.h"
-#include "unit.h"
 extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
+extern const bool HasFahrenheit;
 
 extern const char *SettingsShortNames[29][2];
 extern const char *SettingsDescriptions[29];
@@ -70,9 +70,7 @@ extern const char *SymbolMinus;
 extern const char *SymbolSpace;
 extern const char *SymbolDot;
 extern const char *SymbolDegC;
-#ifdef ENABLED_FAHRENHEIT_SUPPORT
 extern const char *SymbolDegF;
-#endif
 extern const char *SymbolMinutes;
 extern const char *SymbolSeconds;
 extern const char *SymbolWatts;
