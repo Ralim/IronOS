@@ -1,0 +1,1057 @@
+========================================================== 
+
+          Wen Quan Yi Bitmap Song CJK Fonts
+
+               Contributors and Credits
+
+----------------------------------------------------------
+Email confusers:
+   replace " #" to "@" , replace " _" to "."
+----------------------------------------------------------
+
+Summary: 
+
+  This font package is copyrighted by the WenQuanYi Board of 
+  Trustees 2004-2010 http://wenq.org/index.cgi?WQYBOT
+----------------------------------------------------------
+
+Table of Content
+
+ I.  Pevious Work
+ II. WenQuanYi Bitmap Font developers
+ III.Authors for CJK Bitmap Glyphs (CJK Basic)
+ IV. Authors for CJK Extension A Glyphs
+ V.  Authors for CJK Basic glyphs standard verfication
+ VI. Other resources
+
+----------------------------------------------------------
+
+ I. Previous Work:
+
+   firefly     firefly #firefly _idv _tw
+               provided multi-size Big5/GB2312 glyphs
+               http://www.study-area.org/apt/firefly-font/
+
+   Chinese National Standard GB19966-2005
+               provided all 12pt face CJK glyphs between U3400-U9FA5
+               http://www.standardcn.com/standard_plan/
+                  list_standard_content.asp?stand_id=GB@19966-2005
+
+----------------------------------------------------------
+
+ II .WenQuanYi Bitmap Font developers
+
+1. Core members
+
+   Qianqian Fang[FangQ] (fangq #nmr _mgh _harvard _edu)
+
+                     project founder and maintainer, wiki developer,
+                     release manager, software programer, 
+                     major font developer and reviewer
+
+                     http://nmr.mgh.harvard.edu/~fangq/
+                     http://bbs.dartmouth.edu/~fangq/blog/
+
+   Hong Wang     (hongclean #gmail _com)
+
+                     key contributor, major reviewer
+
+   Kefu Chai[tchaikov]    (tchaikov #sjtu _edu _cn)
+
+                     web development, major reviewer
+
+
+   ailantian*             (ailantian #email _jlu _edu _cn)
+
+                     key developer for vector Chinese project
+                     http://ailantian.blogchina.com
+
+   Haitao Han[niqiu]*     (chenniqiu #gmail _com)
+
+                     key developer for vector Chinese project
+                     http://www.livejournal.com/~niqiu/
+
+   Qian Cai[caiqian]*    (caiqian #gmail _com)
+
+                     creator of WenQuanYi bitmap font standard
+
+   Funda Wang[fundawang]*(fundawang #linux _net _cn)
+
+                     key developer, technical support
+                     http://my.opera.com/fundawang/
+
+   Qing Lei[fiag]*        (fiag.hit #gmail _com)
+
+                     key developer for vector Chinese project
+
+   Nicolas Wang[ZaiJianQingRen]*  (abcxyz54321 #163 _com)
+
+                     key contributor, major reviewer
+
+   * the status is inactive
+
+
+2. Team B members
+
+   activeion   (jizh #cnst _pku _edu _cn)
+   amadeoh     (zh217 #cam _ac _uk)
+   BabyPBC     (babypbc #etang _com)           [Baochuan Pang]
+   BenBear     (cxj26424 #163 _com)            [Xiongjie Chen]
+   brep        (brep #163 _com)
+   chaoslawful (wangxz00 #mails _tsinghua _edu _cn) [Xiaozhe Wang]
+   DannyZeng
+   eka         (ekapie #googlemail _com) (key contributor for glyph fine-tunning)
+   keykeen     (kaleasy #21cn _com)
+   liyi        (liyi79 #gmail _com)            [Yi Li]
+   lucifer     (xinjibo #163 _com)             [Jibo Xin]
+   nilarcs     (nilarcs #163 _com)             [Jun Zhang]
+   pangwa      (pangwa #gmail _com)            [Guang Han]
+   pathfinder  (pathfinder_name #hotmail _com) [Wei Yao]
+   pinker      (pinker #pku _edu _cn) 
+   PONY        (yangxcmail-linux #yahoo _com _cn)
+   pupilzeng   
+   shhky       
+   stid        xuxiaodong #tsinghua _org _cn   http://stid.blogchina.com/
+   wuler.lv    (wuler.lv #gmail _com)          [Wuler Lv]
+   xnuxmwx     (xnuxmwx #gmail _com)           [Man Xu]     http://www.tanvy.com/
+   namespace #yeah _net
+   leftstand #chinaacc _com
+
+The following contributors had contributed for the development of 
+CJK Extension A bitmaps:
+
+   MarkLam     (mark.jlam#gmail_com)
+   twang467    (twang467#21cn_com)             [Qiang Wang]
+   buick       (weiyiwei#gmail_com)            [Yiwei Wei]
+   liqian      
+   qinling     (qin_ling#sohu_com)             http://qinling.bokee.com
+   Seeker      (seeker#yeah_net)
+   xiaoma      (mayueping#gmail_com)
+   SiCengXiangShi (liyulongmen#yahoo_com_cn)
+   the_owl     (weitao1979#gmail_com )
+   whppc       (lyons.chang#gmail_com)
+   eka         (ekapie#googlemail_com)
+   failsafe    (simon.youngest#gmail_com) MSN:failsafenow@hotmail.com
+   musiccow    (blkatbyhh#gmail_com)      http://my.opera.com/musiccow
+   Blueelf     (yshen#fas_harvard_edu) http://bbs.dartmouth.edu/web/yinghua/
+   lenovox     (lenovox#126_com) 
+   fourbrow    (fourbrow#163_com)
+   udi         (udisaar#gmail_com)
+   leal        (linxiao.li#gmail_com)     http://www.leal.cn
+   soicer      (soicer#gmail_com)         http://www.qianxinlei.com
+   xuande      (liu.i3655#gmail_com)       [liu bei]
+   lrobinson   (lrobinson#126_com)
+   zhouyingxin (yingxinzhou#gmail_com)    [Yingxin Zhou]
+   chenzhipeter(chenzhipeter#126_com)     
+   havas       (zhihua.tan#gmail_com)     [Zhihua Tan]
+
+The following contributors helped in developing non-CJK characters
+
+   hzhsun      (zhuang1 #cs _uml _edu)         [Zhonghong Huang]
+   weitao      (weitao1979 #gmail _com)        [Wei Tao]
+
+
+If your name is missing, please send an email to
+fangqq<at>nmr.mgh.harvard.edu, we will add you to the list 
+for all subsequent releases.
+
+3. Donation Providers
+
+   We sincerely appreciate the generous donations from many friends. 
+Their donations not only support the project to grow healthily, 
+but also encourage all the developers. A list of supporters can 
+be found at
+
+   http://wenq.org/index.cgi?Donation
+
+----------------------------------------------------------
+
+
+ III. Authors for CJK Bitmap Glyphs (CJK Basic)
+
+* Project proceeded between 10/2004-04/2005
+* Original project record: 
+  http://wenq.org/?UNICODE_U19968-U40869
+  http://wenq.org/index.cgi?offline
+* Progress log:
+  http://wenq.org/index.cgi?CJK_TeamB_Progress
+
+
+--------------------------------------------------
+  Group         Author           Level Reviewer
+--------------------------------------------------
+U+4E00~U+4E64   :anonymous:        L3  FangQ     
+U+4E65~U+4EC9   :anonymous:        L3  FangQ     
+U+4ECA~U+4F2E   niqiu              L3  FangQ     
+U+4F2F~U+4F93   FangQ              L3  FangQ     
+U+4F94~U+4FF8   pupilzeng          L3  FangQ     
+U+4FF9~U+505D   niqiu              L3  FangQ     
+U+505E~U+50C2   nilarcs            L3  FangQ     
+U+50C3~U+5127   achaoge/FangQ      L3  FangQ     
+U+5128~U+518C   anonyous           L3  tchaikov  
+U+518D~U+51F1   FangQ              L3  tchaikov  
+U+51F2~U+5256   fundawang          L3  FangQ     
+U+5257~U+52BB   FangQ/shhky        L3  Caiqian   
+U+52BC~U+5320   :anonymous:        L3  Caiqian   
+U+5321~U+5385   FangQ              L3  tchaikov  
+U+5386~U+53EA   FangQ              L3  tchaikov  
+U+53EB~U+544F   amadeoh/FangQ      L3  wanghong  
+U+5450~U+54B4   :anonymous:        L3  tchaikov  
+U+54B5~U+5519   FangQ              L3  tchaikov  
+U+551A~U+557E   :anonymous:        L3  FangQ     
+U+557F~U+55E3   FangQ              L3  FangQ     
+U+55E4~U+5648   :anonymous:        L3  wanghong  
+U+5649~U+56AD   FangQ              L3  wanghong  
+U+56AE~U+5712   vertex/FangQ       L3  FangQ     
+U+5713~U+5777   xnuxmwx            L3  FangQ     
+U+5778~U+57DC   wanghong           L3  FangQ     
+U+57DD~U+5841   FangQ              L3  tchaikov  
+U+5842~U+58A6   fundawang          L3  tchaikov  
+U+58A7~U+590B   :anonymous:        L1  FangQ     
+U+590C~U+5970   FangQ              L1  FangQ     
+U+5971~U+59D5   wanghong           L1  FangQ     
+U+59D6~U+5A3A   :anonymous:        L1  FangQ     
+U+5A3B~U+5A9F   brep)              L3  FangQ     
+U+5AA0~U+5B04   :anonymous:        L1  FangQ     
+U+5B05~U+5B69   pinker)            L1  FangQ     
+U+5B6A~U+5BCE   fundawang          L1  FangQ     
+U+5BCF~U+5C33   fundawang)         L3  FangQ     
+U+5C34~U+5C98   fundawang)         L3  FangQ     
+U+5C99~U+5CFD   ailantian          L3  FangQ     
+U+5CFE~U+5D62   :anonymous:        L1  FangQ     
+U+5D63~U+5DC7   :anonymous:        L1  FangQ     
+U+5DC8~U+5E2C   :anonymous:        L1  FangQ     
+U+5E2D~U+5E91   chaoslawful        L3  FangQ     
+U+5E92~U+5EF6   brep               L3  FangQ     
+U+5EF7~U+5F5B   xnuxmwx            L3  FangQ     
+U+5F5C~U+5FC0   FangQ              L3  wanghong  
+U+5FC1~U+6025   keykeen            L3  wanghong  
+U+6026~U+608A   pangwa             L3  tchaikov  
+U+608B~U+60EF   :anonymous:        L3  tchaikov  
+U+60F0~U+6154   :anonymous:        L3  wanghong  
+U+6155~U+61B9   :anonymous:        L3  wanghong  
+U+61BA~U+621E   wanghong           L3  wanghong  
+U+621F~U+6283   FangQ              L3  wanghong  
+U+6284~U+62E8   brep               L3  tchaikov  
+U+62E9~U+634D   brep               L3  FangQ     
+U+634E~U+63B2   FangQ              L3  tchaikov  
+U+63B3~U+6417   :anonymous:        L3  tchaikov  
+U+6418~U+647C   :anonymous:        L1  FangQ     
+U+647D~U+64E1   wanghong           L1  FangQ     
+U+64E2~U+6546   wanghong           L1  FangQ     
+U+6547~U+65AB   :anonymous:        L1  FangQ     
+U+65AC~U+6610   keykeen            L1  FangQ     
+U+6611~U+6675   FangQ              L1  FangQ     
+U+6676~U+66DA   FangQ              L1  FangQ     
+U+66DB~U+673F   FangQ              L1  FangQ     
+U+6740~U+67A4   FangQ              L1  FangQ     
+U+67A5~U+6809   FangQ              L1  FangQ     
+U+680A~U+686E   activeion          L1  FangQ     
+U+686F~U+68D3   FangQ              L1  FangQ     
+U+68D4~U+6938   wanghong           L1  FangQ     
+U+6939~U+699D   wanghong           L1  FangQ     
+U+699E~U+6A02   wanghong           L1  FangQ     
+U+6A03~U+6A67   wanghong           L1  FangQ     
+U+6A68~U+6ACC   pinker             L1  FangQ     
+U+6ACD~U+6B31   FangQ              L1  FangQ     
+U+6B32~U+6B96   wanghong           L1  FangQ     
+U+6B97~U+6BFB   FangQ              L1  FangQ     
+U+6BFC~U+6C60   FangQ              L1  FangQ     
+U+6C61~U+6CC5   wuler.lv           L3  wanghong  
+U+6CC6~U+6D2A   wuler.lv           L3  wanghong  
+U+6D2B~U+6D8F   wanghong           L1  FangQ     
+U+6D90~U+6DF4   wanghong           L1  FangQ     
+U+6DF5~U+6E59   wanghong           L1  FangQ     
+U+6E5A~U+6EBE   wanghong           L1  FangQ     
+U+6EBF~U+6F23   wanghong           L1  FangQ     
+U+6F24~U+6F88   wanghong           L2  wanghong  
+U+6F89~U+6FED   wanghong           L3  tchaikov  
+U+6FEE~U+7052   wanghong           L3  tchaikov  
+U+7053~U+70B7   wanghong           L3  tchaikov  
+U+70B8~U+711C   wanghong           L3  wanghong  
+U+711D~U+7181   wanghong           L3  wanghong  
+U+7182~U+71E6   wanghong           L3  tchaikov  
+U+71E7~U+724B   wanghong           L3  tchaikov  
+U+724C~U+72B0   wanghong           L3  tchaikov  
+U+72B1~U+7315   wanghong           L3  tchaikov  
+U+7316~U+737A   wanghong           L3  tchaikov  
+U+737B~U+73DF   wanghong           L3  tchaikov  
+U+73E0~U+7444   wanghong           L3  tchaikov  
+U+7445~U+74A9   wanghong           L3  tchaikov  
+U+74AA~U+750E   wanghong           L3  tchaikov  
+U+750F~U+7573   wanghong           L3  tchaikov  
+U+7574~U+75D8   wanghong           L3  tchaikov  
+U+75D9~U+763D   wanghong           L3  tchaikov  
+U+763E~U+76A2   wanghong           L3  tchaikov  
+U+76A3~U+7707   wanghong           L3  tchaikov  
+U+7708~U+776C   wanghong           L3  tchaikov  
+U+776D~U+77D1   wanghong           L3  tchaikov  
+U+77D2~U+7836   keykeen            L3  tchaikov  
+U+7837~U+789B   keykeen            L3  tchaikov  
+U+789C~U+7900   keykeen            L3  tchaikov  
+U+7901~U+7965   keykeen            ??  tchaikov  
+U+7966~U+79CA   keykeen            ??  tchaikov  
+U+79CB~U+7A2F   pathfinder         ??  tchaikov  
+U+7A30~U+7A94   wanghong           ??  tchaikov  
+U+7A95~U+7AF9   wanghong           (not done yet)
+U+7AFA~U+7B5E   xnuxmwx            (not done yet)
+U+7B5F~U+7BC3   keykeen            (not done yet)
+U+7BC4~U+7C28   keykeen/FangQ      (not done yet)
+U+7C29~U+7C8D   FangQ              (not done yet)
+U+7C8E~U+7CF2   FangQ/LiuQingyan   (not done yet)
+U+7CF3~U+7D57   keykeen            (not done yet)
+U+7D58~U+7DBC   chaoslawful        (not done yet)
+U+7DBD~U+7E21   tchaikov           (not done yet)
+U+7E22~U+7E86   liyi               (not done yet)
+U+7E87~U+7EEB   brep               (not done yet)
+U+7EEC~U+7F50   FangQ              (not done yet)
+U+7F51~U+7FB5   FangQ              (not done yet)
+U+7FB6~U+801A   brep               (not done yet)
+U+801B~U+807F   liyi               (not done yet)
+U+8080~U+80E4   tchaikov           (not done yet)
+U+80E5~U+8149   ailantian          (not done yet)
+U+814A~U+81AE   lucifer            (not done yet)
+U+81AF~U+8213   keykeen            (not done yet)
+U+8214~U+8278   keykeen            (not done yet)
+U+8279~U+82DD   caiqian            (not done yet)
+U+82DE~U+8342   wanghong           (not done yet)
+U+8343~U+83A7   keykeen            (not done yet)
+U+83A8~U+840C   keykeen            (not done yet)
+U+840D~U+8471   keykeen            (not done yet)
+U+8472~U+84D6   wanghong           (not done yet)
+U+84D7~U+853B   BabyPBC            (not done yet)
+U+853C~U+85A0   BabyPBC            (not done yet)
+U+85A1~U+8605   FangQ              (not done yet)
+U+8606~U+866A   tchaikov           (not done yet)
+U+866B~U+86CF   keykeen            (not done yet)
+U+86D0~U+8734   ailantian          (not done yet)
+U+8735~U+8799   wanghong           (not done yet)
+U+879A~U+87FE   chaoslawful        (not done yet)
+U+87FF~U+8863   wanghong           (not done yet)
+U+8864~U+88C8   lucifer            (not done yet)
+U+88C9~U+892D   lucifer            (not done yet)
+U+892E~U+8992   wanghong           (not done yet)
+U+8993~U+89F7   wanghong           (not done yet)
+U+89F8~U+8A5C   ailantian          (not done yet)
+U+8A5D~U+8AC1   ailantian          (not done yet)
+U+8AC2~U+8B26   ailantian          (not done yet)
+U+8B27~U+8B8B   wanghong           (not done yet)
+U+8B8C~U+8BF0   stid               (not done yet)
+U+8BF1~U+8C55   wanghong           (not done yet)
+U+8C56~U+8CBA   wanghong           (not done yet)
+U+8CBB~U+8D1F   pinker             (not done yet)
+U+8D20~U+8D84   brep               (not done yet)
+U+8D85~U+8DE9   ailantian          (not done yet)
+U+8DEA~U+8E4E   ailantian          (not done yet)
+U+8E4F~U+8EB3   tchaikov           (not done yet)
+U+8EB4~U+8F18   wanghong           (not done yet)
+U+8F19~U+8F7D   wanghong           L3  FangQ     
+U+8F7E~U+8FE2   chaoslawful        L3  FangQ     
+U+8FE3~U+9047   keykeen            L3  FangQ     
+U+9048~U+90AC   keykeen            L3  FangQ     
+U+90AD~U+9111   wanghong           L3  FangQ     
+U+9112~U+9176   nilarcs            L3  wanghong  
+U+9177~U+91DB   wanghong           L3  wanghong  
+U+91DC~U+9240   wanghong           L3  wanghong  
+U+9241~U+92A5   lucifer            ??  wanghong  
+U+92A6~U+930A   FangQ              ??  wanghong  
+U+930B~U+936F   FangQ              ??  wanghong  
+U+9370~U+93D4   wanghong           ??  wanghong  
+U+93D5~U+9439   FangQ              (not done yet)
+U+943A~U+949E   chaoslawful        (not done yet)
+U+949F~U+9503   wanghong           (not done yet)
+U+9504~U+9568   wanghong           (not done yet)
+U+9569~U+95CD   Yei                (not done yet)
+U+95CE~U+9632   FangQ              (not done yet)
+U+9633~U+9697   wanghong           (not done yet)
+U+9698~U+96FC   wanghong           (not done yet)
+U+96FD~U+9761   wanghong           (not done yet)
+U+9762~U+97C6   wanghong           (not done yet)
+U+97C7~U+982B   wanghong           (not done yet)
+U+982C~U+9890   wanghong           (not done yet)
+U+9891~U+98F5   wanghong           (not done yet)
+U+98F6~U+995A   FangQ              (not done yet)
+U+995B~U+99BF   wanghong           (not done yet)
+U+99C0~U+9A24   wanghong           (not done yet)
+U+9A25~U+9A89   wanghong           (not done yet)
+U+9A8A~U+9AEE   wanghong           (not done yet)
+U+9AEF~U+9B53   wanghong           (not done yet)
+U+9B54~U+9BB8   FangQ              L3  wanghong  
+U+9BB9~U+9C1D   FangQ              L3  wanghong  
+U+9C1E~U+9C82   FangQ              ??  wanghong  
+U+9C83~U+9CE7   wanghong           L1  wanghong  
+U+9CE8~U+9D4C   wanghong           L3  wanghong  
+U+9D4D~U+9DB1   FangQ              L2  wanghong  
+U+9DB2~U+9E16   wanghong           L3  wanghong  
+U+9E17~U+9E7B   wanghong           L3  wanghong  
+U+9E7C~U+9EE0   wanghong           L1  wanghong  
+U+9EE1~U+9F45   wanghong           L3  wanghong  
+U+9F46~U+9FAA   albert liu/FangQ   L3  wanghong  
+----------------------------------------------------------
+
+ IV. Authors for CJK Extension A Glyphs
+
+* Project proceeded between 04/2005 to 07/2006
+* Original project record: 
+  http://wenq.org/?CJKExtA_Index
+  http://wenq.org/index.cgi?offline_ExtA
+* Progress log:
+  http://wenq.org/index.cgi?CJKExtA_TeamB_Progress
+
+----------------------------------------------------------
+  Unicode       Author
+----------------------------------------------------------
+U3400 BLOCK by FangQ
+U3410 BLOCK by fundawang
+U3420 BLOCK by fundawang
+U3430 BLOCK by fundawang
+U3440 BLOCK by fundawang
+U3450 BLOCK by fundawang
+U3460 BLOCK by fundawang
+U3470 BLOCK by fundawang
+U3480 BLOCK by fundawang
+U3490 BLOCK by fundawang
+U34A0 BLOCK by fiag
+U34B0 BLOCK by :anonymous:
+U34C0 BLOCK by fundawang
+U34D0 BLOCK by fundawang
+U34E0 BLOCK by :anonymous:
+U34F0 BLOCK by :anonymous:
+U3500 BLOCK by fundawang,buick
+U3510 BLOCK by :anonymous:
+U3520 BLOCK by fundawang
+U3530 BLOCK by :anonymous:
+U3540 BLOCK by :anonymous:
+U3550 BLOCK by :anonymous:
+U3560 BLOCK by :anonymous:
+U3570 BLOCK by :anonymous:
+U3580 BLOCK by fundawang
+U3590 BLOCK by :anonymous:
+U35A0 BLOCK by qinling
+U35B0 BLOCK by :anonymous:
+U35C0 BLOCK by :anonymous:
+U35D0 BLOCK by qinling
+U35E0 BLOCK by fundawang
+U35F0 BLOCK by :anonymous:
+U3600 BLOCK by :anonymous:
+U3610 BLOCK by :anonymous:
+U3620 BLOCK by :anonymous:
+U3630 BLOCK by fundawang
+U3640 BLOCK by :anonymous:
+U3650 BLOCK by :anonymous:
+U3660 BLOCK by ZJQR
+U3670 BLOCK by ZJQR
+U3680 BLOCK by ZJQR
+U3690 BLOCK by MarkLam
+U36A0 BLOCK by MarkLam
+U36B0 BLOCK by MarkLam
+U36C0 BLOCK by MarkLam
+U36D0 BLOCK by MarkLam
+U36E0 BLOCK by MarkLam
+U36F0 BLOCK by MarkLam
+U3700 BLOCK by ZJQR
+U3710 BLOCK by ZJQR
+U3720 BLOCK by ZJQR
+U3730 BLOCK by ZJQR
+U3740 BLOCK by ZJQR
+U3750 BLOCK by ailantian
+U3760 BLOCK by ZJQR,ailantian
+U3770 BLOCK by ZJQR
+U3780 BLOCK by ZJQR
+U3790 BLOCK by ZJQR
+U37A0 BLOCK by MarkLam
+U37B0 BLOCK by MarkLam
+U37C0 BLOCK by MarkLam
+U37D0 BLOCK by MarkLam
+U37E0 BLOCK by MarkLam
+U37F0 BLOCK by MarkLam
+U3800 BLOCK by MarkLam
+U3810 BLOCK by ZJQR
+U3820 BLOCK by ZJQR
+U3830 BLOCK by FangQ
+U3840 BLOCK by ZJQR
+U3850 BLOCK by ZJQR
+U3860 BLOCK by ZJQR
+U3870 BLOCK by ZJQR,fundawang
+U3880 BLOCK by musiccow
+U3890 BLOCK by ZJQR,FangQ
+U38A0 BLOCK by ZJQR
+U38B0 BLOCK by :anonymous:
+U38C0 BLOCK by :anonymous:
+U38D0 BLOCK by :anonymous:
+U38E0 BLOCK by whppc
+U38F0 BLOCK by whppc
+U3900 BLOCK by PONY
+U3910 BLOCK by PONY
+U3920 BLOCK by PONY
+U3930 BLOCK by PONY
+U3940 BLOCK by ZJQR
+U3950 BLOCK by ZJQR
+U3960 BLOCK by fiag
+U3970 BLOCK by ZJQR
+U3980 BLOCK by fiag
+U3990 BLOCK by ZJQR
+U39A0 BLOCK by LeeZJQR
+U39B0 BLOCK by :anonymous:
+U39C0 BLOCK by PONY
+U39D0 BLOCK by PONY
+U39E0 BLOCK by PONY
+U39F0 BLOCK by PONY
+U3A00 BLOCK by PONY
+U3A10 BLOCK by PONY
+U3A20 BLOCK by PONY
+U3A30 BLOCK by :anonymous:
+U3A40 BLOCK by zhouyingxin
+U3A50 BLOCK by ZJQR
+U3A60 BLOCK by chenzhipeter
+U3A70 BLOCK by :anonymous:
+U3A80 BLOCK by PONY
+U3A90 BLOCK by PONY
+U3AA0 BLOCK by PONY
+U3AB0 BLOCK by :anonymous:
+U3AC0 BLOCK by :anonymous:
+U3AD0 BLOCK by failsafe
+U3AE0 BLOCK by failsafe
+U3AF0 BLOCK by failsafe
+U3B00 BLOCK by :anonymous:,fourbrow
+U3B10 BLOCK by :anonymous:
+U3B20 BLOCK by ZJQR
+U3B30 BLOCK by lenovox
+U3B40 BLOCK by lenovox
+U3B50 BLOCK by udi
+U3B60 BLOCK by :anonymous:
+U3B70 BLOCK by :anonymous:
+U3B80 BLOCK by :anonymous:
+U3B90 BLOCK by lenovox
+U3BA0 BLOCK by :anonymous:
+U3BB0 BLOCK by lrobinson
+U3BC0 BLOCK by :anonymous:
+U3BD0 BLOCK by chenzhipeter,ZJQR
+U3BE0 BLOCK by :anonymous:
+U3BF0 BLOCK by :anonymous:
+U3C00 BLOCK by :anonymous:
+U3C10 BLOCK by gsyZJQR
+U3C20 BLOCK by ZJQR
+U3C30 BLOCK by ZJQR
+U3C40 BLOCK by ZJQR
+U3C50 BLOCK by ZJQR
+U3C60 BLOCK by ZJQR
+U3C70 BLOCK by ZJQR
+U3C80 BLOCK by ZJQR
+U3C90 BLOCK by ZJQR
+U3CA0 BLOCK by ZJQR
+U3CB0 BLOCK by ZJQR
+U3CC0 BLOCK by udi
+U3CD0 BLOCK by :anonymous:
+U3CE0 BLOCK by :anonymous:
+U3CF0 BLOCK by ZJQR
+U3D00 BLOCK by leal
+U3D10 BLOCK by :anonymous:
+U3D20 BLOCK by ZJQR
+U3D30 BLOCK by ZJQR
+U3D40 BLOCK by ZJQR
+U3D50 BLOCK by ZJQR
+U3D60 BLOCK by ZJQR
+U3D70 BLOCK by ZJQR
+U3D80 BLOCK by ZJQR
+U3D90 BLOCK by ZJQR
+U3DA0 BLOCK by ZJQR
+U3DB0 BLOCK by ZJQR
+U3DC0 BLOCK by ZJQR
+U3DD0 BLOCK by ZJQR
+U3DE0 BLOCK by ZJQR
+U3DF0 BLOCK by ZJQR
+U3E00 BLOCK by ZJQR
+U3E10 BLOCK by ZJQR
+U3E20 BLOCK by ZJQR
+U3E30 BLOCK by ZJQR
+U3E40 BLOCK by ZJQR
+U3E50 BLOCK by ZJQR
+U3E60 BLOCK by ZJQR
+U3E70 BLOCK by ZJQR
+U3E80 BLOCK by ZJQR
+U3E90 BLOCK by ZJQR
+U3EA0 BLOCK by ZJQR
+U3EB0 BLOCK by udi,ZJQR
+U3EC0 BLOCK by :anonymous:
+U3ED0 BLOCK by :anonymous:
+U3EE0 BLOCK by :anonymous:
+U3EF0 BLOCK by :anonymous:
+U3F00 BLOCK by ZJQR
+U3F10 BLOCK by ZJQR
+U3F20 BLOCK by ZJQR
+U3F30 BLOCK by ZJQR
+U3F40 BLOCK by ZJQR
+U3F50 BLOCK by soicer
+U3F60 BLOCK by ZJQR
+U3F70 BLOCK by PONY
+U3F80 BLOCK by PONY
+U3F90 BLOCK by PONY
+U3FA0 BLOCK by PONY
+U3FB0 BLOCK by ZJQR
+U3FC0 BLOCK by ZJQR
+U3FD0 BLOCK by ZJQR
+U3FE0 BLOCK by ZJQR
+U3FF0 BLOCK by niqiu
+U4000 BLOCK by FangQ
+U4010 BLOCK by FangQ
+U4020 BLOCK by FangQ
+U4030 BLOCK by niqiu
+U4040 BLOCK by niqiu
+U4050 BLOCK by niqiu
+U4060 BLOCK by niqiu
+U4070 BLOCK by niqiu
+U4080 BLOCK by niqiu,FangQ
+U4090 BLOCK by niqiu,FangQ
+U40A0 BLOCK by niqiu,FangQ
+U40B0 BLOCK by niqiu,FangQ
+U40C0 BLOCK by buick
+U40D0 BLOCK by niqiu,FangQ
+U40E0 BLOCK by ZJQR
+U40F0 BLOCK by ZJQR
+U4100 BLOCK by buick
+U4110 BLOCK by xiaoma
+U4120 BLOCK by ZJQR
+U4130 BLOCK by ailantian
+U4140 BLOCK by ZJQR
+U4150 BLOCK by ZJQR
+U4160 BLOCK by ZJQR
+U4170 BLOCK by ZJQR
+U4180 BLOCK by ZJQR
+U4190 BLOCK by ZJQR
+U41A0 BLOCK by ZJQR
+U41B0 BLOCK by ZJQR
+U41C0 BLOCK by ZJQR
+U41D0 BLOCK by ZJQR
+U41E0 BLOCK by ZJQR
+U41F0 BLOCK by ZJQR
+U4200 BLOCK by ZJQR
+U4210 BLOCK by ZJQR
+U4220 BLOCK by ZJQR
+U4230 BLOCK by FangQ
+U4240 BLOCK by FangQ
+U4250 BLOCK by ZJQR
+U4260 BLOCK by ZJQR
+U4270 BLOCK by ZJQR
+U4280 BLOCK by ZJQR
+U4290 BLOCK by ZJQR
+U42A0 BLOCK by ZJQR
+U42B0 BLOCK by ZJQR
+U42C0 BLOCK by ZJQR
+U42D0 BLOCK by Seeker
+U42E0 BLOCK by twang467
+U42F0 BLOCK by twang467
+U4300 BLOCK by twang467
+U4310 BLOCK by twang467
+U4320 BLOCK by twang467
+U4330 BLOCK by twang467
+U4340 BLOCK by twang467
+U4350 BLOCK by twang467
+U4360 BLOCK by twang467
+U4370 BLOCK by twang467
+U4380 BLOCK by Blueelf
+U4390 BLOCK by twang467
+U43A0 BLOCK by twang467
+U43B0 BLOCK by twang467
+U43C0 BLOCK by twang467
+U43D0 BLOCK by twang467
+U43E0 BLOCK by ZJQR
+U43F0 BLOCK by ZJQR
+U4400 BLOCK by ZJQR
+U4410 BLOCK by ZJQR
+U4420 BLOCK by ZJQR
+U4430 BLOCK by ZJQR
+U4440 BLOCK by whppc
+U4450 BLOCK by ZJQR
+U4460 BLOCK by ZJQR
+U4470 BLOCK by ZJQR
+U4480 BLOCK by ZJQR
+U4490 BLOCK by ZJQR
+U44A0 BLOCK by ZJQR
+U44B0 BLOCK by ZJQR
+U44C0 BLOCK by ZJQR
+U44D0 BLOCK by ZJQR
+U44E0 BLOCK by ZJQR
+U44F0 BLOCK by ZJQR
+U4500 BLOCK by :anonymous:
+U4510 BLOCK by ZJQR
+U4520 BLOCK by ZJQR
+U4530 BLOCK by ZJQR
+U4540 BLOCK by ZJQR
+U4550 BLOCK by ZJQR
+U4560 BLOCK by ZJQR
+U4570 BLOCK by ZJQR
+U4580 BLOCK by ZJQR
+U4590 BLOCK by ZJQR
+U45A0 BLOCK by ZJQR
+U45B0 BLOCK by ZJQR
+U45C0 BLOCK by ZJQR
+U45D0 BLOCK by ZJQR
+U45E0 BLOCK by ZJQR
+U45F0 BLOCK by havas
+U4600 BLOCK by havas
+U4610 BLOCK by ZJQR
+U4620 BLOCK by ZJQR
+U4630 BLOCK by ZJQR
+U4640 BLOCK by ZJQR
+U4650 BLOCK by ZJQR
+U4660 BLOCK by tchaikov
+U4670 BLOCK by ZJQR
+U4680 BLOCK by eka
+U4690 BLOCK by eka
+U46A0 BLOCK by ZJQR
+U46B0 BLOCK by ZJQR
+U46C0 BLOCK by xuande
+U46D0 BLOCK by ZJQR
+U46E0 BLOCK by tchaikov
+U46F0 BLOCK by tchaikov
+U4700 BLOCK by tchaikov
+U4710 BLOCK by tchaikov
+U4720 BLOCK by tchaikov
+U4730 BLOCK by tchaikov
+U4740 BLOCK by ZJQR
+U4750 BLOCK by ZJQR
+U4760 BLOCK by ZJQR
+U4770 BLOCK by ZJQR
+U4780 BLOCK by ZJQR
+U4790 BLOCK by wanghong
+U47A0 BLOCK by wanghong
+U47B0 BLOCK by wanghong
+U47C0 BLOCK by wanghong
+U47D0 BLOCK by buick
+U47E0 BLOCK by buick
+U47F0 BLOCK by PONY
+U4800 BLOCK by :anonymous:
+U4810 BLOCK by SCXS
+U4820 BLOCK by SCXS
+U4830 BLOCK by :anonymous:
+U4840 BLOCK by SCXS
+U4850 BLOCK by SCXS
+U4860 BLOCK by fiag
+U4870 BLOCK by fiag
+U4880 BLOCK by ZJQR
+U4890 BLOCK by ZJQR
+U48A0 BLOCK by ZJQR
+U48B0 BLOCK by ZJQR
+U48C0 BLOCK by :anonymous:
+U48D0 BLOCK by ZJQR
+U48E0 BLOCK by :anonymous:
+U48F0 BLOCK by :anonymous:
+U4900 BLOCK by ZJQR
+U4910 BLOCK by ZJQR
+U4920 BLOCK by musiccow
+U4930 BLOCK by musiccow
+U4940 BLOCK by musiccow
+U4950 BLOCK by ZJQR
+U4960 BLOCK by ZJQR
+U4970 BLOCK by ZJQR
+U4980 BLOCK by ZJQR
+U4990 BLOCK by ZJQR
+U49A0 BLOCK by ZJQR
+U49B0 BLOCK by ZJQR
+U49C0 BLOCK by ZJQR
+U49D0 BLOCK by eka
+U49E0 BLOCK by eka
+U49F0 BLOCK by :anonymous:
+U4A00 BLOCK by :anonymous:
+U4A10 BLOCK by :anonymous:
+U4A20 BLOCK by :anonymous:
+U4A30 BLOCK by :anonymous:
+U4A40 BLOCK by :anonymous:
+U4A50 BLOCK by :anonymous:
+U4A60 BLOCK by :anonymous:
+U4A70 BLOCK by :anonymous:
+U4A80 BLOCK by :anonymous:
+U4A90 BLOCK by :anonymous:
+U4AA0 BLOCK by :anonymous:
+U4AB0 BLOCK by :anonymous:
+U4AC0 BLOCK by :anonymous:
+U4AD0 BLOCK by :anonymous:
+U4AE0 BLOCK by :anonymous:
+U4AF0 BLOCK by :anonymous:
+U4B00 BLOCK by :anonymous:
+U4B10 BLOCK by :anonymous:
+U4B20 BLOCK by :anonymous:
+U4B30 BLOCK by :anonymous:
+U4B40 BLOCK by :anonymous:
+U4B50 BLOCK by :anonymous:
+U4B60 BLOCK by :anonymous:
+U4B70 BLOCK by :anonymous:
+U4B80 BLOCK by :anonymous:
+U4B90 BLOCK by :anonymous:
+U4BA0 BLOCK by :anonymous:
+U4BB0 BLOCK by :anonymous:
+U4BC0 BLOCK by :anonymous:
+U4BD0 BLOCK by :anonymous:
+U4BE0 BLOCK by :anonymous:
+U4BF0 BLOCK by :anonymous:
+U4C00 BLOCK by FangQ
+U4C10 BLOCK by :anonymous:
+U4C20 BLOCK by :anonymous:
+U4C30 BLOCK by :anonymous:
+U4C40 BLOCK by :anonymous:
+U4C50 BLOCK by :anonymous:
+U4C60 BLOCK by :anonymous:
+U4C70 BLOCK by :anonymous:
+U4C80 BLOCK by :anonymous:
+U4C90 BLOCK by :anonymous:
+U4CA0 BLOCK by :anonymous:
+U4CB0 BLOCK by :anonymous:
+U4CC0 BLOCK by :anonymous:
+U4CD0 BLOCK by :anonymous:
+U4CE0 BLOCK by :anonymous:
+U4CF0 BLOCK by :anonymous:
+U4D00 BLOCK by :anonymous:
+U4D10 BLOCK by :anonymous:
+U4D20 BLOCK by :anonymous:
+U4D30 BLOCK by :anonymous:
+U4D40 BLOCK by :anonymous:
+U4D50 BLOCK by :anonymous:
+U4D60 BLOCK by :anonymous:
+U4D70 BLOCK by :anonymous:
+U4D80 BLOCK by :anonymous:
+U4D90 BLOCK by :anonymous:
+U4DA0 BLOCK by :anonymous:
+
+*note: ZJQR for ZaiJianQingRen, SCXS for ShiCengXiangShi
+
+----------------------------------------------------------
+
+ V.  Authors for CJK Basic glyphs standard verfication
+
+*original project record: 
+  http://wenq.org/index.cgi?ProjectTotem
+----------------------------------------------------------
+   Unicode       Reviewer
+----------------------------------------------------------
+U+4E00~U+4E64 by FangQ
+U+4E65~U+4EC9 by FangQ
+U+4ECA~U+4F2E by FangQ
+U+4F2F~U+4F93 by mumchristmas
+U+4F94~U+4FF8 by mumchristmas
+U+4FF9~U+505D by mumchristmas
+U+505E~U+50C2 by mumchristmas
+U+50C3~U+5127 by mumchristmas
+U+5128~U+518C by lsz
+U+518D~U+51F1 by lsz
+U+51F2~U+5256 by lsz
+U+5257~U+52BB by fundawang
+U+52BC~U+5320 by fundawang
+U+5321~U+5385 by :anonymous:
+U+5386~U+53EA by tchaikov
+U+53EB~U+544F by tchaikov
+U+5450~U+54B4 by tchaikov
+U+54B5~U+5519 by tchaikov
+U+551A~U+557E by tchaikov
+U+557F~U+55E3 by tchaikov
+U+55E4~U+5648 by tchaikov
+U+5649~U+56AD by nihui
+U+56AE~U+5712 by tchaikov
+U+5713~U+5777 by tchaikov
+U+5778~U+57DC by tchaikov
+U+57DD~U+5841 by pem
+U+5842~U+58A6 by nihui
+U+58A7~U+590B by dblobster
+U+590C~U+5970 by tchaikov
+U+5971~U+59D5 by tchaikov
+U+59D6~U+5A3A by tchaikov
+U+5A3B~U+5A9F by tchaikov
+U+5AA0~U+5B04 by tchaikov
+U+5B05~U+5B69 by tchaikov
+U+5B6A~U+5BCE by tchaikov
+U+5BCF~U+5C33 by tchaikov
+U+5C34~U+5C98 by tchaikov
+U+5C99~U+5CFD by tchaikov
+U+5CFE~U+5D62 by tchaikov
+U+5D63~U+5DC7 by tchaikov
+U+5DC8~U+5E2C by tchaikov
+U+5E2D~U+5E91 by tchaikov
+U+5E92~U+5EF6 by tchaikov
+U+5EF7~U+5F5B by tchaikov
+U+5F5C~U+5FC0 by tchaikov
+U+5FC1~U+6025 by tchaikov
+U+6026~U+608A by tchaikov
+U+608B~U+60EF by tchaikov
+U+60F0~U+6154 by tchaikov
+U+6155~U+61B9 by tchaikov
+U+61BA~U+621E by tchaikov
+U+621F~U+6283 by tchaikov
+U+6284~U+62E8 by tchaikov
+U+62E9~U+634D by tchaikov
+U+634E~U+63B2 by tchaikov
+U+63B3~U+6417 by tchaikov
+U+6418~U+647C by tchaikov
+U+647D~U+64E1 by tchaikov
+U+64E2~U+6546 by tchaikov
+U+6547~U+65AB by tchaikov
+U+65AC~U+6610 by tchaikov
+U+6611~U+6675 by tchaikov
+U+6676~U+66DA by tchaikov
+U+66DB~U+673F by tchaikov
+U+6740~U+67A4 by wanghong
+U+67A5~U+6809 by wanghong
+U+680A~U+686E by wanghong
+U+686F~U+68D3 by wanghong
+U+68D4~U+6938 by wanghong
+U+6939~U+699D by wanghong
+U+699E~U+6A02 by wanghong
+U+6A03~U+6A67 by wanghong
+U+6A68~U+6ACC by wanghong
+U+6ACD~U+6B31 by wanghong
+U+6B32~U+6B96 by wanghong
+U+6B97~U+6BFB by wanghong
+U+6BFC~U+6C60 by wanghong
+U+6C61~U+6CC5 by wanghong
+U+6CC6~U+6D2A by wanghong
+U+6D2B~U+6D8F by wanghong
+U+6D90~U+6DF4 by wanghong
+U+6DF5~U+6E59 by wanghong
+U+6E5A~U+6EBE by wanghong
+U+6EBF~U+6F23 by wanghong
+U+6F24~U+6F88 by wanghong
+U+6F89~U+6FED by wanghong
+U+6FEE~U+7052 by wanghong
+U+7053~U+70B7 by wanghong
+U+70B8~U+711C by wanghong
+U+711D~U+7181 by wanghong
+U+7182~U+71E6 by wanghong
+U+71E7~U+724B by wanghong
+U+724C~U+72B0 by wanghong
+U+72B1~U+7315 by wanghong
+U+7316~U+737A by wanghong
+U+737B~U+73DF by wanghong
+U+73E0~U+7444 by wanghong
+U+7445~U+74A9 by tchaikov
+U+74AA~U+750E by lsz
+U+750F~U+7573 by lsz
+U+7574~U+75D8 by lsz
+U+75D9~U+763D by lsz
+U+763E~U+76A2 by lsz
+U+76A3~U+7707 by lsz
+U+7708~U+776C by lsz
+U+776D~U+77D1 by lsz
+U+77D2~U+7836 by lsz
+U+7837~U+789B by lsz
+U+789C~U+7900 by lsz
+U+7901~U+7965 by tchaikov
+U+7966~U+79CA by tchaikov
+U+79CB~U+7A2F by tchaikov
+U+7A30~U+7A94 by tchaikov
+U+7A95~U+7AF9 by tchaikov
+U+7AFA~U+7B5E by tchaikov
+U+7B5F~U+7BC3 by tchaikov
+U+7BC4~U+7C28 by tchaikov
+U+7C29~U+7C8D by tchaikov
+U+7C8E~U+7CF2 by tchaikov
+U+7CF3~U+7D57 by the_owl
+U+7D58~U+7DBC by the_owl
+U+7DBD~U+7E21 by wanghong
+U+7E22~U+7E86 by wanghong
+U+7E87~U+7EEB by wanghong
+U+7EEC~U+7F50 by wanghong
+U+7F51~U+7FB5 by wanghong
+U+7FB6~U+801A by wanghong
+U+801B~U+807F by wanghong
+U+8080~U+80E4 by wanghong
+U+80E5~U+8149 by wanghong
+U+814A~U+81AE by wanghong
+U+81AF~U+8213 by wanghong
+U+8214~U+8278 by wanghong
+U+8279~U+82DD by wanghong
+U+82DE~U+8342 by wanghong
+U+8343~U+83A7 by wanghong
+U+83A8~U+840C by wanghong
+U+840D~U+8471 by tchaikov
+U+8472~U+84D6 by tchaikov
+U+84D7~U+853B by FangQ
+U+853C~U+85A0 by FangQ
+U+85A1~U+8605 by FangQ
+U+8606~U+866A by FangQ
+U+866B~U+86CF by FangQ
+U+86D0~U+8734 by FangQ
+U+8735~U+8799 by FangQ
+U+879A~U+87FE by wanghong
+U+87FF~U+8863 by wanghong
+U+8864~U+88C8 by wanghong
+U+88C9~U+892D by wanghong
+U+892E~U+8992 by wanghong
+U+8993~U+89F7 by wanghong
+U+89F8~U+8A5C by wanghong
+U+8A5D~U+8AC1 by wanghong
+U+8AC2~U+8B26 by wanghong
+U+8B27~U+8B8B by wanghong
+U+8B8C~U+8BF0 by wanghong
+U+8BF1~U+8C55 by wanghong
+U+8C56~U+8CBA by wanghong
+U+8CBB~U+8D1F by FangQ
+U+8D20~U+8D84 by FangQ
+U+8D85~U+8DE9 by wanghong
+U+8DEA~U+8E4E by wanghong
+U+8E4F~U+8EB3 by wanghong
+U+8EB4~U+8F18 by wanghong
+U+8F19~U+8F7D by wanghong
+U+8F7E~U+8FE2 by wanghong
+U+8FE3~U+9047 by wanghong
+U+9048~U+90AC by wanghong
+U+90AD~U+9111 by wanghong
+U+9112~U+9176 by wanghong
+U+9177~U+91DB by FangQ
+U+91DC~U+9240 by FangQ
+U+9241~U+92A5 by FangQ
+U+92A6~U+930A by FangQ
+U+930B~U+936F by FangQ
+U+9370~U+93D4 by FangQ
+U+93D5~U+9439 by FangQ
+U+943A~U+949E by FangQ
+U+949F~U+9503 by FangQ
+U+9504~U+9568 by FangQ
+U+9569~U+95CD by FangQ
+U+95CE~U+9632 by FangQ
+U+9633~U+9697 by FangQ
+U+9698~U+96FC by FangQ
+U+96FD~U+9761 by FangQ
+U+9762~U+97C6 by FangQ
+U+97C7~U+982B by FangQ
+U+982C~U+9890 by FangQ
+U+9891~U+98F5 by FangQ
+U+98F6~U+995A by FangQ
+U+995B~U+99BF by FangQ
+U+99C0~U+9A24 by FangQ
+U+9A25~U+9A89 by FangQ
+U+9A8A~U+9AEE by FangQ
+U+9AEF~U+9B53 by FangQ
+U+9B54~U+9BB8 by FangQ
+U+9BB9~U+9C1D by FangQ
+U+9C1E~U+9C82 by wanghong
+U+9C83~U+9CE7 by wanghong
+U+9CE8~U+9D4C by wanghong
+U+9D4D~U+9DB1 by wanghong
+U+9DB2~U+9E16 by wanghong
+U+9E17~U+9E7B by wanghong
+U+9E7C~U+9EE0 by FangQ
+U+9EE1~U+9F45 by wanghong
+U+9F46~U+9FAA by FangQ
+
+----------------------------------------------------------
+
+ VI. Other resources
+
+Webspace provider:
+
+     Sourceforge provided free webspace and great tools to help
+                   the development: http://sf.net/
+
+Wiki development:
+
+     Qianqian Fang developed the WenQuanYi wiki software
+     (Habitat wiki: http://wenq.org/habitat/) 
+     based on UseModWiki written by Clifford Adams.
+
+     The Javascript font editor 
+     (Pixel: http://wenq.org/index.cgi?Pixel) was writen by 
+     Qianqian Fang.
+
+     The font editor previewer was written by Chai Kov
+     (tchaikov #sjtu _edu _cn)
+
+========================================================== 

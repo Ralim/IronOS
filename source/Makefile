@@ -3,7 +3,14 @@ ifndef model
 model:=TS100
 endif
 
-ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK
+ALL_MINIWARE_MODELS=TS100 TS80 TS80P
+ALL_PINE_MODELS=Pinecil
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINE_MODELS)
+ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
+$(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
+endif
+
+ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_TW
 
 
 # Enumerate all of the include directories
@@ -37,7 +44,7 @@ ALL_INCLUDES = $(shell find ./Core -type f -name '*.h') \
 ALL_SOURCE = $(shell find ./Core -type f -name '*.c') \
 			   $(shell find ./Core -type f -name '*.cpp') 
 # Device dependent settings
-ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
+ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 $(info Building for Miniware )
 DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
 	-I$(MINIWARE_INC_CMSIS_DEVICE)\
@@ -65,7 +72,7 @@ flash_size=64k
 bootldr_size=0x4000
 endif
 
-ifeq ($(model),Pinecil)
+ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_VENDOR_INC_DIR) \
@@ -143,10 +150,10 @@ COMPILER=gcc
 # arm-none-eabi is the general ARM compiler, 
 # riscv-none-embed is the riscv compiler
 # riscv-nuclei-elf is the nuclei tuned one for their cores
-ifeq ($(model),$(filter $(model),TS100 TS80 TS80P))
+ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),Pinecil)
+ifeq ($(model),$(ALL_PINE_MODELS))
 COMPILER_PREFIX=riscv-nuclei-elf
 endif
 # programs ---------------------------------------------------------------------
@@ -158,7 +165,7 @@ OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
 
 # For the Pinecil, use gcc in assembler mode
-ifeq ($(model),Pinecil)
+ifeq ($(model),$(ALL_PINE_MODELS))
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 endif
 

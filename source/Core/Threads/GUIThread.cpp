@@ -720,7 +720,12 @@ void showDebugMenu(void) {
 void showWarnings() {
   // Display alert if settings were reset
   if (settingsWereReset) {
-    warnUser(SettingsResetMessage, 1, 10 * TICKS_SECOND);
+    if (SettingsResetMessage[0] == '\x01') { // `\x01` is used as newline.
+      // Empty first line means that this uses large font (for CJK).
+      warnUser(SettingsResetMessage + 1, 0, 10 * TICKS_SECOND);
+    } else {
+      warnUser(SettingsResetMessage, 1, 10 * TICKS_SECOND);
+    }
   }
 #ifndef NO_WARN_MISSING
   // We also want to alert if accel or pd is not detected / not responding
