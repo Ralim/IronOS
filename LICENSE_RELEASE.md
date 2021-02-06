@@ -6,6 +6,7 @@ This document outlines the license of IronOS and its dependencies.
 - CMSIS + STM32F1xx HAL driver: BSD-3-Clause
 - NMSIS: Apache-2.0
 - GD32VF103 board files: BSD-3-Clause
+- WenQuanYi Bitmap Song font: GPL-2.0-or-later
 
 The source code of IronOS can be obtained on the [IronOS GitHub repo][gh].
 
@@ -153,3 +154,27 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 OF SUCH DAMAGE.
 ```
 
+
+WenQuanYi Bitmap Song font
+---
+
+* Only applies to CJK (Chinese, Japanese and Korean) language releases.
+
+```
+Copyright (c) 2004-2010, The WenQuanYi Project 
+              Board of Trustees and Qianqian Fang
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+```
