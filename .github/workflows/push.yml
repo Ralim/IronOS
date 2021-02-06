@@ -29,6 +29,11 @@ jobs:
       - name: build TS80
         run: cd source && ./build.sh -m TS80
 
+      - name: copy license text
+        run: |
+          cp LICENSE source/Hexfile/LICENSE
+          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+
       - name: Archive TS80 artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -36,6 +41,8 @@ jobs:
           path: |
             source/Hexfile/TS80_*.hex
             source/Hexfile/TS80_*.bin
+            source/Hexfile/LICENSE
+            source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
   build_TS80P:
     runs-on: ubuntu-latest
@@ -63,6 +70,11 @@ jobs:
       - name: build TS80P
         run: cd source && ./build.sh -m TS80P
 
+      - name: copy license text
+        run: |
+          cp LICENSE source/Hexfile/LICENSE
+          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+
       - name: Archive TS80P artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -70,6 +82,8 @@ jobs:
           path: |
             source/Hexfile/TS80P_*.hex
             source/Hexfile/TS80P_*.bin
+            source/Hexfile/LICENSE
+            source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
   build_TS100:
     runs-on: ubuntu-latest
@@ -97,6 +111,11 @@ jobs:
       - name: build TS100
         run: cd source && ./build.sh -m TS100
 
+      - name: copy license text
+        run: |
+          cp LICENSE source/Hexfile/LICENSE
+          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+
       - name: Archive TS100 artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -104,6 +123,8 @@ jobs:
           path: |
             source/Hexfile/TS100_*.hex
             source/Hexfile/TS100_*.bin
+            source/Hexfile/LICENSE
+            source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
   build_Pinecil:
@@ -132,6 +153,11 @@ jobs:
       - name: build Pinecil
         run: cd source && ./build.sh -m Pinecil
 
+      - name: copy license text
+        run: |
+          cp LICENSE source/Hexfile/LICENSE
+          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+
       - name: Archive Pinecil artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -139,4 +165,6 @@ jobs:
           path: |
             source/Hexfile/Pinecil_*.hex
             source/Hexfile/Pinecil_*.bin
+            source/Hexfile/LICENSE
+            source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
