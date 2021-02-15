@@ -822,9 +822,15 @@ static void settings_displayTempChangeShortStep(void) {
 }
 
 static bool settings_setTempChangeLongStep(void) {
-  systemSettings.TempChangeLongStep += TEMP_CHANGE_LONG_STEP;
+  if (systemSettings.TempChangeLongStep == TEMP_CHANGE_SHORT_STEP) {
+    systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP / 2;
+  } else if (systemSettings.TempChangeLongStep == TEMP_CHANGE_LONG_STEP / 2) {
+    systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP;
+  } else {
+    systemSettings.TempChangeLongStep += TEMP_CHANGE_LONG_STEP;
+  }
   if (systemSettings.TempChangeLongStep > TEMP_CHANGE_LONG_STEP_MAX) {
-    systemSettings.TempChangeLongStep = TEMP_CHANGE_LONG_STEP; // loop back at TEMP_CHANGE_LONG_STEP_MAX
+    systemSettings.TempChangeLongStep = TEMP_CHANGE_SHORT_STEP; // loop back at TEMP_CHANGE_LONG_STEP_MAX
   }
   return systemSettings.TempChangeLongStep == TEMP_CHANGE_LONG_STEP_MAX;
 }
