@@ -7,5 +7,5 @@ services:
       context: .
     command: /bin/bash
     volumes:
-      - ./ci:/build/ci
-      - ./:/build/source
+      - ./ci:/build/ci:Z
+      - ./:/build/source:Z
