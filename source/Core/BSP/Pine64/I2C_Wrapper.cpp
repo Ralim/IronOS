@@ -46,12 +46,13 @@ enum i2c_step {
 struct i2c_state {
 	i2c_step currentStep;
 	bool isMemoryWrite;
+	bool wakePart;
 	dma_parameter_struct dma_init_struct;
 
 };
 volatile i2c_state currentState;
 
-bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8_t *p_buffer, uint16_t number_of_byte, bool isWrite) {
+bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8_t *p_buffer, uint16_t number_of_byte, bool isWrite, bool isWakeOnly) {
 	{
 		//TODO is this required
 		/* disable I2C0 */
@@ -62,29 +63,38 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 	i2c_interrupt_disable(I2C0, I2C_INT_ERR);
 	i2c_interrupt_disable(I2C0, I2C_INT_BUF);
 	i2c_interrupt_disable(I2C0, I2C_INT_EV);
-	currentState.isMemoryWrite = isWrite;
-	//Setup DMA
-	currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
-	currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
-	currentState.dma_init_struct.number = number_of_byte;
-	currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
-	currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
-	currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
-	currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
-	if (currentState.isMemoryWrite) {
-		dma_deinit(DMA0, DMA_CH5);
-		currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-		dma_init(DMA0, DMA_CH5, (dma_parameter_struct*) &currentState.dma_init_struct);
-	} else {
-		dma_deinit(DMA0, DMA_CH6);
-		currentState.dma_init_struct.direction = DMA_PERIPHERAL_TO_MEMORY;
-		dma_init(DMA0, DMA_CH6, (dma_parameter_struct*) &currentState.dma_init_struct);
-	}
 
-	if (!currentState.isMemoryWrite) {
-		i2c_dma_last_transfer_config(I2C0, I2C_DMALST_ON);
+	currentState.isMemoryWrite = isWrite;
+	currentState.wakePart = isWakeOnly;
+	if (!isWakeOnly) {
+		//Setup DMA
+		currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
+		currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
+		currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+		currentState.dma_init_struct.number = number_of_byte;
+		currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
+		currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+		currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+		currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
+		if (currentState.isMemoryWrite) {
+			dma_deinit(DMA0, DMA_CH5);
+			currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
+			dma_init(DMA0, DMA_CH5, (dma_parameter_struct*) &currentState.dma_init_struct);
+		} else {
+			dma_deinit(DMA0, DMA_CH6);
+			currentState.dma_init_struct.direction = DMA_PERIPHERAL_TO_MEMORY;
+			dma_init(DMA0, DMA_CH6, (dma_parameter_struct*) &currentState.dma_init_struct);
+		}
+
+		if (!currentState.isMemoryWrite) {
+			i2c_dma_last_transfer_config(I2C0, I2C_DMALST_ON);
+		}
 	}
+	//Clear flags
+	I2C_STAT0(I2C0) = 0;
+	I2C_STAT1(I2C0) = 0;
+	i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+
 	currentState.currentStep = Write_start; //Always start in write mode
 	TickType_t timeout = xTaskGetTickCount() + TICKS_SECOND;
 	while ((currentState.currentStep != Done) && (currentState.currentStep != Error_occured)) {
@@ -92,6 +102,23 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 			i2c_stop_on_bus(I2C0);
 			return false;
 		}
+//		if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
+//			i2c_flag_clear(I2C0, I2C_FLAG_AERR);
+//			//Arb error - we lost the bus / nacked
+//			currentState.currentStep = Error_occured;
+//		} else if (i2c_flag_get(I2C0, I2C_FLAG_BERR)) {
+//			i2c_flag_clear(I2C0, I2C_FLAG_BERR);
+//			// Bus Error
+//			currentState.currentStep = Error_occured;
+//		} else if (i2c_flag_get(I2C0, I2C_FLAG_LOSTARB)) {
+//			i2c_flag_clear(I2C0, I2C_FLAG_LOSTARB);
+//			// Bus Error
+//			currentState.currentStep = Error_occured;
+//		} else if (i2c_flag_get(I2C0, I2C_FLAG_PECERR)) {
+//			i2c_flag_clear(I2C0, I2C_FLAG_PECERR);
+//			// Bus Error
+//			currentState.currentStep = Error_occured;
+//		}
 		switch (currentState.currentStep) {
 		case Error_occured:
 
@@ -109,37 +136,36 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 				currentState.currentStep = Write_device_address;
 			}
 			break;
-		case Read_start:
-			/* wait until BTC bit is set */
-			if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
-				i2c_start_on_bus(I2C0);
-				currentState.currentStep = Read_device_address;
-			}
-			break;
+
 		case Write_device_address:
 			/* i2c master sends START signal successfully */
 			if (i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) {
+				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
 				i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
 				currentState.currentStep = Write_device_memory_address;
 			}
 			break;
-		case Read_device_address:
-			if (i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) {
-				i2c_master_addressing(I2C0, DevAddress, I2C_RECEIVER);
-				currentState.currentStep = Read_device_data_start;
-			}
-			break;
 		case Write_device_memory_address:
 			//Send the device memory location
+
 			if (i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) { //addr sent
-				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
+				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+
+				if (i2c_flag_get(I2C0, I2C_FLAG_BERR)) {
+					i2c_flag_clear(I2C0, I2C_FLAG_BERR);
+					// Bus Error
+					currentState.currentStep = Error_occured;
+				} else if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
+					i2c_flag_clear(I2C0, I2C_FLAG_AERR);
 					//Arb error - we lost the bus / nacked
 					currentState.currentStep = Error_occured;
-				}
-				if (i2c_flag_get(I2C0, I2C_FLAG_TBE)) {
-					i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+				} else if (currentState.wakePart) {
+					//We are stopping here
+					currentState.currentStep = Send_stop;
+				} else if (i2c_flag_get(I2C0, I2C_FLAG_TBE)) {
 					// Write out the 8 byte address
 					i2c_data_transmit(I2C0, memory_address);
+
 					if (currentState.isMemoryWrite) {
 						currentState.currentStep = Write_device_data_start;
 					} else {
@@ -147,6 +173,7 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 					}
 				}
 			}
+
 			break;
 		case Write_device_data_start:
 
@@ -168,18 +195,30 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 					currentState.currentStep = Send_stop;
 				}
 			}
-
+			break;
+		case Read_start:
+			/* wait until BTC bit is set */
+			if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+				i2c_start_on_bus(I2C0);
+				currentState.currentStep = Read_device_address;
+			}
+			break;
+		case Read_device_address:
+			if (i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) {
+				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+				i2c_master_addressing(I2C0, DevAddress, I2C_RECEIVER);
+				currentState.currentStep = Read_device_data_start;
+			}
 			break;
 		case Read_device_data_start:
 			if (i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) { //addr sent
+				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
 				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
 					//Arb error - we lost the bus / nacked
 					currentState.currentStep = Error_occured;
 				}
-				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
 				/* one byte master reception procedure (polling) */
 				if (number_of_byte == 0) {
-
 					currentState.currentStep = Send_stop;
 				} else if (number_of_byte == 1) {
 					/* disable acknowledge */
@@ -234,7 +273,7 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
 	if (!lock())
 		return false;
-	bool res = perform_i2c_transaction(DevAddress, read_address, p_buffer, number_of_byte, false);
+	bool res = perform_i2c_transaction(DevAddress, read_address, p_buffer, number_of_byte, false, false);
 	if (!res) {
 		I2C_Unstick();
 	}
@@ -245,7 +284,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
 	if (!lock())
 		return false;
-	bool res = perform_i2c_transaction(DevAddress, MemAddress, p_buffer, number_of_byte, true);
+	bool res = perform_i2c_transaction(DevAddress, MemAddress, p_buffer, number_of_byte, true, false);
 	if (!res) {
 		I2C_Unstick();
 	}
@@ -290,109 +329,15 @@ bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *register
 }
 
 bool FRToSI2C::wakePart(uint16_t DevAddress) {
-// wakepart is a special case  where only the device address is sent
+	// wakepart is a special case  where only the device address is sent
 	if (!lock())
 		return false;
-
-	i2c_interrupt_disable(I2C0, I2C_INT_ERR);
-	i2c_interrupt_disable(I2C0, I2C_INT_EV);
-	i2c_interrupt_disable(I2C0, I2C_INT_BUF);
-
-	uint8_t state = I2C_START;
-	uint16_t timeout = 0;
-	bool done = false;
-	bool timedout = false;
-	while (!(done || timedout)) {
-		switch (state) {
-		case I2C_START:
-			/* i2c master sends start signal only when the bus is idle */
-			while (i2c_flag_get(I2C0, I2C_FLAG_I2CBSY) && (timeout < I2C_TIME_OUT )) {
-				timeout++;
-			}
-			if (timeout < I2C_TIME_OUT) {
-				i2c_start_on_bus(I2C0);
-				timeout = 0;
-				state = I2C_SEND_ADDRESS;
-			} else {
-				I2C_Unstick();
-				timeout = 0;
-				state = I2C_START;
-			}
-			break;
-		case I2C_SEND_ADDRESS:
-			/* i2c master sends START signal successfully */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) && (timeout < I2C_TIME_OUT )) {
-				timeout++;
-			}
-			if (timeout < I2C_TIME_OUT) {
-				i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
-				timeout = 0;
-				state = I2C_CLEAR_ADDRESS_FLAG;
-			} else {
-				timedout = true;
-				done = true;
-				timeout = 0;
-				state = I2C_START;
-			}
-			break;
-		case I2C_CLEAR_ADDRESS_FLAG:
-			/* address flag set means i2c slave sends ACK */
-			while ((!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) && (timeout < I2C_TIME_OUT )) {
-				timeout++;
-				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
-					i2c_flag_clear(I2C0, I2C_FLAG_AERR);
-					i2c_stop_on_bus(I2C0);
-					/* i2c master sends STOP signal successfully */
-					while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
-						timeout++;
-					}
-					// Address NACK'd
-					unlock();
-					return false;
-				}
-			}
-			if (timeout < I2C_TIME_OUT) {
-				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-				timeout = 0;
-				state = I2C_STOP;
-			} else {
-				// Dont retry as this means a NAK
-				i2c_stop_on_bus(I2C0);
-				/* i2c master sends STOP signal successfully */
-				while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
-					timeout++;
-				}
-				unlock();
-				return false;
-			}
-			break;
-
-		case I2C_STOP:
-			/* send a stop condition to I2C bus */
-			i2c_stop_on_bus(I2C0);
-			/* i2c master sends STOP signal successfully */
-			while ((I2C_CTL0(I2C0) & 0x0200) && (timeout < I2C_TIME_OUT )) {
-				timeout++;
-			}
-			if (timeout < I2C_TIME_OUT) {
-				timeout = 0;
-				state = I2C_END;
-				done = true;
-			} else {
-				timedout = true;
-				done = true;
-				timeout = 0;
-				state = I2C_START;
-			}
-			break;
-		default:
-			state = I2C_START;
-			timeout = 0;
-			break;
-		}
+	bool res = perform_i2c_transaction(DevAddress, 0, NULL, 0, false, true);
+	if (!res) {
+		I2C_Unstick();
 	}
 	unlock();
-	return timedout == false;
+	return res;
 }
 
 void I2C_EV_IRQ() {
