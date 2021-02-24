@@ -45,54 +45,68 @@ enum i2c_step {
 };
 struct i2c_state {
 	i2c_step currentStep;
+	bool isMemoryWrite;
 	dma_parameter_struct dma_init_struct;
 
 };
 volatile i2c_state currentState;
-bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
-	if (!lock())
-		return false;
+
+bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8_t *p_buffer, uint16_t number_of_byte, bool isWrite) {
+	{
+		//TODO is this required
+		/* disable I2C0 */
+		i2c_disable(I2C0);
+		/* enable I2C0 */
+		i2c_enable(I2C0);
+	}
 	i2c_interrupt_disable(I2C0, I2C_INT_ERR);
 	i2c_interrupt_disable(I2C0, I2C_INT_BUF);
 	i2c_interrupt_disable(I2C0, I2C_INT_EV);
+	currentState.isMemoryWrite = isWrite;
 	//Setup DMA
-	dma_deinit(DMA0, DMA_CH6);
-	currentState.dma_init_struct.direction = DMA_PERIPHERAL_TO_MEMORY;
-	currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
-	currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
-	currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	currentState.dma_init_struct.number = number_of_byte;
-	currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
-	currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
-	currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
-	currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
-	dma_init(DMA0, DMA_CH6, (dma_parameter_struct*) &currentState.dma_init_struct);
+	if (currentState.isMemoryWrite) {
+		dma_deinit(DMA0, DMA_CH5);
+		currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
+		currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
+		currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+		currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
+		currentState.dma_init_struct.number = number_of_byte;
+		currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
+		currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+		currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+		currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
+		dma_init(DMA0, DMA_CH5, (dma_parameter_struct*) &currentState.dma_init_struct);
+	} else {
+		dma_deinit(DMA0, DMA_CH6);
+		currentState.dma_init_struct.direction = DMA_PERIPHERAL_TO_MEMORY;
+		currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
+		currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+		currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
+		currentState.dma_init_struct.number = number_of_byte;
+		currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
+		currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+		currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+		currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
+		dma_init(DMA0, DMA_CH6, (dma_parameter_struct*) &currentState.dma_init_struct);
+	}
 
-	i2c_dma_last_transfer_config(I2C0, I2C_DMALST_ON);
-
-	currentState.currentStep = Write_start;
+	if (!currentState.isMemoryWrite) {
+		i2c_dma_last_transfer_config(I2C0, I2C_DMALST_ON);
+	}
+	currentState.currentStep = Write_start; //Always start in write mode
 	TickType_t timeout = xTaskGetTickCount() + TICKS_SECOND;
 	while ((currentState.currentStep != Done) && (currentState.currentStep != Error_occured)) {
 		if (xTaskGetTickCount() > timeout) {
 			i2c_stop_on_bus(I2C0);
-			I2C_Unstick();
-			unlock();
 			return false;
 		}
 		switch (currentState.currentStep) {
 		case Error_occured:
 
 			i2c_stop_on_bus(I2C0);
-			I2C_Unstick();
-			unlock();
 			return false;
 			break;
 		case Write_start:
-
-			/* disable I2C0 */
-			i2c_disable(I2C0);
-			/* enable I2C0 */
-			i2c_enable(I2C0);
 
 			/* enable acknowledge */
 			i2c_ack_config(I2C0, I2C_ACK_ENABLE);
@@ -133,10 +147,36 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 				if (i2c_flag_get(I2C0, I2C_FLAG_TBE)) {
 					i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
 					// Write out the 8 byte address
-					i2c_data_transmit(I2C0, read_address);
-					currentState.currentStep = Read_start;
+					i2c_data_transmit(I2C0, memory_address);
+					if (currentState.isMemoryWrite) {
+						currentState.currentStep = Write_device_data_start;
+					} else {
+						currentState.currentStep = Read_start;
+					}
 				}
 			}
+			break;
+		case Write_device_data_start:
+
+			/* wait until BTC bit is set */
+			if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+				/* enable I2C0 DMA */
+				i2c_dma_enable(I2C0, I2C_DMA_ON);
+				/* enable DMA0 channel5 */
+				dma_channel_enable(DMA0, DMA_CH5);
+				currentState.currentStep = Write_device_data_finish;
+			}
+			break;
+
+		case Write_device_data_finish:					//Wait for complete then goto stop
+			/* wait until BTC bit is set */
+			if (dma_flag_get(DMA0, DMA_CH5, DMA_FLAG_FTF)) {
+				/* wait until BTC bit is set */
+				if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+					currentState.currentStep = Send_stop;
+				}
+			}
+
 			break;
 		case Read_device_data_start:
 			if (i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) { //addr sent
@@ -144,7 +184,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 					//Arb error - we lost the bus / nacked
 					currentState.currentStep = Error_occured;
 				}
-				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND); //TODO may not be able to do this
+				i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
 				/* one byte master reception procedure (polling) */
 				if (number_of_byte == 0) {
 
@@ -193,130 +233,32 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 			break;
 		default:
 			//If we get here something is amiss
-			unlock();
 			return false;
 		}
 	}
-	unlock();
 	return true;
+}
+
+bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
+	if (!lock())
+		return false;
+	bool res = perform_i2c_transaction(DevAddress, read_address, p_buffer, number_of_byte, false);
+	if (!res) {
+		I2C_Unstick();
+	}
+	unlock();
+	return res;
 }
 
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
 	if (!lock())
 		return false;
-
-	i2c_interrupt_disable(I2C0, I2C_INT_ERR);
-	i2c_interrupt_disable(I2C0, I2C_INT_EV);
-	i2c_interrupt_disable(I2C0, I2C_INT_BUF);
-	dma_deinit(DMA0, DMA_CH5);
-	currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
-	currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
-	currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	currentState.dma_init_struct.number = number_of_byte;
-	currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
-	currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
-	currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
-	currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
-	dma_init(DMA0, DMA_CH5, (dma_parameter_struct*) &currentState.dma_init_struct);
-	currentState.currentStep = Write_start;
-	TickType_t timeout = xTaskGetTickCount() + TICKS_SECOND;
-	while ((currentState.currentStep != Done) && (currentState.currentStep != Error_occured)) {
-		if (xTaskGetTickCount() > timeout) {
-			i2c_stop_on_bus(I2C0);
-			I2C_Unstick();
-			unlock();
-			return false;
-		}
-		switch (currentState.currentStep) {
-
-		case Error_occured:
-
-			i2c_stop_on_bus(I2C0);
-			I2C_Unstick();
-			unlock();
-			return false;
-			break;
-		case Write_start:
-
-			/* disable I2C0 */
-			i2c_disable(I2C0);
-			/* enable I2C0 */
-			i2c_enable(I2C0);
-
-			/* enable acknowledge */
-			i2c_ack_config(I2C0, I2C_ACK_ENABLE);
-			/* i2c master sends start signal only when the bus is idle */
-			if (!i2c_flag_get(I2C0, I2C_FLAG_I2CBSY)) {
-				/* send the start signal */
-				i2c_start_on_bus(I2C0);
-				currentState.currentStep = Write_device_address;
-			}
-			break;
-		case Write_device_address:
-			/* i2c master sends START signal successfully */
-			if (i2c_flag_get(I2C0, I2C_FLAG_SBSEND)) {
-				i2c_master_addressing(I2C0, DevAddress, I2C_TRANSMITTER);
-				currentState.currentStep = Write_device_memory_address;
-			}
-			break;
-		case Write_device_memory_address:
-			//Send the device memory location
-			if (i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) { //addr sent
-				if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
-					//Arb error - we lost the bus / nacked
-					currentState.currentStep = Error_occured;
-				}
-				if (i2c_flag_get(I2C0, I2C_FLAG_TBE)) {
-					i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-					// Write out the 8 byte address
-					i2c_data_transmit(I2C0, MemAddress);
-					currentState.currentStep = Write_device_data_start;
-				}
-			}
-			break;
-		case Write_device_data_start:
-
-			/* wait until BTC bit is set */
-			if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
-
-				/* enable I2C0 DMA */
-				i2c_dma_enable(I2C0, I2C_DMA_ON);
-				/* enable DMA0 channel5 */
-				dma_channel_enable(DMA0, DMA_CH5);
-				currentState.currentStep = Write_device_data_finish;
-			}
-			break;
-
-		case Write_device_data_finish:					//Wait for complete then goto stop
-			/* wait until BTC bit is set */
-			if (dma_flag_get(DMA0, DMA_CH5, DMA_FLAG_FTF)) {
-				/* wait until BTC bit is set */
-				if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
-					currentState.currentStep = Send_stop;
-				}
-			}
-
-			break;
-		case Send_stop:
-			/* send a stop condition to I2C bus*/
-			i2c_stop_on_bus(I2C0);
-			currentState.currentStep = Wait_stop;
-			break;
-		case Wait_stop:
-			/* i2c master sends STOP signal successfully */
-			if ((I2C_CTL0(I2C0) & 0x0200) != 0x0200) {
-				currentState.currentStep = Done;
-			}
-			break;
-		default:
-			//If we get here something is amiss
-			unlock();
-			return false;
-		}
+	bool res = perform_i2c_transaction(DevAddress, MemAddress, p_buffer, number_of_byte, true);
+	if (!res) {
+		I2C_Unstick();
 	}
 	unlock();
-	return true;
+	return res;
 }
 
 bool FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
