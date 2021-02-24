@@ -64,29 +64,21 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 	i2c_interrupt_disable(I2C0, I2C_INT_EV);
 	currentState.isMemoryWrite = isWrite;
 	//Setup DMA
+	currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
+	currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
+	currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+	currentState.dma_init_struct.number = number_of_byte;
+	currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
+	currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+	currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+	currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
 	if (currentState.isMemoryWrite) {
 		dma_deinit(DMA0, DMA_CH5);
 		currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-		currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
-		currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
-		currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-		currentState.dma_init_struct.number = number_of_byte;
-		currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
-		currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
-		currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
-		currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
 		dma_init(DMA0, DMA_CH5, (dma_parameter_struct*) &currentState.dma_init_struct);
 	} else {
 		dma_deinit(DMA0, DMA_CH6);
 		currentState.dma_init_struct.direction = DMA_PERIPHERAL_TO_MEMORY;
-		currentState.dma_init_struct.memory_addr = (uint32_t) p_buffer;
-		currentState.dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
-		currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-		currentState.dma_init_struct.number = number_of_byte;
-		currentState.dma_init_struct.periph_addr = (uint32_t) &I2C_DATA(I2C0);
-		currentState.dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
-		currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
-		currentState.dma_init_struct.priority = DMA_PRIORITY_ULTRA_HIGH;
 		dma_init(DMA0, DMA_CH6, (dma_parameter_struct*) &currentState.dma_init_struct);
 	}
 
