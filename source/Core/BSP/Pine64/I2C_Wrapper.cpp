@@ -275,7 +275,7 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
     }
     perform_i2c_step();
   }
-  return true;
+  return currentState.currentStep == Done;
 }
 
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
