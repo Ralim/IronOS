@@ -157,15 +157,16 @@ const menuitem solderingMenu[] = {
     {NULL, NULL, NULL}                                                                                              // end of menu marker. DO NOT REMOVE
 };
 const menuitem UIMenu[] = {
-/*
- // Language
- *  Scrolling Speed
- *  Temperature Unit
- *  Display orientation
- *  Cooldown blink
- *  Reverse Temp change buttons + -
- */
-    {(const char *)SettingsDescriptions[5], settings_setTempF, settings_displayTempF}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
+    /*
+     // Language
+     *  Scrolling Speed
+     *  Temperature Unit
+     *  Display orientation
+     *  Cooldown blink
+     *  Reverse Temp change buttons + -
+     */
+    {(const char *)SettingsDescriptions[5], settings_setTempF,
+     settings_displayTempF}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
     {(const char *)SettingsDescriptions[7], settings_setDisplayRotation, settings_displayDisplayRotation},                                /*Display Rotation*/
     {(const char *)SettingsDescriptions[10], settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                       /*Cooling blink warning*/
     {(const char *)SettingsDescriptions[15], settings_setScrollSpeed, settings_displayScrollSpeed},                                       /*Scroll Speed for descriptions*/

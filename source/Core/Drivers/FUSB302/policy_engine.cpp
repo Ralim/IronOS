@@ -411,10 +411,9 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 
           return PESinkSendSoftReset;
         }
-        /* If we got an unknown message, send a soft reset ??? */
       } else {
-
-        return PESinkSendSoftReset;
+        /* if we get an unknown message code, silently ignore it*/
+        return PESinkReady;
       }
     }
   }

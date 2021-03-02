@@ -70,8 +70,7 @@ void gui_drawTipTemp(bool symbol) {
   uint32_t Temp = 0;
   if (systemSettings.temperatureInF) {
     Temp = TipThermoModel::getTipInF();
-  } else
-  {
+  } else {
     Temp = TipThermoModel::getTipInC();
   }
 
@@ -274,8 +273,7 @@ static void gui_solderingTempAdjust() {
     OLED::printNumber(systemSettings.SolderingTemp, 3);
     if (systemSettings.temperatureInF)
       OLED::drawSymbol(0);
-    else
-    {
+    else {
       OLED::drawSymbol(1);
     }
     OLED::print(SymbolSpace);
@@ -410,7 +408,7 @@ static bool shouldBeSleeping(bool inAutoStart) {
       }
     }
     if (lastMovementTime > 0 || lastButtonTime > 0) {
-      if ((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout() && (xTaskGetTickCount() - lastButtonTime) > getSleepTimeout()) {
+      if (((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout()) && ((xTaskGetTickCount() - lastButtonTime) > getSleepTimeout())) {
         return true;
       }
     }
@@ -419,7 +417,7 @@ static bool shouldBeSleeping(bool inAutoStart) {
 #ifdef HALL_SENSOR
   // If the hall effect sensor is enabled in the build, check if its over
   // threshold, and if so then we force sleep
-  if (lookupHallEffectThreshold()) {
+  if (getHallSensorFitted() && lookupHallEffectThreshold()) {
     int16_t hallEffectStrength = getRawHallEffect();
     if (hallEffectStrength < 0)
       hallEffectStrength = -hallEffectStrength;
