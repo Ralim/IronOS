@@ -5,12 +5,12 @@ import argparse
 import json
 import os
 import io
+import functools
 from datetime import datetime
 import sys
 import fontTables
 import re
 import subprocess
-from bdflib import reader as bdfreader
 
 HERE = os.path.dirname(__file__)
 
@@ -20,8 +20,11 @@ except NameError:
     to_unicode = str
 
 
-with open(os.path.join(HERE, "wqy-bitmapsong/wenquanyi_9pt.bdf"), "rb") as handle:
-    cjkFont = bdfreader.read_bdf(handle)
+@functools.lru_cache(maxsize=None)
+def cjkFont():
+    from bdflib import reader as bdfreader
+    with open(os.path.join(HERE, "wqy-bitmapsong/wenquanyi_9pt.bdf"), "rb") as f:
+        return bdfreader.read_bdf(f)
 
 
 def log(message):
@@ -184,7 +187,7 @@ def getLetterCounts(defs, lang):
 def getCJKGlyph(sym):
     from bdflib.model import Glyph
     try:
-        glyph: Glyph = cjkFont[ord(sym)]
+        glyph: Glyph = cjkFont()[ord(sym)]
     except:
         return None
     data = glyph.data
