@@ -9,6 +9,7 @@
 #include "Debug.h"
 #include "Pins.h"
 #include "gd32vf103.h"
+#include "usb.h"
 #include <string.h>
 #define ADC_NORM_CHANNELS 2
 #define ADC_NORM_SAMPLES  32
@@ -42,6 +43,8 @@ void hardware_init() {
   /* enable TIMER1 - PWM control timing*/
   timer_enable(TIMER1);
   timer_enable(TIMER2);
+
+  setup_usb();
 }
 // channel 0 -> temperature sensor, 1-> VIN
 uint16_t getADC(uint8_t channel) {
