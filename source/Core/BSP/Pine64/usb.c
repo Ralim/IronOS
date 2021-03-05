@@ -113,7 +113,7 @@ static const usb_dfu_desc_config_set dfu_runtime_config = {
 			.bLength = sizeof(usb_desc_config),
 			.bDescriptorType = USB_DESCTYPE_CONFIG,
 		},
-		.wTotalLength = sizeof(usb_dfu_desc_config_set) - 1, // FIXME
+		.wTotalLength = sizeof(usb_dfu_desc_config_set),
 		.bNumInterfaces = 0x01U,
 		.bConfigurationValue = 0x01U,
 		.iConfiguration = STR_IDX_CONFIG,
@@ -193,8 +193,3 @@ void setup_usb(void) {
 void USBFS_IRQHandler (void) {
 	usbd_isr (&driver);
 }
-
-void TIMER2_IRQHandler(void) {
-	usb_timer_irq();
-}
-
