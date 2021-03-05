@@ -33,7 +33,7 @@
 /* ToDo: add here your necessary defines for device initialization
  following is an example for different system frequencies */
 #ifndef SYSTEM_CLOCK
-#define SYSTEM_CLOCK __SYSTEM_CLOCK_108M_PLL_HXTAL
+#define SYSTEM_CLOCK __SYSTEM_CLOCK_96M_PLL_HXTAL
 #endif
 
 /**
@@ -80,11 +80,79 @@
  * program is not using it. Debugging systems require the variable to be physically
  * present in memory so that it can be examined to configure the debugger.
  */
-uint32_t SystemCoreClock = __SYSTEM_CLOCK_108M_PLL_HXTAL; /* System Clock Frequency (Core Clock) */
+uint32_t SystemCoreClock = __SYSTEM_CLOCK_96M_PLL_HXTAL; /* System Clock Frequency (Core Clock) */
 
 /*----------------------------------------------------------------------------
  Clock functions
  *----------------------------------------------------------------------------*/
+
+static void system_clock_96m_hxtal(void)
+{
+    uint32_t timeout = 0U;
+    uint32_t stab_flag = 0U;
+
+    /* enable HXTAL */
+    RCU_CTL |= RCU_CTL_HXTALEN;
+
+    /* wait until HXTAL is stable or the startup time is longer than HXTAL_STARTUP_TIMEOUT */
+    do{
+        timeout++;
+        stab_flag = (RCU_CTL & RCU_CTL_HXTALSTB);
+    }while((0U == stab_flag) && (HXTAL_STARTUP_TIMEOUT != timeout));
+
+    /* if fail */
+    if(0U == (RCU_CTL & RCU_CTL_HXTALSTB)){
+        while(1){
+        }
+    }
+
+    /* HXTAL is stable */
+    /* AHB = SYSCLK */
+    RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+    /* APB2 = AHB/1 */
+    RCU_CFG0 |= RCU_APB2_CKAHB_DIV1;
+    /* APB1 = AHB/2 */
+    RCU_CFG0 |= RCU_APB1_CKAHB_DIV2;
+
+    if(HXTAL_VALUE==25000000){
+
+        /* CK_PLL = (CK_PREDIV0) * 24 = 96 MHz */
+        RCU_CFG0 &= ~(RCU_CFG0_PLLMF | RCU_CFG0_PLLMF_4);
+        RCU_CFG0 |= (RCU_PLLSRC_HXTAL | RCU_PLL_MUL24);
+
+        /* CK_PREDIV0 = (CK_HXTAL)/5 *8 /10 = 4 MHz */
+        RCU_CFG1 &= ~(RCU_CFG1_PREDV0SEL | RCU_CFG1_PLL1MF | RCU_CFG1_PREDV1 | RCU_CFG1_PREDV0);
+        RCU_CFG1 |= (RCU_PREDV0SRC_CKPLL1 | RCU_PLL1_MUL8 | RCU_PREDV1_DIV5 | RCU_PREDV0_DIV10);
+        /* enable PLL1 */
+        RCU_CTL |= RCU_CTL_PLL1EN;
+        /* wait till PLL1 is ready */
+        while((RCU_CTL & RCU_CTL_PLL1STB) == 0){
+        }
+
+    }else if(HXTAL_VALUE==8000000){
+        /* CK_PLL = (CK_PREDIV0) * 24 = 96 MHz */
+        RCU_CFG0 &= ~(RCU_CFG0_PLLMF | RCU_CFG0_PLLMF_4);
+        RCU_CFG0 |= (RCU_PLLSRC_HXTAL | RCU_PLL_MUL24);
+
+        RCU_CFG1 &= ~(RCU_CFG1_PREDV0SEL | RCU_CFG1_PREDV1 | RCU_CFG1_PLL1MF | RCU_CFG1_PREDV0);
+        RCU_CFG1 |= (RCU_PREDV0SRC_HXTAL | RCU_PREDV0_DIV2 );
+    }
+
+    /* enable PLL */
+    RCU_CTL |= RCU_CTL_PLLEN;
+
+    /* wait until PLL is stable */
+    while(0U == (RCU_CTL & RCU_CTL_PLLSTB)){
+    }
+
+    /* select PLL as system clock */
+    RCU_CFG0 &= ~RCU_CFG0_SCS;
+    RCU_CFG0 |= RCU_CKSYSSRC_PLL;
+
+    /* wait until PLL is selected as system clock */
+    while(0U == (RCU_CFG0 & RCU_SCSS_PLL)){
+    }
+}
 
 /*!
  \brief      configure the system clock to 108M by PLL which selects HXTAL(MD/HD/XD:8M; CL:25M) as its clock source
@@ -172,7 +240,7 @@ static void system_clock_108m_hxtal(void) {
  \param[out] none
  \retval     none
  */
-static void system_clock_config(void) { system_clock_108m_hxtal(); }
+static void system_clock_config(void) { system_clock_96m_hxtal(); }
 
 /**
  * \brief      Function to update the variable \ref SystemCoreClock
