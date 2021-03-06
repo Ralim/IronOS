@@ -26,9 +26,9 @@
 		"SettingsResetMessage": "Налаштування\nскинуті!",
 		"NoAccelerometerMessage": "Акселерометр\nне виявлено!",
 		"NoPowerDeliveryMessage": "USB-PD IC\nне виявлено!",
-		"LockingKeysString": " ЗАБЛОКОВАНО",
-		"UnlockingKeysString": "РОЗБЛОКОВАНО",
-		"WarningKeysLockedString": "!ЗАБЛОКОВАНО!"
+		"LockingKeysString": " ЗАБЛОК.",
+		"UnlockingKeysString": "РОЗБЛОК.",
+		"WarningKeysLockedString": "!ЗАБЛОК!"
 	},
 	"characters": {
 		"SettingRightChar": "П",
