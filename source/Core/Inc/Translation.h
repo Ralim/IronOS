@@ -14,7 +14,7 @@ extern const bool    HasFahrenheit;
 
 extern const char *SettingsShortNames[29][2];
 extern const char *SettingsDescriptions[29];
-extern const char *SettingsMenuEntries[4];
+extern const char *SettingsMenuEntries[5];
 
 extern const char *SettingsCalibrationDone;
 extern const char *SettingsCalibrationWarning;
@@ -76,6 +76,7 @@ extern const char *SymbolSeconds;
 extern const char *SymbolWatts;
 extern const char *SymbolVolts;
 extern const char *SymbolDC;
+extern const char *SymbolNA;
 extern const char *SymbolCellCount;
 extern const char *SymbolVersionNumber;
 

@@ -49,6 +49,13 @@
 		"SettingLockFullChar": "T"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Forrasztási",
@@ -274,6 +281,13 @@
 				"enged."
 			],
 			"desc": "Forrasztás közben mindkét gombot hosszan lenyomva rögzíti a hőmérsékletet (K=ki B=csak \"boost\" mód T=teljes lezárás)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

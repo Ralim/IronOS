@@ -50,6 +50,13 @@
 		"SettingLockFullChar": "V"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Löt-",
@@ -275,6 +282,13 @@
 				"sperre"
 			],
 			"desc": "Langes drücken beider Tasten im Lötmodus sperrt diese <D=deaktiviert | B=nur Boost | V=vollständig>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

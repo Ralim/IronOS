@@ -49,6 +49,13 @@
 		"SettingLockFullChar": "П"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Параметри",
@@ -274,6 +281,13 @@
 				"блок. кнопок"
 			],
 			"desc": "Під час пайки тривале натискання обох кнопок заблокує їх <В=Вимк, Т=Тільки турбо, П=Повне>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

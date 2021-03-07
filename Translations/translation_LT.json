@@ -49,6 +49,13 @@
 		"SettingLockFullChar": "V"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Litavimo",
@@ -274,6 +281,13 @@
 				"užraktas"
 			],
 			"desc": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte <I=Išjungta, T=Tik turbo režimas, V=Visiškas užrakinimas>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

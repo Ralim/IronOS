@@ -19,6 +19,8 @@ void gui_Menu(const menuitem *menu);
 #ifdef POW_DC
 static bool settings_setInputVRange(void);
 static void settings_displayInputVRange(void);
+static bool settings_setInputMinVRange(void);
+static void settings_displayInputMinVRange(void);
 #endif
 #ifdef POW_QC
 static bool settings_setQCInputV(void);
@@ -73,10 +75,12 @@ static void settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
 #endif
 // Menu functions
-static void settings_displaySolderingMenu(void);
-static bool settings_enterSolderingMenu(void);
 static void settings_displayPowerMenu(void);
 static bool settings_enterPowerMenu(void);
+static void settings_displaySolderingMenu(void);
+static bool settings_enterSolderingMenu(void);
+static void settings_displayPowerSavingMenu(void);
+static bool settings_enterPowerSavingMenu(void);
 static void settings_displayUIMenu(void);
 static bool settings_enterUIMenu(void);
 static void settings_displayAdvancedMenu(void);
@@ -84,7 +88,9 @@ static bool settings_enterAdvancedMenu(void);
 /*
  * Root Settings Menu
  *
- * Power Source
+ * Power Menu
+ *  Power Source
+ * 
  * Soldering
  * 	Boost Mode Enabled
  * 	Boost Mode Temp
@@ -121,26 +127,34 @@ static bool settings_enterAdvancedMenu(void);
  */
 const menuitem rootSettingsMenu[]{
 /*
- * Power Source
+ * Power Menu
  * Soldering Menu
  * Power Saving Menu
  * UI Menu
  * Advanced Menu
  * Exit
  */
-#ifdef POW_DC
-    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange}, /*Voltage input*/
-#endif
-#ifdef POW_QC
-    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
-#endif
+    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},         /*Power*/
     {(const char *)NULL, settings_enterSolderingMenu, settings_displaySolderingMenu}, /*Soldering*/
-    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},         /*Sleep Options Menu*/
+    {(const char *)NULL, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu},         /*Sleep Options Menu*/
     {(const char *)NULL, settings_enterUIMenu, settings_displayUIMenu},               /*UI Menu*/
     {(const char *)NULL, settings_enterAdvancedMenu, settings_displayAdvancedMenu},   /*Advanced Menu*/
     {NULL, NULL, NULL}                                                                // end of menu marker. DO NOT REMOVE
 };
 
+const menuitem powerMenu[] = {
+    /*
+    * Power Source
+     */
+#ifdef POW_DC
+    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange},          /*Voltage input*/
+    {(const char *)SettingsDescriptions[28], settings_setInputMinVRange, settings_displayInputMinVRange},   /*Minimum voltage input*/
+#endif
+#ifdef POW_QC
+    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV},               /*Voltage input*/
+#endif
+    {NULL, NULL, NULL}                                                                                              // end of menu marker. DO NOT REMOVE
+};
 const menuitem solderingMenu[] = {
     /*
      * Boost Mode Enabled
@@ -173,7 +187,7 @@ const menuitem UIMenu[] = {
     {(const char *)SettingsDescriptions[21], settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled}, /* Reverse Temp change buttons + - */
     {NULL, NULL, NULL}                                                                                                                    // end of menu marker. DO NOT REMOVE
 };
-const menuitem PowerMenu[] = {
+const menuitem PowerSavingMenu[] = {
     /*
      * Sleep Temp
      * 	Sleep Time
@@ -294,7 +308,9 @@ static int userConfirmation(const char *message) {
 #ifdef POW_DC
 static bool settings_setInputVRange(void) {
   systemSettings.minDCVoltageCells = (systemSettings.minDCVoltageCells + 1) % 5;
-  return systemSettings.minDCVoltageCells == 4;
+  if (systemSettings.minDCVoltageCells == 1 && systemSettings.minVoltageCells < 30)
+    systemSettings.minVoltageCells = 30;
+  return systemSettings.minDCVoltageCells == 5;
 }
 
 static void settings_displayInputVRange(void) {
@@ -305,6 +321,27 @@ static void settings_displayInputVRange(void) {
     OLED::print(SymbolCellCount);
   } else {
     OLED::print(SymbolDC);
+  }
+}
+
+static bool settings_setInputMinVRange(void) {
+  systemSettings.minVoltageCells = (systemSettings.minVoltageCells + 1) % 38;
+  if (systemSettings.minDCVoltageCells == 1 && systemSettings.minVoltageCells < 30)
+    systemSettings.minVoltageCells = 30;
+  else if(systemSettings.minVoltageCells < 24)
+    systemSettings.minVoltageCells = 24;
+  return systemSettings.minVoltageCells == 38;
+}
+
+static void settings_displayInputMinVRange(void) {
+  if (systemSettings.minDCVoltageCells) {
+    printShortDescription(28, 4);
+    OLED::printNumber(systemSettings.minVoltageCells / 10, 2);
+    OLED::print(SymbolDot);
+    OLED::printNumber(systemSettings.minVoltageCells % 10, 1);
+  } else {
+    printShortDescription(28, 5);
+    OLED::print(SymbolNA);
   }
 }
 #endif
@@ -904,22 +941,27 @@ static void displayMenu(size_t index) {
 }
 
 static void settings_displayCalibrateVIN(void) { printShortDescription(13, 5); }
-static void settings_displaySolderingMenu(void) { displayMenu(0); }
+static void settings_displayPowerMenu(void) { displayMenu(0); }
+static bool settings_enterPowerMenu(void) {
+  gui_Menu(powerMenu);
+  return false;
+}
+static void settings_displaySolderingMenu(void) { displayMenu(1); }
 static bool settings_enterSolderingMenu(void) {
   gui_Menu(solderingMenu);
   return false;
 }
-static void settings_displayPowerMenu(void) { displayMenu(1); }
-static bool settings_enterPowerMenu(void) {
-  gui_Menu(PowerMenu);
+static void settings_displayPowerSavingMenu(void) { displayMenu(2); }
+static bool settings_enterPowerSavingMenu(void) {
+  gui_Menu(PowerSavingMenu);
   return false;
 }
-static void settings_displayUIMenu(void) { displayMenu(2); }
+static void settings_displayUIMenu(void) { displayMenu(3); }
 static bool settings_enterUIMenu(void) {
   gui_Menu(HasFahrenheit ? UIMenu : UIMenu + 1);
   return false;
 }
-static void settings_displayAdvancedMenu(void) { displayMenu(3); }
+static void settings_displayAdvancedMenu(void) { displayMenu(4); }
 static bool settings_enterAdvancedMenu(void) {
   gui_Menu(advancedMenu);
   return false;

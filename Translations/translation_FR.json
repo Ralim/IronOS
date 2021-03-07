@@ -49,6 +49,13 @@
 		"SettingLockFullChar": "V"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Paramètres",
@@ -274,6 +281,13 @@
 				"capteur effet hall"
 			],
 			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <D=désactivé | B=basse | M=moyenne | H=haute>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

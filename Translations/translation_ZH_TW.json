@@ -50,6 +50,13 @@
 		"SettingLockFullChar": "全"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"",
@@ -275,6 +282,13 @@
 				"按鍵鎖定"
 			],
 			"desc": "於焊接模式時，同時長按兩個按鍵啟用按鍵鎖定 <無=停用 | 增=只鎖定增熱模式 | 全=鎖定全部>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

@@ -49,6 +49,13 @@
 		"SettingLockFullChar": "C"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Opzioni",
@@ -274,6 +281,13 @@
 				"tasti"
 			],
 			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare/sbloccare <D: disattiva; T: blocca «Turbo»; C: blocco completo>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

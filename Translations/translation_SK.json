@@ -49,6 +49,13 @@
 		"SettingLockFullChar": "P"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Nastavenie",
@@ -274,6 +281,13 @@
 				"tlačidiel"
 			],
 			"desc": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania <Z=Zakázať, B=Okrem boost, P=Plné zamknutie>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Maximum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }
