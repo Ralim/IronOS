@@ -10,7 +10,7 @@
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 #include <stdint.h>
-#define SETTINGSVERSION (0x25)
+#define SETTINGSVERSION (0x26)
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
