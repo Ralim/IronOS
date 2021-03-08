@@ -14,7 +14,7 @@ extern const bool    HasFahrenheit;
 
 extern const char *SettingsShortNames[29][2];
 extern const char *SettingsDescriptions[29];
-extern const char *SettingsMenuEntries[4];
+extern const char *SettingsMenuEntries[5];
 
 extern const char *SettingsCalibrationDone;
 extern const char *SettingsCalibrationWarning;
@@ -60,6 +60,7 @@ extern const char *SettingSensitivityHigh;
 extern const char *SettingLockDisableChar;
 extern const char *SettingLockBoostChar;
 extern const char *SettingLockFullChar;
+extern const char *SettingNAChar;
 
 extern const char *SettingFastChar;
 extern const char *SettingSlowChar;

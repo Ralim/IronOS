@@ -46,9 +46,17 @@
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "L",
 		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H"
+		"SettingSensitivityHigh": "H",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldeer",
@@ -274,6 +282,13 @@
 				"knoppen"
 			],
 			"desc": "Tijdens solderen lang op beide knoppen drukken, blokkeert ze. <U=Uit, B=Alleen boost, V=Volledig blokkeren>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

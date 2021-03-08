@@ -47,9 +47,17 @@
 		"SettingSensitivityHigh": "W",
 		"SettingLockDisableChar": "W",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "P"
+		"SettingLockFullChar": "P",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Lutowanie",
@@ -275,6 +283,13 @@
 				"przycisków"
 			],
 			"desc": "W trybie lutowania, wciśnij oba przyciski aby je zablokować <O-Wyłączona, B-tylko Boost, P-pełna blokada>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

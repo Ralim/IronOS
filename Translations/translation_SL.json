@@ -46,9 +46,17 @@
 		"SettingSensitivityHigh": "V",
 		"SettingLockDisableChar": "O",
 		"SettingLockBoostChar": "L",
-		"SettingLockFullChar": "P"
+		"SettingLockFullChar": "P",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Nastavitve",
@@ -274,6 +282,13 @@
 				"zaklep gumbov"
 			],
 			"desc": "Za zaklep med spajkanjem drži oba gumba <O=onemogoči | L=le pospešeno | P=polno>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

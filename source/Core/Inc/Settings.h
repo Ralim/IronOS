@@ -10,7 +10,7 @@
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 #include <stdint.h>
-#define SETTINGSVERSION (0x25)
+#define SETTINGSVERSION (0x26)
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -25,6 +25,7 @@ typedef struct {
   uint16_t SleepTemp;           // temp to drop to in sleep
   uint8_t  SleepTime;           // minutes timeout to sleep
   uint8_t  minDCVoltageCells;   // The voltage we cut out at for under voltage when powered by DC jack
+  uint8_t  minVoltageCells;     // Minimum allowed voltage per cell <3S - 3.0V (30)> <4S - 2.4V (24)> <...> (Minimum recommended 2.7V)
   uint8_t  QCIdealVoltage;      // Desired QC3.0 voltage (9,12,20V)
   uint8_t  OrientationMode : 2; // Selects between Auto,Right and left handed layouts
   uint8_t  sensitivity : 4;     // Sensitivity of accelerometer (5 bits)
