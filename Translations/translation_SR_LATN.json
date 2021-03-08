@@ -285,7 +285,7 @@
 		},
 		"MinVolCell": {
 			"text2": [
-				"Maximum",
+				"Minimum",
 				"voltage"
 			],
 			"desc": "Minimum allowed voltage per cell"
