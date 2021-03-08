@@ -937,7 +937,7 @@ static void displayMenu(size_t index) {
   // Draw symbol
   // 16 pixel wide image
   // 2 pixel wide scrolling indicator
-  OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * (index + 2)]));
+  OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 2]));
 }
 
 static void settings_displayCalibrateVIN(void) { printShortDescription(13, 5); }
