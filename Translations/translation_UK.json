@@ -46,9 +46,17 @@
 		"SettingSensitivityHigh": "М",
 		"SettingLockDisableChar": "В",
 		"SettingLockBoostChar": "Т",
-		"SettingLockFullChar": "П"
+		"SettingLockFullChar": "П",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Параметри",
@@ -274,6 +282,13 @@
 				"блок. кнопок"
 			],
 			"desc": "Під час пайки тривале натискання обох кнопок заблокує їх <В=Вимк, Т=Тільки турбо, П=Повне>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

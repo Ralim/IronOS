@@ -46,7 +46,7 @@ uint8_t lookupVoltageLevel() {
   if (systemSettings.minDCVoltageCells == 0)
     return 90; // 9V since iron does not function effectively below this
   else
-    return (systemSettings.minDCVoltageCells * 33) + (33 * 2);
+    return (systemSettings.minDCVoltageCells * systemSettings.minVoltageCells) + (systemSettings.minVoltageCells * 2);
 }
 void resetSettings() {
   memset((void *)&systemSettings, 0, sizeof(systemSettingsType));
@@ -55,6 +55,7 @@ void resetSettings() {
   // to sleep - default 1 min
   systemSettings.SolderingTemp                  = SOLDERING_TEMP;             // Default soldering temp is 320.0 C
   systemSettings.minDCVoltageCells              = CUT_OUT_SETTING;            // default to no cut-off voltage
+  systemSettings.minVoltageCells                = RECOM_VOL_CELL;             // Minimum voltage per cell (Recommended 3.3V (33))
   systemSettings.QCIdealVoltage                 = 0;                          // Default to 9V for QC3.0 Voltage
   systemSettings.version                        = SETTINGSVERSION;            // Store the version number to allow for easier upgrades
   systemSettings.detailedSoldering              = DETAILED_SOLDERING;         // Detailed soldering screen
