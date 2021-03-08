@@ -159,7 +159,7 @@ static void gui_drawBatteryIcon() {
     uint8_t  cellCount = systemSettings.minDCVoltageCells + 2;
     uint32_t cellV     = getInputVoltageX10(systemSettings.voltageDiv, 0) / cellCount;
     // Should give us approx cell voltage X10
-    // Range is 42 -> 33 = 9 steps therefore we will use battery 0-9
+    // Range is 42 -> Minimum voltage setting (systemSettings.minVoltageCells) = 9 steps therefore we will use battery 0-9
     if (cellV < systemSettings.minVoltageCells)
       cellV = systemSettings.minVoltageCells;
     cellV -= systemSettings.minVoltageCells; // Should leave us a number of 0-9
