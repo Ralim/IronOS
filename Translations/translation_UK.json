@@ -7,7 +7,7 @@
 		"SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",
 		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? <A - Так, В - Ні>",
 		"UVLOWarningString": "АККУМ--",
-		"UndervoltageString": "Низька\nнапруга",
+		"UndervoltageString": "Низька напруга",
 		"InputVoltageString": "Жив.(B): ",
 		"WarningTipTempString": "Жало t°: ",
 		"BadTipString": "ЖАЛО--",
