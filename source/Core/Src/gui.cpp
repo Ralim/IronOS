@@ -90,7 +90,7 @@ static bool settings_enterAdvancedMenu(void);
  *
  * Power Menu
  *  Power Source
- * 
+ *
  * Soldering
  * 	Boost Mode Enabled
  * 	Boost Mode Temp
@@ -341,7 +341,7 @@ static void settings_displayInputMinVRange(void) {
     OLED::printNumber(systemSettings.minVoltageCells % 10, 1);
   } else {
     printShortDescription(28, 5);
-    OLED::print(SymbolNA);
+    OLED::print(SettingNAChar);
   }
 }
 #endif

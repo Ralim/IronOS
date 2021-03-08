@@ -60,6 +60,7 @@ extern const char *SettingSensitivityHigh;
 extern const char *SettingLockDisableChar;
 extern const char *SettingLockBoostChar;
 extern const char *SettingLockFullChar;
+extern const char *SettingNAChar;
 
 extern const char *SettingFastChar;
 extern const char *SettingSlowChar;
@@ -76,7 +77,6 @@ extern const char *SymbolSeconds;
 extern const char *SymbolWatts;
 extern const char *SymbolVolts;
 extern const char *SymbolDC;
-extern const char *SymbolNA;
 extern const char *SymbolCellCount;
 extern const char *SymbolVersionNumber;
 

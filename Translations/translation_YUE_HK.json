@@ -47,7 +47,8 @@
 		"SettingSensitivityHigh": "高",
 		"SettingLockDisableChar": "無",
 		"SettingLockBoostChar": "增",
-		"SettingLockFullChar": "全"
+		"SettingLockFullChar": "全",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
 		"PowerMenu": {

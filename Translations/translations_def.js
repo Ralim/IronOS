@@ -188,6 +188,11 @@ var def =
 			"id": "SettingLockFullChar",
 			"len": 1,
 			"default": "F"
+		},
+		{
+			"id": "SettingNAChar",
+			"len": 3,
+			"default": "N/A"
 		}
 	],
 	"menuGroups": [

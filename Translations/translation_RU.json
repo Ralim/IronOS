@@ -46,7 +46,8 @@
 		"SettingSensitivityHigh": "В",
 		"SettingLockDisableChar": "О",
 		"SettingLockBoostChar": "Т",
-		"SettingLockFullChar": "П"
+		"SettingLockFullChar": "П",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
 		"PowerMenu": {

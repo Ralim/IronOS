@@ -100,7 +100,6 @@ def getConstants():
     consants.append(("SymbolWatts", "W"))
     consants.append(("SymbolVolts", "V"))
     consants.append(("SymbolDC", "DC"))
-    consants.append(("SymbolNA", "N/A"))
     consants.append(("SymbolCellCount", "S"))
     consants.append(("SymbolVersionNumber", buildVersion))
     return consants

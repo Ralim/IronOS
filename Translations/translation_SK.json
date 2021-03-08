@@ -46,7 +46,8 @@
 		"SettingSensitivityHigh": "V",
 		"SettingLockDisableChar": "Z",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "P"
+		"SettingLockFullChar": "P",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
 		"PowerMenu": {

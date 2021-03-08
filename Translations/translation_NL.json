@@ -46,7 +46,8 @@
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "L",
 		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H"
+		"SettingSensitivityHigh": "H",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
 		"PowerMenu": {
