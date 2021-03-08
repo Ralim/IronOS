@@ -160,11 +160,11 @@ static void gui_drawBatteryIcon() {
     uint32_t cellV     = getInputVoltageX10(systemSettings.voltageDiv, 0) / cellCount;
     // Should give us approx cell voltage X10
     // Range is 42 -> 33 = 9 steps therefore we will use battery 0-9
-    if (cellV < 33)
-      cellV = 33;
-    cellV -= 33; // Should leave us a number of 0-9
-    if (cellV > 9)
-      cellV = 9;
+    if (cellV < systemSettings.minVoltageCells)
+      cellV = systemSettings.minVoltageCells;
+    cellV -= systemSettings.minVoltageCells; // Should leave us a number of 0-9
+    if (cellV > (uint32_t)(42 - systemSettings.minVoltageCells))
+      cellV = 42 - systemSettings.minVoltageCells;
     OLED::drawBattery(cellV + 1);
   } else {
     OLED::drawSymbol(15); // Draw the DC Logo
