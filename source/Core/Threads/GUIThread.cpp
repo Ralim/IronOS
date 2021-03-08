@@ -163,8 +163,8 @@ static void gui_drawBatteryIcon() {
     if (cellV < systemSettings.minVoltageCells)
       cellV = systemSettings.minVoltageCells;
     cellV -= systemSettings.minVoltageCells; // Should leave us a number of 0-9
-    if (cellV > (uint32_t)(42 - systemSettings.minVoltageCells))
-      cellV = 42 - systemSettings.minVoltageCells;
+    if (cellV > 9)
+      cellV = 9;
     OLED::drawBattery(cellV + 1);
   } else {
     OLED::drawSymbol(15); // Draw the DC Logo
