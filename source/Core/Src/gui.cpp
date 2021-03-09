@@ -957,22 +957,26 @@ static void displayMenu(size_t index) {
   // Draw symbol
   // 16 pixel wide image
   // 2 pixel wide scrolling indicator
-  static TickType_t menuSwitchTick = 0;
+  static TickType_t menuSwitchLoopTick = 0;
   static size_t menuCurrentIndex = SIZE_MAX;
   if (!animOpenState) {
     if (menuCurrentIndex != index) {
-      menuCurrentIndex = index;
-      menuSwitchTick   = xTaskGetTickCount();
+      menuCurrentIndex   = index;
+      menuSwitchLoopTick = xTaskGetTickCount();
     }
-    if (xTaskGetTickCount() - menuSwitchTick < systemSettings.animationSpeed) {
+    if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed) {
+    loop:
       OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
       OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 0]));
-    } else if (xTaskGetTickCount() - menuSwitchTick < systemSettings.animationSpeed * 2) {
+    } else if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 2) {
       OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
       OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 1]));
-    } else { // TODO: loop animation
+    } else if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 3) {
       OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
       OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 2]));
+    } else {
+      menuSwitchLoopTick = xTaskGetTickCount();
+      goto loop;
     }
   }
 }
