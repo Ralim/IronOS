@@ -310,7 +310,7 @@ static bool settings_setInputVRange(void) {
   systemSettings.minDCVoltageCells = (systemSettings.minDCVoltageCells + 1) % 5;
   if (systemSettings.minDCVoltageCells == 1 && systemSettings.minVoltageCells < 30)
     systemSettings.minVoltageCells = 30;
-  return systemSettings.minDCVoltageCells == 5;
+  return systemSettings.minDCVoltageCells == 4;
 }
 
 static void settings_displayInputVRange(void) {
@@ -330,7 +330,7 @@ static bool settings_setInputMinVRange(void) {
     systemSettings.minVoltageCells = 30;
   else if(systemSettings.minVoltageCells < 24)
     systemSettings.minVoltageCells = 24;
-  return systemSettings.minVoltageCells == 38;
+  return systemSettings.minVoltageCells == 37;
 }
 
 static void settings_displayInputMinVRange(void) {

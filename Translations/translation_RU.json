@@ -7,7 +7,7 @@
 		"SettingsCalibrationWarning": "Прежде чем продолжить, пожалуйста, убедитесь, что жало имеет комнатную температуру!",
 		"SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
 		"UVLOWarningString": "НАПРЯЖ--",
-		"UndervoltageString": "Низкое\nнапряжение",
+		"UndervoltageString": "Низкое напряжение",
 		"InputVoltageString": "Питание В: ",
 		"WarningTipTempString": "Темп. жала: ",
 		"BadTipString": "ЖАЛО--",
