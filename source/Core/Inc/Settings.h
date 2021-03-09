@@ -10,7 +10,7 @@
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 #include <stdint.h>
-#define SETTINGSVERSION (0x26)
+#define SETTINGSVERSION (0x27)
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -29,6 +29,7 @@ typedef struct {
   uint8_t  QCIdealVoltage;      // Desired QC3.0 voltage (9,12,20V)
   uint8_t  OrientationMode : 2; // Selects between Auto,Right and left handed layouts
   uint8_t  sensitivity : 4;     // Sensitivity of accelerometer (5 bits)
+  uint16_t animationSpeed;      // Animation speed (in miliseconds)
   uint8_t  autoStartMode : 2;   // Should the unit automatically jump straight
                                 // into soldering mode when power is applied
   uint8_t ShutdownTime;         // Time until unit shuts down if left alone

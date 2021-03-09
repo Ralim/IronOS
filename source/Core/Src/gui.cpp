@@ -70,6 +70,8 @@ static void settings_displayTempChangeLongStep(void);
 static bool settings_setTempChangeLongStep(void);
 static void settings_displayPowerPulse(void);
 static bool settings_setPowerPulse(void);
+static void settings_displayAnimationSpeed(void);
+static bool settings_setAnimationSpeed(void);
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
@@ -213,6 +215,7 @@ const menuitem advancedMenu[] = {
      *  Calibrate Input V
      *  Reset Settings
      *  Power Pulse
+     *  Animation Speed
      */
     {(const char *)SettingsDescriptions[20], settings_setPowerLimit, settings_displayPowerLimit},                             /*Power limit*/
     {(const char *)SettingsDescriptions[6], settings_setAdvancedIDLEScreens, settings_displayAdvancedIDLEScreens},            /* Advanced idle screen*/
@@ -221,6 +224,7 @@ const menuitem advancedMenu[] = {
     {(const char *)SettingsDescriptions[11], settings_setCalibrate, settings_displayCalibrate},                               /*Calibrate tip*/
     {(const char *)SettingsDescriptions[13], settings_setCalibrateVIN, settings_displayCalibrateVIN},                         /*Voltage input cal*/
     {(const char *)SettingsDescriptions[24], settings_setPowerPulse, settings_displayPowerPulse},                             /*Power Pulse adjustment */
+    {(const char *)SettingsDescriptions[29], settings_setAnimationSpeed, settings_displayAnimationSpeed},                     /*Animation Speed adjustment */
     //{ (const char *) SettingsDescriptions[25], settings_setTipGain, settings_displayTipGain }, /*TipGain*/
     {NULL, NULL, NULL} // end of menu marker. DO NOT REMOVE
 };
@@ -894,6 +898,19 @@ static void settings_displayPowerPulse(void) {
     OLED::print(OffString);
   }
 }
+
+static bool settings_setAnimationSpeed(void) {
+  systemSettings.animationSpeed += 50;
+  systemSettings.animationSpeed = systemSettings.animationSpeed % 1000;
+  if (systemSettings.animationSpeed < 250)
+    systemSettings.animationSpeed = 250;
+  return systemSettings.animationSpeed == 950;
+}
+
+static void settings_displayAnimationSpeed(void) {
+  printShortDescription(29, 5);
+  OLED::printNumber(systemSettings.animationSpeed, 3, false);
+}
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
   printShortDescription(26, 7);
@@ -921,6 +938,9 @@ static bool settings_setHallEffect(void) {
   return systemSettings.hallEffectSensitivity == 3;
 }
 #endif
+
+static bool animOpenState = false;
+
 static void displayMenu(size_t index) {
   // Call into the menu
   const char *textPtr = SettingsMenuEntries[index];
@@ -939,19 +959,21 @@ static void displayMenu(size_t index) {
   // 2 pixel wide scrolling indicator
   static TickType_t menuSwitchTick = 0;
   static size_t menuCurrentIndex = SIZE_MAX;
-  if (menuCurrentIndex != index) {
-    menuCurrentIndex = index;
-    menuSwitchTick   = xTaskGetTickCount();
-  }
-  if (xTaskGetTickCount() - menuSwitchTick < 500) {
-    OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-    OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 0]));
-  } else if (xTaskGetTickCount() - menuSwitchTick < 500 * 2) {
-    OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-    OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 1]));
-  } else { // TODO: loop animation
-    OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-    OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 2]));
+  if (!animOpenState) {
+    if (menuCurrentIndex != index) {
+      menuCurrentIndex = index;
+      menuSwitchTick   = xTaskGetTickCount();
+    }
+    if (xTaskGetTickCount() - menuSwitchTick < systemSettings.animationSpeed) {
+      OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
+      OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 0]));
+    } else if (xTaskGetTickCount() - menuSwitchTick < systemSettings.animationSpeed * 2) {
+      OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
+      OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 1]));
+    } else { // TODO: loop animation
+      OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
+      OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 2]));
+    }
   }
 }
 
@@ -1008,6 +1030,7 @@ void gui_Menu(const menuitem *menu) {
     // Then we play a transition from the current primary
     // framebuffer to the new buffer.
     // The extra buffer is discarded at the end of the transition.
+    animOpenState = true;
     OLED::useSecondaryFramebuffer(true);
     OLED::setFont(0);
     OLED::setCursor(0, 0);
@@ -1015,6 +1038,7 @@ void gui_Menu(const menuitem *menu) {
     menu[currentScreen].draw();
     OLED::useSecondaryFramebuffer(false);
     OLED::transitionSecondaryFramebuffer(true);
+    animOpenState = false;
   }
 
   while ((menu[currentScreen].draw != NULL) && earlyExit == false) {

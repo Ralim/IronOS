@@ -289,6 +289,13 @@
 				"voltage"
 			],
 			"desc": "Minimum allowed voltage per cell"
+		},
+		"AnimSpeed": {
+			"text2": [
+				"Anim.",
+				"speed"
+			],
+			"desc": "Speed of icon animations in root menu <Miliseconds> <100 - 950 ms>"
 		}
 	}
 }
