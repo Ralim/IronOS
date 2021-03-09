@@ -308,6 +308,13 @@
 			],
 			"desc": "Minimum allowed voltage per cell"
 		},
+		"AnimLoop": {
+			"text2": [
+				"Anim.",
+				"loop"
+			],
+			"desc": "Loop icon animations in root menu <+ ON> <- OFF>"
+		},
 		"AnimSpeed": {
 			"text2": [
 				"Anim.",

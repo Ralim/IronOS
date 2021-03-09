@@ -72,6 +72,8 @@ static void settings_displayPowerPulse(void);
 static bool settings_setPowerPulse(void);
 static void settings_displayAnimationSpeed(void);
 static bool settings_setAnimationSpeed(void);
+static void settings_displayAnimationLoop(void);
+static bool settings_setAnimationLoop(void);
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
@@ -215,6 +217,7 @@ const menuitem advancedMenu[] = {
      *  Calibrate Input V
      *  Reset Settings
      *  Power Pulse
+     *  Animation Loop
      *  Animation Speed
      */
     {(const char *)SettingsDescriptions[20], settings_setPowerLimit, settings_displayPowerLimit},                             /*Power limit*/
@@ -224,7 +227,8 @@ const menuitem advancedMenu[] = {
     {(const char *)SettingsDescriptions[11], settings_setCalibrate, settings_displayCalibrate},                               /*Calibrate tip*/
     {(const char *)SettingsDescriptions[13], settings_setCalibrateVIN, settings_displayCalibrateVIN},                         /*Voltage input cal*/
     {(const char *)SettingsDescriptions[24], settings_setPowerPulse, settings_displayPowerPulse},                             /*Power Pulse adjustment */
-    {(const char *)SettingsDescriptions[29], settings_setAnimationSpeed, settings_displayAnimationSpeed},                     /*Animation Speed adjustment */
+    {(const char *)SettingsDescriptions[29], settings_setAnimationLoop, settings_displayAnimationLoop},                       /*Animation Loop switch */
+    {(const char *)SettingsDescriptions[30], settings_setAnimationSpeed, settings_displayAnimationSpeed},                     /*Animation Speed adjustment */
     //{ (const char *) SettingsDescriptions[25], settings_setTipGain, settings_displayTipGain }, /*TipGain*/
     {NULL, NULL, NULL} // end of menu marker. DO NOT REMOVE
 };
@@ -899,6 +903,17 @@ static void settings_displayPowerPulse(void) {
   }
 }
 
+static bool settings_setAnimationLoop(void) {
+  systemSettings.animationLoop++;
+  systemSettings.animationLoop = systemSettings.animationLoop % 2;
+  return systemSettings.animationLoop == 1;
+}
+
+static void settings_displayAnimationLoop(void) {
+  printShortDescription(29, 7);
+  OLED::print(systemSettings.animationLoop ? SymbolPlus : SymbolMinus);
+}
+
 static bool settings_setAnimationSpeed(void) {
   systemSettings.animationSpeed += 50;
   systemSettings.animationSpeed = systemSettings.animationSpeed % 1000;
@@ -908,7 +923,7 @@ static bool settings_setAnimationSpeed(void) {
 }
 
 static void settings_displayAnimationSpeed(void) {
-  printShortDescription(29, 5);
+  printShortDescription(30, 5);
   OLED::printNumber(systemSettings.animationSpeed, 3, false);
 }
 #ifdef HALL_SENSOR
@@ -958,7 +973,7 @@ static void displayMenu(size_t index) {
   // 16 pixel wide image
   // 2 pixel wide scrolling indicator
   static TickType_t menuSwitchLoopTick = 0;
-  static size_t menuCurrentIndex = SIZE_MAX;
+  static size_t     menuCurrentIndex   = SIZE_MAX;
   if (!animOpenState) {
     if (menuCurrentIndex != index) {
       menuCurrentIndex   = index;
@@ -971,12 +986,19 @@ static void displayMenu(size_t index) {
     } else if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 2) {
       OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
       OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 1]));
-    } else if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 3) {
-      OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-      OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 2]));
     } else {
-      menuSwitchLoopTick = xTaskGetTickCount();
-      goto loop;
+      if (systemSettings.animationLoop)
+        if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 3) {
+          OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
+          OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 2]));
+        } else {
+          menuSwitchLoopTick = xTaskGetTickCount();
+          goto loop;
+        }
+      else {
+        OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
+        OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * 2]));
+      }
     }
   }
 }
