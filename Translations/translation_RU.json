@@ -292,17 +292,17 @@
 		},
 		"AnimLoop": {
 			"text2": [
-				"Anim.",
-				"loop"
+				"Зацикленная",
+				"анимация"
 			],
-			"desc": "Loop icon animations in root menu <+ ON> <- OFF>"
+			"desc": "Зацикленная анимация иконок в главном меню <+ Вкл> <- Выкл>"
 		},
 		"AnimSpeed": {
 			"text2": [
-				"Anim.",
-				"speed"
+				"Скорость",
+				"анимации"
 			],
-			"desc": "Speed of icon animations in root menu <Miliseconds> <100 - 950 ms>"
+			"desc": "Скорость анимации иконок в главном меню <Милисекунды> <100 - 950 мс>"
 		}
 	}
 }
