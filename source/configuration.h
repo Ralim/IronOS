@@ -93,7 +93,7 @@
 #define TEMPERATURE_INF          0   // default to 0
 #define DESCRIPTION_SCROLL_SPEED 0   // 0: Slow 1: Fast - default to slow
 #define ANIMATION_LOOP           0   // 0: off 1: on
-#define ANIMATION_SPEED          500 // 250 - 950 ms
+#define ANIMATION_SPEED          500 // 0: off, 250 - 950 ms
 
 #define OP_AMP_Rf_TS100  750 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_TS100 2370       // 2.37 Kilo-ohms -> From schematic, R2

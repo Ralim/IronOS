@@ -302,7 +302,7 @@
 				"Anim.",
 				"speed"
 			],
-			"desc": "Speed of icon animations in root menu <Miliseconds> <100 - 950 ms>"
+			"desc": "Speed of icon animations in root menu <Miliseconds> <O - Off> <100 - 950 ms>"
 		}
 	}
 }

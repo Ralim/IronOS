@@ -916,14 +916,17 @@ static void settings_displayAnimationLoop(void) {
 static bool settings_setAnimationSpeed(void) {
   systemSettings.animationSpeed += 50;
   systemSettings.animationSpeed = systemSettings.animationSpeed % 1000;
-  if (systemSettings.animationSpeed < 250)
+  if (systemSettings.animationSpeed < 250 && systemSettings.animationSpeed != 0)
     systemSettings.animationSpeed = 250;
   return systemSettings.animationSpeed == 950;
 }
 
 static void settings_displayAnimationSpeed(void) {
-  printShortDescription(30, 5);
-  OLED::printNumber(systemSettings.animationSpeed, 3, false);
+  printShortDescription(30, systemSettings.animationSpeed ? 5 : 7);
+  if (systemSettings.animationSpeed)
+    OLED::printNumber(systemSettings.animationSpeed, 3, false);
+  else
+    OLED::print(SettingSensitivityOff);
 }
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
