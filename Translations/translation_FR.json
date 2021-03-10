@@ -285,10 +285,10 @@
 		},
 		"MinVolCell": {
 			"text2": [
-				"Minimum",
-				"voltage"
+				"Tension",
+				"minimale"
 			],
-			"desc": "Minimum allowed voltage per cell"
+			"desc": "Tension minimale autorisée par cellule"
 		}
 	}
 }
