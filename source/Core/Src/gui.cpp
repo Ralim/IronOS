@@ -189,6 +189,8 @@ const menuitem UIMenu[] = {
     {(const char *)SettingsDescriptions[10], settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                       /*Cooling blink warning*/
     {(const char *)SettingsDescriptions[15], settings_setScrollSpeed, settings_displayScrollSpeed},                                       /*Scroll Speed for descriptions*/
     {(const char *)SettingsDescriptions[21], settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled}, /* Reverse Temp change buttons + - */
+    {(const char *)SettingsDescriptions[30], settings_setAnimationSpeed, settings_displayAnimationSpeed},                                 /*Animation Speed adjustment */
+    {(const char *)SettingsDescriptions[29], settings_setAnimationLoop, settings_displayAnimationLoop},                                   /*Animation Loop switch */
     {NULL, NULL, NULL}                                                                                                                    // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
@@ -227,8 +229,6 @@ const menuitem advancedMenu[] = {
     {(const char *)SettingsDescriptions[11], settings_setCalibrate, settings_displayCalibrate},                               /*Calibrate tip*/
     {(const char *)SettingsDescriptions[13], settings_setCalibrateVIN, settings_displayCalibrateVIN},                         /*Voltage input cal*/
     {(const char *)SettingsDescriptions[24], settings_setPowerPulse, settings_displayPowerPulse},                             /*Power Pulse adjustment */
-    {(const char *)SettingsDescriptions[29], settings_setAnimationLoop, settings_displayAnimationLoop},                       /*Animation Loop switch */
-    {(const char *)SettingsDescriptions[30], settings_setAnimationSpeed, settings_displayAnimationSpeed},                     /*Animation Speed adjustment */
     //{ (const char *) SettingsDescriptions[25], settings_setTipGain, settings_displayTipGain }, /*TipGain*/
     {NULL, NULL, NULL} // end of menu marker. DO NOT REMOVE
 };
