@@ -983,9 +983,8 @@ static void displayMenu(size_t index) {
       currentFrame       = systemSettings.animationSpeed ? 0 : 2;
       menuSwitchLoopTick = xTaskGetTickCount();
     }
-    if (systemSettings.animationSpeed)
-      if (systemSettings.animationLoop || currentFrame != 2)
-        currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / systemSettings.animationSpeed) % 3;
+    if (systemSettings.animationSpeed && (systemSettings.animationLoop || currentFrame != 2))
+      currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / systemSettings.animationSpeed) % 3;
     OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
   }
 }
