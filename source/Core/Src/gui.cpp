@@ -976,25 +976,16 @@ static void displayMenu(size_t index) {
   // 2 pixel wide scrolling indicator
   static TickType_t menuSwitchLoopTick = 0;
   static size_t     menuCurrentIndex   = sizeof(rootSettingsMenu) + 1;
-  static uint8_t    currentFrame       = 0;
+  static size_t     currentFrame       = 0;
   if (!animOpenState) {
     if (menuCurrentIndex != index) {
       menuCurrentIndex   = index;
+      currentFrame       = systemSettings.animationSpeed ? 0 : 2;
       menuSwitchLoopTick = xTaskGetTickCount();
     }
-
-    if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed)
-      currentFrame = 0;
-    else if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 2)
-      currentFrame = 1;
-    else {
-      if (!systemSettings.animationLoop || (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 3))
-        currentFrame = 2;
-      else {
-        currentFrame       = 0;
-        menuSwitchLoopTick = xTaskGetTickCount();
-      }
-    }
+    if (systemSettings.animationSpeed)
+      if (systemSettings.animationLoop || currentFrame != 2)
+        currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / systemSettings.animationSpeed) % 3;
     OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
   }
 }
