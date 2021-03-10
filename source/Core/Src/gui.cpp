@@ -973,32 +973,27 @@ static void displayMenu(size_t index) {
   // 2 pixel wide scrolling indicator
   static TickType_t menuSwitchLoopTick = 0;
   static size_t     menuCurrentIndex   = sizeof(rootSettingsMenu) + 1;
+  static uint8_t    currentFrame       = 0;
   if (!animOpenState) {
     if (menuCurrentIndex != index) {
       menuCurrentIndex   = index;
       menuSwitchLoopTick = xTaskGetTickCount();
     }
-    if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed) {
-    loop:
-      OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-      OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, OLED_HEIGHT, (&SettingsMenuIcons[index][(16 * 2) * 0]));
-    } else if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 2) {
-      OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-      OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, OLED_HEIGHT, (&SettingsMenuIcons[index][(16 * 2) * 1]));
-    } else {
-      if (systemSettings.animationLoop)
-        if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 3) {
-          OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-          OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, OLED_HEIGHT, (&SettingsMenuIcons[index][(16 * 2) * 2]));
-        } else {
-          menuSwitchLoopTick = xTaskGetTickCount();
-          goto loop;
-        }
+
+    if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed)
+      currentFrame = 0;
+    else if (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 2)
+      currentFrame = 1;
+    else {
+      if (!systemSettings.animationLoop || (xTaskGetTickCount() - menuSwitchLoopTick < systemSettings.animationSpeed * 3))
+        currentFrame = 2;
       else {
-        OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-        OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, OLED_HEIGHT, (&SettingsMenuIcons[index][(16 * 2) * 2]));
+        currentFrame       = 0;
+        menuSwitchLoopTick = xTaskGetTickCount();
       }
     }
+    OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
+    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, OLED_HEIGHT, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
   }
 }
 
