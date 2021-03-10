@@ -295,7 +295,7 @@
 				"Anim.",
 				"loop"
 			],
-			"desc": "Loop icon animations in root menu <+ ON> <- OFF>"
+			"desc": "Loop icon animations in root menu"
 		},
 		"AnimSpeed": {
 			"text2": [

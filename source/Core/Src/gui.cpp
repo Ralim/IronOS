@@ -904,14 +904,13 @@ static void settings_displayPowerPulse(void) {
 }
 
 static bool settings_setAnimationLoop(void) {
-  systemSettings.animationLoop++;
-  systemSettings.animationLoop = systemSettings.animationLoop % 2;
-  return systemSettings.animationLoop == 1;
+  systemSettings.animationLoop = !systemSettings.animationLoop;
+  return false;
 }
 
 static void settings_displayAnimationLoop(void) {
   printShortDescription(29, 7);
-  OLED::print(systemSettings.animationLoop ? SymbolPlus : SymbolMinus);
+  OLED::drawCheckbox(systemSettings.animationLoop);
 }
 
 static bool settings_setAnimationSpeed(void) {
