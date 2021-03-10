@@ -995,8 +995,7 @@ static void displayMenu(size_t index) {
         menuSwitchLoopTick = xTaskGetTickCount();
       }
     }
-    OLED::drawFilledRect(OLED_WIDTH - 16 - 2, 0, OLED_WIDTH - 2, OLED_HEIGHT, true);
-    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, OLED_HEIGHT, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
+    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
   }
 }
 
