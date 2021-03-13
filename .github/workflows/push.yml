@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build_TS80:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
@@ -45,7 +45,7 @@ jobs:
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
   build_TS80P:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
@@ -86,7 +86,7 @@ jobs:
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
   build_TS100:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
@@ -128,7 +128,7 @@ jobs:
           if-no-files-found: error
 
   build_Pinecil:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
