@@ -14,8 +14,8 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
-static TickType_t powerPulseRate        = 10000;
-static TickType_t powerPulseDuration    = 250;
+static TickType_t powerPulseRate        = 10*TICKS_SECOND;
+static TickType_t powerPulseDuration    = 3*TICKS_100MS;
 TaskHandle_t      pidTaskNotification   = NULL;
 uint32_t          currentTempTargetDegC = 0; // Current temperature target in C
 

@@ -162,7 +162,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
   uint8_t *firstBackStripPtr  = &secondFrameBuffer[0];
   uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
 
-  uint32_t totalDuration = 50; // 500ms
+  uint32_t totalDuration = TICKS_100MS*5; // 500ms
   uint32_t duration      = 0;
   uint32_t start         = xTaskGetTickCount();
   uint8_t  offset        = 0;

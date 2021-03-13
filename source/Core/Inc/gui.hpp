@@ -11,9 +11,9 @@
 #include "Settings.h"
 #include "Translation.h"
 
-#define PRESS_ACCEL_STEP         30
-#define PRESS_ACCEL_INTERVAL_MIN 100
-#define PRESS_ACCEL_INTERVAL_MAX 300
+#define PRESS_ACCEL_STEP         (TICKS_100MS / 3)
+#define PRESS_ACCEL_INTERVAL_MIN TICKS_100MS
+#define PRESS_ACCEL_INTERVAL_MAX (TICKS_100MS * 3)
 
 // GUI holds the menu structure and all its methods for the menu itself
 

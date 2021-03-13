@@ -126,34 +126,34 @@ static bool settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[]{
-/*
- * Power Menu
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
-    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},         /*Power*/
-    {(const char *)NULL, settings_enterSolderingMenu, settings_displaySolderingMenu}, /*Soldering*/
-    {(const char *)NULL, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu},         /*Sleep Options Menu*/
-    {(const char *)NULL, settings_enterUIMenu, settings_displayUIMenu},               /*UI Menu*/
-    {(const char *)NULL, settings_enterAdvancedMenu, settings_displayAdvancedMenu},   /*Advanced Menu*/
-    {NULL, NULL, NULL}                                                                // end of menu marker. DO NOT REMOVE
+    /*
+     * Power Menu
+     * Soldering Menu
+     * Power Saving Menu
+     * UI Menu
+     * Advanced Menu
+     * Exit
+     */
+    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},             /*Power*/
+    {(const char *)NULL, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
+    {(const char *)NULL, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
+    {(const char *)NULL, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
+    {(const char *)NULL, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+    {NULL, NULL, NULL}                                                                    // end of menu marker. DO NOT REMOVE
 };
 
 const menuitem powerMenu[] = {
-    /*
-    * Power Source
-     */
+/*
+ * Power Source
+ */
 #ifdef POW_DC
-    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange},          /*Voltage input*/
-    {(const char *)SettingsDescriptions[28], settings_setInputMinVRange, settings_displayInputMinVRange},   /*Minimum voltage input*/
+    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange},        /*Voltage input*/
+    {(const char *)SettingsDescriptions[28], settings_setInputMinVRange, settings_displayInputMinVRange}, /*Minimum voltage input*/
 #endif
 #ifdef POW_QC
-    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV},               /*Voltage input*/
+    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
 #endif
-    {NULL, NULL, NULL}                                                                                              // end of menu marker. DO NOT REMOVE
+    {NULL, NULL, NULL} // end of menu marker. DO NOT REMOVE
 };
 const menuitem solderingMenu[] = {
     /*
@@ -268,7 +268,7 @@ static int userConfirmation(const char *message) {
   bool    lcdRefresh = true;
 
   for (;;) {
-    int16_t messageOffset = ((xTaskGetTickCount() - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? 10 : 20));
+    int16_t messageOffset = ((xTaskGetTickCount() - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS : (TICKS_100MS * 2)));
     messageOffset %= messageWidth; // Roll around at the end
 
     if (lastOffset != messageOffset) {
@@ -328,7 +328,7 @@ static bool settings_setInputMinVRange(void) {
   systemSettings.minVoltageCells = (systemSettings.minVoltageCells + 1) % 38;
   if (systemSettings.minDCVoltageCells == 1 && systemSettings.minVoltageCells < 30)
     systemSettings.minVoltageCells = 30;
-  else if(systemSettings.minVoltageCells < 24)
+  else if (systemSettings.minVoltageCells < 24)
     systemSettings.minVoltageCells = 24;
   return systemSettings.minVoltageCells == 37;
 }
@@ -1007,7 +1007,7 @@ void gui_Menu(const menuitem *menu) {
     OLED::setCursor(0, 0);
     // If the user has hesitated for >=3 seconds, show the long text
     // Otherwise "draw" the option
-    if ((xTaskGetTickCount() - lastButtonTime < 3000) || menu[currentScreen].description == NULL) {
+    if ((xTaskGetTickCount() - lastButtonTime < (TICKS_SECOND * 3)) || menu[currentScreen].description == NULL) {
       OLED::clearScreen();
       menu[currentScreen].draw();
       uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
@@ -1024,7 +1024,7 @@ void gui_Menu(const menuitem *menu) {
         descriptionStart = xTaskGetTickCount();
       // lower the value - higher the speed
       int16_t descriptionWidth  = FONT_12_WIDTH * (strlen(menu[currentScreen].description) + 7);
-      int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? 10 : 20));
+      int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS : (TICKS_100MS * 2)));
       descriptionOffset %= descriptionWidth; // Roll around at the end
       if (lastOffset != descriptionOffset) {
         OLED::clearScreen();
@@ -1078,7 +1078,7 @@ void gui_Menu(const menuitem *menu) {
         descriptionStart = 0;
       break;
     case BUTTON_F_LONG:
-      if ((int)(xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
+      if ((xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
         if ((lastValue = menu[currentScreen].incrementHandler()))
           autoRepeatTimer = 1000;
         else
@@ -1114,7 +1114,7 @@ void gui_Menu(const menuitem *menu) {
       osDelay(40);
       lcdRefresh = false;
     }
-    if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
+    if ((xTaskGetTickCount() - lastButtonTime) > (TICKS_SECOND * 30)) {
       // If user has not pressed any buttons in 30 seconds, exit back a menu layer
       // This will trickle the user back to the main screen eventually
       earlyExit        = true;
