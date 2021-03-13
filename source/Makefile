@@ -319,7 +319,7 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@echo 'Building file: $<'
 	@$(AS) -c $(AFLAGS) $< -o $@
 
-Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Translations/make_translation.py ../Translations/translations_commons.js
+Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Translations/make_translation.py ../Translations/translations_commons.js ../Translations/fontTables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Generating translations for language $*'
 	@python3 ../Translations/make_translation.py -o $(PWD)/$@ $*

@@ -43,9 +43,17 @@
 		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
+		"SettingLockFullChar": "F",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Lehimleme",
@@ -292,6 +300,13 @@
 				"locking"
 			],
 			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

@@ -47,9 +47,17 @@
 		"SettingSensitivityHigh": "高",
 		"SettingLockDisableChar": "無",
 		"SettingLockBoostChar": "增",
-		"SettingLockFullChar": "全"
+		"SettingLockFullChar": "全",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"",
@@ -275,6 +283,13 @@
 				"撳掣鎖定"
 			],
 			"desc": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <無=停用 | 增=只鎖定增熱模式 | 全=鎖定全部>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

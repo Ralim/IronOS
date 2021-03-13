@@ -14,7 +14,7 @@
 		"BadTipString": "Spitze Defekt",
 		"SleepingSimpleString": "Zzz ",
 		"SleepingAdvancedString": "Ruhemodus...",
-		"WarningSimpleString": "HEIß!",
+		"WarningSimpleString": "HEISS!",
 		"WarningAdvancedString": "! Achtung Heiß !",
 		"SleepingTipAdvancedString": "Temp:",
 		"IdleTipString": "Ist:",
@@ -47,9 +47,17 @@
 		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "V"
+		"SettingLockFullChar": "V",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Löt-",
@@ -99,14 +107,14 @@
 				"Ruhever-",
 				"zögerung"
 			],
-			"desc": "System wechselt in Ruhemodus, wenn innerhalb dieser Dauer nicht bewegt <S=Sekunden | M=Minuten>"
+			"desc": "Dauer vor Übergang in den Ruhemodus <S=Sekunden | M=Minuten>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Abschalt-",
 				"zeit"
 			],
-			"desc": "System schaltet ab, wenn innerhalb dieser Dauer nicht bewegt <M=Minuten>"
+			"desc": "Dauer vor automatischer Abschaltung <M=Minuten>"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -148,7 +156,7 @@
 				"Start im",
 				"Lötmodus"
 			],
-			"desc": "Bestimmt das Heizverhalten beim Einschalten der Spannungsversorgung <A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit klater Spitze>"
+			"desc": "Heizverhalten beim Einschalten der Spannungsversorgung <A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze>"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -169,14 +177,14 @@
 				"Einstellungen",
 				"zurücksetzen?"
 			],
-			"desc": "Werte werden auf Werkseinstellungen zurückgesetzt!"
+			"desc": "Werte auf Werkseinstellungen zurücksetzen"
 		},
 		"VoltageCalibration": {
 			"text2": [
 				"Eingangsspannung",
 				"kalibrieren?"
 			],
-			"desc": "Kalibrierung der Eingangsspannung. Kurzer Tastendruck zum Einstellen, langer Tastendruck zum Verlassen."
+			"desc": "Kalibrierung der Eingangsspannung <Langer Tastendruck zum Verlassen>"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -204,14 +212,14 @@
 				"Einfache",
 				"Kalibrierung"
 			],
-			"desc": "Einfache Kalibrierung mittels heißen Wassers"
+			"desc": "Einfache Kalibrierung mit heißem Wasser"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
 				"Erweiterte",
 				"Kalibrierung"
 			],
-			"desc": "Erweiterte Kalibrierung mittels eines Thermoelements an der Lötspitze"
+			"desc": "Erweiterte Kalibrierung mit Thermoelement an der Lötspitze"
 		},
 		"QCMaxVoltage": {
 			"text2": [
@@ -253,28 +261,35 @@
 				"Leistungs-",
 				"impuls"
 			],
-			"desc": "Powerbank wird mittels eines Impulses wach gehalten <Watt>"
+			"desc": "Powerbank mit einem Impuls wach halten <Watt>"
 		},
 		"TipGain": {
 			"text2": [
 				"Ändere",
-				"Spitzen Faktor"
+				"Spitzen-Faktor"
 			],
-			"desc": "Spitzen Faktor"
+			"desc": "Spitzen-Faktor"
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Sensor",
+				"Hall-Sonde",
 				"Empfindlichkeit"
 			],
-			"desc": "Empfindlichkeit des Hall Effekt Sensors beim Erkennen des Ruhemodus <A=aus | N=niedrig | M=mittel | H=hoch>"
+			"desc": "Empfindlichkeit der Hall-Sonde beim Erkennen des Ruhemodus <A=aus | N=niedrig | M=mittel | H=hoch>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Knopf-",
+				"Tasten-",
 				"sperre"
 			],
-			"desc": "Langes drücken beider Knöpfe im Lötmodus, sperrt diese <D=deaktiviert | B=nur Boost | V=vollständig gesperrt>"
+			"desc": "Langes drücken beider Tasten im Lötmodus sperrt diese <D=deaktiviert | B=nur Boost | V=vollständig>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell"
 		}
 	}
 }

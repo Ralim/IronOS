@@ -88,9 +88,10 @@
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
-#define CUT_OUT_SETTING          0 // default to no cut-off voltage
-#define TEMPERATURE_INF          0 // default to 0
-#define DESCRIPTION_SCROLL_SPEED 0 // 0: Slow 1: Fast - default to slow
+#define CUT_OUT_SETTING          0  // default to no cut-off voltage
+#define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
+#define TEMPERATURE_INF          0  // default to 0
+#define DESCRIPTION_SCROLL_SPEED 0  // 0: Slow 1: Fast - default to slow
 
 #define OP_AMP_Rf_TS100  750 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_TS100 2370       // 2.37 Kilo-ohms -> From schematic, R2

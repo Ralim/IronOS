@@ -173,7 +173,8 @@ var def =
 		{
 			"id": "SettingSensitivityHigh",
 			"len": 1
-		}, {
+		},
+		{
 			"id": "SettingLockDisableChar",
 			"len": 1,
 			"default": "D"
@@ -187,9 +188,18 @@ var def =
 			"id": "SettingLockFullChar",
 			"len": 1,
 			"default": "F"
+		},
+		{
+			"id": "SettingNAChar",
+			"len": 3,
+			"default": "N/A"
 		}
 	],
 	"menuGroups": [
+		{
+			"id": "PowerMenu",
+			"maxLen": 11
+		},
 		{
 			"id": "SolderingMenu",
 			"maxLen": 11
@@ -342,10 +352,16 @@ var def =
 			"id": "HallEffSensitivity",
 			"maxLen": 6,
 			"maxLen2": 8
-		}, {
+		},
+		{
 			"id": "LockingMode",
 			"maxLen": 6,
 			"maxLen2": 13
+		},
+		{
+			"id": "MinVolCell",
+			"maxLen": 4,
+			"maxLen2": 9
 		}
 	]
 }

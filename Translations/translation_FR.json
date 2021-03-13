@@ -46,9 +46,17 @@
 		"SettingSensitivityHigh": "H",
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "V"
+		"SettingLockFullChar": "V",
+		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
 		"SolderingMenu": {
 			"text2": [
 				"Paramètres",
@@ -274,6 +282,13 @@
 				"capteur effet hall"
 			],
 			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <D=désactivé | B=basse | M=moyenne | H=haute>"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Tension",
+				"minimale"
+			],
+			"desc": "Tension minimale autorisée par cellule"
 		}
 	}
 }
