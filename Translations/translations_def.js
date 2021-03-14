@@ -370,8 +370,8 @@ var def =
 		},
 		{
 			"id": "AnimSpeed",
-			"maxLen": 4,
-			"maxLen2": 9
+			"maxLen": 6,
+			"maxLen2": 13
 		}
 	]
 }

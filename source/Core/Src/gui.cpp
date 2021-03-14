@@ -914,19 +914,39 @@ static void settings_displayAnimationLoop(void) {
 }
 
 static bool settings_setAnimationSpeed(void) {
-  systemSettings.animationSpeed += 50;
-  systemSettings.animationSpeed = systemSettings.animationSpeed % 1000;
-  if (systemSettings.animationSpeed < 250 && systemSettings.animationSpeed != 0)
-    systemSettings.animationSpeed = 250;
-  return systemSettings.animationSpeed == 950;
+  switch (systemSettings.animationSpeed) {
+  case 0:
+    systemSettings.animationSpeed = TICKS_100MS * 5;
+    break;
+  case TICKS_100MS * 5:
+    systemSettings.animationSpeed = TICKS_100MS * 4;
+    break;
+  case TICKS_100MS * 4:
+    systemSettings.animationSpeed = TICKS_100MS * 3;
+    break;
+  default:
+    systemSettings.animationSpeed = 0;
+    break;
+  }
+  return systemSettings.animationSpeed == 300;
 }
 
 static void settings_displayAnimationSpeed(void) {
-  printShortDescription(30, systemSettings.animationSpeed ? 5 : 7);
-  if (systemSettings.animationSpeed)
-    OLED::printNumber(systemSettings.animationSpeed, 3, false);
-  else
+  printShortDescription(30, 7);
+  switch (systemSettings.animationSpeed) {
+  case TICKS_100MS * 5:
+    OLED::print(SettingSensitivityLow);
+    break;
+  case TICKS_100MS * 4:
+    OLED::print(SettingSensitivityMedium);
+    break;
+  case TICKS_100MS * 3:
+    OLED::print(SettingSensitivityHigh);
+    break;
+  default:
     OLED::print(SettingSensitivityOff);
+    break;
+  }
 }
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
