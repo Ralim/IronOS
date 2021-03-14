@@ -306,7 +306,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell"
+			"desc": "Minimum allowed voltage per cell <Volts> <3S — 3.0V - 3.7V, 4/5/6S — 2.4V - 3.7V>"
 		}
 	}
 }
