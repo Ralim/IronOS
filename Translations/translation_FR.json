@@ -288,7 +288,7 @@
 				"Tension",
 				"minimale"
 			],
-			"desc": "Tension minimale autorisée par cellule"
+			"desc": "Tension minimale autorisée par cellule <Volts> <3S — 3.0V - 3.7V, 4/5/6S — 2.4V - 3.7V>"
 		}
 	}
 }
