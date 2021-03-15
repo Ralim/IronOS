@@ -276,7 +276,7 @@ static int userConfirmation(const char *message) {
   bool    lcdRefresh = true;
 
   for (;;) {
-    int16_t messageOffset = ((xTaskGetTickCount() - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS : (TICKS_100MS * 2)));
+    int16_t messageOffset = ((xTaskGetTickCount() - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS / 10 : (TICKS_100MS / 5)));
     messageOffset %= messageWidth; // Roll around at the end
 
     if (lastOffset != messageOffset) {
