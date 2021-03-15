@@ -130,34 +130,34 @@ static bool settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[]{
-/*
- * Power Menu
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
-    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},         /*Power*/
-    {(const char *)NULL, settings_enterSolderingMenu, settings_displaySolderingMenu}, /*Soldering*/
-    {(const char *)NULL, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu},         /*Sleep Options Menu*/
-    {(const char *)NULL, settings_enterUIMenu, settings_displayUIMenu},               /*UI Menu*/
-    {(const char *)NULL, settings_enterAdvancedMenu, settings_displayAdvancedMenu},   /*Advanced Menu*/
-    {NULL, NULL, NULL}                                                                // end of menu marker. DO NOT REMOVE
+    /*
+     * Power Menu
+     * Soldering Menu
+     * Power Saving Menu
+     * UI Menu
+     * Advanced Menu
+     * Exit
+     */
+    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},             /*Power*/
+    {(const char *)NULL, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
+    {(const char *)NULL, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
+    {(const char *)NULL, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
+    {(const char *)NULL, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+    {NULL, NULL, NULL}                                                                    // end of menu marker. DO NOT REMOVE
 };
 
 const menuitem powerMenu[] = {
-    /*
-    * Power Source
-     */
+/*
+ * Power Source
+ */
 #ifdef POW_DC
-    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange},          /*Voltage input*/
-    {(const char *)SettingsDescriptions[28], settings_setInputMinVRange, settings_displayInputMinVRange},   /*Minimum voltage input*/
+    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange},        /*Voltage input*/
+    {(const char *)SettingsDescriptions[28], settings_setInputMinVRange, settings_displayInputMinVRange}, /*Minimum voltage input*/
 #endif
 #ifdef POW_QC
-    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV},               /*Voltage input*/
+    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
 #endif
-    {NULL, NULL, NULL}                                                                                              // end of menu marker. DO NOT REMOVE
+    {NULL, NULL, NULL} // end of menu marker. DO NOT REMOVE
 };
 const menuitem solderingMenu[] = {
     /*
@@ -336,7 +336,7 @@ static bool settings_setInputMinVRange(void) {
   systemSettings.minVoltageCells = (systemSettings.minVoltageCells + 1) % 38;
   if (systemSettings.minDCVoltageCells == 1 && systemSettings.minVoltageCells < 30)
     systemSettings.minVoltageCells = 30;
-  else if(systemSettings.minVoltageCells < 24)
+  else if (systemSettings.minVoltageCells < 24)
     systemSettings.minVoltageCells = 24;
   return systemSettings.minVoltageCells == 37;
 }

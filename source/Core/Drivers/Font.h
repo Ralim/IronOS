@@ -149,7 +149,7 @@ const uint8_t disconnectedTipIcon[] = {
  * 16x16 icons
  * 32 * 3 = Frame size * Frame count
  * */
-const uint8_t SettingsMenuIcons[][32*3] = {
+const uint8_t SettingsMenuIcons[][32 * 3] = {
 
     // Power
     // 3 frames
