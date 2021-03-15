@@ -37,6 +37,7 @@
 		"SettingAutoChar": "A",
 		"SettingFastChar": "S",
 		"SettingSlowChar": "W",
+		"SettingMediumChar": "M",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "O",
@@ -303,7 +304,7 @@
 				"Anim.",
 				"speed"
 			],
-			"desc": "Speed of icon animations in root menu <Miliseconds> <O=off | L=low | M=medium | H=high>"
+			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
 		}
 	}
 }

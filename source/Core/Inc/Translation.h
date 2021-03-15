@@ -44,8 +44,6 @@ extern const char *LockingKeysString;
 extern const char *UnlockingKeysString;
 extern const char *WarningKeysLockedString;
 
-extern const char *SettingTrueChar;
-extern const char *SettingFalseChar;
 extern const char *SettingRightChar;
 extern const char *SettingLeftChar;
 extern const char *SettingAutoChar;
@@ -63,6 +61,7 @@ extern const char *SettingLockFullChar;
 extern const char *SettingNAChar;
 
 extern const char *SettingFastChar;
+extern const char *SettingMediumChar;
 extern const char *SettingSlowChar;
 extern const char *TipModelStrings[];
 extern const char *DebugMenu[];
