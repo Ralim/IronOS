@@ -914,33 +914,21 @@ static void settings_displayAnimationLoop(void) {
 }
 
 static bool settings_setAnimationSpeed(void) {
-  switch (systemSettings.animationSpeed) {
-  case 0:
-    systemSettings.animationSpeed = TICKS_100MS * 5;
-    break;
-  case TICKS_100MS * 5:
-    systemSettings.animationSpeed = TICKS_100MS * 4;
-    break;
-  case TICKS_100MS * 4:
-    systemSettings.animationSpeed = TICKS_100MS * 3;
-    break;
-  default:
-    systemSettings.animationSpeed = 0;
-    break;
-  }
-  return systemSettings.animationSpeed == TICKS_100MS * 3;
+  systemSettings.animationSpeed++;
+  systemSettings.animationSpeed %= settingOffSpeed_t::MAX_VALUE;
+  return systemSettings.animationSpeed == (uint8_t)settingOffSpeed_t::FAST;
 }
 
 static void settings_displayAnimationSpeed(void) {
   printShortDescription(30, 7);
   switch (systemSettings.animationSpeed) {
-  case TICKS_100MS * 5:
+  case settingOffSpeed_t::SLOW:
     OLED::print(SettingSensitivityLow);
     break;
-  case TICKS_100MS * 4:
+  case settingOffSpeed_t::MEDIUM:
     OLED::print(SettingSensitivityMedium);
     break;
-  case TICKS_100MS * 3:
+  case settingOffSpeed_t::FAST:
     OLED::print(SettingSensitivityHigh);
     break;
   default:
@@ -997,14 +985,26 @@ static void displayMenu(size_t index) {
   static TickType_t menuSwitchLoopTick = 0;
   static size_t     menuCurrentIndex   = sizeof(rootSettingsMenu) + 1;
   static size_t     currentFrame       = 0;
+  TickType_t        step               = TICKS_100MS * 5;
+  switch (systemSettings.animationSpeed) {
+  case settingOffSpeed_t::FAST:
+    step = TICKS_100MS * 3;
+    break;
+  case settingOffSpeed_t::MEDIUM:
+    step = TICKS_100MS * 4;
+    break;
+  default: // SLOW or off - default
+    break;
+  }
   if (!animOpenState) {
     if (menuCurrentIndex != index) {
       menuCurrentIndex   = index;
-      currentFrame       = systemSettings.animationSpeed ? 0 : 2;
+      currentFrame       = systemSettings.animationSpeed == settingOffSpeed_t::OFF ? 2 : 0;
       menuSwitchLoopTick = xTaskGetTickCount();
     }
-    if (systemSettings.animationSpeed && (systemSettings.animationLoop || currentFrame != 2))
-      currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / systemSettings.animationSpeed) % 3;
+    if (systemSettings.animationSpeed && (systemSettings.animationLoop || currentFrame != 2)) {
+      currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / step) % 3;
+    }
     OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
   }
 }
