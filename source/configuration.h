@@ -1,5 +1,6 @@
 #pragma once
 #include "Model_Config.h"
+#include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h
@@ -93,7 +94,7 @@
 #define TEMPERATURE_INF          0   // default to 0
 #define DESCRIPTION_SCROLL_SPEED 0   // 0: Slow 1: Fast - default to slow
 #define ANIMATION_LOOP           0   // 0: off 1: on
-#define ANIMATION_SPEED          400 // 0: off, 300: High, 400: Medium, 500: Low
+#define ANIMATION_SPEED          settingOffSpeed_t::MEDIUM 
 
 #define OP_AMP_Rf_TS100  750 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_TS100 2370       // 2.37 Kilo-ohms -> From schematic, R2
