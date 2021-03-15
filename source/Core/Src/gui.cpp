@@ -70,6 +70,10 @@ static void settings_displayTempChangeLongStep(void);
 static bool settings_setTempChangeLongStep(void);
 static void settings_displayPowerPulse(void);
 static bool settings_setPowerPulse(void);
+static void settings_displayAnimationSpeed(void);
+static bool settings_setAnimationSpeed(void);
+static void settings_displayAnimationLoop(void);
+static bool settings_setAnimationLoop(void);
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
@@ -126,34 +130,34 @@ static bool settings_enterAdvancedMenu(void);
  *
  */
 const menuitem rootSettingsMenu[]{
-/*
- * Power Menu
- * Soldering Menu
- * Power Saving Menu
- * UI Menu
- * Advanced Menu
- * Exit
- */
-    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},         /*Power*/
-    {(const char *)NULL, settings_enterSolderingMenu, settings_displaySolderingMenu}, /*Soldering*/
-    {(const char *)NULL, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu},         /*Sleep Options Menu*/
-    {(const char *)NULL, settings_enterUIMenu, settings_displayUIMenu},               /*UI Menu*/
-    {(const char *)NULL, settings_enterAdvancedMenu, settings_displayAdvancedMenu},   /*Advanced Menu*/
-    {NULL, NULL, NULL}                                                                // end of menu marker. DO NOT REMOVE
+    /*
+     * Power Menu
+     * Soldering Menu
+     * Power Saving Menu
+     * UI Menu
+     * Advanced Menu
+     * Exit
+     */
+    {(const char *)NULL, settings_enterPowerMenu, settings_displayPowerMenu},             /*Power*/
+    {(const char *)NULL, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
+    {(const char *)NULL, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
+    {(const char *)NULL, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
+    {(const char *)NULL, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+    {NULL, NULL, NULL}                                                                    // end of menu marker. DO NOT REMOVE
 };
 
 const menuitem powerMenu[] = {
-    /*
-    * Power Source
-     */
+/*
+ * Power Source
+ */
 #ifdef POW_DC
-    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange},          /*Voltage input*/
-    {(const char *)SettingsDescriptions[28], settings_setInputMinVRange, settings_displayInputMinVRange},   /*Minimum voltage input*/
+    {(const char *)SettingsDescriptions[0], settings_setInputVRange, settings_displayInputVRange},        /*Voltage input*/
+    {(const char *)SettingsDescriptions[28], settings_setInputMinVRange, settings_displayInputMinVRange}, /*Minimum voltage input*/
 #endif
 #ifdef POW_QC
-    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV},               /*Voltage input*/
+    {(const char *)SettingsDescriptions[19], settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
 #endif
-    {NULL, NULL, NULL}                                                                                              // end of menu marker. DO NOT REMOVE
+    {NULL, NULL, NULL} // end of menu marker. DO NOT REMOVE
 };
 const menuitem solderingMenu[] = {
     /*
@@ -185,6 +189,8 @@ const menuitem UIMenu[] = {
     {(const char *)SettingsDescriptions[10], settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                       /*Cooling blink warning*/
     {(const char *)SettingsDescriptions[15], settings_setScrollSpeed, settings_displayScrollSpeed},                                       /*Scroll Speed for descriptions*/
     {(const char *)SettingsDescriptions[21], settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled}, /* Reverse Temp change buttons + - */
+    {(const char *)SettingsDescriptions[30], settings_setAnimationSpeed, settings_displayAnimationSpeed},                                 /*Animation Speed adjustment */
+    {(const char *)SettingsDescriptions[29], settings_setAnimationLoop, settings_displayAnimationLoop},                                   /*Animation Loop switch */
     {NULL, NULL, NULL}                                                                                                                    // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
@@ -213,6 +219,8 @@ const menuitem advancedMenu[] = {
      *  Calibrate Input V
      *  Reset Settings
      *  Power Pulse
+     *  Animation Loop
+     *  Animation Speed
      */
     {(const char *)SettingsDescriptions[20], settings_setPowerLimit, settings_displayPowerLimit},                             /*Power limit*/
     {(const char *)SettingsDescriptions[6], settings_setAdvancedIDLEScreens, settings_displayAdvancedIDLEScreens},            /* Advanced idle screen*/
@@ -328,7 +336,7 @@ static bool settings_setInputMinVRange(void) {
   systemSettings.minVoltageCells = (systemSettings.minVoltageCells + 1) % 38;
   if (systemSettings.minDCVoltageCells == 1 && systemSettings.minVoltageCells < 30)
     systemSettings.minVoltageCells = 30;
-  else if(systemSettings.minVoltageCells < 24)
+  else if (systemSettings.minVoltageCells < 24)
     systemSettings.minVoltageCells = 24;
   return systemSettings.minVoltageCells == 37;
 }
@@ -894,6 +902,52 @@ static void settings_displayPowerPulse(void) {
     OLED::print(OffString);
   }
 }
+
+static bool settings_setAnimationLoop(void) {
+  systemSettings.animationLoop = !systemSettings.animationLoop;
+  return false;
+}
+
+static void settings_displayAnimationLoop(void) {
+  printShortDescription(29, 7);
+  OLED::drawCheckbox(systemSettings.animationLoop);
+}
+
+static bool settings_setAnimationSpeed(void) {
+  switch (systemSettings.animationSpeed) {
+  case 0:
+    systemSettings.animationSpeed = TICKS_100MS * 5;
+    break;
+  case TICKS_100MS * 5:
+    systemSettings.animationSpeed = TICKS_100MS * 4;
+    break;
+  case TICKS_100MS * 4:
+    systemSettings.animationSpeed = TICKS_100MS * 3;
+    break;
+  default:
+    systemSettings.animationSpeed = 0;
+    break;
+  }
+  return systemSettings.animationSpeed == TICKS_100MS * 3;
+}
+
+static void settings_displayAnimationSpeed(void) {
+  printShortDescription(30, 7);
+  switch (systemSettings.animationSpeed) {
+  case TICKS_100MS * 5:
+    OLED::print(SettingSensitivityLow);
+    break;
+  case TICKS_100MS * 4:
+    OLED::print(SettingSensitivityMedium);
+    break;
+  case TICKS_100MS * 3:
+    OLED::print(SettingSensitivityHigh);
+    break;
+  default:
+    OLED::print(SettingSensitivityOff);
+    break;
+  }
+}
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
   printShortDescription(26, 7);
@@ -921,6 +975,9 @@ static bool settings_setHallEffect(void) {
   return systemSettings.hallEffectSensitivity == 3;
 }
 #endif
+
+static bool animOpenState = false;
+
 static void displayMenu(size_t index) {
   // Call into the menu
   const char *textPtr = SettingsMenuEntries[index];
@@ -937,7 +994,19 @@ static void displayMenu(size_t index) {
   // Draw symbol
   // 16 pixel wide image
   // 2 pixel wide scrolling indicator
-  OLED::drawArea(96 - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[(16 * 2) * index]));
+  static TickType_t menuSwitchLoopTick = 0;
+  static size_t     menuCurrentIndex   = sizeof(rootSettingsMenu) + 1;
+  static size_t     currentFrame       = 0;
+  if (!animOpenState) {
+    if (menuCurrentIndex != index) {
+      menuCurrentIndex   = index;
+      currentFrame       = systemSettings.animationSpeed ? 0 : 2;
+      menuSwitchLoopTick = xTaskGetTickCount();
+    }
+    if (systemSettings.animationSpeed && (systemSettings.animationLoop || currentFrame != 2))
+      currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / systemSettings.animationSpeed) % 3;
+    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
+  }
 }
 
 static void settings_displayCalibrateVIN(void) { printShortDescription(13, 5); }
@@ -993,6 +1062,7 @@ void gui_Menu(const menuitem *menu) {
     // Then we play a transition from the current primary
     // framebuffer to the new buffer.
     // The extra buffer is discarded at the end of the transition.
+    animOpenState = true;
     OLED::useSecondaryFramebuffer(true);
     OLED::setFont(0);
     OLED::setCursor(0, 0);
@@ -1000,6 +1070,7 @@ void gui_Menu(const menuitem *menu) {
     menu[currentScreen].draw();
     OLED::useSecondaryFramebuffer(false);
     OLED::transitionSecondaryFramebuffer(true);
+    animOpenState = false;
   }
 
   while ((menu[currentScreen].draw != NULL) && earlyExit == false) {
