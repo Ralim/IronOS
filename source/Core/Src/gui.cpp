@@ -276,7 +276,7 @@ static int userConfirmation(const char *message) {
   bool    lcdRefresh = true;
 
   for (;;) {
-    int16_t messageOffset = ((xTaskGetTickCount() - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? 10 : 20));
+    int16_t messageOffset = ((xTaskGetTickCount() - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS : (TICKS_100MS * 2)));
     messageOffset %= messageWidth; // Roll around at the end
 
     if (lastOffset != messageOffset) {
@@ -1078,7 +1078,7 @@ void gui_Menu(const menuitem *menu) {
     OLED::setCursor(0, 0);
     // If the user has hesitated for >=3 seconds, show the long text
     // Otherwise "draw" the option
-    if ((xTaskGetTickCount() - lastButtonTime < 3000) || menu[currentScreen].description == NULL) {
+    if ((xTaskGetTickCount() - lastButtonTime < (TICKS_SECOND * 3)) || menu[currentScreen].description == NULL) {
       OLED::clearScreen();
       menu[currentScreen].draw();
       uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
@@ -1095,7 +1095,7 @@ void gui_Menu(const menuitem *menu) {
         descriptionStart = xTaskGetTickCount();
       // lower the value - higher the speed
       int16_t descriptionWidth  = FONT_12_WIDTH * (strlen(menu[currentScreen].description) + 7);
-      int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? 10 : 20));
+      int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? (TICKS_100MS / 10) : (TICKS_100MS / 5)));
       descriptionOffset %= descriptionWidth; // Roll around at the end
       if (lastOffset != descriptionOffset) {
         OLED::clearScreen();
@@ -1149,7 +1149,7 @@ void gui_Menu(const menuitem *menu) {
         descriptionStart = 0;
       break;
     case BUTTON_F_LONG:
-      if ((int)(xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
+      if ((xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
         if ((lastValue = menu[currentScreen].incrementHandler()))
           autoRepeatTimer = 1000;
         else
@@ -1185,7 +1185,7 @@ void gui_Menu(const menuitem *menu) {
       osDelay(40);
       lcdRefresh = false;
     }
-    if ((xTaskGetTickCount() - lastButtonTime) > (1000 * 30)) {
+    if ((xTaskGetTickCount() - lastButtonTime) > (TICKS_SECOND * 30)) {
       // If user has not pressed any buttons in 30 seconds, exit back a menu layer
       // This will trickle the user back to the main screen eventually
       earlyExit        = true;

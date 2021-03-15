@@ -24,7 +24,7 @@ ButtonState getButtonState() {
    */
   static uint8_t  previousState       = 0;
   static uint32_t previousStateChange = 0;
-  const uint16_t  timeout             = 400;
+  const uint16_t  timeout             = TICKS_100MS * 4;
   uint8_t         currentState;
   currentState = (getButtonA()) << 0;
   currentState |= (getButtonB()) << 1;

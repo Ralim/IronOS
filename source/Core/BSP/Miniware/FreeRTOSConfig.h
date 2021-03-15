@@ -83,7 +83,9 @@
  *----------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
-/* Section where include file can be added */
+#ifdef __cplusplus
+extern "C" {
+#endif
 /* USER CODE END Includes */
 
 /* Ensure stdint is only used by the compiler, and not the assembler. */
@@ -172,5 +174,7 @@ extern uint32_t SystemCoreClock;
 #define configTIMER_QUEUE_LENGTH     8
 #define configTIMER_TASK_STACK_DEPTH (512 / 4)
 #endif
-
+#ifdef __cplusplus
+}
+#endif
 #endif /* FREERTOS_CONFIG_H */

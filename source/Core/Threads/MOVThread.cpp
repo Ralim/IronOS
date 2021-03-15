@@ -170,6 +170,6 @@ void startMOVTask(void const *argument __unused) {
       lastMovementTime = xTaskGetTickCount();
     }
 
-    osDelay(TICKS_100MS); // Slow down update rate
+    vTaskDelay(TICKS_100MS); // Slow down update rate
   }
 }

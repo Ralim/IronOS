@@ -45,7 +45,6 @@ OF SUCH DAMAGE.
 static uint32_t usbh_request_submit(usb_core_driver *pudev, uint8_t pp_num) {
   pudev->host.pipe[pp_num].urb_state  = URB_IDLE;
   pudev->host.pipe[pp_num].xfer_count = 0U;
-
   return usb_pipe_xfer(pudev, pp_num);
 }
 
@@ -63,8 +62,8 @@ usbh_status usbh_ctlsetup_send(usb_core_driver *pudev, uint8_t *buf, uint8_t pp_
   pp->DPID     = PIPE_DPID_SETUP;
   pp->xfer_buf = buf;
   pp->xfer_len = USB_SETUP_PACKET_LEN;
-
-  return (usbh_status)usbh_request_submit(pudev, pp_num);
+  uint32_t res = usbh_request_submit(pudev, pp_num);
+  return (usbh_status)res;
 }
 
 /*!

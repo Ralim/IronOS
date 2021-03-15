@@ -256,7 +256,7 @@ static void gui_solderingTempAdjust() {
         systemSettings.SolderingTemp = 10;
     }
 
-    if (xTaskGetTickCount() - lastChange > 2000)
+    if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
       return; // exit if user just doesn't press anything for a bit
 
 #ifdef OLED_FLIP
@@ -645,11 +645,11 @@ void showDebugMenu(void) {
       break;
     case 4:
       // system up time stamp
-      OLED::printNumber(xTaskGetTickCount() / 100, 5);
+      OLED::printNumber(xTaskGetTickCount() / TICKS_100MS, 5);
       break;
     case 5:
       // Movement time stamp
-      OLED::printNumber(lastMovementTime / 100, 5);
+      OLED::printNumber(lastMovementTime / TICKS_100MS, 5);
       break;
     case 6:
       // Raw Tip
@@ -774,7 +774,7 @@ void startGUITask(void const *argument __unused) {
   getTipRawTemp(1); // reset filter
   OLED::setRotation(systemSettings.OrientationMode & 1);
   uint32_t ticks = xTaskGetTickCount();
-  ticks += 4000; // 4 seconds from now
+  ticks += (TICKS_SECOND * 4); // 4 seconds from now
   while (xTaskGetTickCount() < ticks) {
     if (showBootLogoIfavailable() == false)
       ticks = xTaskGetTickCount();
@@ -912,7 +912,7 @@ void startGUITask(void const *argument __unused) {
         // If we have a tip connected draw the temp, if not we leave it blank
         if (!tipDisconnectedDisplay) {
           // draw in the temp
-          if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 26 < 16)))
+          if (!(systemSettings.coolingTempBlink && (xTaskGetTickCount() % 260 < 160)))
             gui_drawTipTemp(false); // draw in the temp
         } else {
           // Draw in missing tip symbol
