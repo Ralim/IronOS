@@ -928,7 +928,7 @@ static bool settings_setAnimationSpeed(void) {
     systemSettings.animationSpeed = 0;
     break;
   }
-  return systemSettings.animationSpeed == 300;
+  return systemSettings.animationSpeed == TICKS_100MS * 3;
 }
 
 static void settings_displayAnimationSpeed(void) {
