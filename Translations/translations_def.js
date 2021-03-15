@@ -362,6 +362,16 @@ var def =
 			"id": "MinVolCell",
 			"maxLen": 4,
 			"maxLen2": 9
+		},
+		{
+			"id": "AnimLoop",
+			"maxLen": 6,
+			"maxLen2": 13
+		},
+		{
+			"id": "AnimSpeed",
+			"maxLen": 6,
+			"maxLen2": 13
 		}
 	]
 }

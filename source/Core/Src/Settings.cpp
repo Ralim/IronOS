@@ -70,6 +70,8 @@ void resetSettings() {
   systemSettings.coolingTempBlink               = COOLING_TEMP_BLINK;         // Blink the temperature on the cooling screen when its > 50C
   systemSettings.temperatureInF                 = TEMPERATURE_INF;            // default to 0
   systemSettings.descriptionScrollSpeed         = DESCRIPTION_SCROLL_SPEED;   // default to slow
+  systemSettings.animationLoop                  = ANIMATION_LOOP;             // Default false
+  systemSettings.animationSpeed                 = ANIMATION_SPEED;            // Default 400 ms (Medium)
   systemSettings.CalibrationOffset              = CALIBRATION_OFFSET;         // the adc offset in uV
   systemSettings.powerLimit                     = POWER_LIMIT;                // 30 watts default limit
   systemSettings.ReverseButtonTempChangeEnabled = REVERSE_BUTTON_TEMP_CHANGE; //
