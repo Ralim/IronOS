@@ -302,7 +302,7 @@
 				"Anim.",
 				"speed"
 			],
-			"desc": "Speed of icon animations in root menu <Miliseconds> <O=off | L=low | M=medium | H=high>"
+			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
 		}
 	}
 }
