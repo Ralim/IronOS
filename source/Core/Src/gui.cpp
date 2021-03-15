@@ -1024,7 +1024,7 @@ void gui_Menu(const menuitem *menu) {
         descriptionStart = xTaskGetTickCount();
       // lower the value - higher the speed
       int16_t descriptionWidth  = FONT_12_WIDTH * (strlen(menu[currentScreen].description) + 7);
-      int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS : (TICKS_100MS * 2)));
+      int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? (TICKS_100MS / 10) : (TICKS_100MS / 5)));
       descriptionOffset %= descriptionWidth; // Roll around at the end
       if (lastOffset != descriptionOffset) {
         OLED::clearScreen();

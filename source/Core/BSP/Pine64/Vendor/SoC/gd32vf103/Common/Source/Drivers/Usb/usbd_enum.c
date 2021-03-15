@@ -93,7 +93,8 @@ usb_reqsta usbd_class_request(usb_core_driver *udev, usb_req *req) {
   if (USBD_CONFIGURED == udev->dev.cur_status) {
     if (BYTE_LOW(req->wIndex) <= USBD_ITF_MAX_NUM) {
       /* call device class handle function */
-      return (usb_reqsta)udev->dev.class_core->req_proc(udev, req);
+      uint8_t res = udev->dev.class_core->req_proc(udev, req);
+      return (usb_reqsta)res;
     }
   }
 
@@ -426,7 +427,10 @@ static usb_reqsta _usb_std_getdescriptor(usb_core_driver *udev, usb_req *req) {
 
   case USB_RECPTYPE_ITF:
     /* get device class special descriptor */
-    return (usb_reqsta)(udev->dev.class_core->req_proc(udev, req));
+    {
+      uint8_t res = udev->dev.class_core->req_proc(udev, req);
+      return (usb_reqsta)res;
+    }
 
   case USB_RECPTYPE_EP:
     break;
