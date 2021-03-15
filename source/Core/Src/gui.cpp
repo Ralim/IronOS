@@ -923,16 +923,16 @@ static void settings_displayAnimationSpeed(void) {
   printShortDescription(30, 7);
   switch (systemSettings.animationSpeed) {
   case settingOffSpeed_t::SLOW:
-    OLED::print(SettingSensitivityLow);
+    OLED::print(SettingSlowChar);
     break;
   case settingOffSpeed_t::MEDIUM:
-    OLED::print(SettingSensitivityMedium);
+    OLED::print(SettingMediumChar);
     break;
   case settingOffSpeed_t::FAST:
-    OLED::print(SettingSensitivityHigh);
+    OLED::print(SettingFastChar);
     break;
   default:
-    OLED::print(SettingSensitivityOff);
+    OLED::print(SettingFalseChar);
     break;
   }
 }
@@ -993,7 +993,7 @@ static void displayMenu(size_t index) {
   case settingOffSpeed_t::MEDIUM:
     step = TICKS_100MS * 4;
     break;
-  default: // SLOW or off - default
+  default: // SLOW or off - defaulted above
     break;
   }
   if (!animOpenState) {

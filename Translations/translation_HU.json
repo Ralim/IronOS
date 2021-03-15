@@ -36,6 +36,7 @@
 		"SettingAutoChar": "A",
 		"SettingFastChar": "G",
 		"SettingSlowChar": "L",
+		"SettingMediumChar": "M",
 		"SettingStartSolderingChar": "F",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "S",

@@ -63,6 +63,7 @@ extern const char *SettingLockFullChar;
 extern const char *SettingNAChar;
 
 extern const char *SettingFastChar;
+extern const char *SettingMediumChar;
 extern const char *SettingSlowChar;
 extern const char *TipModelStrings[];
 extern const char *DebugMenu[];

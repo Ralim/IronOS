@@ -143,6 +143,10 @@ var def =
 			"len": 1
 		},
 		{
+			"id": "SettingMediumChar",
+			"len": 1
+		},
+		{
 			"id": "SettingStartSolderingChar",
 			"len": 1
 		},
