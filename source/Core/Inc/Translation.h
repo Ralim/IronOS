@@ -44,8 +44,6 @@ extern const char *LockingKeysString;
 extern const char *UnlockingKeysString;
 extern const char *WarningKeysLockedString;
 
-extern const char *SettingTrueChar;
-extern const char *SettingFalseChar;
 extern const char *SettingRightChar;
 extern const char *SettingLeftChar;
 extern const char *SettingAutoChar;

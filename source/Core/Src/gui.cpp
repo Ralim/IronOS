@@ -920,7 +920,7 @@ static bool settings_setAnimationSpeed(void) {
 }
 
 static void settings_displayAnimationSpeed(void) {
-  printShortDescription(30, 7);
+  printShortDescription(30, 5);
   switch (systemSettings.animationSpeed) {
   case settingOffSpeed_t::SLOW:
     OLED::print(SettingSlowChar);
@@ -932,7 +932,7 @@ static void settings_displayAnimationSpeed(void) {
     OLED::print(SettingFastChar);
     break;
   default:
-    OLED::print(SettingFalseChar);
+    OLED::print(OffString);
     break;
   }
 }
