@@ -1086,10 +1086,10 @@ static bool settings_enterAdvancedMenu(void) {
 void gui_Menu(const menuitem *menu) {
   // Draw the settings menu and provide iteration support etc
   uint8_t     currentScreen          = 0;
-  uint32_t    autoRepeatTimer        = 0;
-  uint8_t     autoRepeatAcceleration = 0;
+  TickType_t  autoRepeatTimer        = 0;
+  TickType_t  autoRepeatAcceleration = 0;
   bool        earlyExit              = false;
-  uint32_t    descriptionStart       = 0;
+  TickType_t  descriptionStart       = 0;
   int16_t     lastOffset             = -1;
   bool        lcdRefresh             = true;
   ButtonState lastButtonState        = BUTTON_NONE;

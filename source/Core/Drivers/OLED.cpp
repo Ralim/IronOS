@@ -195,7 +195,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
     memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
 
     refresh();
-    osDelay(TICKS_100MS/5);
+    osDelay(TICKS_100MS / 5);
   }
 }
 
