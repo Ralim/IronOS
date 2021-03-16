@@ -38,6 +38,7 @@
 		"SettingFastChar": "快",
 		"SettingSlowChar": "慢",
 		"SettingMediumChar": "中",
+		"SettingOffChar":"關",
 		"SettingStartSolderingChar": "焊",
 		"SettingStartSleepChar": "待",
 		"SettingStartSleepOffChar": "室",

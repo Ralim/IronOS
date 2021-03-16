@@ -940,7 +940,7 @@ static void settings_displayAnimationSpeed(void) {
     OLED::print(SettingFastChar);
     break;
   default:
-    OLED::print(OffString);
+    OLED::print(SettingOffChar);
     break;
   }
 }

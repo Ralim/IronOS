@@ -37,6 +37,7 @@
 		"SettingFastChar": "Б",
 		"SettingSlowChar": "М",
 		"SettingMediumChar": "M",
+		"SettingOffChar":"O",
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",
