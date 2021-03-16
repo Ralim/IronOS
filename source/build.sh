@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 TRANSLATION_DIR="../Translations"
 TRANSLATION_SCRIPT="make_translation.py"

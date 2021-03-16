@@ -122,11 +122,11 @@ void OLED::drawChar(const uint16_t charCode) {
     cursor_x = 0;
     cursor_y = 8;
     return;
-  } else if (charCode <=0x01) {
+  } else if (charCode <= 0x01) {
     return;
   }
   // First index is \x02
-  uint16_t index = charCode-2; 
+  uint16_t index = charCode - 2;
   uint8_t *charPointer;
   charPointer = ((uint8_t *)currentFont) + ((fontWidth * (fontHeight / 8)) * index);
   drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
@@ -236,8 +236,17 @@ void OLED::setRotation(bool leftHanded) {
 
 // print a string to the current cursor location
 void OLED::print(const char *str) {
+  uint16_t cache = 0;
   while (str[0]) {
-    drawChar(str[0]);
+    if (str[0] >= 0xF0) {
+      cache = static_cast<uint16_t>(str[0] & 0x0F) << 8;
+    } else if (cache != 0) {
+      cache |= str[0];
+      drawChar(cache);
+      cache = 0;
+    } else {
+      drawChar(str[0]);
+    }
     str++;
   }
 }
