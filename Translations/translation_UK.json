@@ -304,6 +304,20 @@
 				"анімації"
 			],
 			"desc": "Швидкість анімації іконок у головному меню <Мілісекунди> <В=Вимк, Н=Низькa, С=Середня, М=Макс>"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Power pulse",
+				"wait time"
+			],
+			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Power pulse",
+				"duration"
+			],
+			"desc": "Keep-awake-pulse duration (x 250ms)"
 		}
 	}
 }

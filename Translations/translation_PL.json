@@ -305,6 +305,20 @@
 				"speed"
 			],
 			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Czas między",
+				"imp. mocy"
+			],
+			"desc": "Czas między kolejnymi impulsami mocy zapobiegającymi usypianiu powerbanku (x 2.5s)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Długość",
+				"impulsu mocy"
+			],
+			"desc": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x 250ms)"
 		}
 	}
 }

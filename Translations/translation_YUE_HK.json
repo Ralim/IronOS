@@ -305,6 +305,20 @@
 				"動畫速度"
 			],
 			"desc": "功能表圖示動畫嘅速度 <關=不顯示動畫 | 慢=慢速 | 中=中速 | 快=快速>"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Power pulse",
+				"wait time"
+			],
+			"desc": "Time to wait beFore triggering everY power pulse <in 2.5s>"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Power pulse",
+				"duration"
+			],
+			"desc": "power pulse duration <in 250ms>"
 		}
 	}
 }

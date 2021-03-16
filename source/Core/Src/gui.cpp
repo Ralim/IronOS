@@ -74,6 +74,10 @@ static void settings_displayAnimationSpeed(void);
 static bool settings_setAnimationSpeed(void);
 static void settings_displayAnimationLoop(void);
 static bool settings_setAnimationLoop(void);
+static void settings_displayPowerPulseWait(void);
+static bool settings_setPowerPulseWait(void);
+static void settings_displayPowerPulseDuration(void);
+static bool settings_setPowerPulseDuration(void);
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
@@ -221,6 +225,8 @@ const menuitem advancedMenu[] = {
      *  Power Pulse
      *  Animation Loop
      *  Animation Speed
+     *  Power Pulse Wait
+     *  Power Pulse Duration
      */
     {(const char *)SettingsDescriptions[20], settings_setPowerLimit, settings_displayPowerLimit},                             /*Power limit*/
     {(const char *)SettingsDescriptions[6], settings_setAdvancedIDLEScreens, settings_displayAdvancedIDLEScreens},            /* Advanced idle screen*/
@@ -229,6 +235,8 @@ const menuitem advancedMenu[] = {
     {(const char *)SettingsDescriptions[11], settings_setCalibrate, settings_displayCalibrate},                               /*Calibrate tip*/
     {(const char *)SettingsDescriptions[13], settings_setCalibrateVIN, settings_displayCalibrateVIN},                         /*Voltage input cal*/
     {(const char *)SettingsDescriptions[24], settings_setPowerPulse, settings_displayPowerPulse},                             /*Power Pulse adjustment */
+    {(const char *)SettingsDescriptions[31], settings_setPowerPulseWait, settings_displayPowerPulseWait},                     /*Power Pulse Wait adjustment*/
+    {(const char *)SettingsDescriptions[32], settings_setPowerPulseDuration, settings_displayPowerPulseDuration},             /*Power Pulse Duration adjustment*/
     //{ (const char *) SettingsDescriptions[25], settings_setTipGain, settings_displayTipGain }, /*TipGain*/
     {NULL, NULL, NULL} // end of menu marker. DO NOT REMOVE
 };
@@ -936,6 +944,45 @@ static void settings_displayAnimationSpeed(void) {
     break;
   }
 }
+
+static bool settings_setPowerPulseWait(void) {
+  // Constrain to range 1 to POWER_PULSE_WAIT_MAX inclusive
+  auto &wait = systemSettings.KeepAwakePulseWait;
+  if (++wait > POWER_PULSE_WAIT_MAX) {
+    wait = 1;
+  }
+
+  return wait == POWER_PULSE_WAIT_MAX;
+}
+
+static void settings_displayPowerPulseWait(void) {
+  printShortDescription(31, 7);
+  if (systemSettings.KeepAwakePulse) {
+    OLED::printNumber(systemSettings.KeepAwakePulseWait, 1);
+  } else {
+    OLED::print(SymbolMinus);
+  }
+}
+
+static bool settings_setPowerPulseDuration(void) {
+  // Constrain to range 1 to POWER_PULSE_DURATION_MAX inclusive
+  auto &duration = systemSettings.KeepAwakePulseDuration;
+  if (++duration > POWER_PULSE_DURATION_MAX) {
+    duration = 1;
+  }
+
+  return duration == POWER_PULSE_DURATION_MAX;
+}
+
+static void settings_displayPowerPulseDuration(void) {
+  printShortDescription(32, 7);
+  if (systemSettings.KeepAwakePulse) {
+    OLED::printNumber(systemSettings.KeepAwakePulseDuration, 1);
+  } else {
+    OLED::print(SymbolMinus);
+  }
+}
+
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
   printShortDescription(26, 7);
