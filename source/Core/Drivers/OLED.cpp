@@ -117,15 +117,16 @@ void OLED::setFramebuffer(uint8_t *buffer) {
  * UTF font handling is done using the two input chars.
  * Precursor is the command char that is used to select the table.
  */
-void OLED::drawChar(char c) {
-  if (c == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
+void OLED::drawChar(const uint16_t charCode) {
+  if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
     cursor_x = 0;
     cursor_y = 8;
     return;
-  } else if (c == 0) {
+  } else if (charCode <=0x01) {
     return;
   }
-  uint16_t index = static_cast<unsigned char>(c) - 2; // First index is \x02
+  // First index is \x02
+  uint16_t index = charCode-2; 
   uint8_t *charPointer;
   charPointer = ((uint8_t *)currentFont) + ((fontWidth * (fontHeight / 8)) * index);
   drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
