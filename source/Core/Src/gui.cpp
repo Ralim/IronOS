@@ -1196,7 +1196,7 @@ void gui_Menu(const menuitem *menu) {
         descriptionStart = 0;
       break;
     case BUTTON_F_LONG:
-      if ((xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
+      if (xTaskGetTickCount() + autoRepeatAcceleration > autoRepeatTimer + PRESS_ACCEL_INTERVAL_MAX) {
         if ((lastValue = menu[currentScreen].incrementHandler()))
           autoRepeatTimer = 1000;
         else
