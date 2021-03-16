@@ -49,15 +49,15 @@
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "T",
 		"SettingLockFullChar": "C",
-		"SettingNAChar": "N/A"
+		"SettingNAChar": "NA"
 	},
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": [
-				"Power",
-				"settings"
+				"Opzioni",
+				"alimentaz"
 			],
-			"desc": "Power settings"
+			"desc": "Menù d'impostazioni per l'alimentazione"
 		},
 		"SolderingMenu": {
 			"text2": [
@@ -94,42 +94,42 @@
 				"Sorgente",
 				"alimentaz"
 			],
-			"desc": "Scegli la sorgente di alimentazione; se a batteria, limita lo scaricamento al valore di soglia <DC: 10V; S: 3,3V per cella>"
+			"desc": "Imposta una tensione minima di alimentazione attraverso la selezione di una sorgente [DC: 10 V; 3S/4S/5S/6S: 3,3 V per cella]"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Temp",
 				"riposo"
 			],
-			"desc": "Imposta la temperatura da mantenere in modalità Riposo <°C/°F>"
+			"desc": "Imposta la temperatura da mantenere in modalità Riposo [°C/°F]"
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Timer",
 				"riposo"
 			],
-			"desc": "Imposta il timer per entrare in modalità Riposo <minuti/secondi>"
+			"desc": "Imposta il timer per entrare in modalità Riposo [minuti/secondi]"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Timer",
 				"spegnimento"
 			],
-			"desc": "Imposta il timer per lo spegnimento <minuti>"
+			"desc": "Imposta il timer per lo spegnimento [minuti]"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Sensibilità",
 				"al movimento"
 			],
-			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo <0: nessuna; 1: minima; 9: massima>"
+			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [0: nessuna; 1: minima; 9: massima]"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Unità di",
 				"temperatura"
 			],
-			"desc": "Scegli l'unità di misura per la temperatura <C: grado Celsius; F: grado Farenheit>"
+			"desc": "Scegli l'unità di misura per la temperatura [C: grado Celsius; F: grado Farenheit]"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -143,21 +143,21 @@
 				"Orientamento",
 				"display"
 			],
-			"desc": "Imposta l'orientamento del display <A: automatico; S: mano sinistra; D: mano destra>"
+			"desc": "Imposta l'orientamento del display [A: automatico; S: mano sinistra; D: mano destra]"
 		},
 		"BoostTemperature": {
 			"text2": [
 				"Temp",
-				"«Turbo»"
+				"Turbo"
 			],
-			"desc": "Imposta la temperatura della funzione «Turbo» <°C/°F>"
+			"desc": "Imposta la temperatura della funzione Turbo [°C/°F]"
 		},
 		"AutoStart": {
 			"text2": [
 				"Avvio",
 				"automatico"
 			],
-			"desc": "Attiva automaticamente il saldatore quando viene alimentato <D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente>"
+			"desc": "Attiva automaticamente il saldatore quando viene alimentato [D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente]"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -199,7 +199,7 @@
 				"Velocità",
 				"testo"
 			],
-			"desc": "Imposta la velocità di scorrimento del testo <L: lento; V: veloce>"
+			"desc": "Imposta la velocità di scorrimento del testo [L: lenta; V: veloce]"
 		},
 		"TipModel": {
 			"text2": [
@@ -213,7 +213,7 @@
 				"Calibrazione",
 				"semplice"
 			],
-			"desc": "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua calda"
+			"desc": "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua in ebollizione"
 		},
 		"AdvancedCalibrationMode": {
 			"text2": [
@@ -227,14 +227,14 @@
 				"Voltaggio",
 				"Quick Charge"
 			],
-			"desc": "Imposta il massimo voltaggio necessario alla negoziazione con un alimentatore Quick Charge"
+			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge"
 		},
 		"PowerLimit": {
 			"text2": [
 				"Limite",
 				"potenza"
 			],
-			"desc": "Imposta il valore di potenza massima erogabile al saldatore <watt>"
+			"desc": "Imposta il valore di potenza massima erogabile al saldatore [watt]"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -248,21 +248,21 @@
 				"Temp passo",
 				"breve"
 			],
-			"desc": "Imposta il «passo» dei valori di temperatura ad una breve pressione dei tasti"
+			"desc": "Imposta il \"passo\" dei valori di temperatura per una breve pressione dei tasti"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Temp passo",
 				"lungo"
 			],
-			"desc": "Imposta il «passo» dei valori di temperatura ad una lunga pressione dei tasti"
+			"desc": "Imposta il \"passo\" dei valori di temperatura per una lunga pressione dei tasti"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Potenza",
 				"impulso"
 			],
-			"desc": "Regola la potenza d'impulso per prevenire lo standby eventuale dell'alimentatore <watt>"
+			"desc": "Regola la potenza di un \"impulso sveglia\" atto a prevenire lo standby eventuale dell'alimentatore [watt]"
 		},
 		"TipGain": {
 			"text2": [
@@ -276,49 +276,49 @@
 				"Effetto",
 				"Hall"
 			],
-			"desc": "Regola la sensibilità alla rilevazione di supporti metallici per entrare in modalità Riposo <O: OFF; B: bassa; M: media; A: alta>"
+			"desc": "Regola la sensibilità alla rilevazione di supporti metallici per entrare in modalità Riposo [O: OFF; B: bassa; M: media; A: alta]"
 		},
 		"LockingMode": {
 			"text2": [
 				"Blocco",
 				"tasti"
 			],
-			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare/sbloccare <D: disattiva; T: blocca «Turbo»; C: blocco completo>"
+			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: blocca Turbo; C: blocco completo]"
 		},
 		"MinVolCell": {
 			"text2": [
-				"Minimum",
-				"voltage"
+				"Tensione",
+				"min celle"
 			],
-			"desc": "Minimum allowed voltage per cell <Volts> <3S — 3.0V - 3.7V, 4/5/6S — 2.4V - 3.7V>"
+			"desc": "Modifica il valore di tensione minima \"di scaricamento\" per le celle di una batteria Li-Po [3S: 3,0-3,7 V; 4S/5S/6S: 2,4-3,7 V]"
 		},
 		"AnimLoop": {
 			"text2": [
-				"Anim.",
-				"loop"
+				"Ciclo",
+				"animazioni"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Abilita la riproduzione ciclica delle animazioni del menù principale"
 		},
 		"AnimSpeed": {
 			"text2": [
-				"Anim.",
-				"speed"
+				"Velocità",
+				"animazioni"
 			],
-			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+			"desc": "Imposta la velocità di riproduzione delle animazioni del menù principale [O: OFF; L: lenta; M: media; V: veloce]"
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"Distanza",
+				"impulsi"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Imposta il tempo che deve intercorrere tra due \"impulsi sveglia\" [multipli di 2,5 s]"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"Durata",
+				"impulso"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Regola la durata dell'«impulso sveglia» [multipli di 250 ms]"
 		}
 	}
 }
