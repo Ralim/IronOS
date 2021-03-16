@@ -60,6 +60,7 @@ extern const char *SettingLockBoostChar;
 extern const char *SettingLockFullChar;
 extern const char *SettingNAChar;
 
+extern const char *SettingOffChar;
 extern const char *SettingFastChar;
 extern const char *SettingMediumChar;
 extern const char *SettingSlowChar;
