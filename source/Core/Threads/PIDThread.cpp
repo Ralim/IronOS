@@ -14,10 +14,10 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
-static TickType_t powerPulseRate        = 10 * TICKS_SECOND;
-static TickType_t powerPulseDuration    = 3 * TICKS_100MS;
-TaskHandle_t      pidTaskNotification   = NULL;
-uint32_t          currentTempTargetDegC = 0; // Current temperature target in C
+static TickType_t powerPulseWaitUnit     = 25 * TICKS_100MS;      // 2.5 s
+static TickType_t powerPulseDurationUnit = (5 * TICKS_100MS) / 2; // 250 ms
+TaskHandle_t      pidTaskNotification    = NULL;
+uint32_t          currentTempTargetDegC  = 0; // Current temperature target in C
 
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
@@ -92,10 +92,11 @@ void startPIDTask(void const *argument __unused) {
       }
       // If the user turns on the option of using an occasional pulse to keep the power bank on
       if (systemSettings.KeepAwakePulse) {
-
-        if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseRate) {
-          lastPowerPulseStart = xTaskGetTickCount();
-          lastPowerPulseEnd   = lastPowerPulseStart + powerPulseDuration;
+        const TickType_t powerPulseWait = powerPulseWaitUnit * systemSettings.KeepAwakePulseWait;
+        if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseWait) {
+          const TickType_t powerPulseDuration = powerPulseDurationUnit * systemSettings.KeepAwakePulseDuration;
+          lastPowerPulseStart                 = xTaskGetTickCount();
+          lastPowerPulseEnd                   = lastPowerPulseStart + powerPulseDuration;
         }
 
         // If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor

@@ -376,6 +376,16 @@ var def =
 			"id": "AnimSpeed",
 			"maxLen": 6,
 			"maxLen2": 13
+		},
+		{
+			"id": "PowerPulseWait",
+			"maxLen": 6,
+			"maxLen2": 13
+		},
+		{
+			"id": "PowerPulseDuration",
+			"maxLen": 6,
+			"maxLen2": 13
 		}
 	]
 }

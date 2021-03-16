@@ -68,14 +68,18 @@
 #define TEMP_CHANGE_LONG_STEP_MAX  90 // Temp change long step MAX value
 
 /* Power pulse for keeping power banks awake*/
-#define POWER_PULSE_INCREMENT 1
-#define POWER_PULSE_MAX       50 // x10 max watts
-#define POWER_PULSE_MAX       100 // x10 max watts
+#define POWER_PULSE_INCREMENT       1
+#define POWER_PULSE_MAX           100 // x10 max watts
+#define POWER_PULSE_WAIT_MAX        9 // 9*2.5s = 22.5 seconds
+#define POWER_PULSE_DURATION_MAX    9 // 9*250ms = 2.25 seconds
+
 #ifdef MODEL_TS100
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
 #endif
+#define POWER_PULSE_WAIT_DEFAULT      4; // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
+#define POWER_PULSE_DURATION_DEFAULT  1; // Default duration of the power pulse: 1*250 = 250 ms
 
 /**
  * OLED Orientation Sensitivity on Automatic mode!

@@ -10,7 +10,7 @@
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 #include <stdint.h>
-#define SETTINGSVERSION (0x28)
+#define SETTINGSVERSION (0x29)
 /*Change this if you change the struct below to prevent people getting \
           out of sync*/
 
@@ -43,6 +43,8 @@ typedef struct {
   uint8_t descriptionScrollSpeed : 1; // Description scroll speed
   uint8_t lockingMode : 2;            // Store the locking mode
   uint8_t KeepAwakePulse;             // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
+  uint8_t KeepAwakePulseWait;         // Time between Keep Awake pulses in 2500 ms = 2.5 s increments
+  uint8_t KeepAwakePulseDuration;     // Duration of the Keep Awake pusle in 250 ms increments
 
   uint16_t voltageDiv;        // Voltage divisor factor
   uint16_t BoostTemp;         // Boost mode set point for the iron
