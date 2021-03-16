@@ -23,6 +23,7 @@ except NameError:
 @functools.lru_cache(maxsize=None)
 def cjkFont():
     from bdflib import reader as bdfreader
+
     with open(os.path.join(HERE, "wqy-bitmapsong/wenquanyi_9pt.bdf"), "rb") as f:
         return bdfreader.read_bdf(f)
 
@@ -43,7 +44,7 @@ def loadJson(fileName, skipFirstLine):
 
 
 def readTranslation(jsonDir, langCode):
-    fileName = 'translation_{}.json'.format(langCode)
+    fileName = "translation_{}.json".format(langCode)
 
     fileWithPath = os.path.join(jsonDir, fileName)
 
@@ -184,8 +185,10 @@ def getLetterCounts(defs, lang):
     symbolCounts.reverse()
     return symbolCounts
 
+
 def getCJKGlyph(sym):
     from bdflib.model import Glyph
+
     try:
         glyph: Glyph = cjkFont()[ord(sym)]
     except:
@@ -213,6 +216,7 @@ def getCJKGlyph(sym):
             return True
         else:
             return False
+
     # A glyph in the font table is divided into upper and lower parts, each by
     # 8px high. Each byte represents half if a column, with the LSB being the
     # top-most pixel. The data goes from the left-most to the right-most column
@@ -227,6 +231,7 @@ def getCJKGlyph(sym):
                     b |= 0x01 << r
             s += f"0x{b:02X},"
     return s
+
 
 def getFontMapAndTable(textList):
     # the text list is sorted
@@ -311,13 +316,14 @@ def convStr(symbolConversionTable, text):
     for c in text.replace("\\r", "").replace("\\n", "\n"):
         if c not in symbolConversionTable:
             log("Missing font definition for {}".format(c))
+            sys.exit(1)
         else:
             outputString = outputString + symbolConversionTable[c]
     return outputString
 
 
 def writeLanguage(lang, defs, f):
-    languageCode = lang['languageCode']
+    languageCode = lang["languageCode"]
     log("Generating block for " + languageCode)
     # Iterate over all of the text to build up the symbols & counts
     textList = getLetterCounts(defs, lang)
@@ -516,10 +522,11 @@ def writeLanguage(lang, defs, f):
         )
 
     f.write(to_unicode("};\n\n"))
-    f.write("const bool HasFahrenheit = " + (
-        "true" if lang.get('tempUnitFahrenheit', True) else "false") +
-        ";\n")
-
+    f.write(
+        "const bool HasFahrenheit = "
+        + ("true" if lang.get("tempUnitFahrenheit", True) else "false")
+        + ";\n"
+    )
 
 
 def readVersion(jsonDir):
@@ -567,9 +574,9 @@ def orderOutput(langDict):
 def parseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-            '--output', '-o',
-            help='Target file', type=argparse.FileType('w'), required=True)
-    parser.add_argument('languageCode', help='Language to generate')
+        "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
+    )
+    parser.add_argument("languageCode", help="Language to generate")
     return parser.parse_args()
 
 
