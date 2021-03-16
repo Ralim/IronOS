@@ -70,6 +70,7 @@
 /* Power pulse for keeping power banks awake*/
 #define POWER_PULSE_INCREMENT 1
 #define POWER_PULSE_MAX       50 // x10 max watts
+#define POWER_PULSE_MAX       100 // x10 max watts
 #ifdef MODEL_TS100
 #define POWER_PULSE_DEFAULT 0
 #else
