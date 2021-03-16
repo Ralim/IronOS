@@ -247,14 +247,24 @@ def getFontMapAndTable(textList):
     totalSymbolCount = len(set(textList) | set(forcedFirstSymbols))
     # \x00 is for NULL termination and \x01 is for newline, so the maximum
     # number of symbols allowed with 8 bits is `256 - 2`.
-    if totalSymbolCount > (256 - 2):
+    if totalSymbolCount > ((0xEE * 0x0F) - 2):
         log(f"Error, too many used symbols for this version (total {totalSymbolCount})")
-        exit(1)
+        sys.exit(1)
     log("Generating fonts for {} symbols".format(totalSymbolCount))
 
     for sym in textList:
         if sym not in symbolMap:
-            symbolMap[sym] = "\\x%0.2X" % index
+            page = int(index / 0xEF)
+            if page == 0:
+                symbolMap[sym] = "\\x%0.2X" % index
+            else:
+                # Into extended range
+                # Leader is 0xFz where z is the page number
+                # Following char is the remainder
+                leader = page + 0xF0
+                value = (index % 0xEF) + 1
+                symbolMap[sym] = "\\x%0.2X" % leader + "\\x%0.2X" % value
+
             index = index + 1
     # Get the font table
     fontTableStrings = []

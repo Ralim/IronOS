@@ -236,14 +236,15 @@ void OLED::setRotation(bool leftHanded) {
 
 // print a string to the current cursor location
 void OLED::print(const char *str) {
-  uint16_t cache = 0;
+  uint16_t page = 0;
   while (str[0]) {
-    if (str[0] >= 0xF0) {
-      cache = static_cast<uint16_t>(str[0] & 0x0F) << 8;
-    } else if (cache != 0) {
-      cache |= str[0];
-      drawChar(cache);
-      cache = 0;
+    if (static_cast<uint8_t>(str[0]) >= 0xF0) {
+      page = static_cast<uint16_t>(str[0]&0x0F);
+    } else if (page != 0) {
+      page*=0xEF;
+      page +=static_cast<uint8_t>(str[0])-1;
+      drawChar(page);
+      page = 0;
     } else {
       drawChar(str[0]);
     }
