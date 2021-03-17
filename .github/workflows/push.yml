@@ -13,7 +13,7 @@ jobs:
         run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
 
       - name: Cached compiler source files
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         env:
           cache-name: cache-compilers
         with:
@@ -54,7 +54,7 @@ jobs:
         run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
 
       - name: Cached compiler source files
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         env:
           cache-name: cache-compilers
         with:
@@ -95,7 +95,7 @@ jobs:
         run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
 
       - name: Cached compiler source files
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         env:
           cache-name: cache-compilers
         with:
@@ -137,7 +137,7 @@ jobs:
         run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
 
       - name: Cached compiler source files
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         env:
           cache-name: cache-compilers
         with:
