@@ -213,7 +213,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
    * than the maximum possible) */
   _pps_index = 8;
   /* Search for the first PPS APDO */
-  for (int8_t i = 0; i < PD_NUMOBJ_GET(&tempMessage); i++) {
+  for (int i = 0; i < PD_NUMOBJ_GET(&tempMessage); i++) {
     if ((tempMessage.obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (tempMessage.obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
       _pps_index = i + 1;
       break;

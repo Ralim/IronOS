@@ -274,12 +274,12 @@ def getFontMapAndTable(textList):
     for sym in forcedFirstSymbols:
         if sym not in fontTable:
             log("Missing Large font element for {}".format(sym))
-            exit(1)
+            sys.exit(1)
         fontLine = fontTable[sym]
         fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
         if sym not in fontSmallTable:
             log("Missing Small font element for {}".format(sym))
-            exit(1)
+            sys.exit(1)
         fontLine = fontSmallTable[sym]
         fontSmallTableStrings.append(
             fontLine + "//{} -> {}".format(symbolMap[sym], sym)
@@ -291,7 +291,7 @@ def getFontMapAndTable(textList):
             fromFont = getCJKGlyph(sym)
             if fromFont is None:
                 log("Missing Large font element for {}".format(sym))
-                exit(1)
+                sys.exit(1)
             # We store the glyph back to the fontTable.
             fontTable[sym] = fromFont
             # We also put a "replacement character" in the small font table
@@ -302,7 +302,7 @@ def getFontMapAndTable(textList):
             fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
             if sym not in fontSmallTable:
                 log("Missing Small font element for {}".format(sym))
-                exit(1)
+                sys.exit(1)
             fontLine = fontSmallTable[sym]
             fontSmallTableStrings.append(
                 fontLine + "//{} -> {}".format(symbolMap[sym], sym)

@@ -30,7 +30,7 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   // now we program it
   uint16_t *data = (uint16_t *)buffer;
   HAL_FLASH_Unlock();
-  for (uint8_t i = 0; i < (length / 2); i++) {
+  for (uint16_t i = 0; i < (length / 2); i++) {
     resetWatchdog();
     HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)&settings_page[i], data[i]);
   }

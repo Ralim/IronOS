@@ -26,7 +26,7 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   fmc_page_erase((uint32_t)SETTINGS_START_PAGE);
   resetWatchdog();
   uint16_t *data = (uint16_t *)buffer;
-  for (uint8_t i = 0; i < (length / 2); i++) {
+  for (uint16_t i = 0; i < (length / 2); i++) {
     fmc_halfword_program((uint32_t)SETTINGS_START_PAGE + (i * 2), data[i]);
     fmc_flag_clear(FMC_FLAG_END);
     fmc_flag_clear(FMC_FLAG_WPERR);
