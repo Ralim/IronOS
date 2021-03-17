@@ -23,6 +23,7 @@ except NameError:
 @functools.lru_cache(maxsize=None)
 def cjkFont():
     from bdflib import reader as bdfreader
+
     with open(os.path.join(HERE, "wqy-bitmapsong/wenquanyi_9pt.bdf"), "rb") as f:
         return bdfreader.read_bdf(f)
 
@@ -43,7 +44,7 @@ def loadJson(fileName, skipFirstLine):
 
 
 def readTranslation(jsonDir, langCode):
-    fileName = 'translation_{}.json'.format(langCode)
+    fileName = "translation_{}.json".format(langCode)
 
     fileWithPath = os.path.join(jsonDir, fileName)
 
@@ -184,8 +185,10 @@ def getLetterCounts(defs, lang):
     symbolCounts.reverse()
     return symbolCounts
 
+
 def getCJKGlyph(sym):
     from bdflib.model import Glyph
+
     try:
         glyph: Glyph = cjkFont()[ord(sym)]
     except:
@@ -213,6 +216,7 @@ def getCJKGlyph(sym):
             return True
         else:
             return False
+
     # A glyph in the font table is divided into upper and lower parts, each by
     # 8px high. Each byte represents half if a column, with the LSB being the
     # top-most pixel. The data goes from the left-most to the right-most column
@@ -227,6 +231,7 @@ def getCJKGlyph(sym):
                     b |= 0x01 << r
             s += f"0x{b:02X},"
     return s
+
 
 def getFontMapAndTable(textList):
     # the text list is sorted
@@ -244,7 +249,7 @@ def getFontMapAndTable(textList):
     # number of symbols allowed with 8 bits is `256 - 2`.
     if totalSymbolCount > (256 - 2):
         log(f"Error, too many used symbols for this version (total {totalSymbolCount})")
-        exit(1)
+        sys.exit(1)
     log("Generating fonts for {} symbols".format(totalSymbolCount))
 
     for sym in textList:
@@ -259,12 +264,12 @@ def getFontMapAndTable(textList):
     for sym in forcedFirstSymbols:
         if sym not in fontTable:
             log("Missing Large font element for {}".format(sym))
-            exit(1)
+            sys.exit(1)
         fontLine = fontTable[sym]
         fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
         if sym not in fontSmallTable:
             log("Missing Small font element for {}".format(sym))
-            exit(1)
+            sys.exit(1)
         fontLine = fontSmallTable[sym]
         fontSmallTableStrings.append(
             fontLine + "//{} -> {}".format(symbolMap[sym], sym)
@@ -276,7 +281,7 @@ def getFontMapAndTable(textList):
             fromFont = getCJKGlyph(sym)
             if fromFont is None:
                 log("Missing Large font element for {}".format(sym))
-                exit(1)
+                sys.exit(1)
             # We store the glyph back to the fontTable.
             fontTable[sym] = fromFont
             # We also put a "replacement character" in the small font table
@@ -287,7 +292,7 @@ def getFontMapAndTable(textList):
             fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
             if sym not in fontSmallTable:
                 log("Missing Small font element for {}".format(sym))
-                exit(1)
+                sys.exit(1)
             fontLine = fontSmallTable[sym]
             fontSmallTableStrings.append(
                 fontLine + "//{} -> {}".format(symbolMap[sym], sym)
@@ -317,7 +322,7 @@ def convStr(symbolConversionTable, text):
 
 
 def writeLanguage(lang, defs, f):
-    languageCode = lang['languageCode']
+    languageCode = lang["languageCode"]
     log("Generating block for " + languageCode)
     # Iterate over all of the text to build up the symbols & counts
     textList = getLetterCounts(defs, lang)
@@ -516,10 +521,11 @@ def writeLanguage(lang, defs, f):
         )
 
     f.write(to_unicode("};\n\n"))
-    f.write("const bool HasFahrenheit = " + (
-        "true" if lang.get('tempUnitFahrenheit', True) else "false") +
-        ";\n")
-
+    f.write(
+        "const bool HasFahrenheit = "
+        + ("true" if lang.get("tempUnitFahrenheit", True) else "false")
+        + ";\n"
+    )
 
 
 def readVersion(jsonDir):
@@ -567,9 +573,9 @@ def orderOutput(langDict):
 def parseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-            '--output', '-o',
-            help='Target file', type=argparse.FileType('w'), required=True)
-    parser.add_argument('languageCode', help='Language to generate')
+        "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
+    )
+    parser.add_argument("languageCode", help="Language to generate")
     return parser.parse_args()
 
 
