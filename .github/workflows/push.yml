@@ -3,8 +3,11 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build_TS80:
+  build:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        model: ["TS100", "TS80", "TS80P", "Pinecil"]
 
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +20,6 @@ jobs:
         env:
           cache-name: cache-compilers
         with:
-          # we deliberately persist a cache folder forwards
           path: /build/cache
           key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
@@ -26,148 +28,25 @@ jobs:
       - name: setup
         run: ./setup.sh
 
-      - name: build TS80
-        run: cd source && ./build.sh -m TS80
+      - name: build ${{ matrix.model }}
+        run: cd source && ./build.sh -m ${{ matrix.model }}
 
       - name: copy license text
         run: |
           cp LICENSE source/Hexfile/LICENSE
           cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
 
-      - name: Archive TS80 artifacts
+      - name: Archive ${{ matrix.model }} artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: TS80
+          name: ${{ matrix.model }}
           path: |
-            source/Hexfile/TS80_*.hex
-            source/Hexfile/TS80_*.bin
-            source/Hexfile/LICENSE
-            source/Hexfile/LICENSE_RELEASE.md
-          if-no-files-found: error
-  build_TS80P:
-    runs-on: ubuntu-20.04
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: chmod
-        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-
-      - name: Cached compiler source files
-        uses: actions/cache@v2.1.4
-        env:
-          cache-name: cache-compilers
-        with:
-          # we deliberately persist a cache folder forwards
-          path: /build/cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-
-
-      - name: setup
-        run: ./setup.sh
-
-      - name: build TS80P
-        run: cd source && ./build.sh -m TS80P
-
-      - name: copy license text
-        run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
-
-      - name: Archive TS80P artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: TS80P
-          path: |
-            source/Hexfile/TS80P_*.hex
-            source/Hexfile/TS80P_*.bin
-            source/Hexfile/LICENSE
-            source/Hexfile/LICENSE_RELEASE.md
-          if-no-files-found: error
-  build_TS100:
-    runs-on: ubuntu-20.04
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: chmod
-        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-
-      - name: Cached compiler source files
-        uses: actions/cache@v2.1.4
-        env:
-          cache-name: cache-compilers
-        with:
-          # we deliberately persist a cache folder forwards
-          path: /build/cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-
-
-      - name: setup
-        run: ./setup.sh
-
-      - name: build TS100
-        run: cd source && ./build.sh -m TS100
-
-      - name: copy license text
-        run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
-
-      - name: Archive TS100 artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: TS100
-          path: |
-            source/Hexfile/TS100_*.hex
-            source/Hexfile/TS100_*.bin
+            source/Hexfile/${{ matrix.model }}_*.hex
+            source/Hexfile/${{ matrix.model }}_*.bin
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
-  build_Pinecil:
-    runs-on: ubuntu-20.04
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: chmod
-        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-
-      - name: Cached compiler source files
-        uses: actions/cache@v2.1.4
-        env:
-          cache-name: cache-compilers
-        with:
-          # we deliberately persist a cache folder forwards
-          path: /build/cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-
-
-      - name: setup
-        run: ./setup.sh
-
-      - name: build Pinecil
-        run: cd source && ./build.sh -m Pinecil
-
-      - name: copy license text
-        run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
-
-      - name: Archive Pinecil artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: Pinecil
-          path: |
-            source/Hexfile/Pinecil_*.hex
-            source/Hexfile/Pinecil_*.bin
-            source/Hexfile/LICENSE
-            source/Hexfile/LICENSE_RELEASE.md
-          if-no-files-found: error
   check_formatting:
     runs-on: ubuntu-20.04
 
