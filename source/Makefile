@@ -216,7 +216,7 @@ CHECKOPTIONS=		-Wall 				\
 			
 
 
-CHECKOPTIONS_C=		-Wbad-function-cast -Wall -Wshadow -Werror
+CHECKOPTIONS_C=	$(CHECKOPTIONS) -Wbad-function-cast
 
 
 CXXFLAGS=$(DEV_CXXFLAGS)         \
