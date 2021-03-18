@@ -261,7 +261,7 @@ static uint32_t usbd_int_epout(usb_core_driver *udev) {
         if (USB_USE_DMA == udev->bp.transfer_mode) {
           __IO uint32_t eplen = udev->regs.er_out[ep_num]->DOEPLEN;
 
-          udev->dev.transc_out[ep_num].xfer_count = udev->dev.transc_out[ep_num].max_len - eplen & DEPLEN_TLEN;
+          udev->dev.transc_out[ep_num].xfer_count = udev->dev.transc_out[ep_num].max_len - (eplen & DEPLEN_TLEN);
         }
 
         /* inform upper layer: data ready */

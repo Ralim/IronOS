@@ -216,7 +216,7 @@ CHECKOPTIONS=		-Wall 				\
 			
 
 
-CHECKOPTIONS_C=		-Wbad-function-cast
+CHECKOPTIONS_C=	$(CHECKOPTIONS) -Wbad-function-cast
 
 
 CXXFLAGS=$(DEV_CXXFLAGS)         \
@@ -227,7 +227,7 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 		-D${COMPILER}  		     \
 		-MMD 				     \
 		$(CHECKOPTIONS)		     \
-		-std=c++11			     \
+		-std=c++14			     \
 		$(OPTIM) 			     \
 		-fno-common			     \
 		-ffreestanding		     \
@@ -336,6 +336,16 @@ style:
 	done
 	@echo "Done"
 
+check-style:
+	@for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
+		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
+		if [ $$var -ne 0 ] ; then \
+			echo "$$src does not respect the coding style (diff: $$var lines)" ; \
+			exit 1 ; \
+		fi ; \
+	done
+	@echo "Style check passed"
+  
 .PHONY: style all clean default
 .SECONDARY:
 

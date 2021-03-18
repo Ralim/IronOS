@@ -376,7 +376,7 @@ uint32_t usbh_int_pipe_in(usb_core_driver *pudev, uint32_t pp_num) {
     usb_pp_halt(pudev, pp_num, HCHINTF_REQOVR, PIPE_REQOVR);
   } else if (intr_pp & HCHINTF_TF) {
     if (USB_USE_DMA == pudev->bp.transfer_mode) {
-      pudev->host.backup_xfercount[pp_num] = pp->xfer_len - pp_reg->HCHLEN & HCHLEN_TLEN;
+      pudev->host.backup_xfercount[pp_num] = pp->xfer_len - (pp_reg->HCHLEN & HCHLEN_TLEN);
     }
 
     pp->pp_status = PIPE_XF;
