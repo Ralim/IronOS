@@ -227,7 +227,7 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 		-D${COMPILER}  		     \
 		-MMD 				     \
 		$(CHECKOPTIONS)		     \
-		-std=c++11			     \
+		-std=c++14			     \
 		$(OPTIM) 			     \
 		-fno-common			     \
 		-ffreestanding		     \
@@ -336,6 +336,29 @@ style:
 	done
 	@echo "Done"
 
+check-style:
+	@for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
+		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
+		if [ $$var -ne 0 ] ; then \
+			echo "$$src does not respect the coding style (diff: $$var lines)" ; \
+			exit 1 ; \
+		fi ; \
+	done
+	@echo "Style check passed"
+  
+tidy:
+	@for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
+		echo "Running tidy on $$src..." ; \
+		clang-tidy -checks="-*,modernize-use-auto,modernize-use-nullptr,\
+			readability-else-after-return,readability-simplify-boolean-expr,\
+			readability-redundant-member-init,modernize-use-default-member-init,\
+			modernize-use-equals-default,modernize-use-equals-delete,\
+			modernize-use-using,modernize-loop-convert,\
+			cppcoreguidelines-no-malloc,misc-redundant-expression" \
+			-header-filter=".*" \
+			"$$src" ; \
+	done
+	@echo "Done"
 .PHONY: style all clean default
 .SECONDARY:
 

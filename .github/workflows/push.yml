@@ -168,3 +168,28 @@ jobs:
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
+  check_formatting:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: chmod
+        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
+
+      - name: Cached compiler source files
+        uses: actions/cache@v2.1.4
+        env:
+          cache-name: cache-compilers
+        with:
+          # we deliberately persist a cache folder forwards
+          path: /build/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - name: setup
+        run: ./setup.sh
+
+      - name: Check formatting with clang-format
+        run: cd source && make clean && make check-style
