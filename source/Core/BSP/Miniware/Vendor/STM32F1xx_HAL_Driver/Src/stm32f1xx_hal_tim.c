@@ -154,7 +154,6 @@ static void TIM_TI2_ConfigInputStage(TIM_TypeDef *TIMx, uint32_t TIM_ICPolarity,
 static void TIM_TI3_SetConfig(TIM_TypeDef *TIMx, uint32_t TIM_ICPolarity, uint32_t TIM_ICSelection, uint32_t TIM_ICFilter);
 static void TIM_TI4_SetConfig(TIM_TypeDef *TIMx, uint32_t TIM_ICPolarity, uint32_t TIM_ICSelection, uint32_t TIM_ICFilter);
 static void TIM_ETR_SetConfig(TIM_TypeDef *TIMx, uint32_t TIM_ExtTRGPrescaler, uint32_t TIM_ExtTRGPolarity, uint32_t ExtTRGFilter);
-static void TIM_ITRx_SetConfig(TIM_TypeDef *TIMx, uint16_t InputTriggerSource);
 static void TIM_DMAPeriodElapsedCplt(DMA_HandleTypeDef *hdma);
 static void TIM_DMATriggerCplt(DMA_HandleTypeDef *hdma);
 static void TIM_SlaveTimer_SetConfig(TIM_HandleTypeDef *htim, TIM_SlaveConfigTypeDef *sSlaveConfig);
@@ -4748,33 +4747,6 @@ static void TIM_TI4_SetConfig(TIM_TypeDef *TIMx, uint32_t TIM_ICPolarity, uint32
   TIMx->CCER  = tmpccer;
 }
 
-/**
- * @brief  Selects the Input Trigger source
- * @param  TIMx  to select the TIM peripheral
- * @param  InputTriggerSource : The Input Trigger source.
- *          This parameter can be one of the following values:
- *            @arg TIM_TS_ITR0 : Internal Trigger 0
- *            @arg TIM_TS_ITR1 : Internal Trigger 1
- *            @arg TIM_TS_ITR2 : Internal Trigger 2
- *            @arg TIM_TS_ITR3 : Internal Trigger 3
- *            @arg TIM_TS_TI1F_ED : TI1 Edge Detector
- *            @arg TIM_TS_TI1FP1 : Filtered Timer Input 1
- *            @arg TIM_TS_TI2FP2 : Filtered Timer Input 2
- *            @arg TIM_TS_ETRF : External Trigger input
- * @retval None
- */
-static void TIM_ITRx_SetConfig(TIM_TypeDef *TIMx, uint16_t InputTriggerSource) {
-  uint32_t tmpsmcr = 0U;
-
-  /* Get the TIMx SMCR register value */
-  tmpsmcr = TIMx->SMCR;
-  /* Reset the TS Bits */
-  tmpsmcr &= ~TIM_SMCR_TS;
-  /* Set the Input Trigger source and the slave mode*/
-  tmpsmcr |= InputTriggerSource | TIM_SLAVEMODE_EXTERNAL1;
-  /* Write to TIMx SMCR */
-  TIMx->SMCR = tmpsmcr;
-}
 /**
  * @brief  Configures the TIMx External Trigger (ETR).
  * @param  TIMx  to select the TIM peripheral
