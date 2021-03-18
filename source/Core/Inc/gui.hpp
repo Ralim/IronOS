@@ -24,7 +24,7 @@ typedef struct {
   const char *description;
   // return true if increment reached the maximum value
   bool (*const incrementHandler)(void);
-  void (*const draw)(void);
+  bool (*const draw)(void);
 } menuitem;
 
 void                  enterSettingsMenu();
