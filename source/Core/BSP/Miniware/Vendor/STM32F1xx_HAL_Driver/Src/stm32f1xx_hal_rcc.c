@@ -119,7 +119,6 @@
  */
 
 /* Private function prototypes -----------------------------------------------*/
-static void RCC_Delay(uint32_t mdelay);
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -1068,18 +1067,6 @@ void HAL_RCC_NMI_IRQHandler(void) {
     /* Clear RCC CSS pending bit */
     __HAL_RCC_CLEAR_IT(RCC_IT_CSS);
   }
-}
-
-/**
- * @brief  This function provides delay (in milliseconds) based on CPU cycles method.
- * @param  mdelay: specifies the delay time length, in milliseconds.
- * @retval None
- */
-static void RCC_Delay(uint32_t mdelay) {
-  __IO uint32_t Delay = mdelay * (SystemCoreClock / 8U / 1000U);
-  do {
-    __NOP();
-  } while (Delay--);
 }
 
 /**
