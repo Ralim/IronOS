@@ -233,6 +233,55 @@ def getCJKGlyph(sym):
     return s
 
 
+def getCharsFromFontIndex(index: int) -> str:
+    '''
+    Converts the font table index into its corresponding string escape
+    sequence(s).
+    '''
+
+    # We want to be able to use more than 254 symbols (excluding \x00 null
+    # terminator and \x01 new-line) in the font table but without making all
+    # the chars take 2 bytes. To do this, we use \xF1 to \xFF as lead bytes
+    # to designate double-byte chars, and leave the remaining as single-byte
+    # chars.
+    # 
+    # For the sake of sanity, \x00 always means the end of string, so we skip
+    # \xF1\x00 and others in the mapping.
+    #
+    # Mapping example:
+    #
+    # 0x02 => 2
+    # 0x03 => 3
+    # ...
+    # 0xEF => 239
+    # 0xF0 => 240
+    # 0xF1 0x01 => 1 * 0xFF - 15 + 1 = 241
+    # 0xF1 0x02 => 1 * 0xFF - 15 + 2 = 242
+    # ...
+    # 0xF1 0xFF => 1 * 0xFF - 15 + 255 = 495
+    # 0xF2 0x01 => 2 * 0xFF - 15 + 1 = 496
+    # ...
+    # 0xF2 0xFF => 2 * 0xFF - 15 + 255 = 750
+    # 0xF3 0x01 => 3 * 0xFF - 15 + 1 = 751
+    # ...
+    # 0xFF 0xFF => 15 * 0xFF - 15 + 255 = 4065
+
+    assert index >= 0
+    page = int((index + 14) / 0xFF)
+    assert page <= 0x0F
+    if page == 0:
+        return "\\x%0.2X" % index
+    else:
+        # Into extended range
+        # Leader is 0xFz where z is the page number
+        # Following char is the remainder
+        leader = page + 0xF0
+        value = ((index + 14) % 0xFF) + 1
+        assert leader <= 0xFF
+        assert value <= 0xFF
+        return "\\x%0.2X\\x%0.2X" % (leader, value)
+
+
 def getFontMapAndTable(textList):
     # the text list is sorted
     # allocate out these in their order as number codes
@@ -242,29 +291,20 @@ def getFontMapAndTable(textList):
     forcedFirstSymbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     # enforce numbers are first
     for sym in forcedFirstSymbols:
-        symbolMap[sym] = "\\x%0.2X" % index
+        symbolMap[sym] = getCharsFromFontIndex(index)
         index = index + 1
     totalSymbolCount = len(set(textList) | set(forcedFirstSymbols))
     # \x00 is for NULL termination and \x01 is for newline, so the maximum
-    # number of symbols allowed with 8 bits is `256 - 2`.
-    if totalSymbolCount > ((0xEE * 0x0F) - 2):
+    # number of symbols allowed is as follow (see also the comments in
+    # `getCharsFromFontIndex`):
+    if totalSymbolCount > (0x10 * 0xFF - 15) - 2:
         log(f"Error, too many used symbols for this version (total {totalSymbolCount})")
         sys.exit(1)
     log("Generating fonts for {} symbols".format(totalSymbolCount))
 
     for sym in textList:
         if sym not in symbolMap:
-            page = int(index / 0xEF)
-            if page == 0:
-                symbolMap[sym] = "\\x%0.2X" % index
-            else:
-                # Into extended range
-                # Leader is 0xFz where z is the page number
-                # Following char is the remainder
-                leader = page + 0xF0
-                value = (index % 0xEF) + 1
-                symbolMap[sym] = "\\x%0.2X" % leader + "\\x%0.2X" % value
-
+            symbolMap[sym] = getCharsFromFontIndex(index)
             index = index + 1
     # Get the font table
     fontTableStrings = []
