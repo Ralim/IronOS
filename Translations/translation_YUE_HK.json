@@ -263,7 +263,7 @@
 				"",
 				"電源脈衝"
 			],
-			"desc": "為保持電源而通電所用嘅功率 <watt（火）>"
+			"desc": "為保持電源喚醒而通電所用嘅功率 <watt（火）>"
 		},
 		"TipGain": {
 			"text2": [
@@ -309,17 +309,17 @@
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"",
+				"電源脈衝間隔"
 			],
-			"desc": "Time to wait beFore triggering everY power pulse <in 2.5s>"
+			"desc": "為保持電源喚醒，每次通電之間嘅間隔時間 <x2.5s（秒）>"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"",
+				"電源脈衝時長"
 			],
-			"desc": "power pulse duration <in 250ms>"
+			"desc": "為保持電源喚醒，每次通電脈衝嘅時間長度 <x250ms（亳秒）>"
 		}
 	}
 }
