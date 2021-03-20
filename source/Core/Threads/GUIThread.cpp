@@ -547,7 +547,13 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       OLED::setCursor(0, 8);
       OLED::print(SleepingTipAdvancedString);
       gui_drawTipTemp(true);
-      OLED::print(SymbolSpace);
+
+      if (boostModeOn) {
+        OLED::print(SymbolPlus);
+      } else {
+        OLED::print(SymbolSpace);
+      }
+
       printVoltage();
       OLED::print(SymbolVolts);
     } else {
