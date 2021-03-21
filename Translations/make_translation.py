@@ -289,29 +289,37 @@ def getFontMapAndTable(textList):
     symbolMap["\n"] = "\\x01"  # Force insert the newline char
     index = 2  # start at 2, as 0= null terminator,1 = new line
     forcedFirstSymbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    # enforce numbers are first
-    for sym in forcedFirstSymbols:
-        symbolMap[sym] = getCharsFromFontIndex(index)
-        index = index + 1
-    totalSymbolCount = len(set(textList) | set(forcedFirstSymbols))
+
+    # Get the font table, which does not include CJK chars
+    fontTable = fontTables.getFontMap()
+    fontSmallTable = fontTables.getSmallFontMap()
+
+    # We want to put all CJK chars after non-CJK ones so that the CJK chars
+    # do not need to be in the small font table to save space.
+    # We assume all symbols not in the font table to be a CJK char.
+    # We also enforce that numbers are first.
+    orderedNormalSymList = forcedFirstSymbols + [x for x in textList if x not in forcedFirstSymbols and x in fontTable]
+    orderedCJKSymList = [x for x in textList if x not in forcedFirstSymbols and x not in fontTable]
+
+    totalSymbolCount = len(orderedNormalSymList) + len(orderedCJKSymList)
     # \x00 is for NULL termination and \x01 is for newline, so the maximum
     # number of symbols allowed is as follow (see also the comments in
     # `getCharsFromFontIndex`):
     if totalSymbolCount > (0x10 * 0xFF - 15) - 2:
         log(f"Error, too many used symbols for this version (total {totalSymbolCount})")
         sys.exit(1)
+
     log("Generating fonts for {} symbols".format(totalSymbolCount))
 
-    for sym in textList:
-        if sym not in symbolMap:
+    for l in (orderedNormalSymList, orderedCJKSymList):
+        for sym in l:
+            assert(sym not in symbolMap)
             symbolMap[sym] = getCharsFromFontIndex(index)
             index = index + 1
-    # Get the font table
+
     fontTableStrings = []
     fontSmallTableStrings = []
-    fontTable = fontTables.getFontMap()
-    fontSmallTable = fontTables.getSmallFontMap()
-    for sym in forcedFirstSymbols:
+    for sym in orderedNormalSymList:
         if sym not in fontTable:
             log("Missing Large font element for {}".format(sym))
             sys.exit(1)
@@ -325,28 +333,18 @@ def getFontMapAndTable(textList):
             fontLine + "//{} -> {}".format(symbolMap[sym], sym)
         )
 
-    for sym in textList:
-        if sym not in fontTable:
-            # Assume this is a CJK character.
-            fromFont = getCJKGlyph(sym)
-            if fromFont is None:
-                log("Missing Large font element for {}".format(sym))
-                sys.exit(1)
-            # We store the glyph back to the fontTable.
-            fontTable[sym] = fromFont
-            # We also put a "replacement character" in the small font table
-            # for sanity. (It is a question mark with inverted colour.)
-            fontSmallTable[sym] = "0xFD, 0xFE, 0xAE, 0xF6, 0xF9, 0xFF,"
-        if sym not in forcedFirstSymbols:
-            fontLine = fontTable[sym]
-            fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
-            if sym not in fontSmallTable:
-                log("Missing Small font element for {}".format(sym))
-                sys.exit(1)
-            fontLine = fontSmallTable[sym]
-            fontSmallTableStrings.append(
-                fontLine + "//{} -> {}".format(symbolMap[sym], sym)
-            )
+    for sym in orderedCJKSymList:
+        assert(sym not in fontTable)
+        fontLine = getCJKGlyph(sym)
+        if fontLine is None:
+            log("Missing Large font element for {}".format(sym))
+            sys.exit(1)
+        fontTableStrings.append(fontLine + "//{} -> {}".format(symbolMap[sym], sym))
+        # No data to add to the small font table
+        fontSmallTableStrings.append(
+            "//                                   {} -> {}".format(symbolMap[sym], sym)
+        )
+
     outputTable = "const uint8_t USER_FONT_12[] = {" + to_unicode("\n")
     for line in fontTableStrings:
         # join font table int one large string
@@ -380,13 +378,14 @@ def writeLanguage(lang, defs, f):
     # From the letter counts, need to make a symbol translator & write out the font
     (fontTableText, symbolConversionTable) = getFontMapAndTable(textList)
 
-    f.write(fontTableText)
     try:
         langName = lang["languageLocalName"]
     except KeyError:
         langName = languageCode
 
-    f.write(to_unicode("// ---- " + langName + " ----\n\n"))
+    f.write(to_unicode("\n// ---- " + langName + " ----\n\n"))
+    f.write(fontTableText)
+    f.write(to_unicode("\n// ---- " + langName + " ----\n\n"))
 
     # ----- Writing SettingsDescriptions
     obj = lang["menuOptions"]
