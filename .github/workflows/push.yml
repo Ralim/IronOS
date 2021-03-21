@@ -49,14 +49,14 @@ jobs:
 
   tests:
     runs-on: ubuntu-20.04
-  steps:
-    - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-    - name: Setup
-      run: sudo apt-get update && sudo apt-get install -y python3
+      - name: Setup
+        run: sudo apt-get update && sudo apt-get install -y python3
 
-    - name: Run python tests
-      run: cd Translations && ./make_translation_test.py
+      - name: Run python tests
+        run: cd Translations && ./make_translation_test.py
 
   check_formatting:
     runs-on: ubuntu-20.04
