@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-const uint8_t *OLED::currentFont; // Pointer to the current font used for
 // rendering to the buffer
 uint8_t *OLED::firstStripPtr; // Pointers to the strips to allow for buffer
 // having extra content
@@ -20,7 +19,6 @@ uint8_t *OLED::secondStripPtr;   // Pointers to the strips
 bool     OLED::inLeftHandedMode; // Whether the screen is in left or not (used for
 // offsets in GRAM)
 OLED::DisplayState OLED::displayState;
-uint8_t            OLED::fontWidth, OLED::fontHeight;
 int16_t            OLED::cursor_x, OLED::cursor_y;
 bool               OLED::initDone = false;
 uint8_t            OLED::displayOffset;
@@ -81,12 +79,9 @@ static uint8_t lerp(uint8_t a, uint8_t b, uint8_t t) { return a + t * (b - a) / 
 
 void OLED::initialize() {
   cursor_x = cursor_y = 0;
-  currentFont         = USER_FONT_12;
-  fontWidth           = 12;
   inLeftHandedMode    = false;
   firstStripPtr       = &screenBuffer[FRAMEBUFFER_START];
   secondStripPtr      = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
-  fontHeight          = 16;
   displayOffset       = 0;
   memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
@@ -117,18 +112,37 @@ void OLED::setFramebuffer(uint8_t *buffer) {
  * UTF font handling is done using the two input chars.
  * Precursor is the command char that is used to select the table.
  */
-void OLED::drawChar(const uint16_t charCode) {
+void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
+  const uint8_t *currentFont;
+  static uint8_t fontWidth, fontHeight;
+  switch (fontStyle) {
+  case FontStyle::SMALL:
+    currentFont = USER_FONT_6x8;
+    fontHeight  = 8;
+    fontWidth   = 6;
+    break;
+  case FontStyle::EXTRAS:
+    currentFont = ExtraFontChars;
+    fontHeight  = 16;
+    fontWidth   = 12;
+    break;
+  case FontStyle::LARGE:
+  default:
+    currentFont = USER_FONT_12;
+    fontHeight  = 16;
+    fontWidth   = 12;
+    break;
+  }
+
   if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
-    cursor_x = 0;
-    cursor_y = 8;
+    setCursor(0, 8);
     return;
   } else if (charCode <= 0x01) {
     return;
   }
   // First index is \x02
-  uint16_t index = charCode - 2;
-  uint8_t *charPointer;
-  charPointer = ((uint8_t *)currentFont) + ((fontWidth * (fontHeight / 8)) * index);
+  const uint16_t index       = charCode - 2;
+  const uint8_t *charPointer = currentFont + ((fontWidth * (fontHeight / 8)) * index);
   drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
   cursor_x += fontWidth;
 }
@@ -235,7 +249,7 @@ void OLED::setRotation(bool leftHanded) {
 }
 
 // print a string to the current cursor location
-void OLED::print(const char *const str) {
+void OLED::print(const char *const str, FontStyle fontStyle) {
   const uint8_t *next = reinterpret_cast<const uint8_t *>(str);
   while (next[0]) {
     uint16_t index;
@@ -249,34 +263,10 @@ void OLED::print(const char *const str) {
       index = (next[0] - 0xF0) * 0xFF - 15 + next[1];
       next += 2;
     }
-    drawChar(index);
+    drawChar(index, fontStyle);
   }
 }
 
-void OLED::setFont(uint8_t fontNumber) {
-  if (fontNumber == 1) {
-    // small font
-    currentFont = USER_FONT_6x8;
-    fontHeight  = 8;
-    fontWidth   = 6;
-  } else if (fontNumber == 2) {
-    currentFont = ExtraFontChars;
-    fontHeight  = 16;
-    fontWidth   = 12;
-  } else {
-    currentFont = USER_FONT_12;
-    fontHeight  = 16;
-    fontWidth   = 12;
-  }
-}
-uint8_t OLED::getFont() {
-  if (currentFont == USER_FONT_6x8)
-    return 1;
-  else if (currentFont == ExtraFontChars)
-    return 2;
-  else
-    return 0;
-}
 inline void stripLeaderZeros(char *buffer, uint8_t places) {
   // Removing the leading zero's by swapping them to SymbolSpace
   // Stop 1 short so that we dont blank entire number if its zero
@@ -289,7 +279,7 @@ inline void stripLeaderZeros(char *buffer, uint8_t places) {
   }
 }
 // maximum places is 5
-void OLED::printNumber(uint16_t number, uint8_t places, bool noLeaderZeros) {
+void OLED::printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros) {
   char buffer[7] = {0};
 
   if (places >= 5) {
@@ -319,28 +309,26 @@ void OLED::printNumber(uint16_t number, uint8_t places, bool noLeaderZeros) {
   buffer[0] = 2 + number % 10;
   if (noLeaderZeros)
     stripLeaderZeros(buffer, places);
-  print(buffer);
+  print(buffer, fontStyle);
 }
 
-void OLED::debugNumber(int32_t val) {
+void OLED::debugNumber(int32_t val, FontStyle fontStyle) {
   if (abs(val) > 99999) {
-    OLED::print(SymbolSpace); // out of bounds
+    OLED::print(SymbolSpace, fontStyle); // out of bounds
     return;
   }
   if (val >= 0) {
-    OLED::print(SymbolSpace);
-    OLED::printNumber(val, 5);
+    OLED::print(SymbolSpace, fontStyle);
+    OLED::printNumber(val, 5, fontStyle);
   } else {
-    OLED::print(SymbolMinus);
-    OLED::printNumber(-val, 5);
+    OLED::print(SymbolMinus, fontStyle);
+    OLED::printNumber(-val, 5, fontStyle);
   }
 }
 
 void OLED::drawSymbol(uint8_t symbolID) {
   // draw a symbol to the current cursor location
-  setFont(2);
-  drawChar(symbolID + 2);
-  setFont(0);
+  drawChar(symbolID + 2, FontStyle::EXTRAS);
 }
 
 // Draw an area, but y must be aligned on 0/8 offset

@@ -26,6 +26,12 @@ extern "C" {
 #define OLED_HEIGHT       16
 #define FRAMEBUFFER_START 17
 
+enum class FontStyle {
+  SMALL,
+  LARGE,
+  EXTRAS,
+};
+
 class OLED {
 public:
   enum DisplayState : bool { OFF = false, ON = true };
@@ -48,30 +54,23 @@ public:
   // Get the current rotation of the LCD
   static bool    getRotation() { return inLeftHandedMode; }
   static int16_t getCursorX() { return cursor_x; }
-  static void    print(const char *string); // Draw a string to the current location, with current font
+  static void    print(const char *string, FontStyle fontStyle); // Draw a string to the current location, with selected font
   // Set the cursor location by pixels
   static void setCursor(int16_t x, int16_t y) {
     cursor_x = x;
     cursor_y = y;
   }
-  // Set cursor location by chars in current font
-  static void setCharCursor(int16_t x, int16_t y) {
-    cursor_x = x * fontWidth;
-    cursor_y = y * fontHeight;
-  }
-  static void    setFont(uint8_t fontNumber); // (Future) Set the font that is being used
-  static uint8_t getFont();
-  static void    drawImage(const uint8_t *buffer, uint8_t x, uint8_t width) { drawArea(x, 0, width, 16, buffer); }
   // Draws an image to the buffer, at x offset from top to bottom (fixed height renders)
-  static void printNumber(uint16_t number, uint8_t places, bool noLeaderZeros = true);
+  static void drawImage(const uint8_t *buffer, uint8_t x, uint8_t width) { drawArea(x, 0, width, 16, buffer); }
   // Draws a number at the current cursor location
+  static void printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros = true);
   // Clears the buffer
   static void clearScreen() { memset(firstStripPtr, 0, OLED_WIDTH * 2); }
   // Draws the battery level symbol
   static void drawBattery(uint8_t state) { drawSymbol(3 + (state > 10 ? 10 : state)); }
   // Draws a checkbox
   static void drawCheckbox(bool state) { drawSymbol((state) ? 16 : 17); }
-  static void debugNumber(int32_t val);
+  static void debugNumber(int32_t val, FontStyle fontStyle);
   static void drawSymbol(uint8_t symbolID);                                                           // Used for drawing symbols of a predictable width
   static void drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr);        // Draw an area, but y must be aligned on 0/8 offset
   static void drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr); // Draw an area, but y must be aligned on 0/8 offset
@@ -83,19 +82,17 @@ public:
   static void useSecondaryFramebuffer(bool useSecondary);
 
 private:
-  static void           drawChar(const uint16_t charCode); // Draw a character to the current cursor location
-  static void           setFramebuffer(uint8_t *buffer);
-  static const uint8_t *currentFont;      // Pointer to the current font used for rendering to the buffer
-  static uint8_t *      firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
-  static uint8_t *      secondStripPtr;   // Pointers to the strips
-  static bool           inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
-  static bool           initDone;
-  static DisplayState   displayState;
-  static uint8_t        fontWidth, fontHeight;
-  static int16_t        cursor_x, cursor_y;
-  static uint8_t        displayOffset;
-  static uint8_t        screenBuffer[16 + (OLED_WIDTH * 2) + 10]; // The data buffer
-  static uint8_t        secondFrameBuffer[OLED_WIDTH * 2];
+  static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
+  static void         setFramebuffer(uint8_t *buffer);
+  static uint8_t *    firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
+  static uint8_t *    secondStripPtr;   // Pointers to the strips
+  static bool         inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
+  static bool         initDone;
+  static DisplayState displayState;
+  static int16_t      cursor_x, cursor_y;
+  static uint8_t      displayOffset;
+  static uint8_t      screenBuffer[16 + (OLED_WIDTH * 2) + 10]; // The data buffer
+  static uint8_t      secondFrameBuffer[OLED_WIDTH * 2];
 };
 
 #endif /* OLED_HPP_ */
