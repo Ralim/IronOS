@@ -1,9 +1,12 @@
+#!/usr/bin/env python3
+# coding=utf-8
 import unittest
 
 
 class TestMakeTranslation(unittest.TestCase):
     def test_getCharsFromFontIndex(self):
         from make_translation import getCharsFromFontIndex
+
         self.assertEqual(getCharsFromFontIndex(2), "\\x02")
         self.assertEqual(getCharsFromFontIndex(239), "\\xEF")
         self.assertEqual(getCharsFromFontIndex(240), "\\xF0")
@@ -17,5 +20,5 @@ class TestMakeTranslation(unittest.TestCase):
             getCharsFromFontIndex(0x10 * 0xFF - 14)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
