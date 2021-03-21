@@ -17,6 +17,7 @@ if md5sum -c $MDPATH/ci/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2.
 else
     echo "ARM MD5 Mismatch, downloading fresh"
     sudo wget -q "https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2" -O gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
+    rm -rf $MDPATH/ci/gcc-arm*.bz2 || true
 fi
 
 if md5sum -c $MDPATH/ci/nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2.md5; then
@@ -24,6 +25,7 @@ if md5sum -c $MDPATH/ci/nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2.md
 else
     echo "RISCV MD5 Mismatch, downloading fresh"
     sudo wget -q "https://github.com/Ralim/nuclei-compiler/releases/download/2020.08/nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2" -O nuclei_riscv_newlibc_prebuilt_linux64_2020.08.tar.bz2
+    rm -rf $MDPATH/ci/nuclei*.bz2 || true
 fi
 
 echo "Extracting compilers"
