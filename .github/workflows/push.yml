@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
         model: ["TS100", "TS80", "TS80P", "Pinecil"]
+      fail-fast: true
 
     steps:
       - uses: actions/checkout@v2
