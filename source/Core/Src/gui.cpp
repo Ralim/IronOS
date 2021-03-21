@@ -12,7 +12,6 @@
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "main.hpp"
-#include "string.h"
 
 void gui_Menu(const menuitem *menu);
 
@@ -274,8 +273,33 @@ static void printShortDescription(uint32_t shortDescIndex, uint16_t cursorCharPo
   OLED::setCursor(OLED::getCursorX() - 2, 0);
 }
 
+/**
+ * Counts the number of chars in the string excluding the null terminator.
+ * This is a custom version of `strlen` which takes into account our custom
+ * double-byte char encoding.
+ * @param str The input string.
+ * @return The length of the string.
+ */
+static uint16_t str_display_len(const char *const str) {
+  const uint8_t *next  = reinterpret_cast<const uint8_t *>(str);
+  uint16_t       count = 0;
+  while (next[0]) {
+    if (next[0] <= 0xF0) {
+      count++;
+      next++;
+    } else {
+      if (!next[1]) {
+        break;
+      }
+      count++;
+      next += 2;
+    }
+  }
+  return count;
+}
+
 static int userConfirmation(const char *message) {
-  uint16_t messageWidth = FONT_12_WIDTH * (strlen(message) + 7);
+  uint16_t messageWidth = FONT_12_WIDTH * (str_display_len(message) + 7);
   uint32_t messageStart = xTaskGetTickCount();
 
   OLED::setFont(0);
@@ -1144,7 +1168,7 @@ void gui_Menu(const menuitem *menu) {
       if (descriptionStart == 0)
         descriptionStart = xTaskGetTickCount();
       // lower the value - higher the speed
-      int16_t descriptionWidth  = FONT_12_WIDTH * (strlen(menu[currentScreen].description) + 7);
+      int16_t descriptionWidth  = FONT_12_WIDTH * (str_display_len(menu[currentScreen].description) + 7);
       int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? (TICKS_100MS / 10) : (TICKS_100MS / 5)));
       descriptionOffset %= descriptionWidth; // Roll around at the end
       if (lastOffset != descriptionOffset) {

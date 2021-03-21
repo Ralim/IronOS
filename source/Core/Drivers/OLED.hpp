@@ -83,7 +83,7 @@ public:
   static void useSecondaryFramebuffer(bool useSecondary);
 
 private:
-  static void           drawChar(char c); // Draw a character to a specific location
+  static void           drawChar(const uint16_t charCode); // Draw a character to the current cursor location
   static void           setFramebuffer(uint8_t *buffer);
   static const uint8_t *currentFont;      // Pointer to the current font used for rendering to the buffer
   static uint8_t *      firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
