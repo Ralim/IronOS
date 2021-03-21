@@ -56,7 +56,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y python3
 
       - name: Run python tests
-        run: cd Translations && ./make_translation_test.py
+        run: cd Translations &&  chmod +x make_translation_test.py && ./make_translation_test.py
 
   check_formatting:
     runs-on: ubuntu-20.04
