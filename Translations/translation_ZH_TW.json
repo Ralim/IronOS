@@ -309,17 +309,17 @@
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"",
+				"電源脈衝間隔"
 			],
-			"desc": "Time to wait beFore triggering every keep-awake pulse <x 2.5s>"
+			"desc": "為保持電源喚醒，每次通電之間的間隔時間 <x2.5s（秒）>"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"",
+				"電源脈衝時長"
 			],
-			"desc": "Keep-awake-pulse duration <x 250ms>"
+			"desc": "為保持電源喚醒，每次通電脈衝的時間長度 <x250ms（亳秒）>"
 		}
 	}
 }
