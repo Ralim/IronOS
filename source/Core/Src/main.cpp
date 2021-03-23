@@ -41,7 +41,6 @@ int main(void) {
   preRToSInit();
   setTipX10Watts(0); // force tip off
   resetWatchdog();
-  OLED::setFont(0); // default to bigger font
   // Testing for which accelerometer is mounted
   settingsWereReset = restoreSettings(); // load the settings from flash
   resetWatchdog();

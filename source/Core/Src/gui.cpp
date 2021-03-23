@@ -243,15 +243,13 @@ const menuitem advancedMenu[] = {
 static void printShortDescriptionDoubleLine(uint32_t shortDescIndex) {
   if (SettingsShortNames[shortDescIndex][0][0] == '\x00') {
     // Empty first line means that this uses large font (for CJK).
-    OLED::setFont(0);
-    OLED::setCharCursor(0, 0);
-    OLED::print(SettingsShortNames[shortDescIndex][1]);
+    OLED::setCursor(0, 0);
+    OLED::print(SettingsShortNames[shortDescIndex][1], FontStyle::LARGE);
   } else {
-    OLED::setFont(1);
-    OLED::setCharCursor(0, 0);
-    OLED::print(SettingsShortNames[shortDescIndex][0]);
-    OLED::setCharCursor(0, 1);
-    OLED::print(SettingsShortNames[shortDescIndex][1]);
+    OLED::setCursor(0, 0);
+    OLED::print(SettingsShortNames[shortDescIndex][0], FontStyle::SMALL);
+    OLED::setCursor(0, 8);
+    OLED::print(SettingsShortNames[shortDescIndex][1], FontStyle::SMALL);
   }
 }
 
@@ -267,10 +265,8 @@ static void printShortDescription(uint32_t shortDescIndex, uint16_t cursorCharPo
   printShortDescriptionDoubleLine(shortDescIndex);
 
   // prepare cursor for value
-  OLED::setFont(0);
-  OLED::setCharCursor(cursorCharPosition, 0);
   // make room for scroll indicator
-  OLED::setCursor(OLED::getCursorX() - 2, 0);
+  OLED::setCursor(cursorCharPosition * FONT_12_WIDTH - 2, 0);
 }
 
 /**
@@ -302,7 +298,6 @@ static int userConfirmation(const char *message) {
   uint16_t messageWidth = FONT_12_WIDTH * (str_display_len(message) + 7);
   uint32_t messageStart = xTaskGetTickCount();
 
-  OLED::setFont(0);
   OLED::setCursor(0, 0);
   int16_t lastOffset = -1;
   bool    lcdRefresh = true;
@@ -316,7 +311,7 @@ static int userConfirmation(const char *message) {
 
       //^ Rolling offset based on time
       OLED::setCursor((OLED_WIDTH - messageOffset), 0);
-      OLED::print(message);
+      OLED::print(message, FontStyle::LARGE);
       lastOffset = messageOffset;
       lcdRefresh = true;
     }
@@ -357,10 +352,10 @@ static bool settings_displayInputVRange(void) {
   printShortDescription(0, 6);
 
   if (systemSettings.minDCVoltageCells) {
-    OLED::printNumber(2 + systemSettings.minDCVoltageCells, 1);
-    OLED::print(SymbolCellCount);
+    OLED::printNumber(2 + systemSettings.minDCVoltageCells, 1, FontStyle::LARGE);
+    OLED::print(SymbolCellCount, FontStyle::LARGE);
   } else {
-    OLED::print(SymbolDC);
+    OLED::print(SymbolDC, FontStyle::LARGE);
   }
   return false;
 }
@@ -377,12 +372,12 @@ static bool settings_setInputMinVRange(void) {
 static bool settings_displayInputMinVRange(void) {
   if (systemSettings.minDCVoltageCells) {
     printShortDescription(28, 4);
-    OLED::printNumber(systemSettings.minVoltageCells / 10, 2);
-    OLED::print(SymbolDot);
-    OLED::printNumber(systemSettings.minVoltageCells % 10, 1);
+    OLED::printNumber(systemSettings.minVoltageCells / 10, 2, FontStyle::LARGE);
+    OLED::print(SymbolDot, FontStyle::LARGE);
+    OLED::printNumber(systemSettings.minVoltageCells % 10, 1, FontStyle::LARGE);
   } else {
     printShortDescription(28, 5);
-    OLED::print(SettingNAChar);
+    OLED::print(SettingNAChar, FontStyle::LARGE);
   }
   return false;
 }
@@ -404,16 +399,16 @@ static bool settings_displayQCInputV(void) {
   // These are only used in QC modes
   switch (systemSettings.QCIdealVoltage) {
   case 0:
-    OLED::printNumber(9, 2);
-    OLED::print(SymbolVolts);
+    OLED::printNumber(9, 2, FontStyle::LARGE);
+    OLED::print(SymbolVolts, FontStyle::LARGE);
     break;
   case 1:
-    OLED::printNumber(12, 2);
-    OLED::print(SymbolVolts);
+    OLED::printNumber(12, 2, FontStyle::LARGE);
+    OLED::print(SymbolVolts, FontStyle::LARGE);
     break;
   case 2:
-    OLED::printNumber(20, 2);
-    OLED::print(SymbolVolts);
+    OLED::printNumber(20, 2, FontStyle::LARGE);
+    OLED::print(SymbolVolts, FontStyle::LARGE);
     break;
   default:
     break;
@@ -439,7 +434,7 @@ static bool settings_setSleepTemp(void) {
 
 static bool settings_displaySleepTemp(void) {
   printShortDescription(1, 5);
-  OLED::printNumber(systemSettings.SleepTemp, 3);
+  OLED::printNumber(systemSettings.SleepTemp, 3, FontStyle::LARGE);
   return false;
 }
 
@@ -457,13 +452,13 @@ static bool settings_setSleepTime(void) {
 static bool settings_displaySleepTime(void) {
   printShortDescription(2, 5);
   if (systemSettings.SleepTime == 0) {
-    OLED::print(OffString);
+    OLED::print(OffString, FontStyle::LARGE);
   } else if (systemSettings.SleepTime < 6) {
-    OLED::printNumber(systemSettings.SleepTime * 10, 2);
-    OLED::print(SymbolSeconds);
+    OLED::printNumber(systemSettings.SleepTime * 10, 2, FontStyle::LARGE);
+    OLED::print(SymbolSeconds, FontStyle::LARGE);
   } else {
-    OLED::printNumber(systemSettings.SleepTime - 5, 2);
-    OLED::print(SymbolMinutes);
+    OLED::printNumber(systemSettings.SleepTime - 5, 2, FontStyle::LARGE);
+    OLED::print(SymbolMinutes, FontStyle::LARGE);
   }
   return false;
 }
@@ -481,10 +476,10 @@ static bool settings_setShutdownTime(void) {
 static bool settings_displayShutdownTime(void) {
   printShortDescription(3, 5);
   if (systemSettings.ShutdownTime == 0) {
-    OLED::print(OffString);
+    OLED::print(OffString, FontStyle::LARGE);
   } else {
-    OLED::printNumber(systemSettings.ShutdownTime, 2);
-    OLED::print(SymbolMinutes);
+    OLED::printNumber(systemSettings.ShutdownTime, 2, FontStyle::LARGE);
+    OLED::print(SymbolMinutes, FontStyle::LARGE);
   }
   return false;
 }
@@ -516,7 +511,7 @@ static bool settings_setTempF(void) {
 static bool settings_displayTempF(void) {
   printShortDescription(5, 7);
 
-  OLED::print((systemSettings.temperatureInF) ? SymbolDegF : SymbolDegC);
+  OLED::print((systemSettings.temperatureInF) ? SymbolDegF : SymbolDegC, FontStyle::LARGE);
   return false;
 }
 
@@ -528,7 +523,7 @@ static bool settings_setSensitivity(void) {
 
 static bool settings_displaySensitivity(void) {
   printShortDescription(4, 7);
-  OLED::printNumber(systemSettings.sensitivity, 1, false);
+  OLED::printNumber(systemSettings.sensitivity, 1, FontStyle::LARGE, false);
   return false;
 }
 
@@ -566,10 +561,10 @@ static bool settings_setPowerLimit(void) {
 static bool settings_displayPowerLimit(void) {
   printShortDescription(20, 5);
   if (systemSettings.powerLimit == 0) {
-    OLED::print(OffString);
+    OLED::print(OffString, FontStyle::LARGE);
   } else {
-    OLED::printNumber(systemSettings.powerLimit, 2);
-    OLED::print(SymbolWatts);
+    OLED::printNumber(systemSettings.powerLimit, 2, FontStyle::LARGE);
+    OLED::print(SymbolWatts, FontStyle::LARGE);
   }
   return false;
 }
@@ -584,7 +579,7 @@ static bool settings_setScrollSpeed(void) {
 
 static bool settings_displayScrollSpeed(void) {
   printShortDescription(15, 7);
-  OLED::print((systemSettings.descriptionScrollSpeed) ? SettingFastChar : SettingSlowChar);
+  OLED::print((systemSettings.descriptionScrollSpeed) ? SettingFastChar : SettingSlowChar, FontStyle::LARGE);
   return false;
 }
 
@@ -612,16 +607,16 @@ static bool settings_displayDisplayRotation(void) {
 
   switch (systemSettings.OrientationMode) {
   case 0:
-    OLED::print(SettingRightChar);
+    OLED::print(SettingRightChar, FontStyle::LARGE);
     break;
   case 1:
-    OLED::print(SettingLeftChar);
+    OLED::print(SettingLeftChar, FontStyle::LARGE);
     break;
   case 2:
-    OLED::print(SettingAutoChar);
+    OLED::print(SettingAutoChar, FontStyle::LARGE);
     break;
   default:
-    OLED::print(SettingRightChar);
+    OLED::print(SettingRightChar, FontStyle::LARGE);
     break;
   }
   return false;
@@ -655,9 +650,9 @@ static bool settings_setBoostTemp(void) {
 static bool settings_displayBoostTemp(void) {
   printShortDescription(8, 5);
   if (systemSettings.BoostTemp) {
-    OLED::printNumber(systemSettings.BoostTemp, 3);
+    OLED::printNumber(systemSettings.BoostTemp, 3, FontStyle::LARGE);
   } else {
-    OLED::print(OffString);
+    OLED::print(OffString, FontStyle::LARGE);
   }
   return false;
 }
@@ -673,19 +668,19 @@ static bool settings_displayAutomaticStartMode(void) {
 
   switch (systemSettings.autoStartMode) {
   case 0:
-    OLED::print(SettingStartNoneChar);
+    OLED::print(SettingStartNoneChar, FontStyle::LARGE);
     break;
   case 1:
-    OLED::print(SettingStartSolderingChar);
+    OLED::print(SettingStartSolderingChar, FontStyle::LARGE);
     break;
   case 2:
-    OLED::print(SettingStartSleepChar);
+    OLED::print(SettingStartSleepChar, FontStyle::LARGE);
     break;
   case 3:
-    OLED::print(SettingStartSleepOffChar);
+    OLED::print(SettingStartSleepOffChar, FontStyle::LARGE);
     break;
   default:
-    OLED::print(SettingStartNoneChar);
+    OLED::print(SettingStartNoneChar, FontStyle::LARGE);
     break;
   }
   return false;
@@ -702,16 +697,16 @@ static bool settings_displayLockingMode(void) {
 
   switch (systemSettings.lockingMode) {
   case 0:
-    OLED::print(SettingLockDisableChar);
+    OLED::print(SettingLockDisableChar, FontStyle::LARGE);
     break;
   case 1:
-    OLED::print(SettingLockBoostChar);
+    OLED::print(SettingLockBoostChar, FontStyle::LARGE);
     break;
   case 2:
-    OLED::print(SettingLockFullChar);
+    OLED::print(SettingLockFullChar, FontStyle::LARGE);
     break;
   default:
-    OLED::print(SettingLockDisableChar);
+    OLED::print(SettingLockDisableChar, FontStyle::LARGE);
     break;
   }
   return false;
@@ -732,10 +727,9 @@ static bool settings_setResetSettings(void) {
   if (userConfirmation(SettingsResetWarning)) {
     resetSettings();
 
-    OLED::setFont(0);
     OLED::clearScreen();
     OLED::setCursor(0, 0);
-    OLED::print(ResetOKMessage);
+    OLED::print(ResetOKMessage, FontStyle::LARGE);
     OLED::refresh();
 
     waitForButtonPressOrTimeout(2000); // 2 second timeout
@@ -761,9 +755,9 @@ static void setTipOffset() {
       // cycle through the filter a fair bit to ensure we're stable.
       OLED::clearScreen();
       OLED::setCursor(0, 0);
-      OLED::print(SymbolDot);
+      OLED::print(SymbolDot, FontStyle::LARGE);
       for (uint8_t x = 0; x < (i / 4); x++)
-        OLED::print(SymbolDot);
+        OLED::print(SymbolDot, FontStyle::LARGE);
       OLED::refresh();
       osDelay(100);
     }
@@ -772,7 +766,7 @@ static void setTipOffset() {
   OLED::clearScreen();
   OLED::setCursor(0, 0);
   OLED::drawCheckbox(true);
-  OLED::printNumber(systemSettings.CalibrationOffset, 4);
+  OLED::printNumber(systemSettings.CalibrationOffset, 4, FontStyle::LARGE);
   OLED::refresh();
   osDelay(1200);
 }
@@ -796,15 +790,14 @@ static bool settings_displayCalibrate(void) {
 
 static bool settings_setCalibrateVIN(void) {
   // Jump to the voltage calibration subscreen
-  OLED::setFont(0);
   OLED::clearScreen();
 
   for (;;) {
     OLED::setCursor(0, 0);
-    OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) / 10, 2);
-    OLED::print(SymbolDot);
-    OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) % 10, 1, false);
-    OLED::print(SymbolVolts);
+    OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) / 10, 2, FontStyle::LARGE);
+    OLED::print(SymbolDot, FontStyle::LARGE);
+    OLED::printNumber(getInputVoltageX10(systemSettings.voltageDiv, 0) % 10, 1, FontStyle::LARGE, false);
+    OLED::print(SymbolVolts, FontStyle::LARGE);
 
     ButtonState buttons = getButtonState();
     switch (buttons) {
@@ -821,7 +814,7 @@ static bool settings_setCalibrateVIN(void) {
     case BUTTON_B_LONG:
       saveSettings();
       OLED::setCursor(0, 0);
-      OLED::printNumber(systemSettings.voltageDiv, 3);
+      OLED::printNumber(systemSettings.voltageDiv, 3, FontStyle::LARGE);
       OLED::refresh();
       waitForButtonPressOrTimeout(1000);
       return false;
@@ -872,7 +865,7 @@ static bool settings_setTempChangeShortStep(void) {
 
 static bool settings_displayTempChangeShortStep(void) {
   printShortDescription(22, 6);
-  OLED::printNumber(systemSettings.TempChangeShortStep, 2);
+  OLED::printNumber(systemSettings.TempChangeShortStep, 2, FontStyle::LARGE);
   return false;
 }
 
@@ -892,7 +885,7 @@ static bool settings_setTempChangeLongStep(void) {
 
 static bool settings_displayTempChangeLongStep(void) {
   printShortDescription(23, 6);
-  OLED::printNumber(systemSettings.TempChangeLongStep, 2);
+  OLED::printNumber(systemSettings.TempChangeLongStep, 2, FontStyle::LARGE);
   return false;
 }
 
@@ -905,11 +898,11 @@ static bool settings_setPowerPulse(void) {
 static bool settings_displayPowerPulse(void) {
   printShortDescription(24, 5);
   if (systemSettings.KeepAwakePulse) {
-    OLED::printNumber(systemSettings.KeepAwakePulse / 10, 1);
-    OLED::print(SymbolDot);
-    OLED::printNumber(systemSettings.KeepAwakePulse % 10, 1);
+    OLED::printNumber(systemSettings.KeepAwakePulse / 10, 1, FontStyle::LARGE);
+    OLED::print(SymbolDot, FontStyle::LARGE);
+    OLED::printNumber(systemSettings.KeepAwakePulse % 10, 1, FontStyle::LARGE);
   } else {
-    OLED::print(OffString);
+    OLED::print(OffString, FontStyle::LARGE);
   }
   return false;
 }
@@ -935,16 +928,16 @@ static bool settings_displayAnimationSpeed(void) {
   printShortDescription(30, 7);
   switch (systemSettings.animationSpeed) {
   case settingOffSpeed_t::SLOW:
-    OLED::print(SettingSlowChar);
+    OLED::print(SettingSlowChar, FontStyle::LARGE);
     break;
   case settingOffSpeed_t::MEDIUM:
-    OLED::print(SettingMediumChar);
+    OLED::print(SettingMediumChar, FontStyle::LARGE);
     break;
   case settingOffSpeed_t::FAST:
-    OLED::print(SettingFastChar);
+    OLED::print(SettingFastChar, FontStyle::LARGE);
     break;
   default:
-    OLED::print(SettingOffChar);
+    OLED::print(SettingOffChar, FontStyle::LARGE);
     break;
   }
   return false;
@@ -963,7 +956,7 @@ static bool settings_setPowerPulseWait(void) {
 static bool settings_displayPowerPulseWait(void) {
   if (systemSettings.KeepAwakePulse) {
     printShortDescription(31, 7);
-    OLED::printNumber(systemSettings.KeepAwakePulseWait, 1);
+    OLED::printNumber(systemSettings.KeepAwakePulseWait, 1, FontStyle::LARGE);
     return false;
   } else {
     return true; // skip
@@ -983,7 +976,7 @@ static bool settings_setPowerPulseDuration(void) {
 static bool settings_displayPowerPulseDuration(void) {
   if (systemSettings.KeepAwakePulse) {
     printShortDescription(32, 7);
-    OLED::printNumber(systemSettings.KeepAwakePulseDuration, 1);
+    OLED::printNumber(systemSettings.KeepAwakePulseDuration, 1, FontStyle::LARGE);
     return false;
   } else {
     return true; // skip
@@ -995,17 +988,17 @@ static bool settings_displayHallEffect(void) {
   printShortDescription(26, 7);
   switch (systemSettings.hallEffectSensitivity) {
   case 1:
-    OLED::print(SettingSensitivityLow);
+    OLED::print(SettingSensitivityLow, FontStyle::LARGE);
     break;
   case 2:
-    OLED::print(SettingSensitivityMedium);
+    OLED::print(SettingSensitivityMedium, FontStyle::LARGE);
     break;
   case 3:
-    OLED::print(SettingSensitivityHigh);
+    OLED::print(SettingSensitivityHigh, FontStyle::LARGE);
     break;
   case 0:
   default:
-    OLED::print(SettingSensitivityOff);
+    OLED::print(SettingSensitivityOff, FontStyle::LARGE);
     break;
   }
   return false;
@@ -1024,16 +1017,17 @@ static bool animOpenState = false;
 static void displayMenu(size_t index) {
   // Call into the menu
   const char *textPtr = SettingsMenuEntries[index];
+  FontStyle   font;
   if (textPtr[0] == '\x01') { // `\x01` is used as newline.
     // Empty first line means that this uses large font (for CJK).
-    OLED::setFont(0);
+    font = FontStyle::LARGE;
     textPtr++;
   } else {
-    OLED::setFont(1);
+    font = FontStyle::SMALL;
   }
   OLED::setCursor(0, 0);
   // Draw title
-  OLED::print(textPtr);
+  OLED::print(textPtr, font);
   // Draw symbol
   // 16 pixel wide image
   // 2 pixel wide scrolling indicator
@@ -1135,7 +1129,6 @@ void gui_Menu(const menuitem *menu) {
     // The extra buffer is discarded at the end of the transition.
     animOpenState = true;
     OLED::useSecondaryFramebuffer(true);
-    OLED::setFont(0);
     OLED::setCursor(0, 0);
     OLED::clearScreen();
     menu[currentScreen].draw();
@@ -1145,7 +1138,6 @@ void gui_Menu(const menuitem *menu) {
   }
 
   while ((menu[currentScreen].draw != NULL) && earlyExit == false) {
-    OLED::setFont(0);
     OLED::setCursor(0, 0);
     // If the user has hesitated for >=3 seconds, show the long text
     // Otherwise "draw" the option
@@ -1174,7 +1166,7 @@ void gui_Menu(const menuitem *menu) {
       if (lastOffset != descriptionOffset) {
         OLED::clearScreen();
         OLED::setCursor((OLED_WIDTH - descriptionOffset), 0);
-        OLED::print(menu[currentScreen].description);
+        OLED::print(menu[currentScreen].description, FontStyle::LARGE);
         lastOffset = descriptionOffset;
         lcdRefresh = true;
       }
