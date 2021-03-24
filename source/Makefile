@@ -352,4 +352,4 @@ check-style:
 # pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
 -include $(OUT_OBJS_CPP:.o=.d)
-
+-include $(OUTPUT_DIR)/Core/Gen/Translation.*.d
