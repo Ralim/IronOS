@@ -28,6 +28,8 @@ Depending on how your device is being powered, at one end of the screen, the fir
 
 If you see exclamation marks (!!!) where the solderion icon should be, this indicates that the firmware can't see the tip connected. This could indicate a problem with the iron or tip if there is one inserted. First try removing and reinstalling the tip. If the issue persists please see the [hardware issues section](Documentation/HardwareIssues.md).
 
+This screen features a burn-in protection feature, where if no buttons or movement have been detected for a while it will automatically blank the screen to try and reduce burn in if the iron is left unattended. Any movement or button press will wake the screen.
+
 ### Hidden Extras
 
 Additionally to the two icons shown, there are two "hidden" actions that can be performed on this menu.
@@ -40,4 +42,43 @@ If you press and hold the button near the rear of the iron it will take you into
 
 When you press the button to enter into the soldering mode, the iron will instantly start to heat up the tip.
 
+The firmware defaults to 320C as the set point for the soldering mode, however on this screen you can enter into the adjustment screen by pressing either button.
+
+Pressing and holding the button near the tip will enter **boost** mode. This allows temporarily overriding the set temperature to a higher (or lower) value. This can be useful as a way to force the tip to a higher temperature to drive more wattage into a large joint when the thermal connection is not ideal.
+
+Pressing and holding the rear button will exit soldering mode and land you back at the home screen. You can also do this by pressing both buttons at once and this will also work, this is a bit harder to do but is kept for compatibility to the Miniware firmware.
+
+Pressing and holding **both** buttons at once will enter locked mode, which will prevent the buttons doing anything. You can in the settings allow boost mode in locked mode optionally. This can be useful if you find yourself hitting the buttons and entering into the temperature adjustment screen by accident.
+
+### Idle sleep
+
+If the iron detects a period of time without any significant movement, it will enter into a sleep mode. This is indicated with a graphic one the screen similar to ZZzz (or text in detailed mode).
+
+In this mode the temperature of the iron will automatically reduce down to a temperature just below the melting point of solder. This helps reduce the rate of oxidation and damage to the iron tip.
+
+Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
+
+The Pinecil has a footprint (unpopulated) on the PCB for a hall effect sensor (Si7210). If you fit this then iron will additionally force sleep when it detects a strong magnetic field near the tip of the plastic body. This allows attaching a strong magnet near your iron holder to ensure it always enters sleep.
+
+### Idle shutdown
+
+If, after entering sleep mode the iron still does not see movement for a much longer time; it will shutdown and return to the home screen.
+
 ## Settings Menu
+
+The settings menu is the most often evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has a description so that you dont _need_ to come back here to figure them all out.
+
+To navigate the menu, the two buttons act seperately.
+The button that you pressed to enter the menu (rear) cycles down the options, and the other button (front) will change the current option.
+
+To see a description of an option, just pause and wait and after a little bit it will scroll across the screen.
+
+The menu is comprised of a "main menu" of categories and then sub items that allow you to adjust parameters.
+
+You can long hold buttons to change through options faster, and there is some acceleration on when holding the buttons.
+
+There is a small scrollbar that will be shown along the edge of the screen to indicate how far through the current list you are.
+
+Additionally, this scrollbar will blink rapidly when you are on the last item in a menu choice.
+
+I highly reccomend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit yourself.
