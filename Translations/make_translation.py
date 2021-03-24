@@ -577,6 +577,12 @@ def writeLanguage(lang, defs, f):
         + ";\n"
     )
 
+    f.write(to_unicode("\n// Verify SettingsItemIndex values:\n"))
+    for i, mod in enumerate(defs["menuOptions"]):
+        eid = mod["id"]
+        f.write(to_unicode(
+            f"static_assert(static_cast<uint8_t>(SettingsItemIndex::{eid}) == {i});\n"))
+
 
 def readVersion(jsonDir):
     with open(os.path.relpath(jsonDir + "/../source/version.h"), "r") as version_file:

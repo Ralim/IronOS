@@ -81,4 +81,45 @@ extern const char *SymbolCellCount;
 extern const char *SymbolVersionNumber;
 
 extern const char *DebugMenu[];
+
+enum class SettingsItemIndex : uint8_t {
+  DCInCutoff,
+  SleepTemperature,
+  SleepTimeout,
+  ShutdownTimeout,
+  MotionSensitivity,
+  TemperatureUnit,
+  AdvancedIdle,
+  DisplayRotation,
+  BoostTemperature,
+  AutoStart,
+  CooldownBlink,
+  TemperatureCalibration,
+  SettingsReset,
+  VoltageCalibration,
+  AdvancedSoldering,
+  ScrollingSpeed,
+  TipModel,
+  SimpleCalibrationMode,
+  AdvancedCalibrationMode,
+  QCMaxVoltage,
+  PowerLimit,
+  ReverseButtonTempChange,
+  TempChangeShortStep,
+  TempChangeLongStep,
+  PowerPulsePower,
+  TipGain,
+  HallEffSensitivity,
+  LockingMode,
+  MinVolCell,
+  AnimLoop,
+  AnimSpeed,
+  PowerPulseWait,
+  PowerPulseDuration,
+};
+
+constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
+// Use a constexpr function for type-checking.
+#define SETTINGS_DESC(i) (SettingsDescriptions[settings_item_index(i)])
+
 #endif /* TRANSLATION_H_ */
