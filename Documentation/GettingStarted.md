@@ -1,12 +1,12 @@
 # Getting Started
 
 Getting started with Iron OS on your Pinecil/TS80/TS80P/TS100.
-If your device did not come with Iron OS already installed, or if you need to update to the latest version; please see the [Flashing Guide](Documentation/Flashing.md).
+If your device did not come with Iron OS already installed, or if you need to update to the latest version; please see the [Flashing Guide](/Documentation/Flashing.md).
 
 Once your Iron has been flashed, one first power on it _may_ warn you about the system settings being reset.
 _Do not panic_; this is 100% completely normal. This is here to note to you that they have been reset to handle the internal structure changing.
 
-If you receive a warning about the accelerometer or USB-PD not being detected, please see [here](Documentation/HardwareIssues.md).
+If you receive a warning about the accelerometer or USB-PD not being detected, please see [here](/Documentation/HardwareIssues.md).
 
 ## The Home screen (or idle screen)
 
@@ -14,7 +14,7 @@ This is the landing page of the firmware, from here you can choose to either go 
 
 By default this will show a screen similar to the one below:
 
-![Home Screen](Documentation/images/HomeScreen.png)
+![Home Screen](/Documentation/images/HomeScreen.png)
 
 Note that this may be drawn mirrored depending on the orientation of your screen.
 
@@ -26,7 +26,7 @@ In the settings, you can turn on an advanced idle screen instead. The buttons st
 
 Depending on how your device is being powered, at one end of the screen, the firmware will either draw text to show you the current-voltage your unit is being provided with, a battery icon (if battery mode is enabled) or a power plug icon.
 
-If you see exclamation marks (!!!) where the soldering iron should be, this indicates that the firmware can't see the tip connected. This could indicate a problem with the iron or tip if there is one inserted. First, try removing and reinstalling the tip. If the issue persists please see the [hardware issues section](Documentation/HardwareIssues.md).
+If you see exclamation marks (!!!) where the soldering iron should be, this indicates that the firmware can't see the tip connected. This could indicate a problem with the iron or tip if there is one inserted. First, try removing and reinstalling the tip. If the issue persists please see the [hardware issues section](/Documentation/HardwareIssues.md).
 
 This screen features a burn-in protection feature, where if no buttons or movement have been detected for a while it will automatically blank the screen to try and reduce burn-in if the iron is left unattended. Any movement or button press will wake the screen.
 
@@ -36,7 +36,7 @@ Additionally to the two icons shown, there are two "hidden" actions that can be 
 
 If you press and hold on to the button near the tip of the soldering iron, this will bring up the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
 
-If you press and hold the button near the rear of the iron it will take you into the [debug menu](Documentation/DebugMenu.md).
+If you press and hold the button near the rear of the iron it will take you into the [debug menu](/Documentation/DebugMenu.md).
 
 ## Soldering Mode
 
