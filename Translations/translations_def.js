@@ -307,21 +307,6 @@ var def =
 			"maxLen2": 11
 		},
 		{
-			"id": "TipModel",
-			"maxLen": 8,
-			"maxLen2": 16
-		},
-		{
-			"id": "SimpleCalibrationMode",
-			"maxLen": 8,
-			"maxLen2": 16
-		},
-		{
-			"id": "AdvancedCalibrationMode",
-			"maxLen": 8,
-			"maxLen2": 16
-		},
-		{
 			"id": "QCMaxVoltage",
 			"maxLen": 8,
 			"maxLen2": 16
@@ -350,11 +335,6 @@ var def =
 			"id": "PowerPulsePower",
 			"maxLen": 6,
 			"maxLen2": 16
-		},
-		{
-			"id": "TipGain",
-			"maxLen": 6,
-			"maxLen2": 8
 		},
 		{
 			"id": "HallEffSensitivity",

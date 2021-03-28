@@ -201,27 +201,6 @@
 			],
 			"desc": "Imposta la velocità di scorrimento del testo [L: lenta; V: veloce]"
 		},
-		"TipModel": {
-			"text2": [
-				"Modello",
-				"punta"
-			],
-			"desc": "Seleziona il modello della punta in uso"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Calibrazione",
-				"semplice"
-			],
-			"desc": "Calibra le rilevazioni di temperatura tramite l'utilizzo di acqua in ebollizione"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Calibrazione",
-				"avanzata"
-			],
-			"desc": "Calibra le rilevazioni di temperatura attraverso la termocoppia presente nella punta"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Voltaggio",
@@ -263,13 +242,6 @@
 				"impulso"
 			],
 			"desc": "Regola la potenza di un \"impulso sveglia\" atto a prevenire lo standby eventuale dell'alimentatore [watt]"
-		},
-		"TipGain": {
-			"text2": [
-				"Guadagno",
-				"punta"
-			],
-			"desc": "Varia il guadagno della punta"
 		},
 		"HallEffSensitivity": {
 			"text2": [

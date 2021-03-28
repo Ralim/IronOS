@@ -201,27 +201,6 @@
 			],
 			"desc": "Brzina kretanja opisnih poruka poput ove. <S=sporo, B=brzo>"
 		},
-		"TipModel": {
-			"text2": [
-				"Model",
-				"vrha"
-			],
-			"desc": "Odabir modela lemnog vrha."
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Jednostavna",
-				"kalibracija"
-			],
-			"desc": "Jednostavna kalibracija kipućom vodom."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Napredna",
-				"kalibracija"
-			],
-			"desc": "Napredna kalibracija pomoću termopara."
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Ulazna",
@@ -263,13 +242,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

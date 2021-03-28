@@ -57,8 +57,6 @@ static bool settings_setResetSettings(void);
 static bool settings_displayResetSettings(void);
 static bool settings_setCalibrate(void);
 static bool settings_displayCalibrate(void);
-// static bool settings_setTipGain(void);
-// static bool settings_displayTipGain(void);
 static bool settings_setCalibrateVIN(void);
 static bool settings_displayCalibrateVIN(void);
 static bool settings_displayReverseButtonTempChangeEnabled(void);
@@ -236,8 +234,7 @@ const menuitem advancedMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), settings_setPowerPulse, settings_displayPowerPulse},                               /*Power Pulse adjustment */
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), settings_setPowerPulseWait, settings_displayPowerPulseWait},                        /*Power Pulse Wait adjustment*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), settings_setPowerPulseDuration, settings_displayPowerPulseDuration},            /*Power Pulse Duration adjustment*/
-    //{ SETTINGS_DESC(SettingsDescriptionsIndex::TipGain), settings_setTipGain, settings_displayTipGain }, /*TipGain*/
-    {nullptr, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
+    {nullptr, nullptr, nullptr}                                                                                                            // end of menu marker. DO NOT REMOVE
 };
 
 static void printShortDescriptionDoubleLine(SettingsItemIndex settingsItemIndex) {

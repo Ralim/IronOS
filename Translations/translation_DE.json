@@ -202,27 +202,6 @@
 			],
 			"desc": "Scrollgeschwindigkeit der Erläuterungen <L=langsam | S=schnell>"
 		},
-		"TipModel": {
-			"text2": [
-				"Löt-",
-				"spitze"
-			],
-			"desc": "Auswahl der Lötspitze"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Einfache",
-				"Kalibrierung"
-			],
-			"desc": "Einfache Kalibrierung mit heißem Wasser"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Erweiterte",
-				"Kalibrierung"
-			],
-			"desc": "Erweiterte Kalibrierung mit Thermoelement an der Lötspitze"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Spannungs-",
@@ -264,13 +243,6 @@
 				"impuls"
 			],
 			"desc": "Powerbank mit einem Impuls wach halten <Watt>"
-		},
-		"TipGain": {
-			"text2": [
-				"Ändere",
-				"Spitzen-Faktor"
-			],
-			"desc": "Spitzen-Faktor"
 		},
 		"HallEffSensitivity": {
 			"text2": [

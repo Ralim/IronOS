@@ -202,27 +202,6 @@
 			],
 			"desc": "解說文字嘅捲動速度"
 		},
-		"TipModel": {
-			"text2": [
-				"Tip",
-				"model"
-			],
-			"desc": "Tip model selection"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Simple",
-				"calibration"
-			],
-			"desc": "Using hot water to calibrate tip"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Advanced",
-				"calibration"
-			],
-			"desc": "Using a thermocouple on the tip to calibrate it"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"",
@@ -264,13 +243,6 @@
 				"電源脈衝"
 			],
 			"desc": "為保持電源喚醒而通電所用嘅功率 <watt（火）>"
-		},
-		"TipGain": {
-			"text2": [
-				"",
-				"温度增幅"
-			],
-			"desc": "辣雞咀温度增幅"
 		},
 		"HallEffSensitivity": {
 			"text2": [

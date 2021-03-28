@@ -201,27 +201,6 @@
 			],
 			"desc": "Vitesse de défilement du texte <R=rapide | L=lent>"
 		},
-		"TipModel": {
-			"text2": [
-				"Modèle de",
-				"la panne"
-			],
-			"desc": "Sélection du modèle de la panne"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Calibration",
-				"simple"
-			],
-			"desc": "Calibration simple à l'aide d'eau chaude"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Calibration",
-				"avancée"
-			],
-			"desc": "Calibration avancée à l'aide d'un thermocouple sur la panne"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Tension max.",
@@ -263,13 +242,6 @@
 				"impulsions"
 			],
 			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries <watt>"
-		},
-		"TipGain": {
-			"text2": [
-				"Modifier",
-				"gain panne"
-			],
-			"desc": "Modifier le gain de la panne"
 		},
 		"LockingMode": {
 			"text2": [

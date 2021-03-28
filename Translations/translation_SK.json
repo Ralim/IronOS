@@ -201,27 +201,6 @@
 			],
 			"desc": "Rýchlosť pohybu tohto textu"
 		},
-		"TipModel": {
-			"text2": [
-				"Typ",
-				"hrotu"
-			],
-			"desc": "Zvolenie hrotu"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Zjednodušená",
-				"kalibrácia"
-			],
-			"desc": "Zjednodušená kalibrácia pomocou horúcej vody"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Pokročilá",
-				"kalibrácia"
-			],
-			"desc": "Pokročilá kalibrácia meraním teploty hrotu"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Obmedzenie",
@@ -263,13 +242,6 @@
 				"impulzu"
 			],
 			"desc": "Impulz udržujúci napájací zdroj zapnutý (power banky) <watt>"
-		},
-		"TipGain": {
-			"text2": [
-				"Zisk",
-				"hrotu"
-			],
-			"desc": "Úprava zisku hrotu (meranie)"
 		},
 		"HallEffSensitivity": {
 			"text2": [

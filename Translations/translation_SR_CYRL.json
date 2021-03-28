@@ -201,27 +201,6 @@
 			],
 			"desc": "Брзина кретања описних порука попут ове. <С=споро, Б=брзо>"
 		},
-		"TipModel": {
-			"text2": [
-				"Модел",
-				"врха"
-			],
-			"desc": "Одабир модела лемног врха."
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Једноставна",
-				"калибрација"
-			],
-			"desc": "Једноставна калибрација кипућом водом."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Напредна",
-				"калибрација"
-			],
-			"desc": "Напредна калибрација помоћу термопара."
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Улазна",
@@ -263,13 +242,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

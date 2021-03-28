@@ -201,27 +201,6 @@
 			],
 			"desc": "Scrolsnelheid van de tekst."
 		},
-		"TipModel": {
-			"text2": [
-				"Punt",
-				"Model"
-			],
-			"desc": "Gekozen punt"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Eenvoudige",
-				"Calibrering"
-			],
-			"desc": "Calibrering met heet water"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Gevorderde",
-				"Calibrering"
-			],
-			"desc": "Calibrering met thermokoppel"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Vermogen",
@@ -263,13 +242,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

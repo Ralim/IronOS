@@ -201,27 +201,6 @@
 			],
 			"desc": "Rychlost posuvu popisků podobných tomuto <P=Pomalu, R=Rychle>"
 		},
-		"TipModel": {
-			"text2": [
-				"Model",
-				"hrotu"
-			],
-			"desc": "Výběr modelu hrotu."
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Jednoduchá",
-				"kalibrace"
-			],
-			"desc": "Jednoduchá kalibrace pomocí horké vody."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Pokročilá",
-				"kalibrace"
-			],
-			"desc": "Pokročilá kalibrace pomocí termočlánku na hrotu."
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Výkon",
@@ -263,13 +242,6 @@
 				"Výkon. pulsu"
 			],
 			"desc": "Puls pro udržení zařízení v chodu (kvůli power bankám)."
-		},
-		"TipGain": {
-			"text2": [
-				"Změnit",
-				"zisk hr."
-			],
-			"desc": "Zisk hrotu (měření)"
 		},
 		"HallEffSensitivity": {
 			"text2": [

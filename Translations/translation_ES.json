@@ -201,27 +201,6 @@
 			],
 			"desc": "Velocidad de desplazamiento del texto <R=rápida L=lenta>"
 		},
-		"TipModel": {
-			"text2": [
-				"Modelo de",
-				"punta"
-			],
-			"desc": "Elegir el modelo de punta actual."
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Calibración",
-				"simple"
-			],
-			"desc": "Calibración simple con agua caliente."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Calibración",
-				"avanzada"
-			],
-			"desc": "Calibrar con un termopar en la punta; más difícil."
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Potencia de",
@@ -263,13 +242,6 @@
 				"constantes"
 			],
 			"desc": "Aplica unos pulsos necesarios para mantener encendidas ciertas baterías portátiles. En vatios."
-		},
-		"TipGain": {
-			"text2": [
-				"Ajustar ganancia",
-				"de punta"
-			],
-			"desc": "Modificar el valor de ganancia de la punta."
 		},
 		"HallEffSensitivity": {
 			"text2": [

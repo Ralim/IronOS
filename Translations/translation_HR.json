@@ -201,27 +201,6 @@
 			],
 			"desc": "Brzina kretanja dugačkih poruka. <B=brzo, S=sporo>"
 		},
-		"TipModel": {
-			"text2": [
-				"Model",
-				"Vrha"
-			],
-			"desc": "Odabir modela lemnog vrha"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Jednostavna",
-				"kalibracija"
-			],
-			"desc": "Kalibracija kipućom vodom"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Napredna",
-				"kalibracija"
-			],
-			"desc": "Kalibracija korištenjem termo-elementa"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Snaga",
@@ -263,13 +242,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

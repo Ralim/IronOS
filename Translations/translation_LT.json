@@ -201,27 +201,6 @@
 			],
 			"desc": "Greitis, kuriuo šis tekstas slenka"
 		},
-		"TipModel": {
-			"text2": [
-				"Antgalio",
-				"modelis"
-			],
-			"desc": "Antgalio modelio pasirinkimas"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Paprastas",
-				"kalibravimas"
-			],
-			"desc": "Paprastas kalibravimas naudojant karštą vandienį"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Išplėstinis",
-				"kalibravimas"
-			],
-			"desc": "Išplėstinis kalibravimas naudojant termoelementą"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC mait.",
@@ -263,13 +242,6 @@
 				"Pulso W"
 			],
 			"desc": "Periodinis galios pulso intensyvumas maitinblokiui, neleidžiantis jam užmigti."
-		},
-		"TipGain": {
-			"text2": [
-				"Keisti",
-				"antgreit"
-			],
-			"desc": "Antgalio pokyčio greitis"
 		},
 		"HallEffSensitivity": {
 			"text2": [

@@ -201,27 +201,6 @@
 			],
 			"desc": "Hitrost, s katero se prikazuje besedilo <P=počasi | H=hitro>"
 		},
-		"TipModel": {
-			"text2": [
-				"Tip",
-				"konice"
-			],
-			"desc": "Izbira tipa konice"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Preprosta",
-				"kalibracija"
-			],
-			"desc": "Preprosta kalibracija z vročo vodo."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Napredna",
-				"kalibracija"
-			],
-			"desc": "Napredna kalibracija s termočlenom na konici"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
@@ -263,13 +242,6 @@
 				"moči"
 			],
 			"desc": "Velikost moči za vzdrževanje budnosti."
-		},
-		"TipGain": {
-			"text2": [
-				"Nastavi",
-				"moč kon."
-			],
-			"desc": "Nastavi moč konice."
 		},
 		"HallEffSensitivity": {
 			"text2": [

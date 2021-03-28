@@ -202,27 +202,6 @@
 			],
 			"desc": "Speed info text scrolls past at <S=slow | F=fast>"
 		},
-		"TipModel": {
-			"text2": [
-				"Tip",
-				"model"
-			],
-			"desc": "Tip model selection"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Simple",
-				"calibration"
-			],
-			"desc": "Using hot water to calibrate tip"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Advanced",
-				"calibration"
-			],
-			"desc": "Using a thermocouple on the tip to calibrate it"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
@@ -264,13 +243,6 @@
 				"pulse"
 			],
 			"desc": "Intensity of power of keep-awake-pulse <watt>"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [
