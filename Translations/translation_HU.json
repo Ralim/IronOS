@@ -201,27 +201,6 @@
 			],
 			"desc": "Szöveggörgetés sebessége"
 		},
-		"TipModel": {
-			"text2": [
-				"Forr.páka",
-				"modell"
-			],
-			"desc": "Forrasztópáka modell kiválasztása"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Egyszerű",
-				"kalibráció"
-			],
-			"desc": "Egyszerű kalibrálás forró víz segítségével"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Haladó",
-				"Kalibráció"
-			],
-			"desc": "Haladó kalibrálás hegyre helyezett hőelem segítségével"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Max. USB",
@@ -263,13 +242,6 @@
 				"pulzus W"
 			],
 			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok nagysága <W>"
-		},
-		"TipGain": {
-			"text2": [
-				"Pákaerősítés",
-				""
-			],
-			"desc": "Pákaerősítés állítása"
 		},
 		"HallEffSensitivity": {
 			"text2": [

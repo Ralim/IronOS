@@ -205,27 +205,6 @@
 			],
 			"desc": "Bu yazının kayma hızı S= Yavaş, F= Hızlı"
 		},
-		"TipModel": {
-			"text2": [
-				"Uç",
-				"Modeli"
-			],
-			"desc": "Uç Modeli seçimi"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Basit",
-				"Kalibrasyon"
-			],
-			"desc": "Sıcak su kullanarak basit kalibrasyon"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Gelişmiş",
-				"Kalibrasyon"
-			],
-			"desc": "Uçtaki ısı sensörünü kullanarak gelişmiş kalibrasyon"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
@@ -281,13 +260,6 @@
 				"Pulse W"
 			],
 			"desc": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Kazancınız"
 		},
 		"HallEffSensitivity": {
 			"text2": [

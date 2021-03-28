@@ -202,27 +202,6 @@
 			],
 			"desc": "Szybkość przewijania tekstu"
 		},
-		"TipModel": {
-			"text2": [
-				"Model",
-				"grotu"
-			],
-			"desc": "Wybór modelu grotu"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Prosta",
-				"kalibracja"
-			],
-			"desc": "Prosta kalibracja, używając gorącej wody"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Zaawansowana",
-				"kalibracja"
-			],
-			"desc": "Zaawansowana kalibracja za pomocą termopary na grocie"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Moc",
@@ -264,13 +243,6 @@
 				"impulsu"
 			],
 			"desc": "W przypadku używania powerbanku, utrzymuj moc na poziomie <W> aby nie uśpić powerbanku"
-		},
-		"TipGain": {
-			"text2": [
-				"Zm. zysk",
-				"grotu"
-			],
-			"desc": "Własne ustawienia zysku grotu, celem lepszej kalibracji wysokich temperatur <uV/°C>"
 		},
 		"HallEffSensitivity": {
 			"text2": [
