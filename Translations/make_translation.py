@@ -427,7 +427,7 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
 
     # ----- Writing SettingsDescriptions
     obj = lang["menuOptions"]
-    f.write("const char* SettingsShortNames[][2] = {\n")
+    f.write("const char* SettingsShortNames[] = {\n")
 
     max_len = 25
     index = 0
@@ -436,7 +436,8 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         if "feature" in mod:
             f.write(f"#ifdef {mod['feature']}\n")
         f.write(f"  /* [{index:02d}] {eid.ljust(max_len)[:max_len]} */ ")
-        f.write(f'{{ "{convert_string(symbol_conversion_table, (obj[eid]["text2"][0]))}", "{convert_string(symbol_conversion_table, (obj[eid]["text2"][1]))}" }},//{obj[eid]["text2"]} \n')
+        txt = f'{obj[eid]["text2"][0]}\\n{obj[eid]["text2"][1]}'
+        f.write(f'{{ "{convert_string(symbol_conversion_table, txt)}" }},//{obj[eid]["text2"]} \n')
 
         if "feature" in mod:
             f.write("#endif\n")

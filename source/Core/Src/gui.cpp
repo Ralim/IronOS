@@ -239,15 +239,12 @@ const menuitem advancedMenu[] = {
 
 static void printShortDescriptionDoubleLine(SettingsItemIndex settingsItemIndex) {
   uint8_t shortDescIndex = static_cast<uint8_t>(settingsItemIndex);
-  if (SettingsShortNames[shortDescIndex][0][0] == '\x00') {
+  OLED::setCursor(0, 0);
+  if (SettingsShortNames[shortDescIndex][0] == '\x01') {
     // Empty first line means that this uses large font (for CJK).
-    OLED::setCursor(0, 0);
-    OLED::print(SettingsShortNames[shortDescIndex][1], FontStyle::LARGE);
+    OLED::print(SettingsShortNames[shortDescIndex] + 1, FontStyle::LARGE);
   } else {
-    OLED::setCursor(0, 0);
-    OLED::print(SettingsShortNames[shortDescIndex][0], FontStyle::SMALL);
-    OLED::setCursor(0, 8);
-    OLED::print(SettingsShortNames[shortDescIndex][1], FontStyle::SMALL);
+    OLED::print(SettingsShortNames[shortDescIndex], FontStyle::SMALL);
   }
 }
 
