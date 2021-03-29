@@ -132,12 +132,9 @@ OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
 
-# Without debug code
-DEBUG=
+DEBUG=-g3
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
-	# Enable debug code generation
-	DEBUG=-g
 endif
 
 
