@@ -12,9 +12,9 @@ extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
 extern const bool    HasFahrenheit;
 
-extern const char *SettingsShortNames[33][2];
-extern const char *SettingsDescriptions[33];
-extern const char *SettingsMenuEntries[5];
+extern const char *SettingsShortNames[][2];
+extern const char *SettingsDescriptions[];
+extern const char *SettingsMenuEntries[];
 
 extern const char *SettingsCalibrationDone;
 extern const char *SettingsCalibrationWarning;
