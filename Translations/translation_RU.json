@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "ЖАЛО ОТСОЕДИНЕНО",
 		"SolderingAdvancedPowerPrompt": "Питание: ",
 		"OffString": "Выкл.",
-		"ResetOKMessage": "Сброс OK",
 		"YourGainMessage": "Прирост:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Сброс OK",
 		"SettingsResetMessage": [
 			"Настройки",
 			"сброшены!"

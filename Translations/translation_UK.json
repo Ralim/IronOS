@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "Жало вимкнено!",
 		"SolderingAdvancedPowerPrompt": "Живлення: ",
 		"OffString": "Вимк",
-		"ResetOKMessage": "Скид. OK",
 		"YourGainMessage": "Приріст:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Скид. OK",
 		"SettingsResetMessage": [
 			"Налаштування",
 			"скинуті!"

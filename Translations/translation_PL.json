@@ -22,10 +22,10 @@
 		"TipDisconnectedString": "GROT ODŁĄCZONY",
 		"SolderingAdvancedPowerPrompt": "Moc: ",
 		"OffString": "Wył",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Us.zysk:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Ust. zresetowane",
 			""

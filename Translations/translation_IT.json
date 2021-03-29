@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "PUNTA ASSENTE",
 		"SolderingAdvancedPowerPrompt": "Potenz:",
 		"OffString": "OFF",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Guad.: "
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Reset effettuato",
 			""

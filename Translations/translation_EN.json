@@ -22,10 +22,10 @@
 		"TipDisconnectedString": "NO TIP",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Settings were",
 			"reset!"

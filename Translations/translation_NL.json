@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "PUNT LOSGEKOPPELT",
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
 		"OffString": "Uit",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Niveau:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Instellingen",
 			"zijn gereset!"

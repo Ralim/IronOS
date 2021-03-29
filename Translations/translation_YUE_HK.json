@@ -22,10 +22,10 @@
 		"TipDisconnectedString": "NO TIP",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "關",
-		"ResetOKMessage": "已重設！",
 		"YourGainMessage": "Your gain:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "已重設！",
 		"SettingsResetMessage": "設定已被重設！",
 		"NoAccelerometerMessage": [
 			"No accelerometer",

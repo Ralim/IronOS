@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance : ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Gain : "
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Réglage",
 			"réinit. !"

@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "KÄRKI ON IRTI",
 		"SolderingAdvancedPowerPrompt": "Teho: ",
 		"OffString": "OFF",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Settings were",
 			"reset!"

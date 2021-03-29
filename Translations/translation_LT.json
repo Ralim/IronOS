@@ -21,10 +21,13 @@
 		"TipDisconnectedString": "NĖRA ANTGALIO",
 		"SolderingAdvancedPowerPrompt": "Galia: ",
 		"OffString": "Išj",
-		"ResetOKMessage": "Atstatytas OK",
 		"YourGainMessage": "Greitis:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": [
+			"Atstatytas OK",
+			""
+		],
 		"SettingsResetMessage": [
 			"Nust. atstatyti!",
 			""

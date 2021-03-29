@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "VRH NIJE SPOJEN",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
 		"OffString": "Isk",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Settings were",
 			"reset!"

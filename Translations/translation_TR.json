@@ -21,10 +21,13 @@
 		"TipDisconnectedString": "UÇ ÇIKARILDI",
 		"SolderingAdvancedPowerPrompt": "Güç: ",
 		"OffString": "Kapalı",
-		"ResetOKMessage": "Sıfırlama Tamam",
 		"YourGainMessage": "Kazancınız:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": [
+			"Sıfırlama Tamam",
+			""
+		],
 		"SettingsResetMessage": [
 			"Ayarlar",
 			"Sıfırlandı"

@@ -21,10 +21,13 @@
 		"TipDisconnectedString": "ПРЕКЪСНАТ ВРЪХ",
 		"SolderingAdvancedPowerPrompt": "Захранване: ",
 		"OffString": "Изкл.",
-		"ResetOKMessage": "Нулиране завършено",
 		"YourGainMessage": "Усилване:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": [
+			"Нулиране",
+			"завършено"
+		],
 		"SettingsResetMessage": [
 			"Настройките бяха",
 			"нулирани!"

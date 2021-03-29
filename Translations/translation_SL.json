@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "NI KONICE",
 		"SolderingAdvancedPowerPrompt": "Moč: ",
 		"OffString": "Off",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Ojačenje"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Nastavitve OK!",
 			""

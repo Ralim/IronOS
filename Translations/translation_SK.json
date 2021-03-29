@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "HROT ODPOJENÝ",
 		"SolderingAdvancedPowerPrompt": "Výkon: ",
 		"OffString": "Vyp",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Tov. nas. obnov.",
 			""

@@ -711,13 +711,7 @@ static bool settings_displayCoolingBlinkEnabled(void) {
 static bool settings_setResetSettings(void) {
   if (userConfirmation(SettingsResetWarning)) {
     resetSettings();
-
-    OLED::clearScreen();
-    OLED::setCursor(0, 0);
-    OLED::print(ResetOKMessage, FontStyle::LARGE);
-    OLED::refresh();
-
-    waitForButtonPressOrTimeout(2000); // 2 second timeout
+    warnUser(ResetOKMessage, 2 * TICKS_SECOND);
   }
   return false;
 }
@@ -801,7 +795,7 @@ static bool settings_setCalibrateVIN(void) {
       OLED::setCursor(0, 0);
       OLED::printNumber(systemSettings.voltageDiv, 3, FontStyle::LARGE);
       OLED::refresh();
-      waitForButtonPressOrTimeout(1000);
+      waitForButtonPressOrTimeout(1 * TICKS_SECOND);
       return false;
     case BUTTON_NONE:
     default:

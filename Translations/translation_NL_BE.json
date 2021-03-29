@@ -21,10 +21,10 @@
 		"TipDisconnectedString": "Punt ONTKOPPELD",
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
 		"OffString": "Uit",
-		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Settings were",
 			"reset!"

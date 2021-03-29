@@ -21,11 +21,11 @@
 		"TipDisconnectedString": "NO HAY PUNTA",
 		"SolderingAdvancedPowerPrompt": "Potencia: ",
 		"OffString": " No",
-		"ResetOKMessage": "Hecho.       ",
 		"YourGainMessage": "Gananc.:",
 		"SettingsResetMessage": "Ajustes borrados"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": "Hecho.",
 		"SettingsResetMessage": [
 			"Settings were",
 			"reset!"

@@ -82,16 +82,15 @@ var def =
 			"maxLen": 3
 		},
 		{
-			"id": "ResetOKMessage",
-			"maxLen": 8
-		},
-		{
 			"id": "YourGainMessage",
 			"maxLen": 8,
 			"default": "Your Gain"
 		}
 	],
 	"messagesWarn": [
+		{
+			"id": "ResetOKMessage"
+		},
 		{
 			"id": "SettingsResetMessage"
 		},

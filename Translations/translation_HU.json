@@ -21,10 +21,13 @@
 		"TipDisconnectedString": "PÁKA LEVÉVE",
 		"SolderingAdvancedPowerPrompt": "Telj: ",
 		"OffString": "Ki",
-		"ResetOKMessage": "Törlés OK",
 		"YourGainMessage": "Erősítés:"
 	},
 	"messagesWarn": {
+		"ResetOKMessage": [
+			"Törlés OK",
+			""
+		],
 		"SettingsResetMessage": [
 			"Beállítások",
 			"törölve!"
