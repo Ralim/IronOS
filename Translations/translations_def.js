@@ -91,11 +91,6 @@ var def =
 			"default": "Your Gain"
 		},
 		{
-			"id": "SettingsResetMessage",
-			"maxLen": 16,
-			"default": "Settings were\nreset!"
-		},
-		{
 			"id": "NoAccelerometerMessage",
 			"maxLen": 16,
 			"default": "No accelerometer\ndetected!"
@@ -119,6 +114,11 @@ var def =
 			"id": "WarningKeysLockedString",
 			"maxLen": 8,
 			"default": "LOCKED!"
+		}
+	],
+	"messagesWarn": [
+		{
+			"id": "SettingsResetMessage"
 		}
 	],
 	"characters": [

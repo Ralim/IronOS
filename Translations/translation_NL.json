@@ -23,12 +23,17 @@
 		"OffString": "Uit",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Niveau:",
-		"SettingsResetMessage": "Instellingen zijn\ngereset!",
 		"NoAccelerometerMessage": "No accelerometer\ndetected!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " GEBLOKKEERD",
 		"UnlockingKeysString": "GEDEBLOKKEERD",
 		"WarningKeysLockedString": "!GEBLOKKEERD!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Instellingen",
+			"zijn gereset!"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",

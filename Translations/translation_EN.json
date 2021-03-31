@@ -24,12 +24,17 @@
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
 		"NoAccelerometerMessage": "No accelerometer\ndetected!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": "LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -38,7 +43,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "R",

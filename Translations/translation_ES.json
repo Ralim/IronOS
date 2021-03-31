@@ -30,6 +30,12 @@
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
 	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		]
+	},
 	"characters": {
 		"SettingRightChar": "D",
 		"SettingLeftChar": "I",
@@ -37,7 +43,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "F",

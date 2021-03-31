@@ -23,12 +23,17 @@
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:",
-		"SettingsResetMessage": "Tov. nas. obnov.",
 		"NoAccelerometerMessage": "Bez pohyb. senz.",
 		"NoPowerDeliveryMessage": "Chýba čip USB-PD",
 		"LockingKeysString": " ZABLOK.",
 		"UnlockingKeysString": "ODBLOK.",
 		"WarningKeysLockedString": "!ZABLOK!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Tov. nas. obnov.",
+			""
+		]
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"Z",
+		"SettingOffChar": "Z",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "K",
 		"SettingStartSleepOffChar": "O",

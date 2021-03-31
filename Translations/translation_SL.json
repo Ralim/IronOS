@@ -23,12 +23,17 @@
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Ojačenje",
-		"SettingsResetMessage": "Nastavitve OK!",
 		"NoAccelerometerMessage": "Ni pospeševalnik",
 		"NoPowerDeliveryMessage": "Ni USB-PD čipa!",
 		"LockingKeysString": "ZAKLENJ.",
 		"UnlockingKeysString": "ODKLENJ.",
 		"WarningKeysLockedString": "ZAKLENJ."
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Nastavitve OK!",
+			""
+		]
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "H",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"U",
+		"SettingOffChar": "U",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "V",

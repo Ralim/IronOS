@@ -24,12 +24,14 @@
 		"OffString": "關",
 		"ResetOKMessage": "已重設！",
 		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "\n設定已被重設！",
 		"NoAccelerometerMessage": "No accelerometer\ndetected!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": "已鎖定",
 		"UnlockingKeysString": "已解除鎖定",
 		"WarningKeysLockedString": "!撳掣鎖定!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": "設定已被重設！"
 	},
 	"characters": {
 		"SettingRightChar": "右",
@@ -38,7 +40,7 @@
 		"SettingFastChar": "快",
 		"SettingSlowChar": "慢",
 		"SettingMediumChar": "中",
-		"SettingOffChar":"關",
+		"SettingOffChar": "關",
 		"SettingStartSolderingChar": "焊",
 		"SettingStartSleepChar": "待",
 		"SettingStartSleepOffChar": "室",

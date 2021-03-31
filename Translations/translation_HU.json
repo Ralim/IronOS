@@ -23,12 +23,17 @@
 		"OffString": "Ki",
 		"ResetOKMessage": "Törlés OK",
 		"YourGainMessage": "Erősítés:",
-		"SettingsResetMessage": "Beállítások\ntörölve!",
 		"NoAccelerometerMessage": "Nincs gyorsulásmérő!",
 		"NoPowerDeliveryMessage": "Nincs USB-PD IC!",
 		"LockingKeysString": "LEZÁRVA",
 		"UnlockingKeysString": "FELOLDVA",
 		"WarningKeysLockedString": "!LEZÁRVA!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Beállítások",
+			"törölve!"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "J",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "G",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"0",
+		"SettingOffChar": "0",
 		"SettingStartSolderingChar": "F",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "S",

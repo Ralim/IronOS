@@ -127,6 +127,15 @@ def get_letter_counts(defs: dict, lang: dict) -> List[str]:
         else:
             text_list.append(obj[eid])
 
+    obj = lang["messagesWarn"]
+    for mod in defs["messagesWarn"]:
+        eid = mod["id"]
+        if isinstance(obj[eid], list):
+            text_list.append(obj[eid][0])
+            text_list.append(obj[eid][1])
+        else:
+            text_list.append(obj[eid])
+
     obj = lang["characters"]
 
     for mod in defs["characters"]:
@@ -397,6 +406,23 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
             source_text = mod["default"]
         if eid in obj:
             source_text = obj[eid]
+        translated_text = convert_string(symbol_conversion_table, source_text)
+        source_text = source_text.replace("\n", "_")
+        f.write(f'const char* {eid} = "{translated_text}";//{source_text} \n')
+
+    f.write("\n")
+
+    obj = lang["messagesWarn"]
+
+    for mod in defs["messagesWarn"]:
+        eid = mod["id"]
+        if isinstance(obj[eid], list):
+            if not obj[eid][1]:
+                source_text = obj[eid][0]
+            else:
+                source_text = obj[eid][0] + "\n" + obj[eid][1]
+        else:
+            source_text = "\n" + obj[eid]
         translated_text = convert_string(symbol_conversion_table, source_text)
         source_text = source_text.replace("\n", "_")
         f.write(f'const char* {eid} = "{translated_text}";//{source_text} \n')

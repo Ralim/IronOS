@@ -23,12 +23,17 @@
 		"OffString": "Išj",
 		"ResetOKMessage": "Atstatytas OK",
 		"YourGainMessage": "Greitis:",
-		"SettingsResetMessage": "Nust. atstatyti!",
 		"NoAccelerometerMessage": "Nerastas\nakselerometras!",
 		"NoPowerDeliveryMessage": "Nerastas\nUSB-PD IC !",
 		"LockingKeysString": " UŽRAKIN",
 		"UnlockingKeysString": "ATRAKIN",
 		"WarningKeysLockedString": "!UŽRAK!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Nust. atstatyti!",
+			""
+		]
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "G",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"I",
+		"SettingOffChar": "I",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "M",
 		"SettingStartSleepOffChar": "K",

@@ -23,12 +23,17 @@
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Zisk:",
-		"SettingsResetMessage": "Tov. nas. obnov.",
 		"NoAccelerometerMessage": "No accelerometer\ndetected!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Tov. nas. obnov.",
+			""
+		]
 	},
 	"characters": {
 		"SettingRightChar": "P",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",

@@ -23,12 +23,17 @@
 		"OffString": "Вимк",
 		"ResetOKMessage": "Скид. OK",
 		"YourGainMessage": "Приріст:",
-		"SettingsResetMessage": "Налаштування\nскинуті!",
 		"NoAccelerometerMessage": "Акселерометр\nне виявлено!",
 		"NoPowerDeliveryMessage": "USB-PD IC\nне виявлено!",
 		"LockingKeysString": " ЗАБЛОК.",
 		"UnlockingKeysString": "РОЗБЛОК.",
 		"WarningKeysLockedString": "!ЗАБЛОК!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Налаштування",
+			"скинуті!"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "П",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "Ш",
 		"SettingSlowChar": "П",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"B",
+		"SettingOffChar": "B",
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",

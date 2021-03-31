@@ -23,9 +23,14 @@
 		"OffString": "Kapalı",
 		"ResetOKMessage": "Sıfırlama Tamam",
 		"YourGainMessage": "Kazancınız:",
-		"SettingsResetMessage": "Ayarlar Sıfırlandı",
 		"NoAccelerometerMessage": "No accelerometer\ndetected!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Ayarlar",
+			"Sıfırlandı"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -34,7 +39,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",

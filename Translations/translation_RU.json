@@ -23,12 +23,17 @@
 		"OffString": "Выкл.",
 		"ResetOKMessage": "Сброс OK",
 		"YourGainMessage": "Прирост:",
-		"SettingsResetMessage": "Настройки\nсброшены!",
 		"NoAccelerometerMessage": "Не определен\nакселерометр!",
 		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Настройки",
+			"сброшены!"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "П",
@@ -37,7 +42,7 @@
 		"SettingFastChar": "Б",
 		"SettingSlowChar": "М",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",

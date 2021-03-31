@@ -26,10 +26,15 @@
 		"NoPowerDeliveryMessage": "Kein USB-PD IC\nerkannt!",
 		"ResetOKMessage": "Reset OK",
 		"YourGainMessage": "Dein Faktor:",
-		"SettingsResetMessage": "Einstellungen\nzurückgesetzt!",
 		"LockingKeysString": "GESPERRT",
 		"UnlockingKeysString": "ENTSPERRT",
 		"WarningKeysLockedString": "!GESPERRT!"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": [
+			"Einstellungen",
+			"zurückgesetzt!"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
