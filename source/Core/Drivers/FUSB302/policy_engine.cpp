@@ -16,6 +16,7 @@
  */
 
 #include "policy_engine.h"
+#include "Defines.h"
 #include "fusb302b.h"
 #include "int_n.h"
 #include "protocol_tx.h"
@@ -31,7 +32,6 @@ bool                              PolicyEngine::_explicit_contract;
 int8_t                            PolicyEngine::_hard_reset_counter;
 int8_t                            PolicyEngine::_old_tcc_match;
 uint8_t                           PolicyEngine::_pps_index;
-uint8_t                           PolicyEngine::_last_pps;
 osThreadId                        PolicyEngine::TaskHandle = NULL;
 uint32_t                          PolicyEngine::TaskBuffer[PolicyEngine::TaskStackSize];
 osStaticThreadDef_t               PolicyEngine::TaskControlBlock;
@@ -43,6 +43,8 @@ uint8_t                           PolicyEngine::ucQueueStorageArea[PDB_MSG_POOL_
 QueueHandle_t                     PolicyEngine::messagesWaiting   = NULL;
 EventGroupHandle_t                PolicyEngine::xEventGroupHandle = NULL;
 StaticEventGroup_t                PolicyEngine::xCreatedEventGroup;
+bool                              PolicyEngine::PPSTimerEnabled  = false;
+TickType_t                        PolicyEngine::PPSTimeLastEvent = 0;
 void                              PolicyEngine::init() {
   messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE, sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
   // Create static thread at PDB_PRIO_PE priority
@@ -64,9 +66,7 @@ void PolicyEngine::pe_task(const void *arg) {
   /* Initialize the old_tcc_match */
   _old_tcc_match = -1;
   /* Initialize the pps_index */
-  _pps_index = 8;
-  /* Initialize the last_pps */
-  _last_pps = 8;
+  _pps_index = 0xFF;
 
   for (;;) {
     // Loop based on state
@@ -133,7 +133,7 @@ void PolicyEngine::pe_task(const void *arg) {
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_startup() {
   /* We don't have an explicit contract currently */
   _explicit_contract = false;
-
+  PPSTimerEnabled    = false;
   // If desired could send an alert that PD is starting
 
   /* No need to reset the protocol layer here.  There are two ways into this
@@ -211,7 +211,9 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
    * PE_SNK_Select_Cap. */
   /* Start by assuming we won't find a PPS APDO (set the index greater
    * than the maximum possible) */
-  _pps_index = 8;
+  _pps_index = 0xFF;
+  /* New capabilities also means we can't be making a request from the
+   * same PPS APDO */
   /* Search for the first PPS APDO */
   for (int i = 0; i < PD_NUMOBJ_GET(&tempMessage); i++) {
     if ((tempMessage.obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (tempMessage.obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
@@ -219,13 +221,9 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
       break;
     }
   }
-  /* New capabilities also means we can't be making a request from the
-   * same PPS APDO */
-  _last_pps = 8;
 
   /* Ask the DPM what to request */
   if (pdbs_dpm_evaluate_capability(&tempMessage, &_last_dpm_request)) {
-
     return PESinkSelectCap;
   }
 
@@ -248,6 +246,18 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
   if ((evt & PDB_EVT_PE_TX_ERR) == PDB_EVT_PE_TX_ERR) {
     return PESinkHardReset;
   }
+  /* If we're using PD 3.0 */
+  if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0) {
+    /* If the request was for a PPS APDO, start time callbacks if not started */
+    if (PD_RDO_OBJPOS_GET(&_last_dpm_request) >= _pps_index) {
+      if (PPSTimerEnabled == false) {
+        PPSTimerEnabled  = true;
+        PPSTimeLastEvent = xTaskGetTickCount();
+      }
+    } else {
+      PPSTimerEnabled = false;
+    }
+  }
 
   /* Wait for a response */
   evt = waitForEvent(PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET, PD_T_SENDER_RESPONSE);
@@ -265,7 +275,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
     readMessage();
     /* If the source accepted our request, wait for the new power */
     if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_ACCEPT && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
       return PESinkTransitionSink;
       /* If the message was a Soft_Reset, do the soft reset procedure */
     } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOFT_RESET && PD_NUMOBJ_GET(&tempMessage) == 0) {
@@ -280,7 +289,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
         return PESinkReady;
       }
     } else {
-      return PESinkSendSoftReset;
+      return PESinkSelectCap;
     }
   }
   return PESinkHardReset;
@@ -306,15 +315,12 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_transition_sink() {
       /* We just finished negotiating an explicit contract */
       _explicit_contract = true;
 
-      /* Set the output appropriately */
+      /* Negotiation finished */
       pdbs_dpm_transition_requested();
 
       return PESinkReady;
       /* If there was a protocol error, send a hard reset */
     } else {
-      /* Turn off the power output before this hard reset to make sure we
-       * don't supply an incorrect voltage to the device we're powering.
-       */
       pdbs_dpm_transition_default();
 
       return PESinkHardReset;
@@ -328,7 +334,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
   eventmask_t evt;
 
   /* Wait for an event */
-  evt = waitForEvent(PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP);
+  evt = waitForEvent(PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP | PDB_EVT_PE_PPS_REQUEST);
 
   /* If we got reset signaling, transition to default */
   if (evt & PDB_EVT_PE_RESET) {
@@ -340,6 +346,12 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
     return PESinkHardReset;
   }
 
+  /* If SinkPPSPeriodicTimer ran out, send a new request */
+  if (evt & PDB_EVT_PE_PPS_REQUEST) {
+    /* Tell the protocol layer we're starting an AMS */
+    ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
+    return PESinkSelectCap;
+  }
   /* If we received a message */
   if (evt & PDB_EVT_PE_MSG_RX) {
     if (messageWaiting()) {
@@ -631,3 +643,14 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_source_unresponsive() {
 uint32_t PolicyEngine::waitForEvent(uint32_t mask, TickType_t ticksToWait) { return xEventGroupWaitBits(xEventGroupHandle, mask, mask, pdFALSE, ticksToWait); }
 
 bool PolicyEngine::isPD3_0() { return (hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0; }
+
+void PolicyEngine::PPSTimerCallback() {
+
+  if (PPSTimerEnabled) {
+    if (xTaskGetTickCount() - PPSTimeLastEvent > TICKS_100MS) {
+      // Send a new PPS message
+      PPSTimeLastEvent = xTaskGetTickCount();
+      notify(PDB_EVT_PE_PPS_REQUEST);
+    }
+  }
+}

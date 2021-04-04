@@ -59,6 +59,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
   uint8_t bestIndex        = 0xFF;
   int     bestIndexVoltage = 0;
   int     bestIndexCurrent = 0;
+  bool    bestIsPPS        = false;
   for (uint8_t i = 0; i < numobj; i++) {
     /* If we have a fixed PDO, its V equals our desired V, and its I is
      * at least our desired I */
@@ -83,15 +84,37 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
           bestIndexVoltage = voltage_mv;
           bestIndexCurrent = current_a_x100;
         }
+    if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (capabilities->obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
+      // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
+      uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(capabilities->obj[i]));
+      // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(capabilities->obj[i]));
+      uint16_t max_current = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(capabilities->obj[i])); // max current in 10mA units
+      // Using the current and tip resistance, calculate the ideal max voltage
+      // if this is range, then we will work with this voltage
+      // if this is not in range; then max_voltage can be safely selected
+      int ideal_voltage_mv = (tipResistance * max_current);
+      if (ideal_voltage_mv > max_voltage) {
+        ideal_voltage_mv = max_voltage; // constrain
+      }
+      if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
+        ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max
+      }
+      if (ideal_voltage_mv > bestIndexVoltage) {
+        bestIndex        = i;
+        bestIndexVoltage = ideal_voltage_mv;
+        bestIndexCurrent = max_current;
+        bestIsPPS        = true;
       }
     }
   }
   if (bestIndex != 0xFF) {
     /* We got what we wanted, so build a request for that */
     request->hdr = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
-
-    /* GiveBack disabled */
-    request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(bestIndexCurrent) | PD_RDO_FV_CURRENT_SET(bestIndexCurrent) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
+    if (bestIsPPS) {
+      request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2PRV(bestIndexVoltage)) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
+    } else {
+      request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(bestIndexCurrent) | PD_RDO_FV_CURRENT_SET(bestIndexCurrent) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
+    }
     // We support usb comms (ish)
     request->obj[0] |= PD_RDO_USB_COMMS;
 
@@ -103,8 +126,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
     /* Nothing matched (or no configuration), so get 5 V at low current */
     request->hdr    = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
     request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_FV_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(1);
-    /* If the output is enabled and we got here, it must be a capability
-     * mismatch. */
+    /* If the output is enabled and we got here, it must be a capability mismatch. */
     if (pdNegotiationComplete) {
       request->obj[0] |= PD_RDO_CAP_MISMATCH;
     }
@@ -161,6 +183,11 @@ void PolicyEngine::pdbs_dpm_get_sink_capability(union pd_msg *cap) {
       cap->obj[1] ^= cap->obj[2];
       cap->obj[2] ^= cap->obj[1];
       cap->obj[1] ^= cap->obj[2];
+    }
+    /* If we're using PD 3.0, add a PPS APDO for our desired voltage */
+    if ((hdr_template & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
+      cap->obj[numobj++]
+          = PD_PDO_TYPE_AUGMENTED | PD_APDO_TYPE_PPS | PD_APDO_PPS_MAX_VOLTAGE_SET(PD_MV2PAV(voltage)) | PD_APDO_PPS_MIN_VOLTAGE_SET(PD_MV2PAV(voltage)) | PD_APDO_PPS_CURRENT_SET(PD_CA2PAI(current));
     }
   }
 

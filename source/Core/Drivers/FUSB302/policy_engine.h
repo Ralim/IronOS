@@ -31,8 +31,8 @@
 #define PDB_EVT_PE_TX_ERR      EVENT_MASK(3)
 #define PDB_EVT_PE_HARD_SENT   EVENT_MASK(4)
 #define PDB_EVT_PE_I_OVRTEMP   EVENT_MASK(5)
+#define PDB_EVT_PE_PPS_REQUEST EVENT_MASK(6)
 #define PDB_EVT_PE_MSG_RX_PEND EVENT_MASK(7) /* Never SEND THIS DIRECTLY*/
-
 class PolicyEngine {
 public:
   // Sets up internal state and registers the thread
@@ -55,6 +55,8 @@ public:
   // Has pd negotiation completed
   static bool pdHasNegotiated() { return pdNegotiationComplete; }
 
+  static void PPSTimerCallback();
+
 private:
   static bool pdNegotiationComplete;
   static int  current_voltage_mv;   // The current voltage PD is expecting
@@ -72,9 +74,8 @@ private:
   static int8_t _old_tcc_match;
   /* The index of the first PPS APDO */
   static uint8_t _pps_index;
-  /* The index of the just-requested PPS APDO */
-  static uint8_t _last_pps;
-  static void    pe_task(const void *arg);
+
+  static void pe_task(const void *arg);
   enum policy_engine_state {
     PESinkStartup,
     PESinkDiscovery,
@@ -130,7 +131,9 @@ private:
   static QueueHandle_t messagesWaiting;
   static bool          messageWaiting();
   // Read a pending message into the temp message
-  static bool readMessage();
+  static bool       readMessage();
+  static bool       PPSTimerEnabled;
+  static TickType_t PPSTimeLastEvent;
 
   // These callbacks are called to implement the logic for the iron to select the desired voltage
 

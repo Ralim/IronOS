@@ -12,6 +12,7 @@ bool FUSB302_present = false;
 void power_check() {
 #ifdef POW_PD
   if (FUSB302_present) {
+    PolicyEngine::PPSTimerCallback();
     // Cant start QC until either PD works or fails
     if (PolicyEngine::setupCompleteOrTimedOut() == false) {
       return;
