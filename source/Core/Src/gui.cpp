@@ -6,11 +6,11 @@
  */
 
 #include "gui.hpp"
-#include "../../configuration.h"
 #include "Buttons.hpp"
 #include "TipThermoModel.h"
 #include "Translation.h"
 #include "cmsis_os.h"
+#include "configuration.h"
 #include "main.hpp"
 
 void gui_Menu(const menuitem *menu);
