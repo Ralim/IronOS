@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Teho: ",
 		"OffString": "OFF",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"YourGainMessage": "Your gain:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Settings were",
 			"reset!"
-		]
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "O",

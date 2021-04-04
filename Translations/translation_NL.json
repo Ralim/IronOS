@@ -22,17 +22,32 @@
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
 		"OffString": "Uit",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Niveau:",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " GEBLOKKEERD",
-		"UnlockingKeysString": "GEDEBLOKKEERD",
-		"WarningKeysLockedString": "!GEBLOKKEERD!"
+		"YourGainMessage": "Niveau:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Instellingen",
 			"zijn gereset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": [
+			" GEBLOKKEERD",
+			""
+		],
+		"UnlockingKeysString": [
+			"GEDEBLOKKEERD",
+			""
+		],
+		"WarningKeysLockedString": [
+			"!GEBLOKKEERD!",
+			""
 		]
 	},
 	"characters": {

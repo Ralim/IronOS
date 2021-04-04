@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Живлення: ",
 		"OffString": "Вимк",
 		"ResetOKMessage": "Скид. OK",
-		"YourGainMessage": "Приріст:",
-		"NoAccelerometerMessage": "Акселерометр\nне виявлено!",
-		"NoPowerDeliveryMessage": "USB-PD IC\nне виявлено!",
-		"LockingKeysString": " ЗАБЛОК.",
-		"UnlockingKeysString": "РОЗБЛОК.",
-		"WarningKeysLockedString": "!ЗАБЛОК!"
+		"YourGainMessage": "Приріст:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Налаштування",
 			"скинуті!"
-		]
+		],
+		"NoAccelerometerMessage": [
+			"Акселерометр",
+			"не виявлено!"
+		],
+		"NoPowerDeliveryMessage": [
+			"USB-PD IC",
+			"не виявлено!"
+		],
+		"LockingKeysString": " ЗАБЛОК.",
+		"UnlockingKeysString": "РОЗБЛОК.",
+		"WarningKeysLockedString": "!ЗАБЛОК!"
 	},
 	"characters": {
 		"SettingRightChar": "П",

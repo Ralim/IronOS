@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Výkon: ",
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Zisk:",
-		"NoAccelerometerMessage": "Bez pohyb. senz.",
-		"NoPowerDeliveryMessage": "Chýba čip USB-PD",
-		"LockingKeysString": " ZABLOK.",
-		"UnlockingKeysString": "ODBLOK.",
-		"WarningKeysLockedString": "!ZABLOK!"
+		"YourGainMessage": "Zisk:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Tov. nas. obnov.",
 			""
-		]
+		],
+		"NoAccelerometerMessage": [
+			"Bez pohyb. senz.",
+			""
+		],
+		"NoPowerDeliveryMessage": [
+			"Chýba čip USB-PD",
+			""
+		],
+		"LockingKeysString": " ZABLOK.",
+		"UnlockingKeysString": "ODBLOK.",
+		"WarningKeysLockedString": "!ZABLOK!"
 	},
 	"characters": {
 		"SettingRightChar": "P",

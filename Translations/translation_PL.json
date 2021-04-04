@@ -23,18 +23,24 @@
 		"SolderingAdvancedPowerPrompt": "Moc: ",
 		"OffString": "Wył",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Us.zysk:",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " ZABLOK.",
-		"UnlockingKeysString": "ODBLOK.",
-		"WarningKeysLockedString": "!ZABLOK!"
+		"YourGainMessage": "Us.zysk:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Ust. zresetowane",
 			""
-		]
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": " ZABLOK.",
+		"UnlockingKeysString": "ODBLOK.",
+		"WarningKeysLockedString": "!ZABLOK!"
 	},
 	"characters": {
 		"SettingRightChar": "P",

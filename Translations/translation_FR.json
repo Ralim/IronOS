@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Puissance : ",
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Gain : ",
-		"NoAccelerometerMessage": "Accéléromètre\nnon détecté !",
-		"NoPowerDeliveryMessage": "Pas d'USB-PD\ndétecté !",
-		"LockingKeysString": "VERROUIL",
-		"UnlockingKeysString": "DEVERROU",
-		"WarningKeysLockedString": "! VERR. !"
+		"YourGainMessage": "Gain : "
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Réglage",
 			"réinit. !"
-		]
+		],
+		"NoAccelerometerMessage": [
+			"Accéléromètre",
+			"non détecté !"
+		],
+		"NoPowerDeliveryMessage": [
+			"Pas d'USB-PD",
+			"détecté !"
+		],
+		"LockingKeysString": "VERROUIL",
+		"UnlockingKeysString": "DEVERROU",
+		"WarningKeysLockedString": "! VERR. !"
 	},
 	"characters": {
 		"SettingRightChar": "D",

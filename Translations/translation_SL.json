@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Moč: ",
 		"OffString": "Off",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Ojačenje",
-		"NoAccelerometerMessage": "Ni pospeševalnik",
-		"NoPowerDeliveryMessage": "Ni USB-PD čipa!",
-		"LockingKeysString": "ZAKLENJ.",
-		"UnlockingKeysString": "ODKLENJ.",
-		"WarningKeysLockedString": "ZAKLENJ."
+		"YourGainMessage": "Ojačenje"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Nastavitve OK!",
 			""
-		]
+		],
+		"NoAccelerometerMessage": [
+			"Ni pospeševalnik",
+			""
+		],
+		"NoPowerDeliveryMessage": [
+			"Ni USB-PD čipa!",
+			""
+		],
+		"LockingKeysString": "ZAKLENJ.",
+		"UnlockingKeysString": "ODKLENJ.",
+		"WarningKeysLockedString": "ZAKLENJ."
 	},
 	"characters": {
 		"SettingRightChar": "D",

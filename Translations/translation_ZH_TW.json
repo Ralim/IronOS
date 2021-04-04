@@ -23,15 +23,21 @@
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "關",
 		"ResetOKMessage": "已重設！",
-		"YourGainMessage": "Your gain:",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"YourGainMessage": "Your gain:"
+	},
+	"messagesWarn": {
+		"SettingsResetMessage": "設定已被重設！",
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": "已鎖定",
 		"UnlockingKeysString": "已解除鎖定",
 		"WarningKeysLockedString": "!按鍵鎖定!"
-	},
-	"messagesWarn": {
-		"SettingsResetMessage": "設定已被重設！"
 	},
 	"characters": {
 		"SettingRightChar": "右",

@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Ohřev: ",
 		"OffString": "Vyp",
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Zisk:",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"YourGainMessage": "Zisk:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Tov. nas. obnov.",
 			""
-		]
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "P",

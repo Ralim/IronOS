@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Telj: ",
 		"OffString": "Ki",
 		"ResetOKMessage": "Törlés OK",
-		"YourGainMessage": "Erősítés:",
-		"NoAccelerometerMessage": "Nincs gyorsulásmérő!",
-		"NoPowerDeliveryMessage": "Nincs USB-PD IC!",
-		"LockingKeysString": "LEZÁRVA",
-		"UnlockingKeysString": "FELOLDVA",
-		"WarningKeysLockedString": "!LEZÁRVA!"
+		"YourGainMessage": "Erősítés:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Beállítások",
 			"törölve!"
-		]
+		],
+		"NoAccelerometerMessage": [
+			"Nincs",
+			"gyorsulásmérő!"
+		],
+		"NoPowerDeliveryMessage": [
+			"Nincs USB-PD IC!",
+			""
+		],
+		"LockingKeysString": "LEZÁRVA",
+		"UnlockingKeysString": "FELOLDVA",
+		"WarningKeysLockedString": "!LEZÁRVA!"
 	},
 	"characters": {
 		"SettingRightChar": "J",

@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Galia: ",
 		"OffString": "Išj",
 		"ResetOKMessage": "Atstatytas OK",
-		"YourGainMessage": "Greitis:",
-		"NoAccelerometerMessage": "Nerastas\nakselerometras!",
-		"NoPowerDeliveryMessage": "Nerastas\nUSB-PD IC !",
-		"LockingKeysString": " UŽRAKIN",
-		"UnlockingKeysString": "ATRAKIN",
-		"WarningKeysLockedString": "!UŽRAK!"
+		"YourGainMessage": "Greitis:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Nust. atstatyti!",
 			""
-		]
+		],
+		"NoAccelerometerMessage": [
+			"Nerastas",
+			"akselerometras!"
+		],
+		"NoPowerDeliveryMessage": [
+			"Nerastas",
+			"USB-PD IC !"
+		],
+		"LockingKeysString": " UŽRAKIN",
+		"UnlockingKeysString": "ATRAKIN",
+		"WarningKeysLockedString": "!UŽRAK!"
 	},
 	"characters": {
 		"SettingRightChar": "D",

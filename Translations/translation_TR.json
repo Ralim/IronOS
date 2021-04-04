@@ -22,15 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Güç: ",
 		"OffString": "Kapalı",
 		"ResetOKMessage": "Sıfırlama Tamam",
-		"YourGainMessage": "Kazancınız:",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!"
+		"YourGainMessage": "Kazancınız:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Ayarlar",
 			"Sıfırlandı"
-		]
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": "LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",

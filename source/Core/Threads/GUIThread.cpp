@@ -43,10 +43,10 @@ static uint16_t   min(uint16_t a, uint16_t b) {
   else
     return a;
 }
-void warnUser(const char *warning, const FontStyle font, const int timeout) {
+
+void warnUser(const char *warning, const int timeout) {
   OLED::clearScreen();
-  OLED::setCursor(0, 0);
-  OLED::print(warning, font);
+  OLED::printWholeScreen(warning);
   OLED::refresh();
   waitForButtonPressOrTimeout(timeout);
 }
@@ -462,7 +462,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       case BUTTON_BOTH_LONG:
         // Unlock buttons
         buttonsLocked = false;
-        warnUser(UnlockingKeysString, FontStyle::LARGE, TICKS_SECOND);
+        warnUser(UnlockingKeysString, TICKS_SECOND);
         break;
       case BUTTON_F_LONG:
         // if boost mode is enabled turn it on
@@ -476,7 +476,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       case BUTTON_F_SHORT:
       case BUTTON_B_SHORT:
         // Do nothing and display a lock warming
-        warnUser(WarningKeysLockedString, FontStyle::LARGE, TICKS_SECOND / 2);
+        warnUser(WarningKeysLockedString, TICKS_SECOND / 2);
         break;
       default:
         break;
@@ -511,7 +511,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
         if (systemSettings.lockingMode != 0) {
           // Lock buttons
           buttonsLocked = true;
-          warnUser(LockingKeysString, FontStyle::LARGE, TICKS_SECOND);
+          warnUser(LockingKeysString, TICKS_SECOND);
         }
         break;
       default:
@@ -713,12 +713,7 @@ void showDebugMenu(void) {
 void showWarnings() {
   // Display alert if settings were reset
   if (settingsWereReset) {
-    if (SettingsResetMessage[0] == '\x01') { // `\x01` is used as newline.
-      // Empty first line means that this uses large font (for CJK).
-      warnUser(SettingsResetMessage + 1, FontStyle::LARGE, 10 * TICKS_SECOND);
-    } else {
-      warnUser(SettingsResetMessage, FontStyle::SMALL, 10 * TICKS_SECOND);
-    }
+    warnUser(SettingsResetMessage, 10 * TICKS_SECOND);
   }
 #ifndef NO_WARN_MISSING
   // We also want to alert if accel or pd is not detected / not responding
@@ -732,7 +727,7 @@ void showWarnings() {
     if (systemSettings.accelMissingWarningCounter < 2) {
       systemSettings.accelMissingWarningCounter++;
       saveSettings();
-      warnUser(NoAccelerometerMessage, FontStyle::SMALL, 10 * TICKS_SECOND);
+      warnUser(NoAccelerometerMessage, 10 * TICKS_SECOND);
     }
   }
 #ifdef POW_PD
@@ -741,7 +736,7 @@ void showWarnings() {
     if (systemSettings.pdMissingWarningCounter < 2) {
       systemSettings.pdMissingWarningCounter++;
       saveSettings();
-      warnUser(NoPowerDeliveryMessage, FontStyle::SMALL, 10 * TICKS_SECOND);
+      warnUser(NoPowerDeliveryMessage, 10 * TICKS_SECOND);
     }
   }
 #endif

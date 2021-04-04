@@ -89,36 +89,26 @@ var def =
 			"id": "YourGainMessage",
 			"maxLen": 8,
 			"default": "Your Gain"
-		},
-		{
-			"id": "NoAccelerometerMessage",
-			"maxLen": 16,
-			"default": "No accelerometer\ndetected!"
-		},
-		{
-			"id": "NoPowerDeliveryMessage",
-			"maxLen": 16,
-			"default": "No USB-PD IC\ndetected!"
-		},
-		{
-			"id": "LockingKeysString",
-			"maxLen": 8,
-			"default": "LOCKING"
-		},
-		{
-			"id": "UnlockingKeysString",
-			"maxLen": 8,
-			"default": "UNLOCK"
-		},
-		{
-			"id": "WarningKeysLockedString",
-			"maxLen": 8,
-			"default": "LOCKED!"
 		}
 	],
 	"messagesWarn": [
 		{
 			"id": "SettingsResetMessage"
+		},
+		{
+			"id": "NoAccelerometerMessage"
+		},
+		{
+			"id": "NoPowerDeliveryMessage"
+		},
+		{
+			"id": "LockingKeysString"
+		},
+		{
+			"id": "UnlockingKeysString"
+		},
+		{
+			"id": "WarningKeysLockedString"
 		}
 	],
 	"characters": [

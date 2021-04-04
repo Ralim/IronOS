@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Захранване: ",
 		"OffString": "Изкл.",
 		"ResetOKMessage": "Нулиране завършено",
-		"YourGainMessage": "Усилване:",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"YourGainMessage": "Усилване:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Настройките бяха",
 			"нулирани!"
-		]
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",

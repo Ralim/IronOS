@@ -22,18 +22,24 @@
 		"SolderingAdvancedPowerPrompt": "Питание: ",
 		"OffString": "Выкл.",
 		"ResetOKMessage": "Сброс OK",
-		"YourGainMessage": "Прирост:",
-		"NoAccelerometerMessage": "Не определен\nакселерометр!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"YourGainMessage": "Прирост:"
 	},
 	"messagesWarn": {
 		"SettingsResetMessage": [
 			"Настройки",
 			"сброшены!"
-		]
+		],
+		"NoAccelerometerMessage": [
+			"Не определен",
+			"акселерометр!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": " LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "П",
