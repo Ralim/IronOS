@@ -5,8 +5,10 @@
  *      Author: Ralim
  */
 #include "BSP_PD.h"
+#include "configuration.h"
 #include "pd.h"
 #include "policy_engine.h"
+
 /* The current draw when the output is disabled */
 #define DPM_MIN_CURRENT PD_MA2PDI(50)
 /*
@@ -54,52 +56,65 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
   /* Make sure we have configuration */
   /* Look at the PDOs to see if one matches our desires */
   // Look against USB_PD_Desired_Levels to select in order of preference
-  for (uint8_t desiredLevel = 0; desiredLevel < USB_PD_Desired_Levels_Len; desiredLevel++) {
-    for (uint8_t i = 0; i < numobj; i++) {
-      /* If we have a fixed PDO, its V equals our desired V, and its I is
-       * at least our desired I */
-      if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-        // This is a fixed PDO entry
-        int      voltage           = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[i]));
-        int      current           = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[i]);
-        uint16_t desiredVoltage    = USB_PD_Desired_Levels[(desiredLevel * 2) + 0];
-        uint16_t desiredminCurrent = USB_PD_Desired_Levels[(desiredLevel * 2) + 1];
-        // As pd stores current in 10mA increments, divide by 10
-        desiredminCurrent /= 10;
-        if (voltage == desiredVoltage) {
-          if (current >= desiredminCurrent) {
-            /* We got what we wanted, so build a request for that */
-            request->hdr = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
+  uint8_t bestIndex        = 0xFF;
+  int     bestIndexVoltage = 0;
+  int     bestIndexCurrent = 0;
+  for (uint8_t i = 0; i < numobj; i++) {
+    /* If we have a fixed PDO, its V equals our desired V, and its I is
+     * at least our desired I */
+    if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+      // This is a fixed PDO entry
+      // Evaluate if it can produve sufficient current based on the tipResistance (ohms*10)
+      // V=I*R -> V/I => minimum resistance, if our tip resistance is >= this then we can use this supply
 
-            /* GiveBack disabled */
-            request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(current) | PD_RDO_FV_CURRENT_SET(current) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(i + 1);
-            // We support usb comms (ish)
-            request->obj[0] |= PD_RDO_USB_COMMS;
-
-            /* Update requested voltage */
-            _requested_voltage = voltage;
-
-            return true;
-          }
+      int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[i])); // voltage in mV units
+      int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[i]);            // current in 10mA units
+      int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
+      if (min_resistance_ohmsx10 <= tipResistance) {
+        // This is a valid power source we can select as
+        if (bestIndex == 0xFF) {
+          // This is the first valid source, so select to be safe
+          bestIndex        = i;
+          bestIndexVoltage = voltage_mv;
+          bestIndexCurrent = current_a_x100;
+        } else if (voltage_mv > bestIndexVoltage) {
+          // Higher voltage and valid, select this instead
+          bestIndex        = i;
+          bestIndexVoltage = voltage_mv;
+          bestIndexCurrent = current_a_x100;
         }
       }
     }
   }
+  if (bestIndex != 0xFF) {
+    /* We got what we wanted, so build a request for that */
+    request->hdr = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
 
-  /* Nothing matched (or no configuration), so get 5 V at low current */
-  request->hdr    = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
-  request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_FV_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(1);
-  /* If the output is enabled and we got here, it must be a capability
-   * mismatch. */
-  if (pdNegotiationComplete) {
-    request->obj[0] |= PD_RDO_CAP_MISMATCH;
+    /* GiveBack disabled */
+    request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(bestIndexCurrent) | PD_RDO_FV_CURRENT_SET(bestIndexCurrent) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
+    // We support usb comms (ish)
+    request->obj[0] |= PD_RDO_USB_COMMS;
+
+    /* Update requested voltage */
+    _requested_voltage = bestIndexVoltage;
+
+    return true;
+  } else {
+    /* Nothing matched (or no configuration), so get 5 V at low current */
+    request->hdr    = hdr_template | PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
+    request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_FV_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(1);
+    /* If the output is enabled and we got here, it must be a capability
+     * mismatch. */
+    if (pdNegotiationComplete) {
+      request->obj[0] |= PD_RDO_CAP_MISMATCH;
+    }
+    request->obj[0] |= PD_RDO_USB_COMMS;
+
+    /* Update requested voltage */
+    _requested_voltage = 5000;
+
+    return false;
   }
-  request->obj[0] |= PD_RDO_USB_COMMS;
-
-  /* Update requested voltage */
-  _requested_voltage = 5000;
-
-  return false;
 }
 
 void PolicyEngine::pdbs_dpm_get_sink_capability(union pd_msg *cap) {
@@ -112,8 +127,12 @@ void PolicyEngine::pdbs_dpm_get_sink_capability(union pd_msg *cap) {
   cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(5000)) | PD_PDO_SNK_FIXED_CURRENT_SET(DPM_MIN_CURRENT);
 
   /* Get the current we want */
-  uint16_t current = USB_PD_Desired_Levels[1] / 10; // In centi-amps
-  uint16_t voltage = USB_PD_Desired_Levels[0];      // in mv
+  uint16_t voltage = USB_PD_VMAX * 1000; // in mv
+  if (_requested_voltage != 5000) {
+    voltage = _requested_voltage;
+  }
+  uint16_t current = (voltage) / tipResistance; // In centi-amps
+
   /* Add a PDO for the desired power. */
   cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);
 

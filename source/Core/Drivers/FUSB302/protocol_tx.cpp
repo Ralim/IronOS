@@ -104,17 +104,15 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
   temp_msg.hdr |= (_tx_messageidcounter % 8) << PD_HDR_MESSAGEID_SHIFT;
 
   /* PD 3.0 collision avoidance */
-  //	if (PolicyEngine::isPD3_0()) {
-  //		/* If we're starting an AMS, wait for permission to transmit */
-  //		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
-  //				0);
-  //		if ((uint32_t) evt
-  //				& (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
-  //			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
-  //				osDelay(1);
-  //			}
-  //		}
-  //	}
+  if (PolicyEngine::isPD3_0()) {
+    /* If we're starting an AMS, wait for permission to transmit */
+    ProtocolTransmit::Notifications evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PRLTX_START_AMS, 0);
+    if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_PRLTX_START_AMS) {
+      while (fusb_get_typec_current() != fusb_sink_tx_ok) {
+        osDelay(1);
+      }
+    }
+  }
   messageSending = true;
   /* Send the message to the PHY */
   fusb_send_message(&temp_msg);
