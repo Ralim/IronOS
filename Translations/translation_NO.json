@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "SPISS FRAKOBLET",
 		"SolderingAdvancedPowerPrompt": "Effekt: ",
 		"OffString": "Av",
+		"YourGainMessage": "Your gain:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "H",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "L",
 		"SettingStartSleepChar": "D",
 		"SettingStartSleepOffChar": "O",
@@ -105,7 +116,7 @@
 		},
 		"SleepTimeout": {
 			"text2": [
-				"",
+				"DTid",
 				""
 			],
 			"desc": "Tid før dvale <Minutter/Sekunder"
@@ -201,27 +212,6 @@
 			],
 			"desc": "Hastigheten på rulletekst"
 		},
-		"TipModel": {
-			"text2": [
-				"Tip",
-				"Model"
-			],
-			"desc": "Tip Model selection"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Simple",
-				"Calibration"
-			],
-			"desc": "Simple Calibration using Hot water"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Advanced",
-				"Calibration"
-			],
-			"desc": "Advanced calibration using thermocouple on the tip"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Power",
@@ -263,13 +253,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "VRH NIJE SPOJEN",
 		"SolderingAdvancedPowerPrompt": "Snaga: ",
 		"OffString": "Isk",
+		"YourGainMessage": "Your gain:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "B",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
@@ -201,27 +212,6 @@
 			],
 			"desc": "Brzina kretanja opisnih poruka poput ove. <S=sporo, B=brzo>"
 		},
-		"TipModel": {
-			"text2": [
-				"Model",
-				"vrha"
-			],
-			"desc": "Odabir modela lemnog vrha."
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Jednostavna",
-				"kalibracija"
-			],
-			"desc": "Jednostavna kalibracija kipućom vodom."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Napredna",
-				"kalibracija"
-			],
-			"desc": "Napredna kalibracija pomoću termopara."
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Ulazna",
@@ -263,13 +253,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

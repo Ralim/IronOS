@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "ВРХ НИЈЕ СПОЈЕН",
 		"SolderingAdvancedPowerPrompt": "Снага: ",
 		"OffString": "Иск",
+		"YourGainMessage": "Your gain:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "Б",
 		"SettingSlowChar": "С",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
@@ -201,27 +212,6 @@
 			],
 			"desc": "Брзина кретања описних порука попут ове. <С=споро, Б=брзо>"
 		},
-		"TipModel": {
-			"text2": [
-				"Модел",
-				"врха"
-			],
-			"desc": "Одабир модела лемног врха."
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Једноставна",
-				"калибрација"
-			],
-			"desc": "Једноставна калибрација кипућом водом."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Напредна",
-				"калибрација"
-			],
-			"desc": "Напредна калибрација помоћу термопара."
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Улазна",
@@ -263,13 +253,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

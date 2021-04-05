@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "Жало вимкнено!",
 		"SolderingAdvancedPowerPrompt": "Живлення: ",
 		"OffString": "Вимк",
+		"YourGainMessage": "Приріст:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Скид. OK",
-		"YourGainMessage": "Приріст:",
-		"SettingsResetMessage": "Налаштування\nскинуті!",
-		"NoAccelerometerMessage": "Акселерометр\nне виявлено!",
-		"NoPowerDeliveryMessage": "USB-PD IC\nне виявлено!",
+		"SettingsResetMessage": [
+			"Налаштування",
+			"скинуті!"
+		],
+		"NoAccelerometerMessage": [
+			"Акселерометр",
+			"не виявлено!"
+		],
+		"NoPowerDeliveryMessage": [
+			"USB-PD IC",
+			"не виявлено!"
+		],
 		"LockingKeysString": " ЗАБЛОК.",
 		"UnlockingKeysString": "РОЗБЛОК.",
 		"WarningKeysLockedString": "!ЗАБЛОК!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "Ш",
 		"SettingSlowChar": "П",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"B",
+		"SettingOffChar": "B",
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",
@@ -201,27 +212,6 @@
 			],
 			"desc": "Швидкість прокрутки тексту <П=повільно, Ш=швидко>"
 		},
-		"TipModel": {
-			"text2": [
-				"Модель",
-				"жала"
-			],
-			"desc": "Вибір моделі жала"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Просте",
-				"Калібрування"
-			],
-			"desc": "Просте калібрування з використанням гарячої води"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Детальне",
-				"Калібрування"
-			],
-			"desc": "Калібрування за допомогою термопари"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Потужність",
@@ -263,13 +253,6 @@
 				"Навантаж."
 			],
 			"desc": "Деякі PowerBank-и з часом вимк. живлення, якщо пристрій споживає дуже мало енергії)"
-		},
-		"TipGain": {
-			"text2": [
-				"Змінити",
-				"підсил. жала"
-			],
-			"desc": "Підсилення жала"
 		},
 		"HallEffSensitivity": {
 			"text2": [

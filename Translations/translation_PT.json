@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "SEM PONTA",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
+		"YourGainMessage": "Your gain:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
@@ -201,27 +212,6 @@
 			],
 			"desc": "Velocidade a que o texto é exibido"
 		},
-		"TipModel": {
-			"text2": [
-				"Ponta",
-				"Modelo"
-			],
-			"desc": "Selecção de modelo de ponta"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Calibração",
-				"Simples"
-			],
-			"desc": "Calibração simples com água quente"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Calibração",
-				"Avançada"
-			],
-			"desc": "Calibração avançada com um termopar na ponta"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Potência",
@@ -263,13 +253,6 @@
 				"Pulse W"
 			],
 			"desc": "Keep awake pulse power intensity"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

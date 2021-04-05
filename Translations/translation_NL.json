@@ -21,14 +21,34 @@
 		"TipDisconnectedString": "PUNT LOSGEKOPPELT",
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
 		"OffString": "Uit",
+		"YourGainMessage": "Niveau:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Niveau:",
-		"SettingsResetMessage": "Instellingen zijn\ngereset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " GEBLOKKEERD",
-		"UnlockingKeysString": "GEDEBLOKKEERD",
-		"WarningKeysLockedString": "!GEBLOKKEERD!"
+		"SettingsResetMessage": [
+			"Instellingen",
+			"zijn gereset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": [
+			" GEBLOKKEERD",
+			""
+		],
+		"UnlockingKeysString": [
+			"GEDEBLOKKEERD",
+			""
+		],
+		"WarningKeysLockedString": [
+			"!GEBLOKKEERD!",
+			""
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -37,7 +57,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
@@ -201,27 +221,6 @@
 			],
 			"desc": "Snelheid waarmee de tekst scrolt."
 		},
-		"TipModel": {
-			"text2": [
-				"Punt",
-				"Model"
-			],
-			"desc": "Punt Model selecteren"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Simpele",
-				"Calibratie"
-			],
-			"desc": "Simpele Calibratie met warm water"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Geavanceerde",
-				"Calibratie"
-			],
-			"desc": "Geavanceerde calibratie met een thermokoppel op de punt"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Power",
@@ -263,13 +262,6 @@
 				"Puls W"
 			],
 			"desc": "Vermogen van puls om soldeerbout aan te houden"
-		},
-		"TipGain": {
-			"text2": [
-				"Verander",
-				"punt gain"
-			],
-			"desc": "Punt gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

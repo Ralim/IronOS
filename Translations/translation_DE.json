@@ -22,11 +22,22 @@
 		"TipDisconnectedString": "Spitze fehlt",
 		"SolderingAdvancedPowerPrompt": "Leistung: ",
 		"OffString": "Aus",
-		"NoAccelerometerMessage": "Kein Bewegungssensor\nerkannt!",
-		"NoPowerDeliveryMessage": "Kein USB-PD IC\nerkannt!",
+		"YourGainMessage": "Dein Faktor:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Dein Faktor:",
-		"SettingsResetMessage": "Einstellungen\nzurückgesetzt!",
+		"SettingsResetMessage": [
+			"Einstellungen",
+			"zurückgesetzt!"
+		],
+		"NoAccelerometerMessage": [
+			"Kein Bewegungssensor",
+			"erkannt!"
+		],
+		"NoPowerDeliveryMessage": [
+			"Kein USB-PD IC",
+			"erkannt!"
+		],
 		"LockingKeysString": "GESPERRT",
 		"UnlockingKeysString": "ENTSPERRT",
 		"WarningKeysLockedString": "!GESPERRT!"
@@ -202,27 +213,6 @@
 			],
 			"desc": "Scrollgeschwindigkeit der Erläuterungen <L=langsam | S=schnell>"
 		},
-		"TipModel": {
-			"text2": [
-				"Löt-",
-				"spitze"
-			],
-			"desc": "Auswahl der Lötspitze"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Einfache",
-				"Kalibrierung"
-			],
-			"desc": "Einfache Kalibrierung mit heißem Wasser"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Erweiterte",
-				"Kalibrierung"
-			],
-			"desc": "Erweiterte Kalibrierung mit Thermoelement an der Lötspitze"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Spannungs-",
@@ -264,13 +254,6 @@
 				"impuls"
 			],
 			"desc": "Powerbank mit einem Impuls wach halten <Watt>"
-		},
-		"TipGain": {
-			"text2": [
-				"Ändere",
-				"Spitzen-Faktor"
-			],
-			"desc": "Spitzen-Faktor"
 		},
 		"HallEffSensitivity": {
 			"text2": [

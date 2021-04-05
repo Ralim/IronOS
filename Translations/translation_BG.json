@@ -21,11 +21,25 @@
 		"TipDisconnectedString": "ПРЕКЪСНАТ ВРЪХ",
 		"SolderingAdvancedPowerPrompt": "Захранване: ",
 		"OffString": "Изкл.",
-		"ResetOKMessage": "Нулиране завършено",
-		"YourGainMessage": "Усилване:",
-		"SettingsResetMessage": "Настройките бяха\nнулирани!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"YourGainMessage": "Усилване:"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": [
+			"Нулиране",
+			"завършено"
+		],
+		"SettingsResetMessage": [
+			"Настройките бяха",
+			"нулирани!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +51,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
@@ -201,27 +215,6 @@
 			],
 			"desc": "Скорост на движение на този текст"
 		},
-		"TipModel": {
-			"text2": [
-				"Модел",
-				"на връх"
-			],
-			"desc": "Избор на модел на връх"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Бърза",
-				"калибрация"
-			],
-			"desc": "Бърза калибрация с използване на гореща вода"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Прецизна",
-				"калибрация"
-			],
-			"desc": "Прецизна калибрация с използване на термо-двойка на върха на поялника"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Мощност на",
@@ -263,13 +256,6 @@
 				"импулс"
 			],
 			"desc": "Поддържане на интензивност на захранващия импулс"
-		},
-		"TipGain": {
-			"text2": [
-				"Промяна",
-				"сила връх"
-			],
-			"desc": "Усилване на върха на поялника"
 		},
 		"HallEffSensitivity": {
 			"text2": [

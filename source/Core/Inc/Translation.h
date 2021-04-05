@@ -12,9 +12,9 @@ extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
 extern const bool    HasFahrenheit;
 
-extern const char *SettingsShortNames[33][2];
-extern const char *SettingsDescriptions[33];
-extern const char *SettingsMenuEntries[5];
+extern const char *SettingsShortNames[];
+extern const char *SettingsDescriptions[];
+extern const char *SettingsMenuEntries[];
 
 extern const char *SettingsCalibrationDone;
 extern const char *SettingsCalibrationWarning;
@@ -35,8 +35,9 @@ extern const char *IdleSetString;
 extern const char *TipDisconnectedString;
 extern const char *SolderingAdvancedPowerPrompt;
 extern const char *OffString;
-extern const char *ResetOKMessage;
 extern const char *YourGainMessage;
+
+extern const char *ResetOKMessage;
 extern const char *SettingsResetMessage;
 extern const char *NoAccelerometerMessage;
 extern const char *NoPowerDeliveryMessage;
@@ -81,4 +82,41 @@ extern const char *SymbolCellCount;
 extern const char *SymbolVersionNumber;
 
 extern const char *DebugMenu[];
+
+enum class SettingsItemIndex : uint8_t {
+  DCInCutoff,
+  SleepTemperature,
+  SleepTimeout,
+  ShutdownTimeout,
+  MotionSensitivity,
+  TemperatureUnit,
+  AdvancedIdle,
+  DisplayRotation,
+  BoostTemperature,
+  AutoStart,
+  CooldownBlink,
+  TemperatureCalibration,
+  SettingsReset,
+  VoltageCalibration,
+  AdvancedSoldering,
+  ScrollingSpeed,
+  QCMaxVoltage,
+  PowerLimit,
+  ReverseButtonTempChange,
+  TempChangeShortStep,
+  TempChangeLongStep,
+  PowerPulsePower,
+  HallEffSensitivity,
+  LockingMode,
+  MinVolCell,
+  AnimLoop,
+  AnimSpeed,
+  PowerPulseWait,
+  PowerPulseDuration,
+};
+
+constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
+// Use a constexpr function for type-checking.
+#define SETTINGS_DESC(i) (SettingsDescriptions[settings_item_index(i)])
+
 #endif /* TRANSLATION_H_ */

@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance : ",
 		"OffString": "Off",
+		"YourGainMessage": "Gain : "
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Gain : ",
-		"SettingsResetMessage": "Réglage réinit. !",
-		"NoAccelerometerMessage": "Accéléromètre\nnon détecté !",
-		"NoPowerDeliveryMessage": "Pas d'USB-PD\ndétecté !",
+		"SettingsResetMessage": [
+			"Réglage",
+			"réinit. !"
+		],
+		"NoAccelerometerMessage": [
+			"Accéléromètre",
+			"non détecté !"
+		],
+		"NoPowerDeliveryMessage": [
+			"Pas d'USB-PD",
+			"détecté !"
+		],
 		"LockingKeysString": "VERROUIL",
 		"UnlockingKeysString": "DEVERROU",
 		"WarningKeysLockedString": "! VERR. !"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"D",
+		"SettingOffChar": "D",
 		"SettingStartSolderingChar": "A",
 		"SettingStartSleepChar": "V",
 		"SettingStartSleepOffChar": "O",
@@ -201,27 +212,6 @@
 			],
 			"desc": "Vitesse de défilement du texte <R=rapide | L=lent>"
 		},
-		"TipModel": {
-			"text2": [
-				"Modèle de",
-				"la panne"
-			],
-			"desc": "Sélection du modèle de la panne"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Calibration",
-				"simple"
-			],
-			"desc": "Calibration simple à l'aide d'eau chaude"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Calibration",
-				"avancée"
-			],
-			"desc": "Calibration avancée à l'aide d'un thermocouple sur la panne"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Tension max.",
@@ -263,13 +253,6 @@
 				"impulsions"
 			],
 			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries <watt>"
-		},
-		"TipGain": {
-			"text2": [
-				"Modifier",
-				"gain panne"
-			],
-			"desc": "Modifier le gain de la panne"
 		},
 		"LockingMode": {
 			"text2": [

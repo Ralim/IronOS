@@ -82,43 +82,32 @@ var def =
 			"maxLen": 3
 		},
 		{
-			"id": "ResetOKMessage",
-			"maxLen": 8
-		},
-		{
 			"id": "YourGainMessage",
 			"maxLen": 8,
 			"default": "Your Gain"
+		}
+	],
+	"messagesWarn": [
+		{
+			"id": "ResetOKMessage"
 		},
 		{
-			"id": "SettingsResetMessage",
-			"maxLen": 16,
-			"default": "Settings were\nreset!"
+			"id": "SettingsResetMessage"
 		},
 		{
-			"id": "NoAccelerometerMessage",
-			"maxLen": 16,
-			"default": "No accelerometer\ndetected!"
+			"id": "NoAccelerometerMessage"
 		},
 		{
-			"id": "NoPowerDeliveryMessage",
-			"maxLen": 16,
-			"default": "No USB-PD IC\ndetected!"
+			"id": "NoPowerDeliveryMessage"
 		},
 		{
-			"id": "LockingKeysString",
-			"maxLen": 8,
-			"default": "LOCKING"
+			"id": "LockingKeysString"
 		},
 		{
-			"id": "UnlockingKeysString",
-			"maxLen": 8,
-			"default": "UNLOCK"
+			"id": "UnlockingKeysString"
 		},
 		{
-			"id": "WarningKeysLockedString",
-			"maxLen": 8,
-			"default": "LOCKED!"
+			"id": "WarningKeysLockedString"
 		}
 	],
 	"characters": [
@@ -206,23 +195,28 @@ var def =
 	"menuGroups": [
 		{
 			"id": "PowerMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "SolderingMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "PowerSavingMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "UIMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "AdvancedMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		}
 	],
 	"menuOptions": [
@@ -307,21 +301,6 @@ var def =
 			"maxLen2": 11
 		},
 		{
-			"id": "TipModel",
-			"maxLen": 8,
-			"maxLen2": 16
-		},
-		{
-			"id": "SimpleCalibrationMode",
-			"maxLen": 8,
-			"maxLen2": 16
-		},
-		{
-			"id": "AdvancedCalibrationMode",
-			"maxLen": 8,
-			"maxLen2": 16
-		},
-		{
 			"id": "QCMaxVoltage",
 			"maxLen": 8,
 			"maxLen2": 16
@@ -350,11 +329,6 @@ var def =
 			"id": "PowerPulsePower",
 			"maxLen": 6,
 			"maxLen2": 16
-		},
-		{
-			"id": "TipGain",
-			"maxLen": 6,
-			"maxLen2": 8
 		},
 		{
 			"id": "HallEffSensitivity",

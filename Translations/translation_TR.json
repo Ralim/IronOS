@@ -21,11 +21,28 @@
 		"TipDisconnectedString": "UÇ ÇIKARILDI",
 		"SolderingAdvancedPowerPrompt": "Güç: ",
 		"OffString": "Kapalı",
-		"ResetOKMessage": "Sıfırlama Tamam",
-		"YourGainMessage": "Kazancınız:",
-		"SettingsResetMessage": "Ayarlar Sıfırlandı",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!"
+		"YourGainMessage": "Kazancınız:"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": [
+			"Sıfırlama Tamam",
+			""
+		],
+		"SettingsResetMessage": [
+			"Ayarlar",
+			"Sıfırlandı"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": "LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -34,7 +51,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",
@@ -205,27 +222,6 @@
 			],
 			"desc": "Bu yazının kayma hızı S= Yavaş, F= Hızlı"
 		},
-		"TipModel": {
-			"text2": [
-				"Uç",
-				"Modeli"
-			],
-			"desc": "Uç Modeli seçimi"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Basit",
-				"Kalibrasyon"
-			],
-			"desc": "Sıcak su kullanarak basit kalibrasyon"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Gelişmiş",
-				"Kalibrasyon"
-			],
-			"desc": "Uçtaki ısı sensörünü kullanarak gelişmiş kalibrasyon"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
@@ -281,13 +277,6 @@
 				"Pulse W"
 			],
 			"desc": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Kazancınız"
 		},
 		"HallEffSensitivity": {
 			"text2": [

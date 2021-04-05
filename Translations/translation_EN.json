@@ -22,11 +22,22 @@
 		"TipDisconnectedString": "NO TIP",
 		"SolderingAdvancedPowerPrompt": "Power: ",
 		"OffString": "Off",
+		"YourGainMessage": "Your gain:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": "LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -38,7 +49,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "R",
@@ -202,27 +213,6 @@
 			],
 			"desc": "Speed info text scrolls past at <S=slow | F=fast>"
 		},
-		"TipModel": {
-			"text2": [
-				"Tip",
-				"model"
-			],
-			"desc": "Tip model selection"
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Simple",
-				"calibration"
-			],
-			"desc": "Using hot water to calibrate tip"
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Advanced",
-				"calibration"
-			],
-			"desc": "Using a thermocouple on the tip to calibrate it"
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
@@ -264,13 +254,6 @@
 				"pulse"
 			],
 			"desc": "Intensity of power of keep-awake-pulse <watt>"
-		},
-		"TipGain": {
-			"text2": [
-				"Modify",
-				"tip gain"
-			],
-			"desc": "Tip gain"
 		},
 		"HallEffSensitivity": {
 			"text2": [

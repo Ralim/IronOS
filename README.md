@@ -4,7 +4,7 @@
 
 # IronOS - Flexible Soldering iron control Firmware
 
-*This repository was formerly known as TS100, its the same great code. Just with more supported devices*
+_This repository was formerly known as TS100, its the same great code. Just with more supported devices_
 
 Originally concieved as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
@@ -16,29 +16,30 @@ For soldering irons that are designed to be powered by batteries (TS100), settin
 
 There are 25 languages currently supported as of present. When downloading the firmware for your soldering iron take note of the language code in the file name.
 
-This project is considered feature complete for use as a soldering iron, *so please suggest any feature improvements you would like!*
+This project is considered feature complete for use as a soldering iron, _so please suggest any feature improvements you would like!_
 
-*This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode.*
+_This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
+To get started with this firmware, please jump over to [here](Documentation/GettingStarted.md)
 
 ## Key Features
 
-* PID style iron temperature control
-* Automatic sleep with selectable sensitivity
-* Motion wake support
-* All settings exposed in intuitive menu
-* (TS100) Set a voltage lower limit for Lithium batteries so you don't kill your battery pack
-* (TS80) Set 18W or 24W settings for your power bank
-* (TS80P) Automatically negotiates appropriate PD and falls back to QC mode like TS80
-* (Pinecil) Supports all 3 power modes (PD,QC, DC In).
-* Improved readability Fonts, supporting multiple languages
-* Use hardware features to improve reliability
-* Can disable movement detection if desired
-* Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods of time)
-* (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
-* (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
-* [Custom boot up logo support](Documentation/Logo.md)
-* Automatic LCD rotation based on the orientation
+- PID style iron temperature control
+- Automatic sleep with selectable sensitivity
+- Motion wake support
+- All settings exposed in intuitive menu
+- (TS100) Set a voltage lower limit for Lithium batteries so you don't kill your battery pack
+- (TS80) Set 18W or 24W settings for your power bank
+- (TS80P) Automatically negotiates appropriate PD and falls back to QC mode like TS80
+- (Pinecil) Supports all 3 power modes (PD,QC, DC In).
+- Improved readability Fonts, supporting multiple languages
+- Use hardware features to improve reliability
+- Can disable movement detection if desired
+- Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods of time)
+- (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
+- (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
+- [Custom boot up logo support](Documentation/Logo.md)
+- Automatic LCD rotation based on the orientation
 
 ## Installation
 
@@ -49,10 +50,10 @@ For installation for your device, please refer to the [Flashing Guide](Documenta
 This new firmware uses a new menu system to allow access to the settings on the device.
 When on the main screen, the unit shows prompts for the two most common operations.
 
-* Pressing the button near the tip enters soldering mode
-* Pressing the button near the USB enters the settings menu
-* Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
-* Holding the button near the USB end will show the [debug menu](Documentation/DebugMenu.md)
+- Pressing the button near the tip enters soldering mode
+- Pressing the button near the USB enters the settings menu
+- Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
+- Holding the button near the USB end will show the [debug menu](Documentation/DebugMenu.md)
 
 Detailed operation details are over in the [Menu information.](Documentation/Menu.md)
 
@@ -63,19 +64,19 @@ I also want to give a shout out to all of the [Fantastic Contributors](https://g
 
 Especially to the following users, who have helped in various ways that are massively appreciated:
 
-* [Dhiltonp](https://github.com/dhiltonp)
-* [Mrkvozrout](https://github.com/Mrkvozrout)
-* [JonnieZG](https://github.com/jonnieZG)
-* [Federck](https://github.com/federck)
-* [Jvitkauskas](https://github.com/jvitkauskas)
-* [Doegox](https://github.com/doegox)
-* [Perillamint](https://github.com/perillamint)
-* [GeminiServer](https://github.com/GeminiServer)
-* [Patrick Horlebein](https://github.com/PixelPirate)
-* [Firebie](https://github.com/Firebie)
-* [Agatti](https://github.com/agatti)
-* [Discip](https://github.com/discip)
-* [Paul Fertser](https://github.com/paulfertser)
+- [Dhiltonp](https://github.com/dhiltonp)
+- [Mrkvozrout](https://github.com/Mrkvozrout)
+- [JonnieZG](https://github.com/jonnieZG)
+- [Federck](https://github.com/federck)
+- [Jvitkauskas](https://github.com/jvitkauskas)
+- [Doegox](https://github.com/doegox)
+- [Perillamint](https://github.com/perillamint)
+- [GeminiServer](https://github.com/GeminiServer)
+- [Patrick Horlebein](https://github.com/PixelPirate)
+- [Firebie](https://github.com/Firebie)
+- [Agatti](https://github.com/agatti)
+- [Discip](https://github.com/discip)
+- [Paul Fertser](https://github.com/paulfertser)
 
 Plus the huge number of people who have contributed translations, your effort is massively appreciated.
 
@@ -86,6 +87,6 @@ Other components such as FreeRTOS/USB-PD have their own licence.
 
 ## Commercial Use
 
-This software is provided as-is, so I cannot provide any commercial support for the firmware. 
+This software is provided as-is, so I cannot provide any commercial support for the firmware.
 However, you are more than welcome to distribute links to the firmware, or provide irons with this software on them.
 Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around.

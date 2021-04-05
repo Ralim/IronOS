@@ -21,11 +21,23 @@
 		"TipDisconnectedString": "NO HAY PUNTA",
 		"SolderingAdvancedPowerPrompt": "Potencia: ",
 		"OffString": " No",
-		"ResetOKMessage": "Hecho.       ",
 		"YourGainMessage": "Gananc.:",
-		"SettingsResetMessage": "Ajustes borrados",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": "Ajustes borrados"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": "Hecho.",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +49,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "F",
@@ -201,27 +213,6 @@
 			],
 			"desc": "Velocidad de desplazamiento del texto <R=rápida L=lenta>"
 		},
-		"TipModel": {
-			"text2": [
-				"Modelo de",
-				"punta"
-			],
-			"desc": "Elegir el modelo de punta actual."
-		},
-		"SimpleCalibrationMode": {
-			"text2": [
-				"Calibración",
-				"simple"
-			],
-			"desc": "Calibración simple con agua caliente."
-		},
-		"AdvancedCalibrationMode": {
-			"text2": [
-				"Calibración",
-				"avanzada"
-			],
-			"desc": "Calibrar con un termopar en la punta; más difícil."
-		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Potencia de",
@@ -263,13 +254,6 @@
 				"constantes"
 			],
 			"desc": "Aplica unos pulsos necesarios para mantener encendidas ciertas baterías portátiles. En vatios."
-		},
-		"TipGain": {
-			"text2": [
-				"Ajustar ganancia",
-				"de punta"
-			],
-			"desc": "Modificar el valor de ganancia de la punta."
 		},
 		"HallEffSensitivity": {
 			"text2": [

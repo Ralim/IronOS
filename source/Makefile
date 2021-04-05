@@ -132,12 +132,9 @@ OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
 
-# Without debug code
-DEBUG=
+DEBUG=-g3
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
-	# Enable debug code generation
-	DEBUG=-g
 endif
 
 
@@ -319,7 +316,7 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@echo 'Building file: $<'
 	@$(AS) -c $(AFLAGS) $< -o $@
 
-Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Translations/make_translation.py ../Translations/translations_commons.js ../Translations/fontTables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Generating translations for language $*'
 	@python3 ../Translations/make_translation.py -o $(PWD)/$@ $*
@@ -352,4 +349,4 @@ check-style:
 # pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
 -include $(OUT_OBJS_CPP:.o=.d)
-
+-include $(OUTPUT_DIR)/Core/Gen/Translation.*.d
