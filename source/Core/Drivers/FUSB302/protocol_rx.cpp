@@ -34,7 +34,7 @@ union pd_msg        ProtocolReceive::tempMessage;
  */
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
   /* Wait for an event */
-  EventBits_t evt = waitForEvent(PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT | PDB_EVT_PRLRX_I_RXPEND);
+  EventBits_t evt = waitForEvent(PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT);
 
   /* If we got a reset event, reset */
   if (evt & PDB_EVT_PRLRX_RESET) {
@@ -56,12 +56,6 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
       /* Otherwise, check the message ID */
       return PRLRxCheckMessageID;
     }
-  } else if (evt & PDB_EVT_PRLRX_I_RXPEND) {
-    // There is an RX message pending that is not a Good CRC
-    union pd_msg *_rx_message = &tempMessage;
-    /* Read the message */
-    fusb_read_message(_rx_message);
-    return PRLRxWaitPHY;
   }
 
   return PRLRxWaitPHY;

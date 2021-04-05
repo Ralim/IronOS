@@ -25,7 +25,6 @@
 /* Events for the Protocol RX thread */
 #define PDB_EVT_PRLRX_RESET      EVENT_MASK(0)
 #define PDB_EVT_PRLRX_I_GCRCSENT EVENT_MASK(1)
-#define PDB_EVT_PRLRX_I_RXPEND   EVENT_MASK(2)
 
 class ProtocolReceive {
 public:
