@@ -54,7 +54,6 @@ void InterruptHandler::readPendingMessage() {
 
     /* Pass the message to the policy engine. */
     PolicyEngine::handleMessage(&tempMessage);
-    PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_MSG_RX);
   }
 }
 

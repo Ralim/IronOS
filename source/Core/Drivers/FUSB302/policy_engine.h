@@ -59,10 +59,9 @@ public:
     PDB_EVT_PE_HARD_SENT      = EVENT_MASK(4),
     PDB_EVT_PE_I_OVRTEMP      = EVENT_MASK(5),
     PDB_EVT_PE_PPS_REQUEST    = EVENT_MASK(6),
-    PDB_EVT_PE_MSG_RX_PEND    = EVENT_MASK(7), /* Never send this from user area*/
-    PDB_EVT_PE_GET_SOURCE_CAP = EVENT_MASK(8),
-    PDB_EVT_PE_NEW_POWER      = EVENT_MASK(9),
-    PDB_EVT_PE_ALL            = (EVENT_MASK(10) - 1),
+    PDB_EVT_PE_GET_SOURCE_CAP = EVENT_MASK(7),
+    PDB_EVT_PE_NEW_POWER      = EVENT_MASK(8),
+    PDB_EVT_PE_ALL            = (EVENT_MASK(9) - 1),
   };
   // Send a notification
   static void notify(Notifications notification);

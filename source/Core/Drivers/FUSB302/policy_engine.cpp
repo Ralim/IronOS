@@ -155,14 +155,10 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_discovery() {
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
   /* Fetch a message from the protocol layer */
-  EventBits_t evt = 0;
-  if (readMessage()) {
-    evt = (uint32_t)Notifications::PDB_EVT_PE_MSG_RX_PEND;
-  } else {
-    evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_MSG_RX | (uint32_t)Notifications::PDB_EVT_PE_I_OVRTEMP | (uint32_t)Notifications::PDB_EVT_PE_RESET,
-                       // Wait for cap timeout
-                       PD_T_TYPEC_SINK_WAIT_CAP);
-  }
+  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_MSG_RX | (uint32_t)Notifications::PDB_EVT_PE_I_OVRTEMP | (uint32_t)Notifications::PDB_EVT_PE_RESET,
+                                 // Wait for cap timeout
+                                 PD_T_TYPEC_SINK_WAIT_CAP);
+
   /* If we timed out waiting for Source_Capabilities, send a hard reset */
   if (evt == 0) {
     return PESinkHardReset;
@@ -177,7 +173,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_wait_cap() {
   }
 
   /* If we got a message */
-  if (evt & ((uint32_t)Notifications::PDB_EVT_PE_MSG_RX | (uint32_t)Notifications::PDB_EVT_PE_MSG_RX_PEND)) {
+  if (evt & (uint32_t)Notifications::PDB_EVT_PE_MSG_RX) {
     /* Get the message */
     while (readMessage()) {
       /* If we got a Source_Capabilities message, read it. */
@@ -292,13 +288,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_transition_sink() {
   /* Wait for the PS_RDY message */
-  EventBits_t evt = 0;
-
-  if (messageWaiting()) {
-    evt = (uint32_t)Notifications::PDB_EVT_PE_MSG_RX;
-  } else {
-    evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_MSG_RX | (uint32_t)Notifications::PDB_EVT_PE_RESET, PD_T_PS_TRANSITION);
-  } /* If we got reset signaling, transition to default */
+  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_MSG_RX | (uint32_t)Notifications::PDB_EVT_PE_RESET, PD_T_PS_TRANSITION);
+  /* If we got reset signaling, transition to default */
   if (evt & (uint32_t)Notifications::PDB_EVT_PE_RESET) {
     return PESinkTransitionDefault;
   }
@@ -617,6 +608,11 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_source_unresponsive() {
 EventBits_t PolicyEngine::waitForEvent(uint32_t mask, TickType_t ticksToWait) { return xEventGroupWaitBits(xEventGroupHandle, mask, mask, pdFALSE, ticksToWait); }
 
 bool PolicyEngine::isPD3_0() { return (hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0; }
+
+void PolicyEngine::handleMessage(union pd_msg *msg) {
+  xQueueSend(messagesWaiting, msg, 100);
+  notify(PolicyEngine::Notifications::PDB_EVT_PE_MSG_RX);
+}
 
 void PolicyEngine::PPSTimerCallback() {
   if (PPSTimerEnabled && state == policy_engine_state::PESinkReady) {
