@@ -333,7 +333,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
   eventmask_t evt;
 
   /* Wait for an event */
-  evt = waitForEvent(PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP | PDB_EVT_PE_PPS_REQUEST);
+  evt = waitForEvent(PDB_EVT_PE_MSG_RX | PDB_EVT_PE_RESET | PDB_EVT_PE_I_OVRTEMP | PDB_EVT_PE_GET_SOURCE_CAP | PDB_EVT_PE_NEW_POWER | PDB_EVT_PE_PPS_REQUEST);
 
   /* If we got reset signaling, transition to default */
   if (evt & PDB_EVT_PE_RESET) {
@@ -345,6 +345,18 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
     return PESinkHardReset;
   }
 
+  /* If the DPM wants us to, send a Get_Source_Cap message */
+  if (evt & PDB_EVT_PE_GET_SOURCE_CAP) {
+    return PESinkGetSourceCap;
+  }
+  /* If the DPM wants new power, let it figure out what power it wants
+   * exactly.  This isn't exactly the transition from the spec (that would be
+   * SelectCap, not EvalCap), but this works better with the particular
+   * design of this firmware. */
+  if (evt & PDB_EVT_PE_NEW_POWER) {
+    /* Tell the protocol layer we're starting an AMS */
+    return PESinkEvalCap;
+  }
   /* If SinkPPSPeriodicTimer ran out, send a new request */
   if (evt & PDB_EVT_PE_PPS_REQUEST) {
     return PESinkSelectCap;
