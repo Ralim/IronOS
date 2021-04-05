@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>TS100 Translation Editor</title>
+		<title>IronOS Translation Editor</title>
 
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<script src="translations_commons.js"></script>
@@ -191,11 +191,67 @@
 						delim = " and ";
 					}
 					return str;
+				},
+
+				getWholeScreenMessageMaxLen: function(valMap, id, prop) {
+					var v = prop ? valMap[id][prop] : valMap[id];
+					var maxLen;
+					if (this.isSmall(v)) {
+						maxLen = defMap[id].maxLen2 || 16;
+					} else {
+						maxLen = defMap[id].maxLen || 8;
+					}
+					return maxLen;
+				},
+
+				validateWholeScreenMessage: function(valMap, id, prop) {
+					var v = prop ? valMap[id][prop] : valMap[id];
+					var maxLen = this.getWholeScreenMessageMaxLen(valMap, id, prop);
+					if (this.isSmall(v)) {
+						if (v[0].length === 0) {
+							return "invalid";
+						} else if (Math.max(v[0].length, v[1].length) > maxLen) {
+							return "invalid";
+						}
+					} else {
+						if (v.length > maxLen) {
+							return "invalid";
+						}
+					}
+				},
+
+				constraintWholeScreenMessage: function(valMap, id, prop) {
+					return "len <= " + this.getWholeScreenMessageMaxLen(valMap, id, prop);
+				},
+
+				isSmall: function(v) {
+					return v instanceof Array;
+				},
+
+				convertToLarge: function(valMap, id, prop) {
+					var v = prop ? valMap[id][prop] : valMap[id];
+					var message = v[0] + (v[1] !== "" ? " " + v[1] : "");
+					if (prop) {
+						valMap[id][prop] = message;
+					} else {
+						valMap[id] = message;
+					}
+				},
+
+				convertToSmall: function(valMap, id, prop) {
+					var v = prop ? valMap[id][prop] : valMap[id];
+					var message = [ v, "" ];
+					if (prop) {
+						valMap[id][prop] = message;
+					} else {
+						valMap[id] = message;
+					}
 				}
 			}
 		});
 		app.def = def;
 		copyArrayToMap(app.def.messages, defMap);
+		copyArrayToMap(app.def.messagesWarn, defMap);
 		copyArrayToMap(app.def.characters, defMap);
 		copyArrayToMap(app.def.menuGroups, defMap);
 		copyArrayToMap(app.def.menuOptions, defMap);
@@ -208,7 +264,7 @@
 	<body>
 
 		<div id="app">
-			<h1>TS100 Translation Editor<span v-if="meta.currentLoaded"> - {{ current.languageLocalName }} [{{current.languageCode}}]</span></h1>
+			<h1>IronOS Translation Editor<span v-if="meta.currentLoaded"> - {{ current.languageLocalName }} [{{current.languageCode}}]</span></h1>
 			<table class="header data">
 				<tr>
 					<td class="label">Referent Language</td>
@@ -273,6 +329,27 @@
 					</tr>
 				</table>
 
+				<h2>Warning Messages</h2>
+				<table class="data">
+					<tr v-for="message in def.messagesWarn" v-bind:class="validateWholeScreenMessage(current.messagesWarn, message.id)">
+						<td class="label"><div class="stringId">{{message.id}}</div></td>
+						<td class="value">
+							<div class="constraint">{{constraintWholeScreenMessage(current.messagesWarn, message.id)}}</div>
+							<div class="ref">{{referent.messagesWarn[message.id]}}</div>
+							<div class="note" v-if="message.note">{{message.note}}</div>
+							<div class="tran" v-if="isSmall(current.messagesWarn[message.id])">
+								<input :id="'in_'+message.id+'_0'" type="text" v-model="current.messagesWarn[message.id][0]" v-bind:class="{unchanged : current.messagesWarn[message.id][0] == referent.messagesWarn[message.id][0] && current.messagesWarn[message.id][1] == referent.messagesWarn[message.id][1], empty : current.messagesWarn[message.id][0] == '' && current.messagesWarn[message.id][1] == ''}">
+								<input :id="'in_'+message.id+'_1'" type="text" v-model="current.messagesWarn[message.id][1]" v-bind:class="{unchanged : current.messagesWarn[message.id][0] == referent.messagesWarn[message.id][0] && current.messagesWarn[message.id][1] == referent.messagesWarn[message.id][1], empty : current.messagesWarn[message.id][0] == '' && current.messagesWarn[message.id][1] == ''}">
+								<button type="button" @click="convertToLarge(current.messagesWarn, message.id)">Convert to large text</button>
+							</div>
+							<div class="tran" v-else>
+								<input :id="'in_'+message.id" type="text" v-model="current.messagesWarn[message.id]" v-bind:class="{unchanged : current.messagesWarn[message.id] == referent.messagesWarn[message.id], empty : current.messagesWarn[message.id]==''}">
+								<button type="button" @click="convertToSmall(current.messagesWarn, message.id)">Convert to small text</button>
+							</div>
+						</td>
+					</tr>
+				</table>
+
 				<h2>Characters</h2>
 				<table class="data">
 					<tr v-for="char in def.characters" v-bind:class="validateInput(current.characters, char.id)">
@@ -287,13 +364,21 @@
 
 				<h2>Menu Groups</h2>
 				<table class="data">
-					<tr v-for="menu in def.menuGroups" v-bind:class="validateInput(current.menuGroups, menu.id, 2)">
+					<tr v-for="menu in def.menuGroups" v-bind:class="validateWholeScreenMessage(current.menuGroups, menu.id, 'text2')">
 						<td class="label"><div class="stringId">{{menu.id}}</div></td>
 						<td class="value">
 							<div class="label">Menu Name</div>
-							<div class="constraint">{{constraintString(menu)}}</div>
+							<div class="constraint">{{constraintWholeScreenMessage(current.menuGroups, menu.id, 'text2')}}</div>
 							<div class="ref">{{referent.menuGroups[menu.id].text2}}</div>
-							<div class="tran" v-bind:class="{unchanged : current.menuGroups[menu.id].text2[0] == referent.menuGroups[menu.id].text2[0] && current.menuGroups[menu.id].text2[1] == referent.menuGroups[menu.id].text2[1], empty : current.menuGroups[menu.id].text2[0] == '' || current.menuGroups[menu.id].text2[1] == ''}"><input type="text" v-model="current.menuGroups[menu.id].text2[0]"><input type="text" v-model="current.menuGroups[menu.id].text2[1]"></div>
+							<div class="tran" v-if="isSmall(current.menuGroups[menu.id].text2)">
+								<input type="text" v-model="current.menuGroups[menu.id].text2[0]" v-bind:class="{unchanged : current.menuGroups[menu.id].text2[0] == referent.menuGroups[menu.id].text2[0] && current.menuGroups[menu.id].text2[1] == referent.menuGroups[menu.id].text2[1], empty : current.menuGroups[menu.id].text2[0] == '' && current.menuGroups[menu.id].text2[1] == ''}">
+								<input type="text" v-model="current.menuGroups[menu.id].text2[1]" v-bind:class="{unchanged : current.menuGroups[menu.id].text2[0] == referent.menuGroups[menu.id].text2[0] && current.menuGroups[menu.id].text2[1] == referent.menuGroups[menu.id].text2[1], empty : current.menuGroups[menu.id].text2[0] == '' && current.menuGroups[menu.id].text2[1] == ''}">
+								<button type="button" @click="convertToLarge(current.menuGroups, menu.id, 'text2')">Convert to large text</button>
+							</div>
+							<div class="tran" v-else>
+								<input type="text" v-model="current.menuGroups[menu.id].text2" v-bind:class="{unchanged : current.menuGroups[menu.id].text2 == referent.menuGroups[menu.id].text2, empty : current.menuGroups[menu.id].text2==''}">
+								<button type="button" @click="convertToSmall(current.menuGroups, menu.id, 'text2')">Convert to small text</button>
+							</div>
 							<div class="label">Description</div>
 							<div class="ref">{{referent.menuGroups[menu.id].desc}}</div>
 							<div class="tran"><input type="text" v-model="current.menuGroups[menu.id].desc" v-bind:class="{unchanged : current.menuGroups[menu.id].desc == referent.menuGroups[menu.id].desc, empty : current.menuGroups[menu.id].desc == ''}"></div>
@@ -303,14 +388,22 @@
 
 				<h2>Menu Options</h2>
 				<table class="data">
-					<tr v-for="menu in def.menuOptions" v-bind:class="validateInput(current.menuOptions, menu.id, 2)">
+					<tr v-for="menu in def.menuOptions" v-bind:class="validateWholeScreenMessage(current.menuOptions, menu.id, 'text2')">
 						<td class="label"><div class="stringId">{{menu.id}}</div></td>
 						<td class="value">
 							<div v-bind:class="{hidden : false}">
-								<div class="label">Menu Name (Double-Line)</div>
-								<div class="constraint">{{constraintString(menu)}}</div>
+								<div class="label">Menu Name</div>
+								<div class="constraint">{{constraintWholeScreenMessage(current.menuOptions, menu.id, 'text2')}}</div>
 								<div class="ref">{{referent.menuOptions[menu.id].text2}}</div>
-								<div class="tran" v-bind:class="{unchanged : current.menuOptions[menu.id].text2[0] == referent.menuOptions[menu.id].text2[0] && current.menuOptions[menu.id].text2[1] == referent.menuOptions[menu.id].text2[1], empty : current.menuOptions[menu.id].text2[0] == '' || current.menuOptions[menu.id].text2[1] == ''}"><input type="text" v-model="current.menuOptions[menu.id].text2[0]"><input type="text" v-model="current.menuOptions[menu.id].text2[1]"></div>
+								<div class="tran" v-if="isSmall(current.menuOptions[menu.id].text2)">
+									<input type="text" v-model="current.menuOptions[menu.id].text2[0]" v-bind:class="{unchanged : current.menuOptions[menu.id].text2[0] == referent.menuOptions[menu.id].text2[0] && current.menuOptions[menu.id].text2[1] == referent.menuOptions[menu.id].text2[1], empty : current.menuOptions[menu.id].text2[0] == '' && current.menuOptions[menu.id].text2[1] == ''}">
+									<input type="text" v-model="current.menuOptions[menu.id].text2[1]" v-bind:class="{unchanged : current.menuOptions[menu.id].text2[0] == referent.menuOptions[menu.id].text2[0] && current.menuOptions[menu.id].text2[1] == referent.menuOptions[menu.id].text2[1], empty : current.menuOptions[menu.id].text2[0] == '' && current.menuOptions[menu.id].text2[1] == ''}">
+									<button type="button" @click="convertToLarge(current.menuOptions, menu.id, 'text2')">Convert to large text</button>
+								</div>
+								<div class="tran" v-else>
+									<input type="text" v-model="current.menuOptions[menu.id].text2" v-bind:class="{unchanged : current.menuOptions[menu.id].text2 == referent.menuOptions[menu.id].text2, empty : current.menuOptions[menu.id].text2==''}">
+									<button type="button" @click="convertToSmall(current.menuOptions, menu.id, 'text2')">Convert to small text</button>
+								</div>
 							</div>
 							<div class="label">Description</div>
 							<div class="ref">{{referent.menuOptions[menu.id].desc}}</div>

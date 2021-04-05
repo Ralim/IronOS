@@ -267,6 +267,26 @@ void OLED::print(const char *const str, FontStyle fontStyle) {
   }
 }
 
+/**
+ * Prints a static string message designed to use the whole screen, starting
+ * from the top-left corner.
+ *
+ * If the message starts with a newline (`\\x01`), the string starting from
+ * after the newline is printed in the large font. Otherwise, the message
+ * is printed in the small font.
+ *
+ * @param string The string message to be printed
+ */
+void OLED::printWholeScreen(const char *string) {
+  setCursor(0, 0);
+  if (string[0] == '\x01') {
+    // Empty first line means that this uses large font (for CJK).
+    OLED::print(string + 1, FontStyle::LARGE);
+  } else {
+    OLED::print(string, FontStyle::SMALL);
+  }
+}
+
 inline void stripLeaderZeros(char *buffer, uint8_t places) {
   // Removing the leading zero's by swapping them to SymbolSpace
   // Stop 1 short so that we dont blank entire number if its zero

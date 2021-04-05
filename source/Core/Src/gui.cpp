@@ -237,20 +237,6 @@ const menuitem advancedMenu[] = {
     {nullptr, nullptr, nullptr}                                                                                                            // end of menu marker. DO NOT REMOVE
 };
 
-static void printShortDescriptionDoubleLine(SettingsItemIndex settingsItemIndex) {
-  uint8_t shortDescIndex = static_cast<uint8_t>(settingsItemIndex);
-  if (SettingsShortNames[shortDescIndex][0][0] == '\x00') {
-    // Empty first line means that this uses large font (for CJK).
-    OLED::setCursor(0, 0);
-    OLED::print(SettingsShortNames[shortDescIndex][1], FontStyle::LARGE);
-  } else {
-    OLED::setCursor(0, 0);
-    OLED::print(SettingsShortNames[shortDescIndex][0], FontStyle::SMALL);
-    OLED::setCursor(0, 8);
-    OLED::print(SettingsShortNames[shortDescIndex][1], FontStyle::SMALL);
-  }
-}
-
 /**
  * Prints two small lines (or one line for CJK) of short description for
  * setting items and prepares cursor after it.
@@ -260,7 +246,8 @@ static void printShortDescriptionDoubleLine(SettingsItemIndex settingsItemIndex)
  */
 static void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t cursorCharPosition) {
   // print short description (default single line, explicit double line)
-  printShortDescriptionDoubleLine(settingsItemIndex);
+  uint8_t shortDescIndex = static_cast<uint8_t>(settingsItemIndex);
+  OLED::printWholeScreen(SettingsShortNames[shortDescIndex]);
 
   // prepare cursor for value
   // make room for scroll indicator
@@ -724,13 +711,7 @@ static bool settings_displayCoolingBlinkEnabled(void) {
 static bool settings_setResetSettings(void) {
   if (userConfirmation(SettingsResetWarning)) {
     resetSettings();
-
-    OLED::clearScreen();
-    OLED::setCursor(0, 0);
-    OLED::print(ResetOKMessage, FontStyle::LARGE);
-    OLED::refresh();
-
-    waitForButtonPressOrTimeout(2000); // 2 second timeout
+    warnUser(ResetOKMessage, 2 * TICKS_SECOND);
   }
   return false;
 }
@@ -814,7 +795,7 @@ static bool settings_setCalibrateVIN(void) {
       OLED::setCursor(0, 0);
       OLED::printNumber(systemSettings.voltageDiv, 3, FontStyle::LARGE);
       OLED::refresh();
-      waitForButtonPressOrTimeout(1000);
+      waitForButtonPressOrTimeout(1 * TICKS_SECOND);
       return false;
     case BUTTON_NONE:
     default:
@@ -1014,18 +995,8 @@ static bool animOpenState = false;
 
 static void displayMenu(size_t index) {
   // Call into the menu
-  const char *textPtr = SettingsMenuEntries[index];
-  FontStyle   font;
-  if (textPtr[0] == '\x01') { // `\x01` is used as newline.
-    // Empty first line means that this uses large font (for CJK).
-    font = FontStyle::LARGE;
-    textPtr++;
-  } else {
-    font = FontStyle::SMALL;
-  }
-  OLED::setCursor(0, 0);
   // Draw title
-  OLED::print(textPtr, font);
+  OLED::printWholeScreen(SettingsMenuEntries[index]);
   // Draw symbol
   // 16 pixel wide image
   // 2 pixel wide scrolling indicator

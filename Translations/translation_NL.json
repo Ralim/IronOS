@@ -21,14 +21,34 @@
 		"TipDisconnectedString": "PUNT LOSGEKOPPELT",
 		"SolderingAdvancedPowerPrompt": "Vermogen: ",
 		"OffString": "Uit",
+		"YourGainMessage": "Niveau:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Niveau:",
-		"SettingsResetMessage": "Instellingen zijn\ngereset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
-		"LockingKeysString": " GEBLOKKEERD",
-		"UnlockingKeysString": "GEDEBLOKKEERD",
-		"WarningKeysLockedString": "!GEBLOKKEERD!"
+		"SettingsResetMessage": [
+			"Instellingen",
+			"zijn gereset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": [
+			" GEBLOKKEERD",
+			""
+		],
+		"UnlockingKeysString": [
+			"GEDEBLOKKEERD",
+			""
+		],
+		"WarningKeysLockedString": [
+			"!GEBLOKKEERD!",
+			""
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -37,7 +57,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",

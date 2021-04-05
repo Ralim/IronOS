@@ -22,11 +22,22 @@
 		"TipDisconnectedString": "Spitze fehlt",
 		"SolderingAdvancedPowerPrompt": "Leistung: ",
 		"OffString": "Aus",
-		"NoAccelerometerMessage": "Kein Bewegungssensor\nerkannt!",
-		"NoPowerDeliveryMessage": "Kein USB-PD IC\nerkannt!",
+		"YourGainMessage": "Dein Faktor:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Dein Faktor:",
-		"SettingsResetMessage": "Einstellungen\nzurückgesetzt!",
+		"SettingsResetMessage": [
+			"Einstellungen",
+			"zurückgesetzt!"
+		],
+		"NoAccelerometerMessage": [
+			"Kein Bewegungssensor",
+			"erkannt!"
+		],
+		"NoPowerDeliveryMessage": [
+			"Kein USB-PD IC",
+			"erkannt!"
+		],
 		"LockingKeysString": "GESPERRT",
 		"UnlockingKeysString": "ENTSPERRT",
 		"WarningKeysLockedString": "!GESPERRT!"

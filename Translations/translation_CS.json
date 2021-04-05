@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "HROT NEPŘIPOJEN",
 		"SolderingAdvancedPowerPrompt": "Ohřev: ",
 		"OffString": "Vyp",
+		"YourGainMessage": "Zisk:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Zisk:",
-		"SettingsResetMessage": "Tov. nas. obnov.",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Tov. nas. obnov.",
+			""
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",

@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance : ",
 		"OffString": "Off",
+		"YourGainMessage": "Gain : "
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Gain : ",
-		"SettingsResetMessage": "Réglage réinit. !",
-		"NoAccelerometerMessage": "Accéléromètre\nnon détecté !",
-		"NoPowerDeliveryMessage": "Pas d'USB-PD\ndétecté !",
+		"SettingsResetMessage": [
+			"Réglage",
+			"réinit. !"
+		],
+		"NoAccelerometerMessage": [
+			"Accéléromètre",
+			"non détecté !"
+		],
+		"NoPowerDeliveryMessage": [
+			"Pas d'USB-PD",
+			"détecté !"
+		],
 		"LockingKeysString": "VERROUIL",
 		"UnlockingKeysString": "DEVERROU",
 		"WarningKeysLockedString": "! VERR. !"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"D",
+		"SettingOffChar": "D",
 		"SettingStartSolderingChar": "A",
 		"SettingStartSleepChar": "V",
 		"SettingStartSleepOffChar": "O",
