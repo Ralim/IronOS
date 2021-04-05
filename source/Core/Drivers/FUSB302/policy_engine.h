@@ -43,7 +43,11 @@ public:
     return false;
   }
   // Has pd negotiation completed
-  static bool pdHasNegotiated() { return pdNegotiationComplete; }
+  static bool pdHasNegotiated() {
+    if (state == policy_engine_state::PESinkSourceUnresponsive)
+      return false;
+    return true;
+  }
   // Call this periodically, at least once every second
   static void PPSTimerCallback();
 
