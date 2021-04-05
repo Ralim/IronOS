@@ -87,3 +87,6 @@ jobs:
 
       - name: Check python formatting with black
         run: black --check Translations
+
+      - name: Check python with flake8
+        run: flake8 Translations
