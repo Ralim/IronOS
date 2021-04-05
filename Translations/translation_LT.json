@@ -21,11 +21,25 @@
 		"TipDisconnectedString": "NĖRA ANTGALIO",
 		"SolderingAdvancedPowerPrompt": "Galia: ",
 		"OffString": "Išj",
-		"ResetOKMessage": "Atstatytas OK",
-		"YourGainMessage": "Greitis:",
-		"SettingsResetMessage": "Nust. atstatyti!",
-		"NoAccelerometerMessage": "Nerastas\nakselerometras!",
-		"NoPowerDeliveryMessage": "Nerastas\nUSB-PD IC !",
+		"YourGainMessage": "Greitis:"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": [
+			"Atstatytas OK",
+			""
+		],
+		"SettingsResetMessage": [
+			"Nust. atstatyti!",
+			""
+		],
+		"NoAccelerometerMessage": [
+			"Nerastas",
+			"akselerometras!"
+		],
+		"NoPowerDeliveryMessage": [
+			"Nerastas",
+			"USB-PD IC !"
+		],
 		"LockingKeysString": " UŽRAKIN",
 		"UnlockingKeysString": "ATRAKIN",
 		"WarningKeysLockedString": "!UŽRAK!"
@@ -37,7 +51,7 @@
 		"SettingFastChar": "G",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"I",
+		"SettingOffChar": "I",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "M",
 		"SettingStartSleepOffChar": "K",

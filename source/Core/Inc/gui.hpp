@@ -29,6 +29,7 @@ typedef struct {
 
 void                  enterSettingsMenu();
 void                  GUIDelay();
+void                  warnUser(const char *warning, const int timeout);
 extern const menuitem rootSettingsMenu[];
 
 #endif /* GUI_HPP_ */

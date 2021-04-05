@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "SPISS FRAKOBLET",
 		"SolderingAdvancedPowerPrompt": "Effekt: ",
 		"OffString": "Av",
+		"YourGainMessage": "Your gain:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Your gain:",
-		"SettingsResetMessage": "Settings were\nreset!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "H",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "L",
 		"SettingStartSleepChar": "D",
 		"SettingStartSleepOffChar": "O",
@@ -105,7 +116,7 @@
 		},
 		"SleepTimeout": {
 			"text2": [
-				"",
+				"DTid",
 				""
 			],
 			"desc": "Tid før dvale <Minutter/Sekunder"

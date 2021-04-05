@@ -21,11 +21,25 @@
 		"TipDisconnectedString": "ПРЕКЪСНАТ ВРЪХ",
 		"SolderingAdvancedPowerPrompt": "Захранване: ",
 		"OffString": "Изкл.",
-		"ResetOKMessage": "Нулиране завършено",
-		"YourGainMessage": "Усилване:",
-		"SettingsResetMessage": "Настройките бяха\nнулирани!",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"YourGainMessage": "Усилване:"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": [
+			"Нулиране",
+			"завършено"
+		],
+		"SettingsResetMessage": [
+			"Настройките бяха",
+			"нулирани!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +51,7 @@
 		"SettingFastChar": "F",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "S",
 		"SettingStartSleepOffChar": "O",

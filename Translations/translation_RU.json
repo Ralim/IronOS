@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "ЖАЛО ОТСОЕДИНЕНО",
 		"SolderingAdvancedPowerPrompt": "Питание: ",
 		"OffString": "Выкл.",
+		"YourGainMessage": "Прирост:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Сброс OK",
-		"YourGainMessage": "Прирост:",
-		"SettingsResetMessage": "Настройки\nсброшены!",
-		"NoAccelerometerMessage": "Не определен\nакселерометр!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Настройки",
+			"сброшены!"
+		],
+		"NoAccelerometerMessage": [
+			"Не определен",
+			"акселерометр!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "Б",
 		"SettingSlowChar": "М",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
 		"SettingStartSleepOffChar": "К",

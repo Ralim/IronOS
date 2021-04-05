@@ -21,11 +21,22 @@
 		"TipDisconnectedString": "PUNTA ASSENTE",
 		"SolderingAdvancedPowerPrompt": "Potenz:",
 		"OffString": "OFF",
+		"YourGainMessage": "Guad.: "
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Guad.: ",
-		"SettingsResetMessage": "Reset effettuato",
-		"NoAccelerometerMessage": "Accelerometro\nnon rilevato",
-		"NoPowerDeliveryMessage": "USB-PD non\ndisponibile",
+		"SettingsResetMessage": [
+			"Reset effettuato",
+			""
+		],
+		"NoAccelerometerMessage": [
+			"Accelerometro",
+			"non rilevato"
+		],
+		"NoPowerDeliveryMessage": [
+			"USB-PD non",
+			"disponibile"
+		],
 		"LockingKeysString": "Blocc.",
 		"UnlockingKeysString": "Sblocc.",
 		"WarningKeysLockedString": "BLOCCATO"
@@ -37,7 +48,7 @@
 		"SettingFastChar": "V",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "A",

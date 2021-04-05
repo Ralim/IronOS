@@ -22,11 +22,22 @@
 		"TipDisconnectedString": "GROT ODŁĄCZONY",
 		"SolderingAdvancedPowerPrompt": "Moc: ",
 		"OffString": "Wył",
+		"YourGainMessage": "Us.zysk:"
+	},
+	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
-		"YourGainMessage": "Us.zysk:",
-		"SettingsResetMessage": "Ust. zresetowane",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": [
+			"Ust. zresetowane",
+			""
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " ZABLOK.",
 		"UnlockingKeysString": "ODBLOK.",
 		"WarningKeysLockedString": "!ZABLOK!"
@@ -38,7 +49,7 @@
 		"SettingFastChar": "S",
 		"SettingSlowChar": "W",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "O",

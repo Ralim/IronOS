@@ -127,6 +127,15 @@ def get_letter_counts(defs: dict, lang: dict) -> List[str]:
         else:
             text_list.append(obj[eid])
 
+    obj = lang["messagesWarn"]
+    for mod in defs["messagesWarn"]:
+        eid = mod["id"]
+        if isinstance(obj[eid], list):
+            text_list.append(obj[eid][0])
+            text_list.append(obj[eid][1])
+        else:
+            text_list.append(obj[eid])
+
     obj = lang["characters"]
 
     for mod in defs["characters"]:
@@ -136,14 +145,20 @@ def get_letter_counts(defs: dict, lang: dict) -> List[str]:
     obj = lang["menuOptions"]
     for mod in defs["menuOptions"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["text2"][0])
-        text_list.append(obj[eid]["text2"][1])
+        if isinstance(obj[eid]["text2"], list):
+            text_list.append(obj[eid]["text2"][0])
+            text_list.append(obj[eid]["text2"][1])
+        else:
+            text_list.append(obj[eid]["text2"])
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["text2"][0])
-        text_list.append(obj[eid]["text2"][1])
+        if isinstance(obj[eid]["text2"], list):
+            text_list.append(obj[eid]["text2"][0])
+            text_list.append(obj[eid]["text2"][1])
+        else:
+            text_list.append(obj[eid]["text2"])
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
@@ -403,6 +418,23 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
 
     f.write("\n")
 
+    obj = lang["messagesWarn"]
+
+    for mod in defs["messagesWarn"]:
+        eid = mod["id"]
+        if isinstance(obj[eid], list):
+            if not obj[eid][1]:
+                source_text = obj[eid][0]
+            else:
+                source_text = obj[eid][0] + "\n" + obj[eid][1]
+        else:
+            source_text = "\n" + obj[eid]
+        translated_text = convert_string(symbol_conversion_table, source_text)
+        source_text = source_text.replace("\n", "_")
+        f.write(f'const char* {eid} = "{translated_text}";//{source_text} \n')
+
+    f.write("\n")
+
     # ----- Writing Characters
 
     obj = lang["characters"]
@@ -427,16 +459,23 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
 
     # ----- Writing SettingsDescriptions
     obj = lang["menuOptions"]
-    f.write("const char* SettingsShortNames[][2] = {\n")
+    f.write("const char* SettingsShortNames[] = {\n")
 
     max_len = 25
     index = 0
     for mod in defs["menuOptions"]:
         eid = mod["id"]
+        if isinstance(obj[eid]["text2"], list):
+            if not obj[eid]["text2"][1]:
+                source_text = obj[eid]["text2"][0]
+            else:
+                source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
+        else:
+            source_text = "\n" + obj[eid]["text2"]
         if "feature" in mod:
             f.write(f"#ifdef {mod['feature']}\n")
         f.write(f"  /* [{index:02d}] {eid.ljust(max_len)[:max_len]} */ ")
-        f.write(f'{{ "{convert_string(symbol_conversion_table, (obj[eid]["text2"][0]))}", "{convert_string(symbol_conversion_table, (obj[eid]["text2"][1]))}" }},//{obj[eid]["text2"]} \n')
+        f.write(f'{{ "{convert_string(symbol_conversion_table, source_text)}" }},//{obj[eid]["text2"]} \n')
 
         if "feature" in mod:
             f.write("#endif\n")
@@ -451,9 +490,15 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     max_len = 25
     for mod in defs["menuGroups"]:
         eid = mod["id"]
+        if isinstance(obj[eid]["text2"], list):
+            if not obj[eid]["text2"][1]:
+                source_text = obj[eid]["text2"][0]
+            else:
+                source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
+        else:
+            source_text = "\n" + obj[eid]["text2"]
         f.write(f"  /* {eid.ljust(max_len)[:max_len]} */ ")
-        txt = f'{obj[eid]["text2"][0]}\\n{obj[eid]["text2"][1]}'
-        f.write(f'"{convert_string(symbol_conversion_table, txt)}",//{obj[eid]["text2"]} \n')
+        f.write(f'"{convert_string(symbol_conversion_table, source_text)}",//{obj[eid]["text2"]} \n')
 
     f.write("};\n\n")
 

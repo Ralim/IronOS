@@ -21,11 +21,23 @@
 		"TipDisconnectedString": "NO HAY PUNTA",
 		"SolderingAdvancedPowerPrompt": "Potencia: ",
 		"OffString": " No",
-		"ResetOKMessage": "Hecho.       ",
 		"YourGainMessage": "Gananc.:",
-		"SettingsResetMessage": "Ajustes borrados",
-		"NoAccelerometerMessage": "No accelerometer\ndetected!",
-		"NoPowerDeliveryMessage": "No USB-PD IC\ndetected!",
+		"SettingsResetMessage": "Ajustes borrados"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": "Hecho.",
+		"SettingsResetMessage": [
+			"Settings were",
+			"reset!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
 		"LockingKeysString": " LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!"
@@ -37,7 +49,7 @@
 		"SettingFastChar": "R",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar":"O",
+		"SettingOffChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "F",

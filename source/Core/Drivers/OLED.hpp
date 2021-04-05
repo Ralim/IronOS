@@ -55,6 +55,7 @@ public:
   static bool    getRotation() { return inLeftHandedMode; }
   static int16_t getCursorX() { return cursor_x; }
   static void    print(const char *string, FontStyle fontStyle); // Draw a string to the current location, with selected font
+  static void    printWholeScreen(const char *string);
   // Set the cursor location by pixels
   static void setCursor(int16_t x, int16_t y) {
     cursor_x = x;
