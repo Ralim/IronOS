@@ -31,6 +31,7 @@ uint32_t            InterruptHandler::TaskBuffer[InterruptHandler::TaskStackSize
 osStaticThreadDef_t InterruptHandler::TaskControlBlock;
 
 void InterruptHandler::init() {
+  TaskHandle = NULL;
   osThreadStaticDef(intTask, Thread, PDB_PRIO_PRL_INT_N, 0, TaskStackSize, TaskBuffer, &TaskControlBlock);
   TaskHandle = osThreadCreate(osThread(intTask), NULL);
 }
@@ -38,16 +39,20 @@ void InterruptHandler::init() {
 void InterruptHandler::Thread(const void *arg) {
   (void)arg;
   union fusb_status status;
-  while (true) {
-    /* If the INT_N line is low */
+  for (;;) {
+    // If the irq is low continue, otherwise wait for irq or timeout
     if (!getFUS302IRQLow()) {
-      if (xTaskNotifyWait(0x00, 0x0F, NULL, PolicyEngine::setupCompleteOrTimedOut() ? 100 : 10) == pdPASS) {
-        // delay slightly so we catch the crc with better timing
-        // osDelay(1);
-      }
+      xTaskNotifyWait(0x00, 0x0F, NULL, PolicyEngine::setupCompleteOrTimedOut() ? 100 : 10);
     }
     /* Read the FUSB302B status and interrupt registers */
     fusb_get_status(&status);
+
+    /* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
+    // This means a message was recieved with a good CRC
+    if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
+      ProtocolReceive::notify(PDB_EVT_PRLRX_I_GCRCSENT);
+    }
+
     /* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX
      * thread */
     if (status.interrupta & FUSB_INTERRUPTA_I_TXSENT) {
@@ -55,12 +60,6 @@ void InterruptHandler::Thread(const void *arg) {
     }
     if (status.interrupta & FUSB_INTERRUPTA_I_RETRYFAIL) {
       ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
-    }
-
-    /* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
-    // This means a message was recieved with a good CRC
-    if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
-      ProtocolReceive::notify(PDB_EVT_PRLRX_I_GCRCSENT);
     }
 
     /* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
@@ -71,11 +70,9 @@ void InterruptHandler::Thread(const void *arg) {
   }
 }
 void InterruptHandler::irqCallback() {
-  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-    if (TaskHandle != NULL) {
-      BaseType_t taskWoke = pdFALSE;
-      xTaskNotifyFromISR(TaskHandle, 0x01, eNotifyAction::eSetValueWithOverwrite, &taskWoke);
-      portYIELD_FROM_ISR(taskWoke);
-    }
+  if (TaskHandle != NULL) {
+    BaseType_t taskWoke = pdFALSE;
+    xTaskNotifyFromISR(TaskHandle, 0x01, eNotifyAction::eSetBits, &taskWoke);
+    portYIELD_FROM_ISR(taskWoke);
   }
 }
