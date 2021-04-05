@@ -252,7 +252,9 @@ void ProtocolTransmit::init() {
 
 void ProtocolTransmit::pushMessage(union pd_msg *msg) {
   if (messagesWaiting) {
-    xQueueSend(messagesWaiting, msg, 100);
+    if (xQueueSend(messagesWaiting, msg, 100) == pdTRUE) {
+      notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
+    }
   }
 }
 

@@ -34,7 +34,7 @@ union pd_msg        ProtocolReceive::tempMessage;
  */
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
   /* Wait for an event */
-  eventmask_t evt = waitForEvent(PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT | PDB_EVT_PRLRX_I_RXPEND);
+  EventBits_t evt = waitForEvent(PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT | PDB_EVT_PRLRX_I_RXPEND);
 
   /* If we got a reset event, reset */
   if (evt & PDB_EVT_PRLRX_RESET) {

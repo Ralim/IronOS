@@ -62,11 +62,12 @@ public:
     PDB_EVT_PE_MSG_RX_PEND    = EVENT_MASK(7), /* Never send this from user area*/
     PDB_EVT_PE_GET_SOURCE_CAP = EVENT_MASK(8),
     PDB_EVT_PE_NEW_POWER      = EVENT_MASK(9),
-    PDB_EVT_PE_ALL            = (PDB_EVT_PE_NEW_POWER - 1),
-
+    PDB_EVT_PE_ALL            = (EVENT_MASK(10) - 1),
   };
   // Send a notification
   static void notify(Notifications notification);
+  // Debugging allows looking at state
+  static uint32_t getState() { return (uint32_t)state; }
 
 private:
   static bool pdNegotiationComplete;
@@ -92,9 +93,9 @@ private:
     PESinkDiscovery,
     PESinkWaitCap,
     PESinkEvalCap,
-    PESinkSelectCap,
-    PESinkTransitionSink,
-    PESinkReady,
+    PESinkSelectCap,      // 4
+    PESinkTransitionSink, // 5
+    PESinkReady,          // 6
     PESinkGetSourceCap,
     PESinkGiveSinkCap,
     PESinkHardReset,
@@ -125,7 +126,7 @@ private:
   static enum policy_engine_state pe_sink_source_unresponsive();
   static EventGroupHandle_t       xEventGroupHandle;
   static StaticEventGroup_t       xCreatedEventGroup;
-  static uint32_t                 waitForEvent(uint32_t mask, TickType_t ticksToWait = portMAX_DELAY);
+  static EventBits_t              waitForEvent(uint32_t mask, TickType_t ticksToWait = portMAX_DELAY);
   // Task resources
   static osThreadId          TaskHandle;
   static const size_t        TaskStackSize = 2048 / 4;

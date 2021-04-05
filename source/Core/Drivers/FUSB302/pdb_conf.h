@@ -19,13 +19,13 @@
 #define PDB_CONF_H
 
 /* Number of messages in the message pool */
-#define PDB_MSG_POOL_SIZE 4
+#define PDB_MSG_POOL_SIZE 8
 
 #define EVENT_MASK(x) (1 << x)
-#define eventmask_t   uint32_t
+
 /* PD Buddy thread priorities */
-#define PDB_PRIO_PE        (osPriorityNormal)
-#define PDB_PRIO_PRL       (osPriorityBelowNormal)
-#define PDB_PRIO_PRL_INT_N (osPriorityLow)
+#define PDB_PRIO_PE        (osPriorityBelowNormal)
+#define PDB_PRIO_PRL       (osPriorityNormal)
+#define PDB_PRIO_PRL_INT_N (osPriorityAboveNormal)
 
 #endif /* PDB_CONF_H */
