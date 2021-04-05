@@ -90,7 +90,6 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
 
   /* Tell the Protocol RX thread to reset */
   ProtocolReceive::notify(PDB_EVT_PRLRX_RESET);
-  taskYIELD();
 
   return PRLTxConstructMessage;
 }
