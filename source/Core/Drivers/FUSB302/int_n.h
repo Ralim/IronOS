@@ -29,7 +29,7 @@ public:
 
 private:
   static void                Thread(const void *arg);
-  static osThreadId          TaskHandle;
+  static volatile osThreadId TaskHandle;
   static const size_t        TaskStackSize = 1536 / 3;
   static uint32_t            TaskBuffer[TaskStackSize];
   static osStaticThreadDef_t TaskControlBlock;

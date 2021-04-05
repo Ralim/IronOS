@@ -25,7 +25,7 @@
 #include "task.h"
 #include <pd.h>
 
-osThreadId          InterruptHandler::TaskHandle = NULL;
+volatile osThreadId InterruptHandler::TaskHandle = NULL;
 uint32_t            InterruptHandler::TaskBuffer[InterruptHandler::TaskStackSize];
 osStaticThreadDef_t InterruptHandler::TaskControlBlock;
 
@@ -68,11 +68,9 @@ void InterruptHandler::Thread(const void *arg) {
   }
 }
 void InterruptHandler::irqCallback() {
-  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-    if (TaskHandle != NULL) {
-      BaseType_t taskWoke = pdFALSE;
-      xTaskNotifyFromISR(TaskHandle, 0x01, eNotifyAction::eSetBits, &taskWoke);
-      portYIELD_FROM_ISR(taskWoke);
-    }
+  if (TaskHandle != NULL) {
+    BaseType_t taskWoke = pdFALSE;
+    xTaskNotifyFromISR(TaskHandle, 0, eNotifyAction::eNoAction, &taskWoke);
+    portYIELD_FROM_ISR(taskWoke);
   }
 }

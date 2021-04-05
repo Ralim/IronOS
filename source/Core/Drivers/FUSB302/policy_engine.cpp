@@ -622,10 +622,10 @@ void PolicyEngine::PPSTimerCallback() {
   if (PPSTimerEnabled && state == policy_engine_state::PESinkReady) {
     // I believe even once per second is totally fine, but leaning on faster since everything seems cool with faster
     // Have seen everything from 10ms to 1 second :D
-    // if ((xTaskGetTickCount() - PPSTimeLastEvent) > (100)) {
-    // Send a new PPS message
-    PolicyEngine::notify(Notifications::PDB_EVT_PE_PPS_REQUEST);
-    PPSTimeLastEvent = xTaskGetTickCount();
-    // }
+    if ((xTaskGetTickCount() - PPSTimeLastEvent) > (TICKS_SECOND)) {
+      // Send a new PPS message
+      PolicyEngine::notify(Notifications::PDB_EVT_PE_PPS_REQUEST);
+      PPSTimeLastEvent = xTaskGetTickCount();
+    }
   }
 }

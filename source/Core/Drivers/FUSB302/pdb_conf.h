@@ -24,8 +24,8 @@
 #define EVENT_MASK(x) (1 << x)
 
 /* PD Buddy thread priorities */
-#define PDB_PRIO_PE        (osPriorityBelowNormal)
+#define PDB_PRIO_PE        (osPriorityAboveNormal)
 #define PDB_PRIO_PRL       (osPriorityNormal)
-#define PDB_PRIO_PRL_INT_N (osPriorityAboveNormal)
+#define PDB_PRIO_PRL_INT_N (osPriorityBelowNormal)
 
 #endif /* PDB_CONF_H */

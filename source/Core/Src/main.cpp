@@ -9,6 +9,7 @@
 #include "Settings.h"
 #include "cmsis_os.h"
 #include <MMA8652FC.hpp>
+#include <fusbpd.h>
 #include <main.hpp>
 #include <power.hpp>
 uint8_t DetectedAccelerometerVersion = 0;
@@ -61,7 +62,12 @@ int main(void) {
   osThreadStaticDef(MOVTask, startMOVTask, osPriorityNormal, 0, MOVTaskStackSize, MOVTaskBuffer, &MOVTaskControlBlock);
   MOVTaskHandle = osThreadCreate(osThread(MOVTask), NULL);
   resetWatchdog();
-
+#ifdef POW_PD
+  if (usb_pd_detect() == true) {
+    // Spawn all of the USB-C processors
+    fusb302_start_processing();
+  }
+#endif
   /* Start scheduler */
   osKernelStart();
   /* We should never get here as control is now taken by the scheduler */
