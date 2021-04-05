@@ -214,7 +214,6 @@ bool PolicyEngine::pdbs_dpm_evaluate_typec_current(enum fusb_typec_current tcc) 
 }
 
 void PolicyEngine::pdbs_dpm_transition_default() {
-  /* Cast the dpm_data to the right type */
 
   /* Pretend we requested 5 V */
   current_voltage_mv = 5000;
@@ -222,10 +221,7 @@ void PolicyEngine::pdbs_dpm_transition_default() {
   pdNegotiationComplete = false;
 }
 
-void PolicyEngine::pdbs_dpm_transition_requested() {
-  /* Cast the dpm_data to the right type */
-  pdNegotiationComplete = true;
-}
+void PolicyEngine::pdbs_dpm_transition_requested() { pdNegotiationComplete = true; }
 
 void PolicyEngine::handleMessage(union pd_msg *msg) { xQueueSend(messagesWaiting, msg, 100); }
 
