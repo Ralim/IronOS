@@ -195,23 +195,28 @@ var def =
 	"menuGroups": [
 		{
 			"id": "PowerMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "SolderingMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "PowerSavingMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "UIMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		},
 		{
 			"id": "AdvancedMenu",
-			"maxLen": 11
+			"maxLen": 5,
+			"maxLen2": 11
 		}
 	],
 	"menuOptions": [
