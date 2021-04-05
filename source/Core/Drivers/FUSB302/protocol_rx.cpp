@@ -129,7 +129,7 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
   /* Pass the message to the policy engine. */
 
   PolicyEngine::handleMessage(&tempMessage);
-  PolicyEngine::notify(PDB_EVT_PE_MSG_RX);
+  PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_MSG_RX);
   taskYIELD();
   /* Don't check if we got a RESET because we'd do nothing different. */
 

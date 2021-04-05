@@ -63,27 +63,28 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
   for (uint8_t i = 0; i < numobj; i++) {
     /* If we have a fixed PDO, its V equals our desired V, and its I is
      * at least our desired I */
-    if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-      // This is a fixed PDO entry
-      // Evaluate if it can produve sufficient current based on the tipResistance (ohms*10)
-      // V=I*R -> V/I => minimum resistance, if our tip resistance is >= this then we can use this supply
+    // if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+    //   // This is a fixed PDO entry
+    //   // Evaluate if it can produve sufficient current based on the tipResistance (ohms*10)
+    //   // V=I*R -> V/I => minimum resistance, if our tip resistance is >= this then we can use this supply
 
-      int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[i])); // voltage in mV units
-      int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[i]);            // current in 10mA units
-      int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
-      if (min_resistance_ohmsx10 <= tipResistance) {
-        // This is a valid power source we can select as
-        if (bestIndex == 0xFF) {
-          // This is the first valid source, so select to be safe
-          bestIndex        = i;
-          bestIndexVoltage = voltage_mv;
-          bestIndexCurrent = current_a_x100;
-        } else if (voltage_mv > bestIndexVoltage) {
-          // Higher voltage and valid, select this instead
-          bestIndex        = i;
-          bestIndexVoltage = voltage_mv;
-          bestIndexCurrent = current_a_x100;
-        }
+    //   int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[i])); // voltage in mV units
+    //   int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[i]);            // current in 10mA units
+    //   int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
+    //   if (voltage_mv <= (USB_PD_VMAX * 1000)) {
+    //     if (min_resistance_ohmsx10 <= tipResistance) {
+    //       // This is a valid power source we can select as
+    //       if (voltage_mv > bestIndexVoltage||bestIndex == 0xFF) {
+    //         // Higher voltage and valid, select this instead
+    //         bestIndex        = i;
+    //         bestIndexVoltage = voltage_mv;
+    //         bestIndexCurrent = current_a_x100;
+    //         bestIsPPS        = false;
+    //       }
+    //     }
+    //   }
+    // } else
+
     if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (capabilities->obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
       // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(capabilities->obj[i]));

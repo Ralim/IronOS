@@ -63,7 +63,7 @@ void InterruptHandler::Thread(const void *arg) {
     /* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
      * Engine thread */
     if ((status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP) && (status.status1 & FUSB_STATUS1_OVRTEMP)) {
-      PolicyEngine::notify(PDB_EVT_PE_I_OVRTEMP);
+      PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_I_OVRTEMP);
     }
   }
 }

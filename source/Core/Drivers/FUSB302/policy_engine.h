@@ -25,25 +25,12 @@
  *
  */
 
-#define PDB_EVT_PE_RESET          EVENT_MASK(0)
-#define PDB_EVT_PE_MSG_RX         EVENT_MASK(1)
-#define PDB_EVT_PE_TX_DONE        EVENT_MASK(2)
-#define PDB_EVT_PE_TX_ERR         EVENT_MASK(3)
-#define PDB_EVT_PE_HARD_SENT      EVENT_MASK(4)
-#define PDB_EVT_PE_I_OVRTEMP      EVENT_MASK(5)
-#define PDB_EVT_PE_PPS_REQUEST    EVENT_MASK(6)
-#define PDB_EVT_PE_MSG_RX_PEND    EVENT_MASK(7) /* Never SEND THIS DIRECTLY*/
-#define PDB_EVT_PE_GET_SOURCE_CAP EVENT_MASK(8)
-#define PDB_EVT_PE_NEW_POWER      EVENT_MASK(9)
-#define PDB_EVT_PE_ALL            (EVENT_MASK(9) - 1)
 class PolicyEngine {
 public:
   // Sets up internal state and registers the thread
   static void init();
   // Push an incoming message to the Policy Engine
   static void handleMessage(union pd_msg *msg);
-  // Send a notification
-  static void notify(uint32_t notification);
   // Returns true if headers indicate PD3.0 compliant
   static bool isPD3_0();
   static bool setupCompleteOrTimedOut() {
@@ -57,8 +44,25 @@ public:
   }
   // Has pd negotiation completed
   static bool pdHasNegotiated() { return pdNegotiationComplete; }
-
+  // Call this periodically, at least once every second
   static void PPSTimerCallback();
+
+  enum class Notifications {
+    PDB_EVT_PE_RESET          = EVENT_MASK(0),
+    PDB_EVT_PE_MSG_RX         = EVENT_MASK(1),
+    PDB_EVT_PE_TX_DONE        = EVENT_MASK(2),
+    PDB_EVT_PE_TX_ERR         = EVENT_MASK(3),
+    PDB_EVT_PE_HARD_SENT      = EVENT_MASK(4),
+    PDB_EVT_PE_I_OVRTEMP      = EVENT_MASK(5),
+    PDB_EVT_PE_PPS_REQUEST    = EVENT_MASK(6),
+    PDB_EVT_PE_MSG_RX_PEND    = EVENT_MASK(7), /* Never send this from user area*/
+    PDB_EVT_PE_GET_SOURCE_CAP = EVENT_MASK(8),
+    PDB_EVT_PE_NEW_POWER      = EVENT_MASK(9),
+    PDB_EVT_PE_ALL            = (PDB_EVT_PE_NEW_POWER - 1),
+
+  };
+  // Send a notification
+  static void notify(Notifications notification);
 
 private:
   static bool pdNegotiationComplete;

@@ -44,7 +44,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_phy_reset() {
    * we failed to send it */
   if (messagePending()) {
     /* Tell the policy engine that we failed */
-    PolicyEngine::notify(PDB_EVT_PE_TX_ERR);
+    PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_TX_ERR);
     /* Finish failing to send the message */
     while (messagePending()) {
       getMessage(); // Discard
@@ -168,7 +168,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_transmission_e
   _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
   /* Tell the policy engine that we failed */
-  PolicyEngine::notify(PDB_EVT_PE_TX_ERR);
+  PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_TX_ERR);
 
   return PRLTxWaitMessage;
 }
@@ -179,7 +179,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_message_sent()
   _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
   /* Tell the policy engine that we succeeded */
-  PolicyEngine::notify(PDB_EVT_PE_TX_DONE);
+  PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_TX_DONE);
 
   return PRLTxWaitMessage;
 }
