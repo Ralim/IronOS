@@ -19,7 +19,7 @@
 #define PDB_PROTOCOL_TX_H
 
 #include "policy_engine.h"
-#include "protocol_rx.h"
+
 #include <pd.h>
 #include <stdint.h>
 

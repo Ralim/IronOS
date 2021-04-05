@@ -44,6 +44,9 @@ private:
   static enum hardrst_state hardrst_hard_reset_requested();
   static enum hardrst_state hardrst_wait_pe();
   static enum hardrst_state hardrst_complete();
+  // Mesage rx
+  static void         readPendingMessage();
+  static union pd_msg tempMessage;
 };
 
 #endif /* PDB_INT_N_OLD_H */

@@ -21,19 +21,41 @@
 #include "fusb302b.h"
 #include "fusbpd.h"
 #include "policy_engine.h"
-#include "protocol_rx.h"
+
 #include "protocol_tx.h"
 #include "task.h"
 #include <pd.h>
+#include <string.h>
 
 volatile osThreadId InterruptHandler::TaskHandle = NULL;
 uint32_t            InterruptHandler::TaskBuffer[InterruptHandler::TaskStackSize];
 osStaticThreadDef_t InterruptHandler::TaskControlBlock;
+union pd_msg        InterruptHandler::tempMessage;
 
 void InterruptHandler::init() {
   TaskHandle = NULL;
   osThreadStaticDef(intTask, Thread, PDB_PRIO_PRL_INT_N, 0, TaskStackSize, TaskBuffer, &TaskControlBlock);
   TaskHandle = osThreadCreate(osThread(intTask), NULL);
+}
+
+void InterruptHandler::readPendingMessage() {
+  /* Get a buffer to read the message into.  Guaranteed to not fail
+   * because we have a big enough pool and are careful. */
+  memset(&tempMessage, 0, sizeof(tempMessage));
+  /* Read the message */
+  fusb_read_message(&tempMessage);
+  /* If it's a Soft_Reset, go to the soft reset state */
+  if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOFT_RESET && PD_NUMOBJ_GET(&tempMessage) == 0) {
+    /* TX transitions to its reset state */
+    ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_RESET);
+  } else {
+    /* Tell ProtocolTX to discard the message being transmitted */
+    ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_DISCARD);
+
+    /* Pass the message to the policy engine. */
+    PolicyEngine::handleMessage(&tempMessage);
+    PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_MSG_RX);
+  }
 }
 
 void InterruptHandler::Thread(const void *arg) {
@@ -50,7 +72,7 @@ void InterruptHandler::Thread(const void *arg) {
     /* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
     // This means a message was recieved with a good CRC
     if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
-      ProtocolReceive::notify(PDB_EVT_PRLRX_I_GCRCSENT);
+      readPendingMessage();
     }
 
     /* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX

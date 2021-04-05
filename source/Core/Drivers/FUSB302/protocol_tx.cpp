@@ -19,7 +19,7 @@
 #include "fusb302b.h"
 #include "fusbpd.h"
 #include "policy_engine.h"
-#include "protocol_rx.h"
+
 #include <pd.h>
 
 osThreadId          ProtocolTransmit::TaskHandle = NULL;
@@ -87,9 +87,6 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_wait_message()
 ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
   /* Clear MessageIDCounter */
   _tx_messageidcounter = 0;
-
-  /* Tell the Protocol RX thread to reset */
-  ProtocolReceive::notify(PDB_EVT_PRLRX_RESET);
 
   return PRLTxConstructMessage;
 }
