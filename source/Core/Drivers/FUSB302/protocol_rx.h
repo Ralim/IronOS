@@ -46,13 +46,8 @@ private:
    * There is no Send_GoodCRC state because the PHY sends the GoodCRC for us.
    * All transitions that would go to that state instead go to Check_MessageID.
    */
-  enum protocol_rx_state { PRLRxWaitPHY, PRLRxReset, PRLRxCheckMessageID, PRLRxStoreMessageID };
-  static protocol_rx_state protocol_rx_store_messageid();
-  static protocol_rx_state protocol_rx_check_messageid();
-  static protocol_rx_state protocol_rx_reset();
-  static protocol_rx_state protocol_rx_wait_phy();
-  static union pd_msg      tempMessage;
-  static uint32_t          waitForEvent(uint32_t mask, TickType_t ticksToWait = portMAX_DELAY);
+  static union pd_msg tempMessage;
+  static uint32_t     waitForEvent(uint32_t mask, TickType_t ticksToWait = portMAX_DELAY);
 };
 
 #endif /* PDB_PROTOCOL_RX_H */
