@@ -17,6 +17,7 @@
 
 #include "int_n.h"
 #include "BSP.h"
+#include "BSP_PD.h"
 #include "fusb302b.h"
 #include "fusbpd.h"
 #include "policy_engine.h"
@@ -39,9 +40,11 @@ void InterruptHandler::Thread(const void *arg) {
   union fusb_status status;
   while (true) {
     /* If the INT_N line is low */
-    if (xTaskNotifyWait(0x00, 0x0F, NULL, PolicyEngine::setupCompleteOrTimedOut() ? 1000 : 10) == pdPASS) {
-      // delay slightly so we catch the crc with better timing
-      osDelay(1);
+    if (!getFUS302IRQLow()) {
+      if (xTaskNotifyWait(0x00, 0x0F, NULL, PolicyEngine::setupCompleteOrTimedOut() ? 100 : 10) == pdPASS) {
+        // delay slightly so we catch the crc with better timing
+        // osDelay(1);
+      }
     }
     /* Read the FUSB302B status and interrupt registers */
     fusb_get_status(&status);
@@ -68,9 +71,11 @@ void InterruptHandler::Thread(const void *arg) {
   }
 }
 void InterruptHandler::irqCallback() {
-  if (TaskHandle != NULL) {
-    BaseType_t taskWoke = pdFALSE;
-    xTaskNotifyFromISR(TaskHandle, 0, eNotifyAction::eNoAction, &taskWoke);
-    portYIELD_FROM_ISR(taskWoke);
+  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+    if (TaskHandle != NULL) {
+      BaseType_t taskWoke = pdFALSE;
+      xTaskNotifyFromISR(TaskHandle, 0x01, eNotifyAction::eSetValueWithOverwrite, &taskWoke);
+      portYIELD_FROM_ISR(taskWoke);
+    }
   }
 }

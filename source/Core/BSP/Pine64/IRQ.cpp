@@ -118,6 +118,10 @@ void EXTI5_9_IRQHandler(void) {
 #endif
 }
 
+bool getFUS302IRQLow() {
+  // Return true if the IRQ line is still held low
+  return (RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin));
+}
 // These are unused for now
 void I2C0_EV_IRQHandler(void) {}
 
