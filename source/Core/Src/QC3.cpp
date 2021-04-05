@@ -81,12 +81,12 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
       return; // dont bother with small steps
     while (steps < 0) {
       QC_SeekContNeg();
-      osDelay(30);
+      vTaskDelay(3 * TICKS_10MS);
       steps++;
     }
     while (steps > 0) {
       QC_SeekContPlus();
-      osDelay(30);
+      vTaskDelay(3 * TICKS_10MS);
       steps--;
     }
     osDelay(100);
@@ -140,7 +140,7 @@ void startQC(uint16_t divisor) {
   // Delay 1.25 seconds
   uint8_t enteredQC = 0;
   for (uint16_t i = 0; i < 200 && enteredQC == 0; i++) {
-    osDelay(10); // 10mS pause
+    vTaskDelay(TICKS_10MS); // 10mS pause
     if (i > 130) {
       if (QC_DM_PulledDown()) {
         enteredQC = 1;
@@ -165,7 +165,7 @@ void startQC(uint16_t divisor) {
         QCMode = QCState::QC_3; // We have at least QC2, pray for 3
         return;
       }
-      osDelay(100); // 100mS
+      vTaskDelay(TICKS_100MS); // 100mS
     }
     QCMode = QCState::NOT_STARTED;
     QCTries++;
