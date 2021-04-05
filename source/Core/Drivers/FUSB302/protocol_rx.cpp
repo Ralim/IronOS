@@ -29,14 +29,11 @@ StaticEventGroup_t  ProtocolReceive::xCreatedEventGroup;
 uint32_t            ProtocolReceive::TaskBuffer[ProtocolReceive::TaskStackSize];
 osStaticThreadDef_t ProtocolReceive::TaskControlBlock;
 union pd_msg        ProtocolReceive::tempMessage;
-uint8_t             ProtocolReceive::_rx_messageid;
-uint8_t             ProtocolReceive::_tx_messageidcounter;
 /*
  * PRL_Rx_Wait_for_PHY_Message state
  */
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
   /* Wait for an event */
-  _rx_messageid   = 0;
   eventmask_t evt = waitForEvent(PDB_EVT_PRLRX_RESET | PDB_EVT_PRLRX_I_GCRCSENT | PDB_EVT_PRLRX_I_RXPEND);
 
   /* If we got a reset event, reset */
@@ -74,11 +71,6 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_wait_phy() {
  * PRL_Rx_Layer_Reset_for_Receive state
  */
 ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_reset() {
-  /* Reset MessageIDCounter */
-  _tx_messageidcounter = 0;
-
-  /* Clear stored MessageID */
-  _rx_messageid = -1;
 
   /* TX transitions to its reset state */
   ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_RESET);
@@ -92,28 +84,10 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_reset() {
   /* Go to the Check_MessageID state */
   return PRLRxCheckMessageID;
 }
-volatile uint32_t rxCounter = 0;
 /*
  * PRL_Rx_Check_MessageID state
  */
-ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid() {
-  /* If we got a RESET signal, reset the machine */
-  //	if (waitForEvent(PDB_EVT_PRLRX_RESET, 0) == PDB_EVT_PRLRX_RESET) {
-  //		return PRLRxWaitPHY;
-  //	}
-  /* If the message has the stored ID, we've seen this message before.  Free
-   * it and don't pass it to the policy engine. */
-
-  /* Otherwise, there's either no stored ID or this message has an ID we
-   * haven't just seen.  Transition to the Store_MessageID state. */
-  //	if (PD_MESSAGEID_GET(&tempMessage) == _rx_messageid) {
-  //		return PRLRxWaitPHY;
-  //	} else
-  {
-    rxCounter++;
-    return PRLRxStoreMessageID;
-  }
-}
+ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_check_messageid() { return PRLRxStoreMessageID; }
 
 /*
  * PRL_Rx_Store_MessageID state
@@ -122,9 +96,6 @@ ProtocolReceive::protocol_rx_state ProtocolReceive::protocol_rx_store_messageid(
   /* Tell ProtocolTX to discard the message being transmitted */
 
   ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_DISCARD);
-
-  /* Update the stored MessageID */
-  _rx_messageid = PD_MESSAGEID_GET(&tempMessage);
 
   /* Pass the message to the policy engine. */
 

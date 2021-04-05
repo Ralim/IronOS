@@ -53,8 +53,6 @@ private:
   static protocol_rx_state protocol_rx_reset();
   static protocol_rx_state protocol_rx_wait_phy();
   static union pd_msg      tempMessage;
-  static uint8_t           _rx_messageid;
-  static uint8_t           _tx_messageidcounter;
   static uint32_t          waitForEvent(uint32_t mask, TickType_t ticksToWait = portMAX_DELAY);
 };
 
