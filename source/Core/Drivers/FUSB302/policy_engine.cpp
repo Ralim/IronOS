@@ -344,7 +344,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
   if (evt & PDB_EVT_PE_I_OVRTEMP) {
     return PESinkHardReset;
   }
-
   /* If the DPM wants us to, send a Get_Source_Cap message */
   if (evt & PDB_EVT_PE_GET_SOURCE_CAP) {
     return PESinkGetSourceCap;
