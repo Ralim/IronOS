@@ -116,7 +116,7 @@
 		},
 		"SleepTimeout": {
 			"text2": [
-				"",
+				"DTid",
 				""
 			],
 			"desc": "Tid før dvale <Minutter/Sekunder"
