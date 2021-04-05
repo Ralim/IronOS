@@ -99,7 +99,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
       if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
         ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max
       }
-      if (ideal_voltage_mv > bestIndexVoltage) {
+      if (ideal_voltage_mv > bestIndexVoltage || bestIndex == 0xFF) {
         bestIndex        = i;
         bestIndexVoltage = ideal_voltage_mv;
         bestIndexCurrent = max_current;
