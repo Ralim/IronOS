@@ -267,7 +267,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
   }
   /* If we didn't get a response before the timeout, send a hard reset */
   if (evt == 0) {
-    return PESinkHardReset;
+    return PESinkSoftReset;
   }
 
   /* Get the response message */
@@ -304,7 +304,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_transition_sink() {
   }
   /* If no message was received, send a hard reset */
   if (evt == 0) {
-    return PESinkHardReset;
+    return PESinkSoftReset;
   }
 
   /* If we received a message, read it */
@@ -322,12 +322,11 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_transition_sink() {
       /* If there was a protocol error, send a hard reset */
     } else {
       pdbs_dpm_transition_default();
-
-      return PESinkHardReset;
+      return PESinkSoftReset;
     }
   }
 
-  return PESinkHardReset;
+  return PESinkSoftReset;
 }
 
 PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
@@ -348,8 +347,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
 
   /* If SinkPPSPeriodicTimer ran out, send a new request */
   if (evt & PDB_EVT_PE_PPS_REQUEST) {
-    /* Tell the protocol layer we're starting an AMS */
-    ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_START_AMS);
     return PESinkSelectCap;
   }
   /* If we received a message */
@@ -358,53 +355,39 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
       readMessage();
       /* Ignore vendor-defined messages */
       if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_VENDOR_DEFINED && PD_NUMOBJ_GET(&tempMessage) > 0) {
-
         return PESinkReady;
         /* Ignore Ping messages */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_PING && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
         return PESinkReady;
         /* DR_Swap messages are not supported */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_DR_SWAP && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
         return PESinkSendNotSupported;
         /* Get_Source_Cap messages are not supported */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_GET_SOURCE_CAP && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
         return PESinkSendNotSupported;
         /* PR_Swap messages are not supported */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_PR_SWAP && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
         return PESinkSendNotSupported;
         /* VCONN_Swap messages are not supported */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_VCONN_SWAP && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
         return PESinkSendNotSupported;
         /* Request messages are not supported */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_REQUEST && PD_NUMOBJ_GET(&tempMessage) > 0) {
-
         return PESinkSendNotSupported;
         /* Sink_Capabilities messages are not supported */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SINK_CAPABILITIES && PD_NUMOBJ_GET(&tempMessage) > 0) {
-
         return PESinkSendNotSupported;
         /* Handle GotoMin messages */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_GOTOMIN && PD_NUMOBJ_GET(&tempMessage) == 0) {
-        /* GiveBack is not supported */
         return PESinkSendNotSupported;
-
         /* Evaluate new Source_Capabilities */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOURCE_CAPABILITIES && PD_NUMOBJ_GET(&tempMessage) > 0) {
-        /* Don't free the message: we need to keep the
-         * Source_Capabilities message so we can evaluate it. */
         return PESinkEvalCap;
         /* Give sink capabilities when asked */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_GET_SINK_CAP && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
         return PESinkGiveSinkCap;
         /* If the message was a Soft_Reset, do the soft reset procedure */
       } else if (PD_MSGTYPE_GET(&tempMessage) == PD_MSGTYPE_SOFT_RESET && PD_NUMOBJ_GET(&tempMessage) == 0) {
-
         return PESinkSoftReset;
         /* PD 3.0 messges */
       } else if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0) {
