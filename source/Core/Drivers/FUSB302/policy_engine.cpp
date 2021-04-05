@@ -407,8 +407,8 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_ready() {
           return PESinkSendSoftReset;
         }
       } else {
-        /* if we get an unknown message code, silently ignore it*/
-        return PESinkReady;
+        /* if we get an unknown message code, reset*/
+        return PESinkSendSoftReset;
       }
     }
   }
@@ -630,7 +630,9 @@ bool PolicyEngine::isPD3_0() { return (hdr_template & PD_HDR_SPECREV) == PD_SPEC
 void PolicyEngine::PPSTimerCallback() {
 
   if (PPSTimerEnabled) {
-    if (xTaskGetTickCount() - PPSTimeLastEvent > TICKS_100MS) {
+    // I believe even once per second is totally fine, but leaning on faster since everything seems cool with faster
+    // Have seen everything from 10ms to 1 second :D
+    if (xTaskGetTickCount() - PPSTimeLastEvent > 3 * TICKS_100MS) {
       // Send a new PPS message
       PPSTimeLastEvent = xTaskGetTickCount();
       notify(PDB_EVT_PE_PPS_REQUEST);
