@@ -84,3 +84,6 @@ jobs:
 
       - name: Check formatting with clang-format
         run: cd source && make clean && make check-style
+
+      - name: Check python formatting with black
+        run: black --check Translations
