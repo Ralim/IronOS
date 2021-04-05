@@ -224,6 +224,18 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_eval_cap() {
 
   /* Ask the DPM what to request */
   if (pdbs_dpm_evaluate_capability(&tempMessage, &_last_dpm_request)) {
+    /* If we're using PD 3.0 */
+    if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0) {
+      /* If the request was for a PPS APDO, start time callbacks if not started */
+      if (PD_RDO_OBJPOS_GET(&_last_dpm_request) >= _pps_index) {
+        if (PPSTimerEnabled == false) {
+          PPSTimerEnabled  = true;
+          PPSTimeLastEvent = xTaskGetTickCount();
+        }
+      } else {
+        PPSTimerEnabled = false;
+      }
+    }
     return PESinkSelectCap;
   }
 
@@ -245,18 +257,6 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
   /* If the message transmission failed, send a hard reset */
   if ((evt & PDB_EVT_PE_TX_ERR) == PDB_EVT_PE_TX_ERR) {
     return PESinkHardReset;
-  }
-  /* If we're using PD 3.0 */
-  if ((hdr_template & PD_HDR_SPECREV) == PD_SPECREV_3_0) {
-    /* If the request was for a PPS APDO, start time callbacks if not started */
-    if (PD_RDO_OBJPOS_GET(&_last_dpm_request) >= _pps_index) {
-      if (PPSTimerEnabled == false) {
-        PPSTimerEnabled  = true;
-        PPSTimeLastEvent = xTaskGetTickCount();
-      }
-    } else {
-      PPSTimerEnabled = false;
-    }
   }
 
   /* Wait for a response */
