@@ -19,7 +19,7 @@
 void startPOWTask(void const *argument __unused) {
   postRToSInit();
   for (;;) {
-    osDelay(TICKS_100MS); // Slow down update rate
     power_check();
+    osDelay(TICKS_100MS); // Slow down update rate
   }
 }
