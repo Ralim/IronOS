@@ -301,10 +301,10 @@ $(HEXFILE_DIR)/$(model)_%.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTP
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_single.o $(OUTPUT_DIR)/Core/Gen/Translation.$*.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
-$(HEXFILE_DIR)/$(model)_langswitch_demo.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.EN.o Makefile $(LDSCRIPT)
+$(HEXFILE_DIR)/$(model)_multilang_Chinese.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.Chinese.o Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.EN.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.Chinese.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
@@ -325,6 +325,11 @@ Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Trans
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Generating translations for language $*'
 	@python3 ../Translations/make_translation.py -o $(PWD)/$@ $*
+
+Core/Gen/Translation.multi.Chinese.cpp: ../Translations/translation_EN.json ../Translations/translation_YUE_HK.json ../Translations/translation_ZH_TW.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo 'Generating translations for languages EN + YUE_HK + ZH_TW'
+	@python3 ../Translations/make_translation.py -o $(PWD)/$@ EN YUE_HK ZH_TW
 
 clean :
 	rm -Rf $(SOURCE_CORE_DIR)/Translation.cpp Core/Gen
