@@ -306,6 +306,16 @@ $(HEXFILE_DIR)/$(model)_multilang_Chinese.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.Chinese.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
+$(HEXFILE_DIR)/$(model)_multilang_all_non_CJK.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all_non_CJK.o Makefile $(LDSCRIPT)
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all_non_CJK.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
+$(HEXFILE_DIR)/$(model)_multilang_all.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all.o Makefile $(LDSCRIPT)
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
@@ -330,6 +340,16 @@ Core/Gen/Translation.multi.Chinese.cpp: ../Translations/translation_EN.json ../T
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo 'Generating translations for languages EN + YUE_HK + ZH_TW'
 	@python3 ../Translations/make_translation.py -o $(PWD)/$@ EN YUE_HK ZH_TW
+
+Core/Gen/Translation.multi.all_non_CJK.cpp: ../Translations/translation_*.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo 'Generating translations for all languages (excluding CJK)'
+	@python3 ../Translations/make_translation.py -o $(PWD)/$@ EN BG CS DA DE ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK
+
+Core/Gen/Translation.multi.all.cpp: ../Translations/translation_*.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo 'Generating translations for all languages'
+	@python3 ../Translations/make_translation.py -o $(PWD)/$@ EN BG CS DA DE ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_TW
 
 clean :
 	rm -Rf $(SOURCE_CORE_DIR)/Translation.cpp Core/Gen

@@ -128,8 +128,8 @@ if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
         make -j$(nproc) model="$model" "${BUILD_LANGUAGES[@]/#/firmware-}" >/dev/null
         checkLastCommand
         if [ "$model" == "Pinecil" ]; then
-            echo "Building multilang_Chinese firmware for $model"
-            make -j$(nproc) model="$model" firmware-multilang_Chinese >/dev/null
+            echo "Building multilang firmware for $model"
+            make -j$(nproc) model="$model" firmware-multilang_Chinese firmware-multilang_all_non_CJK firmware-multilang_all >/dev/null
             checkLastCommand
         fi
     done
