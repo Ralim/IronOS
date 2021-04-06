@@ -139,13 +139,13 @@ const menuitem rootSettingsMenu[]{
      * Advanced Menu
      * Exit
      */
-    {nullptr, settings_enterPowerMenu, settings_displayPowerMenu},             /*Power*/
-    {nullptr, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
-    {nullptr, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
-    {nullptr, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
-    {nullptr, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
-    {nullptr, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Menu*/
-    {nullptr, nullptr, nullptr}                                                // end of menu marker. DO NOT REMOVE
+    {0, settings_enterPowerMenu, settings_displayPowerMenu},             /*Power*/
+    {0, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
+    {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
+    {0, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
+    {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+    {0, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Menu*/
+    {0, nullptr, nullptr}                                                // end of menu marker. DO NOT REMOVE
 };
 
 const menuitem powerMenu[] = {
@@ -159,7 +159,7 @@ const menuitem powerMenu[] = {
 #ifdef POW_QC
     {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
 #endif
-    {nullptr, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
+    {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
 };
 const menuitem solderingMenu[] = {
     /*
@@ -174,7 +174,7 @@ const menuitem solderingMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::TempChangeShortStep), settings_setTempChangeShortStep, settings_displayTempChangeShortStep}, /*Temp change short step*/
     {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), settings_setTempChangeLongStep, settings_displayTempChangeLongStep},    /*Temp change long step*/
     {SETTINGS_DESC(SettingsItemIndex::LockingMode), settings_setLockingMode, settings_displayLockingMode},                         /*Locking Mode*/
-    {nullptr, nullptr, nullptr}                                                                                                    // end of menu marker. DO NOT REMOVE
+    {0, nullptr, nullptr}                                                                                                    // end of menu marker. DO NOT REMOVE
 };
 const menuitem UIMenu[] = {
     /*
@@ -193,7 +193,7 @@ const menuitem UIMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled}, /* Reverse Temp change buttons + - */
     {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), settings_setAnimationSpeed, settings_displayAnimationSpeed},                                               /*Animation Speed adjustment */
     {SETTINGS_DESC(SettingsItemIndex::AnimLoop), settings_setAnimationLoop, settings_displayAnimationLoop},                                                  /*Animation Loop switch */
-    {nullptr, nullptr, nullptr}                                                                                                                              // end of menu marker. DO NOT REMOVE
+    {0, nullptr, nullptr}                                                                                                                              // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
     /*
@@ -209,7 +209,7 @@ const menuitem PowerSavingMenu[] = {
 #ifdef HALL_SENSOR
     {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), settings_setHallEffect, settings_displayHallEffect}, /* HallEffect Sensitivity*/
 #endif
-    {nullptr, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
+    {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
 };
 const menuitem advancedMenu[] = {
 
@@ -235,7 +235,7 @@ const menuitem advancedMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), settings_setPowerPulse, settings_displayPowerPulse},                               /*Power Pulse adjustment */
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), settings_setPowerPulseWait, settings_displayPowerPulseWait},                        /*Power Pulse Wait adjustment*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), settings_setPowerPulseDuration, settings_displayPowerPulseDuration},            /*Power Pulse Duration adjustment*/
-    {nullptr, nullptr, nullptr}                                                                                                            // end of menu marker. DO NOT REMOVE
+    {0, nullptr, nullptr}                                                                                                            // end of menu marker. DO NOT REMOVE
 };
 
 /**
@@ -1111,7 +1111,7 @@ void gui_Menu(const menuitem *menu) {
     OLED::setCursor(0, 0);
     // If the user has hesitated for >=3 seconds, show the long text
     // Otherwise "draw" the option
-    if ((xTaskGetTickCount() - lastButtonTime < (TICKS_SECOND * 3)) || menu[currentScreen].description == nullptr) {
+    if ((xTaskGetTickCount() - lastButtonTime < (TICKS_SECOND * 3)) || menu[currentScreen].description == 0) {
       lcdRefresh = true;
       OLED::clearScreen();
       if (menu[currentScreen].draw()) {
@@ -1129,7 +1129,7 @@ void gui_Menu(const menuitem *menu) {
       // Draw description
       if (descriptionStart == 0)
         descriptionStart = xTaskGetTickCount();
-      const char *description = menu[currentScreen].description;
+      const char *description = SettingsDescriptions[menu[currentScreen].description - 1];
       // lower the value - higher the speed
       int16_t descriptionWidth  = FONT_12_WIDTH * (str_display_len(description) + 7);
       int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? (TICKS_100MS / 10) : (TICKS_100MS / 5)));
