@@ -115,59 +115,61 @@ def get_debug_menu() -> List[str]:
     ]
 
 
-def get_letter_counts(defs: dict, lang: dict) -> List[str]:
+def get_letter_counts(defs: dict, langs: List[dict]) -> List[str]:
     text_list = []
-    # iterate over all strings
-    obj = lang["menuOptions"]
-    for mod in defs["menuOptions"]:
-        eid = mod["id"]
-        text_list.append(obj[eid]["desc"])
+    for lang in langs:
+        # iterate over all strings
+        obj = lang["menuOptions"]
+        for mod in defs["menuOptions"]:
+            eid = mod["id"]
+            text_list.append(obj[eid]["desc"])
 
-    obj = lang["messages"]
-    for mod in defs["messages"]:
-        eid = mod["id"]
-        if eid not in obj:
-            text_list.append(mod["default"])
-        else:
+        obj = lang["messages"]
+        for mod in defs["messages"]:
+            eid = mod["id"]
+            if eid not in obj:
+                text_list.append(mod["default"])
+            else:
+                text_list.append(obj[eid])
+
+        obj = lang["messagesWarn"]
+        for mod in defs["messagesWarn"]:
+            eid = mod["id"]
+            if isinstance(obj[eid], list):
+                text_list.append(obj[eid][0])
+                text_list.append(obj[eid][1])
+            else:
+                text_list.append(obj[eid])
+
+        obj = lang["characters"]
+
+        for mod in defs["characters"]:
+            eid = mod["id"]
             text_list.append(obj[eid])
 
-    obj = lang["messagesWarn"]
-    for mod in defs["messagesWarn"]:
-        eid = mod["id"]
-        if isinstance(obj[eid], list):
-            text_list.append(obj[eid][0])
-            text_list.append(obj[eid][1])
-        else:
-            text_list.append(obj[eid])
+        obj = lang["menuOptions"]
+        for mod in defs["menuOptions"]:
+            eid = mod["id"]
+            if isinstance(obj[eid]["text2"], list):
+                text_list.append(obj[eid]["text2"][0])
+                text_list.append(obj[eid]["text2"][1])
+            else:
+                text_list.append(obj[eid]["text2"])
 
-    obj = lang["characters"]
+        obj = lang["menuGroups"]
+        for mod in defs["menuGroups"]:
+            eid = mod["id"]
+            if isinstance(obj[eid]["text2"], list):
+                text_list.append(obj[eid]["text2"][0])
+                text_list.append(obj[eid]["text2"][1])
+            else:
+                text_list.append(obj[eid]["text2"])
 
-    for mod in defs["characters"]:
-        eid = mod["id"]
-        text_list.append(obj[eid])
+        obj = lang["menuGroups"]
+        for mod in defs["menuGroups"]:
+            eid = mod["id"]
+            text_list.append(obj[eid]["desc"])
 
-    obj = lang["menuOptions"]
-    for mod in defs["menuOptions"]:
-        eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            text_list.append(obj[eid]["text2"][0])
-            text_list.append(obj[eid]["text2"][1])
-        else:
-            text_list.append(obj[eid]["text2"])
-
-    obj = lang["menuGroups"]
-    for mod in defs["menuGroups"]:
-        eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            text_list.append(obj[eid]["text2"][0])
-            text_list.append(obj[eid]["text2"][1])
-        else:
-            text_list.append(obj[eid]["text2"])
-
-    obj = lang["menuGroups"]
-    for mod in defs["menuGroups"]:
-        eid = mod["id"]
-        text_list.append(obj[eid]["desc"])
     constants = get_constants()
     for x in constants:
         text_list.append(x[1])
@@ -381,7 +383,7 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     language_code: str = lang["languageCode"]
     logging.info(f"Generating block for {language_code}")
     # Iterate over all of the text to build up the symbols & counts
-    text_list = get_letter_counts(defs, lang)
+    text_list = get_letter_counts(defs, [lang])
     # From the letter counts, need to make a symbol translator & write out the font
     font_table_text, symbol_conversion_table = get_font_map_and_table(text_list)
 
