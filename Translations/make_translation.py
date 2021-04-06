@@ -401,7 +401,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
 
     # ----- Writing SettingsDescriptions
     objs = [lang["menuOptions"] for lang in langs]
-    f.write("const char* SettingsDescriptions[] = {\n")
+    f.write("const char *const SettingsDescriptions[] = {\n")
 
     max_len = 25
     index = 0
@@ -427,7 +427,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
 
     for mod in defs["messages"]:
         eid = mod["id"]
-        f.write(f"const char* {eid}[] = {{\n")
+        f.write(f"const char *const {eid}[] = {{\n")
         for obj in objs:
             source_text = ""
             if "default" in mod:
@@ -445,7 +445,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
 
     for mod in defs["messagesWarn"]:
         eid = mod["id"]
-        f.write(f"const char* {eid}[] = {{\n")
+        f.write(f"const char *const {eid}[] = {{\n")
         for obj in objs:
             if isinstance(obj[eid], list):
                 if not obj[eid][1]:
@@ -467,7 +467,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
 
     for mod in defs["characters"]:
         eid: str = mod["id"]
-        f.write(f"const char* {eid}[] = {{\n")
+        f.write(f"const char *const {eid}[] = {{\n")
         for obj in objs:
             f.write(
                 f'  "{convert_string(symbol_conversion_table, obj[eid])}",//{obj[eid]} \n'
@@ -484,7 +484,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
     f.write("\n")
 
     # Debug Menu
-    f.write("const char* DebugMenu[] = {\n")
+    f.write("const char *const DebugMenu[] = {\n")
 
     for c in get_debug_menu():
         f.write(f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n')
@@ -492,7 +492,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
 
     # ----- Writing SettingsDescriptions
     objs = [lang["menuOptions"] for lang in langs]
-    f.write("const char* SettingsShortNames[] = {\n")
+    f.write("const char *const SettingsShortNames[] = {\n")
 
     max_len = 25
     index = 0
@@ -521,7 +521,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
 
     # ----- Writing Menu Groups
     objs = [lang["menuGroups"] for lang in langs]
-    f.write("const char* SettingsMenuEntries[] = {\n")
+    f.write("const char *const SettingsMenuEntries[] = {\n")
 
     max_len = 25
     for mod in defs["menuGroups"]:
@@ -543,7 +543,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
 
     # ----- Writing Menu Groups Descriptions
     objs = [lang["menuGroups"] for lang in langs]
-    f.write("const char* SettingsMenuEntriesDescriptions[] = {\n")
+    f.write("const char *const SettingsMenuEntriesDescriptions[] = {\n")
 
     max_len = 25
     for mod in defs["menuGroups"]:
@@ -558,7 +558,7 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
     f.write(
         f"const bool HasFahrenheit = {('true' if any([lang.get('tempUnitFahrenheit', True) for lang in langs]) else 'false')};\n"
     )
-    f.write("const char *LanguageCodes[] = {\n")
+    f.write("const char *const LanguageCodes[] = {\n")
     for lang in langs:
         f.write(
             f"  \"{convert_string(symbol_conversion_table, lang['languageCode'])}\",//{lang['languageCode']}\n"
