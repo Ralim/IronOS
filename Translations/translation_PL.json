@@ -36,7 +36,7 @@
 		],
 		"NoPowerDeliveryMessage": [
 			"Nie rozpoznano",
-			"kontrolera USB-PD IC!"
+			"kont. USB-PD IC!"
 		],
 		"LockingKeysString": " ZABLOK.",
 		"UnlockingKeysString": "ODBLOK.",
