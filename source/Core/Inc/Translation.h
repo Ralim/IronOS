@@ -110,6 +110,6 @@ enum class SettingsItemIndex : uint8_t {
 
 constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
 // Use a constexpr function for type-checking.
-#define SETTINGS_DESC(i) (SettingsDescriptions[settings_item_index(i)])
+#define SETTINGS_DESC(i) (settings_item_index(i) + 1)
 
 #endif /* TRANSLATION_H_ */

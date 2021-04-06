@@ -21,7 +21,9 @@
 
 // Struct for holding the function pointers and descriptions
 typedef struct {
-  const char *description;
+  // The settings description index, please use the `SETTINGS_DESC` macro with
+  // the `SettingsItemIndex` enum. Use 0 for no description.
+  uint8_t description;
   // return true if increment reached the maximum value
   bool (*const incrementHandler)(void);
   bool (*const draw)(void);
