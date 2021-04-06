@@ -31,12 +31,12 @@
 			""
 		],
 		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
+			"Nie rozpoznano",
+			"akcelerometru!"
 		],
 		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
+			"Nie rozpoznano",
+			"kontrolera USB-PD IC!"
 		],
 		"LockingKeysString": " ZABLOK.",
 		"UnlockingKeysString": "ODBLOK.",
@@ -278,17 +278,17 @@
 		},
 		"AnimLoop": {
 			"text2": [
-				"Anim.",
-				"loop"
+				"Zapętlona",
+				"animacja"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Zapętla animację ikon w menu głównym"
 		},
 		"AnimSpeed": {
 			"text2": [
-				"Anim.",
-				"speed"
+				"Prędkosć",
+				"animacji"
 			],
-			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+			"desc": "Prędkość animacji ikon w menu <O=wył. | L=mała | M=średnia | H=duża>"
 		},
 		"PowerPulseWait": {
 			"text2": [
