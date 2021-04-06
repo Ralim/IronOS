@@ -198,6 +198,10 @@
 		"PowerPulseDuration": {
 			"text2": "電源脈衝時長",
 			"desc": "為保持電源喚醒，每次通電脈衝的時間長度 <x250ms（亳秒）>"
+		},
+		"LanguageSwitch": {
+			"text2": "語言",
+			"desc": ""
 		}
 	}
 }

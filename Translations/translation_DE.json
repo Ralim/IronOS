@@ -303,6 +303,13 @@
 				"Dauer"
 			],
 			"desc": "Dauer des Wachhalteimpulses (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Display",
+				"language"
+			],
+			"desc": ""
 		}
 	}
 }

@@ -170,6 +170,8 @@ def get_letter_counts(defs: dict, langs: List[dict]) -> List[str]:
             eid = mod["id"]
             text_list.append(obj[eid]["desc"])
 
+        text_list.append(lang["languageCode"])
+
     constants = get_constants()
     for x in constants:
         text_list.append(x[1])
@@ -542,6 +544,10 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     f.write(
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n"
     )
+    f.write(
+        f"const char *LanguageCodes = \"{convert_string(symbol_conversion_table, lang['languageCode'])}\";\n"
+    )
+    f.write(f"const uint8_t LanguageCount = 1;\n")
 
     f.write("\n// Verify SettingsItemIndex values:\n")
     for i, mod in enumerate(defs["menuOptions"]):

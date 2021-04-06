@@ -364,6 +364,11 @@ var def =
 			"id": "PowerPulseDuration",
 			"maxLen": 6,
 			"maxLen2": 13
+		},
+		{
+			"id": "LanguageSwitch",
+			"maxLen": 5,
+			"maxLen2": 11
 		}
 	]
 }

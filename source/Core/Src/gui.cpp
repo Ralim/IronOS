@@ -144,6 +144,7 @@ const menuitem rootSettingsMenu[]{
     {nullptr, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
     {nullptr, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
     {nullptr, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+    {nullptr, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Menu*/
     {nullptr, nullptr, nullptr}                                                // end of menu marker. DO NOT REMOVE
 };
 
@@ -244,7 +245,7 @@ const menuitem advancedMenu[] = {
  * @param cursorCharPosition Custom cursor char position to set after printing
  * description.
  */
-static void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t cursorCharPosition) {
+void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t cursorCharPosition) {
   // print short description (default single line, explicit double line)
   uint8_t shortDescIndex = static_cast<uint8_t>(settingsItemIndex);
   OLED::printWholeScreen(SettingsShortNames[shortDescIndex]);
@@ -261,7 +262,7 @@ static void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t 
  * @param str The input string.
  * @return The length of the string.
  */
-static uint16_t str_display_len(const char *const str) {
+uint16_t str_display_len(const char *const str) {
   const uint8_t *next  = reinterpret_cast<const uint8_t *>(str);
   uint16_t       count = 0;
   while (next[0]) {

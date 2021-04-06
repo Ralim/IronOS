@@ -11,6 +11,8 @@
 extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
 extern const bool    HasFahrenheit;
+extern const char *  LanguageCodes;
+extern const uint8_t LanguageCount;
 
 extern const char *SettingsShortNames[];
 extern const char *SettingsDescriptions[];
@@ -113,10 +115,14 @@ enum class SettingsItemIndex : uint8_t {
   AnimSpeed,
   PowerPulseWait,
   PowerPulseDuration,
+  LanguageSwitch,
 };
 
 constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
 // Use a constexpr function for type-checking.
 #define SETTINGS_DESC(i) (SettingsDescriptions[settings_item_index(i)])
+
+bool        settings_displayLanguageSwitch(void);
+bool        settings_setLanguageSwitch(void);
 
 #endif /* TRANSLATION_H_ */

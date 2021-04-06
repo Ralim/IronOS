@@ -296,10 +296,15 @@ all: $(ALL_FIRMWARE_TARGETS)
 	$(SIZE)  --format=berkeley  $<
 	$(OBJCOPY) $< -O binary $@
 
-$(HEXFILE_DIR)/$(model)_%.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/Gen/Translation.%.o Makefile $(LDSCRIPT)
+$(HEXFILE_DIR)/$(model)_%.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_single.o $(OUTPUT_DIR)/Core/Gen/Translation.%.o Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/Gen/Translation.$*.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_single.o $(OUTPUT_DIR)/Core/Gen/Translation.$*.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
+$(HEXFILE_DIR)/$(model)_langswitch_demo.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.EN.o Makefile $(LDSCRIPT)
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.EN.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
@@ -349,4 +354,5 @@ check-style:
 # pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
 -include $(OUT_OBJS_CPP:.o=.d)
+-include $(OUTPUT_DIR)/Core/LangSupport/*.d
 -include $(OUTPUT_DIR)/Core/Gen/Translation.*.d
