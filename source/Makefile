@@ -10,7 +10,7 @@ ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
 
-ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_CN ZH_TW
+ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_CN ZH_TW
 
 
 # Enumerate all of the include directories
