@@ -16,26 +16,20 @@ extern const char *SettingsShortNames[];
 extern const char *SettingsDescriptions[];
 extern const char *SettingsMenuEntries[];
 
-extern const char *SettingsCalibrationDone;
 extern const char *SettingsCalibrationWarning;
 extern const char *SettingsResetWarning;
 extern const char *UVLOWarningString;
 extern const char *UndervoltageString;
 extern const char *InputVoltageString;
-extern const char *WarningTipTempString;
-extern const char *BadTipString;
 
 extern const char *SleepingSimpleString;
 extern const char *SleepingAdvancedString;
-extern const char *WarningSimpleString;
-extern const char *WarningAdvancedString;
 extern const char *SleepingTipAdvancedString;
 extern const char *IdleTipString;
 extern const char *IdleSetString;
 extern const char *TipDisconnectedString;
 extern const char *SolderingAdvancedPowerPrompt;
 extern const char *OffString;
-extern const char *YourGainMessage;
 
 extern const char *ResetOKMessage;
 extern const char *SettingsResetMessage;
@@ -65,8 +59,7 @@ extern const char *SettingOffChar;
 extern const char *SettingFastChar;
 extern const char *SettingMediumChar;
 extern const char *SettingSlowChar;
-extern const char *TipModelStrings[];
-extern const char *DebugMenu[];
+
 extern const char *SymbolPlus;
 extern const char *SymbolMinus;
 extern const char *SymbolSpace;
