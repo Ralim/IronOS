@@ -10,8 +10,14 @@ ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
 
-ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_CN ZH_TW
+TRANSLATION_FILES=$(wildcard ../Translations/translation_*.json)
+ALL_LANGUAGES=$(sort $(patsubst translation_%.json,%,$(notdir $(TRANSLATION_FILES))))
 
+LANGUAGE_GROUP_CJK_LANGS=YUE_HK ZH_TW ZH_CN
+LANGUAGE_GROUP_CJK_NAME=Chinese
+LANGUAGE_GROUP_CYRILLIC_LANGS=BG RU SR_CYRL SR_LATN UK
+LANGUAGE_GROUP_CYRILLIC_NAME=Bulgarian+Russian+Serbian+Ukrainian
+LANGUAGE_GROUPS=CJK CYRILLIC
 
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
@@ -72,7 +78,7 @@ flash_size=64k
 bootldr_size=0x4000
 endif
 
-ifeq ($(model),$(ALL_PINE_MODELS))
+ifeq ($(model),$(filter $(model),$(ALL_PINE_MODELS)))
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_VENDOR_INC_DIR) \
@@ -108,8 +114,7 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(THREADS_INC_DIR) \
 	-I$(INC_PD_DRIVERS_DIR) \
 	  $(DEVICE_INCLUDES) 
-	  
-TRANSLATION_FILES=$(wildcard ../../Translations/translation_*.json)
+
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
@@ -150,7 +155,7 @@ COMPILER=gcc
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),$(ALL_PINE_MODELS))
+ifeq ($(model),$(filter $(model),$(ALL_PINE_MODELS)))
 COMPILER_PREFIX=riscv-nuclei-elf
 endif
 # programs ---------------------------------------------------------------------
@@ -162,7 +167,7 @@ OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
 
 # For the Pinecil, use gcc in assembler mode
-ifeq ($(model),$(ALL_PINE_MODELS))
+ifeq ($(model),$(filter $(model),$(ALL_PINE_MODELS)))
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 endif
 
@@ -278,11 +283,9 @@ OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 
 default : firmware-EN
 
-firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin
-	@true
-
 ALL_FIRMWARE_TARGETS=$(addprefix firmware-,$(ALL_LANGUAGES))
-all: $(ALL_FIRMWARE_TARGETS)
+all-single-lang: $(ALL_FIRMWARE_TARGETS)
+all: all-single-lang
 
 #
 # The rule to create the target directory
@@ -295,26 +298,6 @@ all: $(ALL_FIRMWARE_TARGETS)
 %.bin : %.elf Makefile
 	$(SIZE)  --format=berkeley  $<
 	$(OBJCOPY) $< -O binary $@
-
-$(HEXFILE_DIR)/$(model)_%.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_single.o $(OUTPUT_DIR)/Core/Gen/Translation.%.o Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_single.o $(OUTPUT_DIR)/Core/Gen/Translation.$*.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_multilang_Chinese.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.Chinese.o Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.Chinese.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_multilang_all_non_CJK.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all_non_CJK.o Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all_non_CJK.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_multilang_all.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all.o Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_multi.o $(OUTPUT_DIR)/Core/Gen/Translation.multi.all.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
@@ -331,25 +314,56 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@echo 'Building file: $<'
 	@$(AS) -c $(AFLAGS) $< -o $@
 
-Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo 'Generating translations for language $*'
-	@python3 ../Translations/make_translation.py -o $(PWD)/$@ $*
 
-Core/Gen/Translation.multi.Chinese.cpp: ../Translations/translation_EN.json ../Translations/translation_YUE_HK.json ../Translations/translation_ZH_TW.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo 'Generating translations for languages EN + YUE_HK + ZH_TW'
-	@python3 ../Translations/make_translation.py -o $(PWD)/$@ EN YUE_HK ZH_TW
+#
+# The rules for translation files and individual firmware files:
+#
 
-Core/Gen/Translation.multi.all_non_CJK.cpp: ../Translations/translation_*.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo 'Generating translations for all languages (excluding CJK)'
-	@python3 ../Translations/make_translation.py -o $(PWD)/$@ EN BG CS DA DE ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK
+# Usage: $(eval $(call lang_rule))
+#    or: $(eval $(call lang_rule,$(1)=group_code,$(2)=group_name,$(3)=lang_codes))
+define lang_rule
 
-Core/Gen/Translation.multi.all.cpp: ../Translations/translation_*.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo 'Generating translations for all languages'
-	@python3 ../Translations/make_translation.py -o $(PWD)/$@ EN BG CS DA DE ES FI FR HR HU IT LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_TW
+firmware-$(if $(1),multilang-$(1),%): \
+		$(HEXFILE_DIR)/$(model)_$(if $(1),multilang_$(2),%).hex \
+		$(HEXFILE_DIR)/$(model)_$(if $(1),multilang_$(2),%).bin
+	@true
+
+$(HEXFILE_DIR)/$(model)_$(if $(1),multilang_$(2),%).elf: \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_$(if $(1),multi,single).o \
+		$(OUTPUT_DIR)/Core/Gen/Translation.$(if $(1),multi.$(2),%).o \
+		Makefile $(LDSCRIPT)
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo Linking $$@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/LangSupport/lang_$(if $(1),multi,single).o $(OUTPUT_DIR)/Core/Gen/Translation.$(if $(1),multi.$(2),$$*).o $(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
+
+Core/Gen/Translation.$(if $(1),multi.$(2),%).cpp: \
+		$(if $(1),$(patsubst %,../Translations/translation_%.json,$(3)),../Translations/translation_%.json) \
+		../Translations/make_translation.py \
+		../Translations/translations_def.js \
+		../Translations/font_tables.py \
+		../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf \
+		Makefile
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo 'Generating translations for language $(if $(1),group "$(2)" ($(3)),$$*)'
+	@python3 ../Translations/make_translation.py -o $(PWD)/$$@ $(if $(1),$(3),$$*)
+
+ifneq ($(1),)
+all: firmware-multilang-$(1)
+endif
+
+endef # lang_rule
+
+
+# Add single-language firmware rule:
+$(eval $(call lang_rule))
+
+# Only Pinecil has the ROM space for multi-language firmwares.
+ifeq ($(model),$(filter $(model),$(ALL_PINE_MODELS)))
+# Add multi-language firmware rules:
+$(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call lang_rule,$(group_code),$(LANGUAGE_GROUP_$(group_code)_NAME),EN $(LANGUAGE_GROUP_$(group_code)_LANGS))))
+endif
+
 
 clean :
 	rm -Rf $(SOURCE_CORE_DIR)/Translation.cpp Core/Gen
@@ -373,7 +387,7 @@ check-style:
 	done
 	@echo "Style check passed"
   
-.PHONY: style all clean default
+.PHONY: style all all-single-lang clean default
 .SECONDARY:
 
 # pull in dependency info for *existing* .o files
