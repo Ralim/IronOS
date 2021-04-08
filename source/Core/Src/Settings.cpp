@@ -83,7 +83,6 @@ void resetSettings() {
   systemSettings.hallEffectSensitivity          = 1;
   systemSettings.accelMissingWarningCounter     = 0;
   systemSettings.pdMissingWarningCounter        = 0;
-  systemSettings.uiLanguage                     = 0;
 
   saveSettings(); // Save defaults
 }

@@ -59,7 +59,7 @@ typedef struct {
   uint8_t  hallEffectSensitivity;          // Operating mode of the hall effect sensor
   uint8_t  accelMissingWarningCounter;     // Counter of how many times we have warned we cannot detect the accelerometer
   uint8_t  pdMissingWarningCounter;        // Counter of how many times we have warned we cannot detect the pd interface
-  uint8_t  uiLanguage;                     // Selected UI Language index
+  char     uiLanguage[8];                  // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
 
   uint32_t padding; // This is here for in case we are not an even divisor so
                     // that nothing gets cut off

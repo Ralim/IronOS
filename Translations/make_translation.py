@@ -558,11 +558,15 @@ def write_languages(langs: List[dict], defs: dict, f: TextIO) -> None:
     f.write(
         f"const bool HasFahrenheit = {('true' if any([lang.get('tempUnitFahrenheit', True) for lang in langs]) else 'false')};\n"
     )
-    f.write("const char *const LanguageCodes[] = {\n")
+    f.write("const char *const DisplayLanguageNames[] = {\n")
     for lang in langs:
         f.write(
             f"  \"{convert_string(symbol_conversion_table, lang['languageCode'])}\",//{lang['languageCode']}\n"
         )
+    f.write("};\n")
+    f.write("const char InternalLanguageCodes[][8] = {\n")
+    for lang in langs:
+        f.write(f"  \"{lang['languageCode']}\",\n")
     f.write("};\n")
     f.write(f"const uint8_t LanguageCount = {len(langs)};\n")
 

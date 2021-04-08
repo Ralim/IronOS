@@ -11,7 +11,8 @@
 extern const uint8_t     USER_FONT_12[];
 extern const uint8_t     USER_FONT_6x8[];
 extern const bool        HasFahrenheit;
-extern const char *const LanguageCodes[];
+extern const char *const DisplayLanguageNames[];
+extern const char        InternalLanguageCodes[][8];
 extern const uint8_t     LanguageCount;
 
 extern const char *const SettingsShortNames[];
