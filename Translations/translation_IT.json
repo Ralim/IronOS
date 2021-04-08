@@ -26,8 +26,8 @@
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
-			"Reset effettuato",
-			""
+			"Impostazioni",
+			"ripristinate"
 		],
 		"NoAccelerometerMessage": [
 			"Accelerometro",
