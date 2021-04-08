@@ -26,6 +26,7 @@ void startPOWTask(void const *argument __unused) {
     fusb302_start_processing();
   }
 #endif
+  vTaskDelay(TICKS_100MS);
   // Init any other misc sensors
   postRToSInit();
 

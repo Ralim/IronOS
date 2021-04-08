@@ -63,7 +63,7 @@ void InterruptHandler::Thread(const void *arg) {
   for (;;) {
     // If the irq is low continue, otherwise wait for irq or timeout
     if (!getFUS302IRQLow()) {
-      xTaskNotifyWait(0x00, 0x0F, NULL, PolicyEngine::setupCompleteOrTimedOut() ? 100 : 10);
+      xTaskNotifyWait(0x00, 0x0F, NULL, TICKS_SECOND * 30);
     }
     /* Read the FUSB302B status and interrupt registers */
     fusb_get_status(&status);

@@ -16,10 +16,10 @@
  */
 
 #include "protocol_tx.h"
+#include "Defines.h"
 #include "fusb302b.h"
 #include "fusbpd.h"
 #include "policy_engine.h"
-
 #include <pd.h>
 
 osThreadId          ProtocolTransmit::TaskHandle = NULL;
@@ -103,7 +103,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
   if (PolicyEngine::isPD3_0()) {
     /* If we're starting an AMS, wait for permission to transmit */
     while (fusb_get_typec_current() != fusb_sink_tx_ok) {
-      osDelay(1);
+      vTaskDelay(TICKS_10MS);
     }
   }
   messageSending = true;

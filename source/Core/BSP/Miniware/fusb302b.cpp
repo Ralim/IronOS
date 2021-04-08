@@ -132,10 +132,15 @@ bool fusb_setup() {
     return false;
   }
   /* Fully reset the FUSB302B */
-  //	fusb_write_byte( FUSB_RESET, FUSB_RESET_SW_RES);
-  //	osDelay(2);
-  if (!fusb_read_id()) {
-    return false;
+  fusb_write_byte(FUSB_RESET, FUSB_RESET_SW_RES);
+  vTaskDelay(TICKS_10MS);
+  uint8_t tries = 0;
+  while (!fusb_read_id()) {
+    vTaskDelay(TICKS_10MS);
+    tries++;
+    if (tries > 5) {
+      return false; // Welp :(
+    }
   }
 
   /* Turn on all power */
@@ -157,12 +162,12 @@ bool fusb_setup() {
 
   /* Measure CC1 */
   fusb_write_byte(FUSB_SWITCHES0, 0x07);
-  osDelay(10);
+  vTaskDelay(TICKS_10MS);
   uint8_t cc1 = fusb_read_byte(FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
 
   /* Measure CC2 */
   fusb_write_byte(FUSB_SWITCHES0, 0x0B);
-  osDelay(10);
+  vTaskDelay(TICKS_10MS);
   uint8_t cc2 = fusb_read_byte(FUSB_STATUS0) & FUSB_STATUS0_BC_LVL;
 
   /* Select the correct CC line for BMC signaling; also enable AUTO_CRC */
