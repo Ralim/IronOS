@@ -10,8 +10,6 @@
 #include <I2CBB.hpp>
 SemaphoreHandle_t I2CBB::I2CSemaphore = NULL;
 StaticSemaphore_t I2CBB::xSemaphoreBuffer;
-SemaphoreHandle_t I2CBB::I2CSemaphore2 = NULL;
-StaticSemaphore_t I2CBB::xSemaphoreBuffer2;
 void              I2CBB::init() {
   // Set GPIO's to output open drain
   GPIO_InitTypeDef GPIO_InitStruct;
@@ -28,10 +26,8 @@ void              I2CBB::init() {
   HAL_GPIO_Init(SCL2_GPIO_Port, &GPIO_InitStruct);
   SOFT_SDA_HIGH();
   SOFT_SCL_HIGH();
-  I2CSemaphore  = xSemaphoreCreateMutexStatic(&xSemaphoreBuffer);
-  I2CSemaphore2 = xSemaphoreCreateMutexStatic(&xSemaphoreBuffer2);
+  I2CSemaphore = xSemaphoreCreateMutexStatic(&xSemaphoreBuffer);
   unlock();
-  unlock2();
 }
 
 bool I2CBB::probe(uint8_t address) {
@@ -291,14 +287,4 @@ void I2CBB::write_bit(uint8_t val) {
   SOFT_SCL_LOW();
 }
 
-void I2CBB::unlock2() { xSemaphoreGive(I2CSemaphore2); }
-
-bool I2CBB::lock2() {
-  if (I2CSemaphore2 == NULL) {
-    asm("bkpt");
-  }
-  bool a = xSemaphoreTake(I2CSemaphore2, (TickType_t)500) == pdTRUE;
-
-  return a;
-}
 #endif

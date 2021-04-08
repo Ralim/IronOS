@@ -28,14 +28,10 @@ public:
   static void Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
   static void Receive(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
   static void TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx, uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx);
-  static void unlock2();
-  static bool lock2();
 
 private:
   static SemaphoreHandle_t I2CSemaphore;
   static StaticSemaphore_t xSemaphoreBuffer;
-  static SemaphoreHandle_t I2CSemaphore2;
-  static StaticSemaphore_t xSemaphoreBuffer2;
   static void              unlock();
   static bool              lock();
   static void              start();
