@@ -234,10 +234,9 @@ def get_cjk_glyph(sym: str) -> str:
     return s
 
 
-def get_chars_from_font_index(index: int) -> str:
+def get_bytes_from_font_index(index: int) -> bytes:
     """
-    Converts the font table index into its corresponding string escape
-    sequence(s).
+    Converts the font table index into its corresponding bytes
     """
 
     # We want to be able to use more than 254 symbols (excluding \x00 null
@@ -273,7 +272,7 @@ def get_chars_from_font_index(index: int) -> str:
     if page > 0x0F:
         raise ValueError("page value out of range")
     if page == 0:
-        return f"\\x{index:02X}"
+        return bytes([index])
     else:
         # Into extended range
         # Leader is 0xFz where z is the page number
@@ -283,13 +282,17 @@ def get_chars_from_font_index(index: int) -> str:
 
         if leader > 0xFF or value > 0xFF:
             raise ValueError("value is out of range")
-        return f"\\x{leader:02X}\\x{value:02X}"
+        return bytes([leader, value])
 
 
-def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, str]]:
+def bytes_to_escaped(b: bytes) -> str:
+    return "".join((f"\\x{i:02X}" for i in b))
+
+
+def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, bytes]]:
     # the text list is sorted
     # allocate out these in their order as number codes
-    symbol_map = {"\n": "\\x01"}
+    symbol_map: Dict[str, bytes] = {"\n": bytes([1])}
     index = 2  # start at 2, as 0= null terminator,1 = new line
     forced_first_symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
@@ -311,7 +314,7 @@ def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, str]]:
     total_symbol_count = len(ordered_normal_sym_list) + len(ordered_cjk_sym_list)
     # \x00 is for NULL termination and \x01 is for newline, so the maximum
     # number of symbols allowed is as follow (see also the comments in
-    # `get_chars_from_font_index`):
+    # `get_bytes_from_font_index`):
     if total_symbol_count > (0x10 * 0xFF - 15) - 2:  # 4063
         logging.error(
             f"Error, too many used symbols for this version (total {total_symbol_count})"
@@ -323,7 +326,7 @@ def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, str]]:
     for sym in chain(ordered_normal_sym_list, ordered_cjk_sym_list):
         if sym in symbol_map:
             raise ValueError("Symbol not found in symbol map")
-        symbol_map[sym] = get_chars_from_font_index(index)
+        symbol_map[sym] = get_bytes_from_font_index(index)
         index += 1
 
     font_table_strings = []
@@ -333,12 +336,16 @@ def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, str]]:
             logging.error(f"Missing Large font element for {sym}")
             sys.exit(1)
         font_line: str = font_table[sym]
-        font_table_strings.append(f"{font_line}//{symbol_map[sym]} -> {sym}")
+        font_table_strings.append(
+            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
+        )
         if sym not in font_small_table:
             logging.error(f"Missing Small font element for {sym}")
             sys.exit(1)
         font_line: str = font_small_table[sym]
-        font_small_table_strings.append(f"{font_line}//{symbol_map[sym]} -> {sym}")
+        font_small_table_strings.append(
+            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
+        )
 
     for sym in ordered_cjk_sym_list:
         if sym in font_table:
@@ -347,10 +354,12 @@ def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, str]]:
         if font_line is None:
             logging.error(f"Missing Large font element for {sym}")
             sys.exit(1)
-        font_table_strings.append(f"{font_line}//{symbol_map[sym]} -> {sym}")
+        font_table_strings.append(
+            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
+        )
         # No data to add to the small font table
         font_small_table_strings.append(
-            f"//                                   {symbol_map[sym]} -> {sym}"
+            f"//                                   {bytes_to_escaped(symbol_map[sym])} -> {sym}"
         )
 
     output_table = "const uint8_t USER_FONT_12[] = {\n"
@@ -366,9 +375,9 @@ def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, str]]:
     return output_table, symbol_map
 
 
-def convert_string(symbol_conversion_table: Dict[str, str], text: str) -> str:
-    # convert all of the symbols from the string into escapes for their content
-    output_string = ""
+def convert_string_bytes(symbol_conversion_table: Dict[str, bytes], text: str) -> bytes:
+    # convert all of the symbols from the string into bytes for their content
+    output_string = b""
     for c in text.replace("\\r", "").replace("\\n", "\n"):
         if c not in symbol_conversion_table:
             logging.error(f"Missing font definition for {c}")
@@ -376,6 +385,11 @@ def convert_string(symbol_conversion_table: Dict[str, str], text: str) -> str:
         else:
             output_string += symbol_conversion_table[c]
     return output_string
+
+
+def convert_string(symbol_conversion_table: Dict[str, bytes], text: str) -> str:
+    # convert all of the symbols from the string into escapes for their content
+    return bytes_to_escaped(convert_string_bytes(symbol_conversion_table, text))
 
 
 def escape(string: str) -> str:

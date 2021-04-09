@@ -3,20 +3,26 @@ import unittest
 
 
 class TestMakeTranslation(unittest.TestCase):
-    def test_get_chars_from_font_index(self):
-        from make_translation import get_chars_from_font_index
+    def test_get_bytes_from_font_index(self):
+        from make_translation import get_bytes_from_font_index
 
-        self.assertEqual(get_chars_from_font_index(2), "\\x02")
-        self.assertEqual(get_chars_from_font_index(239), "\\xEF")
-        self.assertEqual(get_chars_from_font_index(240), "\\xF0")
-        self.assertEqual(get_chars_from_font_index(241), "\\xF1\\x01")
-        self.assertEqual(get_chars_from_font_index(495), "\\xF1\\xFF")
-        self.assertEqual(get_chars_from_font_index(496), "\\xF2\\x01")
-        self.assertEqual(get_chars_from_font_index(750), "\\xF2\\xFF")
-        self.assertEqual(get_chars_from_font_index(751), "\\xF3\\x01")
-        self.assertEqual(get_chars_from_font_index(0x10 * 0xFF - 15), "\\xFF\\xFF")
+        self.assertEqual(get_bytes_from_font_index(2), b"\x02")
+        self.assertEqual(get_bytes_from_font_index(239), b"\xEF")
+        self.assertEqual(get_bytes_from_font_index(240), b"\xF0")
+        self.assertEqual(get_bytes_from_font_index(241), b"\xF1\x01")
+        self.assertEqual(get_bytes_from_font_index(495), b"\xF1\xFF")
+        self.assertEqual(get_bytes_from_font_index(496), b"\xF2\x01")
+        self.assertEqual(get_bytes_from_font_index(750), b"\xF2\xFF")
+        self.assertEqual(get_bytes_from_font_index(751), b"\xF3\x01")
+        self.assertEqual(get_bytes_from_font_index(0x10 * 0xFF - 15), b"\xFF\xFF")
         with self.assertRaises(ValueError):
-            get_chars_from_font_index(0x10 * 0xFF - 14)
+            get_bytes_from_font_index(0x10 * 0xFF - 14)
+
+    def test_bytes_to_escaped(self):
+        from make_translation import bytes_to_escaped
+
+        self.assertEqual(bytes_to_escaped(b"\x00"), "\\x00")
+        self.assertEqual(bytes_to_escaped(b"\xF1\xAB"), "\\xF1\\xAB")
 
 
 if __name__ == "__main__":
