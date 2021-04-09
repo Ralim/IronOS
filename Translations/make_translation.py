@@ -11,7 +11,7 @@ import sys
 from datetime import datetime
 from itertools import chain
 from pathlib import Path
-from typing import Dict, List, TextIO, Tuple, Union
+from typing import Dict, List, Optional, TextIO, Tuple, Union
 from dataclasses import dataclass
 
 from bdflib import reader as bdfreader
@@ -536,10 +536,38 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
 
     f.write("\n")
 
-    # TODO: De-duplicate the strings in str_table.
+    @dataclass
+    class RemappedTranslationItem:
+        str_index: int
+        str_start_offset: int = 0
+
+    # ----- Perform suffix merging optimization:
+    #
+    # We sort the backward strings so that strings with the same suffix will
+    # be next to each other, e.g.:
+    #   "ef\0",
+    #   "cdef\0",
+    #   "abcdef\0",
+    backward_sorted_table: List[Tuple[int, str, bytes]] = sorted(
+        (
+            (i, s, bytes(reversed(convert_string_bytes(symbol_conversion_table, s))))
+            for i, s in enumerate(str_table)
+        ),
+        key=lambda x: x[2],
+    )
+    str_remapping: List[Optional[RemappedTranslationItem]] = [None] * len(str_table)
+    for i, (str_index, source_str, converted) in enumerate(backward_sorted_table[:-1]):
+        j = i
+        while backward_sorted_table[j + 1][2].startswith(converted):
+            j += 1
+        if j != i:
+            str_remapping[str_index] = RemappedTranslationItem(
+                str_index=backward_sorted_table[j][0],
+                str_start_offset=len(backward_sorted_table[j][2]) - len(converted),
+            )
 
     # ----- Write the string table:
-    str_offsets = []
+    str_offsets = [-1] * len(str_table)
     offset = 0
     write_null = False
     f.write("const char TranslationStringsData[] = {\n")
@@ -547,29 +575,39 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         if write_null:
             f.write(' "\\0"\n')
         write_null = True
-        # Find what items use this string
-        is_used = False
-        for group, pre_info in [
-            (str_group_messages, "messages"),
-            (str_group_messageswarn, "messagesWarn"),
-            (str_group_characters, "characters"),
-            (str_group_settingdesc, "SettingsDescriptions"),
-            (str_group_settingshortnames, "SettingsShortNames"),
-            (str_group_settingmenuentries, "SettingsMenuEntries"),
-            (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
-        ]:
-            for item in group:
-                if item.str_index == i:
-                    is_used = True
-                    f.write(f"  //     - {pre_info} {item.info}\n")
-        if not is_used:
-            str_offsets.append(-1)
+        if str_remapping[i] is not None:
             write_null = False
             continue
-        f.write(f"  // {offset: >4}: {escape(source_str)}\n")
+        # Find what items use this string
+        str_used_by = [i] + [
+            j for j, r in enumerate(str_remapping) if r and r.str_index == i
+        ]
+        for j in str_used_by:
+            for group, pre_info in [
+                (str_group_messages, "messages"),
+                (str_group_messageswarn, "messagesWarn"),
+                (str_group_characters, "characters"),
+                (str_group_settingdesc, "SettingsDescriptions"),
+                (str_group_settingshortnames, "SettingsShortNames"),
+                (str_group_settingmenuentries, "SettingsMenuEntries"),
+                (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
+            ]:
+                for item in group:
+                    if item.str_index == j:
+                        f.write(f"  //     - {pre_info} {item.info}\n")
+            if j == i:
+                f.write(f"  // {offset: >4}: {escape(source_str)}\n")
+                str_offsets[j] = offset
+            else:
+                remapped = str_remapping[j]
+                assert remapped is not None
+                f.write(
+                    f"  // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
+                )
+                str_offsets[j] = offset + remapped.str_start_offset
         converted_str = convert_string(symbol_conversion_table, source_str)
         f.write(f'  "{converted_str}"')
-        str_offsets.append(offset)
+        str_offsets[i] = offset
         # Sanity check: Each "char" in `converted_str` should be in format
         # `\xFF`, so the length should be divisible by 4.
         assert len(converted_str) % 4 == 0
