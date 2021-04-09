@@ -79,7 +79,7 @@ def write_start(f: TextIO):
     f.write('#include "Translation.h"\n')
 
 
-def get_constants() -> List[str]:
+def get_constants() -> List[Tuple[str, str]]:
     # Extra constants that are used in the firmware that are shared across all languages
     return [
         ("SymbolPlus", "+"),
@@ -183,9 +183,10 @@ def get_letter_counts(defs: dict, lang: dict) -> List[str]:
         if line:
             for letter in line:
                 symbol_counts[letter] = symbol_counts.get(letter, 0) + 1
-    symbols_by_occurrence = sorted(symbol_counts.items(), key=lambda kv: (kv[1], kv[0]))
     # swap to Big -> little sort order
-    symbols_by_occurrence = [x[0] for x in symbols_by_occurrence]
+    symbols_by_occurrence = [
+        x[0] for x in sorted(symbol_counts.items(), key=lambda kv: (kv[1], kv[0]))
+    ]
     symbols_by_occurrence.reverse()
     return symbols_by_occurrence
 
@@ -342,7 +343,7 @@ def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, bytes]]
         if sym not in font_small_table:
             logging.error(f"Missing Small font element for {sym}")
             sys.exit(1)
-        font_line: str = font_small_table[sym]
+        font_line = font_small_table[sym]
         font_small_table_strings.append(
             f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
         )
@@ -428,6 +429,8 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     str_group_settingmenuentries: List[TranslationItem] = []
     str_group_settingmenuentriesdesc: List[TranslationItem] = []
 
+    eid: str
+
     # ----- Reading SettingsDescriptions
     obj = lang["menuOptions"]
 
@@ -471,7 +474,7 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     obj = lang["characters"]
 
     for mod in defs["characters"]:
-        eid: str = mod["id"]
+        eid = mod["id"]
         str_group_characters.append(TranslationItem(eid, len(str_table)))
         str_table.append(obj[eid])
 
@@ -667,9 +670,9 @@ def read_version() -> str:
     with open(HERE.parent / "source" / "version.h") as version_file:
         for line in version_file:
             if re.findall(r"^.*(?<=(#define)).*(?<=(BUILD_VERSION))", line):
-                line = re.findall(r"\"(.+?)\"", line)
-                if line:
-                    version = line[0]
+                matches = re.findall(r"\"(.+?)\"", line)
+                if matches:
+                    version = matches[0]
                     try:
                         version += f".{subprocess.check_output(['git', 'rev-parse', '--short=7', 'HEAD']).strip().decode('ascii').upper()}"
                     # --short=7: the shorted hash with 7 digits. Increase/decrease if needed!
