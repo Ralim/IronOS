@@ -12,53 +12,55 @@ extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
 extern const bool    HasFahrenheit;
 
-extern const char *SettingsShortNames[];
-extern const char *SettingsDescriptions[];
-extern const char *SettingsMenuEntries[];
+extern const char TranslationStrings[];
 
-extern const char *SettingsCalibrationWarning;
-extern const char *SettingsResetWarning;
-extern const char *UVLOWarningString;
-extern const char *UndervoltageString;
-extern const char *InputVoltageString;
+extern const uint16_t SettingsShortNames[];
+extern const uint16_t SettingsDescriptions[];
+extern const uint16_t SettingsMenuEntries[];
 
-extern const char *SleepingSimpleString;
-extern const char *SleepingAdvancedString;
-extern const char *SleepingTipAdvancedString;
-extern const char *IdleTipString;
-extern const char *IdleSetString;
-extern const char *TipDisconnectedString;
-extern const char *SolderingAdvancedPowerPrompt;
-extern const char *OffString;
+extern const uint16_t SettingsCalibrationWarning;
+extern const uint16_t SettingsResetWarning;
+extern const uint16_t UVLOWarningString;
+extern const uint16_t UndervoltageString;
+extern const uint16_t InputVoltageString;
 
-extern const char *ResetOKMessage;
-extern const char *SettingsResetMessage;
-extern const char *NoAccelerometerMessage;
-extern const char *NoPowerDeliveryMessage;
-extern const char *LockingKeysString;
-extern const char *UnlockingKeysString;
-extern const char *WarningKeysLockedString;
+extern const uint16_t SleepingSimpleString;
+extern const uint16_t SleepingAdvancedString;
+extern const uint16_t SleepingTipAdvancedString;
+extern const uint16_t IdleTipString;
+extern const uint16_t IdleSetString;
+extern const uint16_t TipDisconnectedString;
+extern const uint16_t SolderingAdvancedPowerPrompt;
+extern const uint16_t OffString;
 
-extern const char *SettingRightChar;
-extern const char *SettingLeftChar;
-extern const char *SettingAutoChar;
-extern const char *SettingStartSolderingChar;
-extern const char *SettingStartSleepChar;
-extern const char *SettingStartSleepOffChar;
-extern const char *SettingStartNoneChar;
-extern const char *SettingSensitivityOff;
-extern const char *SettingSensitivityLow;
-extern const char *SettingSensitivityMedium;
-extern const char *SettingSensitivityHigh;
-extern const char *SettingLockDisableChar;
-extern const char *SettingLockBoostChar;
-extern const char *SettingLockFullChar;
-extern const char *SettingNAChar;
+extern const uint16_t ResetOKMessage;
+extern const uint16_t SettingsResetMessage;
+extern const uint16_t NoAccelerometerMessage;
+extern const uint16_t NoPowerDeliveryMessage;
+extern const uint16_t LockingKeysString;
+extern const uint16_t UnlockingKeysString;
+extern const uint16_t WarningKeysLockedString;
 
-extern const char *SettingOffChar;
-extern const char *SettingFastChar;
-extern const char *SettingMediumChar;
-extern const char *SettingSlowChar;
+extern const uint16_t SettingRightChar;
+extern const uint16_t SettingLeftChar;
+extern const uint16_t SettingAutoChar;
+extern const uint16_t SettingStartSolderingChar;
+extern const uint16_t SettingStartSleepChar;
+extern const uint16_t SettingStartSleepOffChar;
+extern const uint16_t SettingStartNoneChar;
+extern const uint16_t SettingSensitivityOff;
+extern const uint16_t SettingSensitivityLow;
+extern const uint16_t SettingSensitivityMedium;
+extern const uint16_t SettingSensitivityHigh;
+extern const uint16_t SettingLockDisableChar;
+extern const uint16_t SettingLockBoostChar;
+extern const uint16_t SettingLockFullChar;
+extern const uint16_t SettingNAChar;
+
+extern const uint16_t SettingOffChar;
+extern const uint16_t SettingFastChar;
+extern const uint16_t SettingMediumChar;
+extern const uint16_t SettingSlowChar;
 
 extern const char *SymbolPlus;
 extern const char *SymbolMinus;
@@ -111,5 +113,7 @@ enum class SettingsItemIndex : uint8_t {
 constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
 // Use a constexpr function for type-checking.
 #define SETTINGS_DESC(i) (settings_item_index(i) + 1)
+
+const char *translatedString(uint16_t index);
 
 #endif /* TRANSLATION_H_ */

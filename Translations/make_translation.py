@@ -12,6 +12,7 @@ from datetime import datetime
 from itertools import chain
 from pathlib import Path
 from typing import Dict, List, TextIO, Tuple, Union
+from dataclasses import dataclass
 
 from bdflib import reader as bdfreader
 from bdflib.model import Font, Glyph
@@ -377,6 +378,16 @@ def convert_string(symbol_conversion_table: Dict[str, str], text: str) -> str:
     return output_string
 
 
+def escape(string: str) -> str:
+    return json.dumps(string, ensure_ascii=False)
+
+
+@dataclass
+class TranslationItem:
+    info: str
+    str_index: int
+
+
 def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     language_code: str = lang["languageCode"]
     logging.info(f"Generating block for {language_code}")
@@ -394,28 +405,26 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     f.write(font_table_text)
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
-    # ----- Writing SettingsDescriptions
+    str_table: List[str] = []
+    str_group_messages: List[TranslationItem] = []
+    str_group_messageswarn: List[TranslationItem] = []
+    str_group_characters: List[TranslationItem] = []
+    str_group_settingdesc: List[TranslationItem] = []
+    str_group_settingshortnames: List[TranslationItem] = []
+    str_group_settingmenuentries: List[TranslationItem] = []
+    str_group_settingmenuentriesdesc: List[TranslationItem] = []
+
+    # ----- Reading SettingsDescriptions
     obj = lang["menuOptions"]
-    f.write("const char* SettingsDescriptions[] = {\n")
 
-    max_len = 25
-    index = 0
-    for mod in defs["menuOptions"]:
+    for index, mod in enumerate(defs["menuOptions"]):
         eid = mod["id"]
-        if "feature" in mod:
-            f.write(f"#ifdef {mod['feature']}\n")
-        f.write(f"  /* [{index:02d}] {eid.ljust(max_len)[:max_len]} */ ")
-        f.write(
-            f"\"{convert_string(symbol_conversion_table, obj[eid]['desc'])}\",//{obj[eid]['desc']} \n"
+        str_group_settingdesc.append(
+            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
+        str_table.append(obj[eid]["desc"])
 
-        if "feature" in mod:
-            f.write("#endif\n")
-        index += 1
-
-    f.write("};\n\n")
-
-    # ----- Writing Message strings
+    # ----- Reading Message strings
 
     obj = lang["messages"]
 
@@ -426,11 +435,8 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
             source_text = mod["default"]
         if eid in obj:
             source_text = obj[eid]
-        translated_text = convert_string(symbol_conversion_table, source_text)
-        source_text = source_text.replace("\n", "_")
-        f.write(f'const char* {eid} = "{translated_text}";//{source_text} \n')
-
-    f.write("\n")
+        str_group_messages.append(TranslationItem(eid, len(str_table)))
+        str_table.append(source_text)
 
     obj = lang["messagesWarn"]
 
@@ -443,22 +449,17 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
                 source_text = obj[eid][0] + "\n" + obj[eid][1]
         else:
             source_text = "\n" + obj[eid]
-        translated_text = convert_string(symbol_conversion_table, source_text)
-        source_text = source_text.replace("\n", "_")
-        f.write(f'const char* {eid} = "{translated_text}";//{source_text} \n')
+        str_group_messageswarn.append(TranslationItem(eid, len(str_table)))
+        str_table.append(source_text)
 
-    f.write("\n")
-
-    # ----- Writing Characters
+    # ----- Reading Characters
 
     obj = lang["characters"]
 
     for mod in defs["characters"]:
         eid: str = mod["id"]
-        f.write(
-            f'const char* {eid} = "{convert_string(symbol_conversion_table, obj[eid])}";//{obj[eid]} \n'
-        )
-    f.write("\n")
+        str_group_characters.append(TranslationItem(eid, len(str_table)))
+        str_table.append(obj[eid])
 
     # Write out firmware constant options
     constants = get_constants()
@@ -475,13 +476,10 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         f.write(f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n')
     f.write("};\n\n")
 
-    # ----- Writing SettingsDescriptions
+    # ----- Reading SettingsDescriptions
     obj = lang["menuOptions"]
-    f.write("const char* SettingsShortNames[] = {\n")
 
-    max_len = 25
-    index = 0
-    for mod in defs["menuOptions"]:
+    for index, mod in enumerate(defs["menuOptions"]):
         eid = mod["id"]
         if isinstance(obj[eid]["text2"], list):
             if not obj[eid]["text2"][1]:
@@ -490,25 +488,15 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
                 source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
         else:
             source_text = "\n" + obj[eid]["text2"]
-        if "feature" in mod:
-            f.write(f"#ifdef {mod['feature']}\n")
-        f.write(f"  /* [{index:02d}] {eid.ljust(max_len)[:max_len]} */ ")
-        f.write(
-            f'{{ "{convert_string(symbol_conversion_table, source_text)}" }},//{obj[eid]["text2"]} \n'
+        str_group_settingshortnames.append(
+            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
+        str_table.append(source_text)
 
-        if "feature" in mod:
-            f.write("#endif\n")
-        index += 1
-
-    f.write("};\n\n")
-
-    # ----- Writing Menu Groups
+    # ----- Reading Menu Groups
     obj = lang["menuGroups"]
-    f.write(f"const char* SettingsMenuEntries[{len(obj)}] = {{\n")
 
-    max_len = 25
-    for mod in defs["menuGroups"]:
+    for index, mod in enumerate(defs["menuGroups"]):
         eid = mod["id"]
         if isinstance(obj[eid]["text2"], list):
             if not obj[eid]["text2"][1]:
@@ -517,26 +505,91 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
                 source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
         else:
             source_text = "\n" + obj[eid]["text2"]
-        f.write(f"  /* {eid.ljust(max_len)[:max_len]} */ ")
-        f.write(
-            f'"{convert_string(symbol_conversion_table, source_text)}",//{obj[eid]["text2"]} \n'
+        str_group_settingmenuentries.append(
+            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
+        str_table.append(source_text)
 
-    f.write("};\n\n")
-
-    # ----- Writing Menu Groups Descriptions
+    # ----- Reading Menu Groups Descriptions
     obj = lang["menuGroups"]
-    f.write(f"const char* SettingsMenuEntriesDescriptions[{(len(obj))}] = {{\n")
 
-    max_len = 25
-    for mod in defs["menuGroups"]:
+    for index, mod in enumerate(defs["menuGroups"]):
         eid = mod["id"]
-        f.write(f"  /* {eid.ljust(max_len)[:max_len]} */ ")
-        f.write(
-            f"\"{convert_string(symbol_conversion_table, (obj[eid]['desc']))}\",//{obj[eid]['desc']} \n"
+        str_group_settingmenuentriesdesc.append(
+            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
+        str_table.append(obj[eid]["desc"])
 
-    f.write("};\n\n")
+    f.write("\n")
+
+    # TODO: De-duplicate the strings in str_table.
+
+    # ----- Write the string table:
+    str_offsets = []
+    offset = 0
+    write_null = False
+    f.write("const char TranslationStrings[] = {\n")
+    for i, source_str in enumerate(str_table):
+        if write_null:
+            f.write(' "\\0"\n')
+        write_null = True
+        # Find what items use this string
+        is_used = False
+        for group, pre_info in [
+            (str_group_messages, "messages"),
+            (str_group_messageswarn, "messagesWarn"),
+            (str_group_characters, "characters"),
+            (str_group_settingdesc, "SettingsDescriptions"),
+            (str_group_settingshortnames, "SettingsShortNames"),
+            (str_group_settingmenuentries, "SettingsMenuEntries"),
+            (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
+        ]:
+            for item in group:
+                if item.str_index == i:
+                    is_used = True
+                    f.write(f"  //     - {pre_info} {item.info}\n")
+        if not is_used:
+            str_offsets.append(-1)
+            write_null = False
+            continue
+        f.write(f"  // {offset: >4}: {escape(source_str)}\n")
+        converted_str = convert_string(symbol_conversion_table, source_str)
+        f.write(f'  "{converted_str}"')
+        str_offsets.append(offset)
+        # Sanity check: Each "char" in `converted_str` should be in format
+        # `\xFF`, so the length should be divisible by 4.
+        assert len(converted_str) % 4 == 0
+        # Add the length and the null terminator
+        offset += len(converted_str) // 4 + 1
+    f.write("\n};\n\n")
+
+    def get_offset(idx: int) -> int:
+        assert str_offsets[idx] >= 0
+        return str_offsets[idx]
+
+    # ----- Write the messages string indices:
+    for group in [str_group_messages, str_group_messageswarn, str_group_characters]:
+        for item in group:
+            f.write(
+                f"const uint16_t {item.info} = {get_offset(item.str_index)}; // {escape(str_table[item.str_index])}\n"
+            )
+        f.write("\n")
+
+    # ----- Write the settings index tables:
+    for group, name in [
+        (str_group_settingdesc, "SettingsDescriptions"),
+        (str_group_settingshortnames, "SettingsShortNames"),
+        (str_group_settingmenuentries, "SettingsMenuEntries"),
+        (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
+    ]:
+        max_len = 30
+        f.write(f"const uint16_t {name}[] = {{\n")
+        for item in group:
+            f.write(
+                f"  /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+            )
+        f.write(f"}}; // {name}\n\n")
+
     f.write(
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n"
     )

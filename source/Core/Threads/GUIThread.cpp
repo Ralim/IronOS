@@ -107,13 +107,13 @@ static bool checkVoltageForExit() {
       OLED::clearScreen();
       OLED::setCursor(0, 0);
       if (systemSettings.detailedSoldering) {
-        OLED::print(UndervoltageString, FontStyle::SMALL);
+        OLED::print(translatedString(UndervoltageString), FontStyle::SMALL);
         OLED::setCursor(0, 8);
-        OLED::print(InputVoltageString, FontStyle::SMALL);
+        OLED::print(translatedString(InputVoltageString), FontStyle::SMALL);
         printVoltage();
         OLED::print(SymbolVolts, FontStyle::SMALL);
       } else {
-        OLED::print(UVLOWarningString, FontStyle::LARGE);
+        OLED::print(translatedString(UVLOWarningString), FontStyle::LARGE);
       }
 
       OLED::refresh();
@@ -326,9 +326,9 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     OLED::clearScreen();
     OLED::setCursor(0, 0);
     if (systemSettings.detailedSoldering) {
-      OLED::print(SleepingAdvancedString, FontStyle::SMALL);
+      OLED::print(translatedString(SleepingAdvancedString), FontStyle::SMALL);
       OLED::setCursor(0, 8);
-      OLED::print(SleepingTipAdvancedString, FontStyle::SMALL);
+      OLED::print(translatedString(SleepingTipAdvancedString), FontStyle::SMALL);
       OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
       if (systemSettings.temperatureInF)
         OLED::print(SymbolDegF, FontStyle::SMALL);
@@ -340,7 +340,7 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       printVoltage();
       OLED::print(SymbolVolts, FontStyle::SMALL);
     } else {
-      OLED::print(SleepingSimpleString, FontStyle::LARGE);
+      OLED::print(translatedString(SleepingSimpleString), FontStyle::LARGE);
       OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
       if (systemSettings.temperatureInF)
         OLED::drawSymbol(0);
@@ -462,7 +462,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       case BUTTON_BOTH_LONG:
         // Unlock buttons
         buttonsLocked = false;
-        warnUser(UnlockingKeysString, TICKS_SECOND);
+        warnUser(translatedString(UnlockingKeysString), TICKS_SECOND);
         break;
       case BUTTON_F_LONG:
         // if boost mode is enabled turn it on
@@ -476,7 +476,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       case BUTTON_F_SHORT:
       case BUTTON_B_SHORT:
         // Do nothing and display a lock warming
-        warnUser(WarningKeysLockedString, TICKS_SECOND / 2);
+        warnUser(translatedString(WarningKeysLockedString), TICKS_SECOND / 2);
         break;
       default:
         break;
@@ -511,7 +511,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
         if (systemSettings.lockingMode != 0) {
           // Lock buttons
           buttonsLocked = true;
-          warnUser(LockingKeysString, TICKS_SECOND);
+          warnUser(translatedString(LockingKeysString), TICKS_SECOND);
         }
         break;
       default:
@@ -523,7 +523,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     OLED::clearScreen();
     // Draw in the screen details
     if (systemSettings.detailedSoldering) {
-      OLED::print(SolderingAdvancedPowerPrompt, FontStyle::SMALL); // Power:
+      OLED::print(translatedString(SolderingAdvancedPowerPrompt), FontStyle::SMALL); // Power:
       OLED::printNumber(x10WattHistory.average() / 10, 2, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(x10WattHistory.average() % 10, 1, FontStyle::SMALL);
@@ -535,7 +535,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       }
 
       OLED::setCursor(0, 8);
-      OLED::print(SleepingTipAdvancedString, FontStyle::SMALL);
+      OLED::print(translatedString(SleepingTipAdvancedString), FontStyle::SMALL);
       gui_drawTipTemp(true, FontStyle::SMALL);
 
       if (boostModeOn) {
@@ -713,7 +713,7 @@ void showDebugMenu(void) {
 void showWarnings() {
   // Display alert if settings were reset
   if (settingsWereReset) {
-    warnUser(SettingsResetMessage, 10 * TICKS_SECOND);
+    warnUser(translatedString(SettingsResetMessage), 10 * TICKS_SECOND);
   }
 #ifndef NO_WARN_MISSING
   // We also want to alert if accel or pd is not detected / not responding
@@ -727,7 +727,7 @@ void showWarnings() {
     if (systemSettings.accelMissingWarningCounter < 2) {
       systemSettings.accelMissingWarningCounter++;
       saveSettings();
-      warnUser(NoAccelerometerMessage, 10 * TICKS_SECOND);
+      warnUser(translatedString(NoAccelerometerMessage), 10 * TICKS_SECOND);
     }
   }
 #ifdef POW_PD
@@ -736,7 +736,7 @@ void showWarnings() {
     if (systemSettings.pdMissingWarningCounter < 2) {
       systemSettings.pdMissingWarningCounter++;
       saveSettings();
-      warnUser(NoPowerDeliveryMessage, 10 * TICKS_SECOND);
+      warnUser(translatedString(NoPowerDeliveryMessage), 10 * TICKS_SECOND);
     }
   }
 #endif
@@ -844,16 +844,16 @@ void startGUITask(void const *argument __unused) {
     OLED::setCursor(0, 0);
     if (systemSettings.detailedIDLE) {
       if (tipTemp > tipDisconnectedThres) {
-        OLED::print(TipDisconnectedString, FontStyle::SMALL);
+        OLED::print(translatedString(TipDisconnectedString), FontStyle::SMALL);
       } else {
-        OLED::print(IdleTipString, FontStyle::SMALL);
+        OLED::print(translatedString(IdleTipString), FontStyle::SMALL);
         gui_drawTipTemp(false, FontStyle::SMALL);
-        OLED::print(IdleSetString, FontStyle::SMALL);
+        OLED::print(translatedString(IdleSetString), FontStyle::SMALL);
         OLED::printNumber(systemSettings.SolderingTemp, 3, FontStyle::SMALL);
       }
       OLED::setCursor(0, 8);
 
-      OLED::print(InputVoltageString, FontStyle::SMALL);
+      OLED::print(translatedString(InputVoltageString), FontStyle::SMALL);
       printVoltage();
 
     } else {
