@@ -567,11 +567,13 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         assert str_offsets[idx] >= 0
         return str_offsets[idx]
 
+    f.write("static const TranslationIndexTable TranslationIndices = {\n")
+
     # ----- Write the messages string indices:
     for group in [str_group_messages, str_group_messageswarn, str_group_characters]:
         for item in group:
             f.write(
-                f"const uint16_t {item.info} = {get_offset(item.str_index)}; // {escape(str_table[item.str_index])}\n"
+                f"  .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
             )
         f.write("\n")
 
@@ -583,12 +585,15 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
     ]:
         max_len = 30
-        f.write(f"const uint16_t {name}[] = {{\n")
+        f.write(f"  .{name} = {{\n")
         for item in group:
             f.write(
-                f"  /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+                f"    /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
             )
-        f.write(f"}}; // {name}\n\n")
+        f.write(f"  }}, // {name}\n\n")
+
+    f.write("}; // TranslationIndices\n\n")
+    f.write("const TranslationIndexTable *const Tr = &TranslationIndices;\n\n")
 
     f.write(
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n"
@@ -600,6 +605,9 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         f.write(
             f"static_assert(static_cast<uint8_t>(SettingsItemIndex::{eid}) == {i});\n"
         )
+    f.write(
+        f"static_assert(static_cast<uint8_t>(SettingsItemIndex::NUM_ITEMS) == {len(defs['menuOptions'])});\n"
+    )
 
 
 def read_version() -> str:

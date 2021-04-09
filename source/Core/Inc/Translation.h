@@ -12,56 +12,6 @@ extern const uint8_t USER_FONT_12[];
 extern const uint8_t USER_FONT_6x8[];
 extern const bool    HasFahrenheit;
 
-extern const char TranslationStrings[];
-
-extern const uint16_t SettingsShortNames[];
-extern const uint16_t SettingsDescriptions[];
-extern const uint16_t SettingsMenuEntries[];
-
-extern const uint16_t SettingsCalibrationWarning;
-extern const uint16_t SettingsResetWarning;
-extern const uint16_t UVLOWarningString;
-extern const uint16_t UndervoltageString;
-extern const uint16_t InputVoltageString;
-
-extern const uint16_t SleepingSimpleString;
-extern const uint16_t SleepingAdvancedString;
-extern const uint16_t SleepingTipAdvancedString;
-extern const uint16_t IdleTipString;
-extern const uint16_t IdleSetString;
-extern const uint16_t TipDisconnectedString;
-extern const uint16_t SolderingAdvancedPowerPrompt;
-extern const uint16_t OffString;
-
-extern const uint16_t ResetOKMessage;
-extern const uint16_t SettingsResetMessage;
-extern const uint16_t NoAccelerometerMessage;
-extern const uint16_t NoPowerDeliveryMessage;
-extern const uint16_t LockingKeysString;
-extern const uint16_t UnlockingKeysString;
-extern const uint16_t WarningKeysLockedString;
-
-extern const uint16_t SettingRightChar;
-extern const uint16_t SettingLeftChar;
-extern const uint16_t SettingAutoChar;
-extern const uint16_t SettingStartSolderingChar;
-extern const uint16_t SettingStartSleepChar;
-extern const uint16_t SettingStartSleepOffChar;
-extern const uint16_t SettingStartNoneChar;
-extern const uint16_t SettingSensitivityOff;
-extern const uint16_t SettingSensitivityLow;
-extern const uint16_t SettingSensitivityMedium;
-extern const uint16_t SettingSensitivityHigh;
-extern const uint16_t SettingLockDisableChar;
-extern const uint16_t SettingLockBoostChar;
-extern const uint16_t SettingLockFullChar;
-extern const uint16_t SettingNAChar;
-
-extern const uint16_t SettingOffChar;
-extern const uint16_t SettingFastChar;
-extern const uint16_t SettingMediumChar;
-extern const uint16_t SettingSlowChar;
-
 extern const char *SymbolPlus;
 extern const char *SymbolMinus;
 extern const char *SymbolSpace;
@@ -108,7 +58,62 @@ enum class SettingsItemIndex : uint8_t {
   AnimSpeed,
   PowerPulseWait,
   PowerPulseDuration,
+  NUM_ITEMS,
 };
+
+extern const char TranslationStrings[];
+
+struct TranslationIndexTable {
+  uint16_t SettingsCalibrationWarning;
+  uint16_t SettingsResetWarning;
+  uint16_t UVLOWarningString;
+  uint16_t UndervoltageString;
+  uint16_t InputVoltageString;
+
+  uint16_t SleepingSimpleString;
+  uint16_t SleepingAdvancedString;
+  uint16_t SleepingTipAdvancedString;
+  uint16_t IdleTipString;
+  uint16_t IdleSetString;
+  uint16_t TipDisconnectedString;
+  uint16_t SolderingAdvancedPowerPrompt;
+  uint16_t OffString;
+
+  uint16_t ResetOKMessage;
+  uint16_t SettingsResetMessage;
+  uint16_t NoAccelerometerMessage;
+  uint16_t NoPowerDeliveryMessage;
+  uint16_t LockingKeysString;
+  uint16_t UnlockingKeysString;
+  uint16_t WarningKeysLockedString;
+
+  uint16_t SettingRightChar;
+  uint16_t SettingLeftChar;
+  uint16_t SettingAutoChar;
+  uint16_t SettingFastChar;
+  uint16_t SettingSlowChar;
+  uint16_t SettingMediumChar;
+  uint16_t SettingOffChar;
+  uint16_t SettingStartSolderingChar;
+  uint16_t SettingStartSleepChar;
+  uint16_t SettingStartSleepOffChar;
+  uint16_t SettingStartNoneChar;
+  uint16_t SettingSensitivityOff;
+  uint16_t SettingSensitivityLow;
+  uint16_t SettingSensitivityMedium;
+  uint16_t SettingSensitivityHigh;
+  uint16_t SettingLockDisableChar;
+  uint16_t SettingLockBoostChar;
+  uint16_t SettingLockFullChar;
+  uint16_t SettingNAChar;
+
+  uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
+  uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
+  uint16_t SettingsMenuEntries[5];
+  uint16_t SettingsMenuEntriesDescriptions[5]; // unused
+};
+
+extern const TranslationIndexTable *const Tr;
 
 constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
 // Use a constexpr function for type-checking.
