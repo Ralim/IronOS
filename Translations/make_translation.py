@@ -528,7 +528,7 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     str_offsets = []
     offset = 0
     write_null = False
-    f.write("const char TranslationStrings[] = {\n")
+    f.write("const char TranslationStringsData[] = {\n")
     for i, source_str in enumerate(str_table):
         if write_null:
             f.write(' "\\0"\n')
@@ -567,7 +567,7 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         assert str_offsets[idx] >= 0
         return str_offsets[idx]
 
-    f.write("static const TranslationIndexTable TranslationIndices = {\n")
+    f.write("const TranslationIndexTable TranslationIndices = {\n")
 
     # ----- Write the messages string indices:
     for group in [str_group_messages, str_group_messageswarn, str_group_characters]:
@@ -593,7 +593,8 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         f.write(f"  }}, // {name}\n\n")
 
     f.write("}; // TranslationIndices\n\n")
-    f.write("const TranslationIndexTable *const Tr = &TranslationIndices;\n\n")
+    f.write("const TranslationIndexTable *const Tr = &TranslationIndices;\n")
+    f.write("const char *const TranslationStrings = TranslationStringsData;\n\n")
 
     f.write(
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n"

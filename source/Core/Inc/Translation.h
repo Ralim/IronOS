@@ -61,8 +61,6 @@ enum class SettingsItemIndex : uint8_t {
   NUM_ITEMS,
 };
 
-extern const char TranslationStrings[];
-
 struct TranslationIndexTable {
   uint16_t SettingsCalibrationWarning;
   uint16_t SettingsResetWarning;
@@ -114,6 +112,7 @@ struct TranslationIndexTable {
 };
 
 extern const TranslationIndexTable *const Tr;
+extern const char *const                  TranslationStrings;
 
 constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
 // Use a constexpr function for type-checking.
