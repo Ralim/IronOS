@@ -608,14 +608,11 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
                     f"  // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
                 )
                 str_offsets[j] = offset + remapped.str_start_offset
-        converted_str = convert_string(symbol_conversion_table, source_str)
-        f.write(f'  "{converted_str}"')
+        converted_bytes = convert_string_bytes(symbol_conversion_table, source_str)
+        f.write(f'  "{bytes_to_escaped(converted_bytes)}"')
         str_offsets[i] = offset
-        # Sanity check: Each "char" in `converted_str` should be in format
-        # `\xFF`, so the length should be divisible by 4.
-        assert len(converted_str) % 4 == 0
         # Add the length and the null terminator
-        offset += len(converted_str) // 4 + 1
+        offset += len(converted_bytes) + 1
     f.write("\n};\n\n")
 
     def get_offset(idx: int) -> int:
