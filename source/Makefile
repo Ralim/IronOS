@@ -322,7 +322,7 @@ Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Trans
 	@python3 ../Translations/make_translation.py -o $(PWD)/$@ $*
 
 clean :
-	rm -Rf $(SOURCE_CORE_DIR)/Translation.cpp Core/Gen
+	rm -Rf Core/Gen
 	rm -Rf $(OUTPUT_DIR_BASE)
 	rm -Rf $(HEXFILE_DIR)
 

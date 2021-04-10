@@ -2,9 +2,6 @@ var def =
 {
 	"messages": [
 		{
-			"id": "SettingsCalibrationDone"
-		},
-		{
 			"id": "SettingsCalibrationWarning"
 		},
 		{
@@ -24,28 +21,11 @@ var def =
 			"note": "Preferably end with a space"
 		},
 		{
-			"id": "WarningTipTempString",
-			"maxLen": 12,
-			"note": "Preferably end with a space"
-		},
-		{
-			"id": "BadTipString",
-			"maxLen": 8
-		},
-		{
 			"id": "SleepingSimpleString",
 			"maxLen": 4
 		},
 		{
 			"id": "SleepingAdvancedString",
-			"maxLen": 16
-		},
-		{
-			"id": "WarningSimpleString",
-			"maxLen": 4
-		},
-		{
-			"id": "WarningAdvancedString",
 			"maxLen": 16
 		},
 		{
@@ -80,11 +60,6 @@ var def =
 		{
 			"id": "OffString",
 			"maxLen": 3
-		},
-		{
-			"id": "YourGainMessage",
-			"maxLen": 8,
-			"default": "Your Gain"
 		}
 	],
 	"messagesWarn": [
