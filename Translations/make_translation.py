@@ -79,7 +79,7 @@ def write_start(f: TextIO):
     f.write('#include "Translation.h"\n')
 
 
-def get_constants() -> List[Tuple[str, str]]:
+def get_constants(build_version: str) -> List[Tuple[str, str]]:
     # Extra constants that are used in the firmware that are shared across all languages
     return [
         ("SymbolPlus", "+"),
@@ -94,7 +94,7 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SymbolVolts", "V"),
         ("SymbolDC", "DC"),
         ("SymbolCellCount", "S"),
-        ("SymbolVersionNumber", buildVersion),
+        ("SymbolVersionNumber", build_version),
     ]
 
 
@@ -116,7 +116,7 @@ def get_debug_menu() -> List[str]:
     ]
 
 
-def get_letter_counts(defs: dict, lang: dict) -> List[str]:
+def get_letter_counts(defs: dict, lang: dict, build_version: str) -> List[str]:
     text_list = []
     # iterate over all strings
     obj = lang["menuOptions"]
@@ -169,7 +169,7 @@ def get_letter_counts(defs: dict, lang: dict) -> List[str]:
     for mod in defs["menuGroups"]:
         eid = mod["id"]
         text_list.append(obj[eid]["desc"])
-    constants = get_constants()
+    constants = get_constants(build_version)
     for x in constants:
         text_list.append(x[1])
     text_list.extend(get_debug_menu())
@@ -290,7 +290,15 @@ def bytes_to_escaped(b: bytes) -> str:
     return "".join((f"\\x{i:02X}" for i in b))
 
 
-def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, bytes]]:
+@dataclass
+class FontMap:
+    font12: Dict[str, str]
+    font06: Dict[str, str]
+
+
+def get_font_map_and_table(
+    text_list: List[str],
+) -> Tuple[List[str], FontMap, Dict[str, bytes]]:
     # the text list is sorted
     # allocate out these in their order as number codes
     symbol_map: Dict[str, bytes] = {"\n": bytes([1])}
@@ -324,56 +332,56 @@ def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, bytes]]
 
     logging.info(f"Generating fonts for {total_symbol_count} symbols")
 
-    for sym in chain(ordered_normal_sym_list, ordered_cjk_sym_list):
+    sym_list = ordered_normal_sym_list + ordered_cjk_sym_list
+    for sym in sym_list:
         if sym in symbol_map:
             raise ValueError("Symbol not found in symbol map")
         symbol_map[sym] = get_bytes_from_font_index(index)
         index += 1
 
-    font_table_strings = []
-    font_small_table_strings = []
+    font12_map: Dict[str, str] = {}
+    font06_map: Dict[str, str] = {}
     for sym in ordered_normal_sym_list:
         if sym not in font_table:
             logging.error(f"Missing Large font element for {sym}")
             sys.exit(1)
-        font_line: str = font_table[sym]
-        font_table_strings.append(
-            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
+        font12_map[sym] = font_table[sym]
         if sym not in font_small_table:
             logging.error(f"Missing Small font element for {sym}")
             sys.exit(1)
-        font_line = font_small_table[sym]
-        font_small_table_strings.append(
-            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
+        font06_map[sym] = font_small_table[sym]
 
     for sym in ordered_cjk_sym_list:
         if sym in font_table:
             raise ValueError("Symbol already exists in font_table")
-        font_line = get_cjk_glyph(sym)
+        font_line: str = get_cjk_glyph(sym)
         if font_line is None:
             logging.error(f"Missing Large font element for {sym}")
             sys.exit(1)
-        font_table_strings.append(
-            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
+        font12_map[sym] = font_line
         # No data to add to the small font table
-        font_small_table_strings.append(
-            f"//                                   {bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
+        font06_map[sym] = "//                                 "  # placeholder
 
+    return sym_list, FontMap(font12_map, font06_map), symbol_map
+
+
+def make_font_table_cpp(
+    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+) -> str:
     output_table = "const uint8_t USER_FONT_12[] = {\n"
-    for line in font_table_strings:
-        # join font table int one large string
-        output_table += line + "\n"
+    for sym in sym_list:
+        output_table += (
+            f"{font_map.font12[sym]}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
+        )
     output_table += "};\n"
+
     output_table += "const uint8_t USER_FONT_6x8[] = {\n"
-    for line in font_small_table_strings:
-        # join font table int one large string
-        output_table += line + "\n"
+    for sym in sym_list:
+        output_table += (
+            f"{font_map.font06[sym]}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
+        )
     output_table += "};\n"
-    return output_table, symbol_map
+    return output_table
 
 
 def convert_string_bytes(symbol_conversion_table: Dict[str, bytes], text: str) -> bytes:
@@ -403,13 +411,14 @@ class TranslationItem:
     str_index: int
 
 
-def write_language(lang: dict, defs: dict, f: TextIO) -> None:
+def write_language(lang: dict, defs: dict, build_version: str, f: TextIO) -> None:
     language_code: str = lang["languageCode"]
     logging.info(f"Generating block for {language_code}")
     # Iterate over all of the text to build up the symbols & counts
-    text_list = get_letter_counts(defs, lang)
+    text_list = get_letter_counts(defs, lang, build_version)
     # From the letter counts, need to make a symbol translator & write out the font
-    font_table_text, symbol_conversion_table = get_font_map_and_table(text_list)
+    sym_list, font_map, symbol_conversion_table = get_font_map_and_table(text_list)
+    font_table_text = make_font_table_cpp(sym_list, font_map, symbol_conversion_table)
 
     try:
         lang_name = lang["languageLocalName"]
@@ -420,6 +429,50 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     f.write(font_table_text)
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
+    translation_common_text = get_translation_common_text(
+        defs, symbol_conversion_table, build_version
+    )
+    f.write(translation_common_text)
+    f.write(
+        f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n\n"
+    )
+
+    translation_strings_and_indices_text = get_translation_strings_and_indices_text(
+        lang, defs, symbol_conversion_table
+    )
+    f.write(translation_strings_and_indices_text)
+    f.write("const TranslationIndexTable *const Tr = &TranslationIndices;\n")
+    f.write("const char *const TranslationStrings = TranslationStringsData;\n\n")
+
+    sanity_checks_text = get_translation_sanity_checks_text(defs)
+    f.write(sanity_checks_text)
+
+
+def get_translation_common_text(
+    defs: dict, symbol_conversion_table: Dict[str, bytes], build_version
+) -> str:
+    translation_common_text = ""
+
+    # Write out firmware constant options
+    constants = get_constants(build_version)
+    for x in constants:
+        translation_common_text += f'const char* {x[0]} = "{convert_string(symbol_conversion_table, x[1])}";//{x[1]} \n'
+    translation_common_text += "\n"
+
+    # Debug Menu
+    translation_common_text += "const char* DebugMenu[] = {\n"
+
+    for c in get_debug_menu():
+        translation_common_text += (
+            f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
+        )
+    translation_common_text += "};\n\n"
+    return translation_common_text
+
+
+def get_translation_strings_and_indices_text(
+    lang: dict, defs: dict, symbol_conversion_table: Dict[str, bytes]
+) -> str:
     str_table: List[str] = []
     str_group_messages: List[TranslationItem] = []
     str_group_messageswarn: List[TranslationItem] = []
@@ -478,21 +531,6 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         str_group_characters.append(TranslationItem(eid, len(str_table)))
         str_table.append(obj[eid])
 
-    # Write out firmware constant options
-    constants = get_constants()
-    for x in constants:
-        f.write(
-            f'const char* {x[0]} = "{convert_string(symbol_conversion_table, x[1])}";//{x[1]} \n'
-        )
-    f.write("\n")
-
-    # Debug Menu
-    f.write("const char* DebugMenu[] = {\n")
-
-    for c in get_debug_menu():
-        f.write(f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n')
-    f.write("};\n\n")
-
     # ----- Reading SettingsDescriptions
     obj = lang["menuOptions"]
 
@@ -537,8 +575,6 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         )
         str_table.append(obj[eid]["desc"])
 
-    f.write("\n")
-
     @dataclass
     class RemappedTranslationItem:
         str_index: int
@@ -573,14 +609,13 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     str_offsets = [-1] * len(str_table)
     offset = 0
     write_null = False
-    f.write("const char TranslationStringsData[] = {\n")
+    translation_strings_text = "const char TranslationStringsData[] = {\n"
     for i, source_str in enumerate(str_table):
-        if write_null:
-            f.write(' "\\0"\n')
-        write_null = True
         if str_remapping[i] is not None:
-            write_null = False
             continue
+        if write_null:
+            translation_strings_text += ' "\\0"\n'
+        write_null = True
         # Find what items use this string
         str_used_by = [i] + [
             j for j, r in enumerate(str_remapping) if r and r.str_index == i
@@ -597,37 +632,35 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
             ]:
                 for item in group:
                     if item.str_index == j:
-                        f.write(f"  //     - {pre_info} {item.info}\n")
+                        translation_strings_text += (
+                            f"  //     - {pre_info} {item.info}\n"
+                        )
             if j == i:
-                f.write(f"  // {offset: >4}: {escape(source_str)}\n")
+                translation_strings_text += f"  // {offset: >4}: {escape(source_str)}\n"
                 str_offsets[j] = offset
             else:
                 remapped = str_remapping[j]
                 assert remapped is not None
-                f.write(
-                    f"  // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
-                )
+                translation_strings_text += f"  // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
                 str_offsets[j] = offset + remapped.str_start_offset
         converted_bytes = convert_string_bytes(symbol_conversion_table, source_str)
-        f.write(f'  "{bytes_to_escaped(converted_bytes)}"')
+        translation_strings_text += f'  "{bytes_to_escaped(converted_bytes)}"'
         str_offsets[i] = offset
         # Add the length and the null terminator
         offset += len(converted_bytes) + 1
-    f.write("\n};\n\n")
+    translation_strings_text += "\n}; // TranslationStringsData\n\n"
 
     def get_offset(idx: int) -> int:
         assert str_offsets[idx] >= 0
         return str_offsets[idx]
 
-    f.write("const TranslationIndexTable TranslationIndices = {\n")
+    translation_indices_text = "const TranslationIndexTable TranslationIndices = {\n"
 
     # ----- Write the messages string indices:
     for group in [str_group_messages, str_group_messageswarn, str_group_characters]:
         for item in group:
-            f.write(
-                f"  .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
-            )
-        f.write("\n")
+            translation_indices_text += f"  .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+        translation_indices_text += "\n"
 
     # ----- Write the settings index tables:
     for group, name in [
@@ -637,30 +670,25 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
     ]:
         max_len = 30
-        f.write(f"  .{name} = {{\n")
+        translation_indices_text += f"  .{name} = {{\n"
         for item in group:
-            f.write(
-                f"    /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
-            )
-        f.write(f"  }}, // {name}\n\n")
+            translation_indices_text += f"    /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+        translation_indices_text += f"  }}, // {name}\n\n"
 
-    f.write("}; // TranslationIndices\n\n")
-    f.write("const TranslationIndexTable *const Tr = &TranslationIndices;\n")
-    f.write("const char *const TranslationStrings = TranslationStringsData;\n\n")
+    translation_indices_text += "}; // TranslationIndices\n\n"
 
-    f.write(
-        f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n"
-    )
+    return translation_strings_text + translation_indices_text
 
-    f.write("\n// Verify SettingsItemIndex values:\n")
+
+def get_translation_sanity_checks_text(defs: dict) -> str:
+    sanity_checks_text = "\n// Verify SettingsItemIndex values:\n"
     for i, mod in enumerate(defs["menuOptions"]):
         eid = mod["id"]
-        f.write(
+        sanity_checks_text += (
             f"static_assert(static_cast<uint8_t>(SettingsItemIndex::{eid}) == {i});\n"
         )
-    f.write(
-        f"static_assert(static_cast<uint8_t>(SettingsItemIndex::NUM_ITEMS) == {len(defs['menuOptions'])});\n"
-    )
+    sanity_checks_text += f"static_assert(static_cast<uint8_t>(SettingsItemIndex::NUM_ITEMS) == {len(defs['menuOptions'])});\n"
+    return sanity_checks_text
 
 
 def read_version() -> str:
@@ -687,23 +715,27 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-if __name__ == "__main__":
+def main() -> None:
     json_dir = HERE
 
     args = parse_args()
     try:
-        buildVersion = read_version()
+        build_version = read_version()
     except FileNotFoundError:
         logging.error("error: Could not find version info ")
         sys.exit(1)
 
-    logging.info(f"Build version: {buildVersion}")
+    logging.info(f"Build version: {build_version}")
     logging.info(f"Making {args.languageCode} from {json_dir}")
 
     lang_ = read_translation(json_dir, args.languageCode)
     defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
     out_ = args.output
     write_start(out_)
-    write_language(lang_, defs_, out_)
+    write_language(lang_, defs_, build_version, out_)
 
     logging.info("Done")
+
+
+if __name__ == "__main__":
+    main()
