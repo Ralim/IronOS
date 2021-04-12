@@ -9,7 +9,7 @@
 #define TRANSLATION_H_
 #include "stdint.h"
 
-extern const bool    HasFahrenheit;
+extern const bool HasFahrenheit;
 
 extern const char *SymbolPlus;
 extern const char *SymbolMinus;
