@@ -117,7 +117,7 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
   static uint8_t fontWidth, fontHeight;
   switch (fontStyle) {
   case FontStyle::SMALL:
-    currentFont = USER_FONT_6x8;
+    currentFont = Font_6x8;
     fontHeight  = 8;
     fontWidth   = 6;
     break;
@@ -128,7 +128,7 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
     break;
   case FontStyle::LARGE:
   default:
-    currentFont = USER_FONT_12;
+    currentFont = Font_12x16;
     fontHeight  = 16;
     fontWidth   = 12;
     break;

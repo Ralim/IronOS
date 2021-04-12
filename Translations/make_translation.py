@@ -5,13 +5,14 @@ import functools
 import json
 import logging
 import os
+import pickle
 import re
 import subprocess
 import sys
 from datetime import datetime
 from itertools import chain
 from pathlib import Path
-from typing import Dict, List, Optional, TextIO, Tuple, Union
+from typing import BinaryIO, Dict, List, Optional, TextIO, Tuple, Union
 from dataclasses import dataclass
 
 from bdflib import reader as bdfreader
@@ -405,6 +406,17 @@ def escape(string: str) -> str:
     return json.dumps(string, ensure_ascii=False)
 
 
+def write_bytes_as_c_array(
+    f: TextIO, name: str, data: bytes, indent: int = 2, bytes_per_line: int = 16
+) -> None:
+    f.write(f"const uint8_t {name}[] = {{\n")
+    for i in range(0, len(data), bytes_per_line):
+        f.write(" " * indent)
+        f.write(", ".join((f"0x{b:02X}" for b in data[i : i + bytes_per_line])))
+        f.write(",\n")
+    f.write(f"}}; // {name}\n\n")
+
+
 @dataclass
 class LanguageData:
     lang: dict
@@ -427,7 +439,9 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
     )
 
 
-def write_language(data: LanguageData, f: TextIO) -> None:
+def write_language(
+    data: LanguageData, f: TextIO, lzfx_strings: Optional[bytes] = None
+) -> None:
     lang = data.lang
     defs = data.defs
     build_version = data.build_version
@@ -444,6 +458,9 @@ def write_language(data: LanguageData, f: TextIO) -> None:
     except KeyError:
         lang_name = language_code
 
+    if lzfx_strings:
+        f.write('#include "lzfx.h"\n')
+
     f.write(f"\n// ---- {lang_name} ----\n\n")
     f.write(font_table_text)
     f.write(f"\n// ---- {lang_name} ----\n\n")
@@ -456,12 +473,31 @@ def write_language(data: LanguageData, f: TextIO) -> None:
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n\n"
     )
 
-    translation_strings_and_indices_text = get_translation_strings_and_indices_text(
-        lang, defs, symbol_conversion_table
-    )
-    f.write(translation_strings_and_indices_text)
-    f.write("const TranslationIndexTable *const Tr = &TranslationIndices;\n")
-    f.write("const char *const TranslationStrings = TranslationStringsData;\n\n")
+    if not lzfx_strings:
+        translation_strings_and_indices_text = get_translation_strings_and_indices_text(
+            lang, defs, symbol_conversion_table
+        )
+        f.write(translation_strings_and_indices_text)
+        f.write(
+            "const TranslationIndexTable *const Tr = &TranslationIndices;\n"
+            "const char *const TranslationStrings = TranslationStringsData;\n\n"
+            "extern const uint8_t *const Font_12x16 = USER_FONT_12;\n"
+            "extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n"
+            "void prepareTranslations() {}\n\n"
+        )
+    else:
+        write_bytes_as_c_array(f, "translation_data_lzfx", lzfx_strings)
+        f.write(
+            "static uint8_t translation_data_out_buffer[4096] __attribute__((__aligned__(2)));\n\n"
+            "const TranslationIndexTable *const Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
+            "const char *const TranslationStrings = reinterpret_cast<const char *>(translation_data_out_buffer) + sizeof(TranslationIndexTable);\n\n"
+            "extern const uint8_t *const Font_12x16 = USER_FONT_12;\n"
+            "extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n"
+            "void prepareTranslations() {\n"
+            "  unsigned int outsize = sizeof(translation_data_out_buffer);\n"
+            "  lzfx_decompress(translation_data_lzfx, sizeof(translation_data_lzfx), translation_data_out_buffer, &outsize);\n"
+            "}\n\n"
+        )
 
     sanity_checks_text = get_translation_sanity_checks_text(defs)
     f.write(sanity_checks_text)
@@ -734,6 +770,27 @@ def read_version() -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "--output-pickled",
+        help="Write pickled language data for later reuse",
+        type=argparse.FileType("wb"),
+        required=False,
+        dest="output_pickled",
+    )
+    parser.add_argument(
+        "--input-pickled",
+        help="Use previously generated pickled language data",
+        type=argparse.FileType("rb"),
+        required=False,
+        dest="input_pickled",
+    )
+    parser.add_argument(
+        "--lzfx-strings",
+        help="Use compressed TranslationIndices + TranslationStrings data",
+        type=argparse.FileType("rb"),
+        required=False,
+        dest="lzfx_strings",
+    )
+    parser.add_argument(
         "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
     )
     parser.add_argument("languageCode", help="Language to generate")
@@ -744,21 +801,45 @@ def main() -> None:
     json_dir = HERE
 
     args = parse_args()
-    try:
-        build_version = read_version()
-    except FileNotFoundError:
-        logging.error("error: Could not find version info ")
+    if args.input_pickled and args.output_pickled:
+        logging.error("error: Both --output-pickled and --input-pickled are specified")
         sys.exit(1)
 
-    logging.info(f"Build version: {build_version}")
-    logging.info(f"Making {args.languageCode} from {json_dir}")
+    language_data: LanguageData
+    if args.input_pickled:
+        logging.info(f"Reading pickled language data from {args.input_pickled.name}...")
+        language_data = pickle.load(args.input_pickled)
+        if language_data.lang["languageCode"] != args.languageCode:
+            logging.error(
+                f"error: languageCode {args.languageCode} does not match language data {language_data.lang['languageCode']}"
+            )
+            sys.exit(1)
+        logging.info(f"Read language data for {language_data.lang['languageCode']}")
+        logging.info(f"Build version: {language_data.build_version}")
+    else:
+        try:
+            build_version = read_version()
+        except FileNotFoundError:
+            logging.error("error: Could not find version info ")
+            sys.exit(1)
 
-    lang_ = read_translation(json_dir, args.languageCode)
-    defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
-    language_data = prepare_language(lang_, defs_, build_version)
+        logging.info(f"Build version: {build_version}")
+        logging.info(f"Making {args.languageCode} from {json_dir}")
+
+        lang_ = read_translation(json_dir, args.languageCode)
+        defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
+        language_data = prepare_language(lang_, defs_, build_version)
+
     out_ = args.output
     write_start(out_)
-    write_language(language_data, out_)
+    if args.lzfx_strings:
+        write_language(language_data, out_, args.lzfx_strings.read())
+    else:
+        write_language(language_data, out_)
+
+    if args.output_pickled:
+        logging.info(f"Writing pickled data to {args.output_pickled.name}")
+        pickle.dump(language_data, args.output_pickled)
 
     logging.info("Done")
 
