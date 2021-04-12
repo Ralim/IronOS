@@ -406,18 +406,37 @@ def escape(string: str) -> str:
 
 
 @dataclass
-class TranslationItem:
-    info: str
-    str_index: int
+class LanguageData:
+    lang: dict
+    defs: dict
+    build_version: str
+    sym_list: List[str]
+    font_map: FontMap
+    symbol_conversion_table: Dict[str, bytes]
 
 
-def write_language(lang: dict, defs: dict, build_version: str, f: TextIO) -> None:
+def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData:
     language_code: str = lang["languageCode"]
-    logging.info(f"Generating block for {language_code}")
+    logging.info(f"Preparing language data for {language_code}")
     # Iterate over all of the text to build up the symbols & counts
     text_list = get_letter_counts(defs, lang, build_version)
     # From the letter counts, need to make a symbol translator & write out the font
     sym_list, font_map, symbol_conversion_table = get_font_map_and_table(text_list)
+    return LanguageData(
+        lang, defs, build_version, sym_list, font_map, symbol_conversion_table
+    )
+
+
+def write_language(data: LanguageData, f: TextIO) -> None:
+    lang = data.lang
+    defs = data.defs
+    build_version = data.build_version
+    sym_list = data.sym_list
+    font_map = data.font_map
+    symbol_conversion_table = data.symbol_conversion_table
+
+    language_code: str = lang["languageCode"]
+    logging.info(f"Generating block for {language_code}")
     font_table_text = make_font_table_cpp(sym_list, font_map, symbol_conversion_table)
 
     try:
@@ -468,6 +487,12 @@ def get_translation_common_text(
         )
     translation_common_text += "};\n\n"
     return translation_common_text
+
+
+@dataclass
+class TranslationItem:
+    info: str
+    str_index: int
 
 
 def get_translation_strings_and_indices_text(
@@ -730,9 +755,10 @@ def main() -> None:
 
     lang_ = read_translation(json_dir, args.languageCode)
     defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
+    language_data = prepare_language(lang_, defs_, build_version)
     out_ = args.output
     write_start(out_)
-    write_language(lang_, defs_, build_version, out_)
+    write_language(language_data, out_)
 
     logging.info("Done")
 
