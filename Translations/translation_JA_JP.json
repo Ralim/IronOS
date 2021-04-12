@@ -7,7 +7,7 @@
 		"SettingsCalibrationDone": "校正完了",
 		"SettingsCalibrationWarning": "続行する前に、コテが室温になっていることを確認してください",
 		"SettingsResetWarning": "設定をリセットしますか？",
-		"UVLOWarningString": "電圧が低すぎる",
+		"UVLOWarningString": "電圧が低すぎます",
 		"UndervoltageString": "Undervoltage",
 		"InputVoltageString": "Input V: ",
 		"WarningTipTempString": "Tip temp: ",
@@ -37,7 +37,7 @@
 		],
 		"LockingKeysString": "ボタンロック",
 		"UnlockingKeysString": "ロックを解除",
-		"WarningKeysLockedString": "!ボタンロック!"
+		"WarningKeysLockedString": "!入力ロック中!"
 	},
 	"characters": {
 		"SettingRightChar": "右",
@@ -85,19 +85,19 @@
 	"menuOptions": {
 		"DCInCutoff": {
 			"text2": "電源",
-			"desc": "電源。電圧下限を設定します。 <DC 10V> <S セルあたり3.3V、電力制限を無効にする>"
+			"desc": "電源設定。下限電圧を指定します。 <DC=10V> <S=セルあたり3.3V、電力制限は無効化されます>"
 		},
 		"SleepTemperature": {
 			"text2": "待機温度",
-			"desc": "スタンバイ時のコテ温度"
+			"desc": "スタンバイ時のコテ先温度"
 		},
 		"SleepTimeout": {
 			"text2": "待機遅延",
-			"desc": "スタンバイに入る前に待つ時間 <S=秒 | M=分>"
+			"desc": "スタンバイモードに入るまでの待機時間 <S=秒 | M=分>"
 		},
 		"ShutdownTimeout": {
 			"text2": "自動オフ",
-			"desc": "自動電源オフの前に待つ時間 <M=分>"
+			"desc": "自動電源オフするまでの待機時間 <M=分>"
 		},
 		"MotionSensitivity": {
 			"text2": "動きの感度",
@@ -124,12 +124,12 @@
 			"desc": "電源投入時に自動的に起動します <X=オフ | 熱=はんだ加熱モード | 待=スタンバイモード | 室=室温スタンバイモード>"
 		},
 		"CooldownBlink": {
-			"text2": "冷却時に点滅",
-			"desc": "加熱を停止した後、コテがまだ熱いときに、温度テキストを点滅させます"
+			"text2": "冷却中に点滅",
+			"desc": "加熱を停止した後、コテ先がまだ熱い間は温度テキストを点滅させます"
 		},
 		"TemperatureCalibration": {
-			"text2": "温度校正？",
-			"desc": "コテの温度の校正を開始します"
+			"text2": "温度を校正する？",
+			"desc": "コテ先の温度の校正を開始します"
 		},
 		"SettingsReset": {
 			"text2": "設定をリセット？",
@@ -161,15 +161,15 @@
 		},
 		"TempChangeShortStep": {
 			"text2": "温度変化 短",
-			"desc": "ボタンを短く押したときの温度変化値"
+			"desc": "ボタンを短く押した際の温度変化値"
 		},
 		"TempChangeLongStep": {
 			"text2": "温度変化 長",
-			"desc": "ボタンを長押ししたときの温度変化値"
+			"desc": "ボタンを長押しした際の温度変化値"
 		},
 		"PowerPulsePower": {
 			"text2": "電力パルス",
-			"desc": "電源をオンに保つための電力パルス <ワット>"
+			"desc": "電源供給元をオンに保つための電力パルス <ワット>"
 		},
 		"HallEffSensitivity": {
 			"text2": "磁界感度",
@@ -177,7 +177,7 @@
 		},
 		"LockingMode": {
 			"text2": "ボタンロック",
-			"desc": "はんだ付けモードの場合、2つのボタンを長押ししてボタンロックをオンにします <X=オフ | ブ=ブーストをロックする | 全=すべてのロック>"
+			"desc": "はんだ付けモードの場合、2つのボタンを長押ししてボタンロックをオンにします <X=オフ | ブ=ブーストのみ許可 | 全=すべてをロック>"
 		},
 		"MinVolCell": {
 			"text2": "最低電圧",
@@ -193,11 +193,11 @@
 		},
 		"PowerPulseWait": {
 			"text2": "パルス間隔",
-			"desc": "電源をオンに保つために使用される、電力パルス間の時間間隔 <x2.5s（秒）>"
+			"desc": "電源供給元をオンに保つために使用される、電力パルス間の時間間隔 <x2.5s（秒）>"
 		},
 		"PowerPulseDuration": {
 			"text2": "パルス時間長",
-			"desc": "電源をオンに保つために使用される、電力パルスの時間長 <x250ms（ミリ秒）>"
+			"desc": "電源供給元をオンに保つために使用される、電力パルスの時間長 <x250ms（ミリ秒）>"
 		}
 	}
 }
