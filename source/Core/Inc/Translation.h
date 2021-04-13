@@ -8,9 +8,8 @@
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
 #include "stdint.h"
-extern const uint8_t USER_FONT_12[];
-extern const uint8_t USER_FONT_6x8[];
-extern const bool    HasFahrenheit;
+
+extern const bool HasFahrenheit;
 
 extern const char *SymbolPlus;
 extern const char *SymbolMinus;
@@ -114,10 +113,15 @@ struct TranslationIndexTable {
 extern const TranslationIndexTable *const Tr;
 extern const char *const                  TranslationStrings;
 
+extern const uint8_t *const Font_12x16;
+extern const uint8_t *const Font_6x8;
+
 constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
 // Use a constexpr function for type-checking.
 #define SETTINGS_DESC(i) (settings_item_index(i) + 1)
 
 const char *translatedString(uint16_t index);
+
+void prepareTranslations();
 
 #endif /* TRANSLATION_H_ */
