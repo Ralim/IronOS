@@ -471,6 +471,8 @@ def write_language(
     f.write(translation_common_text)
     f.write(
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n\n"
+        "extern const uint8_t *const Font_12x16 = USER_FONT_12;\n"
+        "extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n"
     )
 
     if not lzfx_strings:
@@ -481,8 +483,6 @@ def write_language(
         f.write(
             "const TranslationIndexTable *const Tr = &TranslationIndices;\n"
             "const char *const TranslationStrings = TranslationStringsData;\n\n"
-            "extern const uint8_t *const Font_12x16 = USER_FONT_12;\n"
-            "extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n"
             "void prepareTranslations() {}\n\n"
         )
     else:
@@ -491,8 +491,6 @@ def write_language(
             "static uint8_t translation_data_out_buffer[4096] __attribute__((__aligned__(2)));\n\n"
             "const TranslationIndexTable *const Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
             "const char *const TranslationStrings = reinterpret_cast<const char *>(translation_data_out_buffer) + sizeof(TranslationIndexTable);\n\n"
-            "extern const uint8_t *const Font_12x16 = USER_FONT_12;\n"
-            "extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n"
             "void prepareTranslations() {\n"
             "  unsigned int outsize = sizeof(translation_data_out_buffer);\n"
             "  lzfx_decompress(translation_data_lzfx, sizeof(translation_data_lzfx), translation_data_out_buffer, &outsize);\n"
