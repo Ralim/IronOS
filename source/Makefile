@@ -13,8 +13,16 @@ endif
 ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_CN ZH_TW
 
 
+# Defines for host tools
+ifeq ($(HOST_CC),)
+HOST_CC := gcc
+endif
+HOST_OUTPUT_DIR=Objects/host
+
+
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
+LZFX_INC_DIR = ./Core/lzfx
 MINIWARE_INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 MINIWARE_CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
 MINIWARE_HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
@@ -34,6 +42,7 @@ PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
+SOURCE_LZFX_DIR = ./Core/lzfx
 SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/FUSB302
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
@@ -101,6 +110,7 @@ DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
+	-I$(LZFX_INC_DIR) \
 	-I$(FRTOS_CMIS_INC_DIR)	\
 	-I$(FRTOS_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
@@ -114,7 +124,8 @@ SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
 $(shell find $(DEVICE_BSP_DIR) -type f -name '*.c') \
-$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') 
+$(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') \
+$(SOURCE_LZFX_DIR)/lzfx.c
 SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.cpp') \
@@ -296,10 +307,25 @@ all: $(ALL_FIRMWARE_TARGETS)
 	$(SIZE)  --format=berkeley  $<
 	$(OBJCOPY) $< -O binary $@
 
-$(HEXFILE_DIR)/$(model)_%.elf : $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/Gen/Translation.%.o Makefile $(LDSCRIPT)
+$(HEXFILE_DIR)/$(model)_%.elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation.%.o \
+		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) $(OUTPUT_DIR)/Core/Gen/Translation.$*.o $(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o \
+		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
+$(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.%.o \
+		Makefile $(LDSCRIPT)
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.$*.o \
+		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
@@ -316,10 +342,57 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 	@echo 'Building file: $<'
 	@$(AS) -c $(AFLAGS) $< -o $@
 
-Core/Gen/Translation.%.cpp: ../Translations/translation_%.json Makefile ../Translations/make_translation.py ../Translations/translations_def.js ../Translations/font_tables.py ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
-	@test -d $(@D) || mkdir -p $(@D)
+Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ../Translations/translation_%.json \
+		../Translations/make_translation.py \
+		../Translations/translations_def.js \
+		../Translations/font_tables.py \
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+	@test -d Core/Gen || mkdir -p Core/Gen
+	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for language $*'
-	@python3 ../Translations/make_translation.py -o $(PWD)/$@ $*
+	@python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation.$*.cpp \
+		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
+		$*
+
+#
+# The recipes to produce compressed translation data:
+#
+
+$(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Generating $@
+	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+
+$(HOST_OUTPUT_DIR)/lzfx/lzfx-host-compress: Core/lzfx/lzfx-host-compress.c Core/lzfx/lzfx.c
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Building host lzfx tool $@
+	@$(HOST_CC) -Wno-unused-result -O $^ -o $@
+
+$(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
+	@echo Dumping translation strings data from $<
+	@# Extract the raw strings data from the object file
+	@$(OBJCOPY) -O binary -j .rodata._ZL18TranslationIndices $< $(@D)/$*.data.TranslationIndices.bin
+	@test -s $(@D)/$*.data.TranslationIndices.bin || (rm $(@D)/$*.data.TranslationIndices.bin; echo 'ERROR: Output for .rodata._ZL18TranslationIndices is empty!' >&2; false)
+	@$(OBJCOPY) -O binary -j .rodata._ZL22TranslationStringsData $< $(@D)/$*.data.TranslationStrings.bin
+	@test -s $(@D)/$*.data.TranslationStrings.bin || (rm $(@D)/$*.data.TranslationStrings.bin; echo 'ERROR: Output for .rodata._ZL22TranslationStringsData is empty!' >&2; false)
+	@cat $(@D)/$*.data.TranslationIndices.bin $(@D)/$*.data.TranslationStrings.bin > $@
+
+$(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.lzfx: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin $(HOST_OUTPUT_DIR)/lzfx/lzfx-host-compress
+	@echo Compressing translation strings data for $*
+	@$(HOST_OUTPUT_DIR)/lzfx/lzfx-host-compress $< $@
+	@echo Compressed from $$(stat --printf="%s" $<) to $$(stat --printf="%s" $@) bytes
+
+Core/Gen/Translation_lzfx.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.lzfx $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Generating lzfx compressed translation for $*
+	@python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_lzfx.$*.cpp \
+		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
+		--lzfx-strings $(OUTPUT_DIR)/Core/Gen/translation.files/$*.strings.lzfx \
+		$*
+
+
 
 clean :
 	rm -Rf Core/Gen
@@ -350,3 +423,5 @@ check-style:
 -include $(OUT_OBJS:.o=.d)
 -include $(OUT_OBJS_CPP:.o=.d)
 -include $(OUTPUT_DIR)/Core/Gen/Translation.*.d
+-include $(OUTPUT_DIR)/Core/Gen/Translation_*.d
+-include $(OUTPUT_DIR)/Core/Gen/translation.files/*.d

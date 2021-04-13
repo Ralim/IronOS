@@ -746,6 +746,8 @@ void showWarnings() {
 uint8_t idleScreenBGF[sizeof(idleScreenBG)];
 /* StartGUITask function */
 void startGUITask(void const *argument __unused) {
+  prepareTranslations();
+
   OLED::initialize(); // start up the LCD
 
   uint8_t tempWarningState       = 0;
