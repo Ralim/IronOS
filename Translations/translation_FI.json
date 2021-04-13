@@ -3,43 +3,40 @@
 	"languageLocalName": "Suomi",
 	"cyrillicGlyphs": false,
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",
 		"SettingsResetWarning": "Haluatko varmasti palauttaa oletusarvot?",
-		"UVLOWarningString": "DC LOW",
+		"UVLOWarningString": "DC ALH.",
 		"UndervoltageString": "Alijännite",
 		"InputVoltageString": "Jännite: ",
-		"WarningTipTempString": "Lämpötila: ",
-		"BadTipString": "VIKATILA",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Lepotila...",
-		"WarningSimpleString": "HOT",
-		"WarningAdvancedString": "! KÄRKI KUUMA !",
 		"SleepingTipAdvancedString": "Kärki:",
-		"IdleTipString": "Kärki:",
-		"IdleSetString": " Asetus:",
-		"TipDisconnectedString": "KÄRKI ON IRTI",
+		"IdleTipString": "Pää:",
+		"IdleSetString": "Aseta:",
+		"TipDisconnectedString": "KÄRKI PUUTTUU",
 		"SolderingAdvancedPowerPrompt": "Teho: ",
-		"OffString": "OFF",
-		"YourGainMessage": "Your gain:"
+		"OffString": "Off"
 	},
 	"messagesWarn": {
-		"ResetOKMessage": "Reset OK",
+		"ResetOKMessage": [
+			"Palautus",
+			"onnistui"
+		],
 		"SettingsResetMessage": [
-			"Settings were",
-			"reset!"
+			"Asetukset",
+			"palautettu!"
 		],
 		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
+			"Kiihtyvyysanturi",
+			"puuttuu!"
 		],
 		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
+			"USB-PD IC",
+			"puuttuu!"
 		],
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"LockingKeysString": " LUKITTU",
+		"UnlockingKeysString": "AUKI",
+		"WarningKeysLockedString": "!LUKKO!"
 	},
 	"characters": {
 		"SettingRightChar": "O",
@@ -48,27 +45,27 @@
 		"SettingFastChar": "N",
 		"SettingSlowChar": "H",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F",
+		"SettingOffChar": "P",
+		"SettingStartSolderingChar": "K",
+		"SettingStartSleepChar": "L",
+		"SettingStartSleepOffChar": "N",
+		"SettingStartNoneChar": "E",
+		"SettingSensitivityOff": "P",
+		"SettingSensitivityLow": "A",
+		"SettingSensitivityMedium": "K",
+		"SettingSensitivityHigh": "S",
+		"SettingLockDisableChar": "P",
+		"SettingLockBoostChar": "V",
+		"SettingLockFullChar": "K",
 		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": [
-				"Power",
-				"settings"
+				"Virta-",
+				"asetukset"
 			],
-			"desc": "Power settings"
+			"desc": "Virta-asetukset"
 		},
 		"SolderingMenu": {
 			"text2": [
@@ -105,56 +102,56 @@
 				"Virtalähde",
 				"DC"
 			],
-			"desc": "Käytettävä virtalähde. Asettaa katkaisujänniteen. <DC 10V, 3S=9.9V, 4S=13.2V, 5S=16.5V, 6S=19.8V>"
+			"desc": "Virtalähde. Asettaa katkaisujännitteen. <DC 10V> <S 3.3V per kenno, poistaa virtarajoitukset>"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Lepotilan",
 				"lämpötila"
 			],
-			"desc": "Lepotilan lämpötila. <C>"
+			"desc": "Kärjen lämpötila \"lepotilassa\""
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Lepotilan",
 				"viive"
 			],
-			"desc": "Lepotilan viive. <minuuttia/sekuntia>"
+			"desc": "\"Lepotilan\" ajastus <S=sekuntia | M=minuuttia>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Sammutus",
 				"viive"
 			],
-			"desc": "Automaattisen sammutuksen aikaviive. <minuuttia>"
+			"desc": "Automaattisen sammutuksen ajastus <M=minuuttia>"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Liikkeen",
 				"herkkyys"
 			],
-			"desc": "Liikkeentunnistuksen herkkyys. <0=pois, 1=epäherkin, 9=herkin>"
+			"desc": "0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Lämpötilan",
 				"yksikkö"
 			],
-			"desc": "Lämpötilan yksikkö. <C=celsius, F=fahrenheit>"
+			"desc": "<C=celsius, F=fahrenheit>"
 		},
 		"AdvancedIdle": {
 			"text2": [
 				"Tiedot",
 				"lepotilassa"
 			],
-			"desc": "Näyttää yksityiskohtaisemmat tiedot lepotilassa."
+			"desc": "Näyttää yksityiskohtaisemmat pienemmällä fontilla tiedot lepotilassa."
 		},
 		"DisplayRotation": {
 			"text2": [
 				"Näytön",
 				"kierto"
 			],
-			"desc": "Näytön kierto. <A=automaattinen O=oikeakätinen V=vasenkätinen>"
+			"desc": "A=automaattinen | V=vasenkätinen | O=oikeakätinen"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -175,133 +172,133 @@
 				"Jäähdytyksen",
 				"vilkutus"
 			],
-			"desc": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma."
+			"desc": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma"
 		},
 		"TemperatureCalibration": {
 			"text2": [
 				"Kalibroi",
 				"lämpötila?"
 			],
-			"desc": "Kalibroi kärjen lämpötilaeron."
+			"desc": "Kalibroi kärjen lämpötilaeron"
 		},
 		"SettingsReset": {
 			"text2": [
 				"Palauta",
 				"tehdasasetukset?"
 			],
-			"desc": "Palauta kaikki asetukset oletusarvoihin."
+			"desc": "Palauta kaikki asetukset oletusarvoihin"
 		},
 		"VoltageCalibration": {
 			"text2": [
 				"Kalibroi",
 				"tulojännite?"
 			],
-			"desc": "Tulojännitten kalibrointi (VIN). Painikkeilla säädetään ja pitkään painamalla poistutaan."
+			"desc": "Tulojännitten kalibrointi (VIN) <paina pitkään poistuaksesi>"
 		},
 		"AdvancedSoldering": {
 			"text2": [
 				"Tarkempi",
 				"juotosnäyttö"
 			],
-			"desc": "Näyttää yksityiskohtaisemmat tiedot juotostilassa."
+			"desc": "Näyttää yksityiskohtaisemmat tiedot pienellä fontilla juotostilassa"
 		},
 		"ScrollingSpeed": {
 			"text2": [
-				"Tietojen",
-				"näyttönopeus"
+				"Selityksien",
+				"nopeus"
 			],
-			"desc": "Näiden selitetekstien vieritysnopeus."
+			"desc": "Selityksien vieritysnopeus <H=hidas | N=nopea>"
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Power",
-				"Wattage"
+				"QC",
+				"jännite"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Ensisijainen maksimi QC jännite"
 		},
 		"PowerLimit": {
 			"text2": [
-				"Power",
-				"Limit"
+				"Tehon-",
+				"rajoitus"
 			],
-			"desc": "Maximum power the iron can use <Watts>"
+			"desc": "Suurin sallittu teho <Watti>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Suunnanvaihto",
+				"+ - näppäimille"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Lämpötilapainikkeiden suunnan vaihtaminen"
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"Temp change",
-				"short?"
+				"Lämmön muutos",
+				"lyhyt painal."
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Lämpötilan muutos lyhyellä painalluksella"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Temp change",
-				"long?"
+				"Lämmön muutos",
+				"pitkä painal."
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Lämpötilan muutos pitkällä painalluksella"
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Power",
-				"Pulse W"
+				"Herätyspulssin",
+				"voimakkuus"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Herätyspulssin voimakkuus <watti>"
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Hall-",
+				"herk."
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Hall-efektianturin herkkyys lepotilan tunnistuksessa  <P=pois | A=alhainen | K=keskiverto | S=suuri>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Salli nappien",
+				"lukitus"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Kolvatessa paina molempia näppäimiä lukitaksesi ne <P=pois | V=vain tehostus | K=kaikki>"
 		},
 		"MinVolCell": {
 			"text2": [
-				"Minimum",
-				"voltage"
+				"Pienin",
+				"jännite"
 			],
-			"desc": "Minimum allowed voltage per cell <Volts> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+			"desc": "Pienin sallittu jännite per kenno <Voltit> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
 		},
 		"AnimLoop": {
 			"text2": [
-				"Anim.",
-				"loop"
+				"Animaation",
+				"toistaminen"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Toista animaatiot valikossa"
 		},
 		"AnimSpeed": {
 			"text2": [
-				"Anim.",
-				"speed"
+				"Animaation",
+				"nopeus"
 			],
-			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+			"desc": "Animaatioiden nopeus valikossa <P=pois | A=alhainen | K=keskiverto | S=suuri>"
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"Pulssin",
+				"odotusaika"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Odotusaika herätyspulssin lähetykseen (x 2.5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"Pulssin",
+				"kesto"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Herätyspulssin kesto (x 250ms)"
 		}
 	}
 }
