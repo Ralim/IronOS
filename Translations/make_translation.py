@@ -301,8 +301,89 @@ class FontMap:
     font06: Dict[str, Optional[bytes]]
 
 
+@dataclass
+class FontMapsPerFont:
+    font12_maps: Dict[str, Dict[str, bytes]]
+    font06_maps: Dict[str, Dict[str, Optional[bytes]]]
+    sym_lists: Dict[str, List[str]]
+
+
+def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPerFont:
+    pending_sym_set = set(text_list)
+    if len(pending_sym_set) != len(text_list):
+        raise ValueError("`text_list` contains duplicated symbols")
+
+    if fonts[0] != font_tables.NAME_ASCII_BASIC:
+        raise ValueError(
+            f'First item in `fonts` must be "{font_tables.NAME_ASCII_BASIC}"'
+        )
+
+    total_symbol_count = len(text_list)
+    # \x00 is for NULL termination and \x01 is for newline, so the maximum
+    # number of symbols allowed is as follow (see also the comments in
+    # `get_bytes_from_font_index`):
+    if total_symbol_count > (0x10 * 0xFF - 15) - 2:  # 4063
+        raise ValueError(
+            f"Error, too many used symbols for this version (total {total_symbol_count})"
+        )
+
+    logging.info(f"Generating fonts for {total_symbol_count} symbols")
+
+    # Collect font bitmaps by the defined font order:
+    font12_maps: Dict[str, Dict[str, bytes]] = {}
+    font06_maps: Dict[str, Dict[str, Optional[bytes]]] = {}
+    sym_lists: Dict[str, List[str]] = {}
+    for font in fonts:
+        font12_maps[font] = {}
+        font12_map = font12_maps[font]
+        font06_maps[font] = {}
+        font06_map = font06_maps[font]
+        sym_lists[font] = []
+        sym_list = sym_lists[font]
+
+        if len(pending_sym_set) == 0:
+            logging.warning(
+                f"Font {font} not used because all symbols already have font bitmaps"
+            )
+            continue
+
+        if font == font_tables.NAME_CJK:
+            is_cjk = True
+        else:
+            is_cjk = False
+            font12: Dict[str, bytes]
+            font06: Dict[str, bytes]
+            font12, font06 = font_tables.get_font_maps_for_name(font)
+
+        for sym in text_list:
+            if sym not in pending_sym_set:
+                continue
+            if is_cjk:
+                font12_line = get_cjk_glyph(sym)
+                if font12_line is None:
+                    continue
+                font06_line = None
+            else:
+                try:
+                    font12_line = font12[sym]
+                    font06_line = font06[sym]
+                except KeyError:
+                    continue
+            font12_map[sym] = font12_line
+            font06_map[sym] = font06_line
+            sym_list.append(sym)
+            pending_sym_set.remove(sym)
+
+        if len(sym_list) == 0:
+            logging.warning(f"Font {font} not used by any symbols on the list")
+    if len(pending_sym_set) > 0:
+        raise KeyError(f"Symbols not found in specified fonts: {pending_sym_set}")
+
+    return FontMapsPerFont(font12_maps, font06_maps, sym_lists)
+
+
 def get_font_map_and_table(
-    text_list: List[str],
+    text_list: List[str], fonts: List[str]
 ) -> Tuple[List[str], FontMap, Dict[str, bytes]]:
     # the text list is sorted
     # allocate out these in their order as number codes
@@ -310,62 +391,38 @@ def get_font_map_and_table(
     index = 2  # start at 2, as 0= null terminator,1 = new line
     forced_first_symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-    # Get the font table, which does not include CJK chars
-    font_table: Dict[str, bytes] = font_tables.get_font_map()
-    font_small_table: Dict[str, bytes] = font_tables.get_small_font_map()
-
-    # We want to put all CJK chars after non-CJK ones so that the CJK chars
-    # do not need to be in the small font table to save space.
-    # We assume all symbols not in the font table to be a CJK char.
-    # We also enforce that numbers are first.
-    ordered_normal_sym_list: List[str] = forced_first_symbols + [
-        x for x in text_list if x not in forced_first_symbols and x in font_table
-    ]
-    ordered_cjk_sym_list: List[str] = [
-        x for x in text_list if x not in forced_first_symbols and x not in font_table
+    # We enforce that numbers come first.
+    text_list = forced_first_symbols + [
+        x for x in text_list if x not in forced_first_symbols
     ]
 
-    total_symbol_count = len(ordered_normal_sym_list) + len(ordered_cjk_sym_list)
-    # \x00 is for NULL termination and \x01 is for newline, so the maximum
-    # number of symbols allowed is as follow (see also the comments in
-    # `get_bytes_from_font_index`):
-    if total_symbol_count > (0x10 * 0xFF - 15) - 2:  # 4063
-        logging.error(
-            f"Error, too many used symbols for this version (total {total_symbol_count})"
-        )
-        sys.exit(1)
+    font_maps = get_font_map_per_font(text_list, fonts)
+    font12_maps = font_maps.font12_maps
+    font06_maps = font_maps.font06_maps
 
-    logging.info(f"Generating fonts for {total_symbol_count} symbols")
+    # Build the full font maps
+    font12_map = {}
+    font06_map = {}
+    for font in fonts:
+        font12_map.update(font12_maps[font])
+        font06_map.update(font06_maps[font])
 
-    sym_list = ordered_normal_sym_list + ordered_cjk_sym_list
-    for sym in sym_list:
-        if sym in symbol_map:
-            raise ValueError("Symbol not found in symbol map")
+    # Collect all symbols by the original symbol order, but also making sure
+    # all symbols with only large font must be placed after all symbols with
+    # both small and large fonts
+    sym_list_both_fonts = []
+    sym_list_large_only = []
+    for sym in text_list:
+        if font06_map[sym] is None:
+            sym_list_large_only.append(sym)
+        else:
+            sym_list_both_fonts.append(sym)
+    sym_list = sym_list_both_fonts + sym_list_large_only
+
+    # Assign symbol bytes by font index
+    for index, sym in enumerate(sym_list, index):
+        assert sym not in symbol_map
         symbol_map[sym] = get_bytes_from_font_index(index)
-        index += 1
-
-    font12_map: Dict[str, bytes] = {}
-    font06_map: Dict[str, Optional[bytes]] = {}
-    for sym in ordered_normal_sym_list:
-        if sym not in font_table:
-            logging.error(f"Missing Large font element for {sym}")
-            sys.exit(1)
-        font12_map[sym] = font_table[sym]
-        if sym not in font_small_table:
-            logging.error(f"Missing Small font element for {sym}")
-            sys.exit(1)
-        font06_map[sym] = font_small_table[sym]
-
-    for sym in ordered_cjk_sym_list:
-        if sym in font_table:
-            raise ValueError("Symbol already exists in font_table")
-        font_line = get_cjk_glyph(sym)
-        if font_line is None:
-            logging.error(f"Missing Large font element for {sym}")
-            sys.exit(1)
-        font12_map[sym] = font_line
-        # No data to add to the small font table
-        font06_map[sym] = None
 
     return sym_list, FontMap(font12_map, font06_map), symbol_map
 
@@ -438,7 +495,10 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
     # Iterate over all of the text to build up the symbols & counts
     text_list = get_letter_counts(defs, lang, build_version)
     # From the letter counts, need to make a symbol translator & write out the font
-    sym_list, font_map, symbol_conversion_table = get_font_map_and_table(text_list)
+    fonts = lang["fonts"]
+    sym_list, font_map, symbol_conversion_table = get_font_map_and_table(
+        text_list, fonts
+    )
     return LanguageData(
         lang, defs, build_version, sym_list, font_map, symbol_conversion_table
     )

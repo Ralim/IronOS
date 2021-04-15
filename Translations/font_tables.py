@@ -1,5 +1,4 @@
-import functools
-from typing import Dict
+from typing import Dict, Final, Tuple
 
 
 def get_font_map_ascii_basic() -> Dict[str, bytes]:
@@ -856,19 +855,20 @@ def get_small_font_map_cyrillic() -> Dict[str, bytes]:
     return font
 
 
-@functools.lru_cache(maxsize=None)
-def get_font_map() -> Dict[str, bytes]:
-    return {
-        **get_font_map_ascii_basic(),
-        **get_font_map_latin_extended(),
-        **get_font_map_cyrillic(),
-    }
+NAME_ASCII_BASIC: Final = "ascii_basic"
+NAME_LATIN_EXTENDED: Final = "latin_extended"
+NAME_CYRILLIC: Final = "cyrillic"
+NAME_CJK: Final = "cjk"
 
 
-@functools.lru_cache(maxsize=None)
-def get_small_font_map() -> Dict[str, bytes]:
-    return {
-        **get_small_font_map_ascii_basic(),
-        **get_small_font_map_latin_extended(),
-        **get_small_font_map_cyrillic(),
-    }
+def get_font_maps_for_name(
+    font_name: str,
+) -> Tuple[Dict[str, bytes], Dict[str, bytes]]:
+    if font_name == NAME_ASCII_BASIC:
+        return get_font_map_ascii_basic(), get_small_font_map_ascii_basic()
+    elif font_name == NAME_LATIN_EXTENDED:
+        return get_font_map_latin_extended(), get_small_font_map_latin_extended()
+    elif font_name == NAME_CYRILLIC:
+        return get_font_map_cyrillic(), get_small_font_map_cyrillic()
+    else:
+        raise ValueError("Invalid font name")

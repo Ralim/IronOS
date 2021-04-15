@@ -1,7 +1,10 @@
 {
 	"languageCode": "HU",
 	"languageLocalName": "Magyar",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Kalibráció befejezve!",
 		"SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a páka szobahőmérsékletű!",

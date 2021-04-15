@@ -1,7 +1,10 @@
 {
 	"languageCode": "NL",
 	"languageLocalName": "Nederlands",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Calibratie klaar!",
 		"SettingsCalibrationWarning": "Zorg ervoor dat te punt op kamertemperatuur is voor je verder gaat!",
