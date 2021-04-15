@@ -58,10 +58,10 @@
 		"SettingSensitivityLow": "N",
 		"SettingSensitivityMedium": "M",
 		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
+		"SettingLockDisableChar": "A",
 		"SettingLockBoostChar": "B",
 		"SettingLockFullChar": "V",
-		"SettingNAChar": "N/A"
+		"SettingNAChar": "-"
 	},
 	"menuGroups": {
 		"PowerMenu": {
@@ -267,7 +267,7 @@
 				"Tasten-",
 				"sperre"
 			],
-			"desc": "Langes drücken beider Tasten im Lötmodus sperrt diese <D=deaktiviert | B=nur Boost | V=vollständig>"
+			"desc": "Langes drücken beider Tasten im Lötmodus sperrt diese <A=aus | B=nur Boost | V=vollständig>"
 		},
 		"MinVolCell": {
 			"text2": [
@@ -288,14 +288,14 @@
 				"Anim.",
 				"Geschw."
 			],
-			"desc": "Geschwindigkeit der Icon-Animationen im Menü <A=aus | N=niedrig | M=mittel | H=hoch>"
+			"desc": "Geschwindigkeit der Icon-Animationen im Menü <A=aus | L=langsam | M=mittel | S=schnell>"
 		},
 		"PowerPulseWait": {
 			"text2": [
 				"Leistungsimpulse",
 				"Wartezeit"
 			],
-			"desc": "Wartezeit vor dem Auslösen jedes Wachhalteimpulses (x 2,5s)"
+			"desc": "Dauer vor Abgabe von Wachhalteimpulsen (x 2,5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
