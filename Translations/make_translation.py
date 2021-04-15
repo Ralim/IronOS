@@ -192,7 +192,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> List[str]:
     return symbols_by_occurrence
 
 
-def get_cjk_glyph(sym: str) -> str:
+def get_cjk_glyph(sym: str) -> bytes:
     glyph: Glyph = cjk_font()[ord(sym)]
 
     data = glyph.data
@@ -225,15 +225,15 @@ def get_cjk_glyph(sym: str) -> str:
     # top-most pixel. The data goes from the left-most to the right-most column
     # of the top half, then from the left-most to the right-most column of the
     # bottom half.
-    s = ""
+    bs = bytearray()
     for block in range(2):
         for c in range(dst_w):
             b = 0
             for r in range(8):
                 if get_cell(c, r + 8 * block):
                     b |= 0x01 << r
-            s += f"0x{b:02X},"
-    return s
+            bs.append(b)
+    return bytes(bs)
 
 
 def get_bytes_from_font_index(index: int) -> bytes:
@@ -291,10 +291,14 @@ def bytes_to_escaped(b: bytes) -> str:
     return "".join((f"\\x{i:02X}" for i in b))
 
 
+def bytes_to_c_hex(b: bytes) -> str:
+    return ", ".join((f"0x{i:02X}" for i in b)) + ","
+
+
 @dataclass
 class FontMap:
-    font12: Dict[str, str]
-    font06: Dict[str, str]
+    font12: Dict[str, bytes]
+    font06: Dict[str, Optional[bytes]]
 
 
 def get_font_map_and_table(
@@ -307,8 +311,8 @@ def get_font_map_and_table(
     forced_first_symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
     # Get the font table, which does not include CJK chars
-    font_table = font_tables.get_font_map()
-    font_small_table = font_tables.get_small_font_map()
+    font_table: Dict[str, bytes] = font_tables.get_font_map()
+    font_small_table: Dict[str, bytes] = font_tables.get_small_font_map()
 
     # We want to put all CJK chars after non-CJK ones so that the CJK chars
     # do not need to be in the small font table to save space.
@@ -340,8 +344,8 @@ def get_font_map_and_table(
         symbol_map[sym] = get_bytes_from_font_index(index)
         index += 1
 
-    font12_map: Dict[str, str] = {}
-    font06_map: Dict[str, str] = {}
+    font12_map: Dict[str, bytes] = {}
+    font06_map: Dict[str, Optional[bytes]] = {}
     for sym in ordered_normal_sym_list:
         if sym not in font_table:
             logging.error(f"Missing Large font element for {sym}")
@@ -355,13 +359,13 @@ def get_font_map_and_table(
     for sym in ordered_cjk_sym_list:
         if sym in font_table:
             raise ValueError("Symbol already exists in font_table")
-        font_line: str = get_cjk_glyph(sym)
+        font_line = get_cjk_glyph(sym)
         if font_line is None:
             logging.error(f"Missing Large font element for {sym}")
             sys.exit(1)
         font12_map[sym] = font_line
         # No data to add to the small font table
-        font06_map[sym] = "//                                 "  # placeholder
+        font06_map[sym] = None
 
     return sym_list, FontMap(font12_map, font06_map), symbol_map
 
@@ -371,16 +375,17 @@ def make_font_table_cpp(
 ) -> str:
     output_table = "const uint8_t USER_FONT_12[] = {\n"
     for sym in sym_list:
-        output_table += (
-            f"{font_map.font12[sym]}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
-        )
+        output_table += f"{bytes_to_c_hex(font_map.font12[sym])}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
     output_table += "};\n"
 
     output_table += "const uint8_t USER_FONT_6x8[] = {\n"
     for sym in sym_list:
-        output_table += (
-            f"{font_map.font06[sym]}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
-        )
+        font_bytes = font_map.font06[sym]
+        if font_bytes:
+            font_line = bytes_to_c_hex(font_bytes)
+        else:
+            font_line = "//                                 "  # placeholder
+        output_table += f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
     output_table += "};\n"
     return output_table
 
