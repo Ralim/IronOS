@@ -19,6 +19,7 @@ from bdflib import reader as bdfreader
 from bdflib.model import Font, Glyph
 
 import font_tables
+import lzfx
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -505,7 +506,7 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
 
 
 def write_language(
-    data: LanguageData, f: TextIO, lzfx_strings: Optional[bytes] = None
+    data: LanguageData, f: TextIO, strings_bin: Optional[bytes] = None
 ) -> None:
     lang = data.lang
     defs = data.defs
@@ -523,7 +524,7 @@ def write_language(
     except KeyError:
         lang_name = language_code
 
-    if lzfx_strings:
+    if strings_bin:
         f.write('#include "lzfx.h"\n')
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
@@ -540,7 +541,7 @@ def write_language(
         "extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n"
     )
 
-    if not lzfx_strings:
+    if not strings_bin:
         translation_strings_and_indices_text = get_translation_strings_and_indices_text(
             lang, defs, symbol_conversion_table
         )
@@ -551,9 +552,13 @@ def write_language(
             "void prepareTranslations() {}\n\n"
         )
     else:
-        write_bytes_as_c_array(f, "translation_data_lzfx", lzfx_strings)
+        compressed = lzfx.compress(strings_bin)
+        logging.info(
+            f"Strings compressed from {len(strings_bin)} to {len(compressed)} bytes (ratio {len(compressed) / len(strings_bin):.3})"
+        )
+        write_bytes_as_c_array(f, "translation_data_lzfx", compressed)
         f.write(
-            "static uint8_t translation_data_out_buffer[4096] __attribute__((__aligned__(2)));\n\n"
+            f"static uint8_t translation_data_out_buffer[{len(strings_bin)}] __attribute__((__aligned__(2)));\n\n"
             "const TranslationIndexTable *const Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
             "const char *const TranslationStrings = reinterpret_cast<const char *>(translation_data_out_buffer) + sizeof(TranslationIndexTable);\n\n"
             "void prepareTranslations() {\n"
@@ -847,11 +852,11 @@ def parse_args() -> argparse.Namespace:
         dest="input_pickled",
     )
     parser.add_argument(
-        "--lzfx-strings",
-        help="Use compressed TranslationIndices + TranslationStrings data",
+        "--strings-bin",
+        help="Use generated TranslationIndices + TranslationStrings data and compress them",
         type=argparse.FileType("rb"),
         required=False,
-        dest="lzfx_strings",
+        dest="strings_bin",
     )
     parser.add_argument(
         "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
@@ -895,8 +900,8 @@ def main() -> None:
 
     out_ = args.output
     write_start(out_)
-    if args.lzfx_strings:
-        write_language(language_data, out_, args.lzfx_strings.read())
+    if args.strings_bin:
+        write_language(language_data, out_, args.strings_bin.read())
     else:
         write_language(language_data, out_)
 
