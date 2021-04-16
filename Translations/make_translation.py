@@ -431,12 +431,25 @@ def get_font_map_and_table(
 def make_font_table_cpp(
     sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
 ) -> str:
+    output_table = make_font_table_12_cpp(sym_list, font_map, symbol_map)
+    output_table += make_font_table_06_cpp(sym_list, font_map, symbol_map)
+    return output_table
+
+
+def make_font_table_12_cpp(
+    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+) -> str:
     output_table = "const uint8_t USER_FONT_12[] = {\n"
     for sym in sym_list:
         output_table += f"{bytes_to_c_hex(font_map.font12[sym])}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
     output_table += "};\n"
+    return output_table
 
-    output_table += "const uint8_t USER_FONT_6x8[] = {\n"
+
+def make_font_table_06_cpp(
+    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+) -> str:
+    output_table = "const uint8_t USER_FONT_6x8[] = {\n"
     for sym in sym_list:
         font_bytes = font_map.font06[sym]
         if font_bytes:
@@ -506,7 +519,10 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
 
 
 def write_language(
-    data: LanguageData, f: TextIO, strings_bin: Optional[bytes] = None
+    data: LanguageData,
+    f: TextIO,
+    strings_bin: Optional[bytes] = None,
+    compress_font: bool = False,
 ) -> None:
     lang = data.lang
     defs = data.defs
@@ -517,18 +533,36 @@ def write_language(
 
     language_code: str = lang["languageCode"]
     logging.info(f"Generating block for {language_code}")
-    font_table_text = make_font_table_cpp(sym_list, font_map, symbol_conversion_table)
 
     try:
         lang_name = lang["languageLocalName"]
     except KeyError:
         lang_name = language_code
 
-    if strings_bin:
+    if strings_bin or compress_font:
         f.write('#include "lzfx.h"\n')
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
-    f.write(font_table_text)
+
+    if not compress_font:
+        font_table_text = make_font_table_cpp(
+            sym_list, font_map, symbol_conversion_table
+        )
+        f.write(font_table_text)
+    else:
+        font12_uncompressed = bytearray()
+        for sym in sym_list:
+            font12_uncompressed.extend(font_map.font12[sym])
+        font12_compressed = lzfx.compress(bytes(font12_uncompressed))
+        logging.info(
+            f"Font table 12x16 compressed from {len(font12_uncompressed)} to {len(font12_compressed)} bytes (ratio {len(font12_compressed) / len(font12_uncompressed):.3})"
+        )
+        write_bytes_as_c_array(f, "font_12x16_lzfx", font12_compressed)
+        font_table_text = make_font_table_06_cpp(
+            sym_list, font_map, symbol_conversion_table
+        )
+        f.write(font_table_text)
+
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
     translation_common_text = get_translation_common_text(
@@ -537,9 +571,16 @@ def write_language(
     f.write(translation_common_text)
     f.write(
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n\n"
-        "extern const uint8_t *const Font_12x16 = USER_FONT_12;\n"
-        "extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n"
     )
+
+    if not compress_font:
+        f.write("extern const uint8_t *const Font_12x16 = USER_FONT_12;\n")
+    else:
+        f.write(
+            f"static uint8_t font_out_buffer[{len(font12_uncompressed)}];\n\n"
+            "extern const uint8_t *const Font_12x16 = font_out_buffer;\n"
+        )
+    f.write("extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n")
 
     if not strings_bin:
         translation_strings_and_indices_text = get_translation_strings_and_indices_text(
@@ -549,7 +590,6 @@ def write_language(
         f.write(
             "const TranslationIndexTable *const Tr = &TranslationIndices;\n"
             "const char *const TranslationStrings = TranslationStringsData;\n\n"
-            "void prepareTranslations() {}\n\n"
         )
     else:
         compressed = lzfx.compress(strings_bin)
@@ -561,11 +601,23 @@ def write_language(
             f"static uint8_t translation_data_out_buffer[{len(strings_bin)}] __attribute__((__aligned__(2)));\n\n"
             "const TranslationIndexTable *const Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
             "const char *const TranslationStrings = reinterpret_cast<const char *>(translation_data_out_buffer) + sizeof(TranslationIndexTable);\n\n"
-            "void prepareTranslations() {\n"
-            "  unsigned int outsize = sizeof(translation_data_out_buffer);\n"
-            "  lzfx_decompress(translation_data_lzfx, sizeof(translation_data_lzfx), translation_data_out_buffer, &outsize);\n"
-            "}\n\n"
         )
+
+    if not strings_bin and not compress_font:
+        f.write("void prepareTranslations() {}\n\n")
+    else:
+        f.write("void prepareTranslations() {\n" "  unsigned int outsize;\n")
+        if compress_font:
+            f.write(
+                "  outsize = sizeof(font_out_buffer);\n"
+                "  lzfx_decompress(font_12x16_lzfx, sizeof(font_12x16_lzfx), font_out_buffer, &outsize);\n"
+            )
+        if strings_bin:
+            f.write(
+                "  outsize = sizeof(translation_data_out_buffer);\n"
+                "  lzfx_decompress(translation_data_lzfx, sizeof(translation_data_lzfx), translation_data_out_buffer, &outsize);\n"
+            )
+        f.write("}\n\n")
 
     sanity_checks_text = get_translation_sanity_checks_text(defs)
     f.write(sanity_checks_text)
@@ -859,6 +911,13 @@ def parse_args() -> argparse.Namespace:
         dest="strings_bin",
     )
     parser.add_argument(
+        "--compress-font",
+        help="Compress the font table",
+        action="store_true",
+        required=False,
+        dest="compress_font",
+    )
+    parser.add_argument(
         "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
     )
     parser.add_argument("languageCode", help="Language to generate")
@@ -901,9 +960,14 @@ def main() -> None:
     out_ = args.output
     write_start(out_)
     if args.strings_bin:
-        write_language(language_data, out_, args.strings_bin.read())
+        write_language(
+            language_data,
+            out_,
+            args.strings_bin.read(),
+            compress_font=args.compress_font,
+        )
     else:
-        write_language(language_data, out_)
+        write_language(language_data, out_, compress_font=args.compress_font)
 
     if args.output_pickled:
         logging.info(f"Writing pickled data to {args.output_pickled.name}")
