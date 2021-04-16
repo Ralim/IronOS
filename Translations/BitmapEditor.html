@@ -141,10 +141,36 @@
 				}
 			}
 		}
+		stringFromMatrix(true, false);
+	}
+	
+	function escapedToMatrix(str) {
+		app.encodedEscapeSequence = str;
+		clearMatrix();
+		var strs = str.split("\\x");
+		var c = 0;
+		var rs = 7;
+		for (var i = 0; i<strs.length; i++) {
+			var d = strs[i];
+			if (d.length > 0) {
+				v = parseInt(d, 16);
+				sv = padLeft(v.toString(2), "0", 8);
+				for (r = 0; r < 8; r++) {
+					paint(getCell(rs - r, c), sv.charAt(r) == '1');
+				}
+				c++;
+				if (c >= app.matrix.cols) {
+					c = 0;
+					rs += 8;
+				}
+			}
+		}
+		stringFromMatrix(false, true);
 	}
 
-	function stringFromMatrix() {
+	function stringFromMatrix(skipEncodedData, skipEncodedEscapeSequence) {
 		var str = "";
+		var strEscaped = "";
 		var delim = "";
 		var blocks = app.matrix.rows / 8;
 		var rs = 7;
@@ -158,11 +184,17 @@
 					}
 				}
 				str += delim + "0x" + padLeft(b.toString(16).toUpperCase(), "0", 2);
+				strEscaped += "\\x" + padLeft(b.toString(16).toUpperCase(), "0", 2);
 				delim = ",";
 			}
 			rs += 8;
 		}
-		app.encodedData = str;
+		if (!skipEncodedData) {
+			app.encodedData = str;
+		}
+		if (!skipEncodedEscapeSequence) {
+			app.encodedEscapeSequence = strEscaped;
+		}
 		return str;
 	}
 	
@@ -175,11 +207,15 @@
 					rows: 16
 				},
 				type: "big",
-				encodedData: ""
+				encodedData: "",
+				encodedEscapeSequence: "",
 			},
 			methods : {
 				VtoMatrix : function(val) {
 					toMatrix(val);
+				},
+				escapedToMatrix : function(val) {
+					escapedToMatrix(val);
 				},
 				
 				VchangeSize : function() {
@@ -236,7 +272,8 @@
 			<input type="button" value="Clear" onclick="clearMatrix();stringFromMatrix()">
 		</div>
 		<div class="data">
-			<textarea v-model="encodedData" style="width:100%" v-on:change="VtoMatrix(encodedData)" rows=5>
+			<textarea v-model="encodedData" style="width:100%" v-on:change="VtoMatrix(encodedData)" rows=5></textarea>
+			<textarea v-model="encodedEscapeSequence" style="width:100%" v-on:change="escapedToMatrix(encodedEscapeSequence)" rows=5></textarea>
 		</div>
 	</div>
 		

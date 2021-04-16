@@ -1,7 +1,10 @@
 {
 	"languageCode": "SR_CYRL",
 	"languageLocalName": "Српски",
-	"cyrillicGlyphs": true,
+	"fonts": [
+		"ascii_basic",
+		"cyrillic"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Калибрација готова",
 		"SettingsCalibrationWarning": "Проверите да ли је врх охлађен на собну температуру пре него што наставите",

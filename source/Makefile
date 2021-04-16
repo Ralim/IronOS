@@ -327,6 +327,16 @@ $(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
 		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.$*.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
+$(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_font.%.o \
+		Makefile $(LDSCRIPT)
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_font.$*.o \
+		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
@@ -364,10 +374,10 @@ $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@echo Generating $@
 	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
 
-$(HOST_OUTPUT_DIR)/lzfx/lzfx-host-compress: Core/lzfx/lzfx-host-compress.c Core/lzfx/lzfx.c
+$(HOST_OUTPUT_DIR)/lzfx/liblzfx.so: Core/lzfx/lzfx.c
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Building host lzfx tool $@
-	@$(HOST_CC) -Wno-unused-result -O $^ -o $@
+	@echo Building host lzfx shared library $@
+	@$(HOST_CC) -Wno-unused-result -fPIC -shared -O $^ -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
 	@echo Dumping translation strings data from $<
@@ -378,18 +388,22 @@ $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin: $(OUTPUT_DIR)/Core/Gen/t
 	@test -s $(@D)/$*.data.TranslationStrings.bin || (rm $(@D)/$*.data.TranslationStrings.bin; echo 'ERROR: Output for .rodata._ZL22TranslationStringsData is empty!' >&2; false)
 	@cat $(@D)/$*.data.TranslationIndices.bin $(@D)/$*.data.TranslationStrings.bin > $@
 
-$(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.lzfx: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin $(HOST_OUTPUT_DIR)/lzfx/lzfx-host-compress
-	@echo Compressing translation strings data for $*
-	@$(HOST_OUTPUT_DIR)/lzfx/lzfx-host-compress $< $@
-	@echo Compressed from $$(stat --printf="%s" $<) to $$(stat --printf="%s" $@) bytes
-
-Core/Gen/Translation_lzfx.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.lzfx $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle
+Core/Gen/Translation_lzfx.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating lzfx compressed translation for $*
 	@python3 ../Translations/make_translation.py \
 		-o $(PWD)/Core/Gen/Translation_lzfx.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
-		--lzfx-strings $(OUTPUT_DIR)/Core/Gen/translation.files/$*.strings.lzfx \
+		--strings-bin $(OUTPUT_DIR)/Core/Gen/translation.files/$*.strings.bin \
+		$*
+
+Core/Gen/Translation_lzfx_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Generating lzfx compressed translation for $*
+	@python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_lzfx_font.$*.cpp \
+		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
+		--compress-font \
 		$*
 
 

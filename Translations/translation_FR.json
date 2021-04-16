@@ -1,7 +1,10 @@
 {
 	"languageCode": "FR",
 	"languageLocalName": "Français",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Calibration effectuée !",
 		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer !",

@@ -1,7 +1,10 @@
 {
 	"languageCode": "ZH_TW",
 	"languageLocalName": "正體中文",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"cjk"
+	],
 	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationDone": "校正完成！",

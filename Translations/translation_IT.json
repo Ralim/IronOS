@@ -1,7 +1,10 @@
 {
 	"languageCode": "IT",
 	"languageLocalName": "Italiano",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Calibrazione effettuata",
 		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",

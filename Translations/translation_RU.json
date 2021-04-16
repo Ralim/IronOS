@@ -1,7 +1,11 @@
 {
 	"languageCode": "RU",
 	"languageLocalName": "Русский",
-	"cyrillicGlyphs": true,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended",
+		"cyrillic"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Калибровка завершена!",
 		"SettingsCalibrationWarning": "Прежде чем продолжить, пожалуйста, убедитесь, что жало имеет комнатную температуру!",

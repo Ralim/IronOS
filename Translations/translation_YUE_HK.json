@@ -1,7 +1,10 @@
 {
 	"languageCode": "YUE_HK",
 	"languageLocalName": "廣東話 (香港)",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"cjk"
+	],
 	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationDone": "校正完成！",
