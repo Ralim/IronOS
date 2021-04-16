@@ -277,31 +277,31 @@
 		},
 		"AnimLoop": {
 			"text2": [
-				"Anim.",
-				"loop"
+				"Icônes",
+				"animées"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Animations des icônes dans le menu principal"
 		},
 		"AnimSpeed": {
 			"text2": [
-				"Anim.",
-				"speed"
+				"Vitesse",
+				"d'animations"
 			],
-			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+			"desc": "Vitesse des animations des icônes dans le menu <D=désactivé | L=lente | M=moyenne | H=haute>"
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"Délai entre",
+				"les impulsions"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Délai entre chaque impulsions pour empêcher la mise en veille (x 2.5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"Durée des",
+				"impulsions"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Durée des impulsions pour empêcher la mise en veille (x 250ms)"
 		}
 	}
 }
