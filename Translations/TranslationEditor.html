@@ -48,8 +48,8 @@
 			} else if (id == "current-lang-file") {
 				if (checkTranslationFile(file.name)) {
 					app.current = json;
-					if (!app.current.cyrillicGlyphs){
-						app.current.cyrillicGlyphs = false;
+					if (!app.current.fonts){
+						app.current.fonts = ["ascii_basic"];
 					}
 					app.meta.currentLoaded = true;
 				}
@@ -137,6 +137,7 @@
 					loaded: false,
 				},
 				obsolete : {},
+				fontToAdd: "latin_extended",
 			},
 			methods : {
 				validateInput: function(valMap, id, mode) {
@@ -246,7 +247,15 @@
 					} else {
 						valMap[id] = message;
 					}
-				}
+				},
+
+				removeFont: function(i) {
+					this.current.fonts.splice(i, 1);
+				},
+
+				addFont: function() {
+					this.current.fonts.push(this.fontToAdd);
+				},
 			}
 		});
 		app.def = def;
@@ -289,12 +298,20 @@
 					<td class="value"><input type="text" v-model="current.languageLocalName" class="short"></td>
 				</tr>
 				<tr v-if="meta.currentLoaded">
-					<td class="label">Font table to use</td>
+					<td class="label">Font tables to use<br>("ascii_basic" must be first)</td>
 					<td class="value">
-						<select v-model="current.cyrillicGlyphs" v-on:change="current.cyrillicGlyphs = current.cyrillicGlyphs=='true'">
-							<option value="false">Latin Extended</option>
-							<option value="true">Cyrillic Glyphs</option>
+						<ul>
+							<li v-for="(font, i) in current.fonts">
+								<button type="button" @click="removeFont(i)" :disabled="i == 0 && font == 'ascii_basic'">-</button> {{ font }}
+							</li>
+						</ul>
+						<select v-model="fontToAdd">
+							<!-- <option value="ascii_basic">ascii_basic: ASCII Basic</option> -->
+							<option value="latin_extended">latin_extended: Latin Extended</option>
+							<option value="cyrillic">cyrillic: Cyrillic Glyphs</option>
+							<option value="cjk">cjk: Chinese/Japanese/Korean</option>
 						</select>
+						<button type="button" @click="addFont()">Add</button>
 					</td>
 				</tr>
 			</table>

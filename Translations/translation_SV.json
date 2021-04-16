@@ -1,7 +1,10 @@
 {
 	"languageCode": "SV",
 	"languageLocalName": "Svenska",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
