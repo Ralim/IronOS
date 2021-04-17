@@ -116,7 +116,7 @@
 		},
 		"DisplayRotation": {
 			"text2": "画面方向",
-			"desc": "A=自动 | L=使用左手 | R=使用右手"
+			"desc": "自=自动 | 左=使用左手 | 右=使用右手"
 		},
 		"BoostTemperature": {
 			"text2": "增热温度",

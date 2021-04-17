@@ -116,7 +116,7 @@
 		},
 		"DisplayRotation": {
 			"text2": "画面の向き",
-			"desc": "A=自動 | L=左利き | R=右利き"
+			"desc": "自=自動 | 左=左利き | 右=右利き"
 		},
 		"BoostTemperature": {
 			"text2": "ブースト温度",
