@@ -1,7 +1,10 @@
 {
 	"languageCode": "LT",
 	"languageLocalName": "Lietuvių",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Kalibravimas atliktas!",
 		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",

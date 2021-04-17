@@ -1,7 +1,11 @@
 {
 	"languageCode": "UK",
 	"languageLocalName": "Українська",
-	"cyrillicGlyphs": true,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended",
+		"cyrillic"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Калібрування виконане!",
 		"SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",

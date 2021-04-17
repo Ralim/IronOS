@@ -1,7 +1,10 @@
 {
 	"languageCode": "NO",
 	"languageLocalName": "Norsk",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Sørg for at loddespissen har romtemperatur før du fortsetter!",

@@ -1,7 +1,9 @@
 {
 	"languageCode": "EN",
 	"languageLocalName": "English",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic"
+	],
 	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
@@ -281,21 +283,21 @@
 				"Anim.",
 				"loop"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Loop icon animations in main menu"
 		},
 		"AnimSpeed": {
 			"text2": [
 				"Anim.",
 				"speed"
 			],
-			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+			"desc": "Pace of icon animations in menu <O=off | S=slow | M=medium | F=fast>"
 		},
 		"PowerPulseWait": {
 			"text2": [
 				"Power pulse",
-				"wait time"
+				"delay"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Delay before keep-awake pulse is triggered (x 2.5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [

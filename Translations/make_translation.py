@@ -5,19 +5,21 @@ import functools
 import json
 import logging
 import os
+import pickle
 import re
 import subprocess
 import sys
 from datetime import datetime
 from itertools import chain
 from pathlib import Path
-from typing import Dict, List, Optional, TextIO, Tuple, Union
+from typing import BinaryIO, Dict, List, Optional, TextIO, Tuple, Union
 from dataclasses import dataclass
 
 from bdflib import reader as bdfreader
 from bdflib.model import Font, Glyph
 
 import font_tables
+import lzfx
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -79,7 +81,7 @@ def write_start(f: TextIO):
     f.write('#include "Translation.h"\n')
 
 
-def get_constants() -> List[Tuple[str, str]]:
+def get_constants(build_version: str) -> List[Tuple[str, str]]:
     # Extra constants that are used in the firmware that are shared across all languages
     return [
         ("SymbolPlus", "+"),
@@ -94,7 +96,7 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SymbolVolts", "V"),
         ("SymbolDC", "DC"),
         ("SymbolCellCount", "S"),
-        ("SymbolVersionNumber", buildVersion),
+        ("SymbolVersionNumber", build_version),
     ]
 
 
@@ -116,7 +118,7 @@ def get_debug_menu() -> List[str]:
     ]
 
 
-def get_letter_counts(defs: dict, lang: dict) -> List[str]:
+def get_letter_counts(defs: dict, lang: dict, build_version: str) -> List[str]:
     text_list = []
     # iterate over all strings
     obj = lang["menuOptions"]
@@ -169,7 +171,7 @@ def get_letter_counts(defs: dict, lang: dict) -> List[str]:
     for mod in defs["menuGroups"]:
         eid = mod["id"]
         text_list.append(obj[eid]["desc"])
-    constants = get_constants()
+    constants = get_constants(build_version)
     for x in constants:
         text_list.append(x[1])
     text_list.extend(get_debug_menu())
@@ -191,7 +193,7 @@ def get_letter_counts(defs: dict, lang: dict) -> List[str]:
     return symbols_by_occurrence
 
 
-def get_cjk_glyph(sym: str) -> str:
+def get_cjk_glyph(sym: str) -> bytes:
     glyph: Glyph = cjk_font()[ord(sym)]
 
     data = glyph.data
@@ -224,15 +226,15 @@ def get_cjk_glyph(sym: str) -> str:
     # top-most pixel. The data goes from the left-most to the right-most column
     # of the top half, then from the left-most to the right-most column of the
     # bottom half.
-    s = ""
+    bs = bytearray()
     for block in range(2):
         for c in range(dst_w):
             b = 0
             for r in range(8):
                 if get_cell(c, r + 8 * block):
                     b |= 0x01 << r
-            s += f"0x{b:02X},"
-    return s
+            bs.append(b)
+    return bytes(bs)
 
 
 def get_bytes_from_font_index(index: int) -> bytes:
@@ -290,90 +292,173 @@ def bytes_to_escaped(b: bytes) -> str:
     return "".join((f"\\x{i:02X}" for i in b))
 
 
-def get_font_map_and_table(text_list: List[str]) -> Tuple[str, Dict[str, bytes]]:
+def bytes_to_c_hex(b: bytes) -> str:
+    return ", ".join((f"0x{i:02X}" for i in b)) + ","
+
+
+@dataclass
+class FontMap:
+    font12: Dict[str, bytes]
+    font06: Dict[str, Optional[bytes]]
+
+
+@dataclass
+class FontMapsPerFont:
+    font12_maps: Dict[str, Dict[str, bytes]]
+    font06_maps: Dict[str, Dict[str, Optional[bytes]]]
+    sym_lists: Dict[str, List[str]]
+
+
+def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPerFont:
+    pending_sym_set = set(text_list)
+    if len(pending_sym_set) != len(text_list):
+        raise ValueError("`text_list` contains duplicated symbols")
+
+    if fonts[0] != font_tables.NAME_ASCII_BASIC:
+        raise ValueError(
+            f'First item in `fonts` must be "{font_tables.NAME_ASCII_BASIC}"'
+        )
+
+    total_symbol_count = len(text_list)
+    # \x00 is for NULL termination and \x01 is for newline, so the maximum
+    # number of symbols allowed is as follow (see also the comments in
+    # `get_bytes_from_font_index`):
+    if total_symbol_count > (0x10 * 0xFF - 15) - 2:  # 4063
+        raise ValueError(
+            f"Error, too many used symbols for this version (total {total_symbol_count})"
+        )
+
+    logging.info(f"Generating fonts for {total_symbol_count} symbols")
+
+    # Collect font bitmaps by the defined font order:
+    font12_maps: Dict[str, Dict[str, bytes]] = {}
+    font06_maps: Dict[str, Dict[str, Optional[bytes]]] = {}
+    sym_lists: Dict[str, List[str]] = {}
+    for font in fonts:
+        font12_maps[font] = {}
+        font12_map = font12_maps[font]
+        font06_maps[font] = {}
+        font06_map = font06_maps[font]
+        sym_lists[font] = []
+        sym_list = sym_lists[font]
+
+        if len(pending_sym_set) == 0:
+            logging.warning(
+                f"Font {font} not used because all symbols already have font bitmaps"
+            )
+            continue
+
+        if font == font_tables.NAME_CJK:
+            is_cjk = True
+        else:
+            is_cjk = False
+            font12: Dict[str, bytes]
+            font06: Dict[str, bytes]
+            font12, font06 = font_tables.get_font_maps_for_name(font)
+
+        for sym in text_list:
+            if sym not in pending_sym_set:
+                continue
+            if is_cjk:
+                font12_line = get_cjk_glyph(sym)
+                if font12_line is None:
+                    continue
+                font06_line = None
+            else:
+                try:
+                    font12_line = font12[sym]
+                    font06_line = font06[sym]
+                except KeyError:
+                    continue
+            font12_map[sym] = font12_line
+            font06_map[sym] = font06_line
+            sym_list.append(sym)
+            pending_sym_set.remove(sym)
+
+        if len(sym_list) == 0:
+            logging.warning(f"Font {font} not used by any symbols on the list")
+    if len(pending_sym_set) > 0:
+        raise KeyError(f"Symbols not found in specified fonts: {pending_sym_set}")
+
+    return FontMapsPerFont(font12_maps, font06_maps, sym_lists)
+
+
+def get_font_map_and_table(
+    text_list: List[str], fonts: List[str]
+) -> Tuple[List[str], FontMap, Dict[str, bytes]]:
     # the text list is sorted
     # allocate out these in their order as number codes
     symbol_map: Dict[str, bytes] = {"\n": bytes([1])}
     index = 2  # start at 2, as 0= null terminator,1 = new line
     forced_first_symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-    # Get the font table, which does not include CJK chars
-    font_table = font_tables.get_font_map()
-    font_small_table = font_tables.get_small_font_map()
-
-    # We want to put all CJK chars after non-CJK ones so that the CJK chars
-    # do not need to be in the small font table to save space.
-    # We assume all symbols not in the font table to be a CJK char.
-    # We also enforce that numbers are first.
-    ordered_normal_sym_list: List[str] = forced_first_symbols + [
-        x for x in text_list if x not in forced_first_symbols and x in font_table
-    ]
-    ordered_cjk_sym_list: List[str] = [
-        x for x in text_list if x not in forced_first_symbols and x not in font_table
+    # We enforce that numbers come first.
+    text_list = forced_first_symbols + [
+        x for x in text_list if x not in forced_first_symbols
     ]
 
-    total_symbol_count = len(ordered_normal_sym_list) + len(ordered_cjk_sym_list)
-    # \x00 is for NULL termination and \x01 is for newline, so the maximum
-    # number of symbols allowed is as follow (see also the comments in
-    # `get_bytes_from_font_index`):
-    if total_symbol_count > (0x10 * 0xFF - 15) - 2:  # 4063
-        logging.error(
-            f"Error, too many used symbols for this version (total {total_symbol_count})"
-        )
-        sys.exit(1)
+    font_maps = get_font_map_per_font(text_list, fonts)
+    font12_maps = font_maps.font12_maps
+    font06_maps = font_maps.font06_maps
 
-    logging.info(f"Generating fonts for {total_symbol_count} symbols")
+    # Build the full font maps
+    font12_map = {}
+    font06_map = {}
+    for font in fonts:
+        font12_map.update(font12_maps[font])
+        font06_map.update(font06_maps[font])
 
-    for sym in chain(ordered_normal_sym_list, ordered_cjk_sym_list):
-        if sym in symbol_map:
-            raise ValueError("Symbol not found in symbol map")
+    # Collect all symbols by the original symbol order, but also making sure
+    # all symbols with only large font must be placed after all symbols with
+    # both small and large fonts
+    sym_list_both_fonts = []
+    sym_list_large_only = []
+    for sym in text_list:
+        if font06_map[sym] is None:
+            sym_list_large_only.append(sym)
+        else:
+            sym_list_both_fonts.append(sym)
+    sym_list = sym_list_both_fonts + sym_list_large_only
+
+    # Assign symbol bytes by font index
+    for index, sym in enumerate(sym_list, index):
+        assert sym not in symbol_map
         symbol_map[sym] = get_bytes_from_font_index(index)
-        index += 1
 
-    font_table_strings = []
-    font_small_table_strings = []
-    for sym in ordered_normal_sym_list:
-        if sym not in font_table:
-            logging.error(f"Missing Large font element for {sym}")
-            sys.exit(1)
-        font_line: str = font_table[sym]
-        font_table_strings.append(
-            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
-        if sym not in font_small_table:
-            logging.error(f"Missing Small font element for {sym}")
-            sys.exit(1)
-        font_line = font_small_table[sym]
-        font_small_table_strings.append(
-            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
+    return sym_list, FontMap(font12_map, font06_map), symbol_map
 
-    for sym in ordered_cjk_sym_list:
-        if sym in font_table:
-            raise ValueError("Symbol already exists in font_table")
-        font_line = get_cjk_glyph(sym)
-        if font_line is None:
-            logging.error(f"Missing Large font element for {sym}")
-            sys.exit(1)
-        font_table_strings.append(
-            f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
-        # No data to add to the small font table
-        font_small_table_strings.append(
-            f"//                                   {bytes_to_escaped(symbol_map[sym])} -> {sym}"
-        )
 
+def make_font_table_cpp(
+    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+) -> str:
+    output_table = make_font_table_12_cpp(sym_list, font_map, symbol_map)
+    output_table += make_font_table_06_cpp(sym_list, font_map, symbol_map)
+    return output_table
+
+
+def make_font_table_12_cpp(
+    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+) -> str:
     output_table = "const uint8_t USER_FONT_12[] = {\n"
-    for line in font_table_strings:
-        # join font table int one large string
-        output_table += line + "\n"
+    for sym in sym_list:
+        output_table += f"{bytes_to_c_hex(font_map.font12[sym])}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
     output_table += "};\n"
-    output_table += "const uint8_t USER_FONT_6x8[] = {\n"
-    for line in font_small_table_strings:
-        # join font table int one large string
-        output_table += line + "\n"
+    return output_table
+
+
+def make_font_table_06_cpp(
+    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+) -> str:
+    output_table = "const uint8_t USER_FONT_6x8[] = {\n"
+    for sym in sym_list:
+        font_bytes = font_map.font06[sym]
+        if font_bytes:
+            font_line = bytes_to_c_hex(font_bytes)
+        else:
+            font_line = "//                                 "  # placeholder
+        output_table += f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
     output_table += "};\n"
-    return output_table, symbol_map
+    return output_table
 
 
 def convert_string_bytes(symbol_conversion_table: Dict[str, bytes], text: str) -> bytes:
@@ -397,29 +482,178 @@ def escape(string: str) -> str:
     return json.dumps(string, ensure_ascii=False)
 
 
+def write_bytes_as_c_array(
+    f: TextIO, name: str, data: bytes, indent: int = 2, bytes_per_line: int = 16
+) -> None:
+    f.write(f"const uint8_t {name}[] = {{\n")
+    for i in range(0, len(data), bytes_per_line):
+        f.write(" " * indent)
+        f.write(", ".join((f"0x{b:02X}" for b in data[i : i + bytes_per_line])))
+        f.write(",\n")
+    f.write(f"}}; // {name}\n\n")
+
+
 @dataclass
-class TranslationItem:
-    info: str
-    str_index: int
+class LanguageData:
+    lang: dict
+    defs: dict
+    build_version: str
+    sym_list: List[str]
+    font_map: FontMap
+    symbol_conversion_table: Dict[str, bytes]
 
 
-def write_language(lang: dict, defs: dict, f: TextIO) -> None:
+def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData:
+    language_code: str = lang["languageCode"]
+    logging.info(f"Preparing language data for {language_code}")
+    # Iterate over all of the text to build up the symbols & counts
+    text_list = get_letter_counts(defs, lang, build_version)
+    # From the letter counts, need to make a symbol translator & write out the font
+    fonts = lang["fonts"]
+    sym_list, font_map, symbol_conversion_table = get_font_map_and_table(
+        text_list, fonts
+    )
+    return LanguageData(
+        lang, defs, build_version, sym_list, font_map, symbol_conversion_table
+    )
+
+
+def write_language(
+    data: LanguageData,
+    f: TextIO,
+    strings_bin: Optional[bytes] = None,
+    compress_font: bool = False,
+) -> None:
+    lang = data.lang
+    defs = data.defs
+    build_version = data.build_version
+    sym_list = data.sym_list
+    font_map = data.font_map
+    symbol_conversion_table = data.symbol_conversion_table
+
     language_code: str = lang["languageCode"]
     logging.info(f"Generating block for {language_code}")
-    # Iterate over all of the text to build up the symbols & counts
-    text_list = get_letter_counts(defs, lang)
-    # From the letter counts, need to make a symbol translator & write out the font
-    font_table_text, symbol_conversion_table = get_font_map_and_table(text_list)
 
     try:
         lang_name = lang["languageLocalName"]
     except KeyError:
         lang_name = language_code
 
-    f.write(f"\n// ---- {lang_name} ----\n\n")
-    f.write(font_table_text)
+    if strings_bin or compress_font:
+        f.write('#include "lzfx.h"\n')
+
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
+    if not compress_font:
+        font_table_text = make_font_table_cpp(
+            sym_list, font_map, symbol_conversion_table
+        )
+        f.write(font_table_text)
+    else:
+        font12_uncompressed = bytearray()
+        for sym in sym_list:
+            font12_uncompressed.extend(font_map.font12[sym])
+        font12_compressed = lzfx.compress(bytes(font12_uncompressed))
+        logging.info(
+            f"Font table 12x16 compressed from {len(font12_uncompressed)} to {len(font12_compressed)} bytes (ratio {len(font12_compressed) / len(font12_uncompressed):.3})"
+        )
+        write_bytes_as_c_array(f, "font_12x16_lzfx", font12_compressed)
+        font_table_text = make_font_table_06_cpp(
+            sym_list, font_map, symbol_conversion_table
+        )
+        f.write(font_table_text)
+
+    f.write(f"\n// ---- {lang_name} ----\n\n")
+
+    translation_common_text = get_translation_common_text(
+        defs, symbol_conversion_table, build_version
+    )
+    f.write(translation_common_text)
+    f.write(
+        f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n\n"
+    )
+
+    if not compress_font:
+        f.write("extern const uint8_t *const Font_12x16 = USER_FONT_12;\n")
+    else:
+        f.write(
+            f"static uint8_t font_out_buffer[{len(font12_uncompressed)}];\n\n"
+            "extern const uint8_t *const Font_12x16 = font_out_buffer;\n"
+        )
+    f.write("extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n")
+
+    if not strings_bin:
+        translation_strings_and_indices_text = get_translation_strings_and_indices_text(
+            lang, defs, symbol_conversion_table
+        )
+        f.write(translation_strings_and_indices_text)
+        f.write(
+            "const TranslationIndexTable *const Tr = &TranslationIndices;\n"
+            "const char *const TranslationStrings = TranslationStringsData;\n\n"
+        )
+    else:
+        compressed = lzfx.compress(strings_bin)
+        logging.info(
+            f"Strings compressed from {len(strings_bin)} to {len(compressed)} bytes (ratio {len(compressed) / len(strings_bin):.3})"
+        )
+        write_bytes_as_c_array(f, "translation_data_lzfx", compressed)
+        f.write(
+            f"static uint8_t translation_data_out_buffer[{len(strings_bin)}] __attribute__((__aligned__(2)));\n\n"
+            "const TranslationIndexTable *const Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
+            "const char *const TranslationStrings = reinterpret_cast<const char *>(translation_data_out_buffer) + sizeof(TranslationIndexTable);\n\n"
+        )
+
+    if not strings_bin and not compress_font:
+        f.write("void prepareTranslations() {}\n\n")
+    else:
+        f.write("void prepareTranslations() {\n" "  unsigned int outsize;\n")
+        if compress_font:
+            f.write(
+                "  outsize = sizeof(font_out_buffer);\n"
+                "  lzfx_decompress(font_12x16_lzfx, sizeof(font_12x16_lzfx), font_out_buffer, &outsize);\n"
+            )
+        if strings_bin:
+            f.write(
+                "  outsize = sizeof(translation_data_out_buffer);\n"
+                "  lzfx_decompress(translation_data_lzfx, sizeof(translation_data_lzfx), translation_data_out_buffer, &outsize);\n"
+            )
+        f.write("}\n\n")
+
+    sanity_checks_text = get_translation_sanity_checks_text(defs)
+    f.write(sanity_checks_text)
+
+
+def get_translation_common_text(
+    defs: dict, symbol_conversion_table: Dict[str, bytes], build_version
+) -> str:
+    translation_common_text = ""
+
+    # Write out firmware constant options
+    constants = get_constants(build_version)
+    for x in constants:
+        translation_common_text += f'const char* {x[0]} = "{convert_string(symbol_conversion_table, x[1])}";//{x[1]} \n'
+    translation_common_text += "\n"
+
+    # Debug Menu
+    translation_common_text += "const char* DebugMenu[] = {\n"
+
+    for c in get_debug_menu():
+        translation_common_text += (
+            f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
+        )
+    translation_common_text += "};\n\n"
+    return translation_common_text
+
+
+@dataclass
+class TranslationItem:
+    info: str
+    str_index: int
+
+
+def get_translation_strings_and_indices_text(
+    lang: dict, defs: dict, symbol_conversion_table: Dict[str, bytes]
+) -> str:
     str_table: List[str] = []
     str_group_messages: List[TranslationItem] = []
     str_group_messageswarn: List[TranslationItem] = []
@@ -478,21 +712,6 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         str_group_characters.append(TranslationItem(eid, len(str_table)))
         str_table.append(obj[eid])
 
-    # Write out firmware constant options
-    constants = get_constants()
-    for x in constants:
-        f.write(
-            f'const char* {x[0]} = "{convert_string(symbol_conversion_table, x[1])}";//{x[1]} \n'
-        )
-    f.write("\n")
-
-    # Debug Menu
-    f.write("const char* DebugMenu[] = {\n")
-
-    for c in get_debug_menu():
-        f.write(f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n')
-    f.write("};\n\n")
-
     # ----- Reading SettingsDescriptions
     obj = lang["menuOptions"]
 
@@ -537,8 +756,6 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         )
         str_table.append(obj[eid]["desc"])
 
-    f.write("\n")
-
     @dataclass
     class RemappedTranslationItem:
         str_index: int
@@ -573,14 +790,13 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
     str_offsets = [-1] * len(str_table)
     offset = 0
     write_null = False
-    f.write("const char TranslationStringsData[] = {\n")
+    translation_strings_text = "const char TranslationStringsData[] = {\n"
     for i, source_str in enumerate(str_table):
-        if write_null:
-            f.write(' "\\0"\n')
-        write_null = True
         if str_remapping[i] is not None:
-            write_null = False
             continue
+        if write_null:
+            translation_strings_text += ' "\\0"\n'
+        write_null = True
         # Find what items use this string
         str_used_by = [i] + [
             j for j, r in enumerate(str_remapping) if r and r.str_index == i
@@ -597,40 +813,35 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
             ]:
                 for item in group:
                     if item.str_index == j:
-                        f.write(f"  //     - {pre_info} {item.info}\n")
+                        translation_strings_text += (
+                            f"  //     - {pre_info} {item.info}\n"
+                        )
             if j == i:
-                f.write(f"  // {offset: >4}: {escape(source_str)}\n")
+                translation_strings_text += f"  // {offset: >4}: {escape(source_str)}\n"
                 str_offsets[j] = offset
             else:
                 remapped = str_remapping[j]
                 assert remapped is not None
-                f.write(
-                    f"  // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
-                )
+                translation_strings_text += f"  // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
                 str_offsets[j] = offset + remapped.str_start_offset
-        converted_str = convert_string(symbol_conversion_table, source_str)
-        f.write(f'  "{converted_str}"')
+        converted_bytes = convert_string_bytes(symbol_conversion_table, source_str)
+        translation_strings_text += f'  "{bytes_to_escaped(converted_bytes)}"'
         str_offsets[i] = offset
-        # Sanity check: Each "char" in `converted_str` should be in format
-        # `\xFF`, so the length should be divisible by 4.
-        assert len(converted_str) % 4 == 0
         # Add the length and the null terminator
-        offset += len(converted_str) // 4 + 1
-    f.write("\n};\n\n")
+        offset += len(converted_bytes) + 1
+    translation_strings_text += "\n}; // TranslationStringsData\n\n"
 
     def get_offset(idx: int) -> int:
         assert str_offsets[idx] >= 0
         return str_offsets[idx]
 
-    f.write("const TranslationIndexTable TranslationIndices = {\n")
+    translation_indices_text = "const TranslationIndexTable TranslationIndices = {\n"
 
     # ----- Write the messages string indices:
     for group in [str_group_messages, str_group_messageswarn, str_group_characters]:
         for item in group:
-            f.write(
-                f"  .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
-            )
-        f.write("\n")
+            translation_indices_text += f"  .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+        translation_indices_text += "\n"
 
     # ----- Write the settings index tables:
     for group, name in [
@@ -640,30 +851,25 @@ def write_language(lang: dict, defs: dict, f: TextIO) -> None:
         (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
     ]:
         max_len = 30
-        f.write(f"  .{name} = {{\n")
+        translation_indices_text += f"  .{name} = {{\n"
         for item in group:
-            f.write(
-                f"    /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
-            )
-        f.write(f"  }}, // {name}\n\n")
+            translation_indices_text += f"    /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+        translation_indices_text += f"  }}, // {name}\n\n"
 
-    f.write("}; // TranslationIndices\n\n")
-    f.write("const TranslationIndexTable *const Tr = &TranslationIndices;\n")
-    f.write("const char *const TranslationStrings = TranslationStringsData;\n\n")
+    translation_indices_text += "}; // TranslationIndices\n\n"
 
-    f.write(
-        f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n"
-    )
+    return translation_strings_text + translation_indices_text
 
-    f.write("\n// Verify SettingsItemIndex values:\n")
+
+def get_translation_sanity_checks_text(defs: dict) -> str:
+    sanity_checks_text = "\n// Verify SettingsItemIndex values:\n"
     for i, mod in enumerate(defs["menuOptions"]):
         eid = mod["id"]
-        f.write(
+        sanity_checks_text += (
             f"static_assert(static_cast<uint8_t>(SettingsItemIndex::{eid}) == {i});\n"
         )
-    f.write(
-        f"static_assert(static_cast<uint8_t>(SettingsItemIndex::NUM_ITEMS) == {len(defs['menuOptions'])});\n"
-    )
+    sanity_checks_text += f"static_assert(static_cast<uint8_t>(SettingsItemIndex::NUM_ITEMS) == {len(defs['menuOptions'])});\n"
+    return sanity_checks_text
 
 
 def read_version() -> str:
@@ -684,29 +890,91 @@ def read_version() -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "--output-pickled",
+        help="Write pickled language data for later reuse",
+        type=argparse.FileType("wb"),
+        required=False,
+        dest="output_pickled",
+    )
+    parser.add_argument(
+        "--input-pickled",
+        help="Use previously generated pickled language data",
+        type=argparse.FileType("rb"),
+        required=False,
+        dest="input_pickled",
+    )
+    parser.add_argument(
+        "--strings-bin",
+        help="Use generated TranslationIndices + TranslationStrings data and compress them",
+        type=argparse.FileType("rb"),
+        required=False,
+        dest="strings_bin",
+    )
+    parser.add_argument(
+        "--compress-font",
+        help="Compress the font table",
+        action="store_true",
+        required=False,
+        dest="compress_font",
+    )
+    parser.add_argument(
         "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
     )
     parser.add_argument("languageCode", help="Language to generate")
     return parser.parse_args()
 
 
-if __name__ == "__main__":
+def main() -> None:
     json_dir = HERE
 
     args = parse_args()
-    try:
-        buildVersion = read_version()
-    except FileNotFoundError:
-        logging.error("error: Could not find version info ")
+    if args.input_pickled and args.output_pickled:
+        logging.error("error: Both --output-pickled and --input-pickled are specified")
         sys.exit(1)
 
-    logging.info(f"Build version: {buildVersion}")
-    logging.info(f"Making {args.languageCode} from {json_dir}")
+    language_data: LanguageData
+    if args.input_pickled:
+        logging.info(f"Reading pickled language data from {args.input_pickled.name}...")
+        language_data = pickle.load(args.input_pickled)
+        if language_data.lang["languageCode"] != args.languageCode:
+            logging.error(
+                f"error: languageCode {args.languageCode} does not match language data {language_data.lang['languageCode']}"
+            )
+            sys.exit(1)
+        logging.info(f"Read language data for {language_data.lang['languageCode']}")
+        logging.info(f"Build version: {language_data.build_version}")
+    else:
+        try:
+            build_version = read_version()
+        except FileNotFoundError:
+            logging.error("error: Could not find version info ")
+            sys.exit(1)
 
-    lang_ = read_translation(json_dir, args.languageCode)
-    defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
+        logging.info(f"Build version: {build_version}")
+        logging.info(f"Making {args.languageCode} from {json_dir}")
+
+        lang_ = read_translation(json_dir, args.languageCode)
+        defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
+        language_data = prepare_language(lang_, defs_, build_version)
+
     out_ = args.output
     write_start(out_)
-    write_language(lang_, defs_, out_)
+    if args.strings_bin:
+        write_language(
+            language_data,
+            out_,
+            args.strings_bin.read(),
+            compress_font=args.compress_font,
+        )
+    else:
+        write_language(language_data, out_, compress_font=args.compress_font)
+
+    if args.output_pickled:
+        logging.info(f"Writing pickled data to {args.output_pickled.name}")
+        pickle.dump(language_data, args.output_pickled)
 
     logging.info("Done")
+
+
+if __name__ == "__main__":
+    main()

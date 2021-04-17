@@ -1,7 +1,10 @@
 {
 	"languageCode": "HR",
 	"languageLocalName": "Hrvatski",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracija gotova!",
 		"SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
