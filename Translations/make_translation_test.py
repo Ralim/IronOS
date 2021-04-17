@@ -24,6 +24,12 @@ class TestMakeTranslation(unittest.TestCase):
         self.assertEqual(bytes_to_escaped(b"\x00"), "\\x00")
         self.assertEqual(bytes_to_escaped(b"\xF1\xAB"), "\\xF1\\xAB")
 
+    def test_bytes_to_c_hex(self):
+        from make_translation import bytes_to_c_hex
+
+        self.assertEqual(bytes_to_c_hex(b"\x00"), "0x00,")
+        self.assertEqual(bytes_to_c_hex(b"\xF1\xAB"), "0xF1, 0xAB,")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,10 @@
 {
 	"languageCode": "SL",
 	"languageLocalName": "Slovenščina",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Kalibracija opravljena!",
 		"SettingsCalibrationWarning": "Pred nadaljevanjem mora biti konica segreta na sobno temperaturo!",

@@ -1,7 +1,10 @@
 {
 	"languageCode": "JA_JP",
 	"languageLocalName": "日本語",
-	"cyrillicGlyphs": false,
+	"fonts": [
+		"ascii_basic",
+		"cjk"
+	],
 	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationDone": "校正完了",

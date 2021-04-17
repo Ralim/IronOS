@@ -1,7 +1,10 @@
 {
 	"languageCode": "BG",
 	"languageLocalName": "Български",
-	"cyrillicGlyphs": true,
+	"fonts": [
+		"ascii_basic",
+		"cyrillic"
+	],
 	"messages": {
 		"SettingsCalibrationDone": "Калибрацията завършена!",
 		"SettingsCalibrationWarning": "Уверете се, че върха на поялника е със стайна температура преди да продължите!",
