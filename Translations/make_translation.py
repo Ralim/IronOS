@@ -549,6 +549,18 @@ def write_language(
             sym_list, font_map, symbol_conversion_table
         )
         f.write(font_table_text)
+        f.write(
+            "const FontSection FontSectionsData[] = {\n"
+            "  {\n"
+            "    .symbol_start = 2,\n"
+            f"    .symbol_end = {len(sym_list) + 2},\n"
+            "    .font12_start_ptr = USER_FONT_12,\n"
+            "    .font06_start_ptr = USER_FONT_6x8,\n"
+            "  },\n"
+            "};\n"
+            "const FontSection *const FontSections = FontSectionsData;\n"
+            "const uint8_t FontSectionsCount = sizeof(FontSectionsData) / sizeof(FontSectionsData[0]);\n"
+        )
     else:
         font12_uncompressed = bytearray()
         for sym in sym_list:
@@ -562,6 +574,19 @@ def write_language(
             sym_list, font_map, symbol_conversion_table
         )
         f.write(font_table_text)
+        f.write(
+            f"static uint8_t font_out_buffer[{len(font12_uncompressed)}];\n"
+            "const FontSection FontSectionsData[] = {\n"
+            "  {\n"
+            "    .symbol_start = 2,\n"
+            f"    .symbol_end = {len(sym_list) + 2},\n"
+            "    .font12_start_ptr = font_out_buffer,\n"
+            "    .font06_start_ptr = USER_FONT_6x8,\n"
+            "  },\n"
+            "};\n"
+            "const FontSection *const FontSections = FontSectionsData;\n"
+            "const uint8_t FontSectionsCount = sizeof(FontSectionsData) / sizeof(FontSectionsData[0]);\n"
+        )
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
@@ -572,15 +597,6 @@ def write_language(
     f.write(
         f"const bool HasFahrenheit = {('true' if lang.get('tempUnitFahrenheit', True) else 'false')};\n\n"
     )
-
-    if not compress_font:
-        f.write("extern const uint8_t *const Font_12x16 = USER_FONT_12;\n")
-    else:
-        f.write(
-            f"static uint8_t font_out_buffer[{len(font12_uncompressed)}];\n\n"
-            "extern const uint8_t *const Font_12x16 = font_out_buffer;\n"
-        )
-    f.write("extern const uint8_t *const Font_6x8 = USER_FONT_6x8;\n\n")
 
     if not strings_bin:
         translation_strings_and_indices_text = get_translation_strings_and_indices_text(
