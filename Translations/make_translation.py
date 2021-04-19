@@ -383,20 +383,14 @@ def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPer
     return FontMapsPerFont(font12_maps, font06_maps, sym_lists)
 
 
-def get_font_map_and_table(
-    text_list: List[str], fonts: List[str]
-) -> Tuple[List[str], FontMap, Dict[str, bytes]]:
-    # the text list is sorted
-    # allocate out these in their order as number codes
-    symbol_map: Dict[str, bytes] = {"\n": bytes([1])}
-    index = 2  # start at 2, as 0= null terminator,1 = new line
+def get_forced_first_symbols() -> List[str]:
     forced_first_symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    return forced_first_symbols
 
-    # We enforce that numbers come first.
-    text_list = forced_first_symbols + [
-        x for x in text_list if x not in forced_first_symbols
-    ]
 
+def get_sym_list_and_font_map(
+    text_list: List[str], fonts: List[str]
+) -> Tuple[List[str], FontMap]:
     font_maps = get_font_map_per_font(text_list, fonts)
     font12_maps = font_maps.font12_maps
     font06_maps = font_maps.font06_maps
@@ -420,12 +414,25 @@ def get_font_map_and_table(
             sym_list_both_fonts.append(sym)
     sym_list = sym_list_both_fonts + sym_list_large_only
 
+    return sym_list, FontMap(font12_map, font06_map)
+
+
+def build_symbol_conversion_map(sym_list: List[str]) -> Dict[str, bytes]:
+    forced_first_symbols = get_forced_first_symbols()
+    if sym_list[: len(forced_first_symbols)] != forced_first_symbols:
+        raise ValueError("Symbol list does not start with forced_first_symbols.")
+
+    # the text list is sorted
+    # allocate out these in their order as number codes
+    symbol_map: Dict[str, bytes] = {"\n": bytes([1])}
+    index = 2  # start at 2, as 0= null terminator,1 = new line
+
     # Assign symbol bytes by font index
     for index, sym in enumerate(sym_list, index):
         assert sym not in symbol_map
         symbol_map[sym] = get_bytes_from_font_index(index)
 
-    return sym_list, FontMap(font12_map, font06_map), symbol_map
+    return symbol_map
 
 
 def make_font_table_cpp(
@@ -500,7 +507,6 @@ class LanguageData:
     build_version: str
     sym_list: List[str]
     font_map: FontMap
-    symbol_conversion_table: Dict[str, bytes]
 
 
 def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData:
@@ -510,12 +516,16 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
     text_list = get_letter_counts(defs, lang, build_version)
     # From the letter counts, need to make a symbol translator & write out the font
     fonts = lang["fonts"]
-    sym_list, font_map, symbol_conversion_table = get_font_map_and_table(
-        text_list, fonts
-    )
-    return LanguageData(
-        lang, defs, build_version, sym_list, font_map, symbol_conversion_table
-    )
+
+    forced_first_symbols = get_forced_first_symbols()
+
+    # We enforce that numbers come first.
+    text_list = forced_first_symbols + [
+        x for x in text_list if x not in forced_first_symbols
+    ]
+
+    sym_list, font_map = get_sym_list_and_font_map(text_list, fonts)
+    return LanguageData(lang, defs, build_version, sym_list, font_map)
 
 
 def write_language(
@@ -529,7 +539,8 @@ def write_language(
     build_version = data.build_version
     sym_list = data.sym_list
     font_map = data.font_map
-    symbol_conversion_table = data.symbol_conversion_table
+
+    symbol_conversion_table = build_symbol_conversion_map(sym_list)
 
     language_code: str = lang["languageCode"]
     logging.info(f"Generating block for {language_code}")
