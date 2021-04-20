@@ -355,6 +355,18 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
+$(HEXFILE_DIR)/$(model)_multi_compressed_demo.elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_multi.demo.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		Makefile $(LDSCRIPT)
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_multi.demo.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
@@ -432,6 +444,15 @@ Core/Gen/Translation_lzfx_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--compress-font \
 		$*
+
+Core/Gen/Translation_lzfx_multi.demo.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Generating lzfx compressed translation for multi-language demo
+	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_lzfx_multi.demo.cpp \
+		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle \
+		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.o \
+		EN YUE_HK
 
 
 

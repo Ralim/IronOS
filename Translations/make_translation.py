@@ -839,8 +839,37 @@ def write_languages(
             "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
         )
     else:
-        # TODO
-        raise Exception("Not implemented")
+        max_decompressed_size = 0
+        for lang in data.langs:
+            lang_code = lang["languageCode"]
+            sym_name = objcopy.cpp_var_to_section_name(f"translation_{lang_code}")
+            strings_bin = objcopy.get_binary_from_obj(strings_obj_path, sym_name)
+            if len(strings_bin) == 0:
+                raise ValueError(f"Output for {sym_name} is empty")
+            max_decompressed_size = max(max_decompressed_size, len(strings_bin))
+            compressed = lzfx.compress(strings_bin)
+            logging.info(
+                f"Strings for {lang_code} compressed from {len(strings_bin)} to {len(compressed)} bytes (ratio {len(compressed) / len(strings_bin):.3})"
+            )
+            write_bytes_as_c_array(f, f"translation_data_lzfx_{lang_code}", compressed)
+        f.write("const LanguageMeta LanguageMetas[] = {\n")
+        for lang in data.langs:
+            lang_code = lang["languageCode"]
+            f.write(
+                "  {\n"
+                # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
+                f'    /* .code = */ "{lang_code}",\n'
+                f"    .translation_data = translation_data_lzfx_{lang_code},\n"
+                f"    .translation_size = sizeof(translation_data_lzfx_{lang_code}),\n"
+                f"    .translation_is_compressed = true,\n"
+                "  },\n"
+            )
+        f.write("};\n")
+        f.write(
+            "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
+            f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_size}];\n"
+            "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
+        )
 
     sanity_checks_text = get_translation_sanity_checks_text(defs)
     f.write(sanity_checks_text)
