@@ -306,6 +306,13 @@
 				"impulsu mocy"
 			],
 			"desc": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" PL      Polski"
+			],
+			"desc": ""
 		}
 	}
 }

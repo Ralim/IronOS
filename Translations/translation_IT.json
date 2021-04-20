@@ -305,6 +305,13 @@
 				"impulso"
 			],
 			"desc": "Regola la durata dell'«impulso sveglia» [multipli di 250 ms]"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" IT    Italiano"
+			],
+			"desc": ""
 		}
 	}
 }

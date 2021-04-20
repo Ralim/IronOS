@@ -395,7 +395,7 @@ def get_forced_first_symbols() -> List[str]:
 
 def get_sym_list_and_font_map(
     text_list: List[str], fonts: List[str]
-) -> Tuple[List[str], FontMap]:
+) -> Tuple[List[str], Dict[str, List[str]], FontMap]:
     font_maps = get_font_map_per_font(text_list, fonts)
     font12_maps = font_maps.font12_maps
     font06_maps = font_maps.font06_maps
@@ -419,7 +419,7 @@ def get_sym_list_and_font_map(
             sym_list_both_fonts.append(sym)
     sym_list = sym_list_both_fonts + sym_list_large_only
 
-    return sym_list, FontMap(font12_map, font06_map)
+    return sym_list, font_maps.sym_lists, FontMap(font12_map, font06_map)
 
 
 def build_symbol_conversion_map(sym_list: List[str]) -> Dict[str, bytes]:
@@ -443,18 +443,23 @@ def build_symbol_conversion_map(sym_list: List[str]) -> Dict[str, bytes]:
 def make_font_table_cpp(
     sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
 ) -> str:
-    output_table = make_font_table_12_cpp(sym_list, font_map, symbol_map)
+    output_table = make_font_table_named_cpp(
+        "USER_FONT_12", sym_list, font_map.font12, symbol_map
+    )
     output_table += make_font_table_06_cpp(sym_list, font_map, symbol_map)
     return output_table
 
 
-def make_font_table_12_cpp(
-    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+def make_font_table_named_cpp(
+    name: str,
+    sym_list: List[str],
+    font_map: Dict[str, bytes],
+    symbol_map: Dict[str, bytes],
 ) -> str:
-    output_table = "const uint8_t USER_FONT_12[] = {\n"
+    output_table = f"const uint8_t {name}[] = {{\n"
     for sym in sym_list:
-        output_table += f"{bytes_to_c_hex(font_map.font12[sym])}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
-    output_table += "};\n"
+        output_table += f"{bytes_to_c_hex(font_map[sym])}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
+    output_table += f"}}; // {name}\n"
     return output_table
 
 
@@ -507,10 +512,11 @@ def write_bytes_as_c_array(
 
 @dataclass
 class LanguageData:
-    lang: dict
+    langs: List[dict]
     defs: dict
     build_version: str
     sym_list: List[str]
+    sym_lists_by_font: Dict[str, List[str]]
     font_map: FontMap
 
 
@@ -529,8 +535,80 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
         x for x in text_list if x not in forced_first_symbols
     ]
 
-    sym_list, font_map = get_sym_list_and_font_map(text_list, fonts)
-    return LanguageData(lang, defs, build_version, sym_list, font_map)
+    sym_list, sym_lists_by_font, font_map = get_sym_list_and_font_map(text_list, fonts)
+    return LanguageData(
+        [lang], defs, build_version, sym_list, sym_lists_by_font, font_map
+    )
+
+
+def prepare_languages(
+    langs: List[dict], defs: dict, build_version: str
+) -> LanguageData:
+    language_codes: List[str] = [lang["languageCode"] for lang in langs]
+    logging.info(f"Preparing language data for {language_codes}")
+
+    forced_first_symbols = get_forced_first_symbols()
+
+    all_fonts = [
+        font_tables.NAME_ASCII_BASIC,
+        font_tables.NAME_LATIN_EXTENDED,
+        font_tables.NAME_CYRILLIC,
+        font_tables.NAME_CJK,
+    ]
+
+    # Build the full font maps
+    font12_map = {}
+    font06_map = {}
+    # Calculate total symbol counts per font:
+    total_sym_counts: Dict[str, Dict[str, int]] = {}
+    for lang in langs:
+        text_list, sym_counts = get_letter_counts(defs, lang, build_version)
+        fonts = lang["fonts"]
+        text_list = forced_first_symbols + [
+            x for x in text_list if x not in forced_first_symbols
+        ]
+        font_maps = get_font_map_per_font(text_list, fonts)
+        for font in fonts:
+            font12_map.update(font_maps.font12_maps[font])
+            font06_map.update(font_maps.font06_maps[font])
+        for font, font_sym_list in font_maps.sym_lists.items():
+            font_total_sym_counts = total_sym_counts.get(font, {})
+            for sym in font_sym_list:
+                font_total_sym_counts[sym] = font_total_sym_counts.get(
+                    sym, 0
+                ) + sym_counts.get(sym, 0)
+            total_sym_counts[font] = font_total_sym_counts
+
+    sym_lists_by_font: Dict[str, List[str]] = {}
+    combined_sym_list = []
+    for font in all_fonts:
+        if font not in total_sym_counts:
+            continue
+        # swap to Big -> little sort order
+        current_sym_list = [
+            x[0]
+            for x in sorted(
+                total_sym_counts[font].items(),
+                key=lambda kv: (kv[1], kv[0]),
+                reverse=True,
+            )
+        ]
+        if font == font_tables.NAME_ASCII_BASIC:
+            # We enforce that numbers come first.
+            current_sym_list = forced_first_symbols + [
+                x for x in current_sym_list if x not in forced_first_symbols
+            ]
+        sym_lists_by_font[font] = current_sym_list
+        combined_sym_list.extend(current_sym_list)
+
+    return LanguageData(
+        langs,
+        defs,
+        build_version,
+        combined_sym_list,
+        sym_lists_by_font,
+        FontMap(font12_map, font06_map),
+    )
 
 
 def write_language(
@@ -539,7 +617,9 @@ def write_language(
     strings_bin: Optional[bytes] = None,
     compress_font: bool = False,
 ) -> None:
-    lang = data.lang
+    if len(data.langs) > 1:
+        raise ValueError("More than 1 languages are provided")
+    lang = data.langs[0]
     defs = data.defs
     build_version = data.build_version
     sym_list = data.sym_list
@@ -650,6 +730,117 @@ def write_language(
                 "  lzfx_decompress(translation_data_lzfx, sizeof(translation_data_lzfx), translation_data_out_buffer, &outsize);\n"
             )
         f.write("}\n\n")
+
+    sanity_checks_text = get_translation_sanity_checks_text(defs)
+    f.write(sanity_checks_text)
+
+
+def write_languages(
+    data: LanguageData,
+    f: TextIO,
+    strings_obj_path: Optional[str] = None,
+    compress_font: bool = False,
+) -> None:
+    defs = data.defs
+    build_version = data.build_version
+    combined_sym_list = data.sym_list
+    sym_lists_by_font = data.sym_lists_by_font
+    font_map = data.font_map
+
+    symbol_conversion_table = build_symbol_conversion_map(combined_sym_list)
+
+    language_codes: List[str] = [lang["languageCode"] for lang in data.langs]
+    logging.info(f"Generating block for {language_codes}")
+
+    lang_names = [
+        lang.get("languageLocalName", lang["languageCode"]) for lang in data.langs
+    ]
+
+    f.write('#include "Translation_multi.h"')
+
+    f.write(f"\n// ---- {lang_names} ----\n\n")
+
+    if not compress_font:
+        for font, current_sym_list in sym_lists_by_font.items():
+            font_table_text = make_font_table_named_cpp(
+                f"font_table_12x16_{font}",
+                current_sym_list,
+                font_map.font12,
+                symbol_conversion_table,
+            )
+            f.write(font_table_text)
+            if font != font_tables.NAME_CJK:
+                font_table_text = make_font_table_named_cpp(
+                    f"font_table_6x8_{font}",
+                    current_sym_list,
+                    font_map.font06,  # type: ignore[arg-type]
+                    symbol_conversion_table,
+                )
+                f.write(font_table_text)
+
+        f.write("const FontSection FontSectionsData[] = {\n")
+        for font, current_sym_list in sym_lists_by_font.items():
+            current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
+            f.write(
+                "  {\n"
+                f"    .symbol_start = {current_sym_start},\n"
+                f"    .symbol_end = {len(current_sym_list) + current_sym_start},\n"
+                f"    .font12_start_ptr = font_table_12x16_{font},\n"
+            )
+            if font != font_tables.NAME_CJK:
+                f.write(f"    .font06_start_ptr = font_table_6x8_{font},\n")
+            else:
+                f.write("    .font06_start_ptr = nullptr,\n")
+            f.write("  },\n")
+        f.write(
+            "};\n"
+            "const FontSection *const FontSections = FontSectionsData;\n"
+            "const uint8_t FontSectionsCount = sizeof(FontSectionsData) / sizeof(FontSectionsData[0]);\n"
+        )
+    else:
+        # TODO
+        raise Exception("Not implemented")
+
+    f.write(f"\n// ---- {lang_names} ----\n\n")
+
+    translation_common_text = get_translation_common_text(
+        defs, symbol_conversion_table, build_version
+    )
+    f.write(translation_common_text)
+    f.write(
+        f"const bool HasFahrenheit = {('true' if any([lang.get('tempUnitFahrenheit', True) for lang in data.langs]) else 'false')};\n\n"
+    )
+
+    if not strings_obj_path:
+        for lang in data.langs:
+            lang_code = lang["languageCode"]
+            translation_strings_and_indices_text = (
+                get_translation_strings_and_indices_text(
+                    lang, defs, symbol_conversion_table, suffix=f"_{lang_code}"
+                )
+            )
+            f.write(translation_strings_and_indices_text)
+        f.write("const LanguageMeta LanguageMetas[] = {\n")
+        for lang in data.langs:
+            lang_code = lang["languageCode"]
+            f.write(
+                "  {\n"
+                # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
+                f'    /* .code = */ "{lang_code}",\n'
+                f"    .translation_data = reinterpret_cast<const uint8_t *>(&translation_{lang_code}),\n"
+                f"    .translation_size = sizeof(translation_{lang_code}),\n"
+                f"    .translation_is_compressed = false,\n"
+                "  },\n"
+            )
+        f.write("};\n")
+        f.write(
+            "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
+            f"alignas(TranslationData) uint8_t translation_data_out_buffer[{0}];\n"
+            "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
+        )
+    else:
+        # TODO
+        raise Exception("Not implemented")
 
     sanity_checks_text = get_translation_sanity_checks_text(defs)
     f.write(sanity_checks_text)
@@ -967,7 +1158,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
     )
-    parser.add_argument("languageCode", help="Language to generate")
+    parser.add_argument(
+        "languageCodes",
+        metavar="languageCode",
+        nargs="+",
+        help="Language(s) to generate",
+    )
     return parser.parse_args()
 
 
@@ -983,12 +1179,13 @@ def main() -> None:
     if args.input_pickled:
         logging.info(f"Reading pickled language data from {args.input_pickled.name}...")
         language_data = pickle.load(args.input_pickled)
-        if language_data.lang["languageCode"] != args.languageCode:
+        language_codes = [lang["languageCode"] for lang in language_data.langs]
+        if language_codes != args.languageCodes:
             logging.error(
-                f"error: languageCode {args.languageCode} does not match language data {language_data.lang['languageCode']}"
+                f"error: languageCode {args.languageCode} does not match language data {language_codes}"
             )
             sys.exit(1)
-        logging.info(f"Read language data for {language_data.lang['languageCode']}")
+        logging.info(f"Read language data for {language_codes}")
         logging.info(f"Build version: {language_data.build_version}")
     else:
         try:
@@ -998,27 +1195,45 @@ def main() -> None:
             sys.exit(1)
 
         logging.info(f"Build version: {build_version}")
-        logging.info(f"Making {args.languageCode} from {json_dir}")
+        logging.info(f"Making {args.languageCodes} from {json_dir}")
 
-        lang_ = read_translation(json_dir, args.languageCode)
         defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
-        language_data = prepare_language(lang_, defs_, build_version)
+        if len(args.languageCodes) == 1:
+            lang_ = read_translation(json_dir, args.languageCodes[0])
+            language_data = prepare_language(lang_, defs_, build_version)
+        else:
+            langs_ = [
+                read_translation(json_dir, lang_code)
+                for lang_code in args.languageCodes
+            ]
+            language_data = prepare_languages(langs_, defs_, build_version)
 
     out_ = args.output
     write_start(out_)
-    if args.strings_obj:
-        sym_name = objcopy.cpp_var_to_section_name("translation")
-        strings_bin = objcopy.get_binary_from_obj(args.strings_obj.name, sym_name)
-        if len(strings_bin) == 0:
-            raise ValueError(f"Output for {sym_name} is empty")
-        write_language(
-            language_data,
-            out_,
-            strings_bin=strings_bin,
-            compress_font=args.compress_font,
-        )
+    if len(language_data.langs) == 1:
+        if args.strings_obj:
+            sym_name = objcopy.cpp_var_to_section_name("translation")
+            strings_bin = objcopy.get_binary_from_obj(args.strings_obj.name, sym_name)
+            if len(strings_bin) == 0:
+                raise ValueError(f"Output for {sym_name} is empty")
+            write_language(
+                language_data,
+                out_,
+                strings_bin=strings_bin,
+                compress_font=args.compress_font,
+            )
+        else:
+            write_language(language_data, out_, compress_font=args.compress_font)
     else:
-        write_language(language_data, out_, compress_font=args.compress_font)
+        if args.strings_obj:
+            write_languages(
+                language_data,
+                out_,
+                strings_obj_path=args.strings_obj.name,
+                compress_font=args.compress_font,
+            )
+        else:
+            write_languages(language_data, out_, compress_font=args.compress_font)
 
     if args.output_pickled:
         logging.info(f"Writing pickled data to {args.output_pickled.name}")

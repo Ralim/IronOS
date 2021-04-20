@@ -310,31 +310,49 @@ all: $(ALL_FIRMWARE_TARGETS)
 $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation.%.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
+		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
+$(HEXFILE_DIR)/$(model)_multi_demo.elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_multi.demo.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		Makefile $(LDSCRIPT)
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Linking $@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_multi.demo.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.%.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.$*.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_font.%.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_font.$*.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
@@ -365,11 +383,29 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		$*
 
+Core/Gen/Translation_multi.demo.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle &: ../Translations/translation_EN.json ../Translations/translation_YUE_HK.json \
+		../Translations/make_translation.py \
+		../Translations/translations_def.js \
+		../Translations/font_tables.py \
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+	@test -d Core/Gen || mkdir -p Core/Gen
+	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
+	@echo 'Generating translations for multi-language demo'
+	@python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_multi.demo.cpp \
+		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle \
+		EN YUE_HK
+
 #
 # The recipes to produce compressed translation data:
 #
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Generating $@
+	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+
+$(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
 	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@

@@ -57,6 +57,7 @@ enum class SettingsItemIndex : uint8_t {
   AnimSpeed,
   PowerPulseWait,
   PowerPulseDuration,
+  LanguageSwitch,
   NUM_ITEMS,
 };
 
@@ -113,6 +114,14 @@ struct TranslationIndexTable {
 extern const TranslationIndexTable *Tr;
 extern const char *                 TranslationStrings;
 
+struct TranslationData {
+  TranslationIndexTable indices;
+  // Translation strings follows the translation index table.
+  // C++ does not support flexible array member as in C, so we use a 1-element
+  // array as a placeholder.
+  char strings[1];
+};
+
 struct FontSection {
   /// Start index of font section, inclusive
   uint16_t symbol_start;
@@ -132,5 +141,7 @@ constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static
 const char *translatedString(uint16_t index);
 
 void prepareTranslations();
+bool settings_displayLanguageSwitch(void);
+bool settings_setLanguageSwitch(void);
 
 #endif /* TRANSLATION_H_ */

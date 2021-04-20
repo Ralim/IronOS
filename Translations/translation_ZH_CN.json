@@ -201,6 +201,10 @@
 		"PowerPulseDuration": {
 			"text2": "电源脉冲时长",
 			"desc": "为保持电源唤醒，每次通电脉冲的时间长度 <x250ms（亳秒）>"
+		},
+		"LanguageSwitch": {
+			"text2": "语言：简体中文",
+			"desc": ""
 		}
 	}
 }
