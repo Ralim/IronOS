@@ -379,19 +379,13 @@ $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so: Core/lzfx/lzfx.c
 	@echo Building host lzfx shared library $@
 	@$(HOST_CC) -Wno-unused-result -fPIC -shared -O $^ -o $@
 
-$(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
-	@echo Dumping translation strings data from $<
-	@# Extract the raw translation data from the object file
-	@$(OBJCOPY) -O binary -j .rodata._ZL11translation $< $@
-	@test -s $@ || (rm $@; echo 'ERROR: Output for .rodata._ZL11translation is empty!' >&2; false)
-
-Core/Gen/Translation_lzfx.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
+Core/Gen/Translation_lzfx.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating lzfx compressed translation for $*
-	@python3 ../Translations/make_translation.py \
+	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
 		-o $(PWD)/Core/Gen/Translation_lzfx.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
-		--strings-bin $(OUTPUT_DIR)/Core/Gen/translation.files/$*.strings.bin \
+		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/$*.o \
 		$*
 
 Core/Gen/Translation_lzfx_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so

@@ -20,6 +20,7 @@ from bdflib.model import Font, Glyph
 
 import font_tables
 import lzfx
+import objcopy
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -950,11 +951,11 @@ def parse_args() -> argparse.Namespace:
         dest="input_pickled",
     )
     parser.add_argument(
-        "--strings-bin",
-        help="Use generated TranslationIndices + TranslationStrings data and compress them",
+        "--strings-obj",
+        help="Use generated TranslationData by extracting from object file",
         type=argparse.FileType("rb"),
         required=False,
-        dest="strings_bin",
+        dest="strings_obj",
     )
     parser.add_argument(
         "--compress-font",
@@ -1005,11 +1006,15 @@ def main() -> None:
 
     out_ = args.output
     write_start(out_)
-    if args.strings_bin:
+    if args.strings_obj:
+        sym_name = objcopy.cpp_var_to_section_name("translation")
+        strings_bin = objcopy.get_binary_from_obj(args.strings_obj.name, sym_name)
+        if len(strings_bin) == 0:
+            raise ValueError(f"Output for {sym_name} is empty")
         write_language(
             language_data,
             out_,
-            args.strings_bin.read(),
+            strings_bin=strings_bin,
             compress_font=args.compress_font,
         )
     else:
