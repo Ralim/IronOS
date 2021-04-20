@@ -110,8 +110,8 @@ struct TranslationIndexTable {
   uint16_t SettingsMenuEntriesDescriptions[5]; // unused
 };
 
-extern const TranslationIndexTable *const Tr;
-extern const char *const                  TranslationStrings;
+extern const TranslationIndexTable *Tr;
+extern const char *                 TranslationStrings;
 
 struct FontSection {
   /// Start index of font section, inclusive

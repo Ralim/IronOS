@@ -118,7 +118,9 @@ def get_debug_menu() -> List[str]:
     ]
 
 
-def get_letter_counts(defs: dict, lang: dict, build_version: str) -> List[str]:
+def get_letter_counts(
+    defs: dict, lang: dict, build_version: str
+) -> Tuple[List[str], Dict[str, int]]:
     text_list = []
     # iterate over all strings
     obj = lang["menuOptions"]
@@ -187,10 +189,12 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> List[str]:
                 symbol_counts[letter] = symbol_counts.get(letter, 0) + 1
     # swap to Big -> little sort order
     symbols_by_occurrence = [
-        x[0] for x in sorted(symbol_counts.items(), key=lambda kv: (kv[1], kv[0]))
+        x[0]
+        for x in sorted(
+            symbol_counts.items(), key=lambda kv: (kv[1], kv[0]), reverse=True
+        )
     ]
-    symbols_by_occurrence.reverse()
-    return symbols_by_occurrence
+    return symbols_by_occurrence, symbol_counts
 
 
 def get_cjk_glyph(sym: str) -> bytes:
@@ -513,7 +517,7 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
     language_code: str = lang["languageCode"]
     logging.info(f"Preparing language data for {language_code}")
     # Iterate over all of the text to build up the symbols & counts
-    text_list = get_letter_counts(defs, lang, build_version)
+    text_list, _ = get_letter_counts(defs, lang, build_version)
     # From the letter counts, need to make a symbol translator & write out the font
     fonts = lang["fonts"]
 
@@ -615,8 +619,8 @@ def write_language(
         )
         f.write(translation_strings_and_indices_text)
         f.write(
-            "const TranslationIndexTable *const Tr = &TranslationIndices;\n"
-            "const char *const TranslationStrings = TranslationStringsData;\n\n"
+            "const TranslationIndexTable *Tr = &translation.indices;\n"
+            "const char *TranslationStrings = translation.strings;\n\n"
         )
     else:
         compressed = lzfx.compress(strings_bin)
@@ -626,8 +630,8 @@ def write_language(
         write_bytes_as_c_array(f, "translation_data_lzfx", compressed)
         f.write(
             f"static uint8_t translation_data_out_buffer[{len(strings_bin)}] __attribute__((__aligned__(2)));\n\n"
-            "const TranslationIndexTable *const Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
-            "const char *const TranslationStrings = reinterpret_cast<const char *>(translation_data_out_buffer) + sizeof(TranslationIndexTable);\n\n"
+            "const TranslationIndexTable *Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
+            "const char *TranslationStrings = reinterpret_cast<const char *>(translation_data_out_buffer) + sizeof(TranslationIndexTable);\n\n"
         )
 
     if not strings_bin and not compress_font:
@@ -679,7 +683,7 @@ class TranslationItem:
 
 
 def get_translation_strings_and_indices_text(
-    lang: dict, defs: dict, symbol_conversion_table: Dict[str, bytes]
+    lang: dict, defs: dict, symbol_conversion_table: Dict[str, bytes], suffix: str = ""
 ) -> str:
     str_table: List[str] = []
     str_group_messages: List[TranslationItem] = []
@@ -807,6 +811,8 @@ def get_translation_strings_and_indices_text(
         j = i
         while backward_sorted_table[j + 1][2].startswith(converted):
             j += 1
+            if j + 1 == len(backward_sorted_table):
+                break
         if j != i:
             str_remapping[str_index] = RemappedTranslationItem(
                 str_index=backward_sorted_table[j][0],
@@ -817,7 +823,8 @@ def get_translation_strings_and_indices_text(
     str_offsets = [-1] * len(str_table)
     offset = 0
     write_null = False
-    translation_strings_text = "const char TranslationStringsData[] = {\n"
+    # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
+    translation_strings_text = "  /* .strings = */ {\n"
     for i, source_str in enumerate(str_table):
         if str_remapping[i] is not None:
             continue
@@ -841,33 +848,37 @@ def get_translation_strings_and_indices_text(
                 for item in group:
                     if item.str_index == j:
                         translation_strings_text += (
-                            f"  //     - {pre_info} {item.info}\n"
+                            f"    //     - {pre_info} {item.info}\n"
                         )
             if j == i:
-                translation_strings_text += f"  // {offset: >4}: {escape(source_str)}\n"
+                translation_strings_text += (
+                    f"    // {offset: >4}: {escape(source_str)}\n"
+                )
                 str_offsets[j] = offset
             else:
                 remapped = str_remapping[j]
                 assert remapped is not None
-                translation_strings_text += f"  // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
+                translation_strings_text += f"    // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
                 str_offsets[j] = offset + remapped.str_start_offset
         converted_bytes = convert_string_bytes(symbol_conversion_table, source_str)
-        translation_strings_text += f'  "{bytes_to_escaped(converted_bytes)}"'
+        translation_strings_text += f'    "{bytes_to_escaped(converted_bytes)}"'
         str_offsets[i] = offset
         # Add the length and the null terminator
         offset += len(converted_bytes) + 1
-    translation_strings_text += "\n}; // TranslationStringsData\n\n"
+    translation_strings_text += "\n  }, // .strings\n\n"
+
+    str_total_bytes = offset
 
     def get_offset(idx: int) -> int:
         assert str_offsets[idx] >= 0
         return str_offsets[idx]
 
-    translation_indices_text = "const TranslationIndexTable TranslationIndices = {\n"
+    translation_indices_text = "  .indices = {\n"
 
     # ----- Write the messages string indices:
     for group in [str_group_messages, str_group_messageswarn, str_group_characters]:
         for item in group:
-            translation_indices_text += f"  .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+            translation_indices_text += f"    .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
         translation_indices_text += "\n"
 
     # ----- Write the settings index tables:
@@ -878,14 +889,22 @@ def get_translation_strings_and_indices_text(
         (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
     ]:
         max_len = 30
-        translation_indices_text += f"  .{name} = {{\n"
+        translation_indices_text += f"    .{name} = {{\n"
         for item in group:
-            translation_indices_text += f"    /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
-        translation_indices_text += f"  }}, // {name}\n\n"
+            translation_indices_text += f"      /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
+        translation_indices_text += f"    }}, // {name}\n\n"
 
-    translation_indices_text += "}; // TranslationIndices\n\n"
+    translation_indices_text += "  }, // .indices\n\n"
 
-    return translation_strings_text + translation_indices_text
+    return (
+        "struct {\n"
+        "  TranslationIndexTable indices;\n"
+        f"  char strings[{str_total_bytes}];\n"
+        f"}} const translation{suffix} = {{\n"
+        + translation_indices_text
+        + translation_strings_text
+        + f"}}; // translation{suffix}\n\n"
+    )
 
 
 def get_translation_sanity_checks_text(defs: dict) -> str:

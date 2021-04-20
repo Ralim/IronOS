@@ -381,12 +381,9 @@ $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so: Core/lzfx/lzfx.c
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
 	@echo Dumping translation strings data from $<
-	@# Extract the raw strings data from the object file
-	@$(OBJCOPY) -O binary -j .rodata._ZL18TranslationIndices $< $(@D)/$*.data.TranslationIndices.bin
-	@test -s $(@D)/$*.data.TranslationIndices.bin || (rm $(@D)/$*.data.TranslationIndices.bin; echo 'ERROR: Output for .rodata._ZL18TranslationIndices is empty!' >&2; false)
-	@$(OBJCOPY) -O binary -j .rodata._ZL22TranslationStringsData $< $(@D)/$*.data.TranslationStrings.bin
-	@test -s $(@D)/$*.data.TranslationStrings.bin || (rm $(@D)/$*.data.TranslationStrings.bin; echo 'ERROR: Output for .rodata._ZL22TranslationStringsData is empty!' >&2; false)
-	@cat $(@D)/$*.data.TranslationIndices.bin $(@D)/$*.data.TranslationStrings.bin > $@
+	@# Extract the raw translation data from the object file
+	@$(OBJCOPY) -O binary -j .rodata._ZL11translation $< $@
+	@test -s $@ || (rm $@; echo 'ERROR: Output for .rodata._ZL11translation is empty!' >&2; false)
 
 Core/Gen/Translation_lzfx.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
 	@test -d $(@D) || mkdir -p $(@D)
