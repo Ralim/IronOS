@@ -116,8 +116,8 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
     } else {
       request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(bestIndexCurrent) | PD_RDO_FV_CURRENT_SET(bestIndexCurrent) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
     }
-    // We support usb comms (ish)
-    request->obj[0] |= PD_RDO_USB_COMMS;
+    // We dont do usb
+    // request->obj[0] |= PD_RDO_USB_COMMS;
 
     /* Update requested voltage */
     _requested_voltage = bestIndexVoltage;
@@ -130,7 +130,8 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
     if (pdNegotiationComplete) {
       request->obj[0] |= PD_RDO_CAP_MISMATCH;
     }
-    request->obj[0] |= PD_RDO_USB_COMMS;
+    // We dont do usb
+    // request->obj[0] |= PD_RDO_USB_COMMS;
 
     /* Update requested voltage */
     _requested_voltage = 5000;
