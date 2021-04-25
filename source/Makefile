@@ -452,6 +452,7 @@ Core/Gen/Translation_lzfx_multi.demo.cpp: $(OUTPUT_DIR)/Core/Gen/translation.fil
 		-o $(PWD)/Core/Gen/Translation_lzfx_multi.demo.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.o \
+		--compress-font \
 		EN YUE_HK
 
 

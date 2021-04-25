@@ -38,16 +38,45 @@ void prepareTranslations() {
   const LanguageMeta &langMeta = LanguageMetas[selectedLangIndex];
 
   const TranslationData *translationData;
+  uint16_t               buffer_remaining_size = translation_data_out_buffer_size;
+  uint8_t *              buffer_next_ptr       = translation_data_out_buffer;
   if (langMeta.translation_is_compressed) {
     unsigned int outsize;
-    outsize = translation_data_out_buffer_size;
-    lzfx_decompress(langMeta.translation_data, langMeta.translation_size, translation_data_out_buffer, &outsize);
-    translationData = reinterpret_cast<const TranslationData *>(translation_data_out_buffer);
+    outsize = buffer_remaining_size;
+    lzfx_decompress(langMeta.translation_data, langMeta.translation_size, buffer_next_ptr, &outsize);
+    translationData = reinterpret_cast<const TranslationData *>(buffer_next_ptr);
+    buffer_remaining_size -= outsize;
+    buffer_next_ptr += outsize;
   } else {
     translationData = reinterpret_cast<const TranslationData *>(langMeta.translation_data);
   }
   Tr                 = &translationData->indices;
   TranslationStrings = translationData->strings;
+
+  memset(DynamicFontSections, 0, FontSectionsCount * sizeof(DynamicFontSections[0]));
+  for (int i = 0; i < FontSectionDataCount; i++) {
+    const auto &fontSectionDataInfo = FontSectionDataInfos[i];
+    auto &      fontSection         = DynamicFontSections[i];
+    fontSection.symbol_start        = fontSectionDataInfo.symbol_start;
+    fontSection.symbol_end          = fontSection.symbol_start + fontSectionDataInfo.symbol_count;
+    const uint16_t font12_size      = fontSectionDataInfo.symbol_count * (12 * 16 / 8);
+    uint16_t       dataSize;
+    if (fontSectionDataInfo.data_is_compressed) {
+      unsigned int outsize;
+      outsize = buffer_remaining_size;
+      lzfx_decompress(fontSectionDataInfo.data_ptr, fontSectionDataInfo.data_size, buffer_next_ptr, &outsize);
+      fontSection.font12_start_ptr = buffer_next_ptr;
+      dataSize                     = outsize;
+      buffer_remaining_size -= outsize;
+      buffer_next_ptr += outsize;
+    } else {
+      fontSection.font12_start_ptr = fontSectionDataInfo.data_ptr;
+      dataSize                     = fontSectionDataInfo.data_size;
+    }
+    if (dataSize > font12_size) {
+      fontSection.font06_start_ptr = fontSection.font12_start_ptr + font12_size;
+    }
+  }
 }
 
 bool settings_setLanguageSwitch(void) {

@@ -451,15 +451,18 @@ def make_font_table_cpp(
 
 
 def make_font_table_named_cpp(
-    name: str,
+    name: Optional[str],
     sym_list: List[str],
     font_map: Dict[str, bytes],
     symbol_map: Dict[str, bytes],
 ) -> str:
-    output_table = f"const uint8_t {name}[] = {{\n"
+    output_table = ""
+    if name:
+        output_table = f"const uint8_t {name}[] = {{\n"
     for sym in sym_list:
         output_table += f"{bytes_to_c_hex(font_map[sym])}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
-    output_table += f"}}; // {name}\n"
+    if name:
+        output_table += f"}}; // {name}\n"
     return output_table
 
 
@@ -760,46 +763,89 @@ def write_languages(
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
 
+    max_decompressed_font_size = 0
     if not compress_font:
+        font_table_text = ""
+        font_section_info_text = (
+            "const FontSectionDataInfo FontSectionDataInfos[] = {\n"
+        )
         for font, current_sym_list in sym_lists_by_font.items():
-            font_table_text = make_font_table_named_cpp(
-                f"font_table_12x16_{font}",
+            font_table_text += f"const uint8_t font_table_data_{font}[] = {{\n"
+            font_table_text += "// 12x16:\n"
+            font_table_text += make_font_table_named_cpp(
+                None,
                 current_sym_list,
                 font_map.font12,
                 symbol_conversion_table,
             )
-            f.write(font_table_text)
             if font != font_tables.NAME_CJK:
-                font_table_text = make_font_table_named_cpp(
-                    f"font_table_6x8_{font}",
+                font_table_text += "// 6x8:\n"
+                font_table_text += make_font_table_named_cpp(
+                    None,
                     current_sym_list,
                     font_map.font06,  # type: ignore[arg-type]
                     symbol_conversion_table,
                 )
-                f.write(font_table_text)
-
-        f.write("const FontSection FontSectionsData[] = {\n")
-        for font, current_sym_list in sym_lists_by_font.items():
+            font_table_text += f"}}; // font_table_data_{font}\n"
             current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
-            f.write(
+            font_section_info_text += (
                 "  {\n"
                 f"    .symbol_start = {current_sym_start},\n"
-                f"    .symbol_end = {len(current_sym_list) + current_sym_start},\n"
-                f"    .font12_start_ptr = font_table_12x16_{font},\n"
+                f"    .symbol_count = {len(current_sym_list)},\n"
+                f"    .data_size = sizeof(font_table_data_{font}),\n"
+                "    .data_is_compressed = false,\n"
+                f"    .data_ptr = font_table_data_{font},\n"
+                "  },\n"
             )
-            if font != font_tables.NAME_CJK:
-                f.write(f"    .font06_start_ptr = font_table_6x8_{font},\n")
-            else:
-                f.write("    .font06_start_ptr = nullptr,\n")
-            f.write("  },\n")
-        f.write(
+
+        f.write(font_table_text)
+        font_section_info_text += (
             "};\n"
-            "const FontSection *const FontSections = FontSectionsData;\n"
-            "const uint8_t FontSectionsCount = sizeof(FontSectionsData) / sizeof(FontSectionsData[0]);\n"
+            "const uint8_t FontSectionDataCount = sizeof(FontSectionDataInfos) / sizeof(FontSectionDataInfos[0]);\n\n"
+        )
+        f.write(font_section_info_text)
+        f.write(
+            "FontSection DynamicFontSections[4] = {};\n"
+            "const FontSection *const FontSections = DynamicFontSections;\n"
+            "const uint8_t FontSectionsCount = sizeof(DynamicFontSections) / sizeof(DynamicFontSections[0]);\n"
         )
     else:
-        # TODO
-        raise Exception("Not implemented")
+        font_section_info_text = (
+            "const FontSectionDataInfo FontSectionDataInfos[] = {\n"
+        )
+        for font, current_sym_list in sym_lists_by_font.items():
+            current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
+            font_uncompressed = bytearray()
+            for sym in current_sym_list:
+                font_uncompressed.extend(font_map.font12[sym])
+            if font != font_tables.NAME_CJK:
+                for sym in current_sym_list:
+                    font_uncompressed.extend(font_map.font06[sym])  # type: ignore[arg-type]
+            font_compressed = lzfx.compress(bytes(font_uncompressed))
+            logging.info(
+                f"Font table for {font} compressed from {len(font_uncompressed)} to {len(font_compressed)} bytes (ratio {len(font_compressed) / len(font_uncompressed):.3})"
+            )
+            max_decompressed_font_size += len(font_uncompressed)
+            write_bytes_as_c_array(f, f"font_data_lzfx_{font}", font_compressed)
+            font_section_info_text += (
+                "  {\n"
+                f"    .symbol_start = {current_sym_start},\n"
+                f"    .symbol_count = {len(current_sym_list)},\n"
+                f"    .data_size = sizeof(font_data_lzfx_{font}),\n"
+                "    .data_is_compressed = true,\n"
+                f"    .data_ptr = font_data_lzfx_{font},\n"
+                "  },\n"
+            )
+        font_section_info_text += (
+            "};\n"
+            "const uint8_t FontSectionDataCount = sizeof(FontSectionDataInfos) / sizeof(FontSectionDataInfos[0]);\n\n"
+        )
+        f.write(font_section_info_text)
+        f.write(
+            "FontSection DynamicFontSections[4] = {};\n"
+            "const FontSection *const FontSections = DynamicFontSections;\n"
+            "const uint8_t FontSectionsCount = sizeof(DynamicFontSections) / sizeof(DynamicFontSections[0]);\n"
+        )
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
 
@@ -811,6 +857,7 @@ def write_languages(
         f"const bool HasFahrenheit = {('true' if any([lang.get('tempUnitFahrenheit', True) for lang in data.langs]) else 'false')};\n\n"
     )
 
+    max_decompressed_translation_size = 0
     if not strings_obj_path:
         for lang in data.langs:
             lang_code = lang["languageCode"]
@@ -833,20 +880,16 @@ def write_languages(
                 "  },\n"
             )
         f.write("};\n")
-        f.write(
-            "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
-            f"alignas(TranslationData) uint8_t translation_data_out_buffer[{0}];\n"
-            "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
-        )
     else:
-        max_decompressed_size = 0
         for lang in data.langs:
             lang_code = lang["languageCode"]
             sym_name = objcopy.cpp_var_to_section_name(f"translation_{lang_code}")
             strings_bin = objcopy.get_binary_from_obj(strings_obj_path, sym_name)
             if len(strings_bin) == 0:
                 raise ValueError(f"Output for {sym_name} is empty")
-            max_decompressed_size = max(max_decompressed_size, len(strings_bin))
+            max_decompressed_translation_size = max(
+                max_decompressed_translation_size, len(strings_bin)
+            )
             compressed = lzfx.compress(strings_bin)
             logging.info(
                 f"Strings for {lang_code} compressed from {len(strings_bin)} to {len(compressed)} bytes (ratio {len(compressed) / len(strings_bin):.3})"
@@ -865,11 +908,11 @@ def write_languages(
                 "  },\n"
             )
         f.write("};\n")
-        f.write(
-            "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
-            f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_size}];\n"
-            "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
-        )
+    f.write(
+        "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
+        f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_translation_size + max_decompressed_font_size}];\n"
+        "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
+    )
 
     sanity_checks_text = get_translation_sanity_checks_text(defs)
     f.write(sanity_checks_text)

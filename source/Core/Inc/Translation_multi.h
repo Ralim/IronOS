@@ -14,6 +14,21 @@
 extern uint8_t        translation_data_out_buffer[];
 extern const uint16_t translation_data_out_buffer_size;
 
+struct FontSectionDataInfo {
+  uint16_t symbol_start;
+  uint16_t symbol_count;
+  uint16_t data_size : 15;
+  bool     data_is_compressed : 1;
+
+  // Font12x16 data followed by font6x8 data
+  const uint8_t *data_ptr;
+};
+
+extern const FontSectionDataInfo FontSectionDataInfos[];
+extern const uint8_t             FontSectionDataCount;
+
+extern FontSection DynamicFontSections[];
+
 struct LanguageMeta {
   char           code[8];
   const uint8_t *translation_data;

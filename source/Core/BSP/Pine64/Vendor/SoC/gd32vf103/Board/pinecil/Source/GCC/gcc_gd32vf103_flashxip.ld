@@ -50,7 +50,7 @@ __ILM_RAM_SIZE = 0x00010000;
  * </h>
 */
 __RAM_BASE = 0x20000000;
-__RAM_SIZE = 0x00005000;
+__RAM_SIZE = 0x00006800;
 
 /********************* Stack / Heap Configuration ****************************
  * <h> Stack / Heap Configuration
