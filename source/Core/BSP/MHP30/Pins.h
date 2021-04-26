@@ -38,7 +38,7 @@
 #define SDA_GPIO_Port             GPIOB
 #define SCL2_Pin                  GPIO_PIN_3
 #define SCL2_GPIO_Port            GPIOB
-#define SDA2_Pin                  GPIO_PIN15
+#define SDA2_Pin                  GPIO_PIN_15
 #define SDA2_GPIO_Port            GPIOA
 #define INT_PD_Pin                GPIO_PIN_5
 #define INT_PD_GPIO_Port          GPIOB

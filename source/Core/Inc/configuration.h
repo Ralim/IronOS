@@ -163,6 +163,18 @@
 #define USB_PD_VMAX         12                     // Maximum voltage for PD to negotiate
 #endif
 
+#ifdef MODEL_MHP30
+#define VOLTAGE_DIV         650                     // Default for MHP30 TODO
+#define PID_POWER_LIMIT     75                      // Sets the max pwm power limit
+#define CALIBRATION_OFFSET  900                    // the adc offset in uV
+#define POWER_LIMIT         65                      // 65 watts default power limit
+#define MAX_POWER_LIMIT     35                      //
+#define POWER_LIMIT_STEPS   2                       //
+#define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS100 // TODO
+#define TEMP_uV_LOOKUP_MHP30                        // TODO
+#define USB_PD_VMAX         20                      // Maximum voltage for PD to negotiate
+#endif
+
 #ifdef MODEL_TS100
 const int32_t tipMass       = 65; // X10 watts to raise 1 deg C in 1 second
 const uint8_t tipResistance = 75; // x10 ohms, 7.5 typical for ts100 tips
@@ -182,3 +194,10 @@ const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 const uint32_t tipMass       = 40;
 const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 #endif
+
+
+#ifdef MODEL_MHP30
+const uint32_t tipMass       = 80;//TODO
+const uint8_t  tipResistance = 60; // x10 ohms, 6 typical
+#endif
+

@@ -63,7 +63,7 @@ uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) { return conver
 //  x = input value
 // output is x's interpolated y value
 int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x) { return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000; }
-#ifdef TEMP_uV_LOOKUP_HAKKO
+#ifdef TEMP_uV_LOOKUP_MHP30
 const uint16_t uVtoDegC[] = {
     //
     //
@@ -122,64 +122,6 @@ const uint16_t uVtoDegC[] = {
 };
 #endif
 
-#ifdef TEMP_uV_LOOKUP_TS80
-
-const uint16_t uVtoDegC[] = {
-    //
-    //
-    530,   0,   //
-    1282,  10,  //
-    2034,  20,  //
-    2786,  30,  //
-    3538,  40,  //
-    4290,  50,  //
-    5043,  60,  //
-    5795,  70,  //
-    6547,  80,  //
-    7299,  90,  //
-    8051,  100, //
-    8803,  110, //
-    9555,  120, //
-    10308, 130, //
-    11060, 140, //
-    11812, 150, //
-    12564, 160, //
-    13316, 170, //
-    14068, 180, //
-    14820, 190, //
-    15573, 200, //
-    16325, 210, //
-    17077, 220, //
-    17829, 230, //
-    18581, 240, //
-    19333, 250, //
-    20085, 260, //
-    20838, 270, //
-    21590, 280, //
-    22342, 290, //
-    23094, 300, //
-    23846, 310, //
-    24598, 320, //
-    25350, 330, //
-    26103, 340, //
-    26855, 350, //
-    27607, 360, //
-    28359, 370, //
-    29111, 380, //
-    29863, 390, //
-    30615, 400, //
-    31368, 410, //
-    32120, 420, //
-    32872, 430, //
-    33624, 440, //
-    34376, 450, //
-    35128, 460, //
-    35880, 470, //
-    36632, 480, //
-    37385, 490, //
-    38137, 500, //
-};
-#endif
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
   if (tipuVDelta) {
     int noItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));

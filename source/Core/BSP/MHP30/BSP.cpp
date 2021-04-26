@@ -158,7 +158,6 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 // Therefore we can divide down from there
 // Multiplying ADC max by 4 for additional calibration options,
 // ideal term is 467
-#define BATTFILTERDEPTH 32
   static uint8_t  preFillneeded = 10;
   static uint32_t samples[BATTFILTERDEPTH];
   static uint8_t  index = 0;

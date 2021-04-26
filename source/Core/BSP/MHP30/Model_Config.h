@@ -19,7 +19,7 @@
 #define ACCEL_LIS
 #define ACCEL_MSA
 #define POW_PD
-#define POW_QC
+//#define POW_QC // Unsure if we have this
 #define TEMP_NTC
 #define I2C_SOFT
 #define LIS_ORI_FLIP
