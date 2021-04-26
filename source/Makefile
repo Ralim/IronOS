@@ -12,6 +12,11 @@ endif
 
 ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_CN ZH_TW
 
+LANGUAGE_GROUP_DEMO_LANGS=EN YUE_HK
+LANGUAGE_GROUP_DEMO_NAME=demo
+
+LANGUAGE_GROUPS=DEMO
+
 
 # Defines for host tools
 ifeq ($(HOST_CC),)
@@ -319,18 +324,6 @@ $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
-$(HEXFILE_DIR)/$(model)_multi_demo.elf : \
-		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_multi.demo.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
-		Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_multi.demo.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
-		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
 $(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.%.o \
@@ -353,18 +346,6 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_font.$*.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_multi_compressed_demo.elf : \
-		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_multi.demo.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
-		Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_multi.demo.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
@@ -394,19 +375,6 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 		-o $(PWD)/Core/Gen/Translation.$*.cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		$*
-
-Core/Gen/Translation_multi.demo.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle &: ../Translations/translation_EN.json ../Translations/translation_YUE_HK.json \
-		../Translations/make_translation.py \
-		../Translations/translations_def.js \
-		../Translations/font_tables.py \
-		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
-	@test -d Core/Gen || mkdir -p Core/Gen
-	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
-	@echo 'Generating translations for multi-language demo'
-	@python3 ../Translations/make_translation.py \
-		-o $(PWD)/Core/Gen/Translation_multi.demo.cpp \
-		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle \
-		EN YUE_HK
 
 #
 # The recipes to produce compressed translation data:
@@ -445,16 +413,65 @@ Core/Gen/Translation_lzfx_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%
 		--compress-font \
 		$*
 
-Core/Gen/Translation_lzfx_multi.demo.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Generating lzfx compressed translation for multi-language demo
-	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
-		-o $(PWD)/Core/Gen/Translation_lzfx_multi.demo.cpp \
-		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.pickle \
-		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.demo.o \
-		--compress-font \
-		EN YUE_HK
+#
+# The recipes to produce multi-language firmwares:
+#
 
+# Usage: $(eval $(call multi_lang_rule,$(1)=group_code,$(2)=group_name,$(3)=lang_codes))
+define multi_lang_rule
+
+$(HEXFILE_DIR)/$(model)_multi_$(2).elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		Makefile $(LDSCRIPT)
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo Linking $$@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
+
+$(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		Makefile $(LDSCRIPT)
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo Linking $$@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
+
+Core/Gen/Translation_multi.$(1).cpp $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle &: $(patsubst %,../Translations/translation_%.json,$(3)) \
+		../Translations/make_translation.py \
+		../Translations/translations_def.js \
+		../Translations/font_tables.py \
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+	@test -d Core/Gen || mkdir -p Core/Gen
+	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
+	@echo 'Generating translations for multi-language $(2)'
+	@python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_multi.$(1).cpp \
+		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
+		$(3)
+
+Core/Gen/Translation_lzfx_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo Generating lzfx compressed translation for multi-language $(2)
+	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_lzfx_multi.$(1).cpp \
+		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
+		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o \
+		--compress-font \
+		$(3)
+
+endef # multi_lang_rule
+
+
+# Add multi-language firmware rules:
+$(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_code),$(LANGUAGE_GROUP_$(group_code)_NAME),$(LANGUAGE_GROUP_$(group_code)_LANGS))))
 
 
 clean :
