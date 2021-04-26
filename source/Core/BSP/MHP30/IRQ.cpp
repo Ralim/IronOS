@@ -14,7 +14,8 @@
  * readings coming in Once these have come in we can unblock the PID so that it
  * runs again
  */
-void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc) {
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	if (hadc == &hadc1) {
 		if (pidTaskNotification) {

@@ -17,7 +17,7 @@ DMA_HandleTypeDef hdma_i2c1_tx;
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
-#define ADC_CHANNELS 2
+#define ADC_CHANNELS 3
 #define ADC_SAMPLES  16
 uint32_t ADCReadings[ADC_SAMPLES * ADC_CHANNELS]; // room for 32 lots of the pair of readings
 
@@ -51,7 +51,7 @@ void Setup_HAL() {
 	HAL_ADCEx_InjectedStart(&hadc2);                 // enable injected readings
 }
 
-// channel 0 -> temperature sensor, 1-> VIN
+// channel 0 -> temperature sensor, 1-> VIN, 2-> tip
 uint16_t getADC(uint8_t channel) {
 	uint32_t sum = 0;
 	for (uint8_t i = 0; i < ADC_SAMPLES; i++) {
@@ -115,7 +115,6 @@ static void MX_ADC1_Init(void) {
 	ADC_MultiModeTypeDef multimode;
 
 	ADC_ChannelConfTypeDef sConfig;
-	ADC_InjectionConfTypeDef sConfigInjected;
 	/**Common config
 	 */
 	hadc1.Instance = ADC1;
@@ -144,33 +143,11 @@ static void MX_ADC1_Init(void) {
 	sConfig.Channel = VIN_ADC1_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_2;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+	sConfig.Channel = TIP_TEMP_ADC1_CHANNEL;
+	sConfig.Rank = ADC_REGULAR_RANK_2;
+	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
-	/**Configure Injected Channel
-	 */
-	// F in = 10.66 MHz
-	/*
-	 * Injected time is 1 delay clock + (12 adc cycles*4)+4*sampletime =~217
-	 * clocks = 0.2ms Charge time is 0.016 uS ideally So Sampling time must be >=
-	 * 0.016uS 1/10.66MHz is 0.09uS, so 1 CLK is *should* be enough
-	 * */
-	sConfigInjected.InjectedChannel = TIP_TEMP_ADC1_CHANNEL;
-	sConfigInjected.InjectedRank = 1;
-	sConfigInjected.InjectedNbrOfConversion = 4;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
-	sConfigInjected.AutoInjectedConv = DISABLE;
-	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
-	sConfigInjected.InjectedOffset = 0;
-
-	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-
-	sConfigInjected.InjectedRank = 2;
-	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-	sConfigInjected.InjectedRank = 3;
-	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-	sConfigInjected.InjectedRank = 4;
-	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-	SET_BIT(hadc1.Instance->CR1, (ADC_CR1_JEOCIE)); // Enable end of injected conv irq
+	SET_BIT(hadc1.Instance->CR1, (ADC_CR1_EOSIE)); // Enable end of Normal
 	// Run ADC internal calibration
 	while (HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK)
 		;
@@ -179,7 +156,6 @@ static void MX_ADC1_Init(void) {
 /* ADC2 init function */
 static void MX_ADC2_Init(void) {
 	ADC_ChannelConfTypeDef sConfig;
-	ADC_InjectionConfTypeDef sConfigInjected;
 
 	/**Common config
 	 */
@@ -202,25 +178,9 @@ static void MX_ADC2_Init(void) {
 	sConfig.Channel = VIN_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_2;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
-
-	/**Configure Injected Channel
-	 */
-	sConfigInjected.InjectedChannel = TIP_TEMP_ADC2_CHANNEL;
-	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_1;
-	sConfigInjected.InjectedNbrOfConversion = 4;
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-	sConfigInjected.ExternalTrigInjecConv = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
-	sConfigInjected.AutoInjectedConv = DISABLE;
-	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
-	sConfigInjected.InjectedOffset = 0;
-	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
-
-	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_2;
-	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
-	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_3;
-	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
-	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_4;
-	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
+	sConfig.Channel = TIP_TEMP_ADC1_CHANNEL;
+	sConfig.Rank = ADC_REGULAR_RANK_2;
+	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
 	// Run ADC internal calibration
 	while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK)
