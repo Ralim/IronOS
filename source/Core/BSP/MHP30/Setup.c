@@ -300,14 +300,14 @@ static void MX_TIM2_Init(void) {
 	TIM_OC_InitTypeDef sConfigOC;
 
 	htim2.Instance = TIM2;
-	htim2.Init.Prescaler = 2000; // 2 MHz timer clock/2000 = 1 kHz tick rate
+	htim2.Init.Prescaler = 200; // 2 MHz timer clock/2000 = 1 kHz tick rate
 
 	// pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
 	// These values give a rate of around 3.5 Hz for "fast" mode and 1.84 Hz for "slow"
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
 	// dummy value, will be reconfigured by BSPInit()
 	htim2.Init.Period = 10;
-	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4; // 8 MHz (x2 APB1) before divide
+	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1; // 8 MHz (x2 APB1) before divide
 	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	htim2.Init.RepetitionCounter = 0;
 	HAL_TIM_Base_Init(&htim2);
@@ -324,13 +324,12 @@ static void MX_TIM2_Init(void) {
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
 	// dummy value, will be reconfigured by BSPInit() in the BSP.cpp
-	sConfigOC.Pulse = 5; // 13 -> Delay of 7 ms
+	sConfigOC.Pulse = 5;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
 	sConfigOC.Pulse = 0; // default to entirely off
 	HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4);
 
-	HAL_TIM_Base_Start_IT(&htim2);
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 }
 

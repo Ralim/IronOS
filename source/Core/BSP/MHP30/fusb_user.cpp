@@ -5,6 +5,7 @@
 #include "Setup.h"
 #include "fusb302b.h"
 #include "fusb_user.h"
+#include "Pins.h"
 /*
  * Read a single byte from the FUSB302B
  *
@@ -53,7 +54,7 @@ bool fusb_write_byte(uint8_t addr, uint8_t byte) {
  * buf: The buffer to write
  */
 bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) {
-	return FRToSI2C::Mem_Write(FUSB302B_ADDR, addr, buf, size);
+	return FRToSI2C::Mem_Write(FUSB302B_ADDR, addr, (uint8_t*)buf, size);
 }
 
 uint8_t fusb302_detect() {

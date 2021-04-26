@@ -29,7 +29,7 @@ uint8_t            OLED::secondFrameBuffer[OLED_WIDTH * 2];
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
 /*Data packets are prefixed with 0x40*/
-FRToSI2C::I2C_REG OLED_Setup_Array[] = {
+I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     /**/
     {0x80, 0xAE, 0}, /*Display off*/
     {0x80, 0xD5, 0}, /*Set display clock divide ratio / osc freq*/
@@ -89,7 +89,7 @@ void OLED::initialize() {
   // initialisation data to the OLED.
 
   for (int tries = 0; tries < 10; tries++) {
-    if (FRToSI2C::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]))) {
+    if (I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]))) {
       return;
     }
   }
@@ -238,7 +238,7 @@ void OLED::setRotation(bool leftHanded) {
     OLED_Setup_Array[5].val = 0xC0;
     OLED_Setup_Array[9].val = 0xA0;
   }
-  FRToSI2C::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
+  I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
 
   inLeftHandedMode = leftHanded;
 
