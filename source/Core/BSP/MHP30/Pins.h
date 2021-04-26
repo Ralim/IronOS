@@ -42,6 +42,8 @@
 #define SDA2_GPIO_Port            GPIOA
 #define INT_PD_Pin                GPIO_PIN_5
 #define INT_PD_GPIO_Port          GPIOB
+#define HEAT_EN_Pin               GPIO_PIN_3
+#define HEAT_EN_GPIO_Port         GPIOA
 
 
 #endif /* BSP_MINIWARE_PINS_H_ */

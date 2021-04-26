@@ -163,7 +163,6 @@ static void MX_ADC1_Init(void) {
 	sConfigInjected.InjectedOffset = 0;
 
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
 
 	sConfigInjected.InjectedRank = 2;
 	HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
@@ -215,7 +214,6 @@ static void MX_ADC2_Init(void) {
 	sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
 	sConfigInjected.InjectedOffset = 0;
 	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
-	sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
 
 	sConfigInjected.InjectedRank = ADC_INJECTED_RANK_2;
 	HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
@@ -231,8 +229,7 @@ static void MX_ADC2_Init(void) {
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.ClockSpeed = 75000;
-	// OLED doesnt handle >100k when its asleep (off).
+	hi2c1.Init.ClockSpeed = 75000;	//TODO we can probs run this fast
 	hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -260,10 +257,10 @@ static void MX_TIM3_Init(void) {
 	TIM_OC_InitTypeDef sConfigOC;
 
 	htim3.Instance = TIM3;
-	htim3.Init.Prescaler = 8;
+	htim3.Init.Prescaler = 1;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period = 100;                           // 5 Khz PWM freq
-	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;        // 4mhz before div
+	htim3.Init.Period = 255;                           //
+	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;        // 4mhz before div
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE; // Preload the ARR register (though we dont use this)
 	HAL_TIM_Base_Init(&htim3);
 
@@ -279,11 +276,11 @@ static void MX_TIM3_Init(void) {
 	HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig);
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 50; // 50% duty cycle, that is AC coupled through the cap
+	sConfigOC.Pulse = 0; //Output control
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
 	HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, PWM_Out_CHANNEL);
-
+	//TODO need to do buzzer
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	/**TIM3 GPIO Configuration
@@ -293,35 +290,23 @@ static void MX_TIM3_Init(void) {
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
 	HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
-#ifdef MODEL_TS100
-  // Remap TIM3_CH1 to be on PB4
-  __HAL_AFIO_REMAP_TIM3_PARTIAL();
-#else
-	// No re-map required
-#endif
 	HAL_TIM_PWM_Start(&htim3, PWM_Out_CHANNEL);
 }
 /* TIM3 init function */
 static void MX_TIM2_Init(void) {
-	/*
-	 * We use the channel 1 to trigger the ADC at end of PWM period
-	 * And we use the channel 4 as the PWM modulation source using Interrupts
-	 * */
+
 	TIM_ClockConfigTypeDef sClockSourceConfig;
 	TIM_MasterConfigTypeDef sMasterConfig;
 	TIM_OC_InitTypeDef sConfigOC;
 
-	// Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC
-	// in the PWM off time.
 	htim2.Instance = TIM2;
-	// dummy value, will be reconfigured by BSPInit()
 	htim2.Init.Prescaler = 2000; // 2 MHz timer clock/2000 = 1 kHz tick rate
 
 	// pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
 	// These values give a rate of around 3.5 Hz for "fast" mode and 1.84 Hz for "slow"
 	htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
 	// dummy value, will be reconfigured by BSPInit()
-	htim2.Init.Period = 255 + 17 * 2;
+	htim2.Init.Period = 10;
 	htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4; // 8 MHz (x2 APB1) before divide
 	htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	htim2.Init.RepetitionCounter = 0;
@@ -339,24 +324,14 @@ static void MX_TIM2_Init(void) {
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
 	// dummy value, will be reconfigured by BSPInit() in the BSP.cpp
-	sConfigOC.Pulse = 255 + 13 * 2; // 13 -> Delay of 7 ms
-	// 255 is the largest time period of the drive signal, and then offset ADC sample to be a bit delayed after this
-	/*
-	 * It takes 4 milliseconds for output to be stable after PWM turns off.
-	 * Assume ADC samples in 0.5ms
-	 * We need to set this to 100% + 4.5ms
-	 * */
+	sConfigOC.Pulse = 5; // 13 -> Delay of 7 ms
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
-	HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
 	sConfigOC.Pulse = 0; // default to entirely off
 	HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4);
 
 	HAL_TIM_Base_Start_IT(&htim2);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_4);
-	HAL_NVIC_SetPriority(TIM2_IRQn, 15, 0);
-	HAL_NVIC_EnableIRQ(TIM2_IRQn);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 }
 
 /**
@@ -378,16 +353,6 @@ static void MX_DMA_Init(void) {
 	HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
 }
 
-/** Configure pins as
- * Analog
- * Input
- * Output
- * EVENT_OUT
- * EXTI
- * Free pins are configured automatically as Analog
- PB0   ------> ADCx_IN8
- PB1   ------> ADCx_IN9
- */
 static void MX_GPIO_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -417,43 +382,21 @@ static void MX_GPIO_Init(void) {
 	GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 |
-#ifdef MODEL_TS100
-			GPIO_PIN_3 |
-#endif
-			GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8
-			| GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13
+	GPIO_PIN_3 |
+	GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9
+			| GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13
 			| GPIO_PIN_14 | GPIO_PIN_15;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-#ifdef MODEL_TS100
-#ifndef SWD_ENABLE
-  /* Pull USB and SWD lines low to prevent enumeration attempts and EMI affecting
-   * the debug core */
-  GPIO_InitStruct.Pin   = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14;
-  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET);
-#else
-  /* Make all lines affecting SWD floating to allow debugging */
-  GPIO_InitStruct.Pin  = GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_14 | GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-#endif
-#else
-	/* TS80 */
-	/* Leave USB lines open circuit*/
-
-#endif
-
 	/*Configure GPIO pins : KEY_B_Pin KEY_A_Pin */
-	GPIO_InitStruct.Pin = KEY_B_Pin | KEY_A_Pin;
+	GPIO_InitStruct.Pin = KEY_B_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(KEY_B_GPIO_Port, &GPIO_InitStruct);
+	GPIO_InitStruct.Pin = KEY_A_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(KEY_A_GPIO_Port, &GPIO_InitStruct);
 
 	/*Configure GPIO pin : OLED_RESET_Pin */
 	GPIO_InitStruct.Pin = OLED_RESET_Pin;
@@ -467,6 +410,7 @@ static void MX_GPIO_Init(void) {
 	HAL_Delay(30);
 	HAL_GPIO_WritePin(OLED_RESET_GPIO_Port, OLED_RESET_Pin, GPIO_PIN_SET);
 }
+
 #ifdef USE_FULL_ASSERT
 void assert_failed(uint8_t *file, uint32_t line) { asm("bkpt"); }
 #endif
