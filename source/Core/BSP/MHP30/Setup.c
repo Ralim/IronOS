@@ -276,7 +276,6 @@ static void MX_TIM2_Init(void) {
 	HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig);
 
 	HAL_TIM_PWM_Init(&htim2);
-	HAL_TIM_OC_Init(&htim2);
 
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
@@ -287,9 +286,12 @@ static void MX_TIM2_Init(void) {
 	sConfigOC.Pulse = 5;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
-	sConfigOC.Pulse = 0; // default to entirely off
-	HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4);
-
+	HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4);
+	GPIO_InitTypeDef GPIO_InitStruct;
+	GPIO_InitStruct.Pin = HEAT_EN_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
+	HAL_GPIO_Init(HEAT_EN_GPIO_Port, &GPIO_InitStruct);
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 }
 
