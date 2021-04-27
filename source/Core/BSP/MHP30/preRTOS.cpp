@@ -13,13 +13,13 @@
 #include "fusbpd.h"
 #include <I2C_Wrapper.hpp>
 void preRToSInit() {
-	/* Reset of all peripherals, Initializes the Flash interface and the Systick.
-	 */
-	SCB->VTOR = FLASH_BASE; //Set vector table offset
-	HAL_Init();
-	Setup_HAL(); // Setup all the HAL objects
-	BSPInit();
-	I2CBB::init();
-	/* Init the IPC objects */
-	FRToSI2C::FRToSInit();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick.
+   */
+  SCB->VTOR = FLASH_BASE; // Set vector table offset
+  HAL_Init();
+  Setup_HAL(); // Setup all the HAL objects
+  BSPInit();
+  I2CBB::init();
+  /* Init the IPC objects */
+  FRToSI2C::FRToSInit();
 }
