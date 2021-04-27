@@ -13,7 +13,6 @@
 static uint16_t settings_page[512] __attribute__((section(".settings_page")));
 
 uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
-  return; // TODO
   FLASH_EraseInitTypeDef pEraseInit;
   pEraseInit.TypeErase    = FLASH_TYPEERASE_PAGES;
   pEraseInit.Banks        = FLASH_BANK_1;
@@ -41,7 +40,5 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length) {
   memset(buffer, 0, length);
-  return; // TODO
-
   memcpy(buffer, settings_page, length);
 }
