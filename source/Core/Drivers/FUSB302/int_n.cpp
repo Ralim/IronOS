@@ -57,7 +57,7 @@ void InterruptHandler::readPendingMessage() {
   }
 }
 
-void InterruptHandler::Thread(const void *arg) {
+void              InterruptHandler::Thread(const void *arg) {
   (void)arg;
   union fusb_status status;
   for (;;) {
@@ -66,27 +66,28 @@ void InterruptHandler::Thread(const void *arg) {
       xTaskNotifyWait(0x00, 0x0F, NULL, TICKS_SECOND * 30);
     }
     /* Read the FUSB302B status and interrupt registers */
-    fusb_get_status(&status);
+    if (fusb_get_status(&status)) {
 
-    /* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
-    // This means a message was recieved with a good CRC
-    if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
-      readPendingMessage();
-    }
+      /* If the I_GCRCSENT flag is set, tell the Protocol RX thread */
+      // This means a message was received with a good CRC
+      if (status.interruptb & FUSB_INTERRUPTB_I_GCRCSENT) {
+        readPendingMessage();
+      }
 
-    /* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX
-     * thread */
-    if (status.interrupta & FUSB_INTERRUPTA_I_TXSENT) {
-      ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_TXSENT);
-    }
-    if (status.interrupta & FUSB_INTERRUPTA_I_RETRYFAIL) {
-      ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
-    }
+      /* If the I_TXSENT or I_RETRYFAIL flag is set, tell the Protocol TX
+       * thread */
+      if (status.interrupta & FUSB_INTERRUPTA_I_TXSENT) {
+        ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_TXSENT);
+      }
+      if (status.interrupta & FUSB_INTERRUPTA_I_RETRYFAIL) {
+        ProtocolTransmit::notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_I_RETRYFAIL);
+      }
 
-    /* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
-     * Engine thread */
-    if ((status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP) && (status.status1 & FUSB_STATUS1_OVRTEMP)) {
-      PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_I_OVRTEMP);
+      /* If the I_OCP_TEMP and OVRTEMP flags are set, tell the Policy
+       * Engine thread */
+      if ((status.interrupta & FUSB_INTERRUPTA_I_OCP_TEMP) && (status.status1 & FUSB_STATUS1_OVRTEMP)) {
+        PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_I_OVRTEMP);
+      }
     }
   }
 }
