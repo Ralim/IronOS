@@ -111,11 +111,11 @@ bool fusb_setup() {
 
   /* Select the correct CC line for BMC signaling; also enable AUTO_CRC */
   if (cc1 > cc2) {
-    fusb_write_byte(FUSB_SWITCHES1, 0x25);
-    fusb_write_byte(FUSB_SWITCHES0, 0x07);
+    fusb_write_byte(FUSB_SWITCHES1, 0x25); // TX_CC1|AUTO_CRC|SPECREV0
+    fusb_write_byte(FUSB_SWITCHES0, 0x07); // PWDN1|PWDN2|MEAS_CC1
   } else {
-    fusb_write_byte(FUSB_SWITCHES1, 0x26);
-    fusb_write_byte(FUSB_SWITCHES0, 0x0B);
+    fusb_write_byte(FUSB_SWITCHES1, 0x26); // TX_CC2|AUTO_CRC|SPECREV0
+    fusb_write_byte(FUSB_SWITCHES0, 0x0B); // PWDN1|PWDN2|MEAS_CC2
   }
 
   fusb_reset();
