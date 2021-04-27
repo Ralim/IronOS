@@ -123,10 +123,10 @@ bool fusb_setup() {
   return true;
 }
 
-void fusb_get_status(union fusb_status *status) {
+bool fusb_get_status(union fusb_status *status) {
 
   /* Read the interrupt and status flags into status */
-  fusb_read_buf(FUSB_STATUS0A, 7, status->bytes);
+  return fusb_read_buf(FUSB_STATUS0A, 7, status->bytes);
 }
 
 enum fusb_typec_current fusb_get_typec_current() {

@@ -283,7 +283,7 @@ void fusb_send_hardrst();
 /*
  * Read the FUSB302B status and interrupt flags into *status
  */
-void fusb_get_status(union fusb_status *status);
+bool fusb_get_status(union fusb_status *status);
 
 /*
  * Read the FUSB302B BC_LVL as an enum fusb_typec_current
