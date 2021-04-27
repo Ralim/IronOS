@@ -95,7 +95,7 @@ void SystemClock_Config(void) {
 	HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
 
 	PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-	PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6; // 6 or 8 are the only non overclocked options
+	PeriphClkInit.AdcClockSelection = RCC_CFGR_ADCPRE_DIV8; // 6 or 8 are the only non overclocked options
 	HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit);
 
 	/**Configure the Systick interrupt time
@@ -128,14 +128,14 @@ static void MX_ADC1_Init(void) {
 
 	/**Configure the ADC multi-mode
 	 */
-	multimode.Mode = ADC_DUALMODE_REGSIMULT_INJECSIMULT;
+	multimode.Mode = ADC_DUALMODE_REGSIMULT;
 	HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode);
 
 	/**Configure Regular Channel
 	 */
 	sConfig.Channel = TMP36_ADC1_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
 	/**Configure Regular Channel
@@ -144,7 +144,7 @@ static void MX_ADC1_Init(void) {
 	sConfig.Rank = ADC_REGULAR_RANK_2;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 	sConfig.Channel = TIP_TEMP_ADC1_CHANNEL;
-	sConfig.Rank = ADC_REGULAR_RANK_2;
+	sConfig.Rank = ADC_REGULAR_RANK_3;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
 	SET_BIT(hadc1.Instance->CR1, (ADC_CR1_EOSIE)); // Enable end of Normal
@@ -172,7 +172,7 @@ static void MX_ADC2_Init(void) {
 	 */
 	sConfig.Channel = TMP36_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
 	sConfig.Channel = VIN_ADC2_CHANNEL;
