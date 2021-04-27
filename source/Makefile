@@ -444,7 +444,7 @@ $(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf : \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
 		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
 
-Core/Gen/Translation_multi.$(1).cpp $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle &: $(patsubst %,../Translations/translation_%.json,$(3)) \
+Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.json,$(3)) \
 		../Translations/make_translation.py \
 		../Translations/translations_def.js \
 		../Translations/font_tables.py \
@@ -456,6 +456,8 @@ Core/Gen/Translation_multi.$(1).cpp $(OUTPUT_DIR)/Core/Gen/translation.files/mul
 		-o $(PWD)/Core/Gen/Translation_multi.$(1).cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		$(3)
+
+$(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle: Core/Gen/Translation_multi.$(1).cpp
 
 Core/Gen/Translation_lzfx_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
 	@test -d $$(@D) || mkdir -p $$(@D)
