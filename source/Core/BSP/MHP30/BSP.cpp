@@ -102,7 +102,7 @@ uint16_t getHandleTemperature() {
 }
 
 uint16_t getTipInstantTemperature() {
-	return 0; //TODO
+	return getADC(2);
 }
 
 uint16_t getTipRawTemp(uint8_t refresh) {
