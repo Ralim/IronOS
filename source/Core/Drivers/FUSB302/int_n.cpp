@@ -57,7 +57,7 @@ void InterruptHandler::readPendingMessage() {
   }
 }
 
-void              InterruptHandler::Thread(const void *arg) {
+void InterruptHandler::Thread(const void *arg) {
   (void)arg;
   union fusb_status status;
   for (;;) {

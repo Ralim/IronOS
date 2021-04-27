@@ -27,8 +27,8 @@
  *
  * This was bought to my attention by <Kuba Sztandera>
  */
-
-uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset) {
+volatile uint32_t lastuv = 0;
+uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset) {
   // This takes the raw ADC samples, converts these to uV
   // Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
   // Then remove the calibration value that is stored as a tip offset
@@ -48,7 +48,7 @@ uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffse
     else
       valueuV = 0;
   }
-
+  lastuv = valueuV;
   return valueuV;
 }
 
@@ -126,56 +126,34 @@ const uint16_t uVtoDegC[] = {
     //
     //
     0,     0,   //
-    266,   10,  //
-    522,   20,  //
-    770,   30,  //
-    1010,  40,  //
-    1244,  50,  //
-    1473,  60,  //
-    1697,  70,  //
-    1917,  80,  //
-    2135,  90,  //
-    2351,  100, //
-    2566,  110, //
-    2780,  120, //
-    2994,  130, //
-    3209,  140, //
-    3426,  150, //
-    3644,  160, //
-    3865,  170, //
-    4088,  180, //
-    4314,  190, //
-    4544,  200, //
-    4777,  210, //
-    5014,  220, //
-    5255,  230, //
-    5500,  240, //
-    5750,  250, //
-    6003,  260, //
-    6261,  270, //
-    6523,  280, //
-    6789,  290, //
-    7059,  300, //
-    7332,  310, //
-    7609,  320, //
-    7889,  330, //
-    8171,  340, //
-    8456,  350, //
-    8742,  360, //
-    9030,  370, //
-    9319,  380, //
-    9607,  390, //
-    9896,  400, //
-    10183, 410, //
-    10468, 420, //
-    10750, 430, //
-    11029, 440, //
-    11304, 450, //
-    11573, 460, //
-    11835, 470, //
-    12091, 480, //
-    12337, 490, //
-    12575, 500, //
+    397,   10,  //
+    798,   20,  ///
+    1203,  30,  //
+    1612,  40,  //
+    2023,  50,  //
+    2436,  60,  //
+    3225,  79,  //
+    4013,  98,  //
+    4756,  116, //
+    5491,  134, //
+    5694,  139, //
+    6339,  155, //
+    7021,  172, //
+    7859,  193, //
+    8619,  212, //
+    9383,  231, //
+    10153, 250, //
+    10930, 269, //
+    11712, 288, //
+    12499, 307, //
+    13290, 326, //
+    14084, 345, //
+    14881, 364, //
+    15680, 383, //
+    16482, 402, //
+    17285, 421, //
+    18091, 440, //
+    18898, 459, //
 
 };
 #endif
@@ -266,9 +244,10 @@ uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
   }
   return ((degF - 32) * 5) / 9;
 }
-
+volatile uint32_t lastTemp=0;
 uint32_t TipThermoModel::getTipInC(bool sampleNow) {
   int32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(sampleNow));
+  lastTemp=currentTipTempInC;
   currentTipTempInC += getHandleTemperature() / 10; // Add handle offset
   // Power usage indicates that our tip temp is lower than our thermocouple temp.
   // I found a number that doesn't unbalance the existing PID, causing overshoot.
