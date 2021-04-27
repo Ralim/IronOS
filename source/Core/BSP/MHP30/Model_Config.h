@@ -16,7 +16,6 @@
 #endif
 
 #ifdef MODEL_MHP30
-#define ACCEL_LIS
 #define ACCEL_MSA
 #define POW_PD
 //#define POW_QC // Unsure if we have this

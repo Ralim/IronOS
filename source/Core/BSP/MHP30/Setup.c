@@ -177,8 +177,8 @@ static void MX_ADC2_Init(void) {
   sConfig.Rank    = ADC_REGULAR_RANK_2;
   HAL_ADC_ConfigChannel(&hadc2, &sConfig);
   sConfig.Channel = TIP_TEMP_ADC1_CHANNEL;
-  sConfig.Rank    = ADC_REGULAR_RANK_2;
-  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+  sConfig.Rank    = ADC_REGULAR_RANK_3;
+  HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
   // Run ADC internal calibration
   while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK)
