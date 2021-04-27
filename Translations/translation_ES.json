@@ -30,20 +30,20 @@
 	"messagesWarn": {
 		"ResetOKMessage": "Hecho.",
 		"SettingsResetMessage": [
-			"Settings were",
-			"reset!"
+			"Los ajustes fueron",
+			"¡Reinicio!"
 		],
 		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
+			"Sin acelerómetro",
+			"¡Detectado!"
 		],
 		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
+			"Sin USB-PD IC",
+			"¡Detectado!"
 		],
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"LockingKeysString": " BLOQUEADO",
+		"UnlockingKeysString": "DESBLOQUEADO",
+		"WarningKeysLockedString": "¡BLOQUEADO!"
 	},
 	"characters": {
 		"SettingRightChar": "D",
@@ -69,10 +69,10 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": [
-				"Power",
-				"settings"
+				"Potencia",
+				"ajustes"
 			],
-			"desc": "Power settings"
+			"desc": "Ajustes de potencia"
 		},
 		"SolderingMenu": {
 			"text2": [
@@ -261,51 +261,51 @@
 		"HallEffSensitivity": {
 			"text2": [
 				"Hall Eff",
-				"Sensitivity"
+				"Sensibilidad"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Sensibilidad del sensor de efecto Hall en la detección de reposo <O=Off,L=Low,M=Medium,H=High>"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Permitir botones",
+				"bloqueo"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "Al soldar, una pulsación larga en ambos botones los bloquea <D=desactivar, B=sólo potenciar, F=bloqueo total>."
 		},
 		"MinVolCell": {
 			"text2": [
-				"Minimum",
-				"voltage"
+				"Mínimo",
+				"voltaje"
 			],
-			"desc": "Minimum allowed voltage per cell <Volts> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+			"desc": "voltaje mínimo permitido por célula <Voltios> <3S: 3,0V - 3,7V, 4/5/6S: 2,4V - 3,7V>"
 		},
 		"AnimLoop": {
 			"text2": [
 				"Anim.",
-				"loop"
+				"bucle"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Animaciones de iconos en bucle en el menú raíz"
 		},
 		"AnimSpeed": {
 			"text2": [
 				"Anim.",
-				"speed"
+				"velocidad"
 			],
-			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+			"desc": "Velocidad de las animaciones de los iconos en el menú <O=off | L=low | M=medium | H=high>"
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"Impulso de potencia",
+				"tiempo de espera"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Tiempo de espera antes de disparar cada pulso de mantenimiento de la vigilia (x 2,5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"Impulso de potencia",
+				"duración"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Duración del impulso de mantenimiento de la vigilia (x 250ms)"
 		}
 	}
 }
