@@ -1,7 +1,7 @@
-#include "../../configuration.h"
 #include "OLED.hpp"
 #include "Translation.h"
 #include "Translation_multi.h"
+#include "configuration.h"
 #include "gui.hpp"
 #include "lzfx.h"
 
