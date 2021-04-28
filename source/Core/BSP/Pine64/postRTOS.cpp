@@ -19,10 +19,6 @@ void postRToSInit() {
     hall_effect_present = Si7210::init();
   }
 #endif
-#ifdef POW_PD
-  // Spawn all of the USB-C processors
-  fusb302_start_processing();
-#endif
 }
 int16_t getRawHallEffect() {
   if (hall_effect_present) {

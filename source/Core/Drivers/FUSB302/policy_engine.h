@@ -25,22 +25,12 @@
  *
  */
 
-#define PDB_EVT_PE_RESET       EVENT_MASK(0)
-#define PDB_EVT_PE_MSG_RX      EVENT_MASK(1)
-#define PDB_EVT_PE_TX_DONE     EVENT_MASK(2)
-#define PDB_EVT_PE_TX_ERR      EVENT_MASK(3)
-#define PDB_EVT_PE_HARD_SENT   EVENT_MASK(4)
-#define PDB_EVT_PE_I_OVRTEMP   EVENT_MASK(5)
-#define PDB_EVT_PE_MSG_RX_PEND EVENT_MASK(7) /* Never SEND THIS DIRECTLY*/
-
 class PolicyEngine {
 public:
   // Sets up internal state and registers the thread
   static void init();
   // Push an incoming message to the Policy Engine
   static void handleMessage(union pd_msg *msg);
-  // Send a notification
-  static void notify(uint32_t notification);
   // Returns true if headers indicate PD3.0 compliant
   static bool isPD3_0();
   static bool setupCompleteOrTimedOut() {
@@ -53,7 +43,30 @@ public:
     return false;
   }
   // Has pd negotiation completed
-  static bool pdHasNegotiated() { return pdNegotiationComplete; }
+  static bool pdHasNegotiated() {
+    if (state == policy_engine_state::PESinkSourceUnresponsive)
+      return false;
+    return true;
+  }
+  // Call this periodically, at least once every second
+  static void PPSTimerCallback();
+
+  enum class Notifications {
+    PDB_EVT_PE_RESET          = EVENT_MASK(0),
+    PDB_EVT_PE_MSG_RX         = EVENT_MASK(1),
+    PDB_EVT_PE_TX_DONE        = EVENT_MASK(2),
+    PDB_EVT_PE_TX_ERR         = EVENT_MASK(3),
+    PDB_EVT_PE_HARD_SENT      = EVENT_MASK(4),
+    PDB_EVT_PE_I_OVRTEMP      = EVENT_MASK(5),
+    PDB_EVT_PE_PPS_REQUEST    = EVENT_MASK(6),
+    PDB_EVT_PE_GET_SOURCE_CAP = EVENT_MASK(7),
+    PDB_EVT_PE_NEW_POWER      = EVENT_MASK(8),
+    PDB_EVT_PE_ALL            = (EVENT_MASK(9) - 1),
+  };
+  // Send a notification
+  static void notify(Notifications notification);
+  // Debugging allows looking at state
+  static uint32_t getState() { return (uint32_t)state; }
 
 private:
   static bool pdNegotiationComplete;
@@ -72,17 +85,16 @@ private:
   static int8_t _old_tcc_match;
   /* The index of the first PPS APDO */
   static uint8_t _pps_index;
-  /* The index of the just-requested PPS APDO */
-  static uint8_t _last_pps;
-  static void    pe_task(const void *arg);
+
+  static void pe_task(const void *arg);
   enum policy_engine_state {
     PESinkStartup,
     PESinkDiscovery,
     PESinkWaitCap,
     PESinkEvalCap,
-    PESinkSelectCap,
-    PESinkTransitionSink,
-    PESinkReady,
+    PESinkSelectCap,      // 4
+    PESinkTransitionSink, // 5
+    PESinkReady,          // 6
     PESinkGetSourceCap,
     PESinkGiveSinkCap,
     PESinkHardReset,
@@ -113,7 +125,7 @@ private:
   static enum policy_engine_state pe_sink_source_unresponsive();
   static EventGroupHandle_t       xEventGroupHandle;
   static StaticEventGroup_t       xCreatedEventGroup;
-  static uint32_t                 waitForEvent(uint32_t mask, TickType_t ticksToWait = portMAX_DELAY);
+  static EventBits_t              waitForEvent(uint32_t mask, TickType_t ticksToWait = portMAX_DELAY);
   // Task resources
   static osThreadId          TaskHandle;
   static const size_t        TaskStackSize = 2048 / 4;
@@ -130,7 +142,9 @@ private:
   static QueueHandle_t messagesWaiting;
   static bool          messageWaiting();
   // Read a pending message into the temp message
-  static bool readMessage();
+  static bool       readMessage();
+  static bool       PPSTimerEnabled;
+  static TickType_t PPSTimeLastEvent;
 
   // These callbacks are called to implement the logic for the iron to select the desired voltage
 

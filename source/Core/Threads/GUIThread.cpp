@@ -7,7 +7,6 @@
 extern "C" {
 #include "FreeRTOSConfig.h"
 }
-#include "../../configuration.h"
 #include "Buttons.hpp"
 #include "I2CBB.hpp"
 #include "LIS2DH12.hpp"
@@ -15,6 +14,7 @@ extern "C" {
 #include "TipThermoModel.h"
 #include "Translation.h"
 #include "cmsis_os.h"
+#include "configuration.h"
 #include "main.hpp"
 #include "stdlib.h"
 #include "string.h"

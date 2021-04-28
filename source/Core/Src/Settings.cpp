@@ -9,9 +9,9 @@
  */
 
 #include "Settings.h"
-#include "../../configuration.h"
 #include "BSP.h"
 #include "Setup.h"
+#include "configuration.h"
 
 #include "string.h"
 volatile systemSettingsType systemSettings;

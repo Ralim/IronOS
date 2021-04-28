@@ -5,8 +5,8 @@
  *     Authors: Ben V. Brown, David Hilton (David's Idea)
  */
 
-#include "../../configuration.h"
 #include "BSP.h"
+#include "configuration.h"
 #include "expMovingAverage.h"
 #include "stdint.h"
 #include <history.hpp>
