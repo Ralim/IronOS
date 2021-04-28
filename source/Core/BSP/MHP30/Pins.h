@@ -12,10 +12,10 @@
 // MHP30 pin map
 #define KEY_B_Pin             GPIO_PIN_0
 #define KEY_B_GPIO_Port       GPIOB
-#define TMP36_INPUT_Pin       GPIO_PIN_0 // UNKNOWN
-#define TMP36_INPUT_GPIO_Port GPIOA
-#define TMP36_ADC1_CHANNEL    ADC_CHANNEL_0
-#define TMP36_ADC2_CHANNEL    ADC_CHANNEL_0
+#define TMP36_INPUT_Pin       GPIO_PIN_1
+#define TMP36_INPUT_GPIO_Port GPIOB
+#define TMP36_ADC1_CHANNEL    ADC_CHANNEL_9
+#define TMP36_ADC2_CHANNEL    ADC_CHANNEL_9
 #define TIP_TEMP_Pin          GPIO_PIN_2
 #define TIP_TEMP_GPIO_Port    GPIOA
 #define TIP_TEMP_ADC1_CHANNEL ADC_CHANNEL_2
