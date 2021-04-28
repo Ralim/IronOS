@@ -8,9 +8,9 @@
 #include "TipThermoModel.h"
 #include "BSP.h"
 #include "Settings.h"
+#include "Utils.h"
 #include "configuration.h"
 #include "main.hpp"
-#include "Utils.h"
 #include "power.hpp"
 /*
  * The hardware is laid out  as a non-inverting op-amp
@@ -218,9 +218,7 @@ const uint16_t uVtoDegC[] = {
 #endif
 const int uVtoDegCItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));
 
-uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
-  return Utils::InterpolateLookupTable(uVtoDegC,uVtoDegCItems,tipuVDelta);
-}
+uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) { return Utils::InterpolateLookupTable(uVtoDegC, uVtoDegCItems, tipuVDelta); }
 
 uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) { return convertCtoF(convertuVToDegC(tipuVDelta)); }
 
