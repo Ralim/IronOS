@@ -6,9 +6,9 @@
  */
 
 #include "TipThermoModel.h"
-#include "../../configuration.h"
 #include "BSP.h"
 #include "Settings.h"
+#include "configuration.h"
 #include "main.hpp"
 #include "power.hpp"
 /*

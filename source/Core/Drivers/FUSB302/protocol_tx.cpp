@@ -16,10 +16,10 @@
  */
 
 #include "protocol_tx.h"
+#include "Defines.h"
 #include "fusb302b.h"
 #include "fusbpd.h"
 #include "policy_engine.h"
-#include "protocol_rx.h"
 #include <pd.h>
 
 osThreadId          ProtocolTransmit::TaskHandle = NULL;
@@ -44,7 +44,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_phy_reset() {
    * we failed to send it */
   if (messagePending()) {
     /* Tell the policy engine that we failed */
-    PolicyEngine::notify(PDB_EVT_PE_TX_ERR);
+    PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_TX_ERR);
     /* Finish failing to send the message */
     while (messagePending()) {
       getMessage(); // Discard
@@ -88,10 +88,6 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_reset() {
   /* Clear MessageIDCounter */
   _tx_messageidcounter = 0;
 
-  /* Tell the Protocol RX thread to reset */
-  ProtocolReceive::notify(PDB_EVT_PRLRX_RESET);
-  taskYIELD();
-
   return PRLTxConstructMessage;
 }
 
@@ -104,17 +100,12 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_construct_mess
   temp_msg.hdr |= (_tx_messageidcounter % 8) << PD_HDR_MESSAGEID_SHIFT;
 
   /* PD 3.0 collision avoidance */
-  //	if (PolicyEngine::isPD3_0()) {
-  //		/* If we're starting an AMS, wait for permission to transmit */
-  //		evt = waitForEvent((uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS,
-  //				0);
-  //		if ((uint32_t) evt
-  //				& (uint32_t) Notifications::PDB_EVT_PRLTX_START_AMS) {
-  //			while (fusb_get_typec_current() != fusb_sink_tx_ok) {
-  //				osDelay(1);
-  //			}
-  //		}
-  //	}
+  if (PolicyEngine::isPD3_0()) {
+    /* If we're starting an AMS, wait for permission to transmit */
+    while (fusb_get_typec_current() != fusb_sink_tx_ok) {
+      vTaskDelay(TICKS_10MS);
+    }
+  }
   messageSending = true;
   /* Send the message to the PHY */
   fusb_send_message(&temp_msg);
@@ -173,7 +164,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_transmission_e
   _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
   /* Tell the policy engine that we failed */
-  PolicyEngine::notify(PDB_EVT_PE_TX_ERR);
+  PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_TX_ERR);
 
   return PRLTxWaitMessage;
 }
@@ -184,7 +175,7 @@ ProtocolTransmit::protocol_tx_state ProtocolTransmit::protocol_tx_message_sent()
   _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
 
   /* Tell the policy engine that we succeeded */
-  PolicyEngine::notify(PDB_EVT_PE_TX_DONE);
+  PolicyEngine::notify(PolicyEngine::Notifications::PDB_EVT_PE_TX_DONE);
 
   return PRLTxWaitMessage;
 }
@@ -257,7 +248,9 @@ void ProtocolTransmit::init() {
 
 void ProtocolTransmit::pushMessage(union pd_msg *msg) {
   if (messagesWaiting) {
-    xQueueSend(messagesWaiting, msg, 100);
+    if (xQueueSend(messagesWaiting, msg, 100) == pdTRUE) {
+      notify(ProtocolTransmit::Notifications::PDB_EVT_PRLTX_MSG_TX);
+    }
   }
 }
 

@@ -68,18 +68,18 @@
 #define TEMP_CHANGE_LONG_STEP_MAX  90 // Temp change long step MAX value
 
 /* Power pulse for keeping power banks awake*/
-#define POWER_PULSE_INCREMENT       1
-#define POWER_PULSE_MAX           100 // x10 max watts
-#define POWER_PULSE_WAIT_MAX        9 // 9*2.5s = 22.5 seconds
-#define POWER_PULSE_DURATION_MAX    9 // 9*250ms = 2.25 seconds
+#define POWER_PULSE_INCREMENT    1
+#define POWER_PULSE_MAX          100 // x10 max watts
+#define POWER_PULSE_WAIT_MAX     9   // 9*2.5s = 22.5 seconds
+#define POWER_PULSE_DURATION_MAX 9   // 9*250ms = 2.25 seconds
 
 #ifdef MODEL_TS100
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
 #endif
-#define POWER_PULSE_WAIT_DEFAULT      4; // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
-#define POWER_PULSE_DURATION_DEFAULT  1; // Default duration of the power pulse: 1*250 = 250 ms
+#define POWER_PULSE_WAIT_DEFAULT     4; // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
+#define POWER_PULSE_DURATION_DEFAULT 1; // Default duration of the power pulse: 1*250 = 250 ms
 
 /**
  * OLED Orientation Sensitivity on Automatic mode!
@@ -94,12 +94,12 @@
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
-#define CUT_OUT_SETTING          0   // default to no cut-off voltage
-#define RECOM_VOL_CELL           33  // Minimum voltage per cell (Recommended 3.3V (33))
-#define TEMPERATURE_INF          0   // default to 0
-#define DESCRIPTION_SCROLL_SPEED 0   // 0: Slow 1: Fast - default to slow
-#define ANIMATION_LOOP           1   // 0: off 1: on
-#define ANIMATION_SPEED          settingOffSpeed_t::MEDIUM 
+#define CUT_OUT_SETTING          0  // default to no cut-off voltage
+#define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
+#define TEMPERATURE_INF          0  // default to 0
+#define DESCRIPTION_SCROLL_SPEED 0  // 0: Slow 1: Fast - default to slow
+#define ANIMATION_LOOP           1  // 0: off 1: on
+#define ANIMATION_SPEED          settingOffSpeed_t::MEDIUM
 
 #define OP_AMP_Rf_TS100  750 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_TS100 2370       // 2.37 Kilo-ohms -> From schematic, R2
@@ -116,47 +116,51 @@
 // vdiv = (32768*4)/(vin_max*10)
 
 #ifdef MODEL_TS100
-#define VOLTAGE_DIV        467 // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
-#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
-#define POWER_LIMIT        0   // 0 watts default limit
-#define MAX_POWER_LIMIT    65  //
-#define POWER_LIMIT_STEPS  5   //
-#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
-#define TEMP_uV_LOOKUP_HAKKO
+#define VOLTAGE_DIV          467                     // 467 - Default divider from schematic
+#define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
+#define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
+#define POWER_LIMIT          0                       // 0 watts default limit
+#define MAX_POWER_LIMIT      65                      //
+#define POWER_LIMIT_STEPS    5                       //
+#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 //
+#define TEMP_uV_LOOKUP_HAKKO                         //
+#define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
 #endif
 
 #ifdef MODEL_Pinecil
-#define VOLTAGE_DIV        467 // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
-#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
-#define POWER_LIMIT        0   // 0 watts default limit
-#define MAX_POWER_LIMIT    65  //
-#define POWER_LIMIT_STEPS  5   //
-#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
-#define TEMP_uV_LOOKUP_HAKKO
+#define VOLTAGE_DIV          467                     // 467 - Default divider from schematic
+#define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
+#define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
+#define POWER_LIMIT          0                       // 0 watts default limit
+#define MAX_POWER_LIMIT      65                      //
+#define POWER_LIMIT_STEPS    5                       //
+#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 // Uses TS100 resistors
+#define TEMP_uV_LOOKUP_HAKKO                         // Use Hakko lookup table
+#define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
 #endif
 
 #ifdef MODEL_TS80
-#define VOLTAGE_DIV        780 // Default divider from schematic
-#define PID_POWER_LIMIT    24  // Sets the max pwm power limit
-#define CALIBRATION_OFFSET 900 // the adc offset in uV
-#define POWER_LIMIT        24  // 24 watts default power limit
-#define MAX_POWER_LIMIT    30  //
-#define POWER_LIMIT_STEPS  2
-#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS80
-#define TEMP_uV_LOOKUP_TS80
+#define VOLTAGE_DIV         780                    // Default divider from schematic
+#define PID_POWER_LIMIT     24                     // Sets the max pwm power limit
+#define CALIBRATION_OFFSET  900                    // the adc offset in uV
+#define POWER_LIMIT         24                     // 24 watts default power limit
+#define MAX_POWER_LIMIT     30                     //
+#define POWER_LIMIT_STEPS   2                      //
+#define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
+#define TEMP_uV_LOOKUP_TS80                        //
+#define USB_PD_VMAX         12                     // Maximum voltage for PD to negotiate
 #endif
 
 #ifdef MODEL_TS80P
-#define VOLTAGE_DIV        650  // Default for TS80P with slightly different resistors
-#define PID_POWER_LIMIT    35   // Sets the max pwm power limit
-#define CALIBRATION_OFFSET 1500 // the adc offset in uV
-#define POWER_LIMIT        30   // 30 watts default power limit
-#define MAX_POWER_LIMIT    35   //
-#define POWER_LIMIT_STEPS  2
-#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS80
-#define TEMP_uV_LOOKUP_TS80
+#define VOLTAGE_DIV         650                    // Default for TS80P with slightly different resistors
+#define PID_POWER_LIMIT     35                     // Sets the max pwm power limit
+#define CALIBRATION_OFFSET  1500                   // the adc offset in uV
+#define POWER_LIMIT         30                     // 30 watts default power limit
+#define MAX_POWER_LIMIT     35                     //
+#define POWER_LIMIT_STEPS   2                      //
+#define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
+#define TEMP_uV_LOOKUP_TS80                        //
+#define USB_PD_VMAX         12                     // Maximum voltage for PD to negotiate
 #endif
 
 #ifdef MODEL_TS100

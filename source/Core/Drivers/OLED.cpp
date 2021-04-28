@@ -5,9 +5,9 @@
  *      Author: Ben V. Brown
  */
 
-#include "../../configuration.h"
 #include "Translation.h"
 #include "cmsis_os.h"
+#include "configuration.h"
 #include <OLED.hpp>
 #include <stdlib.h>
 #include <string.h>

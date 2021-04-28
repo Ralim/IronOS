@@ -29,7 +29,7 @@ public:
 
 private:
   static void                Thread(const void *arg);
-  static osThreadId          TaskHandle;
+  static volatile osThreadId TaskHandle;
   static const size_t        TaskStackSize = 1536 / 3;
   static uint32_t            TaskBuffer[TaskStackSize];
   static osStaticThreadDef_t TaskControlBlock;
@@ -44,6 +44,9 @@ private:
   static enum hardrst_state hardrst_hard_reset_requested();
   static enum hardrst_state hardrst_wait_pe();
   static enum hardrst_state hardrst_complete();
+  // Mesage rx
+  static void         readPendingMessage();
+  static union pd_msg tempMessage;
 };
 
 #endif /* PDB_INT_N_OLD_H */

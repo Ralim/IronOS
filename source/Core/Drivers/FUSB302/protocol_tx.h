@@ -19,7 +19,7 @@
 #define PDB_PROTOCOL_TX_H
 
 #include "policy_engine.h"
-#include "protocol_rx.h"
+
 #include <pd.h>
 #include <stdint.h>
 
@@ -38,7 +38,6 @@ public:
     PDB_EVT_PRLTX_I_RETRYFAIL = EVENT_MASK(2), //
     PDB_EVT_PRLTX_DISCARD     = EVENT_MASK(3), //
     PDB_EVT_PRLTX_MSG_TX      = EVENT_MASK(4), //
-    PDB_EVT_PRLTX_START_AMS   = EVENT_MASK(5), //
   };
   static void notify(Notifications notification);
 

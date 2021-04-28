@@ -271,13 +271,13 @@
  * Where a range is specified, the middle of the range (rounded down to the
  * nearest millisecond) is used.
  */
-#define PD_T_CHUNKING_NOT_SUPPORTED (450)
-#define PD_T_HARD_RESET_COMPLETE    (1000)
-#define PD_T_PS_TRANSITION          (5000)
-#define PD_T_SENDER_RESPONSE        (2700)
-#define PD_T_SINK_REQUEST           (1000)
-#define PD_T_TYPEC_SINK_WAIT_CAP    (1000)
-#define PD_T_PD_DEBOUNCE            (2000)
+#define PD_T_CHUNKING_NOT_SUPPORTED (TICKS_SECOND / 2)
+#define PD_T_HARD_RESET_COMPLETE    (1 * TICKS_SECOND)
+#define PD_T_PS_TRANSITION          (5 * TICKS_SECOND)
+#define PD_T_SENDER_RESPONSE        (27 * TICKS_100MS)
+#define PD_T_SINK_REQUEST           (1 * TICKS_SECOND)
+#define PD_T_TYPEC_SINK_WAIT_CAP    (1 * TICKS_SECOND)
+#define PD_T_PD_DEBOUNCE            (2 * TICKS_SECOND)
 
 /*
  * Counter maximums

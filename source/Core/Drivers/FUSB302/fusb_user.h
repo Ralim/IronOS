@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-#ifndef PDB_CONF_H
-#define PDB_CONF_H
+#ifndef PDB_FUSB_USER_H
+#define PDB_FUSB_USER_H
 
-/* Number of messages in the message pool */
-#define PDB_MSG_POOL_SIZE 8
+#include <stdint.h>
+uint8_t fusb_read_byte(uint8_t addr);
+bool    fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf);
+bool    fusb_write_byte(uint8_t addr, uint8_t byte);
+bool    fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf);
+uint8_t fusb302_detect();
+void    setupFUSBIRQ();
 
-#define EVENT_MASK(x) (1 << x)
-
-/* PD Buddy thread priorities */
-#define PDB_PRIO_PE        (osPriorityAboveNormal)
-#define PDB_PRIO_PRL       (osPriorityAboveNormal)
-#define PDB_PRIO_PRL_INT_N (osPriorityAboveNormal)
-
-#endif /* PDB_CONF_H */
+#endif /* PDB_FUSB302B_H */
