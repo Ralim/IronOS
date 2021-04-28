@@ -10,6 +10,7 @@
 #include "Settings.h"
 #include "configuration.h"
 #include "main.hpp"
+#include "Utils.h"
 #include "power.hpp"
 /*
  * The hardware is laid out  as a non-inverting op-amp
@@ -62,7 +63,6 @@ uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) { return conver
 // [x2, y2] = point 2
 //  x = input value
 // output is x's interpolated y value
-int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x) { return y1 + (((((x - x1) * 1000) / (x2 - x1)) * (y2 - y1))) / 1000; }
 #ifdef TEMP_uV_LOOKUP_HAKKO
 const uint16_t uVtoDegC[] = {
     //
@@ -217,17 +217,7 @@ const uint16_t uVtoDegC[] = {
 };
 #endif
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
-  if (tipuVDelta) {
-    int noItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));
-    for (int i = 1; i < (noItems - 1); i++) {
-      // If current tip temp is less than current lookup, then this current lookup is the higher point to interpolate
-      if (tipuVDelta < uVtoDegC[i * 2]) {
-        return LinearInterpolate(uVtoDegC[(i - 1) * 2], uVtoDegC[((i - 1) * 2) + 1], uVtoDegC[i * 2], uVtoDegC[(i * 2) + 1], tipuVDelta);
-      }
-    }
-    return LinearInterpolate(uVtoDegC[(noItems - 2) * 2], uVtoDegC[((noItems - 2) * 2) + 1], uVtoDegC[(noItems - 1) * 2], uVtoDegC[((noItems - 1) * 2) + 1], tipuVDelta);
-  }
-  return 0;
+  return Utils::InterpolateLookupTable(uVtoDegC,tipuVDelta);
 }
 
 uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) { return convertCtoF(convertuVToDegC(tipuVDelta)); }
