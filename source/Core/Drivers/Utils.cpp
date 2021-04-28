@@ -8,9 +8,8 @@
 #include <Utils.h>
 
 int32_t Utils::InterpolateLookupTable(const uint16_t *lookupTable,
-		const uint16_t value) {
+		const int noItems, const uint16_t value) {
 	if (value) {
-		int noItems = sizeof(lookupTable) / (2 * sizeof(uint16_t));
 		for (int i = 1; i < (noItems - 1); i++) {
 			// If current tip temp is less than current lookup, then this current lookup is the higher point to interpolate
 			if (value < lookupTable[i * 2]) {

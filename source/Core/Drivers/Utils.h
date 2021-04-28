@@ -11,9 +11,9 @@
 class Utils {
 public:
 	static int32_t InterpolateLookupTable(const uint16_t *lookupTable,
-			const uint16_t value);
+			const int noItems, const uint16_t value);
 	static int32_t LinearInterpolate(int32_t x1, int32_t y1, int32_t x2,
-			int32_t y2, int32_t x) ;
+			int32_t y2, int32_t x);
 
 };
 
