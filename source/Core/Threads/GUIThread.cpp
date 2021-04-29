@@ -381,6 +381,7 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
   }
   return 0;
 }
+#ifndef NO_SLEEP_MODE
 
 static void display_countdown(int sleepThres) {
   /*
@@ -398,7 +399,6 @@ static void display_countdown(int sleepThres) {
   }
 }
 static uint32_t getSleepTimeout() {
-#ifndef NO_SLEEP_MODE
 
   if (systemSettings.sensitivity && systemSettings.SleepTime) {
 
@@ -409,9 +409,9 @@ static uint32_t getSleepTimeout() {
       sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
     return sleepThres;
   }
-#endif
   return 0;
 }
+#endif
 static bool shouldBeSleeping(bool inAutoStart) {
 #ifndef NO_SLEEP_MODE
   // Return true if the iron should be in sleep mode
