@@ -222,3 +222,50 @@ blz_depack(const void *src, void *dst, unsigned long depacked_size)
 	/* Return decompressed size */
 	return dst_size;
 }
+
+unsigned long
+blz_depack_srcsize(const void *src, void *dst, unsigned long src_size)
+{
+	struct blz_state bs;
+	unsigned long dst_size = 0;
+	const unsigned char *src_end = src + src_size;
+
+	bs.src = (const unsigned char *) src;
+	bs.dst = (unsigned char *) dst;
+
+	/* Initialise to one bit left in tag; that bit is zero (a literal) */
+	bs.bits_left = 1;
+	bs.tag = 0x4000;
+
+	/* Main decompression loop */
+	while (bs.src < src_end) {
+		if (blz_getbit(&bs)) {
+			/* Input match length and offset */
+			unsigned long len = blz_getgamma(&bs) + 2;
+			unsigned long off = blz_getgamma(&bs) - 2;
+
+			off = (off << 8) + (unsigned long) *bs.src++ + 1;
+
+			/* Copy match */
+			{
+				const unsigned char *p = bs.dst - off;
+				unsigned long i;
+
+				for (i = len; i > 0; --i) {
+					*bs.dst++ = *p++;
+				}
+			}
+
+			dst_size += len;
+		}
+		else {
+			/* Copy literal */
+			*bs.dst++ = *bs.src++;
+
+			dst_size++;
+		}
+	}
+
+	/* Return decompressed size */
+	return dst_size;
+}

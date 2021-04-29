@@ -39,6 +39,8 @@ extern "C" {
 #define BLZ_VER_PATCH 0        /**< Patch version number */
 #define BLZ_VER_STRING "1.3.0" /**< Version number as a string */
 
+#define BLZ_NO_LUT
+
 #ifdef BLZ_DLL
 #  if defined(_WIN32) || defined(__CYGWIN__)
 #    ifdef BLZ_DLL_EXPORTS
@@ -143,6 +145,20 @@ blz_pack_level(const void *src, void *dst, unsigned long src_size,
  */
 BLZ_API unsigned long
 blz_depack(const void *src, void *dst, unsigned long depacked_size);
+
+/**
+ * Decompress `src_size` bytes of data from `src` to `dst`.
+ *
+ * This function is unsafe. If the provided data is malformed, it may
+ * read more than `src_size` from the `src` buffer.
+ *
+ * @param src pointer to compressed data
+ * @param dst pointer to where to place decompressed data
+ * @param src_size size of the compressed data
+ * @return size of decompressed data
+ */
+BLZ_API unsigned long
+blz_depack_srcsize(const void *src, void *dst, unsigned long src_size);
 
 /**
  * Decompress `depacked_size` bytes of data from `src` to `dst`.
