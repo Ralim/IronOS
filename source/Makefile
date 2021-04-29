@@ -58,11 +58,10 @@ SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/FUSB302
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 # Find-all's used for formatting
-ALL_INCLUDES = $(shell find ./Core -type f -name '*.h') \
-			   $(shell find ./Core -type f -name '*.hpp') 
+ALL_INCLUDES = $(shell find ./Core -path $(BRIEFLZ_INC_DIR) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 
-ALL_SOURCE = $(shell find ./Core -type f -name '*.c') \
-			   $(shell find ./Core -type f -name '*.cpp') 
+ALL_SOURCE = $(shell find ./Core -path $(SOURCE_BRIEFLZ_DIR) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 $(info Building for Miniware )
