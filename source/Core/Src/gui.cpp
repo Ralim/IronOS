@@ -195,14 +195,16 @@ const menuitem UIMenu[] = {
     {0, nullptr, nullptr}                                                                                                                                    // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
-    /*
-     * Sleep Temp
-     * 	Sleep Time
-     * 	Shutdown Time
-     * 	Motion Sensitivity
-     */
-    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp},      /*Sleep Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), settings_setSleepTime, settings_displaySleepTime},          /*Sleep Time*/
+/*
+ * Sleep Temp
+ * 	Sleep Time
+ * 	Shutdown Time
+ * 	Motion Sensitivity
+ */
+#ifndef NO_SLEEP_MODE
+    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp}, /*Sleep Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), settings_setSleepTime, settings_displaySleepTime},     /*Sleep Time*/
+#endif
     {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), settings_setShutdownTime, settings_displayShutdownTime}, /*Shutdown Time*/
     {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), settings_setSensitivity, settings_displaySensitivity}, /* Motion Sensitivity*/
 #ifdef HALL_SENSOR

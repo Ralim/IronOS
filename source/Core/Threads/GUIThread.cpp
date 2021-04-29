@@ -351,9 +351,28 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
 
     OLED::refresh();
     GUIDelay();
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+    // If the accel works in reverse where movement will cause exiting the soldering mode
+    if (systemSettings.sensitivity) {
+      if (lastMovementTime) {
+        if (lastMovementTime > TICKS_SECOND * 10) {
+          // If we have moved recently; in the last second
+          // Then exit soldering mode
+
+          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
+            currentTempTargetDegC = 0;
+            return 1;
+          }
+        }
+      }
+    }
+#else
+
     if (!shouldBeSleeping(autoStarted)) {
       return 0;
     }
+
+#endif
     if (shouldShutdown()) {
       // shutdown
       currentTempTargetDegC = 0;
@@ -379,6 +398,8 @@ static void display_countdown(int sleepThres) {
   }
 }
 static uint32_t getSleepTimeout() {
+#ifndef NO_SLEEP_MODE
+
   if (systemSettings.sensitivity && systemSettings.SleepTime) {
 
     uint32_t sleepThres = 0;
@@ -388,9 +409,11 @@ static uint32_t getSleepTimeout() {
       sleepThres = (systemSettings.SleepTime - 5) * 60 * 1000;
     return sleepThres;
   }
+#endif
   return 0;
 }
 static bool shouldBeSleeping(bool inAutoStart) {
+#ifndef NO_SLEEP_MODE
   // Return true if the iron should be in sleep mode
   if (systemSettings.sensitivity && systemSettings.SleepTime) {
     if (inAutoStart) {
@@ -425,6 +448,7 @@ static bool shouldBeSleeping(bool inAutoStart) {
       lastHallEffectSleepStart = 0;
     }
   }
+#endif
 #endif
   return false;
 }
@@ -523,17 +547,18 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     OLED::clearScreen();
     // Draw in the screen details
     if (systemSettings.detailedSoldering) {
-      OLED::print(translatedString(Tr->SolderingAdvancedPowerPrompt), FontStyle::SMALL); // Power:
+      OLED::print(translatedString(Tr->SolderingAdvancedPowerPrompt),
+                  FontStyle::SMALL); // Power:
       OLED::printNumber(x10WattHistory.average() / 10, 2, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(x10WattHistory.average() % 10, 1, FontStyle::SMALL);
       OLED::print(SymbolWatts, FontStyle::SMALL);
-
+#ifndef NO_SLEEP_MODE
       if (systemSettings.sensitivity && systemSettings.SleepTime) {
         OLED::print(SymbolSpace, FontStyle::SMALL);
         display_countdown(getSleepTimeout());
       }
-
+#endif
       OLED::setCursor(0, 8);
       OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
       gui_drawTipTemp(true, FontStyle::SMALL);

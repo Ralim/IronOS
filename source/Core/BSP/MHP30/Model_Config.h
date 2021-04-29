@@ -18,12 +18,13 @@
 #ifdef MODEL_MHP30
 #define ACCEL_MSA
 #define POW_PD
-//#define POW_QC // Unsure if we have this
 #define TEMP_NTC
 #define I2C_SOFT
-#define LIS_ORI_FLIP
 #define BATTFILTERDEPTH 8
 #define OLED_I2CBB
+#define ACCEL_EXITS_ON_MOVEMENT
 #endif
-
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+#define NO_SLEEP_MODE
+#endif
 #endif /* BSP_MINIWARE_MODEL_CONFIG_H_ */
