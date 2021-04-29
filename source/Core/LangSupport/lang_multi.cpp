@@ -1,9 +1,9 @@
 #include "OLED.hpp"
 #include "Translation.h"
 #include "Translation_multi.h"
+#include "brieflz.h"
 #include "configuration.h"
 #include "gui.hpp"
-#include "lzfx.h"
 
 const TranslationIndexTable *Tr                 = nullptr;
 const char *                 TranslationStrings = nullptr;
@@ -42,8 +42,8 @@ void prepareTranslations() {
   uint8_t *              buffer_next_ptr       = translation_data_out_buffer;
   if (langMeta.translation_is_compressed) {
     unsigned int outsize;
-    outsize = buffer_remaining_size;
-    lzfx_decompress(langMeta.translation_data, langMeta.translation_size, buffer_next_ptr, &outsize);
+    outsize = blz_depack_srcsize(langMeta.translation_data, buffer_next_ptr, langMeta.translation_size);
+
     translationData = reinterpret_cast<const TranslationData *>(buffer_next_ptr);
     buffer_remaining_size -= outsize;
     buffer_next_ptr += outsize;
@@ -63,8 +63,8 @@ void prepareTranslations() {
     uint16_t       dataSize;
     if (fontSectionDataInfo.data_is_compressed) {
       unsigned int outsize;
-      outsize = buffer_remaining_size;
-      lzfx_decompress(fontSectionDataInfo.data_ptr, fontSectionDataInfo.data_size, buffer_next_ptr, &outsize);
+      outsize = blz_depack_srcsize(fontSectionDataInfo.data_ptr, buffer_next_ptr, fontSectionDataInfo.data_size);
+
       fontSection.font12_start_ptr = buffer_next_ptr;
       dataSize                     = outsize;
       buffer_remaining_size -= outsize;

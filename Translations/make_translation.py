@@ -19,7 +19,7 @@ from bdflib import reader as bdfreader
 from bdflib.model import Font, Glyph
 
 import font_tables
-import lzfx
+import brieflz
 import objcopy
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
@@ -639,7 +639,7 @@ def write_language(
         lang_name = language_code
 
     if strings_bin or compress_font:
-        f.write('#include "lzfx.h"\n')
+        f.write('#include "brieflz.h"\n')
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
@@ -664,11 +664,11 @@ def write_language(
         font12_uncompressed = bytearray()
         for sym in sym_list:
             font12_uncompressed.extend(font_map.font12[sym])
-        font12_compressed = lzfx.compress(bytes(font12_uncompressed))
+        font12_compressed = brieflz.compress(bytes(font12_uncompressed))
         logging.info(
             f"Font table 12x16 compressed from {len(font12_uncompressed)} to {len(font12_compressed)} bytes (ratio {len(font12_compressed) / len(font12_uncompressed):.3})"
         )
-        write_bytes_as_c_array(f, "font_12x16_lzfx", font12_compressed)
+        write_bytes_as_c_array(f, "font_12x16_brieflz", font12_compressed)
         font_table_text = make_font_table_06_cpp(
             sym_list, font_map, symbol_conversion_table
         )
@@ -707,11 +707,11 @@ def write_language(
             "const char *TranslationStrings = translation.strings;\n\n"
         )
     else:
-        compressed = lzfx.compress(strings_bin)
+        compressed = brieflz.compress(strings_bin)
         logging.info(
             f"Strings compressed from {len(strings_bin)} to {len(compressed)} bytes (ratio {len(compressed) / len(strings_bin):.3})"
         )
-        write_bytes_as_c_array(f, "translation_data_lzfx", compressed)
+        write_bytes_as_c_array(f, "translation_data_brieflz", compressed)
         f.write(
             f"static uint8_t translation_data_out_buffer[{len(strings_bin)}] __attribute__((__aligned__(2)));\n\n"
             "const TranslationIndexTable *Tr = reinterpret_cast<const TranslationIndexTable *>(translation_data_out_buffer);\n"
@@ -721,16 +721,14 @@ def write_language(
     if not strings_bin and not compress_font:
         f.write("void prepareTranslations() {}\n\n")
     else:
-        f.write("void prepareTranslations() {\n" "  unsigned int outsize;\n")
+        f.write("void prepareTranslations() {\n")
         if compress_font:
             f.write(
-                "  outsize = sizeof(font_out_buffer);\n"
-                "  lzfx_decompress(font_12x16_lzfx, sizeof(font_12x16_lzfx), font_out_buffer, &outsize);\n"
+                "  blz_depack_srcsize(font_12x16_brieflz, font_out_buffer, sizeof(font_12x16_brieflz));\n"
             )
         if strings_bin:
             f.write(
-                "  outsize = sizeof(translation_data_out_buffer);\n"
-                "  lzfx_decompress(translation_data_lzfx, sizeof(translation_data_lzfx), translation_data_out_buffer, &outsize);\n"
+                "  blz_depack_srcsize(translation_data_brieflz, translation_data_out_buffer, sizeof(translation_data_brieflz));\n"
             )
         f.write("}\n\n")
 
@@ -821,19 +819,19 @@ def write_languages(
             if font != font_tables.NAME_CJK:
                 for sym in current_sym_list:
                     font_uncompressed.extend(font_map.font06[sym])  # type: ignore[arg-type]
-            font_compressed = lzfx.compress(bytes(font_uncompressed))
+            font_compressed = brieflz.compress(bytes(font_uncompressed))
             logging.info(
                 f"Font table for {font} compressed from {len(font_uncompressed)} to {len(font_compressed)} bytes (ratio {len(font_compressed) / len(font_uncompressed):.3})"
             )
             max_decompressed_font_size += len(font_uncompressed)
-            write_bytes_as_c_array(f, f"font_data_lzfx_{font}", font_compressed)
+            write_bytes_as_c_array(f, f"font_data_brieflz_{font}", font_compressed)
             font_section_info_text += (
                 "  {\n"
                 f"    .symbol_start = {current_sym_start},\n"
                 f"    .symbol_count = {len(current_sym_list)},\n"
-                f"    .data_size = sizeof(font_data_lzfx_{font}),\n"
+                f"    .data_size = sizeof(font_data_brieflz_{font}),\n"
                 "    .data_is_compressed = true,\n"
-                f"    .data_ptr = font_data_lzfx_{font},\n"
+                f"    .data_ptr = font_data_brieflz_{font},\n"
                 "  },\n"
             )
         font_section_info_text += (
@@ -890,11 +888,13 @@ def write_languages(
             max_decompressed_translation_size = max(
                 max_decompressed_translation_size, len(strings_bin)
             )
-            compressed = lzfx.compress(strings_bin)
+            compressed = brieflz.compress(strings_bin)
             logging.info(
                 f"Strings for {lang_code} compressed from {len(strings_bin)} to {len(compressed)} bytes (ratio {len(compressed) / len(strings_bin):.3})"
             )
-            write_bytes_as_c_array(f, f"translation_data_lzfx_{lang_code}", compressed)
+            write_bytes_as_c_array(
+                f, f"translation_data_brieflz_{lang_code}", compressed
+            )
         f.write("const LanguageMeta LanguageMetas[] = {\n")
         for lang in data.langs:
             lang_code = lang["languageCode"]
@@ -902,8 +902,8 @@ def write_languages(
                 "  {\n"
                 # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
                 f'    /* .code = */ "{lang_code}",\n'
-                f"    .translation_data = translation_data_lzfx_{lang_code},\n"
-                f"    .translation_size = sizeof(translation_data_lzfx_{lang_code}),\n"
+                f"    .translation_data = translation_data_brieflz_{lang_code},\n"
+                f"    .translation_size = sizeof(translation_data_brieflz_{lang_code}),\n"
                 f"    .translation_is_compressed = true,\n"
                 "  },\n"
             )
