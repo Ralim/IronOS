@@ -25,10 +25,13 @@ static bool settings_displayInputMinVRange(void);
 static bool settings_setQCInputV(void);
 static bool settings_displayQCInputV(void);
 #endif
+
+#ifndef NO_SLEEP_MODE
 static bool settings_setSleepTemp(void);
 static bool settings_displaySleepTemp(void);
 static bool settings_setSleepTime(void);
 static bool settings_displaySleepTime(void);
+#endif
 static bool settings_setShutdownTime(void);
 static bool settings_displayShutdownTime(void);
 static bool settings_setSensitivity(void);
@@ -404,6 +407,8 @@ static bool settings_displayQCInputV(void) {
 }
 
 #endif
+
+#ifndef NO_SLEEP_MODE
 static bool settings_setSleepTemp(void) {
   // If in C, 10 deg, if in F 20 deg
   if (systemSettings.temperatureInF) {
@@ -449,7 +454,7 @@ static bool settings_displaySleepTime(void) {
   }
   return false;
 }
-
+#endif
 static bool settings_setShutdownTime(void) {
   systemSettings.ShutdownTime++;
   if (systemSettings.ShutdownTime > 60) {
