@@ -7,7 +7,7 @@ This document outlines the license of IronOS and its dependencies.
 - NMSIS: Apache-2.0
 - GD32VF103 board files: BSD-3-Clause
 - WenQuanYi Bitmap Song font: GPL-2.0-or-later
-- Simplified LZFX-based compression library: BSD-2-Clause
+- BriefLZ compression library: Zlib
 
 The source code of IronOS can be obtained on the [IronOS GitHub repo][gh].
 
@@ -181,35 +181,32 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ```
 
 
-Simplified LZFX-based compression library
+BriefLZ compression library
 ---
 
 * Only applies to multi-language builds.
 
 ```
-LZFX is copyright (c) 2009 Andrew Collette and subject to the BSD license
-(below).  Original LZF copyright statement follows.
+The zlib License (Zlib)
 
-Copyright (c) 2000-2007 Marc Alexander Lehmann <schmorp@schmorp.de>
+Copyright (c) 2002-2020 Joergen Ibsen
 
-Redistribution and use in source and binary forms, with or without modifica-
-tion, are permitted provided that the following conditions are met:
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
 
-  1.  Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-  2.  Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
+  1. The origin of this software must not be misrepresented; you must
+     not claim that you wrote the original software. If you use this
+     software in a product, an acknowledgment in the product
+     documentation would be appreciated but is not required.
 
-THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MER-
-CHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
-EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPE-
-CIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTH-
-ERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-OF THE POSSIBILITY OF SUCH DAMAGE.
+  2. Altered source versions must be plainly marked as such, and must
+     not be misrepresented as being the original software.
+
+  3. This notice may not be removed or altered from any source
+     distribution.
 ```
