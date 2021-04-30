@@ -302,6 +302,13 @@
 				"kesto"
 			],
 			"desc": "Herätyspulssin kesto (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" FI       Suomi"
+			],
+			"desc": ""
 		}
 	}
 }

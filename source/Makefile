@@ -13,6 +13,17 @@ endif
 
 ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_CN ZH_TW
 
+LANGUAGE_GROUP_CJK_LANGS=EN JA_JP YUE_HK ZH_TW ZH_CN
+LANGUAGE_GROUP_CJK_NAME=Chinese+Japanese
+
+LANGUAGE_GROUP_CYRILLIC_LANGS=EN BG RU SR_CYRL SR_LATN UK
+LANGUAGE_GROUP_CYRILLIC_NAME=Bulgarian+Russian+Serbian+Ukrainian
+
+LANGUAGE_GROUP_EUR_LANGS=EN $(filter-out $(LANGUAGE_GROUP_CJK_LANGS) $(LANGUAGE_GROUP_CYRILLIC_LANGS),$(ALL_LANGUAGES))
+LANGUAGE_GROUP_EUR_NAME=European
+
+LANGUAGE_GROUPS=CJK CYRILLIC EUR
+
 
 # Defines for host tools
 ifeq ($(HOST_CC),)
@@ -23,7 +34,7 @@ HOST_OUTPUT_DIR=Objects/host
 
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
-LZFX_INC_DIR = ./Core/lzfx
+BRIEFLZ_INC_DIR = ./Core/brieflz
 MINIWARE_INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 MINIWARE_CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
 MINIWARE_HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
@@ -53,16 +64,15 @@ PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
-SOURCE_LZFX_DIR = ./Core/lzfx
+SOURCE_BRIEFLZ_DIR = ./Core/brieflz
 SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/FUSB302
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 # Find-all's used for formatting
-ALL_INCLUDES = $(shell find ./Core -type f -name '*.h') \
-			   $(shell find ./Core -type f -name '*.hpp') 
+ALL_INCLUDES = $(shell find ./Core -path $(BRIEFLZ_INC_DIR) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 
-ALL_SOURCE = $(shell find ./Core -type f -name '*.c') \
-			   $(shell find ./Core -type f -name '*.cpp') 
+ALL_SOURCE = $(shell find ./Core -path $(SOURCE_BRIEFLZ_DIR) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 $(info Building for Miniware )
@@ -148,7 +158,7 @@ DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
-	-I$(LZFX_INC_DIR) \
+	-I$(BRIEFLZ_INC_DIR) \
 	-I$(FRTOS_CMIS_INC_DIR)	\
 	-I$(FRTOS_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
@@ -156,14 +166,13 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(THREADS_INC_DIR) \
 	-I$(INC_PD_DRIVERS_DIR) \
 	  $(DEVICE_INCLUDES) 
-	  
-TRANSLATION_FILES=$(wildcard ../../Translations/translation_*.json)
+
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
 $(shell find $(DEVICE_BSP_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') \
-$(SOURCE_LZFX_DIR)/lzfx.c
+$(SOURCE_BRIEFLZ_DIR)/depack.c
 SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.cpp') \
@@ -348,31 +357,37 @@ all: $(ALL_FIRMWARE_TARGETS)
 $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation.%.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.%.o \
+		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.%.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx.$*.o \
+		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.$*.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_font.%.o \
+		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.%.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_lzfx_font.$*.o \
+		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.$*.o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
@@ -412,38 +427,95 @@ $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@echo Generating $@
 	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
 
-$(HOST_OUTPUT_DIR)/lzfx/liblzfx.so: Core/lzfx/lzfx.c
+$(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Building host lzfx shared library $@
-	@$(HOST_CC) -Wno-unused-result -fPIC -shared -O $^ -o $@
+	@echo Generating $@
+	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
 
-$(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
-	@echo Dumping translation strings data from $<
-	@# Extract the raw strings data from the object file
-	@$(OBJCOPY) -O binary -j .rodata._ZL18TranslationIndices $< $(@D)/$*.data.TranslationIndices.bin
-	@test -s $(@D)/$*.data.TranslationIndices.bin || (rm $(@D)/$*.data.TranslationIndices.bin; echo 'ERROR: Output for .rodata._ZL18TranslationIndices is empty!' >&2; false)
-	@$(OBJCOPY) -O binary -j .rodata._ZL22TranslationStringsData $< $(@D)/$*.data.TranslationStrings.bin
-	@test -s $(@D)/$*.data.TranslationStrings.bin || (rm $(@D)/$*.data.TranslationStrings.bin; echo 'ERROR: Output for .rodata._ZL22TranslationStringsData is empty!' >&2; false)
-	@cat $(@D)/$*.data.TranslationIndices.bin $(@D)/$*.data.TranslationStrings.bin > $@
-
-Core/Gen/Translation_lzfx.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.strings.bin $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
+$(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/depack.c
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Generating lzfx compressed translation for $*
-	@python3 ../Translations/make_translation.py \
-		-o $(PWD)/Core/Gen/Translation_lzfx.$*.cpp \
+	@echo Building host brieflz shared library $@
+	@$(HOST_CC) -fPIC -shared -DBLZ_DLL -DBLZ_DLL_EXPORTS -O $^ -o $@
+
+Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Generating BriefLZ compressed translation for $*
+	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_brieflz.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
-		--strings-bin $(OUTPUT_DIR)/Core/Gen/translation.files/$*.strings.bin \
+		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/$*.o \
 		$*
 
-Core/Gen/Translation_lzfx_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/lzfx/liblzfx.so
+Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Generating lzfx compressed translation for $*
+	@echo Generating BriefLZ compressed translation for $*
 	@python3 ../Translations/make_translation.py \
-		-o $(PWD)/Core/Gen/Translation_lzfx_font.$*.cpp \
+		-o $(PWD)/Core/Gen/Translation_brieflz_font.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--compress-font \
 		$*
 
+#
+# The recipes to produce multi-language firmwares:
+#
+
+# Usage: $(eval $(call multi_lang_rule,$(1)=group_code,$(2)=group_name,$(3)=lang_codes))
+define multi_lang_rule
+
+$(HEXFILE_DIR)/$(model)_multi_$(2).elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		Makefile $(LDSCRIPT)
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo Linking $$@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
+
+$(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf : \
+		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		Makefile $(LDSCRIPT)
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo Linking $$@
+	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
+		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
+
+Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.json,$(3)) \
+		../Translations/make_translation.py \
+		../Translations/translations_def.js \
+		../Translations/font_tables.py \
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+	@test -d Core/Gen || mkdir -p Core/Gen
+	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
+	@echo 'Generating translations for multi-language $(2)'
+	@python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_multi.$(1).cpp \
+		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
+		$(3)
+
+$(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle: Core/Gen/Translation_multi.$(1).cpp
+
+Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+	@test -d $$(@D) || mkdir -p $$(@D)
+	@echo Generating BriefLZ compressed translation for multi-language $(2)
+	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+		-o $(PWD)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
+		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
+		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o \
+		--compress-font \
+		$(3)
+
+endef # multi_lang_rule
+
+
+# Add multi-language firmware rules:
+$(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_code),$(LANGUAGE_GROUP_$(group_code)_NAME),$(LANGUAGE_GROUP_$(group_code)_LANGS))))
 
 
 clean :

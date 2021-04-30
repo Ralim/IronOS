@@ -305,6 +305,13 @@
 				"impulsions"
 			],
 			"desc": "Durée des impulsions pour empêcher la mise en veille (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" FR    Français"
+			],
+			"desc": ""
 		}
 	}
 }

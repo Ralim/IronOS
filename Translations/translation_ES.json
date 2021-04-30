@@ -306,6 +306,13 @@
 				"duración"
 			],
 			"desc": "Duración del impulso de mantenimiento de la vigilia (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" ES  Castellano"
+			],
+			"desc": ""
 		}
 	}
 }
