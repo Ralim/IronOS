@@ -201,6 +201,10 @@
 		"PowerPulseDuration": {
 			"text2": "パルス時間長",
 			"desc": "電源供給元をオンに保つために使用される、電力パルスの時間長 <x250ms（ミリ秒）>"
+		},
+		"LanguageSwitch": {
+			"text2": "言語： 日本語",
+			"desc": ""
 		}
 	}
 }

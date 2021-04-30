@@ -113,35 +113,49 @@ void OLED::setFramebuffer(uint8_t *buffer) {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
+
   const uint8_t *currentFont;
   static uint8_t fontWidth, fontHeight;
+  uint16_t       index;
   switch (fontStyle) {
-  case FontStyle::SMALL:
-    currentFont = Font_6x8;
-    fontHeight  = 8;
-    fontWidth   = 6;
-    break;
   case FontStyle::EXTRAS:
     currentFont = ExtraFontChars;
+    index       = charCode;
     fontHeight  = 16;
     fontWidth   = 12;
     break;
+  case FontStyle::SMALL:
   case FontStyle::LARGE:
   default:
-    currentFont = Font_12x16;
-    fontHeight  = 16;
-    fontWidth   = 12;
+    if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
+      setCursor(0, 8);
+      return;
+    } else if (charCode <= 0x01) {
+      return;
+    }
+    currentFont = nullptr;
+    index       = 0;
+    switch (fontStyle) {
+    case FontStyle::SMALL:
+      fontHeight = 8;
+      fontWidth  = 6;
+      break;
+    case FontStyle::LARGE:
+    default:
+      fontHeight = 16;
+      fontWidth  = 12;
+      break;
+    }
+    for (uint32_t i = 0; i < FontSectionsCount; i++) {
+      const auto &section = FontSections[i];
+      if (charCode >= section.symbol_start && charCode < section.symbol_end) {
+        currentFont = fontStyle == FontStyle::SMALL ? section.font06_start_ptr : section.font12_start_ptr;
+        index       = charCode - section.symbol_start;
+        break;
+      }
+    }
     break;
   }
-
-  if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
-    setCursor(0, 8);
-    return;
-  } else if (charCode <= 0x01) {
-    return;
-  }
-  // First index is \x02
-  const uint16_t index       = charCode - 2;
   const uint8_t *charPointer = currentFont + ((fontWidth * (fontHeight / 8)) * index);
   drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
   cursor_x += fontWidth;
@@ -348,7 +362,7 @@ void OLED::debugNumber(int32_t val, FontStyle fontStyle) {
 
 void OLED::drawSymbol(uint8_t symbolID) {
   // draw a symbol to the current cursor location
-  drawChar(symbolID + 2, FontStyle::EXTRAS);
+  drawChar(symbolID, FontStyle::EXTRAS);
 }
 
 // Draw an area, but y must be aligned on 0/8 offset

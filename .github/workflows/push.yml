@@ -48,6 +48,51 @@ jobs:
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
+  build_multi-lang:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        model: ["Pinecil"]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: chmod
+        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
+
+      - name: Cached compiler source files
+        uses: actions/cache@v2.1.5
+        env:
+          cache-name: cache-compilers
+        with:
+          path: /build/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - name: setup
+        run: ./setup.sh
+
+      - name: build ${{ matrix.model }}
+        run: cd source && make -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
+
+      - name: copy license text
+        run: |
+          cp LICENSE source/Hexfile/LICENSE
+          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+
+      - name: Archive ${{ matrix.model }} artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.model }}_multi-lang
+          path: |
+            source/Hexfile/${{ matrix.model }}_*.hex
+            source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/LICENSE
+            source/Hexfile/LICENSE_RELEASE.md
+          if-no-files-found: error
+
   tests:
     runs-on: ubuntu-20.04
     steps:
@@ -58,6 +103,14 @@ jobs:
 
       - name: Run python tests
         run: cd Translations && chmod +x make_translation_test.py && ./make_translation_test.py
+
+      - name: Run BriefLZ tests
+        run: |
+          cd source
+          make Objects/host/brieflz/libbrieflz.so
+          cd ../Translations
+          chmod +x brieflz_test.py
+          ./brieflz_test.py
 
   check_formatting:
     runs-on: ubuntu-20.04

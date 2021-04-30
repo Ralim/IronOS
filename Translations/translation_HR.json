@@ -305,6 +305,13 @@
 				"duration"
 			],
 			"desc": "Keep-awake-pulse duration (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" HR    Hrvatski"
+			],
+			"desc": ""
 		}
 	}
 }

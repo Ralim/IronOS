@@ -144,6 +144,7 @@ const menuitem rootSettingsMenu[]{
     {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
     {0, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
     {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+    {0, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Switch*/
     {0, nullptr, nullptr}                                                // end of menu marker. DO NOT REMOVE
 };
 
