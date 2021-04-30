@@ -290,7 +290,7 @@
 				"Vitesse",
 				"anim. icônes"
 			],
-			"desc": "Vitesse des animations des icônes dans le menu <D=désactivé | L=lente | M=moyenne | H=haute>"
+			"desc": "Vitesse des animations des icônes dans le menu <D=désactivé | L=lente | M=moyenne | R=rapide>"
 		},
 		"PowerPulseWait": {
 			"text2": [
