@@ -133,6 +133,55 @@ def compress(data: bytes) -> bytes:
         return bytes(dst[:res])  # type: ignore
 
 
+@functools.lru_cache(maxsize=None)
+def _fn_blz_depack_srcsize():
+    """Returns the blz_depack_srcsize C function.
+    ::
+
+        /**
+        * Decompress `src_size` bytes of data from `src` to `dst`.
+        *
+        * This function is unsafe. If the provided data is malformed, it may
+        * read more than `src_size` from the `src` buffer.
+        *
+        * @param src pointer to compressed data
+        * @param dst pointer to where to place decompressed data
+        * @param src_size size of the compressed data
+        * @return size of decompressed data
+        */
+        BLZ_API unsigned long
+        blz_depack_srcsize(const void *src, void *dst, unsigned long src_size);
+    """
+
+    fn = _libbrieflz().blz_depack_srcsize
+    fn.argtype = [
+        ctypes.c_char_p,
+        ctypes.c_char_p,
+        ctypes.c_ulong,
+    ]
+    fn.restype = ctypes.c_ulong
+    return fn
+
+
+def depack_srcsize(data: bytes, expected_depack_size: int) -> bytes:
+    """Returns a bytes object of the uncompressed data."""
+
+    fn_blz_depack_srcsize = _fn_blz_depack_srcsize()
+
+    output_buffer_len = expected_depack_size * 2
+
+    src = data
+    dst = ctypes.create_string_buffer(output_buffer_len)
+    src_size = len(src)
+
+    res = fn_blz_depack_srcsize(src, dst, src_size)
+
+    if res == 0:
+        raise BriefLZError()
+    else:
+        return bytes(dst[:res])  # type: ignore
+
+
 class BriefLZError(Exception):
     """Exception raised for brieflz compression or decompression error."""
 

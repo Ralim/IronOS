@@ -104,6 +104,14 @@ jobs:
       - name: Run python tests
         run: cd Translations && chmod +x make_translation_test.py && ./make_translation_test.py
 
+      - name: Run BriefLZ tests
+        run: |
+          cd source
+          make Objects/host/brieflz/libbrieflz.so
+          cd ../Translations
+          chmod +x brieflz_test.py
+          ./brieflz_test.py
+
   check_formatting:
     runs-on: ubuntu-20.04
 
