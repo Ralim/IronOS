@@ -68,10 +68,10 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": [
-				"Power",
-				"settings"
+				"Paramètres",
+				"d'alim."
 			],
-			"desc": "Power settings"
+			"desc": "Paramètres d'alimentation"
 		},
 		"SolderingMenu": {
 			"text2": [
@@ -217,8 +217,8 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Tension max.",
-				"QC"
+				"Tension",
+				"max. QC"
 			],
 			"desc": "Tension maximale désirée avec une alimentation QC"
 		},
@@ -280,15 +280,15 @@
 		},
 		"AnimLoop": {
 			"text2": [
-				"Icônes",
-				"animées"
+				"Rejouer",
+				"anim. icônes"
 			],
-			"desc": "Animations des icônes dans le menu principal"
+			"desc": "Rejouer en boucle les animations des icônes dans le menu principal"
 		},
 		"AnimSpeed": {
 			"text2": [
 				"Vitesse",
-				"d'animations"
+				"anim. icônes"
 			],
 			"desc": "Vitesse des animations des icônes dans le menu <D=désactivé | L=lente | M=moyenne | H=haute>"
 		},
