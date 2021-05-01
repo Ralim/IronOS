@@ -20,7 +20,6 @@
 #define TIP_TEMP_GPIO_Port    GPIOA
 #define TIP_TEMP_ADC1_CHANNEL ADC_CHANNEL_2
 #define TIP_TEMP_ADC2_CHANNEL ADC_CHANNEL_2
-
 #define VIN_Pin              GPIO_PIN_1
 #define VIN_GPIO_Port        GPIOA
 #define VIN_ADC1_CHANNEL     ADC_CHANNEL_1
@@ -44,5 +43,11 @@
 #define INT_PD_GPIO_Port     GPIOB
 #define HEAT_EN_Pin          GPIO_PIN_3
 #define HEAT_EN_GPIO_Port    GPIOA
+#define PLATE_SENSOR_PULLUP_Pin          GPIO_PIN_1
+#define PLATE_SENSOR_PULLUP_GPIO_Port    GPIOD
 
+#define PLATE_SENSOR_Pin              GPIO_PIN_5
+#define PLATE_SENSOR_GPIO_Port        GPIOA
+#define PLATE_SENSOR_ADC1_CHANNEL     ADC_CHANNEL_5
+#define PLATE_SENSOR_ADC2_CHANNEL     ADC_CHANNEL_5
 #endif /* BSP_MINIWARE_PINS_H_ */
