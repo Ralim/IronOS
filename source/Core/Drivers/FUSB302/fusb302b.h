@@ -269,7 +269,7 @@ union fusb_status {
  * Send a USB Power Delivery message to the FUSB302B
  */
 void fusb_send_message(const union pd_msg *msg);
-
+bool fusb_rx_pending();
 /*
  * Read a USB Power Delivery message from the FUSB302B
  */

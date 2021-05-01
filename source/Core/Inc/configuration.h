@@ -164,9 +164,9 @@
 #endif
 
 #ifdef MODEL_MHP30
-#define VOLTAGE_DIV          350                     // Default for MHP30
+#define VOLTAGE_DIV          352                     // Default for MHP30
 #define PID_POWER_LIMIT      65                      // Sets the max pwm power limit
-#define CALIBRATION_OFFSET   0                       // the adc offset in uV
+#define CALIBRATION_OFFSET   700                     // the adc offset in uV
 #define POWER_LIMIT          65                      // 65 watts default power limit
 #define MAX_POWER_LIMIT      65                      //
 #define POWER_LIMIT_STEPS    2                       //

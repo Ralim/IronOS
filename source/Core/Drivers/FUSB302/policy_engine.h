@@ -61,7 +61,10 @@ public:
     PDB_EVT_PE_PPS_REQUEST    = EVENT_MASK(6),
     PDB_EVT_PE_GET_SOURCE_CAP = EVENT_MASK(7),
     PDB_EVT_PE_NEW_POWER      = EVENT_MASK(8),
-    PDB_EVT_PE_ALL            = (EVENT_MASK(9) - 1),
+    PDB_EVT_TX_I_TXSENT       = EVENT_MASK(9),
+    PDB_EVT_TX_I_RETRYFAIL    = EVENT_MASK(10),
+    PDB_EVT_TX_DISCARD        = EVENT_MASK(11),
+    PDB_EVT_PE_ALL            = (EVENT_MASK(12) - 1),
   };
   // Send a notification
   static void notify(Notifications notification);
@@ -86,25 +89,28 @@ private:
   /* The index of the first PPS APDO */
   static uint8_t _pps_index;
 
-  static void pe_task(const void *arg);
+  static void        pe_task(const void *arg);
+  static EventBits_t pushMessage(union pd_msg *msg);
+  static uint8_t     _tx_messageidcounter;
   enum policy_engine_state {
-    PESinkStartup,
-    PESinkDiscovery,
-    PESinkWaitCap,
-    PESinkEvalCap,
-    PESinkSelectCap,      // 4
-    PESinkTransitionSink, // 5
-    PESinkReady,          // 6
-    PESinkGetSourceCap,
-    PESinkGiveSinkCap,
-    PESinkHardReset,
-    PESinkTransitionDefault,
-    PESinkSoftReset,
-    PESinkSendSoftReset,
-    PESinkSendNotSupported,
-    PESinkChunkReceived,
-    PESinkNotSupportedReceived,
-    PESinkSourceUnresponsive
+    PESinkStartup,              // 0
+    PESinkDiscovery,            // 1
+    PESinkWaitCap,              // 2
+    PESinkEvalCap,              // 3
+    PESinkSelectCap,            // 4
+    PESinkTransitionSink,       // 5
+    PESinkReady,                // 6
+    PESinkGetSourceCap,         // 7
+    PESinkGiveSinkCap,          // 8
+    PESinkHardReset,            // 9
+    PESinkTransitionDefault,    // 10
+    PESinkSoftReset,            // 11
+    PESinkSendSoftReset,        // 12
+    PESinkSendNotSupported,     // 13
+    PESinkChunkReceived,        // 14
+    PESinkNotSupportedReceived, // 15
+    PESinkSourceUnresponsive    // 16
+
   };
   static enum policy_engine_state pe_sink_startup();
   static enum policy_engine_state pe_sink_discovery();
