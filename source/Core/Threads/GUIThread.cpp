@@ -840,8 +840,10 @@ void startGUITask(void const *argument __unused) {
       saveSettings();
       break;
     case BUTTON_F_SHORT:
-      gui_solderingMode(0); // enter soldering mode
-      buttonLockout = true;
+      if (!isTipDisconnected()) {
+        gui_solderingMode(0); // enter soldering mode
+        buttonLockout = true;
+      }
       break;
     case BUTTON_B_SHORT:
       enterSettingsMenu(); // enter the settings menu
@@ -865,12 +867,11 @@ void startGUITask(void const *argument __unused) {
     if ((tipTemp < 50) && systemSettings.sensitivity && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
       OLED::setDisplayState(OLED::DisplayState::OFF);
     }
-    uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
     // Clear the lcd buffer
     OLED::clearScreen();
     OLED::setCursor(0, 0);
     if (systemSettings.detailedIDLE) {
-      if (tipTemp > tipDisconnectedThres) {
+      if (isTipDisconnected()) {
         OLED::print(translatedString(Tr->TipDisconnectedString), FontStyle::SMALL);
       } else {
         OLED::print(translatedString(Tr->IdleTipString), FontStyle::SMALL);
@@ -903,7 +904,7 @@ void startGUITask(void const *argument __unused) {
         tempOnDisplay = true;
       else if (tipTemp < 45)
         tempOnDisplay = false;
-      if (tipTemp > tipDisconnectedThres) {
+      if (isTipDisconnected()) {
         tempOnDisplay          = false;
         tipDisconnectedDisplay = true;
       }

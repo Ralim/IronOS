@@ -5,8 +5,8 @@
  *      Author: Ralim
  */
 #include "TipThermoModel.h"
-#include "configuration.h"
 #include "Utils.h"
+#include "configuration.h"
 
 #ifdef TEMP_uV_LOOKUP_MHP30
 const uint16_t uVtoDegC[] = {
@@ -47,5 +47,11 @@ const uint16_t uVtoDegC[] = {
 
 const int uVtoDegCItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));
 
+uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
+  // For the MHP30, we are mimicing the original code and using the resistor fitted to the base of the heater head
+  // As such, we need to use the ADC and some pin toggling to measure this resistor
+  // We want to cache the value as it takes time to measure, but we also need to re-measure when the tip is inserted / removed
+  // We can detect the tip being inserted / removed by using the reading of that channel, as if its reporting max (0xFFFF) then the heater is not connected
 
-uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) { return Utils::InterpolateLookupTable(uVtoDegC, uVtoDegCItems, tipuVDelta); }
+  return Utils::InterpolateLookupTable(uVtoDegC, uVtoDegCItems, tipuVDelta);
+}

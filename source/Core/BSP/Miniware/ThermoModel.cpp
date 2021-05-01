@@ -5,10 +5,8 @@
  *      Author: Ralim
  */
 #include "TipThermoModel.h"
-#include "configuration.h"
 #include "Utils.h"
-
-
+#include "configuration.h"
 
 #ifdef TEMP_uV_LOOKUP_HAKKO
 const uint16_t uVtoDegC[] = {

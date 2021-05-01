@@ -55,8 +55,6 @@ uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool ski
 uint32_t TipThermoModel::convertTipRawADCToDegC(uint16_t rawADC) { return convertuVToDegC(convertTipRawADCTouV(rawADC)); }
 uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) { return convertuVToDegF(convertTipRawADCTouV(rawADC)); }
 
-
-
 uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) { return convertCtoF(convertuVToDegC(tipuVDelta)); }
 
 uint32_t TipThermoModel::convertCtoF(uint32_t degC) {

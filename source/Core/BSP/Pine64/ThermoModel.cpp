@@ -5,9 +5,8 @@
  *      Author: Ralim
  */
 #include "TipThermoModel.h"
-#include "configuration.h"
 #include "Utils.h"
-
+#include "configuration.h"
 
 #ifdef TEMP_uV_LOOKUP_HAKKO
 const uint16_t uVtoDegC[] = {
@@ -69,6 +68,5 @@ const uint16_t uVtoDegC[] = {
 #endif
 
 const int uVtoDegCItems = sizeof(uVtoDegC) / (2 * sizeof(uint16_t));
-
 
 uint32_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) { return Utils::InterpolateLookupTable(uVtoDegC, uVtoDegCItems, tipuVDelta); }

@@ -111,8 +111,8 @@
 
 #define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
 
-#define OP_AMP_Rf_MHP30  268500   //  268.5  Kilo-ohms -> Measured
-#define OP_AMP_Rin_MHP30 1600     //  1.6  Kilo-ohms -> Measured
+#define OP_AMP_Rf_MHP30  268500 //  268.5  Kilo-ohms -> Measured
+#define OP_AMP_Rin_MHP30 1600   //  1.6  Kilo-ohms -> Measured
 
 #define OP_AMP_GAIN_STAGE_MHP30 (1 + (OP_AMP_Rf_MHP30 / OP_AMP_Rin_MHP30))
 // Deriving the Voltage div:
@@ -200,6 +200,6 @@ const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 #endif
 
 #ifdef MODEL_MHP30
-const uint32_t tipMass = 100; // TODO
-const uint8_t tipResistance = 75;  // x10 ohms, ~6 typical
+const uint32_t tipMass       = 100; // TODO
+const uint8_t  tipResistance = 75;  // x10 ohms, ~6 typical
 #endif
