@@ -16,12 +16,11 @@
  */
 
 #include "int_n.h"
-#include "BSP.h"
-#include "BSP_PD.h"
+#include "Defines.h"
 #include "fusb302b.h"
+#include "fusb_user.h"
 #include "fusbpd.h"
 #include "policy_engine.h"
-
 #include "task.h"
 #include <pd.h>
 #include <string.h>

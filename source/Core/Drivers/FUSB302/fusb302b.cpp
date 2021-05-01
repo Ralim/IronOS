@@ -21,7 +21,9 @@
 #include "fusb_user.h"
 #include "int_n.h"
 #include <pd.h>
-void fusb_send_message(const union pd_msg *msg) {
+uint8_t fusb_read_byte(uint8_t addr);
+bool    fusb_write_byte(uint8_t addr, uint8_t byte);
+void    fusb_send_message(const union pd_msg *msg) {
 
   /* Token sequences for the FUSB302B */
   static uint8_t       sop_seq[5] = {FUSB_FIFO_TX_SOP1, FUSB_FIFO_TX_SOP1, FUSB_FIFO_TX_SOP1, FUSB_FIFO_TX_SOP2, FUSB_FIFO_TX_PACKSYM};
@@ -161,3 +163,27 @@ bool fusb_read_id() {
     return false;
   return true;
 }
+/*
+ * Read a single byte from the FUSB302B
+ *
+ * cfg: The FUSB302B to communicate with
+ * addr: The memory address from which to read
+ *
+ * Returns the value read from addr.
+ */
+uint8_t fusb_read_byte(uint8_t addr) {
+  uint8_t data[1];
+  if (!fusb_read_buf(addr, 1, (uint8_t *)data)) {
+    return 0;
+  }
+  return data[0];
+}
+
+/*
+ * Write a single byte to the FUSB302B
+ *
+ * cfg: The FUSB302B to communicate with
+ * addr: The memory address to which we will write
+ * byte: The value to write
+ */
+bool fusb_write_byte(uint8_t addr, uint8_t byte) { return fusb_write_buf(addr, 1, (uint8_t *)&byte); }

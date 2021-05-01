@@ -50,7 +50,7 @@ bool fusb_write_byte(uint8_t addr, uint8_t byte) { return I2CBB::Mem_Write(FUSB3
  */
 bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) { return I2CBB::Mem_Write(FUSB302B_ADDR, addr, buf, size); }
 
-uint8_t fusb302_detect() {
+bool fusb302_detect() {
   // Probe the I2C bus for its address
   return I2CBB::probe(FUSB302B_ADDR);
 }

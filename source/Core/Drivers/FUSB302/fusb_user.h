@@ -19,11 +19,29 @@
 #define PDB_FUSB_USER_H
 
 #include <stdint.h>
-uint8_t fusb_read_byte(uint8_t addr);
-bool    fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf);
-bool    fusb_write_byte(uint8_t addr, uint8_t byte);
-bool    fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf);
-uint8_t fusb302_detect();
-void    setupFUSBIRQ();
+/*
+ * Read multiple bytes from the FUSB302B
+ *
+ * cfg: The FUSB302B to communicate with
+ * addr: The memory address from which to read
+ * size: The number of bytes to read
+ * buf: The buffer into which data will be read
+ */
+bool fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf);
+/*
+ * Write multiple bytes to the FUSB302B
+ *
+ * cfg: The FUSB302B to communicate with
+ * addr: The memory address to which we will write
+ * size: The number of bytes to write
+ * buf: The buffer to write
+ */
+bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf);
+// Used to poll for the device existing on the I2C bus. This should return non-zero if the device is responding on the bus
+bool fusb302_detect();
+// Once this is called IRQ's should be enabled and routed to the IRQ handler thread
+void setupFUSBIRQ();
+// This should return true if the IRQ line for the FUSB302 is still held low
+bool getFUS302IRQLow();
 
 #endif /* PDB_FUSB302B_H */
