@@ -4,6 +4,7 @@
 #include "Pins.h"
 #include "QC3.h"
 #include "Settings.h"
+#include "fusb_user.h"
 #include "fusbpd.h"
 #include "int_n.h"
 #include "policy_engine.h"
