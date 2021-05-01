@@ -631,9 +631,9 @@ EventBits_t PolicyEngine::pushMessage(union pd_msg *msg) {
   /* PD 3.0 collision avoidance */
   if (PolicyEngine::isPD3_0()) {
     /* If we're starting an AMS, wait for permission to transmit */
-//    while (fusb_get_typec_current() != fusb_sink_tx_ok) {
-//      vTaskDelay(TICKS_10MS);
-//    }
+    //    while (fusb_get_typec_current() != fusb_sink_tx_ok) {
+    //      vTaskDelay(TICKS_10MS);
+    //    }
   }
   /* Send the message to the PHY */
   fusb_send_message(msg);
