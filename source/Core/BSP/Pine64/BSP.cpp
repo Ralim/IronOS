@@ -129,3 +129,5 @@ bool isTipDisconnected() {
   uint32_t tipTemp              = TipThermoModel::getTipInC();
   return tipTemp > tipDisconnectedThres;
 }
+
+void setStatusLED(const enum StatusLED state) {}
