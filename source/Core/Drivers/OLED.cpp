@@ -59,7 +59,38 @@ FRToSI2C::I2C_REG OLED_Setup_Array[] = {
 };
 // Setup based on the SSD1307 and modified for the SSD1306
 
-const uint8_t REFRESH_COMMANDS[17] = {0x80, 0xAF, 0x80, 0x21, 0x80, 0x20, 0x80, 0x7F, 0x80, 0xC0, 0x80, 0x22, 0x80, 0x00, 0x80, 0x01, 0x40};
+const uint8_t REFRESH_COMMANDS[17] = {
+    // Set display ON:
+    0x80,
+    0xAF, // cmd
+
+    // Set column address:
+    //  A[6:0] - Column start address = 0x20
+    //  B[6:0] - Column end address = 0x7F
+    0x80,
+    0x21, // cmd
+    0x80,
+    0x20, // A
+    0x80,
+    0x7F, // B
+
+    // Set COM output scan direction (normal mode, COM0 to COM[N-1])
+    0x80,
+    0xC0,
+
+    // Set page address:
+    //  A[2:0] - Page start address = 0
+    //  B[2:0] - Page end address = 1
+    0x80,
+    0x22, // cmd
+    0x80,
+    0x00, // A
+    0x80,
+    0x01, // B
+
+    // Start of data
+    0x40,
+};
 
 /*
  * Animation timing function that follows a bezier curve.
@@ -233,6 +264,45 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
     setFramebuffer(secondFrameBuffer);
   } else {
     setFramebuffer(NULL);
+  }
+}
+/**
+ * Plays a transition animation of scrolling downward. Note this does *not*
+ * use the secondary framebuffer.
+ *
+ * This transition relies on the previous screen data already in the OLED
+ * RAM. The caller shall not call `OLED::refresh()` before calling this
+ * method, as doing so will overwrite the previous screen data. The caller
+ * does not need to call `OLED::refresh()` after this function returns.
+ *
+ * **This function blocks until the transition has completed.**
+ */
+void OLED::transitionScrollDown() {
+  // We want to draw the updated framebuffer to the next page downward.
+  uint8_t const pageStart = screenBuffer[13];
+  uint8_t const nextPage  = (pageStart + 2) % 8;
+  // Change page start address:
+  screenBuffer[13] = nextPage;
+  // Change page end address:
+  screenBuffer[15] = nextPage + 1;
+
+  refresh();
+  osDelay(TICKS_100MS / 5);
+
+  uint8_t const startLine = pageStart * 8 + 1;
+  uint8_t const scrollTo  = (pageStart + 2) * 8;
+
+  // Scroll the screen by changing display start line.
+  for (uint8_t current = startLine; current <= scrollTo; current++) {
+    // Set display start line (0x40~0x7F):
+    //  X[5:0] - display start line value
+    uint8_t scrollCommandByte = 0b01000000 | (current & 0b00111111);
+
+    // Also update setup command for "set display start line":
+    OLED_Setup_Array[8].val = scrollCommandByte;
+
+    FRToSI2C::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
+    osDelay(TICKS_100MS / 5);
   }
 }
 

@@ -81,6 +81,7 @@ public:
   static void drawScrollIndicator(uint8_t p, uint8_t h); // Draws a scrolling position indicator
   static void transitionSecondaryFramebuffer(bool forwardNavigation);
   static void useSecondaryFramebuffer(bool useSecondary);
+  static void transitionScrollDown();
 
 private:
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
