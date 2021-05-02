@@ -280,7 +280,7 @@ static uint16_t str_display_len(const char *const str) {
   return count;
 }
 
-uint16_t ScrollMessage::messageWidth(const char *message) { return FONT_12_WIDTH * (str_display_len(message) + 7); }
+uint16_t ScrollMessage::messageWidth(const char *message) { return FONT_12_WIDTH * str_display_len(message); }
 
 bool ScrollMessage::drawUpdate(const char *message, uint32_t currentTick) {
   bool lcdRefresh = false;
@@ -289,8 +289,22 @@ bool ScrollMessage::drawUpdate(const char *message, uint32_t currentTick) {
     messageStart = currentTick;
     lcdRefresh   = true;
   }
-  int16_t messageOffset = ((currentTick - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS / 10 : (TICKS_100MS / 5)));
-  messageOffset %= messageWidth(message); // Roll around at the end
+  int16_t  messageOffset;
+  uint16_t msgWidth = messageWidth(message);
+  if (msgWidth > OLED_WIDTH) {
+    messageOffset = ((currentTick - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS / 10 : (TICKS_100MS / 5)));
+    messageOffset %= msgWidth + OLED_WIDTH; // Roll around at the end
+    if (messageOffset < OLED_WIDTH) {
+      // Snap the message to the left edge.
+      messageOffset = OLED_WIDTH;
+    } else if (messageOffset > msgWidth) {
+      // Snap the message to the right edge.
+      messageOffset = msgWidth;
+    }
+  } else {
+    // Centre the message without scrolling.
+    messageOffset = (OLED_WIDTH - msgWidth) / 2 + msgWidth;
+  }
 
   if (lastOffset != messageOffset) {
     OLED::clearScreen();
