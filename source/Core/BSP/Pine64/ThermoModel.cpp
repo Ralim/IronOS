@@ -11,7 +11,7 @@
 #ifdef TEMP_uV_LOOKUP_HAKKO
 const uint16_t uVtoDegC[] = {
     //
-    //
+    // uv -> temp in C
     0,     0,   //
     266,   10,  //
     522,   20,  //

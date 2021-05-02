@@ -6,6 +6,7 @@
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
+#include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
 #include <IRQ.h>

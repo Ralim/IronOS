@@ -2,13 +2,14 @@
 
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
+#include "IRQ.h"
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
+#include "configuration.h"
 #include "gd32vf103_timer.h"
 #include "history.hpp"
 #include "main.hpp"
-#include <IRQ.h>
 
 const uint16_t powerPWM         = 255;
 const uint8_t  holdoffTicks     = 25; // delay of 7 ms

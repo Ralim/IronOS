@@ -75,7 +75,9 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
   // Power usage indicates that our tip temp is lower than our thermocouple temp.
   // I found a number that doesn't unbalance the existing PID, causing overshoot.
   // This could be tuned in concert with PID parameters...
+#ifndef NO_THERMAL_MASS_COMP
   currentTipTempInC -= x10WattHistory.average() / 25;
+#endif
   if (currentTipTempInC < 0)
     return 0;
   return currentTipTempInC;

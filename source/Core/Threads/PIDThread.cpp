@@ -73,7 +73,6 @@ void startPIDTask(void const *argument __unused) {
         // Once we have feed-forward temp estimation we should be able to better tune this.
 
         int32_t x10WattsNeeded = tempToX10Watts(tError);
-        //						tempError.average());
         // note that milliWattsNeeded is sometimes negative, this counters overshoot
         //  from I term's inertia.
         x10WattsOut += x10WattsNeeded;
@@ -106,7 +105,7 @@ void startPIDTask(void const *argument __unused) {
       }
 
       // Secondary safety check to forcefully disable header when within ADC noise of top of ADC
-      if (getTipRawTemp(0) > (0x7FFF - 150)) {
+      if (getTipRawTemp(0) > (0x7FFF - 32)) {
         x10WattsOut = 0;
       }
       if (systemSettings.powerLimit && x10WattsOut > (systemSettings.powerLimit * 10)) {

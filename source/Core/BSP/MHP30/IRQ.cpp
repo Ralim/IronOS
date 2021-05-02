@@ -15,12 +15,15 @@
  * runs again
  */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
-
-  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+  static uint8_t counter                  = 0;
+  BaseType_t     xHigherPriorityTaskWoken = pdFALSE;
   if (hadc == &hadc1) {
-    if (pidTaskNotification) {
-      vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
-      portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    counter++;
+    if (counter % 4 == 0) {
+      if (pidTaskNotification) {
+        vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+      }
     }
   }
 }

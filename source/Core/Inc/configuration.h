@@ -129,6 +129,7 @@
 #define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 //
 #define TEMP_uV_LOOKUP_HAKKO                         //
 #define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ           (8)
 #endif
 
 #ifdef MODEL_Pinecil
@@ -141,6 +142,7 @@
 #define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                         // Use Hakko lookup table
 #define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ           (8)
 #endif
 
 #ifdef MODEL_TS80
@@ -153,6 +155,7 @@
 #define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
 #define TEMP_uV_LOOKUP_TS80                        //
 #define USB_PD_VMAX         12                     // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ          (8)
 #endif
 
 #ifdef MODEL_TS80P
@@ -165,17 +168,20 @@
 #define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
 #define TEMP_uV_LOOKUP_TS80                        //
 #define USB_PD_VMAX         12                     // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ          (8)
 #endif
 
 #ifdef MODEL_MHP30
-#define VOLTAGE_DIV        355                     // Default for MHP30
-#define PID_POWER_LIMIT    65                      // Sets the max pwm power limit
-#define CALIBRATION_OFFSET 0                       // the adc offset in uV - MHP compensates automagically
-#define POWER_LIMIT        65                      // 65 watts default power limit
-#define MAX_POWER_LIMIT    65                      //
-#define POWER_LIMIT_STEPS  2                       //
-#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_MHP30 //
-#define USB_PD_VMAX        20                      // Maximum voltage for PD to negotiate
+#define VOLTAGE_DIV          355                     // Default for MHP30
+#define PID_POWER_LIMIT      65                      // Sets the max pwm power limit
+#define CALIBRATION_OFFSET   0                       // the adc offset in uV - MHP compensates automagically
+#define POWER_LIMIT          65                      // 65 watts default power limit
+#define MAX_POWER_LIMIT      65                      //
+#define POWER_LIMIT_STEPS    2                       //
+#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_MHP30 //
+#define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ           (32)                    // We run a faster update rate (ballpark no for now)
+#define NO_THERMAL_MASS_COMP                         // The temp sensor is mounted seperate to the heater so we dont need this
 #endif
 
 #ifdef MODEL_TS100
