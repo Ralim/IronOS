@@ -127,7 +127,7 @@ CPUFLAGS= -mcpu=cortex-m3     \
 		  -mthumb 			\
 		  -mfloat-abi=soft
 flash_size=128k
-bootldr_size=0x0000
+bootldr_size=0x8000
 endif
 ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )

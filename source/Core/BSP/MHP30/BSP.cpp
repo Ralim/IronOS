@@ -7,6 +7,7 @@
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "Utils.h"
+#include "WS2812.h"
 #include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
@@ -410,4 +411,7 @@ bool     isTipDisconnected() {
   return tipDisconnected;
 }
 
-void setStatusLED(const enum StatusLED state) {}
+void setStatusLED(const enum StatusLED state) {
+  WS2812::led_set_color(0, 0xFF, 0, 0);
+  WS2812::led_update(1);
+}

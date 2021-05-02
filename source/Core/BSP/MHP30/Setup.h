@@ -25,7 +25,7 @@ extern I2C_HandleTypeDef hi2c1;
 extern IWDG_HandleTypeDef hiwdg;
 
 extern TIM_HandleTypeDef htim1;
-extern DMA_HandleTypeDef hdma_tim1_ch2;
+extern DMA_HandleTypeDef hdma_tim1_ch1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 void                     Setup_HAL();

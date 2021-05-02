@@ -49,7 +49,7 @@ void TIM4_IRQHandler(void) { HAL_TIM_IRQHandler(&htim4); }
 void I2C1_EV_IRQHandler(void) { HAL_I2C_EV_IRQHandler(&hi2c1); }
 void I2C1_ER_IRQHandler(void) { HAL_I2C_ER_IRQHandler(&hi2c1); }
 
-void DMA1_Channel3_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_tim1_ch2); }
+void DMA1_Channel2_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_tim1_ch1); }
 void DMA1_Channel6_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_i2c1_tx); }
 
 void DMA1_Channel7_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_i2c1_rx); }
