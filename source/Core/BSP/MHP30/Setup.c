@@ -6,6 +6,7 @@
  */
 #include "Setup.h"
 #include "Pins.h"
+#include <string.h>
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
@@ -128,14 +129,15 @@ static void MX_ADC1_Init(void) {
 
 	/**Configure the ADC multi-mode
 	 */
-	multimode.Mode = ADC_DUALMODE_REGSIMULT;
+	multimode.Mode = ADC_DUALMODE_REGSIMULT_INJECSIMULT;
 	HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode);
 
 	/**Configure Regular Channel
 	 */
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+
 	sConfig.Channel = TMP36_ADC1_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
 	/**Configure Regular Channel
@@ -143,9 +145,11 @@ static void MX_ADC1_Init(void) {
 	sConfig.Channel = VIN_ADC1_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_2;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
 	sConfig.Channel = TIP_TEMP_ADC1_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_3;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
 	sConfig.Channel = PLATE_SENSOR_ADC1_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_4;
 	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
@@ -170,12 +174,12 @@ static void MX_ADC2_Init(void) {
 	hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
 	hadc2.Init.NbrOfConversion = ADC_CHANNELS;
 	HAL_ADC_Init(&hadc2);
+	sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
 
 	/**Configure Regular Channel
 	 */
 	sConfig.Channel = TMP36_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
 	sConfig.Channel = VIN_ADC2_CHANNEL;
@@ -186,7 +190,7 @@ static void MX_ADC2_Init(void) {
 	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 	sConfig.Channel = PLATE_SENSOR_ADC2_CHANNEL;
 	sConfig.Rank = ADC_REGULAR_RANK_4;
-	HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+	HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
 	// Run ADC internal calibration
 	while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK)
@@ -322,6 +326,7 @@ static void MX_DMA_Init(void) {
 
 static void MX_GPIO_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
+	memset(&GPIO_InitStruct,0,sizeof(GPIO_InitStruct));
 
 	/* GPIO Ports Clock Enable */
 	__HAL_RCC_GPIOD_CLK_ENABLE();
@@ -337,8 +342,7 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 	/*Configure peripheral I/O remapping */
 	__HAL_AFIO_REMAP_PD01_ENABLE();
-	//^ remap XTAL so that pins can be analog (all input buffers off).
-	// reduces power consumption
+	//^ remap XTAL so that pins used
 
 	/*
 	 * Configure All pins as analog by default
