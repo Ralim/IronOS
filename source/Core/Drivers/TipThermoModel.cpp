@@ -69,10 +69,8 @@ uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
   }
   return ((degF - 32) * 5) / 9;
 }
-volatile uint32_t lastTemp = 0;
-uint32_t          TipThermoModel::getTipInC(bool sampleNow) {
+uint32_t TipThermoModel::getTipInC(bool sampleNow) {
   int32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(sampleNow));
-  lastTemp                  = currentTipTempInC;
   currentTipTempInC += getHandleTemperature() / 10; // Add handle offset
   // Power usage indicates that our tip temp is lower than our thermocouple temp.
   // I found a number that doesn't unbalance the existing PID, causing overshoot.

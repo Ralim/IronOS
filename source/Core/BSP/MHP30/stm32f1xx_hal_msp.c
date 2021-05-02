@@ -41,7 +41,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
     hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
     hdma_adc1.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
     hdma_adc1.Init.Mode                = DMA_CIRCULAR;
-    hdma_adc1.Init.Priority            = DMA_PRIORITY_MEDIUM;
+    hdma_adc1.Init.Priority            = DMA_PRIORITY_LOW;
     HAL_DMA_Init(&hdma_adc1);
 
     __HAL_LINKDMA(hadc, DMA_Handle, hdma_adc1);
@@ -65,6 +65,9 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
     GPIO_InitStruct.Pin  = VIN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(VIN_GPIO_Port, &GPIO_InitStruct);
+    GPIO_InitStruct.Pin  = PLATE_SENSOR_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    HAL_GPIO_Init(PLATE_SENSOR_GPIO_Port, &GPIO_InitStruct);
 
     /* ADC2 interrupt Init */
     HAL_NVIC_SetPriority(ADC1_2_IRQn, 15, 0);
