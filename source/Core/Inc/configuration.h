@@ -168,15 +168,14 @@
 #endif
 
 #ifdef MODEL_MHP30
-#define VOLTAGE_DIV          355                     // Default for MHP30
-#define PID_POWER_LIMIT      65                      // Sets the max pwm power limit
-#define CALIBRATION_OFFSET   700                     // the adc offset in uV
-#define POWER_LIMIT          65                      // 65 watts default power limit
-#define MAX_POWER_LIMIT      65                      //
-#define POWER_LIMIT_STEPS    2                       //
-#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_MHP30 //
-#define TEMP_uV_LOOKUP_MHP30                         //
-#define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
+#define VOLTAGE_DIV        355                     // Default for MHP30
+#define PID_POWER_LIMIT    65                      // Sets the max pwm power limit
+#define CALIBRATION_OFFSET 0                       // the adc offset in uV - MHP compensates automagically
+#define POWER_LIMIT        65                      // 65 watts default power limit
+#define MAX_POWER_LIMIT    65                      //
+#define POWER_LIMIT_STEPS  2                       //
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_MHP30 //
+#define USB_PD_VMAX        20                      // Maximum voltage for PD to negotiate
 #endif
 
 #ifdef MODEL_TS100
@@ -200,6 +199,6 @@ const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 #endif
 
 #ifdef MODEL_MHP30
-const uint32_t tipMass       = 100; // TODO
-const uint8_t  tipResistance = 75;  // x10 ohms, ~6 typical
+const uint32_t tipMass       = 45; // TODO
+const uint8_t  tipResistance = 75; // x10 ohms, ~6 typical
 #endif
