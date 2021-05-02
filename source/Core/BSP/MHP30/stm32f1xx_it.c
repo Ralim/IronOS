@@ -5,7 +5,7 @@
 #include "cmsis_os.h"
 #include "stm32f1xx.h"
 #include "stm32f1xx_hal.h"
-extern TIM_HandleTypeDef htim1; // used for the systick
+extern TIM_HandleTypeDef htim4; // used for the systick
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */
@@ -45,9 +45,11 @@ void ADC1_2_IRQHandler(void) { HAL_ADC_IRQHandler(&hadc1); }
 // Timer 1 has overflowed, used for HAL ticks
 void TIM1_UP_IRQHandler(void) { HAL_TIM_IRQHandler(&htim1); }
 
+void TIM4_IRQHandler(void) { HAL_TIM_IRQHandler(&htim4); }
 void I2C1_EV_IRQHandler(void) { HAL_I2C_EV_IRQHandler(&hi2c1); }
 void I2C1_ER_IRQHandler(void) { HAL_I2C_ER_IRQHandler(&hi2c1); }
 
+void DMA1_Channel3_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_tim1_ch2); }
 void DMA1_Channel6_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_i2c1_tx); }
 
 void DMA1_Channel7_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_i2c1_rx); }
