@@ -126,7 +126,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base) {
 
-   if (htim_base->Instance == TIM3) {
+  if (htim_base->Instance == TIM3) {
     __HAL_RCC_TIM3_CLK_ENABLE();
   } else if (htim_base->Instance == TIM2) {
     __HAL_RCC_TIM2_CLK_ENABLE();

@@ -51,7 +51,7 @@ typedef enum { HAL_TICK_FREQ_10HZ = 100U, HAL_TICK_FREQ_100HZ = 10U, HAL_TICK_FR
  * @}
  */
 /* Exported types ------------------------------------------------------------*/
-extern volatile uint32_t       uwTick;
+extern volatile uint32_t   uwTick;
 extern uint32_t            uwTickPrio;
 extern HAL_TickFreqTypeDef uwTickFreq;
 

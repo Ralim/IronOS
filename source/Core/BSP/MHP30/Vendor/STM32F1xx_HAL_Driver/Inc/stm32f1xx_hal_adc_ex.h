@@ -53,13 +53,13 @@ extern "C" {
  *          - For all except parameters 'ExternalTrigInjecConv': ADC enabled without conversion on going on injected group.
  */
 typedef struct {
-  uint32_t
-      InjectedChannel;                           /*!< Selection of ADC channel to configure
+  uint32_t InjectedChannel;                      /*!< Selection of ADC channel to configure
                                                       This parameter can be a value of @ref ADC_channels
                                                       Note: Depending on devices, some channels may not be available on package pins. Refer to device datasheet for channels availability.
                                                       Note: On STM32F1 devices with several ADC: Only ADC1 can access internal measurement channels (VrefInt/TempSensor)
-                                                      Note: On STM32F10xx8 and STM32F10xxB devices: A low-amplitude voltage glitch may be generated (on ADC input 0) on the PA0 pin, when the ADC is converting with injection
-                                                    trigger.                           It is advised to distribute the analog channels so that Channel 0 is configured as an injected channel.                           Refer to errata sheet of these devices for more details. */
+                                                      Note: On STM32F10xx8 and STM32F10xxB devices: A low-amplitude voltage glitch may be generated (on ADC input 0) on the PA0 pin, when the ADC is converting with
+                                                    injection                      trigger.                           It is advised to distribute the analog channels so that Channel 0 is configured as an injected channel.                      Refer to errata
+                                                    sheet of these devices for more details. */
   uint32_t InjectedRank;                         /*!< Rank in the injected group sequencer
                                                       This parameter must be a value of @ref ADCEx_injected_rank
                                                       Note: In case of need to disable a channel or change order of conversion sequencer, rank containing a previous channel setting can be overwritten by the new channel

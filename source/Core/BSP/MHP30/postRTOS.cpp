@@ -11,6 +11,4 @@
 #include "task.h"
 
 // Initialisation to be performed with scheduler active
-void postRToSInit() {
-
-}
+void postRToSInit() {}
