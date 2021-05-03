@@ -379,7 +379,7 @@ bool isTipDisconnected() {
 	 * plate_sensor_res = ((adc5_value_PD1_set - adc5_value_PD1_cleared) / (adc5_value_PD1_cleared + 4096 - adc5_value_PD1_set)) * 1000.0;
 	 * */
 
-	bool tipDisconnected = getADC(2) > 4090;
+	bool tipDisconnected = getADC(2) > (4090*8);
 	// We have to handle here that this ^ will trip while measuring the gain resistor
 	if (xTaskGetTickCount() - lastMeas
 			< (TICKS_100MS * 2 + (TICKS_100MS / 2))) {
