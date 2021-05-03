@@ -32,7 +32,15 @@ extern "C" {
 #include <stddef.h>
 
 /* Exported types ------------------------------------------------------------*/
-
+#ifndef USE_HAL_TIM_REGISTER_CALLBACKS
+#define USE_HAL_TIM_REGISTER_CALLBACKS 0
+#endif
+#ifndef USE_HAL_I2C_REGISTER_CALLBACKS
+#define USE_HAL_I2C_REGISTER_CALLBACKS 0
+#endif
+#ifndef USE_HAL_ADC_REGISTER_CALLBACKS
+#define USE_HAL_ADC_REGISTER_CALLBACKS 0
+#endif
 /**
  * @brief  HAL Status structures definition
  */

@@ -219,7 +219,9 @@ typedef struct
   __IO uint32_t MemaddSize; /*!< I2C Target memory address  size          */
 
   __IO uint32_t EventCount; /*!< I2C Event counter                        */
-
+#ifndef USE_HAL_I2C_REGISTER_CALLBACKS
+#define USE_HAL_I2C_REGISTER_CALLBACKS 0
+#endif
 #if (USE_HAL_I2C_REGISTER_CALLBACKS == 1)
   void (*MasterTxCpltCallback)(struct __I2C_HandleTypeDef *hi2c); /*!< I2C Master Tx Transfer completed callback */
   void (*MasterRxCpltCallback)(struct __I2C_HandleTypeDef *hi2c); /*!< I2C Master Rx Transfer completed callback */

@@ -415,6 +415,7 @@ void setStatusLED(const enum StatusLED state) {
   static enum StatusLED lastState = LED_UNKNOWN;
   if (lastState != state || state == LED_HEATING) {
     switch (state) {
+    default:
     case LED_UNKNOWN:
     case LED_OFF:
       WS2812::led_set_color(0, 0, 0, 0);

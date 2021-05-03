@@ -1948,6 +1948,7 @@ void HAL_TIM_TriggerHalfCpltCallback(TIM_HandleTypeDef *htim);
 void HAL_TIM_ErrorCallback(TIM_HandleTypeDef *htim);
 
 /* Callbacks Register/UnRegister functions  ***********************************/
+
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
 HAL_StatusTypeDef HAL_TIM_RegisterCallback(TIM_HandleTypeDef *htim, HAL_TIM_CallbackIDTypeDef CallbackID, pTIM_CallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_TIM_UnRegisterCallback(TIM_HandleTypeDef *htim, HAL_TIM_CallbackIDTypeDef CallbackID);
