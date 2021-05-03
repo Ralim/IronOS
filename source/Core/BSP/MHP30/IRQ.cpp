@@ -19,7 +19,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
   BaseType_t     xHigherPriorityTaskWoken = pdFALSE;
   if (hadc == &hadc1) {
     counter++;
-    if (counter % 64 == 0) {
+    if (counter % 32 == 0) { // 64 = 128ms, 32 = 64ms
       if (pidTaskNotification) {
         vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);

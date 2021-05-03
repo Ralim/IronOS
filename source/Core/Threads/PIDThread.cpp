@@ -14,11 +14,11 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
-static TickType_t powerPulseWaitUnit     = 25 * TICKS_100MS;      // 2.5 s
-static TickType_t powerPulseDurationUnit = (5 * TICKS_100MS) / 2; // 250 ms
-TaskHandle_t      pidTaskNotification    = NULL;
-uint32_t          currentTempTargetDegC  = 0; // Current temperature target in C
-
+static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
+static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
+TaskHandle_t      pidTaskNotification     = NULL;
+uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
+int32_t           powerSupplyWattageLimit = 0;
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
   /*
@@ -110,6 +110,8 @@ void startPIDTask(void const *argument __unused) {
       }
       if (systemSettings.powerLimit && x10WattsOut > (systemSettings.powerLimit * 10)) {
         setTipX10Watts(systemSettings.powerLimit * 10);
+      } else if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
+        setTipX10Watts(powerSupplyWattageLimit * 10);
       } else {
         setTipX10Watts(x10WattsOut);
       }

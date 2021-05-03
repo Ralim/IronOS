@@ -15,7 +15,7 @@
  * Default soldering temp is 320.0 C
  * Temperature the iron sleeps at - default 150.0 C
  */
-#define SOLDERING_TEMP     320 // Default soldering temp is 320.0 °C
+
 #define SLEEP_TEMP         150 // Default sleep temperature
 #define BOOST_TEMP         420 // Default boost temp.
 #define BOOST_MODE_ENABLED 1   // 0: Disable 1: Enable
@@ -120,6 +120,7 @@
 // vdiv = (32768*4)/(vin_max*10)
 
 #ifdef MODEL_TS100
+#define SOLDERING_TEMP       320                     // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV          467                     // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
@@ -133,6 +134,7 @@
 #endif
 
 #ifdef MODEL_Pinecil
+#define SOLDERING_TEMP       320                     // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV          467                     // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
@@ -146,6 +148,7 @@
 #endif
 
 #ifdef MODEL_TS80
+#define SOLDERING_TEMP      320                    // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV         780                    // Default divider from schematic
 #define PID_POWER_LIMIT     24                     // Sets the max pwm power limit
 #define CALIBRATION_OFFSET  900                    // the adc offset in uV
@@ -159,6 +162,7 @@
 #endif
 
 #ifdef MODEL_TS80P
+#define SOLDERING_TEMP      320                    // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV         650                    // Default for TS80P with slightly different resistors
 #define PID_POWER_LIMIT     35                     // Sets the max pwm power limit
 #define CALIBRATION_OFFSET  1500                   // the adc offset in uV
@@ -172,16 +176,18 @@
 #endif
 
 #ifdef MODEL_MHP30
-#define VOLTAGE_DIV          355                     // Default for MHP30
-#define PID_POWER_LIMIT      65                      // Sets the max pwm power limit
-#define CALIBRATION_OFFSET   0                       // the adc offset in uV - MHP compensates automagically
-#define POWER_LIMIT          65                      // 65 watts default power limit
-#define MAX_POWER_LIMIT      65                      //
-#define POWER_LIMIT_STEPS    2                       //
-#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_MHP30 //
-#define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ           (32)                    // We run a faster update rate (ballpark no for now)
-#define NO_THERMAL_MASS_COMP                         // The temp sensor is mounted seperate to the heater so we dont need this
+#define SOLDERING_TEMP     200                     // Default soldering temp is 200.0 °C
+#define VOLTAGE_DIV        360                     // Default for MHP30
+#define PID_POWER_LIMIT    65                      // Sets the max pwm power limit
+#define CALIBRATION_OFFSET 0                       // the adc offset in uV - MHP compensates automagically
+#define POWER_LIMIT        65                      // 65 watts default power limit
+#define MAX_POWER_LIMIT    65                      //
+#define POWER_LIMIT_STEPS  2                       //
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_MHP30 //
+#define USB_PD_VMAX        20                      // Maximum voltage for PD to negotiate
+#define MODEL_HAS_DCDC                             // Has inductor to current filter
+#define PID_TIM_HZ         (16)                    //
+#define THERMAL_MASS_OVERSHOOTS
 #endif
 
 #ifdef MODEL_TS100
@@ -206,5 +212,5 @@ const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 
 #ifdef MODEL_MHP30
 const uint32_t tipMass       = 45; // TODO
-const uint8_t  tipResistance = 75; // x10 ohms, ~6 typical
+const uint8_t  tipResistance = 60; // x10 ohms, ~6 typical
 #endif
