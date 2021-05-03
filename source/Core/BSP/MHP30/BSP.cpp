@@ -451,13 +451,12 @@ void setStatusLED(const enum StatusLED state) {
 			WS2812::led_set_color(0, ((HAL_GetTick() / 10) % 192) + 64, 0,
 					0); //Red fade
 		}
-
 			break;
 		case LED_HOT:
 			WS2812::led_set_color(0, 0xFF, 0, 0); //red
 			break;
 		case LED_COOLING_STILL_HOT:
-			WS2812::led_set_color(0, 0xFF, 0xFF, 0xFF); //white
+			WS2812::led_set_color(0, 0xFF, 0x8C, 0x00); //Orange
 			break;
 		}
 		WS2812::led_update();
