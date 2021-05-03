@@ -126,20 +126,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base) {
 
-  if (htim_base->Instance == TIM1) {
-    __HAL_RCC_TIM1_CLK_ENABLE();
-    __HAL_RCC_DMA1_CLK_ENABLE();
-    hdma_tim1_ch1.Instance                 = DMA1_Channel2;
-    hdma_tim1_ch1.Init.Direction           = DMA_MEMORY_TO_PERIPH;
-    hdma_tim1_ch1.Init.PeriphInc           = DMA_PINC_DISABLE;
-    hdma_tim1_ch1.Init.MemInc              = DMA_MINC_ENABLE;
-    hdma_tim1_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_tim1_ch1.Init.MemDataAlignment    = DMA_PDATAALIGN_HALFWORD;
-    hdma_tim1_ch1.Init.Mode                = DMA_CIRCULAR;
-    hdma_tim1_ch1.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
-    HAL_DMA_Init(&hdma_tim1_ch1);
-    __HAL_LINKDMA(htim_base, hdma[TIM_DMA_ID_CC1], hdma_tim1_ch1);
-  } else if (htim_base->Instance == TIM3) {
+   if (htim_base->Instance == TIM3) {
     __HAL_RCC_TIM3_CLK_ENABLE();
   } else if (htim_base->Instance == TIM2) {
     __HAL_RCC_TIM2_CLK_ENABLE();
