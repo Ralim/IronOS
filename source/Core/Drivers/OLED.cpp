@@ -212,6 +212,36 @@ void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
 }
 
 /**
+ * Masks (removes) the scrolling indicator, i.e. clears the rightmost column
+ * on the screen. This operates directly on the OLED graphics RAM, as this
+ * is intended to be used before calling `OLED::transitionScrollDown()`.
+ */
+void OLED::maskScrollIndicatorOnOLED() {
+  // The right-most column depends on the screen rotation, so just take
+  // it from the screen buffer which is updated by `OLED::setRotation`.
+  uint8_t rightmostColumn = screenBuffer[7];
+  uint8_t maskCommands[]  = {
+      // Set column address:
+      //  A[6:0] - Column start address = rightmost column
+      //  B[6:0] - Column end address = rightmost column
+      0x80,
+      0x21, // cmd
+      0x80,
+      rightmostColumn, // A
+      0x80,
+      rightmostColumn, // B
+
+      // Start of data
+      0x40,
+
+      // Clears two 8px strips
+      0x00,
+      0x00,
+  };
+  FRToSI2C::Transmit(DEVICEADDR_OLED, maskCommands, sizeof(maskCommands));
+}
+
+/**
  * Plays a transition animation between two framebuffers.
  * @param forwardNavigation Direction of the navigation animation.
  *

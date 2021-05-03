@@ -1086,7 +1086,7 @@ void gui_Menu(const menuitem *menu) {
       uint8_t position        = OLED_HEIGHT * currentScreen / scrollContentSize;
       if (lastValue)
         scrollBlink = !scrollBlink;
-      if (!lastValue || !scrollBlink)
+      if ((!lastValue || !scrollBlink) && !scrollingDown)
         OLED::drawScrollIndicator(position, indicatorHeight);
     } else {
       // Draw description
@@ -1096,6 +1096,7 @@ void gui_Menu(const menuitem *menu) {
 
     if (lcdRefresh) {
       if (scrollingDown) {
+        OLED::maskScrollIndicatorOnOLED();
         OLED::transitionScrollDown();
         scrollingDown = false;
         animOpenState = false;
