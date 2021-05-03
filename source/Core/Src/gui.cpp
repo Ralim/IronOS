@@ -951,6 +951,8 @@ static bool settings_setHallEffect(void) {
 }
 #endif
 
+// Indicates whether a menu transition is in progress, so that the menu icon
+// animation is paused during the transition.
 static bool animOpenState = false;
 
 static void displayMenu(size_t index) {
@@ -962,7 +964,6 @@ static void displayMenu(size_t index) {
   // 2 pixel wide scrolling indicator
   static TickType_t menuSwitchLoopTick = 0;
   static size_t     menuCurrentIndex   = sizeof(rootSettingsMenu) + 1;
-  static size_t     currentFrame       = 0;
   TickType_t        step               = TICKS_100MS * 5;
   switch (systemSettings.animationSpeed) {
   case settingOffSpeed_t::FAST:
@@ -974,17 +975,25 @@ static void displayMenu(size_t index) {
   default: // SLOW or off - defaulted above
     break;
   }
-  if (!animOpenState) {
+  size_t currentFrame;
+  if (!animOpenState && systemSettings.animationSpeed != settingOffSpeed_t::OFF) {
     if (menuCurrentIndex != index) {
       menuCurrentIndex   = index;
-      currentFrame       = systemSettings.animationSpeed == settingOffSpeed_t::OFF ? 2 : 0;
       menuSwitchLoopTick = xTaskGetTickCount();
     }
-    if (systemSettings.animationSpeed && (systemSettings.animationLoop || currentFrame != 2)) {
-      currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / step) % 3;
+    currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / step);
+    if (systemSettings.animationLoop) {
+      currentFrame %= 3;
+    } else if (currentFrame > 2) {
+      currentFrame = 2;
     }
-    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
+  } else {
+    // We want the animation to restart after completing the transition.
+    menuCurrentIndex = sizeof(rootSettingsMenu) + 1;
+    // Always draw the last frame if icon animation is disabled.
+    currentFrame = systemSettings.animationSpeed == settingOffSpeed_t::OFF ? 2 : 0;
   }
+  OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
 }
 
 static bool settings_displayCalibrateVIN(void) {
