@@ -438,7 +438,7 @@ bool isTipDisconnected() {
 
 void setStatusLED(const enum StatusLED state) {
 	static enum StatusLED lastState = LED_UNKNOWN;
-	if (lastState != state) {
+	if (lastState != state || state == LED_HEATING) {
 		switch (state) {
 		case LED_UNKNOWN:
 		case LED_OFF:
@@ -447,8 +447,11 @@ void setStatusLED(const enum StatusLED state) {
 		case LED_STANDBY:
 			WS2812::led_set_color(0, 0, 0xFF, 0); //green
 			break;
-		case LED_HEATING:
-			WS2812::led_set_color(0, 0, 0, 0xFF); //Blue
+		case LED_HEATING: {
+			WS2812::led_set_color(0, ((HAL_GetTick() / 10) % 192) + 64, 0,
+					0); //Red fade
+		}
+
 			break;
 		case LED_HOT:
 			WS2812::led_set_color(0, 0xFF, 0, 0); //red

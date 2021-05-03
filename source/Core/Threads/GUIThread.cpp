@@ -522,7 +522,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 				// Unlock buttons
 				buttonsLocked = false;
 				warnUser(translatedString(Tr->UnlockingKeysString),
-						TICKS_SECOND);
+				TICKS_SECOND);
 				break;
 			case BUTTON_F_LONG:
 				// if boost mode is enabled turn it on
@@ -538,7 +538,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			case BUTTON_B_SHORT:
 				// Do nothing and display a lock warming
 				warnUser(translatedString(Tr->WarningKeysLockedString),
-						TICKS_SECOND / 2);
+				TICKS_SECOND / 2);
 				break;
 			default:
 				break;
@@ -575,7 +575,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 					// Lock buttons
 					buttonsLocked = true;
 					warnUser(translatedString(Tr->LockingKeysString),
-							TICKS_SECOND);
+					TICKS_SECOND);
 				}
 				break;
 			default:
@@ -678,6 +678,14 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 			if (gui_SolderingSleepingMode(false, false)) {
 				return; // If the function returns non-0 then exit
 			}
+		}
+		//Update LED status
+		int error = currentTempTargetDegC - TipThermoModel::getTipInC();
+		if (error >= -10 && error <= 10) {
+			//converged
+			setStatusLED(LED_HOT);
+		} else {
+			setStatusLED(LED_HEATING);
 		}
 		// slow down ui update rate
 		GUIDelay();
@@ -918,7 +926,7 @@ void startGUITask(void const *argument __unused) {
 		if (tipTemp > 55) {
 			setStatusLED(LED_COOLING_STILL_HOT);
 		} else {
-			setStatusLED(LED_OFF);
+			setStatusLED(LED_STANDBY);
 		}
 		// Preemptively turn the display on.  Turn it off if and only if
 		// the tip temperature is below 50 degrees C *and* motion sleep
@@ -933,6 +941,7 @@ void startGUITask(void const *argument __unused) {
 						&& ((xTaskGetTickCount() - lastButtonTime)
 								> BUTTON_INACTIVITY_TIME))) {
 			OLED::setDisplayState(OLED::DisplayState::OFF);
+			setStatusLED(LED_OFF);
 		}
 		// Clear the lcd buffer
 		OLED::clearScreen();
