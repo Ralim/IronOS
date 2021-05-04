@@ -295,15 +295,15 @@
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Leistungsimpulse",
+				"Impuls",
 				"Wartezeit"
 			],
 			"desc": "Dauer vor Abgabe von Wachhalteimpulsen <x 2,5s>"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Leistungsimpulse",
-				"Dauer"
+				"Impuls-",
+				"dauer"
 			],
 			"desc": "Dauer des Wachhalteimpulses <x 0,25s>"
 		},
