@@ -15,7 +15,7 @@
 		"InputVoltageString": "V Eingang: ",
 		"WarningTipTempString": "Temperatur: ",
 		"BadTipString": "Spitze Defekt",
-		"SleepingSimpleString": "Zzz ",
+		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Ruhemodus...",
 		"WarningSimpleString": "HEISS!",
 		"WarningAdvancedString": "! Achtung Heiß !",
@@ -128,7 +128,7 @@
 		"ShutdownTimeout": {
 			"text2": [
 				"Abschalt-",
-				"verzögerung"
+				"verzög."
 			],
 			"desc": "Dauer vor automatischer Abschaltung <M=Minuten>"
 		},
@@ -219,14 +219,14 @@
 		"QCMaxVoltage": {
 			"text2": [
 				"Spannungs-",
-				"obergrenze"
+				"maximum"
 			],
 			"desc": "Maximal zulässige Spannung der verwendeten Spannungsversorgung <V=Volt>"
 		},
 		"PowerLimit": {
 			"text2": [
 				"Leistungs-",
-				"obergrenze"
+				"maximum"
 			],
 			"desc": "Maximale zulässige Leistungsaufnahme des Lötkolbens <W=Watt>"
 		},
