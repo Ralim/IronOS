@@ -13,11 +13,11 @@
 #include "main.hpp"
 #include <IRQ.h>
 
-WS2812<GPIOA_BASE,WS2812_Pin,1> ws2812;
-volatile uint16_t PWMSafetyTimer = 0;
-volatile uint8_t  pendingPWM     = 0;
-uint16_t          totalPWM       = 255;
-const uint16_t    powerPWM       = 255;
+WS2812<GPIOA_BASE, WS2812_Pin, 1> ws2812;
+volatile uint16_t                 PWMSafetyTimer = 0;
+volatile uint8_t                  pendingPWM     = 0;
+uint16_t                          totalPWM       = 255;
+const uint16_t                    powerPWM       = 255;
 
 history<uint16_t, PID_TIM_HZ> rawTempFilter = {{0}, 0, 0};
 void                          resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
@@ -427,7 +427,7 @@ void setStatusLED(const enum StatusLED state) {
       break;
     case LED_HEATING: {
       ws2812.led_set_color(0, ((HAL_GetTick() / 10) % 192) + 64, 0,
-                            0); // Red fade
+                           0); // Red fade
     } break;
     case LED_HOT:
       ws2812.led_set_color(0, 0xFF, 0, 0); // red

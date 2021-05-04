@@ -13,13 +13,6 @@
 /* #define DATA_IN_ExtSRAM */
 #endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
 
-#ifndef VECT_TAB_OFFSET
-#define VECT_TAB_OFFSET                            \
-  0x00004000U /*!< Vector Table base offset field. \
-           This value must be a multiple of 0x200. */
-// We offset this by 0x4000 to because of the bootloader
-#endif
-
 /*******************************************************************************
  *  Clock Definitions
  *******************************************************************************/
@@ -90,7 +83,7 @@ void SystemInit(void) {
 #ifdef VECT_TAB_SRAM
   SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
 #else
-  SCB->VTOR  = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
+  SCB->VTOR  = FLASH_BASE | 0x8000; /* Vector Table Relocation in Internal FLASH. */
 #endif
 }
 
