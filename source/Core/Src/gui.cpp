@@ -83,8 +83,11 @@ static bool settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
 #endif
 // Menu functions
+
+#if defined(POW_DC) || defined(POW_QC)
 static bool settings_displayPowerMenu(void);
 static bool settings_enterPowerMenu(void);
+#endif
 static bool settings_displaySolderingMenu(void);
 static bool settings_enterSolderingMenu(void);
 static bool settings_displayPowerSavingMenu(void);
@@ -133,24 +136,30 @@ static bool settings_enterAdvancedMenu(void);
  *  Reset Settings
  *
  */
-const menuitem rootSettingsMenu[]{
-    /*
-     * Power Menu
-     * Soldering Menu
-     * Power Saving Menu
-     * UI Menu
-     * Advanced Menu
-     * Exit
-     */
-    {0, settings_enterPowerMenu, settings_displayPowerMenu},             /*Power*/
-    {0, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
-    {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
-    {0, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
-    {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
-    {0, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Switch*/
-    {0, nullptr, nullptr}                                                // end of menu marker. DO NOT REMOVE
+const menuitem rootSettingsMenu[] {
+  /*
+   * Power Menu
+   * Soldering Menu
+   * Power Saving Menu
+   * UI Menu
+   * Advanced Menu
+   * Exit
+   */
+
+#if defined(POW_DC) || defined(POW_QC)
+  {0, settings_enterPowerMenu, settings_displayPowerMenu}, /*Power*/
+#endif
+      {0, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
+      {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
+      {0, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
+      {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+      {0, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Switch*/
+  {
+    0, nullptr, nullptr
+  } // end of menu marker. DO NOT REMOVE
 };
 
+#if defined(POW_DC) || defined(POW_QC)
 const menuitem powerMenu[] = {
 /*
  * Power Source
@@ -164,6 +173,7 @@ const menuitem powerMenu[] = {
 #endif
     {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
 };
+#endif
 const menuitem solderingMenu[] = {
     /*
      * Boost Mode Enabled
@@ -1039,6 +1049,8 @@ static bool settings_displayCalibrateVIN(void) {
   printShortDescription(SettingsItemIndex::VoltageCalibration, 5);
   return false;
 }
+
+#if defined(POW_DC) || defined(POW_QC)
 static bool settings_displayPowerMenu(void) {
   displayMenu(0);
   return false;
@@ -1047,6 +1059,7 @@ static bool settings_enterPowerMenu(void) {
   gui_Menu(powerMenu);
   return false;
 }
+#endif
 static bool settings_displaySolderingMenu(void) {
   displayMenu(1);
   return false;
