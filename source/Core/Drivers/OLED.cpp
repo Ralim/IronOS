@@ -238,7 +238,7 @@ void OLED::maskScrollIndicatorOnOLED() {
       0x00,
       0x00,
   };
-  FRToSI2C::Transmit(DEVICEADDR_OLED, maskCommands, sizeof(maskCommands));
+  I2C_CLASS::Transmit(DEVICEADDR_OLED, maskCommands, sizeof(maskCommands));
 }
 
 /**
@@ -331,7 +331,7 @@ void OLED::transitionScrollDown() {
     // Also update setup command for "set display start line":
     OLED_Setup_Array[8].val = scrollCommandByte;
 
-    FRToSI2C::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
+    I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
     osDelay(TICKS_100MS / 5);
   }
 }
