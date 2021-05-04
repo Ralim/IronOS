@@ -7,6 +7,7 @@
 
 #include "gui.hpp"
 #include "Buttons.hpp"
+#include "ScrollMessage.hpp"
 #include "TipThermoModel.h"
 #include "Translation.h"
 #include "cmsis_os.h"
@@ -270,52 +271,11 @@ static void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t 
   OLED::setCursor(cursorCharPosition * FONT_12_WIDTH - 2, 0);
 }
 
-/**
- * Counts the number of chars in the string excluding the null terminator.
- * This is a custom version of `strlen` which takes into account our custom
- * double-byte char encoding.
- * @param str The input string.
- * @return The length of the string.
- */
-static uint16_t str_display_len(const char *const str) {
-  const uint8_t *next  = reinterpret_cast<const uint8_t *>(str);
-  uint16_t       count = 0;
-  while (next[0]) {
-    if (next[0] <= 0xF0) {
-      count++;
-      next++;
-    } else {
-      if (!next[1]) {
-        break;
-      }
-      count++;
-      next += 2;
-    }
-  }
-  return count;
-}
-
 static int userConfirmation(const char *message) {
-  uint16_t messageWidth = FONT_12_WIDTH * (str_display_len(message) + 7);
-  uint32_t messageStart = xTaskGetTickCount();
-
-  OLED::setCursor(0, 0);
-  int16_t lastOffset = -1;
-  bool    lcdRefresh = true;
+  ScrollMessage scrollMessage;
 
   for (;;) {
-    int16_t messageOffset = ((xTaskGetTickCount() - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS / 10 : (TICKS_100MS / 5)));
-    messageOffset %= messageWidth; // Roll around at the end
-
-    if (lastOffset != messageOffset) {
-      OLED::clearScreen();
-
-      //^ Rolling offset based on time
-      OLED::setCursor((OLED_WIDTH - messageOffset), 0);
-      OLED::print(message, FontStyle::LARGE);
-      lastOffset = messageOffset;
-      lcdRefresh = true;
-    }
+    bool lcdRefresh = scrollMessage.drawUpdate(message, xTaskGetTickCount());
 
     ButtonState buttons = getButtonState();
     switch (buttons) {
@@ -336,7 +296,6 @@ static int userConfirmation(const char *message) {
     if (lcdRefresh) {
       OLED::refresh();
       osDelay(40);
-      lcdRefresh = false;
     }
   }
   return 0;
@@ -1099,13 +1058,13 @@ void gui_Menu(const menuitem *menu) {
   TickType_t  autoRepeatTimer        = 0;
   TickType_t  autoRepeatAcceleration = 0;
   bool        earlyExit              = false;
-  TickType_t  descriptionStart       = 0;
-  int16_t     lastOffset             = -1;
   bool        lcdRefresh             = true;
   ButtonState lastButtonState        = BUTTON_NONE;
   uint8_t     scrollContentSize      = 0;
   bool        scrollBlink            = false;
   bool        lastValue              = false;
+
+  ScrollMessage scrollMessage;
 
   for (uint8_t i = 0; menu[i].draw != nullptr; i++) {
     scrollContentSize += 1;
@@ -1144,23 +1103,10 @@ void gui_Menu(const menuitem *menu) {
         scrollBlink = !scrollBlink;
       if (!lastValue || !scrollBlink)
         OLED::drawScrollIndicator(position, indicatorHeight);
-      lastOffset = -1;
     } else {
       // Draw description
-      if (descriptionStart == 0)
-        descriptionStart = xTaskGetTickCount();
       const char *description = translatedString(Tr->SettingsDescriptions[menu[currentScreen].description - 1]);
-      // lower the value - higher the speed
-      int16_t descriptionWidth  = FONT_12_WIDTH * (str_display_len(description) + 7);
-      int16_t descriptionOffset = ((xTaskGetTickCount() - descriptionStart) / (systemSettings.descriptionScrollSpeed == 1 ? (TICKS_100MS / 10) : (TICKS_100MS / 5)));
-      descriptionOffset %= descriptionWidth; // Roll around at the end
-      if (lastOffset != descriptionOffset) {
-        OLED::clearScreen();
-        OLED::setCursor((OLED_WIDTH - descriptionOffset), 0);
-        OLED::print(description, FontStyle::LARGE);
-        lastOffset = descriptionOffset;
-        lcdRefresh = true;
-      }
+      lcdRefresh |= scrollMessage.drawUpdate(description, xTaskGetTickCount());
     }
 
     ButtonState buttons = getButtonState();
@@ -1172,26 +1118,26 @@ void gui_Menu(const menuitem *menu) {
 
     switch (buttons) {
     case BUTTON_BOTH:
-      earlyExit        = true; // will make us exit next loop
-      descriptionStart = 0;
+      earlyExit = true; // will make us exit next loop
+      scrollMessage.reset();
       break;
     case BUTTON_F_SHORT:
       // increment
-      if (descriptionStart == 0) {
+      if (scrollMessage.isReset()) {
         if (menu[currentScreen].incrementHandler != nullptr) {
           lastValue = menu[currentScreen].incrementHandler();
         } else {
           earlyExit = true;
         }
       } else
-        descriptionStart = 0;
+        scrollMessage.reset();
       break;
     case BUTTON_B_SHORT:
-      if (descriptionStart == 0) {
+      if (scrollMessage.isReset()) {
         currentScreen++;
         lastValue = false;
       } else
-        descriptionStart = 0;
+        scrollMessage.reset();
       break;
     case BUTTON_F_LONG:
       if (xTaskGetTickCount() + autoRepeatAcceleration > autoRepeatTimer + PRESS_ACCEL_INTERVAL_MAX) {
@@ -1202,7 +1148,7 @@ void gui_Menu(const menuitem *menu) {
 
         autoRepeatTimer += xTaskGetTickCount();
 
-        descriptionStart = 0;
+        scrollMessage.reset();
 
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
@@ -1210,8 +1156,8 @@ void gui_Menu(const menuitem *menu) {
     case BUTTON_B_LONG:
       if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
         currentScreen++;
-        autoRepeatTimer  = xTaskGetTickCount();
-        descriptionStart = 0;
+        autoRepeatTimer = xTaskGetTickCount();
+        scrollMessage.reset();
 
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
@@ -1233,8 +1179,8 @@ void gui_Menu(const menuitem *menu) {
     if ((xTaskGetTickCount() - lastButtonTime) > (TICKS_SECOND * 30)) {
       // If user has not pressed any buttons in 30 seconds, exit back a menu layer
       // This will trickle the user back to the main screen eventually
-      earlyExit        = true;
-      descriptionStart = 0;
+      earlyExit = true;
+      scrollMessage.reset();
     }
   }
 }
