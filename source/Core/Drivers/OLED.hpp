@@ -88,8 +88,10 @@ public:
   static void drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool clear);
   static void drawHeatSymbol(uint8_t state);
   static void drawScrollIndicator(uint8_t p, uint8_t h); // Draws a scrolling position indicator
+  static void maskScrollIndicatorOnOLED();
   static void transitionSecondaryFramebuffer(bool forwardNavigation);
   static void useSecondaryFramebuffer(bool useSecondary);
+  static void transitionScrollDown();
 
 private:
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location

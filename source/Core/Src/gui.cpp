@@ -1063,6 +1063,7 @@ void gui_Menu(const menuitem *menu) {
   uint8_t     scrollContentSize      = 0;
   bool        scrollBlink            = false;
   bool        lastValue              = false;
+  bool        scrollingDown          = false;
 
   ScrollMessage scrollMessage;
 
@@ -1088,6 +1089,10 @@ void gui_Menu(const menuitem *menu) {
 
   while ((menu[currentScreen].draw != nullptr) && earlyExit == false) {
     OLED::setCursor(0, 0);
+    if (scrollingDown) {
+      animOpenState = true;
+    }
+
     // If the user has hesitated for >=3 seconds, show the long text
     // Otherwise "draw" the option
     if ((xTaskGetTickCount() - lastButtonTime < (TICKS_SECOND * 3)) || menu[currentScreen].description == 0) {
@@ -1101,12 +1106,25 @@ void gui_Menu(const menuitem *menu) {
       uint8_t position        = OLED_HEIGHT * currentScreen / scrollContentSize;
       if (lastValue)
         scrollBlink = !scrollBlink;
-      if (!lastValue || !scrollBlink)
+      if ((!lastValue || !scrollBlink) && !scrollingDown)
         OLED::drawScrollIndicator(position, indicatorHeight);
     } else {
       // Draw description
       const char *description = translatedString(Tr->SettingsDescriptions[menu[currentScreen].description - 1]);
       lcdRefresh |= scrollMessage.drawUpdate(description, xTaskGetTickCount());
+    }
+
+    if (lcdRefresh) {
+      if (scrollingDown) {
+        OLED::maskScrollIndicatorOnOLED();
+        OLED::transitionScrollDown();
+        scrollingDown = false;
+        animOpenState = false;
+      } else {
+        OLED::refresh(); // update the LCD
+        osDelay(40);
+      }
+      lcdRefresh = false;
     }
 
     ButtonState buttons = getButtonState();
@@ -1135,7 +1153,8 @@ void gui_Menu(const menuitem *menu) {
     case BUTTON_B_SHORT:
       if (scrollMessage.isReset()) {
         currentScreen++;
-        lastValue = false;
+        scrollingDown = true;
+        lastValue     = false;
       } else
         scrollMessage.reset();
       break;
@@ -1156,6 +1175,7 @@ void gui_Menu(const menuitem *menu) {
     case BUTTON_B_LONG:
       if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
         currentScreen++;
+        scrollingDown   = true;
         autoRepeatTimer = xTaskGetTickCount();
         scrollMessage.reset();
 
@@ -1171,11 +1191,6 @@ void gui_Menu(const menuitem *menu) {
       autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
     }
 
-    if (lcdRefresh) {
-      OLED::refresh(); // update the LCD
-      osDelay(40);
-      lcdRefresh = false;
-    }
     if ((xTaskGetTickCount() - lastButtonTime) > (TICKS_SECOND * 30)) {
       // If user has not pressed any buttons in 30 seconds, exit back a menu layer
       // This will trickle the user back to the main screen eventually
@@ -1183,6 +1198,8 @@ void gui_Menu(const menuitem *menu) {
       scrollMessage.reset();
     }
   }
+
+  animOpenState = false;
 }
 
 void enterSettingsMenu() {
