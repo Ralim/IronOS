@@ -128,7 +128,7 @@
 		"ShutdownTimeout": {
 			"text2": [
 				"Abschalt-",
-				"zeit"
+				"verzögerung"
 			],
 			"desc": "Dauer vor automatischer Abschaltung <M=Minuten>"
 		},
@@ -226,7 +226,7 @@
 		"PowerLimit": {
 			"text2": [
 				"Leistungs-",
-				"grenze"
+				"obergrenze"
 			],
 			"desc": "Maximale zulässige Leistungsaufnahme des Lötkolbens <W=Watt>"
 		},
@@ -295,8 +295,8 @@
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Impuls",
-				"Wartezeit"
+				"Impuls-",
+				"verzögerung"
 			],
 			"desc": "Dauer vor Abgabe von Wachhalteimpulsen <x 2,5s>"
 		},
