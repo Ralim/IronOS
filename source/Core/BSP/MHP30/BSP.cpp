@@ -12,6 +12,8 @@
 #include "history.hpp"
 #include "main.hpp"
 #include <IRQ.h>
+
+WS2812<GPIOA_BASE,WS2812_Pin,1> ws2812;
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t  pendingPWM     = 0;
 uint16_t          totalPWM       = 255;
@@ -325,7 +327,7 @@ void unstick_I2C() {
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 uint8_t getButtonB() { return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 
-void BSPInit(void) { WS2812::init(); }
+void BSPInit(void) { ws2812.init(); }
 
 void reboot() { NVIC_SystemReset(); }
 
@@ -418,23 +420,23 @@ void setStatusLED(const enum StatusLED state) {
     default:
     case LED_UNKNOWN:
     case LED_OFF:
-      WS2812::led_set_color(0, 0, 0, 0);
+      ws2812.led_set_color(0, 0, 0, 0);
       break;
     case LED_STANDBY:
-      WS2812::led_set_color(0, 0, 0xFF, 0); // green
+      ws2812.led_set_color(0, 0, 0xFF, 0); // green
       break;
     case LED_HEATING: {
-      WS2812::led_set_color(0, ((HAL_GetTick() / 10) % 192) + 64, 0,
+      ws2812.led_set_color(0, ((HAL_GetTick() / 10) % 192) + 64, 0,
                             0); // Red fade
     } break;
     case LED_HOT:
-      WS2812::led_set_color(0, 0xFF, 0, 0); // red
+      ws2812.led_set_color(0, 0xFF, 0, 0); // red
       break;
     case LED_COOLING_STILL_HOT:
-      WS2812::led_set_color(0, 0xFF, 0x8C, 0x00); // Orange
+      ws2812.led_set_color(0, 0xFF, 0x8C, 0x00); // Orange
       break;
     }
-    WS2812::led_update();
+    ws2812.led_update();
     lastState = state;
   }
 }
