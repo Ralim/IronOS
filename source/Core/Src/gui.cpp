@@ -587,25 +587,25 @@ static bool settings_displayDisplayRotation(void) {
 static bool settings_setBoostTemp(void) {
   if (systemSettings.temperatureInF) {
     if (systemSettings.BoostTemp == 0) {
-      systemSettings.BoostTemp = 480; // loop back at 480
+      systemSettings.BoostTemp = MIN_BOOST_TEMP_F; // loop back at 480
     } else {
       systemSettings.BoostTemp += 20; // Go up 20F at a time
     }
 
-    if (systemSettings.BoostTemp > 850) {
+    if (systemSettings.BoostTemp > MAX_TEMP_F) {
       systemSettings.BoostTemp = 0; // jump to off
     }
-    return systemSettings.BoostTemp == 840;
+    return systemSettings.BoostTemp == MAX_TEMP_F - 10;
   } else {
     if (systemSettings.BoostTemp == 0) {
-      systemSettings.BoostTemp = 250; // loop back at 250
+      systemSettings.BoostTemp = MIN_BOOST_TEMP_C; // loop back at 250
     } else {
       systemSettings.BoostTemp += 10; // Go up 10C at a time
     }
-    if (systemSettings.BoostTemp > 450) {
+    if (systemSettings.BoostTemp > MAX_TEMP_C) {
       systemSettings.BoostTemp = 0; // Go to off state
     }
-    return systemSettings.BoostTemp == 450;
+    return systemSettings.BoostTemp == MAX_TEMP_C;
   }
 }
 

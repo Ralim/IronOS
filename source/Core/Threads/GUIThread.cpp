@@ -239,15 +239,15 @@ static void gui_solderingTempAdjust() {
     }
     // constrain between 10-450 C
     if (systemSettings.temperatureInF) {
-      if (systemSettings.SolderingTemp > 850)
-        systemSettings.SolderingTemp = 850;
-      if (systemSettings.SolderingTemp < 60)
-        systemSettings.SolderingTemp = 60;
+      if (systemSettings.SolderingTemp > MAX_TEMP_F)
+        systemSettings.SolderingTemp = MAX_TEMP_F;
+      if (systemSettings.SolderingTemp < MIN_TEMP_F)
+        systemSettings.SolderingTemp = MIN_TEMP_F;
     } else {
-      if (systemSettings.SolderingTemp > 450)
-        systemSettings.SolderingTemp = 450;
-      if (systemSettings.SolderingTemp < 10)
-        systemSettings.SolderingTemp = 10;
+      if (systemSettings.SolderingTemp > MAX_TEMP_C)
+        systemSettings.SolderingTemp = MAX_TEMP_C;
+      if (systemSettings.SolderingTemp < MIN_TEMP_C)
+        systemSettings.SolderingTemp = MIN_TEMP_C;
     }
 
     if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
