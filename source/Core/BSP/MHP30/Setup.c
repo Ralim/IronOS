@@ -223,7 +223,9 @@ static void MX_TIM3_Init(void) {
   TIM_ClockConfigTypeDef  sClockSourceConfig;
   TIM_MasterConfigTypeDef sMasterConfig;
   TIM_OC_InitTypeDef      sConfigOC;
-
+  memset(&sClockSourceConfig, 0, sizeof(sClockSourceConfig));
+  memset(&sMasterConfig, 0, sizeof(sMasterConfig));
+  memset(&sConfigOC, 0, sizeof(sConfigOC));
   htim3.Instance               = TIM3;
   htim3.Init.Prescaler         = 1;
   htim3.Init.CounterMode       = TIM_COUNTERMODE_UP;
@@ -248,17 +250,18 @@ static void MX_TIM3_Init(void) {
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, PWM_Out_CHANNEL);
-  // TODO need to do buzzer
+  HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, BUZZER_CHANNEL);
   GPIO_InitTypeDef GPIO_InitStruct;
 
   /**TIM3 GPIO Configuration
    PWM_Out_Pin     ------> TIM3_CH1
    */
-  GPIO_InitStruct.Pin   = PWM_Out_Pin;
+  GPIO_InitStruct.Pin   = PWM_Out_Pin | BUZZER_Pin;
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
   HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
   HAL_TIM_PWM_Start(&htim3, PWM_Out_CHANNEL);
+  HAL_TIM_PWM_Start(&htim3, BUZZER_CHANNEL);
 }
 /* TIM3 init function */
 static void MX_TIM2_Init(void) {

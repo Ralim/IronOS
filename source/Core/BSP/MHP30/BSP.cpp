@@ -412,9 +412,19 @@ bool     isTipDisconnected() {
 
   return tipDisconnected;
 }
-
+void setBuzzer(bool on) {
+  if (on) {
+    htim3.Instance->CCR2 = 128;
+    htim3.Instance->PSC  = 100; // drop down into audible range
+  } else {
+    htim3.Instance->CCR2 = 0;
+    htim3.Instance->PSC  = 1; // revert back out of hearing range
+  }
+}
 void setStatusLED(const enum StatusLED state) {
   static enum StatusLED lastState = LED_UNKNOWN;
+  static TickType_t     buzzerEnd = 0;
+
   if (lastState != state || state == LED_HEATING) {
     switch (state) {
     default:
@@ -426,11 +436,12 @@ void setStatusLED(const enum StatusLED state) {
       ws2812.led_set_color(0, 0, 0xFF, 0); // green
       break;
     case LED_HEATING: {
-      ws2812.led_set_color(0, ((HAL_GetTick() / 10) % 192) + 64, 0,
-                           0); // Red fade
+      ws2812.led_set_color(0, ((HAL_GetTick() / 10) % 192) + 64, 0, 0); // Red fade
     } break;
     case LED_HOT:
       ws2812.led_set_color(0, 0xFF, 0, 0); // red
+      // We have hit the right temp, run buzzer for a short period
+      buzzerEnd = xTaskGetTickCount() + TICKS_SECOND / 3;
       break;
     case LED_COOLING_STILL_HOT:
       ws2812.led_set_color(0, 0xFF, 0x8C, 0x00); // Orange
@@ -438,5 +449,10 @@ void setStatusLED(const enum StatusLED state) {
     }
     ws2812.led_update();
     lastState = state;
+  }
+  if (state == LED_HOT && xTaskGetTickCount() < buzzerEnd) {
+    setBuzzer(true);
+  } else {
+    setBuzzer(false);
   }
 }

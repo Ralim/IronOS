@@ -31,6 +31,9 @@
 #define PWM_Out_Pin                   GPIO_PIN_6
 #define PWM_Out_GPIO_Port             GPIOA
 #define PWM_Out_CHANNEL               TIM_CHANNEL_1
+#define BUZZER_Pin                    GPIO_PIN_7
+#define BUZZER_GPIO_Port              GPIOA
+#define BUZZER_CHANNEL                TIM_CHANNEL_2
 #define SCL_Pin                       GPIO_PIN_6
 #define SCL_GPIO_Port                 GPIOB
 #define SDA_Pin                       GPIO_PIN_7
