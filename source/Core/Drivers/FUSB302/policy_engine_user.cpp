@@ -92,7 +92,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
             bestIsPPS        = false;
 #ifdef MODEL_HAS_DCDC
             // set limiter for wattage
-            powerSupplyWattageLimit = ((voltage_mv * current_a_x100) / 100 / 1000) - 1;
+            powerSupplyWattageLimit = ((voltage_mv * current_a_x100) / 100 / 1000);
 #endif
           }
         }
@@ -119,7 +119,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
         bestIsPPS        = true;
 #ifdef MODEL_HAS_DCDC
         // set limiter for wattage
-        powerSupplyWattageLimit = ((ideal_voltage_mv * max_current) / 100 / 1000) - 1;
+        powerSupplyWattageLimit = ((ideal_voltage_mv * max_current) / 100 / 1000);
 #endif
       }
     }
