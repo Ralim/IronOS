@@ -220,7 +220,7 @@
 #define MIN_BOOST_TEMP_C        150                     // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F        300                     // The min settable temp for boost mode °F
 #define NO_DISPLAY_ROTATE                               // Disable OLED rotation by accel
-
+#define SLEW_LIMIT              50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
 #endif
 
 #ifdef MODEL_TS100

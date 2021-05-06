@@ -34,6 +34,9 @@ void startPIDTask(void const *argument __unused) {
                                               // be over-ridden rapidly
   pidTaskNotification    = xTaskGetCurrentTaskHandle();
   uint32_t PIDTempTarget = 0;
+#ifdef SLEW_LIMIT
+  int32_t x10WattsOutLast = 0;
+#endif
   for (;;) {
 
     if (ulTaskNotifyTake(pdTRUE, 2000)) {
@@ -109,12 +112,21 @@ void startPIDTask(void const *argument __unused) {
         x10WattsOut = 0;
       }
       if (systemSettings.powerLimit && x10WattsOut > (systemSettings.powerLimit * 10)) {
-        setTipX10Watts(systemSettings.powerLimit * 10);
-      } else if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
-        setTipX10Watts(powerSupplyWattageLimit * 10);
-      } else {
-        setTipX10Watts(x10WattsOut);
+        x10WattsOut = systemSettings.powerLimit * 10;
       }
+      if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
+        x10WattsOut = powerSupplyWattageLimit * 10;
+      }
+#ifdef SLEW_LIMIT
+      if (x10WattsOut - x10WattsOutLast > SLEW_LIMIT) {
+        x10WattsOut = x10WattsOutLast + SLEW_LIMIT;
+      }
+      if (x10WattsOut < 0) {
+        x10WattsOut = 0;
+      }
+      x10WattsOutLast = x10WattsOut;
+#endif
+      setTipX10Watts(x10WattsOut);
 #ifdef DEBUG_UART_OUTPUT
       log_system_state(x10WattsOut);
 #endif
