@@ -218,7 +218,7 @@
 		"QCMaxVoltage": {
 			"text2": [
 				"Voltaggio",
-				"Quick Charge"
+				"QC"
 			],
 			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge"
 		},
@@ -269,14 +269,14 @@
 				"Blocco",
 				"tasti"
 			],
-			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: blocca Turbo; C: blocco completo]"
+			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Tensione",
 				"min celle"
 			],
-			"desc": "Modifica il valore di tensione minima \"di scaricamento\" per le celle di una batteria Li-Po [3S: 3,0-3,7 V; 4S/5S/6S: 2,4-3,7 V]"
+			"desc": "Modifica la tensione di minima carica delle celle di una batteria Li-Po [3S: 3,0-3,7 V; 4S/5S/6S: 2,4-3,7 V]"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -308,7 +308,7 @@
 		},
 		"LanguageSwitch": {
 			"text2": [
-				"Language:",
+				"Lingua:",
 				" IT    Italiano"
 			],
 			"desc": ""

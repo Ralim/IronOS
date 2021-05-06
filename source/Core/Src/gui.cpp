@@ -973,6 +973,8 @@ static bool settings_setHallEffect(void) {
 }
 #endif
 
+// Indicates whether a menu transition is in progress, so that the menu icon
+// animation is paused during the transition.
 static bool animOpenState = false;
 
 static void displayMenu(size_t index) {
@@ -984,7 +986,6 @@ static void displayMenu(size_t index) {
   // 2 pixel wide scrolling indicator
   static TickType_t menuSwitchLoopTick = 0;
   static size_t     menuCurrentIndex   = sizeof(rootSettingsMenu) + 1;
-  static size_t     currentFrame       = 0;
   TickType_t        step               = TICKS_100MS * 5;
   switch (systemSettings.animationSpeed) {
   case settingOffSpeed_t::FAST:
@@ -996,17 +997,25 @@ static void displayMenu(size_t index) {
   default: // SLOW or off - defaulted above
     break;
   }
-  if (!animOpenState) {
+  size_t currentFrame;
+  if (!animOpenState && systemSettings.animationSpeed != settingOffSpeed_t::OFF) {
     if (menuCurrentIndex != index) {
       menuCurrentIndex   = index;
-      currentFrame       = systemSettings.animationSpeed == settingOffSpeed_t::OFF ? 2 : 0;
       menuSwitchLoopTick = xTaskGetTickCount();
     }
-    if (systemSettings.animationSpeed && (systemSettings.animationLoop || currentFrame != 2)) {
-      currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / step) % 3;
+    currentFrame = ((xTaskGetTickCount() - menuSwitchLoopTick) / step);
+    if (systemSettings.animationLoop) {
+      currentFrame %= 3;
+    } else if (currentFrame > 2) {
+      currentFrame = 2;
     }
-    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
+  } else {
+    // We want the animation to restart after completing the transition.
+    menuCurrentIndex = sizeof(rootSettingsMenu) + 1;
+    // Always draw the last frame if icon animation is disabled.
+    currentFrame = systemSettings.animationSpeed == settingOffSpeed_t::OFF ? 2 : 0;
   }
+  OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
 }
 
 static bool settings_displayCalibrateVIN(void) {
@@ -1059,6 +1068,18 @@ static bool settings_enterAdvancedMenu(void) {
 
 void gui_Menu(const menuitem *menu) {
   // Draw the settings menu and provide iteration support etc
+
+  // This is used to detect whether a menu-exit transition should be played.
+  static bool wasInGuiMenu;
+  wasInGuiMenu = true;
+
+  enum class NavState {
+    Idle,
+    Entering,
+    ScrollingDown,
+    Exiting,
+  };
+
   uint8_t     currentScreen          = 0;
   TickType_t  autoRepeatTimer        = 0;
   TickType_t  autoRepeatAcceleration = 0;
@@ -1068,7 +1089,7 @@ void gui_Menu(const menuitem *menu) {
   uint8_t     scrollContentSize      = 0;
   bool        scrollBlink            = false;
   bool        lastValue              = false;
-  bool        scrollingDown          = false;
+  NavState    navState               = NavState::Entering;
 
   ScrollMessage scrollMessage;
 
@@ -1076,42 +1097,58 @@ void gui_Menu(const menuitem *menu) {
     scrollContentSize += 1;
   }
 
-  // Animated menu opening.
-  if (menu[currentScreen].draw != nullptr) {
-    // This menu is drawn in a secondary framebuffer.
-    // Then we play a transition from the current primary
-    // framebuffer to the new buffer.
-    // The extra buffer is discarded at the end of the transition.
-    animOpenState = true;
-    OLED::useSecondaryFramebuffer(true);
-    OLED::setCursor(0, 0);
-    OLED::clearScreen();
-    menu[currentScreen].draw();
-    OLED::useSecondaryFramebuffer(false);
-    OLED::transitionSecondaryFramebuffer(true);
-    animOpenState = false;
-  }
-
   while ((menu[currentScreen].draw != nullptr) && earlyExit == false) {
-    OLED::setCursor(0, 0);
-    if (scrollingDown) {
+
+    // Handle menu transition:
+    if (navState != NavState::Idle) {
+      // Check if this menu item shall be skipped. If it shall be skipped,
+      // `draw()` returns true. Draw on the secondary framebuffer as we want
+      // to keep the primary framebuffer intact for the upcoming transition
+      // animation.
+      OLED::useSecondaryFramebuffer(true);
+      if (menu[currentScreen].draw()) {
+        currentScreen++;
+        OLED::useSecondaryFramebuffer(false);
+        continue;
+      }
+
       animOpenState = true;
+      // The menu entering/exiting transition uses the secondary framebuffer,
+      // but the scroll down transition does not.
+      if (navState == NavState::ScrollingDown) {
+        OLED::useSecondaryFramebuffer(false);
+      }
+      OLED::setCursor(0, 0);
+      OLED::clearScreen();
+      menu[currentScreen].draw();
+      if (navState == NavState::ScrollingDown) {
+        // Play the scroll down animation.
+        OLED::maskScrollIndicatorOnOLED();
+        OLED::transitionScrollDown();
+      } else {
+        // The menu was drawn in a secondary framebuffer.
+        // Now we play a transition from the pre-drawn primary
+        // framebuffer to the new buffer.
+        // The extra buffer is discarded at the end of the transition.
+        OLED::useSecondaryFramebuffer(false);
+        OLED::transitionSecondaryFramebuffer(navState == NavState::Entering);
+      }
+      animOpenState = false;
+      navState      = NavState::Idle;
     }
 
     // If the user has hesitated for >=3 seconds, show the long text
     // Otherwise "draw" the option
     if ((xTaskGetTickCount() - lastButtonTime < (TICKS_SECOND * 3)) || menu[currentScreen].description == 0) {
       lcdRefresh = true;
+      OLED::setCursor(0, 0);
       OLED::clearScreen();
-      if (menu[currentScreen].draw()) {
-        currentScreen++;
-        lcdRefresh = false;
-      }
+      menu[currentScreen].draw();
       uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
       uint8_t position        = OLED_HEIGHT * currentScreen / scrollContentSize;
       if (lastValue)
         scrollBlink = !scrollBlink;
-      if ((!lastValue || !scrollBlink) && !scrollingDown)
+      if (!lastValue || !scrollBlink)
         OLED::drawScrollIndicator(position, indicatorHeight);
     } else {
       // Draw description
@@ -1120,15 +1157,8 @@ void gui_Menu(const menuitem *menu) {
     }
 
     if (lcdRefresh) {
-      if (scrollingDown) {
-        OLED::maskScrollIndicatorOnOLED();
-        OLED::transitionScrollDown();
-        scrollingDown = false;
-        animOpenState = false;
-      } else {
-        OLED::refresh(); // update the LCD
-        osDelay(40);
-      }
+      OLED::refresh(); // update the LCD
+      osDelay(40);
       lcdRefresh = false;
     }
 
@@ -1139,6 +1169,16 @@ void gui_Menu(const menuitem *menu) {
       lastButtonState        = buttons;
     }
 
+    auto callIncrementHandler = [&]() {
+      wasInGuiMenu = false;
+      bool res     = menu[currentScreen].incrementHandler();
+      if (wasInGuiMenu) {
+        navState = NavState::Exiting;
+      }
+      wasInGuiMenu = true;
+      return res;
+    };
+
     switch (buttons) {
     case BUTTON_BOTH:
       earlyExit = true; // will make us exit next loop
@@ -1148,7 +1188,7 @@ void gui_Menu(const menuitem *menu) {
       // increment
       if (scrollMessage.isReset()) {
         if (menu[currentScreen].incrementHandler != nullptr) {
-          lastValue = menu[currentScreen].incrementHandler();
+          lastValue = callIncrementHandler();
         } else {
           earlyExit = true;
         }
@@ -1158,14 +1198,14 @@ void gui_Menu(const menuitem *menu) {
     case BUTTON_B_SHORT:
       if (scrollMessage.isReset()) {
         currentScreen++;
-        scrollingDown = true;
-        lastValue     = false;
+        navState  = NavState::ScrollingDown;
+        lastValue = false;
       } else
         scrollMessage.reset();
       break;
     case BUTTON_F_LONG:
       if (xTaskGetTickCount() + autoRepeatAcceleration > autoRepeatTimer + PRESS_ACCEL_INTERVAL_MAX) {
-        if ((lastValue = menu[currentScreen].incrementHandler()))
+        if ((lastValue = callIncrementHandler()))
           autoRepeatTimer = 1000;
         else
           autoRepeatTimer = 0;
@@ -1180,7 +1220,7 @@ void gui_Menu(const menuitem *menu) {
     case BUTTON_B_LONG:
       if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
         currentScreen++;
-        scrollingDown   = true;
+        navState        = NavState::ScrollingDown;
         autoRepeatTimer = xTaskGetTickCount();
         scrollMessage.reset();
 
@@ -1203,8 +1243,6 @@ void gui_Menu(const menuitem *menu) {
       scrollMessage.reset();
     }
   }
-
-  animOpenState = false;
 }
 
 void enterSettingsMenu() {
