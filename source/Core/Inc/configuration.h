@@ -207,7 +207,7 @@
 #define CALIBRATION_OFFSET      0                       // the adc offset in uV - MHP compensates automagically
 #define POWER_LIMIT             65                      // 65 watts default power limit
 #define MAX_POWER_LIMIT         65                      //
-#define POWER_LIMIT_STEPS       2                       //
+#define POWER_LIMIT_STEPS       1                       //
 #define OP_AMP_GAIN_STAGE       OP_AMP_GAIN_STAGE_MHP30 //
 #define USB_PD_VMAX             20                      // Maximum voltage for PD to negotiate
 #define MODEL_HAS_DCDC                                  // Has inductor to current filter
