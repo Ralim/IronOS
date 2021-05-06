@@ -47,8 +47,10 @@ static bool settings_setScrollSpeed(void);
 static bool settings_displayScrollSpeed(void);
 static bool settings_setPowerLimit(void);
 static bool settings_displayPowerLimit(void);
+#ifndef NO_DISPLAY_ROTATE
 static bool settings_setDisplayRotation(void);
 static bool settings_displayDisplayRotation(void);
+#endif
 static bool settings_setBoostTemp(void);
 static bool settings_displayBoostTemp(void);
 static bool settings_setAutomaticStartMode(void);
@@ -201,8 +203,10 @@ const menuitem UIMenu[] = {
      */
     {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF,
      settings_displayTempF}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
-    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation},                                       /*Display Rotation*/
-    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                                 /*Cooling blink warning*/
+#ifndef NO_DISPLAY_ROTATE
+	 {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation},                                       /*Display Rotation*/
+#endif
+	 {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                                 /*Cooling blink warning*/
     {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), settings_setScrollSpeed, settings_displayScrollSpeed},                                                /*Scroll Speed for descriptions*/
     {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled}, /* Reverse Temp change buttons + - */
     {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), settings_setAnimationSpeed, settings_displayAnimationSpeed},                                               /*Animation Speed adjustment */
@@ -545,6 +549,7 @@ static bool settings_displayScrollSpeed(void) {
   return false;
 }
 
+#ifndef NO_DISPLAY_ROTATE
 static bool settings_setDisplayRotation(void) {
   systemSettings.OrientationMode++;
   systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
@@ -583,7 +588,7 @@ static bool settings_displayDisplayRotation(void) {
   }
   return false;
 }
-
+#endif
 static bool settings_setBoostTemp(void) {
   if (systemSettings.temperatureInF) {
     if (systemSettings.BoostTemp == 0) {

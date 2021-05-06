@@ -219,6 +219,7 @@
 #define MIN_TEMP_F              60                      // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C        150                     // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F        300                     // The min settable temp for boost mode °F
+#define NO_DISPLAY_ROTATE // Disable OLED rotation by accel
 
 #endif
 
