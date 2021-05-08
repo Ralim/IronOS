@@ -19,7 +19,6 @@
 #include "Defines.h"
 #include "fusb302b.h"
 #include "int_n.h"
-#include "protocol_tx.h"
 #include <pd.h>
 #include <stdbool.h>
 bool                              PolicyEngine::pdNegotiationComplete;
@@ -43,8 +42,9 @@ uint8_t                           PolicyEngine::ucQueueStorageArea[PDB_MSG_POOL_
 QueueHandle_t                     PolicyEngine::messagesWaiting   = NULL;
 EventGroupHandle_t                PolicyEngine::xEventGroupHandle = NULL;
 StaticEventGroup_t                PolicyEngine::xCreatedEventGroup;
-bool                              PolicyEngine::PPSTimerEnabled  = false;
-TickType_t                        PolicyEngine::PPSTimeLastEvent = 0;
+bool                              PolicyEngine::PPSTimerEnabled      = false;
+TickType_t                        PolicyEngine::PPSTimeLastEvent     = 0;
+uint8_t                           PolicyEngine::_tx_messageidcounter = 0;
 void                              PolicyEngine::init() {
   messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE, sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
   // Create static thread at PDB_PRIO_PE priority
@@ -238,9 +238,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_select_cap() {
 
   /* Transmit the request */
   waitForEvent((uint32_t)Notifications::PDB_EVT_PE_ALL, 0); // clear pending
-  ProtocolTransmit::pushMessage(&_last_dpm_request);
-  // Send indication that there is a message pending
-  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_TX_DONE | (uint32_t)Notifications::PDB_EVT_PE_TX_ERR | (uint32_t)Notifications::PDB_EVT_PE_RESET);
+  EventBits_t evt = pushMessage(&_last_dpm_request);
   /* If we got reset signaling, transition to default */
   if (evt & (uint32_t)Notifications::PDB_EVT_PE_RESET || evt == 0) {
     return PESinkTransitionDefault;
@@ -410,8 +408,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_get_source_cap() {
   /* Make a Get_Source_Cap message */
   get_source_cap->hdr = hdr_template | PD_MSGTYPE_GET_SOURCE_CAP | PD_NUMOBJ(0);
   /* Transmit the Get_Source_Cap */
-  ProtocolTransmit::pushMessage(get_source_cap);
-  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_TX_DONE | (uint32_t)Notifications::PDB_EVT_PE_TX_ERR | (uint32_t)Notifications::PDB_EVT_PE_RESET);
+  EventBits_t evt = pushMessage(get_source_cap);
   /* Free the sent message */
   /* If we got reset signaling, transition to default */
   if (evt & (uint32_t)Notifications::PDB_EVT_PE_RESET) {
@@ -432,8 +429,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_give_sink_cap() {
   pdbs_dpm_get_sink_capability(snk_cap);
 
   /* Transmit our capabilities */
-  ProtocolTransmit::pushMessage(snk_cap);
-  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_TX_DONE | (uint32_t)Notifications::PDB_EVT_PE_TX_ERR | (uint32_t)Notifications::PDB_EVT_PE_RESET);
+  EventBits_t evt = pushMessage(snk_cap);
 
   /* Free the Sink_Capabilities message */
 
@@ -485,8 +481,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_soft_reset() {
   /* Make an Accept message */
   accept.hdr = hdr_template | PD_MSGTYPE_ACCEPT | PD_NUMOBJ(0);
   /* Transmit the Accept */
-  ProtocolTransmit::pushMessage(&accept);
-  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_TX_DONE | (uint32_t)Notifications::PDB_EVT_PE_TX_ERR | (uint32_t)Notifications::PDB_EVT_PE_RESET);
+  EventBits_t evt = pushMessage(&accept);
   /* Free the sent message */
 
   /* If we got reset signaling, transition to default */
@@ -510,8 +505,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_send_soft_reset() {
   /* Make a Soft_Reset message */
   softrst->hdr = hdr_template | PD_MSGTYPE_SOFT_RESET | PD_NUMOBJ(0);
   /* Transmit the soft reset */
-  ProtocolTransmit::pushMessage(softrst);
-  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_TX_DONE | (uint32_t)Notifications::PDB_EVT_PE_TX_ERR | (uint32_t)Notifications::PDB_EVT_PE_RESET);
+  EventBits_t evt = pushMessage(softrst);
   /* If we got reset signaling, transition to default */
   if (evt & (uint32_t)Notifications::PDB_EVT_PE_RESET) {
     return PESinkTransitionDefault;
@@ -564,8 +558,7 @@ PolicyEngine::policy_engine_state PolicyEngine::pe_sink_send_not_supported() {
   }
 
   /* Transmit the message */
-  ProtocolTransmit::pushMessage(&tempMessage);
-  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_TX_DONE | (uint32_t)Notifications::PDB_EVT_PE_TX_ERR | (uint32_t)Notifications::PDB_EVT_PE_RESET);
+  EventBits_t evt = pushMessage(&tempMessage);
 
   /* If we got reset signaling, transition to default */
   if (evt & (uint32_t)Notifications::PDB_EVT_PE_RESET) {
@@ -624,4 +617,58 @@ void PolicyEngine::PPSTimerCallback() {
       PPSTimeLastEvent = xTaskGetTickCount();
     }
   }
+}
+
+EventBits_t PolicyEngine::pushMessage(union pd_msg *msg) {
+  if (PD_MSGTYPE_GET(msg) == PD_MSGTYPE_SOFT_RESET && PD_NUMOBJ_GET(msg) == 0) {
+    /* Clear MessageIDCounter */
+    _tx_messageidcounter = 0;
+    return (EventBits_t)Notifications::PDB_EVT_PE_TX_DONE;
+  }
+  msg->hdr &= ~PD_HDR_MESSAGEID;
+  msg->hdr |= (_tx_messageidcounter % 8) << PD_HDR_MESSAGEID_SHIFT;
+
+  /* PD 3.0 collision avoidance */
+  if (PolicyEngine::isPD3_0()) {
+    /* If we're starting an AMS, wait for permission to transmit */
+    //    while (fusb_get_typec_current() != fusb_sink_tx_ok) {
+    //      vTaskDelay(TICKS_10MS);
+    //    }
+  }
+  /* Send the message to the PHY */
+  fusb_send_message(msg);
+  /* Waiting for response*/
+  EventBits_t evt = waitForEvent((uint32_t)Notifications::PDB_EVT_PE_RESET | (uint32_t)Notifications::PDB_EVT_TX_DISCARD | (uint32_t)Notifications::PDB_EVT_TX_I_TXSENT
+                                 | (uint32_t)Notifications::PDB_EVT_TX_I_RETRYFAIL);
+
+  if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_TX_DISCARD) {
+    // increment the counter
+    _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
+    return (EventBits_t)Notifications::PDB_EVT_PE_TX_ERR; //
+  }
+
+  /* If the message was sent successfully */
+  if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_TX_I_TXSENT) {
+    union pd_msg goodcrc;
+
+    /* Read the GoodCRC */
+    fusb_read_message(&goodcrc);
+
+    /* Check that the message is correct */
+    if (PD_MSGTYPE_GET(&goodcrc) == PD_MSGTYPE_GOODCRC && PD_NUMOBJ_GET(&goodcrc) == 0 && PD_MESSAGEID_GET(&goodcrc) == _tx_messageidcounter) {
+      /* Increment MessageIDCounter */
+      _tx_messageidcounter = (_tx_messageidcounter + 1) % 8;
+
+      return (EventBits_t)Notifications::PDB_EVT_PE_TX_DONE;
+    } else {
+      return (EventBits_t)Notifications::PDB_EVT_PE_TX_ERR;
+    }
+  }
+  /* If the message failed to be sent */
+  if ((uint32_t)evt & (uint32_t)Notifications::PDB_EVT_TX_I_RETRYFAIL) {
+    return (EventBits_t)Notifications::PDB_EVT_PE_TX_ERR;
+  }
+
+  /* Silence the compiler warning */
+  return (EventBits_t)Notifications::PDB_EVT_PE_TX_ERR;
 }

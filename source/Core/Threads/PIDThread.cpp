@@ -14,11 +14,11 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
-static TickType_t powerPulseWaitUnit     = 25 * TICKS_100MS;      // 2.5 s
-static TickType_t powerPulseDurationUnit = (5 * TICKS_100MS) / 2; // 250 ms
-TaskHandle_t      pidTaskNotification    = NULL;
-uint32_t          currentTempTargetDegC  = 0; // Current temperature target in C
-
+static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
+static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
+TaskHandle_t      pidTaskNotification     = NULL;
+uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
+int32_t           powerSupplyWattageLimit = 0;
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
   /*
@@ -34,6 +34,9 @@ void startPIDTask(void const *argument __unused) {
                                               // be over-ridden rapidly
   pidTaskNotification    = xTaskGetCurrentTaskHandle();
   uint32_t PIDTempTarget = 0;
+#ifdef SLEW_LIMIT
+  int32_t x10WattsOutLast = 0;
+#endif
   for (;;) {
 
     if (ulTaskNotifyTake(pdTRUE, 2000)) {
@@ -73,7 +76,6 @@ void startPIDTask(void const *argument __unused) {
         // Once we have feed-forward temp estimation we should be able to better tune this.
 
         int32_t x10WattsNeeded = tempToX10Watts(tError);
-        //						tempError.average());
         // note that milliWattsNeeded is sometimes negative, this counters overshoot
         //  from I term's inertia.
         x10WattsOut += x10WattsNeeded;
@@ -106,14 +108,25 @@ void startPIDTask(void const *argument __unused) {
       }
 
       // Secondary safety check to forcefully disable header when within ADC noise of top of ADC
-      if (getTipRawTemp(0) > (0x7FFF - 150)) {
+      if (getTipRawTemp(0) > (0x7FFF - 32)) {
         x10WattsOut = 0;
       }
       if (systemSettings.powerLimit && x10WattsOut > (systemSettings.powerLimit * 10)) {
-        setTipX10Watts(systemSettings.powerLimit * 10);
-      } else {
-        setTipX10Watts(x10WattsOut);
+        x10WattsOut = systemSettings.powerLimit * 10;
       }
+      if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
+        x10WattsOut = powerSupplyWattageLimit * 10;
+      }
+#ifdef SLEW_LIMIT
+      if (x10WattsOut - x10WattsOutLast > SLEW_LIMIT) {
+        x10WattsOut = x10WattsOutLast + SLEW_LIMIT;
+      }
+      if (x10WattsOut < 0) {
+        x10WattsOut = 0;
+      }
+      x10WattsOutLast = x10WattsOut;
+#endif
+      setTipX10Watts(x10WattsOut);
 #ifdef DEBUG_UART_OUTPUT
       log_system_state(x10WattsOut);
 #endif

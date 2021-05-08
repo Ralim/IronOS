@@ -2,12 +2,14 @@
 
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
+#include "IRQ.h"
 #include "Pins.h"
 #include "Setup.h"
+#include "TipThermoModel.h"
+#include "configuration.h"
 #include "gd32vf103_timer.h"
 #include "history.hpp"
 #include "main.hpp"
-#include <IRQ.h>
 
 const uint16_t powerPWM         = 255;
 const uint8_t  holdoffTicks     = 25; // delay of 7 ms
@@ -120,3 +122,12 @@ void     delay_ms(uint16_t count) { delay_1ms(count); }
 uint32_t __get_IPSR(void) {
   return 0; // To shut-up CMSIS
 }
+
+bool isTipDisconnected() {
+
+  uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
+  uint32_t tipTemp              = TipThermoModel::getTipInC();
+  return tipTemp > tipDisconnectedThres;
+}
+
+void setStatusLED(const enum StatusLED state) {}

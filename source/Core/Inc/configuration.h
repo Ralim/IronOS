@@ -15,7 +15,7 @@
  * Default soldering temp is 320.0 C
  * Temperature the iron sleeps at - default 150.0 C
  */
-#define SOLDERING_TEMP     320 // Default soldering temp is 320.0 °C
+
 #define SLEEP_TEMP         150 // Default sleep temperature
 #define BOOST_TEMP         420 // Default boost temp.
 #define BOOST_MODE_ENABLED 1   // 0: Disable 1: Enable
@@ -111,11 +111,16 @@
 
 #define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
 
+#define OP_AMP_Rf_MHP30  268500 //  268.5  Kilo-ohms -> Measured
+#define OP_AMP_Rin_MHP30 1600   //  1.6  Kilo-ohms -> Measured
+
+#define OP_AMP_GAIN_STAGE_MHP30 (1 + (OP_AMP_Rf_MHP30 / OP_AMP_Rin_MHP30))
 // Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
 #ifdef MODEL_TS100
+#define SOLDERING_TEMP       320                     // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV          467                     // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
@@ -125,9 +130,17 @@
 #define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 //
 #define TEMP_uV_LOOKUP_HAKKO                         //
 #define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ           (8)                     // Tick rate of the PID loop
+#define MAX_TEMP_C           450                     // Max soldering temp selectable °C
+#define MAX_TEMP_F           850                     // Max soldering temp selectable °F
+#define MIN_TEMP_C           10                      // Min soldering temp selectable °C
+#define MIN_TEMP_F           60                      // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C     250                     // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F     480                     // The min settable temp for boost mode °F
 #endif
 
 #ifdef MODEL_Pinecil
+#define SOLDERING_TEMP       320                     // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV          467                     // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
@@ -137,9 +150,17 @@
 #define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                         // Use Hakko lookup table
 #define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ           (8)                     // Tick rate of the PID loop
+#define MAX_TEMP_C           450                     // Max soldering temp selectable °C
+#define MAX_TEMP_F           850                     // Max soldering temp selectable °F
+#define MIN_TEMP_C           10                      // Min soldering temp selectable °C
+#define MIN_TEMP_F           60                      // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C     250                     // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F     480                     // The min settable temp for boost mode °F
 #endif
 
 #ifdef MODEL_TS80
+#define SOLDERING_TEMP      320                    // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV         780                    // Default divider from schematic
 #define PID_POWER_LIMIT     24                     // Sets the max pwm power limit
 #define CALIBRATION_OFFSET  900                    // the adc offset in uV
@@ -149,9 +170,17 @@
 #define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
 #define TEMP_uV_LOOKUP_TS80                        //
 #define USB_PD_VMAX         12                     // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ          (8)                    // Tick rate of the PID loop
+#define MAX_TEMP_C          450                    // Max soldering temp selectable °C
+#define MAX_TEMP_F          850                    // Max soldering temp selectable °F
+#define MIN_TEMP_C          10                     // Min soldering temp selectable °C
+#define MIN_TEMP_F          60                     // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C    250                    // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F    480                    // The min settable temp for boost mode °F
 #endif
 
 #ifdef MODEL_TS80P
+#define SOLDERING_TEMP      320                    // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV         650                    // Default for TS80P with slightly different resistors
 #define PID_POWER_LIMIT     35                     // Sets the max pwm power limit
 #define CALIBRATION_OFFSET  1500                   // the adc offset in uV
@@ -161,6 +190,37 @@
 #define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
 #define TEMP_uV_LOOKUP_TS80                        //
 #define USB_PD_VMAX         12                     // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ          (8)                    // Tick rate of the PID loop
+#define MAX_TEMP_C          450                    // Max soldering temp selectable °C
+#define MAX_TEMP_F          850                    // Max soldering temp selectable °F
+#define MIN_TEMP_C          10                     // Min soldering temp selectable °C
+#define MIN_TEMP_F          60                     // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C    250                    // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F    480                    // The min settable temp for boost mode °F
+
+#endif
+
+#ifdef MODEL_MHP30
+#define SOLDERING_TEMP          200                     // Default soldering temp is 200.0 °C
+#define VOLTAGE_DIV             360                     // Default for MHP30
+#define PID_POWER_LIMIT         65                      // Sets the max pwm power limit
+#define CALIBRATION_OFFSET      0                       // the adc offset in uV - MHP compensates automagically
+#define POWER_LIMIT             65                      // 65 watts default power limit
+#define MAX_POWER_LIMIT         65                      //
+#define POWER_LIMIT_STEPS       1                       //
+#define OP_AMP_GAIN_STAGE       OP_AMP_GAIN_STAGE_MHP30 //
+#define USB_PD_VMAX             20                      // Maximum voltage for PD to negotiate
+#define MODEL_HAS_DCDC                                  // Has inductor to current filter
+#define PID_TIM_HZ              (16)                    //
+#define THERMAL_MASS_OVERSHOOTS                         // We have overshoot so reverse direction of compensation
+#define MAX_TEMP_C              300                     // Max soldering temp selectable °C
+#define MAX_TEMP_F              570                     // Max soldering temp selectable °F
+#define MIN_TEMP_C              10                      // Min soldering temp selectable °C
+#define MIN_TEMP_F              60                      // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C        150                     // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F        300                     // The min settable temp for boost mode °F
+#define NO_DISPLAY_ROTATE                               // Disable OLED rotation by accel
+#define SLEW_LIMIT              50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
 #endif
 
 #ifdef MODEL_TS100
@@ -181,4 +241,9 @@ const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 #ifdef MODEL_TS80P
 const uint32_t tipMass       = 40;
 const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
+#endif
+
+#ifdef MODEL_MHP30
+const uint32_t tipMass       = 45; // TODO
+const uint8_t  tipResistance = 60; // x10 ohms, ~6 typical
 #endif

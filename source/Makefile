@@ -5,7 +5,8 @@ endif
 
 ALL_MINIWARE_MODELS=TS100 TS80 TS80P
 ALL_PINE_MODELS=Pinecil
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINE_MODELS)
+ALL_MHP30_MODELS=MHP30
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINE_MODELS) $(ALL_MHP30_MODELS)
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
@@ -38,13 +39,23 @@ MINIWARE_INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx
 MINIWARE_CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
 MINIWARE_HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
 MINIWARE_HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
+MINIWARE_STARTUP_DIR = ./Startup
+MINIWARE_INC_DIR = ./Core/BSP/Miniware
+MINIWARE_LD_FILE = ./Core/BSP/Miniware/stm32f103.ld
+
+MHP30_INC_CMSIS_DEVICE = ./Core/BSP/MHP30/Vendor/CMSIS/Device/ST/STM32F1xx/Include
+MHP30_CMSIS_CORE_INC_DIR = ./Core/BSP/MHP30/Vendor/CMSIS/Include
+MHP30_HAL_INC_DIR = ./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc
+MHP30_HAL_LEGACY_INC_DIR = ./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
+MHP30_STARTUP_DIR = ./Startup
+MHP30_INC_DIR = ./Core/BSP/MHP30
+MHP30_LD_FILE = ./Core/BSP/MHP30/stm32f103.ld
+
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
-MINIWARE_STARTUP_DIR = ./Startup
 DRIVER_INC_DIR =./Core/Drivers
 BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
-MINIWARE_INC_DIR = ./Core/BSP/Miniware
 PINE_INC_DIR = ./Core/BSP/Pine64
 PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include
 PINE_BOARD_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Include
@@ -72,7 +83,7 @@ DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
 	-I$(MINIWARE_HAL_LEGACY_INC_DIR)
 DEVICE_BSP_DIR = ./Core/BSP/Miniware
 S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
-LDSCRIPT=stm32f103.ld
+LDSCRIPT=$(MINIWARE_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
@@ -91,6 +102,33 @@ flash_size=64k
 bootldr_size=0x4000
 endif
 
+ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
+$(info Building for MHP30 )
+DEVICE_INCLUDES = -I$(MHP30_INC_DIR) \
+	-I$(MHP30_INC_CMSIS_DEVICE)\
+	-I$(MHP30_CMSIS_CORE_INC_DIR)	\
+	-I$(MHP30_HAL_INC_DIR)	\
+	-I$(MHP30_HAL_LEGACY_INC_DIR)
+DEVICE_BSP_DIR = ./Core/BSP/MHP30
+S_SRCS := $(shell find $(MHP30_STARTUP_DIR) -type f -name '*.S')
+LDSCRIPT=$(MHP30_LD_FILE)
+DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD 
+DEV_LDFLAGS=-lm -Wl,--gc-sections 
+DEV_AFLAGS=
+DEV_CFLAGS= -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD		
+DEV_CXXFLAGS= -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD		
+CPUFLAGS= -mcpu=cortex-m3     \
+		  -mthumb 			\
+		  -mfloat-abi=soft
+flash_size=128k
+bootldr_size=32k
+endif
 ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
@@ -167,7 +205,7 @@ COMPILER=gcc
 # arm-none-eabi is the general ARM compiler, 
 # riscv-none-embed is the riscv compiler
 # riscv-nuclei-elf is the nuclei tuned one for their cores
-ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
+ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
 ifeq ($(model),$(ALL_PINE_MODELS))

@@ -7,11 +7,11 @@ TRANSLATION_SCRIPT="make_translation.py"
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
 AVAILABLE_LANGUAGES=()
 BUILD_LANGUAGES=()
-AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil")
+AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30")
 BUILD_MODELS=()
 
 usage() {
-    echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80|TS80P|Pinecil>] [-h]
+    echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80|TS80P|Pinecil|MHP30>] [-h]
 
 Parameters :
     -l LANG_CODE : Force a specific language (E.g. : EN, FR, NL_BE, ...)
@@ -70,7 +70,7 @@ shift $((OPTIND - 1))
 echo "*********************************************"
 echo "             Builder for the"
 echo "      Alternate Open Source Firmware"
-echo "        for Miniware TS100 or TS80"
+echo "        for Miniware + Pine64"
 echo "                                     by Ralim"
 echo "                                             "
 echo "*********************************************"

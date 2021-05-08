@@ -7,7 +7,7 @@
 
 #include "MSA301_defines.h"
 #include <MSA301.h>
-#define MSA301_I2C_ADDRESS 0x4C
+#define MSA301_I2C_ADDRESS 0x26 << 1
 bool MSA301::detect() { return FRToSI2C::probe(MSA301_I2C_ADDRESS); }
 
 static const FRToSI2C::I2C_REG i2c_registers[] = {

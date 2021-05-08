@@ -5,6 +5,8 @@
 #include "Model_Config.h"
 #include "Pins.h"
 #include "Setup.h"
+#include "TipThermoModel.h"
+#include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
 #include <IRQ.h>
@@ -338,3 +340,12 @@ void BSPInit(void) { switchToFastPWM(); }
 void reboot() { NVIC_SystemReset(); }
 
 void delay_ms(uint16_t count) { HAL_Delay(count); }
+
+bool isTipDisconnected() {
+
+  uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
+  uint32_t tipTemp              = TipThermoModel::getTipInC();
+  return tipTemp > tipDisconnectedThres;
+}
+
+void setStatusLED(const enum StatusLED state) {}

@@ -269,7 +269,7 @@ union fusb_status {
  * Send a USB Power Delivery message to the FUSB302B
  */
 void fusb_send_message(const union pd_msg *msg);
-
+bool fusb_rx_pending();
 /*
  * Read a USB Power Delivery message from the FUSB302B
  */
@@ -283,7 +283,7 @@ void fusb_send_hardrst();
 /*
  * Read the FUSB302B status and interrupt flags into *status
  */
-void fusb_get_status(union fusb_status *status);
+bool fusb_get_status(union fusb_status *status);
 
 /*
  * Read the FUSB302B BC_LVL as an enum fusb_typec_current

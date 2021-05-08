@@ -74,6 +74,21 @@ bool getIsPoweredByDCIN();
 // Logs the system state to a debug interface if supported
 void log_system_state(int32_t PWMWattsx10);
 
+// Returns true if the tip is disconnected
+bool isTipDisconnected();
+
+// Status LED controls
+
+enum StatusLED {
+  LED_OFF = 0,           // Turn off status led
+  LED_STANDBY,           // unit is in sleep /standby
+  LED_HEATING,           // The unit is heating up to temperature
+  LED_HOT,               // The unit is at operating temperature
+  LED_COOLING_STILL_HOT, // The unit is off and cooling but still hot
+  LED_UNKNOWN,           //
+};
+void setStatusLED(const enum StatusLED state);
+
 #ifdef __cplusplus
 }
 #endif

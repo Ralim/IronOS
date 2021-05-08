@@ -6,6 +6,7 @@
  */
 #include "BSP_PD.h"
 #include "configuration.h"
+#include "main.hpp"
 #include "pd.h"
 #include "policy_engine.h"
 
@@ -60,6 +61,7 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
   int     bestIndexVoltage = 0;
   int     bestIndexCurrent = 0;
   bool    bestIsPPS        = false;
+  powerSupplyWattageLimit  = 0;
   for (uint8_t i = 0; i < numobj; i++) {
     /* If we have a fixed PDO, its V equals our desired V, and its I is
      * at least our desired I */
@@ -72,7 +74,15 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
       int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[i]);            // current in 10mA units
       int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
       if (voltage_mv <= (USB_PD_VMAX * 1000)) {
-        if (min_resistance_ohmsx10 <= tipResistance) {
+#ifdef MODEL_HAS_DCDC
+        // If this device has step down DC/DC inductor to smooth out current spikes
+        // We can instead ignore resistance and go for max voltage we can accept
+        if (voltage_mv <= (USB_PD_VMAX * 1000)) {
+          min_resistance_ohmsx10 = tipResistance;
+        }
+#endif
+        // Fudge of 0.5 ohms to round up a little to account for other losses
+        if (min_resistance_ohmsx10 <= (tipResistance + 5)) {
           // This is a valid power source we can select as
           if (voltage_mv > bestIndexVoltage || bestIndex == 0xFF) {
             // Higher voltage and valid, select this instead
@@ -80,12 +90,14 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
             bestIndexVoltage = voltage_mv;
             bestIndexCurrent = current_a_x100;
             bestIsPPS        = false;
+#ifdef MODEL_HAS_DCDC
+            // set limiter for wattage
+            powerSupplyWattageLimit = ((voltage_mv * current_a_x100) / 100 / 1000);
+#endif
           }
         }
       }
-    } else
-
-        if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (capabilities->obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
+    } else if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (capabilities->obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
       // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(capabilities->obj[i]));
       // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(capabilities->obj[i]));
@@ -105,6 +117,10 @@ bool PolicyEngine::pdbs_dpm_evaluate_capability(const union pd_msg *capabilities
         bestIndexVoltage = ideal_voltage_mv;
         bestIndexCurrent = max_current;
         bestIsPPS        = true;
+#ifdef MODEL_HAS_DCDC
+        // set limiter for wattage
+        powerSupplyWattageLimit = ((ideal_voltage_mv * max_current) / 100 / 1000);
+#endif
       }
     }
   }

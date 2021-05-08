@@ -239,15 +239,15 @@ static void gui_solderingTempAdjust() {
     }
     // constrain between 10-450 C
     if (systemSettings.temperatureInF) {
-      if (systemSettings.SolderingTemp > 850)
-        systemSettings.SolderingTemp = 850;
-      if (systemSettings.SolderingTemp < 60)
-        systemSettings.SolderingTemp = 60;
+      if (systemSettings.SolderingTemp > MAX_TEMP_F)
+        systemSettings.SolderingTemp = MAX_TEMP_F;
+      if (systemSettings.SolderingTemp < MIN_TEMP_F)
+        systemSettings.SolderingTemp = MIN_TEMP_F;
     } else {
-      if (systemSettings.SolderingTemp > 450)
-        systemSettings.SolderingTemp = 450;
-      if (systemSettings.SolderingTemp < 10)
-        systemSettings.SolderingTemp = 10;
+      if (systemSettings.SolderingTemp > MAX_TEMP_C)
+        systemSettings.SolderingTemp = MAX_TEMP_C;
+      if (systemSettings.SolderingTemp < MIN_TEMP_C)
+        systemSettings.SolderingTemp = MIN_TEMP_C;
     }
 
     if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
@@ -354,9 +354,28 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
 
     OLED::refresh();
     GUIDelay();
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+    // If the accel works in reverse where movement will cause exiting the soldering mode
+    if (systemSettings.sensitivity) {
+      if (lastMovementTime) {
+        if (lastMovementTime > TICKS_SECOND * 10) {
+          // If we have moved recently; in the last second
+          // Then exit soldering mode
+
+          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
+            currentTempTargetDegC = 0;
+            return 1;
+          }
+        }
+      }
+    }
+#else
+
     if (!shouldBeSleeping(autoStarted)) {
       return 0;
     }
+
+#endif
     if (shouldShutdown()) {
       // shutdown
       currentTempTargetDegC = 0;
@@ -365,6 +384,7 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
   }
   return 0;
 }
+#ifndef NO_SLEEP_MODE
 
 static void display_countdown(int sleepThres) {
   /*
@@ -382,6 +402,7 @@ static void display_countdown(int sleepThres) {
   }
 }
 static uint32_t getSleepTimeout() {
+
   if (systemSettings.sensitivity && systemSettings.SleepTime) {
 
     uint32_t sleepThres = 0;
@@ -393,7 +414,9 @@ static uint32_t getSleepTimeout() {
   }
   return 0;
 }
+#endif
 static bool shouldBeSleeping(bool inAutoStart) {
+#ifndef NO_SLEEP_MODE
   // Return true if the iron should be in sleep mode
   if (systemSettings.sensitivity && systemSettings.SleepTime) {
     if (inAutoStart) {
@@ -428,6 +451,7 @@ static bool shouldBeSleeping(bool inAutoStart) {
       lastHallEffectSleepStart = 0;
     }
   }
+#endif
 #endif
   return false;
 }
@@ -526,17 +550,18 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     OLED::clearScreen();
     // Draw in the screen details
     if (systemSettings.detailedSoldering) {
-      OLED::print(translatedString(Tr->SolderingAdvancedPowerPrompt), FontStyle::SMALL); // Power:
+      OLED::print(translatedString(Tr->SolderingAdvancedPowerPrompt),
+                  FontStyle::SMALL); // Power:
       OLED::printNumber(x10WattHistory.average() / 10, 2, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(x10WattHistory.average() % 10, 1, FontStyle::SMALL);
       OLED::print(SymbolWatts, FontStyle::SMALL);
-
+#ifndef NO_SLEEP_MODE
       if (systemSettings.sensitivity && systemSettings.SleepTime) {
         OLED::print(SymbolSpace, FontStyle::SMALL);
         display_countdown(getSleepTimeout());
       }
-
+#endif
       OLED::setCursor(0, 8);
       OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
       gui_drawTipTemp(true, FontStyle::SMALL);
@@ -611,6 +636,14 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       if (gui_SolderingSleepingMode(false, false)) {
         return; // If the function returns non-0 then exit
       }
+    }
+    // Update LED status
+    int error = currentTempTargetDegC - TipThermoModel::getTipInC();
+    if (error >= -10 && error <= 10) {
+      // converged
+      setStatusLED(LED_HOT);
+    } else {
+      setStatusLED(LED_HEATING);
     }
     // slow down ui update rate
     GUIDelay();
@@ -819,8 +852,10 @@ void startGUITask(void const *argument __unused) {
       saveSettings();
       break;
     case BUTTON_F_SHORT:
-      gui_solderingMode(0); // enter soldering mode
-      buttonLockout = true;
+      if (!isTipDisconnected()) {
+        gui_solderingMode(0); // enter soldering mode
+        buttonLockout = true;
+      }
       break;
     case BUTTON_B_SHORT:
       enterSettingsMenu(); // enter the settings menu
@@ -837,7 +872,11 @@ void startGUITask(void const *argument __unused) {
     currentTempTargetDegC = 0; // ensure tip is off
     getInputVoltageX10(systemSettings.voltageDiv, 0);
     uint32_t tipTemp = TipThermoModel::getTipInC();
-
+    if (tipTemp > 55) {
+      setStatusLED(LED_COOLING_STILL_HOT);
+    } else {
+      setStatusLED(LED_STANDBY);
+    }
     // Preemptively turn the display on.  Turn it off if and only if
     // the tip temperature is below 50 degrees C *and* motion sleep
     // detection is enabled *and* there has been no activity (movement or
@@ -847,13 +886,13 @@ void startGUITask(void const *argument __unused) {
 
     if ((tipTemp < 50) && systemSettings.sensitivity && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
       OLED::setDisplayState(OLED::DisplayState::OFF);
+      setStatusLED(LED_OFF);
     }
-    uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
     // Clear the lcd buffer
     OLED::clearScreen();
     OLED::setCursor(0, 0);
     if (systemSettings.detailedIDLE) {
-      if (tipTemp > tipDisconnectedThres) {
+      if (isTipDisconnected()) {
         OLED::print(translatedString(Tr->TipDisconnectedString), FontStyle::SMALL);
       } else {
         OLED::print(translatedString(Tr->IdleTipString), FontStyle::SMALL);
@@ -886,7 +925,7 @@ void startGUITask(void const *argument __unused) {
         tempOnDisplay = true;
       else if (tipTemp < 45)
         tempOnDisplay = false;
-      if (tipTemp > tipDisconnectedThres) {
+      if (isTipDisconnected()) {
         tempOnDisplay          = false;
         tipDisconnectedDisplay = true;
       }

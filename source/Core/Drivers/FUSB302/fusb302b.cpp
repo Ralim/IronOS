@@ -21,7 +21,9 @@
 #include "fusb_user.h"
 #include "int_n.h"
 #include <pd.h>
-void fusb_send_message(const union pd_msg *msg) {
+uint8_t fusb_read_byte(uint8_t addr);
+bool    fusb_write_byte(uint8_t addr, uint8_t byte);
+void    fusb_send_message(const union pd_msg *msg) {
 
   /* Token sequences for the FUSB302B */
   static uint8_t       sop_seq[5] = {FUSB_FIFO_TX_SOP1, FUSB_FIFO_TX_SOP1, FUSB_FIFO_TX_SOP1, FUSB_FIFO_TX_SOP2, FUSB_FIFO_TX_PACKSYM};
@@ -41,6 +43,8 @@ void fusb_send_message(const union pd_msg *msg) {
   fusb_write_buf(FUSB_FIFOS, 4, eop_seq);
 }
 
+bool fusb_rx_pending() { return (fusb_read_byte(FUSB_STATUS1) & FUSB_STATUS1_RX_EMPTY) != FUSB_STATUS1_RX_EMPTY; }
+
 uint8_t fusb_read_message(union pd_msg *msg) {
 
   static uint8_t garbage[4];
@@ -48,7 +52,11 @@ uint8_t fusb_read_message(union pd_msg *msg) {
 
   // Read the header. If its not a SOP we dont actually want it at all
   // But on some revisions of the fusb if you dont both pick them up and read them out of the fifo, it gets stuck
-  fusb_read_byte(FUSB_FIFOS);
+  if ((fusb_read_byte(FUSB_FIFOS) & FUSB_FIFO_RX_TOKEN_BITS) != FUSB_FIFO_RX_SOP) {
+    return 1;
+  }
+
+  //	fusb_read_byte(FUSB_FIFOS);
   /* Read the message header into msg */
   fusb_read_buf(FUSB_FIFOS, 2, msg->bytes);
   /* Get the number of data objects */
@@ -111,11 +119,11 @@ bool fusb_setup() {
 
   /* Select the correct CC line for BMC signaling; also enable AUTO_CRC */
   if (cc1 > cc2) {
-    fusb_write_byte(FUSB_SWITCHES1, 0x25);
-    fusb_write_byte(FUSB_SWITCHES0, 0x07);
+    fusb_write_byte(FUSB_SWITCHES1, 0x25); // TX_CC1|AUTO_CRC|SPECREV0
+    fusb_write_byte(FUSB_SWITCHES0, 0x07); // PWDN1|PWDN2|MEAS_CC1
   } else {
-    fusb_write_byte(FUSB_SWITCHES1, 0x26);
-    fusb_write_byte(FUSB_SWITCHES0, 0x0B);
+    fusb_write_byte(FUSB_SWITCHES1, 0x26); // TX_CC2|AUTO_CRC|SPECREV0
+    fusb_write_byte(FUSB_SWITCHES0, 0x0B); // PWDN1|PWDN2|MEAS_CC2
   }
 
   fusb_reset();
@@ -123,10 +131,10 @@ bool fusb_setup() {
   return true;
 }
 
-void fusb_get_status(union fusb_status *status) {
+bool fusb_get_status(union fusb_status *status) {
 
   /* Read the interrupt and status flags into status */
-  fusb_read_buf(FUSB_STATUS0A, 7, status->bytes);
+  return fusb_read_buf(FUSB_STATUS0A, 7, status->bytes);
 }
 
 enum fusb_typec_current fusb_get_typec_current() {
@@ -144,7 +152,7 @@ void fusb_reset() {
   /* Flush the RX buffer */
   fusb_write_byte(FUSB_CONTROL1, FUSB_CONTROL1_RX_FLUSH);
   /* Reset the PD logic */
-  //	fusb_write_byte( FUSB_RESET, FUSB_RESET_PD_RESET);
+  fusb_write_byte(FUSB_RESET, FUSB_RESET_PD_RESET);
 }
 
 bool fusb_read_id() {
@@ -155,3 +163,27 @@ bool fusb_read_id() {
     return false;
   return true;
 }
+/*
+ * Read a single byte from the FUSB302B
+ *
+ * cfg: The FUSB302B to communicate with
+ * addr: The memory address from which to read
+ *
+ * Returns the value read from addr.
+ */
+uint8_t fusb_read_byte(uint8_t addr) {
+  uint8_t data[1];
+  if (!fusb_read_buf(addr, 1, (uint8_t *)data)) {
+    return 0;
+  }
+  return data[0];
+}
+
+/*
+ * Write a single byte to the FUSB302B
+ *
+ * cfg: The FUSB302B to communicate with
+ * addr: The memory address to which we will write
+ * byte: The value to write
+ */
+bool fusb_write_byte(uint8_t addr, uint8_t byte) { return fusb_write_buf(addr, 1, (uint8_t *)&byte); }

@@ -274,6 +274,14 @@ bool I2CBB::lock() {
   return a;
 }
 
+bool I2CBB::I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data) { return Mem_Write(address, reg, &data, 1); }
+
+uint8_t I2CBB::I2C_RegisterRead(uint8_t address, uint8_t reg) {
+  uint8_t temp = 0;
+  Mem_Read(address, reg, &temp, 1);
+  return temp;
+}
+
 void I2CBB::write_bit(uint8_t val) {
   if (val) {
     SOFT_SDA_HIGH();
@@ -287,4 +295,14 @@ void I2CBB::write_bit(uint8_t val) {
   SOFT_SCL_LOW();
 }
 
+bool I2CBB::writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength) {
+  for (int index = 0; index < registersLength; index++) {
+    if (!I2C_RegisterWrite(address, registers[index].reg, registers[index].val)) {
+      return false;
+    }
+    if (registers[index].pause_ms)
+      delay_ms(registers[index].pause_ms);
+  }
+  return true;
+}
 #endif

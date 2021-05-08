@@ -26,10 +26,13 @@ static bool settings_displayInputMinVRange(void);
 static bool settings_setQCInputV(void);
 static bool settings_displayQCInputV(void);
 #endif
+
+#ifndef NO_SLEEP_MODE
 static bool settings_setSleepTemp(void);
 static bool settings_displaySleepTemp(void);
 static bool settings_setSleepTime(void);
 static bool settings_displaySleepTime(void);
+#endif
 static bool settings_setShutdownTime(void);
 static bool settings_displayShutdownTime(void);
 static bool settings_setSensitivity(void);
@@ -44,8 +47,10 @@ static bool settings_setScrollSpeed(void);
 static bool settings_displayScrollSpeed(void);
 static bool settings_setPowerLimit(void);
 static bool settings_displayPowerLimit(void);
+#ifndef NO_DISPLAY_ROTATE
 static bool settings_setDisplayRotation(void);
 static bool settings_displayDisplayRotation(void);
+#endif
 static bool settings_setBoostTemp(void);
 static bool settings_displayBoostTemp(void);
 static bool settings_setAutomaticStartMode(void);
@@ -81,8 +86,11 @@ static bool settings_displayHallEffect(void);
 static bool settings_setHallEffect(void);
 #endif
 // Menu functions
+
+#if defined(POW_DC) || defined(POW_QC)
 static bool settings_displayPowerMenu(void);
 static bool settings_enterPowerMenu(void);
+#endif
 static bool settings_displaySolderingMenu(void);
 static bool settings_enterSolderingMenu(void);
 static bool settings_displayPowerSavingMenu(void);
@@ -131,24 +139,30 @@ static bool settings_enterAdvancedMenu(void);
  *  Reset Settings
  *
  */
-const menuitem rootSettingsMenu[]{
-    /*
-     * Power Menu
-     * Soldering Menu
-     * Power Saving Menu
-     * UI Menu
-     * Advanced Menu
-     * Exit
-     */
-    {0, settings_enterPowerMenu, settings_displayPowerMenu},             /*Power*/
-    {0, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
-    {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
-    {0, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
-    {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
-    {0, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Switch*/
-    {0, nullptr, nullptr}                                                // end of menu marker. DO NOT REMOVE
+const menuitem rootSettingsMenu[] {
+  /*
+   * Power Menu
+   * Soldering Menu
+   * Power Saving Menu
+   * UI Menu
+   * Advanced Menu
+   * Exit
+   */
+
+#if defined(POW_DC) || defined(POW_QC)
+  {0, settings_enterPowerMenu, settings_displayPowerMenu}, /*Power*/
+#endif
+      {0, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
+      {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
+      {0, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
+      {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
+      {0, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Switch*/
+  {
+    0, nullptr, nullptr
+  } // end of menu marker. DO NOT REMOVE
 };
 
+#if defined(POW_DC) || defined(POW_QC)
 const menuitem powerMenu[] = {
 /*
  * Power Source
@@ -162,6 +176,7 @@ const menuitem powerMenu[] = {
 #endif
     {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
 };
+#endif
 const menuitem solderingMenu[] = {
     /*
      * Boost Mode Enabled
@@ -188,7 +203,9 @@ const menuitem UIMenu[] = {
      */
     {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF,
      settings_displayTempF}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
-    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation},                                       /*Display Rotation*/
+#ifndef NO_DISPLAY_ROTATE
+    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation}, /*Display Rotation*/
+#endif
     {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                                 /*Cooling blink warning*/
     {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), settings_setScrollSpeed, settings_displayScrollSpeed},                                                /*Scroll Speed for descriptions*/
     {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled}, /* Reverse Temp change buttons + - */
@@ -197,14 +214,16 @@ const menuitem UIMenu[] = {
     {0, nullptr, nullptr}                                                                                                                                    // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
-    /*
-     * Sleep Temp
-     * 	Sleep Time
-     * 	Shutdown Time
-     * 	Motion Sensitivity
-     */
-    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp},      /*Sleep Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), settings_setSleepTime, settings_displaySleepTime},          /*Sleep Time*/
+/*
+ * Sleep Temp
+ * 	Sleep Time
+ * 	Shutdown Time
+ * 	Motion Sensitivity
+ */
+#ifndef NO_SLEEP_MODE
+    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp}, /*Sleep Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), settings_setSleepTime, settings_displaySleepTime},     /*Sleep Time*/
+#endif
     {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), settings_setShutdownTime, settings_displayShutdownTime}, /*Shutdown Time*/
     {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), settings_setSensitivity, settings_displaySensitivity}, /* Motion Sensitivity*/
 #ifdef HALL_SENSOR
@@ -362,6 +381,8 @@ static bool settings_displayQCInputV(void) {
 }
 
 #endif
+
+#ifndef NO_SLEEP_MODE
 static bool settings_setSleepTemp(void) {
   // If in C, 10 deg, if in F 20 deg
   if (systemSettings.temperatureInF) {
@@ -407,7 +428,7 @@ static bool settings_displaySleepTime(void) {
   }
   return false;
 }
-
+#endif
 static bool settings_setShutdownTime(void) {
   systemSettings.ShutdownTime++;
   if (systemSettings.ShutdownTime > 60) {
@@ -528,6 +549,7 @@ static bool settings_displayScrollSpeed(void) {
   return false;
 }
 
+#ifndef NO_DISPLAY_ROTATE
 static bool settings_setDisplayRotation(void) {
   systemSettings.OrientationMode++;
   systemSettings.OrientationMode = systemSettings.OrientationMode % 3;
@@ -566,29 +588,29 @@ static bool settings_displayDisplayRotation(void) {
   }
   return false;
 }
-
+#endif
 static bool settings_setBoostTemp(void) {
   if (systemSettings.temperatureInF) {
     if (systemSettings.BoostTemp == 0) {
-      systemSettings.BoostTemp = 480; // loop back at 480
+      systemSettings.BoostTemp = MIN_BOOST_TEMP_F; // loop back at 480
     } else {
       systemSettings.BoostTemp += 20; // Go up 20F at a time
     }
 
-    if (systemSettings.BoostTemp > 850) {
+    if (systemSettings.BoostTemp > MAX_TEMP_F) {
       systemSettings.BoostTemp = 0; // jump to off
     }
-    return systemSettings.BoostTemp == 840;
+    return systemSettings.BoostTemp == MAX_TEMP_F - 10;
   } else {
     if (systemSettings.BoostTemp == 0) {
-      systemSettings.BoostTemp = 250; // loop back at 250
+      systemSettings.BoostTemp = MIN_BOOST_TEMP_C; // loop back at 250
     } else {
       systemSettings.BoostTemp += 10; // Go up 10C at a time
     }
-    if (systemSettings.BoostTemp > 450) {
+    if (systemSettings.BoostTemp > MAX_TEMP_C) {
       systemSettings.BoostTemp = 0; // Go to off state
     }
-    return systemSettings.BoostTemp == 450;
+    return systemSettings.BoostTemp == MAX_TEMP_C;
   }
 }
 
@@ -1000,6 +1022,8 @@ static bool settings_displayCalibrateVIN(void) {
   printShortDescription(SettingsItemIndex::VoltageCalibration, 5);
   return false;
 }
+
+#if defined(POW_DC) || defined(POW_QC)
 static bool settings_displayPowerMenu(void) {
   displayMenu(0);
   return false;
@@ -1008,6 +1032,7 @@ static bool settings_enterPowerMenu(void) {
   gui_Menu(powerMenu);
   return false;
 }
+#endif
 static bool settings_displaySolderingMenu(void) {
   displayMenu(1);
   return false;
