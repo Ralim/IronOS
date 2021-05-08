@@ -297,6 +297,9 @@ static bool shouldShutdown() {
       }
     }
   }
+  if (getButtonState() == BUTTON_B_LONG) { // allow also if back button is pressed long
+    return true;
+  }
   return false;
 }
 static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
