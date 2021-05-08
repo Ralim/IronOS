@@ -252,7 +252,11 @@ bool tryBetterPWM(uint8_t pwm) {
 }
 void setTipPWM(uint8_t pulse) {
   // We can just set the timer directly
-  htim3.Instance->CCR1 = pulse;
+  if (htim3.Instance->PSC > 20) {
+    htim3.Instance->CCR1 = 0;
+  } else {
+    htim3.Instance->CCR1 = pulse;
+  }
 }
 
 void unstick_I2C() {
