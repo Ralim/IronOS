@@ -8,7 +8,7 @@
 	"messages": {
 		"SettingsCalibrationDone": "Calibration done!",
 		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before continuing!",
-		"SettingsResetWarning": "Sure you want to restore default settings?",
+		"SettingsResetWarning": "Sure, you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
 		"InputVoltageString": "Input V: ",
@@ -97,9 +97,9 @@
 		"AdvancedMenu": {
 			"text2": [
 				"Advanced",
-				"options"
+				"settings"
 			],
-			"desc": "Advanced options"
+			"desc": "Advanced settings"
 		}
 	},
 	"menuOptions": {
@@ -108,28 +108,28 @@
 				"Power",
 				"source"
 			],
-			"desc": "Power source. Sets cutoff voltage. <DC 10V> <S 3.3V per cell, disable power limit>"
+			"desc": "Power source (Sets cutoff voltage) <DC 10V> <S 3.3V per cell, disable power limit>"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Sleep",
 				"temp"
 			],
-			"desc": "Tip temperature while in \"sleep mode\""
+			"desc": "Tip temperature, while in \"sleep mode\""
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Sleep",
 				"timeout"
 			],
-			"desc": "Interval before \"sleep mode\" kicks in <S=seconds | M=minutes>"
+			"desc": "Interval, before \"sleep mode\" kicks in <S=seconds | M=minutes>"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Shutdown",
 				"timeout"
 			],
-			"desc": "Interval before the iron shuts down <M=minutes>"
+			"desc": "Interval, before the iron shuts down <M=minutes>"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -164,21 +164,21 @@
 				"Boost",
 				"temp"
 			],
-			"desc": "Temperature used in \"boost mode\""
+			"desc": "Temperature, used in \"boost mode\""
 		},
 		"AutoStart": {
 			"text2": [
 				"Auto",
 				"start"
 			],
-			"desc": "Starts the iron into soldering mode on power up <O=off | S=soldering | Z=sleep | R=sleep at room temperature>"
+			"desc": "Starts the iron, on power up, into soldering mode <O=off | S=soldering | Z=sleep | R=sleep at room temperature>"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Cooldown",
 				"blink"
 			],
-			"desc": "Flash the temperature after heating was halted, while the tip is still hot"
+			"desc": "Flash the temperature, after heating was halted, while the tip is still hot"
 		},
 		"TemperatureCalibration": {
 			"text2": [
@@ -213,21 +213,21 @@
 				"Scrolling",
 				"speed"
 			],
-			"desc": "Speed info text scrolls past at <S=slow | F=fast>"
+			"desc": "Speed info, text scrolls past at <S=slow | F=fast>"
 		},
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
 				"voltage"
 			],
-			"desc": "Desired max QC voltage the iron negotiates for"
+			"desc": "Desired max QC voltage, the iron negotiates for"
 		},
 		"PowerLimit": {
 			"text2": [
 				"Power",
 				"limit"
 			],
-			"desc": "Maximum power the iron can use <W=watt>"
+			"desc": "Maximum power, the iron can use <W=watt>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -262,7 +262,7 @@
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep <O=off | L=low | M=medium | H=high>"
+			"desc": "Sensitivity of the Hall effect sensor, to detect sleep <O=off | L=low | M=medium | H=high>"
 		},
 		"LockingMode": {
 			"text2": [
@@ -276,7 +276,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell <Volts> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+			"desc": "Minimum allowed voltage per cell <3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V>"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -297,14 +297,14 @@
 				"Power pulse",
 				"delay"
 			],
-			"desc": "Delay before keep-awake pulse is triggered (x 2.5s)"
+			"desc": "Delay, before keep-awake pulse is triggered <x 2.5s>"
 		},
 		"PowerPulseDuration": {
 			"text2": [
 				"Power pulse",
 				"duration"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Keep-awake-pulse duration <x 0.25s>"
 		},
 		"LanguageSwitch": {
 			"text2": [
