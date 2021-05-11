@@ -4,12 +4,12 @@
 
 # IronOS - Flexible Soldering iron control Firmware
 
-_This repository was formerly known as TS100, its the same great code. Just with more supported devices_
+_This repository was formerly known as TS100, it's the same great code. Just with more supported devices_
 
-Originally concieved as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
+Originally conceived as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
 The firmware implements all of the standard features of a "smart" soldering iron, with lots of little extras and tweaks.
-I highly reccomend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
+I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
 
 For soldering irons that are designed to be powered by "smart" power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100), settings for a cutoff voltage for battery protection are supported.
@@ -27,15 +27,15 @@ To get started with this firmware, please jump over to [here](Documentation/Gett
 - PID style iron temperature control
 - Automatic sleep with selectable sensitivity
 - Motion wake support
-- All settings exposed in intuitive menu
+- All settings exposed in the intuitive menu
 - (TS100) Set a voltage lower limit for Lithium batteries so you don't kill your battery pack
 - (TS80) Set 18W or 24W settings for your power bank
 - (TS80P) Automatically negotiates appropriate PD and falls back to QC mode like TS80
-- (Pinecil) Supports all 3 power modes (PD,QC, DC In).
+- (Pinecil) Supports all 3 power modes (PD, QC, DC In).
 - Improved readability Fonts, supporting multiple languages
 - Use hardware features to improve reliability
 - Can disable movement detection if desired
-- Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods of time)
+- Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods)
 - (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
 - (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
 - [Custom boot up logo support](Documentation/Logo.md)
@@ -43,14 +43,14 @@ To get started with this firmware, please jump over to [here](Documentation/Gett
 
 ## Installation
 
-For installation for your device, please refer to the [Flashing Guide](Documentation/Flashing.md).
+For notes on installation for your device, please refer to the [Flashing Guide](Documentation/Flashing.md).
 
 ## Menu System
 
 This new firmware uses a new menu system to allow access to the settings on the device.
-When on the main screen, the unit shows prompts for the two most common operations.
+When on the main screen, the unit shows a pair of prompts for the two most common operations.
 
-- Pressing the button near the tip enters soldering mode
+- Pressing the button near the tip enters the soldering mode
 - Pressing the button near the USB enters the settings menu
 - Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
 - Holding the button near the USB end will show the [debug menu](Documentation/DebugMenu.md)
@@ -88,5 +88,5 @@ Other components such as FreeRTOS/USB-PD have their own licence.
 ## Commercial Use
 
 This software is provided as-is, so I cannot provide any commercial support for the firmware.
-However, you are more than welcome to distribute links to the firmware, or provide irons with this software on them.
+However, you are more than welcome to distribute links to the firmware or provide irons with this software on them.
 Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around.
