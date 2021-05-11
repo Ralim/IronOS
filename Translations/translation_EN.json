@@ -168,8 +168,8 @@
 		},
 		"AutoStart": {
 			"text2": [
-				"Heat on",
-				"power up"
+				"Heat",
+				"on power up"
 			],
 			"desc": "O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
 		},
