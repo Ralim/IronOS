@@ -19,8 +19,8 @@
 		"WarningSimpleString": "CHAUD !",
 		"WarningAdvancedString": "ATTENTION ! CHAUD !",
 		"SleepingTipAdvancedString": "Panne : ",
-		"IdleTipString": "Act : ",
-		"IdleSetString": "Reg : ",
+		"IdleTipString": "Act :",
+		"IdleSetString": "Reg :",
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
 		"SolderingAdvancedPowerPrompt": "Puissance : ",
 		"OffString": "Off",
@@ -37,8 +37,8 @@
 			"non détecté !"
 		],
 		"NoPowerDeliveryMessage": [
-			"Pas d'USB-PD",
-			"détecté !"
+			"USB-PD",
+			"non détecté !"
 		],
 		"LockingKeysString": "VERROUIL",
 		"UnlockingKeysString": "DEVERROU",
@@ -136,14 +136,14 @@
 				"Sensibilité",
 				"au mouvement"
 			],
-			"desc": "0=inactif | 1=peu sensible | ... | 9=très sensible"
+			"desc": "0=désactivé | 1=peu sensible | ... | 9=très sensible"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Unité de",
 				"température"
 			],
-			"desc": "Unité de température <C=Celsius | F=Fahrenheit>"
+			"desc": "C=Celsius | F=Fahrenheit"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -157,7 +157,7 @@
 				"Orientation",
 				"de l'écran"
 			],
-			"desc": "Orientation de l'affichage <A=automatique | G=gaucher | D=droitier>"
+			"desc": "A=automatique | G=gaucher | D=droitier"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -269,7 +269,7 @@
 				"Sensibilité",
 				"capteur effet hall"
 			],
-			"desc": "Sensibilité du capteur à effet Hall lors de la détection de mise en veille <D=désactivé | B=basse | M=moyenne | H=haute>"
+			"desc": "Sensibilité du capteur à effet Hall pour la mise en veille <D=désactivé | B=basse | M=moyenne | H=haute>"
 		},
 		"MinVolCell": {
 			"text2": [
@@ -297,7 +297,7 @@
 				"Délai entre",
 				"les impulsions"
 			],
-			"desc": "Délai entre chaque impulsions pour empêcher la mise en veille (x 2.5s)"
+			"desc": "Délai entre chaque impulsion pour empêcher la mise en veille (x 2.5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
