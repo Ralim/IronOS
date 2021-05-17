@@ -34,7 +34,7 @@ To calibrate your iron:
 4. Under the advanced submenu
 5. Select the calibrate voltage option
 6. Use the front and back buttons to adjust the displayed voltage to minimize the error to your original measurement
-7. Hold both buttons to save and exit to the menu
+7. Press both buttons at the same time to save and exit to the menu
 
 ### Calibrating tip offset (Set tip model)
 
