@@ -109,7 +109,7 @@
 				"Spannungs-",
 				"quelle"
 			],
-			"desc": "Spannungsquelle (Abschaltspannung) <DC=10V, nS=n*3.3V für n LiIon-Zellen>"
+			"desc": "Spannungsquelle (Abschaltspannung) (DC=10V, nS=n*3.3V für n LiIon-Zellen)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -123,14 +123,14 @@
 				"Ruhever-",
 				"zögerung"
 			],
-			"desc": "Dauer vor Übergang in den Ruhemodus <S=Sekunden | M=Minuten>"
+			"desc": "Dauer vor Übergang in den Ruhemodus (S=Sekunden | M=Minuten)"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Abschalt-",
 				"verzög."
 			],
-			"desc": "Dauer vor automatischer Abschaltung <M=Minuten>"
+			"desc": "Dauer vor automatischer Abschaltung (M=Minuten)"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -172,7 +172,7 @@
 				"Start im",
 				"Lötmodus"
 			],
-			"desc": "Heizverhalten beim Einschalten der Spannungsversorgung <A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze>"
+			"desc": "Heizverhalten beim Einschalten der Spannungsversorgung (A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -200,7 +200,7 @@
 				"Eingangsspannung",
 				"kalibrieren?"
 			],
-			"desc": "Kalibrierung der Eingangsspannung <Langer Tastendruck zum Verlassen>"
+			"desc": "Kalibrierung der Eingangsspannung (Langer Tastendruck zum Verlassen)"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -214,21 +214,21 @@
 				"Scroll-",
 				"geschw."
 			],
-			"desc": "Scrollgeschwindigkeit der Erläuterungen <L=langsam | S=schnell>"
+			"desc": "Scrollgeschwindigkeit der Erläuterungen (L=langsam | S=schnell)"
 		},
 		"QCMaxVoltage": {
 			"text2": [
 				"Spannungs-",
 				"maximum"
 			],
-			"desc": "Maximal zulässige Spannung der verwendeten Spannungsversorgung <V=Volt>"
+			"desc": "Maximal zulässige Spannung der verwendeten Spannungsversorgung (V=Volt)"
 		},
 		"PowerLimit": {
 			"text2": [
 				"Leistungs-",
 				"maximum"
 			],
-			"desc": "Maximale zulässige Leistungsaufnahme des Lötkolbens <W=Watt>"
+			"desc": "Maximale zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -256,28 +256,28 @@
 				"Leistungs-",
 				"impuls"
 			],
-			"desc": "Powerbank mit einem Impuls wach halten <Watt>"
+			"desc": "Powerbank mit einem Impuls wach halten (Watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Empfindlichkeit",
 				"der Hall-Sonde"
 			],
-			"desc": "Empfindlichkeit der Hall-Sonde beim Erkennen des Ruhemodus <A=aus | N=niedrig | M=mittel | H=hoch>"
+			"desc": "Empfindlichkeit der Hall-Sonde beim Erkennen des Ruhemodus (A=aus | N=niedrig | M=mittel | H=hoch)"
 		},
 		"LockingMode": {
 			"text2": [
 				"Tasten-",
 				"sperre"
 			],
-			"desc": "Langes drücken beider Tasten im Lötmodus sperrt diese <A=aus | B=nur Boost | V=vollständig>"
+			"desc": "Langes drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Minimale",
 				"Spannung"
 			],
-			"desc": "Minimal zulässige Spannung pro Zelle <3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V>"
+			"desc": "Minimal zulässige Spannung pro Zelle (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -291,21 +291,21 @@
 				"Anim.",
 				"Geschw."
 			],
-			"desc": "Geschwindigkeit der Icon-Animationen im Menü <A=aus | L=langsam | M=mittel | S=schnell>"
+			"desc": "Geschwindigkeit der Icon-Animationen im Menü (A=aus | L=langsam | M=mittel | S=schnell)"
 		},
 		"PowerPulseWait": {
 			"text2": [
 				"Impuls-",
 				"verzögerung"
 			],
-			"desc": "Dauer vor Abgabe von Wachhalteimpulsen <x 2,5s>"
+			"desc": "Dauer vor Abgabe von Wachhalteimpulsen (x 2,5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
 				"Impuls-",
 				"dauer"
 			],
-			"desc": "Dauer des Wachhalteimpulses <x 0,25s>"
+			"desc": "Dauer des Wachhalteimpulses (x 250ms)"
 		},
 		"LanguageSwitch": {
 			"text2": [
