@@ -255,7 +255,7 @@
 				"Puissance des",
 				"impulsions"
 			],
-			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries (watt)"
+			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries (watts)"
 		},
 		"LockingMode": {
 			"text2": [
