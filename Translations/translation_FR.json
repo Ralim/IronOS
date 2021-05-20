@@ -168,8 +168,8 @@
 		},
 		"AutoStart": {
 			"text2": [
-				"Chauffer à",
-				"l'allumage"
+				"Chauffer au",
+				"démarrage"
 			],
 			"desc": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
 		},
