@@ -108,7 +108,7 @@
 				"Source",
 				"d'alim."
 			],
-			"desc": "Source d'alimentation. Règle la tension de coupure (DC=10V) (S 3.3V par cellules, désactive la limite de puissance)"
+			"desc": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
 		},
 		"SleepTemperature": {
 			"text2": [
