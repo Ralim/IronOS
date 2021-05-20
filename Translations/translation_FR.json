@@ -22,7 +22,7 @@
 		"IdleTipString": "Act:",
 		"IdleSetString": " Reg:",
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
-		"SolderingAdvancedPowerPrompt": "Puiss.: ",
+		"SolderingAdvancedPowerPrompt": "Puiss.:",
 		"OffString": "Off",
 		"YourGainMessage": "Gain : "
 	},
