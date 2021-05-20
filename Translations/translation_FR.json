@@ -11,25 +11,25 @@
 		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
 		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
-		"InputVoltageString": "V d'entrée : ",
+		"InputVoltageString": "V d'entrée :",
 		"WarningTipTempString": "Temp. Panne : ",
 		"BadTipString": "PANNE HS",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "En veille...",
 		"WarningSimpleString": "CHAUD !",
 		"WarningAdvancedString": "ATTENTION ! CHAUD !",
-		"SleepingTipAdvancedString": "Panne : ",
-		"IdleTipString": "Act :",
-		"IdleSetString": "Reg :",
+		"SleepingTipAdvancedString": "Panne:",
+		"IdleTipString": "Act:",
+		"IdleSetString": " Reg:",
 		"TipDisconnectedString": "PANNE DÉBRANCHÉE",
-		"SolderingAdvancedPowerPrompt": "Puissance : ",
+		"SolderingAdvancedPowerPrompt": "Puiss.: ",
 		"OffString": "Off",
 		"YourGainMessage": "Gain : "
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
-			"Réglage",
+			"Réglages",
 			"réinit. !"
 		],
 		"NoAccelerometerMessage": [
@@ -108,28 +108,28 @@
 				"Source",
 				"d'alim."
 			],
-			"desc": "Source d'alimentation. Règle la tension de coupure <DC=10V> <S=3.3V par cellules>"
+			"desc": "Source d'alimentation. Règle la tension de coupure (DC=10V) (S 3.3V par cellules, désactive la limite de puissance)"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Temp.",
 				"veille"
 			],
-			"desc": "Température en veille <C>"
+			"desc": "Température de la panne en \"mode veille\""
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Délai",
 				"veille"
 			],
-			"desc": "Délai avant mise en veille <S=secondes | M=minutes>"
+			"desc": "Délai avant mise en veille (S=secondes | M=minutes)"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Délai",
 				"extinction"
 			],
-			"desc": "Délai avant extinction <M=minutes>"
+			"desc": "Délai avant extinction (M=minutes)"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -150,7 +150,7 @@
 				"Écran veille",
 				"détaillé"
 			],
-			"desc": "Afficher les informations détaillées lors de la veille."
+			"desc": "Afficher les informations détaillées sur l'écran de veille."
 		},
 		"DisplayRotation": {
 			"text2": [
@@ -162,23 +162,23 @@
 		"BoostTemperature": {
 			"text2": [
 				"Temp.",
-				"Boost"
+				"boost"
 			],
-			"desc": "Température du mode \"Boost\""
+			"desc": "Température utilisée en \"mode boost\""
 		},
 		"AutoStart": {
 			"text2": [
-				"Démarrage",
-				"automatique"
+				"Chauffer à",
+				"l'allumage"
 			],
-			"desc": "Démarrer automatiquement la soudure à l'allumage <D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante>"
+			"desc": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Refroidir en",
 				"clignotant"
 			],
-			"desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude."
+			"desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
 		},
 		"TemperatureCalibration": {
 			"text2": [
@@ -199,21 +199,21 @@
 				"Étalonner",
 				"tension d'entrée"
 			],
-			"desc": "Étalonner tension d'entrée <appui long pour quitter>"
+			"desc": "Étalonner tension d'entrée (appui long pour quitter)"
 		},
 		"AdvancedSoldering": {
 			"text2": [
 				"Écran soudure",
 				"détaillé"
 			],
-			"desc": "Afficher les informations détaillées pendant la soudure"
+			"desc": "Afficher les informations détaillées sur l'écran de soudure"
 		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Vitesse de",
 				"défilement"
 			],
-			"desc": "Vitesse de défilement du texte <R=rapide | L=lent>"
+			"desc": "Vitesse de défilement du texte (R=rapide | L=lent)"
 		},
 		"QCMaxVoltage": {
 			"text2": [
@@ -227,56 +227,56 @@
 				"Limite de",
 				"puissance"
 			],
-			"desc": "Puissance maximale utilisable <W=watts>"
+			"desc": "Puissance maximale utilisable (W=watts)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
 				"Inverser les",
 				"touches + -"
 			],
-			"desc": "Inverser l'assignation des boutons d'ajustement de température de la panne."
+			"desc": "Inverser les boutons d'ajustement de température"
 		},
 		"TempChangeShortStep": {
 			"text2": [
 				"Incrément",
 				"appui court"
 			],
-			"desc": "Incrément de changement de température sur appui court."
+			"desc": "Incrément de changement de température sur appui court"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Incrément",
 				"appui long"
 			],
-			"desc": "Incrément de changement de température sur appui long."
+			"desc": "Incrément de changement de température sur appui long"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Puissance des",
 				"impulsions"
 			],
-			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries <watt>"
+			"desc": "Puissance des impulsions pour éviter la mise en veille des batteries (watt)"
 		},
 		"LockingMode": {
 			"text2": [
 				"Verrouiller",
 				"les boutons"
 			],
-			"desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller <D=désactivé | B=boost seulement | V=verr. total>"
+			"desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Sensibilité",
 				"capteur effet hall"
 			],
-			"desc": "Sensibilité du capteur à effet Hall pour la mise en veille <D=désactivé | B=basse | M=moyenne | H=haute>"
+			"desc": "Sensibilité du capteur à effet Hall pour la mise en veille (D=désactivé | B=basse | M=moyenne | H=haute)"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Tension",
 				"minimale"
 			],
-			"desc": "Tension minimale autorisée par cellule <Volts> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+			"desc": "Tension minimale autorisée par cellule (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -290,7 +290,7 @@
 				"Vitesse",
 				"anim. icônes"
 			],
-			"desc": "Vitesse des animations des icônes dans le menu <D=désactivé | L=lente | M=moyenne | R=rapide>"
+			"desc": "Vitesse des animations des icônes dans le menu (D=désactivé | L=lente | M=moyenne | R=rapide)"
 		},
 		"PowerPulseWait": {
 			"text2": [
