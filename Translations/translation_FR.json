@@ -150,7 +150,7 @@
 				"Écran veille",
 				"détaillé"
 			],
-			"desc": "Afficher les informations détaillées sur l'écran de veille."
+			"desc": "Afficher les informations détaillées sur l'écran de veille"
 		},
 		"DisplayRotation": {
 			"text2": [
@@ -185,7 +185,7 @@
 				"Étalonner",
 				"température"
 			],
-			"desc": "Étalonner température de la panne."
+			"desc": "Étalonner température de la panne"
 		},
 		"SettingsReset": {
 			"text2": [
