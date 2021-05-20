@@ -53,10 +53,10 @@
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
 		"SettingOffChar": "A",
+		"SettingStartNoneChar": "A",
 		"SettingStartSolderingChar": "L",
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "K",
-		"SettingStartNoneChar": "A",
 		"SettingSensitivityOff": "A",
 		"SettingSensitivityLow": "N",
 		"SettingSensitivityMedium": "M",
@@ -109,7 +109,7 @@
 				"Spannungs-",
 				"quelle"
 			],
-			"desc": "Spannungsquelle (Abschaltspannung) (DC=10V, nS=n*3.3V für n LiIon-Zellen)"
+			"desc": "Spannungsquelle (Abschaltspannung) (DC=10V | nS=n*3.3V für n LiIon-Zellen)"
 		},
 		"SleepTemperature": {
 			"text2": [

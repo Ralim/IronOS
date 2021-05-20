@@ -55,10 +55,10 @@
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "K",
 		"SettingOffChar": "0",
-		"SettingStartSolderingChar": "F",
-		"SettingStartSleepChar": "Z",
-		"SettingStartSleepOffChar": "S",
 		"SettingStartNoneChar": "K",
+		"SettingStartSolderingChar": "F",
+		"SettingStartSleepChar": "A",
+		"SettingStartSleepOffChar": "S",
 		"SettingSensitivityOff": "0",
 		"SettingSensitivityLow": "A",
 		"SettingSensitivityMedium": "K",
@@ -111,42 +111,42 @@
 				"Áram",
 				"forrás"
 			],
-			"desc": "Kikapcsolási feszültség beállítása (DC:10V, S:3.3V/LiPo cella)"
+			"desc": "Kikapcsolási feszültség beállítása (DC:10V | S:3.3V/LiPo cella)"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Alvási",
 				"hőmérséklet"
 			],
-			"desc": "Hőmérséklet alvó módban <C/F>"
+			"desc": "Hőmérséklet alvó módban (C | F)"
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Alvás",
 				"időzítő"
 			],
-			"desc": "Alvási időzítő <perc/másodperc>"
+			"desc": "Alvási időzítő (perc | másodperc)"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Kikapcsolás",
 				"időzítő"
 			],
-			"desc": "Kikapcsolási időzítő <perc>"
+			"desc": "Kikapcsolási időzítő (perc)"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Mozgás",
 				"érzékenység"
 			],
-			"desc": "Mozgás érzékenység beállítása (0=kikapcsolva 1=legkevésbé érzékeny 9=legérzékenyebb)"
+			"desc": "Mozgás érzékenység beállítása (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Hőmérséklet",
 				"mértékegysége"
 			],
-			"desc": "Hőmérséklet mértékegysége (C=Celsius F=Fahrenheit)"
+			"desc": "Hőmérséklet mértékegysége (C=Celsius | F=Fahrenheit)"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -160,7 +160,7 @@
 				"Kijelző",
 				"tájolása"
 			],
-			"desc": "Kijelző tájolása (A=automatikus B=balkezes J=jobbkezes)"
+			"desc": "Kijelző tájolása (A=automatikus | B=balkezes | J=jobbkezes)"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -174,7 +174,7 @@
 				"Automatikus",
 				"indítás"
 			],
-			"desc": "Bekapcsolás után automatikusan lépjen forrasztás módba (F=forrasztás S=szobahőmérséklet Z=alvó mód K=ki)"
+			"desc": "Bekapcsolás után automatikusan lépjen forrasztás módba (K=ki | F=forrasztás | A=alvó mód | S=szobahőmérséklet)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -244,42 +244,42 @@
 				"Hőm. váltás",
 				"rövid"
 			],
-			"desc": "Hőmérséklet váltás rövid gombnyomásra <C/F>"
+			"desc": "Hőmérséklet váltás rövid gombnyomásra (C | F)"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Hőm. váltás",
 				"hosszú"
 			],
-			"desc": "Hőmérséklet váltás hosszú gombnyomásra <C/F>"
+			"desc": "Hőmérséklet váltás hosszú gombnyomásra (C | F)"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Ébr. pulzus",
 				"nagysága"
 			],
-			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok nagysága <W>"
+			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok nagysága (W)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Alvásérzékelő",
 				"érzékenység"
 			],
-			"desc": "Alvásérzékelő gyorsulásmérő érzékenysége (0=ki A=alacsony K=közepes M=magas)"
+			"desc": "Alvásérzékelő gyorsulásmérő érzékenysége (0=ki | A=alacsony | K=közepes | M=magas)"
 		},
 		"LockingMode": {
 			"text2": [
 				"Lezárás",
 				"engedélyezés"
 			],
-			"desc": "Forrasztás közben mindkét gombot hosszan lenyomva rögzíti a hőmérsékletet (K=ki B=csak \"boost\" mód T=teljes lezárás)"
+			"desc": "Forrasztás közben mindkét gombot hosszan lenyomva rögzíti a hőmérsékletet (K=ki | B=csak \"boost\" mód | T=teljes lezárás)"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Minimum",
 				"feszültség"
 			],
-			"desc": "Minimális engedélyezett cellafeszültség <V> (3S: 3.0V-3.7V, 4/5/6S: 2.4V-3.7V)"
+			"desc": "Minimális engedélyezett cellafeszültség (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -293,25 +293,25 @@
 				"Animáció",
 				"sebessége"
 			],
-			"desc": "Menüikonok animációjának sebessége (0=ki L=lassú K=közepes G=gyors)"
+			"desc": "Menüikonok animációjának sebessége (0=ki | L=lassú | K=közepes | G=gyors)"
 		},
 		"PowerPulseWait": {
 			"text2": [
 				"Ébr. pulzus",
 				"időköze"
 			],
-			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időköze <x2.5s>"
+			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időköze (x2.5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
 				"Ébr. pulzus",
 				"időtartama"
 			],
-			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időtartama <x250ms>"
+			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időtartama (x250ms)"
 		},
 		"LanguageSwitch": {
 			"text2": [
-				"Language:",
+				"Nyelv:",
 				" HU      Magyar"
 			],
 			"desc": ""

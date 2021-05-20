@@ -52,10 +52,10 @@
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
 		"SettingOffChar": "O",
+		"SettingStartNoneChar": "D",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "A",
-		"SettingStartNoneChar": "D",
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "B",
 		"SettingSensitivityMedium": "M",
@@ -108,21 +108,21 @@
 				"Sorgente",
 				"alimentaz"
 			],
-			"desc": "Imposta una tensione minima di alimentazione attraverso la selezione di una sorgente [DC: 10 V; 3S/4S/5S/6S: 3,3 V per cella]"
+			"desc": "Imposta una tensione minima di alimentazione attraverso la selezione di una sorgente [DC: 10V | 3-6S: 3,3V per cella]"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Temp",
 				"riposo"
 			],
-			"desc": "Imposta la temperatura da mantenere in modalità Riposo [°C/°F]"
+			"desc": "Imposta la temperatura da mantenere in modalità Riposo [°C | °F]"
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Timer",
 				"riposo"
 			],
-			"desc": "Imposta il timer per entrare in modalità Riposo [minuti/secondi]"
+			"desc": "Imposta il timer per entrare in modalità Riposo [minuti | secondi]"
 		},
 		"ShutdownTimeout": {
 			"text2": [
@@ -136,14 +136,14 @@
 				"Sensibilità",
 				"al movimento"
 			],
-			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [0: nessuna; 1: minima; 9: massima]"
+			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [0=nessuna | 1=minima | ... | 9=massima]"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Unità di",
 				"temperatura"
 			],
-			"desc": "Scegli l'unità di misura per la temperatura [C: grado Celsius; F: grado Farenheit]"
+			"desc": "Scegli l'unità di misura per la temperatura [C=grado Celsius | F=grado Farenheit]"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -157,21 +157,21 @@
 				"Orientamento",
 				"display"
 			],
-			"desc": "Imposta l'orientamento del display [A: automatico; S: mano sinistra; D: mano destra]"
+			"desc": "Imposta l'orientamento del display [A=automatico | S=mano sinistra | D=mano destra]"
 		},
 		"BoostTemperature": {
 			"text2": [
 				"Temp",
 				"Turbo"
 			],
-			"desc": "Imposta la temperatura della funzione Turbo [°C/°F]"
+			"desc": "Imposta la temperatura della funzione Turbo [°C | °F]"
 		},
 		"AutoStart": {
 			"text2": [
 				"Avvio",
 				"automatico"
 			],
-			"desc": "Attiva automaticamente il saldatore quando viene alimentato [D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente]"
+			"desc": "Attiva automaticamente il saldatore quando viene alimentato [D=disattiva | S=saldatura | R=riposo | A=temperatura ambiente]"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -213,7 +213,7 @@
 				"Velocità",
 				"testo"
 			],
-			"desc": "Imposta la velocità di scorrimento del testo [L: lenta; V: veloce]"
+			"desc": "Imposta la velocità di scorrimento del testo [L=lenta | V=veloce]"
 		},
 		"QCMaxVoltage": {
 			"text2": [
@@ -262,21 +262,21 @@
 				"Effetto",
 				"Hall"
 			],
-			"desc": "Regola la sensibilità alla rilevazione di supporti metallici per entrare in modalità Riposo [O: OFF; B: bassa; M: media; A: alta]"
+			"desc": "Regola la sensibilità alla rilevazione di supporti metallici per entrare in modalità Riposo [O=OFF | B=bassa | M=media | A=alta]"
 		},
 		"LockingMode": {
 			"text2": [
 				"Blocco",
 				"tasti"
 			],
-			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
+			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D=disattiva | T=consenti Turbo | C=blocco completo]"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Tensione",
 				"min celle"
 			],
-			"desc": "Modifica la tensione di minima carica delle celle di una batteria Li-Po [3S: 3,0-3,7 V; 4S/5S/6S: 2,4-3,7 V]"
+			"desc": "Modifica la tensione di minima carica delle celle di una batteria Li-Po [3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V]"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -290,7 +290,7 @@
 				"Velocità",
 				"animazioni"
 			],
-			"desc": "Imposta la velocità di riproduzione delle animazioni del menù principale [O: OFF; L: lenta; M: media; V: veloce]"
+			"desc": "Imposta la velocità di riproduzione delle animazioni del menù principale [O=OFF | L=lenta | M=media | V=veloce]"
 		},
 		"PowerPulseWait": {
 			"text2": [
