@@ -11,7 +11,7 @@
 		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
 		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
-		"InputVoltageString": "V d'entrée :",
+		"InputVoltageString": "V d'entrée: ",
 		"WarningTipTempString": "Temp. Panne : ",
 		"BadTipString": "PANNE HS",
 		"SleepingSimpleString": "Zzzz",
