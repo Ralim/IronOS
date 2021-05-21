@@ -535,6 +535,7 @@ check-style:
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
 		if [ $$var -ne 0 ] ; then \
 			echo "$$src does not respect the coding style (diff: $$var lines)" ; \
+			clang-format "$$src" | diff "$$src" - \
 			exit 1 ; \
 		fi ; \
 	done
