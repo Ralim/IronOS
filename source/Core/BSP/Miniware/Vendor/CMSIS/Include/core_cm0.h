@@ -1,6 +1,6 @@
 /**************************************************************************/ /**
-                                                                              * @file     core_sc000.h
-                                                                              * @brief    CMSIS SC000 Core Peripheral Access Layer Header File
+                                                                              * @file     core_cm0.h
+                                                                              * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
                                                                               * @version  V4.30
                                                                               * @date     20. October 2015
                                                                               ******************************************************************************/
@@ -37,8 +37,8 @@
 #pragma clang system_header /* treat file as system include file */
 #endif
 
-#ifndef __CORE_SC000_H_GENERIC
-#define __CORE_SC000_H_GENERIC
+#ifndef __CORE_CM0_H_GENERIC
+#define __CORE_CM0_H_GENERIC
 
 #include <stdint.h>
 
@@ -64,16 +64,16 @@ extern "C" {
  *                 CMSIS definitions
  ******************************************************************************/
 /**
-  \ingroup SC000
+  \ingroup Cortex_M0
   @{
  */
 
-/*  CMSIS SC000 definitions */
-#define __SC000_CMSIS_VERSION_MAIN (0x04U)                                                           /*!< [31:16] CMSIS HAL main version */
-#define __SC000_CMSIS_VERSION_SUB  (0x1EU)                                                           /*!< [15:0]  CMSIS HAL sub version */
-#define __SC000_CMSIS_VERSION      ((__SC000_CMSIS_VERSION_MAIN << 16U) | __SC000_CMSIS_VERSION_SUB) /*!< CMSIS HAL version number */
+/*  CMSIS CM0 definitions */
+#define __CM0_CMSIS_VERSION_MAIN (0x04U)                                                       /*!< [31:16] CMSIS HAL main version */
+#define __CM0_CMSIS_VERSION_SUB  (0x1EU)                                                       /*!< [15:0]  CMSIS HAL sub version */
+#define __CM0_CMSIS_VERSION      ((__CM0_CMSIS_VERSION_MAIN << 16U) | __CM0_CMSIS_VERSION_SUB) /*!< CMSIS HAL version number */
 
-#define __CORTEX_SC (000U) /*!< Cortex secure core */
+#define __CORTEX_M (0x00U) /*!< Cortex-M Core */
 
 #if defined(__CC_ARM)
 #define __ASM           __asm    /*!< asm keyword for ARM Compiler */
@@ -163,12 +163,12 @@ extern "C" {
 }
 #endif
 
-#endif /* __CORE_SC000_H_GENERIC */
+#endif /* __CORE_CM0_H_GENERIC */
 
 #ifndef __CMSIS_GENERIC
 
-#ifndef __CORE_SC000_H_DEPENDANT
-#define __CORE_SC000_H_DEPENDANT
+#ifndef __CORE_CM0_H_DEPENDANT
+#define __CORE_CM0_H_DEPENDANT
 
 #ifdef __cplusplus
 extern "C" {
@@ -176,14 +176,9 @@ extern "C" {
 
 /* check device defines and use defaults */
 #if defined __CHECK_DEVICE_DEFINES
-#ifndef __SC000_REV
-#define __SC000_REV 0x0000U
-#warning "__SC000_REV not defined in device header file; using default!"
-#endif
-
-#ifndef __MPU_PRESENT
-#define __MPU_PRESENT 0U
-#warning "__MPU_PRESENT not defined in device header file; using default!"
+#ifndef __CM0_REV
+#define __CM0_REV 0x0000U
+#warning "__CM0_REV not defined in device header file; using default!"
 #endif
 
 #ifndef __NVIC_PRIO_BITS
@@ -218,7 +213,7 @@ extern "C" {
 #define __OM  volatile       /*! Defines 'write only' structure member permissions */
 #define __IOM volatile       /*! Defines 'read / write' structure member permissions */
 
-/*@} end of group SC000 */
+/*@} end of group Cortex_M0 */
 
 /*******************************************************************************
  *                 Register Abstraction
@@ -227,7 +222,6 @@ extern "C" {
   - Core NVIC Register
   - Core SCB Register
   - Core SysTick Register
-  - Core MPU Register
  ******************************************************************************/
 /**
   \defgroup CMSIS_core_register Defines and Type Definitions
@@ -375,15 +369,13 @@ typedef struct {
 typedef struct {
   __IM uint32_t  CPUID; /*!< Offset: 0x000 (R/ )  CPUID Base Register */
   __IOM uint32_t ICSR;  /*!< Offset: 0x004 (R/W)  Interrupt Control and State Register */
-  __IOM uint32_t VTOR;  /*!< Offset: 0x008 (R/W)  Vector Table Offset Register */
+  uint32_t       RESERVED0;
   __IOM uint32_t AIRCR; /*!< Offset: 0x00C (R/W)  Application Interrupt and Reset Control Register */
   __IOM uint32_t SCR;   /*!< Offset: 0x010 (R/W)  System Control Register */
   __IOM uint32_t CCR;   /*!< Offset: 0x014 (R/W)  Configuration Control Register */
-  uint32_t       RESERVED0[1U];
+  uint32_t       RESERVED1;
   __IOM uint32_t SHP[2U]; /*!< Offset: 0x01C (R/W)  System Handlers Priority Registers. [0] is RESERVED */
   __IOM uint32_t SHCSR;   /*!< Offset: 0x024 (R/W)  System Handler Control and State Register */
-  uint32_t       RESERVED1[154U];
-  __IOM uint32_t SFCR; /*!< Offset: 0x290 (R/W)  Security Features Control Register */
 } SCB_Type;
 
 /* SCB CPUID Register Definitions */
@@ -430,10 +422,6 @@ typedef struct {
 #define SCB_ICSR_VECTACTIVE_Pos 0U                                       /*!< SCB ICSR: VECTACTIVE Position */
 #define SCB_ICSR_VECTACTIVE_Msk (0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE Mask */
 
-/* SCB Interrupt Control State Register Definitions */
-#define SCB_VTOR_TBLOFF_Pos 7U                                   /*!< SCB VTOR: TBLOFF Position */
-#define SCB_VTOR_TBLOFF_Msk (0x1FFFFFFUL << SCB_VTOR_TBLOFF_Pos) /*!< SCB VTOR: TBLOFF Mask */
-
 /* SCB Application Interrupt and Reset Control Register Definitions */
 #define SCB_AIRCR_VECTKEY_Pos 16U                                 /*!< SCB AIRCR: VECTKEY Position */
 #define SCB_AIRCR_VECTKEY_Msk (0xFFFFUL << SCB_AIRCR_VECTKEY_Pos) /*!< SCB AIRCR: VECTKEY Mask */
@@ -472,27 +460,6 @@ typedef struct {
 #define SCB_SHCSR_SVCALLPENDED_Msk (1UL << SCB_SHCSR_SVCALLPENDED_Pos) /*!< SCB SHCSR: SVCALLPENDED Mask */
 
 /*@} end of group CMSIS_SCB */
-
-/**
-  \ingroup  CMSIS_core_register
-  \defgroup CMSIS_SCnSCB System Controls not in SCB (SCnSCB)
-  \brief    Type definitions for the System Control and ID Register not in the SCB
-  @{
- */
-
-/**
-  \brief  Structure type to access the System Control and ID Register not in the SCB.
- */
-typedef struct {
-  uint32_t       RESERVED0[2U];
-  __IOM uint32_t ACTLR; /*!< Offset: 0x008 (R/W)  Auxiliary Control Register */
-} SCnSCB_Type;
-
-/* Auxiliary Control Register Definitions */
-#define SCnSCB_ACTLR_DISMCYCINT_Pos 0U                                       /*!< ACTLR: DISMCYCINT Position */
-#define SCnSCB_ACTLR_DISMCYCINT_Msk (1UL /*<< SCnSCB_ACTLR_DISMCYCINT_Pos*/) /*!< ACTLR: DISMCYCINT Mask */
-
-/*@} end of group CMSIS_SCnotSCB */
 
 /**
   \ingroup  CMSIS_core_register
@@ -544,98 +511,11 @@ typedef struct {
 
 /*@} end of group CMSIS_SysTick */
 
-#if (__MPU_PRESENT == 1U)
-/**
-  \ingroup  CMSIS_core_register
-  \defgroup CMSIS_MPU     Memory Protection Unit (MPU)
-  \brief    Type definitions for the Memory Protection Unit (MPU)
-  @{
- */
-
-/**
-  \brief  Structure type to access the Memory Protection Unit (MPU).
- */
-typedef struct {
-  __IM uint32_t  TYPE; /*!< Offset: 0x000 (R/ )  MPU Type Register */
-  __IOM uint32_t CTRL; /*!< Offset: 0x004 (R/W)  MPU Control Register */
-  __IOM uint32_t RNR;  /*!< Offset: 0x008 (R/W)  MPU Region RNRber Register */
-  __IOM uint32_t RBAR; /*!< Offset: 0x00C (R/W)  MPU Region Base Address Register */
-  __IOM uint32_t RASR; /*!< Offset: 0x010 (R/W)  MPU Region Attribute and Size Register */
-} MPU_Type;
-
-/* MPU Type Register Definitions */
-#define MPU_TYPE_IREGION_Pos 16U                              /*!< MPU TYPE: IREGION Position */
-#define MPU_TYPE_IREGION_Msk (0xFFUL << MPU_TYPE_IREGION_Pos) /*!< MPU TYPE: IREGION Mask */
-
-#define MPU_TYPE_DREGION_Pos 8U                               /*!< MPU TYPE: DREGION Position */
-#define MPU_TYPE_DREGION_Msk (0xFFUL << MPU_TYPE_DREGION_Pos) /*!< MPU TYPE: DREGION Mask */
-
-#define MPU_TYPE_SEPARATE_Pos 0U                                 /*!< MPU TYPE: SEPARATE Position */
-#define MPU_TYPE_SEPARATE_Msk (1UL /*<< MPU_TYPE_SEPARATE_Pos*/) /*!< MPU TYPE: SEPARATE Mask */
-
-/* MPU Control Register Definitions */
-#define MPU_CTRL_PRIVDEFENA_Pos 2U                               /*!< MPU CTRL: PRIVDEFENA Position */
-#define MPU_CTRL_PRIVDEFENA_Msk (1UL << MPU_CTRL_PRIVDEFENA_Pos) /*!< MPU CTRL: PRIVDEFENA Mask */
-
-#define MPU_CTRL_HFNMIENA_Pos 1U                             /*!< MPU CTRL: HFNMIENA Position */
-#define MPU_CTRL_HFNMIENA_Msk (1UL << MPU_CTRL_HFNMIENA_Pos) /*!< MPU CTRL: HFNMIENA Mask */
-
-#define MPU_CTRL_ENABLE_Pos 0U                               /*!< MPU CTRL: ENABLE Position */
-#define MPU_CTRL_ENABLE_Msk (1UL /*<< MPU_CTRL_ENABLE_Pos*/) /*!< MPU CTRL: ENABLE Mask */
-
-/* MPU Region Number Register Definitions */
-#define MPU_RNR_REGION_Pos 0U                                 /*!< MPU RNR: REGION Position */
-#define MPU_RNR_REGION_Msk (0xFFUL /*<< MPU_RNR_REGION_Pos*/) /*!< MPU RNR: REGION Mask */
-
-/* MPU Region Base Address Register Definitions */
-#define MPU_RBAR_ADDR_Pos 8U                                /*!< MPU RBAR: ADDR Position */
-#define MPU_RBAR_ADDR_Msk (0xFFFFFFUL << MPU_RBAR_ADDR_Pos) /*!< MPU RBAR: ADDR Mask */
-
-#define MPU_RBAR_VALID_Pos 4U                          /*!< MPU RBAR: VALID Position */
-#define MPU_RBAR_VALID_Msk (1UL << MPU_RBAR_VALID_Pos) /*!< MPU RBAR: VALID Mask */
-
-#define MPU_RBAR_REGION_Pos 0U                                 /*!< MPU RBAR: REGION Position */
-#define MPU_RBAR_REGION_Msk (0xFUL /*<< MPU_RBAR_REGION_Pos*/) /*!< MPU RBAR: REGION Mask */
-
-/* MPU Region Attribute and Size Register Definitions */
-#define MPU_RASR_ATTRS_Pos 16U                              /*!< MPU RASR: MPU Region Attribute field Position */
-#define MPU_RASR_ATTRS_Msk (0xFFFFUL << MPU_RASR_ATTRS_Pos) /*!< MPU RASR: MPU Region Attribute field Mask */
-
-#define MPU_RASR_XN_Pos 28U                      /*!< MPU RASR: ATTRS.XN Position */
-#define MPU_RASR_XN_Msk (1UL << MPU_RASR_XN_Pos) /*!< MPU RASR: ATTRS.XN Mask */
-
-#define MPU_RASR_AP_Pos 24U                        /*!< MPU RASR: ATTRS.AP Position */
-#define MPU_RASR_AP_Msk (0x7UL << MPU_RASR_AP_Pos) /*!< MPU RASR: ATTRS.AP Mask */
-
-#define MPU_RASR_TEX_Pos 19U                         /*!< MPU RASR: ATTRS.TEX Position */
-#define MPU_RASR_TEX_Msk (0x7UL << MPU_RASR_TEX_Pos) /*!< MPU RASR: ATTRS.TEX Mask */
-
-#define MPU_RASR_S_Pos 18U                     /*!< MPU RASR: ATTRS.S Position */
-#define MPU_RASR_S_Msk (1UL << MPU_RASR_S_Pos) /*!< MPU RASR: ATTRS.S Mask */
-
-#define MPU_RASR_C_Pos 17U                     /*!< MPU RASR: ATTRS.C Position */
-#define MPU_RASR_C_Msk (1UL << MPU_RASR_C_Pos) /*!< MPU RASR: ATTRS.C Mask */
-
-#define MPU_RASR_B_Pos 16U                     /*!< MPU RASR: ATTRS.B Position */
-#define MPU_RASR_B_Msk (1UL << MPU_RASR_B_Pos) /*!< MPU RASR: ATTRS.B Mask */
-
-#define MPU_RASR_SRD_Pos 8U                           /*!< MPU RASR: Sub-Region Disable Position */
-#define MPU_RASR_SRD_Msk (0xFFUL << MPU_RASR_SRD_Pos) /*!< MPU RASR: Sub-Region Disable Mask */
-
-#define MPU_RASR_SIZE_Pos 1U                            /*!< MPU RASR: Region Size Field Position */
-#define MPU_RASR_SIZE_Msk (0x1FUL << MPU_RASR_SIZE_Pos) /*!< MPU RASR: Region Size Field Mask */
-
-#define MPU_RASR_ENABLE_Pos 0U                               /*!< MPU RASR: Region enable bit Position */
-#define MPU_RASR_ENABLE_Msk (1UL /*<< MPU_RASR_ENABLE_Pos*/) /*!< MPU RASR: Region enable bit Disable Mask */
-
-/*@} end of group CMSIS_MPU */
-#endif
-
 /**
   \ingroup  CMSIS_core_register
   \defgroup CMSIS_CoreDebug       Core Debug Registers (CoreDebug)
-  \brief    SC000 Core Debug Registers (DCB registers, SHCSR, and DFSR) are only accessible over DAP and not via processor.
-            Therefore they are not covered by the SC000 header file.
+  \brief    Cortex-M0 Core Debug Registers (DCB registers, SHCSR, and DFSR) are only accessible over DAP and not via processor.
+            Therefore they are not covered by the Cortex-M0 header file.
   @{
  */
 /*@} end of group CMSIS_CoreDebug */
@@ -672,21 +552,15 @@ typedef struct {
   @{
  */
 
-/* Memory mapping of SC000 Hardware */
+/* Memory mapping of Cortex-M0 Hardware */
 #define SCS_BASE     (0xE000E000UL)        /*!< System Control Space Base Address */
 #define SysTick_BASE (SCS_BASE + 0x0010UL) /*!< SysTick Base Address */
 #define NVIC_BASE    (SCS_BASE + 0x0100UL) /*!< NVIC Base Address */
 #define SCB_BASE     (SCS_BASE + 0x0D00UL) /*!< System Control Block Base Address */
 
-#define SCnSCB  ((SCnSCB_Type *)SCS_BASE)      /*!< System control Register not in SCB */
 #define SCB     ((SCB_Type *)SCB_BASE)         /*!< SCB configuration struct */
 #define SysTick ((SysTick_Type *)SysTick_BASE) /*!< SysTick configuration struct */
 #define NVIC    ((NVIC_Type *)NVIC_BASE)       /*!< NVIC configuration struct */
-
-#if (__MPU_PRESENT == 1U)
-#define MPU_BASE (SCS_BASE + 0x0D90UL)  /*!< Memory Protection Unit */
-#define MPU      ((MPU_Type *)MPU_BASE) /*!< Memory Protection Unit */
-#endif
 
 /*@} */
 
@@ -844,6 +718,6 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks) {
 }
 #endif
 
-#endif /* __CORE_SC000_H_DEPENDANT */
+#endif /* __CORE_CM0_H_DEPENDANT */
 
 #endif /* __CMSIS_GENERIC */

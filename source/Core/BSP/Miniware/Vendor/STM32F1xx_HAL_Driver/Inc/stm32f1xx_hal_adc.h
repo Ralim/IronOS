@@ -6,14 +6,29 @@
  ******************************************************************************
  * @attention
  *
+ * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
  *
- * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *   1. Redistributions of source code must retain the above copyright notice,
+ *      this list of conditions and the following disclaimer.
+ *   2. Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
+ *      and/or other materials provided with the distribution.
+ *   3. Neither the name of STMicroelectronics nor the names of its contributors
+ *      may be used to endorse or promote products derived from this software
+ *      without specific prior written permission.
  *
- * This software component is licensed by ST under BSD 3-Clause license,
- * the "License"; You may not use this file except in compliance with the
- * License. You may obtain a copy of the License at:
- *                        opensource.org/licenses/BSD-3-Clause
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  ******************************************************************************
  */
@@ -50,27 +65,27 @@ extern "C" {
  *         ADC can be either disabled or enabled without conversion on going on regular group.
  */
 typedef struct {
-  uint32_t DataAlign;                 /*!< Specifies ADC data alignment to right (MSB on register bit 11 and LSB on register bit 0) (default setting)
-                                           or to left (if regular group: MSB on register bit 15 and LSB on register bit 4, if injected group (MSB kept as signed value due to potential negative value after offset
-                                         application): MSB on register bit 14 and LSB on register bit 3).                 This parameter can be a value of @ref ADC_Data_align */
-  uint32_t ScanConvMode;              /*!< Configures the sequencer of regular and injected groups.
-                                           This parameter can be associated to parameter 'DiscontinuousConvMode' to have main sequence subdivided in successive parts.
-                                           If disabled: Conversion is performed in single mode (one channel converted, the one defined in rank 1).
-                                                        Parameters 'NbrOfConversion' and 'InjectedNbrOfConversion' are discarded (equivalent to set to 1).
-                                           If enabled:  Conversions are performed in sequence mode (multiple ranks defined by 'NbrOfConversion'/'InjectedNbrOfConversion' and each channel rank).
-                                                        Scan direction is upward: from rank1 to rank 'n'.
-                                           This parameter can be a value of @ref ADC_Scan_mode
-                                           Note: For regular group, this parameter should be enabled in conversion either by polling (HAL_ADC_Start with Discontinuous mode and NbrOfDiscConversion=1)
-                                                 or by DMA (HAL_ADC_Start_DMA), but not by interruption (HAL_ADC_Start_IT): in scan mode, interruption is triggered only on the
-                                                 the last conversion of the sequence. All previous conversions would be overwritten by the last one.
-                                                 Injected group used with scan mode has not this constraint: each rank has its own result register, no data is overwritten. */
-  FunctionalState ContinuousConvMode; /*!< Specifies whether the conversion is performed in single mode (one conversion) or continuous mode for regular group,
-                                          after the selected trigger occurred (software start or external trigger).
-                                          This parameter can be set to ENABLE or DISABLE. */
-  uint32_t NbrOfConversion;           /*!< Specifies the number of ranks that will be converted within the regular group sequencer.
-                                           To use regular group sequencer and convert several ranks, parameter 'ScanConvMode' must be enabled.
-                                           This parameter must be a number between Min_Data = 1 and Max_Data = 16. */
-  FunctionalState
+  uint32_t DataAlign;          /*!< Specifies ADC data alignment to right (MSB on register bit 11 and LSB on register bit 0) (default setting)
+                                    or to left (if regular group: MSB on register bit 15 and LSB on register bit 4, if injected group (MSB kept as signed value due to potential negative value after offset
+                                  application): MSB on register bit 14 and LSB on register bit 3).          This parameter can be a value of @ref ADC_Data_align */
+  uint32_t ScanConvMode;       /*!< Configures the sequencer of regular and injected groups.
+                                    This parameter can be associated to parameter 'DiscontinuousConvMode' to have main sequence subdivided in successive parts.
+                                    If disabled: Conversion is performed in single mode (one channel converted, the one defined in rank 1).
+                                                 Parameters 'NbrOfConversion' and 'InjectedNbrOfConversion' are discarded (equivalent to set to 1).
+                                    If enabled:  Conversions are performed in sequence mode (multiple ranks defined by 'NbrOfConversion'/'InjectedNbrOfConversion' and each channel rank).
+                                                 Scan direction is upward: from rank1 to rank 'n'.
+                                    This parameter can be a value of @ref ADC_Scan_mode
+                                    Note: For regular group, this parameter should be enabled in conversion either by polling (HAL_ADC_Start with Discontinuous mode and NbrOfDiscConversion=1)
+                                          or by DMA (HAL_ADC_Start_DMA), but not by interruption (HAL_ADC_Start_IT): in scan mode, interruption is triggered only on the
+                                          the last conversion of the sequence. All previous conversions would be overwritten by the last one.
+                                          Injected group used with scan mode has not this constraint: each rank has its own result register, no data is overwritten. */
+  uint32_t ContinuousConvMode; /*!< Specifies whether the conversion is performed in single mode (one conversion) or continuous mode for regular group,
+                                    after the selected trigger occurred (software start or external trigger).
+                                    This parameter can be set to ENABLE or DISABLE. */
+  uint32_t NbrOfConversion;    /*!< Specifies the number of ranks that will be converted within the regular group sequencer.
+                                    To use regular group sequencer and convert several ranks, parameter 'ScanConvMode' must be enabled.
+                                    This parameter must be a number between Min_Data = 1 and Max_Data = 16. */
+  uint32_t
       DiscontinuousConvMode; /*!< Specifies whether the conversions sequence of regular group is performed in Complete-sequence/Discontinuous-sequence (main sequence subdivided in successive parts).
                                   Discontinuous mode is used only if sequencer is enabled (parameter 'ScanConvMode'). If sequencer is disabled, this parameter is discarded.
                                   Discontinuous mode can be enabled only if continuous mode is disabled. If continuous mode is enabled, this parameter setting is discarded.
@@ -123,7 +138,7 @@ typedef struct {
   uint32_t Channel;        /*!< Selects which ADC channel to monitor by analog watchdog.
                                 This parameter has an effect only if watchdog mode is configured on single channel (parameter WatchdogMode)
                                 This parameter can be a value of @ref ADC_channels. */
-  FunctionalState ITMode;  /*!< Specifies whether the analog watchdog is configured in interrupt or polling mode.
+  uint32_t ITMode;         /*!< Specifies whether the analog watchdog is configured in interrupt or polling mode.
                                 This parameter can be set to ENABLE or DISABLE */
   uint32_t HighThreshold;  /*!< Configures the ADC analog watchdog High threshold value.
                                 This parameter must be a number between Min_Data = 0x000 and Max_Data = 0xFFF. */
@@ -172,7 +187,7 @@ typedef struct {
 /**
  * @brief  ADC handle Structure definition
  */
-typedef struct __ADC_HandleTypeDef {
+typedef struct {
   ADC_TypeDef *Instance; /*!< Register base address */
 
   ADC_InitTypeDef Init; /*!< ADC required parameters */
@@ -184,39 +199,7 @@ typedef struct __ADC_HandleTypeDef {
   __IO uint32_t State; /*!< ADC communication state (bitmap of ADC states) */
 
   __IO uint32_t ErrorCode; /*!< ADC Error code */
-
-#if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-  void (*ConvCpltCallback)(struct __ADC_HandleTypeDef *hadc);                                                                 /*!< ADC conversion complete callback */
-  void (*ConvHalfCpltCallback)(struct __ADC_HandleTypeDef *hadc);                                                             /*!< ADC conversion DMA half-transfer callback */
-  void (*LevelOutOfWindowCallback)(struct __ADC_HandleTypeDef *hadc);                                                         /*!< ADC analog watchdog 1 callback */
-  void (*ErrorCallback)(struct __ADC_HandleTypeDef *hadc);                                                                    /*!< ADC error callback */
-  void (*InjectedConvCpltCallback)(struct __ADC_HandleTypeDef *hadc); /*!< ADC group injected conversion complete callback */ /*!< ADC end of sampling callback */
-  void (*MspInitCallback)(struct __ADC_HandleTypeDef *hadc);                                                                  /*!< ADC Msp Init callback */
-  void (*MspDeInitCallback)(struct __ADC_HandleTypeDef *hadc);                                                                /*!< ADC Msp DeInit callback */
-#endif                                                                                                                        /* USE_HAL_ADC_REGISTER_CALLBACKS */
 } ADC_HandleTypeDef;
-
-#if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-/**
- * @brief  HAL ADC Callback ID enumeration definition
- */
-typedef enum {
-  HAL_ADC_CONVERSION_COMPLETE_CB_ID     = 0x00U, /*!< ADC conversion complete callback ID */
-  HAL_ADC_CONVERSION_HALF_CB_ID         = 0x01U, /*!< ADC conversion DMA half-transfer callback ID */
-  HAL_ADC_LEVEL_OUT_OF_WINDOW_1_CB_ID   = 0x02U, /*!< ADC analog watchdog 1 callback ID */
-  HAL_ADC_ERROR_CB_ID                   = 0x03U, /*!< ADC error callback ID */
-  HAL_ADC_INJ_CONVERSION_COMPLETE_CB_ID = 0x04U, /*!< ADC group injected conversion complete callback ID */
-  HAL_ADC_MSPINIT_CB_ID                 = 0x09U, /*!< ADC Msp Init callback ID          */
-  HAL_ADC_MSPDEINIT_CB_ID               = 0x0AU  /*!< ADC Msp DeInit callback ID        */
-} HAL_ADC_CallbackIDTypeDef;
-
-/**
- * @brief  HAL ADC Callback pointer definition
- */
-typedef void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to a ADC callback function */
-
-#endif /* USE_HAL_ADC_REGISTER_CALLBACKS */
-
 /**
  * @}
  */
@@ -237,9 +220,6 @@ typedef void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to a
 #define HAL_ADC_ERROR_OVR 0x02U /*!< Overrun error                                         */
 #define HAL_ADC_ERROR_DMA 0x04U /*!< DMA transfer error                                    */
 
-#if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-#define HAL_ADC_ERROR_INVALID_CALLBACK (0x10U) /*!< Invalid Callback error */
-#endif                                         /* USE_HAL_ADC_REGISTER_CALLBACKS */
 /**
  * @}
  */
@@ -561,16 +541,7 @@ typedef void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to a
  * @param  __HANDLE__: ADC handle
  * @retval None
  */
-#if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-#define __HAL_ADC_RESET_HANDLE_STATE(__HANDLE__)           \
-  do {                                                     \
-    (__HANDLE__)->State             = HAL_ADC_STATE_RESET; \
-    (__HANDLE__)->MspInitCallback   = NULL;                \
-    (__HANDLE__)->MspDeInitCallback = NULL;                \
-  } while (0)
-#else
 #define __HAL_ADC_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_ADC_STATE_RESET)
-#endif
 
 /**
  * @}
@@ -812,13 +783,6 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc);
 HAL_StatusTypeDef HAL_ADC_DeInit(ADC_HandleTypeDef *hadc);
 void              HAL_ADC_MspInit(ADC_HandleTypeDef *hadc);
 void              HAL_ADC_MspDeInit(ADC_HandleTypeDef *hadc);
-
-#if (USE_HAL_ADC_REGISTER_CALLBACKS == 1)
-/* Callbacks Register/UnRegister functions  ***********************************/
-HAL_StatusTypeDef HAL_ADC_RegisterCallback(ADC_HandleTypeDef *hadc, HAL_ADC_CallbackIDTypeDef CallbackID, pADC_CallbackTypeDef pCallback);
-HAL_StatusTypeDef HAL_ADC_UnRegisterCallback(ADC_HandleTypeDef *hadc, HAL_ADC_CallbackIDTypeDef CallbackID);
-#endif /* USE_HAL_ADC_REGISTER_CALLBACKS */
-
 /**
  * @}
  */

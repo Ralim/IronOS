@@ -1,6 +1,6 @@
 /**************************************************************************/ /**
-                                                                              * @file     core_sc300.h
-                                                                              * @brief    CMSIS SC300 Core Peripheral Access Layer Header File
+                                                                              * @file     core_cm4.h
+                                                                              * @brief    CMSIS Cortex-M4 Core Peripheral Access Layer Header File
                                                                               * @version  V4.30
                                                                               * @date     20. October 2015
                                                                               ******************************************************************************/
@@ -37,8 +37,8 @@
 #pragma clang system_header /* treat file as system include file */
 #endif
 
-#ifndef __CORE_SC300_H_GENERIC
-#define __CORE_SC300_H_GENERIC
+#ifndef __CORE_CM4_H_GENERIC
+#define __CORE_CM4_H_GENERIC
 
 #include <stdint.h>
 
@@ -64,16 +64,16 @@ extern "C" {
  *                 CMSIS definitions
  ******************************************************************************/
 /**
-  \ingroup SC3000
+  \ingroup Cortex_M4
   @{
  */
 
-/*  CMSIS SC300 definitions */
-#define __SC300_CMSIS_VERSION_MAIN (0x04U)                                                           /*!< [31:16] CMSIS HAL main version */
-#define __SC300_CMSIS_VERSION_SUB  (0x1EU)                                                           /*!< [15:0]  CMSIS HAL sub version */
-#define __SC300_CMSIS_VERSION      ((__SC300_CMSIS_VERSION_MAIN << 16U) | __SC300_CMSIS_VERSION_SUB) /*!< CMSIS HAL version number */
+/*  CMSIS CM4 definitions */
+#define __CM4_CMSIS_VERSION_MAIN (0x04U)                                                       /*!< [31:16] CMSIS HAL main version */
+#define __CM4_CMSIS_VERSION_SUB  (0x1EU)                                                       /*!< [15:0]  CMSIS HAL sub version */
+#define __CM4_CMSIS_VERSION      ((__CM4_CMSIS_VERSION_MAIN << 16U) | __CM4_CMSIS_VERSION_SUB) /*!< CMSIS HAL version number */
 
-#define __CORTEX_SC (300U) /*!< Cortex secure core */
+#define __CORTEX_M (0x04U) /*!< Cortex-M Core */
 
 #if defined(__CC_ARM)
 #define __ASM           __asm    /*!< asm keyword for ARM Compiler */
@@ -115,60 +115,108 @@ extern "C" {
 #endif
 
 /** __FPU_USED indicates whether an FPU is used or not.
-    This core does not support an FPU at all
+    For this, __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
 */
-#define __FPU_USED 0U
-
 #if defined(__CC_ARM)
 #if defined __TARGET_FPU_VFP
+#if (__FPU_PRESENT == 1U)
+#define __FPU_USED 1U
+#else
 #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#define __FPU_USED 0U
+#endif
+#else
+#define __FPU_USED 0U
 #endif
 
 #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #if defined __ARM_PCS_VFP
-#error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#if (__FPU_PRESENT == 1)
+#define __FPU_USED 1U
+#else
+#warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#define __FPU_USED 0U
+#endif
+#else
+#define __FPU_USED 0U
 #endif
 
 #elif defined(__GNUC__)
 #if defined(__VFP_FP__) && !defined(__SOFTFP__)
+#if (__FPU_PRESENT == 1U)
+#define __FPU_USED 1U
+#else
 #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#define __FPU_USED 0U
+#endif
+#else
+#define __FPU_USED 0U
 #endif
 
 #elif defined(__ICCARM__)
 #if defined __ARMVFP__
+#if (__FPU_PRESENT == 1U)
+#define __FPU_USED 1U
+#else
 #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#define __FPU_USED 0U
+#endif
+#else
+#define __FPU_USED 0U
 #endif
 
 #elif defined(__TMS470__)
 #if defined __TI_VFP_SUPPORT__
+#if (__FPU_PRESENT == 1U)
+#define __FPU_USED 1U
+#else
 #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#define __FPU_USED 0U
+#endif
+#else
+#define __FPU_USED 0U
 #endif
 
 #elif defined(__TASKING__)
 #if defined __FPU_VFP__
+#if (__FPU_PRESENT == 1U)
+#define __FPU_USED 1U
+#else
 #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#define __FPU_USED 0U
+#endif
+#else
+#define __FPU_USED 0U
 #endif
 
 #elif defined(__CSMC__)
 #if (__CSMC__ & 0x400U)
+#if (__FPU_PRESENT == 1U)
+#define __FPU_USED 1U
+#else
 #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+#define __FPU_USED 0U
+#endif
+#else
+#define __FPU_USED 0U
 #endif
 
 #endif
 
 #include "core_cmFunc.h"  /* Core Function Access */
 #include "core_cmInstr.h" /* Core Instruction Access */
+#include "core_cmSimd.h"  /* Compiler specific SIMD Intrinsics */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __CORE_SC300_H_GENERIC */
+#endif /* __CORE_CM4_H_GENERIC */
 
 #ifndef __CMSIS_GENERIC
 
-#ifndef __CORE_SC300_H_DEPENDANT
-#define __CORE_SC300_H_DEPENDANT
+#ifndef __CORE_CM4_H_DEPENDANT
+#define __CORE_CM4_H_DEPENDANT
 
 #ifdef __cplusplus
 extern "C" {
@@ -176,9 +224,14 @@ extern "C" {
 
 /* check device defines and use defaults */
 #if defined __CHECK_DEVICE_DEFINES
-#ifndef __SC300_REV
-#define __SC300_REV 0x0000U
-#warning "__SC300_REV not defined in device header file; using default!"
+#ifndef __CM4_REV
+#define __CM4_REV 0x0000U
+#warning "__CM4_REV not defined in device header file; using default!"
+#endif
+
+#ifndef __FPU_PRESENT
+#define __FPU_PRESENT 0U
+#warning "__FPU_PRESENT not defined in device header file; using default!"
 #endif
 
 #ifndef __MPU_PRESENT
@@ -218,7 +271,7 @@ extern "C" {
 #define __OM  volatile       /*! Defines 'write only' structure member permissions */
 #define __IOM volatile       /*! Defines 'read / write' structure member permissions */
 
-/*@} end of group SC300 */
+/*@} end of group Cortex_M4 */
 
 /*******************************************************************************
  *                 Register Abstraction
@@ -229,6 +282,7 @@ extern "C" {
   - Core SysTick Register
   - Core Debug Register
   - Core MPU Register
+  - Core FPU Register
  ******************************************************************************/
 /**
   \defgroup CMSIS_core_register Defines and Type Definitions
@@ -247,7 +301,9 @@ extern "C" {
  */
 typedef union {
   struct {
-    uint32_t _reserved0 : 27; /*!< bit:  0..26  Reserved */
+    uint32_t _reserved0 : 16; /*!< bit:  0..15  Reserved */
+    uint32_t GE : 4;          /*!< bit: 16..19  Greater than or Equal flags */
+    uint32_t _reserved1 : 7;  /*!< bit: 20..26  Reserved */
     uint32_t Q : 1;           /*!< bit:     27  Saturation condition flag */
     uint32_t V : 1;           /*!< bit:     28  Overflow condition code flag */
     uint32_t C : 1;           /*!< bit:     29  Carry condition code flag */
@@ -273,6 +329,9 @@ typedef union {
 #define APSR_Q_Pos 27U                 /*!< APSR: Q Position */
 #define APSR_Q_Msk (1UL << APSR_Q_Pos) /*!< APSR: Q Mask */
 
+#define APSR_GE_Pos 16U                    /*!< APSR: GE Position */
+#define APSR_GE_Msk (0xFUL << APSR_GE_Pos) /*!< APSR: GE Mask */
+
 /**
   \brief  Union type to access the Interrupt Program Status Register (IPSR).
  */
@@ -293,17 +352,19 @@ typedef union {
  */
 typedef union {
   struct {
-    uint32_t ISR : 9;         /*!< bit:  0.. 8  Exception number */
-    uint32_t _reserved0 : 15; /*!< bit:  9..23  Reserved */
-    uint32_t T : 1;           /*!< bit:     24  Thumb bit        (read 0) */
-    uint32_t IT : 2;          /*!< bit: 25..26  saved IT state   (read 0) */
-    uint32_t Q : 1;           /*!< bit:     27  Saturation condition flag */
-    uint32_t V : 1;           /*!< bit:     28  Overflow condition code flag */
-    uint32_t C : 1;           /*!< bit:     29  Carry condition code flag */
-    uint32_t Z : 1;           /*!< bit:     30  Zero condition code flag */
-    uint32_t N : 1;           /*!< bit:     31  Negative condition code flag */
-  } b;                        /*!< Structure used for bit  access */
-  uint32_t w;                 /*!< Type      used for word access */
+    uint32_t ISR : 9;        /*!< bit:  0.. 8  Exception number */
+    uint32_t _reserved0 : 7; /*!< bit:  9..15  Reserved */
+    uint32_t GE : 4;         /*!< bit: 16..19  Greater than or Equal flags */
+    uint32_t _reserved1 : 4; /*!< bit: 20..23  Reserved */
+    uint32_t T : 1;          /*!< bit:     24  Thumb bit        (read 0) */
+    uint32_t IT : 2;         /*!< bit: 25..26  saved IT state   (read 0) */
+    uint32_t Q : 1;          /*!< bit:     27  Saturation condition flag */
+    uint32_t V : 1;          /*!< bit:     28  Overflow condition code flag */
+    uint32_t C : 1;          /*!< bit:     29  Carry condition code flag */
+    uint32_t Z : 1;          /*!< bit:     30  Zero condition code flag */
+    uint32_t N : 1;          /*!< bit:     31  Negative condition code flag */
+  } b;                       /*!< Structure used for bit  access */
+  uint32_t w;                /*!< Type      used for word access */
 } xPSR_Type;
 
 /* xPSR Register Definitions */
@@ -328,6 +389,9 @@ typedef union {
 #define xPSR_T_Pos 24U                 /*!< xPSR: T Position */
 #define xPSR_T_Msk (1UL << xPSR_T_Pos) /*!< xPSR: T Mask */
 
+#define xPSR_GE_Pos 16U                    /*!< xPSR: GE Position */
+#define xPSR_GE_Msk (0xFUL << xPSR_GE_Pos) /*!< xPSR: GE Mask */
+
 #define xPSR_ISR_Pos 0U                            /*!< xPSR: ISR Position */
 #define xPSR_ISR_Msk (0x1FFUL /*<< xPSR_ISR_Pos*/) /*!< xPSR: ISR Mask */
 
@@ -338,12 +402,16 @@ typedef union {
   struct {
     uint32_t nPRIV : 1;       /*!< bit:      0  Execution privilege in Thread mode */
     uint32_t SPSEL : 1;       /*!< bit:      1  Stack to be used */
-    uint32_t _reserved1 : 30; /*!< bit:  2..31  Reserved */
+    uint32_t FPCA : 1;        /*!< bit:      2  FP extension active flag */
+    uint32_t _reserved0 : 29; /*!< bit:  3..31  Reserved */
   } b;                        /*!< Structure used for bit  access */
   uint32_t w;                 /*!< Type      used for word access */
 } CONTROL_Type;
 
 /* CONTROL Register Definitions */
+#define CONTROL_FPCA_Pos 2U                        /*!< CONTROL: FPCA Position */
+#define CONTROL_FPCA_Msk (1UL << CONTROL_FPCA_Pos) /*!< CONTROL: FPCA Mask */
+
 #define CONTROL_SPSEL_Pos 1U                         /*!< CONTROL: SPSEL Position */
 #define CONTROL_SPSEL_Msk (1UL << CONTROL_SPSEL_Pos) /*!< CONTROL: SPSEL Mask */
 
@@ -416,8 +484,6 @@ typedef struct {
   __IM uint32_t  ISAR[5U]; /*!< Offset: 0x060 (R/ )  Instruction Set Attributes Register */
   uint32_t       RESERVED0[5U];
   __IOM uint32_t CPACR; /*!< Offset: 0x088 (R/W)  Coprocessor Access Control Register */
-  uint32_t       RESERVED1[129U];
-  __IOM uint32_t SFCR; /*!< Offset: 0x290 (R/W)  Security Features Control Register */
 } SCB_Type;
 
 /* SCB CPUID Register Definitions */
@@ -468,11 +534,8 @@ typedef struct {
 #define SCB_ICSR_VECTACTIVE_Msk (0x1FFUL /*<< SCB_ICSR_VECTACTIVE_Pos*/) /*!< SCB ICSR: VECTACTIVE Mask */
 
 /* SCB Vector Table Offset Register Definitions */
-#define SCB_VTOR_TBLBASE_Pos 29U                           /*!< SCB VTOR: TBLBASE Position */
-#define SCB_VTOR_TBLBASE_Msk (1UL << SCB_VTOR_TBLBASE_Pos) /*!< SCB VTOR: TBLBASE Mask */
-
-#define SCB_VTOR_TBLOFF_Pos 7U                                  /*!< SCB VTOR: TBLOFF Position */
-#define SCB_VTOR_TBLOFF_Msk (0x3FFFFFUL << SCB_VTOR_TBLOFF_Pos) /*!< SCB VTOR: TBLOFF Mask */
+#define SCB_VTOR_TBLOFF_Pos 7U                                   /*!< SCB VTOR: TBLOFF Position */
+#define SCB_VTOR_TBLOFF_Msk (0x1FFFFFFUL << SCB_VTOR_TBLOFF_Pos) /*!< SCB VTOR: TBLOFF Mask */
 
 /* SCB Application Interrupt and Reset Control Register Definitions */
 #define SCB_AIRCR_VECTKEY_Pos 16U                                 /*!< SCB AIRCR: VECTKEY Position */
@@ -617,14 +680,30 @@ typedef struct {
   \brief  Structure type to access the System Control and ID Register not in the SCB.
  */
 typedef struct {
-  uint32_t      RESERVED0[1U];
-  __IM uint32_t ICTR; /*!< Offset: 0x004 (R/ )  Interrupt Controller Type Register */
-  uint32_t      RESERVED1[1U];
+  uint32_t       RESERVED0[1U];
+  __IM uint32_t  ICTR;  /*!< Offset: 0x004 (R/ )  Interrupt Controller Type Register */
+  __IOM uint32_t ACTLR; /*!< Offset: 0x008 (R/W)  Auxiliary Control Register */
 } SCnSCB_Type;
 
 /* Interrupt Controller Type Register Definitions */
 #define SCnSCB_ICTR_INTLINESNUM_Pos 0U                                         /*!< ICTR: INTLINESNUM Position */
 #define SCnSCB_ICTR_INTLINESNUM_Msk (0xFUL /*<< SCnSCB_ICTR_INTLINESNUM_Pos*/) /*!< ICTR: INTLINESNUM Mask */
+
+/* Auxiliary Control Register Definitions */
+#define SCnSCB_ACTLR_DISOOFP_Pos 9U                                /*!< ACTLR: DISOOFP Position */
+#define SCnSCB_ACTLR_DISOOFP_Msk (1UL << SCnSCB_ACTLR_DISOOFP_Pos) /*!< ACTLR: DISOOFP Mask */
+
+#define SCnSCB_ACTLR_DISFPCA_Pos 8U                                /*!< ACTLR: DISFPCA Position */
+#define SCnSCB_ACTLR_DISFPCA_Msk (1UL << SCnSCB_ACTLR_DISFPCA_Pos) /*!< ACTLR: DISFPCA Mask */
+
+#define SCnSCB_ACTLR_DISFOLD_Pos 2U                                /*!< ACTLR: DISFOLD Position */
+#define SCnSCB_ACTLR_DISFOLD_Msk (1UL << SCnSCB_ACTLR_DISFOLD_Pos) /*!< ACTLR: DISFOLD Mask */
+
+#define SCnSCB_ACTLR_DISDEFWBUF_Pos 1U                                   /*!< ACTLR: DISDEFWBUF Position */
+#define SCnSCB_ACTLR_DISDEFWBUF_Msk (1UL << SCnSCB_ACTLR_DISDEFWBUF_Pos) /*!< ACTLR: DISDEFWBUF Mask */
+
+#define SCnSCB_ACTLR_DISMCYCINT_Pos 0U                                       /*!< ACTLR: DISMCYCINT Position */
+#define SCnSCB_ACTLR_DISMCYCINT_Msk (1UL /*<< SCnSCB_ACTLR_DISMCYCINT_Pos*/) /*!< ACTLR: DISMCYCINT Mask */
 
 /*@} end of group CMSIS_SCnotSCB */
 
@@ -1169,6 +1248,112 @@ typedef struct {
 /*@} end of group CMSIS_MPU */
 #endif
 
+#if (__FPU_PRESENT == 1U)
+/**
+  \ingroup  CMSIS_core_register
+  \defgroup CMSIS_FPU     Floating Point Unit (FPU)
+  \brief    Type definitions for the Floating Point Unit (FPU)
+  @{
+ */
+
+/**
+  \brief  Structure type to access the Floating Point Unit (FPU).
+ */
+typedef struct {
+  uint32_t       RESERVED0[1U];
+  __IOM uint32_t FPCCR;  /*!< Offset: 0x004 (R/W)  Floating-Point Context Control Register */
+  __IOM uint32_t FPCAR;  /*!< Offset: 0x008 (R/W)  Floating-Point Context Address Register */
+  __IOM uint32_t FPDSCR; /*!< Offset: 0x00C (R/W)  Floating-Point Default Status Control Register */
+  __IM uint32_t  MVFR0;  /*!< Offset: 0x010 (R/ )  Media and FP Feature Register 0 */
+  __IM uint32_t  MVFR1;  /*!< Offset: 0x014 (R/ )  Media and FP Feature Register 1 */
+} FPU_Type;
+
+/* Floating-Point Context Control Register Definitions */
+#define FPU_FPCCR_ASPEN_Pos 31U                          /*!< FPCCR: ASPEN bit Position */
+#define FPU_FPCCR_ASPEN_Msk (1UL << FPU_FPCCR_ASPEN_Pos) /*!< FPCCR: ASPEN bit Mask */
+
+#define FPU_FPCCR_LSPEN_Pos 30U                          /*!< FPCCR: LSPEN Position */
+#define FPU_FPCCR_LSPEN_Msk (1UL << FPU_FPCCR_LSPEN_Pos) /*!< FPCCR: LSPEN bit Mask */
+
+#define FPU_FPCCR_MONRDY_Pos 8U                            /*!< FPCCR: MONRDY Position */
+#define FPU_FPCCR_MONRDY_Msk (1UL << FPU_FPCCR_MONRDY_Pos) /*!< FPCCR: MONRDY bit Mask */
+
+#define FPU_FPCCR_BFRDY_Pos 6U                           /*!< FPCCR: BFRDY Position */
+#define FPU_FPCCR_BFRDY_Msk (1UL << FPU_FPCCR_BFRDY_Pos) /*!< FPCCR: BFRDY bit Mask */
+
+#define FPU_FPCCR_MMRDY_Pos 5U                           /*!< FPCCR: MMRDY Position */
+#define FPU_FPCCR_MMRDY_Msk (1UL << FPU_FPCCR_MMRDY_Pos) /*!< FPCCR: MMRDY bit Mask */
+
+#define FPU_FPCCR_HFRDY_Pos 4U                           /*!< FPCCR: HFRDY Position */
+#define FPU_FPCCR_HFRDY_Msk (1UL << FPU_FPCCR_HFRDY_Pos) /*!< FPCCR: HFRDY bit Mask */
+
+#define FPU_FPCCR_THREAD_Pos 3U                            /*!< FPCCR: processor mode bit Position */
+#define FPU_FPCCR_THREAD_Msk (1UL << FPU_FPCCR_THREAD_Pos) /*!< FPCCR: processor mode active bit Mask */
+
+#define FPU_FPCCR_USER_Pos 1U                          /*!< FPCCR: privilege level bit Position */
+#define FPU_FPCCR_USER_Msk (1UL << FPU_FPCCR_USER_Pos) /*!< FPCCR: privilege level bit Mask */
+
+#define FPU_FPCCR_LSPACT_Pos 0U                                /*!< FPCCR: Lazy state preservation active bit Position */
+#define FPU_FPCCR_LSPACT_Msk (1UL /*<< FPU_FPCCR_LSPACT_Pos*/) /*!< FPCCR: Lazy state preservation active bit Mask */
+
+/* Floating-Point Context Address Register Definitions */
+#define FPU_FPCAR_ADDRESS_Pos 3U                                      /*!< FPCAR: ADDRESS bit Position */
+#define FPU_FPCAR_ADDRESS_Msk (0x1FFFFFFFUL << FPU_FPCAR_ADDRESS_Pos) /*!< FPCAR: ADDRESS bit Mask */
+
+/* Floating-Point Default Status Control Register Definitions */
+#define FPU_FPDSCR_AHP_Pos 26U                         /*!< FPDSCR: AHP bit Position */
+#define FPU_FPDSCR_AHP_Msk (1UL << FPU_FPDSCR_AHP_Pos) /*!< FPDSCR: AHP bit Mask */
+
+#define FPU_FPDSCR_DN_Pos 25U                        /*!< FPDSCR: DN bit Position */
+#define FPU_FPDSCR_DN_Msk (1UL << FPU_FPDSCR_DN_Pos) /*!< FPDSCR: DN bit Mask */
+
+#define FPU_FPDSCR_FZ_Pos 24U                        /*!< FPDSCR: FZ bit Position */
+#define FPU_FPDSCR_FZ_Msk (1UL << FPU_FPDSCR_FZ_Pos) /*!< FPDSCR: FZ bit Mask */
+
+#define FPU_FPDSCR_RMode_Pos 22U                           /*!< FPDSCR: RMode bit Position */
+#define FPU_FPDSCR_RMode_Msk (3UL << FPU_FPDSCR_RMode_Pos) /*!< FPDSCR: RMode bit Mask */
+
+/* Media and FP Feature Register 0 Definitions */
+#define FPU_MVFR0_FP_rounding_modes_Pos 28U                                        /*!< MVFR0: FP rounding modes bits Position */
+#define FPU_MVFR0_FP_rounding_modes_Msk (0xFUL << FPU_MVFR0_FP_rounding_modes_Pos) /*!< MVFR0: FP rounding modes bits Mask */
+
+#define FPU_MVFR0_Short_vectors_Pos 24U                                    /*!< MVFR0: Short vectors bits Position */
+#define FPU_MVFR0_Short_vectors_Msk (0xFUL << FPU_MVFR0_Short_vectors_Pos) /*!< MVFR0: Short vectors bits Mask */
+
+#define FPU_MVFR0_Square_root_Pos 20U                                  /*!< MVFR0: Square root bits Position */
+#define FPU_MVFR0_Square_root_Msk (0xFUL << FPU_MVFR0_Square_root_Pos) /*!< MVFR0: Square root bits Mask */
+
+#define FPU_MVFR0_Divide_Pos 16U                             /*!< MVFR0: Divide bits Position */
+#define FPU_MVFR0_Divide_Msk (0xFUL << FPU_MVFR0_Divide_Pos) /*!< MVFR0: Divide bits Mask */
+
+#define FPU_MVFR0_FP_excep_trapping_Pos 12U                                        /*!< MVFR0: FP exception trapping bits Position */
+#define FPU_MVFR0_FP_excep_trapping_Msk (0xFUL << FPU_MVFR0_FP_excep_trapping_Pos) /*!< MVFR0: FP exception trapping bits Mask */
+
+#define FPU_MVFR0_Double_precision_Pos 8U                                        /*!< MVFR0: Double-precision bits Position */
+#define FPU_MVFR0_Double_precision_Msk (0xFUL << FPU_MVFR0_Double_precision_Pos) /*!< MVFR0: Double-precision bits Mask */
+
+#define FPU_MVFR0_Single_precision_Pos 4U                                        /*!< MVFR0: Single-precision bits Position */
+#define FPU_MVFR0_Single_precision_Msk (0xFUL << FPU_MVFR0_Single_precision_Pos) /*!< MVFR0: Single-precision bits Mask */
+
+#define FPU_MVFR0_A_SIMD_registers_Pos 0U                                            /*!< MVFR0: A_SIMD registers bits Position */
+#define FPU_MVFR0_A_SIMD_registers_Msk (0xFUL /*<< FPU_MVFR0_A_SIMD_registers_Pos*/) /*!< MVFR0: A_SIMD registers bits Mask */
+
+/* Media and FP Feature Register 1 Definitions */
+#define FPU_MVFR1_FP_fused_MAC_Pos 28U                                   /*!< MVFR1: FP fused MAC bits Position */
+#define FPU_MVFR1_FP_fused_MAC_Msk (0xFUL << FPU_MVFR1_FP_fused_MAC_Pos) /*!< MVFR1: FP fused MAC bits Mask */
+
+#define FPU_MVFR1_FP_HPFP_Pos 24U                              /*!< MVFR1: FP HPFP bits Position */
+#define FPU_MVFR1_FP_HPFP_Msk (0xFUL << FPU_MVFR1_FP_HPFP_Pos) /*!< MVFR1: FP HPFP bits Mask */
+
+#define FPU_MVFR1_D_NaN_mode_Pos 4U                                  /*!< MVFR1: D_NaN mode bits Position */
+#define FPU_MVFR1_D_NaN_mode_Msk (0xFUL << FPU_MVFR1_D_NaN_mode_Pos) /*!< MVFR1: D_NaN mode bits Mask */
+
+#define FPU_MVFR1_FtZ_mode_Pos 0U                                    /*!< MVFR1: FtZ mode bits Position */
+#define FPU_MVFR1_FtZ_mode_Msk (0xFUL /*<< FPU_MVFR1_FtZ_mode_Pos*/) /*!< MVFR1: FtZ mode bits Mask */
+
+/*@} end of group CMSIS_FPU */
+#endif
+
 /**
   \ingroup  CMSIS_core_register
   \defgroup CMSIS_CoreDebug       Core Debug Registers (CoreDebug)
@@ -1304,7 +1489,7 @@ typedef struct {
   @{
  */
 
-/* Memory mapping of Cortex-M3 Hardware */
+/* Memory mapping of Cortex-M4 Hardware */
 #define SCS_BASE       (0xE000E000UL)        /*!< System Control Space Base Address */
 #define ITM_BASE       (0xE0000000UL)        /*!< ITM Base Address */
 #define DWT_BASE       (0xE0001000UL)        /*!< DWT Base Address */
@@ -1326,6 +1511,11 @@ typedef struct {
 #if (__MPU_PRESENT == 1U)
 #define MPU_BASE (SCS_BASE + 0x0D90UL)  /*!< Memory Protection Unit */
 #define MPU      ((MPU_Type *)MPU_BASE) /*!< Memory Protection Unit */
+#endif
+
+#if (__FPU_PRESENT == 1U)
+#define FPU_BASE (SCS_BASE + 0x0F30UL)  /*!< Floating Point Unit */
+#define FPU      ((FPU_Type *)FPU_BASE) /*!< Floating Point Unit */
 #endif
 
 /*@} */
@@ -1626,6 +1816,6 @@ __STATIC_INLINE int32_t ITM_CheckChar(void) {
 }
 #endif
 
-#endif /* __CORE_SC300_H_DEPENDANT */
+#endif /* __CORE_CM4_H_DEPENDANT */
 
 #endif /* __CMSIS_GENERIC */
