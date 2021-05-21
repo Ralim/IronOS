@@ -138,23 +138,6 @@ typedef struct {
 
 /* Exported macro ------------------------------------------------------------*/
 /**
- * @brief  Sets the TIM Output compare preload.
- * @param  __HANDLE__: TIM handle.
- * @param  __CHANNEL__: TIM Channels to be configured.
- *          This parameter can be one of the following values:
- *            @arg TIM_CHANNEL_1: TIM Channel 1 selected
- *            @arg TIM_CHANNEL_2: TIM Channel 2 selected
- *            @arg TIM_CHANNEL_3: TIM Channel 3 selected
- *            @arg TIM_CHANNEL_4: TIM Channel 4 selected
- * @retval None
- */
-#define __HAL_TIM_ENABLE_OCxPRELOAD(__HANDLE__, __CHANNEL__)                                   \
-  (((__CHANNEL__) == TIM_CHANNEL_1)                                                            \
-       ? ((__HANDLE__)->Instance->CCMR1 |= TIM_CCMR1_OC1PE)                                    \
-       : ((__CHANNEL__) == TIM_CHANNEL_2) ? ((__HANDLE__)->Instance->CCMR1 |= TIM_CCMR1_OC2PE) \
-                                          : ((__CHANNEL__) == TIM_CHANNEL_3) ? ((__HANDLE__)->Instance->CCMR2 |= TIM_CCMR2_OC3PE) : ((__HANDLE__)->Instance->CCMR2 |= TIM_CCMR2_OC4PE))
-
-/**
  * @brief  Resets the TIM Output compare preload.
  * @param  __HANDLE__: TIM handle.
  * @param  __CHANNEL__: TIM Channels to be configured.
