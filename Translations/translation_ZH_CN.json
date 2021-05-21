@@ -156,7 +156,7 @@
 		},
 		"PowerLimit": {
 			"text2": "功率限制",
-			"desc": "限制铬铁可用的最大功率 (W=watt[瓦特])"
+			"desc": "限制铬铁可用的最大功率 (W=watt [瓦特])"
 		},
 		"ReverseButtonTempChange": {
 			"text2": "调换加减键",
@@ -172,7 +172,7 @@
 		},
 		"PowerPulsePower": {
 			"text2": "电源脉冲",
-			"desc": "为保持电源唤醒而通电所用的功率 (watt[瓦特])"
+			"desc": "为保持电源唤醒而通电所用的功率 (watt [瓦特])"
 		},
 		"HallEffSensitivity": {
 			"text2": "磁场灵敏度",
@@ -196,11 +196,11 @@
 		},
 		"PowerPulseWait": {
 			"text2": "电源脉冲间隔",
-			"desc": "为保持电源唤醒，每次通电之间的间隔时间 (x2.5s[秒])"
+			"desc": "为保持电源唤醒，每次通电之间的间隔时间 (x2.5s [秒])"
 		},
 		"PowerPulseDuration": {
 			"text2": "电源脉冲时长",
-			"desc": "为保持电源唤醒，每次通电脉冲的时间长度 (x250ms[亳秒])"
+			"desc": "为保持电源唤醒，每次通电脉冲的时间长度 (x250ms [亳秒])"
 		},
 		"LanguageSwitch": {
 			"text2": "语言：简体中文",
