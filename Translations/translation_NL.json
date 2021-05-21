@@ -40,9 +40,9 @@
 			"No USB-PD IC",
 			"detected!"
 		],
-		"LockingKeysString": " GEBLOKKEERD",
-		"UnlockingKeysString": "GEDEBLOKKEERD",
-		"WarningKeysLockedString": "!GEBLOKKEERD!",
+		"LockingKeysString": " GEBLOKKEERD"
+		"UnlockingKeysString": "GEDEBLOKKEERD"
+		"WarningKeysLockedString": "!GEBLOKKEERD!"
 	},
 	"characters": {
 		"SettingRightChar": "R",
