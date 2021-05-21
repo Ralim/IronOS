@@ -14,6 +14,7 @@ RUN apt-get install -y \
   git \
   python3 \
   python3-pip \
+  clang-format \
   wget --no-install-recommends && \
   apt-get clean
 RUN python3 -m pip install bdflib
