@@ -3457,11 +3457,6 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
   if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_BREAK) != RESET) {
     if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_BREAK) != RESET) {
       __HAL_TIM_CLEAR_IT(htim, TIM_IT_BREAK);
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-      htim->BreakCallback(htim);
-#else
-      HAL_TIMEx_BreakCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
     }
   }
   /* TIM Trigger detection event */
@@ -3479,11 +3474,6 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
   if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_COM) != RESET) {
     if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_COM) != RESET) {
       __HAL_TIM_CLEAR_IT(htim, TIM_FLAG_COM);
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-      htim->CommutationCallback(htim);
-#else
-      HAL_TIMEx_CommutCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
     }
   }
 }
@@ -4033,18 +4023,6 @@ HAL_StatusTypeDef HAL_TIM_DMABurst_MultiWriteStart(TIM_HandleTypeDef *htim, uint
     break;
   }
   case TIM_DMA_COM: {
-    /* Set the DMA commutation callbacks */
-    htim->hdma[TIM_DMA_ID_COMMUTATION]->XferCpltCallback     = TIMEx_DMACommutationCplt;
-    htim->hdma[TIM_DMA_ID_COMMUTATION]->XferHalfCpltCallback = TIMEx_DMACommutationHalfCplt;
-
-    /* Set the DMA error callback */
-    htim->hdma[TIM_DMA_ID_COMMUTATION]->XferErrorCallback = TIM_DMAError;
-
-    /* Enable the DMA channel */
-    if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_COMMUTATION], (uint32_t)BurstBuffer, (uint32_t)&htim->Instance->DMAR, DataLength) != HAL_OK) {
-      /* Return error status */
-      return HAL_ERROR;
-    }
     break;
   }
   case TIM_DMA_TRIGGER: {
@@ -4306,19 +4284,6 @@ HAL_StatusTypeDef HAL_TIM_DMABurst_MultiReadStart(TIM_HandleTypeDef *htim, uint3
     break;
   }
   case TIM_DMA_COM: {
-    /* Set the DMA commutation callbacks */
-    htim->hdma[TIM_DMA_ID_COMMUTATION]->XferCpltCallback     = TIMEx_DMACommutationCplt;
-    htim->hdma[TIM_DMA_ID_COMMUTATION]->XferHalfCpltCallback = TIMEx_DMACommutationHalfCplt;
-
-    /* Set the DMA error callback */
-    htim->hdma[TIM_DMA_ID_COMMUTATION]->XferErrorCallback = TIM_DMAError;
-
-    /* Enable the DMA channel */
-    if (HAL_DMA_Start_IT(htim->hdma[TIM_DMA_ID_COMMUTATION], (uint32_t)&htim->Instance->DMAR, (uint32_t)BurstBuffer, DataLength) != HAL_OK) {
-      /* Return error status */
-      return HAL_ERROR;
-    }
-    break;
   }
   case TIM_DMA_TRIGGER: {
     /* Set the DMA trigger callbacks */

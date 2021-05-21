@@ -105,85 +105,6 @@ typedef struct {
  * @{
  */
 
-/** @addtogroup TIMEx_Exported_Functions_Group1 Extended Timer Hall Sensor functions
- *  @brief    Timer Hall Sensor functions
- * @{
- */
-/*  Timer Hall Sensor functions  **********************************************/
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_Init(TIM_HandleTypeDef *htim, TIM_HallSensor_InitTypeDef *sConfig);
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_DeInit(TIM_HandleTypeDef *htim);
-
-void HAL_TIMEx_HallSensor_MspInit(TIM_HandleTypeDef *htim);
-void HAL_TIMEx_HallSensor_MspDeInit(TIM_HandleTypeDef *htim);
-
-/* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start(TIM_HandleTypeDef *htim);
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_Stop(TIM_HandleTypeDef *htim);
-/* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start_IT(TIM_HandleTypeDef *htim);
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_Stop_IT(TIM_HandleTypeDef *htim);
-/* Non-Blocking mode: DMA */
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_Start_DMA(TIM_HandleTypeDef *htim, uint32_t *pData, uint16_t Length);
-HAL_StatusTypeDef HAL_TIMEx_HallSensor_Stop_DMA(TIM_HandleTypeDef *htim);
-/**
- * @}
- */
-
-/** @addtogroup TIMEx_Exported_Functions_Group2 Extended Timer Complementary Output Compare functions
- *  @brief   Timer Complementary Output Compare functions
- * @{
- */
-/*  Timer Complementary Output Compare functions  *****************************/
-/* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_TIMEx_OCN_Start(TIM_HandleTypeDef *htim, uint32_t Channel);
-HAL_StatusTypeDef HAL_TIMEx_OCN_Stop(TIM_HandleTypeDef *htim, uint32_t Channel);
-
-/* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_TIMEx_OCN_Start_IT(TIM_HandleTypeDef *htim, uint32_t Channel);
-HAL_StatusTypeDef HAL_TIMEx_OCN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t Channel);
-
-/* Non-Blocking mode: DMA */
-HAL_StatusTypeDef HAL_TIMEx_OCN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t *pData, uint16_t Length);
-HAL_StatusTypeDef HAL_TIMEx_OCN_Stop_DMA(TIM_HandleTypeDef *htim, uint32_t Channel);
-/**
- * @}
- */
-
-/** @addtogroup TIMEx_Exported_Functions_Group3 Extended Timer Complementary PWM functions
- *  @brief    Timer Complementary PWM functions
- * @{
- */
-/*  Timer Complementary PWM functions  ****************************************/
-/* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_TIMEx_PWMN_Start(TIM_HandleTypeDef *htim, uint32_t Channel);
-HAL_StatusTypeDef HAL_TIMEx_PWMN_Stop(TIM_HandleTypeDef *htim, uint32_t Channel);
-
-/* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_IT(TIM_HandleTypeDef *htim, uint32_t Channel);
-HAL_StatusTypeDef HAL_TIMEx_PWMN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t Channel);
-/* Non-Blocking mode: DMA */
-HAL_StatusTypeDef HAL_TIMEx_PWMN_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t *pData, uint16_t Length);
-HAL_StatusTypeDef HAL_TIMEx_PWMN_Stop_DMA(TIM_HandleTypeDef *htim, uint32_t Channel);
-/**
- * @}
- */
-
-/** @addtogroup TIMEx_Exported_Functions_Group4 Extended Timer Complementary One Pulse functions
- *  @brief    Timer Complementary One Pulse functions
- * @{
- */
-/*  Timer Complementary One Pulse functions  **********************************/
-/* Blocking mode: Polling */
-HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Start(TIM_HandleTypeDef *htim, uint32_t OutputChannel);
-HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Stop(TIM_HandleTypeDef *htim, uint32_t OutputChannel);
-
-/* Non-Blocking mode: Interrupt */
-HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Start_IT(TIM_HandleTypeDef *htim, uint32_t OutputChannel);
-HAL_StatusTypeDef HAL_TIMEx_OnePulseN_Stop_IT(TIM_HandleTypeDef *htim, uint32_t OutputChannel);
-/**
- * @}
- */
-
 /** @addtogroup TIMEx_Exported_Functions_Group5 Extended Peripheral Control functions
  *  @brief    Peripheral Control functions
  * @{
@@ -198,45 +119,6 @@ HAL_StatusTypeDef HAL_TIMEx_RemapConfig(TIM_HandleTypeDef *htim, uint32_t Remap)
 /**
  * @}
  */
-
-/** @addtogroup TIMEx_Exported_Functions_Group6 Extended Callbacks functions
- * @brief    Extended Callbacks functions
- * @{
- */
-/* Extended Callback **********************************************************/
-void HAL_TIMEx_CommutCallback(TIM_HandleTypeDef *htim);
-void HAL_TIMEx_CommutHalfCpltCallback(TIM_HandleTypeDef *htim);
-void HAL_TIMEx_BreakCallback(TIM_HandleTypeDef *htim);
-/**
- * @}
- */
-
-/** @addtogroup TIMEx_Exported_Functions_Group7 Extended Peripheral State functions
- * @brief    Extended Peripheral State functions
- * @{
- */
-/* Extended Peripheral State functions  ***************************************/
-HAL_TIM_StateTypeDef        HAL_TIMEx_HallSensor_GetState(TIM_HandleTypeDef *htim);
-HAL_TIM_ChannelStateTypeDef HAL_TIMEx_GetChannelNState(TIM_HandleTypeDef *htim, uint32_t ChannelN);
-/**
- * @}
- */
-
-/**
- * @}
- */
-/* End of exported functions -------------------------------------------------*/
-
-/* Private functions----------------------------------------------------------*/
-/** @addtogroup TIMEx_Private_Functions TIMEx Private Functions
- * @{
- */
-void TIMEx_DMACommutationCplt(DMA_HandleTypeDef *hdma);
-void TIMEx_DMACommutationHalfCplt(DMA_HandleTypeDef *hdma);
-/**
- * @}
- */
-/* End of private functions --------------------------------------------------*/
 
 /**
  * @}
