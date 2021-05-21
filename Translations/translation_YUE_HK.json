@@ -156,7 +156,7 @@
 		},
 		"PowerLimit": {
 			"text2": "功率限制",
-			"desc": "限制辣雞可用嘅最大功率 (W=watt[火])"
+			"desc": "限制辣雞可用嘅最大功率 (W=watt [火])"
 		},
 		"ReverseButtonTempChange": {
 			"text2": "反轉加減掣",
@@ -172,7 +172,7 @@
 		},
 		"PowerPulsePower": {
 			"text2": "電源脈衝",
-			"desc": "為保持電源喚醒而通電所用嘅功率 (watt[火])"
+			"desc": "為保持電源喚醒而通電所用嘅功率 (watt [火])"
 		},
 		"HallEffSensitivity": {
 			"text2": "磁場敏感度",
@@ -196,11 +196,11 @@
 		},
 		"PowerPulseWait": {
 			"text2": "電源脈衝間隔",
-			"desc": "為保持電源喚醒，每次通電之間嘅間隔時間 (x2.5s[秒])"
+			"desc": "為保持電源喚醒，每次通電之間嘅間隔時間 (x2.5s [秒])"
 		},
 		"PowerPulseDuration": {
 			"text2": "電源脈衝時長",
-			"desc": "為保持電源喚醒，每次通電脈衝嘅時間長度 (x250ms[亳秒])"
+			"desc": "為保持電源喚醒，每次通電脈衝嘅時間長度 (x250ms [亳秒])"
 		},
 		"LanguageSwitch": {
 			"text2": "語言： 廣東話",
