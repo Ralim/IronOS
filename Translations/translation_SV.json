@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "H",
 		"SettingLeftChar": "V",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Visnings",
 				"läge"
 			],
-			"desc": "Visningsläge (A=Automatisk | V=Vänsterhänt | H=Högerhänt)"
+			"desc": "Visningsläge (H=Högerhänt | V=Vänsterhänt | A=Automatisk)"
 		},
 		"BoostTemperature": {
 			"text2": [
