@@ -46,9 +46,9 @@
 		"WarningKeysLockedString": "!GESPERRT!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "A",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
@@ -158,7 +158,7 @@
 				"Anzeige-",
 				"ausrichtung"
 			],
-			"desc": "A=automatisch | L=linkshändig | R=rechtshändig"
+			"desc": "R=rechtshändig | L=linkshändig | A=automatisch"
 		},
 		"BoostTemperature": {
 			"text2": [
