@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Orijentacija",
 				"ekrana"
 			],
-			"desc": "Kako je okrenut ekran. (A=automatski | L=za levoruke | D=za desnoruke)"
+			"desc": "Kako je okrenut ekran. (D=za desnoruke | L=za levoruke | A=automatski)"
 		},
 		"BoostTemperature": {
 			"text2": [
