@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "H",
 		"SettingLeftChar": "V",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"SkRetn",
 				""
 			],
-			"desc": "Skjermretning (A=Automatisk | V=Venstrehendt | H=Høyrehendt)"
+			"desc": "Skjermretning (H=Høyrehendt | V=Venstrehendt | A=Automatisk)"
 		},
 		"BoostTemperature": {
 			"text2": [
