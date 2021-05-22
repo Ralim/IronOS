@@ -43,9 +43,9 @@
 		"WarningKeysLockedString": "!入力ロック中!"
 	},
 	"characters": {
-		"SettingAutoChar": "自",
 		"SettingRightChar": "右",
 		"SettingLeftChar": "左",
+		"SettingAutoChar": "自",
 		"SettingOffChar": "X",
 		"SettingSlowChar": "遅",
 		"SettingMediumChar": "中",
@@ -116,7 +116,7 @@
 		},
 		"DisplayRotation": {
 			"text2": "画面の向き",
-			"desc": "自=自動 | 左=左利き | 右=右利き"
+			"desc": "右=右利き | 左=左利き | 自=自動"
 		},
 		"BoostTemperature": {
 			"text2": "ブースト温度",
