@@ -48,9 +48,9 @@
 		"WarningKeysLockedString": "!LEZÁRVA!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "J",
 		"SettingLeftChar": "B",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "0",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "K",
@@ -160,7 +160,7 @@
 				"Kijelző",
 				"tájolása"
 			],
-			"desc": "Kijelző tájolása (A=automatikus | B=balkezes | J=jobbkezes)"
+			"desc": "Kijelző tájolása (J=jobbkezes | B=balkezes | A=automatikus)"
 		},
 		"BoostTemperature": {
 			"text2": [
