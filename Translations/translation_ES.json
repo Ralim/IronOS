@@ -46,9 +46,9 @@
 		"WarningKeysLockedString": "¡BLOQUEADO!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "I",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
@@ -158,7 +158,7 @@
 				"Orientación",
 				"de pantalla"
 			],
-			"desc": "Orientación de la pantalla (A=automático | I=zurdo | D=diestro)"
+			"desc": "Orientación de la pantalla (D=diestro | I=zurdo | A=automático)"
 		},
 		"BoostTemperature": {
 			"text2": [
