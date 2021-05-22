@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!UŽRAK!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "K",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "I",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "V",
@@ -157,7 +157,7 @@
 				"Ekrano",
 				"orientacija"
 			],
-			"desc": "Ekrano orientacija (A=Automatinė | K=Kairiarankiams | D=Dešiniarankiams)"
+			"desc": "Ekrano orientacija (D=Dešiniarankiams | K=Kairiarankiams | A=Automatinė)"
 		},
 		"BoostTemperature": {
 			"text2": [
