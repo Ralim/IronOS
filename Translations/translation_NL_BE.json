@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "T",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Scherm-",
 				"oriëntatie"
 			],
-			"desc": "Schermoriëntatie (A=Automatisch | L=Linkshandig | R=Rechtshandig)"
+			"desc": "Schermoriëntatie (R=Rechtshandig | L=Linkshandig | A=Automatisch)"
 		},
 		"BoostTemperature": {
 			"text2": [
