@@ -43,13 +43,13 @@
 		"WarningKeysLockedString": "!入力ロック中!"
 	},
 	"characters": {
+		"SettingAutoChar": "自",
 		"SettingRightChar": "右",
 		"SettingLeftChar": "左",
-		"SettingAutoChar": "自",
-		"SettingFastChar": "早",
+		"SettingOffChar": "X",
 		"SettingSlowChar": "遅",
 		"SettingMediumChar": "中",
-		"SettingOffChar": "X",
+		"SettingFastChar": "早",
 		"SettingStartNoneChar": "X",
 		"SettingStartSolderingChar": "熱",
 		"SettingStartSleepChar": "待",
@@ -88,7 +88,7 @@
 	"menuOptions": {
 		"DCInCutoff": {
 			"text2": "電源",
-			"desc": "電源設定。下限電圧を指定します。 (DC=10V) (S=セルあたり3.3V | 電力制限は無効化されます)"
+			"desc": "電源設定。下限電圧を指定します。 <DC=10V> <S=セルあたり3.3V、電力制限は無効化されます>"
 		},
 		"SleepTemperature": {
 			"text2": "待機温度",
@@ -96,11 +96,11 @@
 		},
 		"SleepTimeout": {
 			"text2": "待機遅延",
-			"desc": "スタンバイモードに入るまでの待機時間 (S=秒 | M=分)"
+			"desc": "スタンバイモードに入るまでの待機時間 <S=秒 | M=分>"
 		},
 		"ShutdownTimeout": {
 			"text2": "自動オフ",
-			"desc": "自動電源オフするまでの待機時間 (M=分)"
+			"desc": "自動電源オフするまでの待機時間 <M=分>"
 		},
 		"MotionSensitivity": {
 			"text2": "動きの感度",
@@ -124,7 +124,7 @@
 		},
 		"AutoStart": {
 			"text2": "自動起動",
-			"desc": "電源投入時に自動的に起動します (X=オフ | 熱=はんだ加熱モード | 待=スタンバイモード | 室=室温スタンバイモード)"
+			"desc": "電源投入時に自動的に起動します <X=オフ | 熱=はんだ加熱モード | 待=スタンバイモード | 室=室温スタンバイモード>"
 		},
 		"CooldownBlink": {
 			"text2": "冷却中に点滅",
@@ -140,7 +140,7 @@
 		},
 		"VoltageCalibration": {
 			"text2": "電圧を校正する？",
-			"desc": "入力電圧VINの校正を開始します (長押しして終了します)"
+			"desc": "入力電圧VINの校正を開始します <長押しして終了します>"
 		},
 		"AdvancedSoldering": {
 			"text2": "詳細な作業画面",
@@ -148,7 +148,7 @@
 		},
 		"ScrollingSpeed": {
 			"text2": "スクロール速度",
-			"desc": "説明テキストがスクロールする速度 (遅=遅い | 早=早い)"
+			"desc": "説明テキストがスクロールする速度 <遅=遅い | 早=早い>"
 		},
 		"QCMaxVoltage": {
 			"text2": "QC電圧",
@@ -156,7 +156,7 @@
 		},
 		"PowerLimit": {
 			"text2": "電力制限",
-			"desc": "はんだ付てが使用できる最大電力を制限する (W=ワット)"
+			"desc": "はんだ付てが使用できる最大電力を制限する <W=ワット>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": "キーを交換する",
@@ -172,19 +172,19 @@
 		},
 		"PowerPulsePower": {
 			"text2": "電力パルス",
-			"desc": "電源供給元をオンに保つための電力パルス (ワット)"
+			"desc": "電源供給元をオンに保つための電力パルス <ワット>"
 		},
 		"HallEffSensitivity": {
 			"text2": "磁界感度",
-			"desc": "スタンバイモードに入るのに使用される磁場センサーの感度 (X=オフ | 低=最低感度 | 中=中程度の感度 | 高=最高感度)"
+			"desc": "スタンバイモードに入るのに使用される磁場センサーの感度 <X=オフ | 低=最低感度 | 中=中程度の感度 | 高=最高感度>"
 		},
 		"LockingMode": {
 			"text2": "ボタンロック",
-			"desc": "はんだ付けモードの場合、2つのボタンを長押ししてボタンロックをオンにします (X=オフ | ブ=ブーストのみ許可 | 全=すべてをロック)"
+			"desc": "はんだ付けモードの場合、2つのボタンを長押ししてボタンロックをオンにします <X=オフ | ブ=ブーストのみ許可 | 全=すべてをロック>"
 		},
 		"MinVolCell": {
 			"text2": "最低電圧",
-			"desc": "セルあたりの最低電圧 (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "セルあたりの最低電圧 <ボルト> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
 		},
 		"AnimLoop": {
 			"text2": "動画をループ",
@@ -192,15 +192,15 @@
 		},
 		"AnimSpeed": {
 			"text2": "動画の速度",
-			"desc": "メニューアイコンのアニメーションの再生速度 (X=アニメーションを再生しない | 遅=低速 | 中=中速 | 早=高速)"
+			"desc": "メニューアイコンのアニメーションの再生速度 <X=アニメーションを再生しない | 遅=低速 | 中=中速 | 早=高速>"
 		},
 		"PowerPulseWait": {
 			"text2": "パルス間隔",
-			"desc": "電源供給元をオンに保つために使用される、電力パルス間の時間間隔 (x2.5s [秒])"
+			"desc": "電源供給元をオンに保つために使用される、電力パルス間の時間間隔 <x2.5s（秒）>"
 		},
 		"PowerPulseDuration": {
 			"text2": "パルス時間長",
-			"desc": "電源供給元をオンに保つために使用される、電力パルスの時間長 (x250ms [ミリ秒])"
+			"desc": "電源供給元をオンに保つために使用される、電力パルスの時間長 <x250ms（ミリ秒）>"
 		},
 		"LanguageSwitch": {
 			"text2": "言語： 日本語",
