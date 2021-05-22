@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!ZABLOK!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "P",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "Z",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Orientácia",
 				"displeja"
 			],
-			"desc": "Orientácia displeja (A=Auto | L=Ľavák | P=Pravák)"
+			"desc": "Orientácia displeja (P=Pravák | L=Ľavák | A=Auto)"
 		},
 		"BoostTemperature": {
 			"text2": [
