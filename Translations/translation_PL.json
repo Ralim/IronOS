@@ -46,9 +46,9 @@
 		"WarningKeysLockedString": "!ZABLOK!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "P",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "W",
 		"SettingMediumChar": "M",
@@ -158,7 +158,7 @@
 				"Obrót",
 				"ekranu"
 			],
-			"desc": "Obrót ekranu (A=automatycznie | L=dla leworęcznych | P=dla praworęcznych)"
+			"desc": "Obrót ekranu (P=dla praworęcznych | L=dla leworęcznych | A=automatycznie)"
 		},
 		"BoostTemperature": {
 			"text2": [
