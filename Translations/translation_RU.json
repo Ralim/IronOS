@@ -46,13 +46,13 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
+		"SettingAutoChar": "А",
 		"SettingRightChar": "П",
 		"SettingLeftChar": "Л",
-		"SettingAutoChar": "А",
-		"SettingFastChar": "Б",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "М",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
+		"SettingFastChar": "Б",
 		"SettingStartNoneChar": "В",
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
@@ -298,14 +298,14 @@
 				"Power pulse",
 				"wait time"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2,5s)"
+			"desc": "Time to wait before triggering every keep-awake pulse (x 2,5с)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
 				"Power pulse",
 				"duration"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Keep-awake-pulse duration (x 250мс)"
 		},
 		"LanguageSwitch": {
 			"text2": [
