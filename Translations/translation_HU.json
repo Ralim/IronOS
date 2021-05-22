@@ -48,13 +48,13 @@
 		"WarningKeysLockedString": "!LEZÁRVA!"
 	},
 	"characters": {
+		"SettingAutoChar": "A",
 		"SettingRightChar": "J",
 		"SettingLeftChar": "B",
-		"SettingAutoChar": "A",
-		"SettingFastChar": "G",
+		"SettingOffChar": "0",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "K",
-		"SettingOffChar": "0",
+		"SettingFastChar": "G",
 		"SettingStartNoneChar": "K",
 		"SettingStartSolderingChar": "F",
 		"SettingStartSleepChar": "A",
