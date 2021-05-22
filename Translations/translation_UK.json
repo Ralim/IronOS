@@ -295,21 +295,21 @@
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"Час між імп.",
+				"напруги"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Час між імпульсами напруги яка не дає PowerBank-у заснути (x 2.5с)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"Тривалість",
+				"імп. напруги"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Тривалість імпульсу напруги яка не дає PowerBank-у заснути (x 250мс)"
 		},
 		"LanguageSwitch": {
 			"text2": [
-				"Mову:",
+				"Мова:",
 				" UK  Українська"
 			],
 			"desc": ""
