@@ -44,9 +44,9 @@
 		"WarningKeysLockedString": "!LUKKO!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "O",
 		"SettingLeftChar": "V",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "P",
 		"SettingSlowChar": "H",
 		"SettingMediumChar": "M",
@@ -156,7 +156,7 @@
 				"Näytön",
 				"kierto"
 			],
-			"desc": "A=automaattinen | V=vasenkätinen | O=oikeakätinen"
+			"desc": "O=oikeakätinen | V=vasenkätinen | A=automaattinen"
 		},
 		"BoostTemperature": {
 			"text2": [
