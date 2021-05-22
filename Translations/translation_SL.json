@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "ZAKLENJ."
 	},
 	"characters": {
-		"SettingAutoChar": "S",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "S",
 		"SettingOffChar": "U",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Orientacija",
 				"zaslona"
 			],
-			"desc": "S=samodejno | L=levičar | D=desničar"
+			"desc": "D=desničar | L=levičar | S=samodejno"
 		},
 		"BoostTemperature": {
 			"text2": [
