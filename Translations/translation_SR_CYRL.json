@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "А",
 		"SettingRightChar": "Д",
 		"SettingLeftChar": "Л",
+		"SettingAutoChar": "А",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "С",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Оријентација",
 				"екрана"
 			],
-			"desc": "Како је окренут екран. (А=аутоматски | Л=за леворуке | Д=за десноруке)"
+			"desc": "Како је окренут екран. (Д=за десноруке | Л=за леворуке | А=аутоматски)"
 		},
 		"BoostTemperature": {
 			"text2": [
