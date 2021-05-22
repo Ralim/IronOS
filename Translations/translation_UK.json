@@ -46,13 +46,13 @@
 		"WarningKeysLockedString": "!ЗАБЛОК!"
 	},
 	"characters": {
+		"SettingAutoChar": "A",
 		"SettingRightChar": "П",
 		"SettingLeftChar": "Л",
-		"SettingAutoChar": "A",
-		"SettingFastChar": "Ш",
+		"SettingOffChar": "B",
 		"SettingSlowChar": "П",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "B",
+		"SettingFastChar": "Ш",
 		"SettingStartNoneChar": "В",
 		"SettingStartSolderingChar": "П",
 		"SettingStartSleepChar": "О",
