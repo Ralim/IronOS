@@ -45,13 +45,13 @@
 		"WarningKeysLockedString": "ZAKLENJ."
 	},
 	"characters": {
+		"SettingAutoChar": "S",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "L",
-		"SettingAutoChar": "S",
-		"SettingFastChar": "H",
+		"SettingOffChar": "U",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "U",
+		"SettingFastChar": "H",
 		"SettingStartNoneChar": "U",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "Z",
