@@ -45,13 +45,13 @@
 		"WarningKeysLockedString": "! VERR. !"
 	},
 	"characters": {
+		"SettingAutoChar": "A",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "G",
-		"SettingAutoChar": "A",
-		"SettingFastChar": "R",
+		"SettingOffChar": "D",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "D",
+		"SettingFastChar": "R",
 		"SettingStartNoneChar": "D",
 		"SettingStartSolderingChar": "A",
 		"SettingStartSleepChar": "V",
