@@ -46,8 +46,8 @@
 	},
 	"characters": {
 		"SettingAutoChar": "A",
-		"SettingRightChar": "R",
-		"SettingLeftChar": "L",
+		"SettingRightChar": ">",
+		"SettingLeftChar": "<",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Display",
 				"orientation"
 			],
-			"desc": "A=automatic | L=left-handed | R=right-handed"
+			"desc": "A=automatic | <=left-handed | >=right-handed"
 		},
 		"BoostTemperature": {
 			"text2": [
