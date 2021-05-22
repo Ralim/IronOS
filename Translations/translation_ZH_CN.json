@@ -43,9 +43,9 @@
 		"WarningKeysLockedString": "!按键锁定!"
 	},
 	"characters": {
-		"SettingAutoChar": "自",
 		"SettingRightChar": "右",
 		"SettingLeftChar": "左",
+		"SettingAutoChar": "自",
 		"SettingOffChar": "关",
 		"SettingSlowChar": "慢",
 		"SettingMediumChar": "中",
@@ -116,7 +116,7 @@
 		},
 		"DisplayRotation": {
 			"text2": "画面方向",
-			"desc": "自=自动 | 左=使用左手 | 右=使用右手"
+			"desc": "右=使用右手 | 左=使用左手 | 自=自动"
 		},
 		"BoostTemperature": {
 			"text2": "增热温度",
