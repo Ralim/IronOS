@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "C",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Orientação",
 				"tela"
 			],
-			"desc": "Orientação da tela (A=utomática | C=anhoto | D=estro)"
+			"desc": "Orientação da tela (D=estro | C=anhoto | A=utomática)"
 		},
 		"BoostTemperature": {
 			"text2": [
