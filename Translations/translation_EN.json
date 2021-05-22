@@ -45,13 +45,13 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
+		"SettingAutoChar": "A",
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
-		"SettingAutoChar": "A",
-		"SettingFastChar": "F",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
+		"SettingFastChar": "F",
 		"SettingStartNoneChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "Z",
@@ -108,7 +108,7 @@
 				"Power",
 				"source"
 			],
-			"desc": "Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)"
+			"desc": "Power source. Sets cutoff voltage. [DC 10V] [S 3.3V per cell, disable power limit]"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -122,14 +122,14 @@
 				"Sleep",
 				"timeout"
 			],
-			"desc": "Interval before \"sleep mode\" kicks in (S=seconds | M=minutes)"
+			"desc": "Interval before \"sleep mode\" kicks in [S=seconds | M=minutes]"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Shutdown",
 				"timeout"
 			],
-			"desc": "Interval before the iron shuts down (M=minutes)"
+			"desc": "Interval before the iron shuts down [M=minutes]"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -199,7 +199,7 @@
 				"Calibrate",
 				"input voltage?"
 			],
-			"desc": "Start VIN calibration (long press to exit)"
+			"desc": "Start VIN calibration [long press to exit]"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -213,7 +213,7 @@
 				"Scrolling",
 				"speed"
 			],
-			"desc": "Speed info text scrolls past at (S=slow | F=fast)"
+			"desc": "Speed info text scrolls past at [S=slow | F=fast]"
 		},
 		"QCMaxVoltage": {
 			"text2": [
@@ -227,7 +227,7 @@
 				"Power",
 				"limit"
 			],
-			"desc": "Maximum power the iron can use (W=watt)"
+			"desc": "Maximum power the iron can use [W=watt]"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -255,28 +255,28 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse [watt]"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep (O=off | L=low | M=medium | H=high)"
+			"desc": "Sensitivity of the Hall effect sensor to detect sleep [O=off | L=low | M=medium | H=high]"
 		},
 		"LockingMode": {
 			"text2": [
 				"Allow locking",
 				"buttons"
 			],
-			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+			"desc": "While soldering, hold down both buttons to toggle locking them [D=disable | B=boost mode only | F=full locking]"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per cell [3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V]"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -290,21 +290,21 @@
 				"Anim.",
 				"speed"
 			],
-			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+			"desc": "Pace of icon animations in menu [O=off | S=slow | M=medium | F=fast]"
 		},
 		"PowerPulseWait": {
 			"text2": [
 				"Power pulse",
 				"delay"
 			],
-			"desc": "Delay before keep-awake pulse is triggered (x 2.5s)"
+			"desc": "Delay before keep-awake pulse is triggered [x 2.5s]"
 		},
 		"PowerPulseDuration": {
 			"text2": [
 				"Power pulse",
 				"duration"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Keep-awake-pulse duration [x 250ms]"
 		},
 		"LanguageSwitch": {
 			"text2": [
