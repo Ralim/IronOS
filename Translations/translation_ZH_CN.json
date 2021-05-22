@@ -43,13 +43,13 @@
 		"WarningKeysLockedString": "!按键锁定!"
 	},
 	"characters": {
+		"SettingAutoChar": "自",
 		"SettingRightChar": "右",
 		"SettingLeftChar": "左",
-		"SettingAutoChar": "自",
-		"SettingFastChar": "快",
+		"SettingOffChar": "关",
 		"SettingSlowChar": "慢",
 		"SettingMediumChar": "中",
-		"SettingOffChar": "关",
+		"SettingFastChar": "快",
 		"SettingStartNoneChar": "无",
 		"SettingStartSolderingChar": "焊",
 		"SettingStartSleepChar": "待",
@@ -88,7 +88,7 @@
 	"menuOptions": {
 		"DCInCutoff": {
 			"text2": "电源",
-			"desc": "输入电源；设置自动停机电压 (DC 10V) (S 锂电池，以每颗3.3V计算 | 此设置会禁用功率限制)"
+			"desc": "输入电源；设置自动停机电压 <DC 10V> <S 锂电池，以每颗3.3V计算；此设置会禁用功率限制>"
 		},
 		"SleepTemperature": {
 			"text2": "待机温度",
@@ -96,11 +96,11 @@
 		},
 		"SleepTimeout": {
 			"text2": "待机延时",
-			"desc": "自动进入待机模式前的闲置等候时间 (S=秒 | M=分钟)"
+			"desc": "自动进入待机模式前的闲置等候时间 <S=秒 | M=分钟>"
 		},
 		"ShutdownTimeout": {
 			"text2": "自动关机",
-			"desc": "自动关机前的闲置等候时间 (M=分钟)"
+			"desc": "自动关机前的闲置等候时间 <M=分钟>"
 		},
 		"MotionSensitivity": {
 			"text2": "动作灵敏度",
@@ -124,7 +124,7 @@
 		},
 		"AutoStart": {
 			"text2": "自动启用",
-			"desc": "开机时自动启用 (无=禁用 | 焊=焊接模式 | 待=待机模式 | 室=室温待机)"
+			"desc": "开机时自动启用 <无=禁用 | 焊=焊接模式 | 待=待机模式 | 室=室温待机>"
 		},
 		"CooldownBlink": {
 			"text2": "降温时闪烁",
@@ -140,7 +140,7 @@
 		},
 		"VoltageCalibration": {
 			"text2": "输入电压校正？",
-			"desc": "开始校正VIN输入电压 (长按以退出)"
+			"desc": "开始校正VIN输入电压 <长按以退出>"
 		},
 		"AdvancedSoldering": {
 			"text2": "详细焊接画面",
@@ -156,7 +156,7 @@
 		},
 		"PowerLimit": {
 			"text2": "功率限制",
-			"desc": "限制铬铁可用的最大功率 (W=watt [瓦特])"
+			"desc": "限制铬铁可用的最大功率 <W=watt（瓦特）>"
 		},
 		"ReverseButtonTempChange": {
 			"text2": "调换加减键",
@@ -172,19 +172,19 @@
 		},
 		"PowerPulsePower": {
 			"text2": "电源脉冲",
-			"desc": "为保持电源唤醒而通电所用的功率 (watt [瓦特])"
+			"desc": "为保持电源唤醒而通电所用的功率 <watt（瓦特）>"
 		},
 		"HallEffSensitivity": {
 			"text2": "磁场灵敏度",
-			"desc": "磁场感应器用作启动待机模式的灵敏度 (关=禁用 | 低=最低灵敏度 | 中=中等灵敏度 | 高=最高灵敏度)"
+			"desc": "磁场感应器用作启动待机模式的灵敏度 <关=禁用 | 低=最低灵敏度 | 中=中等灵敏度 | 高=最高灵敏度>"
 		},
 		"LockingMode": {
 			"text2": "按键锁定",
-			"desc": "于焊接模式时，同时长按两个按键启用按键锁定 (无=禁用 | 增=只容许增热模式 | 全=锁定全部)"
+			"desc": "于焊接模式时，同时长按两个按键启用按键锁定 <无=禁用 | 增=只容许增热模式 | 全=锁定全部>"
 		},
 		"MinVolCell": {
 			"text2": "最低电压",
-			"desc": "每颗电池的最低可用电压 (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "每颗电池的最低可用电压 <伏特> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
 		},
 		"AnimLoop": {
 			"text2": "动画循环",
@@ -192,15 +192,15 @@
 		},
 		"AnimSpeed": {
 			"text2": "动画速度",
-			"desc": "功能表图示动画的速度 (关=不显示动画 | 慢=慢速 | 中=中速 | 快=快速)"
+			"desc": "功能表图示动画的速度 <关=不显示动画 | 慢=慢速 | 中=中速 | 快=快速>"
 		},
 		"PowerPulseWait": {
 			"text2": "电源脉冲间隔",
-			"desc": "为保持电源唤醒，每次通电之间的间隔时间 (x2.5s [秒])"
+			"desc": "为保持电源唤醒，每次通电之间的间隔时间 <x2.5s（秒）>"
 		},
 		"PowerPulseDuration": {
 			"text2": "电源脉冲时长",
-			"desc": "为保持电源唤醒，每次通电脉冲的时间长度 (x250ms [亳秒])"
+			"desc": "为保持电源唤醒，每次通电脉冲的时间长度 <x250ms（亳秒）>"
 		},
 		"LanguageSwitch": {
 			"text2": "语言：简体中文",
