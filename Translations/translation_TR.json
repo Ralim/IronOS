@@ -48,9 +48,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
@@ -160,7 +160,7 @@
 				"GRNYÖN",
 				""
 			],
-			"desc": "Görüntü Yönlendirme (A=Otomatik | L=Solak | R=Sağlak)"
+			"desc": "Görüntü Yönlendirme (R=Sağlak | L=Solak | A=Otomatik)"
 		},
 		"BoostEnabled": {
 			"text2": [
