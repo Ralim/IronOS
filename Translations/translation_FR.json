@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "! VERR. !"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "G",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "D",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Orientation",
 				"de l'écran"
 			],
-			"desc": "A=automatique | G=gaucher | D=droitier"
+			"desc": "D=droitier | G=gaucher | A=automatique"
 		},
 		"BoostTemperature": {
 			"text2": [
