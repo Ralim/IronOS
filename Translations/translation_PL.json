@@ -46,13 +46,13 @@
 		"WarningKeysLockedString": "!ZABLOK!"
 	},
 	"characters": {
+		"SettingAutoChar": "A",
 		"SettingRightChar": "P",
 		"SettingLeftChar": "L",
-		"SettingAutoChar": "A",
-		"SettingFastChar": "S",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "W",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
+		"SettingFastChar": "S",
 		"SettingStartNoneChar": "B",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "Z",
