@@ -45,13 +45,13 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
+		"SettingAutoChar": "A",
 		"SettingRightChar": "P",
 		"SettingLeftChar": "L",
-		"SettingAutoChar": "A",
-		"SettingFastChar": "R",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
+		"SettingFastChar": "R",
 		"SettingStartNoneChar": "O",
 		"SettingStartSolderingChar": "P",
 		"SettingStartSleepChar": "S",
