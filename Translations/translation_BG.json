@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
@@ -158,7 +158,7 @@
 				"Ориентация",
 				"на дисплея"
 			],
-			"desc": "Ориентация на дисплея (A=Автоматично | L=Лява Ръка | R=Дясна Ръка)"
+			"desc": "Ориентация на дисплея (R=Дясна Ръка | L=Лява Ръка | A=Автоматично)"
 		},
 		"BoostTemperature": {
 			"text2": [
