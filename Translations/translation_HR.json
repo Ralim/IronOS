@@ -45,9 +45,9 @@
 		"WarningKeysLockedString": "!LOCKED!"
 	},
 	"characters": {
-		"SettingAutoChar": "A",
 		"SettingRightChar": "D",
 		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
 		"SettingOffChar": "O",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
@@ -157,7 +157,7 @@
 				"Rotacija",
 				"ekrana"
 			],
-			"desc": "Orijentacija ekrana. (A=Automatski | L=Ljevoruki | D=Desnoruki)"
+			"desc": "Orijentacija ekrana. (D=Desnoruki | L=Ljevoruki | A=Automatski)"
 		},
 		"BoostTemperature": {
 			"text2": [
