@@ -48,14 +48,14 @@
 		"SettingRightChar": "D",
 		"SettingLeftChar": "S",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "V",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
+		"SettingFastChar": "V",
+		"SettingStartNoneChar": "D",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "R",
 		"SettingStartSleepOffChar": "A",
-		"SettingStartNoneChar": "D",
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "B",
 		"SettingSensitivityMedium": "M",
@@ -157,7 +157,7 @@
 				"Orientamento",
 				"display"
 			],
-			"desc": "Imposta l'orientamento del display [A: automatico; S: mano sinistra; D: mano destra]"
+			"desc": "Imposta l'orientamento del display [D: mano destra; S: mano sinistra; A: automatico]"
 		},
 		"BoostTemperature": {
 			"text2": [

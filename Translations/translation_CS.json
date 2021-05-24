@@ -48,14 +48,14 @@
 		"SettingRightChar": "P",
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "R",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "P",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
-		"SettingStartSolderingChar": "T",
+		"SettingFastChar": "R",
+		"SettingStartNoneChar": "O",
+		"SettingStartSolderingChar": "P",
 		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "F",
+		"SettingStartSleepOffChar": "M",
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "L",
 		"SettingSensitivityMedium": "M",
@@ -108,7 +108,7 @@
 				"Zdroj",
 				"napájení"
 			],
-			"desc": "Při nižším napětí ukončí pájení <DC=10V, ?S=?x3.3V pro LiPo, LiIon...>."
+			"desc": "Při nižším napětí ukončí pájení (DC=10V | ?S=?x3,3V pro LiPo, LiIon...)."
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -122,28 +122,28 @@
 				"Čas do",
 				"r. spánku"
 			],
-			"desc": "Čas do režimu spánku <Minut/Sekund>."
+			"desc": "Čas do režimu spánku (Minut | Sekund)."
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Čas do",
 				"vypnutí"
 			],
-			"desc": "Čas do automatického vypnutí <Minut>."
+			"desc": "Čas do automatického vypnutí (Minut)."
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Citlivost",
 				"det. pohybu"
 			],
-			"desc": "Citlivost detekce pohybu <0=Vyp, 1=Min, ... 9=Max>."
+			"desc": "Citlivost detekce pohybu (0=Vyp | 1=Min | ... | 9=Max)."
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Jednotky",
 				"teploty"
 			],
-			"desc": "Jednotky měření teploty <C=Celsius, F=Fahrenheit>."
+			"desc": "Jednotky měření teploty (C=Celsius | F=Fahrenheit)."
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -157,7 +157,7 @@
 				"Orientace",
 				"obrazovky"
 			],
-			"desc": "Orientace obrazovky <A=Auto, L=Levák, P=Pravák>."
+			"desc": "Orientace obrazovky (P=Pravák | L=Levák | A=Auto)."
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -171,7 +171,7 @@
 				"Automatický",
 				"start"
 			],
-			"desc": "Při startu ihned nahřát hrot?"
+			"desc": "Při startu ihned nahřát hrot? (O=Pryč | P=Pájení | S=Spát | M=Spát teplota místnosti)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -213,7 +213,7 @@
 				"Rychlost",
 				"popisků"
 			],
-			"desc": "Rychlost posuvu popisků podobných tomuto <P=Pomalu, R=Rychle>"
+			"desc": "Rychlost posuvu popisků podobných tomuto (P=Pomalu | R=Rychle)"
 		},
 		"QCMaxVoltage": {
 			"text2": [
@@ -227,7 +227,7 @@
 				"Omezení",
 				"Výkonu"
 			],
-			"desc": "Maximální příkon <Watty>"
+			"desc": "Maximální příkon (Watty)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -262,21 +262,21 @@
 				"Hall Eff",
 				"Sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep <O=Off,L=Low,M=Medium,H=High>"
+			"desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
 		},
 		"LockingMode": {
 			"text2": [
 				"Allow buttons",
 				"locking"
 			],
-			"desc": "When soldering, long press on both buttons lock them <D=Disable, B=Boost only, F=Full locking>"
+			"desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell <Volts> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+			"desc": "Minimum allowed voltage per cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -290,14 +290,14 @@
 				"Anim.",
 				"speed"
 			],
-			"desc": "Speed of icon animations in menu <O=off | L=low | M=medium | H=high>"
+			"desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
 		},
 		"PowerPulseWait": {
 			"text2": [
 				"Power pulse",
 				"wait time"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Time to wait before triggering every keep-awake pulse (x 2,5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
@@ -308,7 +308,7 @@
 		},
 		"LanguageSwitch": {
 			"text2": [
-				"Language:",
+				"Řeč:",
 				" CS       Český"
 			],
 			"desc": ""

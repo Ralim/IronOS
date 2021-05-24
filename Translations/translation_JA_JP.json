@@ -46,14 +46,14 @@
 		"SettingRightChar": "右",
 		"SettingLeftChar": "左",
 		"SettingAutoChar": "自",
-		"SettingFastChar": "早",
+		"SettingOffChar": "X",
 		"SettingSlowChar": "遅",
 		"SettingMediumChar": "中",
-		"SettingOffChar": "X",
+		"SettingFastChar": "早",
+		"SettingStartNoneChar": "X",
 		"SettingStartSolderingChar": "熱",
 		"SettingStartSleepChar": "待",
 		"SettingStartSleepOffChar": "室",
-		"SettingStartNoneChar": "X",
 		"SettingSensitivityOff": "X",
 		"SettingSensitivityLow": "低",
 		"SettingSensitivityMedium": "中",
@@ -116,7 +116,7 @@
 		},
 		"DisplayRotation": {
 			"text2": "画面の向き",
-			"desc": "自=自動 | 左=左利き | 右=右利き"
+			"desc": "右=右利き | 左=左利き | 自=自動"
 		},
 		"BoostTemperature": {
 			"text2": "ブースト温度",
