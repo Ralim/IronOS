@@ -27,7 +27,7 @@ This indicates the High Water mark for the stack for the PID thread. The smaller
 
 ### Time
 
-This just shows how many seconds the unit has been powered for.
+This just shows how many deciseconds the unit has been powered for.
 
 ### Move
 
