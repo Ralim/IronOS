@@ -48,14 +48,14 @@
 		"SettingRightChar": "R",
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "F",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "S",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
+		"SettingFastChar": "F",
+		"SettingStartNoneChar": "O",
 		"SettingStartSolderingChar": "S",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "R",
-		"SettingStartNoneChar": "O",
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "L",
 		"SettingSensitivityMedium": "M",
@@ -157,7 +157,7 @@
 				"Display",
 				"orientation"
 			],
-			"desc": "A=automatic | L=left-handed | R=right-handed"
+			"desc": "R=right-handed | L=left-handed | A=automatic"
 		},
 		"BoostTemperature": {
 			"text2": [

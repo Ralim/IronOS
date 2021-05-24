@@ -46,14 +46,14 @@
 		"SettingRightChar": "右",
 		"SettingLeftChar": "左",
 		"SettingAutoChar": "自",
-		"SettingFastChar": "快",
+		"SettingOffChar": "关",
 		"SettingSlowChar": "慢",
 		"SettingMediumChar": "中",
-		"SettingOffChar": "关",
+		"SettingFastChar": "快",
+		"SettingStartNoneChar": "无",
 		"SettingStartSolderingChar": "焊",
 		"SettingStartSleepChar": "待",
 		"SettingStartSleepOffChar": "室",
-		"SettingStartNoneChar": "无",
 		"SettingSensitivityOff": "关",
 		"SettingSensitivityLow": "低",
 		"SettingSensitivityMedium": "中",
@@ -116,7 +116,7 @@
 		},
 		"DisplayRotation": {
 			"text2": "画面方向",
-			"desc": "自=自动 | 左=使用左手 | 右=使用右手"
+			"desc": "右=使用右手 | 左=使用左手 | 自=自动"
 		},
 		"BoostTemperature": {
 			"text2": "增热温度",

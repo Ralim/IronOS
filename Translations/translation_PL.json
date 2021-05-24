@@ -49,14 +49,14 @@
 		"SettingRightChar": "P",
 		"SettingLeftChar": "L",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "S",
+		"SettingOffChar": "O",
 		"SettingSlowChar": "W",
 		"SettingMediumChar": "M",
-		"SettingOffChar": "O",
+		"SettingFastChar": "S",
+		"SettingStartNoneChar": "B",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "Z",
 		"SettingStartSleepOffChar": "O",
-		"SettingStartNoneChar": "B",
 		"SettingSensitivityOff": "O",
 		"SettingSensitivityLow": "N",
 		"SettingSensitivityMedium": "Ś",
@@ -109,42 +109,42 @@
 				"Źródło",
 				"zasilania"
 			],
-			"desc": "Źródło zasilania. Ustaw napięcie odcięcia. <DC 10V> <S 3.3V dla ogniw Li, wyłącz limit mocy>"
+			"desc": "Źródło zasilania. Ustaw napięcie odcięcia. (DC 10V) (S 3.3V dla ogniw Li, wyłącz limit mocy)"
 		},
 		"SleepTemperature": {
 			"text2": [
 				"Temp.",
 				"uśpienia"
 			],
-			"desc": "Temperatura w trybie uśpienia <°C>"
+			"desc": "Temperatura w trybie uśpienia (°C)"
 		},
 		"SleepTimeout": {
 			"text2": [
 				"Czas do",
 				"uśpienia"
 			],
-			"desc": "Czas do przejścia w tryb uśpienia <minuty/sekundy>"
+			"desc": "Czas do przejścia w tryb uśpienia (minuty | sekundy)"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Czas do",
 				"wyłączenia"
 			],
-			"desc": "Czas do wyłączenia <minuty>"
+			"desc": "Czas do wyłączenia (minuty)"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Czułość",
 				"wykr. ruchu"
 			],
-			"desc": "Czułość wykrywania ruchu <0-Wyłączona, 1-Minimalna, 9-Maksymalna>"
+			"desc": "Czułość wykrywania ruchu (0=Wyłączona | 1=Minimalna | ... | 9=Maksymalna)"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Jednostka",
 				"temperatury"
 			],
-			"desc": "Jednostka temperatury <C-Celciusz, F-Fahrenheit>"
+			"desc": "Jednostka temperatury (C=Celciusz | F=Fahrenheit)"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -158,7 +158,7 @@
 				"Obrót",
 				"ekranu"
 			],
-			"desc": "Obrót ekranu <A-automatycznie, L-dla leworęcznych, P-dla praworęcznych>"
+			"desc": "Obrót ekranu (P=dla praworęcznych | L=dla leworęcznych | A=automatycznie)"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -172,7 +172,7 @@
 				"Aut. uruch.",
 				"tr. lutowania"
 			],
-			"desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania.<B - wyłączone, T - lutowanie, Z - uśpienie, O - uśpienie w temp. pokojowej"
+			"desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (B=wyłączone | T=lutowanie | Z=uśpienie | O=uśpienie w temp. pokojowej)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -221,14 +221,14 @@
 				"Moc",
 				"w W"
 			],
-			"desc": "Moc używanego zasilacza w <W>"
+			"desc": "Moc używanego zasilacza w (W)"
 		},
 		"PowerLimit": {
 			"text2": [
 				"Ogr.",
 				"mocy"
 			],
-			"desc": "Maksymalna moc <W>, jakiej może użyć lutownica"
+			"desc": "Maksymalna moc (W), jakiej może użyć lutownica"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -242,42 +242,42 @@
 				"Zm. temp.",
 				"kr. przyc."
 			],
-			"desc": "Wartość zmiany temperatury, po krótkim przyciśnięciu <°C>"
+			"desc": "Wartość zmiany temperatury, po krótkim przyciśnięciu (°C)"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Zm. temp.",
 				"dł. przyc."
 			],
-			"desc": "Wartość zmiany temperatury, po długim przyciśnięciu <°C>"
+			"desc": "Wartość zmiany temperatury, po długim przyciśnięciu (°C)"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Moc",
 				"impulsu"
 			],
-			"desc": "W przypadku używania powerbanku, utrzymuj moc na poziomie <W> aby nie uśpić powerbanku"
+			"desc": "W przypadku używania powerbanku, utrzymuj moc na poziomie (W) aby nie uśpić powerbanku"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Czułość",
 				"cz.Halla"
 			],
-			"desc": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia <O-Wył,N-Niska,Ś=Średnia,W=Wysoka>"
+			"desc": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (O=Wył | N=Niska | Ś=Średnia | W=Wysoka)"
 		},
 		"LockingMode": {
 			"text2": [
 				"Blokada",
 				"przycisków"
 			],
-			"desc": "W trybie lutowania, wciśnij oba przyciski aby je zablokować <O-Wyłączona, B-tylko Boost, P-pełna blokada>"
+			"desc": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (O=Wyłączona | B=tylko Boost | P=pełna blokada)"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Minimalne",
 				"napięcie"
 			],
-			"desc": "Minimalne dozwolone napięcie na komórkę <W woltach> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+			"desc": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -291,7 +291,7 @@
 				"Prędkosć",
 				"animacji"
 			],
-			"desc": "Prędkość animacji ikon w menu <O=wył. | L=mała | M=średnia | H=duża>"
+			"desc": "Prędkość animacji ikon w menu (O=wył. | L=mała | M=średnia | H=duża)"
 		},
 		"PowerPulseWait": {
 			"text2": [
@@ -309,7 +309,7 @@
 		},
 		"LanguageSwitch": {
 			"text2": [
-				"Language:",
+				"Język :",
 				" PL      Polski"
 			],
 			"desc": ""
