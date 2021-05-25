@@ -23,16 +23,16 @@
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
-			"Settings were reset!",
-			""
+			"Inställningar",
+			"återställda"
 		],
 		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
+			"Ingen",
+			"accelerometer"
 		],
 		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
+			"Ingen USB-PD IC",
+			"hittades!"
 		],
 		"LockingKeysString": "LÅST",
 		"UnlockingKeysString": "UPPLÅST",
