@@ -6,49 +6,43 @@
 		"latin_extended"
 	],
 	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
-		"SettingsCalibrationWarning": "Please ensure the tip is at room temperature before continuing!",
-		"SettingsResetWarning": "Are you sure you want to reset settings to default values?",
+		"SettingsCalibrationWarning": "Se till att spetsen är rumstemererad innan du fortsätter!",
+		"SettingsResetWarning": "Är du säker på att du vill återställa inställningarna?",
 		"UVLOWarningString": "DC LÅG",
 		"UndervoltageString": "Underspänning",
 		"InputVoltageString": "Inspän. V: ",
-		"WarningTipTempString": "Spetstemp: ",
-		"BadTipString": "SPETSFEL",
 		"SleepingSimpleString": "Zzzz",
 		"SleepingAdvancedString": "Viloläge...",
-		"WarningSimpleString": "VARM",
-		"WarningAdvancedString": "!! SPETS VARM !!",
 		"SleepingTipAdvancedString": "Spets:",
-		"IdleTipString": "Spets:",
-		"IdleSetString": " Ange:",
+		"IdleTipString": "Spts:",
+		"IdleSetString": " Ang:",
 		"TipDisconnectedString": "SPETS URTAGEN",
 		"SolderingAdvancedPowerPrompt": "Ström: ",
-		"OffString": "Av",
-		"YourGainMessage": "Your gain:"
+		"OffString": "Av"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
-			"Settings were",
-			"reset!"
+			"Inställningar",
+			"återställda"
 		],
 		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
+			"Ingen",
+			"accelerometer"
 		],
 		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
+			"Ingen USB-PD IC",
+			"hittades!"
 		],
-		"LockingKeysString": "LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"LockingKeysString": "LÅST",
+		"UnlockingKeysString": "UPPLÅST",
+		"WarningKeysLockedString": "!LÅST!"
 	},
 	"characters": {
 		"SettingRightChar": "H",
 		"SettingLeftChar": "V",
 		"SettingAutoChar": "A",
-		"SettingOffChar": "O",
+		"SettingOffChar": "A",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "M",
 		"SettingFastChar": "S",
@@ -56,34 +50,34 @@
 		"SettingStartSolderingChar": "L",
 		"SettingStartSleepChar": "V",
 		"SettingStartSleepOffChar": "R",
-		"SettingSensitivityOff": "O",
+		"SettingSensitivityOff": "A",
 		"SettingSensitivityLow": "L",
 		"SettingSensitivityMedium": "M",
 		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
+		"SettingLockDisableChar": "A",
+		"SettingLockBoostChar": "T",
 		"SettingLockFullChar": "F",
 		"SettingNAChar": "N/A"
 	},
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": [
-				"Power",
-				"settings"
+				"Effekt-",
+				"inställning"
 			],
-			"desc": "Power settings"
+			"desc": "Effektinställningar"
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Lödnings-",
-				"inställningar"
+				"inställning"
 			],
 			"desc": "Lödningsinställningar"
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Vilo-",
-				"lägen"
+				"läge"
 			],
 			"desc": "Viloläges-inställningar"
 		},
@@ -122,7 +116,7 @@
 				"Vilo-",
 				"timeout"
 			],
-			"desc": "Vilo-timeout (Minuter | Seconder)"
+			"desc": "Vilo-timeout (M=Minuter | S=Sekunder)"
 		},
 		"ShutdownTimeout": {
 			"text2": [
@@ -217,38 +211,38 @@
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"Power",
-				"Wattage"
+				"QC",
+				"spänning"
 			],
-			"desc": "Power Wattage of the power adapter used"
+			"desc": "Maximal QC-spänning enheten skall efterfråga"
 		},
 		"PowerLimit": {
 			"text2": [
-				"Power",
-				"Limit"
+				"Max-",
+				"effekt"
 			],
-			"desc": "Maximum power the iron can use (Watts)"
+			"desc": "Maximal effekt som enheten kan använda (Watt)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Omvända",
+				"+- knappar"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Omvänd ordning för temperaturjustering via plus/minus knapparna"
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"Temp change",
-				"short?"
+				"Temp.just",
+				"korttryck"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Temperaturjustering vid kort knapptryckning"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Temp change",
-				"long?"
+				"Temp.just",
+				"långtryck"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Temperaturjustering vid lång knapptryckning"
 		},
 		"PowerPulsePower": {
 			"text2": [
@@ -259,38 +253,38 @@
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Sensor-",
+				"känslght"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
+			"desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (A=Av| L=Låg | M=Medium | H=Hög)"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Tillåt lås",
+				"via knappar"
 			],
-			"desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+			"desc": "Vid lödning, håll nere bägge knappar för att slå på lås (A=Av | T=Bara turbo | F=Fullt lås)"
 		},
 		"MinVolCell": {
 			"text2": [
-				"Minimum",
-				"voltage"
+				"Minimim-",
+				"spänning"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimumspänning per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
 				"Anim.",
 				"loop"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Loopa animationer i huvudmeny"
 		},
 		"AnimSpeed": {
 			"text2": [
-				"Anim.",
-				"speed"
+				"Anim.-",
+				"hastighet"
 			],
-			"desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+			"desc": "Animationshastighet för ikoner i menyer (A=av | L=långsam| M=medel| S=snabb)"
 		},
 		"PowerPulseWait": {
 			"text2": [
