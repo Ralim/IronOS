@@ -256,7 +256,7 @@
 				"Sensor-",
 				"känslght"
 			],
-			"desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (A=Av| L=Låg | M=Medium | H=Hög)"
+			"desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (A=Av | L=Låg | M=Medium | H=Hög)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -284,7 +284,7 @@
 				"Anim.-",
 				"hastighet"
 			],
-			"desc": "Animationshastighet för ikoner i menyer (A=av | L=långsam| M=medel| S=snabb)"
+			"desc": "Animationshastighet för ikoner i menyer (A=av | L=långsam | M=medel | S=snabb)"
 		},
 		"PowerPulseWait": {
 			"text2": [
