@@ -80,9 +80,10 @@ void resetSettings() {
   systemSettings.KeepAwakePulse                 = POWER_PULSE_DEFAULT;          // Power of the power pulse
   systemSettings.KeepAwakePulseWait             = POWER_PULSE_WAIT_DEFAULT;     // Time between Keep Awake pulses in 2.5 second increments
   systemSettings.KeepAwakePulseDuration         = POWER_PULSE_DURATION_DEFAULT; // Duration of the Keep Awake pusle in 250ms increments
-  systemSettings.hallEffectSensitivity          = 1;
-  systemSettings.accelMissingWarningCounter     = 0;
-  systemSettings.pdMissingWarningCounter        = 0;
+  systemSettings.hallEffectSensitivity          = 1;                            // How sensitive is the hall sensor for putting the unit to sleep
+  systemSettings.accelMissingWarningCounter     = 0;                            // Have we arned for missing accel
+  systemSettings.pdMissingWarningCounter        = 0;                            // Have we warned for missing FUSB302
+  systemSettings.QCNegotiationMode              = 0;                            // What set of tunings are we using for the FUSB302
 
   saveSettings(); // Save defaults
 }

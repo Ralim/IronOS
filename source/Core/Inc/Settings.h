@@ -9,6 +9,7 @@
 
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
+#include <stdbool.h>
 #include <stdint.h>
 #define SETTINGSVERSION (0x2A)
 /*Change this if you change the struct below to prevent people getting \
@@ -60,10 +61,10 @@ typedef struct {
   uint8_t  accelMissingWarningCounter;     // Counter of how many times we have warned we cannot detect the accelerometer
   uint8_t  pdMissingWarningCounter;        // Counter of how many times we have warned we cannot detect the pd interface
   char     uiLanguage[8];                  // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
-
-  uint32_t padding; // This is here for in case we are not an even divisor so
-                    // that nothing gets cut off
-                    // MUST BE LAST
+  uint8_t  QCNegotiationMode : 2;          // QC Mode (0-3)
+  uint32_t padding;                        // This is here for in case we are not an even divisor so
+                                           // that nothing gets cut off
+                                           // MUST BE LAST
 
 } systemSettingsType;
 typedef enum {

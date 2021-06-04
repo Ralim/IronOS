@@ -58,6 +58,7 @@ enum class SettingsItemIndex : uint8_t {
   PowerPulseWait,
   PowerPulseDuration,
   LanguageSwitch,
+  QCMode,
   NUM_ITEMS,
 };
 

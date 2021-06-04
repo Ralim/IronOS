@@ -25,6 +25,8 @@ static bool settings_displayInputMinVRange(void);
 #ifdef POW_QC
 static bool settings_setQCInputV(void);
 static bool settings_displayQCInputV(void);
+static bool settings_setQCMode(void);
+static bool settings_displayQCMode(void);
 #endif
 
 #ifndef NO_SLEEP_MODE
@@ -173,6 +175,7 @@ const menuitem powerMenu[] = {
 #endif
 #ifdef POW_QC
     {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
+    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), settings_setQCMode, settings_displayQCMode},     /*What timings are used for negotiation*/
 #endif
     {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
 };
@@ -380,6 +383,17 @@ static bool settings_displayQCInputV(void) {
   return false;
 }
 
+static bool settings_setQCMode(void) {
+  systemSettings.QCNegotiationMode = (systemSettings.QCNegotiationMode + 1) % 4;
+  return systemSettings.QCNegotiationMode == 1;
+}
+
+static bool settings_displayQCMode(void) {
+  printShortDescription(SettingsItemIndex::QCMode, 5);
+  OLED::printNumber(9, 2, FontStyle::LARGE);
+
+  return systemSettings.QCNegotiationMode == 3;
+}
 #endif
 
 #ifndef NO_SLEEP_MODE
