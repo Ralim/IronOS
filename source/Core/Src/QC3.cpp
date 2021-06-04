@@ -7,8 +7,8 @@
 
 // Quick charge 3.0 supporting functions
 #include "QC3.h"
-
 #include "BSP.h"
+#include "Settings.h"
 #include "cmsis_os.h"
 #include "stdint.h"
 enum QCState {
@@ -138,14 +138,15 @@ void startQC(uint16_t divisor) {
   QC_DPlusZero_Six();
 
   // Delay 1.25 seconds
-  uint8_t enteredQC = 0;
-  for (uint16_t i = 0; i < 200 && enteredQC == 0; i++) {
+  uint8_t  enteredQC = 0;
+  uint16_t exitTime  = systemSettings.QCNegotiationMode & 0x02 ? 130 : 200;
+  for (uint16_t i = 0; i < exitTime && enteredQC == 0; i++) {
     vTaskDelay(TICKS_10MS); // 10mS pause
     if (i > 130) {
       if (QC_DM_PulledDown()) {
         enteredQC = 1;
       }
-      if (i == 140) {
+      if ((i == 140) && ((systemSettings.QCNegotiationMode & 0x01) == 0)) {
         // For some marginal QC chargers, we try adding a pulldown
         QC_DM_PullDown();
       }
