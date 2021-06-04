@@ -76,16 +76,12 @@ private:
   static int  current_voltage_mv;   // The current voltage PD is expecting
   static int  _requested_voltage;   // The voltage the unit wanted to requests
   static bool _unconstrained_power; // If the source is unconstrained
-  // Current message being handled
-  static union pd_msg currentMessage;
   /* PD message header template */
   static uint16_t hdr_template;
   /* Whether or not we have an explicit contract */
   static bool _explicit_contract;
   /* The number of hard resets we've sent */
   static int8_t _hard_reset_counter;
-  /* The result of the last Type-C Current match comparison */
-  static int8_t _old_tcc_match;
   /* The index of the first PPS APDO */
   static uint8_t _pps_index;
 
