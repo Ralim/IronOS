@@ -344,6 +344,11 @@ var def =
 			"id": "LanguageSwitch",
 			"maxLen": 7,
 			"maxLen2": 15
+		},
+		{
+			"id": "QCMode",
+			"maxLen": 8,
+			"maxLen2": 16
 		}
 	]
 }

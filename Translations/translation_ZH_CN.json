@@ -205,6 +205,13 @@
 		"LanguageSwitch": {
 			"text2": "语言：简体中文",
 			"desc": ""
+		},
+		"QCMode": {
+			"text2": [
+				"QC Neg",
+				"Mode"
+			],
+			"desc": "Differnt timing modes for different QC chargers"
 		}
 	}
 }

@@ -313,6 +313,13 @@
 				" ES  Castellano"
 			],
 			"desc": ""
+		},
+		"QCMode": {
+			"text2": [
+				"QC Neg",
+				"Mode"
+			],
+			"desc": "Differnt timing modes for different QC chargers"
 		}
 	}
 }
