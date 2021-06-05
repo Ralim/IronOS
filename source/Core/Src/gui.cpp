@@ -390,8 +390,7 @@ static bool settings_setQCMode(void) {
 
 static bool settings_displayQCMode(void) {
   printShortDescription(SettingsItemIndex::QCMode, 5);
-  OLED::printNumber(9, 2, FontStyle::LARGE);
-
+  OLED::printNumber(systemSettings.QCNegotiationMode, 2, FontStyle::LARGE);
   return systemSettings.QCNegotiationMode == 3;
 }
 #endif
