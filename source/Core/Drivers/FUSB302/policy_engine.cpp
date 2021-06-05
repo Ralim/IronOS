@@ -25,11 +25,9 @@ bool                              PolicyEngine::pdNegotiationComplete;
 int                               PolicyEngine::current_voltage_mv;
 int                               PolicyEngine::_requested_voltage;
 bool                              PolicyEngine::_unconstrained_power;
-union pd_msg                      PolicyEngine::currentMessage;
 uint16_t                          PolicyEngine::hdr_template;
 bool                              PolicyEngine::_explicit_contract;
 int8_t                            PolicyEngine::_hard_reset_counter;
-int8_t                            PolicyEngine::_old_tcc_match;
 uint8_t                           PolicyEngine::_pps_index;
 osThreadId                        PolicyEngine::TaskHandle = NULL;
 uint32_t                          PolicyEngine::TaskBuffer[PolicyEngine::TaskStackSize];
@@ -45,7 +43,8 @@ StaticEventGroup_t                PolicyEngine::xCreatedEventGroup;
 bool                              PolicyEngine::PPSTimerEnabled      = false;
 TickType_t                        PolicyEngine::PPSTimeLastEvent     = 0;
 uint8_t                           PolicyEngine::_tx_messageidcounter = 0;
-void                              PolicyEngine::init() {
+
+void PolicyEngine::init() {
   messagesWaiting = xQueueCreateStatic(PDB_MSG_POOL_SIZE, sizeof(union pd_msg), ucQueueStorageArea, &xStaticQueue);
   // Create static thread at PDB_PRIO_PE priority
   osThreadStaticDef(PolEng, pe_task, PDB_PRIO_PE, 0, TaskStackSize, TaskBuffer, &TaskControlBlock);
@@ -65,7 +64,6 @@ void PolicyEngine::pe_task(const void *arg) {
   // Internal thread loop
   hdr_template = PD_DATAROLE_UFP | PD_POWERROLE_SINK;
   /* Initialize the old_tcc_match */
-  _old_tcc_match = -1;
   /* Initialize the pps_index */
   _pps_index = 0xFF;
 

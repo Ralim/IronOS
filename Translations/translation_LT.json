@@ -27,10 +27,7 @@
 		"YourGainMessage": "Greitis:"
 	},
 	"messagesWarn": {
-		"ResetOKMessage": [
-			"Atstatytas OK",
-			""
-		],
+		"ResetOKMessage": "Atstatytas OK",
 		"SettingsResetMessage": [
 			"Nust. atstatyti!",
 			""
@@ -51,14 +48,14 @@
 		"SettingRightChar": "D",
 		"SettingLeftChar": "K",
 		"SettingAutoChar": "A",
-		"SettingFastChar": "G",
+		"SettingOffChar": "I",
 		"SettingSlowChar": "L",
 		"SettingMediumChar": "V",
-		"SettingOffChar": "I",
+		"SettingFastChar": "G",
+		"SettingStartNoneChar": "N",
 		"SettingStartSolderingChar": "T",
 		"SettingStartSleepChar": "M",
 		"SettingStartSleepOffChar": "K",
-		"SettingStartNoneChar": "N",
 		"SettingSensitivityOff": "I",
 		"SettingSensitivityLow": "Ž",
 		"SettingSensitivityMedium": "V",
@@ -111,7 +108,7 @@
 				"Maitinimo",
 				"šaltinis"
 			],
-			"desc": "Išjungimo įtampa. <DC 10V> arba celių (S) kiekis (3.3V per celę)>"
+			"desc": "Išjungimo įtampa. (DC 10V) (arba celių [S] kiekis [3.3V per celę])"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -125,28 +122,28 @@
 				"Miego",
 				"laikas"
 			],
-			"desc": "Užmigimo laikas <sekundės/minutės>"
+			"desc": "Užmigimo laikas (sekundės | minutės)"
 		},
 		"ShutdownTimeout": {
 			"text2": [
 				"Išjungimo",
 				"laikas"
 			],
-			"desc": "Išjungimo laikas <minutės>"
+			"desc": "Išjungimo laikas (minutės)"
 		},
 		"MotionSensitivity": {
 			"text2": [
 				"Judesio",
 				"jautrumas"
 			],
-			"desc": "Judesio jautrumas <0=Išjungta, 1=Mažiausias, 9=Didžiausias>"
+			"desc": "Judesio jautrumas (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
 		},
 		"TemperatureUnit": {
 			"text2": [
 				"Temperatūros",
 				"vienetai"
 			],
-			"desc": "Temperatūros vienetai <C=Celsijus, F=Farenheitas>"
+			"desc": "Temperatūros vienetai (C=Celsijus | F=Farenheitas)"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -160,7 +157,7 @@
 				"Ekrano",
 				"orientacija"
 			],
-			"desc": "Ekrano orientacija <A=Automatinė, K=Kairiarankiams, D=Dešiniarankiams>"
+			"desc": "Ekrano orientacija (D=Dešiniarankiams | K=Kairiarankiams | A=Automatinė)"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -174,7 +171,7 @@
 				"Automatinis",
 				"paleidimas"
 			],
-			"desc": "Ar pradėti kaitininti iš karto įjungus lituoklį <N=Ne, T=Taip, M=Miegas, K=Miegoti kambario temperatūroje>"
+			"desc": "Ar pradėti kaitininti iš karto įjungus lituoklį (N=Ne | T=Taip | M=Miegas | K=Miegoti kambario temperatūroje)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -230,7 +227,7 @@
 				"Galios",
 				"riba"
 			],
-			"desc": "Didžiausia galia, kurią gali naudoti lituoklis <Vatai>"
+			"desc": "Didžiausia galia, kurią gali naudoti lituoklis (Vatai)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -265,21 +262,21 @@
 				"Holo",
 				"jutiklis"
 			],
-			"desc": "Holo jutiklio jautrumas nustatant miegą <I=Išjungtas, Ž=Žemas, V=Vidutinis, A=Aukštas>"
+			"desc": "Holo jutiklio jautrumas nustatant miegą (I=Išjungtas | Ž=Žemas | V=Vidutinis | A=Aukštas)"
 		},
 		"LockingMode": {
 			"text2": [
 				"Mygtukų",
 				"užraktas"
 			],
-			"desc": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte <I=Išjungta, T=leidžiamas tik Turbo režimas, V=Visiškas užrakinimas>"
+			"desc": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte (I=Išjungta | T=leidžiamas tik Turbo režimas | V=Visiškas užrakinimas)"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Minimalus",
 				"voltažas"
 			],
-			"desc": "Minimalus voltažas, kuris yra leidžiamas kiekvienam baterijos elementui <Voltai> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+			"desc": "Minimalus voltažas, kuris yra leidžiamas kiekvienam baterijos elementui (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -293,7 +290,7 @@
 				"Animacijų",
 				"greitis"
 			],
-			"desc": "Paveiksliukų animacijų greitis meniu punktuose <I=Išjungtas | L=Lėtas | V=Vidutinis | G=Greitas>"
+			"desc": "Paveiksliukų animacijų greitis meniu punktuose (I=Išjungtas | L=Lėtas | V=Vidutinis | G=Greitas)"
 		},
 		"PowerPulseWait": {
 			"text2": [
