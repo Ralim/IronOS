@@ -28,6 +28,7 @@ extern "C" {
 // File local variables
 extern uint32_t   currentTempTargetDegC;
 extern TickType_t lastMovementTime;
+extern bool       heaterThermalRunaway;
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
@@ -62,7 +63,7 @@ void GUIDelay() {
   // This limits the re-draw rate to the LCD and also lets the DMA run
   // As the gui task can very easily fill this bus with transactions, which will
   // prevent the movement detection from running
-  osDelay(50);
+  vTaskDelay(5 * TICKS_10MS);
 }
 void gui_drawTipTemp(bool symbol, const FontStyle font) {
   // Draw tip temp handling unit conversion & tolerance near setpoint
@@ -608,7 +609,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       }
     }
     OLED::refresh();
-
     // Update the setpoints for the temperature
     if (boostModeOn) {
       if (systemSettings.temperatureInF)
@@ -644,6 +644,15 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       setStatusLED(LED_HOT);
     } else {
       setStatusLED(LED_HEATING);
+    }
+    // If we have tripped thermal runaway, turn off header and show warning
+    if (heaterThermalRunaway) {
+      currentTempTargetDegC = 0; // heaater control off
+                                 // TODO WARNING
+
+      warnUser(translatedString(Tr->WarningThermalRunaway), 10 * TICKS_SECOND);
+      heaterThermalRunaway = false;
+      return;
     }
     // slow down ui update rate
     GUIDelay();
