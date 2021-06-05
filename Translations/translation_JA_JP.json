@@ -40,7 +40,8 @@
 		],
 		"LockingKeysString": "ボタンロック",
 		"UnlockingKeysString": "ロックを解除",
-		"WarningKeysLockedString": "!入力ロック中!"
+		"WarningKeysLockedString": "!入力ロック中!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "右",

@@ -42,7 +42,8 @@
 		],
 		"LockingKeysString": " UŽRAKIN",
 		"UnlockingKeysString": "ATRAKIN",
-		"WarningKeysLockedString": "!UŽRAK!"
+		"WarningKeysLockedString": "!UŽRAK!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "D",

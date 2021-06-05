@@ -42,7 +42,8 @@
 		],
 		"LockingKeysString": " GEBLOKKEERD",
 		"UnlockingKeysString": "GEDEBLOKKEERD",
-		"WarningKeysLockedString": "!GEBLOKKEERD!"
+		"WarningKeysLockedString": "!GEBLOKKEERD!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "R",

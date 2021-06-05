@@ -42,7 +42,8 @@
 		],
 		"LockingKeysString": "ZAKLENJ.",
 		"UnlockingKeysString": "ODKLENJ.",
-		"WarningKeysLockedString": "ZAKLENJ."
+		"WarningKeysLockedString": "ZAKLENJ.",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "D",

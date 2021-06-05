@@ -42,7 +42,8 @@
 		],
 		"LockingKeysString": "VERROUIL",
 		"UnlockingKeysString": "DEVERROU",
-		"WarningKeysLockedString": "! VERR. !"
+		"WarningKeysLockedString": "! VERR. !",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "D",

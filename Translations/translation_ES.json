@@ -43,7 +43,8 @@
 		],
 		"LockingKeysString": " BLOQUEADO",
 		"UnlockingKeysString": "DESBLOQUEADO",
-		"WarningKeysLockedString": "¡BLOQUEADO!"
+		"WarningKeysLockedString": "¡BLOQUEADO!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "D",

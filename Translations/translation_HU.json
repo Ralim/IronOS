@@ -45,7 +45,8 @@
 		],
 		"LockingKeysString": "LEZÁRVA",
 		"UnlockingKeysString": "FELOLDVA",
-		"WarningKeysLockedString": "!LEZÁRVA!"
+		"WarningKeysLockedString": "!LEZÁRVA!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "J",

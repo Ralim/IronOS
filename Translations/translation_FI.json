@@ -41,7 +41,8 @@
 		],
 		"LockingKeysString": " LUKITTU",
 		"UnlockingKeysString": "AUKI",
-		"WarningKeysLockedString": "!LUKKO!"
+		"WarningKeysLockedString": "!LUKKO!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "O",

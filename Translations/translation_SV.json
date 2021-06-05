@@ -36,7 +36,8 @@
 		],
 		"LockingKeysString": "LÅST",
 		"UnlockingKeysString": "UPPLÅST",
-		"WarningKeysLockedString": "!LÅST!"
+		"WarningKeysLockedString": "!LÅST!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "H",
