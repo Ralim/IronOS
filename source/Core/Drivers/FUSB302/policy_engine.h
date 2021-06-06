@@ -33,10 +33,10 @@ public:
   static void handleMessage(union pd_msg *msg);
   // Returns true if headers indicate PD3.0 compliant
   static bool isPD3_0();
-  static bool setupCompleteOrTimedOut() {
+  static bool setupCompleteOrTimedOut(uint8_t timeout) {
     if (pdNegotiationComplete)
       return true;
-    if (PolicyEngine::NegotiationTimeoutReached())
+    if (PolicyEngine::NegotiationTimeoutReached(timeout))
       return true;
     if (state == policy_engine_state::PESinkSourceUnresponsive)
       return true;
@@ -48,16 +48,12 @@ public:
   static bool pdHasNegotiated() {
     if (state == policy_engine_state::PESinkSourceUnresponsive)
       return false;
-    if (pdNegotiationComplete)
-      return true;
-    if (PolicyEngine::NegotiationTimeoutReached())
-      return false;
     return true;
   }
   // Call this periodically, at least once every second
   static void PPSTimerCallback();
 
-  static bool NegotiationTimeoutReached();
+  static bool NegotiationTimeoutReached(uint8_t timeout);
 
   enum class Notifications {
     PDB_EVT_PE_RESET          = EVENT_MASK(0),

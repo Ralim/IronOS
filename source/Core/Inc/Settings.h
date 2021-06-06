@@ -27,7 +27,6 @@ typedef struct {
   uint8_t  minDCVoltageCells;   // The voltage we cut out at for under voltage when powered by DC jack
   uint8_t  minVoltageCells;     // Minimum allowed voltage per cell <3S - 3.0V (30)> <4S - 2.4V (24)> <...> (Minimum recommended 2.7V)
   uint8_t  QCIdealVoltage;      // Desired QC3.0 voltage (9,12,20V)
-  uint8_t  PDNegTimeout;        // PD timeout in 100ms steps
   uint8_t  OrientationMode : 2; // Selects between Auto,Right and left handed layouts
   uint8_t  sensitivity : 4;     // Sensitivity of accelerometer (5 bits)
   uint8_t  animationLoop : 1;   // Animation loop switch
@@ -61,6 +60,8 @@ typedef struct {
   uint8_t  accelMissingWarningCounter;     // Counter of how many times we have warned we cannot detect the accelerometer
   uint8_t  pdMissingWarningCounter;        // Counter of how many times we have warned we cannot detect the pd interface
   char     uiLanguage[8];                  // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
+
+  uint8_t  PDNegTimeout;        // PD timeout in 100ms steps
 
   uint32_t padding; // This is here for in case we are not an even divisor so
                     // that nothing gets cut off
