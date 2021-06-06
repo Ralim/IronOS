@@ -36,6 +36,8 @@ public:
   static bool setupCompleteOrTimedOut() {
     if (pdNegotiationComplete)
       return true;
+    if (PolicyEngine::NegotiationTimeoutReached())
+      return true;
     if (state == policy_engine_state::PESinkSourceUnresponsive)
       return true;
     if (state == policy_engine_state::PESinkReady)
@@ -46,10 +48,16 @@ public:
   static bool pdHasNegotiated() {
     if (state == policy_engine_state::PESinkSourceUnresponsive)
       return false;
+    if (pdNegotiationComplete)
+      return true;
+    if (PolicyEngine::NegotiationTimeoutReached())
+      return false;
     return true;
   }
   // Call this periodically, at least once every second
   static void PPSTimerCallback();
+
+  static bool NegotiationTimeoutReached();
 
   enum class Notifications {
     PDB_EVT_PE_RESET          = EVENT_MASK(0),

@@ -27,6 +27,9 @@ static bool settings_setQCInputV(void);
 static bool settings_displayQCInputV(void);
 #endif
 
+static bool settings_setPDNegTimeout(void);
+static bool settings_displayPDNegTimeout(void);
+
 #ifndef NO_SLEEP_MODE
 static bool settings_setSleepTemp(void);
 static bool settings_displaySleepTemp(void);
@@ -174,6 +177,7 @@ const menuitem powerMenu[] = {
 #ifdef POW_QC
     {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
 #endif
+    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), settings_setPDNegTimeout, settings_displayPDNegTimeout}, /*PD timeout setup*/
     {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
 };
 #endif
@@ -350,6 +354,7 @@ static bool settings_displayInputMinVRange(void) {
 static bool settings_setQCInputV(void) {
 #ifdef POW_QC_20V
   systemSettings.QCIdealVoltage = (systemSettings.QCIdealVoltage + 1) % 3;
+
   return systemSettings.QCIdealVoltage == 2;
 #else
   systemSettings.QCIdealVoltage = (systemSettings.QCIdealVoltage + 1) % 2;
@@ -381,6 +386,19 @@ static bool settings_displayQCInputV(void) {
 }
 
 #endif
+
+static bool settings_setPDNegTimeout(void) {
+  systemSettings.PDNegTimeout = (systemSettings.PDNegTimeout + 1) % 50;
+
+  return systemSettings.QCIdealVoltage == 49;
+}
+
+static bool settings_displayPDNegTimeout(void){
+  printShortDescription(SettingsItemIndex::PDNegTimeout, 5);
+  OLED::printNumber(systemSettings.PDNegTimeout, 2, FontStyle::LARGE);
+
+  return systemSettings.QCIdealVoltage == 49;
+}
 
 #ifndef NO_SLEEP_MODE
 static bool settings_setSleepTemp(void) {

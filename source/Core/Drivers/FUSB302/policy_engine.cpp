@@ -21,6 +21,8 @@
 #include "int_n.h"
 #include <pd.h>
 #include <stdbool.h>
+#include "Settings.h"
+
 bool                              PolicyEngine::pdNegotiationComplete;
 int                               PolicyEngine::current_voltage_mv;
 int                               PolicyEngine::_requested_voltage;
@@ -615,6 +617,18 @@ void PolicyEngine::PPSTimerCallback() {
       PPSTimeLastEvent = xTaskGetTickCount();
     }
   }
+}
+
+bool PolicyEngine::NegotiationTimeoutReached() {
+    if (systemSettings.PDNegTimeout == 0){
+	return false;
+    }
+
+    if (xTaskGetTickCount() > (TICKS_SECOND/10 * systemSettings.PDNegTimeout)) {
+       return true;
+    }
+
+    return false;
 }
 
 EventBits_t PolicyEngine::pushMessage(union pd_msg *msg) {
