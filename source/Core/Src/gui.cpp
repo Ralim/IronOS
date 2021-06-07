@@ -178,7 +178,7 @@ const menuitem powerMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
 #endif
 #ifdef POW_PD
-    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), settings_setPDNegTimeout, settings_displayPDNegTimeout},   /*PD timeout setup*/
+    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), settings_setPDNegTimeout, settings_displayPDNegTimeout}, /*PD timeout setup*/
 #endif
     {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
 };
@@ -396,7 +396,7 @@ static bool settings_setPDNegTimeout(void) {
   return systemSettings.PDNegTimeout == 49;
 }
 
-static bool settings_displayPDNegTimeout(void){
+static bool settings_displayPDNegTimeout(void) {
   printShortDescription(SettingsItemIndex::PDNegTimeout, 5);
   OLED::printNumber(systemSettings.PDNegTimeout, 2, FontStyle::LARGE);
 
