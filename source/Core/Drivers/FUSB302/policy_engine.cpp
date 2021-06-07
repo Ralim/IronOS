@@ -619,7 +619,7 @@ void PolicyEngine::PPSTimerCallback() {
 }
 
 bool PolicyEngine::NegotiationTimeoutReached(uint8_t timeout) {
-  if (timeout == 0){
+  if (timeout == 0) {
     return false;
   }
 
