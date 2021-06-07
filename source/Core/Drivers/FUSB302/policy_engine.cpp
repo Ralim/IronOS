@@ -619,16 +619,16 @@ void PolicyEngine::PPSTimerCallback() {
 }
 
 bool PolicyEngine::NegotiationTimeoutReached(uint8_t timeout) {
-    if (timeout == 0){
-	return false;
-    }
-
-    if (xTaskGetTickCount() > (TICKS_100MS * timeout)) {
-       state = PESinkSourceUnresponsive;
-       return true;
-    }
-
+  if (timeout == 0){
     return false;
+  }
+
+  if (xTaskGetTickCount() > (TICKS_100MS * timeout)) {
+    state = PESinkSourceUnresponsive;
+    return true;
+  }
+
+  return false;
 }
 
 EventBits_t PolicyEngine::pushMessage(union pd_msg *msg) {
