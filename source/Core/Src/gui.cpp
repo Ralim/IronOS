@@ -393,14 +393,14 @@ static bool settings_displayQCInputV(void) {
 static bool settings_setPDNegTimeout(void) {
   systemSettings.PDNegTimeout = (systemSettings.PDNegTimeout + 1) % 50;
 
-  return systemSettings.QCIdealVoltage == 49;
+  return systemSettings.PDNegTimeout == 49;
 }
 
 static bool settings_displayPDNegTimeout(void){
   printShortDescription(SettingsItemIndex::PDNegTimeout, 5);
   OLED::printNumber(systemSettings.PDNegTimeout, 2, FontStyle::LARGE);
 
-  return systemSettings.QCIdealVoltage == 49;
+  return systemSettings.PDNegTimeout == 49;
 }
 #endif
 
