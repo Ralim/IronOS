@@ -61,6 +61,8 @@ typedef struct {
   uint8_t  pdMissingWarningCounter;        // Counter of how many times we have warned we cannot detect the pd interface
   char     uiLanguage[8];                  // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
 
+  uint8_t PDNegTimeout; // PD timeout in 100ms steps
+
   uint32_t padding; // This is here for in case we are not an even divisor so
                     // that nothing gets cut off
                     // MUST BE LAST

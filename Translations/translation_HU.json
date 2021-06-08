@@ -225,6 +225,13 @@
 			],
 			"desc": "Maximális USB feszültség (QuickCharge)"
 		},
+                "PDNegTimeout": {
+                        "text2": [
+                                "PD",
+                                "időtúllépés"
+                        ],
+                        "desc": "PD egyeztetési leidőzítés 100ms lépésekben megadva néhány QC töltővel való kompatibilitás érdekében (0: kikapcsolva)"
+                },
 		"PowerLimit": {
 			"text2": [
 				"Teljesítmény",
