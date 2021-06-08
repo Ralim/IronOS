@@ -57,6 +57,7 @@ void resetSettings() {
   systemSettings.minDCVoltageCells              = CUT_OUT_SETTING;              // default to no cut-off voltage
   systemSettings.minVoltageCells                = RECOM_VOL_CELL;               // Minimum voltage per cell (Recommended 3.3V (33))
   systemSettings.QCIdealVoltage                 = 0;                            // Default to 9V for QC3.0 Voltage
+  systemSettings.PDNegTimeout                   = 0;                            // Default for PD timout to 0
   systemSettings.version                        = SETTINGSVERSION;              // Store the version number to allow for easier upgrades
   systemSettings.detailedSoldering              = DETAILED_SOLDERING;           // Detailed soldering screen
   systemSettings.detailedIDLE                   = DETAILED_IDLE;                // Detailed idle screen (off for first time users)

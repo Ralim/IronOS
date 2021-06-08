@@ -45,6 +45,7 @@ enum class SettingsItemIndex : uint8_t {
   AdvancedSoldering,
   ScrollingSpeed,
   QCMaxVoltage,
+  PDNegTimeout,
   PowerLimit,
   ReverseButtonTempChange,
   TempChangeShortStep,

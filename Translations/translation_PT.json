@@ -223,6 +223,13 @@
 			],
 			"desc": "Potência da fonte usada (Watt)"
 		},
+		"PDNegTimeout": {
+                        "text2": [
+                                "PD",
+                                "timeout"
+                        ],
+                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+                },
 		"PowerLimit": {
 			"text2": [
 				"Power",

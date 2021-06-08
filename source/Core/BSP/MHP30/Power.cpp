@@ -16,7 +16,7 @@ void power_check() {
   if (FUSB302_present) {
     PolicyEngine::PPSTimerCallback();
     // Cant start QC until either PD works or fails
-    if (PolicyEngine::setupCompleteOrTimedOut() == false) {
+    if (PolicyEngine::setupCompleteOrTimedOut(systemSettings.PDNegTimeout) == false) {
       return;
     }
     if (PolicyEngine::pdHasNegotiated()) {

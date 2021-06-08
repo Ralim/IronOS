@@ -284,6 +284,12 @@ var def =
 			"maxLen2": 16
 		},
 		{
+			"id": "PDNegTimeout",
+			"maxLen": 8,
+			"maxLen2": 16
+		},
+
+		{
 			"id": "PowerLimit",
 			"maxLen": 5,
 			"maxLen2": 11

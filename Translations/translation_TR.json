@@ -233,6 +233,13 @@
 			],
 			"desc": "Desired max QC Voltage negotiated for"
 		},
+		"PDNegTimeout": {
+                        "text2": [
+                                "PD",
+                                "timeout"
+                        ],
+                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+                },
 		"PowerInput": {
 			"text2": [
 				"Güç",

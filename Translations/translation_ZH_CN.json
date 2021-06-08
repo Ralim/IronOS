@@ -155,6 +155,13 @@
 			"text2": "QC电压",
 			"desc": "使用QC电源时请求的最高目标电压"
 		},
+		"PDNegTimeout": {
+                        "text2": [
+                                "PD",
+                                "timeout"
+                        ],
+                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+                },
 		"PowerLimit": {
 			"text2": "功率限制",
 			"desc": "限制铬铁可用的最大功率 <W=watt（瓦特）>"
