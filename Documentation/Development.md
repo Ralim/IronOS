@@ -24,7 +24,7 @@ To update the language translation files & associated font map, execute the `mak
 
 ## Building Pinecil
 
-I highly reccomend using the command line tools and using docker to run the compiler.
-Its a bit more fussy on setup than the STM tooling and this is by far the easiest way.
+I highly recommend using the command line tools and using docker to run the compiler.
+It's a bit more fussy on setup than the STM tooling and this is by far the easiest way.
 If you _need_ an IDE I have used [Nuclei's IDE](https://nucleisys.com/download.php)
 And follow same idea as the STM Cube IDE notes above.
