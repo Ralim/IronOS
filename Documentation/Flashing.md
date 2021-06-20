@@ -11,7 +11,7 @@ Flash according to details below
 
 ### Bleeding edge / latest
 
-For the _latest_ code, you will need to download the zip file from the artefacts page on the build for what you want.
+For the _latest_ code, you will need to download the zip file from the artifacts page on the build for what you want.
 Head to the [Actions](https://github.com/Ralim/IronOS/actions) page and then select the run for the appropriate branch you would like.
 In general you probably want `master`.
 
@@ -51,7 +51,7 @@ sgr1ff1n (Shane) commented in [issue 11](https://github.com/Ralim/ts100/issues/1
 
 While in past there were reports of unreliable upgrades, the consensus in [issue 11](https://github.com/Ralim/ts100/issues/11) is that things work mostly as expected in Linux.
 
-@awigen has contributed a script [flash_ts100_linux.sh](https://raw.githubusercontent.com/Ralim/ts100/master/Flashing/flash_ts100_linux.sh) that works on Ubuntu 16.04 as well as other distro's.
+@awigen has contributed a script [flash_ts100_linux.sh](https://raw.githubusercontent.com/Ralim/ts100/master/Flashing/flash_ts100_linux.sh) that works on Ubuntu 16.04 as well as other distros.
 
 If you want to do it manually (or if the script does not work for some reason) the general procedure is the same as for Windows, the differences are in the way to mount the unit and copy the firmware.
 Remember that after flashing, the firmware filename will have changed to end in `.RDY` or `.ERR` or `.NOT` and only `.RDY` means the flashing was successful!
@@ -66,7 +66,7 @@ Example, to be run as root, once the unit has been plugged in DFU mode and auto-
 ```bash
 FW=ts100.hex
 unset NAME
-eval $(lsblk -P -p -d --output NAME,MODEL|grep "DFU Disk")
+eval $(lsblk -P -p -d --output NAME,MODEL|grep "DFU[ _]Disk")
 [ -z ${NAME+x} ] && exit 1  # Could not find DFU device
 umount "$NAME"
 mkdir /tmp/mntdfu
@@ -100,8 +100,8 @@ dfu-util -d 28e9:0189 -a 0 -D Pinecil_EN.bin -s 0x08000000:mass-erase:force
 
 ### Windows
 
-For windows the easiest tool to use is the vendors gui tool from [here](http://www.gd32mcu.com/download/down/document_id/176/path_type/1)
-Should the link break, its called "GD32 MCU Dfu Tool" and can be grabbed from http://www.gd32mcu.com/en/download/
+For windows the easiest tool to use is the vendors gui tool from [here](http://www.gd32mcu.com/download/down/document_id/176/path_type/1).
+Should the link break, its called "GD32 MCU Dfu Tool" and can be grabbed from http://www.gd32mcu.com/en/download/.
 You will also need the matching drivers from [here](http://www.gd32mcu.com/download/down/document_id/244/path_type/1) installed if you have not used gigadevice parts before.
 These are called "GD32 Dfu Drivers" if the link breaks.
 
@@ -109,7 +109,7 @@ These are called "GD32 Dfu Drivers" if the link breaks.
 
 #### [Miniware] The file is showing up with the extension `.ERR`
 
-This can occur duing the programming process if any of the checks in the bootloader fail. This is often triggered by anti-virus software or using a non-windows host OS.
+This can occur during the programming process if any of the checks in the bootloader fail. This is often triggered by anti-virus software or using a non-windows host OS.
 
 First, try just copying the file a second time.
 
@@ -119,15 +119,15 @@ First, try just copying the file a second time.
 4. Copy the same hex file again **DO NOT TRY AND DELETE THE OLD ONE**
 5. The device will disconnect and reconnect again
 6. The device _should_ now have the `.RDY` file
-7. Your done.
+7. You're done.
 
-If this fails, if you are on Mac or Linux reading the wiki page about programming can help. There is also a very long issue thread going through all of the different attempts around this too.
+If this fails and you are on Mac or Linux reading the wiki page about programming can help. There is also a very long issue thread going through all of the different attempts around this too.
 
-If you are on windows, its often to try another computer (friends, work, partners etc).
+If you are on windows, it's often best to try another computer (friends, work, partners etc).
 
 #### [Miniware] Device randomly disconnects or does not show up in DFU mode
 
-First, check the USB cable your using has the data pins; test it on another device. There are a surprisingly large number of usb-micro cables that are power _only_.
+First, check the USB cable you are using has the data pins; test it on another device. There are a surprisingly large number of usb-micro cables that are power _only_.
 
 Secondly, try other USB ports. Often different USB controllers will interact with the units differently due to design quirks in the miniware design.
 
@@ -139,4 +139,4 @@ This will **NOT** show up as a USB storage drive, but instead show up using a st
 To change to dapboot based alternative bootloader, you need to flash the hex file from [here](https://github.com/eDesignOSS/ts100-bl-flasher/releases).
 `ts100-stockbl.hex` will reflash the stock bootloader, `ts100-dapboot.hex` will flash the new dapboot based usb bootloader.
 
-Note that this is only reccomended for users who know what they doing. If you dont not understand how this works; please dont flash this.
+Note that this is only recommended for users who know what they are doing. If you don't not understand how this works; please don't flash this.

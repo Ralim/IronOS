@@ -2,7 +2,7 @@
 
 All of the irons are PWM controlled resistive heating elements.
 This means that the electronics in the handle can only turn the heating element on and off.
-This *means* that the power proivded in the tip is 100% controlled by the supply voltage used.
+This *means* that the power provided in the tip is 100% controlled by the supply voltage used.
 
 Both irons at their simplest are just a resistor connected to your power source via a switch.
 

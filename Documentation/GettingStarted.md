@@ -3,14 +3,14 @@
 Getting started with Iron OS on your Pinecil/TS80/TS80P/TS100.
 If your device did not come with Iron OS already installed, or if you need to update to the latest version; please see the [Flashing Guide](/Documentation/Flashing.md).
 
-Once your Iron has been flashed, one first power on it _may_ warn you about the system settings being reset.
+Once your Iron has been flashed, on first power on it _may_ warn you about the system settings being reset.
 _Do not panic_; this is 100% completely normal. This is here to note to you that they have been reset to handle the internal structure changing.
 
 If you receive a warning about the accelerometer or USB-PD not being detected, please see [here](/Documentation/HardwareIssues.md).
 
 ## The Home screen (or idle screen)
 
-This is the landing page of the firmware, from here you can choose to either go into the [settings menu](##-Settings-Menu) or go into [soldering mode](##-Soldering-Mode).
+This is the landing page of the firmware, from here you can choose to either go into the [settings menu](#Settings-Menu) or go into [soldering mode](#Soldering-Mode).
 
 By default this will show a screen similar to the one below:
 

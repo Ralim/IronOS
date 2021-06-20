@@ -17,7 +17,7 @@ Note that settings are not saved until you exit the menu.
 If you leave the unit alone (ie don't press any buttons) on a setting, after 3 seconds the screen will scroll a rough description of the setting.
 
 The menu is arranged so that the most often used settings are first.
-With submenu's being selected to enter using the front button (as if you were going to change the setting).
+With submenus being selected to enter using the front button (as if you were going to change the setting).
 Scrolling through the submenu will return you back to its entry location after you scroll through all of the options.
 
 ### Calibrating input voltage
@@ -48,7 +48,7 @@ Some tips will have an offset on their readings, to calibrate this out perform t
 6. The display will start to scroll a warning message to check that the tip is at ambient temperature!
 7. Press the button near the tip of the iron to confirm
 8. The display will go to "...." for a short period of time as the unit measures the tip temperature and the handle temperature and compares them
-9. The display will then go back to *TMP CAL* and it will display a number, this is your offset number. You generally dont need it unless debugging issues
+9. The display will then go back to *TMP CAL* and it will display a number, this is your offset number. You generally don't need it unless debugging issues
 10. Calibration is done, just exit the settings menu as normal
 11. You're done, enjoy your iron!
 
