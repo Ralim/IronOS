@@ -25,7 +25,7 @@ This is completely safe, but if it goes wrong just put the .hex file from the of
 Officially the bootloader on the iron only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under Mac, and can be made to work under Linux _sometimes_. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
 1. Hold the button closest to the tip, and plug in the USB to the computer.
-2. The unit will appear as a USB drive.
+2. The unit will appear as a USB drive. ( Screen will say `DFU` on it.)
 3. Drag the .hex file onto the USB drive.
 4. The unit will disconnect and reconnect.
 5. The filename will have changed to end in .RDY or .ERR
