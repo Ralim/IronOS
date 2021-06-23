@@ -139,4 +139,4 @@ This will **NOT** show up as a USB storage drive, but instead show up using a st
 To change to dapboot based alternative bootloader, you need to flash the hex file from [here](https://github.com/eDesignOSS/ts100-bl-flasher/releases).
 `ts100-stockbl.hex` will reflash the stock bootloader, `ts100-dapboot.hex` will flash the new dapboot based usb bootloader.
 
-Note that this is only recommended for users who know what they are doing. If you don't not understand how this works; please don't flash this.
+Note that this is only recommended for users who know what they are doing. If you don't understand how this works, please don't flash this.
