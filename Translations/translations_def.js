@@ -83,6 +83,9 @@ var def =
 		},
 		{
 			"id": "WarningKeysLockedString"
+		},
+		{
+			"id": "WarningThermalRunaway"
 		}
 	],
 	"characters": [

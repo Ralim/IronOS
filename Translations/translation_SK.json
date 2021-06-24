@@ -42,7 +42,8 @@
 		],
 		"LockingKeysString": "ZABLOK.",
 		"UnlockingKeysString": "ODBLOK.",
-		"WarningKeysLockedString": "!ZABLOK!"
+		"WarningKeysLockedString": "!ZABLOK!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "P",

@@ -42,7 +42,8 @@
 		],
 		"LockingKeysString": "Blocc.",
 		"UnlockingKeysString": "Sblocc.",
-		"WarningKeysLockedString": "BLOCCATO"
+		"WarningKeysLockedString": "BLOCCATO",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "D",

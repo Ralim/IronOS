@@ -43,7 +43,8 @@
 		],
 		"LockingKeysString": "GESPERRT",
 		"UnlockingKeysString": "ENTSPERRT",
-		"WarningKeysLockedString": "!GESPERRT!"
+		"WarningKeysLockedString": "!GESPERRT!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "R",

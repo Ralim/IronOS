@@ -43,7 +43,8 @@
 		],
 		"LockingKeysString": "LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!"
+		"WarningKeysLockedString": "!LOCKED!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "П",

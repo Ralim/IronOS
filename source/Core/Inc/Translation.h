@@ -85,6 +85,7 @@ struct TranslationIndexTable {
   uint16_t LockingKeysString;
   uint16_t UnlockingKeysString;
   uint16_t WarningKeysLockedString;
+  uint16_t WarningThermalRunaway;
 
   uint16_t SettingRightChar;
   uint16_t SettingLeftChar;

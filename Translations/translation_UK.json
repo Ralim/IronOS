@@ -43,7 +43,8 @@
 		],
 		"LockingKeysString": "ЗАБЛОК.",
 		"UnlockingKeysString": "РОЗБЛОК.",
-		"WarningKeysLockedString": "!ЗАБЛОК!"
+		"WarningKeysLockedString": "!ЗАБЛОК!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "П",

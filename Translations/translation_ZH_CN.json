@@ -40,7 +40,8 @@
 		],
 		"LockingKeysString": "已锁定",
 		"UnlockingKeysString": "已解除锁定",
-		"WarningKeysLockedString": "!按键锁定!"
+		"WarningKeysLockedString": "!按键锁定!",
+		"WarningThermalRunaway":["Thermal","Runaway"]
 	},
 	"characters": {
 		"SettingRightChar": "右",

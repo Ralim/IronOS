@@ -19,6 +19,7 @@ static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
 TaskHandle_t      pidTaskNotification     = NULL;
 uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
 int32_t           powerSupplyWattageLimit = 0;
+bool              heaterThermalRunaway    = false;
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
   /*
@@ -32,8 +33,10 @@ void startPIDTask(void const *argument __unused) {
   history<int32_t, PID_TIM_HZ> tempError = {{0}, 0, 0};
   currentTempTargetDegC                  = 0; // Force start with no output (off). If in sleep / soldering this will
                                               // be over-ridden rapidly
-  pidTaskNotification    = xTaskGetCurrentTaskHandle();
-  uint32_t PIDTempTarget = 0;
+  pidTaskNotification              = xTaskGetCurrentTaskHandle();
+  uint32_t   PIDTempTarget         = 0;
+  uint16_t   tipTempCRunawayTemp   = 0;
+  TickType_t runawaylastChangeTime = 0;
 #ifdef SLEW_LIMIT
   int32_t x10WattsOutLast = 0;
 #endif
@@ -91,6 +94,33 @@ void startPIDTask(void const *argument __unused) {
         //  and counters extra power if the iron is no longer losing temp.
         // basically: temp - lastTemp
         //  Unfortunately, our temp signal is too noisy to really help.
+
+        // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
+        // While trying to actively heat
+        if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
+          // Temp error is high
+          int16_t delta = (int16_t)currentTipTempInC - (int16_t)tipTempCRunawayTemp;
+          if (delta < 0) {
+            delta = -delta;
+          }
+          if (delta > THERMAL_RUNAWAY_TEMP_C) {
+            // We have heated up more than the threshold, reset the timer
+            tipTempCRunawayTemp   = currentTipTempInC;
+            runawaylastChangeTime = xTaskGetTickCount();
+          } else {
+            if ((xTaskGetTickCount() - runawaylastChangeTime) > (THERMAL_RUNAWAY_TIME_SEC * TICKS_SECOND)) {
+              // It has taken too long to rise
+              heaterThermalRunaway = true;
+            }
+          }
+        } else {
+          tipTempCRunawayTemp   = currentTipTempInC;
+          runawaylastChangeTime = xTaskGetTickCount();
+        }
+
+      } else {
+        tipTempCRunawayTemp   = currentTipTempInC;
+        runawaylastChangeTime = xTaskGetTickCount();
       }
       // If the user turns on the option of using an occasional pulse to keep the power bank on
       if (systemSettings.KeepAwakePulse) {
@@ -109,6 +139,9 @@ void startPIDTask(void const *argument __unused) {
 
       // Secondary safety check to forcefully disable header when within ADC noise of top of ADC
       if (getTipRawTemp(0) > (0x7FFF - 32)) {
+        x10WattsOut = 0;
+      }
+      if (heaterThermalRunaway) {
         x10WattsOut = 0;
       }
       if (systemSettings.powerLimit && x10WattsOut > (systemSettings.powerLimit * 10)) {
