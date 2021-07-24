@@ -66,7 +66,7 @@ SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
 SOURCE_BRIEFLZ_DIR = ./Core/brieflz
 SOURCE_DRIVERS_DIR = ./Core/Drivers
-INC_PD_DRIVERS_DIR = ./Core/Drivers/FUSB302
+INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 # Find-all's used for formatting
 ALL_INCLUDES = $(shell find ./Core -path $(BRIEFLZ_INC_DIR) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
