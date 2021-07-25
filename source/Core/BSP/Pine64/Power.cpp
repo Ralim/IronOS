@@ -4,24 +4,14 @@
 #include "Pins.h"
 #include "QC3.h"
 #include "Settings.h"
-#include "fusb_user.h"
-#include "fusbpd.h"
-#include "int_n.h"
-#include "policy_engine.h"
-bool FUSB302_present = false;
-bool FUSB302_probed  = false;
+#include "USBPD.h"
 
 void power_check() {
 #ifdef POW_PD
-  if (FUSB302_present) {
-    PolicyEngine::PPSTimerCallback();
-    // Cant start QC until either PD works or fails
-    if (PolicyEngine::setupCompleteOrTimedOut(systemSettings.PDNegTimeout) == false) {
-      return;
-    }
-    if (PolicyEngine::pdHasNegotiated()) {
-      return;
-    }
+  USBPowerDelivery::PPSTimerCallback();
+  // Cant start QC until either PD works or fails
+  if (USBPowerDelivery::negotiationComplete()) {
+    return;
   }
 #endif
 #ifdef POW_QC
@@ -30,11 +20,7 @@ void power_check() {
 }
 
 bool getIsPoweredByDCIN() {
-  // We return false until we are sure we are not using PD
-  if (PolicyEngine::setupCompleteOrTimedOut(systemSettings.PDNegTimeout) == false) {
-    return false;
-  }
-  if (PolicyEngine::pdHasNegotiated()) {
+  if (USBPowerDelivery::negotiationComplete()) {
     return false; // We are using PD
   }
   if (hasQCNegotiated()) {

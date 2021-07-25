@@ -1,9 +1,9 @@
 #include "USBPD.h"
+#include "configuration.h"
 #ifdef POW_PD
 
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
-#include "configuration.h"
 #include "fusb302b.h"
 #include "main.hpp"
 #include "pd.h"
@@ -38,6 +38,7 @@ bool USBPowerDelivery::negotiationComplete() {
   }
   return pe.setupCompleteOrTimedOut(systemSettings.PDNegTimeout);
 }
+bool USBPowerDelivery::negotiationInProgress() { return !pe.pdHasNegotiated(); }
 bool USBPowerDelivery::fusbPresent() {
   if (detectionState == 0) {
     if (fusb.fusb_read_id()) {

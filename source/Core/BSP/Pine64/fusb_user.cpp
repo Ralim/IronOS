@@ -3,8 +3,6 @@
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
 #include "Setup.h"
-#include "fusb302b.h"
-#include "fusb_user.h"
 
 /*
  * Read multiple bytes from the FUSB302B
@@ -26,7 +24,4 @@ bool fusb_read_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const ui
  */
 bool fusb_write_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const uint8_t size, uint8_t *buf) { return FRToSI2C::Mem_Write(deviceAddr, registerAdd, (uint8_t *)buf, size); }
 
-void setupFUSBIRQ() {
-  // No-op as this is done elsehwere
-}
 #endif
