@@ -14,7 +14,7 @@
  * size: The number of bytes to read
  * buf: The buffer into which data will be read
  */
-bool fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf) { return FRToSI2C::Mem_Read(FUSB302B_ADDR, addr, buf, size); }
+bool fusb_read_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const uint8_t size, uint8_t *buf) { return FRToSI2C::Mem_Read(deviceAddr, registerAdd, buf, size); }
 
 /*
  * Write multiple bytes to the FUSB302B
@@ -24,11 +24,9 @@ bool fusb_read_buf(uint8_t addr, uint8_t size, uint8_t *buf) { return FRToSI2C::
  * size: The number of bytes to write
  * buf: The buffer to write
  */
-bool fusb_write_buf(uint8_t addr, uint8_t size, const uint8_t *buf) { return FRToSI2C::Mem_Write(FUSB302B_ADDR, addr, (uint8_t *)buf, size); }
+bool fusb_write_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const uint8_t size, uint8_t *buf) { return FRToSI2C::Mem_Write(deviceAddr, registerAdd, (uint8_t *)buf, size); }
 
-bool fusb302_detect() {
-  // Probe the I2C bus for its address
-  return FRToSI2C::probe(FUSB302B_ADDR);
+void setupFUSBIRQ() {
+  // No-op as this is done elsehwere
 }
-
 #endif

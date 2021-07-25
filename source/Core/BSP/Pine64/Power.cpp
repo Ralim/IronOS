@@ -28,18 +28,6 @@ void power_check() {
   QC_resync();
 #endif
 }
-uint8_t usb_pd_detect() {
-#ifdef POW_PD
-  if (FUSB302_probed) {
-    return FUSB302_present;
-  } else {
-    FUSB302_present = fusb302_detect();
-    FUSB302_probed  = true;
-  }
-  return FUSB302_present;
-#endif
-  return false;
-}
 
 bool getIsPoweredByDCIN() {
   // We return false until we are sure we are not using PD
