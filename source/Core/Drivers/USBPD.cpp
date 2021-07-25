@@ -9,8 +9,16 @@
 #include "pd.h"
 #include "policy_engine.h"
 
-void         ms_delay(uint32_t delayms) { vTaskDelay(delayms); }
-uint32_t     get_ms_timestamp() { return xTaskGetTickCount(); }
+void ms_delay(uint32_t delayms) {
+  // Convert ms -> ticks
+  TickType_t ticks = delayms / portTICK_PERIOD_MS;
+
+  vTaskDelay(ticks ? ticks : 1); /* Minimum delay = 1 tick */
+}
+uint32_t get_ms_timestamp() {
+  // Convert ticks -> ms
+  return xTaskGetTickCount() * portTICK_PERIOD_MS;
+}
 bool         pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request);
 void         pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3);
 FUSB302      fusb((0x22 << 1), fusb_read_buf, fusb_write_buf, ms_delay); // Create FUSB driver
