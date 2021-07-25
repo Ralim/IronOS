@@ -67,11 +67,12 @@ SOURCE_CORE_DIR = ./Core/Src
 SOURCE_BRIEFLZ_DIR = ./Core/brieflz
 SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
+PD_DRIVER_TESTS_DIR = ./Core/Drivers/usb-pd/tests
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 # Find-all's used for formatting
-ALL_INCLUDES = $(shell find ./Core -path $(BRIEFLZ_INC_DIR) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
+ALL_INCLUDES = $(shell find ./Core -path $(BRIEFLZ_INC_DIR)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 
-ALL_SOURCE = $(shell find ./Core -path $(SOURCE_BRIEFLZ_DIR) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+ALL_SOURCE = $(shell find ./Core \( -path $(SOURCE_BRIEFLZ_DIR) -path $(PD_DRIVER_TESTS_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
@@ -173,9 +174,10 @@ $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
 $(shell find $(DEVICE_BSP_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') \
 $(SOURCE_BRIEFLZ_DIR)/depack.c
+# We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
 SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
-$(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.cpp') \
+$(shell find $(SOURCE_DRIVERS_DIR) -path $(PD_DRIVER_TESTS_DIR) -prune -false -o -type f -name '*.cpp') \
 $(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 # output folder
