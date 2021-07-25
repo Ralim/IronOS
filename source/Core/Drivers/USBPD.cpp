@@ -1,4 +1,6 @@
 #include "USBPD.h"
+#ifdef POW_PD
+
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
 #include "configuration.h"
@@ -6,6 +8,7 @@
 #include "main.hpp"
 #include "pd.h"
 #include "policy_engine.h"
+
 void         ms_delay(uint32_t delayms) { vTaskDelay(delayms); }
 uint32_t     get_ms_timestamp() { return xTaskGetTickCount(); }
 bool         pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request);
@@ -212,3 +215,5 @@ void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
   // /* Set the Sink_Capabilities message header */
   // cap->hdr = hdr_template | PD_MSGTYPE_SINK_CAPABILITIES | PD_NUMOBJ(numobj);
 }
+
+#endif

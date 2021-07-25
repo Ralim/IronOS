@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #ifdef __cplusplus
-// #ifdef POW_PD
+#ifdef POW_PD
 class USBPowerDelivery {
 public:
   static bool start();               // Start the PD stack
@@ -16,7 +16,7 @@ private:
   //
   static int detectionState;
 };
-// #endif
+#endif
 
 #endif
 #endif
