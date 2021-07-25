@@ -23,12 +23,19 @@ void startPOWTask(void const *argument __unused) {
 #ifdef POW_PD
   USBPowerDelivery::start();
 #endif
-  vTaskDelay(TICKS_100MS);
   // Init any other misc sensors
   postRToSInit();
-
+  uint32_t notificationValue = 0;
   for (;;) {
+    notificationValue = 0;
+    xTaskNotifyWait(0x0, 0xFFFFFF, &notificationValue, TICKS_100MS);
+#ifdef POW_PD
+    if (notificationValue) {
+      USBPowerDelivery::IRQOccured();
+    }
+    USBPowerDelivery::step();
+    USBPowerDelivery::PPSTimerCallback();
+#endif
     power_check();
-    osDelay(TICKS_100MS); // Slow down update rate
   }
 }

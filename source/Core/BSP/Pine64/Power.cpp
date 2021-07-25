@@ -8,7 +8,6 @@
 
 void power_check() {
 #ifdef POW_PD
-  USBPowerDelivery::PPSTimerCallback();
   // Cant start QC until either PD works or fails
   if (USBPowerDelivery::negotiationComplete()) {
     return;

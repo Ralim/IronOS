@@ -8,15 +8,10 @@
 
 void power_check() {
 #ifdef POW_PD
-  if (FUSB302_present) {
-    USBPowerDelivery::PPSTimerCallback();
-    // Cant start QC until either PD works or fails
-    if (USBPowerDelivery::setupCompleteOrTimedOut(systemSettings.PDNegTimeout) == false) {
-      return;
-    }
-    if (USBPowerDelivery::pdHasNegotiated()) {
-      return;
-    }
+
+  // Cant start QC until either PD works or fails
+  if (USBPowerDelivery::negotiationComplete()) {
+    return;
   }
 #endif
 #ifdef POW_QC

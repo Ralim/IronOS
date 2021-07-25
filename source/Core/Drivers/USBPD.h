@@ -14,6 +14,8 @@ public:
   static bool negotiationInProgress(); // Is negotiation ongoing
   static bool fusbPresent();           // Is the FUSB302 present on the bus
   static void PPSTimerCallback();      // PPS Timer
+  static void IRQOccured();            // Thread callback that an irq occured
+  static void step();                  // Iterate the step machine
 
 private:
   //

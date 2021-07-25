@@ -31,6 +31,11 @@ bool USBPowerDelivery::start() {
   detectionState = 2;
   return false;
 }
+void USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
+void USBPowerDelivery::step() {
+  while (pe.thread()) {}
+}
+
 void USBPowerDelivery::PPSTimerCallback() { pe.PPSTimerCallback(); }
 bool USBPowerDelivery::negotiationComplete() {
   if (!fusbPresent()) {
