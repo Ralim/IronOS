@@ -19,11 +19,16 @@ void power_check() {
 }
 
 bool getIsPoweredByDCIN() {
+#ifdef POW_PD
   if (USBPowerDelivery::negotiationComplete()) {
     return false; // We are using PD
   }
+#endif
+
+#ifdef POW_QC
   if (hasQCNegotiated()) {
     return false; // We are using QC
   }
+#endif
   return true;
 }
