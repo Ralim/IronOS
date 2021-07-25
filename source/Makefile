@@ -68,11 +68,12 @@ SOURCE_BRIEFLZ_DIR = ./Core/brieflz
 SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR = ./Core/Drivers/usb-pd/tests
+PD_DRIVER_DIR = ./Core/Drivers/usb-pd
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 # Find-all's used for formatting
-ALL_INCLUDES = $(shell find ./Core -path $(BRIEFLZ_INC_DIR)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
+ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 
-ALL_SOURCE = $(shell find ./Core \( -path $(SOURCE_BRIEFLZ_DIR) -path $(PD_DRIVER_TESTS_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
