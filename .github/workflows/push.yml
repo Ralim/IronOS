@@ -12,7 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        submodules: true
+        with:
+          submodules: true
 
       - name: chmod
         run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
@@ -58,7 +59,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        submodules: true
+        with:
+          submodules: true
 
       - name: chmod
         run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
@@ -99,7 +101,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        submodules: true
+        with:
+          submodules: true
 
       - name: Setup
         run: sudo apt-get update && sudo apt-get install -y python3 && pip3 install bdflib
@@ -120,7 +123,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        submodules: true
+        with:
+          submodules: true
 
       - name: chmod
         run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
