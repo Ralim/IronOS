@@ -30,7 +30,7 @@ void startPOWTask(void const *argument __unused) {
     notificationValue = 0;
     xTaskNotifyWait(0x0, 0xFFFFFF, &notificationValue, TICKS_100MS);
 #ifdef POW_PD
-    if (notificationValue) {
+    if (getFUS302IRQLow() || notificationValue) {
       USBPowerDelivery::IRQOccured();
     }
     USBPowerDelivery::step();
