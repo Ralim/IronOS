@@ -98,6 +98,12 @@ Using `dfu-util` you can flash the firmware using a command line as such:
 dfu-util -d 28e9:0189 -a 0 -D Pinecil_EN.bin -s 0x08000000:mass-erase:force
 ```
 
+If this command fails with `dfu-util: Error during special command "MASS_ERASE" get_status`, try this instead:
+
+```
+dfu-util -d 28e9:0189 -a 0 -D Pinecil_EN.bin -s 0x08000000
+```
+
 ### Windows
 
 For windows the easiest tool to use is the vendors gui tool from [here](http://www.gd32mcu.com/download/down/document_id/176/path_type/1).
