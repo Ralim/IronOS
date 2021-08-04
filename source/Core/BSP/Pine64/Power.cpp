@@ -9,7 +9,7 @@
 void power_check() {
 #ifdef POW_PD
   // Cant start QC until either PD works or fails
-  if (USBPowerDelivery::negotiationComplete()) {
+  if (!USBPowerDelivery::negotiationComplete()) {
     return;
   }
 #endif
