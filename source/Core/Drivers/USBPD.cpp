@@ -47,7 +47,7 @@ void USBPowerDelivery::step() {
 void USBPowerDelivery::PPSTimerCallback() { pe.PPSTimerCallback(); }
 bool USBPowerDelivery::negotiationComplete() {
   if (!fusbPresent()) {
-    return false;
+    return true;
   }
   return pe.setupCompleteOrTimedOut(systemSettings.PDNegTimeout);
 }
