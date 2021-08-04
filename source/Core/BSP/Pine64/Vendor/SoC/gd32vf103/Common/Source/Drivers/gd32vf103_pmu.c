@@ -2,11 +2,12 @@
     \file    gd32vf103_pmu.c
     \brief   PMU driver
 
-    \version 2019-6-5, V1.0.0, firmware for GD32VF103
+    \version 2019-06-05, V1.0.0, firmware for GD32VF103
+    \version 2020-08-04, V1.1.0, firmware for GD32VF103
 */
 
 /*
-    Copyright (c) 2019, GigaDevice Semiconductor Inc.
+    Copyright (c) 2020, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -33,17 +34,19 @@ OF SUCH DAMAGE.
 */
 
 #include "gd32vf103_pmu.h"
-
+#include "riscv_encoding.h"
+#include "gd32vf103_rcu.h"
 /*!
     \brief      reset PMU register
     \param[in]  none
     \param[out] none
     \retval     none
 */
-void pmu_deinit(void) {
-  /* reset PMU */
-  rcu_periph_reset_enable(RCU_PMURST);
-  rcu_periph_reset_disable(RCU_PMURST);
+void pmu_deinit(void)
+{
+    /* reset PMU */
+    rcu_periph_reset_enable(RCU_PMURST);
+    rcu_periph_reset_disable(RCU_PMURST);
 }
 
 /*!
@@ -61,15 +64,16 @@ void pmu_deinit(void) {
     \param[out] none
     \retval     none
 */
-void pmu_lvd_select(uint32_t lvdt_n) {
-  /* disable LVD */
-  PMU_CTL &= ~PMU_CTL_LVDEN;
-  /* clear LVDT bits */
-  PMU_CTL &= ~PMU_CTL_LVDT;
-  /* set LVDT bits according to lvdt_n */
-  PMU_CTL |= lvdt_n;
-  /* enable LVD */
-  PMU_CTL |= PMU_CTL_LVDEN;
+void pmu_lvd_select(uint32_t lvdt_n)
+{
+    /* disable LVD */
+    PMU_CTL &= ~PMU_CTL_LVDEN;
+    /* clear LVDT bits */
+    PMU_CTL &= ~PMU_CTL_LVDT;
+    /* set LVDT bits according to lvdt_n */
+    PMU_CTL |= lvdt_n;
+    /* enable LVD */
+    PMU_CTL |= PMU_CTL_LVDEN;
 }
 
 /*!
@@ -78,9 +82,10 @@ void pmu_lvd_select(uint32_t lvdt_n) {
     \param[out] none
     \retval     none
 */
-void pmu_lvd_disable(void) {
-  /* disable LVD */
-  PMU_CTL &= ~PMU_CTL_LVDEN;
+void pmu_lvd_disable(void)
+{
+    /* disable LVD */
+    PMU_CTL &= ~PMU_CTL_LVDEN;
 }
 
 /*!
@@ -92,18 +97,21 @@ void pmu_lvd_disable(void) {
     \param[out] none
     \retval     none
 */
-void pmu_to_sleepmode(uint8_t sleepmodecmd) {
-  /* clear sleepdeep bit of RISC-V system control register */
-  __RV_CSR_CLEAR(CSR_WFE, WFE_WFE);
+void pmu_to_sleepmode(uint8_t sleepmodecmd)
+{
+    /* clear sleepdeep bit of RISC-V system control register */
+    clear_csr(0x811U, 0x1U);
 
-  /* select WFI or WFE command to enter sleep mode */
-  if (WFI_CMD == sleepmodecmd) {
-    __WFI();
-  } else {
-    __disable_irq();
-    __WFE();
-    __enable_irq();
-  }
+    /* select WFI or WFE command to enter sleep mode */
+    if(WFI_CMD == sleepmodecmd){
+        __WFI();
+    }else{
+        clear_csr(mstatus, MSTATUS_MIE);
+        set_csr(0x810U, 0x1U);
+        __WFI();
+        clear_csr(0x810U, 0x1U);
+        set_csr(mstatus, MSTATUS_MIE);
+    }
 }
 
 /*!
@@ -119,23 +127,26 @@ void pmu_to_sleepmode(uint8_t sleepmodecmd) {
     \param[out] none
     \retval     none
 */
-void pmu_to_deepsleepmode(uint32_t ldo, uint8_t deepsleepmodecmd) {
-  /* clear stbmod and ldolp bits */
-  PMU_CTL &= ~((uint32_t)(PMU_CTL_STBMOD | PMU_CTL_LDOLP));
-  /* set ldolp bit according to pmu_ldo */
-  PMU_CTL |= ldo;
-  /* set CSR_SLEEPVALUE bit of RISC-V system control register */
-  __RV_CSR_SET(CSR_WFE, WFE_WFE);
-  /* select WFI or WFE command to enter deepsleep mode */
-  if (WFI_CMD == deepsleepmodecmd) {
-    __WFI();
-  } else {
-    __disable_irq();
-    __WFE();
-    __enable_irq();
-  }
-  /* reset sleepdeep bit of RISC-V system control register */
-  __RV_CSR_CLEAR(CSR_WFE, WFE_WFE);
+void pmu_to_deepsleepmode(uint32_t ldo,uint8_t deepsleepmodecmd)
+{
+    /* clear stbmod and ldolp bits */
+    PMU_CTL &= ~((uint32_t)(PMU_CTL_STBMOD | PMU_CTL_LDOLP));
+    /* set ldolp bit according to pmu_ldo */
+    PMU_CTL |= ldo;
+    /* set CSR_SLEEPVALUE bit of RISC-V system control register */
+    set_csr(0x811U, 0x1U);
+    /* select WFI or WFE command to enter deepsleep mode */
+    if(WFI_CMD == deepsleepmodecmd){
+        __WFI();
+    }else{
+        clear_csr(mstatus, MSTATUS_MIE);
+        set_csr(0x810U, 0x1U);
+        __WFI();
+        clear_csr(0x810U, 0x1U);
+        set_csr(mstatus, MSTATUS_MIE);
+    }
+    /* reset sleepdeep bit of RISC-V system control register */
+    clear_csr(0x811U, 0x1U);
 }
 
 /*!
@@ -147,25 +158,28 @@ void pmu_to_deepsleepmode(uint32_t ldo, uint8_t deepsleepmodecmd) {
     \param[out] none
     \retval     none
 */
-void pmu_to_standbymode(uint8_t standbymodecmd) {
-  /* set CSR_SLEEPVALUE bit of RISC-V system control register */
-  __RV_CSR_SET(CSR_WFE, WFE_WFE);
+void pmu_to_standbymode(uint8_t standbymodecmd)
+{
+    /* set CSR_SLEEPVALUE bit of RISC-V system control register */
+    set_csr(0x811U, 0x1U);
 
-  /* set stbmod bit */
-  PMU_CTL |= PMU_CTL_STBMOD;
+    /* set stbmod bit */
+    PMU_CTL |= PMU_CTL_STBMOD;
 
-  /* reset wakeup flag */
-  PMU_CTL |= PMU_CTL_WURST;
+    /* reset wakeup flag */
+    PMU_CTL |= PMU_CTL_WURST;
 
-  /* select WFI or WFE command to enter standby mode */
-  if (WFI_CMD == standbymodecmd) {
-    __WFI();
-  } else {
-    __disable_irq();
-    __WFE();
-    __enable_irq();
-  }
-  __RV_CSR_CLEAR(CSR_WFE, WFE_WFE);
+    /* select WFI or WFE command to enter standby mode */
+    if(WFI_CMD == standbymodecmd){
+        __WFI();
+    }else{
+        clear_csr(mstatus, MSTATUS_MIE);
+        set_csr(0x810U, 0x1U);
+        __WFI();
+        clear_csr(0x810U, 0x1U);
+        set_csr(mstatus, MSTATUS_MIE);
+    }
+    clear_csr(0x811U, 0x1U);
 }
 
 /*!
@@ -174,7 +188,10 @@ void pmu_to_standbymode(uint8_t standbymodecmd) {
     \param[out] none
     \retval     none
 */
-void pmu_wakeup_pin_enable(void) { PMU_CS |= PMU_CS_WUPEN; }
+void pmu_wakeup_pin_enable(void)
+{
+    PMU_CS |= PMU_CS_WUPEN;
+}
 
 /*!
     \brief      disable wakeup pin
@@ -182,7 +199,10 @@ void pmu_wakeup_pin_enable(void) { PMU_CS |= PMU_CS_WUPEN; }
     \param[out] none
     \retval     none
 */
-void pmu_wakeup_pin_disable(void) { PMU_CS &= ~PMU_CS_WUPEN; }
+void pmu_wakeup_pin_disable(void)
+{
+    PMU_CS &= ~PMU_CS_WUPEN;
+}
 
 /*!
     \brief      enable write access to the registers in backup domain
@@ -190,7 +210,10 @@ void pmu_wakeup_pin_disable(void) { PMU_CS &= ~PMU_CS_WUPEN; }
     \param[out] none
     \retval     none
 */
-void pmu_backup_write_enable(void) { PMU_CTL |= PMU_CTL_BKPWEN; }
+void pmu_backup_write_enable(void)
+{
+    PMU_CTL |= PMU_CTL_BKPWEN;
+}
 
 /*!
     \brief      disable write access to the registers in backup domain
@@ -198,7 +221,10 @@ void pmu_backup_write_enable(void) { PMU_CTL |= PMU_CTL_BKPWEN; }
     \param[out] none
     \retval     none
 */
-void pmu_backup_write_disable(void) { PMU_CTL &= ~PMU_CTL_BKPWEN; }
+void pmu_backup_write_disable(void)
+{
+    PMU_CTL &= ~PMU_CTL_BKPWEN;
+}
 
 /*!
     \brief      get flag state
@@ -210,12 +236,13 @@ void pmu_backup_write_disable(void) { PMU_CTL &= ~PMU_CTL_BKPWEN; }
     \param[out] none
     \retval     FlagStatus SET or RESET
 */
-FlagStatus pmu_flag_get(uint32_t flag) {
-  if (PMU_CS & flag) {
-    return SET;
-  } else {
-    return RESET;
-  }
+FlagStatus pmu_flag_get(uint32_t flag)
+{
+    if(PMU_CS & flag){
+        return  SET;
+    }else{
+        return  RESET;
+    }
 }
 
 /*!
@@ -227,17 +254,18 @@ FlagStatus pmu_flag_get(uint32_t flag) {
     \param[out] none
     \retval     none
 */
-void pmu_flag_clear(uint32_t flag_reset) {
-  switch (flag_reset) {
-  case PMU_FLAG_RESET_WAKEUP:
-    /* reset wakeup flag */
-    PMU_CTL |= PMU_CTL_WURST;
-    break;
-  case PMU_FLAG_RESET_STANDBY:
-    /* reset standby flag */
-    PMU_CTL |= PMU_CTL_STBRST;
-    break;
-  default:
-    break;
-  }
+void pmu_flag_clear(uint32_t flag_reset)
+{
+    switch(flag_reset){
+    case PMU_FLAG_RESET_WAKEUP:
+        /* reset wakeup flag */
+        PMU_CTL |= PMU_CTL_WURST;
+        break;
+    case PMU_FLAG_RESET_STANDBY:
+        /* reset standby flag */
+        PMU_CTL |= PMU_CTL_STBRST;
+        break;
+    default :
+        break;
+    }
 }

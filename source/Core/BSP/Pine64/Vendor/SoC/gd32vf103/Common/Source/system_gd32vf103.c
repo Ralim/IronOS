@@ -23,9 +23,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "nuclei_sdk_hal.h"
 #include <stdint.h>
 #include <stdio.h>
+#include "gd32vf103.h"
+#include "gd32vf103_rcu.h"
+
 
 /*----------------------------------------------------------------------------
  Define clocks

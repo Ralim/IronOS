@@ -58,7 +58,6 @@ BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
 PINE_INC_DIR = ./Core/BSP/Pine64
 PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include
-PINE_BOARD_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Include
 PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include/Usb
 PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
@@ -135,7 +134,6 @@ ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_VENDOR_INC_DIR) \
--I$(PINE_BOARD_INC_DIR) \
 -I$(PINE_VENDOR_USB_INC_DIR) \
 -I$(PINE_NMSIS_INC_DIR) \
 -I$(PINE_FREERTOS_PORT_INC_DIR) 
