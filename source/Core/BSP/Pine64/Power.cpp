@@ -20,7 +20,10 @@ void power_check() {
 
 bool getIsPoweredByDCIN() {
 #ifdef POW_PD
-  if (USBPowerDelivery::negotiationComplete()) {
+  if (!USBPowerDelivery::negotiationComplete()) {
+    return false; // We are assuming not dc while negotiating
+  }
+  if (USBPowerDelivery::negotiationHasWorked()) {
     return false; // We are using PD
   }
 #endif
