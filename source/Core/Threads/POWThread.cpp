@@ -18,24 +18,22 @@
 // Small worker thread to handle power (mostly QC) related steps
 
 void startPOWTask(void const *argument __unused) {
+  // Init any other misc sensors
+  postRToSInit();
   // You have to run this once we are willing to answer PD messages
   // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
 #ifdef POW_PD
   USBPowerDelivery::start();
 #endif
-  // Init any other misc sensors
-  postRToSInit();
-  uint32_t notificationValue = 0;
   for (;;) {
-    notificationValue = 0;
-    xTaskNotifyWait(0x0, 0xFFFFFF, &notificationValue, TICKS_100MS);
 #ifdef POW_PD
-    if (getFUS302IRQLow() || notificationValue) {
+    if (getFUS302IRQLow()) {
       USBPowerDelivery::IRQOccured();
     }
     USBPowerDelivery::step();
     USBPowerDelivery::PPSTimerCallback();
 #endif
     power_check();
+    xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_10MS);
   }
 }
