@@ -46,6 +46,7 @@ ssize_t _write(int fd, const void *ptr, size_t len) {
   memcpy(uartOutputBuffer, ptr, len);
   /* enable USART1 Transmit Buffer Empty interrupt */
   usart_interrupt_enable(UART_PERIF, USART_INT_TBE);
+  delay_ms(1);
   return len;
 }
 void USART1_IRQHandler(void) {
