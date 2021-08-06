@@ -12,6 +12,9 @@ void power_check() {
   if (!USBPowerDelivery::negotiationComplete()) {
     return;
   }
+  if (USBPowerDelivery::negotiationHasWorked()) {
+    return; // We are using PD
+  }
 #endif
 #ifdef POW_QC
   QC_resync();
