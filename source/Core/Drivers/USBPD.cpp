@@ -31,17 +31,20 @@ uint16_t     requested_voltage_mv             = 0;
 
 // Start processing
 bool USBPowerDelivery::start() {
-  if (fusb.fusb_read_id() && fusb.fusb_setup()) {
-    detectionState = 1;
+  if (fusbPresent() && fusb.fusb_setup()) {
     setupFUSBIRQ();
     return true;
   }
   detectionState = 2;
   return false;
 }
-void USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
-void USBPowerDelivery::step() {
-  while (pe.thread()) {}
+void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
+bool    USBPowerDelivery::negotiationHasWorked() { return pe.pdHasNegotiated(); }
+uint8_t USBPowerDelivery::getStateNumber() { return pe.currentStateCode(); }
+void    USBPowerDelivery::step() {
+  while (pe.thread()) {
+    vTaskDelay(1);
+  }
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.PPSTimerCallback(); }
@@ -51,7 +54,6 @@ bool USBPowerDelivery::negotiationComplete() {
   }
   return pe.setupCompleteOrTimedOut(systemSettings.PDNegTimeout);
 }
-bool USBPowerDelivery::negotiationInProgress() { return !pe.pdHasNegotiated(); }
 bool USBPowerDelivery::fusbPresent() {
   if (detectionState == 0) {
     if (fusb.fusb_read_id()) {
