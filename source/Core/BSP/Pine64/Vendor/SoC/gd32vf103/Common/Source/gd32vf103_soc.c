@@ -42,9 +42,9 @@ uint32_t get_cpu_freq() {
  */
 void delay_1ms(uint32_t count) {
   uint64_t end_mtime;
-  uint64_t delay_ticks = ((SOC_TIMER_FREQ/4) * (uint64_t)count) / 1000;
+  uint64_t delay_ticks = ((SOC_TIMER_FREQ / 4) * (uint64_t)count) / 1000;
 
-  end_mtime = SysTimer_GetLoadValue()+delay_ticks;
+  end_mtime = SysTimer_GetLoadValue() + delay_ticks;
 
   do {
     asm("nop");

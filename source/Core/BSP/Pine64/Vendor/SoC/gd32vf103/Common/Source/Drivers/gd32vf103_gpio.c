@@ -9,42 +9,42 @@
 /*
     Copyright (c) 2020, GigaDevice Semiconductor Inc.
 
-    Redistribution and use in source and binary forms, with or without modification, 
+    Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
 
-    1. Redistributions of source code must retain the above copyright notice, this 
+    1. Redistributions of source code must retain the above copyright notice, this
        list of conditions and the following disclaimer.
-    2. Redistributions in binary form must reproduce the above copyright notice, 
-       this list of conditions and the following disclaimer in the documentation 
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
        and/or other materials provided with the distribution.
-    3. Neither the name of the copyright holder nor the names of its contributors 
-       may be used to endorse or promote products derived from this software without 
+    3. Neither the name of the copyright holder nor the names of its contributors
+       may be used to endorse or promote products derived from this software without
        specific prior written permission.
 
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
 OF SUCH DAMAGE.
 */
 
 #include "gd32vf103_gpio.h"
 #include "gd32vf103_rcu.h"
 
-#define AFIO_EXTI_SOURCE_MASK              ((uint8_t)0x03U)         /*!< AFIO exti source selection mask*/  
-#define AFIO_EXTI_SOURCE_FIELDS            ((uint8_t)0x04U)         /*!< select AFIO exti source registers */
-#define LSB_16BIT_MASK                     ((uint16_t)0xFFFFU)      /*!< LSB 16-bit mask */
-#define PCF_POSITION_MASK                  ((uint32_t)0x000F0000U)  /*!< AFIO_PCF register position mask */
-#define PCF_SWJCFG_MASK                    ((uint32_t)0xF0FFFFFFU)  /*!< AFIO_PCF register SWJCFG mask */
-#define PCF_LOCATION1_MASK                 ((uint32_t)0x00200000U)  /*!< AFIO_PCF register location1 mask */
-#define PCF_LOCATION2_MASK                 ((uint32_t)0x00100000U)  /*!< AFIO_PCF register location2 mask */
-#define AFIO_PCF1_FIELDS                   ((uint32_t)0x80000000U)  /*!< select AFIO_PCF1 register */
-#define GPIO_OUTPUT_PORT_OFFSET            ((uint32_t)4U)           /*!< GPIO event output port offset*/
+#define AFIO_EXTI_SOURCE_MASK   ((uint8_t)0x03U)        /*!< AFIO exti source selection mask*/
+#define AFIO_EXTI_SOURCE_FIELDS ((uint8_t)0x04U)        /*!< select AFIO exti source registers */
+#define LSB_16BIT_MASK          ((uint16_t)0xFFFFU)     /*!< LSB 16-bit mask */
+#define PCF_POSITION_MASK       ((uint32_t)0x000F0000U) /*!< AFIO_PCF register position mask */
+#define PCF_SWJCFG_MASK         ((uint32_t)0xF0FFFFFFU) /*!< AFIO_PCF register SWJCFG mask */
+#define PCF_LOCATION1_MASK      ((uint32_t)0x00200000U) /*!< AFIO_PCF register location1 mask */
+#define PCF_LOCATION2_MASK      ((uint32_t)0x00100000U) /*!< AFIO_PCF register location2 mask */
+#define AFIO_PCF1_FIELDS        ((uint32_t)0x80000000U) /*!< select AFIO_PCF1 register */
+#define GPIO_OUTPUT_PORT_OFFSET ((uint32_t)4U)          /*!< GPIO event output port offset*/
 
 /*!
     \brief      reset GPIO port
@@ -52,37 +52,36 @@ OF SUCH DAMAGE.
     \param[out] none
     \retval     none
 */
-void gpio_deinit(uint32_t gpio_periph)
-{
-    switch (gpio_periph) {
-    case GPIOA:
-        /* reset GPIOA */
-        rcu_periph_reset_enable(RCU_GPIOARST);
-        rcu_periph_reset_disable(RCU_GPIOARST);
-        break;
-    case GPIOB:
-        /* reset GPIOB */
-        rcu_periph_reset_enable(RCU_GPIOBRST);
-        rcu_periph_reset_disable(RCU_GPIOBRST);
-        break;
-    case GPIOC:
-        /* reset GPIOC */
-        rcu_periph_reset_enable(RCU_GPIOCRST);
-        rcu_periph_reset_disable(RCU_GPIOCRST);
-        break;
-    case GPIOD:
-        /* reset GPIOD */
-        rcu_periph_reset_enable(RCU_GPIODRST);
-        rcu_periph_reset_disable(RCU_GPIODRST);
-        break;
-    case GPIOE:
-        /* reset GPIOE */
-        rcu_periph_reset_enable(RCU_GPIOERST);
-        rcu_periph_reset_disable(RCU_GPIOERST);
-        break;
-    default:
-        break;
-    }
+void gpio_deinit(uint32_t gpio_periph) {
+  switch (gpio_periph) {
+  case GPIOA:
+    /* reset GPIOA */
+    rcu_periph_reset_enable(RCU_GPIOARST);
+    rcu_periph_reset_disable(RCU_GPIOARST);
+    break;
+  case GPIOB:
+    /* reset GPIOB */
+    rcu_periph_reset_enable(RCU_GPIOBRST);
+    rcu_periph_reset_disable(RCU_GPIOBRST);
+    break;
+  case GPIOC:
+    /* reset GPIOC */
+    rcu_periph_reset_enable(RCU_GPIOCRST);
+    rcu_periph_reset_disable(RCU_GPIOCRST);
+    break;
+  case GPIOD:
+    /* reset GPIOD */
+    rcu_periph_reset_enable(RCU_GPIODRST);
+    rcu_periph_reset_disable(RCU_GPIODRST);
+    break;
+  case GPIOE:
+    /* reset GPIOE */
+    rcu_periph_reset_enable(RCU_GPIOERST);
+    rcu_periph_reset_disable(RCU_GPIOERST);
+    break;
+  default:
+    break;
+  }
 }
 
 /*!
@@ -91,10 +90,9 @@ void gpio_deinit(uint32_t gpio_periph)
     \param[out] none
     \retval     none
 */
-void gpio_afio_deinit(void)
-{
-    rcu_periph_reset_enable(RCU_AFRST);
-    rcu_periph_reset_disable(RCU_AFRST);
+void gpio_afio_deinit(void) {
+  rcu_periph_reset_enable(RCU_AFRST);
+  rcu_periph_reset_disable(RCU_AFRST);
 }
 
 /*!
@@ -122,70 +120,68 @@ void gpio_afio_deinit(void)
     \param[out] none
     \retval     none
 */
-void gpio_init(uint32_t gpio_periph, uint32_t mode, uint32_t speed,
-        uint32_t pin)
-{
-    uint16_t i;
-    uint32_t temp_mode = 0U;
-    uint32_t reg = 0U;
+void gpio_init(uint32_t gpio_periph, uint32_t mode, uint32_t speed, uint32_t pin) {
+  uint16_t i;
+  uint32_t temp_mode = 0U;
+  uint32_t reg       = 0U;
 
-    /* GPIO mode configuration */
-    temp_mode = (uint32_t) (mode & ((uint32_t) 0x0FU));
+  /* GPIO mode configuration */
+  temp_mode = (uint32_t)(mode & ((uint32_t)0x0FU));
 
-    /* GPIO speed configuration */
-    if (((uint32_t) 0x00U) != ((uint32_t) mode & ((uint32_t) 0x10U))) {
-        /* output mode max speed:10MHz,2MHz,50MHz */
-        temp_mode |= (uint32_t) speed;
-    }
+  /* GPIO speed configuration */
+  if (((uint32_t)0x00U) != ((uint32_t)mode & ((uint32_t)0x10U))) {
+    /* output mode max speed:10MHz,2MHz,50MHz */
+    temp_mode |= (uint32_t)speed;
+  }
 
-    /* configure the eight low port pins with GPIO_CTL0 */
-    for (i = 0U; i < 8U; i++) {
-        if ((1U << i) & pin) {
-            reg = GPIO_CTL0(gpio_periph);
+  /* configure the eight low port pins with GPIO_CTL0 */
+  for (i = 0U; i < 8U; i++) {
+    if ((1U << i) & pin) {
+      reg = GPIO_CTL0(gpio_periph);
 
-            /* clear the specified pin mode bits */
-            reg &= ~GPIO_MODE_MASK(i);
-            /* set the specified pin mode bits */
-            reg |= GPIO_MODE_SET(i, temp_mode);
+      /* clear the specified pin mode bits */
+      reg &= ~GPIO_MODE_MASK(i);
+      /* set the specified pin mode bits */
+      reg |= GPIO_MODE_SET(i, temp_mode);
 
-            /* set IPD or IPU */
-            if (GPIO_MODE_IPD == mode) {
-                /* reset the corresponding OCTL bit */
-                GPIO_BC(gpio_periph) = (uint32_t) ((1U << i) & pin);
-            } else {
-                /* set the corresponding OCTL bit */
-                if (GPIO_MODE_IPU == mode) {
-                    GPIO_BOP(gpio_periph) = (uint32_t) ((1U << i) & pin);
-                }
-            }
-            /* set GPIO_CTL0 register */
-            GPIO_CTL0(gpio_periph) = reg;
+      /* set IPD or IPU */
+      if (GPIO_MODE_IPD == mode) {
+        /* reset the corresponding OCTL bit */
+        GPIO_BC(gpio_periph) = (uint32_t)((1U << i) & pin);
+      } else {
+        /* set the corresponding OCTL bit */
+        if (GPIO_MODE_IPU == mode) {
+          GPIO_BOP(gpio_periph) = (uint32_t)((1U << i) & pin);
         }
+      }
+      /* set GPIO_CTL0 register */
+      GPIO_CTL0(gpio_periph) = reg;
     }
-    /* configure the eight high port pins with GPIO_CTL1 */
-    for (i = 8U; i < 16U; i++) {
-        if ((1U << i) & pin) {
-            reg = GPIO_CTL1(gpio_periph);
+  }
+  /* configure the eight high port pins with GPIO_CTL1 */
+  for (i = 8U; i < 16U; i++) {
+    if ((1U << i) & pin) {
+      reg = GPIO_CTL1(gpio_periph);
 
-            /* clear the specified pin mode bits */
-            reg &= ~GPIO_MODE_MASK(i - 8U);
-            /* set the specified pin mode bits */
-            reg |= GPIO_MODE_SET(i - 8U, temp_mode);
+      /* clear the specified pin mode bits */
+      reg &= ~GPIO_MODE_MASK(i - 8U);
+      /* set the specified pin mode bits */
+      reg |= GPIO_MODE_SET(i - 8U, temp_mode);
 
-            /* set IPD or IPU */
-            if (GPIO_MODE_IPD == mode) {
-                /* reset the corresponding OCTL bit */
-                GPIO_BC(gpio_periph) = (uint32_t) ((1U << i) & pin);
-            } else {
-                /* set the corresponding OCTL bit */
-                if (GPIO_MODE_IPU == mode) {
-                    GPIO_BOP(gpio_periph) = (uint32_t) ((1U << i) & pin);
-                }
-            }
-            /* set GPIO_CTL1 register */
-            GPIO_CTL1(gpio_periph) = reg;
+      /* set IPD or IPU */
+      if (GPIO_MODE_IPD == mode) {
+        /* reset the corresponding OCTL bit */
+        GPIO_BC(gpio_periph) = (uint32_t)((1U << i) & pin);
+      } else {
+        /* set the corresponding OCTL bit */
+        if (GPIO_MODE_IPU == mode) {
+          GPIO_BOP(gpio_periph) = (uint32_t)((1U << i) & pin);
         }
+      }
+      /* set GPIO_CTL1 register */
+      GPIO_CTL1(gpio_periph) = reg;
     }
+  }
 }
 
 /*!
@@ -197,10 +193,7 @@ void gpio_init(uint32_t gpio_periph, uint32_t mode, uint32_t speed,
     \param[out] none
     \retval     none
 */
-void gpio_bit_set(uint32_t gpio_periph, uint32_t pin)
-{
-    GPIO_BOP(gpio_periph) = (uint32_t) pin;
-}
+void gpio_bit_set(uint32_t gpio_periph, uint32_t pin) { GPIO_BOP(gpio_periph) = (uint32_t)pin; }
 
 /*!
     \brief      reset GPIO pin
@@ -211,10 +204,7 @@ void gpio_bit_set(uint32_t gpio_periph, uint32_t pin)
     \param[out] none
     \retval     none
 */
-void gpio_bit_reset(uint32_t gpio_periph, uint32_t pin)
-{
-    GPIO_BC(gpio_periph) = (uint32_t) pin;
-}
+void gpio_bit_reset(uint32_t gpio_periph, uint32_t pin) { GPIO_BC(gpio_periph) = (uint32_t)pin; }
 
 /*!
     \brief      write data to the specified GPIO pin
@@ -229,13 +219,12 @@ void gpio_bit_reset(uint32_t gpio_periph, uint32_t pin)
     \param[out] none
     \retval     none
 */
-void gpio_bit_write(uint32_t gpio_periph, uint32_t pin, bit_status bit_value)
-{
-    if (RESET != bit_value) {
-        GPIO_BOP(gpio_periph) = (uint32_t) pin;
-    } else {
-        GPIO_BC(gpio_periph) = (uint32_t) pin;
-    }
+void gpio_bit_write(uint32_t gpio_periph, uint32_t pin, bit_status bit_value) {
+  if (RESET != bit_value) {
+    GPIO_BOP(gpio_periph) = (uint32_t)pin;
+  } else {
+    GPIO_BC(gpio_periph) = (uint32_t)pin;
+  }
 }
 
 /*!
@@ -245,10 +234,7 @@ void gpio_bit_write(uint32_t gpio_periph, uint32_t pin, bit_status bit_value)
     \param[out] none
     \retval     none
 */
-void gpio_port_write(uint32_t gpio_periph, uint16_t data)
-{
-    GPIO_OCTL(gpio_periph) = (uint32_t) data;
-}
+void gpio_port_write(uint32_t gpio_periph, uint16_t data) { GPIO_OCTL(gpio_periph) = (uint32_t)data; }
 
 /*!
     \brief      get GPIO pin input status
@@ -259,13 +245,12 @@ void gpio_port_write(uint32_t gpio_periph, uint16_t data)
     \param[out] none
     \retval     input status of gpio pin: SET or RESET
 */
-FlagStatus gpio_input_bit_get(uint32_t gpio_periph, uint32_t pin)
-{
-    if ((uint32_t) RESET != (GPIO_ISTAT(gpio_periph) & (pin))) {
-        return SET;
-    } else {
-        return RESET;
-    }
+FlagStatus gpio_input_bit_get(uint32_t gpio_periph, uint32_t pin) {
+  if ((uint32_t)RESET != (GPIO_ISTAT(gpio_periph) & (pin))) {
+    return SET;
+  } else {
+    return RESET;
+  }
 }
 
 /*!
@@ -274,10 +259,7 @@ FlagStatus gpio_input_bit_get(uint32_t gpio_periph, uint32_t pin)
     \param[out] none
     \retval     input status of gpio all pins
 */
-uint16_t gpio_input_port_get(uint32_t gpio_periph)
-{
-    return (uint16_t) (GPIO_ISTAT(gpio_periph));
-}
+uint16_t gpio_input_port_get(uint32_t gpio_periph) { return (uint16_t)(GPIO_ISTAT(gpio_periph)); }
 
 /*!
     \brief      get GPIO pin output status
@@ -288,13 +270,12 @@ uint16_t gpio_input_port_get(uint32_t gpio_periph)
     \param[out] none
     \retval     output status of gpio pin: SET or RESET
 */
-FlagStatus gpio_output_bit_get(uint32_t gpio_periph, uint32_t pin)
-{
-    if ((uint32_t) RESET != (GPIO_OCTL(gpio_periph) & (pin))) {
-        return SET;
-    } else {
-        return RESET;
-    }
+FlagStatus gpio_output_bit_get(uint32_t gpio_periph, uint32_t pin) {
+  if ((uint32_t)RESET != (GPIO_OCTL(gpio_periph) & (pin))) {
+    return SET;
+  } else {
+    return RESET;
+  }
 }
 
 /*!
@@ -303,10 +284,7 @@ FlagStatus gpio_output_bit_get(uint32_t gpio_periph, uint32_t pin)
     \param[out] none
     \retval     output status of gpio all pins
 */
-uint16_t gpio_output_port_get(uint32_t gpio_periph)
-{
-    return ((uint16_t) GPIO_OCTL(gpio_periph));
-}
+uint16_t gpio_output_port_get(uint32_t gpio_periph) { return ((uint16_t)GPIO_OCTL(gpio_periph)); }
 
 /*!
     \brief      configure GPIO pin remap
@@ -340,47 +318,45 @@ uint16_t gpio_output_port_get(uint32_t gpio_periph)
     \param[out] none
     \retval     none
 */
-void gpio_pin_remap_config(uint32_t remap, ControlStatus newvalue)
-{
-    uint32_t remap1 = 0U, remap2 = 0U, temp_reg = 0U, temp_mask = 0U;
+void gpio_pin_remap_config(uint32_t remap, ControlStatus newvalue) {
+  uint32_t remap1 = 0U, remap2 = 0U, temp_reg = 0U, temp_mask = 0U;
 
-    if (AFIO_PCF1_FIELDS == (remap & AFIO_PCF1_FIELDS)) {
-        /* get AFIO_PCF1 regiter value */
-        temp_reg = AFIO_PCF1;
-    } else {
-        /* get AFIO_PCF0 regiter value */
-        temp_reg = AFIO_PCF0;
-    }
+  if (AFIO_PCF1_FIELDS == (remap & AFIO_PCF1_FIELDS)) {
+    /* get AFIO_PCF1 regiter value */
+    temp_reg = AFIO_PCF1;
+  } else {
+    /* get AFIO_PCF0 regiter value */
+    temp_reg = AFIO_PCF0;
+  }
 
-    temp_mask = (remap & PCF_POSITION_MASK) >> 0x10U;
-    remap1 = remap & LSB_16BIT_MASK;
+  temp_mask = (remap & PCF_POSITION_MASK) >> 0x10U;
+  remap1    = remap & LSB_16BIT_MASK;
 
-    /* judge pin remap type */
-    if ((PCF_LOCATION1_MASK | PCF_LOCATION2_MASK)
-            == (remap & (PCF_LOCATION1_MASK | PCF_LOCATION2_MASK))) {
-        temp_reg &= PCF_SWJCFG_MASK;
-        AFIO_PCF0 &= PCF_SWJCFG_MASK;
-    } else if (PCF_LOCATION2_MASK == (remap & PCF_LOCATION2_MASK)) {
-        remap2 = ((uint32_t) 0x03U) << temp_mask;
-        temp_reg &= ~remap2;
-        temp_reg |= ~PCF_SWJCFG_MASK;
-    }  else {
-        temp_reg &= ~(remap1 << ((remap >> 0x15U) * 0x10U));
-        temp_reg |= ~PCF_SWJCFG_MASK;
-    }
+  /* judge pin remap type */
+  if ((PCF_LOCATION1_MASK | PCF_LOCATION2_MASK) == (remap & (PCF_LOCATION1_MASK | PCF_LOCATION2_MASK))) {
+    temp_reg &= PCF_SWJCFG_MASK;
+    AFIO_PCF0 &= PCF_SWJCFG_MASK;
+  } else if (PCF_LOCATION2_MASK == (remap & PCF_LOCATION2_MASK)) {
+    remap2 = ((uint32_t)0x03U) << temp_mask;
+    temp_reg &= ~remap2;
+    temp_reg |= ~PCF_SWJCFG_MASK;
+  } else {
+    temp_reg &= ~(remap1 << ((remap >> 0x15U) * 0x10U));
+    temp_reg |= ~PCF_SWJCFG_MASK;
+  }
 
-    /* set pin remap value */
-    if (DISABLE != newvalue) {
-        temp_reg |= (remap1 << ((remap >> 0x15U) * 0x10U));
-    }
+  /* set pin remap value */
+  if (DISABLE != newvalue) {
+    temp_reg |= (remap1 << ((remap >> 0x15U) * 0x10U));
+  }
 
-    if (AFIO_PCF1_FIELDS == (remap & AFIO_PCF1_FIELDS)) {
-        /* set AFIO_PCF1 regiter value */
-        AFIO_PCF1 = temp_reg;
-    } else {
-        /* set AFIO_PCF0 regiter value */
-        AFIO_PCF0 = temp_reg;
-    }
+  if (AFIO_PCF1_FIELDS == (remap & AFIO_PCF1_FIELDS)) {
+    /* set AFIO_PCF1 regiter value */
+    AFIO_PCF1 = temp_reg;
+  } else {
+    /* set AFIO_PCF0 regiter value */
+    AFIO_PCF0 = temp_reg;
+  }
 }
 
 /*!
@@ -396,38 +372,28 @@ void gpio_pin_remap_config(uint32_t remap, ControlStatus newvalue)
     \param[out] none
     \retval     none
 */
-void gpio_exti_source_select(uint8_t output_port, uint8_t output_pin)
-{
-    uint32_t source = 0U;
-    source = ((uint32_t) 0x0FU)
-            << (AFIO_EXTI_SOURCE_FIELDS * (output_pin & AFIO_EXTI_SOURCE_MASK));
+void gpio_exti_source_select(uint8_t output_port, uint8_t output_pin) {
+  uint32_t source = 0U;
+  source          = ((uint32_t)0x0FU) << (AFIO_EXTI_SOURCE_FIELDS * (output_pin & AFIO_EXTI_SOURCE_MASK));
 
-    /* select EXTI sources */
-    if (GPIO_PIN_SOURCE_4 > output_pin) {
-        /* select EXTI0/EXTI1/EXTI2/EXTI3 */
-        AFIO_EXTISS0 &= ~source;
-        AFIO_EXTISS0 |= (((uint32_t) output_port)
-                << (AFIO_EXTI_SOURCE_FIELDS
-                        * (output_pin & AFIO_EXTI_SOURCE_MASK)));
-    } else if (GPIO_PIN_SOURCE_8 > output_pin) {
-        /* select EXTI4/EXTI5/EXTI6/EXTI7 */
-        AFIO_EXTISS1 &= ~source;
-        AFIO_EXTISS1 |= (((uint32_t) output_port)
-                << (AFIO_EXTI_SOURCE_FIELDS
-                        * (output_pin & AFIO_EXTI_SOURCE_MASK)));
-    } else if (GPIO_PIN_SOURCE_12 > output_pin) {
-        /* select EXTI8/EXTI9/EXTI10/EXTI11 */
-        AFIO_EXTISS2 &= ~source;
-        AFIO_EXTISS2 |= (((uint32_t) output_port)
-                << (AFIO_EXTI_SOURCE_FIELDS
-                        * (output_pin & AFIO_EXTI_SOURCE_MASK)));
-    } else {
-        /* select EXTI12/EXTI13/EXTI14/EXTI15 */
-        AFIO_EXTISS3 &= ~source;
-        AFIO_EXTISS3 |= (((uint32_t) output_port)
-                << (AFIO_EXTI_SOURCE_FIELDS
-                        * (output_pin & AFIO_EXTI_SOURCE_MASK)));
-    }
+  /* select EXTI sources */
+  if (GPIO_PIN_SOURCE_4 > output_pin) {
+    /* select EXTI0/EXTI1/EXTI2/EXTI3 */
+    AFIO_EXTISS0 &= ~source;
+    AFIO_EXTISS0 |= (((uint32_t)output_port) << (AFIO_EXTI_SOURCE_FIELDS * (output_pin & AFIO_EXTI_SOURCE_MASK)));
+  } else if (GPIO_PIN_SOURCE_8 > output_pin) {
+    /* select EXTI4/EXTI5/EXTI6/EXTI7 */
+    AFIO_EXTISS1 &= ~source;
+    AFIO_EXTISS1 |= (((uint32_t)output_port) << (AFIO_EXTI_SOURCE_FIELDS * (output_pin & AFIO_EXTI_SOURCE_MASK)));
+  } else if (GPIO_PIN_SOURCE_12 > output_pin) {
+    /* select EXTI8/EXTI9/EXTI10/EXTI11 */
+    AFIO_EXTISS2 &= ~source;
+    AFIO_EXTISS2 |= (((uint32_t)output_port) << (AFIO_EXTI_SOURCE_FIELDS * (output_pin & AFIO_EXTI_SOURCE_MASK)));
+  } else {
+    /* select EXTI12/EXTI13/EXTI14/EXTI15 */
+    AFIO_EXTISS3 &= ~source;
+    AFIO_EXTISS3 |= (((uint32_t)output_port) << (AFIO_EXTI_SOURCE_FIELDS * (output_pin & AFIO_EXTI_SOURCE_MASK)));
+  }
 }
 
 /*!
@@ -445,18 +411,17 @@ void gpio_exti_source_select(uint8_t output_port, uint8_t output_pin)
     \param[out] none
     \retval     none
 */
-void gpio_event_output_config(uint8_t output_port, uint8_t output_pin)
-{
-    uint32_t reg = 0U;
-    reg = AFIO_EC;
+void gpio_event_output_config(uint8_t output_port, uint8_t output_pin) {
+  uint32_t reg = 0U;
+  reg          = AFIO_EC;
 
-    /* clear AFIO_EC_PORT and AFIO_EC_PIN bits */
-    reg &= (uint32_t) (~(AFIO_EC_PORT | AFIO_EC_PIN));
+  /* clear AFIO_EC_PORT and AFIO_EC_PIN bits */
+  reg &= (uint32_t)(~(AFIO_EC_PORT | AFIO_EC_PIN));
 
-    reg |= (uint32_t) ((uint32_t) output_port << GPIO_OUTPUT_PORT_OFFSET);
-    reg |= (uint32_t) output_pin;
+  reg |= (uint32_t)((uint32_t)output_port << GPIO_OUTPUT_PORT_OFFSET);
+  reg |= (uint32_t)output_pin;
 
-    AFIO_EC = reg;
+  AFIO_EC = reg;
 }
 
 /*!
@@ -465,10 +430,7 @@ void gpio_event_output_config(uint8_t output_port, uint8_t output_pin)
     \param[out] none
     \retval     none
 */
-void gpio_event_output_enable(void)
-{
-    AFIO_EC |= AFIO_EC_EOE;
-}
+void gpio_event_output_enable(void) { AFIO_EC |= AFIO_EC_EOE; }
 
 /*!
     \brief      disable GPIO pin event output
@@ -476,10 +438,7 @@ void gpio_event_output_enable(void)
     \param[out] none
     \retval     none
 */
-void gpio_event_output_disable(void)
-{
-    AFIO_EC &= (uint32_t) (~AFIO_EC_EOE);
-}
+void gpio_event_output_disable(void) { AFIO_EC &= (uint32_t)(~AFIO_EC_EOE); }
 
 /*!
     \brief      lock GPIO pin
@@ -490,15 +449,14 @@ void gpio_event_output_disable(void)
     \param[out] none
     \retval     none
 */
-void gpio_pin_lock(uint32_t gpio_periph, uint32_t pin)
-{
-    uint32_t lock = 0x00010000U;
-    lock |= pin;
+void gpio_pin_lock(uint32_t gpio_periph, uint32_t pin) {
+  uint32_t lock = 0x00010000U;
+  lock |= pin;
 
-    /* lock key writing sequence: write 1 -> write 0 -> write 1 -> read 0 -> read 1 */
-    GPIO_LOCK(gpio_periph) = (uint32_t) lock;
-    GPIO_LOCK(gpio_periph) = (uint32_t) pin;
-    GPIO_LOCK(gpio_periph) = (uint32_t) lock;
-    lock = GPIO_LOCK(gpio_periph);
-    lock = GPIO_LOCK(gpio_periph);
+  /* lock key writing sequence: write 1 -> write 0 -> write 1 -> read 0 -> read 1 */
+  GPIO_LOCK(gpio_periph) = (uint32_t)lock;
+  GPIO_LOCK(gpio_periph) = (uint32_t)pin;
+  GPIO_LOCK(gpio_periph) = (uint32_t)lock;
+  lock                   = GPIO_LOCK(gpio_periph);
+  lock                   = GPIO_LOCK(gpio_periph);
 }
