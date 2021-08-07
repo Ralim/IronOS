@@ -23,15 +23,19 @@ void startPOWTask(void const *argument __unused) {
   // You have to run this once we are willing to answer PD messages
   // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
 #ifdef POW_PD
-  USBPowerDelivery::start();
+  if (systemSettings.PDNegTimeout) {
+    USBPowerDelivery::start();
+  }
 #endif
   for (;;) {
 #ifdef POW_PD
-    if (getFUS302IRQLow()) {
-      USBPowerDelivery::IRQOccured();
+    if (systemSettings.PDNegTimeout) {
+      if (getFUS302IRQLow()) {
+        USBPowerDelivery::IRQOccured();
+      }
+      USBPowerDelivery::step();
+      USBPowerDelivery::PPSTimerCallback();
     }
-    USBPowerDelivery::step();
-    USBPowerDelivery::PPSTimerCallback();
 #endif
     power_check();
     xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_10MS);
