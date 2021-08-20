@@ -1,0 +1,2 @@
+fails/hangs in 
+usb_status usb_core_init (usb_core_basic usb_basic, usb_core_regs *usb_regs)

@@ -211,6 +211,7 @@ typedef enum EXCn {
 #define __SYS_OSC_CLK (__IRC8M)     /* main oscillator frequency */
 
 #define __SYSTEM_CLOCK_108M_PLL_HXTAL (uint32_t)(108000000)
+#define __SYSTEM_CLOCK_96M_PLL_HXTAL  (uint32_t)(96000000)
 
 #define RTC_FREQ LXTAL_VALUE
 // The TIMER frequency is just the RTC frequency
