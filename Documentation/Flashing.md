@@ -20,7 +20,7 @@ Then this works the same as a production release (use the correct file).
 
 ## Miniware irons (TS100, TS80, TS80P)
 
-This is completely safe, but if it goes wrong just put the .hex file from the official website onto the unit and you're back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called _(MODEL)\_EN.hex_ unless you want the translations, they are (MODEL)\__language short name_.hex. Where (MODEL) is either TS100 or TS80.
+This is completely safe, but if it goes wrong just put the .hex file from the [official website](http://www.miniware.com.cn/product-category/soldering-pen/electric-soldering-kit/) onto the unit and you're back to the old firmware. Downloads for the hex files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called _(MODEL)\_EN.hex_ unless you want the translations, they are (MODEL)\__language short name_.hex. Where (MODEL) is either TS100 or TS80.
 
 Officially the bootloader on the iron only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under Mac, and can be made to work under Linux _sometimes_. Details over on the [wiki page](https://github.com/Ralim/ts100/wiki/Upgrading-Firmware).
 
@@ -96,6 +96,12 @@ Using `dfu-util` you can flash the firmware using a command line as such:
 
 ```
 dfu-util -d 28e9:0189 -a 0 -D Pinecil_EN.bin -s 0x08000000:mass-erase:force
+```
+
+If this command fails with `dfu-util: Error during special command "MASS_ERASE" get_status`, try this instead:
+
+```
+dfu-util -d 28e9:0189 -a 0 -D Pinecil_EN.bin -s 0x08000000
 ```
 
 ### Windows

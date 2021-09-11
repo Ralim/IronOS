@@ -551,28 +551,27 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     OLED::clearScreen();
     // Draw in the screen details
     if (systemSettings.detailedSoldering) {
-      OLED::print(translatedString(Tr->SolderingAdvancedPowerPrompt),
-                  FontStyle::SMALL); // Power:
+      gui_drawTipTemp(true, FontStyle::LARGE);
+
+#ifndef NO_SLEEP_MODE
+      if (systemSettings.sensitivity && systemSettings.SleepTime) {
+        OLED::setCursor(47, 0);
+        display_countdown(getSleepTimeout());
+      }
+#endif
+
+      if (boostModeOn) {
+        OLED::setCursor(54, 8);
+        OLED::print(SymbolPlus, FontStyle::SMALL);
+      }
+
+      OLED::setCursor(67, 0);
       OLED::printNumber(x10WattHistory.average() / 10, 2, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(x10WattHistory.average() % 10, 1, FontStyle::SMALL);
       OLED::print(SymbolWatts, FontStyle::SMALL);
-#ifndef NO_SLEEP_MODE
-      if (systemSettings.sensitivity && systemSettings.SleepTime) {
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-        display_countdown(getSleepTimeout());
-      }
-#endif
-      OLED::setCursor(0, 8);
-      OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
-      gui_drawTipTemp(true, FontStyle::SMALL);
 
-      if (boostModeOn) {
-        OLED::print(SymbolPlus, FontStyle::SMALL);
-      } else {
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-      }
-
+      OLED::setCursor(67, 8);
       printVoltage();
       OLED::print(SymbolVolts, FontStyle::SMALL);
     } else {
@@ -904,15 +903,22 @@ void startGUITask(void const *argument __unused) {
       if (isTipDisconnected()) {
         OLED::print(translatedString(Tr->TipDisconnectedString), FontStyle::SMALL);
       } else {
-        OLED::print(translatedString(Tr->IdleTipString), FontStyle::SMALL);
-        gui_drawTipTemp(false, FontStyle::SMALL);
-        OLED::print(translatedString(Tr->IdleSetString), FontStyle::SMALL);
-        OLED::printNumber(systemSettings.SolderingTemp, 3, FontStyle::SMALL);
+        if (!(systemSettings.coolingTempBlink && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300)))
+          // Blink temp if setting enable and temp < 55°
+          // 1000 tick/sec
+          // OFF 300ms ON 700ms
+          gui_drawTipTemp(true, FontStyle::LARGE);                            // draw in the temp
+        OLED::setCursor(73, 0);                                               // top right
+        OLED::printNumber(systemSettings.SolderingTemp, 3, FontStyle::SMALL); // draw set temp
+        if (systemSettings.temperatureInF)
+          OLED::print(SymbolDegF, FontStyle::SMALL);
+        else
+          OLED::print(SymbolDegC, FontStyle::SMALL);
       }
-      OLED::setCursor(0, 8);
 
-      OLED::print(translatedString(Tr->InputVoltageString), FontStyle::SMALL);
-      printVoltage();
+      OLED::setCursor(67, 8); // bottom right
+      printVoltage();         // draw voltage then symbol (v)
+      OLED::print(SymbolVolts, FontStyle::SMALL);
 
     } else {
 #ifdef OLED_FLIP
