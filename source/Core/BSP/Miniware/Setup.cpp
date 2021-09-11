@@ -5,7 +5,10 @@
  *      Author: Ben V. Brown
  */
 #include "Setup.h"
+#include "BSP.h"
 #include "Pins.h"
+#include "history.hpp"
+#include <stdint.h>
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
@@ -17,9 +20,9 @@ DMA_HandleTypeDef hdma_i2c1_tx;
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef  htim2;
 TIM_HandleTypeDef  htim3;
-#define ADC_CHANNELS 2
-#define ADC_SAMPLES  16
-uint32_t ADCReadings[ADC_SAMPLES * ADC_CHANNELS]; // room for 32 lots of the pair of readings
+#define ADC_FILTER_LEN 32
+#define ADC_SAMPLES    16
+uint16_t ADCReadings[ADC_SAMPLES]; // Used to store the adc readings for the handle cold junction temp
 
 // Functions
 static void SystemClock_Config(void);
@@ -48,24 +51,53 @@ void        Setup_HAL() {
   MX_TIM3_Init();
   MX_TIM2_Init();
   MX_IWDG_Init();
-  HAL_ADC_Start(&hadc2);
-  HAL_ADCEx_MultiModeStart_DMA(&hadc1, ADCReadings, (ADC_SAMPLES * ADC_CHANNELS)); // start DMA of normal readings
-  HAL_ADCEx_InjectedStart(&hadc1);                                                 // enable injected readings
-  HAL_ADCEx_InjectedStart(&hadc2);                                                 // enable injected readings
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADCReadings, (ADC_SAMPLES)); // start DMA of normal readings
+  HAL_ADCEx_InjectedStart(&hadc1);                                   // enable injected readings
+  HAL_ADCEx_InjectedStart(&hadc2);                                   // enable injected readings
 }
 
-// channel 0 -> temperature sensor, 1-> VIN
-uint16_t getADC(uint8_t channel) {
-  uint32_t sum = 0;
-  for (uint8_t i = 0; i < ADC_SAMPLES; i++) {
-    uint16_t adc1Sample = ADCReadings[channel + (i * ADC_CHANNELS)];
-    uint16_t adc2Sample = ADCReadings[channel + (i * ADC_CHANNELS)] >> 16;
-
-    sum += (adc1Sample + adc2Sample);
+uint16_t getADCHandleTemp(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint32_t sum = 0;
+    for (uint8_t i = 0; i < ADC_SAMPLES; i++) {
+      sum += ADCReadings[i];
+    }
+    filter.update(sum);
   }
-  return sum >> 2;
+  return filter.average() >> 1;
 }
 
+uint16_t getADCVin(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint16_t latestADC = 0;
+
+    latestADC += hadc2.Instance->JDR1;
+    latestADC += hadc2.Instance->JDR2;
+    latestADC += hadc2.Instance->JDR3;
+    latestADC += hadc2.Instance->JDR4;
+    latestADC <<= 3;
+    filter.update(latestADC);
+  }
+  return filter.average();
+}
+// Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
+uint16_t getTipRawTemp(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint16_t latestADC = 0;
+
+    latestADC += hadc1.Instance->JDR1;
+    latestADC += hadc1.Instance->JDR2;
+    latestADC += hadc1.Instance->JDR3;
+    latestADC += hadc1.Instance->JDR4;
+    latestADC <<= 1;
+    filter.update(latestADC);
+    return latestADC;
+  }
+  return filter.average();
+}
 /** System Clock Configuration
  */
 void SystemClock_Config(void) {
@@ -113,7 +145,6 @@ void SystemClock_Config(void) {
 
 /* ADC1 init function */
 static void MX_ADC1_Init(void) {
-  ADC_MultiModeTypeDef multimode;
 
   ADC_ChannelConfTypeDef   sConfig;
   ADC_InjectionConfTypeDef sConfigInjected;
@@ -125,25 +156,14 @@ static void MX_ADC1_Init(void) {
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv      = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign             = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion       = ADC_CHANNELS;
+  hadc1.Init.NbrOfConversion       = 1;
   HAL_ADC_Init(&hadc1);
-
-  /**Configure the ADC multi-mode
-   */
-  multimode.Mode = ADC_DUALMODE_REGSIMULT_INJECSIMULT;
-  HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode);
 
   /**Configure Regular Channel
    */
   sConfig.Channel      = TMP36_ADC1_CHANNEL;
   sConfig.Rank         = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
-  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-
-  /**Configure Regular Channel
-   */
-  sConfig.Channel = VIN_ADC1_CHANNEL;
-  sConfig.Rank    = ADC_REGULAR_RANK_2;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 
   /**Configure Injected Channel
@@ -157,15 +177,13 @@ static void MX_ADC1_Init(void) {
   sConfigInjected.InjectedChannel               = TIP_TEMP_ADC1_CHANNEL;
   sConfigInjected.InjectedRank                  = 1;
   sConfigInjected.InjectedNbrOfConversion       = 4;
-  sConfigInjected.InjectedSamplingTime          = ADC_SAMPLETIME_1CYCLE_5;
-  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
+  sConfigInjected.InjectedSamplingTime          = ADC_SAMPLETIME_28CYCLES_5;
+  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T2_TRGO;
   sConfigInjected.AutoInjectedConv              = DISABLE;
   sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
   sConfigInjected.InjectedOffset                = 0;
 
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
-  sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-
   sConfigInjected.InjectedRank = 2;
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
   sConfigInjected.InjectedRank = 3;
@@ -180,44 +198,30 @@ static void MX_ADC1_Init(void) {
 
 /* ADC2 init function */
 static void MX_ADC2_Init(void) {
-  ADC_ChannelConfTypeDef   sConfig;
   ADC_InjectionConfTypeDef sConfigInjected;
 
   /**Common config
    */
   hadc2.Instance                   = ADC2;
-  hadc2.Init.ScanConvMode          = ADC_SCAN_ENABLE;
+  hadc2.Init.ScanConvMode          = ADC_SCAN_DISABLE;
   hadc2.Init.ContinuousConvMode    = ENABLE;
   hadc2.Init.DiscontinuousConvMode = DISABLE;
   hadc2.Init.ExternalTrigConv      = ADC_SOFTWARE_START;
   hadc2.Init.DataAlign             = ADC_DATAALIGN_RIGHT;
-  hadc2.Init.NbrOfConversion       = ADC_CHANNELS;
+  hadc2.Init.NbrOfConversion       = 0;
   HAL_ADC_Init(&hadc2);
-
-  /**Configure Regular Channel
-   */
-  sConfig.Channel      = TMP36_ADC2_CHANNEL;
-  sConfig.Rank         = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
-  HAL_ADC_ConfigChannel(&hadc2, &sConfig);
-
-  sConfig.Channel = VIN_ADC2_CHANNEL;
-  sConfig.Rank    = ADC_REGULAR_RANK_2;
-  HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
   /**Configure Injected Channel
    */
-  sConfigInjected.InjectedChannel               = TIP_TEMP_ADC2_CHANNEL;
+  sConfigInjected.InjectedChannel               = VIN_ADC2_CHANNEL;
   sConfigInjected.InjectedRank                  = ADC_INJECTED_RANK_1;
   sConfigInjected.InjectedNbrOfConversion       = 4;
-  sConfigInjected.InjectedSamplingTime          = ADC_SAMPLETIME_1CYCLE_5;
-  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T2_CC1;
+  sConfigInjected.InjectedSamplingTime          = ADC_SAMPLETIME_28CYCLES_5;
+  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T2_TRGO;
   sConfigInjected.AutoInjectedConv              = DISABLE;
   sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
   sConfigInjected.InjectedOffset                = 0;
   HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
-  sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-
   sConfigInjected.InjectedRank = ADC_INJECTED_RANK_2;
   HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
   sConfigInjected.InjectedRank = ADC_INJECTED_RANK_3;
@@ -334,7 +338,7 @@ static void MX_TIM2_Init(void) {
   HAL_TIM_PWM_Init(&htim2);
   HAL_TIM_OC_Init(&htim2);
 
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_OC1;
   sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
   HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
 

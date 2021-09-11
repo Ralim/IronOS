@@ -21,27 +21,7 @@ uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
 history<uint16_t, PID_TIM_HZ> rawTempFilter = {{0}, 0, 0};
 void                          resetWatchdog() { fwdgt_counter_reload(); }
 
-uint16_t getTipInstantTemperature() {
-  volatile uint16_t sum = 0; // 12 bit readings * 8*2 -> 16 bits
-
-  for (int i = 0; i < 4; i++) {
-    sum += adc_inserted_data_read(ADC0, i);
-    sum += adc_inserted_data_read(ADC1, i);
-  }
-  return sum; // 8x over sample
-}
-
-uint16_t getTipRawTemp(uint8_t refresh) {
-  if (refresh) {
-    uint16_t lastSample = getTipInstantTemperature();
-    rawTempFilter.update(lastSample);
-    return lastSample;
-  } else {
-    return rawTempFilter.average();
-  }
-}
-
-uint16_t getHandleTemperature() {
+uint16_t getHandleTemperature(uint8_t sample) {
 #ifdef TEMP_TMP36
   // We return the current handle temperature in X10 C
   // TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
@@ -50,7 +30,7 @@ uint16_t getHandleTemperature() {
   // mV per count So we need to subtract an offset of 0.5V to center on 0C
   // (4964.8 counts)
   //
-  int32_t result = getADC(0);
+  int32_t result = getADCHandleTemp(sample);
   result -= 4965; // remove 0.5V offset
   // 10mV per C
   // 99.29 counts per Deg C above 0C
@@ -58,33 +38,14 @@ uint16_t getHandleTemperature() {
   result /= 993;
   return result;
 #else
-#error
+#error Pinecil only uses TMP36
 #endif
 }
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
-
-  static uint8_t  preFillneeded = 10;
-  static uint32_t samples[BATTFILTERDEPTH];
-  static uint8_t  index = 0;
-  if (preFillneeded) {
-    for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
-      samples[i] = getADC(1);
-    preFillneeded--;
-  }
-  if (sample) {
-    samples[index] = getADC(1);
-    index          = (index + 1) % BATTFILTERDEPTH;
-  }
-  uint32_t sum = 0;
-
-  for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
-    sum += samples[i];
-
-  sum /= BATTFILTERDEPTH;
-  if (divisor == 0) {
-    divisor = 1;
-  }
-  return sum * 4 / divisor;
+  uint32_t res = getADCVin(sample);
+  res *= 4;
+  res /= divisor;
+  return res;
 }
 
 void unstick_I2C() {

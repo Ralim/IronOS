@@ -201,7 +201,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     HAL_IncTick();
   }
 }
-uint16_t getHandleTemperature() {
+uint16_t getHandleTemperature(uint8_t sample) {
   int32_t result = getADC(0);
   return Utils::InterpolateLookupTable(NTCHandleLookup, NTCHandleLookupItems, result);
 }

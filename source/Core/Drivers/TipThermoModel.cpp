@@ -71,10 +71,10 @@ uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
 }
 uint32_t TipThermoModel::getTipInC(bool sampleNow) {
   int32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(sampleNow));
-  currentTipTempInC += getHandleTemperature() / 10; // Add handle offset
-                                                    // Power usage indicates that our tip temp is lower than our thermocouple temp.
-                                                    // I found a number that doesn't unbalance the existing PID, causing overshoot.
-                                                    // This could be tuned in concert with PID parameters...
+  currentTipTempInC += getHandleTemperature(sampleNow) / 10; // Add handle offset
+                                                             // Power usage indicates that our tip temp is lower than our thermocouple temp.
+                                                             // I found a number that doesn't unbalance the existing PID, causing overshoot.
+                                                             // This could be tuned in concert with PID parameters...
 #ifdef THERMAL_MASS_OVERSHOOTS
   currentTipTempInC += x10WattHistory.average() / 25;
 #else
@@ -93,6 +93,6 @@ uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 
 uint32_t TipThermoModel::getTipMaxInC() {
   uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(0x7FFF - (21 * 5)); // back off approx 5 deg c from ADC max
-  maximumTipTemp += getHandleTemperature() / 10;                                       // Add handle offset
+  maximumTipTemp += getHandleTemperature(0) / 10;                                      // Add handle offset
   return maximumTipTemp - 1;
 }

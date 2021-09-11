@@ -37,6 +37,11 @@ void startPIDTask(void const *argument __unused) {
   uint32_t   PIDTempTarget         = 0;
   uint16_t   tipTempCRunawayTemp   = 0;
   TickType_t runawaylastChangeTime = 0;
+  // Pre-seed the adc filters
+  for (int i = 0; i < 64; i++) {
+    vTaskDelay(2);
+    TipThermoModel::getTipInC(true);
+  }
 #ifdef SLEW_LIMIT
   int32_t x10WattsOutLast = 0;
 #endif

@@ -700,7 +700,7 @@ void showDebugMenu(void) {
       break;
     case 8:
       // Handle Temp
-      OLED::printNumber(getHandleTemperature(), 3, FontStyle::SMALL);
+      OLED::printNumber(getHandleTemperature(0), 6, FontStyle::SMALL);
       break;
     case 9:
       // Voltage input
