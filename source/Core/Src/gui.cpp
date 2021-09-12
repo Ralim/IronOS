@@ -14,10 +14,6 @@
 #include "configuration.h"
 #include "main.hpp"
 
-#define POW_DC
-#define POW_PD
-#define POW_QC
-#define HALL_SENSOR
 void gui_Menu(const menuitem *menu);
 
 #ifdef POW_DC
@@ -47,31 +43,31 @@ static bool settings_displayPowerLimit(void);
 static bool settings_setDisplayRotation(void);
 static bool settings_displayDisplayRotation(void);
 #endif
-static bool                    settings_setBoostTemp(void);
-static bool                    settings_displayBoostTemp(void);
-static bool                    settings_displayAutomaticStartMode(void);
-static bool                    settings_displayLockingMode(void);
-static bool                    settings_displayCoolingBlinkEnabled(void);
-static bool                    settings_setResetSettings(void);
-static bool                    settings_displayResetSettings(void);
-static bool                    settings_setCalibrate(void);
-static bool                    settings_displayCalibrate(void);
-static bool                    settings_setCalibrateVIN(void);
-static bool                    settings_displayCalibrateVIN(void);
-static bool                    settings_displayReverseButtonTempChangeEnabled(void);
-static bool                    settings_displayTempChangeShortStep(void);
-static bool                    settings_displayTempChangeLongStep(void);
-static bool                    settings_displayPowerPulse(void);
-static bool                    settings_displayAnimationSpeed(void);
-static bool                    settings_displayAnimationLoop(void);
-static bool                    settings_displayPowerPulseWait(void);
-static bool                    settings_displayPowerPulseDuration(void);
-static bool                    settings_setPowerPulseDuration(void);
-static bool                    settings_displayBrightnessLevel(void);
-static bool                    settings_setBrightnessLevel(void);
-static bool                    settings_displayInvertColor(void);
-static bool                    settings_setInvertColor(void);
-#ifdef HALL_SENSOR static bool settings_displayHallEffect(void);
+
+static bool settings_setBoostTemp(void);
+static bool settings_displayBoostTemp(void);
+static bool settings_displayAutomaticStartMode(void);
+static bool settings_displayLockingMode(void);
+static bool settings_displayCoolingBlinkEnabled(void);
+static bool settings_setResetSettings(void);
+static bool settings_displayResetSettings(void);
+static bool settings_setCalibrate(void);
+static bool settings_displayCalibrate(void);
+static bool settings_setCalibrateVIN(void);
+static bool settings_displayCalibrateVIN(void);
+static bool settings_displayReverseButtonTempChangeEnabled(void);
+static bool settings_displayTempChangeShortStep(void);
+static bool settings_displayTempChangeLongStep(void);
+static bool settings_displayPowerPulse(void);
+static bool settings_displayAnimationSpeed(void);
+static bool settings_displayAnimationLoop(void);
+static bool settings_displayPowerPulseWait(void);
+static bool settings_displayPowerPulseDuration(void);
+static bool settings_displayBrightnessLevel(void);
+static bool settings_displayInvertColor(void);
+
+#ifdef HALL_SENSOR
+static bool settings_displayHallEffect(void);
 #endif
 // Menu functions
 
@@ -200,12 +196,12 @@ const menuitem UIMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, settings_displayCoolingBlinkEnabled, SettingsOptions::CoolingTempBlink}, /*Cooling blink warning*/
     {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, settings_displayScrollSpeed, SettingsOptions::DescriptionScrollSpeed},  /*Scroll Speed for descriptions*/
     {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, settings_displayReverseButtonTempChangeEnabled,
-     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                       /* Reverse Temp change buttons + - */
-    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, SettingsOptions::AnimationSpeed}, /*Animation Speed adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, SettingsOptions::AnimationLoop},    /*Animation Loop switch */
-    {0, settings_setBrightnessLevel, settings_displayBrightnessLevel},                                                       /*Brightness Level*/
-    {0, settings_setInvertColor, settings_displayInvertColor},                                                               /*Invert screen colour*/
-    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                            // end of menu marker. DO NOT REMOVE
+     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                         /* Reverse Temp change buttons + - */
+    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, SettingsOptions::AnimationSpeed},   /*Animation Speed adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, SettingsOptions::AnimationLoop},      /*Animation Loop switch */
+    {SETTINGS_DESC(SettingsItemIndex::Contrast), nullptr, settings_displayBrightnessLevel, SettingsOptions::OLEDContrast},     /*Brightness Level*/
+    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, SettingsOptions::OLEDInversion}, /*Invert screen colour*/
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                              // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
 /*
@@ -787,39 +783,18 @@ static bool settings_displayPowerPulseDuration(void) {
   }
 }
 
-static uint8_t brightness = 0x00;
-
 static bool settings_displayBrightnessLevel(void) {
   OLED::drawArea(0, 0, 16, 16, brightnessIcon);
   OLED::setCursor(5 * FONT_12_WIDTH - 2, 0);
-  OLED::printNumber(brightness, 3, FontStyle::LARGE);
+  OLED::printNumber(getSettingValue(SettingsOptions::OLEDContrast), 3, FontStyle::LARGE);
   return false;
 }
-
-static bool settings_setBrightnessLevel(void) {
-  if (brightness > (0xFF - 0x08 + 1)) {
-    brightness = 0;
-  } else if (brightness == 0) {
-    brightness = 7;
-  } else {
-    brightness += 0x08;
-  }
-  OLED::setContrast(brightness);
-  return brightness == 0xFF;
-}
-
-static bool invertColor = false;
 
 static bool settings_displayInvertColor(void) {
   OLED::drawArea(0, 0, 24, 16, invertDisplayIcon);
   OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
-  OLED::drawCheckbox(invertColor);
+  OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
   return false;
-}
-static bool settings_setInvertColor(void) {
-  invertColor = !invertColor;
-  OLED::setInverseDisplay(invertColor);
-  return invertColor;
 }
 
 #ifdef HALL_SENSOR

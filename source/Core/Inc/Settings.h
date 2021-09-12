@@ -47,9 +47,11 @@ enum SettingsOptions {
   PDMissingWarningCounter        = 30, // Counter of how many times we have warned we cannot detect the pd interface
   UILanguage                     = 31, // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
   PDNegTimeout                   = 32, // PD timeout in 100ms steps
+  OLEDInversion                  = 33, // Invert the colours on the display
+  OLEDContrast                   = 34, // Contrast for the OLED display
 
   //
-  SettingsOptionsLength = 33, //
+  SettingsOptionsLength = 35, //
 };
 
 typedef enum {

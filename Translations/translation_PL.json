@@ -1,326 +1,214 @@
 {
-	"languageCode": "PL",
-	"languageLocalName": "Polski",
-	"fonts": [
-		"ascii_basic",
-		"latin_extended"
-	],
-	"tempUnitFahrenheit": false,
-	"messages": {
-		"SettingsCalibrationDone": "Kalibracja udana!",
-		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnęła temperaturę pokojową!",
-		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
-		"UVLOWarningString": "NIS. NAP",
-		"UndervoltageString": "Zbyt niskie nap.",
-		"InputVoltageString": "Nap. wej.:",
-		"WarningTipTempString": "Temp. grotu:",
-		"BadTipString": "ZŁY GROT",
-		"SleepingSimpleString": "Zzz!",
-		"SleepingAdvancedString": "Tr. uśpienia",
-		"WarningSimpleString": "HOT!",
-		"WarningAdvancedString": "GORĄCA KOŃCÓWKA!",
-		"SleepingTipAdvancedString": "Grot:",
-		"IdleTipString": "Grot:",
-		"IdleSetString": " Ust:",
-		"TipDisconnectedString": "GROT ODŁĄCZONY",
-		"SolderingAdvancedPowerPrompt": "Moc: ",
-		"OffString": "Wył",
-		"YourGainMessage": "Us.zysk:"
-	},
-	"messagesWarn": {
-		"ResetOKMessage": "Reset OK",
-		"SettingsResetMessage": [
-			"Ust. zresetowane",
-			""
-		],
-		"NoAccelerometerMessage": [
-			"Nie rozpoznano",
-			"akcelerometru!"
-		],
-		"NoPowerDeliveryMessage": [
-			"Nie rozpoznano",
-			"kont. USB-PD IC!"
-		],
-		"LockingKeysString": " ZABLOK.",
-		"UnlockingKeysString": "ODBLOK.",
-		"WarningKeysLockedString": "!ZABLOK!",
-		"WarningThermalRunaway":["Thermal","Runaway"]
-	},
-	"characters": {
-		"SettingRightChar": "P",
-		"SettingLeftChar": "L",
-		"SettingAutoChar": "A",
-		"SettingOffChar": "O",
-		"SettingSlowChar": "W",
-		"SettingMediumChar": "M",
-		"SettingFastChar": "S",
-		"SettingStartNoneChar": "B",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "Z",
-		"SettingStartSleepOffChar": "O",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "N",
-		"SettingSensitivityMedium": "Ś",
-		"SettingSensitivityHigh": "W",
-		"SettingLockDisableChar": "W",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "P",
-		"SettingNAChar": "N/D"
-	},
-	"menuGroups": {
-		"PowerMenu": {
-			"text2": [
-				"Ustawienia",
-				"zasilania"
-			],
-			"desc": "Zasilanie i minimalne napięcie na komórkę"
-		},
-		"SolderingMenu": {
-			"text2": [
-				"Lutowanie",
-				""
-			],
-			"desc": "Ustawienia trybu lutowania"
-		},
-		"PowerSavingMenu": {
-			"text2": [
-				"Oszcz.",
-				"energii"
-			],
-			"desc": "Ustawienia oszczędzania energii"
-		},
-		"UIMenu": {
-			"text2": [
-				"Interfejs",
-				"użytkownika"
-			],
-			"desc": "Ustawienia interfejsu użytkownika"
-		},
-		"AdvancedMenu": {
-			"text2": [
-				"Ustawienia",
-				"zaawans."
-			],
-			"desc": "Ustawienia zaawansowane"
-		}
-	},
-	"menuOptions": {
-		"DCInCutoff": {
-			"text2": [
-				"Źródło",
-				"zasilania"
-			],
-			"desc": "Źródło zasilania. Ustaw napięcie odcięcia. (DC 10V) (S 3.3V dla ogniw Li, wyłącz limit mocy)"
-		},
-		"SleepTemperature": {
-			"text2": [
-				"Temp.",
-				"uśpienia"
-			],
-			"desc": "Temperatura w trybie uśpienia (°C)"
-		},
-		"SleepTimeout": {
-			"text2": [
-				"Czas do",
-				"uśpienia"
-			],
-			"desc": "Czas do przejścia w tryb uśpienia (minuty | sekundy)"
-		},
-		"ShutdownTimeout": {
-			"text2": [
-				"Czas do",
-				"wyłączenia"
-			],
-			"desc": "Czas do wyłączenia (minuty)"
-		},
-		"MotionSensitivity": {
-			"text2": [
-				"Czułość",
-				"wykr. ruchu"
-			],
-			"desc": "Czułość wykrywania ruchu (0=Wyłączona | 1=Minimalna | ... | 9=Maksymalna)"
-		},
-		"TemperatureUnit": {
-			"text2": [
-				"Jednostka",
-				"temperatury"
-			],
-			"desc": "Jednostka temperatury (C=Celciusz | F=Fahrenheit)"
-		},
-		"AdvancedIdle": {
-			"text2": [
-				"Szeczegółowy",
-				"ekran bezczy."
-			],
-			"desc": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
-		},
-		"DisplayRotation": {
-			"text2": [
-				"Obrót",
-				"ekranu"
-			],
-			"desc": "Obrót ekranu (P=dla praworęcznych | L=dla leworęcznych | A=automatycznie)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Temp.",
-				"boost"
-			],
-			"desc": "Temperatura w trybie \"boost\" "
-		},
-		"AutoStart": {
-			"text2": [
-				"Aut. uruch.",
-				"tr. lutowania"
-			],
-			"desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (B=wyłączone | T=lutowanie | Z=uśpienie | O=uśpienie w temp. pokojowej)"
-		},
-		"CooldownBlink": {
-			"text2": [
-				"Mig. podczas",
-				"wychładzania"
-			],
-			"desc": "Temperatura miga podczas wychładzania, gdy grot jest wciąż gorący"
-		},
-		"TemperatureCalibration": {
-			"text2": [
-				"Kalibracja",
-				"temp. grotu"
-			],
-			"desc": "Kalibracja temperatury grotu lutownicy"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Ustawienia",
-				"fabryczne"
-			],
-			"desc": "Resetuje wszystkie ustawienia"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Kalibracja",
-				"napięcia"
-			],
-			"desc": "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść."
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Sz. inf. w",
-				"tr. lutowania"
-			],
-			"desc": "Wyświetl szczegółowe informacje w trybie lutowania"
-		},
-		"ScrollingSpeed": {
-			"text2": [
-				"Sz. przew.",
-				"tekstu"
-			],
-			"desc": "Szybkość przewijania tekstu"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Moc",
-				"w W"
-			],
-			"desc": "Moc używanego zasilacza w (W)"
-		},
-		"PDNegTimeout": {
-                        "text2": [
-                                "PD",
-                                "timeout"
-                        ],
-                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-                },
-		"PowerLimit": {
-			"text2": [
-				"Ogr.",
-				"mocy"
-			],
-			"desc": "Maksymalna moc (W), jakiej może użyć lutownica"
-		},
-		"ReverseButtonTempChange": {
-			"text2": [
-				"Zamień przyc.",
-				"+ -"
-			],
-			"desc": "Zamienia działanie przycisków zmiany temperatury grotu"
-		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Zm. temp.",
-				"kr. przyc."
-			],
-			"desc": "Wartość zmiany temperatury, po krótkim przyciśnięciu (°C)"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Zm. temp.",
-				"dł. przyc."
-			],
-			"desc": "Wartość zmiany temperatury, po długim przyciśnięciu (°C)"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Moc",
-				"impulsu"
-			],
-			"desc": "W przypadku używania powerbanku, utrzymuj moc na poziomie (W) aby nie uśpić powerbanku"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Czułość",
-				"cz.Halla"
-			],
-			"desc": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (O=Wył | N=Niska | Ś=Średnia | W=Wysoka)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Blokada",
-				"przycisków"
-			],
-			"desc": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (O=Wyłączona | B=tylko Boost | P=pełna blokada)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimalne",
-				"napięcie"
-			],
-			"desc": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Zapętlona",
-				"animacja"
-			],
-			"desc": "Zapętla animację ikon w menu głównym"
-		},
-		"AnimSpeed": {
-			"text2": [
-				"Prędkosć",
-				"animacji"
-			],
-			"desc": "Prędkość animacji ikon w menu (O=wył. | L=mała | M=średnia | H=duża)"
-		},
-		"PowerPulseWait": {
-			"text2": [
-				"Czas między",
-				"imp. mocy"
-			],
-			"desc": "Czas między kolejnymi impulsami mocy zapobiegającymi usypianiu powerbanku (x 2.5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Długość",
-				"impulsu mocy"
-			],
-			"desc": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Język :",
-				" PL      Polski"
-			],
-			"desc": ""
-		}
-	}
+  "languageCode": "PL",
+  "languageLocalName": "Polski",
+  "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
+  "messages": {
+    "SettingsCalibrationDone": "Kalibracja udana!",
+    "SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnęła temperaturę pokojową!",
+    "SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
+    "UVLOWarningString": "NIS. NAP",
+    "UndervoltageString": "Zbyt niskie nap.",
+    "InputVoltageString": "Nap. wej.:",
+    "WarningTipTempString": "Temp. grotu:",
+    "BadTipString": "ZŁY GROT",
+    "SleepingSimpleString": "Zzz!",
+    "SleepingAdvancedString": "Tr. uśpienia",
+    "WarningSimpleString": "HOT!",
+    "WarningAdvancedString": "GORĄCA KOŃCÓWKA!",
+    "SleepingTipAdvancedString": "Grot:",
+    "IdleTipString": "Grot:",
+    "IdleSetString": " Ust:",
+    "TipDisconnectedString": "GROT ODŁĄCZONY",
+    "SolderingAdvancedPowerPrompt": "Moc: ",
+    "OffString": "Wył",
+    "YourGainMessage": "Us.zysk:"
+  },
+  "messagesWarn": {
+    "ResetOKMessage": "Reset OK",
+    "SettingsResetMessage": ["Ust. zresetowane", ""],
+    "NoAccelerometerMessage": ["Nie rozpoznano", "akcelerometru!"],
+    "NoPowerDeliveryMessage": ["Nie rozpoznano", "kont. USB-PD IC!"],
+    "LockingKeysString": " ZABLOK.",
+    "UnlockingKeysString": "ODBLOK.",
+    "WarningKeysLockedString": "!ZABLOK!",
+    "WarningThermalRunaway": ["Thermal", "Runaway"]
+  },
+  "characters": {
+    "SettingRightChar": "P",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingOffChar": "O",
+    "SettingSlowChar": "W",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "S",
+    "SettingStartNoneChar": "B",
+    "SettingStartSolderingChar": "T",
+    "SettingStartSleepChar": "Z",
+    "SettingStartSleepOffChar": "O",
+    "SettingSensitivityOff": "O",
+    "SettingSensitivityLow": "N",
+    "SettingSensitivityMedium": "Ś",
+    "SettingSensitivityHigh": "W",
+    "SettingLockDisableChar": "W",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "P",
+    "SettingNAChar": "N/D"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "text2": ["Ustawienia", "zasilania"],
+      "desc": "Zasilanie i minimalne napięcie na komórkę"
+    },
+    "SolderingMenu": {
+      "text2": ["Lutowanie", ""],
+      "desc": "Ustawienia trybu lutowania"
+    },
+    "PowerSavingMenu": {
+      "text2": ["Oszcz.", "energii"],
+      "desc": "Ustawienia oszczędzania energii"
+    },
+    "UIMenu": {
+      "text2": ["Interfejs", "użytkownika"],
+      "desc": "Ustawienia interfejsu użytkownika"
+    },
+    "AdvancedMenu": {
+      "text2": ["Ustawienia", "zaawans."],
+      "desc": "Ustawienia zaawansowane"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "text2": ["Źródło", "zasilania"],
+      "desc": "Źródło zasilania. Ustaw napięcie odcięcia. (DC 10V) (S 3.3V dla ogniw Li, wyłącz limit mocy)"
+    },
+    "SleepTemperature": {
+      "text2": ["Temp.", "uśpienia"],
+      "desc": "Temperatura w trybie uśpienia (°C)"
+    },
+    "SleepTimeout": {
+      "text2": ["Czas do", "uśpienia"],
+      "desc": "Czas do przejścia w tryb uśpienia (minuty | sekundy)"
+    },
+    "ShutdownTimeout": {
+      "text2": ["Czas do", "wyłączenia"],
+      "desc": "Czas do wyłączenia (minuty)"
+    },
+    "MotionSensitivity": {
+      "text2": ["Czułość", "wykr. ruchu"],
+      "desc": "Czułość wykrywania ruchu (0=Wyłączona | 1=Minimalna | ... | 9=Maksymalna)"
+    },
+    "TemperatureUnit": {
+      "text2": ["Jednostka", "temperatury"],
+      "desc": "Jednostka temperatury (C=Celciusz | F=Fahrenheit)"
+    },
+    "AdvancedIdle": {
+      "text2": ["Szeczegółowy", "ekran bezczy."],
+      "desc": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
+    },
+    "DisplayRotation": {
+      "text2": ["Obrót", "ekranu"],
+      "desc": "Obrót ekranu (P=dla praworęcznych | L=dla leworęcznych | A=automatycznie)"
+    },
+    "BoostTemperature": {
+      "text2": ["Temp.", "boost"],
+      "desc": "Temperatura w trybie \"boost\" "
+    },
+    "AutoStart": {
+      "text2": ["Aut. uruch.", "tr. lutowania"],
+      "desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (B=wyłączone | T=lutowanie | Z=uśpienie | O=uśpienie w temp. pokojowej)"
+    },
+    "CooldownBlink": {
+      "text2": ["Mig. podczas", "wychładzania"],
+      "desc": "Temperatura miga podczas wychładzania, gdy grot jest wciąż gorący"
+    },
+    "TemperatureCalibration": {
+      "text2": ["Kalibracja", "temp. grotu"],
+      "desc": "Kalibracja temperatury grotu lutownicy"
+    },
+    "SettingsReset": {
+      "text2": ["Ustawienia", "fabryczne"],
+      "desc": "Resetuje wszystkie ustawienia"
+    },
+    "VoltageCalibration": {
+      "text2": ["Kalibracja", "napięcia"],
+      "desc": "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść."
+    },
+    "AdvancedSoldering": {
+      "text2": ["Sz. inf. w", "tr. lutowania"],
+      "desc": "Wyświetl szczegółowe informacje w trybie lutowania"
+    },
+    "ScrollingSpeed": {
+      "text2": ["Sz. przew.", "tekstu"],
+      "desc": "Szybkość przewijania tekstu"
+    },
+    "QCMaxVoltage": {
+      "text2": ["Moc", "w W"],
+      "desc": "Moc używanego zasilacza w (W)"
+    },
+    "PDNegTimeout": {
+      "text2": ["PD", "timeout"],
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+    },
+    "PowerLimit": {
+      "text2": ["Ogr.", "mocy"],
+      "desc": "Maksymalna moc (W), jakiej może użyć lutownica"
+    },
+    "ReverseButtonTempChange": {
+      "text2": ["Zamień przyc.", "+ -"],
+      "desc": "Zamienia działanie przycisków zmiany temperatury grotu"
+    },
+    "TempChangeShortStep": {
+      "text2": ["Zm. temp.", "kr. przyc."],
+      "desc": "Wartość zmiany temperatury, po krótkim przyciśnięciu (°C)"
+    },
+    "TempChangeLongStep": {
+      "text2": ["Zm. temp.", "dł. przyc."],
+      "desc": "Wartość zmiany temperatury, po długim przyciśnięciu (°C)"
+    },
+    "PowerPulsePower": {
+      "text2": ["Moc", "impulsu"],
+      "desc": "W przypadku używania powerbanku, utrzymuj moc na poziomie (W) aby nie uśpić powerbanku"
+    },
+    "HallEffSensitivity": {
+      "text2": ["Czułość", "cz.Halla"],
+      "desc": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (O=Wył | N=Niska | Ś=Średnia | W=Wysoka)"
+    },
+    "LockingMode": {
+      "text2": ["Blokada", "przycisków"],
+      "desc": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (O=Wyłączona | B=tylko Boost | P=pełna blokada)"
+    },
+    "MinVolCell": {
+      "text2": ["Minimalne", "napięcie"],
+      "desc": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "AnimLoop": {
+      "text2": ["Zapętlona", "animacja"],
+      "desc": "Zapętla animację ikon w menu głównym"
+    },
+    "AnimSpeed": {
+      "text2": ["Prędkosć", "animacji"],
+      "desc": "Prędkość animacji ikon w menu (O=wył. | L=mała | M=średnia | H=duża)"
+    },
+    "PowerPulseWait": {
+      "text2": ["Czas między", "imp. mocy"],
+      "desc": "Czas między kolejnymi impulsami mocy zapobiegającymi usypianiu powerbanku (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "text2": ["Długość", "impulsu mocy"],
+      "desc": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x 250ms)"
+    },
+    "LanguageSwitch": {
+      "text2": ["Język :", " PL      Polski"],
+      "desc": ""
+    },
+    "Contrast": {
+      "text2": ["Screen", "Contrast"],
+      "desc": "Adjust the contrast/brightness of the OLED screen"
+    },
+    "ColourInversion": {
+      "text2": ["Screen", "Invert"],
+      "desc": "Invert the colours of the OLED screen"
+    }
+  }
 }

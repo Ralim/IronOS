@@ -75,8 +75,11 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 10, 1, 0},                                                  // PDMissingWarningCounter
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
     {0, 51, 1, 0},                                                  // PDNegTimeout
+    {0, 2, 1, 0},                                                   // OLEDInversion
+    {7, 256, 0x08, 51},                                             // OLEDContrast
 
 };
+static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
 void saveSettings() { flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType)); }
 
