@@ -78,8 +78,8 @@
 #else
 #define POWER_PULSE_DEFAULT 5
 #endif
-#define POWER_PULSE_WAIT_DEFAULT     4; // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
-#define POWER_PULSE_DURATION_DEFAULT 1; // Default duration of the power pulse: 1*250 = 250 ms
+#define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
+#define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
 /**
  * OLED Orientation Sensitivity on Automatic mode!
@@ -249,4 +249,10 @@ const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 #ifdef MODEL_MHP30
 const uint32_t tipMass       = 45; // TODO
 const uint8_t  tipResistance = 60; // x10 ohms, ~6 typical
+#endif
+
+#ifdef POW_QC_20V
+#define QC_SETTINGS_MAX 3
+#else
+#define QC_SETTINGS_MAX 2
 #endif
