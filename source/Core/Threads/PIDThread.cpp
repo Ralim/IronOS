@@ -24,6 +24,7 @@ bool              heaterThermalRunaway    = false;
 static int32_t getPIDResultX10Watts(int32_t tError);
 static void    detectThermalRunaway(const int16_t currentTipTempInC, const int tError);
 static void    setOutputx10WattsViaFilters(int32_t x10Watts);
+static int32_t getX10WattageLimits();
 
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
@@ -77,7 +78,55 @@ void startPIDTask(void const *argument __unused) {
     }
   }
 }
+#define TRIAL_NEW_PID
+#ifdef TRIAL_NEW_PID
+int32_t getPIDResultX10Watts(int32_t setpointDelta) {
+  static int32_t runningSum = 0;
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Sandman note:
+  // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't 	//
+  // want to overshot excessively (if at all) the setpoint temperature. In the same time we have 'imprecise'	        //
+  // instant temperature measurements. The nature of temperature reading imprecision is not necessarily		//
+  // related to the sensor (thermocouple) or DAQ system, that otherwise are fairly decent. The real issue	is 	//
+  // the thermal inertia. We basically read the temperature in the window between two heating sessions when 	//
+  // the output is off. However, the heater temperature does not dissipate instantly into the tip mass so 	//
+  // at any moment right after heating, the thermocouple would sense a temperature significantly higher than 	//
+  // moments later. We could use longer delays but that would slow the PID loop and that would lead to other 	//
+  // negative side effects. As a result, we can only rely on the I term but with a twist. Instead of a simple //
+  // integrator we are going to use a self decaying integrator that acts more like a dual I term / P term  	//
+  // rather than a plain I term. Depending on the circumstances, like when the delta temperature is large, 	//
+  // it acts more like a P term whereas on closing to setpoint it acts increasingly closer to a plain I term.	//
+  // So in a sense, we have a bit of both.														//
+  //																		 So there we go...
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // P = (Thermal Mass) x (Delta Temperature / T_FACTOR) / 1sec, where thermal mass is in X10 J / °C and
+  // delta temperature is in T_FACTOR x °C. The result is the power in X10 W needed to raise (or decrease!) the
+  // tip temperature with (Delta Temperature / T_FACTOR) °C in 1 second.
+  // Note on powerStore. On update, if the value is provided in X10 (W) units then inertia shall be provided
+  // in X10 (J / °C) units as well. Also, powerStore is updated with a gain of 2. Where this comes from: The actual
+  // power CMOS is controlled by TIM3->CTR1 (that is software modulated - on/off - by TIM2-CTR4 interrupts). However,
+  // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
+  // so we basically double the need (gain = 2) to get what we want.
+
+  // Decay the old value. This is a simplified formula that still works with decent results
+  // Ideally we would have used an exponential decay but the computational effort required
+  // by exp function is just not justified here in respect to the outcome
+  const int gain = 2;
+  runningSum     = runningSum * (100 - tipMass / 10) / 100;
+  // Add the new value x integration interval ( 1 / rate)
+  runningSum += (gain * tempToX10Watts(setpointDelta)) / 10;
+
+  int32_t limit = getX10WattageLimits();
+  // limit the output
+  if (runningSum > limit)
+    runningSum = limit;
+  else if (runningSum < -limit)
+    runningSum = -limit;
+
+  return runningSum;
+}
+#else
 int32_t getPIDResultX10Watts(int32_t tError) {
 
   // Now for the PID!
@@ -107,7 +156,7 @@ int32_t getPIDResultX10Watts(int32_t tError) {
   //  Unfortunately, our temp signal is too noisy to really help.
   return x10WattsOut;
 }
-
+#endif
 void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
   static uint16_t   tipTempCRunawayTemp   = 0;
   static TickType_t runawaylastChangeTime = 0;
@@ -134,6 +183,17 @@ void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
     tipTempCRunawayTemp   = currentTipTempInC;
     runawaylastChangeTime = xTaskGetTickCount();
   }
+}
+
+int32_t getX10WattageLimits() {
+  int32_t limit = 900; // 90W
+  if (getSettingValue(SettingsOptions::PowerLimit) && limit > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
+    limit = getSettingValue(SettingsOptions::PowerLimit) * 10;
+  }
+  if (powerSupplyWattageLimit && limit > powerSupplyWattageLimit * 10) {
+    limit = powerSupplyWattageLimit * 10;
+  }
+  return limit;
 }
 
 void setOutputx10WattsViaFilters(int32_t x10WattsOut) {
@@ -165,11 +225,8 @@ void setOutputx10WattsViaFilters(int32_t x10WattsOut) {
   if (heaterThermalRunaway) {
     x10WattsOut = 0;
   }
-  if (getSettingValue(SettingsOptions::PowerLimit) && x10WattsOut > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
-    x10WattsOut = getSettingValue(SettingsOptions::PowerLimit) * 10;
-  }
-  if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
-    x10WattsOut = powerSupplyWattageLimit * 10;
+  if (x10WattsOut > getX10WattageLimits()) {
+    x10WattsOut = getX10WattageLimits();
   }
 #ifdef SLEW_LIMIT
   if (x10WattsOut - x10WattsOutLast > SLEW_LIMIT) {
