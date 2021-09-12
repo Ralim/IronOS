@@ -78,8 +78,8 @@
 #else
 #define POWER_PULSE_DEFAULT 5
 #endif
-#define POWER_PULSE_WAIT_DEFAULT     4; // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
-#define POWER_PULSE_DURATION_DEFAULT 1; // Default duration of the power pulse: 1*250 = 250 ms
+#define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
+#define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
 /**
  * OLED Orientation Sensitivity on Automatic mode!
