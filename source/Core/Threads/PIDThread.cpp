@@ -21,7 +21,8 @@ uint32_t          currentTempTargetDegC   = 0; // Current temperature target in 
 int32_t           powerSupplyWattageLimit = 0;
 bool              heaterThermalRunaway    = false;
 
-static void detectThermalRunaway(int16_t currentTipTempInC, int tError);
+static void detectThermalRunaway(const int16_t currentTipTempInC, const int tError);
+static void setOutputx10WattsViaFilters(int32_t x10Watts);
 
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
@@ -29,17 +30,13 @@ void startPIDTask(void const *argument __unused) {
    * We take the current tip temperature & evaluate the next step for the tip
    * control PWM.
    */
-  setTipX10Watts(0); // disable the output driver if the output is set to be off
-  TickType_t lastPowerPulseStart = 0;
-  TickType_t lastPowerPulseEnd   = 0;
+  setTipX10Watts(0); // disable the output at startup
 
   history<int32_t, PID_TIM_HZ> tempError = {{0}, 0, 0};
   currentTempTargetDegC                  = 0; // Force start with no output (off). If in sleep / soldering this will
                                               // be over-ridden rapidly
-  pidTaskNotification              = xTaskGetCurrentTaskHandle();
-  uint32_t   PIDTempTarget         = 0;
-  uint16_t   tipTempCRunawayTemp   = 0;
-  TickType_t runawaylastChangeTime = 0;
+  pidTaskNotification    = xTaskGetCurrentTaskHandle();
+  uint32_t PIDTempTarget = 0;
   // Pre-seed the adc filters
   for (int i = 0; i < 64; i++) {
     vTaskDelay(2);
@@ -107,49 +104,7 @@ void startPIDTask(void const *argument __unused) {
       } else {
         detectThermalRunaway(currentTipTempInC, 0);
       }
-
-      // If the user turns on the option of using an occasional pulse to keep the power bank on
-      if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
-        const TickType_t powerPulseWait = powerPulseWaitUnit * getSettingValue(SettingsOptions::KeepAwakePulseWait);
-        if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseWait) {
-          const TickType_t powerPulseDuration = powerPulseDurationUnit * getSettingValue(SettingsOptions::KeepAwakePulseDuration);
-          lastPowerPulseStart                 = xTaskGetTickCount();
-          lastPowerPulseEnd                   = lastPowerPulseStart + powerPulseDuration;
-        }
-
-        // If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor
-        if (x10WattsOut < getSettingValue(SettingsOptions::KeepAwakePulse) && xTaskGetTickCount() < lastPowerPulseEnd) {
-          x10WattsOut = getSettingValue(SettingsOptions::KeepAwakePulse);
-        }
-      }
-
-      // Secondary safety check to forcefully disable header when within ADC noise of top of ADC
-      if (getTipRawTemp(0) > (0x7FFF - 32)) {
-        x10WattsOut = 0;
-      }
-      if (heaterThermalRunaway) {
-        x10WattsOut = 0;
-      }
-      if (getSettingValue(SettingsOptions::PowerLimit) && x10WattsOut > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
-        x10WattsOut = getSettingValue(SettingsOptions::PowerLimit) * 10;
-      }
-      if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
-        x10WattsOut = powerSupplyWattageLimit * 10;
-      }
-#ifdef SLEW_LIMIT
-      if (x10WattsOut - x10WattsOutLast > SLEW_LIMIT) {
-        x10WattsOut = x10WattsOutLast + SLEW_LIMIT;
-      }
-      if (x10WattsOut < 0) {
-        x10WattsOut = 0;
-      }
-      x10WattsOutLast = x10WattsOut;
-#endif
-      setTipX10Watts(x10WattsOut);
-#ifdef DEBUG_UART_OUTPUT
-      log_system_state(x10WattsOut);
-#endif
-      resetWatchdog();
+      setOutputx10WattsViaFilters(x10WattsOut);
     } else {
       // ADC interrupt timeout
       setTipPWM(0);
@@ -157,7 +112,7 @@ void startPIDTask(void const *argument __unused) {
   }
 }
 
-void detectThermalRunaway(int16_t currentTipTempInC, int tError) {
+void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
   static uint16_t   tipTempCRunawayTemp   = 0;
   static TickType_t runawaylastChangeTime = 0;
 
@@ -183,4 +138,52 @@ void detectThermalRunaway(int16_t currentTipTempInC, int tError) {
     tipTempCRunawayTemp   = currentTipTempInC;
     runawaylastChangeTime = xTaskGetTickCount();
   }
+}
+
+void setOutputx10WattsViaFilters(int32_t x10WattsOut) {
+  static TickType_t lastPowerPulseStart = 0;
+  static TickType_t lastPowerPulseEnd   = 0;
+
+  // If the user turns on the option of using an occasional pulse to keep the power bank on
+  if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
+    const TickType_t powerPulseWait = powerPulseWaitUnit * getSettingValue(SettingsOptions::KeepAwakePulseWait);
+    if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseWait) {
+      const TickType_t powerPulseDuration = powerPulseDurationUnit * getSettingValue(SettingsOptions::KeepAwakePulseDuration);
+      lastPowerPulseStart                 = xTaskGetTickCount();
+      lastPowerPulseEnd                   = lastPowerPulseStart + powerPulseDuration;
+    }
+
+    // If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor
+    if (x10WattsOut < getSettingValue(SettingsOptions::KeepAwakePulse) && xTaskGetTickCount() < lastPowerPulseEnd) {
+      x10WattsOut = getSettingValue(SettingsOptions::KeepAwakePulse);
+    }
+  }
+
+  // Secondary safety check to forcefully disable header when within ADC noise of top of ADC
+  if (getTipRawTemp(0) > (0x7FFF - 32)) {
+    x10WattsOut = 0;
+  }
+  if (heaterThermalRunaway) {
+    x10WattsOut = 0;
+  }
+  if (getSettingValue(SettingsOptions::PowerLimit) && x10WattsOut > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
+    x10WattsOut = getSettingValue(SettingsOptions::PowerLimit) * 10;
+  }
+  if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
+    x10WattsOut = powerSupplyWattageLimit * 10;
+  }
+#ifdef SLEW_LIMIT
+  if (x10WattsOut - x10WattsOutLast > SLEW_LIMIT) {
+    x10WattsOut = x10WattsOutLast + SLEW_LIMIT;
+  }
+  if (x10WattsOut < 0) {
+    x10WattsOut = 0;
+  }
+  x10WattsOutLast = x10WattsOut;
+#endif
+  setTipX10Watts(x10WattsOut);
+#ifdef DEBUG_UART_OUTPUT
+  log_system_state(x10WattsOut);
+#endif
+  resetWatchdog();
 }
