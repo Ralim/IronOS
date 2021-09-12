@@ -91,6 +91,10 @@ bool sanitiseSettings() {
   // For all settings, need to ensure settings are in a valid range
   // First for any not know about due to array growth, reset them and update the length value
   bool dirty = false;
+  if (systemSettings.padding != 0xFFFFFFFF) {
+    systemSettings.padding = 0xFFFFFFFF; // Force padding to 0xFFFFFFFF so that rolling forwards / back should be easier
+    dirty                  = true;
+  }
   if (systemSettings.length < (int)SettingsOptions::SettingsOptionsLength) {
     dirty = true;
     for (int i = systemSettings.length; i < (int)SettingsOptions::SettingsOptionsLength; i++) {
