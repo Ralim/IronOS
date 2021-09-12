@@ -341,16 +341,7 @@ static bool settings_displayInputMinVRange(void) {
 }
 #endif
 #ifdef POW_QC
-static bool settings_setQCInputV(void) {
-#ifdef POW_QC_20V
-  systemSettings.QCIdealVoltage = (systemSettings.QCIdealVoltage + 1) % 3;
-
-  return systemSettings.QCIdealVoltage == 2;
-#else
-  systemSettings.QCIdealVoltage = (systemSettings.QCIdealVoltage + 1) % 2;
-  return systemSettings.QCIdealVoltage == 1;
-#endif
-}
+static bool settings_setQCInputV(void) { return nextSettingValue(SettingsOptions::QCIdealVoltage); }
 
 static bool settings_displayQCInputV(void) {
   printShortDescription(SettingsItemIndex::QCMaxVoltage, 5);

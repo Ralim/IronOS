@@ -362,7 +362,7 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     GUIDelay();
 #ifdef ACCEL_EXITS_ON_MOVEMENT
     // If the accel works in reverse where movement will cause exiting the soldering mode
-    if (systemSettings.sensitivity) {
+    if (getSettingValue(SettingsOptions::Sensitivity)) {
       if (lastMovementTime) {
         if (lastMovementTime > TICKS_SECOND * 10) {
           // If we have moved recently; in the last second

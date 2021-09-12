@@ -46,7 +46,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 16, 1, 0},                                                   // SleepTime
     {0, 5, 1, 0},                                                    // MinDCVoltageCells
     {24, 38, 1, 31},                                                 // MinVoltageCells
-    {0, 0, 0, 0},                                                    // QCIdealVoltage
+    {0, QC_SETTINGS_MAX, 1, 0},                                      // QCIdealVoltage
     {0, 0, 0, 0},                                                    // OrientationMode
     {0, 10, 0, 0},                                                   // Sensitivity
     {0, 1, 1, 1},                                                    // AnimationLoop

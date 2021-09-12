@@ -250,3 +250,9 @@ const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
 const uint32_t tipMass       = 45; // TODO
 const uint8_t  tipResistance = 60; // x10 ohms, ~6 typical
 #endif
+
+#ifdef POW_QC_20V
+#define QC_SETTINGS_MAX 3
+#else
+#define QC_SETTINGS_MAX 2
+#endif
