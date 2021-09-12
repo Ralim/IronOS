@@ -31,6 +31,7 @@ extern FontSection DynamicFontSections[];
 
 struct LanguageMeta {
   char           code[8];
+  uint16_t       uniqueID;
   const uint8_t *translation_data;
   uint16_t       translation_size : 15;
   bool           translation_is_compressed : 1;

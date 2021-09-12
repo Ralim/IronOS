@@ -72,7 +72,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 4, 1, 1},                                                   // HallEffectSensitivity
     {0, 10, 1, 0},                                                  // AccelMissingWarningCounter
     {0, 10, 1, 0},                                                  // PDMissingWarningCounter
-    {0, 0, 0, 0},                                                   // UILanguage
+    {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
     {0, 50, 1, 0},                                                  // PDNegTimeout
 
 };
