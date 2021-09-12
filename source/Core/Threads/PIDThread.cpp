@@ -42,13 +42,11 @@ void startPIDTask(void const *argument __unused) {
     vTaskDelay(2);
     TipThermoModel::getTipInC(true);
   }
-#ifdef SLEW_LIMIT
-  int32_t x10WattsOutLast = 0;
-#endif
   for (;;) {
 
+    // This is a call to block this thread until the ADC does its samples
     if (ulTaskNotifyTake(pdTRUE, 2000)) {
-      // This is a call to block this thread until the ADC does its samples
+
       int32_t x10WattsOut = 0;
       // Do the reading here to keep the temp calculations churning along
       uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
@@ -63,7 +61,6 @@ void startPIDTask(void const *argument __unused) {
         if (PIDTempTarget > TipThermoModel::getTipMaxInC()) {
           PIDTempTarget = TipThermoModel::getTipMaxInC();
         }
-        // Convert the current tip to degree's C
 
         // As we get close to our target, temp noise causes the system
         //  to be unstable. Use a rolling average to dampen it.
@@ -143,6 +140,9 @@ void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
 void setOutputx10WattsViaFilters(int32_t x10WattsOut) {
   static TickType_t lastPowerPulseStart = 0;
   static TickType_t lastPowerPulseEnd   = 0;
+#ifdef SLEW_LIMIT
+  static int32_t x10WattsOutLast = 0;
+#endif
 
   // If the user turns on the option of using an occasional pulse to keep the power bank on
   if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
