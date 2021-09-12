@@ -45,7 +45,7 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     {0x80, 0x14, 0}, /*Charge Pump settings*/
     {0x80, 0xDA, 0}, /*Set VCOM Pins hardware config*/
     {0x80, 0x02, 0}, /*Combination 2*/
-    {0x80, 0x81, 0}, /*Contrast*/
+    {0x80, 0x81, 0}, /*Brightness*/
     {0x80, 0x00, 0}, /*^0*/
     {0x80, 0xD9, 0}, /*Set pre-charge period*/
     {0x80, 0xF1, 0}, /*Pre charge period*/
@@ -362,7 +362,7 @@ void OLED::setRotation(bool leftHanded) {
   screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
 }
 
-void OLED::setContrast(uint8_t contrast) {
+void OLED::setBrightness(uint8_t contrast) {
   OLED_Setup_Array[15].val = contrast;
   I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, &OLED_Setup_Array[14], 2);
 }

@@ -76,7 +76,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
     {0, 51, 1, 0},                                                  // PDNegTimeout
     {0, 2, 1, 0},                                                   // OLEDInversion
-    {7, 256, 0x08, 51},                                             // OLEDContrast
+    {7, 256, 0x08, 51},                                             // OLEDBrightness
 
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
@@ -144,7 +144,7 @@ bool nextSettingValue(const enum SettingsOptions option) {
   } else {
     systemSettings.settingsValues[(int)option] += constants.increment;
   }
-  return systemSettings.settingsValues[(int)option] == constants.max - constants.increment;
+  return (constants.max - systemSettings.settingsValues[(int)option]) < constants.increment;
 }
 
 bool prevSettingValue(const enum SettingsOptions option) {

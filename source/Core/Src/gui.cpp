@@ -199,7 +199,7 @@ const menuitem UIMenu[] = {
      SettingsOptions::ReverseButtonTempChangeEnabled},                                                                         /* Reverse Temp change buttons + - */
     {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, SettingsOptions::AnimationSpeed},   /*Animation Speed adjustment */
     {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, SettingsOptions::AnimationLoop},      /*Animation Loop switch */
-    {SETTINGS_DESC(SettingsItemIndex::Contrast), nullptr, settings_displayBrightnessLevel, SettingsOptions::OLEDContrast},     /*Brightness Level*/
+    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, SettingsOptions::OLEDBrightness}, /*Brightness Level*/
     {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, SettingsOptions::OLEDInversion}, /*Invert screen colour*/
     {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                              // end of menu marker. DO NOT REMOVE
 };
@@ -786,15 +786,20 @@ static bool settings_displayPowerPulseDuration(void) {
 static bool settings_displayBrightnessLevel(void) {
   OLED::drawArea(0, 0, 16, 16, brightnessIcon);
   OLED::setCursor(5 * FONT_12_WIDTH - 2, 0);
-  OLED::printNumber(getSettingValue(SettingsOptions::OLEDContrast), 3, FontStyle::LARGE);
-  OLED::setContrast(getSettingValue(SettingsOptions::OLEDContrast));
+  // printShortDescription(SettingsItemIndex::Brightness, 7);
+  OLED::printNumber(getSettingValue(SettingsOptions::OLEDBrightness), 3, FontStyle::LARGE);
+  // While not optimal to apply this here, it is _very_ convienient
+  OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
   return false;
 }
 
 static bool settings_displayInvertColor(void) {
   OLED::drawArea(0, 0, 24, 16, invertDisplayIcon);
   OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
+  // printShortDescription(SettingsItemIndex::ColourInversion, 7);
+
   OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
+  // While not optimal to apply this here, it is _very_ convienient
   OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
   return false;
 }

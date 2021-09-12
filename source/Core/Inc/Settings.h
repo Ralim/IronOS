@@ -48,7 +48,7 @@ enum SettingsOptions {
   UILanguage                     = 31, // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
   PDNegTimeout                   = 32, // PD timeout in 100ms steps
   OLEDInversion                  = 33, // Invert the colours on the display
-  OLEDContrast                   = 34, // Contrast for the OLED display
+  OLEDBrightness                 = 34, // Brightness for the OLED display
 
   //
   SettingsOptionsLength = 35, //

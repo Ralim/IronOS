@@ -201,8 +201,8 @@
       "text2": ["Jezik:", " SL Slovenščina"],
       "desc": ""
     },
-    "Contrast": {
-      "text2": ["Screen", "Contrast"],
+    "Brightness": {
+      "text2": ["Screen", "Brightness"],
       "desc": "Adjust the contrast/brightness of the OLED screen"
     },
     "ColourInversion": {

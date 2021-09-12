@@ -202,8 +202,8 @@
       "text2": "语言：简体中文",
       "desc": ""
     },
-    "Contrast": {
-      "text2": ["Screen", "Contrast"],
+    "Brightness": {
+      "text2": ["Screen", "Brightness"],
       "desc": "Adjust the contrast/brightness of the OLED screen"
     },
     "ColourInversion": {

@@ -195,8 +195,8 @@
       "text2": ["Språk:", " SV     Svenska"],
       "desc": ""
     },
-    "Contrast": {
-      "text2": ["Screen", "Contrast"],
+    "Brightness": {
+      "text2": ["Screen", "Brightness"],
       "desc": "Adjust the contrast/brightness of the OLED screen"
     },
     "ColourInversion": {

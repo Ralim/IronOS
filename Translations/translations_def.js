@@ -355,7 +355,7 @@ var def =
 			"maxLen2": 15
 		},
 		{
-			"id": "Contrast",
+			"id": "Brightness",
 			"maxLen": 7,
 			"maxLen2": 15
 		},
