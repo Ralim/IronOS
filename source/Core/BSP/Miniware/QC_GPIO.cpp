@@ -70,7 +70,7 @@ uint8_t QC_DM_PulledDown() { return HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO
 #endif
 void QC_resync() {
 #ifdef POW_QC
-  seekQC((systemSettings.QCIdealVoltage) ? 120 : 90,
-         systemSettings.voltageDiv); // Run the QC seek again if we have drifted too much
+  seekQC((getSettingValue(SettingsOptions::QCIdealVoltage)) ? 120 : 90,
+         getSettingValue(SettingsOptions::VoltageDiv)); // Run the QC seek again if we have drifted too much
 #endif
 }

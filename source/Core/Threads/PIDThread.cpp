@@ -122,18 +122,19 @@ void startPIDTask(void const *argument __unused) {
         tipTempCRunawayTemp   = currentTipTempInC;
         runawaylastChangeTime = xTaskGetTickCount();
       }
+
       // If the user turns on the option of using an occasional pulse to keep the power bank on
-      if (systemSettings.KeepAwakePulse) {
-        const TickType_t powerPulseWait = powerPulseWaitUnit * systemSettings.KeepAwakePulseWait;
+      if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
+        const TickType_t powerPulseWait = powerPulseWaitUnit * getSettingValue(SettingsOptions::KeepAwakePulseWait);
         if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseWait) {
-          const TickType_t powerPulseDuration = powerPulseDurationUnit * systemSettings.KeepAwakePulseDuration;
+          const TickType_t powerPulseDuration = powerPulseDurationUnit * getSettingValue(SettingsOptions::KeepAwakePulseDuration);
           lastPowerPulseStart                 = xTaskGetTickCount();
           lastPowerPulseEnd                   = lastPowerPulseStart + powerPulseDuration;
         }
 
         // If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor
-        if (x10WattsOut < systemSettings.KeepAwakePulse && xTaskGetTickCount() < lastPowerPulseEnd) {
-          x10WattsOut = systemSettings.KeepAwakePulse;
+        if (x10WattsOut < getSettingValue(SettingsOptions::KeepAwakePulse) && xTaskGetTickCount() < lastPowerPulseEnd) {
+          x10WattsOut = getSettingValue(SettingsOptions::KeepAwakePulse);
         }
       }
 
@@ -144,8 +145,8 @@ void startPIDTask(void const *argument __unused) {
       if (heaterThermalRunaway) {
         x10WattsOut = 0;
       }
-      if (systemSettings.powerLimit && x10WattsOut > (systemSettings.powerLimit * 10)) {
-        x10WattsOut = systemSettings.powerLimit * 10;
+      if (getSettingValue(SettingsOptions::PowerLimit) && x10WattsOut > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
+        x10WattsOut = getSettingValue(SettingsOptions::PowerLimit) * 10;
       }
       if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
         x10WattsOut = powerSupplyWattageLimit * 10;
