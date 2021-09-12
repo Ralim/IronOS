@@ -59,6 +59,8 @@ enum class SettingsItemIndex : uint8_t {
   PowerPulseWait,
   PowerPulseDuration,
   LanguageSwitch,
+  Brightness,
+  ColourInversion,
   NUM_ITEMS,
 };
 

@@ -1,325 +1,213 @@
 {
-	"languageCode": "SR_LATN",
-	"languageLocalName": "Srpski",
-	"fonts": [
-		"ascii_basic",
-		"latin_extended"
-	],
-	"messages": {
-		"SettingsCalibrationDone": "Kalibracija gotova",
-		"SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite",
-		"SettingsResetWarning": "Da li zaista želite da vratite postavke na fabričke vrednosti?",
-		"UVLOWarningString": "NIZ.NAP.",
-		"UndervoltageString": "PRENIZAK NAPON",
-		"InputVoltageString": "Ul. napon: ",
-		"WarningTipTempString": "Temp. vrha: ",
-		"BadTipString": "LOŠ VRH",
-		"SleepingSimpleString": "Zzz",
-		"SleepingAdvancedString": "Spavanje...",
-		"WarningSimpleString": "VRUĆ",
-		"WarningAdvancedString": "! OPREZ, VRUĆE !",
-		"SleepingTipAdvancedString": "Vrh:",
-		"IdleTipString": "Vrh:",
-		"IdleSetString": " / ",
-		"TipDisconnectedString": "VRH NIJE SPOJEN",
-		"SolderingAdvancedPowerPrompt": "Snaga: ",
-		"OffString": "Isk",
-		"YourGainMessage": "Your gain:"
-	},
-	"messagesWarn": {
-		"ResetOKMessage": "Reset OK",
-		"SettingsResetMessage": [
-			"Settings were",
-			"reset!"
-		],
-		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
-		],
-		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
-		],
-		"LockingKeysString": "LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!",
-		"WarningThermalRunaway":["Thermal","Runaway"]
-	},
-	"characters": {
-		"SettingRightChar": "D",
-		"SettingLeftChar": "L",
-		"SettingAutoChar": "A",
-		"SettingOffChar": "O",
-		"SettingSlowChar": "S",
-		"SettingMediumChar": "M",
-		"SettingFastChar": "B",
-		"SettingStartNoneChar": "I",
-		"SettingStartSolderingChar": "L",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "X",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F",
-		"SettingNAChar": "N/A"
-	},
-	"menuGroups": {
-		"PowerMenu": {
-			"text2": [
-				"Power",
-				"settings"
-			],
-			"desc": "Power settings"
-		},
-		"SolderingMenu": {
-			"text2": [
-				"Postavke",
-				"lemljenja"
-			],
-			"desc": "Postavke režima lemljenja."
-		},
-		"PowerSavingMenu": {
-			"text2": [
-				"Ušteda",
-				"energije"
-			],
-			"desc": "Postavke režima mirovanja."
-		},
-		"UIMenu": {
-			"text2": [
-				"Korisničko",
-				"sučelje"
-			],
-			"desc": "Postavke korisničkog sučelja."
-		},
-		"AdvancedMenu": {
-			"text2": [
-				"Napredne",
-				"postavke"
-			],
-			"desc": "Napredne postavke."
-		}
-	},
-	"menuOptions": {
-		"DCInCutoff": {
-			"text2": [
-				"Vrsta",
-				"napajanja"
-			],
-			"desc": "Tip napajanja; određuje najniži radni napon. (DC=adapter [10V], S=baterija [3,3V po ćeliji])"
-		},
-		"SleepTemperature": {
-			"text2": [
-				"Temp.",
-				"spavanja"
-			],
-			"desc": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. (C | F)"
-		},
-		"SleepTimeout": {
-			"text2": [
-				"Vreme do",
-				"spavanja"
-			],
-			"desc": "Vreme mirovanja nakon koga lemilica spušta temperaturu. (M=minuti | S=sekunde)"
-		},
-		"ShutdownTimeout": {
-			"text2": [
-				"Vreme do",
-				"gašenja"
-			],
-			"desc": "Vreme mirovanja nakon koga se lemilica gasi. (M=minuti)"
-		},
-		"MotionSensitivity": {
-			"text2": [
-				"Osetljivost",
-				"na pokret"
-			],
-			"desc": "Osetljivost senzora pokreta. (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
-		},
-		"TemperatureUnit": {
-			"text2": [
-				"Jedinica",
-				"temperature"
-			],
-			"desc": "Jedinice u kojima se prikazuje temperatura. (C=celzijus | F=farenhajt)"
-		},
-		"AdvancedIdle": {
-			"text2": [
-				"Detalji tokom",
-				"mirovanja"
-			],
-			"desc": "Prikazivanje detaljnih informacija na ekranu tokom mirovanja."
-		},
-		"DisplayRotation": {
-			"text2": [
-				"Orijentacija",
-				"ekrana"
-			],
-			"desc": "Kako je okrenut ekran. (D=za desnoruke | L=za levoruke | A=automatski)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Temp.",
-				"pojačanja"
-			],
-			"desc": "Temperatura vrha lemilice u toku pojačanja."
-		},
-		"AutoStart": {
-			"text2": [
-				"Vrući",
-				"start"
-			],
-			"desc": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (I=isključiti | L=lemljenje | S=spavati | X=spavati sobna temperatura)"
-		},
-		"CooldownBlink": {
-			"text2": [
-				"Upozorenje",
-				"pri hlađenju"
-			],
-			"desc": "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć."
-		},
-		"TemperatureCalibration": {
-			"text2": [
-				"Kalibracija",
-				"temperature"
-			],
-			"desc": "Kalibrisanje odstupanja temperature vrha u odnosu na dršku."
-		},
-		"SettingsReset": {
-			"text2": [
-				"Fabričke",
-				"postavke"
-			],
-			"desc": "Vraćanje svih postavki na fabričke vrednosti."
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Kalibracija",
-				"ulaznog napona"
-			],
-			"desc": "Kalibrisanje ulaznog napona. Podešava se na tastere; dugi pritisak za kraj."
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Detalji tokom",
-				"lemljenja"
-			],
-			"desc": "Prikazivanje detaljnih informacija na ekranu tokom lemljenja."
-		},
-		"ScrollingSpeed": {
-			"text2": [
-				"Brzina",
-				"poruka"
-			],
-			"desc": "Brzina kretanja opisnih poruka poput ove. (S=sporo | B=brzo)"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Ulazna",
-				"snaga"
-			],
-			"desc": "Snaga napajanja u vatima."
-		},
-		"PDNegTimeout": {
-                        "text2": [
-                                "PD",
-                                "timeout"
-                        ],
-                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-                },
-		"PowerLimit": {
-			"text2": [
-				"Power",
-				"Limit"
-			],
-			"desc": "Maximum power the iron can use (Watts)"
-		},
-		"ReverseButtonTempChange": {
-			"text2": [
-				"Key +-",
-				"reverse?"
-			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
-		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Temp change",
-				"short?"
-			],
-			"desc": "Temperature change steps on short button press!"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Temp change",
-				"long?"
-			],
-			"desc": "Temperature change steps on long button press!"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Power",
-				"Pulse W"
-			],
-			"desc": "Keep awake pulse power intensity"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall Eff",
-				"Sensitivity"
-			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Allow buttons",
-				"locking"
-			],
-			"desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimum",
-				"voltage"
-			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Anim.",
-				"loop"
-			],
-			"desc": "Loop icon animations in root menu"
-		},
-		"AnimSpeed": {
-			"text2": [
-				"Anim.",
-				"speed"
-			],
-			"desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
-		},
-		"PowerPulseWait": {
-			"text2": [
-				"Power pulse",
-				"wait time"
-			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Power pulse",
-				"duration"
-			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Jezik:",
-				" SR      Srpski"
-			],
-			"desc": ""
-		}
-	}
+  "languageCode": "SR_LATN",
+  "languageLocalName": "Srpski",
+  "fonts": ["ascii_basic", "latin_extended"],
+  "messages": {
+    "SettingsCalibrationDone": "Kalibracija gotova",
+    "SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite",
+    "SettingsResetWarning": "Da li zaista želite da vratite postavke na fabričke vrednosti?",
+    "UVLOWarningString": "NIZ.NAP.",
+    "UndervoltageString": "PRENIZAK NAPON",
+    "InputVoltageString": "Ul. napon: ",
+    "WarningTipTempString": "Temp. vrha: ",
+    "BadTipString": "LOŠ VRH",
+    "SleepingSimpleString": "Zzz",
+    "SleepingAdvancedString": "Spavanje...",
+    "WarningSimpleString": "VRUĆ",
+    "WarningAdvancedString": "! OPREZ, VRUĆE !",
+    "SleepingTipAdvancedString": "Vrh:",
+    "IdleTipString": "Vrh:",
+    "IdleSetString": " / ",
+    "TipDisconnectedString": "VRH NIJE SPOJEN",
+    "SolderingAdvancedPowerPrompt": "Snaga: ",
+    "OffString": "Isk",
+    "YourGainMessage": "Your gain:"
+  },
+  "messagesWarn": {
+    "ResetOKMessage": "Reset OK",
+    "SettingsResetMessage": ["Settings were", "reset!"],
+    "NoAccelerometerMessage": ["No accelerometer", "detected!"],
+    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
+    "LockingKeysString": "LOCKED",
+    "UnlockingKeysString": "UNLOCKED",
+    "WarningKeysLockedString": "!LOCKED!",
+    "WarningThermalRunaway": ["Thermal", "Runaway"]
+  },
+  "characters": {
+    "SettingRightChar": "D",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingOffChar": "O",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "B",
+    "SettingStartNoneChar": "I",
+    "SettingStartSolderingChar": "L",
+    "SettingStartSleepChar": "S",
+    "SettingStartSleepOffChar": "X",
+    "SettingSensitivityOff": "O",
+    "SettingSensitivityLow": "L",
+    "SettingSensitivityMedium": "M",
+    "SettingSensitivityHigh": "H",
+    "SettingLockDisableChar": "D",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F",
+    "SettingNAChar": "N/A"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "text2": ["Power", "settings"],
+      "desc": "Power settings"
+    },
+    "SolderingMenu": {
+      "text2": ["Postavke", "lemljenja"],
+      "desc": "Postavke režima lemljenja."
+    },
+    "PowerSavingMenu": {
+      "text2": ["Ušteda", "energije"],
+      "desc": "Postavke režima mirovanja."
+    },
+    "UIMenu": {
+      "text2": ["Korisničko", "sučelje"],
+      "desc": "Postavke korisničkog sučelja."
+    },
+    "AdvancedMenu": {
+      "text2": ["Napredne", "postavke"],
+      "desc": "Napredne postavke."
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "text2": ["Vrsta", "napajanja"],
+      "desc": "Tip napajanja; određuje najniži radni napon. (DC=adapter [10V], S=baterija [3,3V po ćeliji])"
+    },
+    "SleepTemperature": {
+      "text2": ["Temp.", "spavanja"],
+      "desc": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. (C | F)"
+    },
+    "SleepTimeout": {
+      "text2": ["Vreme do", "spavanja"],
+      "desc": "Vreme mirovanja nakon koga lemilica spušta temperaturu. (M=minuti | S=sekunde)"
+    },
+    "ShutdownTimeout": {
+      "text2": ["Vreme do", "gašenja"],
+      "desc": "Vreme mirovanja nakon koga se lemilica gasi. (M=minuti)"
+    },
+    "MotionSensitivity": {
+      "text2": ["Osetljivost", "na pokret"],
+      "desc": "Osetljivost senzora pokreta. (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
+    },
+    "TemperatureUnit": {
+      "text2": ["Jedinica", "temperature"],
+      "desc": "Jedinice u kojima se prikazuje temperatura. (C=celzijus | F=farenhajt)"
+    },
+    "AdvancedIdle": {
+      "text2": ["Detalji tokom", "mirovanja"],
+      "desc": "Prikazivanje detaljnih informacija na ekranu tokom mirovanja."
+    },
+    "DisplayRotation": {
+      "text2": ["Orijentacija", "ekrana"],
+      "desc": "Kako je okrenut ekran. (D=za desnoruke | L=za levoruke | A=automatski)"
+    },
+    "BoostTemperature": {
+      "text2": ["Temp.", "pojačanja"],
+      "desc": "Temperatura vrha lemilice u toku pojačanja."
+    },
+    "AutoStart": {
+      "text2": ["Vrući", "start"],
+      "desc": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (I=isključiti | L=lemljenje | S=spavati | X=spavati sobna temperatura)"
+    },
+    "CooldownBlink": {
+      "text2": ["Upozorenje", "pri hlađenju"],
+      "desc": "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć."
+    },
+    "TemperatureCalibration": {
+      "text2": ["Kalibracija", "temperature"],
+      "desc": "Kalibrisanje odstupanja temperature vrha u odnosu na dršku."
+    },
+    "SettingsReset": {
+      "text2": ["Fabričke", "postavke"],
+      "desc": "Vraćanje svih postavki na fabričke vrednosti."
+    },
+    "VoltageCalibration": {
+      "text2": ["Kalibracija", "ulaznog napona"],
+      "desc": "Kalibrisanje ulaznog napona. Podešava se na tastere; dugi pritisak za kraj."
+    },
+    "AdvancedSoldering": {
+      "text2": ["Detalji tokom", "lemljenja"],
+      "desc": "Prikazivanje detaljnih informacija na ekranu tokom lemljenja."
+    },
+    "ScrollingSpeed": {
+      "text2": ["Brzina", "poruka"],
+      "desc": "Brzina kretanja opisnih poruka poput ove. (S=sporo | B=brzo)"
+    },
+    "QCMaxVoltage": {
+      "text2": ["Ulazna", "snaga"],
+      "desc": "Snaga napajanja u vatima."
+    },
+    "PDNegTimeout": {
+      "text2": ["PD", "timeout"],
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+    },
+    "PowerLimit": {
+      "text2": ["Power", "Limit"],
+      "desc": "Maximum power the iron can use (Watts)"
+    },
+    "ReverseButtonTempChange": {
+      "text2": ["Key +-", "reverse?"],
+      "desc": "Reverse the tip temperature change buttons plus minus assignment."
+    },
+    "TempChangeShortStep": {
+      "text2": ["Temp change", "short?"],
+      "desc": "Temperature change steps on short button press!"
+    },
+    "TempChangeLongStep": {
+      "text2": ["Temp change", "long?"],
+      "desc": "Temperature change steps on long button press!"
+    },
+    "PowerPulsePower": {
+      "text2": ["Power", "Pulse W"],
+      "desc": "Keep awake pulse power intensity"
+    },
+    "HallEffSensitivity": {
+      "text2": ["Hall Eff", "Sensitivity"],
+      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
+    },
+    "LockingMode": {
+      "text2": ["Allow buttons", "locking"],
+      "desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+    },
+    "MinVolCell": {
+      "text2": ["Minimum", "voltage"],
+      "desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "AnimLoop": {
+      "text2": ["Anim.", "loop"],
+      "desc": "Loop icon animations in root menu"
+    },
+    "AnimSpeed": {
+      "text2": ["Anim.", "speed"],
+      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+    },
+    "PowerPulseWait": {
+      "text2": ["Power pulse", "wait time"],
+      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "text2": ["Power pulse", "duration"],
+      "desc": "Keep-awake-pulse duration (x 250ms)"
+    },
+    "LanguageSwitch": {
+      "text2": ["Jezik:", " SR      Srpski"],
+      "desc": ""
+    },
+    "Brightness": {
+      "text2": ["Screen", "Brightness"],
+      "desc": "Adjust the contrast/brightness of the OLED screen"
+    },
+    "ColourInversion": {
+      "text2": ["Screen", "Invert"],
+      "desc": "Invert the colours of the OLED screen"
+    }
+  }
 }

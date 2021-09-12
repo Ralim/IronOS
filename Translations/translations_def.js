@@ -353,6 +353,16 @@ var def =
 			"id": "LanguageSwitch",
 			"maxLen": 7,
 			"maxLen2": 15
+		},
+		{
+			"id": "Brightness",
+			"maxLen": 7,
+			"maxLen2": 15
+		},
+		{
+			"id": "ColourInversion",
+			"maxLen": 7,
+			"maxLen2": 15
 		}
 	]
 }

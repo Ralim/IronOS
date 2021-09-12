@@ -1,325 +1,213 @@
 {
-	"languageCode": "DA",
-	"languageLocalName": "Dansk",
-	"fonts": [
-		"ascii_basic",
-		"latin_extended"
-	],
-	"messages": {
-		"SettingsCalibrationDone": "Calibration done!",
-		"SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!",
-		"SettingsResetWarning": "Are you sure to reset settings to default values?",
-		"UVLOWarningString": "Lav Volt",
-		"UndervoltageString": "Undervoltage",
-		"InputVoltageString": "Input V: ",
-		"WarningTipTempString": "Tip Temp: ",
-		"BadTipString": "BAD TIP",
-		"SleepingSimpleString": "Zzzz",
-		"SleepingAdvancedString": "Dvale...",
-		"WarningSimpleString": "Varm",
-		"WarningAdvancedString": "VARM LODDESPIDS!",
-		"SleepingTipAdvancedString": "Tip:",
-		"IdleTipString": "Tip:",
-		"IdleSetString": " Set:",
-		"TipDisconnectedString": "TIP DISCONNECTED",
-		"SolderingAdvancedPowerPrompt": "Power: ",
-		"OffString": "Off",
-		"YourGainMessage": "Your gain:"
-	},
-	"messagesWarn": {
-		"ResetOKMessage": "Reset OK",
-		"SettingsResetMessage": [
-			"Settings were",
-			"reset!"
-		],
-		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
-		],
-		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
-		],
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!",
-		"WarningThermalRunaway":["Thermal","Runaway"]
-	},
-	"characters": {
-		"SettingRightChar": "H",
-		"SettingLeftChar": "V",
-		"SettingAutoChar": "A",
-		"SettingOffChar": "O",
-		"SettingSlowChar": "S",
-		"SettingMediumChar": "M",
-		"SettingFastChar": "F",
-		"SettingStartNoneChar": "S",
-		"SettingStartSolderingChar": "L",
-		"SettingStartSleepChar": "D",
-		"SettingStartSleepOffChar": "R",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F",
-		"SettingNAChar": "N/A"
-	},
-	"menuGroups": {
-		"PowerMenu": {
-			"text2": [
-				"Power",
-				"settings"
-			],
-			"desc": "Power settings"
-		},
-		"SolderingMenu": {
-			"text2": [
-				"Soldering",
-				"Settings"
-			],
-			"desc": "Soldering settings"
-		},
-		"PowerSavingMenu": {
-			"text2": [
-				"Sleep",
-				"Modes"
-			],
-			"desc": "Power Saving Settings"
-		},
-		"UIMenu": {
-			"text2": [
-				"User",
-				"Interface"
-			],
-			"desc": "User Interface settings"
-		},
-		"AdvancedMenu": {
-			"text2": [
-				"Advanced",
-				"Options"
-			],
-			"desc": "Advanced options"
-		}
-	},
-	"menuOptions": {
-		"DCInCutoff": {
-			"text2": [
-				"Power",
-				"source"
-			],
-			"desc": "Strømforsyning. Indstil Cutoff Spændingen. (DC 10V) (S 3,3V per cell)"
-		},
-		"SleepTemperature": {
-			"text2": [
-				"Sleep",
-				"temp"
-			],
-			"desc": "Dvale Temperatur (C)"
-		},
-		"SleepTimeout": {
-			"text2": [
-				"Sleep",
-				"timeout"
-			],
-			"desc": "Dvale Timeout (Minutter | Sekunder)"
-		},
-		"ShutdownTimeout": {
-			"text2": [
-				"Shutdown",
-				"timeout"
-			],
-			"desc": "sluknings Timeout (Minutter)"
-		},
-		"MotionSensitivity": {
-			"text2": [
-				"Motion",
-				"sensitivity"
-			],
-			"desc": "Bevægelsesfølsomhed (0=Slukket | 1=Mindst følsom | ... | 9=Mest følsom)"
-		},
-		"TemperatureUnit": {
-			"text2": [
-				"Temperature",
-				"unit"
-			],
-			"desc": "Temperatur Enhed (C=Celsius | F=Fahrenheit)"
-		},
-		"AdvancedIdle": {
-			"text2": [
-				"Detailed",
-				"idle screen"
-			],
-			"desc": "Vis detialieret information med en mindre skriftstørrelse på standby skærmen."
-		},
-		"DisplayRotation": {
-			"text2": [
-				"Display",
-				"orientation"
-			],
-			"desc": "Skærm Orientering (H=Højre Håndet | V=Venstre Håndet | A=Automatisk)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Boost",
-				"temp"
-			],
-			"desc": "Temperatur i \"boost\" mode"
-		},
-		"AutoStart": {
-			"text2": [
-				"Auto",
-				"start"
-			],
-			"desc": "Start automatisk med lodning når strøm sættes til. (S=Slukket | L=Lodning | D=Dvale tilstand | R=Dvale tilstand rumtemperatur)"
-		},
-		"CooldownBlink": {
-			"text2": [
-				"Cooldown",
-				"blink"
-			],
-			"desc": "Blink temperaturen på skærmen, mens spidsen stadig er varm."
-		},
-		"TemperatureCalibration": {
-			"text2": [
-				"Calibrate",
-				"temperature?"
-			],
-			"desc": "kalibrere spids temperatur."
-		},
-		"SettingsReset": {
-			"text2": [
-				"Factory",
-				"Reset?"
-			],
-			"desc": "Gendan alle indstillinger"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Calibrate",
-				"input voltage?"
-			],
-			"desc": "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Detailed",
-				"solder screen"
-			],
-			"desc": "Vis detialieret information mens der loddes"
-		},
-		"ScrollingSpeed": {
-			"text2": [
-				"Scrolling",
-				"speed"
-			],
-			"desc": "Speed this text scrolls past at"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Power",
-				"Wattage"
-			],
-			"desc": "Power Wattage of the power adapter used"
-		},
-		"PDNegTimeout": {
-                        "text2": [
-                                "PD",
-                                "timeout"
-                        ],
-                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-                },
-		"PowerLimit": {
-			"text2": [
-				"Power",
-				"Limit"
-			],
-			"desc": "Maximum power the iron can use (Watts)"
-		},
-		"ReverseButtonTempChange": {
-			"text2": [
-				"Key +-",
-				"reverse?"
-			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
-		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Temp change",
-				"short?"
-			],
-			"desc": "Temperature change steps on short button press!"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Temp change",
-				"long?"
-			],
-			"desc": "Temperature change steps on long button press!"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Power",
-				"Pulse W"
-			],
-			"desc": "Keep awake pulse power intensity"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall Eff",
-				"Sensitivity"
-			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Allow buttons",
-				"locking"
-			],
-			"desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimum",
-				"voltage"
-			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Anim.",
-				"loop"
-			],
-			"desc": "Loop icon animations in root menu"
-		},
-		"AnimSpeed": {
-			"text2": [
-				"Anim.",
-				"speed"
-			],
-			"desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
-		},
-		"PowerPulseWait": {
-			"text2": [
-				"Power pulse",
-				"wait time"
-			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2,5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Power pulse",
-				"duration"
-			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Sprog :",
-				" DA       Dansk"
-			],
-			"desc": ""
-		}
-	}
+  "languageCode": "DA",
+  "languageLocalName": "Dansk",
+  "fonts": ["ascii_basic", "latin_extended"],
+  "messages": {
+    "SettingsCalibrationDone": "Calibration done!",
+    "SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!",
+    "SettingsResetWarning": "Are you sure to reset settings to default values?",
+    "UVLOWarningString": "Lav Volt",
+    "UndervoltageString": "Undervoltage",
+    "InputVoltageString": "Input V: ",
+    "WarningTipTempString": "Tip Temp: ",
+    "BadTipString": "BAD TIP",
+    "SleepingSimpleString": "Zzzz",
+    "SleepingAdvancedString": "Dvale...",
+    "WarningSimpleString": "Varm",
+    "WarningAdvancedString": "VARM LODDESPIDS!",
+    "SleepingTipAdvancedString": "Tip:",
+    "IdleTipString": "Tip:",
+    "IdleSetString": " Set:",
+    "TipDisconnectedString": "TIP DISCONNECTED",
+    "SolderingAdvancedPowerPrompt": "Power: ",
+    "OffString": "Off",
+    "YourGainMessage": "Your gain:"
+  },
+  "messagesWarn": {
+    "ResetOKMessage": "Reset OK",
+    "SettingsResetMessage": ["Settings were", "reset!"],
+    "NoAccelerometerMessage": ["No accelerometer", "detected!"],
+    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
+    "LockingKeysString": " LOCKED",
+    "UnlockingKeysString": "UNLOCKED",
+    "WarningKeysLockedString": "!LOCKED!",
+    "WarningThermalRunaway": ["Thermal", "Runaway"]
+  },
+  "characters": {
+    "SettingRightChar": "H",
+    "SettingLeftChar": "V",
+    "SettingAutoChar": "A",
+    "SettingOffChar": "O",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "F",
+    "SettingStartNoneChar": "S",
+    "SettingStartSolderingChar": "L",
+    "SettingStartSleepChar": "D",
+    "SettingStartSleepOffChar": "R",
+    "SettingSensitivityOff": "O",
+    "SettingSensitivityLow": "L",
+    "SettingSensitivityMedium": "M",
+    "SettingSensitivityHigh": "H",
+    "SettingLockDisableChar": "D",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F",
+    "SettingNAChar": "N/A"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "text2": ["Power", "settings"],
+      "desc": "Power settings"
+    },
+    "SolderingMenu": {
+      "text2": ["Soldering", "Settings"],
+      "desc": "Soldering settings"
+    },
+    "PowerSavingMenu": {
+      "text2": ["Sleep", "Modes"],
+      "desc": "Power Saving Settings"
+    },
+    "UIMenu": {
+      "text2": ["User", "Interface"],
+      "desc": "User Interface settings"
+    },
+    "AdvancedMenu": {
+      "text2": ["Advanced", "Options"],
+      "desc": "Advanced options"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "text2": ["Power", "source"],
+      "desc": "Strømforsyning. Indstil Cutoff Spændingen. (DC 10V) (S 3,3V per cell)"
+    },
+    "SleepTemperature": {
+      "text2": ["Sleep", "temp"],
+      "desc": "Dvale Temperatur (C)"
+    },
+    "SleepTimeout": {
+      "text2": ["Sleep", "timeout"],
+      "desc": "Dvale Timeout (Minutter | Sekunder)"
+    },
+    "ShutdownTimeout": {
+      "text2": ["Shutdown", "timeout"],
+      "desc": "sluknings Timeout (Minutter)"
+    },
+    "MotionSensitivity": {
+      "text2": ["Motion", "sensitivity"],
+      "desc": "Bevægelsesfølsomhed (0=Slukket | 1=Mindst følsom | ... | 9=Mest følsom)"
+    },
+    "TemperatureUnit": {
+      "text2": ["Temperature", "unit"],
+      "desc": "Temperatur Enhed (C=Celsius | F=Fahrenheit)"
+    },
+    "AdvancedIdle": {
+      "text2": ["Detailed", "idle screen"],
+      "desc": "Vis detialieret information med en mindre skriftstørrelse på standby skærmen."
+    },
+    "DisplayRotation": {
+      "text2": ["Display", "orientation"],
+      "desc": "Skærm Orientering (H=Højre Håndet | V=Venstre Håndet | A=Automatisk)"
+    },
+    "BoostTemperature": {
+      "text2": ["Boost", "temp"],
+      "desc": "Temperatur i \"boost\" mode"
+    },
+    "AutoStart": {
+      "text2": ["Auto", "start"],
+      "desc": "Start automatisk med lodning når strøm sættes til. (S=Slukket | L=Lodning | D=Dvale tilstand | R=Dvale tilstand rumtemperatur)"
+    },
+    "CooldownBlink": {
+      "text2": ["Cooldown", "blink"],
+      "desc": "Blink temperaturen på skærmen, mens spidsen stadig er varm."
+    },
+    "TemperatureCalibration": {
+      "text2": ["Calibrate", "temperature?"],
+      "desc": "kalibrere spids temperatur."
+    },
+    "SettingsReset": {
+      "text2": ["Factory", "Reset?"],
+      "desc": "Gendan alle indstillinger"
+    },
+    "VoltageCalibration": {
+      "text2": ["Calibrate", "input voltage?"],
+      "desc": "VIN kalibrering. Knapperne justere, Lang tryk for at gå ud"
+    },
+    "AdvancedSoldering": {
+      "text2": ["Detailed", "solder screen"],
+      "desc": "Vis detialieret information mens der loddes"
+    },
+    "ScrollingSpeed": {
+      "text2": ["Scrolling", "speed"],
+      "desc": "Speed this text scrolls past at"
+    },
+    "QCMaxVoltage": {
+      "text2": ["Power", "Wattage"],
+      "desc": "Power Wattage of the power adapter used"
+    },
+    "PDNegTimeout": {
+      "text2": ["PD", "timeout"],
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+    },
+    "PowerLimit": {
+      "text2": ["Power", "Limit"],
+      "desc": "Maximum power the iron can use (Watts)"
+    },
+    "ReverseButtonTempChange": {
+      "text2": ["Key +-", "reverse?"],
+      "desc": "Reverse the tip temperature change buttons plus minus assignment."
+    },
+    "TempChangeShortStep": {
+      "text2": ["Temp change", "short?"],
+      "desc": "Temperature change steps on short button press!"
+    },
+    "TempChangeLongStep": {
+      "text2": ["Temp change", "long?"],
+      "desc": "Temperature change steps on long button press!"
+    },
+    "PowerPulsePower": {
+      "text2": ["Power", "Pulse W"],
+      "desc": "Keep awake pulse power intensity"
+    },
+    "HallEffSensitivity": {
+      "text2": ["Hall Eff", "Sensitivity"],
+      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
+    },
+    "LockingMode": {
+      "text2": ["Allow buttons", "locking"],
+      "desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+    },
+    "MinVolCell": {
+      "text2": ["Minimum", "voltage"],
+      "desc": "Minimum allowed voltage per cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+    },
+    "AnimLoop": {
+      "text2": ["Anim.", "loop"],
+      "desc": "Loop icon animations in root menu"
+    },
+    "AnimSpeed": {
+      "text2": ["Anim.", "speed"],
+      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+    },
+    "PowerPulseWait": {
+      "text2": ["Power pulse", "wait time"],
+      "desc": "Time to wait before triggering every keep-awake pulse (x 2,5s)"
+    },
+    "PowerPulseDuration": {
+      "text2": ["Power pulse", "duration"],
+      "desc": "Keep-awake-pulse duration (x 250ms)"
+    },
+    "LanguageSwitch": {
+      "text2": ["Sprog :", " DA       Dansk"],
+      "desc": ""
+    },
+    "Brightness": {
+      "text2": ["Screen", "Brightness"],
+      "desc": "Adjust the contrast/brightness of the OLED screen"
+    },
+    "ColourInversion": {
+      "text2": ["Screen", "Invert"],
+      "desc": "Invert the colours of the OLED screen"
+    }
+  }
 }

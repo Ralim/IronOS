@@ -14,10 +14,6 @@
 #include "configuration.h"
 #include "main.hpp"
 
-#define POW_DC
-#define POW_PD
-#define POW_QC
-#define HALL_SENSOR
 void gui_Menu(const menuitem *menu);
 
 #ifdef POW_DC
@@ -47,6 +43,7 @@ static bool settings_displayPowerLimit(void);
 static bool settings_setDisplayRotation(void);
 static bool settings_displayDisplayRotation(void);
 #endif
+
 static bool settings_setBoostTemp(void);
 static bool settings_displayBoostTemp(void);
 static bool settings_displayAutomaticStartMode(void);
@@ -66,6 +63,9 @@ static bool settings_displayAnimationSpeed(void);
 static bool settings_displayAnimationLoop(void);
 static bool settings_displayPowerPulseWait(void);
 static bool settings_displayPowerPulseDuration(void);
+static bool settings_displayBrightnessLevel(void);
+static bool settings_displayInvertColor(void);
+
 #ifdef HALL_SENSOR
 static bool settings_displayHallEffect(void);
 #endif
@@ -196,10 +196,12 @@ const menuitem UIMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, settings_displayCoolingBlinkEnabled, SettingsOptions::CoolingTempBlink}, /*Cooling blink warning*/
     {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, settings_displayScrollSpeed, SettingsOptions::DescriptionScrollSpeed},  /*Scroll Speed for descriptions*/
     {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, settings_displayReverseButtonTempChangeEnabled,
-     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                       /* Reverse Temp change buttons + - */
-    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, SettingsOptions::AnimationSpeed}, /*Animation Speed adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, SettingsOptions::AnimationLoop},    /*Animation Loop switch */
-    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                            // end of menu marker. DO NOT REMOVE
+     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                         /* Reverse Temp change buttons + - */
+    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, SettingsOptions::AnimationSpeed},   /*Animation Speed adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, SettingsOptions::AnimationLoop},      /*Animation Loop switch */
+    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, SettingsOptions::OLEDBrightness}, /*Brightness Level*/
+    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, SettingsOptions::OLEDInversion}, /*Invert screen colour*/
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                              // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
 /*
@@ -779,6 +781,27 @@ static bool settings_displayPowerPulseDuration(void) {
   } else {
     return true; // skip
   }
+}
+
+static bool settings_displayBrightnessLevel(void) {
+  OLED::drawArea(0, 0, 16, 16, brightnessIcon);
+  OLED::setCursor(5 * FONT_12_WIDTH - 2, 0);
+  // printShortDescription(SettingsItemIndex::Brightness, 7);
+  OLED::printNumber(getSettingValue(SettingsOptions::OLEDBrightness), 3, FontStyle::LARGE);
+  // While not optimal to apply this here, it is _very_ convienient
+  OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
+  return false;
+}
+
+static bool settings_displayInvertColor(void) {
+  OLED::drawArea(0, 0, 24, 16, invertDisplayIcon);
+  OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
+  // printShortDescription(SettingsItemIndex::ColourInversion, 7);
+
+  OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
+  // While not optimal to apply this here, it is _very_ convienient
+  OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
+  return false;
 }
 
 #ifdef HALL_SENSOR
