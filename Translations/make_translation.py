@@ -3,6 +3,7 @@
 import argparse
 import functools
 import json
+import hashlib
 import logging
 import os
 import pickle
@@ -39,6 +40,16 @@ def load_json(filename: str, skip_first_line: bool) -> dict:
         if skip_first_line:
             f.readline()
         return json.loads(f.read())
+
+
+def get_language_unqiue_id(language_ascii_name: str):
+    """
+    Given a language code, it will return a unique (enough) uint16_t id code
+    When we have a collision here we can tweak this, but language list should be fairly stable from now on
+    """
+    return (
+        int(hashlib.sha1(language_ascii_name.encode("utf-8")).hexdigest(), 16) % 0xFFFF
+    )
 
 
 def read_translation(json_root: Union[str, Path], lang_code: str) -> dict:
@@ -868,10 +879,12 @@ def write_languages(
         f.write("const LanguageMeta LanguageMetas[] = {\n")
         for lang in data.langs:
             lang_code = lang["languageCode"]
+            lang_id = get_language_unqiue_id(lang_code)
             f.write(
                 "  {\n"
                 # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
                 f'    /* .code = */ "{lang_code}",\n'
+                f"    .uniqueID = {lang_id},\n"
                 f"    .translation_data = reinterpret_cast<const uint8_t *>(&translation_{lang_code}),\n"
                 f"    .translation_size = sizeof(translation_{lang_code}),\n"
                 f"    .translation_is_compressed = false,\n"
