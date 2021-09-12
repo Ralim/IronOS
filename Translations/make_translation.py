@@ -882,8 +882,6 @@ def write_languages(
             lang_id = get_language_unqiue_id(lang_code)
             f.write(
                 "  {\n"
-                # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
-                f'    /* .code = */ "{lang_code}",\n'
                 f"    .uniqueID = {lang_id},\n"
                 f"    .translation_data = reinterpret_cast<const uint8_t *>(&translation_{lang_code}),\n"
                 f"    .translation_size = sizeof(translation_{lang_code}),\n"
@@ -911,10 +909,10 @@ def write_languages(
         f.write("const LanguageMeta LanguageMetas[] = {\n")
         for lang in data.langs:
             lang_code = lang["languageCode"]
+            lang_id = get_language_unqiue_id(lang_code)
             f.write(
                 "  {\n"
-                # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
-                f'    /* .code = */ "{lang_code}",\n'
+                f"    .uniqueID = {lang_id},\n"
                 f"    .translation_data = translation_data_brieflz_{lang_code},\n"
                 f"    .translation_size = sizeof(translation_data_brieflz_{lang_code}),\n"
                 f"    .translation_is_compressed = true,\n"
