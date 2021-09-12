@@ -41,10 +41,10 @@ uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool ski
   // Now to divide this down by the gain
   valueuV /= OP_AMP_GAIN_STAGE;
 
-  if (systemSettings.CalibrationOffset && skipCalOffset == false) {
+  if (getSettingValue(SettingsOptions::CalibrationOffset) && skipCalOffset == false) {
     // Remove uV tipOffset
-    if (valueuV > systemSettings.CalibrationOffset)
-      valueuV -= systemSettings.CalibrationOffset;
+    if (valueuV > getSettingValue(SettingsOptions::CalibrationOffset))
+      valueuV -= getSettingValue(SettingsOptions::CalibrationOffset);
     else
       valueuV = 0;
   }

@@ -70,7 +70,7 @@ void detectAccelerometerVersion() {
 #endif
   {
     // disable imu sensitivity
-    systemSettings.sensitivity   = 0;
+    setSettingValue(SettingsOptions::Sensitivity, 0);
     DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
   }
 }
@@ -116,23 +116,21 @@ void startMOVTask(void const *argument __unused) {
   lastMovementTime = 0;
   // Mask 2 seconds if we are in autostart so that if user is plugging in and
   // then putting in stand it doesnt wake instantly
-  if (systemSettings.autoStartMode)
+  if (getSettingValue(SettingsOptions::AutoStartMode))
     osDelay(2 * TICKS_SECOND);
 
-  int16_t datax[MOVFilter] = {0};
-  int16_t datay[MOVFilter] = {0};
-  int16_t dataz[MOVFilter] = {0};
-  uint8_t currentPointer   = 0;
-  int16_t tx = 0, ty = 0, tz = 0;
-  int32_t avgx, avgy, avgz;
-  if (systemSettings.sensitivity > 9)
-    systemSettings.sensitivity = 9;
+  int16_t     datax[MOVFilter] = {0};
+  int16_t     datay[MOVFilter] = {0};
+  int16_t     dataz[MOVFilter] = {0};
+  uint8_t     currentPointer   = 0;
+  int16_t     tx = 0, ty = 0, tz = 0;
+  int32_t     avgx, avgy, avgz;
   Orientation rotation = ORIENTATION_FLAT;
   for (;;) {
     int32_t threshold = 1500 + (9 * 200);
-    threshold -= systemSettings.sensitivity * 200; // 200 is the step size
+    threshold -= getSettingValue(SettingsOptions::Sensitivity) * 200; // 200 is the step size
     readAccelerometer(tx, ty, tz, rotation);
-    if (systemSettings.OrientationMode == 2) {
+    if (getSettingValue(SettingsOptions::OrientationMode) == 2) {
       if (rotation != ORIENTATION_FLAT) {
         OLED::setRotation(rotation == ORIENTATION_LEFT_HAND); // link the data through
       }

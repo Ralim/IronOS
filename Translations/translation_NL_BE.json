@@ -1,325 +1,213 @@
 {
-	"languageCode": "NL_BE",
-	"languageLocalName": "Vlaams",
-	"fonts": [
-		"ascii_basic",
-		"latin_extended"
-	],
-	"messages": {
-		"SettingsCalibrationDone": "Gecalibreerd!",
-		"SettingsCalibrationWarning": "Zorg vooraf dat de punt op kamertemperatuur is!",
-		"SettingsResetWarning": "Ben je zeker dat je alle standaardwaarden wil resetten?",
-		"UVLOWarningString": "Voedingsspanning LAAG",
-		"UndervoltageString": "Onderspanning",
-		"InputVoltageString": "Voedingsspanning: ",
-		"WarningTipTempString": "Punt Temp: ",
-		"BadTipString": "DEFECT",
-		"SleepingSimpleString": "Zzz ",
-		"SleepingAdvancedString": "Slaapstand...",
-		"WarningSimpleString": "HEET",
-		"WarningAdvancedString": "!!! PUNT HEET !!!",
-		"SleepingTipAdvancedString": "Punt:",
-		"IdleTipString": "Punt:",
-		"IdleSetString": "Stel in:",
-		"TipDisconnectedString": "Punt ONTKOPPELD",
-		"SolderingAdvancedPowerPrompt": "Vermogen: ",
-		"OffString": "Uit",
-		"YourGainMessage": "Your gain:"
-	},
-	"messagesWarn": {
-		"ResetOKMessage": "Reset OK",
-		"SettingsResetMessage": [
-			"Settings were",
-			"reset!"
-		],
-		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
-		],
-		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
-		],
-		"LockingKeysString": " LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!",
-		"WarningThermalRunaway":["Thermal","Runaway"]
-	},
-	"characters": {
-		"SettingRightChar": "R",
-		"SettingLeftChar": "L",
-		"SettingAutoChar": "A",
-		"SettingOffChar": "O",
-		"SettingSlowChar": "T",
-		"SettingMediumChar": "M",
-		"SettingFastChar": "S",
-		"SettingStartNoneChar": "F",
-		"SettingStartSolderingChar": "T",
-		"SettingStartSleepChar": "S",
-		"SettingStartSleepOffChar": "K",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F",
-		"SettingNAChar": "N/A"
-	},
-	"menuGroups": {
-		"PowerMenu": {
-			"text2": [
-				"Power",
-				"settings"
-			],
-			"desc": "Power settings"
-		},
-		"SolderingMenu": {
-			"text2": [
-				"Soldeer",
-				"Instellingen"
-			],
-			"desc": "Soldeerinstellingen"
-		},
-		"PowerSavingMenu": {
-			"text2": [
-				"Slaap",
-				"standen"
-			],
-			"desc": "Batterijspaarstanden"
-		},
-		"UIMenu": {
-			"text2": [
-				"Gebruikers-",
-				"Interface"
-			],
-			"desc": "Gebruikersinterface Instellingen"
-		},
-		"AdvancedMenu": {
-			"text2": [
-				"Gevorderde",
-				"Instellingen"
-			],
-			"desc": "Gevorderde Instellingen"
-		}
-	},
-	"menuOptions": {
-		"DCInCutoff": {
-			"text2": [
-				"Spannings-",
-				"bron"
-			],
-			"desc": "Spanningsbron. Stelt minimumspanning in. (DC 10V) (S 3.3V per cel)"
-		},
-		"SleepTemperature": {
-			"text2": [
-				"Slaap",
-				"temp"
-			],
-			"desc": "Temperatuur in slaapstand (°C)"
-		},
-		"SleepTimeout": {
-			"text2": [
-				"Slaap",
-				"time-out"
-			],
-			"desc": "Slaapstand time-out (Minuten | Seconden)"
-		},
-		"ShutdownTimeout": {
-			"text2": [
-				"Uitschakel",
-				"time-out"
-			],
-			"desc": "Automatisch afsluiten time-out (Minuten)"
-		},
-		"MotionSensitivity": {
-			"text2": [
-				"Bewegings-",
-				"gevoeligheid"
-			],
-			"desc": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
-		},
-		"TemperatureUnit": {
-			"text2": [
-				"Temperatuur",
-				"schaal"
-			],
-			"desc": "Temperatuurschaal (°C=Celsius | °F=Fahrenheit)"
-		},
-		"AdvancedIdle": {
-			"text2": [
-				"Gedetailleerd",
-				"slaapscherm"
-			],
-			"desc": "Gedetailleerde informatie in een kleiner lettertype in het slaapscherm."
-		},
-		"DisplayRotation": {
-			"text2": [
-				"Scherm-",
-				"oriëntatie"
-			],
-			"desc": "Schermoriëntatie (R=Rechtshandig | L=Linkshandig | A=Automatisch)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Verhogings",
-				"temp"
-			],
-			"desc": "Verhogingstemperatuur"
-		},
-		"AutoStart": {
-			"text2": [
-				"Auto",
-				"start"
-			],
-			"desc": "Breng de soldeerbout op temperatuur bij het opstarten. (F=Uit | T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
-		},
-		"CooldownBlink": {
-			"text2": [
-				"Afkoel",
-				"knipper"
-			],
-			"desc": "Temperatuur knippert in hoofdmenu tijdens afkoeling."
-		},
-		"TemperatureCalibration": {
-			"text2": [
-				"Calibreer",
-				"temperatuur?"
-			],
-			"desc": "Temperatuur van de punt calibreren."
-		},
-		"SettingsReset": {
-			"text2": [
-				"Instellingen",
-				"resetten?"
-			],
-			"desc": "Alle instellingen resetten."
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Calibreer",
-				"voedingsspanning?"
-			],
-			"desc": "VIN Calibreren. Bevestigen door knoppen lang in te drukken."
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Gedetailleerd",
-				"soldeerscherm"
-			],
-			"desc": "Gedetailleerde informatie in kleiner lettertype in soldeerscherm."
-		},
-		"ScrollingSpeed": {
-			"text2": [
-				"Scrol",
-				"snelheid"
-			],
-			"desc": "Scrolsnelheid van de tekst."
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Vermogen",
-				"Watt"
-			],
-			"desc": "Vermogen van de adapter"
-		},
-		"PDNegTimeout": {
-                        "text2": [
-                                "PD",
-                                "timeout"
-                        ],
-                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-                },
-		"PowerLimit": {
-			"text2": [
-				"Power",
-				"Limit"
-			],
-			"desc": "Maximum power the iron can use (Watts)"
-		},
-		"ReverseButtonTempChange": {
-			"text2": [
-				"Key +-",
-				"reverse?"
-			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
-		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Temp change",
-				"short?"
-			],
-			"desc": "Temperature change steps on short button press!"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Temp change",
-				"long?"
-			],
-			"desc": "Temperature change steps on long button press!"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Power",
-				"Pulse W"
-			],
-			"desc": "Keep awake pulse power intensity"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall Eff",
-				"Sensitivity"
-			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Allow buttons",
-				"locking"
-			],
-			"desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimum",
-				"voltage"
-			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Anim.",
-				"loop"
-			],
-			"desc": "Loop icon animations in root menu"
-		},
-		"AnimSpeed": {
-			"text2": [
-				"Anim.",
-				"speed"
-			],
-			"desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
-		},
-		"PowerPulseWait": {
-			"text2": [
-				"Power pulse",
-				"wait time"
-			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Power pulse",
-				"duration"
-			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Spraak:",
-				" NL_BE   Vlaams"
-			],
-			"desc": ""
-		}
-	}
+  "languageCode": "NL_BE",
+  "languageLocalName": "Vlaams",
+  "fonts": ["ascii_basic", "latin_extended"],
+  "messages": {
+    "SettingsCalibrationDone": "Gecalibreerd!",
+    "SettingsCalibrationWarning": "Zorg vooraf dat de punt op kamertemperatuur is!",
+    "SettingsResetWarning": "Ben je zeker dat je alle standaardwaarden wil resetten?",
+    "UVLOWarningString": "Voedingsspanning LAAG",
+    "UndervoltageString": "Onderspanning",
+    "InputVoltageString": "Voedingsspanning: ",
+    "WarningTipTempString": "Punt Temp: ",
+    "BadTipString": "DEFECT",
+    "SleepingSimpleString": "Zzz ",
+    "SleepingAdvancedString": "Slaapstand...",
+    "WarningSimpleString": "HEET",
+    "WarningAdvancedString": "!!! PUNT HEET !!!",
+    "SleepingTipAdvancedString": "Punt:",
+    "IdleTipString": "Punt:",
+    "IdleSetString": "Stel in:",
+    "TipDisconnectedString": "Punt ONTKOPPELD",
+    "SolderingAdvancedPowerPrompt": "Vermogen: ",
+    "OffString": "Uit",
+    "YourGainMessage": "Your gain:"
+  },
+  "messagesWarn": {
+    "ResetOKMessage": "Reset OK",
+    "SettingsResetMessage": ["Settings were", "reset!"],
+    "NoAccelerometerMessage": ["No accelerometer", "detected!"],
+    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
+    "LockingKeysString": " LOCKED",
+    "UnlockingKeysString": "UNLOCKED",
+    "WarningKeysLockedString": "!LOCKED!",
+    "WarningThermalRunaway": ["Thermal", "Runaway"]
+  },
+  "characters": {
+    "SettingRightChar": "R",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingOffChar": "O",
+    "SettingSlowChar": "T",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "S",
+    "SettingStartNoneChar": "F",
+    "SettingStartSolderingChar": "T",
+    "SettingStartSleepChar": "S",
+    "SettingStartSleepOffChar": "K",
+    "SettingSensitivityOff": "O",
+    "SettingSensitivityLow": "L",
+    "SettingSensitivityMedium": "M",
+    "SettingSensitivityHigh": "H",
+    "SettingLockDisableChar": "D",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F",
+    "SettingNAChar": "N/A"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "text2": ["Power", "settings"],
+      "desc": "Power settings"
+    },
+    "SolderingMenu": {
+      "text2": ["Soldeer", "Instellingen"],
+      "desc": "Soldeerinstellingen"
+    },
+    "PowerSavingMenu": {
+      "text2": ["Slaap", "standen"],
+      "desc": "Batterijspaarstanden"
+    },
+    "UIMenu": {
+      "text2": ["Gebruikers-", "Interface"],
+      "desc": "Gebruikersinterface Instellingen"
+    },
+    "AdvancedMenu": {
+      "text2": ["Gevorderde", "Instellingen"],
+      "desc": "Gevorderde Instellingen"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "text2": ["Spannings-", "bron"],
+      "desc": "Spanningsbron. Stelt minimumspanning in. (DC 10V) (S 3.3V per cel)"
+    },
+    "SleepTemperature": {
+      "text2": ["Slaap", "temp"],
+      "desc": "Temperatuur in slaapstand (°C)"
+    },
+    "SleepTimeout": {
+      "text2": ["Slaap", "time-out"],
+      "desc": "Slaapstand time-out (Minuten | Seconden)"
+    },
+    "ShutdownTimeout": {
+      "text2": ["Uitschakel", "time-out"],
+      "desc": "Automatisch afsluiten time-out (Minuten)"
+    },
+    "MotionSensitivity": {
+      "text2": ["Bewegings-", "gevoeligheid"],
+      "desc": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+    },
+    "TemperatureUnit": {
+      "text2": ["Temperatuur", "schaal"],
+      "desc": "Temperatuurschaal (°C=Celsius | °F=Fahrenheit)"
+    },
+    "AdvancedIdle": {
+      "text2": ["Gedetailleerd", "slaapscherm"],
+      "desc": "Gedetailleerde informatie in een kleiner lettertype in het slaapscherm."
+    },
+    "DisplayRotation": {
+      "text2": ["Scherm-", "oriëntatie"],
+      "desc": "Schermoriëntatie (R=Rechtshandig | L=Linkshandig | A=Automatisch)"
+    },
+    "BoostTemperature": {
+      "text2": ["Verhogings", "temp"],
+      "desc": "Verhogingstemperatuur"
+    },
+    "AutoStart": {
+      "text2": ["Auto", "start"],
+      "desc": "Breng de soldeerbout op temperatuur bij het opstarten. (F=Uit | T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
+    },
+    "CooldownBlink": {
+      "text2": ["Afkoel", "knipper"],
+      "desc": "Temperatuur knippert in hoofdmenu tijdens afkoeling."
+    },
+    "TemperatureCalibration": {
+      "text2": ["Calibreer", "temperatuur?"],
+      "desc": "Temperatuur van de punt calibreren."
+    },
+    "SettingsReset": {
+      "text2": ["Instellingen", "resetten?"],
+      "desc": "Alle instellingen resetten."
+    },
+    "VoltageCalibration": {
+      "text2": ["Calibreer", "voedingsspanning?"],
+      "desc": "VIN Calibreren. Bevestigen door knoppen lang in te drukken."
+    },
+    "AdvancedSoldering": {
+      "text2": ["Gedetailleerd", "soldeerscherm"],
+      "desc": "Gedetailleerde informatie in kleiner lettertype in soldeerscherm."
+    },
+    "ScrollingSpeed": {
+      "text2": ["Scrol", "snelheid"],
+      "desc": "Scrolsnelheid van de tekst."
+    },
+    "QCMaxVoltage": {
+      "text2": ["Vermogen", "Watt"],
+      "desc": "Vermogen van de adapter"
+    },
+    "PDNegTimeout": {
+      "text2": ["PD", "timeout"],
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+    },
+    "PowerLimit": {
+      "text2": ["Power", "Limit"],
+      "desc": "Maximum power the iron can use (Watts)"
+    },
+    "ReverseButtonTempChange": {
+      "text2": ["Key +-", "reverse?"],
+      "desc": "Reverse the tip temperature change buttons plus minus assignment."
+    },
+    "TempChangeShortStep": {
+      "text2": ["Temp change", "short?"],
+      "desc": "Temperature change steps on short button press!"
+    },
+    "TempChangeLongStep": {
+      "text2": ["Temp change", "long?"],
+      "desc": "Temperature change steps on long button press!"
+    },
+    "PowerPulsePower": {
+      "text2": ["Power", "Pulse W"],
+      "desc": "Keep awake pulse power intensity"
+    },
+    "HallEffSensitivity": {
+      "text2": ["Hall Eff", "Sensitivity"],
+      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
+    },
+    "LockingMode": {
+      "text2": ["Allow buttons", "locking"],
+      "desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+    },
+    "MinVolCell": {
+      "text2": ["Minimum", "voltage"],
+      "desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "AnimLoop": {
+      "text2": ["Anim.", "loop"],
+      "desc": "Loop icon animations in root menu"
+    },
+    "AnimSpeed": {
+      "text2": ["Anim.", "speed"],
+      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+    },
+    "PowerPulseWait": {
+      "text2": ["Power pulse", "wait time"],
+      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "text2": ["Power pulse", "duration"],
+      "desc": "Keep-awake-pulse duration (x 250ms)"
+    },
+    "LanguageSwitch": {
+      "text2": ["Spraak:", " NL_BE   Vlaams"],
+      "desc": ""
+    },
+    "Brightness": {
+      "text2": ["Screen", "Brightness"],
+      "desc": "Adjust the contrast/brightness of the OLED screen"
+    },
+    "ColourInversion": {
+      "text2": ["Screen", "Invert"],
+      "desc": "Invert the colours of the OLED screen"
+    }
+  }
 }

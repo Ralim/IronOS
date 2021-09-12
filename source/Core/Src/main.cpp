@@ -40,7 +40,7 @@ int main(void) {
   setTipX10Watts(0); // force tip off
   resetWatchdog();
   // Testing for which accelerometer is mounted
-  settingsWereReset = restoreSettings(); // load the settings from flash
+  settingsWereReset = loadSettings(); // load the settings from flash
   resetWatchdog();
   /* Create the thread(s) */
 

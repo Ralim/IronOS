@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import json
+import os
 import unittest
 
 
@@ -29,6 +31,23 @@ class TestMakeTranslation(unittest.TestCase):
 
         self.assertEqual(bytes_to_c_hex(b"\x00"), "0x00,")
         self.assertEqual(bytes_to_c_hex(b"\xF1\xAB"), "0xF1, 0xAB,")
+
+    def test_no_language_id_collisions(self):
+        """
+        Asserting that we have no language collisions and that the has works ok
+        """
+        from make_translation import get_language_unqiue_id
+
+        seen_ids = []
+        for filename in os.listdir("."):
+            if filename.endswith(".json") and filename.startswith("translation_"):
+                with open(filename) as f:
+                    data = json.loads(f.read())
+                    lang_code = data.get("languageCode")
+                    self.assertNotEqual(lang_code, None)
+                    id = get_language_unqiue_id(lang_code)
+                    self.assertFalse(id in seen_ids)
+                    seen_ids.append(id)
 
 
 if __name__ == "__main__":

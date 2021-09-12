@@ -1,326 +1,213 @@
 {
-	"languageCode": "RU",
-	"languageLocalName": "Русский",
-	"fonts": [
-		"ascii_basic",
-		"latin_extended",
-		"cyrillic"
-	],
-	"messages": {
-		"SettingsCalibrationDone": "Калибровка завершена!",
-		"SettingsCalibrationWarning": "Прежде чем продолжить, пожалуйста, убедитесь, что жало имеет комнатную температуру!",
-		"SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
-		"UVLOWarningString": "НАПРЯЖ--",
-		"UndervoltageString": "Низкое напряжение",
-		"InputVoltageString": "Питание В: ",
-		"WarningTipTempString": "Темп. жала: ",
-		"BadTipString": "ЖАЛО--",
-		"SleepingSimpleString": "Zzzz",
-		"SleepingAdvancedString": "Ожидание...",
-		"WarningSimpleString": "ГОРЯЧО!",
-		"WarningAdvancedString": "!!! ГОРЯЧЕЕ !!!\n!!! ЖАЛО !!!",
-		"SleepingTipAdvancedString": "Жало:",
-		"IdleTipString": "Жало:",
-		"IdleSetString": " ->",
-		"TipDisconnectedString": "ЖАЛО ОТСОЕДИНЕНО",
-		"SolderingAdvancedPowerPrompt": "Питание: ",
-		"OffString": "Выкл.",
-		"YourGainMessage": "Прирост:"
-	},
-	"messagesWarn": {
-		"ResetOKMessage": "Сброс OK",
-		"SettingsResetMessage": [
-			"Настройки",
-			"сброшены!"
-		],
-		"NoAccelerometerMessage": [
-			"Не определен",
-			"акселерометр!"
-		],
-		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
-		],
-		"LockingKeysString": "LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!",
-		"WarningThermalRunaway":["Thermal","Runaway"]
-	},
-	"characters": {
-		"SettingRightChar": "П",
-		"SettingLeftChar": "Л",
-		"SettingAutoChar": "А",
-		"SettingOffChar": "O",
-		"SettingSlowChar": "М",
-		"SettingMediumChar": "M",
-		"SettingFastChar": "Б",
-		"SettingStartNoneChar": "В",
-		"SettingStartSolderingChar": "П",
-		"SettingStartSleepChar": "О",
-		"SettingStartSleepOffChar": "К",
-		"SettingSensitivityOff": "О",
-		"SettingSensitivityLow": "Н",
-		"SettingSensitivityMedium": "С",
-		"SettingSensitivityHigh": "В",
-		"SettingLockDisableChar": "О",
-		"SettingLockBoostChar": "Т",
-		"SettingLockFullChar": "П",
-		"SettingNAChar": "Н/Д"
-	},
-	"menuGroups": {
-		"PowerMenu": {
-			"text2": [
-				"Параметры",
-				"питания"
-			],
-			"desc": "Источник питания и минимальное напряжение на ячейку"
-		},
-		"SolderingMenu": {
-			"text2": [
-				"Параметры",
-				"пайки"
-			],
-			"desc": "Параметры пайки"
-		},
-		"PowerSavingMenu": {
-			"text2": [
-				"Режимы",
-				"сна"
-			],
-			"desc": "Настройки режима ожидания"
-		},
-		"UIMenu": {
-			"text2": [
-				"Параметры",
-				"интерфейса"
-			],
-			"desc": "Настройки пользовательского интерфейса"
-		},
-		"AdvancedMenu": {
-			"text2": [
-				"Дополнител.",
-				"настройки"
-			],
-			"desc": "Дополнительные настройки"
-		}
-	},
-	"menuOptions": {
-		"DCInCutoff": {
-			"text2": [
-				"Источник",
-				"питания"
-			],
-			"desc": "Источник питания. Устанавливает напряжение отсечки. (DC 10В) (S 3,3В на ячейку, без лимита мощности)"
-		},
-		"SleepTemperature": {
-			"text2": [
-				"Темп.",
-				"ожидания"
-			],
-			"desc": "Температура режима ожидания"
-		},
-		"SleepTimeout": {
-			"text2": [
-				"Таймаут",
-				"ожидания"
-			],
-			"desc": "Время до перехода в режим ожидания (Минуты | Секунды)"
-		},
-		"ShutdownTimeout": {
-			"text2": [
-				"Таймаут",
-				"выключения"
-			],
-			"desc": "Время до отключения паяльника (Минуты)"
-		},
-		"MotionSensitivity": {
-			"text2": [
-				"Чувствительн.",
-				"акселерометра"
-			],
-			"desc": "Чувствительность акселерометра (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
-		},
-		"TemperatureUnit": {
-			"text2": [
-				"Единицы",
-				"температуры"
-			],
-			"desc": "Единицы измерения температуры (C=Цельcия | F=Фаренгейта)"
-		},
-		"AdvancedIdle": {
-			"text2": [
-				"Подробный",
-				"реж. ожидания"
-			],
-			"desc": "Отображать детальную информацию уменьшенным шрифтом на экране ожидания"
-		},
-		"DisplayRotation": {
-			"text2": [
-				"Ориентация",
-				"экрана"
-			],
-			"desc": "Ориентация экрана (П=Правая рука | Л=Левая рука | А=Авто)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"t° турбо",
-				"режима"
-			],
-			"desc": "Температура жала в турбо-режиме"
-		},
-		"AutoStart": {
-			"text2": [
-				"Авто",
-				"старт"
-			],
-			"desc": "Режим, в котором запускается паяльник при подаче питания (В=Выкл. | П=Пайка | О=Ожидание | К=Ожидание при комн. темп.)"
-		},
-		"CooldownBlink": {
-			"text2": [
-				"Мигание t°",
-				"при остывании"
-			],
-			"desc": "Мигать температурой на экране охлаждения, пока жало еще горячее"
-		},
-		"TemperatureCalibration": {
-			"text2": [
-				"Калибровка",
-				"температуры"
-			],
-			"desc": "Калибровка термодатчика жала"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Сброс",
-				"Настроек"
-			],
-			"desc": "Сброс настроек к значеням по умолчанию"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Калибровка",
-				"напряжения"
-			],
-			"desc": "Калибровка входного напряжения (длинное нажатие для выхода)"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Подробный",
-				"экран пайки"
-			],
-			"desc": "Показывать детальную информацию на экране пайки"
-		},
-		"ScrollingSpeed": {
-			"text2": [
-				"Скорость",
-				"текста"
-			],
-			"desc": "Скорость прокрутки текста (М=медленно | Б=быстро)"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Мощность",
-				"питания"
-			],
-			"desc": "Мощность используемого источника питания"
-		},
-		"PDNegTimeout": {
-                        "text2": [
-                                "PD",
-                                "timeout"
-                        ],
-                        "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-                },
-		"PowerLimit": {
-			"text2": [
-				"Предел",
-				"мощности"
-			],
-			"desc": "Максимальная мощность, которую может использовать паяльник (Ватт)"
-		},
-		"ReverseButtonTempChange": {
-			"text2": [
-				"Инвертировать",
-				"кнопки"
-			],
-			"desc": "Инвертировать кнопки изменения температуры"
-		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Шаг темп.",
-				"кор. наж."
-			],
-			"desc": "Шаг изменения температуры при коротком нажатии кнопок"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Шаг темп.",
-				"длин. наж."
-			],
-			"desc": "Шаг изменения температуры при длинном нажатии кнопок"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Сила имп.",
-				"питания Вт"
-			],
-			"desc": "Сила импульса удерживающего от сна повербанк или другой источник питания"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Эффект Холла",
-				"чувствительность"
-			],
-			"desc": "Уровень чувствительности датчика холла в режиме сна (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Разрешить",
-				"блок. кнопок"
-			],
-			"desc": "При работе длинное нажатие обеих кнопок блокирует их (О=Отключено | Т=Только турбо | П=Полная блокировка)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Мин.",
-				"напр."
-			],
-			"desc": "Минимальное разрешенное напряжение на ячейку (3S: 3 - 3,7V | 4-S: 2,4 - 3,7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Зацикленная",
-				"анимация"
-			],
-			"desc": "Зацикленная анимация иконок в главном меню"
-		},
-		"AnimSpeed": {
-			"text2": [
-				"Скорость",
-				"анимации"
-			],
-			"desc": "Скорость анимации иконок в главном меню (Милисекунды) (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
-		},
-		"PowerPulseWait": {
-			"text2": [
-				"Power pulse",
-				"wait time"
-			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2,5с)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Power pulse",
-				"duration"
-			],
-			"desc": "Keep-awake-pulse duration (x 250мс)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Язык:",
-				" RU     Русский"
-			],
-			"desc": ""
-		}
-	}
+  "languageCode": "RU",
+  "languageLocalName": "Русский",
+  "fonts": ["ascii_basic", "latin_extended", "cyrillic"],
+  "messages": {
+    "SettingsCalibrationDone": "Калибровка завершена!",
+    "SettingsCalibrationWarning": "Прежде чем продолжить, пожалуйста, убедитесь, что жало имеет комнатную температуру!",
+    "SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
+    "UVLOWarningString": "НАПРЯЖ--",
+    "UndervoltageString": "Низкое напряжение",
+    "InputVoltageString": "Питание В: ",
+    "WarningTipTempString": "Темп. жала: ",
+    "BadTipString": "ЖАЛО--",
+    "SleepingSimpleString": "Zzzz",
+    "SleepingAdvancedString": "Ожидание...",
+    "WarningSimpleString": "ГОРЯЧО!",
+    "WarningAdvancedString": "!!! ГОРЯЧЕЕ !!!\n!!! ЖАЛО !!!",
+    "SleepingTipAdvancedString": "Жало:",
+    "IdleTipString": "Жало:",
+    "IdleSetString": " ->",
+    "TipDisconnectedString": "ЖАЛО ОТСОЕДИНЕНО",
+    "SolderingAdvancedPowerPrompt": "Питание: ",
+    "OffString": "Выкл.",
+    "YourGainMessage": "Прирост:"
+  },
+  "messagesWarn": {
+    "ResetOKMessage": "Сброс OK",
+    "SettingsResetMessage": ["Настройки", "сброшены!"],
+    "NoAccelerometerMessage": ["Не определен", "акселерометр!"],
+    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
+    "LockingKeysString": "LOCKED",
+    "UnlockingKeysString": "UNLOCKED",
+    "WarningKeysLockedString": "!LOCKED!",
+    "WarningThermalRunaway": ["Thermal", "Runaway"]
+  },
+  "characters": {
+    "SettingRightChar": "П",
+    "SettingLeftChar": "Л",
+    "SettingAutoChar": "А",
+    "SettingOffChar": "O",
+    "SettingSlowChar": "М",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "Б",
+    "SettingStartNoneChar": "В",
+    "SettingStartSolderingChar": "П",
+    "SettingStartSleepChar": "О",
+    "SettingStartSleepOffChar": "К",
+    "SettingSensitivityOff": "О",
+    "SettingSensitivityLow": "Н",
+    "SettingSensitivityMedium": "С",
+    "SettingSensitivityHigh": "В",
+    "SettingLockDisableChar": "О",
+    "SettingLockBoostChar": "Т",
+    "SettingLockFullChar": "П",
+    "SettingNAChar": "Н/Д"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "text2": ["Параметры", "питания"],
+      "desc": "Источник питания и минимальное напряжение на ячейку"
+    },
+    "SolderingMenu": {
+      "text2": ["Параметры", "пайки"],
+      "desc": "Параметры пайки"
+    },
+    "PowerSavingMenu": {
+      "text2": ["Режимы", "сна"],
+      "desc": "Настройки режима ожидания"
+    },
+    "UIMenu": {
+      "text2": ["Параметры", "интерфейса"],
+      "desc": "Настройки пользовательского интерфейса"
+    },
+    "AdvancedMenu": {
+      "text2": ["Дополнител.", "настройки"],
+      "desc": "Дополнительные настройки"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "text2": ["Источник", "питания"],
+      "desc": "Источник питания. Устанавливает напряжение отсечки. (DC 10В) (S 3,3В на ячейку, без лимита мощности)"
+    },
+    "SleepTemperature": {
+      "text2": ["Темп.", "ожидания"],
+      "desc": "Температура режима ожидания"
+    },
+    "SleepTimeout": {
+      "text2": ["Таймаут", "ожидания"],
+      "desc": "Время до перехода в режим ожидания (Минуты | Секунды)"
+    },
+    "ShutdownTimeout": {
+      "text2": ["Таймаут", "выключения"],
+      "desc": "Время до отключения паяльника (Минуты)"
+    },
+    "MotionSensitivity": {
+      "text2": ["Чувствительн.", "акселерометра"],
+      "desc": "Чувствительность акселерометра (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
+    },
+    "TemperatureUnit": {
+      "text2": ["Единицы", "температуры"],
+      "desc": "Единицы измерения температуры (C=Цельcия | F=Фаренгейта)"
+    },
+    "AdvancedIdle": {
+      "text2": ["Подробный", "реж. ожидания"],
+      "desc": "Отображать детальную информацию уменьшенным шрифтом на экране ожидания"
+    },
+    "DisplayRotation": {
+      "text2": ["Ориентация", "экрана"],
+      "desc": "Ориентация экрана (П=Правая рука | Л=Левая рука | А=Авто)"
+    },
+    "BoostTemperature": {
+      "text2": ["t° турбо", "режима"],
+      "desc": "Температура жала в турбо-режиме"
+    },
+    "AutoStart": {
+      "text2": ["Авто", "старт"],
+      "desc": "Режим, в котором запускается паяльник при подаче питания (В=Выкл. | П=Пайка | О=Ожидание | К=Ожидание при комн. темп.)"
+    },
+    "CooldownBlink": {
+      "text2": ["Мигание t°", "при остывании"],
+      "desc": "Мигать температурой на экране охлаждения, пока жало еще горячее"
+    },
+    "TemperatureCalibration": {
+      "text2": ["Калибровка", "температуры"],
+      "desc": "Калибровка термодатчика жала"
+    },
+    "SettingsReset": {
+      "text2": ["Сброс", "Настроек"],
+      "desc": "Сброс настроек к значеням по умолчанию"
+    },
+    "VoltageCalibration": {
+      "text2": ["Калибровка", "напряжения"],
+      "desc": "Калибровка входного напряжения (длинное нажатие для выхода)"
+    },
+    "AdvancedSoldering": {
+      "text2": ["Подробный", "экран пайки"],
+      "desc": "Показывать детальную информацию на экране пайки"
+    },
+    "ScrollingSpeed": {
+      "text2": ["Скорость", "текста"],
+      "desc": "Скорость прокрутки текста (М=медленно | Б=быстро)"
+    },
+    "QCMaxVoltage": {
+      "text2": ["Мощность", "питания"],
+      "desc": "Мощность используемого источника питания"
+    },
+    "PDNegTimeout": {
+      "text2": ["PD", "timeout"],
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+    },
+    "PowerLimit": {
+      "text2": ["Предел", "мощности"],
+      "desc": "Максимальная мощность, которую может использовать паяльник (Ватт)"
+    },
+    "ReverseButtonTempChange": {
+      "text2": ["Инвертировать", "кнопки"],
+      "desc": "Инвертировать кнопки изменения температуры"
+    },
+    "TempChangeShortStep": {
+      "text2": ["Шаг темп.", "кор. наж."],
+      "desc": "Шаг изменения температуры при коротком нажатии кнопок"
+    },
+    "TempChangeLongStep": {
+      "text2": ["Шаг темп.", "длин. наж."],
+      "desc": "Шаг изменения температуры при длинном нажатии кнопок"
+    },
+    "PowerPulsePower": {
+      "text2": ["Сила имп.", "питания Вт"],
+      "desc": "Сила импульса удерживающего от сна повербанк или другой источник питания"
+    },
+    "HallEffSensitivity": {
+      "text2": ["Эффект Холла", "чувствительность"],
+      "desc": "Уровень чувствительности датчика холла в режиме сна (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
+    },
+    "LockingMode": {
+      "text2": ["Разрешить", "блок. кнопок"],
+      "desc": "При работе длинное нажатие обеих кнопок блокирует их (О=Отключено | Т=Только турбо | П=Полная блокировка)"
+    },
+    "MinVolCell": {
+      "text2": ["Мин.", "напр."],
+      "desc": "Минимальное разрешенное напряжение на ячейку (3S: 3 - 3,7V | 4-S: 2,4 - 3,7V)"
+    },
+    "AnimLoop": {
+      "text2": ["Зацикленная", "анимация"],
+      "desc": "Зацикленная анимация иконок в главном меню"
+    },
+    "AnimSpeed": {
+      "text2": ["Скорость", "анимации"],
+      "desc": "Скорость анимации иконок в главном меню (Милисекунды) (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
+    },
+    "PowerPulseWait": {
+      "text2": ["Power pulse", "wait time"],
+      "desc": "Time to wait before triggering every keep-awake pulse (x 2,5с)"
+    },
+    "PowerPulseDuration": {
+      "text2": ["Power pulse", "duration"],
+      "desc": "Keep-awake-pulse duration (x 250мс)"
+    },
+    "LanguageSwitch": {
+      "text2": ["Язык:", " RU     Русский"],
+      "desc": ""
+    },
+    "Brightness": {
+      "text2": ["Screen", "Brightness"],
+      "desc": "Adjust the contrast/brightness of the OLED screen"
+    },
+    "ColourInversion": {
+      "text2": ["Screen", "Invert"],
+      "desc": "Invert the colours of the OLED screen"
+    }
+  }
 }

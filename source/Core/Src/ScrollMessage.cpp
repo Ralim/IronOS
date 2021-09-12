@@ -40,7 +40,7 @@ bool ScrollMessage::drawUpdate(const char *message, uint32_t currentTick) {
   int16_t  messageOffset;
   uint16_t msgWidth = messageWidth(message);
   if (msgWidth > OLED_WIDTH) {
-    messageOffset = ((currentTick - messageStart) / (systemSettings.descriptionScrollSpeed == 1 ? TICKS_100MS / 10 : (TICKS_100MS / 5)));
+    messageOffset = ((currentTick - messageStart) / (getSettingValue(SettingsOptions::DescriptionScrollSpeed) == 1 ? TICKS_100MS / 10 : (TICKS_100MS / 5)));
     messageOffset %= msgWidth + OLED_WIDTH; // Roll around at the end
     if (messageOffset < OLED_WIDTH) {
       // Snap the message to the left edge.
