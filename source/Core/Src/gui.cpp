@@ -153,15 +153,15 @@ const menuitem rootSettingsMenu[] {
    */
 
 #if defined(POW_DC) || defined(POW_QC)
-  {0, settings_enterPowerMenu, settings_displayPowerMenu}, /*Power*/
+  {0, settings_enterPowerMenu, settings_displayPowerMenu, SettingsOptions::SettingsOptionsLength}, /*Power*/
 #endif
-      {0, settings_enterSolderingMenu, settings_displaySolderingMenu},     /*Soldering*/
-      {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu}, /*Sleep Options Menu*/
-      {0, settings_enterUIMenu, settings_displayUIMenu},                   /*UI Menu*/
-      {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu},       /*Advanced Menu*/
-      {0, settings_setLanguageSwitch, settings_displayLanguageSwitch},     /*Language Switch*/
+      {0, settings_enterSolderingMenu, settings_displaySolderingMenu, SettingsOptions::SettingsOptionsLength},     /*Soldering*/
+      {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu, SettingsOptions::SettingsOptionsLength}, /*Sleep Options Menu*/
+      {0, settings_enterUIMenu, settings_displayUIMenu, SettingsOptions::SettingsOptionsLength},                   /*UI Menu*/
+      {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu, SettingsOptions::SettingsOptionsLength},       /*Advanced Menu*/
+      {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, SettingsOptions::SettingsOptionsLength},     /*Language Switch*/
   {
-    0, nullptr, nullptr
+    0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength
   } // end of menu marker. DO NOT REMOVE
 };
 
@@ -171,16 +171,16 @@ const menuitem powerMenu[] = {
  * Power Source
  */
 #ifdef POW_DC
-    {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), settings_setInputVRange, settings_displayInputVRange},       /*Voltage input*/
-    {SETTINGS_DESC(SettingsItemIndex::MinVolCell), settings_setInputMinVRange, settings_displayInputMinVRange}, /*Minimum voltage input*/
+    {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), settings_setInputVRange, settings_displayInputVRange, SettingsOptions::SettingsOptionsLength},       /*Voltage input*/
+    {SETTINGS_DESC(SettingsItemIndex::MinVolCell), settings_setInputMinVRange, settings_displayInputMinVRange, SettingsOptions::SettingsOptionsLength}, /*Minimum voltage input*/
 #endif
 #ifdef POW_QC
-    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), settings_setQCInputV, settings_displayQCInputV}, /*Voltage input*/
+    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), settings_setQCInputV, settings_displayQCInputV, SettingsOptions::SettingsOptionsLength}, /*Voltage input*/
 #endif
 #ifdef POW_PD
-    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), settings_setPDNegTimeout, settings_displayPDNegTimeout}, /*PD timeout setup*/
+    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), settings_setPDNegTimeout, settings_displayPDNegTimeout, SettingsOptions::SettingsOptionsLength}, /*PD timeout setup*/
 #endif
-    {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength} // end of menu marker. DO NOT REMOVE
 };
 #endif
 const menuitem solderingMenu[] = {
@@ -191,12 +191,12 @@ const menuitem solderingMenu[] = {
      *  Temp change short step
      *  Temp change long step
      */
-    {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), settings_setBoostTemp, settings_displayBoostTemp},                        /*Boost Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::AutoStart), settings_setAutomaticStartMode, settings_displayAutomaticStartMode},             /*Auto start*/
-    {SETTINGS_DESC(SettingsItemIndex::TempChangeShortStep), settings_setTempChangeShortStep, settings_displayTempChangeShortStep}, /*Temp change short step*/
-    {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), settings_setTempChangeLongStep, settings_displayTempChangeLongStep},    /*Temp change long step*/
-    {SETTINGS_DESC(SettingsItemIndex::LockingMode), settings_setLockingMode, settings_displayLockingMode},                         /*Locking Mode*/
-    {0, nullptr, nullptr}                                                                                                          // end of menu marker. DO NOT REMOVE
+    {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), settings_setBoostTemp, settings_displayBoostTemp, SettingsOptions::SettingsOptionsLength},                        /*Boost Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::AutoStart), settings_setAutomaticStartMode, settings_displayAutomaticStartMode, SettingsOptions::SettingsOptionsLength},             /*Auto start*/
+    {SETTINGS_DESC(SettingsItemIndex::TempChangeShortStep), settings_setTempChangeShortStep, settings_displayTempChangeShortStep, SettingsOptions::SettingsOptionsLength}, /*Temp change short step*/
+    {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), settings_setTempChangeLongStep, settings_displayTempChangeLongStep, SettingsOptions::SettingsOptionsLength},    /*Temp change long step*/
+    {SETTINGS_DESC(SettingsItemIndex::LockingMode), settings_setLockingMode, settings_displayLockingMode, SettingsOptions::SettingsOptionsLength},                         /*Locking Mode*/
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength} // end of menu marker. DO NOT REMOVE
 };
 const menuitem UIMenu[] = {
     /*
@@ -207,17 +207,18 @@ const menuitem UIMenu[] = {
      *  Cooldown blink
      *  Reverse Temp change buttons + -
      */
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF,
-     settings_displayTempF}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
+    {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF, settings_displayTempF,
+     SettingsOptions::SettingsOptionsLength}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
 #ifndef NO_DISPLAY_ROTATE
-    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation}, /*Display Rotation*/
+    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation, SettingsOptions::SettingsOptionsLength}, /*Display Rotation*/
 #endif
-    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled},                                 /*Cooling blink warning*/
-    {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), settings_setScrollSpeed, settings_displayScrollSpeed},                                                /*Scroll Speed for descriptions*/
-    {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled}, /* Reverse Temp change buttons + - */
-    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), settings_setAnimationSpeed, settings_displayAnimationSpeed},                                               /*Animation Speed adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), settings_setAnimationLoop, settings_displayAnimationLoop},                                                  /*Animation Loop switch */
-    {0, nullptr, nullptr}                                                                                                                                    // end of menu marker. DO NOT REMOVE
+    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), settings_setCoolingBlinkEnabled, settings_displayCoolingBlinkEnabled, SettingsOptions::SettingsOptionsLength}, /*Cooling blink warning*/
+    {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), settings_setScrollSpeed, settings_displayScrollSpeed, SettingsOptions::SettingsOptionsLength},                /*Scroll Speed for descriptions*/
+    {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), settings_setReverseButtonTempChangeEnabled, settings_displayReverseButtonTempChangeEnabled,
+     SettingsOptions::SettingsOptionsLength},                                                                                                          /* Reverse Temp change buttons + - */
+    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), settings_setAnimationSpeed, settings_displayAnimationSpeed, SettingsOptions::SettingsOptionsLength}, /*Animation Speed adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), settings_setAnimationLoop, settings_displayAnimationLoop, SettingsOptions::SettingsOptionsLength},    /*Animation Loop switch */
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                      // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
 /*
@@ -227,15 +228,15 @@ const menuitem PowerSavingMenu[] = {
  * 	Motion Sensitivity
  */
 #ifndef NO_SLEEP_MODE
-    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp}, /*Sleep Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), settings_setSleepTime, settings_displaySleepTime},     /*Sleep Time*/
+    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp, SettingsOptions::SettingsOptionsLength}, /*Sleep Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), settings_setSleepTime, settings_displaySleepTime, SettingsOptions::SettingsOptionsLength},     /*Sleep Time*/
 #endif
-    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), settings_setShutdownTime, settings_displayShutdownTime}, /*Shutdown Time*/
-    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), settings_setSensitivity, settings_displaySensitivity}, /* Motion Sensitivity*/
+    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), settings_setShutdownTime, settings_displayShutdownTime, SettingsOptions::SettingsOptionsLength}, /*Shutdown Time*/
+    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), settings_setSensitivity, settings_displaySensitivity, SettingsOptions::SettingsOptionsLength}, /* Motion Sensitivity*/
 #ifdef HALL_SENSOR
-    {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), settings_setHallEffect, settings_displayHallEffect}, /* HallEffect Sensitivity*/
+    {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), settings_setHallEffect, settings_displayHallEffect, SettingsOptions::SettingsOptionsLength}, /* HallEffect Sensitivity*/
 #endif
-    {0, nullptr, nullptr} // end of menu marker. DO NOT REMOVE
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength} // end of menu marker. DO NOT REMOVE
 };
 const menuitem advancedMenu[] = {
 
@@ -252,16 +253,18 @@ const menuitem advancedMenu[] = {
      *  Power Pulse Wait
      *  Power Pulse Duration
      */
-    {SETTINGS_DESC(SettingsItemIndex::PowerLimit), settings_setPowerLimit, settings_displayPowerLimit},                                    /*Power limit*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), settings_setAdvancedIDLEScreens, settings_displayAdvancedIDLEScreens},                /* Advanced idle screen*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), settings_setAdvancedSolderingScreens, settings_displayAdvancedSolderingScreens}, /* Advanced soldering screen*/
-    {SETTINGS_DESC(SettingsItemIndex::SettingsReset), settings_setResetSettings, settings_displayResetSettings},                           /*Resets settings*/
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), settings_setCalibrate, settings_displayCalibrate},                          /*Calibrate tip*/
-    {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), settings_setCalibrateVIN, settings_displayCalibrateVIN},                        /*Voltage input cal*/
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), settings_setPowerPulse, settings_displayPowerPulse},                               /*Power Pulse adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), settings_setPowerPulseWait, settings_displayPowerPulseWait},                        /*Power Pulse Wait adjustment*/
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), settings_setPowerPulseDuration, settings_displayPowerPulseDuration},            /*Power Pulse Duration adjustment*/
-    {0, nullptr, nullptr}                                                                                                                  // end of menu marker. DO NOT REMOVE
+    {SETTINGS_DESC(SettingsItemIndex::PowerLimit), settings_setPowerLimit, settings_displayPowerLimit, SettingsOptions::SettingsOptionsLength},                     /*Power limit*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), settings_setAdvancedIDLEScreens, settings_displayAdvancedIDLEScreens, SettingsOptions::SettingsOptionsLength}, /* Advanced idle screen*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), settings_setAdvancedSolderingScreens, settings_displayAdvancedSolderingScreens,
+     SettingsOptions::SettingsOptionsLength},                                                                                                               /* Advanced soldering screen*/
+    {SETTINGS_DESC(SettingsItemIndex::SettingsReset), settings_setResetSettings, settings_displayResetSettings, SettingsOptions::SettingsOptionsLength},    /*Resets settings*/
+    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), settings_setCalibrate, settings_displayCalibrate, SettingsOptions::SettingsOptionsLength},   /*Calibrate tip*/
+    {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), settings_setCalibrateVIN, settings_displayCalibrateVIN, SettingsOptions::SettingsOptionsLength}, /*Voltage input cal*/
+    {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), settings_setPowerPulse, settings_displayPowerPulse, SettingsOptions::SettingsOptionsLength},        /*Power Pulse adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), settings_setPowerPulseWait, settings_displayPowerPulseWait, SettingsOptions::SettingsOptionsLength}, /*Power Pulse Wait adjustment*/
+    {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), settings_setPowerPulseDuration, settings_displayPowerPulseDuration,
+     SettingsOptions::SettingsOptionsLength},                     /*Power Pulse Duration adjustment*/
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength} // end of menu marker. DO NOT REMOVE
 };
 
 /**
@@ -1062,7 +1065,15 @@ void gui_Menu(const menuitem *menu) {
 
     auto callIncrementHandler = [&]() {
       wasInGuiMenu = false;
-      bool res     = menu[currentScreen].incrementHandler();
+      bool res     = false;
+
+      if (menu[currentScreen].autoSettingOption < SettingsOptions::SettingsOptionsLength) {
+        res = nextSettingValue(menu[currentScreen].autoSettingOption);
+      } else if (menu[currentScreen].incrementHandler != nullptr) {
+        res = menu[currentScreen].incrementHandler();
+      } else {
+        earlyExit = true;
+      }
       if (wasInGuiMenu) {
         navState = NavState::Exiting;
       }
@@ -1078,11 +1089,7 @@ void gui_Menu(const menuitem *menu) {
     case BUTTON_F_SHORT:
       // increment
       if (scrollMessage.isReset()) {
-        if (menu[currentScreen].incrementHandler != nullptr) {
-          lastValue = callIncrementHandler();
-        } else {
-          earlyExit = true;
-        }
+        lastValue = callIncrementHandler();
       } else
         scrollMessage.reset();
       break;
@@ -1096,6 +1103,7 @@ void gui_Menu(const menuitem *menu) {
       break;
     case BUTTON_F_LONG:
       if (xTaskGetTickCount() + autoRepeatAcceleration > autoRepeatTimer + PRESS_ACCEL_INTERVAL_MAX) {
+
         if ((lastValue = callIncrementHandler()))
           autoRepeatTimer = 1000;
         else

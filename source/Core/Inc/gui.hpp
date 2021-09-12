@@ -27,6 +27,8 @@ typedef struct {
   // return true if increment reached the maximum value
   bool (*const incrementHandler)(void);
   bool (*const draw)(void);
+  // If this is set, we will automatically use the settings increment handler instead, set >= num settings to disable
+  SettingsOptions autoSettingOption;
 } menuitem;
 
 void                  enterSettingsMenu();
