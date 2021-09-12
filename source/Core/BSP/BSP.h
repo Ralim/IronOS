@@ -35,7 +35,7 @@ void resetWatchdog();
 // Accepts a output level of 0.. to use to control the tip output PWM
 void setTipPWM(uint8_t pulse);
 // Returns the Handle temp in C, X10
-uint16_t getHandleTemperature();
+uint16_t getHandleTemperature(uint8_t sample);
 // Returns the Tip temperature ADC reading in raw units
 uint16_t getTipRawTemp(uint8_t refresh);
 // Returns the main DC input voltage, using the adjustable divisor + sample flag

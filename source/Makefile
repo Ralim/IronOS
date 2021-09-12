@@ -521,7 +521,7 @@ $(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_co
 clean :
 	rm -Rf Core/Gen
 	rm -Rf $(OUTPUT_DIR_BASE)
-	rm -Rf $(HEXFILE_DIR)
+	rm -Rf $(HEXFILE_DIR)/*
 
 style:
 	@for src in $(ALL_SOURCE) $(ALL_INCLUDES); do \

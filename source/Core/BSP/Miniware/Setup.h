@@ -27,9 +27,9 @@ extern IWDG_HandleTypeDef hiwdg;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 void                     Setup_HAL();
-uint16_t                 getADC(uint8_t channel);
-
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim); // Since the hal header file does not define this one
+uint16_t                 getADCHandleTemp(uint8_t sample);
+uint16_t                 getADCVin(uint8_t sample);
+void                     HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim); // Since the hal header file does not define this one
 
 #ifdef __cplusplus
 }

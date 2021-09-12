@@ -22,7 +22,7 @@ void                    log_system_state(int32_t PWMWattsx10) {
 
     outputLength = snprintf(uartOutputBuffer, uartOutputBufferLength, "%lu,%u,%li,%u,%lu\r\n", //
                             TipThermoModel::getTipInC(false),                                  // Tip temp in C
-                            getHandleTemperature(),                                            // Handle temp in C X10
+                            getHandleTemperature(0),                                           // Handle temp in C X10
                             PWMWattsx10,                                                       // Output Wattage
                             pendingPWM,                                                        // PWM
                             TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true)       // Tip temp in uV

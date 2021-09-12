@@ -9,10 +9,11 @@
 #include "Debug.h"
 #include "Pins.h"
 #include "gd32vf103.h"
+#include "history.hpp"
 #include <string.h>
-#define ADC_NORM_CHANNELS 2
-#define ADC_NORM_SAMPLES  32
-uint16_t ADCReadings[ADC_NORM_SAMPLES * ADC_NORM_CHANNELS]; // room for 32 lots of the pair of readings
+#define ADC_NORM_SAMPLES 16
+#define ADC_FILTER_LEN   32
+uint16_t ADCReadings[ADC_NORM_SAMPLES]; // room for 32 lots of the pair of readings
 
 // Functions
 void setup_gpio();
@@ -43,12 +44,48 @@ void hardware_init() {
   timer_enable(TIMER1);
   timer_enable(TIMER2);
 }
-// channel 0 -> temperature sensor, 1-> VIN
-uint16_t getADC(uint8_t channel) {
-  uint32_t sum = 0;
-  for (uint8_t i = 0; i < ADC_NORM_SAMPLES; i++)
-    sum += ADCReadings[channel + (i * ADC_NORM_CHANNELS)];
-  return sum >> 2;
+
+uint16_t getADCHandleTemp(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint32_t sum = 0;
+    for (uint8_t i = 0; i < ADC_NORM_SAMPLES; i++) {
+      sum += ADCReadings[i];
+    }
+    filter.update(sum);
+  }
+  return filter.average() >> 1;
+}
+
+uint16_t getADCVin(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint16_t latestADC = 0;
+
+    latestADC += adc_inserted_data_read(ADC1, 0);
+    latestADC += adc_inserted_data_read(ADC1, 1);
+    latestADC += adc_inserted_data_read(ADC1, 2);
+    latestADC += adc_inserted_data_read(ADC1, 3);
+    latestADC <<= 1;
+    filter.update(latestADC);
+  }
+  return filter.average();
+}
+// Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
+uint16_t getTipRawTemp(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint16_t latestADC = 0;
+
+    latestADC += adc_inserted_data_read(ADC0, 0);
+    latestADC += adc_inserted_data_read(ADC0, 1);
+    latestADC += adc_inserted_data_read(ADC0, 2);
+    latestADC += adc_inserted_data_read(ADC0, 3);
+    latestADC <<= 1;
+    filter.update(latestADC);
+    return latestADC;
+  }
+  return filter.average();
 }
 
 void setup_uart() {
@@ -125,7 +162,7 @@ void setup_dma() {
     dma_data_parameter.periph_width = DMA_PERIPHERAL_WIDTH_16BIT;
     dma_data_parameter.memory_width = DMA_MEMORY_WIDTH_16BIT;
     dma_data_parameter.direction    = DMA_PERIPHERAL_TO_MEMORY;
-    dma_data_parameter.number       = ADC_NORM_SAMPLES * ADC_NORM_CHANNELS;
+    dma_data_parameter.number       = ADC_NORM_SAMPLES;
     dma_data_parameter.priority     = DMA_PRIORITY_HIGH;
     dma_init(DMA0, DMA_CH0, &dma_data_parameter);
 
@@ -160,7 +197,7 @@ void setup_adc() {
   /* config ADC clock */
   rcu_adc_clock_config(RCU_CKADC_CKAPB2_DIV16);
   // Run in normal parallel + inserted parallel
-  adc_mode_config(ADC0, ADC_DAUL_REGULAL_PARALLEL_INSERTED_PARALLEL);
+  adc_mode_config(ADC0, ADC_DAUL_INSERTED_PARALLEL);
   adc_special_function_config(ADC0, ADC_CONTINUOUS_MODE, ENABLE);
   adc_special_function_config(ADC0, ADC_SCAN_MODE, ENABLE);
   adc_special_function_config(ADC1, ADC_CONTINUOUS_MODE, ENABLE);
@@ -168,28 +205,22 @@ void setup_adc() {
   // Align right
   adc_data_alignment_config(ADC0, ADC_DATAALIGN_RIGHT);
   adc_data_alignment_config(ADC1, ADC_DATAALIGN_RIGHT);
-  // Setup reading 2 channels on regular mode (Handle Temp + dc in)
-  adc_channel_length_config(ADC0, ADC_REGULAR_CHANNEL, ADC_NORM_CHANNELS);
-  adc_channel_length_config(ADC1, ADC_REGULAR_CHANNEL, ADC_NORM_CHANNELS);
+  // Setup reading the handle temp
+  adc_channel_length_config(ADC0, ADC_REGULAR_CHANNEL, 1);
+  adc_channel_length_config(ADC1, ADC_REGULAR_CHANNEL, 0);
   // Setup the two channels
   adc_regular_channel_config(ADC0, 0, TMP36_ADC0_CHANNEL,
                              ADC_SAMPLETIME_71POINT5); // temp sensor
-  adc_regular_channel_config(ADC1, 0, TMP36_ADC1_CHANNEL,
-                             ADC_SAMPLETIME_71POINT5); // temp sensor
-  adc_regular_channel_config(ADC0, 1, VIN_ADC0_CHANNEL,
-                             ADC_SAMPLETIME_71POINT5); // DC Input voltage
-  adc_regular_channel_config(ADC1, 1, VIN_ADC1_CHANNEL,
-                             ADC_SAMPLETIME_71POINT5); // DC Input voltage
   // Setup that we want all 4 inserted readings to be the tip temp
   adc_channel_length_config(ADC0, ADC_INSERTED_CHANNEL, 4);
   adc_channel_length_config(ADC1, ADC_INSERTED_CHANNEL, 4);
   for (int rank = 0; rank < 4; rank++) {
-    adc_inserted_channel_config(ADC0, rank, TIP_TEMP_ADC0_CHANNEL, ADC_SAMPLETIME_1POINT5);
-    adc_inserted_channel_config(ADC1, rank, TIP_TEMP_ADC1_CHANNEL, ADC_SAMPLETIME_1POINT5);
+    adc_inserted_channel_config(ADC0, rank, TIP_TEMP_ADC0_CHANNEL, ADC_SAMPLETIME_28POINT5);
+    adc_inserted_channel_config(ADC1, rank, VIN_ADC1_CHANNEL, ADC_SAMPLETIME_28POINT5);
   }
   // Setup timer 1 channel 0 to trigger injected measurements
-  adc_external_trigger_source_config(ADC0, ADC_INSERTED_CHANNEL, ADC0_1_EXTTRIG_INSERTED_T1_CH0);
-  adc_external_trigger_source_config(ADC1, ADC_INSERTED_CHANNEL, ADC0_1_EXTTRIG_INSERTED_T1_CH0);
+  adc_external_trigger_source_config(ADC0, ADC_INSERTED_CHANNEL, ADC0_1_EXTTRIG_INSERTED_T1_TRGO);
+  adc_external_trigger_source_config(ADC1, ADC_INSERTED_CHANNEL, ADC0_1_EXTTRIG_INSERTED_T1_TRGO);
 
   adc_external_trigger_source_config(ADC0, ADC_REGULAR_CHANNEL, ADC0_1_EXTTRIG_REGULAR_NONE);
   adc_external_trigger_source_config(ADC1, ADC_REGULAR_CHANNEL, ADC0_1_EXTTRIG_REGULAR_NONE);
@@ -255,7 +286,7 @@ void setup_timers() {
     timer_ocintpara.ocpolarity  = TIMER_OC_POLARITY_HIGH;
     timer_ocintpara.outputstate = TIMER_CCX_ENABLE;
     timer_channel_output_config(TIMER1, TIMER_CH_1, &timer_ocintpara);
-
+    timer_master_output_trigger_source_select(TIMER1, TIMER_TRI_OUT_SRC_CH0);
     timer_channel_output_pulse_value_config(TIMER1, TIMER_CH_1, 0);
     timer_channel_output_mode_config(TIMER1, TIMER_CH_1, TIMER_OC_MODE_PWM0);
     timer_channel_output_shadow_config(TIMER1, TIMER_CH_1, TIMER_OC_SHADOW_DISABLE);

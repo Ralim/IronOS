@@ -93,12 +93,12 @@ static const uint16_t NTCHandleLookup[] = {
 };
 #endif
 
-uint16_t getHandleTemperature() {
+uint16_t getHandleTemperature(uint8_t sample) {
+  int32_t result = getADCHandleTemp(sample);
 #ifdef TEMP_NTC
   // TS80P uses 100k NTC resistors instead
   // NTCG104EF104FT1X from TDK
   // For now not doing interpolation
-  int32_t result = getADC(0);
   for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t))); i++) {
     if (result > NTCHandleLookup[(i * 2) + 0]) {
       return NTCHandleLookup[(i * 2) + 1] * 10;
@@ -114,7 +114,6 @@ uint16_t getHandleTemperature() {
   // mV per count So we need to subtract an offset of 0.5V to center on 0C
   // (4964.8 counts)
   //
-  int32_t result = getADC(0);
   result -= 4965; // remove 0.5V offset
   // 10mV per C
   // 99.29 counts per Deg C above 0C. Tends to read a tad over across all of my sample units
@@ -122,72 +121,18 @@ uint16_t getHandleTemperature() {
   result /= 994;
   return result;
 #endif
-}
-
-uint16_t getTipInstantTemperature() {
-  uint16_t sum = 0; // 12 bit readings * 8 -> 15 bits
-  uint16_t readings[8];
-  // Looking to reject the highest outlier readings.
-  // As on some hardware these samples can run into the op-amp recovery time
-  // Once this time is up the signal stabilises quickly, so no need to reject minimums
-  readings[0] = hadc1.Instance->JDR1;
-  readings[1] = hadc1.Instance->JDR2;
-  readings[2] = hadc1.Instance->JDR3;
-  readings[3] = hadc1.Instance->JDR4;
-  readings[4] = hadc2.Instance->JDR1;
-  readings[5] = hadc2.Instance->JDR2;
-  readings[6] = hadc2.Instance->JDR3;
-  readings[7] = hadc2.Instance->JDR4;
-
-  for (int i = 0; i < 8; i++) {
-    sum += readings[i];
-  }
-  return sum; // 8x over sample
-}
-
-uint16_t getTipRawTemp(uint8_t refresh) {
-  if (refresh) {
-    uint16_t lastSample = getTipInstantTemperature();
-    rawTempFilter.update(lastSample);
-    return lastSample;
-  } else {
-    return rawTempFilter.average();
-  }
+  return 0;
 }
 
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
-// ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
-// Therefore we can divide down from there
-// Multiplying ADC max by 4 for additional calibration options,
-// ideal term is 467
-#ifdef MODEL_TS100
-#define BATTFILTERDEPTH 32
-#else
-#define BATTFILTERDEPTH 8
-
-#endif
-  static uint8_t  preFillneeded = 10;
-  static uint32_t samples[BATTFILTERDEPTH];
-  static uint8_t  index = 0;
-  if (preFillneeded) {
-    for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
-      samples[i] = getADC(1);
-    preFillneeded--;
-  }
-  if (sample) {
-    samples[index] = getADC(1);
-    index          = (index + 1) % BATTFILTERDEPTH;
-  }
-  uint32_t sum = 0;
-
-  for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
-    sum += samples[i];
-
-  sum /= BATTFILTERDEPTH;
-  if (divisor == 0) {
-    divisor = 1;
-  }
-  return sum * 4 / divisor;
+  // ADC maximum is 32767 == 3.3V at input == 28.05V at VIN
+  // Therefore we can divide down from there
+  // Multiplying ADC max by 4 for additional calibration options,
+  // ideal term is 467
+  uint32_t res = getADCVin(sample);
+  res *= 4;
+  res /= divisor;
+  return res;
 }
 
 void setTipPWM(uint8_t pulse) {
