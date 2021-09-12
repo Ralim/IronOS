@@ -20,6 +20,9 @@ TaskHandle_t      pidTaskNotification     = NULL;
 uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
 int32_t           powerSupplyWattageLimit = 0;
 bool              heaterThermalRunaway    = false;
+
+static void detectThermalRunaway(int16_t currentTipTempInC, int tError);
+
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
   /*
@@ -100,32 +103,9 @@ void startPIDTask(void const *argument __unused) {
         // basically: temp - lastTemp
         //  Unfortunately, our temp signal is too noisy to really help.
 
-        // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
-        // While trying to actively heat
-        if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
-          // Temp error is high
-          int16_t delta = (int16_t)currentTipTempInC - (int16_t)tipTempCRunawayTemp;
-          if (delta < 0) {
-            delta = -delta;
-          }
-          if (delta > THERMAL_RUNAWAY_TEMP_C) {
-            // We have heated up more than the threshold, reset the timer
-            tipTempCRunawayTemp   = currentTipTempInC;
-            runawaylastChangeTime = xTaskGetTickCount();
-          } else {
-            if ((xTaskGetTickCount() - runawaylastChangeTime) > (THERMAL_RUNAWAY_TIME_SEC * TICKS_SECOND)) {
-              // It has taken too long to rise
-              heaterThermalRunaway = true;
-            }
-          }
-        } else {
-          tipTempCRunawayTemp   = currentTipTempInC;
-          runawaylastChangeTime = xTaskGetTickCount();
-        }
-
+        detectThermalRunaway(currentTipTempInC, tError);
       } else {
-        tipTempCRunawayTemp   = currentTipTempInC;
-        runawaylastChangeTime = xTaskGetTickCount();
+        detectThermalRunaway(currentTipTempInC, 0);
       }
 
       // If the user turns on the option of using an occasional pulse to keep the power bank on
@@ -174,5 +154,33 @@ void startPIDTask(void const *argument __unused) {
       // ADC interrupt timeout
       setTipPWM(0);
     }
+  }
+}
+
+void detectThermalRunaway(int16_t currentTipTempInC, int tError) {
+  static uint16_t   tipTempCRunawayTemp   = 0;
+  static TickType_t runawaylastChangeTime = 0;
+
+  // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
+  // While trying to actively heat
+  if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
+    // Temp error is high
+    int16_t delta = (int16_t)currentTipTempInC - (int16_t)tipTempCRunawayTemp;
+    if (delta < 0) {
+      delta = -delta;
+    }
+    if (delta > THERMAL_RUNAWAY_TEMP_C) {
+      // We have heated up more than the threshold, reset the timer
+      tipTempCRunawayTemp   = currentTipTempInC;
+      runawaylastChangeTime = xTaskGetTickCount();
+    } else {
+      if ((xTaskGetTickCount() - runawaylastChangeTime) > (THERMAL_RUNAWAY_TIME_SEC * TICKS_SECOND)) {
+        // It has taken too long to rise
+        heaterThermalRunaway = true;
+      }
+    }
+  } else {
+    tipTempCRunawayTemp   = currentTipTempInC;
+    runawaylastChangeTime = xTaskGetTickCount();
   }
 }
