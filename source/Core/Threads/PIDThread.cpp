@@ -21,8 +21,9 @@ uint32_t          currentTempTargetDegC   = 0; // Current temperature target in 
 int32_t           powerSupplyWattageLimit = 0;
 bool              heaterThermalRunaway    = false;
 
-static void detectThermalRunaway(const int16_t currentTipTempInC, const int tError);
-static void setOutputx10WattsViaFilters(int32_t x10Watts);
+static int32_t getPIDResultX10Watts(int32_t tError);
+static void    detectThermalRunaway(const int16_t currentTipTempInC, const int tError);
+static void    setOutputx10WattsViaFilters(int32_t x10Watts);
 
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
@@ -32,9 +33,8 @@ void startPIDTask(void const *argument __unused) {
    */
   setTipX10Watts(0); // disable the output at startup
 
-  history<int32_t, PID_TIM_HZ> tempError = {{0}, 0, 0};
-  currentTempTargetDegC                  = 0; // Force start with no output (off). If in sleep / soldering this will
-                                              // be over-ridden rapidly
+  currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
+                             // be over-ridden rapidly
   pidTaskNotification    = xTaskGetCurrentTaskHandle();
   uint32_t PIDTempTarget = 0;
   // Pre-seed the adc filters
@@ -42,12 +42,12 @@ void startPIDTask(void const *argument __unused) {
     vTaskDelay(2);
     TipThermoModel::getTipInC(true);
   }
+  int32_t x10WattsOut = 0;
   for (;;) {
-
+    x10WattsOut = 0;
     // This is a call to block this thread until the ADC does its samples
     if (ulTaskNotifyTake(pdTRUE, 2000)) {
 
-      int32_t x10WattsOut = 0;
       // Do the reading here to keep the temp calculations churning along
       uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
       PIDTempTarget              = currentTempTargetDegC;
@@ -61,43 +61,12 @@ void startPIDTask(void const *argument __unused) {
         if (PIDTempTarget > TipThermoModel::getTipMaxInC()) {
           PIDTempTarget = TipThermoModel::getTipMaxInC();
         }
-
-        // As we get close to our target, temp noise causes the system
-        //  to be unstable. Use a rolling average to dampen it.
-        // We overshoot by roughly 1 degree C.
-        //  This helps stabilize the display.
         int32_t tError = PIDTempTarget - currentTipTempInC;
         tError         = tError > INT16_MAX ? INT16_MAX : tError;
         tError         = tError < INT16_MIN ? INT16_MIN : tError;
-        tempError.update(tError);
-
-        // Now for the PID!
-
-        // P term - total power needed to hit target temp next cycle.
-        // thermal mass = 1690 milliJ/*C for my tip.
-        //  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-        // we divide milliWattsNeeded by 20 to let the I term dominate near the set point.
-        //  This is necessary because of the temp noise and thermal lag in the system.
-        // Once we have feed-forward temp estimation we should be able to better tune this.
-
-        int32_t x10WattsNeeded = tempToX10Watts(tError);
-        // note that milliWattsNeeded is sometimes negative, this counters overshoot
-        //  from I term's inertia.
-        x10WattsOut += x10WattsNeeded;
-
-        // I term - energy needed to compensate for heat loss.
-        // We track energy put into the system over some window.
-        // Assuming the temp is stable, energy in = energy transfered.
-        //  (If it isn't, P will dominate).
-        x10WattsOut += x10WattHistory.average();
-
-        // D term - use sudden temp change to counter fast cooling/heating.
-        //  In practice, this provides an early boost if temp is dropping
-        //  and counters extra power if the iron is no longer losing temp.
-        // basically: temp - lastTemp
-        //  Unfortunately, our temp signal is too noisy to really help.
 
         detectThermalRunaway(currentTipTempInC, tError);
+        x10WattsOut = getPIDResultX10Watts(tError);
       } else {
         detectThermalRunaway(currentTipTempInC, 0);
       }
@@ -107,6 +76,36 @@ void startPIDTask(void const *argument __unused) {
       setTipPWM(0);
     }
   }
+}
+
+int32_t getPIDResultX10Watts(int32_t tError) {
+
+  // Now for the PID!
+
+  // P term - total power needed to hit target temp next cycle.
+  // thermal mass = 1690 milliJ/*C for my tip.
+  //  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
+  // we divide milliWattsNeeded by 20 to let the I term dominate near the set point.
+  //  This is necessary because of the temp noise and thermal lag in the system.
+  // Once we have feed-forward temp estimation we should be able to better tune this.
+
+  int32_t x10WattsNeeded = tempToX10Watts(tError);
+  // note that milliWattsNeeded is sometimes negative, this counters overshoot
+  //  from I term's inertia.
+  int32_t x10WattsOut = x10WattsNeeded;
+
+  // I term - energy needed to compensate for heat loss.
+  // We track energy put into the system over some window.
+  // Assuming the temp is stable, energy in = energy transfered.
+  //  (If it isn't, P will dominate).
+  x10WattsOut += x10WattHistory.average();
+
+  // D term - use sudden temp change to counter fast cooling/heating.
+  //  In practice, this provides an early boost if temp is dropping
+  //  and counters extra power if the iron is no longer losing temp.
+  // basically: temp - lastTemp
+  //  Unfortunately, our temp signal is too noisy to really help.
+  return x10WattsOut;
 }
 
 void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
