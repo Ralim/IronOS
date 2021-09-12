@@ -39,6 +39,7 @@ typedef struct {
   const uint16_t increment;    // Standard increment
   const uint16_t defaultValue; // Default vaue after reset
 } SettingConstants;
+
 static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
     //{min,max,increment,default}
     {10, 580, 5, 320},                                              // SolderingTemp
@@ -49,31 +50,31 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, QC_SETTINGS_MAX, 1, 0},                                     // QCIdealVoltage
     {0, 3, 1, ORIENTATION_MODE},                                    // OrientationMode
     {0, 10, 1, SENSITIVITY},                                        // Sensitivity
-    {0, 1, 1, ANIMATION_LOOP},                                      // AnimationLoop
+    {0, 2, 1, ANIMATION_LOOP},                                      // AnimationLoop
     {0, settingOffSpeed_t::MAX_VALUE, 1, ANIMATION_SPEED},          // AnimationSpeed
     {0, 4, 1, AUTO_START_MODE},                                     // AutoStartMode
-    {0, 60, 1, SHUTDOWN_TIME},                                      // ShutdownTime
-    {0, 1, 1, COOLING_TEMP_BLINK},                                  // CoolingTempBlink
-    {0, 1, 1, DETAILED_IDLE},                                       // DetailedIDLE
-    {0, 1, 1, DETAILED_SOLDERING},                                  // DetailedSoldering
-    {0, 1, 1, TEMPERATURE_INF},                                     // TemperatureInF
-    {0, 1, 1, DESCRIPTION_SCROLL_SPEED},                            // DescriptionScrollSpeed
+    {0, 61, 1, SHUTDOWN_TIME},                                      // ShutdownTime
+    {0, 2, 1, COOLING_TEMP_BLINK},                                  // CoolingTempBlink
+    {0, 2, 1, DETAILED_IDLE},                                       // DetailedIDLE
+    {0, 2, 1, DETAILED_SOLDERING},                                  // DetailedSoldering
+    {0, 2, 1, TEMPERATURE_INF},                                     // TemperatureInF
+    {0, 2, 1, DESCRIPTION_SCROLL_SPEED},                            // DescriptionScrollSpeed
     {0, 3, 1, LOCKING_MODE},                                        // LockingMode
     {0, 100, 1, POWER_PULSE_DEFAULT},                               // KeepAwakePulse
     {1, POWER_PULSE_WAIT_MAX, 1, POWER_PULSE_WAIT_DEFAULT},         // KeepAwakePulseWait
     {1, POWER_PULSE_DURATION_MAX, 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
     {360, 900, 1, VOLTAGE_DIV},                                     // VoltageDiv
-    {0, 0, 0, BOOST_TEMP},                                          // BoostTemp
-    {0, 0, 0, CALIBRATION_OFFSET},                                  // CalibrationOffset
+    {100, 580, 10, BOOST_TEMP},                                     // BoostTemp
+    {100, 2500, 1, CALIBRATION_OFFSET},                             // CalibrationOffset
     {0, MAX_POWER_LIMIT, POWER_LIMIT_STEPS, POWER_LIMIT},           // PowerLimit
-    {0, 1, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
+    {0, 2, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
     {5, TEMP_CHANGE_LONG_STEP_MAX, 5, TEMP_CHANGE_LONG_STEP},       // TempChangeLongStep
     {1, TEMP_CHANGE_SHORT_STEP_MAX, 1, TEMP_CHANGE_SHORT_STEP},     // TempChangeShortStep
     {0, 4, 1, 1},                                                   // HallEffectSensitivity
     {0, 10, 1, 0},                                                  // AccelMissingWarningCounter
     {0, 10, 1, 0},                                                  // PDMissingWarningCounter
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
-    {0, 50, 1, 0},                                                  // PDNegTimeout
+    {0, 51, 1, 0},                                                  // PDNegTimeout
 
 };
 
@@ -131,12 +132,12 @@ uint16_t getSettingValue(const enum SettingsOptions option) { return systemSetti
 
 bool nextSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
-  if (systemSettings.settingsValues[(int)option] == (constants.max - 1)) {
+  if (systemSettings.settingsValues[(int)option] == (constants.max - constants.increment)) {
     systemSettings.settingsValues[(int)option] = constants.min;
   } else {
     systemSettings.settingsValues[(int)option] += constants.increment;
   }
-  return systemSettings.settingsValues[(int)option] == constants.max - 1;
+  return systemSettings.settingsValues[(int)option] == constants.max - constants.increment;
 }
 
 bool prevSettingValue(const enum SettingsOptions option) {
