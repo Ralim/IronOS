@@ -14,42 +14,42 @@
 #define SETTINGSVERSION (0x2A) // This number is frozen, do not edit
 
 enum SettingsOptions {
-  SolderingTemp,                  // current set point for the iron
-  SleepTemp,                      // temp to drop to in sleep
-  SleepTime,                      // minutes timeout to sleep
-  MinDCVoltageCells,              // The voltage we cut out at for under voltage when powered by DC jack
-  MinVoltageCells,                // Minimum allowed voltage per cell <3S - 3.0V (30)> <4S - 2.4V (24)> <...> (Minimum recommended 2.7V)
-  QCIdealVoltage,                 // Desired QC3.0 voltage (9,12,20V)
-  OrientationMode,                // Selects between Auto,Right and left handed layouts
-  Sensitivity,                    // Sensitivity of accelerometer (5 bits)
-  AnimationLoop,                  // Animation loop switch
-  AnimationSpeed,                 // Animation speed (in miliseconds)
-  AutoStartMode,                  // Should the unit automatically jump straight into soldering mode when power is applied
-  ShutdownTime,                   // Time until unit shuts down if left alone
-  CoolingTempBlink,               // Should the temperature blink on the cool down screen until its <50C
-  DetailedIDLE,                   // Detailed idle screen
-  DetailedSoldering,              // Detailed soldering screens
-  TemperatureInF,                 // Should the temp be in F or C (true is F)
-  DescriptionScrollSpeed,         // Description scroll speed
-  LockingMode,                    // Store the locking mode
-  KeepAwakePulse,                 // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
-  KeepAwakePulseWait,             // Time between Keep Awake pulses in 2500 ms = 2.5 s increments
-  KeepAwakePulseDuration,         // Duration of the Keep Awake pusle in 250 ms increments
-  VoltageDiv,                     // Voltage divisor factor
-  BoostTemp,                      // Boost mode set point for the iron
-  CalibrationOffset,              // This stores the temperature offset for this tip in the iron.
-  PowerLimit,                     // Maximum power iron allowed to output
-  ReverseButtonTempChangeEnabled, // Change the plus and minus button assigment
-  TempChangeLongStep,             // Change the plus and minus button assigment
-  TempChangeShortStep,            // Change the plus and minus button assigment
-  HallEffectSensitivity,          // Operating mode of the hall effect sensor
-  AccelMissingWarningCounter,     // Counter of how many times we have warned we cannot detect the accelerometer
-  PDMissingWarningCounter,        // Counter of how many times we have warned we cannot detect the pd interface
-  UILanguage,                     // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
-  PDNegTimeout,                   // PD timeout in 100ms steps
+  SolderingTemp                  = 0,  // current set point for the iron
+  SleepTemp                      = 1,  // temp to drop to in sleep
+  SleepTime                      = 2,  // minutes timeout to sleep
+  MinDCVoltageCells              = 3,  // The voltage we cut out at for under voltage when powered by DC jack
+  MinVoltageCells                = 4,  // Minimum allowed voltage per cell <3S - 3.0V (30)> <4S - 2.4V (24)> <...> (Minimum recommended 2.7V)
+  QCIdealVoltage                 = 5,  // Desired QC3.0 voltage (9,12,20V)
+  OrientationMode                = 6,  // Selects between Auto,Right and left handed layouts
+  Sensitivity                    = 7,  // Sensitivity of accelerometer (5 bits)
+  AnimationLoop                  = 8,  // Animation loop switch
+  AnimationSpeed                 = 9,  // Animation speed (in miliseconds)
+  AutoStartMode                  = 10, // Should the unit automatically jump straight into soldering mode when power is applied
+  ShutdownTime                   = 11, // Time until unit shuts down if left alone
+  CoolingTempBlink               = 12, // Should the temperature blink on the cool down screen until its <50C
+  DetailedIDLE                   = 13, // Detailed idle screen
+  DetailedSoldering              = 14, // Detailed soldering screens
+  TemperatureInF                 = 15, // Should the temp be in F or C (true is F)
+  DescriptionScrollSpeed         = 16, // Description scroll speed
+  LockingMode                    = 17, // Store the locking mode
+  KeepAwakePulse                 = 18, // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
+  KeepAwakePulseWait             = 19, // Time between Keep Awake pulses in 2500 ms = 2.5 s increments
+  KeepAwakePulseDuration         = 20, // Duration of the Keep Awake pusle in 250 ms increments
+  VoltageDiv                     = 21, // Voltage divisor factor
+  BoostTemp                      = 22, // Boost mode set point for the iron
+  CalibrationOffset              = 23, // This stores the temperature offset for this tip in the iron.
+  PowerLimit                     = 24, // Maximum power iron allowed to output
+  ReverseButtonTempChangeEnabled = 25, // Change the plus and minus button assigment
+  TempChangeLongStep             = 26, // Change the plus and minus button assigment
+  TempChangeShortStep            = 27, // Change the plus and minus button assigment
+  HallEffectSensitivity          = 28, // Operating mode of the hall effect sensor
+  AccelMissingWarningCounter     = 29, // Counter of how many times we have warned we cannot detect the accelerometer
+  PDMissingWarningCounter        = 30, // Counter of how many times we have warned we cannot detect the pd interface
+  UILanguage                     = 31, // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
+  PDNegTimeout                   = 32, // PD timeout in 100ms steps
 
   //
-  SettingsOptionsLength, //
+  SettingsOptionsLength = 33, //
 };
 
 typedef enum {
