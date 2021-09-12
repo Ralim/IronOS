@@ -66,7 +66,7 @@ void startPIDTask(void const *argument __unused) {
         //  to be unstable. Use a rolling average to dampen it.
         // We overshoot by roughly 1 degree C.
         //  This helps stabilize the display.
-        int32_t tError = PIDTempTarget - currentTipTempInC + 1;
+        int32_t tError = PIDTempTarget - currentTipTempInC;
         tError         = tError > INT16_MAX ? INT16_MAX : tError;
         tError         = tError < INT16_MIN ? INT16_MIN : tError;
         tempError.update(tError);
