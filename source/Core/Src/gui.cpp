@@ -787,6 +787,7 @@ static bool settings_displayBrightnessLevel(void) {
   OLED::drawArea(0, 0, 16, 16, brightnessIcon);
   OLED::setCursor(5 * FONT_12_WIDTH - 2, 0);
   OLED::printNumber(getSettingValue(SettingsOptions::OLEDContrast), 3, FontStyle::LARGE);
+  OLED::setContrast(getSettingValue(SettingsOptions::OLEDContrast));
   return false;
 }
 
@@ -794,6 +795,7 @@ static bool settings_displayInvertColor(void) {
   OLED::drawArea(0, 0, 24, 16, invertDisplayIcon);
   OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
   OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
+  OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
   return false;
 }
 

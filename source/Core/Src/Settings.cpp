@@ -139,7 +139,7 @@ uint16_t getSettingValue(const enum SettingsOptions option) { return systemSetti
 
 bool nextSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
-  if (systemSettings.settingsValues[(int)option] == (constants.max - constants.increment)) {
+  if (systemSettings.settingsValues[(int)option] >= (constants.max - constants.increment)) {
     systemSettings.settingsValues[(int)option] = constants.min;
   } else {
     systemSettings.settingsValues[(int)option] += constants.increment;
@@ -150,7 +150,7 @@ bool nextSettingValue(const enum SettingsOptions option) {
 bool prevSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
   int        value     = systemSettings.settingsValues[(int)option];
-  if (value == constants.min) {
+  if (value <= constants.min) {
     value = constants.max;
   } else {
     value -= constants.increment;
