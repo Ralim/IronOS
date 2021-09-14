@@ -227,28 +227,33 @@
 #endif
 
 #ifdef MODEL_TS100
-const int32_t tipMass       = 65; // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance = 75; // x10 ohms, 7.5 typical for ts100 tips
+const int32_t HARDWARE_MAX_WATTAGE_X10 = 750;
+const int32_t TIP_THERMAL_MASS         = 65; // X10 watts to raise 1 deg C in 1 second
+const uint8_t tipResistance            = 75; // x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_Pinecil
-const int32_t tipMass       = 45; // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance = 75; // x10 ohms, 7.5 typical for ts100 tips
+const int32_t HARDWARE_MAX_WATTAGE_X10 = 750;
+const int32_t TIP_THERMAL_MASS         = 65; // X10 watts to raise 1 deg C in 1 second
+const uint8_t tipResistance            = 75; // x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_TS80
-const uint32_t tipMass       = 40;
-const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
+const int32_t  HARDWARE_MAX_WATTAGE_X10 = 180;
+const uint32_t TIP_THERMAL_MASS         = 40;
+const uint8_t  tipResistance            = 45; // x10 ohms, 4.5 typical for ts80 tips
 #endif
 
 #ifdef MODEL_TS80P
-const uint32_t tipMass       = 40;
-const uint8_t  tipResistance = 45; // x10 ohms, 4.5 typical for ts80 tips
+const int32_t  HARDWARE_MAX_WATTAGE_X10 = 300;
+const uint32_t TIP_THERMAL_MASS         = 40;
+const uint8_t  tipResistance            = 45; // x10 ohms, 4.5 typical for ts80 tips
 #endif
 
 #ifdef MODEL_MHP30
-const uint32_t tipMass       = 45; // TODO
-const uint8_t  tipResistance = 60; // x10 ohms, ~6 typical
+const int32_t  HARDWARE_MAX_WATTAGE_X10 = 650;
+const uint32_t TIP_THERMAL_MASS         = 65; // TODO, needs refinement
+const uint8_t  tipResistance            = 60; // x10 ohms, ~6 typical
 #endif
 
 #ifdef POW_QC_20V
