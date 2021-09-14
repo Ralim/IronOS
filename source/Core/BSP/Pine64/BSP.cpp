@@ -12,8 +12,8 @@
 #include "main.hpp"
 
 const uint16_t powerPWM         = 255;
-const uint8_t  holdoffTicks     = 25; // delay of 7 ms
-const uint8_t  tempMeasureTicks = 25;
+const uint8_t  holdoffTicks     = 10;
+const uint8_t  tempMeasureTicks = 14;
 
 uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
 
