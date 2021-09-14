@@ -64,8 +64,8 @@ void startPIDTask(void const *argument __unused) {
           PIDTempTarget = TipThermoModel::getTipMaxInC();
         }
         int32_t tError = PIDTempTarget - currentTipTempInC;
-        tError         = tError > INT16_MAX ? INT16_MAX : tError;
-        tError         = tError < INT16_MIN ? INT16_MIN : tError;
+        // tError         = tError > INT16_MAX ? INT16_MAX : tError;
+        // tError         = tError < INT16_MIN ? INT16_MIN : tError;
 
         detectThermalRunaway(currentTipTempInC, tError);
         x10WattsOut = getPIDResultX10Watts(tError);
@@ -138,7 +138,7 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // so we basically double the need (gain = 2) to get what we want.
   return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
                            TIP_THERMAL_MASS,                 // inertia factor
-                           2,                                // gain
+                           1,                                // gain
                            rate,                             // PID cycle frequency
                            getX10WattageLimits());
 }

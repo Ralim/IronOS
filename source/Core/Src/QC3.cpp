@@ -70,7 +70,7 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
   // try and step towards the wanted value
 
   // 1. Measure current voltage
-  int16_t vStart     = getInputVoltageX10(divisor, 1);
+  int16_t vStart     = getInputVoltageX10(divisor, 0);
   int     difference = Vx10 - vStart;
 
   // 2. calculate ideal steps (0.2V changes)
@@ -94,7 +94,7 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
 #ifdef ENABLE_QC2
   // Re-measure
   /* Disabled due to nothing to test and code space of around 1k*/
-  steps = vStart - getInputVoltageX10(divisor, 1);
+  steps = vStart - getInputVoltageX10(divisor, 0);
   if (steps < 0)
     steps = -steps;
   if (steps > 4) {
@@ -118,7 +118,7 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
 void startQC(uint16_t divisor) {
   // Pre check that the input could be >5V already, and if so, dont both
   // negotiating as someone is feeding in hv
-  if (getInputVoltageX10(divisor, 1) > 80) {
+  if (getInputVoltageX10(divisor, 0) > 80) {
     QCTries = 11;
     QCMode  = QCState::NO_QC;
     return;
@@ -160,7 +160,7 @@ void startQC(uint16_t divisor) {
     // Wait for frontend ADC to stabilise
     QCMode = QCState::QC_2;
     for (uint8_t i = 0; i < 10; i++) {
-      if (getInputVoltageX10(divisor, 1) > 80) {
+      if (getInputVoltageX10(divisor, 0) > 80) {
         // yay we have at least QC2.0 or QC3.0
         QCMode = QCState::QC_3; // We have at least QC2, pray for 3
         return;

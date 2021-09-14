@@ -20,7 +20,7 @@ DMA_HandleTypeDef hdma_i2c1_tx;
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef  htim2;
 TIM_HandleTypeDef  htim3;
-#define ADC_FILTER_LEN 32
+#define ADC_FILTER_LEN 4
 #define ADC_SAMPLES    16
 uint16_t ADCReadings[ADC_SAMPLES]; // Used to store the adc readings for the handle cold junction temp
 
