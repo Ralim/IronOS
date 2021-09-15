@@ -64,8 +64,6 @@ void startPIDTask(void const *argument __unused) {
           PIDTempTarget = TipThermoModel::getTipMaxInC();
         }
         int32_t tError = PIDTempTarget - currentTipTempInC;
-        // tError         = tError > INT16_MAX ? INT16_MAX : tError;
-        // tError         = tError < INT16_MIN ? INT16_MIN : tError;
 
         detectThermalRunaway(currentTipTempInC, tError);
         x10WattsOut = getPIDResultX10Watts(tError);
@@ -77,10 +75,11 @@ void startPIDTask(void const *argument __unused) {
       // ADC interrupt timeout
       setTipPWM(0, false);
     }
+#ifdef DEBUG_UART_OUTPUT
+    log_system_state(x10WattsOut);
+#endif
   }
 }
-#define TRIAL_NEW_PID
-#ifdef TRIAL_NEW_PID
 
 template <class T = int32_t> struct Integrator {
   T sum;
@@ -89,9 +88,9 @@ template <class T = int32_t> struct Integrator {
     // Decay the old value. This is a simplified formula that still works with decent results
     // Ideally we would have used an exponential decay but the computational effort required
     // by exp function is just not justified here in respect to the outcome
-    sum = sum * (100 - inertia / rate) / 100;
+    sum = (sum * (100 - (inertia / rate))) / 100;
     // Add the new value x integration interval ( 1 / rate)
-    sum += gain * val / rate;
+    sum += (gain * val) / rate;
 
     // limit the output
     if (sum > limit)
@@ -137,42 +136,12 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
   // so we basically double the need (gain = 2) to get what we want.
   return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
-                           TIP_THERMAL_MASS,                 // inertia factor
+                           TIP_THERMAL_MASS,                 // Inertia, smaller numbers increase dominance of the previous value
                            1,                                // gain
                            rate,                             // PID cycle frequency
                            getX10WattageLimits());
 }
-#else
-int32_t getPIDResultX10Watts(int32_t tError) {
 
-  // Now for the PID!
-
-  // P term - total power needed to hit target temp next cycle.
-  // thermal mass = 1690 milliJ/*C for my tip.
-  //  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-  // we divide milliWattsNeeded by 20 to let the I term dominate near the set point.
-  //  This is necessary because of the temp noise and thermal lag in the system.
-  // Once we have feed-forward temp estimation we should be able to better tune this.
-
-  int32_t x10WattsNeeded = tempToX10Watts(tError);
-  // note that milliWattsNeeded is sometimes negative, this counters overshoot
-  //  from I term's inertia.
-  int32_t x10WattsOut = x10WattsNeeded;
-
-  // I term - energy needed to compensate for heat loss.
-  // We track energy put into the system over some window.
-  // Assuming the temp is stable, energy in = energy transfered.
-  //  (If it isn't, P will dominate).
-  x10WattsOut += x10WattHistory.average();
-
-  // D term - use sudden temp change to counter fast cooling/heating.
-  //  In practice, this provides an early boost if temp is dropping
-  //  and counters extra power if the iron is no longer losing temp.
-  // basically: temp - lastTemp
-  //  Unfortunately, our temp signal is too noisy to really help.
-  return x10WattsOut;
-}
-#endif
 void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
   static uint16_t   tipTempCRunawayTemp   = 0;
   static TickType_t runawaylastChangeTime = 0;
@@ -203,7 +172,9 @@ void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
 
 int32_t getX10WattageLimits() {
   const auto vin   = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
-  int32_t    limit = (vin * vin) * tipResistance / 10;
+  int32_t    limit = ((vin * vin) * tipResistance);
+  limit *= 12; // Default to 20% over
+  limit /= 100;
 
   if (getSettingValue(SettingsOptions::PowerLimit) && limit > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
     limit = getSettingValue(SettingsOptions::PowerLimit) * 10;
@@ -253,8 +224,5 @@ void setOutputx10WattsViaFilters(int32_t x10WattsOut) {
   x10WattsOutLast = x10WattsOut;
 #endif
   setTipX10Watts(x10WattsOut);
-#ifdef DEBUG_UART_OUTPUT
-  log_system_state(x10WattsOut);
-#endif
   resetWatchdog();
 }
