@@ -22,7 +22,8 @@
 const uint8_t                                        wattHistoryFilter = 24; // I term look back weighting
 extern expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory;
 
-int32_t tempToX10Watts(int32_t rawTemp);
-void    setTipX10Watts(int32_t mw);
-uint8_t X10WattsToPWM(int32_t milliWatts, uint8_t sample = 0);
+uint32_t availableW10(uint8_t sample);
+int32_t  tempToX10Watts(int32_t rawTemp);
+void     setTipX10Watts(int32_t mw);
+uint8_t  X10WattsToPWM(int32_t milliWatts, uint8_t sample = 0);
 #endif /* POWER_HPP_ */

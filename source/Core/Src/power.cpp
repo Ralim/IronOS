@@ -44,7 +44,7 @@ void setTipX10Watts(int32_t mw) {
   x10WattHistory.update(actualMilliWatts);
 }
 
-static uint32_t availableW10(uint8_t sample) {
+uint32_t availableW10(uint8_t sample) {
   // P = V^2 / R, v*v = v^2 * 100
   //				R = R*10
   // P therefore is in V^2*100/R*10 = W*10.

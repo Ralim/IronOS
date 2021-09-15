@@ -171,10 +171,7 @@ void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
 }
 
 int32_t getX10WattageLimits() {
-  const auto vin   = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
-  int32_t    limit = ((vin * vin) * tipResistance);
-  limit *= 12; // Default to 20% over
-  limit /= 100;
+  int32_t limit = availableW10(0);
 
   if (getSettingValue(SettingsOptions::PowerLimit) && limit > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
     limit = getSettingValue(SettingsOptions::PowerLimit) * 10;
