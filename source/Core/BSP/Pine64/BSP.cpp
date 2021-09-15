@@ -15,11 +15,9 @@ const uint16_t powerPWM         = 255;
 const uint8_t  holdoffTicks     = 10;
 const uint8_t  tempMeasureTicks = 14;
 
-uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
+uint16_t totalPWM; // Total length of the cycle's ticks
 
-// 2 second filter (ADC is PID_TIM_HZ Hz)
-history<uint16_t, PID_TIM_HZ> rawTempFilter = {{0}, 0, 0};
-void                          resetWatchdog() { fwdgt_counter_reload(); }
+void resetWatchdog() { fwdgt_counter_reload(); }
 
 uint16_t getHandleTemperature(uint8_t sample) {
 #ifdef TEMP_TMP36

@@ -21,9 +21,7 @@ uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
 
 static bool fastPWM;
 
-// 2 second filter (ADC is PID_TIM_HZ Hz)
-history<uint16_t, PID_TIM_HZ> rawTempFilter = {{0}, 0, 0};
-void                          resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
+void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
 #ifdef TEMP_NTC
 // Lookup table for the NTC
 // Stored as ADCReading,Temp in degC
