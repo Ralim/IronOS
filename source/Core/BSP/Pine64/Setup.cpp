@@ -274,7 +274,7 @@ void setup_timers() {
 
     /* CH0 configured to implement the PWM irq's for the output control*/
     timer_channel_output_struct_para_init(&timer_ocintpara);
-    timer_ocintpara.ocpolarity  = TIMER_OC_POLARITY_HIGH;
+    timer_ocintpara.ocpolarity  = TIMER_OC_POLARITY_LOW;
     timer_ocintpara.outputstate = TIMER_CCX_ENABLE;
     timer_channel_output_config(TIMER1, TIMER_CH_0, &timer_ocintpara);
 
