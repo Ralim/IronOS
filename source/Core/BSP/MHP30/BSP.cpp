@@ -12,7 +12,6 @@
 #include "main.hpp"
 #include <IRQ.h>
 
-
 WS2812<GPIOA_BASE, WS2812_Pin, 1> ws2812;
 volatile uint16_t                 PWMSafetyTimer = 0;
 volatile uint8_t                  pendingPWM     = 0;
