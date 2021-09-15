@@ -7,9 +7,9 @@
 
 // Quick charge 3.0 supporting functions
 #include "QC3.h"
-
 #include "BSP.h"
 #include "cmsis_os.h"
+#include "configuration.h"
 #include "stdint.h"
 enum QCState {
   NOT_STARTED = 0, // Have not checked
