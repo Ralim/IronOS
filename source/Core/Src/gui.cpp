@@ -409,7 +409,7 @@ static bool settings_displayShutdownTime(void) {
   return false;
 }
 static bool settings_setTempF(void) {
-  nextSettingValue(SettingsOptions::TemperatureInF);
+  bool     res           = nextSettingValue(SettingsOptions::TemperatureInF);
   uint16_t BoostTemp     = getSettingValue(SettingsOptions::BoostTemp);
   uint16_t SolderingTemp = getSettingValue(SettingsOptions::SolderingTemp);
   uint16_t SleepTemp     = getSettingValue(SettingsOptions::SleepTemp);
@@ -438,7 +438,7 @@ static bool settings_setTempF(void) {
   setSettingValue(SettingsOptions::SolderingTemp, SolderingTemp);
   setSettingValue(SettingsOptions::SleepTemp, SleepTemp);
 
-  return false;
+  return res;
 }
 
 static bool settings_displayTempF(void) {

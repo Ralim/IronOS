@@ -144,7 +144,7 @@ bool nextSettingValue(const enum SettingsOptions option) {
   } else {
     systemSettings.settingsValues[(int)option] += constants.increment;
   }
-  return (constants.max - systemSettings.settingsValues[(int)option]) < constants.increment;
+  return (constants.max - systemSettings.settingsValues[(int)option]) <= constants.increment;
 }
 
 bool prevSettingValue(const enum SettingsOptions option) {
