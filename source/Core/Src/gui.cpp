@@ -352,8 +352,12 @@ static bool settings_displayQCInputV(void) {
 
 static bool settings_displayPDNegTimeout(void) {
   printShortDescription(SettingsItemIndex::PDNegTimeout, 5);
-  OLED::printNumber(getSettingValue(SettingsOptions::PDNegTimeout), 2, FontStyle::LARGE);
-
+  auto value = getSettingValue(SettingsOptions::PDNegTimeout);
+  if (value == 0) {
+    OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
+  } else {
+    OLED::printNumber(value, 2, FontStyle::LARGE);
+  }
   return false;
 }
 #endif
