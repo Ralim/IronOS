@@ -137,7 +137,7 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // so we basically double the need (gain = 2) to get what we want.
   return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
                            TIP_THERMAL_MASS,                 // Inertia, smaller numbers increase dominance of the previous value
-                           1,                                // gain
+                           2,                                // gain
                            rate,                             // PID cycle frequency
                            getX10WattageLimits());
 }
