@@ -1,10 +1,10 @@
-#pragma once
-#include "Model_Config.h"
+#ifndef CONFIGURATION_H_
+#define CONFIGURATION_H_
 #include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for TS80 or TS100
+ * Define here your default pre settings for TS80(P) or TS100
  *
  */
 
@@ -57,7 +57,7 @@
  *
  */
 #define ORIENTATION_MODE           0 // 0: Right 1:Left 2:Automatic - Default right
-#define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperatur change
+#define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
  * Temp change settings
@@ -114,13 +114,15 @@
 
 #define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
 
-#define OP_AMP_Rf_MHP30  268500 //  268.5  Kilo-ohms -> Measured
-#define OP_AMP_Rin_MHP30 1600   //  1.6  Kilo-ohms -> Measured
-
-#define OP_AMP_GAIN_STAGE_MHP30 (1 + (OP_AMP_Rf_MHP30 / OP_AMP_Rin_MHP30))
 // Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
+
+#if defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) > 1
+#error "Multiple models defined!"
+#elif defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) == 0
+#error "No model defined!"
+#endif
 
 #ifdef MODEL_TS100
 #define SOLDERING_TEMP       320                     // Default soldering temp is 320.0 °C
@@ -140,26 +142,10 @@
 #define MIN_TEMP_F           60                      // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C     250                     // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F     480                     // The min settable temp for boost mode °F
-#endif
-
-#ifdef MODEL_Pinecil
-#define SOLDERING_TEMP       320                     // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV          467                     // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
-#define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
-#define POWER_LIMIT          0                       // 0 watts default limit
-#define MAX_POWER_LIMIT      65                      //
-#define POWER_LIMIT_STEPS    5                       //
-#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 // Uses TS100 resistors
-#define TEMP_uV_LOOKUP_HAKKO                         // Use Hakko lookup table
-#define USB_PD_VMAX          20                      // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ           (8)                     // Tick rate of the PID loop
-#define MAX_TEMP_C           450                     // Max soldering temp selectable °C
-#define MAX_TEMP_F           850                     // Max soldering temp selectable °F
-#define MIN_TEMP_C           10                      // Min soldering temp selectable °C
-#define MIN_TEMP_F           60                      // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C     250                     // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F     480                     // The min settable temp for boost mode °F
+#define POW_DC
+#define ACCEL_MMA
+#define ACCEL_LIS
+#define TEMP_TMP36
 #endif
 
 #ifdef MODEL_TS80
@@ -180,6 +166,11 @@
 #define MIN_TEMP_F          60                     // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C    250                    // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F    480                    // The min settable temp for boost mode °F
+#define ACCEL_LIS
+#define POW_QC
+#define TEMP_TMP36
+#define LIS_ORI_FLIP
+#define OLED_FLIP
 #endif
 
 #ifdef MODEL_TS80P
@@ -200,64 +191,31 @@
 #define MIN_TEMP_F          60                     // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C    250                    // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F    480                    // The min settable temp for boost mode °F
-
-#endif
-
-#ifdef MODEL_MHP30
-#define SOLDERING_TEMP          200                     // Default soldering temp is 200.0 °C
-#define VOLTAGE_DIV             360                     // Default for MHP30
-#define PID_POWER_LIMIT         65                      // Sets the max pwm power limit
-#define CALIBRATION_OFFSET      0                       // the adc offset in uV - MHP compensates automagically
-#define POWER_LIMIT             65                      // 65 watts default power limit
-#define MAX_POWER_LIMIT         65                      //
-#define POWER_LIMIT_STEPS       1                       //
-#define OP_AMP_GAIN_STAGE       OP_AMP_GAIN_STAGE_MHP30 //
-#define USB_PD_VMAX             20                      // Maximum voltage for PD to negotiate
-#define MODEL_HAS_DCDC                                  // Has inductor to current filter
-#define PID_TIM_HZ              (16)                    //
-#define THERMAL_MASS_OVERSHOOTS                         // We have overshoot so reverse direction of compensation
-#define MAX_TEMP_C              300                     // Max soldering temp selectable °C
-#define MAX_TEMP_F              570                     // Max soldering temp selectable °F
-#define MIN_TEMP_C              10                      // Min soldering temp selectable °C
-#define MIN_TEMP_F              60                      // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C        150                     // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F        300                     // The min settable temp for boost mode °F
-#define NO_DISPLAY_ROTATE                               // Disable OLED rotation by accel
-#define SLEW_LIMIT              50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
+#define ACCEL_LIS
+#define ACCEL_MSA
+#define POW_PD
+#define POW_QC
+#define TEMP_NTC
+#define I2C_SOFT
+#define LIS_ORI_FLIP
+#define OLED_FLIP
 #endif
 
 #ifdef MODEL_TS100
-const int32_t HARDWARE_MAX_WATTAGE_X10 = 750;
-const int32_t TIP_THERMAL_MASS         = 65; // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance            = 75; // x10 ohms, 7.5 typical for ts100 tips
-#endif
-
-#ifdef MODEL_Pinecil
-const int32_t HARDWARE_MAX_WATTAGE_X10 = 750;
-const int32_t TIP_THERMAL_MASS         = 65; // X10 watts to raise 1 deg C in 1 second
-const uint8_t tipResistance            = 75; // x10 ohms, 7.5 typical for ts100 tips
+#define HARDWARE_MAX_WATTAGE_X10 750
+#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
+#define tipResistance            75 // x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_TS80
-const int32_t  HARDWARE_MAX_WATTAGE_X10 = 180;
-const uint32_t TIP_THERMAL_MASS         = 40;
-const uint8_t  tipResistance            = 45; // x10 ohms, 4.5 typical for ts80 tips
+#define HARDWARE_MAX_WATTAGE_X10 180
+#define TIP_THERMAL_MASS         40
+#define tipResistance            45 // x10 ohms, 4.5 typical for ts80 tips
 #endif
 
 #ifdef MODEL_TS80P
-const int32_t  HARDWARE_MAX_WATTAGE_X10 = 300;
-const uint32_t TIP_THERMAL_MASS         = 40;
-const uint8_t  tipResistance            = 45; // x10 ohms, 4.5 typical for ts80 tips
+#define HARDWARE_MAX_WATTAGE_X10 300
+#define TIP_THERMAL_MASS         40
+#define tipResistance            45 // x10 ohms, 4.5 typical for ts80 tips
 #endif
-
-#ifdef MODEL_MHP30
-const int32_t  HARDWARE_MAX_WATTAGE_X10 = 650;
-const uint32_t TIP_THERMAL_MASS         = 65; // TODO, needs refinement
-const uint8_t  tipResistance            = 60; // x10 ohms, ~6 typical
-#endif
-
-#ifdef POW_QC_20V
-#define QC_SETTINGS_MAX 3
-#else
-#define QC_SETTINGS_MAX 2
 #endif

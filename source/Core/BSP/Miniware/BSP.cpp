@@ -2,7 +2,6 @@
 
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
-#include "Model_Config.h"
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
@@ -10,6 +9,7 @@
 #include "history.hpp"
 #include "main.hpp"
 #include <IRQ.h>
+
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t  pendingPWM     = 0;
 

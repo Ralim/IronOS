@@ -2,7 +2,6 @@
 
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
-#include "Model_Config.h"
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
@@ -12,6 +11,7 @@
 #include "history.hpp"
 #include "main.hpp"
 #include <IRQ.h>
+
 
 WS2812<GPIOA_BASE, WS2812_Pin, 1> ws2812;
 volatile uint16_t                 PWMSafetyTimer = 0;

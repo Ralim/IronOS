@@ -2,7 +2,7 @@
 #include "BSP_Power.h"
 #include "BSP_QC.h"
 #include "Defines.h"
-#include "Model_Config.h"
+#include "configuration.h"
 #include <stdbool.h>
 #include <stdint.h>
 /*

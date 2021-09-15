@@ -8,7 +8,7 @@
 #ifndef BSP_MINIWARE_SOFTWARE_I2C_H_
 #define BSP_MINIWARE_SOFTWARE_I2C_H_
 #include "BSP.h"
-#include "Model_Config.h"
+#include "configuration.h"
 #include "stm32f1xx_hal.h"
 #ifdef I2C_SOFT
 

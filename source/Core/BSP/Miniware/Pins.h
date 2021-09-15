@@ -7,7 +7,7 @@
 
 #ifndef BSP_MINIWARE_PINS_H_
 #define BSP_MINIWARE_PINS_H_
-#include "Model_Config.h"
+#include "configuration.h"
 
 #ifdef MODEL_TS100
 

@@ -10,7 +10,7 @@
 #ifndef OLED_HPP_
 #define OLED_HPP_
 #include "Font.h"
-#include "Model_Config.h"
+#include "configuration.h"
 #include <BSP.h>
 #include <stdbool.h>
 #include <string.h>
