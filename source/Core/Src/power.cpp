@@ -10,6 +10,8 @@
 #include <power.hpp>
 
 static int32_t PWMToX10Watts(uint8_t pwm, uint8_t sample);
+const int      fastPWMChangeoverPoint     = 128;
+const int      fastPWMChangeoverTolerance = 16;
 
 expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory = {0};
 
@@ -17,9 +19,9 @@ bool shouldBeUsingFastPWMMode(const uint8_t pwmTicks) {
   // Determine if we should use slow or fast PWM mode
   // Crossover between modes set around the midpoint of the PWM control point
   static bool lastPWMWasFast = true;
-  if (pwmTicks > (128 + 8) && lastPWMWasFast) {
+  if (pwmTicks > (fastPWMChangeoverPoint + fastPWMChangeoverTolerance) && lastPWMWasFast) {
     lastPWMWasFast = false;
-  } else if (pwmTicks < (128 - 8) && !lastPWMWasFast) {
+  } else if (pwmTicks < (fastPWMChangeoverPoint - fastPWMChangeoverTolerance) && !lastPWMWasFast) {
     lastPWMWasFast = true;
   }
   return lastPWMWasFast;
@@ -58,20 +60,19 @@ static uint32_t availableW10(uint8_t sample) {
   // availableMilliWattsX10 is now an accurate representation
   return availableWattsX10;
 }
-uint8_t X10WattsToPWM(int32_t milliWatts, uint8_t sample) {
-  // Scale input milliWatts to the pwm range available
-  if (milliWatts < 1) {
+uint8_t X10WattsToPWM(int32_t x10Watts, uint8_t sample) {
+  // Scale input x10Watts to the pwm range available
+  if (x10Watts < 0) {
     // keep the battery voltage updating the filter
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), sample);
     return 0;
   }
 
-  // Calculate desired milliwatts as a percentage of availableW10
+  // Calculate desired x10Watts as a percentage of availableW10
   uint32_t pwm;
-  pwm = (powerPWM * milliWatts) / availableW10(sample);
+  pwm = (powerPWM * x10Watts) / availableW10(sample);
   if (pwm > powerPWM) {
-    // constrain to max PWM counter, shouldn't be possible,
-    // but small cost for safety to avoid wraps
+    // constrain to max PWM counter
     pwm = powerPWM;
   }
   return pwm;
