@@ -641,7 +641,7 @@ static void setTipOffset() {
       OLED::refresh();
       osDelay(100);
     }
-    setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16);
+    setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
   }
   setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
   OLED::clearScreen();
