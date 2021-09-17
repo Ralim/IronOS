@@ -130,7 +130,7 @@
 #define CALIBRATION_OFFSET   900                     // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT      70                      // Sets the max pwm power limit
 #define POWER_LIMIT          0                       // 0 watts default limit
-#define MAX_POWER_LIMIT      65                      //
+#define MAX_POWER_LIMIT      70                      //
 #define POWER_LIMIT_STEPS    5                       //
 #define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_TS100 //
 #define TEMP_uV_LOOKUP_HAKKO                         //
@@ -154,7 +154,7 @@
 #define PID_POWER_LIMIT     24                     // Sets the max pwm power limit
 #define CALIBRATION_OFFSET  900                    // the adc offset in uV
 #define POWER_LIMIT         24                     // 24 watts default power limit
-#define MAX_POWER_LIMIT     30                     //
+#define MAX_POWER_LIMIT     40                     //
 #define POWER_LIMIT_STEPS   2                      //
 #define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
 #define TEMP_uV_LOOKUP_TS80                        //
@@ -179,7 +179,7 @@
 #define PID_POWER_LIMIT     35                     // Sets the max pwm power limit
 #define CALIBRATION_OFFSET  1500                   // the adc offset in uV
 #define POWER_LIMIT         30                     // 30 watts default power limit
-#define MAX_POWER_LIMIT     35                     //
+#define MAX_POWER_LIMIT     40                     //
 #define POWER_LIMIT_STEPS   2                      //
 #define OP_AMP_GAIN_STAGE   OP_AMP_GAIN_STAGE_TS80 //
 #define TEMP_uV_LOOKUP_TS80                        //

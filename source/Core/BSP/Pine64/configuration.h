@@ -119,9 +119,9 @@
 #define CALIBRATION_OFFSET   900                       // 900 - Default adc offset in uV
 #define PID_POWER_LIMIT      70                        // Sets the max pwm power limit
 #define POWER_LIMIT          0                         // 0 watts default limit
-#define MAX_POWER_LIMIT      65                        //
+#define MAX_POWER_LIMIT      70                        //
 #define POWER_LIMIT_STEPS    5                         //
-#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_PINECIL // Uses Pinecil resistors
+#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                           // Use Hakko lookup table
 #define USB_PD_VMAX          20                        // Maximum voltage for PD to negotiate
 #define PID_TIM_HZ           (8)                       // Tick rate of the PID loop
