@@ -16,9 +16,9 @@
 bool sanitiseSettings();
 
 #ifdef POW_QC_20V
-#define QC_VOLTAGE_MAX 220
+#define QC_VOLTAGE_MAX 222
 #else
-#define QC_VOLTAGE_MAX 140
+#define QC_VOLTAGE_MAX 142
 #endif
 
 /*
