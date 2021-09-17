@@ -46,13 +46,6 @@ uint8_t QC_DM_PulledDown() { return gpio_input_bit_get(USB_DM_LOW_GPIO_Port, USB
 #endif
 void QC_resync() {
 #ifdef POW_QC
-  uint8_t targetvoltage = 90;
-  if (getSettingValue(SettingsOptions::QCIdealVoltage) == 1) {
-    targetvoltage = 120;
-  } else if (getSettingValue(SettingsOptions::QCIdealVoltage) == 2) {
-    targetvoltage = 200;
-  }
-
-  seekQC(targetvoltage, getSettingValue(SettingsOptions::VoltageDiv)); // Run the QC seek again if we have drifted too much
+  seekQC(getSettingValue(SettingsOptions::QCIdealVoltage), getSettingValue(SettingsOptions::VoltageDiv)); // Run the QC seek again if we have drifted too much
 #endif
 }
