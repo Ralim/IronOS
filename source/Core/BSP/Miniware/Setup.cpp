@@ -20,7 +20,7 @@ DMA_HandleTypeDef hdma_i2c1_tx;
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef  htim2;
 TIM_HandleTypeDef  htim3;
-#define ADC_FILTER_LEN 32
+#define ADC_FILTER_LEN 4
 #define ADC_SAMPLES    16
 uint16_t ADCReadings[ADC_SAMPLES]; // Used to store the adc readings for the handle cold junction temp
 
@@ -326,7 +326,8 @@ static void MX_TIM2_Init(void) {
   // These values give a rate of around 3.5 Hz for "fast" mode and 1.84 Hz for "slow"
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   // dummy value, will be reconfigured by BSPInit()
-  htim2.Init.Period            = 255 + 17 * 2;
+  htim2.Init.Period = powerPWM + 14 * 2;
+
   htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV4; // 8 MHz (x2 APB1) before divide
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   htim2.Init.RepetitionCounter = 0;
@@ -344,7 +345,7 @@ static void MX_TIM2_Init(void) {
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   // dummy value, will be reconfigured by BSPInit() in the BSP.cpp
-  sConfigOC.Pulse = 255 + 13 * 2; // 13 -> Delay of 7 ms
+  sConfigOC.Pulse = powerPWM + 14; // 13 -> Delay of 7 ms
   // 255 is the largest time period of the drive signal, and then offset ADC sample to be a bit delayed after this
   /*
    * It takes 4 milliseconds for output to be stable after PWM turns off.

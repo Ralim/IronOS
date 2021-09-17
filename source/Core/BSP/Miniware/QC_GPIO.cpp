@@ -5,11 +5,12 @@
  *      Author: Ralim
  */
 #include "BSP.h"
-#include "Model_Config.h"
 #include "Pins.h"
 #include "QC3.h"
 #include "Settings.h"
+#include "configuration.h"
 #include "stm32f1xx_hal.h"
+
 #ifdef POW_QC
 void QC_DPlusZero_Six() {
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET); // pull down D+

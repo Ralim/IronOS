@@ -12,7 +12,7 @@
 #include "history.hpp"
 #include <string.h>
 #define ADC_NORM_SAMPLES 16
-#define ADC_FILTER_LEN   32
+#define ADC_FILTER_LEN   4
 uint16_t ADCReadings[ADC_NORM_SAMPLES]; // room for 32 lots of the pair of readings
 
 // Functions
@@ -264,17 +264,17 @@ void setup_timers() {
     /* initialize TIMER init parameter struct */
     timer_struct_para_init(&timer_initpara);
     /* TIMER1 configuration */
-    timer_initpara.prescaler         = 5000;
+    timer_initpara.prescaler         = 30000;
     timer_initpara.alignedmode       = TIMER_COUNTER_EDGE;
     timer_initpara.counterdirection  = TIMER_COUNTER_UP;
-    timer_initpara.period            = powerPWM + tempMeasureTicks;
+    timer_initpara.period            = powerPWM + tempMeasureTicks + holdoffTicks;
     timer_initpara.clockdivision     = TIMER_CKDIV_DIV4;
     timer_initpara.repetitioncounter = 0;
     timer_init(TIMER1, &timer_initpara);
 
     /* CH0 configured to implement the PWM irq's for the output control*/
     timer_channel_output_struct_para_init(&timer_ocintpara);
-    timer_ocintpara.ocpolarity  = TIMER_OC_POLARITY_HIGH;
+    timer_ocintpara.ocpolarity  = TIMER_OC_POLARITY_LOW;
     timer_ocintpara.outputstate = TIMER_CCX_ENABLE;
     timer_channel_output_config(TIMER1, TIMER_CH_0, &timer_ocintpara);
 

@@ -20,36 +20,36 @@ TaskHandle_t      pidTaskNotification     = NULL;
 uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
 int32_t           powerSupplyWattageLimit = 0;
 bool              heaterThermalRunaway    = false;
+
+static int32_t getPIDResultX10Watts(int32_t tError);
+static void    detectThermalRunaway(const int16_t currentTipTempInC, const int tError);
+static void    setOutputx10WattsViaFilters(int32_t x10Watts);
+static int32_t getX10WattageLimits();
+
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
   /*
    * We take the current tip temperature & evaluate the next step for the tip
    * control PWM.
    */
-  setTipX10Watts(0); // disable the output driver if the output is set to be off
-  TickType_t lastPowerPulseStart = 0;
-  TickType_t lastPowerPulseEnd   = 0;
+  setTipX10Watts(0); // disable the output at startup
 
-  history<int32_t, PID_TIM_HZ> tempError = {{0}, 0, 0};
-  currentTempTargetDegC                  = 0; // Force start with no output (off). If in sleep / soldering this will
-                                              // be over-ridden rapidly
-  pidTaskNotification              = xTaskGetCurrentTaskHandle();
-  uint32_t   PIDTempTarget         = 0;
-  uint16_t   tipTempCRunawayTemp   = 0;
-  TickType_t runawaylastChangeTime = 0;
+  currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
+                             // be over-ridden rapidly
+  pidTaskNotification    = xTaskGetCurrentTaskHandle();
+  uint32_t PIDTempTarget = 0;
   // Pre-seed the adc filters
-  for (int i = 0; i < 64; i++) {
-    vTaskDelay(2);
+  for (int i = 0; i < 128; i++) {
+    vTaskDelay(5);
     TipThermoModel::getTipInC(true);
+    getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
-#ifdef SLEW_LIMIT
-  int32_t x10WattsOutLast = 0;
-#endif
-  for (;;) {
+  int32_t x10WattsOut = 0;
 
+  for (;;) {
+    x10WattsOut = 0;
+    // This is a call to block this thread until the ADC does its samples
     if (ulTaskNotifyTake(pdTRUE, 2000)) {
-      // This is a call to block this thread until the ADC does its samples
-      int32_t x10WattsOut = 0;
       // Do the reading here to keep the temp calculations churning along
       uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
       PIDTempTarget              = currentTempTargetDegC;
@@ -63,116 +63,163 @@ void startPIDTask(void const *argument __unused) {
         if (PIDTempTarget > TipThermoModel::getTipMaxInC()) {
           PIDTempTarget = TipThermoModel::getTipMaxInC();
         }
-        // Convert the current tip to degree's C
+        int32_t tError = PIDTempTarget - currentTipTempInC;
 
-        // As we get close to our target, temp noise causes the system
-        //  to be unstable. Use a rolling average to dampen it.
-        // We overshoot by roughly 1 degree C.
-        //  This helps stabilize the display.
-        int32_t tError = PIDTempTarget - currentTipTempInC + 1;
-        tError         = tError > INT16_MAX ? INT16_MAX : tError;
-        tError         = tError < INT16_MIN ? INT16_MIN : tError;
-        tempError.update(tError);
-
-        // Now for the PID!
-
-        // P term - total power needed to hit target temp next cycle.
-        // thermal mass = 1690 milliJ/*C for my tip.
-        //  = Watts*Seconds to raise Temp from room temp to +100*C, divided by 100*C.
-        // we divide milliWattsNeeded by 20 to let the I term dominate near the set point.
-        //  This is necessary because of the temp noise and thermal lag in the system.
-        // Once we have feed-forward temp estimation we should be able to better tune this.
-
-        int32_t x10WattsNeeded = tempToX10Watts(tError);
-        // note that milliWattsNeeded is sometimes negative, this counters overshoot
-        //  from I term's inertia.
-        x10WattsOut += x10WattsNeeded;
-
-        // I term - energy needed to compensate for heat loss.
-        // We track energy put into the system over some window.
-        // Assuming the temp is stable, energy in = energy transfered.
-        //  (If it isn't, P will dominate).
-        x10WattsOut += x10WattHistory.average();
-
-        // D term - use sudden temp change to counter fast cooling/heating.
-        //  In practice, this provides an early boost if temp is dropping
-        //  and counters extra power if the iron is no longer losing temp.
-        // basically: temp - lastTemp
-        //  Unfortunately, our temp signal is too noisy to really help.
-
-        // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
-        // While trying to actively heat
-        if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
-          // Temp error is high
-          int16_t delta = (int16_t)currentTipTempInC - (int16_t)tipTempCRunawayTemp;
-          if (delta < 0) {
-            delta = -delta;
-          }
-          if (delta > THERMAL_RUNAWAY_TEMP_C) {
-            // We have heated up more than the threshold, reset the timer
-            tipTempCRunawayTemp   = currentTipTempInC;
-            runawaylastChangeTime = xTaskGetTickCount();
-          } else {
-            if ((xTaskGetTickCount() - runawaylastChangeTime) > (THERMAL_RUNAWAY_TIME_SEC * TICKS_SECOND)) {
-              // It has taken too long to rise
-              heaterThermalRunaway = true;
-            }
-          }
-        } else {
-          tipTempCRunawayTemp   = currentTipTempInC;
-          runawaylastChangeTime = xTaskGetTickCount();
-        }
-
+        detectThermalRunaway(currentTipTempInC, tError);
+        x10WattsOut = getPIDResultX10Watts(tError);
       } else {
-        tipTempCRunawayTemp   = currentTipTempInC;
-        runawaylastChangeTime = xTaskGetTickCount();
+        detectThermalRunaway(currentTipTempInC, 0);
       }
-
-      // If the user turns on the option of using an occasional pulse to keep the power bank on
-      if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
-        const TickType_t powerPulseWait = powerPulseWaitUnit * getSettingValue(SettingsOptions::KeepAwakePulseWait);
-        if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseWait) {
-          const TickType_t powerPulseDuration = powerPulseDurationUnit * getSettingValue(SettingsOptions::KeepAwakePulseDuration);
-          lastPowerPulseStart                 = xTaskGetTickCount();
-          lastPowerPulseEnd                   = lastPowerPulseStart + powerPulseDuration;
-        }
-
-        // If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor
-        if (x10WattsOut < getSettingValue(SettingsOptions::KeepAwakePulse) && xTaskGetTickCount() < lastPowerPulseEnd) {
-          x10WattsOut = getSettingValue(SettingsOptions::KeepAwakePulse);
-        }
-      }
-
-      // Secondary safety check to forcefully disable header when within ADC noise of top of ADC
-      if (getTipRawTemp(0) > (0x7FFF - 32)) {
-        x10WattsOut = 0;
-      }
-      if (heaterThermalRunaway) {
-        x10WattsOut = 0;
-      }
-      if (getSettingValue(SettingsOptions::PowerLimit) && x10WattsOut > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
-        x10WattsOut = getSettingValue(SettingsOptions::PowerLimit) * 10;
-      }
-      if (powerSupplyWattageLimit && x10WattsOut > powerSupplyWattageLimit * 10) {
-        x10WattsOut = powerSupplyWattageLimit * 10;
-      }
-#ifdef SLEW_LIMIT
-      if (x10WattsOut - x10WattsOutLast > SLEW_LIMIT) {
-        x10WattsOut = x10WattsOutLast + SLEW_LIMIT;
-      }
-      if (x10WattsOut < 0) {
-        x10WattsOut = 0;
-      }
-      x10WattsOutLast = x10WattsOut;
-#endif
-      setTipX10Watts(x10WattsOut);
-#ifdef DEBUG_UART_OUTPUT
-      log_system_state(x10WattsOut);
-#endif
-      resetWatchdog();
+      setOutputx10WattsViaFilters(x10WattsOut);
     } else {
       // ADC interrupt timeout
-      setTipPWM(0);
+      setTipPWM(0, false);
+    }
+#ifdef DEBUG_UART_OUTPUT
+    log_system_state(x10WattsOut);
+#endif
+  }
+}
+
+template <class T = int32_t> struct Integrator {
+  T sum;
+
+  T update(const T val, const int32_t inertia, const int32_t gain, const int32_t rate, const int32_t limit) {
+    // Decay the old value. This is a simplified formula that still works with decent results
+    // Ideally we would have used an exponential decay but the computational effort required
+    // by exp function is just not justified here in respect to the outcome
+    sum = (sum * (100 - (inertia / rate))) / 100;
+    // Add the new value x integration interval ( 1 / rate)
+    sum += (gain * val) / rate;
+
+    // limit the output
+    if (sum > limit)
+      sum = limit;
+    else if (sum < -limit)
+      sum = -limit;
+
+    return sum;
+  }
+
+  void set(T const val) { sum = val; }
+
+  T get(bool positiveOnly = true) const { return (positiveOnly) ? ((sum > 0) ? sum : 0) : sum; }
+};
+int32_t getPIDResultX10Watts(int32_t setpointDelta) {
+  static TickType_t          lastCall   = 0;
+  static Integrator<int32_t> powerStore = {0};
+
+  const int rate = 1000 / (xTaskGetTickCount() - lastCall);
+  lastCall       = xTaskGetTickCount();
+  // Sandman note:
+  // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't
+  // want to overshot excessively (if at all) the setpoint temperature. In the same time we have 'imprecise'
+  // instant temperature measurements. The nature of temperature reading imprecision is not necessarily
+  // related to the sensor (thermocouple) or DAQ system, that otherwise are fairly decent. The real issue	is
+  // the thermal inertia. We basically read the temperature in the window between two heating sessions when
+  // the output is off. However, the heater temperature does not dissipate instantly into the tip mass so
+  // at any moment right after heating, the thermocouple would sense a temperature significantly higher than
+  // moments later. We could use longer delays but that would slow the PID loop and that would lead to other
+  // negative side effects. As a result, we can only rely on the I term but with a twist. Instead of a simple
+  // integrator we are going to use a self decaying integrator that acts more like a dual I term / P term
+  // rather than a plain I term. Depending on the circumstances, like when the delta temperature is large,
+  // it acts more like a P term whereas on closing to setpoint it acts increasingly closer to a plain I term.
+  // So in a sense, we have a bit of both.
+  //																		 So there we go...
+
+  // P = (Thermal Mass) x (Delta Temperature ) / 1sec, where thermal mass is in X10 J / °C and
+  // delta temperature is in °C. The result is the power in X10 W needed to raise (or decrease!) the
+  // tip temperature with (Delta Temperature ) °C in 1 second.
+  // Note on powerStore. On update, if the value is provided in X10 (W) units then inertia shall be provided
+  // in X10 (J / °C) units as well. Also, powerStore is updated with a gain of 2. Where this comes from: The actual
+  // power CMOS is controlled by TIM3->CTR1 (that is software modulated - on/off - by TIM2-CTR4 interrupts). However,
+  // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
+  // so we basically double the need (gain = 2) to get what we want.
+  return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
+                           TIP_THERMAL_MASS,                 // Inertia, smaller numbers increase dominance of the previous value
+                           2,                                // gain
+                           rate,                             // PID cycle frequency
+                           getX10WattageLimits());
+}
+
+void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
+  static uint16_t   tipTempCRunawayTemp   = 0;
+  static TickType_t runawaylastChangeTime = 0;
+
+  // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
+  // While trying to actively heat
+  if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
+    // Temp error is high
+    int16_t delta = (int16_t)currentTipTempInC - (int16_t)tipTempCRunawayTemp;
+    if (delta < 0) {
+      delta = -delta;
+    }
+    if (delta > THERMAL_RUNAWAY_TEMP_C) {
+      // We have heated up more than the threshold, reset the timer
+      tipTempCRunawayTemp   = currentTipTempInC;
+      runawaylastChangeTime = xTaskGetTickCount();
+    } else {
+      if ((xTaskGetTickCount() - runawaylastChangeTime) > (THERMAL_RUNAWAY_TIME_SEC * TICKS_SECOND)) {
+        // It has taken too long to rise
+        heaterThermalRunaway = true;
+      }
+    }
+  } else {
+    tipTempCRunawayTemp   = currentTipTempInC;
+    runawaylastChangeTime = xTaskGetTickCount();
+  }
+}
+
+int32_t getX10WattageLimits() {
+  int32_t limit = availableW10(0);
+
+  if (getSettingValue(SettingsOptions::PowerLimit) && limit > (getSettingValue(SettingsOptions::PowerLimit) * 10)) {
+    limit = getSettingValue(SettingsOptions::PowerLimit) * 10;
+  }
+  if (powerSupplyWattageLimit && limit > powerSupplyWattageLimit * 10) {
+    limit = powerSupplyWattageLimit * 10;
+  }
+  return limit;
+}
+
+void setOutputx10WattsViaFilters(int32_t x10WattsOut) {
+  static TickType_t lastPowerPulseStart = 0;
+  static TickType_t lastPowerPulseEnd   = 0;
+#ifdef SLEW_LIMIT
+  static int32_t x10WattsOutLast = 0;
+#endif
+
+  // If the user turns on the option of using an occasional pulse to keep the power bank on
+  if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
+    const TickType_t powerPulseWait = powerPulseWaitUnit * getSettingValue(SettingsOptions::KeepAwakePulseWait);
+    if (xTaskGetTickCount() - lastPowerPulseStart > powerPulseWait) {
+      const TickType_t powerPulseDuration = powerPulseDurationUnit * getSettingValue(SettingsOptions::KeepAwakePulseDuration);
+      lastPowerPulseStart                 = xTaskGetTickCount();
+      lastPowerPulseEnd                   = lastPowerPulseStart + powerPulseDuration;
+    }
+
+    // If current PID is less than the pulse level, check if we want to constrain to the pulse as the floor
+    if (x10WattsOut < getSettingValue(SettingsOptions::KeepAwakePulse) && xTaskGetTickCount() < lastPowerPulseEnd) {
+      x10WattsOut = getSettingValue(SettingsOptions::KeepAwakePulse);
     }
   }
+
+  // Secondary safety check to forcefully disable header when within ADC noise of top of ADC
+  if (getTipRawTemp(0) > (0x7FFF - 32)) {
+    x10WattsOut = 0;
+  }
+  if (heaterThermalRunaway) {
+    x10WattsOut = 0;
+  }
+#ifdef SLEW_LIMIT
+  if (x10WattsOut - x10WattsOutLast > SLEW_LIMIT) {
+    x10WattsOut = x10WattsOutLast + SLEW_LIMIT;
+  }
+  if (x10WattsOut < 0) {
+    x10WattsOut = 0;
+  }
+  x10WattsOutLast = x10WattsOut;
+#endif
+  setTipX10Watts(x10WattsOut);
+  resetWatchdog();
 }

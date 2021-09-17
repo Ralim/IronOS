@@ -118,7 +118,7 @@ static void system_clock_108m_hxtal(void) {
   /* APB2 = AHB/1 */
   RCU_CFG0 |= RCU_APB2_CKAHB_DIV1;
   /* APB1 = AHB/2 */
-  RCU_CFG0 |= RCU_APB1_CKAHB_DIV2;
+  RCU_CFG0 |= RCU_APB1_CKAHB_DIV4;
 
   /* CK_PLL = (CK_PREDIV0) * 27 = 108 MHz */
   RCU_CFG0 &= ~(RCU_CFG0_PLLMF | RCU_CFG0_PLLMF_4);

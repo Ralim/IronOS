@@ -12,17 +12,18 @@
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
 #include "MSA301.h"
-#include "Model_Config.h"
 #include "QC3.h"
 #include "SC7A20.hpp"
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "cmsis_os.h"
+#include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
 #include "power.hpp"
 #include "stdlib.h"
 #include "task.h"
+
 #define MOVFilter 8
 uint8_t    accelInit        = 0;
 TickType_t lastMovementTime = 0;

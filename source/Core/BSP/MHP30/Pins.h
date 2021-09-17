@@ -7,7 +7,7 @@
 
 #ifndef BSP_MINIWARE_PINS_H_
 #define BSP_MINIWARE_PINS_H_
-#include "Model_Config.h"
+#include "configuration.h"
 
 // MHP30 pin map
 #define KEY_B_Pin                     GPIO_PIN_0

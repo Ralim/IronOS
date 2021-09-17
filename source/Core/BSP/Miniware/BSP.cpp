@@ -2,7 +2,6 @@
 
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
-#include "Model_Config.h"
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
@@ -10,6 +9,7 @@
 #include "history.hpp"
 #include "main.hpp"
 #include <IRQ.h>
+
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t  pendingPWM     = 0;
 
@@ -21,9 +21,7 @@ uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
 
 static bool fastPWM;
 
-// 2 second filter (ADC is PID_TIM_HZ Hz)
-history<uint16_t, PID_TIM_HZ> rawTempFilter = {{0}, 0, 0};
-void                          resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
+void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
 #ifdef TEMP_NTC
 // Lookup table for the NTC
 // Stored as ADCReading,Temp in degC
@@ -135,48 +133,36 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
   return res;
 }
 
-void setTipPWM(uint8_t pulse) {
-  PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
-                       // disabled if the PID task is not scheduled often enough.
-
-  pendingPWM = pulse;
-}
-
 static void switchToFastPWM(void) {
-  fastPWM             = true;
-  totalPWM            = powerPWM + tempMeasureTicks * 2 + holdoffTicks;
-  htim2.Instance->ARR = totalPWM;
-  // ~3.5 Hz rate
-  htim2.Instance->CCR1 = powerPWM + holdoffTicks * 2;
-  // 2 MHz timer clock/2000 = 1 kHz tick rate
-  htim2.Instance->PSC = 2000;
+  // 10Hz
+  fastPWM              = true;
+  totalPWM             = powerPWM + tempMeasureTicks + holdoffTicks;
+  htim2.Instance->ARR  = totalPWM;
+  htim2.Instance->CCR1 = powerPWM + holdoffTicks;
+  htim2.Instance->PSC  = 2690;
 }
 
 static void switchToSlowPWM(void) {
-  fastPWM             = false;
-  totalPWM            = powerPWM + tempMeasureTicks + holdoffTicks;
-  htim2.Instance->ARR = totalPWM;
-  // ~1.84 Hz rate
-  htim2.Instance->CCR1 = powerPWM + holdoffTicks;
-  // 2 MHz timer clock/4000 = 500 Hz tick rate
-  htim2.Instance->PSC = 4000;
+  // 5Hz
+  fastPWM              = false;
+  totalPWM             = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
+  htim2.Instance->ARR  = totalPWM;
+  htim2.Instance->CCR1 = powerPWM + holdoffTicks / 2;
+  htim2.Instance->PSC  = 2690 * 2;
 }
 
-bool tryBetterPWM(uint8_t pwm) {
-  if (fastPWM && pwm == powerPWM) {
-    // maximum power for fast PWM reached, need to go slower to get more
-    switchToSlowPWM();
-    return true;
-  } else if (!fastPWM && pwm < 230) {
-    // 254 in fast PWM mode gives the same power as 239 in slow
-    // allow for some reasonable hysteresis by switching only when it goes
-    // below 230 (equivalent to 245 in fast mode)
-    switchToFastPWM();
-    return true;
+void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
+  PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
+                       // disabled if the PID task is not scheduled often enough.
+  pendingPWM = pulse;
+  if (fastPWM != shouldUseFastModePWM) {
+    if (shouldUseFastModePWM) {
+      switchToFastPWM();
+    } else {
+      switchToSlowPWM();
+    }
   }
-  return false;
 }
-
 // These are called by the HAL after the corresponding events from the system
 // timers.
 

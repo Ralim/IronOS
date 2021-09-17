@@ -15,6 +15,12 @@
 #include <string.h> // for memset
 bool sanitiseSettings();
 
+#ifdef POW_QC_20V
+#define QC_SETTINGS_MAX 3
+#else
+#define QC_SETTINGS_MAX 2
+#endif
+
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from
  * flash in uint16_t chunks
@@ -144,7 +150,7 @@ bool nextSettingValue(const enum SettingsOptions option) {
   } else {
     systemSettings.settingsValues[(int)option] += constants.increment;
   }
-  return (constants.max - systemSettings.settingsValues[(int)option]) < constants.increment;
+  return (constants.max - systemSettings.settingsValues[(int)option]) <= constants.increment;
 }
 
 bool prevSettingValue(const enum SettingsOptions option) {

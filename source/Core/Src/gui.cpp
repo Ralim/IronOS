@@ -187,6 +187,8 @@ const menuitem UIMenu[] = {
      *  Display orientation
      *  Cooldown blink
      *  Reverse Temp change buttons + -
+     *  Detailed IDLE
+     *  Detailed Soldering
      */
     {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF, settings_displayTempF,
      SettingsOptions::SettingsOptionsLength}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
@@ -196,12 +198,14 @@ const menuitem UIMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, settings_displayCoolingBlinkEnabled, SettingsOptions::CoolingTempBlink}, /*Cooling blink warning*/
     {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, settings_displayScrollSpeed, SettingsOptions::DescriptionScrollSpeed},  /*Scroll Speed for descriptions*/
     {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, settings_displayReverseButtonTempChangeEnabled,
-     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                         /* Reverse Temp change buttons + - */
-    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, SettingsOptions::AnimationSpeed},   /*Animation Speed adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, SettingsOptions::AnimationLoop},      /*Animation Loop switch */
-    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, SettingsOptions::OLEDBrightness}, /*Brightness Level*/
-    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, SettingsOptions::OLEDInversion}, /*Invert screen colour*/
-    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                              // end of menu marker. DO NOT REMOVE
+     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                                            /* Reverse Temp change buttons + - */
+    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, SettingsOptions::AnimationSpeed},                      /*Animation Speed adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, SettingsOptions::AnimationLoop},                         /*Animation Loop switch */
+    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, SettingsOptions::OLEDBrightness},                    /*Brightness Level*/
+    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, SettingsOptions::OLEDInversion},                    /*Invert screen colour*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, SettingsOptions::DetailedIDLE},                /* Advanced idle screen*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, SettingsOptions::DetailedSoldering}, /* Advanced soldering screen*/
+    {0, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                 // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
 /*
@@ -225,8 +229,6 @@ const menuitem advancedMenu[] = {
 
     /*
      *  Power limit
-     *  Detailed IDLE
-     *  Detailed Soldering
      *  Calibrate Temperature
      *  Calibrate Input V
      *  Reset Settings
@@ -237,8 +239,6 @@ const menuitem advancedMenu[] = {
      *  Power Pulse Duration
      */
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, settings_displayPowerLimit, SettingsOptions::PowerLimit},                                       /*Power limit*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, SettingsOptions::DetailedIDLE},                          /* Advanced idle screen*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, SettingsOptions::DetailedSoldering},           /* Advanced soldering screen*/
     {SETTINGS_DESC(SettingsItemIndex::SettingsReset), settings_setResetSettings, settings_displayResetSettings, SettingsOptions::SettingsOptionsLength},    /*Resets settings*/
     {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), settings_setCalibrate, settings_displayCalibrate, SettingsOptions::SettingsOptionsLength},   /*Calibrate tip*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), settings_setCalibrateVIN, settings_displayCalibrateVIN, SettingsOptions::SettingsOptionsLength}, /*Voltage input cal*/
@@ -352,8 +352,12 @@ static bool settings_displayQCInputV(void) {
 
 static bool settings_displayPDNegTimeout(void) {
   printShortDescription(SettingsItemIndex::PDNegTimeout, 5);
-  OLED::printNumber(getSettingValue(SettingsOptions::PDNegTimeout), 2, FontStyle::LARGE);
-
+  auto value = getSettingValue(SettingsOptions::PDNegTimeout);
+  if (value == 0) {
+    OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
+  } else {
+    OLED::printNumber(value, 2, FontStyle::LARGE);
+  }
   return false;
 }
 #endif
@@ -409,7 +413,7 @@ static bool settings_displayShutdownTime(void) {
   return false;
 }
 static bool settings_setTempF(void) {
-  nextSettingValue(SettingsOptions::TemperatureInF);
+  bool     res           = nextSettingValue(SettingsOptions::TemperatureInF);
   uint16_t BoostTemp     = getSettingValue(SettingsOptions::BoostTemp);
   uint16_t SolderingTemp = getSettingValue(SettingsOptions::SolderingTemp);
   uint16_t SleepTemp     = getSettingValue(SettingsOptions::SleepTemp);
@@ -438,7 +442,7 @@ static bool settings_setTempF(void) {
   setSettingValue(SettingsOptions::SolderingTemp, SolderingTemp);
   setSettingValue(SettingsOptions::SleepTemp, SleepTemp);
 
-  return false;
+  return res;
 }
 
 static bool settings_displayTempF(void) {
@@ -641,7 +645,7 @@ static void setTipOffset() {
       OLED::refresh();
       osDelay(100);
     }
-    setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16);
+    setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
   }
   setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
   OLED::clearScreen();

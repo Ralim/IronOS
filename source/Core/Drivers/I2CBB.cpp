@@ -4,7 +4,7 @@
  *  Created on: 12 Jun 2020
  *      Author: Ralim
  */
-#include "Model_Config.h"
+#include "configuration.h"
 #ifdef I2C_SOFT
 #include "FreeRTOS.h"
 #include <I2CBB.hpp>
