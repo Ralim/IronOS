@@ -660,7 +660,7 @@ const uint8_t SettingsMenuIcons[][32 * 3] = {
         /// width = 16
         // height = 16
         0xe0,
-        0xbe,
+        0xae,
         0xe0,
         0x00,
         0x80,
