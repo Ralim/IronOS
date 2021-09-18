@@ -54,18 +54,12 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
   if (QCMode == QCState::NOT_STARTED)
     startQC(divisor);
 
-  if (Vx10 < 45)
+  if (Vx10 < 40) // Bail out if less than 4V
     return;
+
   if (xTaskGetTickCount() < TICKS_SECOND)
     return;
-#ifdef POW_QC_20V
-  if (Vx10 > 200)
-    Vx10 = 200; // Cap max value at 20V
-#else
-  if (Vx10 > 130)
-    Vx10 = 130; // Cap max value at 13V
 
-#endif
   // Seek the QC to the Voltage given if this adapter supports continuous mode
   // try and step towards the wanted value
 
@@ -77,8 +71,6 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
 
   int steps = difference / 2;
   if (QCMode == QCState::QC_3) {
-    if (steps > -2 && steps < 2)
-      return; // dont bother with small steps
     while (steps < 0) {
       QC_SeekContNeg();
       vTaskDelay(3 * TICKS_10MS);
