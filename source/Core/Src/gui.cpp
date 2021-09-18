@@ -324,25 +324,14 @@ static bool settings_displayInputMinVRange(void) {
 #ifdef POW_QC
 
 static bool settings_displayQCInputV(void) {
-  printShortDescription(SettingsItemIndex::QCMaxVoltage, 5);
-  // 0 = 9V, 1=12V, 2=20V (Fixed Voltages)
+  printShortDescription(SettingsItemIndex::QCMaxVoltage, 4);
   // These are only used in QC modes
-  switch (getSettingValue(SettingsOptions::QCIdealVoltage)) {
-  case 0:
-    OLED::printNumber(9, 2, FontStyle::LARGE);
-    OLED::print(SymbolVolts, FontStyle::LARGE);
-    break;
-  case 1:
-    OLED::printNumber(12, 2, FontStyle::LARGE);
-    OLED::print(SymbolVolts, FontStyle::LARGE);
-    break;
-  case 2:
-    OLED::printNumber(20, 2, FontStyle::LARGE);
-    OLED::print(SymbolVolts, FontStyle::LARGE);
-    break;
-  default:
-    break;
-  }
+  // Allows setting the voltage negotiated for QC
+  auto voltage = getSettingValue(SettingsOptions::QCIdealVoltage);
+  OLED::printNumber(voltage / 10, 2, FontStyle::LARGE);
+  OLED::print(SymbolDot, FontStyle::LARGE);
+  OLED::printNumber(voltage % 10, 1, FontStyle::LARGE);
+  OLED::print(SymbolVolts, FontStyle::LARGE);
   return false;
 }
 

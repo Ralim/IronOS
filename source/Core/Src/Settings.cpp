@@ -16,9 +16,9 @@
 bool sanitiseSettings();
 
 #ifdef POW_QC_20V
-#define QC_SETTINGS_MAX 3
+#define QC_VOLTAGE_MAX 222
 #else
-#define QC_SETTINGS_MAX 2
+#define QC_VOLTAGE_MAX 142
 #endif
 
 /*
@@ -53,7 +53,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 16, 1, SLEEP_TIME},                                         // SleepTime
     {0, 5, 1, CUT_OUT_SETTING},                                     // MinDCVoltageCells
     {24, 38, 1, RECOM_VOL_CELL},                                    // MinVoltageCells
-    {0, QC_SETTINGS_MAX, 1, 0},                                     // QCIdealVoltage
+    {90, QC_VOLTAGE_MAX, 2, 90},                                    // QCIdealVoltage
     {0, 3, 1, ORIENTATION_MODE},                                    // OrientationMode
     {0, 10, 1, SENSITIVITY},                                        // Sensitivity
     {0, 2, 1, ANIMATION_LOOP},                                      // AnimationLoop
