@@ -32,7 +32,7 @@
     "LockingKeysString": " ZABLOK.",
     "UnlockingKeysString": "ODBLOK.",
     "WarningKeysLockedString": "!ZABLOK!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+    "WarningThermalRunaway": ["Ucieczka", "termiczna"]
   },
   "characters": {
     "SettingRightChar": "P",
@@ -96,11 +96,11 @@
     },
     "MotionSensitivity": {
       "text2": ["Czułość", "wykr. ruchu"],
-      "desc": "Czułość wykrywania ruchu (0=Wyłączona | 1=Minimalna | ... | 9=Maksymalna)"
+      "desc": "Czułość wykrywania ruchu (0: Wyłączona | 1: Minimalna | ... | 9: Maksymalna)"
     },
     "TemperatureUnit": {
       "text2": ["Jednostka", "temperatury"],
-      "desc": "Jednostka temperatury (C=Celciusz | F=Fahrenheit)"
+      "desc": "Jednostka temperatury (C: Celciusz | F: Fahrenheit)"
     },
     "AdvancedIdle": {
       "text2": ["Szeczegółowy", "ekran bezczy."],
@@ -108,7 +108,7 @@
     },
     "DisplayRotation": {
       "text2": ["Obrót", "ekranu"],
-      "desc": "Obrót ekranu (P=dla praworęcznych | L=dla leworęcznych | A=automatycznie)"
+      "desc": "Obrót ekranu (P: dla praworęcznych | L: dla leworęcznych | A: automatycznie)"
     },
     "BoostTemperature": {
       "text2": ["Temp.", "boost"],
@@ -116,7 +116,7 @@
     },
     "AutoStart": {
       "text2": ["Aut. uruch.", "tr. lutowania"],
-      "desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (B=wyłączone | T=lutowanie | Z=uśpienie | O=uśpienie w temp. pokojowej)"
+      "desc": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (B: wyłączone | T: lutowanie | Z: uśpienie | O: uśpienie w temp. pokojowej)"
     },
     "CooldownBlink": {
       "text2": ["Mig. podczas", "wychładzania"],
@@ -147,8 +147,8 @@
       "desc": "Moc używanego zasilacza w (W)"
     },
     "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "text2": ["Limit czasu", "PD"],
+      "desc": "Limit czasu negocjacji PD w krokach co 100 ms dla zgodności z niektórymi ładowarkami QC (0: wyłączone)"
     },
     "PowerLimit": {
       "text2": ["Ogr.", "mocy"],
@@ -171,7 +171,7 @@
       "desc": "W przypadku używania powerbanku, utrzymuj moc na poziomie (W) aby nie uśpić powerbanku"
     },
     "HallEffSensitivity": {
-      "text2": ["Czułość", "cz.Halla"],
+      "text2": ["Czułość", "cz. Halla"],
       "desc": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (O=Wył | N=Niska | Ś=Średnia | W=Wysoka)"
     },
     "LockingMode": {
@@ -180,7 +180,7 @@
     },
     "MinVolCell": {
       "text2": ["Minimalne", "napięcie"],
-      "desc": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+      "desc": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
     },
     "AnimLoop": {
       "text2": ["Zapętlona", "animacja"],
@@ -188,27 +188,27 @@
     },
     "AnimSpeed": {
       "text2": ["Prędkosć", "animacji"],
-      "desc": "Prędkość animacji ikon w menu (O=wył. | L=mała | M=średnia | H=duża)"
+      "desc": "Prędkość animacji ikon w menu (O: wył. | L: mała | M: średnia | H: duża)"
     },
     "PowerPulseWait": {
       "text2": ["Czas między", "imp. mocy"],
-      "desc": "Czas między kolejnymi impulsami mocy zapobiegającymi usypianiu powerbanku (x 2.5s)"
+      "desc": "Czas między kolejnymi impulsami mocy zapobiegającymi usypianiu powerbanku (x2,5 s)"
     },
     "PowerPulseDuration": {
       "text2": ["Długość", "impulsu mocy"],
-      "desc": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x 250ms)"
+      "desc": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x250 ms)"
     },
     "LanguageSwitch": {
       "text2": ["Język :", " PL      Polski"],
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Jasność", "wyświetlacza"],
+      "desc": "Regulacja kontrastu/jasności wyświetlacza OLED"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Odwrócenie", "kolorów"],
+      "desc": "Odwrócenie kolorów wyświetlacza OLED"
     }
   }
 }
