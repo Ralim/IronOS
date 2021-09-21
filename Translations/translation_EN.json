@@ -148,7 +148,7 @@
     },
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
     },
     "PowerLimit": {
       "text2": ["Power", "limit"],
@@ -203,11 +203,11 @@
       "desc": "Current firmware language"
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "contrast"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
     }
   }
