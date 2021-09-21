@@ -148,11 +148,11 @@
     },
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "desc": "PD Abfragedauer in 100ms Schritten (Kompatibilität mit best. QC-Ladegeräten)"
     },
     "PowerLimit": {
       "text2": ["Leistungs-", "maximum"],
-      "desc": "Maximale zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
+      "desc": "Maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
     },
     "ReverseButtonTempChange": {
       "text2": ["+- Tasten", "umkehren?"],
@@ -203,12 +203,12 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Bildschirm-", "kontrast"],
+      "desc": "Verändert die Helligkeit des OLED-Displays"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Farben", "umkehren"],
+      "desc": "Invertiert die Farben des OLED-Displays"
     }
   }
 }
