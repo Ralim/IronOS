@@ -4,25 +4,25 @@
   "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationDone": "Calibration done!",
+    "SettingsCalibrationDone": "Calibrare completa!",
     "SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful este la temperatura camerei, înainte de a continua!",
     "SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
     "UVLOWarningString": "DC LOW",
     "UndervoltageString": "Sub tensiune",
     "InputVoltageString": "Intrare V: ",
-    "WarningTipTempString": "Tip temp: ",
-    "BadTipString": "BAD TIP",
+    "WarningTipTempString": "Temp. varf: ",
+    "BadTipString": "VARF DEFECT",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Adormit...",
-    "WarningSimpleString": "HOT!",
-    "WarningAdvancedString": "!!! HOT TIP !!!",
+    "WarningSimpleString": "FIERBINTE!",
+    "WarningAdvancedString": "!!! VARF FIERBINTE !!!",
     "SleepingTipAdvancedString": "Tip:",
     "IdleTipString": "Tip:",
     "IdleSetString": " Set:",
-    "TipDisconnectedString": "FĂRĂ SFAT",
+    "TipDisconnectedString": "FĂRĂ VARF",
     "SolderingAdvancedPowerPrompt": "Putere: ",
-    "OffString": "Off",
-    "YourGainMessage": "Your gain:"
+    "OffString": "Nu",
+    "YourGainMessage": "Coeficient:"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
@@ -32,7 +32,7 @@
     "LockingKeysString": "BLOCAT",
     "UnlockingKeysString": "DEBLOCAT",
     "WarningKeysLockedString": "!BLOCAT!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+    "WarningThermalRunaway": ["Incalzire", "Esuata"]
   },
   "characters": {
     "SettingRightChar": "D",
@@ -148,7 +148,7 @@
     },
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+      "desc": "Timp limita de negociere pentru tranzactia PD, in pasi de 100ms, pentru compatibilitate cu alimentatoarele QC"
     },
     "PowerLimit": {
       "text2": ["Putere", "limită"],
@@ -200,15 +200,15 @@
     },
     "LanguageSwitch": {
       "text2": ["Limbă:", " RO     Română"],
-      "desc": "Current firmware language"
+      "desc": "Limba curenta"
     },
     "Brightness": {
-        "text2": ["Screen", "contrast"],
-        "desc": "Adjust the brightness of the OLED screen"
+        "text2": ["Ecranului", "luminozitatea"],
+        "desc": "Ajusteaza luminozitatea ecranului"
     },
     "ColourInversion": {
-        "text2": ["Invert", "screen"],
-        "desc": "Invert the colours of the OLED screen"
+        "text2": ["Schema", "negativa"],
+        "desc": "Inverseaza culoarea ecranului"
     }
   }
 }
