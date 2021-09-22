@@ -5,8 +5,8 @@
   "tempUnitFahrenheit": true,
   "messages": {
     "SettingsCalibrationDone": "Calibration done!",
-    "SettingsCalibrationWarning": "Vă rugăm să vă asigurați că vârful este la temperatura camerei, înainte de a continua!",
-    "SettingsResetWarning": "Sigur doriți să restaurați la setările implicite?",
+    "SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful este la temperatura camerei, înainte de a continua!",
+    "SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
     "UVLOWarningString": "DC LOW",
     "UndervoltageString": "Sub tensiune",
     "InputVoltageString": "Intrare V: ",
@@ -69,18 +69,18 @@
       "desc": "Setări de economisire a energiei"
     },
     "UIMenu": {
-      "text2": ["Interfață", "utilizator"],
-      "desc": "Setări interfață utilizator"
+      "text2": ["Interfată", "utilizator"],
+      "desc": "Setări interfată utilizator"
     },
     "AdvancedMenu": {
-      "text2": ["Opțiuni", "avansate"],
-      "desc": "Opțiuni avansate"
+      "text2": ["Optiuni", "avansate"],
+      "desc": "Optiuni avansate"
     }
   },
   "menuOptions": {
     "DCInCutoff": {
       "text2": ["Sursa de", "alimentare"],
-      "desc": "Sursa de alimentare. Setează tensiunea de întrerupere. (DC 10V) (S 3.3V per celulă, dezactivați limita de alimentare)"
+      "desc": "Sursa de alimentare. Setează tensiunea de întrerupere. (DC 10V) (S 3.3V per celulă, dezactivati limita de alimentare)"
     },
     "SleepTemperature": {
       "text2": ["Temp", "repaus"],
@@ -96,7 +96,7 @@
     },
     "MotionSensitivity": {
       "text2": ["Sensibilitate", "la mişcare"],
-      "desc": "0=oprit | 1=puțin sensibil | ... | 9=cel mai sensibil"
+      "desc": "0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil"
     },
     "TemperatureUnit": {
       "text2": ["Unitate de", "temperatură"],
@@ -104,7 +104,7 @@
     },
     "AdvancedIdle": {
       "text2": ["Detalii,", "ecran inactiv"],
-      "desc": "Afișați informații detaliate într-un font mai mic pe ecranul de repaus"
+      "desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de repaus"
     },
     "DisplayRotation": {
       "text2": ["Orientare", "ecran"],
@@ -119,28 +119,28 @@
       "desc": "Start letcon în modul de lipire la pornire (O=oprit | S=lipire | Z=repaus | R=repaus la temperatura camerei)"
     },
     "CooldownBlink": {
-      "text2": ["Clipește", "la răcire"],
-      "desc": "Clipește temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
+      "text2": ["Clipeste", "la răcire"],
+      "desc": "Clipeste temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
     },
     "TemperatureCalibration": {
       "text2": ["Calibrare", "temperatură?"],
-      "desc": "Începeți calibrarea compensării de temperatură a vârfului"
+      "desc": "Începeti calibrarea compensării de temperatură a vârfului"
     },
     "SettingsReset": {
       "text2": ["Setări", "din fabrică"],
-      "desc": "Reveniți la setările din fabrică"
+      "desc": "Reveniti la setările din fabrică"
     },
     "VoltageCalibration": {
       "text2": ["Calibrare tens.", "de intrare?"],
-      "desc": "Porniți calibrarea VIN (apăsați lung pentru a ieși)"
+      "desc": "Porniti calibrarea VIN (apăsati lung pentru a iesi)"
     },
     "AdvancedSoldering": {
       "text2": ["Detalii", "ecran lipire"],
-      "desc": "Afișați informații detaliate într-un font mai mic pe ecranul de lipire"
+      "desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de lipire"
     },
     "ScrollingSpeed": {
       "text2": ["Viteză", "derulare"],
-      "desc": "Viteză derulare text cu informații la (S=lent | F=rapid)"
+      "desc": "Viteză derulare text cu informatii la (S=lent | F=rapid)"
     },
     "QCMaxVoltage": {
       "text2": ["QC", "voltaj"],
@@ -168,7 +168,7 @@
     },
     "PowerPulsePower": {
       "text2": ["Putere", "puls"],
-      "desc": "Intensitatea puterii la păstrați-pulsul-treaz (watt)"
+      "desc": "Intensitatea puterii la păstrati-pulsul-treaz (watt)"
     },
     "HallEffSensitivity": {
       "text2": ["Sensibilitate", "senzor Hall"],
@@ -176,27 +176,27 @@
     },
     "LockingMode": {
       "text2": ["Blocare", "butoane"],
-      "desc": "Când lipiți, apăsați lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
+      "desc": "Când lipiti, apăsati lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
     },
     "MinVolCell": {
       "text2": ["Voltaj", "minim"],
       "desc": "Tensiunea minimă admisă pe celulă (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
     },
     "AnimLoop": {
-      "text2": ["Animații", "buclă"],
-      "desc": "Animații de pictograme în meniul principal"
+      "text2": ["Animatii", "buclă"],
+      "desc": "Animatii de pictograme în meniul principal"
     },
     "AnimSpeed": {
-      "text2": ["Animații", "viteză"],
-      "desc": "Ritmul animațiilor pictogramei din meniu (O=oprit | S=încet | M=mediu | F=rapid)"
+      "text2": ["Animatii", "viteză"],
+      "desc": "Ritmul animatiilor pictogramei din meniu (O=oprit | S=încet | M=mediu | F=rapid)"
     },
     "PowerPulseWait": {
       "text2": ["Întârziere", "puls putere"],
-      "desc": "Întârziere înainte de declanșarea pulsului trezit (x 2.5s)"
+      "desc": "Întârziere înainte de declansarea pulsului trezit (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Durată", "puls putere"],
-      "desc": "Păstrați-pulsul-treaz durată (x 250ms)"
+      "desc": "Păstrati-pulsul-treaz durată (x 250ms)"
     },
     "LanguageSwitch": {
       "text2": ["Limbă:", " RO     Română"],
