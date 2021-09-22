@@ -84,11 +84,11 @@
     },
     "SleepTemperature": {
       "text2": ["Temp", "repaus"],
-      "desc": "Temperatura vârfului în „modul repaus”"
+      "desc": "Temperatura vârfului în \"modul repaus\""
     },
     "SleepTimeout": {
       "text2": ["Expirare", "repaus"],
-      "desc": "Interval înainte de lansarea „modului de repaus” în (S=secunde | M=minute)"
+      "desc": "Interval înainte de lansarea \"modului de repaus\" în (S=secunde | M=minute)"
     },
     "ShutdownTimeout": {
       "text2": ["Expirare", "oprire"],
