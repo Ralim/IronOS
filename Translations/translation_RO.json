@@ -168,7 +168,7 @@
     },
     "PowerPulsePower": {
       "text2": ["Putere", "puls"],
-      "desc": "Intensitatea puterii la păstrati-pulsul-treaz (watt)"
+      "desc": "Puterea pulsului de mentinere activa a blocului de alimentare (watt)"
     },
     "HallEffSensitivity": {
       "text2": ["Sensibilitate", "senzor Hall"],
@@ -192,11 +192,11 @@
     },
     "PowerPulseWait": {
       "text2": ["Întârziere", "puls putere"],
-      "desc": "Întârziere înainte de declansarea pulsului trezit (x 2.5s)"
+      "desc": "Perioada pulsului de mentinere (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Durată", "puls putere"],
-      "desc": "Păstrati-pulsul-treaz durată (x 250ms)"
+      "desc": "Durata pulsului de mentinere (x 250ms)"
     },
     "LanguageSwitch": {
       "text2": ["Limbă:", " RO     Română"],
