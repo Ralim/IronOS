@@ -1,7 +1,7 @@
 {
   "languageCode": "RO",
   "languageLocalName": "Română",
-  "fonts": ["ascii_basic"],
+  "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": true,
   "messages": {
     "SettingsCalibrationDone": "Calibration done!",
