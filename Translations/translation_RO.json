@@ -207,7 +207,7 @@
         "desc": "Ajusteaza luminozitatea ecranului"
     },
     "ColourInversion": {
-        "text2": ["Schema", "negativa"],
+        "text2": ["Inverseaza", "culoarea"],
         "desc": "Inverseaza culoarea ecranului"
     }
   }
