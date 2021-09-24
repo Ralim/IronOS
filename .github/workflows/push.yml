@@ -43,7 +43,6 @@ jobs:
           name: ${{ matrix.model }}
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
-            source/Hexfile/${{ matrix.model }}_*.bin
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
@@ -89,7 +88,6 @@ jobs:
           name: ${{ matrix.model }}_multi-lang
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
-            source/Hexfile/${{ matrix.model }}_*.bin
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
