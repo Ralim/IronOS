@@ -30,7 +30,7 @@ enum class AccelType {
   BMA=3,
   MSA=4,
   SC7=5,
-  None=99 }
+  None=99 };
 
 #define MOVFilter 8
 uint8_t    accelInit        = 0;
