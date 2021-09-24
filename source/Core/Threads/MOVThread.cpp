@@ -41,7 +41,7 @@ void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
     if (MMA8652FC::initalize()) {
-      DetectedAccelerometerVersion = AccelType::MMA;
+      DetectedAccelerometerVersion = (int)AccelType::MMA;
     }
   } else
 #endif
@@ -49,7 +49,7 @@ void detectAccelerometerVersion() {
       if (LIS2DH12::detect()) {
     // Setup the ST Accelerometer
     if (LIS2DH12::initalize()) {
-      DetectedAccelerometerVersion = AccelType::LIS;
+      DetectedAccelerometerVersion = (int)AccelType::LIS;
     }
   } else
 #endif
@@ -57,7 +57,7 @@ void detectAccelerometerVersion() {
       if (BMA223::detect()) {
     // Setup the BMA223 Accelerometer
     if (BMA223::initalize()) {
-      DetectedAccelerometerVersion = AccelType::BMA;
+      DetectedAccelerometerVersion = (int)AccelType::BMA;
     }
   } else
 #endif
@@ -65,7 +65,7 @@ void detectAccelerometerVersion() {
       if (MSA301::detect()) {
     // Setup the MSA301 Accelerometer
     if (MSA301::initalize()) {
-      DetectedAccelerometerVersion = AccelType::MSA;
+      DetectedAccelerometerVersion = (int)AccelType::MSA;
     }
   } else
 #endif
@@ -73,7 +73,7 @@ void detectAccelerometerVersion() {
       if (SC7A20::detect()) {
     // Setup the SC7A20 Accelerometer
     if (SC7A20::initalize()) {
-      DetectedAccelerometerVersion = AccelType::SC7;
+      DetectedAccelerometerVersion = (int)AccelType::SC7;
     }
   } else
 #endif
