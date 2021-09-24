@@ -31,6 +31,7 @@ HOST_CC := gcc
 endif
 HOST_OUTPUT_DIR=Objects/host
 
+DEVICE_DFU_ADDRESS=0x08000000
 
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
@@ -100,6 +101,7 @@ CPUFLAGS= -mcpu=cortex-m3     \
 		  -mfloat-abi=soft
 flash_size=64k
 bootldr_size=0x4000
+DEVICE_DFU_ADDRESS=0x08004000
 endif
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
@@ -128,6 +130,7 @@ CPUFLAGS= -mcpu=cortex-m3     \
 		  -mfloat-abi=soft
 flash_size=128k
 bootldr_size=32k
+DEVICE_DFU_ADDRESS=0x08008000
 endif
 ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )
@@ -336,7 +339,7 @@ OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 
 default : firmware-EN
 
-firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin
+firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFILE_DIR)/$(model)_%.dfu
 	@true
 
 ALL_FIRMWARE_TARGETS=$(addprefix firmware-,$(ALL_LANGUAGES))
@@ -353,6 +356,9 @@ all: $(ALL_FIRMWARE_TARGETS)
 %.bin : %.elf Makefile
 	$(SIZE)  --format=berkeley  $<
 	$(OBJCOPY) $< -O binary $@
+
+%.dfu : %.bin Makefile
+	python3 dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D 0x28E9:0x0189 $@
 
 $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
