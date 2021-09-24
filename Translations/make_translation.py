@@ -124,7 +124,7 @@ def get_debug_menu() -> List[str]:
         "CTip ",
         "CHan ",
         "Vin  ",
-        "PCB  ",
+        "ACC  ",
         "PWR  ",
         "Max  ",
     ]
