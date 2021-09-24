@@ -44,6 +44,7 @@ jobs:
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
@@ -89,6 +90,7 @@ jobs:
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
