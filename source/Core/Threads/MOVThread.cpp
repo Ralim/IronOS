@@ -24,13 +24,7 @@
 #include "stdlib.h"
 #include "task.h"
 
-enum class AccelType {
-  MMA=1,
-  LIS=2,
-  BMA=3,
-  MSA=4,
-  SC7=5,
-  None=99 };
+enum class AccelType { MMA = 1, LIS = 2, BMA = 3, MSA = 4, SC7 = 5, None = 99 };
 
 #define MOVFilter 8
 uint8_t    accelInit        = 0;
@@ -85,7 +79,7 @@ void detectAccelerometerVersion() {
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
 #ifdef ACCEL_MMA
-      if (DetectedAccelerometerVersion == (int)AccelType::MMA) {
+  if (DetectedAccelerometerVersion == (int)AccelType::MMA) {
     MMA8652FC::getAxisReadings(tx, ty, tz);
     rotation = MMA8652FC::getOrientation();
   } else
