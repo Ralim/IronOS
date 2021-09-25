@@ -2,6 +2,5 @@
 
 bool settings_setLanguageSwitch(void) { return false; }
 
-bool settings_displayLanguageSwitch(void) {
-  return true; // skip
-}
+void settings_displayLanguageSwitch(void) {}
+bool settings_showLanguageSwitch(void) { return false; }
