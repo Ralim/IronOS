@@ -225,7 +225,7 @@
 				"Segnale",
 				"abilitazione PD"
 			],
-			"desc": "Regola la negoziazione del Power Delivery attraverso un segnale di durata multipla a 100 ms [0: spento]"
+			"desc": "Regola la negoziazione del protocollo USB Power Delivery attraverso un segnale di durata multipla a 100 ms [0: disattiva]"
 		},
 		"PowerLimit": {
 			"text2": [
@@ -264,7 +264,7 @@
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Effetto",
+				"Sensore",
 				"Hall"
 			],
 			"desc": "Regola la sensibilità alla rilevazione di supporti metallici per entrare in modalità Riposo [O: OFF; B: bassa; M: media; A: alta]"
