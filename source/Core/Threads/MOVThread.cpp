@@ -29,11 +29,11 @@ uint8_t    accelInit        = 0;
 TickType_t lastMovementTime = 0;
 
 void detectAccelerometerVersion() {
-  DetectedAccelerometerVersion = ACCELEROMETERS_SCANNING;
+  DetectedAccelerometerVersion = AccelType::Scanning;
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
     if (MMA8652FC::initalize()) {
-      DetectedAccelerometerVersion = 1;
+      DetectedAccelerometerVersion = AccelType::MMA;
     }
   } else
 #endif
@@ -41,7 +41,7 @@ void detectAccelerometerVersion() {
       if (LIS2DH12::detect()) {
     // Setup the ST Accelerometer
     if (LIS2DH12::initalize()) {
-      DetectedAccelerometerVersion = 2;
+      DetectedAccelerometerVersion = AccelType::LIS;
     }
   } else
 #endif
@@ -49,7 +49,7 @@ void detectAccelerometerVersion() {
       if (BMA223::detect()) {
     // Setup the BMA223 Accelerometer
     if (BMA223::initalize()) {
-      DetectedAccelerometerVersion = 3;
+      DetectedAccelerometerVersion = AccelType::BMA;
     }
   } else
 #endif
@@ -57,7 +57,7 @@ void detectAccelerometerVersion() {
       if (MSA301::detect()) {
     // Setup the MSA301 Accelerometer
     if (MSA301::initalize()) {
-      DetectedAccelerometerVersion = 4;
+      DetectedAccelerometerVersion = AccelType::MSA;
     }
   } else
 #endif
@@ -65,43 +65,43 @@ void detectAccelerometerVersion() {
       if (SC7A20::detect()) {
     // Setup the SC7A20 Accelerometer
     if (SC7A20::initalize()) {
-      DetectedAccelerometerVersion = 5;
+      DetectedAccelerometerVersion = AccelType::SC7;
     }
   } else
 #endif
   {
     // disable imu sensitivity
     setSettingValue(SettingsOptions::Sensitivity, 0);
-    DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
+    DetectedAccelerometerVersion = AccelType::None;
   }
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
-#ifdef ACCEL_LIS
-  if (DetectedAccelerometerVersion == 2) {
-    LIS2DH12::getAxisReadings(tx, ty, tz);
-    rotation = LIS2DH12::getOrientation();
-  } else
-#endif
 #ifdef ACCEL_MMA
-      if (DetectedAccelerometerVersion == 1) {
+  if (DetectedAccelerometerVersion == AccelType::MMA) {
     MMA8652FC::getAxisReadings(tx, ty, tz);
     rotation = MMA8652FC::getOrientation();
   } else
 #endif
+#ifdef ACCEL_LIS
+      if (DetectedAccelerometerVersion == AccelType::LIS) {
+    LIS2DH12::getAxisReadings(tx, ty, tz);
+    rotation = LIS2DH12::getOrientation();
+  } else
+#endif
 #ifdef ACCEL_BMA
-      if (DetectedAccelerometerVersion == 3) {
+      if (DetectedAccelerometerVersion == AccelType::BMA) {
     BMA223::getAxisReadings(tx, ty, tz);
     rotation = BMA223::getOrientation();
   } else
 #endif
 #ifdef ACCEL_MSA
-      if (DetectedAccelerometerVersion == 4) {
+      if (DetectedAccelerometerVersion == AccelType::MSA) {
     MSA301::getAxisReadings(tx, ty, tz);
     rotation = MSA301::getOrientation();
   } else
 #endif
 #ifdef ACCEL_SC7
-      if (DetectedAccelerometerVersion == 5) {
+      if (DetectedAccelerometerVersion == AccelType::SC7) {
     SC7A20::getAxisReadings(tx, ty, tz);
     rotation = SC7A20::getOrientation();
   } else

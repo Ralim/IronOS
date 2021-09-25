@@ -26,6 +26,7 @@ extern const char *SymbolCellCount;
 extern const char *SymbolVersionNumber;
 
 extern const char *DebugMenu[];
+extern const char *AccelTypeNames[];
 
 enum class SettingsItemIndex : uint8_t {
   DCInCutoff,

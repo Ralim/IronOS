@@ -3,7 +3,6 @@
 
 #include "OLED.hpp"
 #include "Setup.h"
-extern uint8_t  DetectedAccelerometerVersion;
 extern uint32_t currentTempTargetDegC;
 extern bool     settingsWereReset;
 extern bool     usb_pd_available;
@@ -13,8 +12,6 @@ extern "C" {
 
 void vApplicationStackOverflowHook(TaskHandle_t *pxTask, signed portCHAR *pcTaskName);
 
-#define NO_DETECTED_ACCELEROMETER 99
-#define ACCELEROMETERS_SCANNING   100
 // Threads
 void                startGUITask(void const *argument);
 void                startPIDTask(void const *argument);
@@ -26,5 +23,17 @@ extern uint8_t      accelInit;
 extern TickType_t   lastMovementTime;
 #ifdef __cplusplus
 }
+// Accelerometer type
+enum class AccelType {
+  Scanning = 0,
+  None     = 1,
+  MMA      = 2,
+  LIS      = 3,
+  BMA      = 4,
+  MSA      = 5,
+  SC7      = 6,
+};
+extern AccelType DetectedAccelerometerVersion;
+
 #endif
 #endif /* __MAIN_H */
