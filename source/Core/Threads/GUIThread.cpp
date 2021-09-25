@@ -712,7 +712,7 @@ void showDebugMenu(void) {
       printVoltage();
       break;
     case 10:
-      // Print PCB ID number
+      // Print ACC type
       OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
       break;
     case 11:
