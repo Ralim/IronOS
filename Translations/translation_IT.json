@@ -8,16 +8,16 @@
     "SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
     "UVLOWarningString": "DC BASSA",
     "UndervoltageString": "DC INSUFFICIENTE",
-    "InputVoltageString": "V ingresso:",
+    "InputVoltageString": "Vin: ",
     "WarningTipTempString": "Temp punta:",
     "BadTipString": "PUNTA KO",
     "SleepingSimpleString": "Zzz ",
-    "SleepingAdvancedString": "Riposo",
+    "SleepingAdvancedString": "Riposo..",
     "WarningSimpleString": "HOT!",
     "WarningAdvancedString": "PUNTA CALDA!",
     "SleepingTipAdvancedString": "Punta:",
     "IdleTipString": "T punta:",
-    "IdleSetString": "/",
+    "IdleSetString": " /",
     "TipDisconnectedString": "PUNTA ASSENTE",
     "SolderingAdvancedPowerPrompt": "Potenz:",
     "OffString": "OFF",
@@ -27,11 +27,11 @@
     "ResetOKMessage": "Reset OK",
     "SettingsResetMessage": ["Impostazioni", "ripristinate"],
     "NoAccelerometerMessage": ["Accelerometro", "non rilevato"],
-    "NoPowerDeliveryMessage": ["USB-PD non", "disponibile"],
+    "NoPowerDeliveryMessage": ["USB-PD non", "rilevato"],
     "LockingKeysString": "Blocc.",
     "UnlockingKeysString": "Sblocc.",
     "WarningKeysLockedString": "BLOCCATO",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+    "WarningThermalRunaway": ["Temperatura", "Fuori controllo"]
   },
   "characters": {
     "SettingRightChar": "D",
@@ -122,15 +122,15 @@
       "desc": "Evidenzia il valore di temperatura durante il raffreddamento se la punta è ancora calda"
     },
     "TemperatureCalibration": {
-      "text2": ["Calibrazione", "temperatura"],
+      "text2": ["Calibrazione", "temperatura?"],
       "desc": "Calibra le rilevazioni di temperatura"
     },
     "SettingsReset": {
-      "text2": ["Ripristino", "impostazioni"],
+      "text2": ["Ripristino", "impostazioni?"],
       "desc": "Ripristina tutte le impostazioni"
     },
     "VoltageCalibration": {
-      "text2": ["Calibrazione", "tensione"],
+      "text2": ["Calibrazione", "tensione?"],
       "desc": "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire"
     },
     "AdvancedSoldering": {
@@ -146,7 +146,7 @@
       "desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge"
     },
     "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
+      "text2": ["Ritardo", "PD"],
       "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
     },
     "PowerLimit": {
@@ -198,16 +198,16 @@
       "desc": "Regola la durata dell'«impulso sveglia» [multipli di 250 ms]"
     },
     "LanguageSwitch": {
-      "text2": ["Lingua:", " IT    Italiano"],
-      "desc": ""
+      "text2": ["Lingua:", " IT Italiano"],
+      "desc": "Lingua attuale del firmware"
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Luminosità", "schermo"],
+      "desc": "Regola contrasto e luminosità dello schermo OLED"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Ribalta", "schermo"],
+      "desc": "Inverti i colori dello schermo OLED"
     }
   }
 }
