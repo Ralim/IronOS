@@ -4,9 +4,9 @@ LABEL maintainer="Ben V. Brown <ralim@ralimtek.com>"
 WORKDIR /build
 # Add extra mirrors for options
 RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal main restricted universe multiverse" > /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-security main restricted universe multiverse" >> /etc/apt/sources.list && \
-    DEBIAN_FRONTEND=noninteractive apt-get update
+  echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+  echo "deb mirror://mirrors.ubuntu.com/mirrors.txt focal-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+  DEBIAN_FRONTEND=noninteractive apt-get update
 # Install dependencies to build the firmware
 RUN apt-get install -y \
   make \
@@ -15,6 +15,7 @@ RUN apt-get install -y \
   python3 \
   python3-pip \
   clang-format \
+  dfu-util \
   wget --no-install-recommends && \
   apt-get clean
 RUN python3 -m pip install bdflib

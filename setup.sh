@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 # Setup shell file to setup the environment on an ubuntu machine
-sudo apt-get update && sudo apt-get install -y make bzip2 git python3 python3-pip wget 
+sudo apt-get update && sudo apt-get install -y make bzip2 git python3 python3-pip wget  dfu-util
 python3 -m pip install bdflib black flake8
 sudo mkdir -p /build
 cd /build
