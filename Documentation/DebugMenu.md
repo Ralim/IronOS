@@ -52,18 +52,17 @@ This is shown in degrees C x10, so 200 == 20.0C
 
 The input voltage as read by the internal ADC. Can be used to sanity check its being read correctly.
 
-### PCB 
+### ACC 
 
-This is slightly miss-named, but preserving the name for now.
-This indicates the PCB "version" number, which comes from the TS100 changing the model of accelerometer without warning.
 This indicates the accelerometer that is fitted inside the unit.
 
-- 1 = MMA8652
-- 2 = LIS2DH12
-- 3 = BMA223
-- 4 = MSA301
-- 5 = SC7A20
-- 99 = None detected (running in fallback without movement detection)
+- MMA8652
+- LIS2DH12
+- BMA223
+- MSA301
+- SC7A20
+- None detected -> running in fallback without movement detection
+- Scanning -> Still searching I2C for one
 
 ### PWR 
 

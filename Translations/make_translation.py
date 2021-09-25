@@ -124,9 +124,21 @@ def get_debug_menu() -> List[str]:
         "CTip ",
         "CHan ",
         "Vin  ",
-        "PCB  ",
+        "ACC  ",
         "PWR  ",
         "Max  ",
+    ]
+
+
+def get_accel_names_list() -> List[str]:
+    return [
+        "Scanning",
+        "None",
+        "MMA8652FC",
+        "LIS2DH12",
+        "BMA223",
+        "MSA301",
+        "SC7A20",
     ]
 
 
@@ -189,6 +201,7 @@ def get_letter_counts(
     for x in constants:
         text_list.append(x[1])
     text_list.extend(get_debug_menu())
+    text_list.extend(get_accel_names_list())
 
     # collapse all strings down into the composite letters and store totals for these
 
@@ -948,6 +961,16 @@ def get_translation_common_text(
             f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
         )
     translation_common_text += "};\n\n"
+
+    # accel names
+    translation_common_text += "const char* AccelTypeNames[] = {\n"
+
+    for c in get_accel_names_list():
+        translation_common_text += (
+            f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
+        )
+    translation_common_text += "};\n\n"
+
     return translation_common_text
 
 
