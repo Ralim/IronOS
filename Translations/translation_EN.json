@@ -16,7 +16,7 @@
     "IdleSetString": " Set:",
     "TipDisconnectedString": "NO TIP",
     "SolderingAdvancedPowerPrompt": "Power: ",
-    "OffString": "Off",
+    "OffString": "Off"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
