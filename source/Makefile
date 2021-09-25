@@ -32,7 +32,7 @@ endif
 HOST_OUTPUT_DIR=Objects/host
 
 DEVICE_DFU_ADDRESS=0x08000000
-
+DEVICE_DFU_VID_PID=0x28E9:0x0189
 # Enumerate all of the include directories
 APP_INC_DIR = ./Core/Inc
 BRIEFLZ_INC_DIR = ./Core/brieflz
@@ -102,6 +102,7 @@ CPUFLAGS= -mcpu=cortex-m3     \
 flash_size=64k
 bootldr_size=0x4000
 DEVICE_DFU_ADDRESS=0x08004000
+DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
@@ -131,6 +132,7 @@ CPUFLAGS= -mcpu=cortex-m3     \
 flash_size=128k
 bootldr_size=32k
 DEVICE_DFU_ADDRESS=0x08008000
+DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )
@@ -358,7 +360,7 @@ all: $(ALL_FIRMWARE_TARGETS)
 	$(OBJCOPY) $< -O binary $@
 
 %.dfu : %.bin Makefile
-	python3 dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D 0x28E9:0x0189 $@
+	python3 dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
 
 $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
