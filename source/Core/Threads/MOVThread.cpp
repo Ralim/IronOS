@@ -24,14 +24,12 @@
 #include "stdlib.h"
 #include "task.h"
 
-enum class AccelType { MMA = 1, LIS = 2, BMA = 3, MSA = 4, SC7 = 5, None = 99 };
-
 #define MOVFilter 8
 uint8_t    accelInit        = 0;
 TickType_t lastMovementTime = 0;
 
 void detectAccelerometerVersion() {
-  DetectedAccelerometerVersion = ACCELEROMETERS_SCANNING;
+  DetectedAccelerometerVersion = AccelType::Scanning;
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
     if (MMA8652FC::initalize()) {
@@ -74,7 +72,7 @@ void detectAccelerometerVersion() {
   {
     // disable imu sensitivity
     setSettingValue(SettingsOptions::Sensitivity, 0);
-    DetectedAccelerometerVersion = NO_DETECTED_ACCELEROMETER;
+    DetectedAccelerometerVersion = AccelType::None;
   }
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {

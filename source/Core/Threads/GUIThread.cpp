@@ -768,11 +768,11 @@ void showWarnings() {
   // We also want to alert if accel or pd is not detected / not responding
   // In this case though, we dont want to nag the user _too_ much
   // So only show first 2 times
-  while (DetectedAccelerometerVersion == ACCELEROMETERS_SCANNING) {
+  while (DetectedAccelerometerVersion == AccelType::Scanning) {
     osDelay(5);
   }
   // Display alert if accelerometer is not detected
-  if (DetectedAccelerometerVersion == NO_DETECTED_ACCELEROMETER) {
+  if (DetectedAccelerometerVersion == AccelType::None) {
     if (getSettingValue(SettingsOptions::AccelMissingWarningCounter) < 2) {
       nextSettingValue(SettingsOptions::AccelMissingWarningCounter);
       saveSettings();
