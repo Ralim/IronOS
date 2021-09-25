@@ -56,12 +56,13 @@ The input voltage as read by the internal ADC. Can be used to sanity check its b
 
 This indicates the accelerometer that is fitted inside the unit.
 
-- MMA = MMA8652
-- LIS = LIS2DH12
-- BMA = BMA223
-- MSA = MSA301
-- SC7 = SC7A20
-- 99 = None detected (running in fallback without movement detection)
+- MMA8652
+- LIS2DH12
+- BMA223
+- MSA301
+- SC7A20
+- None detected -> running in fallback without movement detection
+- Scanning -> Still searching I2C for one
 
 ### PWR 
 
