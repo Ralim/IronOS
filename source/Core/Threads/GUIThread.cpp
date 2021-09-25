@@ -717,26 +717,29 @@ void showDebugMenu(void) {
       break;
     case 11:
       // Power negotiation status
-      if (getIsPoweredByDCIN()) {
-        OLED::printNumber(0, 1, FontStyle::SMALL);
-      } else {
-        // We are not powered via DC, so want to display the appropriate state for PD or QC
-        bool poweredbyPD = false;
+      {
+        int sourceNumber = 0;
+        if (getIsPoweredByDCIN()) {
+          sourceNumber = 0;
+        } else {
+          // We are not powered via DC, so want to display the appropriate state for PD or QC
+          bool poweredbyPD = false;
 #ifdef POW_PD
-        if (usb_pd_detect()) {
-          // We are PD capable
-          if (PolicyEngine::pdHasNegotiated()) {
-            // We are powered via PD
-            poweredbyPD = true;
+          if (usb_pd_detect()) {
+            // We are PD capable
+            if (PolicyEngine::pdHasNegotiated()) {
+              // We are powered via PD
+              poweredbyPD = true;
+            }
+          }
+#endif
+          if (poweredbyPD) {
+            sourceNumber = 2;
+          } else {
+            sourceNumber = 1;
           }
         }
-#endif
-        if (poweredbyPD) {
-          OLED::printNumber(2, 1, FontStyle::SMALL);
-        } else {
-
-          OLED::printNumber(1, 1, FontStyle::SMALL);
-        }
+        OLED::print(PowerSourceNames[sourceNumber], FontStyle::SMALL);
       }
       break;
     case 12:
