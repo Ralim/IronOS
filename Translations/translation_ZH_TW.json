@@ -4,25 +4,19 @@
   "fonts": ["ascii_basic", "cjk"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationDone": "校正完成！",
     "SettingsCalibrationWarning": "開始溫度校正前，請先確定鉻鐵頭正處於室溫！",
     "SettingsResetWarning": "你是否確定要將全部設定重設到預設值？",
     "UVLOWarningString": "電壓過低",
     "UndervoltageString": "Undervoltage",
     "InputVoltageString": "Input V: ",
-    "WarningTipTempString": "Tip temp: ",
-    "BadTipString": "BAD TIP",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Sleeping...",
-    "WarningSimpleString": "HOT!",
-    "WarningAdvancedString": "!!! HOT TIP !!!",
     "SleepingTipAdvancedString": "Tip:",
     "IdleTipString": "Tip:",
     "IdleSetString": " Set:",
     "TipDisconnectedString": "NO TIP",
     "SolderingAdvancedPowerPrompt": "Power: ",
-    "OffString": "關",
-    "YourGainMessage": "Your gain:"
+    "OffString": "關"
   },
   "messagesWarn": {
     "ResetOKMessage": "已重設！",
@@ -32,8 +26,7 @@
     "LockingKeysString": "已鎖定",
     "UnlockingKeysString": "已解除鎖定",
     "WarningKeysLockedString": "!按鍵鎖定!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"],
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+    "WarningThermalRunaway": "加熱失控"
   },
   "characters": {
     "SettingRightChar": "右",
@@ -148,8 +141,8 @@
       "desc": "使用QC電源時請求的最高目標電壓"
     },
     "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "text2": "PD逾時",
+      "desc": "設定USB PD協定交涉的逾時時限；為兼容某些QC電源而設 <x100ms（亳秒）>"
     },
     "PowerLimit": {
       "text2": "功率限制",
@@ -204,12 +197,12 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": "螢幕亮度",
+      "desc": "設定OLED螢幕的亮度"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": "螢幕反轉色",
+      "desc": "反轉OLED螢幕的黑白色彩"
     }
   }
 }
