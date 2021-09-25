@@ -85,7 +85,5 @@ bool settings_setLanguageSwitch(void) {
   return selectedLangIndex == (LanguageCount - 1);
 }
 
-bool settings_displayLanguageSwitch(void) {
-  OLED::printWholeScreen(translatedString(Tr->SettingsShortNames[static_cast<uint8_t>(SettingsItemIndex::LanguageSwitch)]));
-  return false;
-}
+bool settings_showLanguageSwitch(void) { return true; }
+void settings_displayLanguageSwitch(void) { OLED::printWholeScreen(translatedString(Tr->SettingsShortNames[static_cast<uint8_t>(SettingsItemIndex::LanguageSwitch)])); }

@@ -26,6 +26,7 @@ extern const char *SymbolCellCount;
 extern const char *SymbolVersionNumber;
 
 extern const char *DebugMenu[];
+extern const char *AccelTypeNames[];
 
 enum class SettingsItemIndex : uint8_t {
   DCInCutoff,
@@ -145,7 +146,8 @@ constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static
 const char *translatedString(uint16_t index);
 
 void prepareTranslations();
-bool settings_displayLanguageSwitch(void);
+void settings_displayLanguageSwitch(void);
+bool settings_showLanguageSwitch(void);
 bool settings_setLanguageSwitch(void);
 
 #endif /* TRANSLATION_H_ */

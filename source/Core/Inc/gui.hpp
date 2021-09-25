@@ -26,7 +26,8 @@ typedef struct {
   uint8_t description;
   // return true if increment reached the maximum value
   bool (*const incrementHandler)(void);
-  bool (*const draw)(void);
+  void (*const draw)(void);
+  bool (*const isVisible)(void);
   // If this is set, we will automatically use the settings increment handler instead, set >= num settings to disable
   SettingsOptions autoSettingOption;
 } menuitem;
