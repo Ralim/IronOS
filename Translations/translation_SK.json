@@ -27,12 +27,12 @@
 			"resetované"
 		],
 		"NoAccelerometerMessage": [
-			"Bez pohyb.",
-			"senzora"
+			"Bez pohybového",
+			"senzora!"
 		],
 		"NoPowerDeliveryMessage": [
 			"Chýba čip",
-			"USB-PD"
+			"USB-PD!"
 		],
 		"LockingKeysString": "ZABLOK.",
 		"UnlockingKeysString": "ODBLOK.",
@@ -222,10 +222,10 @@
 		},
 		"PDNegTimeout": {
 			"text2": [
-				"Čas PD",
-				"vypršania"
+				"Čas vypršania",
+				"Power Delivery"
 			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+			"desc": "Čas vyjednávania Power Delivery v 100ms krokoch pre kompatibilitu s niektorými QC nabíjačkami (0: vypnuté)"
 		},
 		"PowerLimit": {
 			"text2": [
@@ -267,7 +267,7 @@
 				"Citliv.",
 				"Hall"
 			],
-			"desc": "Citlivosť Halloveho senzora pre detekciu spánku (Z=Zakázať | N=Nízka | S=Stredná | V=Vysoká)"
+			"desc": "Citlivosť Hallovho senzora pre detekciu spánku (Z=Zakázať | N=Nízka | S=Stredná | V=Vysoká)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -285,31 +285,31 @@
 		},
 		"AnimLoop": {
 			"text2": [
-				"Anim.",
-				"loop"
+				"Opakovanie",
+				"animácií"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Opakovanie animácií ikoniek v hlavnom menu"
 		},
 		"AnimSpeed": {
 			"text2": [
-				"Anim.",
-				"rýchlosť"
+				"Rýchlosť",
+				"animácií"
 			],
 			"desc": "Rýchlosť animácií ikoniek v menu (O=off | P=pomaly | S=stredne | R=rýchlo)"
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"wait time"
+				"Interval",
+				"impulzu"
 			],
-			"desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+			"desc": "Interval medzi impulzami udržujúcimi napájací zdroj zapnutý (x 2.5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"Dĺžka impulzu",
+				""
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Dĺžka impulzu udržujúci napájací zdroj zapnutý (x 250ms)"
 		},
 		"LanguageSwitch": {
 			"text2": [

@@ -4,25 +4,19 @@
   "fonts": ["ascii_basic", "cjk"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationDone": "校正完成！",
     "SettingsCalibrationWarning": "開始温度校正之前，請先確定辣雞咀係處於室温！",
     "SettingsResetWarning": "你係咪確定要將全部設定重設到預設值？",
     "UVLOWarningString": "電壓過低",
     "UndervoltageString": "Undervoltage",
     "InputVoltageString": "Input V: ",
-    "WarningTipTempString": "Tip temp: ",
-    "BadTipString": "BAD TIP",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Sleeping...",
-    "WarningSimpleString": "HOT!",
-    "WarningAdvancedString": "!!! HOT TIP !!!",
     "SleepingTipAdvancedString": "Tip:",
     "IdleTipString": "Tip:",
     "IdleSetString": " Set:",
     "TipDisconnectedString": "NO TIP",
     "SolderingAdvancedPowerPrompt": "Power: ",
-    "OffString": "關",
-    "YourGainMessage": "Your gain:"
+    "OffString": "關"
   },
   "messagesWarn": {
     "ResetOKMessage": "已重設！",
@@ -32,7 +26,7 @@
     "LockingKeysString": "已鎖定",
     "UnlockingKeysString": "已解除鎖定",
     "WarningKeysLockedString": "!撳掣鎖定!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+    "WarningThermalRunaway": "加熱失控"
   },
   "characters": {
     "SettingRightChar": "右",
@@ -147,8 +141,8 @@
       "desc": "使用QC電源時請求嘅最高目標電壓"
     },
     "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "text2": "PD逾時",
+      "desc": "設定USB PD協定交涉嘅逾時時限；為兼容某啲QC電源而設 <x100ms（亳秒）>"
     },
     "PowerLimit": {
       "text2": "功率限制",
@@ -203,12 +197,12 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": "熒幕亮度",
+      "desc": "設定OLED熒幕嘅亮度"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": "熒幕反轉色",
+      "desc": "反轉OLED熒幕嘅黑白色"
     }
   }
 }
