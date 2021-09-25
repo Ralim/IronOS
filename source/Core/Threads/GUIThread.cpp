@@ -713,7 +713,7 @@ void showDebugMenu(void) {
       break;
     case 10:
       // Print PCB ID number
-      OLED::printNumber(DetectedAccelerometerVersion, 2, FontStyle::SMALL);
+      OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
       break;
     case 11:
       // Power negotiation status
