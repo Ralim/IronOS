@@ -4,25 +4,19 @@
   "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Kalibrierung abgeschlossen!",
     "SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
     "SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
     "UVLOWarningString": "V niedr.",
     "UndervoltageString": "Unterspannung",
     "InputVoltageString": "V Eingang: ",
-    "WarningTipTempString": "Temperatur: ",
-    "BadTipString": "Spitze Defekt",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Ruhemodus...",
-    "WarningSimpleString": "HEISS!",
-    "WarningAdvancedString": "! Achtung Heiß !",
     "SleepingTipAdvancedString": "Temp:",
     "IdleTipString": "Ist:",
     "IdleSetString": " Soll:",
     "TipDisconnectedString": "Spitze fehlt",
     "SolderingAdvancedPowerPrompt": "Leistung: ",
-    "OffString": "Aus",
-    "YourGainMessage": "Dein Faktor:"
+    "OffString": "Aus"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
