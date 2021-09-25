@@ -15,7 +15,7 @@
 * Scrollbar is fixed so it doesnt jump around when menus are shown/hidden
 * Moved to `.dfu` files from `.bin` to make flashing commands easier
 * Every language had translation updates I believe
-* Romainian language added
+* Romanian language added
 
 
 ## V2.15
