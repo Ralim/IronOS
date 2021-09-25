@@ -142,6 +142,14 @@ def get_accel_names_list() -> List[str]:
     ]
 
 
+def get_power_source_list() -> List[str]:
+    return [
+        "DC",
+        "QC",
+        "PD",
+    ]
+
+
 def get_letter_counts(
     defs: dict, lang: dict, build_version: str
 ) -> Tuple[List[str], Dict[str, int]]:
@@ -202,6 +210,7 @@ def get_letter_counts(
         text_list.append(x[1])
     text_list.extend(get_debug_menu())
     text_list.extend(get_accel_names_list())
+    text_list.extend(get_power_source_list())
 
     # collapse all strings down into the composite letters and store totals for these
 
@@ -966,6 +975,15 @@ def get_translation_common_text(
     translation_common_text += "const char* AccelTypeNames[] = {\n"
 
     for c in get_accel_names_list():
+        translation_common_text += (
+            f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
+        )
+    translation_common_text += "};\n\n"
+
+    # power source types
+    translation_common_text += "const char* PowerSourceNames[] = {\n"
+
+    for c in get_power_source_list():
         translation_common_text += (
             f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
         )
