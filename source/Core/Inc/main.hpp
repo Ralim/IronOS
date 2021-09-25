@@ -24,7 +24,15 @@ extern TickType_t   lastMovementTime;
 #ifdef __cplusplus
 }
 // Accelerometer type
-enum class AccelType { MMA = 1, LIS = 2, BMA = 3, MSA = 4, SC7 = 5, None = 99, Scanning = 100 };
+enum class AccelType {
+  Scanning = 0,
+  None     = 1,
+  MMA      = 2,
+  LIS      = 3,
+  BMA      = 4,
+  MSA      = 5,
+  SC7      = 6,
+};
 extern AccelType DetectedAccelerometerVersion;
 
 #endif
