@@ -1,5 +1,48 @@
 # Version Changes
 
+## V2.16
+
+* Overhaul of the Timer+ADC setup with help from @sandmanRO
+* Overhaul of the PID with help from @sandmanRO
+* Settings _should_ now upgrade in place to future versions, with resets only happening to new/changed settings
+* Shows error if tip runaway (failed temperature sensor) is detected
+* USB-PD now has a timeout, to allow forcing QC3 negotiation to start faster
+* QC3 Voltages are now adjustable to user desired setpoint
+* Added a small tolerance to allow "overvoltage" on QC3 above unit specifications.
+* * Please note: Doing this is entirely at your own risk!
+* New Advanced view that is much nicer to use and a very good daily driver option from @Mel-kior
+* OLED brightness and contrast thanks to @alvinhochun
+* Scrollbar is fixed so it doesnt jump around when menus are shown/hidden
+* Moved to `.dfu` files from `.bin` to make flashing commands easier
+* Every language had translation updates I believe
+* Romanian language added
+
+
+## V2.15
+
+
+## Feature upgrades:
+
+* MHP30 support
+* Multi-lingual firmware combinations now exist for Pinecil
+* More fine grained voltage controlled options
+* USB-PD improvements (version one and two)
+* More configuration options for power pulse
+* All font / character encoding has been very reworked
+* More translation updates than one can count 
+* More languages 😱 
+
+### MHP30
+
+The MHP30 is a small reflow station from Miniware.
+Thanks to a massive amount of help from @g3gg0 this firmware brings the beginnings of support for this unit.
+Also kudo's to @Vinigas  and @GoJian for helping with testing.
+This is not a _final_ version I'm sure, but this is a working, usable version of firmware support.
+Programs the same as any one Miniware unit using drag and drop.
+**Note: The boot logo scripts will need updates for this unit, so not supported yet.**
+
+The flood doors are now open for feature requests for this unit :)
+
 ## V2.14
 
 - Fixing auto rotation bug in the LIS accelerometer in the TS80/TS80P
