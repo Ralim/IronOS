@@ -134,11 +134,11 @@ def get_accel_names_list() -> List[str]:
     return [
         "Scanning",
         "None",
-        "MMA",
-        "LIS",
-        "BMA",
-        "MSA",
-        "SC7",
+        "MMA8652FC",
+        "LIS2DH12",
+        "BMA223",
+        "MSA301",
+        "SC7A20",
     ]
 
 
