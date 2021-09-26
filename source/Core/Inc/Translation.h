@@ -27,6 +27,7 @@ extern const char *SymbolVersionNumber;
 
 extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
+extern const char *PowerSourceNames[];
 
 enum class SettingsItemIndex : uint8_t {
   DCInCutoff,

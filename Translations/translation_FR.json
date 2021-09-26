@@ -25,7 +25,7 @@
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Réglages", "réinit. !"],
+    "SettingsResetMessage": ["Réglages", "réinitialisés !"],
     "NoAccelerometerMessage": ["Accéléromètre", "non détecté !"],
     "NoPowerDeliveryMessage": ["USB-PD", "non détecté !"],
     "LockingKeysString": "VERROUIL",
@@ -56,7 +56,7 @@
   },
   "menuGroups": {
     "PowerMenu": {
-      "text2": ["Paramètres", "d'alim."],
+      "text2": ["Paramètres", "d'alimentation"],
       "desc": "Paramètres d'alimentation"
     },
     "SolderingMenu": {
@@ -78,7 +78,7 @@
   },
   "menuOptions": {
     "DCInCutoff": {
-      "text2": ["Source", "d'alim."],
+      "text2": ["Source", "d'alimentation"],
       "desc": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
     },
     "SleepTemperature": {
@@ -142,7 +142,7 @@
       "desc": "Vitesse de défilement du texte (R=rapide | L=lent)"
     },
     "QCMaxVoltage": {
-      "text2": ["Tension", "max. QC"],
+      "text2": ["Tension", "QC"],
       "desc": "Tension maximale désirée avec une alimentation QC"
     },
     "PDNegTimeout": {
@@ -202,12 +202,12 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Luminosité", "de l'écran"],
+      "desc": "Ajuster le contraste/luminosité de l'écran OLED"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Inverser", "les couleurs"],
+      "desc": "Inverser les couleurs de l'écran OLED"
     }
   }
 }

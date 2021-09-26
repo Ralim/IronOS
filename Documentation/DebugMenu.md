@@ -69,9 +69,9 @@ This indicates the accelerometer that is fitted inside the unit.
 This indicates the current power source for the iron.
 This may change during power up as the sources are negotiated in turn.
 
-- 0 = DC input (dumb)
-- 1 = QC input (We used QC2/3 negotiation for current supply)
-- 2 = PD input (We used the PD subsystem to negotiate for the current supply)
+- **DC** input (dumb)
+- **QC** input (We used QC2/3 negotiation for current supply)
+- **PD** input (We used the PD subsystem to negotiate for the current supply)
 
 ### Max 
 
