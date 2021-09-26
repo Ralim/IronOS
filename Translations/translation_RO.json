@@ -1,10 +1,10 @@
 {
-  "languageCode": "RO",
-  "languageLocalName": "Română",
+  "languageCode": "ROxx",
+  "languageLocalName": "Romania italia panzani. You fuck my Wife ? You talk to me ?",
   "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationDone": "Calibrare completa!",
+    "SettingsCalibrationDone": "Calibrare me calibrare!",
     "SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful este la temperatura camerei, înainte de a continua!",
     "SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
     "UVLOWarningString": "DC LOW",
@@ -12,7 +12,7 @@
     "InputVoltageString": "Intrare V: ",
     "WarningTipTempString": "Temp. varf: ",
     "BadTipString": "VARF DEFECT",
-    "SleepingSimpleString": "Zzzz",
+    "SleepingSimpleString": "Zzzz SLEEP Zzzzzzzzzzzzzzzz",
     "SleepingAdvancedString": "Adormit...",
     "WarningSimpleString": "FIERBINTE!",
     "WarningAdvancedString": "!!! VARF FIERBINTE !!!",
