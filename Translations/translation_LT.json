@@ -31,7 +31,7 @@
     "LockingKeysString": " UŽRAKIN",
     "UnlockingKeysString": "ATRAKIN",
     "WarningKeysLockedString": "!UŽRAK!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+    "WarningThermalRunaway": ["Perkaitimo", "pavojus"]
   },
   "characters": {
     "SettingRightChar": "D",
@@ -202,12 +202,12 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Ekrano", "šviesumas"],
+      "desc": "Nustato OLED ekrano kontrastą/šviesumą."
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Ekrano", "invertavimas"],
+      "desc": "Invertuoja OLED ekrano spalvas."
     }
   }
 }
