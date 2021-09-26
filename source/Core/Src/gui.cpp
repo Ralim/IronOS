@@ -13,6 +13,7 @@
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"
+#include <cmath>
 
 void gui_Menu(const menuitem *menu);
 
