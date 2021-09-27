@@ -744,7 +744,7 @@ static void settings_displayBrightnessLevel(void) {
   OLED::drawArea(0, 0, 16, 16, brightnessIcon);
   OLED::setCursor(5 * FONT_12_WIDTH - 2, 0);
   // printShortDescription(SettingsItemIndex::Brightness, 7);
-  OLED::printNumber(std::ceil(getSettingValue(SettingsOptions::OLEDBrightness) / 28), 3, FontStyle::LARGE);
+  OLED::printNumber(std::ceil(getSettingValue(SettingsOptions::OLEDBrightness) / 28 + 1), 3, FontStyle::LARGE);
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
 }
