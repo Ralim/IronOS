@@ -30,49 +30,55 @@ TickType_t lastMovementTime = 0;
 
 void detectAccelerometerVersion() {
   DetectedAccelerometerVersion = AccelType::Scanning;
+#ifdef ACCEL_SC7
+  if (SC7A20::detect()) {
+    // Setup the SC7A20 Accelerometer
+    if (SC7A20::initalize()) {
+      DetectedAccelerometerVersion = AccelType::SC7;
+      return;
+    }
+  }
+#endif
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
     if (MMA8652FC::initalize()) {
       DetectedAccelerometerVersion = AccelType::MMA;
+      return;
     }
-  } else
+  }
 #endif
 #ifdef ACCEL_LIS
-      if (LIS2DH12::detect()) {
+  if (LIS2DH12::detect()) {
     // Setup the ST Accelerometer
     if (LIS2DH12::initalize()) {
       DetectedAccelerometerVersion = AccelType::LIS;
+      return;
     }
-  } else
+  }
 #endif
 #ifdef ACCEL_BMA
-      if (BMA223::detect()) {
+  if (BMA223::detect()) {
     // Setup the BMA223 Accelerometer
     if (BMA223::initalize()) {
       DetectedAccelerometerVersion = AccelType::BMA;
+      return;
     }
-  } else
+  }
 #endif
 #ifdef ACCEL_MSA
-      if (MSA301::detect()) {
+  if (MSA301::detect()) {
     // Setup the MSA301 Accelerometer
     if (MSA301::initalize()) {
       DetectedAccelerometerVersion = AccelType::MSA;
+      return;
     }
-  } else
-#endif
-#ifdef ACCEL_SC7
-      if (SC7A20::detect()) {
-    // Setup the SC7A20 Accelerometer
-    if (SC7A20::initalize()) {
-      DetectedAccelerometerVersion = AccelType::SC7;
-    }
-  } else
+  }
 #endif
   {
     // disable imu sensitivity
     setSettingValue(SettingsOptions::Sensitivity, 0);
     DetectedAccelerometerVersion = AccelType::None;
+    return;
   }
 }
 inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation &rotation) {
@@ -111,7 +117,7 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
   }
 }
 void startMOVTask(void const *argument __unused) {
-  osDelay(TICKS_100MS / 5); // This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
+  osDelay(TICKS_100MS / 2); // This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
   detectAccelerometerVersion();
   osDelay(TICKS_100MS / 2); // wait ~50ms for setup of accel to finalise
   lastMovementTime = 0;
