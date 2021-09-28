@@ -186,7 +186,7 @@
     },
     "PowerPulseWait": {
       "text2": ["Power pulse", "delay"],
-      "desc": "Delay before keep-awake pulse is triggered (x 2.5s)"
+      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
