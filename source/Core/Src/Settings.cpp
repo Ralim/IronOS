@@ -82,7 +82,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
     {0, 51, 1, 0},                                                  // PDNegTimeout
     {0, 2, 1, 0},                                                   // OLEDInversion
-    {0, 126, 14, 42},                                               // OLEDBrightness
+    {0, 127, 14, 42},                                               // OLEDBrightness
 
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
