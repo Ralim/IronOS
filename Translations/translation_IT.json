@@ -218,7 +218,7 @@
 				"Voltaggio",
 				"QC"
 			],
-			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge"
+			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge [volt]"
 		},
 		"PDNegTimeout": {
 			"text2": [
