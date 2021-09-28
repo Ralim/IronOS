@@ -151,19 +151,25 @@ void perform_i2c_step() {
       if (currentState.numberOfBytes == 1) {
         /* disable acknowledge */
         i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
-        i2c_ack_config(I2C0, I2C_ACK_DISABLE);
         while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {}
+        i2c_ack_config(I2C0, I2C_ACK_DISABLE);
         i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-        /* send a stop condition to I2C bus*/
-        i2c_stop_on_bus(I2C0);
         /* wait for the byte to be received */
-        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE))
-          ;
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
         /* read the byte received from the EEPROM */
-        *currentState.buffer     = i2c_data_receive(I2C0);
-        currentState.currentStep = i2c_step::Wait_stop;
+        *currentState.buffer = i2c_data_receive(I2C0);
+        while (i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+          i2c_data_receive(I2C0);
+        }
+        // for (int i = 0; i < 10000; i++) {
+        //   asm("nop");
+        // }
+        i2c_stop_on_bus(I2C0);
+        while ((I2C_CTL0(I2C0) & I2C_CTL0_STOP)) {
+          asm("nop");
+        }
+        currentState.currentStep = i2c_step::Done;
       } else {
-
         i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
         currentState.currentStep = i2c_step::Read_device_data_start;
       }
@@ -198,7 +204,7 @@ void perform_i2c_step() {
     break;
   case i2c_step::Wait_stop:
     /* i2c master sends STOP signal successfully */
-    if ((I2C_CTL0(I2C0) & 0x0200) != 0x0200) {
+    if ((I2C_CTL0(I2C0) & I2C_CTL0_STOP) != I2C_CTL0_STOP) {
       currentState.currentStep = i2c_step::Done;
     }
     break;
@@ -254,9 +260,9 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
   I2C_STAT0(I2C0) = 0;
   I2C_STAT1(I2C0) = 0;
   i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
-
+  i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
   currentState.currentStep = i2c_step::Write_start; // Always start in write mode
-  TickType_t timeout       = xTaskGetTickCount() + TICKS_SECOND;
+  TickType_t timeout       = xTaskGetTickCount() + TICKS_100MS;
   while ((currentState.currentStep != i2c_step::Done) && (currentState.currentStep != i2c_step::Error_occured)) {
     if (xTaskGetTickCount() > timeout) {
       i2c_stop_on_bus(I2C0);
