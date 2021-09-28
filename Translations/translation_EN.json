@@ -4,7 +4,7 @@
   "fonts": ["ascii_basic"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before continuing!",
+    "SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before proceeding!",
     "SettingsResetWarning": "Sure you want to restore default settings?",
     "UVLOWarningString": "DC LOW",
     "UndervoltageString": "Undervoltage",
@@ -150,15 +150,15 @@
     },
     "ReverseButtonTempChange": {
       "text2": ["Reverse", "+ - keys"],
-      "desc": "Reverse assignment of temperature adjustment buttons"
+      "desc": "Reverse assignment of buttons for temperature adjustment"
     },
     "TempChangeShortStep": {
       "text2": ["Temp change", "short"],
-      "desc": "Temperature change increment on short button press"
+      "desc": "Temperature-change-increment on short button press"
     },
     "TempChangeLongStep": {
       "text2": ["Temp change", "long"],
-      "desc": "Temperature change increment on long button press"
+      "desc": "Temperature-change-increment on long button press"
     },
     "PowerPulsePower": {
       "text2": ["Power", "pulse"],
