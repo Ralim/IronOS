@@ -344,7 +344,7 @@ static void settings_displayPDNegTimeout(void) {
   if (value == 0) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
   } else {
-    OLED::printNumber(value, 2, FontStyle::LARGE);
+    OLED::printNumber(value, 3, FontStyle::LARGE);
   }
 }
 #endif
