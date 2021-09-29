@@ -51,27 +51,11 @@ struct i2c_state {
   uint16_t             numberOfBytes;
   dma_parameter_struct dma_init_struct;
 };
-volatile i2c_state currentState;
+i2c_state currentState;
 
 void perform_i2c_step() {
   // Performs next step of the i2c state machine
-  if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
-    i2c_flag_clear(I2C0, I2C_FLAG_AERR);
-    // Arb error - we lost the bus / nacked
-    currentState.currentStep = i2c_step::Error_occured;
-  } else if (i2c_flag_get(I2C0, I2C_FLAG_BERR)) {
-    i2c_flag_clear(I2C0, I2C_FLAG_BERR);
-    // Bus Error
-    currentState.currentStep = i2c_step::Error_occured;
-  } else if (i2c_flag_get(I2C0, I2C_FLAG_LOSTARB)) {
-    i2c_flag_clear(I2C0, I2C_FLAG_LOSTARB);
-    // Lost Arb on the bus
-    currentState.currentStep = i2c_step::Error_occured;
-  } else if (i2c_flag_get(I2C0, I2C_FLAG_PECERR)) {
-    i2c_flag_clear(I2C0, I2C_FLAG_PECERR);
-    // PEC error, we have this disabled
-    // currentState.currentStep = i2c_step::Error_occured;
-  }
+
   switch (currentState.currentStep) {
   case i2c_step::Error_occured:
     i2c_stop_on_bus(I2C0);
@@ -98,29 +82,37 @@ void perform_i2c_step() {
     break;
   case i2c_step::Write_device_memory_address:
     // Send the device memory location
-
+    if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
+      i2c_flag_clear(I2C0, I2C_FLAG_AERR);
+      // Arb error - we lost the bus / nacked
+      currentState.currentStep = i2c_step::Error_occured;
+    }
     if (i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) { // addr sent
       i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+
       if (currentState.wakePart) {
         // We are stopping here
         currentState.currentStep = i2c_step::Send_stop;
-      } else if (i2c_flag_get(I2C0, I2C_FLAG_TBE)) {
-        // Write out the 8 byte address
-        i2c_data_transmit(I2C0, currentState.memoryAddress);
-
-        if (currentState.isMemoryWrite) {
-          currentState.currentStep = i2c_step::Write_device_data_start;
-        } else {
-          currentState.currentStep = i2c_step::Read_start;
-        }
+        return;
+      }
+      i2c_flag_clear(I2C0, I2C_FLAG_BTC);
+      // Write out the 8 byte address
+      i2c_data_transmit(I2C0, currentState.memoryAddress);
+      if (currentState.isMemoryWrite) {
+        currentState.currentStep = i2c_step::Write_device_data_start;
+      } else {
+        currentState.currentStep = i2c_step::Read_start;
       }
     }
 
     break;
   case i2c_step::Write_device_data_start:
-
-    /* wait until BTC bit is set */
+    /* wait until the transmission data register is empty */
     if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+      dma_deinit(DMA0, DMA_CH5);
+      dma_init(DMA0, DMA_CH5, &currentState.dma_init_struct);
+
+      dma_circulation_disable(DMA0, DMA_CH5);
       /* enable I2C0 DMA */
       i2c_dma_enable(I2C0, I2C_DMA_ON);
       /* enable DMA0 channel5 */
@@ -139,8 +131,8 @@ void perform_i2c_step() {
     }
     break;
   case i2c_step::Read_start:
-    /* wait until BTC bit is set */
     if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+      /* wait until BTC bit is set */
       i2c_start_on_bus(I2C0);
       currentState.currentStep = i2c_step::Read_device_address;
     }
@@ -161,9 +153,6 @@ void perform_i2c_step() {
         while (i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
           i2c_data_receive(I2C0);
         }
-        // for (int i = 0; i < 10000; i++) {
-        //   asm("nop");
-        // }
         i2c_stop_on_bus(I2C0);
         while ((I2C_CTL0(I2C0) & I2C_CTL0_STOP)) {
           asm("nop");
@@ -182,19 +171,40 @@ void perform_i2c_step() {
       if (currentState.numberOfBytes == 0) {
         currentState.currentStep = i2c_step::Send_stop;
       } else { /* more than one byte master reception procedure (DMA) */
-        /* enable I2C0 DMA */
-        i2c_dma_enable(I2C0, I2C_DMA_ON);
-        /* enable DMA0 channel5 */
-        dma_channel_enable(DMA0, DMA_CH6);
-        currentState.currentStep = i2c_step::Read_device_data_finish;
+        while (currentState.numberOfBytes) {
+
+          if (3 == currentState.numberOfBytes) {
+            /* wait until BTC bit is set */
+            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {}
+            i2c_ackpos_config(I2C0, I2C_ACKPOS_NEXT);
+            /* disable acknowledge */
+            i2c_ack_config(I2C0, I2C_ACK_DISABLE);
+          }
+          if (2 == currentState.numberOfBytes) {
+            /* wait until BTC bit is set */
+            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC))
+              ;
+            /* send a stop condition to I2C bus */
+            i2c_stop_on_bus(I2C0);
+          }
+          /* wait until RBNE bit is set */
+          while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+          /* read a byte from the EEPROM */
+          *currentState.buffer = i2c_data_receive(I2C0);
+
+          /* point to the next location where the byte read will be saved */
+          currentState.buffer++;
+
+          /* decrement the read bytes counter */
+          currentState.numberOfBytes--;
+        }
+        currentState.currentStep = i2c_step::Wait_stop;
+        // currentState.currentStep = i2c_step::Read_device_data_finish;
       }
     }
     break;
   case i2c_step::Read_device_data_finish: // Wait for complete then goto stop
     /* wait until BTC bit is set */
-    if (dma_flag_get(DMA0, DMA_CH6, DMA_FLAG_FTF)) {
-      currentState.currentStep = i2c_step::Send_stop;
-    }
 
     break;
   case i2c_step::Send_stop:
@@ -215,16 +225,6 @@ void perform_i2c_step() {
 }
 
 bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8_t *p_buffer, uint16_t number_of_byte, bool isWrite, bool isWakeOnly) {
-  {
-    // TODO is this required
-    /* disable I2C0 */
-    i2c_disable(I2C0);
-    /* enable I2C0 */
-    i2c_enable(I2C0);
-  }
-  i2c_interrupt_disable(I2C0, I2C_INT_ERR);
-  i2c_interrupt_disable(I2C0, I2C_INT_BUF);
-  i2c_interrupt_disable(I2C0, I2C_INT_EV);
 
   currentState.isMemoryWrite = isWrite;
   currentState.wakePart      = isWakeOnly;
@@ -232,29 +232,19 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
   currentState.memoryAddress = memory_address;
   currentState.numberOfBytes = number_of_byte;
   currentState.buffer        = p_buffer;
-  if (!isWakeOnly) {
-    // Setup DMA
-    currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-    currentState.dma_init_struct.memory_addr  = (uint32_t)p_buffer;
-    currentState.dma_init_struct.memory_inc   = DMA_MEMORY_INCREASE_ENABLE;
-    currentState.dma_init_struct.number       = number_of_byte;
-    currentState.dma_init_struct.periph_addr  = (uint32_t)&I2C_DATA(I2C0);
-    currentState.dma_init_struct.periph_inc   = DMA_PERIPH_INCREASE_DISABLE;
-    currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
-    currentState.dma_init_struct.priority     = DMA_PRIORITY_ULTRA_HIGH;
-    if (currentState.isMemoryWrite) {
-      dma_deinit(DMA0, DMA_CH5);
-      currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-      dma_init(DMA0, DMA_CH5, (dma_parameter_struct *)&currentState.dma_init_struct);
-    } else {
-      dma_deinit(DMA0, DMA_CH6);
-      currentState.dma_init_struct.direction = DMA_PERIPHERAL_TO_MEMORY;
-      dma_init(DMA0, DMA_CH6, (dma_parameter_struct *)&currentState.dma_init_struct);
-    }
-
-    if (!currentState.isMemoryWrite) {
-      i2c_dma_last_transfer_config(I2C0, I2C_DMALST_ON);
-    }
+  // Setup DMA
+  currentState.dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
+  currentState.dma_init_struct.memory_addr  = (uint32_t)p_buffer;
+  currentState.dma_init_struct.memory_inc   = DMA_MEMORY_INCREASE_ENABLE;
+  currentState.dma_init_struct.number       = number_of_byte;
+  currentState.dma_init_struct.periph_addr  = (uint32_t)&I2C_DATA(I2C0);
+  currentState.dma_init_struct.periph_inc   = DMA_PERIPH_INCREASE_DISABLE;
+  currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+  currentState.dma_init_struct.priority     = DMA_PRIORITY_ULTRA_HIGH;
+  if (currentState.isMemoryWrite) {
+    currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
+  } else {
+    currentState.dma_init_struct.direction = DMA_PERIPHERAL_TO_MEMORY;
   }
   // Clear flags
   I2C_STAT0(I2C0) = 0;
