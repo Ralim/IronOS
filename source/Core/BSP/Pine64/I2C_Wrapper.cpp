@@ -8,6 +8,7 @@
 #include "IRQ.h"
 #include "Setup.h"
 #include <I2C_Wrapper.hpp>
+
 SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 #define I2C_TIME_OUT (uint16_t)(12000)
@@ -55,7 +56,11 @@ i2c_state currentState;
 
 void perform_i2c_step() {
   // Performs next step of the i2c state machine
-
+  if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
+    i2c_flag_clear(I2C0, I2C_FLAG_AERR);
+    // Arb error - we lost the bus / nacked
+    currentState.currentStep = i2c_step::Error_occured;
+  }
   switch (currentState.currentStep) {
   case i2c_step::Error_occured:
     i2c_stop_on_bus(I2C0);
@@ -82,11 +87,7 @@ void perform_i2c_step() {
     break;
   case i2c_step::Write_device_memory_address:
     // Send the device memory location
-    if (i2c_flag_get(I2C0, I2C_FLAG_AERR)) {
-      i2c_flag_clear(I2C0, I2C_FLAG_AERR);
-      // Arb error - we lost the bus / nacked
-      currentState.currentStep = i2c_step::Error_occured;
-    }
+
     if (i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) { // addr sent
       i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
 
@@ -111,7 +112,7 @@ void perform_i2c_step() {
     if (i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
       dma_deinit(DMA0, DMA_CH5);
       dma_init(DMA0, DMA_CH5, &currentState.dma_init_struct);
-
+      i2c_dma_last_transfer_config(I2C0, I2C_DMALST_ON);
       dma_circulation_disable(DMA0, DMA_CH5);
       /* enable I2C0 DMA */
       i2c_dma_enable(I2C0, I2C_DMA_ON);
@@ -176,14 +177,14 @@ void perform_i2c_step() {
           if (3 == currentState.numberOfBytes) {
             /* wait until BTC bit is set */
             while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {}
-            i2c_ackpos_config(I2C0, I2C_ACKPOS_NEXT);
+            i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
             /* disable acknowledge */
             i2c_ack_config(I2C0, I2C_ACK_DISABLE);
-          }
-          if (2 == currentState.numberOfBytes) {
+          } else if (2 == currentState.numberOfBytes) {
             /* wait until BTC bit is set */
-            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC))
-              ;
+            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {}
+            /* disable acknowledge */
+            i2c_ack_config(I2C0, I2C_ACK_DISABLE);
             /* send a stop condition to I2C bus */
             i2c_stop_on_bus(I2C0);
           }
@@ -241,6 +242,7 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
   currentState.dma_init_struct.periph_inc   = DMA_PERIPH_INCREASE_DISABLE;
   currentState.dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
   currentState.dma_init_struct.priority     = DMA_PRIORITY_ULTRA_HIGH;
+
   if (currentState.isMemoryWrite) {
     currentState.dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
   } else {
@@ -251,6 +253,8 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
   I2C_STAT1(I2C0) = 0;
   i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
   i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
+  i2c_data_receive(I2C0);
+  i2c_data_receive(I2C0);
   currentState.currentStep = i2c_step::Write_start; // Always start in write mode
   TickType_t timeout       = xTaskGetTickCount() + TICKS_100MS;
   while ((currentState.currentStep != i2c_step::Done) && (currentState.currentStep != i2c_step::Error_occured)) {
