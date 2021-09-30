@@ -35,6 +35,7 @@ OF SUCH DAMAGE.
 */
 
 #include "gd32vf103_dma.h"
+#include "gd32vf103_rcu.h"
 
 #define DMA_WRONG_HANDLE \
   while (1) {}
