@@ -7,6 +7,7 @@
 
 #include "IRQ.h"
 #include "Pins.h"
+#include "configuration.h"
 
 /*
  * Catch the IRQ that says that the conversion is done on the temperature
@@ -38,7 +39,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 bool getFUS302IRQLow() {
-#ifdef POW_PD
+#if POW_PD
   // Return true if the IRQ line is still held low
   return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_RESET;
 #else

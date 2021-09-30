@@ -197,7 +197,7 @@ void setup_adc() {
   /* config ADC clock */
   rcu_adc_clock_config(RCU_CKADC_CKAPB2_DIV16);
   // Run in normal parallel + inserted parallel
-  adc_mode_config(ADC0, ADC_DAUL_INSERTED_PARALLEL);
+  adc_mode_config(ADC_DAUL_REGULAL_PARALLEL_INSERTED_PARALLEL);
   adc_special_function_config(ADC0, ADC_CONTINUOUS_MODE, ENABLE);
   adc_special_function_config(ADC0, ADC_SCAN_MODE, ENABLE);
   adc_special_function_config(ADC1, ADC_CONTINUOUS_MODE, ENABLE);

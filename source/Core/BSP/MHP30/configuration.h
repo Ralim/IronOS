@@ -138,7 +138,7 @@
 #define NO_DISPLAY_ROTATE                          // Disable OLED rotation by accel
 #define SLEW_LIMIT         50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
 #define ACCEL_MSA
-#define POW_PD
+#define POW_PD 1
 #define TEMP_NTC
 #define I2C_SOFT
 #define BATTFILTERDEPTH 8

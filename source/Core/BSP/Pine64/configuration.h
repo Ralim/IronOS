@@ -132,11 +132,11 @@
 #define MIN_BOOST_TEMP_C     250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F     480                       // The min settable temp for boost mode °F
 
-#define POW_PD
-#define POW_QC
-#define POW_DC
-#define POW_QC_20V
-#define ENABLE_QC2
+#define POW_PD     1
+#define POW_QC     1
+#define POW_DC     1
+#define POW_QC_20V 1
+#define ENABLE_QC2 1
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define ACCEL_SC7

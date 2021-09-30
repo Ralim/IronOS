@@ -7,6 +7,7 @@
 
 #include "IRQ.h"
 #include "Pins.h"
+#include "configuration.h"
 volatile uint8_t  i2c_read_process  = 0;
 volatile uint8_t  i2c_write_process = 0;
 volatile uint8_t  i2c_slave_address = 0;
@@ -92,7 +93,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 extern osThreadId POWTaskHandle;
 
 void EXTI5_9_IRQHandler(void) {
-#ifdef POW_PD
+#if POW_PD
   if (RESET != exti_interrupt_flag_get(EXTI_5)) {
     exti_interrupt_flag_clear(EXTI_5);
 

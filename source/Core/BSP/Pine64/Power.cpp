@@ -4,9 +4,10 @@
 #include "QC3.h"
 #include "Settings.h"
 #include "USBPD.h"
+#include "configuration.h"
 
 void power_check() {
-#ifdef POW_PD
+#if POW_PD
   // Cant start QC until either PD works or fails
   if (!USBPowerDelivery::negotiationComplete()) {
     return;
@@ -21,7 +22,7 @@ void power_check() {
 }
 
 bool getIsPoweredByDCIN() {
-#ifdef POW_PD
+#if POW_PD
   if (!USBPowerDelivery::negotiationComplete()) {
     return false; // We are assuming not dc while negotiating
   }

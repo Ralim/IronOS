@@ -22,7 +22,7 @@ extern "C" {
 #include <gui.hpp>
 #include <history.hpp>
 #include <power.hpp>
-#ifdef POW_PD
+#if POW_PD
 #include "USBPD.h"
 #endif
 // File local variables
@@ -724,7 +724,7 @@ void showDebugMenu(void) {
         } else {
           // We are not powered via DC, so want to display the appropriate state for PD or QC
           bool poweredbyPD = false;
-#ifdef POW_PD
+#if POW_PD
           if (USBPowerDelivery::fusbPresent()) {
             // We are PD capable
             if (USBPowerDelivery::negotiationComplete()) {
@@ -782,7 +782,7 @@ void showWarnings() {
       warnUser(translatedString(Tr->NoAccelerometerMessage), 10 * TICKS_SECOND);
     }
   }
-#ifdef POW_PD
+#if POW_PD
   // We expect pd to be present
   if (!USBPowerDelivery::fusbPresent()) {
     if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {

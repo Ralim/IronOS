@@ -1,5 +1,5 @@
 #include "configuration.h"
-#ifdef POW_PD
+#if POW_PD
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
 #include "Setup.h"

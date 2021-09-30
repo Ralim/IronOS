@@ -1,6 +1,6 @@
 #include "USBPD.h"
 #include "configuration.h"
-#ifdef POW_PD
+#if POW_PD
 
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
@@ -50,7 +50,7 @@ bool USBPowerDelivery::negotiationComplete() {
   if (!fusbPresent()) {
     return true;
   }
-  return pe.setupCompleteOrTimedOut(systemSettings.PDNegTimeout);
+  return pe.setupCompleteOrTimedOut(getSettingValue(SettingsOptions::PDNegTimeout));
 }
 bool USBPowerDelivery::fusbPresent() {
   if (detectionState == 0) {

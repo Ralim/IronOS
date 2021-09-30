@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-#ifdef POW_PD
+#if POW_PD
 class USBPowerDelivery {
 public:
   static bool    start();                 // Start the PD stack

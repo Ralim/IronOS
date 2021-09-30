@@ -193,8 +193,8 @@
 #define MIN_BOOST_TEMP_F    480                    // The min settable temp for boost mode °F
 #define ACCEL_LIS
 #define ACCEL_MSA
-#define POW_PD
-#define POW_QC
+#define POW_PD 1
+#define POW_QC 1
 #define TEMP_NTC
 #define I2C_SOFT
 #define LIS_ORI_FLIP
