@@ -31,7 +31,7 @@
     "LockingKeysString": "VERROUIL",
     "UnlockingKeysString": "DEVERROU",
     "WarningKeysLockedString": "! VERR. !",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+    "WarningThermalRunaway": ["Emballement", "thermique"]
   },
   "characters": {
     "SettingRightChar": "D",
@@ -56,7 +56,7 @@
   },
   "menuGroups": {
     "PowerMenu": {
-      "text2": ["Paramètres", "d'alimentation"],
+      "text2": ["Paramètres", "d'alim."],
       "desc": "Paramètres d'alimentation"
     },
     "SolderingMenu": {
@@ -78,7 +78,7 @@
   },
   "menuOptions": {
     "DCInCutoff": {
-      "text2": ["Source", "d'alimentation"],
+      "text2": ["Source", "d'alim."],
       "desc": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
     },
     "SleepTemperature": {
@@ -146,8 +146,8 @@
       "desc": "Tension maximale désirée avec une alimentation QC"
     },
     "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "text2": ["Délai", "expiration PD"],
+      "desc": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC (0: désactivé)"
     },
     "PowerLimit": {
       "text2": ["Limite de", "puissance"],
