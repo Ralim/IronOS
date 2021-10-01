@@ -144,6 +144,7 @@
 #define MIN_BOOST_TEMP_F     480                     // The min settable temp for boost mode °F
 #define POW_DC
 #define ACCEL_MMA
+#define POW_PD 0
 #define ACCEL_LIS
 #define TEMP_TMP36
 #endif
@@ -168,6 +169,7 @@
 #define MIN_BOOST_TEMP_F    480                    // The min settable temp for boost mode °F
 #define ACCEL_LIS
 #define POW_QC
+#define POW_PD 0
 #define TEMP_TMP36
 #define LIS_ORI_FLIP
 #define OLED_FLIP
