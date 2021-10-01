@@ -6,11 +6,11 @@
 		"latin_extended"
 	],
 	"messages": {
-		"SettingsCalibrationWarning": "Assicurati che la punta si trovi a temperatura ambiente prima di continuare!",
+		"SettingsCalibrationWarning": "Assicurarsi che la punta si trovi a temperatura ambiente prima di continuare!",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",
 		"UndervoltageString": "DC INSUFFICIENTE",
-		"InputVoltageString": "V in: ",
+		"InputVoltageString": "V in:",
 		"SleepingSimpleString": "Zzz ",
 		"SleepingAdvancedString": "Riposo",
 		"SleepingTipAdvancedString": "Punta:",
@@ -31,8 +31,8 @@
 			"non rilevato"
 		],
 		"NoPowerDeliveryMessage": [
-			"USB-PD non",
-			"rilevato"
+			"USB PD",
+			"non rilevato"
 		],
 		"LockingKeysString": "Blocc.",
 		"UnlockingKeysString": "Sblocc.",
@@ -61,7 +61,7 @@
 		"SettingLockDisableChar": "D",
 		"SettingLockBoostChar": "T",
 		"SettingLockFullChar": "C",
-		"SettingNAChar": "NA"
+		"SettingNAChar": " NA"
 	},
 	"menuGroups": {
 		"PowerMenu": {
@@ -190,7 +190,7 @@
 				"Ripristino",
 				"impostazioni"
 			],
-			"desc": "Ripristina tutte le impostazioni"
+			"desc": "Ripristina le impostazioni allo stato iniziale"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -218,14 +218,14 @@
 				"Voltaggio",
 				"QC"
 			],
-			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge"
+			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge [volt]"
 		},
 		"PDNegTimeout": {
 			"text2": [
-				"Segnale",
-				"abilitazione PD"
+				"Abilitazione",
+				"USB PD"
 			],
-			"desc": "Regola la negoziazione del protocollo USB Power Delivery attraverso un segnale di durata multipla a 100 ms [0: disattiva]"
+			"desc": "Regola il massimo tempo utile per la negoziazione del protocollo USB Power Delivery con alimentatori compatibili [0: disattiva; multipli di 100 ms]"
 		},
 		"PowerLimit": {
 			"text2": [
@@ -246,14 +246,14 @@
 				"Temp passo",
 				"breve"
 			],
-			"desc": "Imposta il \"passo\" dei valori di temperatura per una breve pressione dei tasti"
+			"desc": "Imposta il passo dei valori di temperatura per una breve pressione dei tasti"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Temp passo",
 				"lungo"
 			],
-			"desc": "Imposta il \"passo\" dei valori di temperatura per una lunga pressione dei tasti"
+			"desc": "Imposta il passo dei valori di temperatura per una lunga pressione dei tasti"
 		},
 		"PowerPulsePower": {
 			"text2": [
@@ -323,7 +323,7 @@
 				"Luminosità",
 				"schermo"
 			],
-			"desc": "Regola la luminosità o il contrasto dello schermo"
+			"desc": "Regola la luminosità dello schermo [1: minimo; 10: massimo]"
 		},
 		"ColourInversion": {
 			"text2": [
