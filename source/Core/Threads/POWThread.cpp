@@ -26,12 +26,27 @@ void startPOWTask(void const *argument __unused) {
 
 #if POW_PD
   USBPowerDelivery::start();
+  // Crank the handle at boot until we are stable and waiting for IRQ
+  USBPowerDelivery::step();
 
 #endif
+  BaseType_t res;
   for (;;) {
+    res = pdFALSE;
+    // While the interrupt is low, dont delay
+    /*This is due to a possible race condition, where:
+     * IRQ fires
+     * We read interrupt register but dont see the Good CRC
+     * Then Good CRC is set while reading it out (racing on I2C read)
+     * Then we would sleep as nothing to do, but 100ms> 20ms power supply typical timeout
+     */
+    if (!getFUS302IRQLow()) {
+      res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS);
+    }
+
 #if POW_PD
 
-    if (getFUS302IRQLow()) {
+    if (res != pdFALSE || getFUS302IRQLow()) {
       USBPowerDelivery::IRQOccured();
     }
     USBPowerDelivery::step();
@@ -39,6 +54,5 @@ void startPOWTask(void const *argument __unused) {
 
 #endif
     power_check();
-    xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_10MS);
   }
 }
