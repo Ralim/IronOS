@@ -16,7 +16,7 @@
 #include "stdlib.h"
 #include "task.h"
 
-// Small worker thread to handle power (mostly QC) related steps
+// Small worker thread to handle power (PD + QC) related steps
 
 void startPOWTask(void const *argument __unused) {
   // Init any other misc sensors
