@@ -42,7 +42,6 @@ bool USBPowerDelivery::start() {
     setupFUSBIRQ();
     return true;
   }
-  detectionState = 2;
   return false;
 }
 void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
@@ -63,8 +62,6 @@ bool USBPowerDelivery::fusbPresent() {
   if (detectionState == 0) {
     if (fusb.fusb_read_id()) {
       detectionState = 1;
-    } else {
-      detectionState = 2;
     }
   }
   return detectionState == 1;
