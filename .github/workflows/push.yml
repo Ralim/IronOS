@@ -141,7 +141,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: setup
-        run: ./setup.sh
+        run: sudo apt-get update && sudo apt-get install -y make clang git python3 python3-pip && python3 -m pip install bdflib black flake8
       - name: Check formatting with clang-format
         run: cd source && make clean && make check-style
 
