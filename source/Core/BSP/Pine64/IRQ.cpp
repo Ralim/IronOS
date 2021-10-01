@@ -97,10 +97,13 @@ void EXTI5_9_IRQHandler(void) {
   if (RESET != exti_interrupt_flag_get(EXTI_5)) {
     exti_interrupt_flag_clear(EXTI_5);
 
-    if (RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin)) {
-      if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-        xTaskNotify(POWTaskHandle, 1, eSetBits);
-      }
+    if (POWTaskHandle != nullptr) {
+      BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+      xTaskNotifyFromISR(POWTaskHandle, 1, eSetBits, &xHigherPriorityTaskWoken);
+      /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+      The macro used to do this is dependent on the port and may be called
+      portEND_SWITCHING_ISR. */
+      portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
     }
   }
 #endif

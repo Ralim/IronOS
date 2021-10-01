@@ -35,7 +35,14 @@ extern osThreadId POWTaskHandle;
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   (void)GPIO_Pin;
   // Notify POW thread that an irq occured
-  xTaskNotify(POWTaskHandle, 1, eSetBits);
+  if (POWTaskHandle != nullptr) {
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xTaskNotifyFromISR(POWTaskHandle, 1, eSetBits, &xHigherPriorityTaskWoken);
+    /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+    The macro used to do this is dependent on the port and may be called
+    portEND_SWITCHING_ISR. */
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+  }
 }
 
 bool getFUS302IRQLow() {
