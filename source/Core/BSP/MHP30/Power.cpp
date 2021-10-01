@@ -14,9 +14,6 @@ void power_check() {
     return;
   }
 #endif
-#ifdef POW_QC
-  QC_resync();
-#endif
 }
 
 bool getIsPoweredByDCIN() { return false; }
