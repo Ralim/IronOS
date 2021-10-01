@@ -913,7 +913,7 @@ void startGUITask(void const *argument) {
     OLED::setCursor(0, 0);
     if (getSettingValue(SettingsOptions::DetailedIDLE)) {
       if (isTipDisconnected()) {
-        OLED::print(translatedString(Tr->TipDisconnectedString), FontStyle::SMALL);
+        OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
       } else {
         if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300)))
           // Blink temp if setting enable and temp < 55°
