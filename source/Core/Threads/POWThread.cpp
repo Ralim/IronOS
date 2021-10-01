@@ -51,7 +51,8 @@ void startPOWTask(void const *argument __unused) {
     }
     USBPowerDelivery::step();
     USBPowerDelivery::PPSTimerCallback();
-
+#else
+    (void)res;
 #endif
     power_check();
   }
