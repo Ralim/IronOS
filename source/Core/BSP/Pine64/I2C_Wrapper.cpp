@@ -159,6 +159,32 @@ void perform_i2c_step() {
           asm("nop");
         }
         currentState.currentStep = i2c_step::Done;
+      } else if (currentState.numberOfBytes == 2) {
+        /* disable acknowledge */
+        i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
+        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {}
+        i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
+        /* wait for the byte to be received */
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
+        i2c_ack_config(I2C0, I2C_ACK_DISABLE);
+
+        /* read the byte received from the EEPROM */
+        *currentState.buffer = i2c_data_receive(I2C0);
+        currentState.buffer++;
+
+        /* wait for the byte to be received */
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        /* read the byte received from the EEPROM */
+        *currentState.buffer = i2c_data_receive(I2C0);
+        while (i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+          i2c_data_receive(I2C0);
+        }
+        i2c_stop_on_bus(I2C0);
+        while ((I2C_CTL0(I2C0) & I2C_CTL0_STOP)) {
+          asm("nop");
+        }
+        currentState.currentStep = i2c_step::Done;
       } else {
         i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
         currentState.currentStep = i2c_step::Read_device_data_start;
@@ -172,6 +198,7 @@ void perform_i2c_step() {
       if (currentState.numberOfBytes == 0) {
         currentState.currentStep = i2c_step::Send_stop;
       } else { /* more than one byte master reception procedure (DMA) */
+
         while (currentState.numberOfBytes) {
 
           if (3 == currentState.numberOfBytes) {
