@@ -147,7 +147,7 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // TODO, needs refinement
-#define tipResistance            60 // x10 ohms, ~6 typical
+#define TIP_RESISTANCE           60 // x10 ohms, ~6 typical
 #endif
 
 #ifdef ACCEL_EXITS_ON_MOVEMENT

@@ -204,18 +204,18 @@
 #ifdef MODEL_TS100
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-#define tipResistance            75 // x10 ohms, 7.5 typical for ts100 tips
+#define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
 #endif
 
 #ifdef MODEL_TS80
 #define HARDWARE_MAX_WATTAGE_X10 180
 #define TIP_THERMAL_MASS         40
-#define tipResistance            45 // x10 ohms, 4.5 typical for ts80 tips
+#define TIP_RESISTANCE           45 // x10 ohms, 4.5 typical for ts80 tips
 #endif
 
 #ifdef MODEL_TS80P
 #define HARDWARE_MAX_WATTAGE_X10 300
 #define TIP_THERMAL_MASS         40
-#define tipResistance            45 // x10 ohms, 4.5 typical for ts80 tips
+#define TIP_RESISTANCE           45 // x10 ohms, 4.5 typical for ts80 tips
 #endif
 #endif

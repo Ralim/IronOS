@@ -146,6 +146,6 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-#define tipResistance            75 // x10 ohms, 7.5 typical for Pinecil tips
+#define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
 #endif
 #endif
