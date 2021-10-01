@@ -87,7 +87,6 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
     /* If we have a fixed PDO, its V equals our desired V, and its I is
      * at least our desired I */
     if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-      bestIndex = i;
       // This is a fixed PDO entry
       // Evaluate if it can produve sufficient current based on the TIP_RESISTANCE (ohms*10)
       // V=I*R -> V/I => minimum resistance, if our tip resistance is >= this then we can use this supply
