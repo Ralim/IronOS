@@ -25,19 +25,20 @@ void setup_iwdg();
 void setup_uart();
 
 void hardware_init() {
+  // I2C
+  setup_i2c();
   // GPIO
   setup_gpio();
   // DMA
   setup_dma();
-  // I2C
-  setup_i2c();
   // ADC's
   setup_adc();
   // Timers
   setup_timers();
   // Watchdog
   setup_iwdg();
-
+  // ELIC
+  eclic_priority_group_set(ECLIC_PRIGROUP_LEVEL0_PRIO4);
   // uart for debugging
   setup_uart();
   /* enable TIMER1 - PWM control timing*/
@@ -102,7 +103,7 @@ void setup_uart() {
 
   /* USART configure */
   usart_deinit(UART_PERIF);
-  usart_baudrate_set(UART_PERIF, 2 * 1000 * 1000U);
+  usart_baudrate_set(UART_PERIF, 1000000);
   usart_word_length_set(UART_PERIF, USART_WL_8BIT);
   usart_stop_bit_set(UART_PERIF, USART_STB_1BIT);
   usart_parity_config(UART_PERIF, USART_PM_NONE);
@@ -126,10 +127,9 @@ void setup_gpio() {
   gpio_init(KEY_B_GPIO_Port, GPIO_MODE_IPD, GPIO_OSPEED_2MHZ, KEY_B_Pin);
   // OLED reset as output
   gpio_init(OLED_RESET_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ, OLED_RESET_Pin);
-  gpio_bit_set(SDA_GPIO_Port, SDA_Pin);
-  gpio_bit_set(SDA_GPIO_Port, SCL_Pin);
   // I2C as AF Open Drain
-  gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_2MHZ, SDA_Pin | SCL_Pin);
+  gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin);
+  gpio_init(SCL_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SCL_Pin);
   // PWM output as AF Push Pull
   gpio_init(PWM_Out_GPIO_Port, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, PWM_Out_Pin);
   // Analog Inputs ... as analog inputs
@@ -139,15 +139,15 @@ void setup_gpio() {
 
   // Remap PB4 away from JTAG NJRST
   gpio_pin_remap_config(GPIO_SWJ_NONJTRST_REMAP, ENABLE);
-
-  // TODO - rest of pins as floating
+  // FUSB interrupt
+  gpio_init(FUSB302_IRQ_GPIO_Port, GPIO_MODE_IPU, GPIO_OSPEED_50MHZ, FUSB302_IRQ_Pin);
 }
 void setup_dma() {
   // Setup DMA for ADC0
   {
     /* enable DMA0 clock */
     rcu_periph_clock_enable(RCU_DMA0);
-    rcu_periph_clock_enable(RCU_DMA1);
+    // rcu_periph_clock_enable(RCU_DMA1);
     /* ADC_DMA_channel configuration */
     dma_parameter_struct dma_data_parameter;
 
@@ -175,14 +175,14 @@ void setup_dma() {
 void setup_i2c() {
   /* enable I2C0 clock */
   rcu_periph_clock_enable(RCU_I2C0);
+  /* enable DMA0 clock */
+  rcu_periph_clock_enable(RCU_DMA0);
   // Setup I20 at 400kHz
   i2c_clock_config(I2C0, 400 * 1000, I2C_DTCY_2);
-  i2c_mode_addr_config(I2C0, I2C_I2CMODE_ENABLE, I2C_ADDFORMAT_7BITS, 0x00);
+  i2c_mode_addr_config(I2C0, I2C_I2CMODE_ENABLE, I2C_ADDFORMAT_7BITS, 0x7F);
   i2c_enable(I2C0);
   /* enable acknowledge */
   i2c_ack_config(I2C0, I2C_ACK_ENABLE);
-  eclic_irq_enable(I2C0_EV_IRQn, 1, 0);
-  eclic_irq_enable(I2C0_ER_IRQn, 2, 0);
 }
 void setup_adc() {
 
@@ -197,7 +197,7 @@ void setup_adc() {
   /* config ADC clock */
   rcu_adc_clock_config(RCU_CKADC_CKAPB2_DIV16);
   // Run in normal parallel + inserted parallel
-  adc_mode_config(ADC0, ADC_DAUL_INSERTED_PARALLEL);
+  adc_mode_config(ADC_DAUL_INSERTED_PARALLEL);
   adc_special_function_config(ADC0, ADC_CONTINUOUS_MODE, ENABLE);
   adc_special_function_config(ADC0, ADC_SCAN_MODE, ENABLE);
   adc_special_function_config(ADC1, ADC_CONTINUOUS_MODE, ENABLE);
@@ -333,13 +333,10 @@ void setup_iwdg() {
 }
 
 void setupFUSBIRQ() {
-  // Setup IRQ for USB-PD
-  gpio_init(FUSB302_IRQ_GPIO_Port, GPIO_MODE_IPU, GPIO_OSPEED_2MHZ, FUSB302_IRQ_Pin);
-  eclic_irq_enable(EXTI5_9_IRQn, 1, 1);
-  /* connect key EXTI line to key GPIO pin */
+  eclic_global_interrupt_enable();
+  eclic_irq_enable(EXTI5_9_IRQn, 15, 0);
   gpio_exti_source_select(GPIO_PORT_SOURCE_GPIOB, GPIO_PIN_SOURCE_5);
 
   /* configure key EXTI line */
   exti_init(EXTI_5, EXTI_INTERRUPT, EXTI_TRIG_FALLING);
-  exti_interrupt_flag_clear(EXTI_5);
 }

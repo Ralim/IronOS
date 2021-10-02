@@ -22,8 +22,8 @@ extern "C" {
 #include <gui.hpp>
 #include <history.hpp>
 #include <power.hpp>
-#ifdef POW_PD
-#include "policy_engine.h"
+#if POW_PD
+#include "USBPD.h"
 #endif
 // File local variables
 extern uint32_t   currentTempTargetDegC;
@@ -724,10 +724,10 @@ void showDebugMenu(void) {
         } else {
           // We are not powered via DC, so want to display the appropriate state for PD or QC
           bool poweredbyPD = false;
-#ifdef POW_PD
-          if (usb_pd_detect()) {
+#if POW_PD
+          if (USBPowerDelivery::fusbPresent()) {
             // We are PD capable
-            if (PolicyEngine::pdHasNegotiated()) {
+            if (USBPowerDelivery::negotiationComplete()) {
               // We are powered via PD
               poweredbyPD = true;
             }
@@ -782,9 +782,9 @@ void showWarnings() {
       warnUser(translatedString(Tr->NoAccelerometerMessage), 10 * TICKS_SECOND);
     }
   }
-#ifdef POW_PD
+#if POW_PD
   // We expect pd to be present
-  if (!usb_pd_detect()) {
+  if (!USBPowerDelivery::fusbPresent()) {
     if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
       nextSettingValue(SettingsOptions::PDMissingWarningCounter);
       saveSettings();
