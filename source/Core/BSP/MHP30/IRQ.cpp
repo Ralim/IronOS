@@ -7,7 +7,7 @@
 
 #include "IRQ.h"
 #include "Pins.h"
-#include "int_n.h"
+#include "configuration.h"
 
 /*
  * Catch the IRQ that says that the conversion is done on the temperature
@@ -34,13 +34,22 @@ void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCal
 void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+extern osThreadId POWTaskHandle;
+void              HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   (void)GPIO_Pin;
-  InterruptHandler::irqCallback();
+  // Notify POW thread that an irq occured
+  if (POWTaskHandle != nullptr) {
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    xTaskNotifyFromISR(POWTaskHandle, 1, eSetBits, &xHigherPriorityTaskWoken);
+    /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+    The macro used to do this is dependent on the port and may be called
+    portEND_SWITCHING_ISR. */
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+  }
 }
 
 bool getFUS302IRQLow() {
-#ifdef POW_PD
+#if POW_PD
   // Return true if the IRQ line is still held low
   return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_RESET;
 #else

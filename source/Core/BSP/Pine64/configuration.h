@@ -132,11 +132,11 @@
 #define MIN_BOOST_TEMP_C     250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F     480                       // The min settable temp for boost mode °F
 
-#define POW_PD
-#define POW_QC
-#define POW_DC
-#define POW_QC_20V
-#define ENABLE_QC2
+#define POW_PD     1
+#define POW_QC     1
+#define POW_DC     1
+#define POW_QC_20V 1
+#define ENABLE_QC2 1
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define ACCEL_SC7
@@ -146,6 +146,6 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-#define tipResistance            75 // x10 ohms, 7.5 typical for Pinecil tips
+#define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
 #endif
 #endif

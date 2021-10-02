@@ -23,7 +23,7 @@ static void settings_displayInputMinVRange(void);
 #ifdef POW_QC
 static void settings_displayQCInputV(void);
 #endif
-#ifdef POW_PD
+#if POW_PD
 static void settings_displayPDNegTimeout(void);
 #endif
 #ifndef NO_SLEEP_MODE
@@ -159,7 +159,7 @@ const menuitem powerMenu[] = {
 #ifdef POW_QC
     {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, settings_displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage}, /*Voltage input*/
 #endif
-#ifdef POW_PD
+#if POW_PD
     {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, settings_displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout}, /*PD timeout setup*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength} // end of menu marker. DO NOT REMOVE
@@ -336,7 +336,7 @@ static void settings_displayQCInputV(void) {
 
 #endif
 
-#ifdef POW_PD
+#if POW_PD
 
 static void settings_displayPDNegTimeout(void) {
   printShortDescription(SettingsItemIndex::PDNegTimeout, 5);
@@ -513,11 +513,11 @@ static bool settings_setBoostTemp(void) {
       value += 20; // Go up 20F at a time
     }
 
-    if (value > MAX_TEMP_F) {
+    if (value >= MAX_TEMP_F) {
       value = 0; // jump to off
     }
     setSettingValue(SettingsOptions::BoostTemp, value);
-    return value == MAX_TEMP_F - 10;
+    return value >= (MAX_TEMP_F - 10);
   }
   if (value == 0) {
     value = MIN_BOOST_TEMP_C; // loop back at 250
@@ -528,7 +528,7 @@ static bool settings_setBoostTemp(void) {
     value = 0; // Go to off state
   }
   setSettingValue(SettingsOptions::BoostTemp, value);
-  return value == MAX_TEMP_C;
+  return value >= MAX_TEMP_C;
 }
 
 static void settings_displayBoostTemp(void) {

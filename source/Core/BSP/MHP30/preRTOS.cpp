@@ -9,8 +9,6 @@
 #include "I2CBB.hpp"
 #include "Pins.h"
 #include "Setup.h"
-#include "configuration.h"
-#include "fusbpd.h"
 #include <I2C_Wrapper.hpp>
 
 void preRToSInit() {
