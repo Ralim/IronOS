@@ -513,11 +513,11 @@ static bool settings_setBoostTemp(void) {
       value += 20; // Go up 20F at a time
     }
 
-    if (value > MAX_TEMP_F) {
+    if (value >= MAX_TEMP_F) {
       value = 0; // jump to off
     }
     setSettingValue(SettingsOptions::BoostTemp, value);
-    return value == MAX_TEMP_F - 10;
+    return value >= (MAX_TEMP_F - 10);
   }
   if (value == 0) {
     value = MIN_BOOST_TEMP_C; // loop back at 250
@@ -528,7 +528,7 @@ static bool settings_setBoostTemp(void) {
     value = 0; // Go to off state
   }
   setSettingValue(SettingsOptions::BoostTemp, value);
-  return value == MAX_TEMP_C;
+  return value >= MAX_TEMP_C;
 }
 
 static void settings_displayBoostTemp(void) {
