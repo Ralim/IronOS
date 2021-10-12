@@ -4,25 +4,19 @@
   "fonts": ["ascii_basic", "cjk"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationDone": "校正完了",
     "SettingsCalibrationWarning": "続行する前に、コテ先が室温と同じになっていることを確認してください",
     "SettingsResetWarning": "設定をリセットしますか？",
     "UVLOWarningString": "DC電圧が低すぎます",
     "UndervoltageString": "電圧不足",
     "InputVoltageString": "入力電圧 V: ",
-    "WarningTipTempString": "コテ先温度: ",
-    "BadTipString": "コテ先エラー",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "スリープ中...",
-    "WarningSimpleString": "高温注意!",
-    "WarningAdvancedString": "!!! コテ先高温 !!!",
     "SleepingTipAdvancedString": "コテ先:",
     "IdleTipString": "コテ先:",
     "IdleSetString": " 設定:",
     "TipDisconnectedString": "コテ先が接続されていません",
     "SolderingAdvancedPowerPrompt": "電源: ",
-    "OffString": "オフ",
-    "YourGainMessage": "ゲイン:"
+    "OffString": "オフ"
   },
   "messagesWarn": {
     "ResetOKMessage": "リセットOK",
