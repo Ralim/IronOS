@@ -48,8 +48,8 @@ typedef struct {
 
 static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
     //{min,max,increment,default}
-    {10, 580, 5, 320},                                              // SolderingTemp
-    {10, 580, 5, 150},                                              // SleepTemp
+    {10, MAX_TEMP_F, 5, 320},                                       // SolderingTemp
+    {10, MAX_TEMP_F, 5, 150},                                       // SleepTemp
     {0, 16, 1, SLEEP_TIME},                                         // SleepTime
     {0, 5, 1, CUT_OUT_SETTING},                                     // MinDCVoltageCells
     {24, 38, 1, RECOM_VOL_CELL},                                    // MinVoltageCells
