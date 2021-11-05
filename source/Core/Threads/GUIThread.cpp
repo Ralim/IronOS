@@ -986,7 +986,7 @@ void startGUITask(void const *argument) {
           if (OLED::getRotation()) {
 #endif
             // in right handed mode we want to draw over the first part
-            OLED::drawArea(55, 0, 41, 16, disconnectedTipIcon);
+            OLED::drawArea(55, 0, 41, 16, disconnectedTipIconFlip);
 
           } else {
             OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
