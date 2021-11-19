@@ -113,7 +113,7 @@ bool sanitiseSettings() {
   }
   for (int i = 0; i < (int)SettingsOptions::SettingsOptionsLength; i++) {
     // Check min max for all settings, if outside the range, move to default
-    if (systemSettings.settingsValues[i] < settingsConstants[i].min || systemSettings.settingsValues[i] > settingsConstants[i].max) {
+    if (systemSettings.settingsValues[i] < settingsConstants[i].min || systemSettings.settingsValues[i] >= settingsConstants[i].max) {
       systemSettings.settingsValues[i] = settingsConstants[i].defaultValue;
 
       dirty = true;
@@ -158,9 +158,8 @@ bool prevSettingValue(const enum SettingsOptions option) {
   int        value     = systemSettings.settingsValues[(int)option];
   if (value <= constants.min) {
     value = constants.max;
-  } else {
-    value -= constants.increment;
   }
+  value -= constants.increment;
   systemSettings.settingsValues[(int)option] = value;
   return systemSettings.settingsValues[(int)option] == constants.min;
 }
