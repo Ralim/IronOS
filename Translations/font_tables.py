@@ -325,7 +325,6 @@ def get_font_map_latin_extended() -> Dict[str, bytes]:
     }
     return font
 
-#TODO: Add Greek Font
 def get_font_map_greek() -> Dict[str, bytes]:
     font = {
         # U+0370..U+03FF Greek and Coptic
@@ -814,14 +813,13 @@ def get_small_font_map_latin_extended() -> Dict[str, bytes]:
     }
     return font
 
-#TODO: Add small greek font
 def get_small_font_map_greek() -> Dict[str, bytes]:
     font = {
     # U+0370..U+03FF Greek and Coptic
     "Έ": b"\x03\x7F\x49\x49\x49\x41",
     "Α": b"\x7e\x09\x09\x09\x7e\x00",
     "Β": b"\x7f\x49\x49\x49\x36\x00",
-    "Γ": b"\x7f\x49\x49\x49\x36\x00",
+    "Γ": b"\x7f\x01\x01\x01\x01\x00",
     "Δ": b"\x7E\x41\x41\x41\x7E\x00",
     "Ε": b"\x7f\x49\x49\x49\x41\x00",
     "Ζ": b"\x61\x51\x49\x45\x43\x00", 
@@ -900,7 +898,7 @@ def get_small_font_map_cyrillic() -> Dict[str, bytes]:
         "А": b"\x7e\x09\x09\x09\x7e\x00",
         "Б": b"\x7f\x49\x49\x49\x31\x00",
         "В": b"\x7f\x49\x49\x49\x36\x00",
-        "Г": b"\x7f\x49\x49\x49\x36\x00",
+        "Г": b"\x7f\x01\x01\x01\x01\x00",
         "Ґ": b"\x7E\x02\x02\x02\x03\x00",
         "Д": b"\x60\x3f\x21\x3f\x60\x00",
         "Е": b"\x7f\x49\x49\x49\x41\x00",
