@@ -1,5 +1,5 @@
 {
-  "languageCode": "BY",
+  "languageCode": "BE",
   "languageLocalName": "Беларуская",
   "fonts": ["ascii_basic", "latin_extended", "cyrillic"],
   "messages": {
