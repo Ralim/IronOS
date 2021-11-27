@@ -4,7 +4,7 @@
   "fonts": ["ascii_basic", "cjk"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationWarning": "開始温度校正之前，請先確定辣雞咀係處於室温！",
+    "SettingsCalibrationWarning": "開始温度校正之前，請先確定焫雞咀係處於室温！",
     "SettingsResetWarning": "你係咪確定要將全部設定重設到預設值？",
     "UVLOWarningString": "電壓過低",
     "UndervoltageString": "Undervoltage",
@@ -78,7 +78,7 @@
     },
     "SleepTemperature": {
       "text2": "待機温度",
-      "desc": "喺待機模式時嘅辣雞咀温度"
+      "desc": "喺待機模式時嘅焫雞咀温度"
     },
     "SleepTimeout": {
       "text2": "待機延時",
@@ -114,11 +114,11 @@
     },
     "CooldownBlink": {
       "text2": "降温時閃爍",
-      "desc": "停止加熱之後，當辣雞咀仲係熱嗰陣閃爍畫面"
+      "desc": "停止加熱之後，當焫雞咀仲係熱嗰陣閃爍畫面"
     },
     "TemperatureCalibration": {
       "text2": "温度校正？",
-      "desc": "開始校正辣雞咀温度位移"
+      "desc": "開始校正焫雞咀温度位移"
     },
     "SettingsReset": {
       "text2": "全部重設？",
@@ -146,7 +146,7 @@
     },
     "PowerLimit": {
       "text2": "功率限制",
-      "desc": "限制辣雞可用嘅最大功率 <W=watt（火）>"
+      "desc": "限制焫雞可用嘅最大功率 <W=watt（火）>"
     },
     "ReverseButtonTempChange": {
       "text2": "反轉加減掣",
