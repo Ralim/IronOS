@@ -14,15 +14,15 @@
     "SleepingTipAdvancedString": "--->",
     "IdleTipString": "--->",
     "IdleSetString": " /",
-    "TipDisconnectedString": "-X->",
+    "TipDisconnectedString": "<-X-",
     "SolderingAdvancedPowerPrompt": "Power: ",
     "OffString": "关"
   },
   "messagesWarn": {
     "ResetOKMessage": "已重置！",
     "SettingsResetMessage": "设定已被重置！",
-    "NoAccelerometerMessage": "未感应加速度计！",
-    "NoPowerDeliveryMessage": "未感应PD电路！",
+    "NoAccelerometerMessage": "未检测到加速度计",
+    "NoPowerDeliveryMessage": "未检测到PD电路",
     "LockingKeysString": "已锁定",
     "UnlockingKeysString": "已解锁",
     "WarningKeysLockedString": "!按键锁定!",
@@ -154,11 +154,11 @@
     },
     "TempChangeShortStep": {
       "text2": "短按温度调整",
-      "desc": "调校温度时短按一下的温度变幅"
+      "desc": "调校温度时短按按键的温度变幅"
     },
     "TempChangeLongStep": {
       "text2": "长按温度调整",
-      "desc": "调校温度时长按一下的温度变幅"
+      "desc": "调校温度时长按按键的温度变幅"
     },
     "PowerPulsePower": {
       "text2": "电源脉冲",
