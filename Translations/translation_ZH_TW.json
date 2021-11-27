@@ -21,8 +21,8 @@
   "messagesWarn": {
     "ResetOKMessage": "已重設！",
     "SettingsResetMessage": "設定已被重設！",
-    "NoAccelerometerMessage": ["No accelerometer", "detected!"],
-    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
+    "NoAccelerometerMessage": "未能偵測加速度計",
+    "NoPowerDeliveryMessage": "未能偵測PD晶片",
     "LockingKeysString": "已鎖定",
     "UnlockingKeysString": "已解除鎖定",
     "WarningKeysLockedString": "!按鍵鎖定!",
