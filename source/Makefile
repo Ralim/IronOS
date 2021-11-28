@@ -1,4 +1,3 @@
-
 ifndef model
 model:=TS100
 endif
@@ -11,10 +10,22 @@ ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
 
+# output folder
+HEXFILE_DIR=Hexfile
+# temporary objects folder
+OUTPUT_DIR_BASE=Objects
+OUTPUT_DIR=Objects/$(model)
+
 ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK YUE_HK ZH_CN ZH_TW
 
 LANGUAGE_GROUP_CJK_LANGS=EN JA_JP YUE_HK ZH_TW ZH_CN
 LANGUAGE_GROUP_CJK_NAME=Chinese+Japanese
+
+ifdef custom_multi_langs
+RUN_SHELL_CMD := $(shell rm -Rf {Core/Gen,$(OUTPUT_DIR)/Core/Gen,$(HEXFILE_DIR)/*_Custom.*})
+LANGUAGE_GROUP_CUSTOM_LANGS=$(custom_multi_langs)
+LANGUAGE_GROUP_CUSTOM_NAME=Custom
+endif
 
 LANGUAGE_GROUP_CYRILLIC_LANGS=EN BG RU SR_CYRL SR_LATN UK
 LANGUAGE_GROUP_CYRILLIC_NAME=Bulgarian+Russian+Serbian+Ukrainian
@@ -22,7 +33,7 @@ LANGUAGE_GROUP_CYRILLIC_NAME=Bulgarian+Russian+Serbian+Ukrainian
 LANGUAGE_GROUP_EUR_LANGS=EN $(filter-out $(LANGUAGE_GROUP_CJK_LANGS) $(LANGUAGE_GROUP_CYRILLIC_LANGS),$(ALL_LANGUAGES))
 LANGUAGE_GROUP_EUR_NAME=European
 
-LANGUAGE_GROUPS=CJK CYRILLIC EUR
+LANGUAGE_GROUPS=CUSTOM CJK CYRILLIC EUR
 
 
 # Defines for host tools
@@ -184,12 +195,7 @@ $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -path $(PD_DRIVER_TESTS_DIR) -prune -false -o -type f -name '*.cpp') \
 $(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
-# output folder
-HEXFILE_DIR=Hexfile
 
-# temporary objects folder
-OUTPUT_DIR_BASE=Objects
-OUTPUT_DIR=Objects/$(model)
 # code optimisation ------------------------------------------------------------
 OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums
 
