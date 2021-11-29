@@ -190,24 +190,24 @@
       "desc": "Скорость анимации иконок в главном меню (Милисекунды) (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2,5с)"
+      "text2": ["Пауза имп.", "питания с"],
+      "desc": "Пауза между импульсами удерживающими источник питания от сна (x 2,5с)"
     },
     "PowerPulseDuration": {
-      "text2": ["Power pulse", "duration"],
-      "desc": "Keep-awake-pulse duration (x 250мс)"
+      "text2": ["Длина имп.", "питания мс"],
+      "desc": "Длина импульса удерживающего от сна источник питания (x 250мс)"
     },
     "LanguageSwitch": {
       "text2": ["Язык:", " RU     Русский"],
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Яркость", "экрана"],
+      "desc": "Настройки контраста/яркости OLED экрана"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Инверт", "экрана"],
+      "desc": "Инвертировать цвета на OLED экране"
     }
   }
 }
