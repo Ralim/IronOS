@@ -1,0 +1,337 @@
+{
+	"languageCode": "UA",
+	"languageLocalName": "Українськв",
+	"fonts": [
+		"ascii_basic",
+		"latin_extended",
+		"cyrillic"
+	],
+	"messages": {
+		"SettingsCalibrationWarning": "Перед тим, як продовжити, переконайтесь, що жало має кімнатну температуру!",
+		"SettingsResetWarning": "Ви впевнені, що хочете скинути налаштування до значень по замовчуванню?",
+		"UVLOWarningString": "НАПРУГ--",
+		"UndervoltageString": "Низка напруга",
+		"InputVoltageString": "Живлен. В: ",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Очікування...",
+		"SleepingTipAdvancedString": "Жало:",
+		"IdleTipString": "Жало:",
+		"IdleSetString": " ->",
+		"TipDisconnectedString": "ЖАЛО ВІДЄДНАНЕ",
+		"SolderingAdvancedPowerPrompt": "Живлення: ",
+		"OffString": "Вик"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": "Скинуто",
+		"SettingsResetMessage": [
+			"Налаштування",
+			"скинуто!"
+		],
+		"NoAccelerometerMessage": [
+			"Не знайдено",
+			"акселерометр!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": "LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!",
+		"WarningThermalRunaway": [
+			"Thermal",
+			"Runaway"
+		]
+	},
+	"characters": {
+		"SettingRightChar": "П",
+		"SettingLeftChar": "Л",
+		"SettingAutoChar": "А",
+		"SettingOffChar": "-",
+		"SettingSlowChar": "Н",
+		"SettingMediumChar": "С",
+		"SettingFastChar": "В",
+		"SettingStartNoneChar": "-",
+		"SettingStartSolderingChar": "П",
+		"SettingStartSleepChar": "О",
+		"SettingStartSleepOffChar": "К",
+		"SettingSensitivityOff": "-",
+		"SettingSensitivityLow": "Н",
+		"SettingSensitivityMedium": "С",
+		"SettingSensitivityHigh": "В",
+		"SettingLockDisableChar": "-",
+		"SettingLockBoostChar": "Т",
+		"SettingLockFullChar": "П",
+		"SettingNAChar": "Н/Д"
+	},
+	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Параметри",
+				"живлення"
+			],
+			"desc": "Джерело живлення і мінімальна напруга"
+		},
+		"SolderingMenu": {
+			"text2": [
+				"Параметри",
+				"пайки"
+			],
+			"desc": "Параметри пайки"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Режими",
+				"сну"
+			],
+			"desc": "Настройки режиму очікування"
+		},
+		"UIMenu": {
+			"text2": [
+				"Параметри",
+				"інтерфейсу"
+			],
+			"desc": "Налаштування інтерфейсу користувача"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Додаткові",
+				"опції"
+			],
+			"desc": "Додаткові опції"
+		}
+	},
+	"menuOptions": {
+		"DCInCutoff": {
+			"text2": [
+				"Джерело",
+				"живлення"
+			],
+			"desc": "Джерело живлення. Встановлює напругу відключення. (DC 10В) (S 3,3В на комірку, без ліміту потужності)"
+		},
+		"SleepTemperature": {
+			"text2": [
+				"Темп.",
+				"очікуван."
+			],
+			"desc": "Температура режиму очікування"
+		},
+		"SleepTimeout": {
+			"text2": [
+				"Таймаут",
+				"очікуван."
+			],
+			"desc": "Час до переходу в режим очікування (Хвилини | Секунди)"
+		},
+		"ShutdownTimeout": {
+			"text2": [
+				"Таймаут",
+				"виключення"
+			],
+			"desc": "Час до відключення паяльника (хвилини)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Чутливість",
+				"акселерометра"
+			],
+			"desc": "Чутливість акселерометра (0=Викл. | 1=Мін. | ... | 9=Макс.)"
+		},
+		"TemperatureUnit": {
+			"text2": [
+				"Одиниці",
+				"температури"
+			],
+			"desc": "Одиниці заміру температури (C=Цельcій | F=Фаренгейт)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Детальний",
+				"реж. очікуван"
+			],
+			"desc": "Відображати детальну информацію малим шрифтом на екрані очікування"
+		},
+		"DisplayRotation": {
+			"text2": [
+				"Орієнтація",
+				"екрану"
+			],
+			"desc": "Орієнтація екрану (П=Права рука | Л=Ліва рука | А=Авто)"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"t° турбо",
+				"режим"
+			],
+			"desc": "Температура жала в турбо-режимі"
+		},
+		"AutoStart": {
+			"text2": [
+				"Авто",
+				"старт"
+			],
+			"desc": "Режим, в якому запускається паяльник при подачі живлення (В=Викл. | П=Пайка | О=Очікування | К=Очікування при кімн. темп.)"
+		},
+		"CooldownBlink": {
+			"text2": [
+				"Мигання t°",
+				"при охолоджен"
+			],
+			"desc": "Мигати температурою на екрані охолодження, поки жало ще гаряче"
+		},
+		"TemperatureCalibration": {
+			"text2": [
+				"Калібрування",
+				"температури"
+			],
+			"desc": "Калібрування термодатчика жала"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Скидання",
+				"Налаштувань"
+			],
+			"desc": "Скидання налаштувань до значень по замовчуванню"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Калібрування",
+				"напруги"
+			],
+			"desc": "Калібрування вхідї напруги (довге натиснення для виходу)"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Детальний",
+				"екран пайки"
+			],
+			"desc": "Показувати детальну інформацію на екрані пайки"
+		},
+		"ScrollingSpeed": {
+			"text2": [
+				"Швидкість",
+				"текста"
+			],
+			"desc": "Швидкість прокрутки тексту (Н=низька | В=висока)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"Потужність",
+				"живлення"
+			],
+			"desc": "Потужність використовуваного джерела живлення"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"timeout"
+			],
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Межа",
+				"потужності"
+			],
+			"desc": "Максимальна потужність, яку може використовувати паяльник (Ватт)"
+		},
+		"ReverseButtonTempChange": {
+			"text2": [
+				"Інвертувати",
+				"кнопки"
+			],
+			"desc": "Інвертувати кнопки зміни температури"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Крок темп.",
+				"кор. нат."
+			],
+			"desc": "Крок зміни температури при коротких натисках кнопок"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Крок темп.",
+				"довж. нат."
+			],
+			"desc": "Крок зміни температури при довгому натиску кнопок"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Сила імп.",
+				"живлення Вт"
+			],
+			"desc": "Сила імпульсу утримуючого від сну павербанк або інше джерело живлення"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"ЕфХолла",
+				"чутливі."
+			],
+			"desc": "Рівень чутливості датчика холла в режимі сну (- =Відключений | Н=Низький | С=Средній | В=Високий)"
+		},
+		"LockingMode": {
+			"text2": [
+				"Дозволити",
+				"блок. кнопок"
+			],
+			"desc": "При роботі довге натискання двох кнопок блокує їх (- =Відключений | Т=Тільки турбо | П=Повне блокування)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Мін.",
+				"напр."
+			],
+			"desc": "Мінімальна дозволена напруга на комірку (3S: 3 - 3,7V | 4-S: 2,4 - 3,7V)"
+		},
+		"AnimLoop": {
+			"text2": [
+				"Зациклена",
+				"анімація"
+			],
+			"desc": "Зациклена анімаці кнопок в головному меню"
+		},
+		"AnimSpeed": {
+			"text2": [
+				"Швидкість",
+				"анімації"
+			],
+			"desc": "Швидкість анімації іконок в головному меню (Мілісекунди) (- =Відключено| Н=Низька | С=Средня | В=Висока)"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Пауза імп.",
+				"живлення с"
+			],
+			"desc": "Пауза між імпульсами утримуючого джерело живлення від сну (x 2,5с)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Довжина імп.",
+				"живлення мс"
+			],
+			"desc": "Довжина імпульсу утримуючого від сну блок живлення (x 250мс)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Мова:",
+				" UA  Українська"
+			],
+			"desc": ""
+		},
+		"Brightness": {
+			"text2": [
+				"Яскравість",
+				"екрану"
+			],
+			"desc": "Налаштування контрасту/яскравості OLED екрану"
+		},
+		"ColourInversion": {
+			"text2": [
+				"Інверт",
+				"екрану"
+			],
+			"desc": "Інвертувати кольори на ОLED екрані"
+		}
+	}
+}
