@@ -202,12 +202,12 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Яскравість", "екрану"],
+      "desc": "Налаштування контрасту/яскравості OLED екрану"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Інверт", "екрану"],
+      "desc": "Налаштування контрасту/яскравості OLED екрану"
     }
   }
 }
