@@ -94,8 +94,9 @@
  */
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
+
 // Due to large thermal mass of the PCB being heated we need to pull this back a bit
-#define THERMAL_RUNAWAY_TIME_SEC 30
+#define THERMAL_RUNAWAY_TIME_SEC 45
 #define THERMAL_RUNAWAY_TEMP_C   3
 
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
@@ -118,25 +119,26 @@
 #endif
 
 #ifdef MODEL_MHP30
-#define SOLDERING_TEMP     200                     // Default soldering temp is 200.0 °C
-#define VOLTAGE_DIV        360                     // Default for MHP30
-#define PID_POWER_LIMIT    65                      // Sets the max pwm power limit
-#define CALIBRATION_OFFSET 0                       // the adc offset in uV - MHP compensates automagically
-#define POWER_LIMIT        65                      // 65 watts default power limit
-#define MAX_POWER_LIMIT    65                      //
-#define POWER_LIMIT_STEPS  1                       //
-#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_MHP30 //
-#define USB_PD_VMAX        20                      // Maximum voltage for PD to negotiate
-#define MODEL_HAS_DCDC                             // Has inductor to current filter
-#define PID_TIM_HZ         (16)                    //
-#define MAX_TEMP_C         300                     // Max soldering temp selectable °C
-#define MAX_TEMP_F         570                     // Max soldering temp selectable °F
-#define MIN_TEMP_C         10                      // Min soldering temp selectable °C
-#define MIN_TEMP_F         60                      // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C   150                     // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F   300                     // The min settable temp for boost mode °F
-#define NO_DISPLAY_ROTATE                          // Disable OLED rotation by accel
-#define SLEW_LIMIT         50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
+#define SOLDERING_TEMP         200                     // Default soldering temp is 200.0 °C
+#define VOLTAGE_DIV            360                     // Default for MHP30
+#define PID_POWER_LIMIT        65                      // Sets the max pwm power limit
+#define CALIBRATION_OFFSET     0                       // the adc offset in uV - MHP compensates automagically
+#define MIN_CALIBRATION_OFFSET 0                       // Min value for calibration
+#define POWER_LIMIT            65                      // 65 watts default power limit
+#define MAX_POWER_LIMIT        65                      //
+#define POWER_LIMIT_STEPS      1                       //
+#define OP_AMP_GAIN_STAGE      OP_AMP_GAIN_STAGE_MHP30 //
+#define USB_PD_VMAX            20                      // Maximum voltage for PD to negotiate
+#define MODEL_HAS_DCDC                                 // Has inductor to current filter
+#define PID_TIM_HZ             (16)                    //
+#define MAX_TEMP_C             350                     // Max soldering temp selectable °C
+#define MAX_TEMP_F             660                     // Max soldering temp selectable °F
+#define MIN_TEMP_C             10                      // Min soldering temp selectable °C
+#define MIN_TEMP_F             60                      // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C       150                     // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F       300                     // The min settable temp for boost mode °F
+#define NO_DISPLAY_ROTATE                              // Disable OLED rotation by accel
+#define SLEW_LIMIT             50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
 #define ACCEL_MSA
 #define POW_PD 1
 #define TEMP_NTC

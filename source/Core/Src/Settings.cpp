@@ -72,7 +72,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {1, POWER_PULSE_DURATION_MAX, 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
     {360, 900, 1, VOLTAGE_DIV},                                     // VoltageDiv
     {MIN_TEMP_C, MAX_TEMP_F, 10, BOOST_TEMP},                       // BoostTemp
-    {100, 2500, 1, CALIBRATION_OFFSET},                             // CalibrationOffset
+    {MIN_CALIBRATION_OFFSET, 2500, 1, CALIBRATION_OFFSET},          // CalibrationOffset
     {0, MAX_POWER_LIMIT, POWER_LIMIT_STEPS, POWER_LIMIT},           // PowerLimit
     {0, 1, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
     {5, TEMP_CHANGE_LONG_STEP_MAX, 5, TEMP_CHANGE_LONG_STEP},       // TempChangeLongStep
@@ -104,6 +104,7 @@ bool sanitiseSettings() {
   if (systemSettings.versionMarker != 0x55AA) {
     memset((void *)&systemSettings, 0xFF, sizeof(systemSettings));
     systemSettings.versionMarker = 0x55AA;
+    dirty                        = true;
   }
   if (systemSettings.padding != 0xFFFFFFFF) {
     systemSettings.padding = 0xFFFFFFFF; // Force padding to 0xFFFFFFFF so that rolling forwards / back should be easier
@@ -120,8 +121,7 @@ bool sanitiseSettings() {
     // Check min max for all settings, if outside the range, move to default
     if (systemSettings.settingsValues[i] < settingsConstants[i].min || systemSettings.settingsValues[i] > settingsConstants[i].max) {
       systemSettings.settingsValues[i] = settingsConstants[i].defaultValue;
-
-      dirty = true;
+      dirty                            = true;
     }
   }
   if (dirty) {

@@ -114,23 +114,24 @@
 #endif
 
 #ifdef MODEL_Pinecil
-#define SOLDERING_TEMP       320                       // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV          467                       // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET   900                       // 900 - Default adc offset in uV
-#define PID_POWER_LIMIT      70                        // Sets the max pwm power limit
-#define POWER_LIMIT          0                         // 0 watts default limit
-#define MAX_POWER_LIMIT      70                        //
-#define POWER_LIMIT_STEPS    5                         //
-#define OP_AMP_GAIN_STAGE    OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
-#define TEMP_uV_LOOKUP_HAKKO                           // Use Hakko lookup table
-#define USB_PD_VMAX          20                        // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ           (8)                       // Tick rate of the PID loop
-#define MAX_TEMP_C           450                       // Max soldering temp selectable °C
-#define MAX_TEMP_F           850                       // Max soldering temp selectable °F
-#define MIN_TEMP_C           10                        // Min soldering temp selectable °C
-#define MIN_TEMP_F           60                        // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C     250                       // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F     480                       // The min settable temp for boost mode °F
+#define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
+#define VOLTAGE_DIV            467                       // 467 - Default divider from schematic
+#define CALIBRATION_OFFSET     900                       // 900 - Default adc offset in uV
+#define MIN_CALIBRATION_OFFSET 100                       // Min value for calibration
+#define PID_POWER_LIMIT        70                        // Sets the max pwm power limit
+#define POWER_LIMIT            0                         // 0 watts default limit
+#define MAX_POWER_LIMIT        70                        //
+#define POWER_LIMIT_STEPS      5                         //
+#define OP_AMP_GAIN_STAGE      OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
+#define TEMP_uV_LOOKUP_HAKKO                             // Use Hakko lookup table
+#define USB_PD_VMAX            20                        // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ             (8)                       // Tick rate of the PID loop
+#define MAX_TEMP_C             450                       // Max soldering temp selectable °C
+#define MAX_TEMP_F             850                       // Max soldering temp selectable °F
+#define MIN_TEMP_C             10                        // Min soldering temp selectable °C
+#define MIN_TEMP_F             60                        // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C       250                       // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
 
 #define POW_PD     1
 #define POW_QC     1
