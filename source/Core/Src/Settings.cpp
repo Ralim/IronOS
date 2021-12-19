@@ -26,6 +26,7 @@ bool sanitiseSettings();
  * flash in uint16_t chunks
  */
 typedef struct {
+  uint16_t versionMarker;
   uint16_t length; // Length of valid bytes following
   uint16_t settingsValues[SettingsOptionsLength];
   // used to make this nicely "good enough" aligned to 32 butes to make driver code trivial
@@ -41,48 +42,48 @@ volatile systemSettingsType systemSettings;
 // For every setting we need to store the min/max/increment values
 typedef struct {
   const uint16_t min;          // Inclusive minimum value
-  const uint16_t max;          // Exclusive maximum value
+  const uint16_t max;          // Inclusive maximum value
   const uint16_t increment;    // Standard increment
   const uint16_t defaultValue; // Default vaue after reset
 } SettingConstants;
 
 static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
     //{min,max,increment,default}
-    {10, MAX_TEMP_F, 5, 320},                                       // SolderingTemp
-    {10, MAX_TEMP_F, 5, 150},                                       // SleepTemp
-    {0, 16, 1, SLEEP_TIME},                                         // SleepTime
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 320},                               // SolderingTemp
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 150},                               // SleepTemp
+    {0, 15, 1, SLEEP_TIME},                                         // SleepTime
     {0, 5, 1, CUT_OUT_SETTING},                                     // MinDCVoltageCells
     {24, 38, 1, RECOM_VOL_CELL},                                    // MinVoltageCells
     {90, QC_VOLTAGE_MAX, 2, 90},                                    // QCIdealVoltage
-    {0, 3, 1, ORIENTATION_MODE},                                    // OrientationMode
-    {0, 10, 1, SENSITIVITY},                                        // Sensitivity
-    {0, 2, 1, ANIMATION_LOOP},                                      // AnimationLoop
-    {0, settingOffSpeed_t::MAX_VALUE, 1, ANIMATION_SPEED},          // AnimationSpeed
-    {0, 4, 1, AUTO_START_MODE},                                     // AutoStartMode
-    {0, 61, 1, SHUTDOWN_TIME},                                      // ShutdownTime
-    {0, 2, 1, COOLING_TEMP_BLINK},                                  // CoolingTempBlink
-    {0, 2, 1, DETAILED_IDLE},                                       // DetailedIDLE
-    {0, 2, 1, DETAILED_SOLDERING},                                  // DetailedSoldering
-    {0, 2, 1, TEMPERATURE_INF},                                     // TemperatureInF
-    {0, 2, 1, DESCRIPTION_SCROLL_SPEED},                            // DescriptionScrollSpeed
-    {0, 3, 1, LOCKING_MODE},                                        // LockingMode
+    {0, 2, 1, ORIENTATION_MODE},                                    // OrientationMode
+    {0, 9, 1, SENSITIVITY},                                         // Sensitivity
+    {0, 1, 1, ANIMATION_LOOP},                                      // AnimationLoop
+    {0, settingOffSpeed_t::MAX_VALUE - 1, 1, ANIMATION_SPEED},      // AnimationSpeed
+    {0, 3, 1, AUTO_START_MODE},                                     // AutoStartMode
+    {0, 60, 1, SHUTDOWN_TIME},                                      // ShutdownTime
+    {0, 1, 1, COOLING_TEMP_BLINK},                                  // CoolingTempBlink
+    {0, 1, 1, DETAILED_IDLE},                                       // DetailedIDLE
+    {0, 1, 1, DETAILED_SOLDERING},                                  // DetailedSoldering
+    {0, 1, 1, TEMPERATURE_INF},                                     // TemperatureInF
+    {0, 1, 1, DESCRIPTION_SCROLL_SPEED},                            // DescriptionScrollSpeed
+    {0, 2, 1, LOCKING_MODE},                                        // LockingMode
     {0, 100, 1, POWER_PULSE_DEFAULT},                               // KeepAwakePulse
     {1, POWER_PULSE_WAIT_MAX, 1, POWER_PULSE_WAIT_DEFAULT},         // KeepAwakePulseWait
     {1, POWER_PULSE_DURATION_MAX, 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
     {360, 900, 1, VOLTAGE_DIV},                                     // VoltageDiv
-    {0, MAX_TEMP_F, 10, BOOST_TEMP},                                // BoostTemp
-    {100, 2500, 1, CALIBRATION_OFFSET},                             // CalibrationOffset
+    {MIN_TEMP_C, MAX_TEMP_F, 10, BOOST_TEMP},                       // BoostTemp
+    {MIN_CALIBRATION_OFFSET, 2500, 1, CALIBRATION_OFFSET},          // CalibrationOffset
     {0, MAX_POWER_LIMIT, POWER_LIMIT_STEPS, POWER_LIMIT},           // PowerLimit
-    {0, 2, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
+    {0, 1, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
     {5, TEMP_CHANGE_LONG_STEP_MAX, 5, TEMP_CHANGE_LONG_STEP},       // TempChangeLongStep
     {1, TEMP_CHANGE_SHORT_STEP_MAX, 1, TEMP_CHANGE_SHORT_STEP},     // TempChangeShortStep
-    {0, 4, 1, 1},                                                   // HallEffectSensitivity
-    {0, 10, 1, 0},                                                  // AccelMissingWarningCounter
-    {0, 10, 1, 0},                                                  // PDMissingWarningCounter
+    {0, 3, 1, 1},                                                   // HallEffectSensitivity
+    {0, 9, 1, 0},                                                   // AccelMissingWarningCounter
+    {0, 9, 1, 0},                                                   // PDMissingWarningCounter
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
-    {0, 51, 1, 0},                                                  // PDNegTimeout
-    {0, 2, 1, 0},                                                   // OLEDInversion
-    {0, 100, 11, 33},                                               // OLEDBrightness
+    {0, 50, 1, 0},                                                  // PDNegTimeout
+    {0, 1, 1, 0},                                                   // OLEDInversion
+    {0, 99, 11, 33},                                                // OLEDBrightness
 
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
@@ -100,6 +101,11 @@ bool sanitiseSettings() {
   // For all settings, need to ensure settings are in a valid range
   // First for any not know about due to array growth, reset them and update the length value
   bool dirty = false;
+  if (systemSettings.versionMarker != 0x55AA) {
+    memset((void *)&systemSettings, 0xFF, sizeof(systemSettings));
+    systemSettings.versionMarker = 0x55AA;
+    dirty                        = true;
+  }
   if (systemSettings.padding != 0xFFFFFFFF) {
     systemSettings.padding = 0xFFFFFFFF; // Force padding to 0xFFFFFFFF so that rolling forwards / back should be easier
     dirty                  = true;
@@ -115,8 +121,7 @@ bool sanitiseSettings() {
     // Check min max for all settings, if outside the range, move to default
     if (systemSettings.settingsValues[i] < settingsConstants[i].min || systemSettings.settingsValues[i] > settingsConstants[i].max) {
       systemSettings.settingsValues[i] = settingsConstants[i].defaultValue;
-
-      dirty = true;
+      dirty                            = true;
     }
   }
   if (dirty) {
@@ -133,34 +138,45 @@ void resetSettings() {
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue) {
   const auto constants                       = settingsConstants[(int)option];
   systemSettings.settingsValues[(int)option] = newValue;
+  // If less than min, constrain
   if (systemSettings.settingsValues[(int)option] < constants.min) {
     systemSettings.settingsValues[(int)option] = constants.min;
   }
   // If hit max, constrain
-  if (systemSettings.settingsValues[(int)option] >= constants.max) {
-    systemSettings.settingsValues[(int)option] = constants.max - 1;
+  if (systemSettings.settingsValues[(int)option] > constants.max) {
+    systemSettings.settingsValues[(int)option] = constants.max;
   }
 }
+// Lookup wrapper for ease of use (with typing)
 uint16_t getSettingValue(const enum SettingsOptions option) { return systemSettings.settingsValues[(int)option]; }
 
+// Increment by the step size to the next value. If past the end wrap to the minimum
+// Returns true if we are on the _last_ value
 bool nextSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
-  if (systemSettings.settingsValues[(int)option] >= (constants.max - constants.increment)) {
+  if (systemSettings.settingsValues[(int)option] == (constants.max)) {
+    // Already at max, wrap to the start
     systemSettings.settingsValues[(int)option] = constants.min;
+  } else if (systemSettings.settingsValues[(int)option] >= (constants.max - constants.increment)) {
+    // If within one increment of the end, constrain to the end
+    systemSettings.settingsValues[(int)option] = constants.max;
   } else {
+    // Otherwise increment
     systemSettings.settingsValues[(int)option] += constants.increment;
   }
-  return (constants.max - systemSettings.settingsValues[(int)option]) <= constants.increment;
+  // Return if we are at the max
+  return constants.max == systemSettings.settingsValues[(int)option];
 }
 
+// Step backwards on the settings item
+// Return true if we are at the end (min)
 bool prevSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
   int        value     = systemSettings.settingsValues[(int)option];
   if (value <= constants.min) {
     value = constants.max;
-  } else {
-    value -= constants.increment;
   }
+  value -= constants.increment;
   systemSettings.settingsValues[(int)option] = value;
   return systemSettings.settingsValues[(int)option] == constants.min;
 }
