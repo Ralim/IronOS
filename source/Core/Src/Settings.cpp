@@ -67,7 +67,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, TEMPERATURE_INF},                                     // TemperatureInF
     {0, 1, 1, DESCRIPTION_SCROLL_SPEED},                            // DescriptionScrollSpeed
     {0, 2, 1, LOCKING_MODE},                                        // LockingMode
-    {0, 100, 1, POWER_PULSE_DEFAULT},                               // KeepAwakePulse
+    {0, 99, 1, POWER_PULSE_DEFAULT},                                // KeepAwakePulse
     {1, POWER_PULSE_WAIT_MAX, 1, POWER_PULSE_WAIT_DEFAULT},         // KeepAwakePulseWait
     {1, POWER_PULSE_DURATION_MAX, 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
     {360, 900, 1, VOLTAGE_DIV},                                     // VoltageDiv
