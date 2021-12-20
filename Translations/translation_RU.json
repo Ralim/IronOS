@@ -146,8 +146,8 @@
       "desc": "Мощность используемого источника питания"
     },
     "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "text2": ["PD", "тайм-аут"],
+      "desc": "Power Delivery тайм-аут согласования с шагом 100 мс для совместимости с некоторыми быстрыми зарядными QC (0: отключено)"
     },
     "PowerLimit": {
       "text2": ["Предел", "мощности"],
