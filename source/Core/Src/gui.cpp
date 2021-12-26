@@ -33,8 +33,8 @@ static bool settings_showSleepOptions(void);
 static bool settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
 static void settings_displaySleepTime(void);
-#endif
 static void settings_displayShutdownTime(void);
+#endif
 static bool settings_setTempF(void);
 static void settings_displayTempF(void);
 static void settings_displayAdvancedSolderingScreens(void);
