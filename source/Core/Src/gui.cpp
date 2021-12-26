@@ -222,7 +222,7 @@ const menuitem PowerSavingMenu[] = {
 #ifndef NO_SLEEP_MODE
     {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp, settings_showSleepOptions, SettingsOptions::SettingsOptionsLength}, /*Sleep Temp*/
     {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, settings_displaySleepTime, settings_showSleepOptions, SettingsOptions::SleepTime},                               /*Sleep Time*/
-    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime}, /*Shutdown Time*/
+    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime},                      /*Shutdown Time*/
 #endif
 #ifdef HALL_SENSOR
     {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, settings_displayHallEffect, nullptr, SettingsOptions::HallEffectSensitivity}, /* HallEffect Sensitivity*/
