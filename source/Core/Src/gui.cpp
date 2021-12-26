@@ -27,8 +27,8 @@ static void settings_displayQCInputV(void);
 #if POW_PD
 static void settings_displayPDNegTimeout(void);
 #endif
-static bool settings_showSleepOptions(void);
 #ifndef NO_SLEEP_MODE
+static bool settings_showSleepOptions(void);
 static bool settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
 static void settings_displaySleepTime(void);
