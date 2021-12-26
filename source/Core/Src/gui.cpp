@@ -218,8 +218,8 @@ const menuitem PowerSavingMenu[] = {
      * 	Sleep Time
      * 	Shutdown Time
      */
-    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, settings_displaySensitivity, nullptr, SettingsOptions::Sensitivity}, /* Motion Sensitivity*/
 #ifndef NO_SLEEP_MODE
+    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, settings_displaySensitivity, nullptr, SettingsOptions::Sensitivity},                                        /* Motion Sensitivity*/
     {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp, settings_showSleepOptions, SettingsOptions::SettingsOptionsLength}, /*Sleep Temp*/
     {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, settings_displaySleepTime, settings_showSleepOptions, SettingsOptions::SleepTime},                               /*Sleep Time*/
     {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime},                      /*Shutdown Time*/
@@ -349,6 +349,17 @@ static void settings_displayPDNegTimeout(void) {
 #endif
 
 #ifndef NO_SLEEP_MODE
+
+static void settings_displayShutdownTime(void) {
+  printShortDescription(SettingsItemIndex::ShutdownTimeout, 5);
+  if (getSettingValue(SettingsOptions::ShutdownTime) == 0) {
+    OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
+  } else {
+    OLED::printNumber(getSettingValue(SettingsOptions::ShutdownTime), 2, FontStyle::LARGE);
+    OLED::print(SymbolMinutes, FontStyle::LARGE);
+  }
+}
+
 static bool settings_setSleepTemp(void) {
   // If in C, 10 deg, if in F 20 deg
   uint16_t temp = getSettingValue(SettingsOptions::SleepTemp);
@@ -392,15 +403,6 @@ static void settings_displaySleepTime(void) {
 }
 #endif
 
-static void settings_displayShutdownTime(void) {
-  printShortDescription(SettingsItemIndex::ShutdownTimeout, 5);
-  if (getSettingValue(SettingsOptions::ShutdownTime) == 0) {
-    OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
-  } else {
-    OLED::printNumber(getSettingValue(SettingsOptions::ShutdownTime), 2, FontStyle::LARGE);
-    OLED::print(SymbolMinutes, FontStyle::LARGE);
-  }
-}
 static bool settings_setTempF(void) {
   bool     res           = nextSettingValue(SettingsOptions::TemperatureInF);
   uint16_t BoostTemp     = getSettingValue(SettingsOptions::BoostTemp);
