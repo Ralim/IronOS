@@ -212,12 +212,12 @@ const menuitem UIMenu[] = {
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                  // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
-    /*
-     *  Motion Sensitivity
-     *  Sleep Temp
-     * 	Sleep Time
-     * 	Shutdown Time
-     */
+/*
+ *  Motion Sensitivity
+ *  Sleep Temp
+ * 	Sleep Time
+ * 	Shutdown Time
+ */
 #ifndef NO_SLEEP_MODE
     {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, settings_displaySensitivity, nullptr, SettingsOptions::Sensitivity},                                        /* Motion Sensitivity*/
     {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp, settings_showSleepOptions, SettingsOptions::SettingsOptionsLength}, /*Sleep Temp*/
