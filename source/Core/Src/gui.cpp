@@ -28,13 +28,13 @@ static void settings_displayQCInputV(void);
 static void settings_displayPDNegTimeout(void);
 #endif
 #ifndef NO_SLEEP_MODE
+static void settings_displaySensitivity(void);
 static bool settings_showSleepOptions(void);
 static bool settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
 static void settings_displaySleepTime(void);
 #endif
 static void settings_displayShutdownTime(void);
-static void settings_displaySensitivity(void);
 static bool settings_setTempF(void);
 static void settings_displayTempF(void);
 static void settings_displayAdvancedSolderingScreens(void);
@@ -222,8 +222,8 @@ const menuitem PowerSavingMenu[] = {
 #ifndef NO_SLEEP_MODE
     {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp, settings_showSleepOptions, SettingsOptions::SettingsOptionsLength}, /*Sleep Temp*/
     {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, settings_displaySleepTime, settings_showSleepOptions, SettingsOptions::SleepTime},                               /*Sleep Time*/
-#endif
     {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime}, /*Shutdown Time*/
+#endif
 #ifdef HALL_SENSOR
     {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, settings_displayHallEffect, nullptr, SettingsOptions::HallEffectSensitivity}, /* HallEffect Sensitivity*/
 #endif
