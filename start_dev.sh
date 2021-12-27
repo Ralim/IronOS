@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
+#!/bin/sh
 docker-compose run --rm builder
