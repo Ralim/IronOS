@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 # TS100 Flasher for Linux by Alex Wigen (https://github.com/awigen)
 
 DIR_TMP="/tmp/ts100"
 
-function usage() {
+usage() {
     echo
     echo "#################"
     echo "# TS100 Flasher #"
@@ -18,36 +18,32 @@ function usage() {
 }
 
 GAUTOMOUNT=0
-function disable_gautomount {
-    GSETTINGS=$(which gsettings)
-    if [ $? -ne 0 ]; then
+disable_gautomount() {
+    if ! GSETTINGS=$(which gsettings); then
         return 1
     fi
-    gsettings get org.gnome.desktop.media-handling automount | grep true > /dev/null
-    if [ $? -eq 0 ]; then
+    if ! gsettings get org.gnome.desktop.media-handling automount | grep true > /dev/null; then
         GAUTOMOUNT=1
         gsettings set org.gnome.desktop.media-handling automount false
     fi
 }
 
-function enable_gautomount {
+enable_gautomount() {
     if [ "$GAUTOMOUNT" -ne 0 ]; then
         gsettings set org.gnome.desktop.media-handling automount true
     fi
 }
 
-function is_attached {
-    output=$(lsblk -b --raw --output NAME,MODEL | grep 'DFU.*Disk')
-    if [ $? -ne 0 ]; then
+is_attached() {
+    if ! output=$(lsblk -b --raw --output NAME,MODEL | grep 'DFU.*Disk'); then
       return 1
     fi
-    DEVICE=$(echo $output | awk '{print "/dev/"$1}')
+    DEVICE=$(echo "$output" | awk '{print "/dev/"$1}')
 }
 
 instructions="not printed"
-function wait_for_ts100 {
-    is_attached
-    while [ $? -ne 0 ]; do
+wait_for_ts100() {
+    while ! is_attached; do
         if [ "$instructions" = "not printed" ]; then
             echo
             echo "#####################################################"
@@ -60,29 +56,27 @@ function wait_for_ts100 {
             instructions="printed"
         fi
         sleep 0.1
-        is_attached
     done
 }
 
-function mount_ts100 {
+mount_ts100() {
     mkdir -p "$DIR_TMP"
-    sudo mount -t msdos -o uid=$UID "$DEVICE" "$DIR_TMP"
-    if [ $? -ne 0 ]; then
+    user="${UID:-$(id -u)}"
+    if ! sudo mount -t msdos -o uid=$user "$DEVICE" "$DIR_TMP"; then
         echo "Failed to mount $DEVICE on $DIR_TMP"
         exit 1
     fi
 }
 
-function umount_ts100 {
-    mountpoint "$DIR_TMP" > /dev/null && sudo umount "$DIR_TMP"
-    if [ $? -ne 0 ]; then
+umount_ts100() {
+    if ! mountpoint "$DIR_TMP" > /dev/null && sudo umount "$DIR_TMP"; then
         echo "Failed to unmount $DIR_TMP"
         exit 1
     fi
     rmdir "$DIR_TMP"
 }
 
-function cleanup {
+cleanup() {
     enable_gautomount
     if [ -d "$DIR_TMP" ]; then
         umount_ts100
@@ -102,7 +96,7 @@ if [ ! -f "$1" ]; then
     exit 1
 fi
 
-if [ $(head -c1 "$1") != ":" ] || [ $(tail -n1 "$1" | head -c1) != ":" ]; then
+if [ "$(head -c1 "$1")" != ":" ] || [ "$(tail -n1 "$1" | head -c1)" != ":" ]; then
     echo "'$1' doesn't look like a valid HEX file. Please provide a HEX file to flash"
     usage
     exit 1
