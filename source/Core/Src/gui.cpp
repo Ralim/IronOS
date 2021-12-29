@@ -857,6 +857,17 @@ static bool settings_enterAdvancedMenu(void) {
   return false;
 }
 
+uint8_t gui_getMenuLength(const menuitem *menu) {
+  uint8_t scrollContentSize = 0;
+  for (uint8_t i = 0; menu[i].draw != nullptr; i++) {
+    if (menu[i].isVisible == nullptr) {
+      scrollContentSize += 1; // Always visible
+    } else if (menu[i].isVisible()) {
+      scrollContentSize += 1; // Selectively visible and chosen to show
+    }
+  }
+  return scrollContentSize;
+}
 void gui_Menu(const menuitem *menu) {
   // Draw the settings menu and provide iteration support etc
 
@@ -877,20 +888,12 @@ void gui_Menu(const menuitem *menu) {
   bool        earlyExit              = false;
   bool        lcdRefresh             = true;
   ButtonState lastButtonState        = BUTTON_NONE;
-  uint8_t     scrollContentSize      = 0;
+  uint8_t     scrollContentSize      = gui_getMenuLength(menu);
   bool        scrollBlink            = false;
   bool        lastValue              = false;
   NavState    navState               = NavState::Entering;
 
   ScrollMessage scrollMessage;
-
-  for (uint8_t i = 0; menu[i].draw != nullptr; i++) {
-    if (menu[i].isVisible == nullptr) {
-      scrollContentSize += 1; // Always visible
-    } else if (menu[i].isVisible()) {
-      scrollContentSize += 1; // Selectively visible and chosen to show
-    }
-  }
 
   while ((menu[currentScreen].draw != nullptr) && earlyExit == false) {
 
