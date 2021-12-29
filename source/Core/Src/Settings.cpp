@@ -16,9 +16,9 @@
 bool sanitiseSettings();
 
 #ifdef POW_QC_20V
-#define QC_VOLTAGE_MAX 222
+#define QC_VOLTAGE_MAX 220
 #else
-#define QC_VOLTAGE_MAX 142
+#define QC_VOLTAGE_MAX 140
 #endif
 
 /*
@@ -52,7 +52,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {MIN_TEMP_C, MAX_TEMP_F, 5, 320},                               // SolderingTemp
     {MIN_TEMP_C, MAX_TEMP_F, 5, 150},                               // SleepTemp
     {0, 15, 1, SLEEP_TIME},                                         // SleepTime
-    {0, 5, 1, CUT_OUT_SETTING},                                     // MinDCVoltageCells
+    {0, 4, 1, CUT_OUT_SETTING},                                     // MinDCVoltageCells
     {24, 38, 1, RECOM_VOL_CELL},                                    // MinVoltageCells
     {90, QC_VOLTAGE_MAX, 2, 90},                                    // QCIdealVoltage
     {0, 2, 1, ORIENTATION_MODE},                                    // OrientationMode
@@ -81,7 +81,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 9, 1, 0},                                                   // AccelMissingWarningCounter
     {0, 9, 1, 0},                                                   // PDMissingWarningCounter
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
-    {0, 50, 1, 0},                                                  // PDNegTimeout
+    {0, 50, 1, 20},                                                 // PDNegTimeout
     {0, 1, 1, 0},                                                   // OLEDInversion
     {0, 99, 11, 33},                                                // OLEDBrightness
 
