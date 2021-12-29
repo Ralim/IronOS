@@ -882,7 +882,8 @@ void gui_Menu(const menuitem *menu) {
     Exiting,
   };
 
-  uint8_t    currentScreen          = 0;
+  uint8_t    currentScreen          = 0; // Current screen index in the menu struct
+  uint8_t    screensSkipped         = 0; // Number of screens skipped due to being disabled
   TickType_t autoRepeatTimer        = 0;
   TickType_t autoRepeatAcceleration = 0;
   bool       earlyExit              = false;
@@ -890,9 +891,10 @@ void gui_Menu(const menuitem *menu) {
 
   ButtonState lastButtonState   = BUTTON_NONE;
   uint8_t     scrollContentSize = gui_getMenuLength(menu);
-  bool        scrollBlink       = false;
-  bool        lastValue         = false;
-  NavState    navState          = NavState::Entering;
+
+  bool     scrollBlink = false;
+  bool     lastValue   = false;
+  NavState navState    = NavState::Entering;
 
   ScrollMessage scrollMessage;
 
@@ -908,6 +910,7 @@ void gui_Menu(const menuitem *menu) {
       if (menu[currentScreen].isVisible != nullptr) {
         if (!menu[currentScreen].isVisible()) {
           currentScreen++;
+          screensSkipped++;
           OLED::useSecondaryFramebuffer(false);
           continue;
         }
@@ -946,7 +949,7 @@ void gui_Menu(const menuitem *menu) {
       OLED::clearScreen();
       menu[currentScreen].draw();
       uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
-      uint8_t position        = OLED_HEIGHT * currentScreen / scrollContentSize;
+      uint8_t position        = OLED_HEIGHT * (currentScreen - screensSkipped) / scrollContentSize;
       if (lastValue)
         scrollBlink = !scrollBlink;
       if (!lastValue || !scrollBlink)
