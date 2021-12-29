@@ -330,7 +330,6 @@ static void settings_displayQCInputV(void) {
   OLED::printNumber(voltage / 10, 2, FontStyle::LARGE);
   OLED::print(SymbolDot, FontStyle::LARGE);
   OLED::printNumber(voltage % 10, 1, FontStyle::LARGE);
-  OLED::print(SymbolVolts, FontStyle::LARGE);
 }
 
 #endif
