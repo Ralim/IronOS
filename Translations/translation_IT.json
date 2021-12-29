@@ -267,7 +267,7 @@
 				"Sensore",
 				"Hall"
 			],
-			"desc": "Regola la sensibilità alla rilevazione di supporti metallici per entrare in modalità Riposo [O: OFF; B: bassa; M: media; A: alta]"
+			"desc": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità Riposo [O: OFF; B: bassa; M: media; A: alta]"
 		},
 		"LockingMode": {
 			"text2": [
