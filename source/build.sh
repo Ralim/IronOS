@@ -77,7 +77,7 @@ echo "*********************************************"
 
 # Calculate available languages
 for f in "$TRANSLATION_DIR"/translation_*.json; do
-    AVAILABLE_LANGUAGES+=($(echo $f | tr "[:lower:]" "[:upper:]" | sed "s/[^_]*_//" | sed "s/\.JSON//g"))
+    AVAILABLE_LANGUAGES+=("$(echo "$f" | tr "[:lower:]" "[:upper:]" | sed "s/[^_]*_//" | sed "s/\.JSON//g")")
 done
 
 # Checking requested language
@@ -124,8 +124,8 @@ if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
     checkLastCommand
 
     for model in "${BUILD_MODELS[@]}"; do
-        echo "Building firmware for $model in ${BUILD_LANGUAGES[@]}"
-        make -j$(nproc) model="$model" "${BUILD_LANGUAGES[@]/#/firmware-}" >/dev/null
+        echo "Building firmware for $model in ${BUILD_LANGUAGES[*]}"
+        make -j"$(nproc)" model="$model" "${BUILD_LANGUAGES[@]/#/firmware-}" >/dev/null
         checkLastCommand
     done
 else
