@@ -81,7 +81,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 9, 1, 0},                                                   // AccelMissingWarningCounter
     {0, 9, 1, 0},                                                   // PDMissingWarningCounter
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
-    {0, 50, 1, 0},                                                  // PDNegTimeout
+    {0, 50, 1, 20},                                                 // PDNegTimeout
     {0, 1, 1, 0},                                                   // OLEDInversion
     {0, 99, 11, 33},                                                // OLEDBrightness
 
