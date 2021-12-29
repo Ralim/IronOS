@@ -882,21 +882,22 @@ void gui_Menu(const menuitem *menu) {
     Exiting,
   };
 
-  uint8_t     currentScreen          = 0;
-  TickType_t  autoRepeatTimer        = 0;
-  TickType_t  autoRepeatAcceleration = 0;
-  bool        earlyExit              = false;
-  bool        lcdRefresh             = true;
-  ButtonState lastButtonState        = BUTTON_NONE;
-  uint8_t     scrollContentSize      = gui_getMenuLength(menu);
-  bool        scrollBlink            = false;
-  bool        lastValue              = false;
-  NavState    navState               = NavState::Entering;
+  uint8_t    currentScreen          = 0;
+  TickType_t autoRepeatTimer        = 0;
+  TickType_t autoRepeatAcceleration = 0;
+  bool       earlyExit              = false;
+  bool       lcdRefresh             = true;
+
+  ButtonState lastButtonState   = BUTTON_NONE;
+  uint8_t     scrollContentSize = gui_getMenuLength(menu);
+  bool        scrollBlink       = false;
+  bool        lastValue         = false;
+  NavState    navState          = NavState::Entering;
 
   ScrollMessage scrollMessage;
 
   while ((menu[currentScreen].draw != nullptr) && earlyExit == false) {
-
+    bool valueChanged = false;
     // Handle menu transition:
     if (navState != NavState::Idle) {
       // Check if this menu item shall be skipped. If it shall be skipped,
@@ -971,6 +972,7 @@ void gui_Menu(const menuitem *menu) {
 
     auto callIncrementHandler = [&]() {
       wasInGuiMenu = false;
+      valueChanged = true;
       bool res     = false;
       if ((int)menu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
         res = nextSettingValue(menu[currentScreen].autoSettingOption);
@@ -1045,6 +1047,10 @@ void gui_Menu(const menuitem *menu) {
       // This will trickle the user back to the main screen eventually
       earlyExit = true;
       scrollMessage.reset();
+    }
+    if (valueChanged) {
+      // If user changed value, update the scroll content size
+      scrollContentSize = gui_getMenuLength(menu);
     }
   }
 }
