@@ -226,12 +226,18 @@ static void gui_solderingTempAdjust() {
     if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration) < PRESS_ACCEL_INTERVAL_MIN) {
       autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
     }
+    // If buttons are flipped; flip the delta
     if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
       delta = -delta;
     }
-    // constrain between 10-450 C
-    uint16_t newTemp = getSettingValue(SettingsOptions::SolderingTemp);
+
+    // constrain between the set temp limits, i.e. 10-450 C
+    int16_t newTemp = getSettingValue(SettingsOptions::SolderingTemp);
     newTemp += delta;
+    // Round to nearest increment of delta
+    delta   = abs(delta);
+    newTemp = (newTemp / delta) * delta;
+
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
       if (newTemp > MAX_TEMP_F)
         newTemp = MAX_TEMP_F;
@@ -243,7 +249,7 @@ static void gui_solderingTempAdjust() {
       if (newTemp < MIN_TEMP_C)
         newTemp = MIN_TEMP_C;
     }
-    setSettingValue(SettingsOptions::SolderingTemp, newTemp);
+    setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
 
     if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
       return; // exit if user just doesn't press anything for a bit
