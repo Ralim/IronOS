@@ -230,27 +230,27 @@ static void gui_solderingTempAdjust() {
     if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
       delta = -delta;
     }
+    if (delta != 0) {
+      // constrain between the set temp limits, i.e. 10-450 C
+      int16_t newTemp = getSettingValue(SettingsOptions::SolderingTemp);
+      newTemp += delta;
+      // Round to nearest increment of delta
+      delta   = abs(delta);
+      newTemp = (newTemp / delta) * delta;
 
-    // constrain between the set temp limits, i.e. 10-450 C
-    int16_t newTemp = getSettingValue(SettingsOptions::SolderingTemp);
-    newTemp += delta;
-    // Round to nearest increment of delta
-    delta   = abs(delta);
-    newTemp = (newTemp / delta) * delta;
-
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      if (newTemp > MAX_TEMP_F)
-        newTemp = MAX_TEMP_F;
-      if (newTemp < MIN_TEMP_F)
-        newTemp = MIN_TEMP_F;
-    } else {
-      if (newTemp > MAX_TEMP_C)
-        newTemp = MAX_TEMP_C;
-      if (newTemp < MIN_TEMP_C)
-        newTemp = MIN_TEMP_C;
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
+        if (newTemp > MAX_TEMP_F)
+          newTemp = MAX_TEMP_F;
+        if (newTemp < MIN_TEMP_F)
+          newTemp = MIN_TEMP_F;
+      } else {
+        if (newTemp > MAX_TEMP_C)
+          newTemp = MAX_TEMP_C;
+        if (newTemp < MIN_TEMP_C)
+          newTemp = MIN_TEMP_C;
+      }
+      setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
     }
-    setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
-
     if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
       return; // exit if user just doesn't press anything for a bit
 
