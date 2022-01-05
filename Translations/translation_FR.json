@@ -147,7 +147,7 @@
     },
     "PDNegTimeout": {
       "text2": ["Délai", "expiration PD"],
-      "desc": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC (0: désactivé)"
+      "desc": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
     },
     "PowerLimit": {
       "text2": ["Limite de", "puissance"],
@@ -199,7 +199,7 @@
     },
     "LanguageSwitch": {
       "text2": ["Langue :", " FR    Français"],
-      "desc": ""
+      "desc": "Langue du firmware"
     },
     "Brightness": {
       "text2": ["Luminosité", "de l'écran"],
