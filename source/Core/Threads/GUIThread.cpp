@@ -202,42 +202,32 @@ static void gui_solderingTempAdjust() {
       break;
     case BUTTON_B_LONG:
       if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
-        if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-          delta = getSettingValue(SettingsOptions::TempChangeLongStep);
-        } else
-          delta = -getSettingValue(SettingsOptions::TempChangeLongStep);
-
+        delta           = -getSettingValue(SettingsOptions::TempChangeLongStep);
         autoRepeatTimer = xTaskGetTickCount();
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;
     case BUTTON_B_SHORT:
-      if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-        delta = getSettingValue(SettingsOptions::TempChangeShortStep);
-      } else
-        delta = -getSettingValue(SettingsOptions::TempChangeShortStep);
+      delta = -getSettingValue(SettingsOptions::TempChangeShortStep);
       break;
     case BUTTON_F_LONG:
       if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
-        if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-          delta = -getSettingValue(SettingsOptions::TempChangeLongStep);
-        } else
-          delta = getSettingValue(SettingsOptions::TempChangeLongStep);
+        delta           = getSettingValue(SettingsOptions::TempChangeLongStep);
         autoRepeatTimer = xTaskGetTickCount();
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;
     case BUTTON_F_SHORT:
-      if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-        delta = -getSettingValue(SettingsOptions::TempChangeShortStep);
-      } else
-        delta = getSettingValue(SettingsOptions::TempChangeShortStep);
+      delta = getSettingValue(SettingsOptions::TempChangeShortStep);
       break;
     default:
       break;
     }
     if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration) < PRESS_ACCEL_INTERVAL_MIN) {
       autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
+    }
+    if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
+      delta = -delta;
     }
     // constrain between 10-450 C
     uint16_t newTemp = getSettingValue(SettingsOptions::SolderingTemp);
