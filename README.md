@@ -4,7 +4,7 @@
 
 # IronOS - Flexible Soldering iron control Firmware
 
-_This repository was formerly known as TS100, it's the same great code. Just with more supported devices_
+_This repository was formerly known as TS100, it's the same great code. Just with more supported devices._
 
 Originally conceived as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
@@ -20,7 +20,13 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
-To get started with this firmware, please jump over to [here](Documentation/GettingStarted.md)
+To get started with this firmware, please jump over to [here](Documentation/GettingStarted.md).
+But the TL;DR is to press the button near the front of the iron to heat up. Use the button near the back of the iron to enter the settings menu.
+Long hold the rear button in soldering mode to exit back to the start screen.
+
+## Installation
+
+For notes on installation for your device, please refer to the [Flashing Guide](Documentation/Flashing.md).
 
 ## Key Features
 
@@ -40,10 +46,6 @@ To get started with this firmware, please jump over to [here](Documentation/Gett
 - (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
 - [Custom boot up logo support](Documentation/Logo.md)
 - Automatic LCD rotation based on the orientation
-
-## Installation
-
-For notes on installation for your device, please refer to the [Flashing Guide](Documentation/Flashing.md).
 
 ## Menu System
 
