@@ -165,7 +165,7 @@ bootldr_size=0x0
 # Flags
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
-			-mcmodel=medany -fsigned-char -fno-builtin  
+			-mcmodel=medany -fsigned-char 
 			
 
 DEV_LDFLAGS=-nostartfiles -Xlinker --gc-sections  -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek --specs=patch.specs
