@@ -69,7 +69,7 @@ mount_ts100() {
 }
 
 umount_ts100() {
-    if ! mountpoint "$DIR_TMP" > /dev/null && sudo umount "$DIR_TMP"; then
+    if ! (mountpoint "$DIR_TMP" > /dev/null && sudo umount "$DIR_TMP"); then
         echo "Failed to unmount $DIR_TMP"
         exit 1
     fi
