@@ -100,7 +100,7 @@ LDSCRIPT=$(MINIWARE_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
-DEV_LDFLAGS=-lm -Wl,--gc-sections 
+DEV_LDFLAGS=-Wl,--gc-sections 
 DEV_AFLAGS=
 DEV_CFLAGS= -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
@@ -130,7 +130,7 @@ LDSCRIPT=$(MHP30_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
-DEV_LDFLAGS=-lm -Wl,--gc-sections 
+DEV_LDFLAGS= -Wl,--gc-sections 
 DEV_AFLAGS=
 DEV_CFLAGS= -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
@@ -146,6 +146,8 @@ bootldr_size=32k
 DEVICE_DFU_ADDRESS=0x08008000
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
+
+
 ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
@@ -163,12 +165,12 @@ bootldr_size=0x0
 # Flags
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
-			-mcmodel=medany -fsigned-char -fno-builtin -fsingle-precision-constant \
-			-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+			-mcmodel=medany -fsigned-char -fno-builtin  
+			
 
-DEV_LDFLAGS= -lstdc++ -nostartfiles -Xlinker --gc-sections  -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek
-DEV_AFLAGS= -nostartfiles -ffreestanding -fno-common -Os -flto 
-DEV_GLOBAL_DEFS=
+DEV_LDFLAGS=-nostartfiles -Xlinker --gc-sections  -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek --specs=patch.specs
+DEV_AFLAGS=-nostartfiles -ffreestanding -fno-common -Os -flto 
+DEV_GLOBAL_DEFS=-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
 DEV_CFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
 DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
 endif
@@ -197,7 +199,7 @@ $(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
@@ -240,14 +242,14 @@ endif
 LINKER_FLAGS=   -Wl,--gc-sections 		                      \
                 -Wl,--wrap=malloc                             \
 			    -Wl,--wrap=free                               \
-			    -lm                                           \
 			    -Wl,--undefined=vTaskSwitchContext            \
 			    -Wl,--undefined=pxCurrentTCB                  \
 			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
-				$(DEV_LDFLAGS)                                \
 				-flto 										  \
-			    --specs=nano.specs
+				--specs=nosys.specs 						  \
+			    --specs=nano.specs						      \
+				$(DEV_LDFLAGS)
 
 # compiler flags ---------------------------------------------------------------
 
@@ -309,17 +311,17 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 		-T$(LDSCRIPT)
 
 
-CFLAGS=$(DEV_CFLAGS) \
-        $(CPUFLAGS) \
-		$(DEBUG) 			\
+CFLAGS=$(DEV_CFLAGS) 			\
+        $(CPUFLAGS) 			\
+		$(DEBUG) 				\
 		$(INCLUDES) 			\
 		$(CHECKOPTIONS_C) 		\
 		$(GLOBAL_DEFINES) 		\
 		-D${COMPILER}  			\
-		-MMD 				\
-		-std=gnu99			\
-		$(OPTIM) 			\
-		-fno-common			\
+		-MMD 					\
+		-std=gnu99				\
+		$(OPTIM) 				\
+		-fno-common				\
 		-ffreestanding			\
 		-T$(LDSCRIPT)			\
 		-c                      
