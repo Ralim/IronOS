@@ -689,9 +689,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     } else {
       setStatusLED(LED_HEATING);
     }
-    // If we have tripped thermal runaway, turn off header and show warning
+    // If we have tripped thermal runaway, turn off heater and show warning
     if (heaterThermalRunaway) {
-      currentTempTargetDegC = 0; // heaater control off
+      currentTempTargetDegC = 0; // heater control off
                                  // TODO WARNING
 
       warnUser(translatedString(Tr->WarningThermalRunaway), 10 * TICKS_SECOND);
