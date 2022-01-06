@@ -2,6 +2,12 @@
 
 ## Downloading source file
 
+In the development of this firmware, there are three _types_ of firmware released.
+These are the "Main" stable releases, which generally have high confidence in being bug free.
+Release candidates are released slightly more often, and these are generally perfectly fine for everyday use. These are released early to allow for translation checking and for wonderful people to help spot bugs and regressions.
+Finally, there are the "mainline" builds, which are built from the main git branch.
+These are built on every change an can be found on the Actions tab (see below).
+
 ### Main release
 
 Main releases are made to the [releases page](https://github.com/Ralim/IronOS/releases).
@@ -111,7 +117,20 @@ You will also need the matching drivers from [here](http://www.gd32mcu.com/downl
 
 These are called "GD32 Dfu Drivers" if the link breaks.
 
-You can also use dfu-util if you wish to set it up, but that is better documented by others
+#### Steps:
+
+1. Download both the `GD32 MCU DFU TOOL` and the `Drivers`
+1. Install the drivers and open the DFU tool
+1. Ignore the prompt to update the tool.
+1. Connect pinecil to windows with usb cable while holding down minus button, **screen will be stay blank** but you will hear the noise from windows connecting to it.
+1. At the top of the DFU tool, you should see `GD DFU DEVICE 1` appear at the top
+1. Change the mode to `Download to device`
+1. Select the `open` button in that area of the window and load the `Pinecil_XX.hex` file from the downloaded release
+1. Tick the `verify after download` check box
+1. Click the OK button at the bottom of the window to run the process
+1. After it is complete either click "Leave DFU` or unplug the iron and power cycle it while _not_ holding down the buttons.
+
+You can also use dfu-util if you wish to set it up, but that is better documented by others when it comes to windows.
 
 ### FAQ
 
