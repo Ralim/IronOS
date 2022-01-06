@@ -5,7 +5,7 @@ services:
     tty: true
     build:
       context: .
-    command: /bin/bash
+    command: /bin/sh
     volumes:
       - ./ci:/build/ci:Z
       - ./:/build/source:Z
