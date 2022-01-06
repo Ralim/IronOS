@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 # TS100 Flasher for Linux by Alex Wigen (https://github.com/awigen)
+# Jan 2021 - Update by Ysard (https://github.com/ysard)
 
 DIR_TMP="/tmp/ts100"
+HEX_FIRMWARE="$DIR_TMP/ts100.hex"
 
 usage() {
     echo
@@ -76,6 +78,21 @@ umount_ts100() {
     rmdir "$DIR_TMP"
 }
 
+check_flash() {
+    RDY_FIRMWARE="${HEX_FIRMWARE%.*}.rdy"
+    ERR_FIRMWARE="${HEX_FIRMWARE%.*}.err"
+    if [ -f "$RDY_FIRMWARE" ]; then
+        echo -e "\e[92mFlash is done\e[0m"
+        echo "Disconnect the USB and power up the iron. You're good to go."
+    elif [ -f "$ERR_FIRMWARE" ]; then
+        echo -e "\e[91mFlash error; Please retry!\e[0m"
+    else
+        echo -e "\e[91mUNKNOWN error\e[0m"
+        echo "Flash result: "
+        ls "$DIR_TMP"/ts100*
+    fi
+}
+
 cleanup() {
     enable_gautomount
     if [ -d "$DIR_TMP" ]; then
@@ -109,7 +126,7 @@ echo "Found TS100 config disk device on $DEVICE"
 
 mount_ts100
 echo "Mounted config disk drive, flashing..."
-cp -v "$1" "$DIR_TMP/ts100.hex"
+cp -v "$1" "$HEX_FIRMWARE"
 sync
 
 echo "Waiting for TS100 to flash"
@@ -119,6 +136,5 @@ echo "Remounting config disk drive"
 umount_ts100
 wait_for_ts100
 mount_ts100
+check_flash
 
-echo "Flash result: "
-ls "$DIR_TMP"/ts100*
