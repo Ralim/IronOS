@@ -194,7 +194,7 @@
     },
     "LanguageSwitch": {
       "text2": ["Sprache:", " DE     Deutsch"],
-      "desc": ""
+      "desc": "Sprache der Firmware ändern"
     },
     "Brightness": {
       "text2": ["Bildschirm-", "kontrast"],
