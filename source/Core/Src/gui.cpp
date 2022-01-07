@@ -68,7 +68,7 @@ static void settings_displayPowerPulseWait(void);
 static bool settings_showPowerPulseOptions(void);
 static void settings_displayPowerPulseDuration(void);
 static void settings_displayBrightnessLevel(void);
-// static void settings_displayInvertColor(void);
+static void settings_displayInvertColor(void);
 
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
@@ -119,7 +119,7 @@ static bool settings_enterAdvancedMenu(void);
  *  Animation Speed
  *  -Animation Loop
  *  OLED Brightnes
- *  // Invert Screen
+ *  Invert Screen
  *  Detailed IDLE
  *  Detailed Soldering
  *
@@ -131,7 +131,6 @@ static bool settings_enterAdvancedMenu(void);
  *  Power Pulse
  *  -Power Pulse Delay
  *  -Power Pulse duration
- *  //Logo Time
  *
  */
 const menuitem rootSettingsMenu[] {
@@ -222,7 +221,7 @@ const menuitem UIMenu[] = {
      *  Animation Speed
      *  -Animation Loop
      *  OLED Brightnes
-     *  //Invert Screen
+     *  Invert Screen
      *  Detailed IDLE
      *  Detailed Soldering
      */
@@ -238,10 +237,10 @@ const menuitem UIMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed},                       /*Animation Speed adjustment */
     {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, settings_displayAnimationOptions, SettingsOptions::AnimationLoop}, /*Animation Loop switch */
     {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness},                     /*Brightness Level*/
-    // {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, nullptr, SettingsOptions::OLEDInversion},                  /*Invert screen colour*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE},                /*Advanced idle screen*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering}, /*Advanced soldering screen*/
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                 // end of menu marker. DO NOT REMOVE
+    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, nullptr, SettingsOptions::OLEDInversion},                     /*Invert screen colour*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE},                 /*Advanced idle screen*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering},  /*Advanced soldering screen*/
+    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                  // end of menu marker. DO NOT REMOVE
 };
 const menuitem advancedMenu[] = {
 
@@ -761,7 +760,7 @@ static void settings_displayBrightnessLevel(void) {
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
 }
-/*
+
 static void settings_displayInvertColor(void) {
   OLED::drawArea(0, 0, 24, 16, invertDisplayIcon);
   OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
@@ -770,7 +769,7 @@ static void settings_displayInvertColor(void) {
   OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
-} */
+}
 
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
