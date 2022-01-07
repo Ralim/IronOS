@@ -48,10 +48,10 @@ enum SettingsOptions {
   UILanguage                     = 31, // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
   PDNegTimeout                   = 32, // PD timeout in 100ms steps
   OLEDBrightness                 = 33, // Brightness for the OLED display
-  // OLEDInversion               = 34, // Invert the colours on the display
+  OLEDInversion                  = 34, // Invert the colours on the display
 
   //
-  SettingsOptionsLength = 34, //
+  SettingsOptionsLength = 35, //
 };
 
 typedef enum {
