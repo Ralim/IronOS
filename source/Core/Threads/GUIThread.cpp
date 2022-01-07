@@ -839,7 +839,7 @@ void startGUITask(void const *argument) {
 
   OLED::initialize(); // start up the LCD
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
-  // OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
+  OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
 
   uint8_t tempWarningState       = 0;
   bool    buttonLockout          = false;
