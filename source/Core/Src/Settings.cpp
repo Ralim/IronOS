@@ -29,7 +29,7 @@ typedef struct {
   uint16_t versionMarker;
   uint16_t length; // Length of valid bytes following
   uint16_t settingsValues[SettingsOptionsLength];
-  // used to make this nicely "good enough" aligned to 32 butes to make driver code trivial
+  // used to make this nicely "good enough" aligned to 32 bytes to make driver code trivial
   uint32_t padding;
 
 } systemSettingsType;

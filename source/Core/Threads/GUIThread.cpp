@@ -202,36 +202,23 @@ static void gui_solderingTempAdjust() {
       break;
     case BUTTON_B_LONG:
       if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
-        if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-          delta = getSettingValue(SettingsOptions::TempChangeLongStep);
-        } else
-          delta = -getSettingValue(SettingsOptions::TempChangeLongStep);
-
+        delta           = -getSettingValue(SettingsOptions::TempChangeLongStep);
         autoRepeatTimer = xTaskGetTickCount();
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;
     case BUTTON_B_SHORT:
-      if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-        delta = getSettingValue(SettingsOptions::TempChangeShortStep);
-      } else
-        delta = -getSettingValue(SettingsOptions::TempChangeShortStep);
+      delta = -getSettingValue(SettingsOptions::TempChangeShortStep);
       break;
     case BUTTON_F_LONG:
       if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
-        if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-          delta = -getSettingValue(SettingsOptions::TempChangeLongStep);
-        } else
-          delta = getSettingValue(SettingsOptions::TempChangeLongStep);
+        delta           = getSettingValue(SettingsOptions::TempChangeLongStep);
         autoRepeatTimer = xTaskGetTickCount();
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;
     case BUTTON_F_SHORT:
-      if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
-        delta = -getSettingValue(SettingsOptions::TempChangeShortStep);
-      } else
-        delta = getSettingValue(SettingsOptions::TempChangeShortStep);
+      delta = getSettingValue(SettingsOptions::TempChangeShortStep);
       break;
     default:
       break;
@@ -239,22 +226,31 @@ static void gui_solderingTempAdjust() {
     if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration) < PRESS_ACCEL_INTERVAL_MIN) {
       autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
     }
-    // constrain between 10-450 C
-    uint16_t newTemp = getSettingValue(SettingsOptions::SolderingTemp);
-    newTemp += delta;
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      if (newTemp > MAX_TEMP_F)
-        newTemp = MAX_TEMP_F;
-      if (newTemp < MIN_TEMP_F)
-        newTemp = MIN_TEMP_F;
-    } else {
-      if (newTemp > MAX_TEMP_C)
-        newTemp = MAX_TEMP_C;
-      if (newTemp < MIN_TEMP_C)
-        newTemp = MIN_TEMP_C;
+    // If buttons are flipped; flip the delta
+    if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
+      delta = -delta;
     }
-    setSettingValue(SettingsOptions::SolderingTemp, newTemp);
+    if (delta != 0) {
+      // constrain between the set temp limits, i.e. 10-450 C
+      int16_t newTemp = getSettingValue(SettingsOptions::SolderingTemp);
+      newTemp += delta;
+      // Round to nearest increment of delta
+      delta   = abs(delta);
+      newTemp = (newTemp / delta) * delta;
 
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
+        if (newTemp > MAX_TEMP_F)
+          newTemp = MAX_TEMP_F;
+        if (newTemp < MIN_TEMP_F)
+          newTemp = MIN_TEMP_F;
+      } else {
+        if (newTemp > MAX_TEMP_C)
+          newTemp = MAX_TEMP_C;
+        if (newTemp < MIN_TEMP_C)
+          newTemp = MIN_TEMP_C;
+      }
+      setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
+    }
     if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
       return; // exit if user just doesn't press anything for a bit
 
@@ -508,7 +504,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       case BUTTON_B_LONG:
       case BUTTON_F_SHORT:
       case BUTTON_B_SHORT:
-        // Do nothing and display a lock warming
+        // Do nothing and display a lock warning
         warnUser(translatedString(Tr->WarningKeysLockedString), TICKS_SECOND / 2);
         break;
       default:
@@ -552,7 +548,15 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       }
     }
     // else we update the screen information
-    OLED::setCursor(0, 0);
+#ifdef OLED_FLIP
+    if (!OLED::getRotation()) {
+#else
+    if (OLED::getRotation()) {
+#endif
+      OLED::setCursor(50, 0);
+    } else {
+      OLED::setCursor(-1, 0);
+    }
     OLED::clearScreen();
     // Draw in the screen details
     if (getSettingValue(SettingsOptions::DetailedSoldering)) {
@@ -560,23 +564,55 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 #ifndef NO_SLEEP_MODE
       if (getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)) {
-        OLED::setCursor(47, 0);
+#ifdef OLED_FLIP
+        if (!OLED::getRotation()) {
+#else
+        if (OLED::getRotation()) {
+#endif
+          OLED::setCursor(32, 0);
+        } else {
+          OLED::setCursor(47, 0);
+        }
         display_countdown(getSleepTimeout());
       }
 #endif
 
       if (boostModeOn) {
-        OLED::setCursor(54, 8);
+#ifdef OLED_FLIP
+        if (!OLED::getRotation()) {
+#else
+        if (OLED::getRotation()) {
+#endif
+          OLED::setCursor(38, 8);
+        } else {
+          OLED::setCursor(55, 8);
+        }
         OLED::print(SymbolPlus, FontStyle::SMALL);
       }
 
-      OLED::setCursor(67, 0);
+#ifdef OLED_FLIP
+      if (!OLED::getRotation()) {
+#else
+      if (OLED::getRotation()) {
+#endif
+        OLED::setCursor(0, 0);
+      } else {
+        OLED::setCursor(67, 0);
+      }
       OLED::printNumber(x10WattHistory.average() / 10, 2, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(x10WattHistory.average() % 10, 1, FontStyle::SMALL);
       OLED::print(SymbolWatts, FontStyle::SMALL);
 
-      OLED::setCursor(67, 8);
+#ifdef OLED_FLIP
+      if (!OLED::getRotation()) {
+#else
+      if (OLED::getRotation()) {
+#endif
+        OLED::setCursor(0, 8);
+      } else {
+        OLED::setCursor(67, 8);
+      }
       printVoltage();
       OLED::print(SymbolVolts, FontStyle::SMALL);
     } else {
@@ -649,9 +685,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     } else {
       setStatusLED(LED_HEATING);
     }
-    // If we have tripped thermal runaway, turn off header and show warning
+    // If we have tripped thermal runaway, turn off heater and show warning
     if (heaterThermalRunaway) {
-      currentTempTargetDegC = 0; // heaater control off
+      currentTempTargetDegC = 0; // heater control off
                                  // TODO WARNING
 
       warnUser(translatedString(Tr->WarningThermalRunaway), 10 * TICKS_SECOND);
@@ -910,27 +946,82 @@ void startGUITask(void const *argument) {
     }
     // Clear the lcd buffer
     OLED::clearScreen();
-    OLED::setCursor(0, 0);
+#ifdef OLED_FLIP
+    if (!OLED::getRotation()) {
+#else
+    if (OLED::getRotation()) {
+#endif
+      OLED::setCursor(50, 0);
+    } else {
+      OLED::setCursor(-1, 0);
+    }
     if (getSettingValue(SettingsOptions::DetailedIDLE)) {
       if (isTipDisconnected()) {
-        OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
+#ifdef OLED_FLIP
+        if (!OLED::getRotation()) {
+#else
+        if (OLED::getRotation()) {
+#endif
+          // in right handed mode we want to draw over the first part
+          OLED::drawArea(55, 0, 41, 16, disconnectedTipIconFlip);
+        } else {
+          OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
+        }
+#ifdef OLED_FLIP
+        if (!OLED::getRotation()) {
+#else
+        if (OLED::getRotation()) {
+#endif
+          OLED::setCursor(-1, 0);
+        } else {
+          OLED::setCursor(42, 0);
+        }
+        uint32_t Vlt = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
+        OLED::printNumber(Vlt / 10, 2, FontStyle::LARGE);
+        OLED::print(SymbolDot, FontStyle::LARGE);
+        OLED::printNumber(Vlt % 10, 1, FontStyle::LARGE);
+#ifdef OLED_FLIP
+        if (!OLED::getRotation()) {
+#else
+        if (OLED::getRotation()) {
+#endif
+          OLED::setCursor(48, 8);
+        } else {
+          OLED::setCursor(91, 8);
+        }
+        OLED::print(SymbolVolts, FontStyle::SMALL);
       } else {
         if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300)))
           // Blink temp if setting enable and temp < 55°
           // 1000 tick/sec
           // OFF 300ms ON 700ms
-          gui_drawTipTemp(true, FontStyle::LARGE);                                               // draw in the temp
-        OLED::setCursor(73, 0);                                                                  // top right
+          gui_drawTipTemp(true, FontStyle::LARGE); // draw in the temp
+#ifdef OLED_FLIP
+        if (!OLED::getRotation()) {
+#else
+        if (OLED::getRotation()) {
+#endif
+          OLED::setCursor(6, 0);
+        } else {
+          OLED::setCursor(73, 0); // top right
+        }
         OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::SMALL); // draw set temp
         if (getSettingValue(SettingsOptions::TemperatureInF))
           OLED::print(SymbolDegF, FontStyle::SMALL);
         else
           OLED::print(SymbolDegC, FontStyle::SMALL);
+#ifdef OLED_FLIP
+        if (!OLED::getRotation()) {
+#else
+        if (OLED::getRotation()) {
+#endif
+          OLED::setCursor(0, 8);
+        } else {
+          OLED::setCursor(67, 8); // bottom right
+        }
+        printVoltage(); // draw voltage then symbol (v)
+        OLED::print(SymbolVolts, FontStyle::SMALL);
       }
-
-      OLED::setCursor(67, 8); // bottom right
-      printVoltage();         // draw voltage then symbol (v)
-      OLED::print(SymbolVolts, FontStyle::SMALL);
 
     } else {
 #ifdef OLED_FLIP
@@ -967,7 +1058,6 @@ void startGUITask(void const *argument) {
           // in right handed mode we want to draw over the first part
           OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp
           OLED::setCursor(56, 0);
-
         } else {
           OLED::fillArea(0, 0, 41, 16, 0); // clear the area
           OLED::setCursor(0, 0);
@@ -987,7 +1077,6 @@ void startGUITask(void const *argument) {
 #endif
             // in right handed mode we want to draw over the first part
             OLED::drawArea(55, 0, 41, 16, disconnectedTipIconFlip);
-
           } else {
             OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
           }
