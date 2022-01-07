@@ -165,12 +165,13 @@ bootldr_size=0x0
 # Flags
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
-			-mcmodel=medany -fsigned-char 
+			-mcmodel=medany -fsigned-char -fno-builtin -fsingle-precision-constant \
+			-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
 			
 
 DEV_LDFLAGS=-nostartfiles -Xlinker --gc-sections  -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek --specs=patch.specs
 DEV_AFLAGS=-nostartfiles -ffreestanding -fno-common -Os -flto 
-DEV_GLOBAL_DEFS=-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+DEV_GLOBAL_DEFS=
 DEV_CFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
 DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
 endif
