@@ -6,8 +6,10 @@ WORKDIR /build
 # Compilders ->gcc-* newlib-*
 # Python3 -> py*
 # Misc -> findutils make git
+# musl-dev is required for the multi lang firmwares
+# clang is required for clang-format (for dev)
 
-RUN apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git
+RUN apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git musl-dev clang
 
 # Install Python3 packages
 
