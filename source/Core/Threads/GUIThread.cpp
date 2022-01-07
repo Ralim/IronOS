@@ -553,9 +553,9 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 #else
     if (OLED::getRotation()) {
 #endif
-      OLED::setCursor(50, 1);
+      OLED::setCursor(50, 0);
     } else {
-      OLED::setCursor(-1, 1);
+      OLED::setCursor(-1, 0);
     }
     OLED::clearScreen();
     // Draw in the screen details
@@ -951,9 +951,9 @@ void startGUITask(void const *argument) {
 #else
     if (OLED::getRotation()) {
 #endif
-      OLED::setCursor(50, 1);
+      OLED::setCursor(50, 0);
     } else {
-      OLED::setCursor(-1, 1);
+      OLED::setCursor(-1, 0);
     }
     if (getSettingValue(SettingsOptions::DetailedIDLE)) {
       if (isTipDisconnected()) {
@@ -972,9 +972,9 @@ void startGUITask(void const *argument) {
 #else
         if (OLED::getRotation()) {
 #endif
-          OLED::setCursor(-1, 1);
+          OLED::setCursor(-1, 0);
         } else {
-          OLED::setCursor(42, 1);
+          OLED::setCursor(42, 0);
         }
         uint32_t Vlt = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
         OLED::printNumber(Vlt / 10, 2, FontStyle::LARGE);
