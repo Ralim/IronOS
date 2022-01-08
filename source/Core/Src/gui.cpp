@@ -92,39 +92,45 @@ static bool settings_enterAdvancedMenu(void);
  *
  * Power Menu
  *  Power Source
+ *  -Minimum Voltage
+ *  QC Voltage
+ *  PD Timeout
  *
  * Soldering
- * 	Boost Mode Enabled
  * 	Boost Mode Temp
  * 	Auto Start
  *  Temp change short step
  *  Temp change long step
  *	Locking Mode
-
  *
  * Power Saving
- * 	Sleep Temp
- * 	Sleep Time
- * 	Shutdown Time
  * 	Motion Sensitivity
+ * 	-Sleep Temp
+ * 	-Sleep Time
+ * 	-Shutdown Time
  *
  * UI
  *  // Language
- *  Scrolling Speed
  *  Temperature Unit
  *  Display orientation
  *  Cooldown blink
+ *  Scrolling Speed
  *  Reverse Temp change buttons + -
- *
- * Advanced
- *  Enable Power Limit
- *  Power Limit
+ *  Animation Speed
+ *  -Animation Loop
+ *  OLED Brightnes
+ *  Invert Screen
  *  Detailed IDLE
  *  Detailed Soldering
- *  Logo Time
+ *
+ * Advanced
+ *  Power Limit
+ *  Factory Reset
  *  Calibrate Temperature
  *  Calibrate Input V
- *  Reset Settings
+ *  Power Pulse
+ *  -Power Pulse Delay
+ *  -Power Pulse duration
  *
  */
 const menuitem rootSettingsMenu[] {
@@ -153,7 +159,10 @@ const menuitem rootSettingsMenu[] {
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
 const menuitem powerMenu[] = {
 /*
- * Power Source
+ *  Power Source
+ *  -Minimum Voltage
+ *  QC Voltage
+ *  PD Timeout
  */
 #ifdef POW_DC
     {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, settings_displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells},                     /*Voltage input*/
@@ -170,11 +179,11 @@ const menuitem powerMenu[] = {
 #endif
 const menuitem solderingMenu[] = {
     /*
-     * Boost Mode Enabled
-     * 	Boost Mode Temp
+     * 	Boost Temp
      * 	Auto Start
      *  Temp change short step
      *  Temp change long step
+     *	Locking Mode
      */
     {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), settings_setBoostTemp, settings_displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength}, /*Boost Temp*/
     {SETTINGS_DESC(SettingsItemIndex::AutoStart), nullptr, settings_displayAutomaticStartMode, nullptr, SettingsOptions::AutoStartMode},                     /*Auto start*/
@@ -183,40 +192,12 @@ const menuitem solderingMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::LockingMode), nullptr, settings_displayLockingMode, nullptr, SettingsOptions::LockingMode},                            /*Locking Mode*/
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                   // end of menu marker. DO NOT REMOVE
 };
-const menuitem UIMenu[] = {
-    /*
-     // Language
-     *  Scrolling Speed
-     *  Temperature Unit
-     *  Display orientation
-     *  Cooldown blink
-     *  Reverse Temp change buttons + -
-     *  Detailed IDLE
-     *  Detailed Soldering
-     */
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF, settings_displayTempF, nullptr,
-     SettingsOptions::SettingsOptionsLength}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
-#ifndef NO_DISPLAY_ROTATE
-    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation, nullptr, SettingsOptions::SettingsOptionsLength}, /*Display Rotation*/
-#endif
-    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, settings_displayCoolingBlinkEnabled, nullptr, SettingsOptions::CoolingTempBlink}, /*Cooling blink warning*/
-    {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, settings_displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed},  /*Scroll Speed for descriptions*/
-    {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, settings_displayReverseButtonTempChangeEnabled, nullptr,
-     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                                                      /* Reverse Temp change buttons + - */
-    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed},                       /*Animation Speed adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, settings_displayAnimationOptions, SettingsOptions::AnimationLoop}, /*Animation Loop switch */
-    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness},                     /*Brightness Level*/
-    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, nullptr, SettingsOptions::OLEDInversion},                     /*Invert screen colour*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE},                 /* Advanced idle screen*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering},  /* Advanced soldering screen*/
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                  // end of menu marker. DO NOT REMOVE
-};
 const menuitem PowerSavingMenu[] = {
 /*
- *  Motion Sensitivity
- *  Sleep Temp
- * 	Sleep Time
- * 	Shutdown Time
+ * 	Motion Sensitivity
+ * 	-Sleep Temp
+ * 	-Sleep Time
+ * 	-Shutdown Time
  */
 #ifndef NO_SLEEP_MODE
     {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, settings_displaySensitivity, nullptr, SettingsOptions::Sensitivity},                                        /* Motion Sensitivity*/
@@ -229,18 +210,48 @@ const menuitem PowerSavingMenu[] = {
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength} // end of menu marker. DO NOT REMOVE
 };
+const menuitem UIMenu[] = {
+    /*
+     *  // Language
+     *  Temperature Unit
+     *  Display orientation
+     *  Cooldown blink
+     *  Scrolling Speed
+     *  Reverse Temp change buttons + -
+     *  Animation Speed
+     *  -Animation Loop
+     *  OLED Brightnes
+     *  Invert Screen
+     *  Detailed IDLE
+     *  Detailed Soldering
+     */
+    {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF, settings_displayTempF, nullptr,
+     SettingsOptions::SettingsOptionsLength}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
+#ifndef NO_DISPLAY_ROTATE
+    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation, nullptr, SettingsOptions::SettingsOptionsLength}, /*Display Rotation*/
+#endif
+    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, settings_displayCoolingBlinkEnabled, nullptr, SettingsOptions::CoolingTempBlink}, /*Cooling blink warning*/
+    {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, settings_displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed},  /*Scroll Speed for descriptions*/
+    {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, settings_displayReverseButtonTempChangeEnabled, nullptr,
+     SettingsOptions::ReverseButtonTempChangeEnabled},                                                                                                      /*Reverse Temp change buttons + - */
+    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed},                       /*Animation Speed adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, settings_displayAnimationOptions, SettingsOptions::AnimationLoop}, /*Animation Loop switch */
+    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness},                     /*Brightness Level*/
+    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, nullptr, SettingsOptions::OLEDInversion},                     /*Invert screen colour*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE},                 /*Advanced idle screen*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering},  /*Advanced soldering screen*/
+    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                  // end of menu marker. DO NOT REMOVE
+};
 const menuitem advancedMenu[] = {
 
     /*
-     *  Power limit
+     *  Power Limit
+     *  Factory Reset
      *  Calibrate Temperature
      *  Calibrate Input V
-     *  Reset Settings
      *  Power Pulse
-     *  Animation Loop
-     *  Animation Speed
-     *  Power Pulse Wait
-     *  Power Pulse Duration
+     *  -Power Pulse Delay
+     *  -Power Pulse duration
      */
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, settings_displayPowerLimit, nullptr, SettingsOptions::PowerLimit},                                        /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::SettingsReset), settings_setResetSettings, settings_displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength},     /*Resets settings*/
