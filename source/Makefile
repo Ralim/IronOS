@@ -221,15 +221,11 @@ endif
 # programs ---------------------------------------------------------------------
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
-AS=$(COMPILER_PREFIX)-as
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
-
-# For the Pinecil, use gcc in assembler mode
-ifeq ($(model),$(ALL_PINE_MODELS))
+# use gcc in assembler mode so we can use defines etc in assembly
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
-endif
 
 # linker flags -----------------------------------------------------------------
 LINKER_FLAGS=   -Wl,--gc-sections 		                      \
