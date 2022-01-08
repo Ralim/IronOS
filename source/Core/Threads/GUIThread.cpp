@@ -854,8 +854,6 @@ void startGUITask(void const *argument) {
       for (int x = 0; x < 84; x++) {
         idleScreenBGF[(row * 84) + x] = idleScreenBG[(row * 84) + (83 - x)];
       }
-    }
-    for (int row = 0; row < 2; row++) {
       for (int x = 0; x < 41; x++) {
         disconnectedTipF[(row * 41) + x] = disconnectedTip[(row * 41) + (40 - x)];
       }
