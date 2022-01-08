@@ -832,6 +832,7 @@ void showWarnings() {
 }
 
 uint8_t idleScreenBGF[sizeof(idleScreenBG)];
+uint8_t disconnectedTipF[sizeof(disconnectedTip)];
 /* StartGUITask function */
 void startGUITask(void const *argument) {
   (void)argument;
@@ -852,6 +853,11 @@ void startGUITask(void const *argument) {
     for (int row = 0; row < 2; row++) {
       for (int x = 0; x < 84; x++) {
         idleScreenBGF[(row * 84) + x] = idleScreenBG[(row * 84) + (83 - x)];
+      }
+    }
+    for (int row = 0; row < 2; row++) {
+      for (int x = 0; x < 41; x++) {
+        disconnectedTipF[(row * 41) + x] = disconnectedTip[(row * 41) + (40 - x)];
       }
     }
   }
@@ -963,9 +969,9 @@ void startGUITask(void const *argument) {
         if (OLED::getRotation()) {
 #endif
           // in right handed mode we want to draw over the first part
-          OLED::drawArea(55, 0, 41, 16, disconnectedTipIconFlip);
+          OLED::drawArea(55, 0, 41, 16, disconnectedTipF);
         } else {
-          OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
+          OLED::drawArea(0, 0, 41, 16, disconnectedTip);
         }
 #ifdef OLED_FLIP
         if (!OLED::getRotation()) {
@@ -1076,9 +1082,9 @@ void startGUITask(void const *argument) {
           if (OLED::getRotation()) {
 #endif
             // in right handed mode we want to draw over the first part
-            OLED::drawArea(55, 0, 41, 16, disconnectedTipIconFlip);
+            OLED::drawArea(55, 0, 41, 16, disconnectedTipF);
           } else {
-            OLED::drawArea(0, 0, 41, 16, disconnectedTipIcon);
+            OLED::drawArea(0, 0, 41, 16, disconnectedTip);
           }
         }
       }
