@@ -1,0 +1,2 @@
+*link:
+%(nano_link) %:replace-outfile(-lm_nano -lm)

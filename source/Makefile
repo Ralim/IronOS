@@ -42,6 +42,7 @@ HOST_CC := gcc
 endif
 HOST_OUTPUT_DIR=Objects/host
 
+# DFU packing address to use
 DEVICE_DFU_ADDRESS=0x08000000
 DEVICE_DFU_VID_PID=0x28E9:0x0189
 # Enumerate all of the include directories
@@ -63,16 +64,19 @@ MHP30_STARTUP_DIR = ./Startup
 MHP30_INC_DIR = ./Core/BSP/MHP30
 MHP30_LD_FILE = ./Core/BSP/MHP30/stm32f103.ld
 
-FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
-FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
-DRIVER_INC_DIR =./Core/Drivers
-BSP_INC_DIR = ./Core/BSP
-THREADS_INC_DIR = ./Core/Threads
 PINE_INC_DIR = ./Core/BSP/Pine64
 PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include
 PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include/Usb
 PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
+
+SOURCE_MIDDLEWARES_DIR = ./Middlewares
+FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
+FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
+DRIVER_INC_DIR =./Core/Drivers
+BSP_INC_DIR = ./Core/BSP
+THREADS_INC_DIR = ./Core/Threads
+
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
 SOURCE_BRIEFLZ_DIR = ./Core/brieflz
@@ -80,10 +84,9 @@ SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR = ./Core/Drivers/usb-pd/tests
 PD_DRIVER_DIR = ./Core/Drivers/usb-pd
-SOURCE_MIDDLEWARES_DIR = ./Middlewares
 # Find-all's used for formatting
-ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 
+ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
 # Device dependent settings
@@ -100,14 +103,10 @@ LDSCRIPT=$(MINIWARE_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
-DEV_LDFLAGS=-lm -Wl,--gc-sections 
+DEV_LDFLAGS= 
 DEV_AFLAGS=
-DEV_CFLAGS= -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD		
-DEV_CXXFLAGS= -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD		
+DEV_CFLAGS= 
+DEV_CXXFLAGS= 
 CPUFLAGS= -mcpu=cortex-m3     \
 		  -mthumb 			\
 		  -mfloat-abi=soft
@@ -130,14 +129,10 @@ LDSCRIPT=$(MHP30_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
-DEV_LDFLAGS=-lm -Wl,--gc-sections 
+DEV_LDFLAGS= 
 DEV_AFLAGS=
-DEV_CFLAGS= -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD		
-DEV_CXXFLAGS= -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD		
+DEV_CFLAGS= 
+DEV_CXXFLAGS= 
 CPUFLAGS= -mcpu=cortex-m3     \
 		  -mthumb 			\
 		  -mfloat-abi=soft
@@ -146,6 +141,8 @@ bootldr_size=32k
 DEVICE_DFU_ADDRESS=0x08008000
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
+
+
 ifeq ($(model),$(ALL_PINE_MODELS))
 $(info Building for Pine64 )
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
@@ -163,14 +160,12 @@ bootldr_size=0x0
 # Flags
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
-			-mcmodel=medany -fsigned-char -fno-builtin -fsingle-precision-constant \
-			-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
-
-DEV_LDFLAGS= -lstdc++ -nostartfiles -Xlinker --gc-sections --specs=nosys.specs -u _isatty -u _write -u _sbrk -u _read -u _close -u _fstat -u _lseek
-DEV_AFLAGS= -nostartfiles -ffreestanding -fno-common -Os -flto 
-DEV_GLOBAL_DEFS=
-DEV_CFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
-DEV_CXXFLAGS= -MMD -MP -MF "$(@:%.o=%.d)" -MT "$@"
+			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles
+DEV_LDFLAGS=-nostartfiles --specs=patch.specs
+DEV_AFLAGS=  
+DEV_GLOBAL_DEFS= -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+DEV_CFLAGS=
+DEV_CXXFLAGS=
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
@@ -197,12 +192,12 @@ $(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums
+OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant -ffreestanding -fno-common
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
 
-DEBUG=-g3
+DEBUG=-g3 
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
 endif
@@ -221,33 +216,30 @@ ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
 ifeq ($(model),$(ALL_PINE_MODELS))
-COMPILER_PREFIX=riscv-nuclei-elf
+COMPILER_PREFIX=riscv-none-elf
 endif
 # programs ---------------------------------------------------------------------
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
-AS=$(COMPILER_PREFIX)-as
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
-
-# For the Pinecil, use gcc in assembler mode
-ifeq ($(model),$(ALL_PINE_MODELS))
+# use gcc in assembler mode so we can use defines etc in assembly
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
-endif
 
 # linker flags -----------------------------------------------------------------
 LINKER_FLAGS=   -Wl,--gc-sections 		                      \
                 -Wl,--wrap=malloc                             \
 			    -Wl,--wrap=free                               \
-			    -lm                                           \
 			    -Wl,--undefined=vTaskSwitchContext            \
 			    -Wl,--undefined=pxCurrentTCB                  \
 			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
-				$(DEV_LDFLAGS)                                \
+				-Wl,--print-memory-usage 					  \
 				-flto 										  \
-			    --specs=nano.specs
+				--specs=nosys.specs 						  \
+			    --specs=nano.specs						      \
+				$(DEV_LDFLAGS)
 
 # compiler flags ---------------------------------------------------------------
 
@@ -296,8 +288,6 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 		$(CHECKOPTIONS)		     \
 		-std=c++14			     \
 		$(OPTIM) 			     \
-		-fno-common			     \
-		-ffreestanding		     \
 		-fno-rtti 			     \
 		-fno-exceptions 	     \
 		-fno-non-call-exceptions \
@@ -309,27 +299,27 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 		-T$(LDSCRIPT)
 
 
-CFLAGS=$(DEV_CFLAGS) \
-        $(CPUFLAGS) \
-		$(DEBUG) 			\
+CFLAGS=$(DEV_CFLAGS) 			\
+        $(CPUFLAGS) 			\
+		$(DEBUG) 				\
 		$(INCLUDES) 			\
 		$(CHECKOPTIONS_C) 		\
 		$(GLOBAL_DEFINES) 		\
 		-D${COMPILER}  			\
-		-MMD 				\
-		-std=gnu99			\
-		$(OPTIM) 			\
-		-fno-common			\
-		-ffreestanding			\
+		-MMD 					\
+		-std=gnu99				\
+		$(OPTIM) 				\
 		-T$(LDSCRIPT)			\
 		-c                      
 
 		
 		
-AFLAGS= $(CPUFLAGS)   \
-		$(DEV_AFLAGS) \
-		$(DEBUG)      \
-		$(ASM_INC)    \
+AFLAGS= $(CPUFLAGS)    			\
+		$(DEV_AFLAGS)  			\
+		$(GLOBAL_DEFINES) 		\
+		$(OPTIM) 				\
+		$(DEBUG)      			\
+		$(ASM_INC)    			\
 		$(INCLUDES)
 
 
@@ -351,8 +341,6 @@ default : firmware-EN
 firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFILE_DIR)/$(model)_%.dfu
 	@true
 
-ALL_FIRMWARE_TARGETS=$(addprefix firmware-,$(ALL_LANGUAGES))
-all: $(ALL_FIRMWARE_TARGETS)
 
 #
 # The rule to create the target directory

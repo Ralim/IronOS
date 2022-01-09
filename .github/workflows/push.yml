@@ -5,31 +5,23 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-20.04
+    container:
+      image: alpine:3.15
     strategy:
       matrix:
         model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30"]
       fail-fast: true
 
     steps:
+      - name: Install dependencies (apk)
+        run: apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash
+
+      - name: Install dependencies (python)
+        run: python3 -m pip install bdflib
+
       - uses: actions/checkout@v2
         with:
           submodules: true
-
-      - name: chmod
-        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-
-      - name: Cached compiler source files
-        uses: actions/cache@v2.1.7
-        env:
-          cache-name: cache-compilers
-        with:
-          path: /build/cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-
-
-      - name: setup
-        run: ./setup.sh
 
       - name: build ${{ matrix.model }}
         run: cd source && ./build.sh -m ${{ matrix.model }}
@@ -52,31 +44,22 @@ jobs:
 
   build_multi-lang:
     runs-on: ubuntu-20.04
+    container:
+      image: alpine:3.15
     strategy:
       matrix:
         model: ["Pinecil"]
       fail-fast: true
 
     steps:
+      - name: Install dependencies (apk)
+        run: apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash musl-dev
+      - name: Install dependencies (python)
+        run: python3 -m pip install bdflib
+
       - uses: actions/checkout@v2
         with:
           submodules: true
-
-      - name: chmod
-        run: chmod +x setup.sh && chmod +x source/build.sh && sudo mkdir -p /build/cache && sudo chmod -R 777 /build
-
-      - name: Cached compiler source files
-        uses: actions/cache@v2.1.7
-        env:
-          cache-name: cache-compilers
-        with:
-          path: /build/cache
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-
-
-      - name: setup
-        run: ./setup.sh
 
       - name: build ${{ matrix.model }}
         run: cd source && make -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
@@ -142,6 +125,7 @@ jobs:
 
       - name: setup
         run: sudo apt-get update && sudo apt-get install -y make clang git python3 python3-pip && python3 -m pip install bdflib black flake8
+
       - name: Check formatting with clang-format
         run: cd source && make clean && make check-style
 
