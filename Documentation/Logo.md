@@ -33,8 +33,10 @@ To flash the logo, use the following steps:
 
 
  - `python3 img2ts100.py input.png logo.hex`
- - `riscv-nuclei-elf-objcopy -I ihex -O binary logo.hex logo.bin`
+ - `objcopy -I ihex -O binary logo.hex logo.bin`
  - `dfu-util -d 28e9:0189 -a 0 -D logo.bin -s 0x0801F800`
 
  This will use the objcopy tool to convert the hex to a binary file, and then use dfu-util to flash it in the right location.
- If you do not have `riscv-nuclei-elf-objcopy` installed, you can generally use any objcopy tool from any toolchain you do have.
+ If you do not have an `objcopy` command you can install the `binutils` suite using your OSs package manager. 
+ Maybe you also have already installed the riscv-nuclei toolchain, then you can use `riscv-nuclei-elf-objcopy`.
+ Generally you can use any objcopy tool from any toolchain you do have.
