@@ -12,16 +12,16 @@ The firmware implements all of the standard features of a "smart" soldering iron
 I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
 
 For soldering irons that are designed to be powered by "smart" power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
-For soldering irons that are designed to be powered by batteries (TS100), settings for a cutoff voltage for battery protection are supported.
+For soldering irons that are designed to be powered by batteries (TS100 & Pinecil), settings for a cutoff voltage for battery protection are supported.
 
-There are 25 languages currently supported as of present. When downloading the firmware for your soldering iron take note of the language code in the file name.
+There are 29 languages currently supported as of present. When downloading the firmware for your soldering iron take note of the language code in the file name.
 
 This project is considered feature complete for use as a soldering iron, _so please suggest any feature improvements you would like!_
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
 To get started with this firmware, please jump over to [here](Documentation/GettingStarted.md).
-But the TL;DR is to press the button near the front of the iron to heat up. Use the button near the back of the iron to enter the settings menu.
+But the [TL;DR](https://www.merriam-webster.com/dictionary/TL%3BDR) is to press the button near the front of the iron to heat up. Use the button near the back of the iron to enter the settings menu.
 Long hold the rear button in soldering mode to exit back to the start screen.
 
 ## Installation
@@ -50,14 +50,14 @@ For notes on installation for your device, please refer to the [Flashing Guide](
 ## Menu System
 
 This new firmware uses a new menu system to allow access to the settings on the device.
-When on the main screen, the unit shows a pair of prompts for the two most common operations.
+When on the main screen and having the tip plugged in, the unit shows a pair of prompts for the two most common operations.
 
-- Pressing the button near the tip enters the soldering mode
-- Pressing the button near the USB enters the settings menu
-- Holding the button near the tip will enter soldering temperature adjust mode (This is the same as the one in the soldering menu, just to let you edit before heating up)
-- Holding the button near the USB end will show the [debug menu](Documentation/DebugMenu.md)
+- Pressing the button near the tip enters the *soldering mode*
+- Pressing the button near the USB end enters the *settings menu*
+- When not in *soldering mode*, holding down the button near the tip will enter *soldering temperature adjust mode* (This is the same as the one in the *soldering mode*, but allows to adjust the temperature before heating up), in *soldering mode* however this will activate *boost mode* as long as you hold down the button.
+- Holding down the button near the USB end will show the *[debug menu](Documentation/DebugMenu.md).* In *soldering mode* this ends the heating.
 
-Detailed operation details are over in the [Menu information.](Documentation/Menu.md)
+Operation details are over in the [Menu information.](Documentation/Menu.md)
 
 ## Thanks
 
