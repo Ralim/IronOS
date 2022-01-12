@@ -32,9 +32,7 @@ For the Pinecil, we require to flash the logo using dfu-util instead, which will
 To flash the logo, use the following steps:
 
 
- - `python3 img2ts100.py input.png logo.hex`
- - `riscv-nuclei-elf-objcopy -I ihex -O binary logo.hex logo.bin`
+ - `python3 img2ts100.py input.png logo.bin`
  - `dfu-util -d 28e9:0189 -a 0 -D logo.bin -s 0x0801F800`
 
- This will use the objcopy tool to convert the hex to a binary file, and then use dfu-util to flash it in the right location.
- If you do not have `riscv-nuclei-elf-objcopy` installed, you can generally use any objcopy tool from any toolchain you do have.
+ The converter will create a binary file if the .bin extension is used. Use dfu-util to flash it in the right location.
