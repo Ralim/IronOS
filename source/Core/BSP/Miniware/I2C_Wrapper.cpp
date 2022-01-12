@@ -11,10 +11,10 @@ SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 
 void FRToSI2C::CpltCallback() {
-  hi2c1.State = HAL_I2C_STATE_READY; // Force state reset (even if tx error)
-  if (I2CSemaphore) {
-    xSemaphoreGiveFromISR(I2CSemaphore, NULL);
-  }
+  // hi2c1.State = HAL_I2C_STATE_READY; // Force state reset (even if tx error)
+  // if (I2CSemaphore) {
+  //   xSemaphoreGiveFromISR(I2CSemaphore, NULL);
+  // }
 }
 
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
