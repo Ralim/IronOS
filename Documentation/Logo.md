@@ -31,7 +31,6 @@ You perform this the same way as if you were flashing a new firmware, and all of
 For the Pinecil, we require to flash the logo using dfu-util instead, which will only take `.bin` files rather than `.hex`.
 To flash the logo, use the following steps:
 
-
  - `python3 img2ts100.py input.png logo.bin`
  - `dfu-util -d 28e9:0189 -a 0 -D logo.bin -s 0x0801F800`
 
