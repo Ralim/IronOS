@@ -13,7 +13,7 @@ except ImportError as error:
                       "management tool."
                       .format(error, sys.argv[0]))
 
-VERSION_STRING = '0.01'
+VERSION_STRING = '0.02'
 
 LCD_WIDTH       = 96
 LCD_HEIGHT      = 16
@@ -87,7 +87,8 @@ def img2hex(input_filename,
             preview_filename=None,
             threshold=128,
             dither=False,
-            negative=False):
+            negative=False,
+            binary=False):
     """
     Convert 'input_filename' image file into Intel hex format with data
         formatted for display on TS100 LCD and file object.
@@ -158,7 +159,11 @@ def img2hex(input_filename,
         # store in endian-reversed byte order
         data[4 + ndx + (1 if ndx % 2 == 0 else -1)] = byte
 
-    intel_hex(output_file, data, 0x0800F800)
+    if binary:
+        for byte in data:
+            output_file.write(byte.to_bytes(1, byteorder="big"))
+    else:
+        intel_hex(output_file, data, 0x0800F800)
 
 
 def parse_commandline():
@@ -229,13 +234,23 @@ if __name__ == "__main__":
         sys.exit(1)
 
     try:
-        with open(args.output_filename, 'w', newline='\r\n') as output:
-            img2hex(args.input_filename,
-                    output,
-                    args.preview,
-                    args.threshold,
-                    args.dither,
-                    args.negative)
+        if args.output_filename[-4:] == ".bin":
+            with open(args.output_filename, 'wb') as output:
+                img2hex(args.input_filename,
+                        output,
+                        args.preview,
+                        args.threshold,
+                        args.dither,
+                        args.negative,
+                        True)
+        else:
+            with open(args.output_filename, 'w', newline='\r\n') as output:
+                img2hex(args.input_filename,
+                        output,
+                        args.preview,
+                        args.threshold,
+                        args.dither,
+                        args.negative)
     except BaseException as error:
         sys.stderr.write("Error converting file: {}\n".format(error))
         sys.exit(1)
