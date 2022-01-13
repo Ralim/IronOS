@@ -31,12 +31,7 @@ You perform this the same way as if you were flashing a new firmware, and all of
 For the Pinecil, we require to flash the logo using dfu-util instead, which will only take `.bin` files rather than `.hex`.
 To flash the logo, use the following steps:
 
-
- - `python3 img2ts100.py input.png logo.hex`
- - `objcopy -I ihex -O binary logo.hex logo.bin`
+ - `python3 img2ts100.py input.png logo.bin`
  - `dfu-util -d 28e9:0189 -a 0 -D logo.bin -s 0x0801F800`
 
- This will use the objcopy tool to convert the hex to a binary file, and then use dfu-util to flash it in the right location.
- If you do not have an `objcopy` command you can install the `binutils` suite using your OSs package manager. 
- Maybe you also have already installed the riscv-nuclei toolchain, then you can use `riscv-nuclei-elf-objcopy`.
- Generally you can use any objcopy tool from any toolchain you do have.
+ The converter will create a binary file if the .bin extension is used. Use dfu-util to flash it in the right location.
