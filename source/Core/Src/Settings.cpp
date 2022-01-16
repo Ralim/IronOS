@@ -172,13 +172,18 @@ bool nextSettingValue(const enum SettingsOptions option) {
 // Return true if we are at the end (min)
 bool prevSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
-  int        value     = systemSettings.settingsValues[(int)option];
-  if (value <= constants.min) {
-    value = constants.max;
+  if (systemSettings.settingsValues[(int)option] == (constants.min)) {
+    // Already at min, wrap to the max
+    systemSettings.settingsValues[(int)option] = constants.max;
+  } else if (systemSettings.settingsValues[(int)option] <= (constants.min + constants.increment)) {
+    // If within one increment of the start, constrain to the start
+    systemSettings.settingsValues[(int)option] = constants.min;
+  } else {
+    // Otherwise decrement
+    systemSettings.settingsValues[(int)option] -= constants.increment;
   }
-  value -= constants.increment;
-  systemSettings.settingsValues[(int)option] = value;
-  return systemSettings.settingsValues[(int)option] == constants.min;
+  // Return if we are at the min
+  return constants.min == systemSettings.settingsValues[(int)option];
 }
 uint16_t lookupHallEffectThreshold() {
   // Return the threshold above which the hall effect sensor is "activated"
