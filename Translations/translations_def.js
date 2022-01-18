@@ -169,7 +169,7 @@ var def =
 			"len": 1,
 			"default": "F",
 			"description":"Shown when the locking mode is set to lock all buttons."
-		},
+		}
 	],
 	"menuGroups": [
 		{
