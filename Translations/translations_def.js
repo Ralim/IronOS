@@ -2,169 +2,205 @@ var def =
 {
 	"messages": [
 		{
-			"id": "SettingsCalibrationWarning"
+			"id": "SettingsCalibrationWarning",
+			"description":"Confirmation message shown before performing an offset calibration. Should warn user to make sure tip and handle are at the same temperature."
 		},
 		{
-			"id": "SettingsResetWarning"
+			"id": "SettingsResetWarning",
+			"description":"Confirmation message shown before confirming a settings reset."
 		},
 		{
 			"id": "UVLOWarningString",
-			"maxLen": 8
+			"maxLen": 8,
+			"description":"Warning text shown when the unit turns off due to undervoltage in simple mode."
 		},
 		{
 			"id": "UndervoltageString",
-			"maxLen": 16
+			"maxLen": 16,
+			"description":"Warning text shown when the unit turns off due to undervoltage in advanced mode."
 		},
 		{
 			"id": "InputVoltageString",
 			"maxLen": 11,
-			"note": "Preferably end with a space"
+			"note": "Preferably end with a space",
+			"description":"Prefix text for 'Input Voltage' shown before showing the input voltage reading"
 		},
 		{
 			"id": "SleepingSimpleString",
-			"maxLen": 4
+			"maxLen": 4,
+			"description":"The text shown to indicate the unit is in sleep mode when advanced view is NOT on"
 		},
 		{
 			"id": "SleepingAdvancedString",
-			"maxLen": 16
+			"maxLen": 16,
+			"description":"The text shown to indicate the unit is in sleep mode when advanced view is turned on"
 		},
 		{
 			"id": "SleepingTipAdvancedString",
-			"maxLen": 6
+			"maxLen": 6,
+			"description":"The prefix text shwon before tip temperature when the unit is sleeping with advanced view on."
 		},
 		{
 			"id": "OffString",
-			"maxLen": 3
+			"maxLen": 3,
+			"description":"Shown when a setting is turned off"
 		}
 	],
 	"messagesWarn": [
 		{
-			"id": "ResetOKMessage"
+			"id": "SettingsResetMessage",
+			"description":"Shown when the settings are reset to factory defaults either by user or by incompatible firmware changes."
 		},
 		{
-			"id": "SettingsResetMessage"
+			"id": "NoAccelerometerMessage",
+			"description":"No accelerometer could be communicated with. This means that either the devices accelerometer is broken or unknown to IronOS. All motion based settings are disabled and motion based features will not work."
 		},
 		{
-			"id": "NoAccelerometerMessage"
+			"id": "NoPowerDeliveryMessage",
+			"description":"The IC required for USB-PD could not be communicated with. This is an error warning that USB-PD WILL NOT FUNCTION. Generally indicative of either a hardware or software issues."
 		},
 		{
-			"id": "NoPowerDeliveryMessage"
+			"id": "LockingKeysString",
+			"description":"Shown when keys are locked"
 		},
 		{
-			"id": "LockingKeysString"
+			"id": "UnlockingKeysString",
+			"description":"Shown when keys are unlocked"
 		},
 		{
-			"id": "UnlockingKeysString"
+			"id": "WarningKeysLockedString",
+			"description":"Warning shown when imput is ignored due to key lock being on"
 		},
 		{
-			"id": "WarningKeysLockedString"
-		},
-		{
-			"id": "WarningThermalRunaway"
+			"id": "WarningThermalRunaway",
+			"description":"Warning text shown when the software has disabled the heater as a safety precaution as the temperature reading didnt react as expected."
 		}
 	],
 	"characters": [
 		{
 			"id": "SettingRightChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown for fixed Right-handed display rotation."
 		},
 		{
 			"id": "SettingLeftChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown for fixed Left-handed display rotation."
 		},
 		{
 			"id": "SettingAutoChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown for automatic display rotation."
 		},
 		{
 			"id": "SettingFastChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a setting is set to a fast value i.e. animation speed"
 		},
 		{
 			"id": "SettingSlowChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a setting is set to a slow value i.e. animation speed"
 		},
 		{
 			"id": "SettingMediumChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a setting is set to a medium value i.e. animation speed"
 		},
 		{
 			"id": "SettingOffChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a setting is turned off"
 		},
 		{
 			"id": "SettingStartSolderingChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when the auto start mode is set to go straight to soldering."
 		},
 		{
 			"id": "SettingStartSleepChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when the auto start mode is to start in sleep mode."
 		},
 		{
 			"id": "SettingStartSleepOffChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when the auto start state is set to go to an off state but on movement wake into soldering mode."
 		},
 		{
 			"id": "SettingStartNoneChar",
-			"len": 1
+			"len": 1,
+			"description":"Shown when auto start state is to do nothing and go to a normal boot"
 		},
 		{
 			"id": "SettingSensitivityOff",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a sensitivity (hall effect) is disabled. Turning off the sensor."
 		},
 		{
 			"id": "SettingSensitivityLow",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a sensitivity (hall effect) is not very sensitive"
 		},
 		{
 			"id": "SettingSensitivityMedium",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a sensitivity (hall effect) is average sensitive"
 		},
 		{
 			"id": "SettingSensitivityHigh",
-			"len": 1
+			"len": 1,
+			"description":"Shown when a sensitivity (hall effect) is highly sensitive"
 		},
 		{
 			"id": "SettingLockDisableChar",
 			"len": 1,
-			"default": "D"
+			"default": "D",
+			"description":"Shown when locking mode is turned off"
 		},
 		{
 			"id": "SettingLockBoostChar",
 			"len": 1,
-			"default": "B"
+			"default": "B",
+			"description":"Shown when the locking mode is set to lock all buttons except for boost mode."
 		},
 		{
 			"id": "SettingLockFullChar",
 			"len": 1,
-			"default": "F"
+			"default": "F",
+			"description":"Shown when the locking mode is set to lock all buttons."
 		},
 	],
 	"menuGroups": [
 		{
 			"id": "PowerMenu",
 			"maxLen": 5,
-			"maxLen2": 11
+			"maxLen2": 11,
+			"description":""
 		},
 		{
 			"id": "SolderingMenu",
 			"maxLen": 5,
-			"maxLen2": 11
+			"maxLen2": 11,
+			"description":""
 		},
 		{
 			"id": "PowerSavingMenu",
 			"maxLen": 5,
-			"maxLen2": 11
+			"maxLen2": 11,
+			"description":""
 		},
 		{
 			"id": "UIMenu",
 			"maxLen": 5,
-			"maxLen2": 11
+			"maxLen2": 11,
+			"description":""
 		},
 		{
 			"id": "AdvancedMenu",
 			"maxLen": 5,
-			"maxLen2": 11
+			"maxLen2": 11,
+			"description":""
 		}
 	],
 	"menuOptions": [
