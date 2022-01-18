@@ -19,6 +19,8 @@ ENGLISH_TRANSLATION_PATH = os.path.join(HERE, "translation_EN.json")
 MENU_DOCS_FILE_PATH = os.path.join(HERE.parent, "Documentation/Settings.md")
 
 # Loading a single JSON file
+
+
 def load_json(filename: str, skip_first_line: bool) -> dict:
     with open(filename) as f:
         if skip_first_line:
@@ -66,10 +68,11 @@ def write_menu_entries(filep, defs, translation_data):
     """
     Writes the menu entries section out
     """
+
     menu_entries_pretense = """
 ## Settings
 
-These are all off the settings possible in the menu. 
+These are all off the settings possible in the menu.
 Not all settings are visible for all devices.
 For example, the TS100 does not have USB-PD settings.
 
