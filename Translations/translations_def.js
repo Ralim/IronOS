@@ -292,7 +292,7 @@ var def =
 			"id": "AdvancedSoldering",
 			"maxLen": 6,
 			"maxLen2": 13,
-			"description":""
+			"description":"Should the device show an 'advanced' soldering view. This is a text based view that shows more information at the cost of no nice graphics."
 		},
 		{
 			"id": "ScrollingSpeed",
