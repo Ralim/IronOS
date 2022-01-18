@@ -72,8 +72,8 @@ def write_menu_entries(filep, defs, translation_data):
     menu_entries_pretense = """
 ## Settings
 
-These are all off the settings possible in the menu.
-Not all settings are visible for all devices.
+These are all of the settings possible in the menu.
+**Not all settings are visible for all devices.**
 For example, the TS100 does not have USB-PD settings.
 
 When using the device, if unsure you can pause (press nothing) on a setting and after a short delay help text will scroll across the screen.
