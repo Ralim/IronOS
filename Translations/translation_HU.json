@@ -16,7 +16,7 @@
     "IdleSetString": " Cél:",
     "TipDisconnectedString": "PÁKA LEVÉVE",
     "SolderingAdvancedPowerPrompt": "Telj.: ",
-    "OffString": "Ki",
+    "OffString": "Ki"
   },
   "messagesWarn": {
     "ResetOKMessage": "Törlés OK",
