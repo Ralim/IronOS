@@ -413,6 +413,9 @@
             <td class="label"><div class="stringId">{{message.id}}</div></td>
             <td class="value">
               <div class="constraint">{{constraintString(message)}}</div>
+              <div class="label">Description</div>
+              <div class="ref">{{message.description}}</div>
+              <div class="label">Reference</div>
               <div class="ref">{{referent.messages[message.id]}}</div>
               <div class="note" v-if="message.note">{{message.note}}</div>
               <div class="tran">
@@ -439,6 +442,9 @@
                 {{constraintWholeScreenMessage(current.messagesWarn,
                 message.id)}}
               </div>
+              <div class="label">Description</div>
+              <div class="ref">{{message.description}}</div>
+              <div class="label">Reference</div>
               <div class="ref">{{referent.messagesWarn[message.id]}}</div>
               <div class="note" v-if="message.note">{{message.note}}</div>
               <div
@@ -491,6 +497,9 @@
             <td class="label"><div class="stringId">{{char.id}}</div></td>
             <td class="value">
               <div class="constraint">{{constraintString(char)}}</div>
+              <div class="label">Description</div>
+              <div class="ref">{{char.description}}</div>
+              <div class="label">Reference</div>
               <div class="ref">{{referent.characters[char.id]}}</div>
               <div class="tran">
                 <input
@@ -516,6 +525,9 @@
                 {{constraintWholeScreenMessage(current.menuGroups, menu.id,
                 'text2')}}
               </div>
+              <div class="label">Description</div>
+              <div class="ref">{{menu.description}}</div>
+              <div class="label">Reference</div>
               <div class="ref">{{referent.menuGroups[menu.id].text2}}</div>
               <div
                 class="tran"
@@ -578,7 +590,7 @@
                   {{constraintWholeScreenMessage(current.menuOptions, menu.id,
                   'text2')}}
                 </div>
-                <div class="label">Setting Description</div>
+                <div class="label">Description</div>
                 <div class="ref">{{menu.description}}</div>
                 <div class="label">Reference</div>
                 <div class="ref">{{referent.menuOptions[menu.id].text2}}</div>

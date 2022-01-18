@@ -176,31 +176,31 @@ var def =
 			"id": "PowerMenu",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description":""
+			"description":"Menu for settings related to power. Main settings to do with the input voltage."
 		},
 		{
 			"id": "SolderingMenu",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description":""
+			"description":"Setttings for soldering mode, such as tip temperature, boost temps, sleep temps."
 		},
 		{
 			"id": "PowerSavingMenu",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description":""
+			"description":"Settings to do with power saving, such as sleep mode and shutdown modes."
 		},
 		{
 			"id": "UIMenu",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description":""
+			"description":"User interface related settings, such as Units."
 		},
 		{
 			"id": "AdvancedMenu",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description":""
+			"description":"Advanced settings. Misc catchall for settings that dont fit anywhere else or settings that require some thought before use."
 		}
 	],
 	"menuOptions": [
