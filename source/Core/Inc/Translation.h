@@ -112,7 +112,8 @@ struct TranslationIndexTable {
 };
 
 extern const TranslationIndexTable *Tr;
-extern const char                  *TranslationStrings;
+
+extern const char *TranslationStrings;
 
 struct TranslationData {
   TranslationIndexTable indices;
