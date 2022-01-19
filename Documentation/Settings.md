@@ -18,7 +18,7 @@ Settings for soldering mode, such as boost temps, the increment used when pressi
 
 ### Category: Sleep mode
 
-Settings to do with power saving, such as sleep mode,sleep temps, and shutdown modes.
+Settings to do with power saving, such as sleep mode, sleep temps, and shutdown modes.
 
 ### Category: User interface
 
@@ -39,7 +39,7 @@ This is the "on device help text".
 
 ### Setting: Power source
 
-When device is powered by a battery,this adjusts the low voltage threshold for when the unit should turns off the heater to protect the battery.
+When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery.
 
 On device help text:
 
@@ -63,7 +63,7 @@ Interval before "sleep mode" kicks in (S=seconds | M=minutes)
 
 ### Setting: Shutdown timeout
 
-How long of a period of movement/button pressing inactivity is required before the device turns of the tip heater completely and returns to the main idle screen.
+How long of a period of movement/button pressing inactivity is required before the device turns off the tip heater completely and returns to the main idle screen.
 
 On device help text:
 
@@ -87,7 +87,7 @@ C=Celsius | F=Fahrenheit
 
 ### Setting: Detailed idle screen
 
-Should the device show an 'advanced' view on the idle screen. Advanced view uses text to show more details than the typical icons.
+Should the device show an 'advanced' view on the idle screen. The advanced view uses text to show more details than the typical icons.
 
 On device help text:
 
@@ -95,7 +95,7 @@ Display detailed information in a smaller font on the idle screen
 
 ### Setting: Display orientation
 
-If the display should rotate automatically or if it should be fixed into Left or Right handed mode.
+If the display should rotate automatically or if it should be fixed into Left or Right handed orientation.
 
 On device help text:
 
@@ -111,7 +111,7 @@ Temperature used in "boost mode"
 
 ### Setting: Heat on power up
 
-When the device powers up, should it enter into a special mode. These settings set it to either start into: Soldering mode, sleeping mode, Auto mode (Enters into soldering mode on first movement).
+When the device powers up, should it enter into a special mode. These settings set it to either start into Soldering mode, sleeping mode, Auto mode (Enters into soldering mode on the first movement).
 
 On device help text:
 
@@ -135,7 +135,7 @@ Start tip temperature offset calibration
 
 ### Setting: Factory reset?
 
-Resets all settings and calibrations to factory defaults. Does NOT erase custom user bootup logo's.
+Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
 
 On device help text:
 
@@ -151,7 +151,7 @@ Start VIN calibration (long press to exit)
 
 ### Setting: Detailed solder screen
 
-Should the device show an 'advanced' soldering view. This is a text based view that shows more information at the cost of no nice graphics.
+Should the device show an 'advanced' soldering view. This is a text-based view that shows more information at the cost of no nice graphics.
 
 On device help text:
 
@@ -175,7 +175,7 @@ Max QC voltage the iron should negotiate for
 
 ### Setting: PD timeout
 
-How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy/old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small.
+How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy/old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended keeping to small values.
 
 On device help text:
 
@@ -287,7 +287,7 @@ Current firmware language
 
 ### Setting: Screen contrast
 
-Display brightness. Higher values age the OLED faster due to burn in. (However, it is notable that most of these screens die from other causes first.)
+Display brightness. Higher values age the OLED faster due to burn-in. (However, it is notable that most of these screens die from other causes first.)
 
 On device help text:
 
