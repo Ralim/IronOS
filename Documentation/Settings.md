@@ -14,11 +14,11 @@ Menu for settings related to power. Main settings to do with the input voltage.
 
 ### Category: Soldering settings
 
-Setttings for soldering mode, such as tip temperature, boost temps, sleep temps.
+Settings for soldering mode, such as boost temps, the increment used when pressing buttons and if button locking is enabled.
 
 ### Category: Sleep mode
 
-Settings to do with power saving, such as sleep mode and shutdown modes.
+Settings to do with power saving, such as sleep mode,sleep temps, and shutdown modes.
 
 ### Category: User interface
 
@@ -26,7 +26,7 @@ User interface related settings, such as Units.
 
 ### Category: Advanced settings
 
-Advanced settings. Misc catchall for settings that dont fit anywhere else or settings that require some thought before use.
+Advanced settings. Misc catchall for settings that don't fit anywhere else or settings that require some thought before use.
 
 ## Settings
 
@@ -39,7 +39,7 @@ This is the "on device help text".
 
 ### Setting: Power source
 
-When device is powered by a battery, adjusts the low voltage threshold for when the unit turns off the heater to protect the battery.
+When device is powered by a battery,this adjusts the low voltage threshold for when the unit should turns off the heater to protect the battery.
 
 On device help text:
 
@@ -55,7 +55,7 @@ Tip temperature while in "sleep mode"
 
 ### Setting: Sleep timeout
 
-How long after inactivity the device drops down to the sleep temperature.
+How long of a period of movement/button pressing inactivity is required before the device drops down to the sleep temperature.
 
 On device help text:
 
@@ -63,7 +63,7 @@ Interval before "sleep mode" kicks in (S=seconds | M=minutes)
 
 ### Setting: Shutdown timeout
 
-How long after the unit enters sleep mode before it turns off the heater and exists soldering mode.
+How long of a period of movement/button pressing inactivity is required before the device turns of the tip heater completely and returns to the main idle screen.
 
 On device help text:
 
@@ -119,7 +119,7 @@ O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby witho
 
 ### Setting: Cooldown blink
 
-If the idle screen should blink the tip temperature for attention when the device tip is over 50C. Intended as a 'tip is hot' warning.
+If the idle screen should blink the tip temperature for attention when the device tip is over 50C. Intended as a 'tip is still hot' warning.
 
 On device help text:
 
@@ -135,7 +135,7 @@ Start tip temperature offset calibration
 
 ### Setting: Factory reset?
 
-Resets all settings and calibrations to factory defaults. Does NOT erase custom user bootup logo's
+Resets all settings and calibrations to factory defaults. Does NOT erase custom user bootup logo's.
 
 On device help text:
 
@@ -143,7 +143,7 @@ Reset settings to default
 
 ### Setting: Calibrate input voltage?
 
-Enters an adjustment mode where you can gradually adjust the measured voltage to compensate for any unit-to-unit variance in the voltage sense resistors
+Enters an adjustment mode where you can gradually adjust the measured voltage to compensate for any unit-to-unit variance in the voltage sense resistors.
 
 On device help text:
 
@@ -175,7 +175,7 @@ Max QC voltage the iron should negotiate for
 
 ### Setting: PD timeout
 
-How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy/old PD adapters, faster times move onto PD quickly. Units of 100ms. Reccomended to keep small.
+How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy/old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small.
 
 On device help text:
 
@@ -183,7 +183,7 @@ PD negotiation timeout in 100ms steps for compatibility with some QC chargers
 
 ### Setting: Power limit
 
-Allows setting a custom Wattage for the iron to aim to keep the AVERAGE power below. The Iron cant control its peak power no matter how you set this. (Except for MHP30 which will regulate nicely to this). If USB-PD is in use, the limit will be set to the lower of this and the supplies advertised wattage.
+Allows setting a custom wattage for the iron to aim to keep the AVERAGE power below. The Iron cant control its peak power no matter how you set this. (Except for MHP30 which will regulate nicely to this). If USB-PD is in use, the limit will be set to the lower of this and the supplies advertised wattage.
 
 On device help text:
 
@@ -191,7 +191,7 @@ Maximum power the iron can use (W=watt)
 
 ### Setting: Reverse + - keys
 
-Swaps which button increments and decrements the temperature on temperature change screens.
+Swaps which button increments and decrements on temperature change screens.
 
 On device help text:
 
@@ -223,7 +223,7 @@ Intensity of power of keep-awake-pulse (watt)
 
 ### Setting: Hall sensor sensitivity
 
-If unit has a hall effect (Pinecil), how sensitive it is at detecting a magnet to put the iron into sleep mode.
+If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the iron into sleep mode.
 
 On device help text:
 
@@ -231,7 +231,7 @@ Sensitivity of the Hall effect sensor to detect sleep (O=off | L=low | M=medium 
 
 ### Setting: Allow locking buttons
 
-If the locking mode for the buttons is enabled. Allows locking the buttons from accidental presses.
+If locking the buttons against accidental presses is enabled.
 
 On device help text:
 
@@ -239,7 +239,7 @@ While soldering, hold down both buttons to toggle locking them (D=disable | B=bo
 
 ### Setting: Minimum voltage
 
-When powered by a battery, sets the minimum voltage per cell that is allowed. This is multiplied by the cell count.
+When powered by a battery, this adjust sets the minimum voltage per cell before shutdown. (This is multiplied by the cell count.)
 
 On device help text:
 
@@ -247,7 +247,7 @@ Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)
 
 ### Setting: Anim. loop
 
-Should the menu animations loop.
+Should the menu animations loop. Only visible if the animation speed is not turned turn to "Off"
 
 On device help text:
 
@@ -255,7 +255,7 @@ Loop icon animations in main menu
 
 ### Setting: Anim. speed
 
-How fast should the menu animations loop.
+How fast should the menu animations loop, or if they should not loop at all.
 
 On device help text:
 
@@ -263,7 +263,7 @@ Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)
 
 ### Setting: Power pulse delay
 
-How long of a time interval between power pulses.
+Adjusts the time interval between power pulses. Longer gaps reduce undesired heating of the tip, but needs to be fast enough to keep your power bank awake.
 
 On device help text:
 
@@ -271,7 +271,7 @@ Delay before keep-awake-pulse is triggered (x 2.5s)
 
 ### Setting: Power pulse duration
 
-How long should the power pulse go for.
+How long should the power pulse go for. Some power banks require seeing the power draw be sustained for a certain duration to keep awake. Should be kept as short as possible to avoid wasting power / undesired heating of the tip.
 
 On device help text:
 
@@ -279,7 +279,7 @@ Keep-awake-pulse duration (x 250ms)
 
 ### Setting: Language:  EN     English
 
-Changes the device language on multi-lingual builds
+Changes the device language on multi-lingual builds.
 
 On device help text:
 
@@ -287,7 +287,7 @@ Current firmware language
 
 ### Setting: Screen contrast
 
-Display brightness. Higher values age the OLED faster but are brighter.
+Display brightness. Higher values age the OLED faster due to burn in. (However, it is notable that most of these screens die from other causes first.)
 
 On device help text:
 
