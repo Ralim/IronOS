@@ -3,7 +3,7 @@ var def =
 	"messages": [
 		{
 			"id": "SettingsCalibrationWarning",
-			"description": "Confirmation message shown before performing an offset calibration. Should warn user to make sure tip and handle are at the same temperature."
+			"description": "Confirmation message shown before performing an offset calibration. Should warn the user to make sure tip and handle are at the same temperature."
 		},
 		{
 			"id": "SettingsResetWarning",
@@ -38,7 +38,7 @@ var def =
 		{
 			"id": "SleepingTipAdvancedString",
 			"maxLen": 6,
-			"description": "The prefix text shwon before tip temperature when the unit is sleeping with advanced view on."
+			"description": "The prefix text shown before tip temperature when the unit is sleeping with advanced view on."
 		},
 		{
 			"id": "OffString",
@@ -250,7 +250,7 @@ var def =
 			"id": "DisplayRotation",
 			"maxLen": 6,
 			"maxLen2": 13,
-			"description": "If the display should rotate automatically or if it should be fixed into Left or Right handed mode."
+			"description": "If the display should rotate automatically or if it should be fixed into Left or Right handed orientation."
 		},
 		{
 			"id": "BoostTemperature",
