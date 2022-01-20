@@ -226,7 +226,8 @@ var def =
 			"id": "ShutdownTimeout",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description": "How long of a period of movement/button pressing inactivity is required before the device turns off the tip heater completely and returns to the main idle screen."
+			"description": "How long of a period without movement / button-pressing is required before the device turns off the tip heater completely and returns to the main idle screen."
+
 		},
 		{
 			"id": "MotionSensitivity",
