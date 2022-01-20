@@ -269,7 +269,8 @@ var def =
 			"id": "CooldownBlink",
 			"maxLen": 6,
 			"maxLen2": 13,
-			"description": "If the idle screen should blink the tip temperature for attention when the device tip is over 50C. Intended as a 'tip is still hot' warning."
+			"description": "If the idle screen should blink the tip temperature for attention while the tip is over 50°C. Intended as a 'tip is still hot' warning."
+
 		},
 		{
 			"id": "TemperatureCalibration",
