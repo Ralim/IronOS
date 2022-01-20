@@ -359,13 +359,13 @@ var def =
 			"id": "MinVolCell",
 			"maxLen": 4,
 			"maxLen2": 9,
-			"description": "When powered by a battery, this adjust sets the minimum voltage per cell before shutdown. (This is multiplied by the cell count.)"
+			"description": "When powered by a battery, this adjusts the minimum voltage per cell before shutdown. (This is multiplied by the cell count.)"
 		},
 		{
 			"id": "AnimLoop",
 			"maxLen": 6,
 			"maxLen2": 13,
-			"description": "Should the menu animations loop. Only visible if the animation speed is not turned turn to \"Off\""
+			"description": "Should the menu animations loop. Only visible if the animation speed is not set to \"Off\""
 		},
 		{
 			"id": "AnimSpeed",
