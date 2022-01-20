@@ -12,7 +12,7 @@ except ImportError as error:
                       "management tool."
                       .format(error, sys.argv[0]))
 
-VERSION_STRING = '0.02'
+VERSION_STRING = '0.03'
 
 LCD_WIDTH       = 96
 LCD_HEIGHT      = 16
@@ -29,7 +29,7 @@ DFU_PINECIL_ALT     = 0
 DFU_PINECIL_VENDOR  = 0x28e9
 DFU_PINECIL_PRODUCT = 0x0189
 DFU_LOGO_ADDRESS    = 0x0801F800 
-DFU_DEFAULT_NAME    = b"ST..."
+DFU_TARGET_NAME    = b"Pinecil"
 DFU_PREFIX_SIZE = 11
 DFU_SUFFIX_SIZE = 16
 
@@ -37,8 +37,10 @@ def split16(word):
     """return high and low byte of 16-bit word value as tuple"""
     return (word >> 8) & 0xff, word & 0xff
 
+
 def compute_crc(data):
     return 0xFFFFFFFF & -zlib.crc32(data) - 1
+
 
 def intel_hex_line(record_type, offset, data):
     """generate a line of data in Intel hex format"""
@@ -89,36 +91,24 @@ def intel_hex(file, bytes_, start_address=0x0):
 
     write(intel_hex_line(INTELHEX_END_OF_FILE_RECORD, 0, ()))
 
-def build_dfu(file, indata):
-    target = []
-    bytes_ = b""
-    for byte in indata:
-        bytes_ += byte.to_bytes(1, byteorder="big")
 
-    target.append(
-        {
-            "address": DFU_LOGO_ADDRESS,
-            "alt": DFU_PINECIL_ALT,
-            "data": bytes_,
-        }
-    )
+def build_dfu(file, bytes_):
     data = b""
-    tdata = b""
-    for image in target:
-        tdata += (
-            struct.pack("<2I", image["address"], len(image["data"])) + image["data"]
-        )
-        ealt = image["alt"]
-    tdata = (
-        struct.pack(
-            "<6sBI255s2I", b"Target", ealt, 1, DFU_DEFAULT_NAME, len(tdata), len(target)
-        )
-        + tdata
+    for byte in bytes_:
+        data += byte.to_bytes(1, byteorder="big")
+
+    data = (
+        struct.pack("<2I", DFU_LOGO_ADDRESS, len(data)) + data
     )
-    data += tdata
     data = (
         struct.pack(
-            "<5sBIB", b"DfuSe", 1, DFU_PREFIX_SIZE + len(data) + DFU_SUFFIX_SIZE, len(target)
+            "<6sBI255s2I", b"Target", DFU_PINECIL_ALT, 1, DFU_TARGET_NAME, len(data), 1
+        )
+        + data
+    )
+    data = (
+        struct.pack(
+            "<5sBIB", b"DfuSe", 1, DFU_PREFIX_SIZE + len(data) + DFU_SUFFIX_SIZE, 1
         )
         + data
     )
@@ -126,6 +116,7 @@ def build_dfu(file, indata):
     crc = compute_crc(data)
     data += struct.pack("<I", crc)
     file.write(data)
+
 
 def img2hex(input_filename,
             output_file,
