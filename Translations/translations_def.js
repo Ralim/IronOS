@@ -331,7 +331,8 @@ var def =
 			"id": "PowerLimit",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description": "Allows setting a custom wattage for the iron to aim to keep the AVERAGE power below. The Iron cant control its peak power no matter how you set this. (Except for MHP30 which will regulate nicely to this). If USB-PD is in use, the limit will be set to the lower of this and the supplies advertised wattage."
+			"description": "Allows setting a custom wattage for the device to aim to keep the AVERAGE power below. The unit can't control its peak power no matter how you set this. (Except for MHP30 which will regulate nicely to this). If USB-PD is in use, the limit will be set to the lower of this and the supplies advertised wattage."
+
 		},
 		{
 			"id": "ReverseButtonTempChange",
