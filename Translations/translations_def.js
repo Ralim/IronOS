@@ -125,7 +125,8 @@ var def =
 		{
 			"id": "SettingStartSleepOffChar",
 			"len": 1,
-			"description": "Shown when the auto start state is set to go to an off state but on movement wake into soldering mode."
+			"description": "Shown when the auto start state is set to go to an off state, but on movement wake into soldering mode."
+
 		},
 		{
 			"id": "SettingStartNoneChar",
