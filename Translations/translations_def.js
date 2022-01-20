@@ -311,7 +311,8 @@ var def =
 			"id": "ScrollingSpeed",
 			"maxLen": 6,
 			"maxLen2": 11,
-			"description": "How fast the description text scrolls when hovering on a menu. Faster speeds may induce tearing but allow reading the whole description faster."
+			"description": "How fast the description text scrolls when hovering on a menu. Faster speeds may induce tearing, but allow reading the whole description faster."
+
 		},
 		{
 			"id": "QCMaxVoltage",
