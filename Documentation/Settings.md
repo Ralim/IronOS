@@ -22,7 +22,7 @@ Settings to do with power saving, such as sleep mode, sleep temps, and shutdown 
 
 ### Category: User interface
 
-User interface related settings, such as Units.
+User interface related settings, such as units.
 
 ### Category: Advanced settings
 
@@ -55,7 +55,7 @@ Tip temperature while in "sleep mode"
 
 ### Setting: Sleep timeout
 
-How long of a period of movement/button pressing inactivity is required before the device drops down to the sleep temperature.
+How long of a period without movement / button-pressing is required before the device drops down to the sleep temperature.
 
 On device help text:
 
@@ -63,7 +63,7 @@ Interval before "sleep mode" kicks in (S=seconds | M=minutes)
 
 ### Setting: Shutdown timeout
 
-How long of a period of movement/button pressing inactivity is required before the device turns off the tip heater completely and returns to the main idle screen.
+How long of a period without movement / button-pressing is required before the device turns off the tip heater completely and returns to the main idle screen.
 
 On device help text:
 
@@ -79,7 +79,7 @@ On device help text:
 
 ### Setting: Temperature unit
 
-If the device shows temperatures in C or F
+If the device shows temperatures in °C or °F.
 
 On device help text:
 
@@ -95,7 +95,7 @@ Display detailed information in a smaller font on the idle screen
 
 ### Setting: Display orientation
 
-If the display should rotate automatically or if it should be fixed into Left or Right handed orientation.
+If the display should rotate automatically or if it should be fixed for left- or right-handed mode.
 
 On device help text:
 
@@ -111,7 +111,7 @@ Temperature used in "boost mode"
 
 ### Setting: Heat on power up
 
-When the device powers up, should it enter into a special mode. These settings set it to either start into Soldering mode, sleeping mode, Auto mode (Enters into soldering mode on the first movement).
+When the device powers up, should it enter into a special mode. These settings set it to either start into soldering mode, sleeping mode or auto mode (Enters into soldering mode on the first movement).
 
 On device help text:
 
@@ -119,7 +119,7 @@ O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby witho
 
 ### Setting: Cooldown blink
 
-If the idle screen should blink the tip temperature for attention when the device tip is over 50C. Intended as a 'tip is still hot' warning.
+If the idle screen should blink the tip temperature for attention while the tip is over 50°C. Intended as a 'tip is still hot' warning.
 
 On device help text:
 
@@ -127,7 +127,7 @@ Flash the temperature reading after heating was halted while the tip is still ho
 
 ### Setting: Calibrate temperature?
 
-Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5C off target.
+Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target.
 
 On device help text:
 
@@ -159,7 +159,7 @@ Display detailed information in a smaller font on soldering screen
 
 ### Setting: Scrolling speed
 
-How fast the description text scrolls when hovering on a menu. Faster speeds may induce tearing but allow reading the whole description faster.
+How fast the description text scrolls when hovering on a menu. Faster speeds may induce tearing, but allow reading the whole description faster.
 
 On device help text:
 
@@ -175,7 +175,7 @@ Max QC voltage the iron should negotiate for
 
 ### Setting: PD timeout
 
-How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy/old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended keeping to small values.
+How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values.
 
 On device help text:
 
@@ -183,7 +183,7 @@ PD negotiation timeout in 100ms steps for compatibility with some QC chargers
 
 ### Setting: Power limit
 
-Allows setting a custom wattage for the iron to aim to keep the AVERAGE power below. The Iron cant control its peak power no matter how you set this. (Except for MHP30 which will regulate nicely to this). If USB-PD is in use, the limit will be set to the lower of this and the supplies advertised wattage.
+Allows setting a custom wattage for the device to aim to keep the AVERAGE power below. The unit can't control its peak power no matter how you set this. (Except for MHP30 which will regulate nicely to this). If USB-PD is in use, the limit will be set to the lower of this and the supplies advertised wattage.
 
 On device help text:
 
@@ -199,7 +199,7 @@ Reverse assignment of buttons for temperature adjustment
 
 ### Setting: Temp change short
 
-How much the temperature is increased with a quick press of the buttons.
+Factor by which the temperature is changed with a quick press of the buttons.
 
 On device help text:
 
@@ -207,7 +207,7 @@ Temperature-change-increment on short button press
 
 ### Setting: Temp change long
 
-How much the temperature is increased with a long hold of the buttons.
+Factor by which the temperature is changed with a hold of the buttons.
 
 On device help text:
 
@@ -215,7 +215,7 @@ Temperature-change-increment on long button press
 
 ### Setting: Power pulse
 
-Enables and sets the wattage of the power pulse. Power pulse causes the iron to briefly turn on the heater to draw power to avoid power banks going to sleep.
+Enables and sets the wattage of the power pulse. Power pulse causes the device to briefly turn on the heater to draw power to avoid power banks going to sleep.
 
 On device help text:
 
@@ -223,7 +223,7 @@ Intensity of power of keep-awake-pulse (watt)
 
 ### Setting: Hall sensor sensitivity
 
-If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the iron into sleep mode.
+If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the device into sleep mode.
 
 On device help text:
 
