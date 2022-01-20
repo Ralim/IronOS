@@ -220,7 +220,8 @@ var def =
 			"id": "SleepTimeout",
 			"maxLen": 4,
 			"maxLen2": 9,
-			"description": "How long of a period of movement/button pressing inactivity is required before the device drops down to the sleep temperature."
+			"description": "How long of a period without movement / button-pressing is required before the device drops down to the sleep temperature."
+
 		},
 		{
 			"id": "ShutdownTimeout",
