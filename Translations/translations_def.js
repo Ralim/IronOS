@@ -241,7 +241,8 @@ var def =
 			"id": "TemperatureUnit",
 			"maxLen": 6,
 			"maxLen2": 13,
-			"description": "If the device shows temperatures in C or F"
+			"description": "If the device shows temperatures in °C or °F."
+
 		},
 		{
 			"id": "AdvancedIdle",
