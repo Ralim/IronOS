@@ -352,7 +352,8 @@ var def =
 			"id": "TempChangeLongStep",
 			"maxLen": 6,
 			"maxLen2": 16,
-			"description": "How much the temperature is increased with a long hold of the buttons."
+			"description": "Factor by which the temperature is changed with a hold of the buttons."
+
 		},
 		{
 			"id": "PowerPulsePower",
