@@ -344,7 +344,8 @@ var def =
 			"id": "TempChangeShortStep",
 			"maxLen": 8,
 			"maxLen2": 16,
-			"description": "How much the temperature is increased with a quick press of the buttons."
+			"description": "Factor by which the temperature is changed with a quick press of the buttons."
+
 		},
 		{
 			"id": "TempChangeLongStep",
