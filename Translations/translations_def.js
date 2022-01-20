@@ -324,7 +324,8 @@ var def =
 			"id": "PDNegTimeout",
 			"maxLen": 8,
 			"maxLen2": 16,
-			"description": "How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy/old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended keeping to small values."
+			"description": "How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values."
+
 		},
 
 		{
