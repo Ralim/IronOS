@@ -239,7 +239,7 @@ While soldering, hold down both buttons to toggle locking them (D=disable | B=bo
 
 ### Setting: Minimum voltage
 
-When powered by a battery, this adjust sets the minimum voltage per cell before shutdown. (This is multiplied by the cell count.)
+When powered by a battery, this adjusts the minimum voltage per cell before shutdown. (This is multiplied by the cell count.)
 
 On device help text:
 
@@ -247,7 +247,7 @@ Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)
 
 ### Setting: Anim. loop
 
-Should the menu animations loop. Only visible if the animation speed is not turned turn to "Off"
+Should the menu animations loop. Only visible if the animation speed is not set to "Off"
 
 On device help text:
 
