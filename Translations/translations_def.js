@@ -262,7 +262,8 @@ var def =
 			"id": "AutoStart",
 			"maxLen": 6,
 			"maxLen2": 13,
-			"description": "When the device powers up, should it enter into a special mode. These settings set it to either start into Soldering mode, sleeping mode, Auto mode (Enters into soldering mode on the first movement)."
+			"description": "When the device powers up, should it enter into a special mode. These settings set it to either start into soldering mode, sleeping mode or auto mode (Enters into soldering mode on the first movement)."
+
 		},
 		{
 			"id": "CooldownBlink",
