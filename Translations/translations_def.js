@@ -358,7 +358,8 @@ var def =
 			"id": "PowerPulsePower",
 			"maxLen": 6,
 			"maxLen2": 16,
-			"description": "Enables and sets the wattage of the power pulse. Power pulse causes the iron to briefly turn on the heater to draw power to avoid power banks going to sleep."
+			"description": "Enables and sets the wattage of the power pulse. Power pulse causes the device to briefly turn on the heater to draw power to avoid power banks going to sleep."
+
 		},
 		{
 			"id": "HallEffSensitivity",
