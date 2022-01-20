@@ -160,7 +160,8 @@ var def =
 			"id": "SettingLockDisableChar",
 			"len": 1,
 			"default": "D",
-			"description": "Shown when locking mode is turned off"
+			"description": "Shown when locking mode is turned off."
+
 		},
 		{
 			"id": "SettingLockBoostChar",
