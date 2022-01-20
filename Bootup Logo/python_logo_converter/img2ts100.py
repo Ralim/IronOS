@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 from __future__ import division
-import os
-import sys
+import os, sys, struct, zlib
 
 
 try:
@@ -26,11 +25,20 @@ INTELHEX_EXTENDED_LINEAR_ADDRESS_RECORD = 0x04
 INTELHEX_BYTES_PER_LINE                 = 16
 INTELHEX_MINIMUM_SIZE                   = 4096
 
+DFU_PINECIL_ALT     = 0
+DFU_PINECIL_VENDOR  = 0x28e9
+DFU_PINECIL_PRODUCT = 0x0189
+DFU_LOGO_ADDRESS    = 0x0801F800 
+DFU_DEFAULT_NAME    = b"ST..."
+DFU_PREFIX_SIZE = 11
+DFU_SUFFIX_SIZE = 16
 
 def split16(word):
     """return high and low byte of 16-bit word value as tuple"""
     return (word >> 8) & 0xff, word & 0xff
 
+def compute_crc(data):
+    return 0xFFFFFFFF & -zlib.crc32(data) - 1
 
 def intel_hex_line(record_type, offset, data):
     """generate a line of data in Intel hex format"""
@@ -81,6 +89,43 @@ def intel_hex(file, bytes_, start_address=0x0):
 
     write(intel_hex_line(INTELHEX_END_OF_FILE_RECORD, 0, ()))
 
+def build_dfu(file, indata):
+    target = []
+    bytes_ = b""
+    for byte in indata:
+        bytes_ += byte.to_bytes(1, byteorder="big")
+
+    target.append(
+        {
+            "address": DFU_LOGO_ADDRESS,
+            "alt": DFU_PINECIL_ALT,
+            "data": bytes_,
+        }
+    )
+    data = b""
+    tdata = b""
+    for image in target:
+        tdata += (
+            struct.pack("<2I", image["address"], len(image["data"])) + image["data"]
+        )
+        ealt = image["alt"]
+    tdata = (
+        struct.pack(
+            "<6sBI255s2I", b"Target", ealt, 1, DFU_DEFAULT_NAME, len(tdata), len(target)
+        )
+        + tdata
+    )
+    data += tdata
+    data = (
+        struct.pack(
+            "<5sBIB", b"DfuSe", 1, DFU_PREFIX_SIZE + len(data) + DFU_SUFFIX_SIZE, len(target)
+        )
+        + data
+    )
+    data += struct.pack("<4H3sB", 0, DFU_PINECIL_PRODUCT, DFU_PINECIL_VENDOR, 0x011A, b"UFD", DFU_SUFFIX_SIZE)
+    crc = compute_crc(data)
+    data += struct.pack("<I", crc)
+    file.write(data)
 
 def img2hex(input_filename,
             output_file,
@@ -160,8 +205,7 @@ def img2hex(input_filename,
         data[4 + ndx + (1 if ndx % 2 == 0 else -1)] = byte
 
     if binary:
-        for byte in data:
-            output_file.write(byte.to_bytes(1, byteorder="big"))
+        build_dfu(output_file, data)
     else:
         intel_hex(output_file, data, 0x0800F800)
 
@@ -234,7 +278,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     try:
-        if args.output_filename[-4:] == ".bin":
+        if args.output_filename[-4:] == ".dfu":
             with open(args.output_filename, 'wb') as output:
                 img2hex(args.input_filename,
                         output,
