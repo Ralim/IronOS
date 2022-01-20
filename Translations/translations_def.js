@@ -250,7 +250,8 @@ var def =
 			"id": "DisplayRotation",
 			"maxLen": 6,
 			"maxLen2": 13,
-			"description": "If the display should rotate automatically or if it should be fixed into Left or Right handed orientation."
+			"description": "If the display should rotate automatically or if it should be fixed for left- or right-handed mode."
+
 		},
 		{
 			"id": "BoostTemperature",
