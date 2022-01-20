@@ -276,7 +276,8 @@ var def =
 			"id": "TemperatureCalibration",
 			"maxLen": 8,
 			"maxLen2": 16,
-			"description": "Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5C off target."
+			"description": "Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target."
+
 		},
 		{
 			"id": "SettingsReset",
