@@ -121,7 +121,8 @@ var def =
 		{
 			"id": "SettingStartSleepChar",
 			"len": 1,
-			"description": "Shown when the auto start mode is to start in sleep mode."
+			"description": "Shown when the auto start mode is set to start in sleep mode."
+
 		},
 		{
 			"id": "SettingStartSleepOffChar",
