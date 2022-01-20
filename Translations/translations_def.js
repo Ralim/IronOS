@@ -194,7 +194,8 @@ var def =
 			"id": "UIMenu",
 			"maxLen": 5,
 			"maxLen2": 11,
-			"description": "User interface related settings, such as Units."
+			"description": "User interface related settings, such as units."
+
 		},
 		{
 			"id": "AdvancedMenu",
