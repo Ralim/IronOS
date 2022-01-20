@@ -23,7 +23,8 @@ var def =
 			"id": "InputVoltageString",
 			"maxLen": 11,
 			"note": "Preferably end with a space",
-			"description": "Prefix text for 'Input Voltage' shown before showing the input voltage reading"
+			"description": "Prefix text for 'Input Voltage' shown before showing the input voltage reading."
+
 		},
 		{
 			"id": "SleepingSimpleString",
