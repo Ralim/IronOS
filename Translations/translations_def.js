@@ -136,7 +136,8 @@ var def =
 		{
 			"id": "SettingSensitivityOff",
 			"len": 1,
-			"description": "Shown when a sensitivity (hall effect) is disabled. Turning off the sensor."
+			"description": "Shown when a sensitivity (hall effect sensor) is disabled. Turning off the sensor."
+
 		},
 		{
 			"id": "SettingSensitivityLow",
