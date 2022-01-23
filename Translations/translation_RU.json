@@ -2,44 +2,39 @@
   "languageCode": "RU",
   "languageLocalName": "Русский",
   "fonts": ["ascii_basic", "latin_extended", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Калибровка завершена!",
     "SettingsCalibrationWarning": "Прежде чем продолжить, пожалуйста, убедитесь, что жало имеет комнатную температуру!",
     "SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
     "UVLOWarningString": "НАПРЯЖ--",
-    "UndervoltageString": "Низкое напряжение",
-    "InputVoltageString": "Питание В: ",
-    "WarningTipTempString": "Темп. жала: ",
-    "BadTipString": "ЖАЛО--",
+    "UndervoltageString": "Низ. напряжение",
+    "InputVoltageString": "Питание В: ",			  
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Ожидание...",
-    "WarningSimpleString": "ГОРЯЧО!",
-    "WarningAdvancedString": "!!! ГОРЯЧЕЕ !!!\n!!! ЖАЛО !!!",
     "SleepingTipAdvancedString": "Жало:",
     "IdleTipString": "Жало:",
     "IdleSetString": " ->",
     "TipDisconnectedString": "ЖАЛО ОТСОЕДИНЕНО",
     "SolderingAdvancedPowerPrompt": "Питание: ",
-    "OffString": "Выкл.",
-    "YourGainMessage": "Прирост:"
+    "OffString": "Вык"
   },
   "messagesWarn": {
     "ResetOKMessage": "Сброс OK",
     "SettingsResetMessage": ["Настройки", "сброшены!"],
     "NoAccelerometerMessage": ["Не определен", "акселерометр!"],
-    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
-    "LockingKeysString": "LOCKED",
-    "UnlockingKeysString": "UNLOCKED",
-    "WarningKeysLockedString": "!LOCKED!",
+    "NoPowerDeliveryMessage": ["USB-PD питание", "не обнаружено"],
+    "LockingKeysString": "ЗАБЛОК",
+    "UnlockingKeysString": "РАЗБЛОК",
+    "WarningKeysLockedString": "!ЗАБЛОК!",
     "WarningThermalRunaway": ["Thermal", "Runaway"]
   },
   "characters": {
     "SettingRightChar": "П",
     "SettingLeftChar": "Л",
     "SettingAutoChar": "А",
-    "SettingOffChar": "O",
+    "SettingOffChar": "О",
     "SettingSlowChar": "М",
-    "SettingMediumChar": "M",
+    "SettingMediumChar": "С",
     "SettingFastChar": "Б",
     "SettingStartNoneChar": "В",
     "SettingStartSolderingChar": "П",
@@ -131,7 +126,7 @@
     },
     "VoltageCalibration": {
       "text2": ["Калибровка", "напряжения"],
-      "desc": "Калибровка входного напряжения (длинное нажатие для выхода)"
+      "desc": "Калибровка входного напряжения (долгое нажатие для выхода)"
     },
     "AdvancedSoldering": {
       "text2": ["Подробный", "экран пайки"],
@@ -170,7 +165,7 @@
       "desc": "Сила импульса удерживающего от сна повербанк или другой источник питания"
     },
     "HallEffSensitivity": {
-      "text2": ["Эффект Холла", "чувствительность"],
+      "text2": ["Датчик", "Холла"],
       "desc": "Уровень чувствительности датчика холла в режиме сна (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
     },
     "LockingMode": {
@@ -199,7 +194,7 @@
     },
     "LanguageSwitch": {
       "text2": ["Язык:", " RU     Русский"],
-      "desc": ""
+      "desc": "Язык прошивки"
     },
     "Brightness": {
       "text2": ["Яркость", "экрана"],
