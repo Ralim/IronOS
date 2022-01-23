@@ -783,7 +783,7 @@ void showDebugMenu(void) {
       OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
     case 13:
-    // Print raw hall effect value if availabe, none if hall effect disabled.
+      // Print raw hall effect value if availabe, none if hall effect disabled.
 #ifdef HALL_SENSOR
       OLED::printNumber(getRawHallEffect(), 6, FontStyle::SMALL);
 #else
