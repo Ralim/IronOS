@@ -785,9 +785,9 @@ void showDebugMenu(void) {
     case 13:
 			// Print raw hall effect value if availabe, none if hall effect disabled.
 #ifdef HALL_SENSOR
-				OLED::printNumber(getRawHallEffect(), 6, FontStyle::SMALL);
+      OLED::printNumber(getRawHallEffect(), 6, FontStyle::SMALL);
 #else
-				OLED::print(translatedString(Tr->OffString), FontStyle::SMALL);
+      OLED::print(translatedString(Tr->OffString), FontStyle::SMALL);
 #endif
       break;
     default:
