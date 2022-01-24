@@ -76,13 +76,8 @@ struct TranslationIndexTable {
   uint16_t SleepingSimpleString;
   uint16_t SleepingAdvancedString;
   uint16_t SleepingTipAdvancedString;
-  uint16_t IdleTipString;
-  uint16_t IdleSetString;
-  uint16_t TipDisconnectedString;
-  uint16_t SolderingAdvancedPowerPrompt;
   uint16_t OffString;
 
-  uint16_t ResetOKMessage;
   uint16_t SettingsResetMessage;
   uint16_t NoAccelerometerMessage;
   uint16_t NoPowerDeliveryMessage;
@@ -109,7 +104,6 @@ struct TranslationIndexTable {
   uint16_t SettingLockDisableChar;
   uint16_t SettingLockBoostChar;
   uint16_t SettingLockFullChar;
-  uint16_t SettingNAChar;
 
   uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
   uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
@@ -118,7 +112,8 @@ struct TranslationIndexTable {
 };
 
 extern const TranslationIndexTable *Tr;
-extern const char *                 TranslationStrings;
+
+extern const char *TranslationStrings;
 
 struct TranslationData {
   TranslationIndexTable indices;

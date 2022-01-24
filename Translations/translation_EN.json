@@ -5,7 +5,7 @@
   "tempUnitFahrenheit": true,
   "messages": {
     "SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before proceeding!",
-    "SettingsResetWarning": "Sure you want to restore default settings?",
+    "SettingsResetWarning": "Are you sure you want to restore default settings?",
     "UVLOWarningString": "DC LOW",
     "UndervoltageString": "Undervoltage",
     "InputVoltageString": "Input V: ",
