@@ -20,54 +20,71 @@ Use the following steps to set up a build environment for IronOS on the command 
 
 1. [Follow steps 1 – 3 here to install the toolchain](https://github.com/glegrain/STM32-with-macOS#0---installing-the-toolchain) needed to compile for STM32 microcontrollers.
 2. Install `python`:
+
 ```
 brew install python
 ```
+
 3. (Optional) Update `pip` so it doesn't warn you about being out-of-date:
+
 ```
 python3 -m pip install --upgrade pip
 ```
+
 4. Change to the `source` directory:
+
 ```
 cd source
 ```
+
 5. Create a Python virtual environment for IronOS named `ironos-venv` to keep your Python installation clean:
+
 ```
 python3 -m venv ironos-venv
 ```
+
 6. Activate the Python virtual environment:
+
 ```
 source ironos-venv/bin/activate
 ```
+
 7. Install the dependencies required to run `make-translation.py`:
+
 ```
 pip install bdflib
 ```
+
 8. All done! See some examples below for how you can build your own IronOS.
 
 ### Examples
 
-To build a single language Simplified Chinese firmware for the TS80P with 8 simultaneous jobs:  
+To build a single language Simplified Chinese firmware for the TS80P with 8 simultaneous jobs:
+
 ```
 make -j8 model=TS80P firmware-ZH_CN
 ```
 
-To build a European multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on Linux:  
+To build a European multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on Linux:
+
 ```
 make -j$(nproc) model=Pinecil firmware-multi_European
 ```
 
-To build a Cyrillic compressed multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on macOS:  
+To build a Cyrillic compressed multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on macOS:
+
 ```
 make -j$(sysctl -n hw.logicalcpu) model=Pinecil firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian
 ```
 
-To build a custom multi-language firmware including English and Simplified Chinese for the TS80:  
+To build a custom multi-language firmware including English and Simplified Chinese for the TS80:
+
 ```
 make -j8 model=TS80 custom_multi_langs="EN ZH_CN" firmware-multi_Custom
 ```
 
-To build a custom compressed multi-language firmware including German, Spanish, and French for the TS100 (note if `model` is unspecified, it will default to `TS100`):  
+To build a custom compressed multi-language firmware including German, Spanish, and French for the TS100 (note if `model` is unspecified, it will default to `TS100`):
+
 ```
 make -j8 custom_multi_langs="DE ES FR" firmware-multi_compressed_Custom
 ```
@@ -77,6 +94,7 @@ To build a release instead, run the `build.sh` script. This will update translat
 ## Updating languages
 
 To update the language translation files and their associated font maps, execute the `make_translation.py` code from the `Translations` directory.
+If you edit the translation definitions or the english translation, please also run `gen_menu_docs.py` to update the settings menu documentation automatically.
 
 ## Building Pinecil
 

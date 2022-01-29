@@ -601,7 +601,7 @@ static void settings_displayCoolingBlinkEnabled(void) {
 static bool settings_setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {
     resetSettings();
-    warnUser(translatedString(Tr->ResetOKMessage), 2 * TICKS_SECOND);
+    warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
   }
   return false;
 }

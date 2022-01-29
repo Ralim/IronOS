@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 from __future__ import division
-import os
-import sys
+import os, sys, struct, zlib
 
 
 try:
@@ -13,7 +12,7 @@ except ImportError as error:
                       "management tool."
                       .format(error, sys.argv[0]))
 
-VERSION_STRING = '0.01'
+VERSION_STRING = '0.03'
 
 LCD_WIDTH       = 96
 LCD_HEIGHT      = 16
@@ -26,10 +25,21 @@ INTELHEX_EXTENDED_LINEAR_ADDRESS_RECORD = 0x04
 INTELHEX_BYTES_PER_LINE                 = 16
 INTELHEX_MINIMUM_SIZE                   = 4096
 
+DFU_PINECIL_ALT     = 0
+DFU_PINECIL_VENDOR  = 0x28e9
+DFU_PINECIL_PRODUCT = 0x0189
+DFU_LOGO_ADDRESS    = 0x0801F800 
+DFU_TARGET_NAME     = b"Pinecil"
+DFU_PREFIX_SIZE = 11
+DFU_SUFFIX_SIZE = 16
 
 def split16(word):
     """return high and low byte of 16-bit word value as tuple"""
     return (word >> 8) & 0xff, word & 0xff
+
+
+def compute_crc(data):
+    return 0xFFFFFFFF & -zlib.crc32(data) - 1
 
 
 def intel_hex_line(record_type, offset, data):
@@ -82,12 +92,39 @@ def intel_hex(file, bytes_, start_address=0x0):
     write(intel_hex_line(INTELHEX_END_OF_FILE_RECORD, 0, ()))
 
 
+def build_dfu(file, bytes_):
+    data = b""
+    for byte in bytes_:
+        data += byte.to_bytes(1, byteorder="big")
+
+    data = (
+        struct.pack("<2I", DFU_LOGO_ADDRESS, len(data)) + data
+    )
+    data = (
+        struct.pack(
+            "<6sBI255s2I", b"Target", DFU_PINECIL_ALT, 1, DFU_TARGET_NAME, len(data), 1
+        )
+        + data
+    )
+    data = (
+        struct.pack(
+            "<5sBIB", b"DfuSe", 1, DFU_PREFIX_SIZE + len(data) + DFU_SUFFIX_SIZE, 1
+        )
+        + data
+    )
+    data += struct.pack("<4H3sB", 0, DFU_PINECIL_PRODUCT, DFU_PINECIL_VENDOR, 0x011A, b"UFD", DFU_SUFFIX_SIZE)
+    crc = compute_crc(data)
+    data += struct.pack("<I", crc)
+    file.write(data)
+
+
 def img2hex(input_filename,
             output_file,
             preview_filename=None,
             threshold=128,
             dither=False,
-            negative=False):
+            negative=False,
+            binary=False):
     """
     Convert 'input_filename' image file into Intel hex format with data
         formatted for display on TS100 LCD and file object.
@@ -158,7 +195,10 @@ def img2hex(input_filename,
         # store in endian-reversed byte order
         data[4 + ndx + (1 if ndx % 2 == 0 else -1)] = byte
 
-    intel_hex(output_file, data, 0x0800F800)
+    if binary:
+        build_dfu(output_file, data)
+    else:
+        intel_hex(output_file, data, 0x0800F800)
 
 
 def parse_commandline():
@@ -229,13 +269,23 @@ if __name__ == "__main__":
         sys.exit(1)
 
     try:
-        with open(args.output_filename, 'w', newline='\r\n') as output:
-            img2hex(args.input_filename,
-                    output,
-                    args.preview,
-                    args.threshold,
-                    args.dither,
-                    args.negative)
+        if args.output_filename[-4:] == ".dfu":
+            with open(args.output_filename, 'wb') as output:
+                img2hex(args.input_filename,
+                        output,
+                        args.preview,
+                        args.threshold,
+                        args.dither,
+                        args.negative,
+                        True)
+        else:
+            with open(args.output_filename, 'w', newline='\r\n') as output:
+                img2hex(args.input_filename,
+                        output,
+                        args.preview,
+                        args.threshold,
+                        args.dither,
+                        args.negative)
     except BaseException as error:
         sys.stderr.write("Error converting file: {}\n".format(error))
         sys.exit(1)
