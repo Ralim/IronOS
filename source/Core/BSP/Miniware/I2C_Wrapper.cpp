@@ -11,10 +11,10 @@ SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 
 void FRToSI2C::CpltCallback() {
-  // hi2c1.State = HAL_I2C_STATE_READY; // Force state reset (even if tx error)
-  // if (I2CSemaphore) {
-  //   xSemaphoreGiveFromISR(I2CSemaphore, NULL);
-  // }
+  hi2c1.State = HAL_I2C_STATE_READY; // Force state reset (even if tx error)
+  if (I2CSemaphore) {
+    xSemaphoreGiveFromISR(I2CSemaphore, NULL);
+  }
 }
 
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
@@ -56,12 +56,11 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pDat
 bool FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
   if (!lock())
     return false;
-  if (HAL_I2C_Master_Transmit(&hi2c1, DevAddress, pData, Size, 1000) != HAL_OK) {
+  if (HAL_I2C_Master_Transmit_DMA(&hi2c1, DevAddress, pData, Size) != HAL_OK) {
     I2C_Unstick();
     unlock();
     return false;
   }
-  unlock();
   return true;
 }
 
@@ -78,7 +77,7 @@ void FRToSI2C::I2C_Unstick() { unstick_I2C(); }
 
 void FRToSI2C::unlock() { xSemaphoreGive(I2CSemaphore); }
 
-bool FRToSI2C::lock() { return xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE; }
+bool FRToSI2C::lock() { return xSemaphoreTake(I2CSemaphore, (TickType_t)500) == pdTRUE; }
 
 bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength) {
   for (int index = 0; index < registersLength; index++) {
