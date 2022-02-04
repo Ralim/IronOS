@@ -40,7 +40,7 @@ void startPIDTask(void const *argument __unused) {
   uint32_t PIDTempTarget = 0;
   // Pre-seed the adc filters
   for (int i = 0; i < 128; i++) {
-    vTaskDelay(5);
+    osDelay(5);
     TipThermoModel::getTipInC(true);
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
