@@ -72,6 +72,7 @@ static void settings_displayInvertColor(void);
 
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
+static bool settings_showHallEffect(void);
 #endif
 // Menu functions
 
@@ -206,7 +207,7 @@ const menuitem PowerSavingMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime},                      /*Shutdown Time*/
 #endif
 #ifdef HALL_SENSOR
-    {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, settings_displayHallEffect, nullptr, SettingsOptions::HallEffectSensitivity}, /* HallEffect Sensitivity*/
+    {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, settings_displayHallEffect, settings_showHallEffect, SettingsOptions::HallEffectSensitivity}, /* HallEffect Sensitivity*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength} // end of menu marker. DO NOT REMOVE
 };
@@ -790,6 +791,7 @@ static void settings_displayHallEffect(void) {
     break;
   }
 }
+static bool settings_showHallEffect(void) { return getHallSensorFitted(); }
 #endif
 
 // Indicates whether a menu transition is in progress, so that the menu icon
