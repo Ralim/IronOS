@@ -127,6 +127,7 @@ def get_debug_menu() -> List[str]:
         "ACC  ",
         "PWR  ",
         "Max  ",
+        "Hall ",
     ]
 
 

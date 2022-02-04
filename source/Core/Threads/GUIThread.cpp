@@ -782,6 +782,19 @@ void showDebugMenu(void) {
       // Max deg C limit
       OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
+    case 13:
+      // Print raw hall effect value if availabe, none if hall effect disabled.
+#ifdef HALL_SENSOR
+    {
+      int16_t hallEffectStrength = getRawHallEffect();
+      if (hallEffectStrength < 0)
+        hallEffectStrength = -hallEffectStrength;
+      OLED::printNumber(hallEffectStrength, 6, FontStyle::SMALL);
+    }
+#else
+      OLED::print(translatedString(Tr->OffString), FontStyle::SMALL);
+#endif
+    break;
     default:
       break;
     }
@@ -792,7 +805,7 @@ void showDebugMenu(void) {
       return;
     else if (b == BUTTON_F_SHORT) {
       screen++;
-      screen = screen % 13;
+      screen = screen % 14;
     }
     GUIDelay();
   }
