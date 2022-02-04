@@ -61,7 +61,13 @@ public:
 
   static void setRotation(bool leftHanded); // Set the rotation for the screen
   // Get the current rotation of the LCD
-  static bool    getRotation() { return inLeftHandedMode; }
+  static bool getRotation() {
+#ifdef OLED_FLIP
+    return !inLeftHandedMode;
+#else
+    return inLeftHandedMode;
+#endif
+  }
   static void    setBrightness(uint8_t contrast);
   static void    setInverseDisplay(bool inverted);
   static int16_t getCursorX() { return cursor_x; }
@@ -98,8 +104,8 @@ public:
 private:
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
-  static uint8_t *    firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
-  static uint8_t *    secondStripPtr;   // Pointers to the strips
+  static uint8_t *     firstStripPtr;   // Pointers to the strips to allow for buffer having extra content
+  static uint8_t *     secondStripPtr;  // Pointers to the strips
   static bool         inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
   static bool         initDone;
   static DisplayState displayState;
