@@ -7,7 +7,7 @@
 void HAL_MspInit(void) {
   __HAL_RCC_AFIO_CLK_ENABLE();
 
-  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+  // HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* System interrupt init*/
   /* MemoryManagement_IRQn interrupt configuration */
@@ -82,7 +82,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
   GPIO_InitStruct.Pin   = SCL_Pin | SDA_Pin;
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
   GPIO_InitStruct.Pull  = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* Peripheral clock enable */
