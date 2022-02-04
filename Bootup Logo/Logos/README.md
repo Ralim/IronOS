@@ -1,4 +1,4 @@
-# Preview of the Logos
+# Preview of the logos
 
 ||&emsp;&emsp;&emsp;TS100&emsp;&emsp;&emsp;|&emsp;&emsp;&emsp;TS80&emsp;&emsp;&emsp;&nbsp;|&emsp;&emsp;&emsp;TS80P&emsp;&emsp;&emsp;&nbsp;|&emsp;&emsp;&emsp;Pinecil&emsp;&emsp;&emsp;&nbsp;|&emsp;&emsp;&emsp;IronOS&emsp;&emsp;&emsp;&nbsp;
 -|-|-|-|-|-
