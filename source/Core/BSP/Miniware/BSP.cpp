@@ -20,6 +20,7 @@ static const uint8_t tempMeasureTicks = 14;
 uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
 
 static bool fastPWM;
+static bool infastPWM;
 
 void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
 #ifdef TEMP_NTC
@@ -135,7 +136,7 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 
 static void switchToFastPWM(void) {
   // 10Hz
-  fastPWM              = true;
+  infastPWM            = true;
   totalPWM             = powerPWM + tempMeasureTicks + holdoffTicks;
   htim2.Instance->ARR  = totalPWM;
   htim2.Instance->CCR1 = powerPWM + holdoffTicks;
@@ -144,7 +145,7 @@ static void switchToFastPWM(void) {
 
 static void switchToSlowPWM(void) {
   // 5Hz
-  fastPWM              = false;
+  infastPWM            = false;
   totalPWM             = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
   htim2.Instance->ARR  = totalPWM;
   htim2.Instance->CCR1 = powerPWM + holdoffTicks / 2;
@@ -152,16 +153,10 @@ static void switchToSlowPWM(void) {
 }
 
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
-  PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
+  PWMSafetyTimer = 20; // This is decremented in the handler for PWM so that the tip pwm is
                        // disabled if the PID task is not scheduled often enough.
+  fastPWM    = shouldUseFastModePWM;
   pendingPWM = pulse;
-  if (fastPWM != shouldUseFastModePWM) {
-    if (shouldUseFastModePWM) {
-      switchToFastPWM();
-    } else {
-      switchToSlowPWM();
-    }
-  }
 }
 // These are called by the HAL after the corresponding events from the system
 // timers.
@@ -182,6 +177,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     } else {
       HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
     }
+    if (fastPWM != infastPWM) {
+      if (fastPWM) {
+        switchToFastPWM();
+      } else {
+        switchToSlowPWM();
+      }
+    }
+
   } else if (htim->Instance == TIM1) {
     // STM uses this for internal functions as a counter for timeouts
     HAL_IncTick();

@@ -40,7 +40,7 @@ void startPIDTask(void const *argument __unused) {
   uint32_t PIDTempTarget = 0;
   // Pre-seed the adc filters
   for (int i = 0; i < 128; i++) {
-    vTaskDelay(5);
+    osDelay(5);
     TipThermoModel::getTipInC(true);
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
@@ -148,12 +148,12 @@ void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
 
   // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
   // While trying to actively heat
+
+  // If we are more than 20C below the setpoint
   if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
-    // Temp error is high
+
+    // If we have heated up by more than 20C since last sample point, snapshot time and tip temp
     int16_t delta = (int16_t)currentTipTempInC - (int16_t)tipTempCRunawayTemp;
-    if (delta < 0) {
-      delta = -delta;
-    }
     if (delta > THERMAL_RUNAWAY_TEMP_C) {
       // We have heated up more than the threshold, reset the timer
       tipTempCRunawayTemp   = currentTipTempInC;
