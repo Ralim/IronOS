@@ -104,8 +104,8 @@ public:
 private:
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
-  static uint8_t *    firstStripPtr;   // Pointers to the strips to allow for buffer having extra content
-  static uint8_t *    secondStripPtr;  // Pointers to the strips
+  static uint8_t *    firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
+  static uint8_t *    secondStripPtr;   // Pointers to the strips
   static bool         inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
   static bool         initDone;
   static DisplayState displayState;
