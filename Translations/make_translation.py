@@ -127,9 +127,7 @@ def get_debug_menu() -> List[str]:
         "ACC  ",
         "PWR  ",
         "Max  ",
-        #ifdef HALL_SENSOR
         "Hall ",
-        #endif
     ]
 
 
