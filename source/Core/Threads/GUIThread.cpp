@@ -587,6 +587,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       printVoltage();
       OLED::print(SymbolVolts, FontStyle::SMALL);
     } else {
+      OLED::setCursor(0, 0);
       // We switch the layout direction depending on the orientation of the oled
       if (OLED::getRotation()) {
         // battery
@@ -753,19 +754,17 @@ void showDebugMenu(void) {
       // Max deg C limit
       OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
+#ifdef HALL_SENSOR
     case 13:
       // Print raw hall effect value if availabe, none if hall effect disabled.
-#ifdef HALL_SENSOR
-    {
-      int16_t hallEffectStrength = getRawHallEffect();
-      if (hallEffectStrength < 0)
-        hallEffectStrength = -hallEffectStrength;
-      OLED::printNumber(hallEffectStrength, 6, FontStyle::SMALL);
-    }
-#else
-      OLED::print(translatedString(Tr->OffString), FontStyle::SMALL);
+      {
+        int16_t hallEffectStrength = getRawHallEffect();
+        if (hallEffectStrength < 0)
+          hallEffectStrength = -hallEffectStrength;
+        OLED::printNumber(hallEffectStrength, 6, FontStyle::SMALL);
+      }
+      break;
 #endif
-    break;
     default:
       break;
     }
@@ -776,7 +775,11 @@ void showDebugMenu(void) {
       return;
     else if (b == BUTTON_F_SHORT) {
       screen++;
+#ifdef HALL_SENSOR
       screen = screen % 14;
+#else
+      screen = screen % 13;
+#endif
     }
     GUIDelay();
   }
