@@ -82,13 +82,19 @@ jobs:
 
   tests:
     runs-on: ubuntu-20.04
+    container:
+      image: alpine:3.15
+
     steps:
+      - name: deps
+        run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
+
       - uses: actions/checkout@v2
         with:
           submodules: true
 
-      - name: Setup
-        run: sudo apt-get update && sudo apt-get install -y python3 && pip3 install bdflib
+      - name: install black
+        run: python3 -m pip install bdflib
 
       - name: Run python tests
         run: cd Translations && chmod +x make_translation_test.py && ./make_translation_test.py
