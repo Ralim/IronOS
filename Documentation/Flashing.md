@@ -90,6 +90,8 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 The MCU used in the Pinecil supports usb-dfu.
 
+There is the nice gui [Pinecil Firmware Updater](https://github.com/pine64/pinecil-firmware-updater/releases). However this currently does not support the latest releases.
+
 To enter DFU mode, hold the button at the back of the iron while connecting to usb over usb-c.
 Generally all usb controllers work, but some hubs have issues so avoiding hubs may be best.
 
@@ -109,7 +111,9 @@ dfu-util -D Pinecil_EN.dfu
 
 ### Windows
 
-For windows the easiest tool to use is the vendors gui tool from [here](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
+For Windows there are two options, you can use dfu-util via command line as shown above.
+
+If you are uncomfortable with the command line, the easiest tool to use is the vendors gui tool from [here](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
 
 Should the link break, its called "GD32 MCU Dfu Tool" and can be grabbed from http://www.gd32mcu.com/en/download/.
 
