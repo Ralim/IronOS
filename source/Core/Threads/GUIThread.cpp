@@ -254,12 +254,7 @@ static void gui_solderingTempAdjust() {
     if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
       return; // exit if user just doesn't press anything for a bit
 
-#ifdef OLED_FLIP
-    if (!OLED::getRotation()) {
-#else
     if (OLED::getRotation()) {
-#endif
-
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolPlus : SymbolMinus, FontStyle::LARGE);
     } else {
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolMinus : SymbolPlus, FontStyle::LARGE);
@@ -273,11 +268,7 @@ static void gui_solderingTempAdjust() {
       OLED::drawSymbol(1);
     }
     OLED::print(SymbolSpace, FontStyle::LARGE);
-#ifdef OLED_FLIP
-    if (!OLED::getRotation()) {
-#else
     if (OLED::getRotation()) {
-#endif
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolMinus : SymbolPlus, FontStyle::LARGE);
     } else {
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolPlus : SymbolMinus, FontStyle::LARGE);
@@ -548,11 +539,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       }
     }
     // else we update the screen information
-#ifdef OLED_FLIP
-    if (!OLED::getRotation()) {
-#else
     if (OLED::getRotation()) {
-#endif
       OLED::setCursor(50, 0);
     } else {
       OLED::setCursor(-1, 0);
@@ -564,11 +551,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 
 #ifndef NO_SLEEP_MODE
       if (getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)) {
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           OLED::setCursor(32, 0);
         } else {
           OLED::setCursor(47, 0);
@@ -578,11 +561,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
 #endif
 
       if (boostModeOn) {
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           OLED::setCursor(38, 8);
         } else {
           OLED::setCursor(55, 8);
@@ -590,11 +569,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
         OLED::print(SymbolPlus, FontStyle::SMALL);
       }
 
-#ifdef OLED_FLIP
-      if (!OLED::getRotation()) {
-#else
       if (OLED::getRotation()) {
-#endif
         OLED::setCursor(0, 0);
       } else {
         OLED::setCursor(67, 0);
@@ -604,11 +579,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       OLED::printNumber(x10WattHistory.average() % 10, 1, FontStyle::SMALL);
       OLED::print(SymbolWatts, FontStyle::SMALL);
 
-#ifdef OLED_FLIP
-      if (!OLED::getRotation()) {
-#else
       if (OLED::getRotation()) {
-#endif
         OLED::setCursor(0, 8);
       } else {
         OLED::setCursor(67, 8);
@@ -966,32 +937,20 @@ void startGUITask(void const *argument) {
     }
     // Clear the lcd buffer
     OLED::clearScreen();
-#ifdef OLED_FLIP
-    if (!OLED::getRotation()) {
-#else
     if (OLED::getRotation()) {
-#endif
       OLED::setCursor(50, 0);
     } else {
       OLED::setCursor(-1, 0);
     }
     if (getSettingValue(SettingsOptions::DetailedIDLE)) {
       if (isTipDisconnected()) {
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           // in right handed mode we want to draw over the first part
           OLED::drawArea(54, 0, 42, 16, disconnectedTipF);
         } else {
           OLED::drawArea(0, 0, 42, 16, disconnectedTip);
         }
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           OLED::setCursor(-1, 0);
         } else {
           OLED::setCursor(42, 0);
@@ -1000,11 +959,7 @@ void startGUITask(void const *argument) {
         OLED::printNumber(Vlt / 10, 2, FontStyle::LARGE);
         OLED::print(SymbolDot, FontStyle::LARGE);
         OLED::printNumber(Vlt % 10, 1, FontStyle::LARGE);
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           OLED::setCursor(48, 8);
         } else {
           OLED::setCursor(91, 8);
@@ -1016,11 +971,7 @@ void startGUITask(void const *argument) {
           // 1000 tick/sec
           // OFF 300ms ON 700ms
           gui_drawTipTemp(true, FontStyle::LARGE); // draw in the temp
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           OLED::setCursor(6, 0);
         } else {
           OLED::setCursor(73, 0); // top right
@@ -1030,11 +981,7 @@ void startGUITask(void const *argument) {
           OLED::print(SymbolDegF, FontStyle::SMALL);
         else
           OLED::print(SymbolDegC, FontStyle::SMALL);
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           OLED::setCursor(0, 8);
         } else {
           OLED::setCursor(67, 8); // bottom right
@@ -1044,11 +991,7 @@ void startGUITask(void const *argument) {
       }
 
     } else {
-#ifdef OLED_FLIP
-      if (!OLED::getRotation()) {
-#else
       if (OLED::getRotation()) {
-#endif
         OLED::drawArea(54, 0, 42, 16, buttonAF);
         OLED::drawArea(12, 0, 42, 16, buttonBF);
         OLED::setCursor(0, 0);
@@ -1071,11 +1014,7 @@ void startGUITask(void const *argument) {
       if (tempOnDisplay || tipDisconnectedDisplay) {
         // draw temp over the start soldering button
         // Location changes on screen rotation
-#ifdef OLED_FLIP
-        if (!OLED::getRotation()) {
-#else
         if (OLED::getRotation()) {
-#endif
           // in right handed mode we want to draw over the first part
           OLED::fillArea(55, 0, 41, 16, 0); // clear the area for the temp
           OLED::setCursor(56, 0);
@@ -1091,11 +1030,7 @@ void startGUITask(void const *argument) {
         } else {
           // Draw in missing tip symbol
 
-#ifdef OLED_FLIP
-          if (!OLED::getRotation()) {
-#else
           if (OLED::getRotation()) {
-#endif
             // in right handed mode we want to draw over the first part
             OLED::drawArea(54, 0, 42, 16, disconnectedTipF);
           } else {

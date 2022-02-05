@@ -61,7 +61,13 @@ public:
 
   static void setRotation(bool leftHanded); // Set the rotation for the screen
   // Get the current rotation of the LCD
-  static bool    getRotation() { return inLeftHandedMode; }
+  static bool getRotation() {
+#ifdef OLED_FLIP
+    return !inLeftHandedMode;
+#else
+    return inLeftHandedMode;
+#endif
+  }
   static void    setBrightness(uint8_t contrast);
   static void    setInverseDisplay(bool inverted);
   static int16_t getCursorX() { return cursor_x; }
