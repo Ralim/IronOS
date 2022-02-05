@@ -545,6 +545,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       OLED::setCursor(-1, 0);
     }
     OLED::clearScreen();
+    OLED::setCursor(0, 0);
     // Draw in the screen details
     if (getSettingValue(SettingsOptions::DetailedSoldering)) {
       gui_drawTipTemp(true, FontStyle::LARGE);
@@ -587,7 +588,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       printVoltage();
       OLED::print(SymbolVolts, FontStyle::SMALL);
     } else {
-      OLED::setCursor(0, 0);
       // We switch the layout direction depending on the orientation of the oled
       if (OLED::getRotation()) {
         // battery
