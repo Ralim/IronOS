@@ -71,7 +71,8 @@ This may change during power up as the sources are negotiated in turn.
 
 - **DC** input (dumb)
 - **QC** input (We used QC2/3 negotiation for current supply)
-- **PD** input (We used the PD subsystem to negotiate for the current supply)
+- **PD W. VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is connected to your input power source
+- **PD No VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is **NOT** connected to your input power source
 
 ### Max 
 
