@@ -148,6 +148,7 @@ def get_power_source_list() -> List[str]:
         "DC",
         "QC",
         "PD",
+        "PD No VBus",
     ]
 
 
