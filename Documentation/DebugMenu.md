@@ -78,3 +78,9 @@ This may change during power up as the sources are negotiated in turn.
 
 This indicates the max temp in C that the system estimates it can measure the tip reliably to.
 This is dependant on a few factors including the handle temperature so it can move around during use.
+
+
+### Hall
+
+This will appear if your device is capable of having a magnetic hall effect sensor fitted.
+This will show the current field strength reading from the sensor, this can be used to check the sensor is operational and measure how strong the magnetic field is for diagnostics.
