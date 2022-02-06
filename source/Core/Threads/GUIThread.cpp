@@ -732,7 +732,7 @@ void showDebugMenu(void) {
         } else {
           // We are not powered via DC, so want to display the appropriate state for PD or QC
           bool poweredbyPD        = false;
-          bool pdHasVBUSConnected = false;
+          bool pdHasVBUSConnected = true;
 #if POW_PD
           if (USBPowerDelivery::fusbPresent()) {
             // We are PD capable
