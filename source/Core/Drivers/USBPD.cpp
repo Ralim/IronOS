@@ -67,6 +67,17 @@ bool USBPowerDelivery::fusbPresent() {
   return detectionState == 1;
 }
 
+bool USBPowerDelivery::isVBUSConnected() {
+  // Check the status reg
+
+  FUSB302::fusb_status status;
+  if (fusb.fusb_get_status(&status)) {
+    return status.status0 & 0x80;
+  }
+  // As we are using this to detect the mod fail safe
+  return true;
+}
+
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
 
   /* Get the number of PDOs */
