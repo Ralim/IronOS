@@ -539,15 +539,16 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       }
     }
     // else we update the screen information
-    if (OLED::getRotation()) {
-      OLED::setCursor(50, 0);
-    } else {
-      OLED::setCursor(-1, 0);
-    }
+
     OLED::clearScreen();
-    OLED::setCursor(0, 0);
+
     // Draw in the screen details
     if (getSettingValue(SettingsOptions::DetailedSoldering)) {
+      if (OLED::getRotation()) {
+        OLED::setCursor(50, 0);
+      } else {
+        OLED::setCursor(-1, 0);
+      }
       gui_drawTipTemp(true, FontStyle::LARGE);
 
 #ifndef NO_SLEEP_MODE
@@ -588,6 +589,7 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
       printVoltage();
       OLED::print(SymbolVolts, FontStyle::SMALL);
     } else {
+      OLED::setCursor(0, 0);
       // We switch the layout direction depending on the orientation of the oled
       if (OLED::getRotation()) {
         // battery
