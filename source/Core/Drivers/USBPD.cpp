@@ -67,6 +67,8 @@ bool USBPowerDelivery::fusbPresent() {
   return detectionState == 1;
 }
 
+bool USBPowerDelivery::isVBUSConnected() { return fusb.isVBUSConnected(); }
+
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
 
   /* Get the number of PDOs */

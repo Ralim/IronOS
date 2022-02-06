@@ -16,9 +16,9 @@ public:
   static void    PPSTimerCallback();      // PPS Timer
   static void    IRQOccured();            // Thread callback that an irq occured
   static void    step();                  // Iterate the step machine
-  static bool    negotiationHasWorked();  //
-  static uint8_t getStateNumber();        //
-
+  static bool    negotiationHasWorked();  // Has PD negotiation worked (are we in a PD contract)
+  static uint8_t getStateNumber();        // Debugging - Get the internal state number
+  static bool    isVBUSConnected();       // Is the VBus pin connected on the FUSB302
 private:
   //
   static int detectionState;
