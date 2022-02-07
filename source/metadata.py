@@ -63,7 +63,7 @@ for file_path in output_files:
     if file_path.endswith(".hex") or file_path.endswith(".dfu"):
         # Find out what language this file is
         name: str = os.path.basename(file_path)
-        matches = re.findall(r"^([a-zA-Z]+)_(.+)\.(.+)$", name)
+        matches = re.findall(r"^([a-zA-Z0-9]+)_(.+)\.(.+)$", name)
         if matches:
             matches = matches[0]
             if len(matches) == 3:
