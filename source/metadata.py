@@ -5,14 +5,20 @@ from pathlib import Path
 import os
 import re
 import subprocess
+import sys
 
 # Creates an index metadata json file of the hexfiles folder
 # This is used by automation like the Pinecil updater
 
+
+if len(sys.argv) != 2:
+    print("Requires the output json name as an arg")
+    exit(1)
+
 HERE = Path(__file__).resolve().parent
 
 HexFileFolder = os.path.join(HERE, "Hexfile")
-OutputJSONPath = os.path.join(HexFileFolder, "index.json")
+OutputJSONPath = os.path.join(HexFileFolder, sys.argv[1])
 TranslationsFilesPath = os.path.join(HERE.parent, "Translations")
 
 
