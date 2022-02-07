@@ -69,8 +69,11 @@ for file_path in output_files:
             if len(matches) == 3:
                 if device_model_name is None:
                     device_model_name = matches[0]
-                lang_code = matches[1]
+                lang_code: str = matches[1]
                 lang_file = parsed_languages.get(lang_code, None)
+                if lang_file is None and lang_code.startswith("multi_"):
+                    # Multi files wont match, but we fake this by just taking the filename to it
+                    lang_file = {"languageLocalName": lang_code.replace("multi_", "").replace("compressed_", "")}
                 if lang_file is None:
                     raise Exception(f"Could not match language code {lang_code}")
                 file_record = {"language_code": lang_code, "language_name": lang_file.get("languageLocalName", None)}
