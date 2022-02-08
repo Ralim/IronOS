@@ -193,7 +193,7 @@ uint16_t lookupHallEffectThreshold() {
   case 1: // Low
     return 300;
   case 2: // Medium
-    return 100;
+    return 70;
   case 3: // High
     return 40;
   default:
