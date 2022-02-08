@@ -147,6 +147,7 @@
 #define ACCEL_MMA
 #define POW_PD 0
 #define ACCEL_LIS
+#define ACCEL_SC7
 #define TEMP_TMP36
 #endif
 
@@ -170,6 +171,7 @@
 #define MIN_BOOST_TEMP_C       250                    // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                    // The min settable temp for boost mode °F
 #define ACCEL_LIS
+#define ACCEL_SC7
 #define POW_QC
 #define POW_PD 0
 #define TEMP_TMP36
@@ -197,6 +199,7 @@
 #define MIN_BOOST_TEMP_C       250                    // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                    // The min settable temp for boost mode °F
 #define ACCEL_LIS
+#define ACCEL_SC7
 #define ACCEL_MSA
 #define POW_PD 1
 #define POW_QC 1
