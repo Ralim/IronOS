@@ -42,6 +42,15 @@ jobs:
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
+      - name: Generate json index file
+        run: cd source && python3 metadata.py ${{ matrix.model }}.json
+
+      - name: Archive ${{ matrix.model }} index file
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.model }}.json
+          path: source/Hexfile/${{ matrix.model }}.json
+
   build_multi-lang:
     runs-on: ubuntu-20.04
     container:
@@ -79,6 +88,15 @@ jobs:
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
+
+      - name: Generate json index file
+        run: cd source && python3 metadata.py ${{ matrix.model }}.json
+
+      - name: Archive ${{ matrix.model }} index file
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.model }}_multi-lang.json
+          path: source/Hexfile/${{ matrix.model }}.json
 
   tests:
     runs-on: ubuntu-20.04
