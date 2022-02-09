@@ -48,7 +48,7 @@ jobs:
       - name: Archive ${{ matrix.model }} index file
         uses: actions/upload-artifact@v2
         with:
-          name: metadata.zip
+          name: metadata
           path: source/Hexfile/${{ matrix.model }}.json
 
   build_multi-lang:
@@ -95,7 +95,7 @@ jobs:
       - name: Archive ${{ matrix.model }} index file
         uses: actions/upload-artifact@v2
         with:
-          name: metadata.zip
+          name: metadata
           path: source/Hexfile/${{ matrix.model }}.json
 
   tests:
