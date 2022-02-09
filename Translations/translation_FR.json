@@ -175,7 +175,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Sensibilité", "capteur effet hall"],
-      "desc": "Sensibilité du capteur à effet Hall pour la mise en veille (D=désactivé | B=basse | M=moyenne | H=haute)"
+      "desc": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
     },
     "MinVolCell": {
       "text2": ["Tension", "minimale"],

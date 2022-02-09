@@ -170,7 +170,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Hall-", "herk."],
-      "desc": "Hall-efektianturin herkkyys lepotilan tunnistuksessa  (P=pois | A=alhainen | K=keskiverto | S=suuri)"
+      "desc": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
     },
     "LockingMode": {
       "text2": ["Salli nappien", "lukitus"],

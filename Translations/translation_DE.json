@@ -166,7 +166,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Empfindlichkeit", "der Hall-Sonde"],
-      "desc": "Empfindlichkeit der Hall-Sonde beim Erkennen des Ruhemodus (A=aus | N=niedrig | M=mittel | H=hoch)"
+      "desc": "Empfindlichkeit der Hall-Sonde beim Erkennen des Ruhemodus (0=aus | 1=minimal | ... | 9=maximal)"
     },
     "LockingMode": {
       "text2": ["Tasten-", "sperre"],

@@ -172,7 +172,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Hall Eff", "Sensibilidad"],
-      "desc": "Sensibilidad del sensor de efecto Hall en la detección de reposo (O=Off | L=Low | M=Medium | H=High)"
+      "desc": "Sensibilidad del sensor de efecto Hall en la detección de reposo (0=no | 1=menos sensible | ... | 9=más sensible)"
     },
     "LockingMode": {
       "text2": ["Permitir botones", "bloqueo"],
