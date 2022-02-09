@@ -77,7 +77,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
     {5, TEMP_CHANGE_LONG_STEP_MAX, 5, TEMP_CHANGE_LONG_STEP},       // TempChangeLongStep
     {1, TEMP_CHANGE_SHORT_STEP_MAX, 1, TEMP_CHANGE_SHORT_STEP},     // TempChangeShortStep
-    {0, 3, 1, 1},                                                   // HallEffectSensitivity
+    {0, 9, 1, 1},                                                   // HallEffectSensitivity
     {0, 9, 1, 0},                                                   // AccelMissingWarningCounter
     {0, 9, 1, 0},                                                   // PDMissingWarningCounter
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
@@ -187,15 +187,28 @@ bool prevSettingValue(const enum SettingsOptions option) {
 }
 uint16_t lookupHallEffectThreshold() {
   // Return the threshold above which the hall effect sensor is "activated"
+  // We want this to be roughly exponentially mapped from 0-1000
   switch (getSettingValue(SettingsOptions::HallEffectSensitivity)) {
   case 0:
     return 0;
-  case 1: // Low
-    return 300;
-  case 2: // Medium
-    return 70;
-  case 3: // High
-    return 40;
+  case 1:
+    return 1000;
+  case 2:
+    return 750;
+  case 3:
+    return 500;
+  case 4:
+    return 250;
+  case 5:
+    return 150;
+  case 6:
+    return 100;
+  case 7:
+    return 75;
+  case 8:
+    return 50;
+  case 9:
+    return 25;
   default:
     return 0; // Off
   }

@@ -775,21 +775,7 @@ static void settings_displayInvertColor(void) {
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void) {
   printShortDescription(SettingsItemIndex::HallEffSensitivity, 7);
-  switch (getSettingValue(SettingsOptions::HallEffectSensitivity)) {
-  case 1:
-    OLED::print(translatedString(Tr->SettingSensitivityLow), FontStyle::LARGE);
-    break;
-  case 2:
-    OLED::print(translatedString(Tr->SettingSensitivityMedium), FontStyle::LARGE);
-    break;
-  case 3:
-    OLED::print(translatedString(Tr->SettingSensitivityHigh), FontStyle::LARGE);
-    break;
-  case 0:
-  default:
-    OLED::print(translatedString(Tr->SettingSensitivityOff), FontStyle::LARGE);
-    break;
-  }
+  OLED::printNumber(getSettingValue(SettingsOptions::HallEffectSensitivity), 1, FontStyle::LARGE, false);
 }
 static bool settings_showHallEffect(void) { return getHallSensorFitted(); }
 #endif
