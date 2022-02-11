@@ -90,13 +90,13 @@ jobs:
           if-no-files-found: error
 
       - name: Generate json index file
-        run: cd source && python3 metadata.py ${{ matrix.model }}.json
+        run: cd source && python3 metadata.py Pinecil_multi-lang.json
 
       - name: Archive ${{ matrix.model }} index file
         uses: actions/upload-artifact@v2
         with:
           name: metadata
-          path: source/Hexfile/${{ matrix.model }}.json
+          path: source/Hexfile/Pinecil_multi-lang.json
 
   tests:
     runs-on: ubuntu-20.04
