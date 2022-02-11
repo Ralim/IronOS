@@ -71,9 +71,16 @@ This may change during power up as the sources are negotiated in turn.
 
 - **DC** input (dumb)
 - **QC** input (We used QC2/3 negotiation for current supply)
-- **PD** input (We used the PD subsystem to negotiate for the current supply)
+- **PD W. VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is connected to your input power source
+- **PD No VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is **NOT** connected to your input power source
 
 ### Max 
 
 This indicates the max temp in C that the system estimates it can measure the tip reliably to.
 This is dependant on a few factors including the handle temperature so it can move around during use.
+
+
+### Hall
+
+This will appear if your device is capable of having a magnetic hall effect sensor fitted.
+This will show the current field strength reading from the sensor, this can be used to check the sensor is operational and measure how strong the magnetic field is for diagnostics.
