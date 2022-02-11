@@ -171,7 +171,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Občut.", "Hall son"],
-      "desc": "Občutljivost Hallove sonde za zaznavanje spanja (U=ugasnjen | N=nizka | S=srednja | V=visoka)"
+      "desc": "Občutljivost Hallove sonde za zaznavanje spanja (0=izklopljeno | 1=najmanjša | ... | 9=največja)"
     },
     "LockingMode": {
       "text2": ["Omogoči", "zaklep gumbov"],

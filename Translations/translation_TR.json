@@ -183,7 +183,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Hall Eff", "Sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (O=Off | L=Low | M=Medium | H=High)"
+      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
     },
     "LockingMode": {
       "text2": ["Allow buttons", "locking"],

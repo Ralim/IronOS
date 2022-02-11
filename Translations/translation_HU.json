@@ -166,7 +166,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Alvásérzékelő", "érzékenység"],
-      "desc": "Alvásérzékelő gyorsulásmérő érzékenysége (0=ki | A=alacsony | K=közepes | M=magas)"
+      "desc": "Alvásérzékelő gyorsulásmérő érzékenysége (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
     },
     "LockingMode": {
       "text2": ["Lezárás", "engedélyezés"],

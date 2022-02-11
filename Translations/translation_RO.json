@@ -172,7 +172,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Sensibilitate", "senzor Hall"],
-      "desc": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (O=oprit | L=scăzut | M=mediu | H=înalt)"
+      "desc": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
     },
     "LockingMode": {
       "text2": ["Blocare", "butoane"],
@@ -203,12 +203,12 @@
       "desc": "Limba curenta"
     },
     "Brightness": {
-        "text2": ["Ecranului", "luminozitatea"],
-        "desc": "Ajusteaza luminozitatea ecranului"
+      "text2": ["Ecranului", "luminozitatea"],
+      "desc": "Ajusteaza luminozitatea ecranului"
     },
     "ColourInversion": {
-        "text2": ["Inverseaza", "culoarea"],
-        "desc": "Inverseaza culoarea ecranului"
+      "text2": ["Inverseaza", "culoarea"],
+      "desc": "Inverseaza culoarea ecranului"
     }
   }
 }

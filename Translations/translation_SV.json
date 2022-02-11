@@ -165,7 +165,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Sensor-", "känslght"],
-      "desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (A=Av | L=Låg | M=Medium | H=Hög)"
+      "desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (0=Av | 1=minst känslig | ... | 9=mest känslig)"
     },
     "LockingMode": {
       "text2": ["Tillåt lås", "via knappar"],

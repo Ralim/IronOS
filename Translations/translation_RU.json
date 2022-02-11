@@ -8,7 +8,7 @@
     "SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
     "UVLOWarningString": "НАПРЯЖ--",
     "UndervoltageString": "Низ. напряжение",
-    "InputVoltageString": "Питание В: ",			  
+    "InputVoltageString": "Питание В: ",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Ожидание...",
     "SleepingTipAdvancedString": "Жало:",
@@ -166,7 +166,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Датчик", "Холла"],
-      "desc": "Уровень чувствительности датчика холла в режиме сна (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
+      "desc": "Уровень чувствительности датчика холла в режиме сна (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
     },
     "LockingMode": {
       "text2": ["Разрешить", "блок. кнопок"],

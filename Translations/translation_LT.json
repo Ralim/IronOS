@@ -171,7 +171,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Holo", "jutiklis"],
-      "desc": "Holo jutiklio jautrumas nustatant miegą (I=Išjungtas | Ž=Žemas | V=Vidutinis | A=Aukštas)"
+      "desc": "Holo jutiklio jautrumas nustatant miegą (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
     },
     "LockingMode": {
       "text2": ["Mygtukų", "užraktas"],

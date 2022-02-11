@@ -172,7 +172,7 @@
     },
     "HallEffSensitivity": {
       "text2": ["Czułość", "cz. Halla"],
-      "desc": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (O=Wył | N=Niska | Ś=Średnia | W=Wysoka)"
+      "desc": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (0: Wyłączona | 1: Minimalna | ... | 9: Maksymalna)"
     },
     "LockingMode": {
       "text2": ["Blokada", "przycisków"],
