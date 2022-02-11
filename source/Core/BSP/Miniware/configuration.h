@@ -124,6 +124,14 @@
 #error "No model defined!"
 #endif
 
+// Miniware is swapping IMU's around a bit now, so we turn them all on
+
+#define ACCEL_MMA
+#define ACCEL_LIS
+#define ACCEL_SC7
+#define ACCEL_MSA
+#define ACCEL_BMA
+
 #ifdef MODEL_TS100
 #define SOLDERING_TEMP         320                     // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV            467                     // 467 - Default divider from schematic
@@ -144,9 +152,9 @@
 #define MIN_BOOST_TEMP_C       250                     // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                     // The min settable temp for boost mode °F
 #define POW_DC
-#define ACCEL_MMA
+
 #define POW_PD 0
-#define ACCEL_LIS
+
 #define TEMP_TMP36
 #endif
 
@@ -169,7 +177,7 @@
 #define MIN_TEMP_F             60                     // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C       250                    // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                    // The min settable temp for boost mode °F
-#define ACCEL_LIS
+
 #define POW_QC
 #define POW_PD 0
 #define TEMP_TMP36
@@ -196,8 +204,7 @@
 #define MIN_TEMP_F             60                     // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C       250                    // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                    // The min settable temp for boost mode °F
-#define ACCEL_LIS
-#define ACCEL_MSA
+
 #define POW_PD 1
 #define POW_QC 1
 #define TEMP_NTC
