@@ -142,6 +142,7 @@
 #define ACCEL_BMA
 #define ACCEL_SC7
 #define HALL_SENSOR
+#define VBUS_MOD_TEST
 #define HALL_SI7210
 #define DEBUG_UART_OUTPUT
 
