@@ -17,7 +17,7 @@ public:
   static bool initalize();
   // 1 = rh, 2,=lh, 8=flat
   static Orientation getOrientation() {
-    uint8_t val = ((FRToSI2C::I2C_RegisterRead(SC7A20_ADDRESS, SC7A20_INT2_SOURCE) >> 2) - 1);
+    uint8_t val = ((FRToSI2C::I2C_RegisterRead(activeAddress, SC7A20_INT2_SOURCE) >> 2) - 1);
     if (val == 1)
       return Orientation::ORIENTATION_LEFT_HAND;
     else if (val == 4 || val == 0)
@@ -28,6 +28,7 @@ public:
   static void getAxisReadings(int16_t &x, int16_t &y, int16_t &z);
 
 private:
+  static uint8_t activeAddress;
 };
 
 #endif /* CORE_DRIVERS_BMA223_HPP_ */

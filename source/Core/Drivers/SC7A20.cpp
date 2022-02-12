@@ -9,15 +9,29 @@
 #include <SC7A20_defines.h>
 #include <array>
 
+uint8_t SC7A20::activeAddress;
+
 bool SC7A20::detect() {
   if (FRToSI2C::probe(SC7A20_ADDRESS)) {
     // Read chip id to ensure its not an address collision
     uint8_t id = 0;
     if (FRToSI2C::Mem_Read(SC7A20_ADDRESS, SC7A20_WHO_AMI_I, &id, 1)) {
-      return id == 0b00010001;
+      if (id == SC7A20_WHO_AM_I_VALUE) {
+        activeAddress = SC7A20_ADDRESS;
+        return true;
+      }
     }
   }
-
+  if (FRToSI2C::probe(SC7A20_ADDRESS2)) {
+    // Read chip id to ensure its not an address collision
+    uint8_t id = 0;
+    if (FRToSI2C::Mem_Read(SC7A20_ADDRESS2, SC7A20_WHO_AMI_I, &id, 1)) {
+      if (id == SC7A20_WHO_AM_I_VALUE) {
+        activeAddress = SC7A20_ADDRESS2;
+        return true;
+      }
+    }
+  }
   return false;
 }
 
@@ -50,7 +64,7 @@ bool SC7A20::initalize() {
   // Hysteresis is set to ~ 16 counts
   // Theta blocking is set to 0b10
 
-  return FRToSI2C::writeRegistersBulk(SC7A20_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
+  return FRToSI2C::writeRegistersBulk(activeAddress, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
 }
 
 void SC7A20::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
