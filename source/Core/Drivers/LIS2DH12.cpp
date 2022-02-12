@@ -36,4 +36,14 @@ void LIS2DH12::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
   z = sensorData[2];
 }
 
-bool LIS2DH12::detect() { return FRToSI2C::probe(LIS2DH_I2C_ADDRESS); }
+bool LIS2DH12::detect() {
+  if (!FRToSI2C::probe(LIS2DH_I2C_ADDRESS)) {
+    return false;
+  }
+  // Read chip id to ensure its not an address collision
+  uint8_t id = 0;
+  if (FRToSI2C::Mem_Read(LIS2DH_I2C_ADDRESS, LIS2DH_WHOAMI_REG, &id, 1)) {
+    return id == LIS2DH_WHOAMI_ID;
+  }
+  return false; // cant read ID
+}
