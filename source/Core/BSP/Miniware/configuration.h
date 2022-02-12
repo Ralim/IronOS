@@ -210,6 +210,7 @@
 #define TEMP_NTC
 #define I2C_SOFT
 #define LIS_ORI_FLIP
+#define SC7_ORI_FLIP
 #define OLED_FLIP
 #endif
 
