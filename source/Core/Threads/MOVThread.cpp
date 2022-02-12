@@ -27,18 +27,10 @@
 #define MOVFilter 8
 uint8_t    accelInit        = 0;
 TickType_t lastMovementTime = 0;
-
+// Order matters for probe order, some Acceleromters do NOT like bad reads; and we have a bunch of overlap of addresses
 void detectAccelerometerVersion() {
   DetectedAccelerometerVersion = AccelType::Scanning;
-#ifdef ACCEL_SC7
-  if (SC7A20::detect()) {
-    // Setup the SC7A20 Accelerometer
-    if (SC7A20::initalize()) {
-      DetectedAccelerometerVersion = AccelType::SC7;
-      return;
-    }
-  }
-#endif
+
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
     if (MMA8652FC::initalize()) {
@@ -61,6 +53,15 @@ void detectAccelerometerVersion() {
     // Setup the BMA223 Accelerometer
     if (BMA223::initalize()) {
       DetectedAccelerometerVersion = AccelType::BMA;
+      return;
+    }
+  }
+#endif
+#ifdef ACCEL_SC7
+  if (SC7A20::detect()) {
+    // Setup the SC7A20 Accelerometer
+    if (SC7A20::initalize()) {
+      DetectedAccelerometerVersion = AccelType::SC7;
       return;
     }
   }
