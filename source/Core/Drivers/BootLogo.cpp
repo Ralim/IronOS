@@ -34,8 +34,14 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
   int position = 1;
   do {
 
-    position += (showNewFrame(ptrLogoArea + position));
+    int len = (showNewFrame(ptrLogoArea + position));
     OLED::refresh();
+    position += len;
+    // At end of animation
+    if (len == 1) {
+      return;
+    }
+
     buttons = getButtonState();
 
     // Button pressed
@@ -55,6 +61,7 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
 }
 int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
   uint8_t length = ptrLogoArea[0];
+
   if (length == 0xFF) {
     // Full frame update
     OLED::drawArea(0, 0, 96, 16, ptrLogoArea + 1);
@@ -70,5 +77,5 @@ int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
   }
 
   OLED::refresh();
-  return length * 2 + 1;
+  return (length * 2) + 1;
 }
