@@ -1,282 +1,491 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script src="translations_commons.js"></script>
-	<title>TS100 Bitmap Editor</title>
-	<style>
-		.matrix {
-			display: inline-block;
-			padding: 0px 0px 1px 1px ;
-			background-color: #666;
-			margin-top: 1em;
-			margin-bottom: 1em;
-		}
-		
-		.matrix * {
-			font-size:0;
-		}
-		.c {
-			margin:1px 1px 0px 0px;
-			display: inline-block;
-			background-color: #fff;
-			height:10px;
-			width: 10px;
-		}
-		
-		.x {
-			background-color: #000;
-		}
-		
-		.header {
-		}
-		
-		.data input, .data textarea {
-			margin-top: 1em;
-			width: 100%;
-		}
-		
-		.actions {
-		}
-	</style>
-	<script>
-	
-	var ink, pressed, ev;
-	function mousedown(e) {
-		c = window.event.target;
-		classes = c.className.split(" ");
-		if (classes.indexOf("c")<0) {
-			return;
-		}
-		ink = classes.indexOf("x")<0;
-		pressed = true;
-		ev = e;
-		enter(e);
-	}
-	
-	function mouseup(e) {
-		ev = e;
-		pressed = false;
-	}
-	
-	function enter(e) {
-		if (!pressed) {
-			return;
-		}
-		ev = e;
-		c = window.event.target;
-		paint(c, ink);
-		stringFromMatrix();
-	}
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="translations_commons.js"></script>
+    <title>TS100 Bitmap Editor</title>
+    <style id="styles">
+      .matrix {
+        display: inline-block;
+        padding: 0px 0px 1px 1px;
+        background-color: #666;
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
 
-	function paint(c, ink) {
-		var cellInk = isInk(c);
-		if (ink) {
-			if (!cellInk) {
-				c.className += " x";
-			}
-		} else {
-			if (cellInk) {
-				c.className = "c";
-			}
-		}
-	}
+      .matrix * {
+        font-size: 0;
+      }
+      .r {
+        white-space: nowrap;
+      }
+      .c {
+        margin: 1px 1px 0px 0px;
+        display: inline-block;
+        background-color: #fff;
+        height: 10px;
+        width: 10px;
+      }
 
-	function isInk(c) {
-		try {
-			var classes = c.className.split(" ");
-			return classes.indexOf("x") >= 0;
-		} catch(e) {
-			return false;
-		}
-	}
-	
-	function getMatrix() {
-		return document.getElementById("matrix");
-	}
-	
-	function getCoordinatesFromId(str) {
-		i = str.indexOf('_');
-		return {
-			row: parseInt(str.substring(1, i)),
- 			col: parseInt(str.substring(i+1))
-		}
-	}
+      .x {
+        background-color: #000;
+      }
 
-	function clearMatrix() {
-		for (var r = 0; r < app.matrix.rows; r++) {
-			for (var c = 0; c < app.matrix.cols; c++) {
-				paint(getCell(r, c), false);
-			}
-		}
-	}
-	
-	function getCell(row, col) {
-		return document.getElementById("C"+row+"_"+col);
-	}
-	
-	function toMatrix(str) {
-		app.encodedData = str;
-		clearMatrix();
-		var strs = str.split(/[ ,]/);
-		var pair = false;
-		var c = 0;
-		var rs = 7;
-		for (var i = 0; i<strs.length; i++) {
-			var d = strs[i];
-			if (d.length > 0) {
-				if (startsWith(d, "0x")) {
-					v = parseInt(d.substring(2), 16);
-				} else {
-					v = parseInt(d);
-				}
-				sv = padLeft(v.toString(2), "0", 8);
-				for (r = 0; r < 8; r++) {
-					paint(getCell(rs - r, c), sv.charAt(r) == '1');
-				}
-				c++;
-				if (c >= app.matrix.cols) {
-					c = 0;
-					rs += 8;
-				}
-			}
-		}
-		stringFromMatrix(true, false);
-	}
-	
-	function escapedToMatrix(str) {
-		app.encodedEscapeSequence = str;
-		clearMatrix();
-		var strs = str.split("\\x");
-		var c = 0;
-		var rs = 7;
-		for (var i = 0; i<strs.length; i++) {
-			var d = strs[i];
-			if (d.length > 0) {
-				v = parseInt(d, 16);
-				sv = padLeft(v.toString(2), "0", 8);
-				for (r = 0; r < 8; r++) {
-					paint(getCell(rs - r, c), sv.charAt(r) == '1');
-				}
-				c++;
-				if (c >= app.matrix.cols) {
-					c = 0;
-					rs += 8;
-				}
-			}
-		}
-		stringFromMatrix(false, true);
-	}
+      .header {
+      }
 
-	function stringFromMatrix(skipEncodedData, skipEncodedEscapeSequence) {
-		var str = "";
-		var strEscaped = "";
-		var delim = "";
-		var blocks = app.matrix.rows / 8;
-		var rs = 7;
-		for (var block = 0; block < blocks; block++) {
-			for (var c = 0; c < app.matrix.cols; c++) {
-				var b = 0;
-				for (var r = 0; r < 8; r++) {
-					var cell = document.getElementById("C"+(rs-r)+"_"+c);
-					if (isInk(cell)) {
-						b |= (1 << (7-r));
-					}
-				}
-				str += delim + "0x" + padLeft(b.toString(16).toUpperCase(), "0", 2);
-				strEscaped += "\\x" + padLeft(b.toString(16).toUpperCase(), "0", 2);
-				delim = ",";
-			}
-			rs += 8;
-		}
-		if (!skipEncodedData) {
-			app.encodedData = str;
-		}
-		if (!skipEncodedEscapeSequence) {
-			app.encodedEscapeSequence = strEscaped;
-		}
-		return str;
-	}
-	
-	function start() {
-		app = new Vue({
-			el : '#app',
-			data : {
-				matrix: {
-					cols: 12,
-					rows: 16
-				},
-				type: "big",
-				encodedData: "",
-				encodedEscapeSequence: "",
-			},
-			methods : {
-				VtoMatrix : function(val) {
-					toMatrix(val);
-				},
-				escapedToMatrix : function(val) {
-					escapedToMatrix(val);
-				},
-				
-				VchangeSize : function() {
-					if (app.type == "big") {
-						app.matrix.cols = 12;
-						app.matrix.rows = 16;
-					} else if (app.type == "small") {
-						app.matrix.cols = 6;
-						app.matrix.rows = 8;
-					} else if (app.type == "icon") {
-						app.matrix.cols = 16;
-						app.matrix.rows = 16;
-					} else if (app.type == "icon24") {
-						app.matrix.cols = 24;
-						app.matrix.rows = 16;
-					} else if (app.type == "screen") {
-						app.matrix.cols = 84;
-						app.matrix.rows = 16;
-					} else if (app.type == "fullscreen") {
-						app.matrix.cols = 96;
-						app.matrix.rows = 16;
-					}
-					stringFromMatrix();
-				}
-				
-			}
-		});
-		toMatrix("0x00,0xF0,0x08,0x0E,0x02,0x02,0x02,0x02,0x0E,0x08,0xF0,0x00,0x00,0x3F,0x40,0x5C,0x5C,0x5C,0x5C,0x5C,0x5C,0x40,0x3F,0x00");
-	}
+      .data input,
+      .data textarea {
+        margin-top: 1em;
+        width: 100%;
+      }
 
-	window.onload=start; 
-	</script>
+      .actions {
+      }
+    </style>
+    <script>
+      var ink, pressed, ev;
+      function mousedown(e) {
+        c = window.event.target;
+        classes = c.className.split(" ");
+        if (classes.indexOf("c") < 0) {
+          return;
+        }
+        ink = classes.indexOf("x") < 0;
+        pressed = true;
+        ev = e;
+        enter(e);
+      }
 
-	
-</head>
-<body>
-	<div id="app">
-		<div class="header">
-			<select v-model="type" v-on:change="VchangeSize()">
-				<option value="small">Small Font (6x8)</option>
-				<option value="big">Big Font (12x16)</option>
-				<option value="icon">Icon (16x16)</option>
-				<option value="icon24">Icon (24x16)</option>
-				<option value="screen">Screen (84x16)</option>
-				<option value="fullscreen">Full Screen (96x16)</option>
-			</select>
-		</div>
-		<div id="matrix" class="matrix" onmousedown="mousedown(this)" onmouseup="mouseup(this)" ondragstart="return false">
-			<div :id="'R'+(r-1)" class="r" v-for="r in matrix.rows">
-				<div :id="'C'+(r-1)+'_'+(c-1)" class="c" onmouseenter="enter(this)" v-for="c in matrix.cols"></div>
-			</div>
-		</div>
-		<div class="actions">
-			<input type="button" value="Clear" onclick="clearMatrix();stringFromMatrix()">
-		</div>
-		<div class="data">
-			<textarea v-model="encodedData" style="width:100%" v-on:change="VtoMatrix(encodedData)" rows=5></textarea>
-			<textarea v-model="encodedEscapeSequence" style="width:100%" v-on:change="escapedToMatrix(encodedEscapeSequence)" rows=5></textarea>
-		</div>
-	</div>
-		
-	
-</body>
+      function mouseup(e) {
+        ev = e;
+        pressed = false;
+      }
+
+      function enter(e) {
+        if (!pressed) {
+          return;
+        }
+        ev = e;
+        c = window.event.target;
+        paint(c, ink);
+        stringFromMatrix();
+      }
+
+      function paint(c, ink) {
+        var cellInk = isInk(c);
+        if (ink) {
+          if (!cellInk) {
+            c.className += " x";
+          }
+        } else {
+          if (cellInk) {
+            c.className = "c";
+          }
+        }
+      }
+
+      function isInk(c) {
+        try {
+          var classes = c.className.split(" ");
+          return classes.indexOf("x") >= 0;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function getMatrix() {
+        return document.getElementById("matrix");
+      }
+
+      function getCoordinatesFromId(str) {
+        i = str.indexOf("_");
+        return {
+          row: parseInt(str.substring(1, i)),
+          col: parseInt(str.substring(i + 1)),
+        };
+      }
+
+      function clearMatrix() {
+        for (var r = 0; r < app.matrix.rows; r++) {
+          for (var c = 0; c < app.matrix.cols; c++) {
+            paint(getCell(r, c), false);
+          }
+        }
+      }
+
+      function invertMatrix() {
+        for (var r = 0; r < app.matrix.rows; r++) {
+          for (var c = 0; c < app.matrix.cols; c++) {
+            cell = getCell(r, c);
+            if (isInk(cell) == true) paint(cell, false);
+            else paint(cell, true);
+          }
+        }
+        stringFromMatrix();
+      }
+
+      function getCell(row, col) {
+        return document.getElementById("C" + row + "_" + col);
+      }
+
+      function toMatrix(str) {
+        app.encodedData = str;
+        clearMatrix();
+        var strs = str.split(/[ ,]/);
+        var pair = false;
+        var c = 0;
+        var rs = 7;
+        for (var i = 0; i < strs.length; i++) {
+          var d = strs[i];
+          if (d.length > 0) {
+            if (startsWith(d, "0x")) {
+              v = parseInt(d.substring(2), 16);
+            } else {
+              v = parseInt(d);
+            }
+            sv = padLeft(v.toString(2), "0", 8);
+            for (r = 0; r < 8; r++) {
+              paint(getCell(rs - r, c), sv.charAt(r) == "1");
+            }
+            c++;
+            if (c >= app.matrix.cols) {
+              c = 0;
+              rs += 8;
+            }
+          }
+        }
+        stringFromMatrix(true, false);
+      }
+
+      function escapedToMatrix(str) {
+        app.encodedEscapeSequence = str;
+        clearMatrix();
+        var strs = str.split("\\x");
+        var c = 0;
+        var rs = 7;
+        for (var i = 0; i < strs.length; i++) {
+          var d = strs[i];
+          if (d.length > 0) {
+            v = parseInt(d, 16);
+            sv = padLeft(v.toString(2), "0", 8);
+            for (r = 0; r < 8; r++) {
+              paint(getCell(rs - r, c), sv.charAt(r) == "1");
+            }
+            c++;
+            if (c >= app.matrix.cols) {
+              c = 0;
+              rs += 8;
+            }
+          }
+        }
+        stringFromMatrix(false, true);
+      }
+
+      // Rather than trying to figure these crazy cells/matrix, we just
+      // slurp up the encoded string at the end. It's updated on every
+      // pixl change, redraw, and load so just slipping into
+      // stringFromMatrix is tacky, but seemss to catch all our refreshes.
+      //
+      // The string is CSV hex, with the first byte being the first column,
+      // and bit zero being the UL corner. Second byte is second column, etc.
+      // app.matrix.{cols,rows} is set by the drawing code to size the
+      // image for a character, an icon, or the full screen image. This
+      // code adapts resizing from that.
+      // INVERT is handled by the code above us, our fill/clearRect handles
+      // that.
+      function updateCanvas(buf) {
+        // Number of squared canvas pixels to image pixels;
+        var scale = 1;
+
+        var c = document.getElementById("myCanvas");
+        var context = c.getContext("2d");
+        context.fillRect(0, 0, c.width, c.height);
+
+        if (c.width != app.matrix.cols || c.height != app.matrix.rows) {
+          c.width = app.matrix.cols * scale;
+          c.height = app.matrix.rows * scale;
+        }
+        context.clearRect(0, 0, c.width, c.height);
+
+        var a = buf.split(",");
+        var x = 0;
+        var y = 0;
+
+        for (var e = 0; e < a.length; e++) {
+          byte = parseInt(a[e], 16);
+          for (var bit = 0; bit < 8; bit++) {
+            // debug.innerHTML+= e + ": " + x + "/" +  y + " " + a.length + "</br>";
+            // debug.innerHTML+= app.matrix.cols + "</br>";
+            if (x > c.cols) {
+              throw "write past right of canvas";
+            }
+            if (x > c.rows) {
+              throw "write past bottom of canvas";
+            }
+            if (byte & (1 << bit)) {
+              // FillRect give better B&W image
+              if (scale > 1) {
+                context.moveTo(x, y);
+                context.lineWidth = scale;
+                context.lineTo(x + scale, y);
+              } else {
+                context.beginPath();
+                context.fillRect(x, y, 1, 1);
+                context.fill();
+              }
+            }
+            y += scale;
+          }
+          y -= 8 * scale;
+          x += scale;
+          if (x == app.matrix.cols * scale) {
+            x = 0;
+            y = 8 * scale;
+          }
+          // debug.innerHTML+= x + " " + x/app.matrix.cols + " " + y + "</br>";
+          // debug.innerHTML+=byte + "</br>";
+        }
+
+        context.strokeStyle = "black";
+        context.stroke();
+        return c;
+      }
+
+      function makePNG() {
+        var canvas = document.getElementById("myCanvas");
+        //var context = c.getContext("2d");
+        //window.location = canvas.toDataURL("image/png");
+        ///var image = canvas.toDataURL("image/png");
+        //	document.write('<img src="'+image+'"/>');
+        var image = canvas
+          .toDataURL("image/png")
+          .replace("image/png", "image/octet-stream");
+        window.location.href = image;
+      }
+
+      function stringFromMatrix(skipEncodedData, skipEncodedEscapeSequence) {
+        var str = "";
+        var strEscaped = "";
+        var delim = "";
+        var blocks = app.matrix.rows / 8;
+        var rs = 7;
+        for (var block = 0; block < blocks; block++) {
+          for (var c = 0; c < app.matrix.cols; c++) {
+            var b = 0;
+            for (var r = 0; r < 8; r++) {
+              var cell = document.getElementById("C" + (rs - r) + "_" + c);
+              if (isInk(cell)) {
+                b |= 1 << (7 - r);
+              }
+            }
+            str += delim + "0x" + padLeft(b.toString(16).toUpperCase(), "0", 2);
+            strEscaped += "\\x" + padLeft(b.toString(16).toUpperCase(), "0", 2);
+            delim = ",";
+          }
+          rs += 8;
+        }
+        if (!skipEncodedData) {
+          app.encodedData = str;
+        }
+        if (!skipEncodedEscapeSequence) {
+          app.encodedEscapeSequence = strEscaped;
+        }
+        updateCanvas(str);
+        return str;
+      }
+
+      function start() {
+        app = new Vue({
+          el: "#app",
+          data: {
+            matrix: {
+              cols: 12,
+              rows: 16,
+            },
+            type: "big",
+            encodedData: "",
+            encodedEscapeSequence: "",
+          },
+          methods: {
+            VtoMatrix: function (val) {
+              toMatrix(val);
+            },
+            escapedToMatrix: function (val) {
+              escapedToMatrix(val);
+            },
+
+            VchangeSize: function () {
+              if (app.type == "big") {
+                app.matrix.cols = 12;
+                app.matrix.rows = 16;
+              } else if (app.type == "small") {
+                app.matrix.cols = 6;
+                app.matrix.rows = 8;
+              } else if (app.type == "icon") {
+                app.matrix.cols = 16;
+                app.matrix.rows = 16;
+              } else if (app.type == "icon24") {
+                app.matrix.cols = 24;
+                app.matrix.rows = 16;
+              } else if (app.type == "screen") {
+                app.matrix.cols = 84;
+                app.matrix.rows = 16;
+              } else if (app.type == "fullscreen") {
+                app.matrix.cols = 96;
+                app.matrix.rows = 16;
+              }
+              stringFromMatrix();
+            },
+          },
+        });
+        toMatrix(
+          "0x00,0xF0,0x08,0x0E,0x02,0x02,0x02,0x02,0x0E,0x08,0xF0,0x00,0x00,0x3F,0x40,0x5C,0x5C,0x5C,0x5C,0x5C,0x5C,0x40,0x3F,0x00"
+        );
+      }
+
+      var margins = 1;
+
+      function changesize(x) {
+        var cursize = x;
+        var mg;
+        if (x < 6) mg = 0;
+        else mg = 1;
+        //		var elements = document.getElementsByClassName('c');
+        //		for (var i=0; i<elements.length;i++){
+        //			elements.item(i).style="height: "+x+"px; width: "+x+"px;"+mg;
+        //		}
+        styles.sheet.rules[3].style.height = x + "px";
+        styles.sheet.rules[3].style.width = x + "px";
+        styles.sheet.rules[3].style.marginRight = mg + "px";
+        styles.sheet.rules[3].style.marginTop = mg + "px";
+        styles.sheet.rules[0].style.paddingLeft = mg + "px";
+        styles.sheet.rules[0].style.paddingBottom = mg + "px";
+      }
+
+      function importFile() {
+        var input, file, fr;
+        input = document.getElementById("fileinput");
+        if (input.files[0]) {
+          file = input.files[0];
+          fr = new FileReader();
+          fr.onload = processData;
+          fr.readAsBinaryString(file);
+        }
+        function processData() {
+          var pushy, data, aB, bS;
+          pushy = [];
+          //			bodyAppend("p","processing data");
+          data = fr.result;
+          for (i = 297; i < 297 + 192; i += 2) {
+            aB = data.charCodeAt(i + 1);
+            bS = aB.toString(16);
+            if (bS.length < 2) bS = "0" + bS;
+            pushy.push(bS);
+            aB = data.charCodeAt(i);
+            bS = aB.toString(16);
+            if (bS.length < 2) bS = "0" + bS;
+            pushy.push(bS);
+          }
+          escapedToMatrix("\\x" + pushy.join("\\x"));
+          //			bodyAppend("p","\\x"+pushy.join("\\x"));
+        }
+      }
+      function bodyAppend(tagName, innerHTML) {
+        var elm;
+
+        elm = document.createElement(tagName);
+        elm.innerHTML = innerHTML;
+        document.body.appendChild(elm);
+      }
+
+      window.onload = start;
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <select v-model="type" v-on:change="VchangeSize()">
+          <option value="small">Small Font (6x8)</option>
+          <option value="big">Big Font (12x16)</option>
+          <option value="icon">Icon (16x16)</option>
+          <option value="icon24">Icon (24x16)</option>
+          <option value="screen">Screen (84x16)</option>
+          <option value="fullscreen">Full Screen (96x16)</option>
+        </select>
+        <a href="#" onclick="changesize(1);">1x</a>
+        <a href="#" onclick="changesize(2);">2x</a>
+        <a href="#" onclick="changesize(4);">4x</a>
+        <a href="#" onclick="changesize(8);">8x</a>
+        <a href="#" onclick="changesize(10);">10x</a>
+        <a href="#" onclick="changesize(12);">12x</a>
+        <a href="#" onclick="changesize(16);">16x</a>
+        <a href="#" onclick="changesize(32);">32x</a>
+        <a href="#" onclick="invertMatrix();">INVERT!</a>
+      </div>
+      <div
+        id="matrix"
+        class="matrix"
+        onmousedown="mousedown(this)"
+        onmouseup="mouseup(this)"
+        ondragstart="return false"
+      >
+        <div :id="'R'+(r-1)" class="r" v-for="r in matrix.rows">
+          <div
+            :id="'C'+(r-1)+'_'+(c-1)"
+            class="c"
+            onmouseenter="enter(this)"
+            v-for="c in matrix.cols"
+          ></div>
+        </div>
+      </div>
+      <div class="actions">
+        <input
+          type="button"
+          value="Clear"
+          onclick="clearMatrix();stringFromMatrix()"
+        />
+      </div>
+      <div class="data">
+        <textarea
+          v-model="encodedData"
+          style="width: 100%"
+          v-on:change="VtoMatrix(encodedData)"
+          rows="5"
+        ></textarea>
+        <textarea
+          v-model="encodedEscapeSequence"
+          style="width: 100%"
+          v-on:change="escapedToMatrix(encodedEscapeSequence)"
+          rows="5"
+        ></textarea>
+      </div>
+
+      <form action="#" onsubmit="return false;">
+        <input type="file" id="fileinput" />
+        <input
+          type="button"
+          id="btnLoad"
+          value="Import"
+          onclick="importFile();"
+        />
+        (Remember to set correct canvas size before importing)
+      </form>
+      <br />
+
+      <canvas
+        id="myCanvas"
+        width="96"
+        height="16"
+        style="border: 1px dotted #000000; padding: 10px"
+      >
+      </canvas>
+
+      <form>
+        <input type="button" value="Make PNG" onclick="makePNG();" />
+      </form>
+
+      <div id="debug"></div>
+    </div>
+  </body>
 </html>
