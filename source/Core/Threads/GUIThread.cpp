@@ -7,6 +7,7 @@
 extern "C" {
 #include "FreeRTOSConfig.h"
 }
+#include "BootLogo.h"
 #include "Buttons.hpp"
 #include "I2CBB.hpp"
 #include "LIS2DH12.hpp"
@@ -859,7 +860,8 @@ void startGUITask(void const *argument) {
   }
   getTipRawTemp(1); // reset filter
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
-  showBootLogoIfavailable();
+
+  BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
 

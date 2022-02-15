@@ -2,6 +2,7 @@
 #include "BSP.h"
 #include "Buttons.hpp"
 #include "OLED.hpp"
+#include "cmsis_os.h"
 #define LOGO_PAGE_LENGTH 1024
 void BootLogo::handleShowingLogo(const uint8_t *ptrLogoArea) {
   // Read the first few bytes and figure out what format we are looking at
