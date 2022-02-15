@@ -11,6 +11,8 @@ void BootLogo::handleShowingLogo(const uint8_t *ptrLogoArea) {
   } else if (ptrLogoArea[0] == 0xAA) {
     showNewFormat(ptrLogoArea + 1);
   }
+  OLED::clearScreen();
+  OLED::refresh();
 }
 
 void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
@@ -24,7 +26,7 @@ void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
 
 void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
   // New logo format (a) fixes long standing byte swap quirk and (b) supports animation
-  uint8_t interFrameDelay = ptrLogoArea[1];
+  uint8_t interFrameDelay = ptrLogoArea[0];
   OLED::clearScreen();
   ButtonState buttons = getButtonState();
 
