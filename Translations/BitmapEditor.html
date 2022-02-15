@@ -387,8 +387,8 @@
             if (bS.length < 2) bS = "0" + bS;
             pushy.push(bS);
           }
-          escapedToMatrix("\\x" + pushy.join("\\x"));
-          //			bodyAppend("p","\\x"+pushy.join("\\x"));
+          escapedToMatrix("0x" + pushy.join(", 0x"));
+          //			bodyAppend("p","0x"+pushy.join(", 0x"));
         }
       }
       function bodyAppend(tagName, innerHTML) {
