@@ -118,6 +118,7 @@ In this example we see that more than one part of the Pinecil is detected as a D
 ```
 dfu-util -D Pinecil_EN.dfu -a 0
 ```
+Note that if you are using an older release of `dfu-util` and you do not see `alt=0, name="@Internal Flash  /0x08000000/128*001Kg"` when running `dfu-util -l` you likely will not be able to update without updating `dfu-util`.
 
 ### Windows
 
