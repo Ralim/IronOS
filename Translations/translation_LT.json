@@ -2,33 +2,28 @@
   "languageCode": "LT",
   "languageLocalName": "Lietuvių",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Kalibravimas atliktas!",
     "SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
     "SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
     "UVLOWarningString": "MAŽ VOLT",
     "UndervoltageString": "Žema įtampa",
     "InputVoltageString": "Įvestis V: ",
-    "WarningTipTempString": "Angal Temp: ",
-    "BadTipString": "BLOG ANT",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Miegu...",
-    "WarningSimpleString": "KRŠ!",
-    "WarningAdvancedString": "ANTGALIS KARŠTAS",
-    "SleepingTipAdvancedString": "Antg: ",
+    "SleepingTipAdvancedString": "Antg:",
     "IdleTipString": "Ant:",
     "IdleSetString": " Nust:",
     "TipDisconnectedString": "NĖRA ANTGALIO",
     "SolderingAdvancedPowerPrompt": "Galia: ",
-    "OffString": "Išj",
-    "YourGainMessage": "Greitis:"
+    "OffString": "Išj"
   },
   "messagesWarn": {
-    "ResetOKMessage": "Atstatytas OK",
+    "ResetOKMessage": "Atstatyta",
     "SettingsResetMessage": ["Nust. atstatyti!", ""],
     "NoAccelerometerMessage": ["Nerastas", "akselerometras!"],
-    "NoPowerDeliveryMessage": ["Nerastas", "USB-PD IC !"],
-    "LockingKeysString": " UŽRAKIN",
+    "NoPowerDeliveryMessage": ["Nerastas", "USB-PD IC!"],
+    "LockingKeysString": "UŽRAKIN",
     "UnlockingKeysString": "ATRAKIN",
     "WarningKeysLockedString": "!UŽRAK!",
     "WarningThermalRunaway": ["Perkaitimo", "pavojus"]
@@ -83,7 +78,7 @@
     },
     "SleepTemperature": {
       "text2": ["Miego", "temperat."],
-      "desc": "Miego temperatūra"
+      "desc": "Antgalio temperatūra miego režimu"
     },
     "SleepTimeout": {
       "text2": ["Miego", "laikas"],
@@ -146,8 +141,8 @@
       "desc": "Maksimali QC maitinimo bloko įtampa"
     },
     "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "text2": ["PD", "laikas"],
+      "desc": "PD suderinimo laikas žingsniais po 100ms suderinamumui su kai kuriais QC įkrovikliais"
     },
     "PowerLimit": {
       "text2": ["Galios", "riba"],
@@ -155,15 +150,15 @@
     },
     "ReverseButtonTempChange": {
       "text2": ["Sukeisti + -", "mygtukus?"],
-      "desc": "Sukeisti + - temperatūros keitimo mygtukus vietomis."
+      "desc": "Sukeisti + - temperatūros keitimo mygtukus vietomis"
     },
     "TempChangeShortStep": {
       "text2": ["Temp.keitim.", "trump.spust."],
-      "desc": "Temperatūros keitimo žingsnis trumpai spustėlėjus mygtuką!"
+      "desc": "Temperatūros keitimo žingsnis trumpai spustėlėjus mygtuką"
     },
     "TempChangeLongStep": {
       "text2": ["Temp.keitim.", "ilgas pasp."],
-      "desc": "Temperatūros keitimo žingsnis ilgai paspaudus mygtuką!"
+      "desc": "Temperatūros keitimo žingsnis ilgai paspaudus mygtuką"
     },
     "PowerPulsePower": {
       "text2": ["Galios", "pulso W"],
@@ -183,7 +178,7 @@
     },
     "AnimLoop": {
       "text2": ["Animacijų", "pakartojimas"],
-      "desc": "Leidžia kartoti animacijas be sustojimo pagrindiniame meniu."
+      "desc": "Leidžia kartoti animacijas be sustojimo pagrindiniame meniu"
     },
     "AnimSpeed": {
       "text2": ["Animacijų", "greitis"],
@@ -191,7 +186,7 @@
     },
     "PowerPulseWait": {
       "text2": ["Galios pulso", "dažnumas"],
-      "desc": "Pasikartojantis laiko intervalas (x 2.5s), ties kuriuo kartojamas galios pulsas maitinblokiui, neleidžiantis jam užmigti."
+      "desc": "Pasikartojantis laiko intervalas (x 2.5s), ties kuriuo kartojamas galios pulsas maitinblokiui, neleidžiantis jam užmigti"
     },
     "PowerPulseDuration": {
       "text2": ["Galios pulso", "trukmė"],
@@ -199,7 +194,7 @@
     },
     "LanguageSwitch": {
       "text2": ["Kalba:", " LT    Lietuvių"],
-      "desc": ""
+      "desc": "Dabartinė programinės įrangos kalba"
     },
     "Brightness": {
       "text2": ["Ekrano", "šviesumas"],
@@ -207,7 +202,7 @@
     },
     "ColourInversion": {
       "text2": ["Ekrano", "invertavimas"],
-      "desc": "Invertuoja OLED ekrano spalvas."
+      "desc": "Invertuoja OLED ekrano spalvas"
     }
   }
 }
