@@ -13,14 +13,14 @@
       function save() {
         saveJSON(
           app.current,
-          "translation_" + app.current.languageCode.toLowerCase() + ".json"
+          "translation_" + app.current.languageCode + ".json"
         );
       }
 
       function view() {
         showJSON(
           app.current,
-          "translation_" + app.current.languageCode.toLowerCase() + ".json"
+          "translation_" + app.current.languageCode + ".json"
         );
       }
 
