@@ -209,6 +209,10 @@
     "ColourInversion": {
       "text2": ["Inverseaza", "culoarea"],
       "desc": "Inverseaza culoarea ecranului"
+    },
+    "Bootlogo": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
     }
   }
 }
