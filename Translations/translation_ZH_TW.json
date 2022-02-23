@@ -203,6 +203,10 @@
     "ColourInversion": {
       "text2": "螢幕反轉色",
       "desc": "反轉OLED螢幕的黑白色彩"
+    },
+    "Bootlogo": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
     }
   }
 }
