@@ -204,7 +204,7 @@
       "text2": ["Képernyő", "invertálás"],
       "desc": "Képernyő színeinek invertálása"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
