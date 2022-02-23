@@ -424,7 +424,7 @@ var def =
 			"description": "Inverts the entire OLED."
 		},
 		{
-			"id": "Bootlogo",
+			"id": "LOGOTime",
 			"maxLen": 7,
 			"maxLen2": 15,
 			"description": "Sets the duration for the bootlogo."
