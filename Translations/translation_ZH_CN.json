@@ -204,7 +204,7 @@
       "text2": "反转屏幕颜色",
       "desc": "反转OLED黑/白屏幕"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
