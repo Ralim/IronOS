@@ -203,6 +203,10 @@
     "ColourInversion": {
       "text2": ["Αντιστροφή", "χρωμάτων"],
       "desc": "Αντιστροφή χρωμάτων οθόνης OLED"
+    },
+    "Bootlogo": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
     }
   }
 }
