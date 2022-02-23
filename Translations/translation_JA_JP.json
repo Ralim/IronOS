@@ -203,6 +203,10 @@
     "ColourInversion": {
       "text2": "色反転",
       "desc": "画面の色を反転する"
+    },
+    "Bootlogo": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
     }
   }
 }
