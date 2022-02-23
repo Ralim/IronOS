@@ -204,7 +204,7 @@
       "text2": ["Ekrano", "invertavimas"],
       "desc": "Invertuoja OLED ekrano spalvas"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
