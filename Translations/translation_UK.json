@@ -209,7 +209,7 @@
       "text2": ["Інверт", "екрану"],
       "desc": "Налаштування контрасту/яскравості OLED екрану"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
