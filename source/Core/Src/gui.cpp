@@ -69,6 +69,7 @@ static bool settings_showPowerPulseOptions(void);
 static void settings_displayPowerPulseDuration(void);
 static void settings_displayBrightnessLevel(void);
 static void settings_displayInvertColor(void);
+static void settings_displayLogoTime(void);
 
 #ifdef HALL_SENSOR
 static void settings_displayHallEffect(void);
@@ -223,6 +224,7 @@ const menuitem UIMenu[] = {
      *  -Animation Loop
      *  OLED Brightnes
      *  Invert Screen
+     *  Logo Timeout
      *  Detailed IDLE
      *  Detailed Soldering
      */
@@ -239,6 +241,7 @@ const menuitem UIMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, settings_displayAnimationOptions, SettingsOptions::AnimationLoop}, /*Animation Loop switch */
     {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness},                     /*Brightness Level*/
     {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, nullptr, SettingsOptions::OLEDInversion},                     /*Invert screen colour*/
+    {SETTINGS_DESC(SettingsItemIndex::LogoTime), nullptr, settings_displayLogoTime, nullptr, SettingsOptions::LOGOTime},                                    /*Set logo duration*/
     {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE},                 /*Advanced idle screen*/
     {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering},  /*Advanced soldering screen*/
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                  // end of menu marker. DO NOT REMOVE
@@ -770,6 +773,11 @@ static void settings_displayInvertColor(void) {
   OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
+}
+
+static void settings_displayLogoTime(void) {
+  printShortDescription(SettingsItemIndex::LogoTime, 7);
+  OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime) / 43, 1, FontStyle::LARGE);
 }
 
 #ifdef HALL_SENSOR
