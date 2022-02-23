@@ -202,6 +202,10 @@
     "ColourInversion": {
       "text2": ["Invertovať", "obrazovku"],
       "desc": "Invertovať farby OLED displeja"
+    },
+    "Bootlogo": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
     }
   }
 }
