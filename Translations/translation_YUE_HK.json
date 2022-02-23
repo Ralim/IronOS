@@ -204,7 +204,7 @@
       "text2": "熒幕反轉色",
       "desc": "反轉OLED熒幕嘅黑白色"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
