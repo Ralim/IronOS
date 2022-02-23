@@ -203,7 +203,7 @@
       "text2": ["Invertovať", "obrazovku"],
       "desc": "Invertovať farby OLED displeja"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
