@@ -861,7 +861,7 @@ void startGUITask(void const *argument) {
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
   uint32_t ticks = xTaskGetTickCount();
   ticks += (getSettingValue(SettingsOptions::LOGOTime) / 100 * TICKS_SECOND);
-  while (getSettingValue(SettingsOptions::LOGOTime) < 0 || (getSettingValue(SettingsOptions::LOGOTime) > 0 && xTaskGetTickCount() < ticks)) {
+  while ((getSettingValue(SettingsOptions::LOGOTime) > 0 && xTaskGetTickCount() < ticks)) {
     if (showBootLogoIfavailable() == false)
       ticks = xTaskGetTickCount();
     ButtonState buttons = getButtonState();
