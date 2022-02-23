@@ -203,7 +203,7 @@
       "text2": ["Inverti", "colori"],
       "desc": "Inverti i colori dello schermo"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
