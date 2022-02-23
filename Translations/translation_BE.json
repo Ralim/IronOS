@@ -209,7 +209,7 @@
       "text2": ["Экран", "Інвертаваць"],
       "desc": "Інвертаваць колеры OLED-экрана"
     },
-    "Bootlogo": {
+    "LOGOTime": {
       "text2": ["Boot", "logo"],
       "desc": "Sets the duration for the bootlogo"
     }
