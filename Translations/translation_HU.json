@@ -203,6 +203,10 @@
     "ColourInversion": {
       "text2": ["Képernyő", "invertálás"],
       "desc": "Képernyő színeinek invertálása"
+    },
+    "Bootlogo": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
     }
   }
 }
