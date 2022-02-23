@@ -209,6 +209,10 @@
     "ColourInversion": {
       "text2": ["Odwrócenie", "kolorów"],
       "desc": "Odwrócenie kolorów wyświetlacza OLED"
+    },
+    "Bootlogo": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
     }
   }
 }
