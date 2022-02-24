@@ -777,7 +777,7 @@ static void settings_displayInvertColor(void) {
 
 static void settings_displayLogoTime(void) {
   printShortDescription(SettingsItemIndex::LOGOTime, 7);
-  OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime) / 43, 1, FontStyle::LARGE);
+  OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 1, FontStyle::LARGE);
 }
 
 #ifdef HALL_SENSOR
