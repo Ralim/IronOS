@@ -20,8 +20,8 @@ void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
   OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t *)(ptrLogoArea + 4));
   OLED::refresh();
 
-  // Delay here until button is pressed or its been 4 seconds
-  waitForButtonPressOrTimeout(TICKS_SECOND * 4);
+  // Delay here until button is pressed or its been the amount of seconds set by the user
+  waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
 }
 
 void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
@@ -54,7 +54,7 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     } else {
 
       // Delay here until button is pressed or its been 4 seconds
-      waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+      waitForButtonPressOrTimeout(TICKS_SECOND * 4);
       return;
     }
   } while (position < 1024);
