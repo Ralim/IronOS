@@ -54,7 +54,7 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     } else {
 
       // Delay here until button is pressed or its been 4 seconds
-      waitForButtonPressOrTimeout(TICKS_SECOND * 4);
+      waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
       return;
     }
   } while (position < 1024);
