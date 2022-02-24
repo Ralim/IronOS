@@ -50,7 +50,7 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     }
 
     if (interFrameDelay) {
-      osDelay(interFrameDelay);
+      osDelay(interFrameDelay*5);
     } else {
 
       // Delay here until button is pressed or its been 4 seconds
