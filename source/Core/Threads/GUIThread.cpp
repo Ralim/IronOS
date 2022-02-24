@@ -860,16 +860,7 @@ void startGUITask(void const *argument) {
   }
   getTipRawTemp(1); // reset filter
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
-  /* uint32_t ticks = xTaskGetTickCount();
-  ticks += (TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
-  if (getSettingValue(SettingsOptions::LOGOTime) > 0 && xTaskGetTickCount() < ticks) {
-    if (showBootLogoIfavailable() == false)
-      ticks = xTaskGetTickCount();
-    ButtonState buttons = getButtonState();
-    if (buttons)
-      ticks = xTaskGetTickCount(); // make timeout now so we will exit
-    GUIDelay();
-  } */
+
   BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
