@@ -865,7 +865,8 @@ void startGUITask(void const *argument) {
     if (showBootLogoIfavailable() == false)
       ticks = xTaskGetTickCount();
     ButtonState buttons = getButtonState();
-    if (buttons) break; // make timeout now so we will exit
+    if (buttons)
+      ticks = xTaskGetTickCount(); // make timeout now so we will exit
     GUIDelay();
   }
 
