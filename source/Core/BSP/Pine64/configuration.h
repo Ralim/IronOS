@@ -151,3 +151,5 @@
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
 #endif
 #endif
+
+#define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
