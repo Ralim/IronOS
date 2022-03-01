@@ -4,18 +4,18 @@
   "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a páka szobahőmérsékletű!",
+    "SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a forrasztó hegy szobahőmérsékletű!",
     "SettingsResetWarning": "Biztos visszaállítja a beállításokat alapértékekre?",
-    "UVLOWarningString": "DC KEVÉS",
+    "UVLOWarningString": "DC TÚL KEVÉS",
     "UndervoltageString": "Alulfeszültség",
     "InputVoltageString": "Bemenet V: ",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Alvás...",
-    "SleepingTipAdvancedString": "Páka:",
-    "IdleTipString": "Páka:",
+    "SleepingTipAdvancedString": "Hegy:",
+    "IdleTipString": "Hegy:",
     "IdleSetString": " Cél:",
-    "TipDisconnectedString": "PÁKA LEVÉVE",
-    "SolderingAdvancedPowerPrompt": "Telj.: ",
+    "TipDisconnectedString": "HEGY KIVÉVE",
+    "SolderingAdvancedPowerPrompt": "Áram: ",
     "OffString": "Ki"
   },
   "messagesWarn": {
@@ -114,11 +114,11 @@
     },
     "CooldownBlink": {
       "text2": ["Villogás", "hűléskor"],
-      "desc": "Villogjon a hőmérséklet kijelzése hűlés közben, amíg a páka forró"
+      "desc": "Villogjon a hőmérséklet kijelzése hűlés közben, amíg a forrasztó hegy forró"
     },
     "TemperatureCalibration": {
       "text2": ["Hőmérséklet", "kalibrálása?"],
-      "desc": "Páka hőmérséklet-érzékelőjének kalibrálása"
+      "desc": "Forrasztó hegy hőmérséklet-érzékelőjének kalibrálása"
     },
     "SettingsReset": {
       "text2": ["Gyári", "beállítások?"],
@@ -150,7 +150,7 @@
     },
     "ReverseButtonTempChange": {
       "text2": ["+/- gomb", "megfordítása"],
-      "desc": "Páka hőmérsékletállító gombok felcserélése"
+      "desc": "Forrasztó hegy hőmérsékletállító gombok felcserélése"
     },
     "TempChangeShortStep": {
       "text2": ["Hőm. állítás", "rövid"],
