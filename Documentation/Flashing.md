@@ -169,7 +169,7 @@ If you are on Windows, it's often best to try another computer (friends, work, p
 
 #### [Miniware] Device randomly disconnects or does not show up in DFU mode
 
-1. heck if the USB cable you are using has the data pins; test it on another device. There are a surprisingly large number of usb-micro cables that are power _only_.
+1. Check if the USB cable you are using has the data pins; test it on another device. There are a surprisingly large number of usb-micro cables that are power _only_.
 
 2. Try other USB ports. Often different USB controllers will interact with the units differently due to design quirks in the miniware design.
 
