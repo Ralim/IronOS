@@ -36,11 +36,11 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
 
     int len = (showNewFrame(ptrLogoArea + position));
     OLED::refresh();
-    position += len;
     // At end of animation
-    if (len == 1) {
+    if (len == 0) {
       return;
     }
+    position += len;
 
     buttons = getButtonState();
 
@@ -50,7 +50,7 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     }
 
     if (interFrameDelay) {
-      osDelay(interFrameDelay*5);
+      osDelay(interFrameDelay * 5);
     } else {
 
       // Delay here until button is pressed or its been the amount of seconds set by the user
@@ -66,6 +66,10 @@ int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
     // Full frame update
     OLED::drawArea(0, 0, 96, 16, ptrLogoArea + 1);
     length = 96;
+  } else if (length == 0xFE) {
+    return 1;
+  } else if (length == 0) {
+    return 0; // end
   } else {
     length /= 2;
     // Draw length patches
