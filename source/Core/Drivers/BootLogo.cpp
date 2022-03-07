@@ -37,9 +37,6 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     int len = (showNewFrame(ptrLogoArea + position));
     OLED::refresh();
     // At end of animation
-    if (len == 0) {
-      return;
-    }
     position += len;
 
     buttons = getButtonState();
@@ -57,6 +54,11 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
       waitForButtonPressOrTimeout(TICKS_SECOND * 4);
       return;
     }
+    // If this was an early exit; bail now
+    if (len == 0) {
+      return;
+    }
+
   } while (position < 1024);
 }
 int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
