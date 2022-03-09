@@ -60,6 +60,9 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     }
 
   } while (position < 1024);
+  if (interFrameDelay) {
+    osDelay(interFrameDelay * 5);
+  }
 }
 int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
   uint8_t length = ptrLogoArea[0];
