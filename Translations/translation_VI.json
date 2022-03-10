@@ -327,6 +327,10 @@
 				"màn hình"
 			],
 			"desc": "-Đao nguoc màu màn hình OLED"
-		}
+		},
+    "LOGOTime": {
+      "text2": ["Boot", "logo"],
+      "desc": "Sets the duration for the bootlogo"
+    }
 	}
 }
