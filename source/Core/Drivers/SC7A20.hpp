@@ -17,7 +17,7 @@ public:
   static bool initalize();
   // 1 = rh, 2,=lh, 8=flat
   static Orientation getOrientation() {
-    uint8_t val = ((FRToSI2C::I2C_RegisterRead(activeAddress, SC7A20_INT2_SOURCE) >> 2) - 1);
+    uint8_t val = ((FRToSI2C::I2C_RegisterRead(isInImitationMode ? SC7A20_ADDRESS2 : SC7A20_ADDRESS, SC7A20_INT2_SOURCE) >> 2) - 1);
     if (val == 1) {
 #ifdef SC7_ORI_FLIP
       return Orientation::ORIENTATION_RIGHT_HAND;
