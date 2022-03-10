@@ -1,0 +1,331 @@
+{
+	"languageCode": "VI",
+	"languageLocalName": "Tiếng Việt",
+	"fonts": [
+		"ascii_basic"
+	],
+	"tempUnitFahrenheit": true,
+	"messages": {
+		"SettingsCalibrationWarning": "Chắc chắn mũi hàn ở nhiệt độ phòng trước khi tiếp tục!",
+		"SettingsResetWarning": "Bạn chắc chắn muốn khôi phục tất cả cài đặt về mặc định?",
+		"UVLOWarningString": "DC thấp",
+		"UndervoltageString": "Điện áp thấp",
+		"InputVoltageString": "Đầu vào V: ",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Đang ngủ...",
+		"SleepingTipAdvancedString": "Mẹo:",
+		"OffString": "Tắt"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
+		"SettingsResetMessage": [
+			"Một số cài đặt",
+			"đã thay đổi"
+		],
+		"NoAccelerometerMessage": [
+			"Không phát hiện",
+			"gia tốc kế!"
+		],
+		"NoPowerDeliveryMessage": [
+			"Không phát hiện",
+			"USB-PD IC!"
+		],
+		"LockingKeysString": "Đã khóa",
+		"UnlockingKeysString": "Mở khóa",
+		"WarningKeysLockedString": "Đã khóa!",
+		"WarningThermalRunaway": [
+			"Nhiệt",
+			"Tắt gia nhiệt"
+		]
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingOffChar": "O",
+		"SettingSlowChar": "S",
+		"SettingMediumChar": "M",
+		"SettingFastChar": "F",
+		"SettingStartNoneChar": "O",
+		"SettingStartSolderingChar": "S",
+		"SettingStartSleepChar": "Z",
+		"SettingStartSleepOffChar": "R",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
+	},
+	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Cài đặt",
+				"nguồn điện"
+			],
+			"desc": "Cài đặt nguồn điện"
+		},
+		"SolderingMenu": {
+			"text2": [
+				"Cài đặt",
+				"tay hàn"
+			],
+			"desc": "Cài đặt tay hàn"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Chế độ",
+				"ngủ"
+			],
+			"desc": "Cài đặt chế độ tiết kiệm điện"
+		},
+		"UIMenu": {
+			"text2": [
+				"Giao diện",
+				"người dùng"
+			],
+			"desc": "Cài đặt giao diện người dùng"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Cài đặt",
+				"nâng cao"
+			],
+			"desc": "Cài đặt nâng cao"
+		}
+	},
+	"menuOptions": {
+		"DCInCutoff": {
+			"text2": [
+				"Nguồn",
+				"điện"
+			],
+			"desc": "Nguồn điện, đặt điện áp giảm. (DC 10V) (S 3.3V mỗi cell, tắt giới hạn công suất)"
+		},
+		"SleepTemperature": {
+			"text2": [
+				"Nhiệt độ",
+				"khi ngủ"
+			],
+			"desc": "Giảm nhiệt độ khi ở \"Chế độ ngủ\""
+		},
+		"SleepTimeout": {
+			"text2": [
+				"Ngủ",
+				"sau"
+			],
+			"desc": "- thời gian trước khi \"Chế độ ngủ\" bắt đầu (S=giây | M=phút)"
+		},
+		"ShutdownTimeout": {
+			"text2": [
+				"Tắt",
+				"sau"
+			],
+			"desc": "- khoảng thời gian trước khi tay hàn tắt (M=phút)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Cảm biến",
+				"cử động"
+			],
+			"desc": "- 0=tắt | 1=độ nhạy thấp nhất| ... | 9=độ nhạy cao nhất"
+		},
+		"TemperatureUnit": {
+			"text2": [
+				"Đơn vị",
+				"nhiệt độ"
+			],
+			"desc": "C= Độ C | F= Độ F"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Chi tiết",
+				"màn hình chờ"
+			],
+			"desc": "- hiển thị thông tin chi tiết bằng phông chữ nhỏ hơn trên màn hình chờ"
+		},
+		"DisplayRotation": {
+			"text2": [
+				"Hướng",
+				"hiển thị"
+			],
+			"desc": "- R=hướng tay phải | L=hướng tay trái | A=tự động"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Tăng",
+				"nhiệt độ"
+			],
+			"desc": "Nhiệt độ dùng trong chế độ \"tăng cường\""
+		},
+		"AutoStart": {
+			"text2": [
+				"Nhiệt độ",
+				"đang tăng"
+			],
+			"desc": "- O=tắt | S=nhiệt độ hàn | Z=chờ ở nhiệt độ ngủ đến khi cử động | R=chờ mà không gia nhiệt đến khi cử động"
+		},
+		"CooldownBlink": {
+			"text2": [
+				"Nguội đi",
+				"chớp mắt"
+			],
+			"desc": "-Nhấp nháy nhiệt độ sau khi việc gia nhiệt tạm dừng trong khi mũi hàn vẫn nóng"
+		},
+		"TemperatureCalibration": {
+			"text2": [
+				"Hiệu chuẩn",
+				"nhiệt độ?"
+			],
+			"desc": "-Bắt đầu hiệu chuẩn bù nhiệt cho mũi hàn"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Khôi phục",
+				"cài đặt gốc?"
+			],
+			"desc": "-đặt lại tất cả cài đặt về mặc định"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Hiệu chỉnh",
+				"điện áp đầu vào?"
+			],
+			"desc": "-bắt đầu hiệu chuẩn VIN (nhấn và giữ để thoát)"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Chi tiết",
+				"màn hình hàn"
+			],
+			"desc": "-Hiển thị thông tin bằng phông chữ nhỏ hơn trên màn hình hàn"
+		},
+		"ScrollingSpeed": {
+			"text2": [
+				"Tốc độ",
+				"cuộn"
+			],
+			"desc": "Tốc độ cuộn văn bản(S=chậm | F=nhanh)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"Voltage"
+			],
+			"desc": "Điện áp QC tối đa mà tay hàn yêu cầu"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"sau"
+			],
+			"desc": "Thời gian chờ đàm phán PD trong các bước 100ms để tương thích với một số bộ sạc QC"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Công suất",
+				"giới hạn"
+			],
+			"desc": "-Công suất tối đa mà tay hàn có thể sử dụng (W=watt)"
+		},
+		"ReverseButtonTempChange": {
+			"text2": [
+				"Đảo ngược",
+				"nút + -"
+			],
+			"desc": "Đảo ngược chức năng các nút điều chỉnh nhiệt độ"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Thay đổi n.độ",
+				"ấn nút nhanh"
+			],
+			"desc": "Biên độ tăng/giảm nhiệt độ khi ấn nút nhanh"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Thay đổi n.độ",
+				"ấn nút lâu"
+			],
+			"desc": "Biên độ tăng/giảm nhiệt độ khi ấn nút lâu"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Công suất",
+				"kích nguồn"
+			],
+			"desc": "-Cường độ công suất kích nguồn (watt)"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall",
+				"độ nhạy"
+			],
+			"desc": "Độ nhạy cảm biến Hall để phát hiện chế độ ngủ (0=tắt | 1=ít nhạy nhất |...| 9=nhạy nhất)"
+		},
+		"LockingMode": {
+			"text2": [
+				"Cho phép khóa",
+				"các nút"
+			],
+			"desc": "Trong khi hàn, giữ cả 2 nút để khóa(D=tắt | B=chỉ chế độ tăng cường | F=khóa hoàn toàn)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Voltage",
+				"tối thiểu"
+			],
+			"desc": "Điện áp tối thiểu cho phép trên mỗi cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+		},
+		"AnimLoop": {
+			"text2": [
+				"Hoạt ảnh",
+				"lặp lại"
+			],
+			"desc": "Lặp lại các hoạt ảnh trong màn hình chính"
+		},
+		"AnimSpeed": {
+			"text2": [
+				"Tốc độ",
+				"hoạt ảnh"
+			],
+			"desc": "-Tốc độ của hoạt ảnh menu (O=tắt | S=chậm | M=trung bình | F=nhanh)"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Trì hoãn",
+				"điện áp kích"
+			],
+			"desc": "Trì hoãn trước khi kích hoạt kích nguồn(x 2,5 giây)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Thời lượng",
+				"kích nguồn"
+			],
+			"desc": "-thời lượng kích nguồn (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Ngôn ngữ:",
+				"VI Tiếng Việt"
+			],
+			"desc": "-Ngôn ngữ firmware hiện tại"
+		},
+		"Brightness": {
+			"text2": [
+				"Độ tương phản",
+				"màn hình"
+			],
+			"desc": "-Điều chỉnh độ sáng màn hình OLED"
+		},
+		"ColourInversion": {
+			"text2": [
+				"Đảo ngược màu",
+				"màn hình"
+			],
+			"desc": "-Đảo ngược màu màn hình OLED"
+		}
+	}
+}
