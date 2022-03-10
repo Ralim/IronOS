@@ -36,7 +36,7 @@ public:
   static void getAxisReadings(int16_t &x, int16_t &y, int16_t &z);
 
 private:
-  static uint8_t activeAddress;
+  static bool isInImitationMode;
 };
 
 #endif /* CORE_DRIVERS_BMA223_HPP_ */
