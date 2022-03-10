@@ -5,7 +5,7 @@
 		"ascii_basic",
 		"latin_extended"
 	],
-	"tempUnitFahrenheit": true,
+	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Chac chan mui hàn o nhiet đo phòng truoc khi tiep tuc!",
 		"SettingsResetWarning": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?",
