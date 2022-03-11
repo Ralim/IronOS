@@ -1,12 +1,12 @@
 # Debugging Menu
 
 In this firmware there is extra debugging information hidden under an extra menu.
-This is accessed by holding the rear (B) button on the iron while it is on the home screen.
+This is accessed by holding the rear (-/B) button on the iron while it is on the home screen.
 
 This menu is meant to be simple, so it has no fancy GUI animations.
 
-To move through the menu use the front (A) button.
-To exit, use the rear (B) button again.
+To move through the menu use the front (+/A) button.
+To exit, use the rear (-/B) button again.
 
 ## Menu items
 
@@ -45,7 +45,7 @@ This can be used with RTip for assessing temperature processing performance.
 
 ### CHan
 
-This is the handle temperature in C. This is used for cold junction compensation of the tip temp.
+This is the handle temperature in C. This is used for cold junction compensation of the tip temperature.
 This is shown in degrees C x10, so 200 == 20.0C
 
 ### Vin 
@@ -73,6 +73,8 @@ This may change during power up as the sources are negotiated in turn.
 - **QC** input (We used QC2/3 negotiation for current supply)
 - **PD W. VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is connected to your input power source
 - **PD No VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is **NOT** connected to your input power source
+- If you successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, then PD No VBus displays on screen.
+- Connect to any PD USB power to check Vbus status, it will not show message when Pinecil is powered by DC port.
 
 ### Max 
 
@@ -82,5 +84,5 @@ This is dependant on a few factors including the handle temperature so it can mo
 
 ### Hall
 
-This will appear if your device is capable of having a magnetic hall effect sensor fitted.
-This will show the current field strength reading from the sensor, this can be used to check the sensor is operational and measure how strong the magnetic field is for diagnostics.
+This appears if your device is capable of having a magnetic hall effect sensor installed (Pinecil).
+This shows the current field strength reading from the sensor. It can be used to check if the sensor is operational, and measure how strong the magnetic field is for diagnostics and optimal placement of magnets on a stand.
