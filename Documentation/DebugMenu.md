@@ -78,7 +78,7 @@ This may change during power up as the sources are negotiated in turn.
 
 ### Max 
 
-This indicates the max temp in C that the system estimates it can measure the tip reliably to.
+This indicates the max temperature in C that the system estimates it can measure the tip reliably to.
 This is dependant on a few factors including the handle temperature so it can move around during use.
 
 
