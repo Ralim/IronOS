@@ -60,7 +60,7 @@ Simply picking up or moving the iron will wake it back up into soldering mode. Y
 
 Optional Hall Effect Feature on Pinecil Only:
 Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Pinecil will sleep after it enters the stand and ZZzz will appear on the screen. After installing the sensor, a magnet is positioned on the stand close enough to the sensor to activate one of 9 settings. 
-  - 9 = high sensitivity to small magnets ... 1 = low sensitivity.
+  - 9 = high sensitivity to small magnets   ...   1 = low sensitivity.
   - Setting of 1 might be used by someone who solders on PCBs with magnets and does not wish Pinecil to auto-sleep constantly. They would also need to use a very strong/large neomydium magnet on the stand to activate the sensor sleep mode.
   - Setting of 9 would be useful if you only had a small magnet and are not concerned about Pinecil falsely triggering sleep mode near magnetized items/tools.
   - Neodymium magnets are recommended. If using small magnets, multiple may be required, but too many can also be detrimental. Actively watch the changing hall number (in debug menu) while you slowly move the magnet around to seek the best locations & whether you have too many or too few magnets  [debug menu](/Documentation/DebugMenu.md). Higher hall number is best.
