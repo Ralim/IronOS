@@ -88,18 +88,15 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 ## Pinecil (Pine64)
 
-The MCU used in the Pinecil supports usb-dfu.
+The MCU used in the Pinecil supports usb-dfu. Reference Pine64 [Wiki](https://wiki.pine64.org/wiki/Pinecil).
 
-There is the nice gui [Pinecil Firmware Updater](https://github.com/pine64/pinecil-firmware-updater/releases). In the event that this tool is unavailable or otherwise does not meet your needs, the below process may be used to update the firmware.
+There is the nice gui [Pinecil Firmware Updater](https://github.com/pine64/pinecil-firmware-updater/releases). It works in several types of OS, i.e. Windows/Mac. If your OS is not currently supported by the Updater or it does not meet your needs, the below manual process may be used to update the firmware.
 
-To enter DFU mode, hold the button at the back of the iron while connecting to usb over usb-c.
+To enter DFU mode, long hold the (-) button at the back of the iron, then connect to usb over usb-c.
 Generally all usb controllers work, but some hubs have issues so avoiding hubs may be best.
 
-Once the device is connected while holding the button, the screen will stay **off**.
-
-This is normal, and then you can use the appropriate tool to load the `.hex` or `.bin` file as per your OS.
-
-You can also refer to the Pine64 [Wiki](https://wiki.pine64.org/wiki/Pinecil).
+Release the (-) button after ~10 seconds. The screen will stay **off/black** to indicate the Pinecil is in DFU mode. This is normal.
+Then use the appropriate tool per you specific OS to load the `.dfu` file onto the Pinecil.
 
 ### Linux and Mac
 
@@ -137,7 +134,7 @@ These are called "GD32 Dfu Drivers" if the link breaks.
 1. Download both the `GD32 MCU DFU TOOL` and the `Drivers`.
 2. Install the drivers and open the DFU tool.
 3. Ignore the prompt to update the tool.
-4. Connect the Pinecil to a Windows PC via USB cable while holding down the minus button, **screen will stay blank** but you will hear the noise from Windows connecting to it.
+4. While holding down the minus button, Connect the Pinecil to a Windows PC via USB cable. The **screen will stay blank** but you will hear the beep from Windows connecting to it.
 5. At the top of the DFU tool, you should see `GD DFU DEVICE 1` appear.
 6. Change the mode to `Download to device`.
 7. Select the `open` button in that area of the window and load the `Pinecil_XX.hex` file from the downloaded release.
