@@ -28,8 +28,8 @@ You perform this the same way as if you were flashing a new firmware, and all of
 
 ### Pinecil
 
-For the Pinecil, we require to flash the logo using dfu-util instead.
-To flash the logo, use the following steps:
+For Pinecil, we require using dfu-util instead to flash the logo art (Pinecil does not use hex).
+To flash the logo, use the following steps to convert the PNG image into a .dfu file and then install the .dfu file.
 
  - `python3 img2ts100.py input.png logo.dfu`
  - `dfu-util -D logo.dfu`
