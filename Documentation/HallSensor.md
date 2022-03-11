@@ -1,12 +1,12 @@
 # Hall Effect Sensor
 
-### Sleep Mode Menu
+## Sleep Mode Menu
 
 In Sleep mode, the temperature of the iron automatically lowers to a temperature just below the melting point of the solder. This helps reduce the rate of oxidation and damage to the iron tip. In general, when you are not using the iron, turn it off or let it sleep to increase durability of the replaceable tips. The default sleep mode temperature can also be customized.
 
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
-####Optional Hall Effect Feature on Pinecil Only:
+###Optional Hall Effect Feature on Pinecil Only:
 
 Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Pinecil will sleep after it enters the stand and ZZzz will appear on the screen. After installing the sensor, a magnet is positioned on the stand close enough to the sensor to activate one of 9 sensitivities. 
   - 0 = off, 1 = 1000, 2 = 750, 3 = 500, 4 = 250, 5 = 150, 6 = 100, 7 = 75, 8 = 50, 9 = 25   (9 has the highest sensitivity to magnets)
