@@ -63,8 +63,7 @@ Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Pi
   - 9 = high sensitivity to small magnets ... 1 = low sensitivity.
   - Setting of 1 might be used by someone who solders on PCBs with magnets and does not wish Pinecil to auto-sleep constantly. They would also need to use a very strong/large neomydium magnet on the stand to activate the sensor sleep mode.
   - Setting of 9 would be useful if you only had a small magnet and are not concerned about Pinecil falsely triggering sleep mode near items like magnetized screwdrivers.
-  - Neodymium magnets are recommended. If using small magnets, multiple may be required, but too many can also be detrimental - watch the Debug hall number.
-  - The Debug Hall number can guide you to the best locations for the magnets & whether you have too many or too few  [debug menu](/Documentation/DebugMenu.md).
+  - Neodymium magnets are recommended. If using small magnets, multiple may be required, but too many can also be detrimental. Actively watch the Debug hall number while you slowly move the magnet around as it can guide you to the best locations & whether you have too many or too few magnets  [debug menu](/Documentation/DebugMenu.md).
   - The Hall Sensor is physically located near the copper contacts for the tip at the front of the handle. Reference [Schematics](https://files.pine64.org/doc/Pinecil/Pinecil_schematic_v1.0a_20201120.pdf)
 
 ### Idle shutdown
