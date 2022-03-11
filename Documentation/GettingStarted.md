@@ -59,13 +59,14 @@ In Sleep mode, the temperature of the iron automatically lowers to a temperature
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
 Pinecil Only
-Optional Hall Effect Feature: Pinecil has a footprint (unpopulated U14) on the PCB for a hall effect sensor (Si7210). Pinecil will sleep the moment it enters the stand and ZZzz appears on the screen. After installing the sensor, a magnet is positioned on the stand close enough to the sensor to activate one of 9 settings. 
-      9 = high sensitivity to small magnets...1 = low sensitivity.
-Setting of 1 might be used by someone who solders on boards with magnets and does not wish Pinecil to auto-sleep constantly and would then also need to use a very strong/large neomydium magnet on the stand to activate the sensor sleep mode. Setting of 9 would be used by someone who only had a small magnet and is not concerned about Pinecil falsely triggering sleep near magnetic fields like magnetized screwdrivers.
 
-Neodymium magnets are recommended. If using small magnets, multiple may be required, but too many can also be detrimental - watch the Debug hall number.
-The Debug Hall number can guide you to the best locations for the magnets & whether you have too many or too few  [debug menu](/Documentation/DebugMenu.md).
-The Hall Sensor is physically located near the copper contacts for the tip at the front of the handle. Reference [Schematics](https://files.pine64.org/doc/Pinecil/Pinecil_schematic_v1.0a_20201120.pdf)
+Optional Hall Effect Feature: Pinecil has a footprint (unpopulated U14) on the PCB for a hall effect sensor (Si7210). Pinecil will sleep the moment it enters the stand and ZZzz appears on the screen. After installing the sensor, a magnet is positioned on the stand close enough to the sensor to activate one of 9 settings. 
+  - 9 = high sensitivity to small magnets...1 = low sensitivity.
+  - Setting of 1 might be used by someone who solders on PCBs with magnets and does not wish Pinecil to auto-sleep constantly. They would also need to use a very strong/large neomydium magnet on the stand to activate the sensor sleep mode.
+  - Setting of 9 would be useful if you only had a small magnet and are not concerned about Pinecil falsely triggering sleep mode near items like magnetized screwdrivers.
+  - Neodymium magnets are recommended. If using small magnets, multiple may be required, but too many can also be detrimental - watch the Debug hall number.
+  - The Debug Hall number can guide you to the best locations for the magnets & whether you have too many or too few  [debug menu](/Documentation/DebugMenu.md).
+  - The Hall Sensor is physically located near the copper contacts for the tip at the front of the handle. Reference [Schematics](https://files.pine64.org/doc/Pinecil/Pinecil_schematic_v1.0a_20201120.pdf)
 
 ### Idle shutdown
 
