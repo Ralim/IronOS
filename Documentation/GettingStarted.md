@@ -1,7 +1,7 @@
 # Getting Started
 
-Getting started with Iron OS on your Pinecil/TS80/TS80P/TS100.
-If your device did not come with Iron OS already installed, or if you need to update to the latest version; please see the [Flashing Guide](/Documentation/Flashing.md).
+Getting started with IronOS on your Pinecil/TS80/TS80P/TS100.
+If your device did not come with IronOS already installed, or if you need to update to the latest version; please see the [Flashing Guide](/Documentation/Flashing.md).
 
 Once your Iron has been flashed, on first power on it _may_ warn you about the system settings being reset.
 _Do not panic_; this is 100% completely normal. This is here to note to you that they have been reset to handle the internal structure changing.
