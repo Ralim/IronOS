@@ -12,7 +12,7 @@ These are built on every change and can be found on the Actions tab (see below).
 
 Main releases are made to the [releases page](https://github.com/Ralim/IronOS/releases).
 Download the zip file that matches your model of soldering iron, and extract it.
-You then need to use the appropriate file type for your unit, in general Miniware devices need `.hex` and Pinecil need `.bin`.
+Select the appropriate file type for your unit, in general Miniware devices need `.hex` and Pinecil needs `.dfu`.
 Flash according to details below
 
 ### Bleeding edge / latest
