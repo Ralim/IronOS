@@ -147,9 +147,9 @@ Steps:
 
 1. Complete Steps 1-7 from [above](https://github.com/Ralim/IronOS/blob/e9bcd165fa75ad265169b9fc371be73481c7f399/Documentation/Flashing.md#L97)
 2. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
-   - [GD32 DFU](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
+   - GD32 DFU Tool [here](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
    - If the link breaks, search for "GD32 MCU Dfu Tool" at this [link](http://www.gd32mcu.com/en/download/).
-   - [GD32 DFU Drivers](http://www.gd32mcu.com/en/download?kw=GD32+Dfu+Drivers&lan=en)
+   - GD32 DFU Drivers [here](http://www.gd32mcu.com/en/download?kw=GD32+Dfu+Drivers&lan=en)
    - If the link breaks, search for "GD32 Dfu Drivers" at this [link](http://www.gd32mcu.com/en/download/).
    - Check properties of both downloads, tick Unblock if needed, then Unzip
 2. Install the drivers and Open the GD32 DFU tool. Ignore the prompt to update the tool.
