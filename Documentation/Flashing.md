@@ -94,25 +94,27 @@ It is recommended to use the [Pine64 Updater](https://github.com/pine64/pinecil-
 
 If your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, the below manual method may be used. You will need to connect your Pinecil to a computer usinga USB cable. Generally all usb controllers work, but some hubs have issues so it is recommended to connect directly and avoid USB hubs.
 
+### Steps
+
    1. Never have DC power plugged into Pinecil when you are updating firmware, only use a USB-C cable or you may destroy something.
    2. Download and extract the firmware package from Github [IronOS Releases](/Ralim/IronOS/releases)
    3. Enter DFU mode: hold down the (-) button at the back of the iron (do not release it).
    4. Connect USB to PC, and USB-C to back of Pinecil, keep holding (-) button down.
    5. The screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
    6. Once USB cable is connected at two ends, wait additional 10 seconds, then release the (-) button. 
-   7. Then use the appropriate tool below per you specific OS to load the `.dfu` file onto the Pinecil.
+   7. Continue to the next section below for your specific OS to complete loading the `.dfu` file onto Pinecil.
 
 ### Linux and Mac
 
-   8. Highly recommended to first update `dfu-util` to the newest version.
-   9. Using `dfu-util` you can flash the firmware using a command line like this
+   1. Highly recommended to first update `dfu-util` to the newest version.
+   2. Using `dfu-util` you can flash the firmware using a command line like this
 ```
 dfu-util -D Pinecil_EN.dfu
 ```
 
 Type the file name from the folder with the appropriate 2-letter country code for your chosen language (i.e, EN = English).
 
-####Troubleshooting:
+#### Troubleshooting:
 If you get a message stating that `More than one DFU capable USB device found!` when running the above command you probably have an old version of `dfu-util` installed. Might be worth updating. You can still install on the old version, but you will have to specify which DFU interface to flash to. Running the command `dfu-util -l` will show you if there are several DFU devices detected. Example:
 ```
 Found DFU: [28e9:0189] ver=0100, devnum=48, cfg=1, intf=0, path="1-1", alt=1, name="@Option Bytes  /0x1FFFF800/01*016Be", serial="??"
@@ -128,7 +130,7 @@ Note: if you are using an older release of `dfu-util` and you do not see `alt=0,
 
 For Windows there are two options:
 
-####Option 1: use `dfu-util` via Command line as shown above for Linux/Mac.
+#### Option 1: use `dfu-util` via Command line as shown above for Linux/Mac.
 
   a. Open PowerShell or Command window.
   b. Change to the directory of the unzipped firmware files
@@ -139,7 +141,7 @@ dfu-util -D Pinecil_EN.dfu
   d. If you have errors, see Linux Troubleshooting above for solutions.
 
 
-####Option 2: if you are uncomfortable with the command line, the easiest tool to use is the chip vendors gui tool and drivers.
+#### Option 2: if you are uncomfortable with the command line, the easiest tool to use is the chip vendors gui tool and drivers.
 
 Steps:
 
