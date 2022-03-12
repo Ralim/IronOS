@@ -126,13 +126,13 @@ dfu-util -D Pinecil_EN.dfu -a 0
 ```
 Note: if you are using an older release of `dfu-util` and you do not see `alt=0, name="@Internal Flash  /0x08000000/128*001Kg"` when running `dfu-util -l` you likely will not be able to update without first updating `dfu-util`.
 
-### Windows
+## Windows
 
 Two Options for Windows
 
-#### Option 1: use command line `dfu-util` similar to above for Linux / Mac.
+### Option 1: use command line `dfu-util` similar to above for Linux / Mac.
 
-### Steps
+#### Steps
 
 ⛔ Do not use the DC power jack while updating firmware or you may destroy your PC.⛔
 
@@ -152,9 +152,9 @@ dfu-util -D Pinecil_EN.dfu
   - If you have errors, see Troubleshooting [above](https://github.com/Ralim/IronOS/blob/7cb83850a8177eba5e7edbce4717b7aefd5938a0/Documentation/Flashing.md#troubleshooting).
 
 
-#### Option 2: if you are uncomfortable with the command line, the easiest tool (besides Pine64 Updater) is the chip vendors gui tool/drivers.
+### Option 2: if you are uncomfortable with the command line, the easiest tool (besides Pine64 Updater) is the chip vendors gui tool/drivers.
 
-### Steps
+#### Steps
 
 ⛔ Do not use the DC power jack while updating firmware or you may destroy your PC.⛔
 
