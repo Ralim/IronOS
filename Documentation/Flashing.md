@@ -88,7 +88,7 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 ## Pinecil (Pine64)
 
-The MCU used in the Pinecil supports usb-dfu. Reference Pine64 [Wiki](https://wiki.pine64.org/wiki/Pinecil).
+The MCU used in the Pinecil supports usb-dfu. Reference [Pine64 Wiki](https://wiki.pine64.org/wiki/Pinecil).
 
 It is recommended to use the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases). This GUI app is easy to use, works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github.
 
