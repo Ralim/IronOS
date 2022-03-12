@@ -90,8 +90,9 @@ Check the extension of your firmware, it should be `.RDY` now.
 # Pinecil (Pine64)
 
 - The MCU used in the Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
-- Recommended [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases). This GUI app is easy to use, works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github.
-- One advantage to Pinecil is that you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. Never fear, simply re-flashing with a working firmware copy will fix everything.
+- Recommended: the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases), is an easy to use GUI app. It is fast, and works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github.
+- If you have issues using the Pine64 Updater or your install fails, please look at some of the troubleshooting tips below. If that does not work, then join the Pine64  Pinecil channel. There are volunteer community helpers in Discord/Telegram/Matrix. Telegram and Matrix are bridged into Discord for people who can not use it.
+- One advantage of Pinecil is that you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. Never fear, simply re-flashing with a working firmware copy will fix everything.
 - If your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, the below manual method may be used. It requires connectting your Pinecil to a computer usinga a USB cable. Generally all usb controllers work, but some hubs have issues so it is preferred to avoid USB hubs for updates.
 
 ## Linux and Mac
