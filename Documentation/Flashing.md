@@ -98,7 +98,7 @@ If your OS is not currently supported by the [Updater](https://github.com/pine64
 
 <div role="note" class="template-box" style="display: table; min-width: 16em; min-height: 1.6em; margin: .5em 0 1em; padding: .5em 1em; border: 1px solid #d33; color: black; background-color: #fee7e6;"><strong>Warning:</strong> Do not have a barrel jack PSU plugged in at the same time as a USB-C cable. Doing this will severely damage your computer, or Type-C PSU.</div>
 
-   1. :warning: Never have DC power plugged into Pinecil when you are updating firmware, only use a USB-C cable or you may destroy something.
+   1. ⚠️ Never have DC power plugged into Pinecil when you are updating firmware, only use a USB-C cable or you may destroy something.
    2. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases)
    3. Enter DFU mode: hold down the (-) button at the back of the iron (do not release it).
    4. Connect USB to PC, and USB-C to back of Pinecil, keep holding (-) button down.
