@@ -98,7 +98,7 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 ### Steps
 
-⛔ Do not use the DC power jack while updating firmware or you may destroy your PC.⛔
+⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
 
 1. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
 2. Highly recommended updating `dfu-util` to the newest version.
@@ -134,7 +134,7 @@ Two Options for Windows
 
 #### Steps
 
-⛔ Do not use the DC power jack while updating firmware or you may destroy your PC.⛔
+⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
 
 1. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
 2. Highly recommended updating `dfu-util` to the newest version.
@@ -156,10 +156,10 @@ dfu-util -D Pinecil_EN.dfu
 
 #### Steps
 
-⛔ Do not use the DC power jack while updating firmware or you may destroy your PC.⛔
+⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
 
 1. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
-2. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
+2. 2. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
    - GD32 DFU Tool [here](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
    - If the link breaks, search for "GD32 MCU Dfu Tool" at this [link](http://www.gd32mcu.com/en/download/).
    - GD32 DFU Drivers [here](http://www.gd32mcu.com/en/download?kw=GD32+Dfu+Drivers&lan=en)
@@ -171,9 +171,7 @@ dfu-util -D Pinecil_EN.dfu
 6. Screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
 7. You may hear a beep from Windows as it connects to Pinecil in DFU mode.
 8. If you see windows notification that it `does not recognize Usb device`, then you didn't connect, repeat step 3-8.
-    -plug usb-c to pc first, then hold down (-) & while holding down, then push usb-c into pinecil (keep holding the (-) button).
-   
-8. Open the GD32 DFU Tool (ignore prompts to update tool).
+9. Open the GD32 DFU Tool (ignore prompts to update tool).
 10. At the top of the DFU tool, you should see `GD DFU DEVICE 1` appear if you successfully connected Pinecil.
 11. If DFU Device box at top is blank, then Pinecil is not connected in DFU mode, repeat steps 3-11.
 12. If it has been more than 10 seconds since you connected the USB cable, Release the (-) button. (don't use Upload from Device section)
