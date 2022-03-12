@@ -145,7 +145,7 @@ dfu-util -D Pinecil_EN.dfu
 
 Steps:
 
-1. Complete Steps 1-7 from [above](/Documentation/Flashing.md#L97)
+1. Complete Steps 1-7 from [above](https://github.com/Ralim/IronOS/blob/e9bcd165fa75ad265169b9fc371be73481c7f399/Documentation/Flashing.md#L97)
 2. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
    - [GD32 DFU](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
    - If the link breaks, search for "GD32 MCU Dfu Tool" at this [link](http://www.gd32mcu.com/en/download/).
