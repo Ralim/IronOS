@@ -115,7 +115,7 @@ dfu-util -D Pinecil_EN.dfu
 Choose the file name from the folder with the appropriate 2-letter country code for your chosen language (i.e, EN = English).
 
 #### Troubleshooting:
-If you get a message stating that `More than one DFU capable USB device found!` when running the above command you probably have an old version of `dfu-util` installed. Might be worth updating. You can still install on the old version, but you will have to specify which DFU interface to flash to. Running the command `dfu-util -l` will show you if there are several DFU devices detected. Example:
+- If you get a message stating that `More than one DFU capable USB device found!` when running the above command you probably have an old version of `dfu-util` installed. Might be worth updating. You can still install on the old version, but you will have to specify which DFU interface to flash to. Running the command `dfu-util -l` will show you if there are several DFU devices detected. Example:
 ```
 Found DFU: [28e9:0189] ver=0100, devnum=48, cfg=1, intf=0, path="1-1", alt=1, name="@Option Bytes  /0x1FFFF800/01*016Be", serial="??"
 Found DFU: [28e9:0189] ver=0100, devnum=48, cfg=1, intf=0, path="1-1", alt=0, name="@Internal Flash  /0x08000000/128*001Kg", serial="??"
@@ -124,7 +124,11 @@ In this example we see that more than one part of the Pinecil is detected as a D
 ```
 dfu-util -D Pinecil_EN.dfu -a 0
 ```
-Note: if you are using an older release of `dfu-util` and you do not see `alt=0, name="@Internal Flash  /0x08000000/128*001Kg"` when running `dfu-util -l` you likely will not be able to update without first updating `dfu-util`.
+- Note: if you are using an older release of `dfu-util` and you do not see `alt=0, name="@Internal Flash  /0x08000000/128*001Kg"` when running `dfu-util -l` you likely will not be able to update without first updating `dfu-util`.
+- If your update is crashing using USB2 or USB3 ports, make sure you are connected directly and not using a USB hub and use shorter cables.
+- Switch to a different PC/Laptop and use different ports. If your PC supports it, USB-C ports are recommended.
+- Also try to hold down the (-) button for the entire firmware update, do not release until near the end.
+
 
 ## Windows
 
