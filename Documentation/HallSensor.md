@@ -15,6 +15,6 @@ Inside the Sleep Menu is an additional type of sleep setting. Pinecil has an unp
   - Neodymium magnets are recommended. If using small magnets, 2-3 may be required, but too many can also be detrimental.
   - Actively watch the hall number change (in [debug menu](/Documentation/DebugMenu.md)) while you slowly move the magnet around to seek the best locations & whether you have too many or too few magnets. Positioning the magnet where you have the highest hall number will ensure consistent sleep mode when you place the iron in the stand. This requires some experimenting.
   - Sensor is physically located near the copper contacts for the tip at the front of the handle. Reference [Schematics U14](https://files.pine64.org/doc/Pinecil/Pinecil_schematic_v1.0a_20201120.pdf).
-  - Positioning/type/quantity of magnets is important for best results. Sometimes too many magnets breaks the effect by distorting the magnetic field (https://www.youtube.com/shorts/afkqKwCX00I).
+  - Positioning/type/quantity of magnets is important for best results. Sometimes [too many magnets](https://www.youtube.com/shorts/afkqKwCX00I) breaks the effect by distorting the magnetic field.
   - Orientation of North and South faces of magnets is important to increase reaction of the hall sensor [SI7210-B-00-IV](https://www.silabs.com/documents/public/application-notes/an1018-si72xx-sensors.pdf).
 
