@@ -179,7 +179,7 @@ Steps
 
 Note: pc/laptop can not power pinecil, it generally only gets 5V (non-PD) there to communicate for firmware updates and Pinecil will report `DC Low` if you try.  
 
-### FAQ
+## FAQ
 
 #### [Miniware] The file is showing up with the extension `.ERR`
 
@@ -205,7 +205,7 @@ If you are on Windows, it's often best to try another computer (friends, work, p
 
 2. Try other USB ports. Often different USB controllers will interact with the units differently due to design quirks in the miniware design.
 
-## [Miniware] Alternative bootloader
+### [Miniware] Alternative bootloader
 
 If you are an advanced user, and you have used `usb-dfu` tools before, or you would like to learn; there is an alternative bootloader for these irons.
 This will **NOT** show up as a USB storage drive, but instead show up using a standard DFU protocol device. You can then use dfu tools or GUI's to upgrade the iron using the `.bin` files that are posted to the releases page.
