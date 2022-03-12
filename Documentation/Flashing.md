@@ -24,7 +24,7 @@ In general you probably want `master`.
 Once you click on a run, scroll down to the "Artifacts" section and then click on your model to download a zip file.
 Then this works the same as a production release (use the correct file).
 
-## Miniware devices (TS100, TS80, TS80P & MHP30)
+# Miniware devices (TS100, TS80, TS80P & MHP30)
 
 This is completely safe, but if it goes wrong just put the `.hex` file from the official website ([TS100](https://www.minidso.com/forum.php?mod=viewthread&tid=868&extra=page%3D1), [TS80](https://www.minidso.com/forum.php?mod=viewthread&tid=3202&extra=page%3D1), [TS80P](https://www.minidso.com/forum.php?mod=viewthread&tid=4070&extra=page%3D1) & [MHP30](https://www.minidso.com/forum.php?mod=viewthread&tid=4385&extra=page%3D1)) onto the unit and you're back to the old firmware. Downloads for the `.hex` files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called _(MODEL)\_EN.hex_ unless you want the translations, they are (MODEL)\__language short name_.hex. Where (MODEL) is either TS100 or TS80.
 
@@ -47,13 +47,13 @@ There is a complete device flash backup included in this repository. (Note this 
 
 For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector.
 
-# Mac
+## Mac
 
 sgr1ff1n (Shane) commented in [issue 11](https://github.com/Ralim/ts100/issues/11) that upgrading worked on their Mac as per normal:
 
 > I just wanted to say that I was able to update the firmware on my ts100 from the stock version to 1.08 found in this repository using my Mac. I simply followed the same steps however through Finder. I have a MacBook Pro (13-inch, Mid 2012) running Sierra 10.12.4 (16E195).
 
-# Linux
+## Linux
 
 While in the past there were reports of unreliable upgrades, the consensus in [issue 11](https://github.com/Ralim/ts100/issues/11) is that things work mostly as expected in Linux.
 
@@ -86,34 +86,33 @@ rmdir /tmp/mntdfu
 Device will reboot and automount will rerun if not disabled.
 Check the extension of your firmware, it should be `.RDY` now.
 
-## Pinecil (Pine64)
+# Pinecil (Pine64)
 
-The MCU used in the Pinecil supports usb-dfu. Reference [Pine64 Wiki](https://wiki.pine64.org/wiki/Pinecil).
+The MCU used in the Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
 
 It is recommended to use the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases). This GUI app is easy to use, works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github. One advantage to Pinecil is you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. However, simply flashing a working firmware will fix everything. 
 
 If your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, the below manual method may be used. You will need to connect your Pinecil to a computer usinga USB cable. Generally all usb controllers work, but some hubs have issues so it is recommended to connect directly and avoid USB hubs.
+
+## Linux and Mac
 
 ### Steps
 
 ⛔ Do not use the DC power jack while updating firmware or you may destroy your PC.⛔
 
 1. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
-2. Enter DFU mode: press and hold (-) button at the back of the iron (do not release).
-3. Connect USB to PC, and USB-C to back of Pinecil, keep holding (-) button down.
-4. The screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
-5. Once USB cable is connected at two ends, wait additional 10 seconds, then release the (-) button.
-6. Continue to the next section below for your specific OS to complete loading the `.dfu` file onto Pinecil.
+2. Highly recommended updating `dfu-util` to the newest version.
+3. Enter DFU mode: press and hold (-) button at the back of the iron (do not release).
+4. Connect USB to PC, and USB-C to back of Pinecil, keep holding (-) button down.
+5. The screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
+6. Once USB cable is connected at two ends, wait additional 10 seconds, then release the (-) button.
+7. Using `dfu-util` you can flash the firmware using a command line like this:
 
-### Linux and Mac
-
-   1. Highly recommended to first update `dfu-util` to the newest version.
-   2. Using `dfu-util` you can flash the firmware using a command line like this
 ```
 dfu-util -D Pinecil_EN.dfu
 ```
 
-Type the file name from the folder with the appropriate 2-letter country code for your chosen language (i.e, EN = English).
+Choose the file name from the folder with the appropriate 2-letter country code for your chosen language (i.e, EN = English).
 
 #### Troubleshooting:
 If you get a message stating that `More than one DFU capable USB device found!` when running the above command you probably have an old version of `dfu-util` installed. Might be worth updating. You can still install on the old version, but you will have to specify which DFU interface to flash to. Running the command `dfu-util -l` will show you if there are several DFU devices detected. Example:
@@ -129,22 +128,33 @@ Note: if you are using an older release of `dfu-util` and you do not see `alt=0,
 
 ### Windows
 
-For Windows there are two options:
+Two Options for Windows
 
 #### Option 1: use `dfu-util` via Command line as shown above for Linux/Mac.
 
-  - Open PowerShell or Command window.
-  - Change to the directory of the unzipped firmware files
-  - Execute this command
+### Steps
+
+⛔ Do not use the DC power jack while updating firmware or you may destroy your PC.⛔
+
+1. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
+2. Highly recommended updating `dfu-util` to the newest version.
+3. Enter DFU mode: press and hold (-) button at the back of the iron (do not release).
+4. Connect USB to PC, and USB-C to back of Pinecil, keep holding (-) button down.
+5. The screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
+6. Once USB cable is connected at two ends, wait additional 10 seconds, then release the (-) button.
+7. Open PowerShell or Command window.
+8. Change to the directory of the unzipped firmware files
+9. Using `dfu-util` you can flash the firmware using a command line like this:
+
 ```
 dfu-util -D Pinecil_EN.dfu
 ```
-  - If you have errors, see Linux Troubleshooting above for solutions.
+  - If you have errors, see Troubleshooting above.
 
 
 #### Option 2: if you are uncomfortable with the command line, the easiest tool to use is the chip vendors gui tool and drivers.
 
-Steps:
+Steps
 
 1. Complete Steps 1-7 from [above](/Documentation/Flashing.md#Steps).
 2. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
