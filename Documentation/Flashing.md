@@ -132,13 +132,13 @@ For Windows there are two options:
 
 #### Option 1: use `dfu-util` via Command line as shown above for Linux/Mac.
 
-  a. Open PowerShell or Command window.
-  b. Change to the directory of the unzipped firmware files
-  c. Execute this command
+  - Open PowerShell or Command window.
+  - Change to the directory of the unzipped firmware files
+  - Execute this command
 ```
 dfu-util -D Pinecil_EN.dfu
 ```
-  d. If you have errors, see Linux Troubleshooting above for solutions.
+  - If you have errors, see Linux Troubleshooting above for solutions.
 
 
 #### Option 2: if you are uncomfortable with the command line, the easiest tool to use is the chip vendors gui tool and drivers.
