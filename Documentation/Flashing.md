@@ -130,21 +130,22 @@ Note: if you are using an older release of `dfu-util` and you do not see `alt=0,
 
 Two Options for Windows
 
-### Option 1: use command line `dfu-util` similar to above for Linux / Mac.
+### Option 1: use command line
 
-#### Steps
+### Steps
 
 ⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
 
-1. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
+1. Using command line `dfu-util` is similar to above for Linux / Mac.
 2. Highly recommended updating `dfu-util` to the newest version.
-3. Enter DFU mode: press and hold (-) button at the back of the iron (do not release).
-4. Connect USB to PC, and USB-C to the back of Pinecil, keep holding (-) button down.
-5. Screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
-6. After the USB cable is connected at both ends, wait ~10 seconds more, then release the (-) button.
-7. Open PowerShell or Command window.
-8. Change to the directory of the unzipped firmware files
-9. Using `dfu-util,`  flash the firmware using a command like this:
+3. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
+4. Enter DFU mode: press and hold (-) button at the back of the iron (do not release).
+5. Connect USB to PC, and USB-C to the back of Pinecil, keep holding (-) button down.
+6. Screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
+7. After the USB cable is connected at both ends, wait ~10 seconds more, then release the (-) button.
+8. Open PowerShell or Command window.
+9. Change to the directory of the unzipped firmware files
+10. Using `dfu-util,`  flash the firmware using a command like this:
 
 ```
 dfu-util -D Pinecil_EN.dfu
@@ -152,29 +153,30 @@ dfu-util -D Pinecil_EN.dfu
   - If you have errors, see Troubleshooting [above](https://github.com/Ralim/IronOS/blob/7cb83850a8177eba5e7edbce4717b7aefd5938a0/Documentation/Flashing.md#troubleshooting).
 
 
-### Option 2: if you are uncomfortable with the command line, the easiest tool (besides Pine64 Updater) is the chip vendors gui tool/drivers.
+### Option 2: Use the gui tool/drivers from chip vendor
 
-#### Steps
+### Steps
 
 ⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
 
-1. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
-2. 2. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
+1. If you are uncomfortable with the command line, then this chip vendor supplied gui tool/drivers is an option.
+2. Download and extract the firmware package from Github [IronOS Releases](https://github.com/Ralim/IronOS/releases).
+3. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
    - GD32 DFU Tool [here](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
    - If the link breaks, search for "GD32 MCU Dfu Tool" at this [link](http://www.gd32mcu.com/en/download/).
    - GD32 DFU Drivers [here](http://www.gd32mcu.com/en/download?kw=GD32+Dfu+Drivers&lan=en)
    - If the link breaks, search for "GD32 Dfu Drivers" at this [link](http://www.gd32mcu.com/en/download/).
    - Check properties of both downloads, tick Unblock if needed, then Unzip
-3. Install the drivers and the GD32 DFU tool (ignore prompts to update the tool).
-4. Enter DFU mode: press and hold (-) button at the back of Pinecil (do not release).
-5. Connect Pinecil to a PC via USB cable (do not release the (-) yet).
-6. Screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
-7. You may hear a beep from Windows as it connects to Pinecil in DFU mode.
-8. If you see windows notification that it `does not recognize Usb device`, then you didn't connect, repeat step 3-8.
-9. Open the GD32 DFU Tool (ignore prompts to update tool).
-10. At the top of the DFU tool, you should see `GD DFU DEVICE 1` appear if you successfully connected Pinecil.
-11. If DFU Device box at top is blank, then Pinecil is not connected in DFU mode, repeat steps 3-11.
-12. If it has been more than 10 seconds since you connected the USB cable, Release the (-) button. (don't use Upload from Device section)
+4. Install the drivers and the GD32 DFU tool (ignore prompts to update the tool).
+5. Enter DFU mode: press and hold (-) button at the back of Pinecil (do not release).
+6. Connect Pinecil to a PC via USB cable (do not release the (-) yet).
+7. Screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
+8. You may hear a beep from Windows as it connects to Pinecil in DFU mode.
+9. If you see windows notification that it `does not recognize Usb device`, then you didn't connect, repeat step 3-8.
+10. Open the GD32 DFU Tool (ignore prompts to update tool).
+11. At the top of the DFU tool, you should see `GD DFU DEVICE 1` appear if you successfully connected Pinecil.
+12. If DFU Device box at top is blank, then Pinecil is not connected in DFU mode, repeat steps 3-11.
+13. If it has been more than 10 seconds since you connected the USB cable, Release the (-) button. (don't use Upload from Device section)
 14. Select `Download to device` > Open > Browse to folder dyou unziped in step 2.  
 15. Select the `hex` file for language. English is  Pinecil_EN.hex , tick `Verify after download`.
 16. Click `OK` at bottom. After a few minutes you will see 0-100%,  Download successfully!  Click `Leave DFU` at the top. 
