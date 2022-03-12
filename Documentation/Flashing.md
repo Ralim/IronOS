@@ -153,7 +153,7 @@ dfu-util -D Pinecil_EN.dfu
   - If you have errors, see Troubleshooting [above](https://github.com/Ralim/IronOS/blob/7cb83850a8177eba5e7edbce4717b7aefd5938a0/Documentation/Flashing.md#troubleshooting).
 
 
-### Option 2: Use the gui tool/drivers from chip vendor
+### Option 2: use the gui tool from chip vendor
 
 ### Steps
 
