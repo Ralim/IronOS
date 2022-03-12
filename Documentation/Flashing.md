@@ -140,7 +140,7 @@ Two Options for Windows
 3. Enter DFU mode: press and hold (-) button at the back of the iron (do not release).
 4. Connect USB to PC, and USB-C to back of Pinecil, keep holding (-) button down.
 5. The screen will stay **black/off** to indicate the Pinecil is in DFU mode. This is normal.
-6. Once USB cable is connected at two ends, wait additional 10 seconds, then release the (-) button.
+6. After the USB cable is connected at both ends, wait additional 10 seconds, then release the (-) button.
 7. Open PowerShell or Command window.
 8. Change to the directory of the unzipped firmware files
 9. Using `dfu-util` you can flash the firmware using a command line like this:
@@ -148,7 +148,7 @@ Two Options for Windows
 ```
 dfu-util -D Pinecil_EN.dfu
 ```
-  - If you have errors, see Troubleshooting above.
+  - If you have errors, see Troubleshooting [above](https://github.com/Ralim/IronOS/blob/7cb83850a8177eba5e7edbce4717b7aefd5938a0/Documentation/Flashing.md#troubleshooting).
 
 
 #### Option 2: if you are uncomfortable with the command line, the easiest tool to use is the chip vendors gui tool and drivers.
