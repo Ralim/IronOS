@@ -88,11 +88,10 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 # Pinecil (Pine64)
 
-The MCU used in the Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
-
-It is recommended to use the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases). This GUI app is easy to use, works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github. One advantage to Pinecil is you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. However, simply flashing a working firmware will fix everything. 
-
-If your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, the below manual method may be used. You will need to connect your Pinecil to a computer usinga USB cable. Generally all usb controllers work, but some hubs have issues so it is recommended to connect directly and avoid USB hubs.
+- The MCU used in the Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
+- Recommended [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases). This GUI app is easy to use, works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github.
+- One advantage to Pinecil is that you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. Never fear, simply re-flashing with a working firmware copy will fix everything.
+- If your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, the below manual method may be used. It requires connectting your Pinecil to a computer usinga a USB cable. Generally all usb controllers work, but some hubs have issues so it is preferred to avoid USB hubs for updates.
 
 ## Linux and Mac
 
@@ -130,7 +129,7 @@ Note: if you are using an older release of `dfu-util` and you do not see `alt=0,
 
 Two Options for Windows
 
-#### Option 1: use `dfu-util` via Command line as shown above for Linux/Mac.
+#### Option 1: use `dfu-util` via Command line similar to above for Linux / Mac.
 
 ### Steps
 
