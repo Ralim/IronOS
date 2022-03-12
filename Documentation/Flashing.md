@@ -145,7 +145,7 @@ dfu-util -D Pinecil_EN.dfu
 
 Steps:
 
-1. Complete Steps 1-7 from [above](/Documentation/Flashing.md#steps)
+1. Complete Steps 1-7 from [above](/Documentation/Flashing.md#Steps).
 2. Download both the `GD32 MCU DFU TOOL` and the `GD32 Dfu Drivers`.
    - GD32 DFU Tool [here](http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&lan=en).
    - If the link breaks, search for "GD32 MCU Dfu Tool" at this [link](http://www.gd32mcu.com/en/download/).
