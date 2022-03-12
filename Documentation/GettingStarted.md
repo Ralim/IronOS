@@ -64,7 +64,8 @@ Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Ad
 
 ### Idle Shutdown
 
-If, after entering sleep mode, the iron still does not see movement for a much longer time; it will shut down and return to the home screen (default = 10 minutes).
+If, after entering sleep mode, the iron still does not see movement for a much longer time (default = 10 min.); it will shut down and return to the home screen.
+
 
 ## Settings Menu
 
