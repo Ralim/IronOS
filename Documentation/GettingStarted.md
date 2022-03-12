@@ -59,7 +59,7 @@ In Sleep mode, the temperature of the iron automatically lowers to 150C (default
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
 Optional Hall Effect Feature (Pinecil only):
-Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Adding the sensor and placing a strong magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and ZZzz will appear on the screen. The magnet is positioned in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1= lowest sensitivity, 9= highest sensitivity). Read the Hall Sensor document for details on [installation](/Documentation/HallSensor.md).
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Adding the sensor and placing a strong magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and ZZzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1= lowest sensitivity, 9= highest sensitivity). Read the Hall Sensor document for details on [installation](/Documentation/HallSensor.md).
 
 
 ### Idle Shutdown
