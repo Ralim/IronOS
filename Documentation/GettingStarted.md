@@ -44,7 +44,7 @@ When you press the button to enter the soldering mode, the iron will instantly s
 
 The firmware defaults to 320C as the set point for the soldering mode, however on this screen you can enter into the adjustment screen by pressing either button.
 
-Pressing and holding the button near the tip will enter **boost** mode. This allows temporarily override of the set temperature to a higher (or lower) value. This can be useful as a way to force the tip to a higher temperature to drive more wattage into a large joint when the thermal connection is not ideal.
+Pressing and holding the button near the tip will enter **Boost** mode. This allows a temporarily override of the set temperature to a higher (or lower) value. This can be useful as a way to force the tip to a higher temperature to drive more wattage into a large joint when the thermal connection is not ideal.
 
 Pressing and holding the rear button will exit soldering mode and land you back at the home screen. You can also do this by pressing both buttons at once and this will also work, this is a bit harder to do but is kept for compatibility with the Miniware firmware.
 
