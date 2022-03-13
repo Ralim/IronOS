@@ -211,7 +211,7 @@
       "desc": "Invert the colours of the OLED screen"
     },
     "LOGOTime": {
-      "text2": ["Boot", "logo"],
+      "text2": ["Boot logo", "duration"],
       "desc": "Sets the duration for the bootlogo"
     }
   }
