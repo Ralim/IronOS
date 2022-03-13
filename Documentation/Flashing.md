@@ -89,11 +89,13 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 # Pinecil (Pine64)
 
-- The MCU used in the Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
-- Recommended: the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases), is an easy to use GUI app. It is fast, and works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github.
-- If you have issues using the Pine64 Updater or your install fails, please look at some of the troubleshooting tips below. If that does not work, then join the Pine64  Pinecil channel. There are volunteer community helpers in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine volunteers/members can see the issues and advice for Pinecil and related items or get tips on which Power supply to purchase.
-- One advantage of Pinecil is that you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. Never fear, simply re-flashing with a working firmware copy will fix everything.
-- If your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, the below manual method may be used. It requires connectting your Pinecil to a computer using a USB cable. Generally all usb controllers work, but some hubs have issues so it is preferred to avoid USB hubs for updates.
+- The MCU used in Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
+- Recommended Updater: the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases), is an easy to use GUI app. It is fast, and works in several types of OS, i.e. Windows/Mac. It will automatically fetch the newest stable version of IronOS from Github.
+- Tourbleshooting: if you have issues using the Pine64 Updater or your install fails, please go to troubleshooting tips below.
+- Community chat: if troubleshooting doesn't work, then join the Pine64 > Pinecil channel. There are knowledgeable members in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine volunteers/members can see advice for Pinecil and related items or just get tips on which Power supply to purchase.
+- One advantage of Pinecil is that you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. But no worries, simply re-flashing with a working firmware copy will fix everything.
+- USB-C cable is required to do an update. Generally all usb controllers work, but some hubs have issues so it is preferred to avoid USB hubs for updates.
+- Alternate Update Methods: if your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, i.e., you want to install a beta version, the below manual methods may be used. 
 
 ## Linux and Mac
 
