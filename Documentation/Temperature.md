@@ -25,7 +25,7 @@ Every time in the circuit there is a join between two different metals, there is
 If you analyse one of the open circuit schematics (Pinecil, TS100, TS80) they all use the same approximate formula.
 This consists of an op-amp that is connected directly across the heating connections to the tip, and a separate handle temperature sensor.
 
-When the iron is **not** heating the tip, the microcontroller uses the ADC to read the output from the op-amp. This produces a voltage that _should_ be linear to the temperature of (tip-handle). This value is then offset compensated (to remove ADC+op-amp offsets), and then converted into a temperature delta in °C/K. This temperature delta can then be added to the handle temperature to derive the tip temperature in degree Celsius.
+When the iron is **not** heating the tip, the microcontroller uses the ADC to read the output from the op-amp. This produces a voltage that _should_ be linear to the temperature of (tip-handle). This value is then offset compensated (to remove ADC+op-amp offsets), and then converted into a temperature delta in °C/K. This temperature delta can then be added to the handle temperature to derive the tip temperature in degrees Celsius.
 
 Depending on the construction of the tip, the lookup values used for converting the tip reading in µV into °C/K varies. It is worth noting, however, that TS100 and Pinecil tips are approximately the same as the Hakko T12 tips. (In @Ralim's testing, to within measurement error). This makes sense as these tips are cheap and would have made an excellent design for Miniware to have cloned in making the TS100 in the first place.
 
