@@ -42,7 +42,7 @@ If you press and hold the button near the rear of the iron it will take you into
 
 When you press the button to enter the soldering mode, the iron will instantly start to heat up the tip.
 
-The firmware defaults to 320C as the set point for the soldering mode, however on this screen you can enter into the adjustment screen by pressing either button.
+The firmware defaults to 320 °C as the set point for the soldering mode, however on this screen you can enter into the adjustment screen by pressing either button.
 
 Pressing and holding the button near the tip will enter **Boost** mode. This allows a temporary override of the set temperature to a higher (or lower) value. This can be useful as a way to force the tip to a higher temperature to drive more wattage into a large joint when the thermal connection is not ideal.
 
@@ -52,19 +52,19 @@ Pressing and holding **both** buttons at once will enter locked mode, which will
 
 ### Idle Sleep
 
-If the iron detects a period of time without any significant movement, it will enter sleep mode. This is indicated with a screen graphic similar to ZZzz (or text in detailed mode).
+If the iron detects a period of time without any significant movement, it will enter sleep mode. This is indicated with a screen graphic similar to Zzzz (or text in detailed mode).
 
-In Sleep mode, the temperature of the iron automatically lowers to 150C (default), which is just below the melting point of the solder. This helps reduce rate of oxidation and damage to the iron tip. In general, when not using the iron, unplug it or let it sleep to increase the longevity of replaceable tips. The default sleep temperature can be customized.
+In Sleep mode, the temperature of the iron automatically lowers to 150 °C (default), which is just below the melting point of the solder. This helps reduce rate of oxidation and damage to the iron tip. In general, when not using the iron, unplug it or let it sleep to increase the longevity of replaceable tips. The default sleep temperature can be customized.
 
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
 Optional Hall Effect Feature (Pinecil only):
-Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Adding the sensor and placing a strong magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and ZZzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1= lowest sensitivity, 9= highest sensitivity). Read the Hall Sensor document for details on [installation](/Documentation/HallSensor.md).
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Adding the sensor and placing a strong magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for details on [installation](/Documentation/HallSensor.md).
 
 
 ### Idle Shutdown
 
-If, after entering sleep mode, the iron still does not see movement for a much longer time (default = 10 min.); it will shut down and return to the home screen.
+If, after entering sleep mode, the iron still does not see movement for a much longer time (default=10 minutes); it will shut down and return to the home screen.
 
 
 ## Settings Menu
