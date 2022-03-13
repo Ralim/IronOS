@@ -89,11 +89,13 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 # Pinecil (Pine64)
 
-- The MCU used in the Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
-- Recommended: the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases), is an easy to use GUI app. It is fast, and works in several types of OS, i.e. Windows/Mac, and will automatically fetch the newest stable version of IronOS from Github.
-- If you have issues using the Pine64 Updater or your install fails, please look at some of the troubleshooting tips below. If that does not work, then join the Pine64  Pinecil channel. There are volunteer community helpers in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine volunteers/members can see the issues and advice for Pinecil and related items or get tips on which Power supply to purchase.
-- One advantage of Pinecil is that you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. Never fear, simply re-flashing with a working firmware copy will fix everything.
-- If your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, the below manual method may be used. It requires connectting your Pinecil to a computer using a USB cable. Generally all usb controllers work, but some hubs have issues so it is preferred to avoid USB hubs for updates.
+- The MCU used in Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
+- Recommended Updater: the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases), is an easy to use GUI app. It is fast, and works in several types of OS, i.e. Windows/Mac. It will automatically fetch the newest stable version of IronOS from Github.
+- Tourbleshooting: if you have issues using the Pine64 Updater or your install fails, please go to troubleshooting tips below.
+- Community chat: if troubleshooting doesn't work, then join the Pine64 > Pinecil channel. There are knowledgeable members in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine volunteers/members can see advice for Pinecil and related items or just get tips on which Power supply to purchase.
+- One advantage of Pinecil is that you can not permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. But no worries, simply re-flashing with a working firmware copy will fix everything.
+- USB-C cable is required to do an update. Generally all usb controllers work, but some hubs have issues so it is preferred to avoid USB hubs for updates.
+- Alternate Update Methods: if your OS is not currently supported by the [Updater](https://github.com/pine64/pinecil-firmware-updater/releases) or it does not meet your needs, i.e., you want to install a beta version, the below manual methods may be used. 
 
 ## Linux and Mac
 
@@ -115,7 +117,7 @@ dfu-util -D Pinecil_EN.dfu
 
 Choose the file name from the folder with the appropriate 2-letter country code for your chosen language (i.e, EN = English).
 
-#### Troubleshooting:
+### Troubleshooting:
 - If you get a message stating that `More than one DFU capable USB device found!` when running the above command you probably have an old version of `dfu-util` installed. Might be worth updating. You can still install on the old version, but you will have to specify which DFU interface to flash to. Running the command `dfu-util -l` will show you if there are several DFU devices detected. Example:
 ```
 Found DFU: [28e9:0189] ver=0100, devnum=48, cfg=1, intf=0, path="1-1", alt=1, name="@Option Bytes  /0x1FFFF800/01*016Be", serial="??"
@@ -125,10 +127,12 @@ In this example we see that more than one part of the Pinecil is detected as a D
 ```
 dfu-util -D Pinecil_EN.dfu -a 0
 ```
-- Note: if you are using an older release of `dfu-util` and you do not see `alt=0, name="@Internal Flash  /0x08000000/128*001Kg"` when running `dfu-util -l` you likely will not be able to update without first updating `dfu-util`.
-- If your update is crashing using USB2 or USB3 ports, make sure you are connected directly and not using a USB hub and use shorter cables.
-- Switch to a different PC/Laptop and use different ports. If your PC supports it, USB-C ports are recommended.
-- Also try to hold down the (-) button for the entire firmware update, do not release until near the end.
+- Note: if you use an older release of `dfu-util` and do not see `alt=0, name="@Internal Flash  /0x08000000/128*001Kg"` when running `dfu-util -l` you likely will not be able to update without first updating 'dfu-util'.
+- If your update is crashing part-way into the update, there is sometimes an issue with older/fussy USB controllers (they can show up/disappear/then show up again)
+    - Try a direct connection to the USB port, do not use a USB hub, and use shorter cable. If possible pick a port connected to the main board.
+    - Switch to a different PC/Laptop and use different ports. USB-C ports are recommended but some have also reported having a fussy C port.
+    - Hold down the (-) button for the entire firmware update, do not release until near the end.
+- `DC Low` message: a pc/laptop can not fully power pinecil, it generally can only get 5V (non-PD) to communicate for firmware updates and Pinecil will report 'DC Low'. This is normal.
 
 
 ## Windows
@@ -155,7 +159,7 @@ Two Options for Windows
 ```
 dfu-util -D Pinecil_EN.dfu
 ```
-  - If you have errors, see Troubleshooting [above](https://github.com/Ralim/IronOS/blob/7cb83850a8177eba5e7edbce4717b7aefd5938a0/Documentation/Flashing.md#troubleshooting).
+  - If you have errors, see Troubleshooting [above](/Documentation/Flashing.md#troubleshooting).
 
 
 ### Option 2: use the gui tool from chip vendor
@@ -187,7 +191,8 @@ dfu-util -D Pinecil_EN.dfu
 18. Do not need to press any buttons, a new screen should appear.
 19. To confirm upgrade, hold the minus (-) button down for a few seconds, it then shows new firmware version v2.xx.x....date
 
-Note: pc/laptop can not power pinecil, it generally only gets 5V (non-PD) there to communicate for firmware updates and Pinecil will report `DC Low` if you try.  
+ - If you have errors, see Troubleshooting [above](/Documentation/Flashing.md#troubleshooting).
+ 
 
 
 ## FAQ
@@ -201,7 +206,7 @@ First, try just copying the file a second time.
 1. Attach the iron in DFU mode.
 2. Copy the `.hex` file to the device.
 3. The device disconnects and connects with the `.ERR` file.
-4. Copy the same `.hex` file again **DO NOT TRY AND DELETE THE OLD ONE**.
+4. Copy the same `.hex` file again **⛔ DO NOT TRY AND DELETE THE OLD ONE ⛔**.
 5. The device will disconnect and reconnect again.
 6. The device _should_ now have the `.RDY` file.
 7. You're done.
