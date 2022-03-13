@@ -14,16 +14,16 @@ Items are shown in the menu on a single line, so they use short codes
 
 ### HW G
 
-This indicates the High Water mark for the stack for the GUI thread. The smaller this number is, the less headroom we have in the stack.
-As this is a Highwater mater, you should only trust this once you have walked through all GUI options to "hit" the worst one.
+This indicates the high water mark for the stack for the GUI thread. The smaller this number is, the less headroom we have in the stack.
+As this is a high-water mater, you should only trust this once you have walked through all GUI options to "hit" the worst one.
 
 ### HW M
 
-This indicates the High Water mark for the stack for the movement detection thread. The smaller this number is, the less headroom we have in the stack.
+This indicates the high water mark for the stack for the movement detection thread. The smaller this number is, the less headroom we have in the stack.
 
 ### HW P
 
-This indicates the High Water mark for the stack for the PID thread. The smaller this number is, the less headroom we have in the stack.
+This indicates the high water mark for the stack for the PID thread. The smaller this number is, the less headroom we have in the stack.
 
 ### Time
 
@@ -31,22 +31,22 @@ This just shows how many deciseconds the unit has been powered for.
 
 ### Move
 
-This is the last timestamp of movement. When the iron is moved this should update to match the Time field (one before in the menu).
+This is the last timestamp of movement. When the iron is moved this should update to match the time field (one before in the menu).
 This can be used for checking performance of the movement dection code.
 
 ### RTip
 
-This is the raw tip reading in uV. This can be used when assessing the calibration routines for example.
+This is the raw tip reading in μV. This can be used when assessing the calibration routines for example.
 
 ### CTip
 
-This is the tip temperature in deg C. 
+This is the tip temperature in degree Celsius. 
 This can be used with RTip for assessing temperature processing performance.
 
 ### CHan
 
-This is the handle temperature in C. This is used for cold junction compensation of the tip temperature.
-This is shown in degrees C x10, so 200 == 20.0C
+This is the handle temperature in °C. This is used for cold junction compensation of the tip temperature.
+This is shown in degrees Celsius x10, so 200 == 20.0 °C
 
 ### Vin 
 
@@ -78,7 +78,7 @@ This may change during power up as the sources are negotiated in turn.
 
 ### Max 
 
-This indicates the max temperature in C that the system estimates it can measure the tip reliably to.
+This indicates the max temperature in degree Celsius that the system estimates it can measure the tip reliably to.
 This is dependant on a few factors including the handle temperature so it can move around during use.
 
 
