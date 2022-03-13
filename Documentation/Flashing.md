@@ -206,7 +206,7 @@ First, try just copying the file a second time.
 1. Attach the iron in DFU mode.
 2. Copy the `.hex` file to the device.
 3. The device disconnects and connects with the `.ERR` file.
-4. Copy the same `.hex` file again **DO NOT TRY AND DELETE THE OLD ONE**.
+4. Copy the same `.hex` file again **⛔ DO NOT TRY AND DELETE THE OLD ONE ⛔**.
 5. The device will disconnect and reconnect again.
 6. The device _should_ now have the `.RDY` file.
 7. You're done.
