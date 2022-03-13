@@ -27,7 +27,7 @@ This consists of an op-amp that is connected directly across the heating connect
 
 When the iron is **not** heating the tip, the microcontroller uses the ADC to read the output from the op-amp. This produces a voltage that _should_ be linear to the temperature of (tip-handle). This value is then offset compensated (to remove ADC+op-amp offsets), and then converted into a temperature delta in °C/K. This temperature delta can then be added to the handle temperature to derive the tip temperature in degree Celsius.
 
-Depending on the construction of the tip, the lookup values used for converting the tip reading in uV into degrees C/K varies. It is worth noting, however, that TS100 and Pinecil tips are approximately the same as the Hakko T12 tips. (In @Ralim's testing, to within measurement error). This makes sense as these tips are cheap and would have made an excellent design for Miniware to have cloned in making the TS100 in the first place.
+Depending on the construction of the tip, the lookup values used for converting the tip reading in µV into °C/K varies. It is worth noting, however, that TS100 and Pinecil tips are approximately the same as the Hakko T12 tips. (In @Ralim's testing, to within measurement error). This makes sense as these tips are cheap and would have made an excellent design for Miniware to have cloned in making the TS100 in the first place.
 
 ## Implications of this
 
@@ -53,6 +53,6 @@ The firmware in these irons does a best-effort of calculating an accurate temper
 
 The firmware only accounts for cold junction compensation and then treats the remaining error as being a constant offset. 
 While the error is small, it is actually composed of both a constant offset as well as an offset that is linear to the handle temperature.
-This offset that is linear to handle temperature is as of current not modelled into the firmware and there is assumed to be constant. This is generally "close enough" as once the unit is in use, the handle temperature is usually within 10C as the components inside warm-up from use. This means that this error is "relatively" constant once the unit is being used. However, this can cause odd behaviour when the tip temperature ~= room temperature. And can cause some jumping and movement in the readings when attempting to control the tip to sub 100 °C.
+This offset that is linear to handle temperature is as of current not modelled into the firmware and there is assumed to be constant. This is generally "close enough" as once the unit is in use, the handle temperature is usually within 10 °C as the components inside warm-up from use. This means that this error is "relatively" constant once the unit is being used. However, this can cause odd behaviour when the tip temperature ~= room temperature. And can cause some jumping and movement in the readings when attempting to control the tip to sub 100 °C.
 
-This is a known tradeoff that is made as the irons intended use case means that it will spend most of its time above 150C, at which point these errors are no longer the dominant error sources in the system.
+This is a known tradeoff that is made as the irons intended use case means that it will spend most of its time above 150 °C, at which point these errors are no longer the dominant error sources in the system.
