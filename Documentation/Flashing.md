@@ -127,9 +127,9 @@ dfu-util -D Pinecil_EN.dfu -a 0
 ```
 - Note: if you use an older release of `dfu-util` and do not see `alt=0, name="@Internal Flash  /0x08000000/128*001Kg"` when running `dfu-util -l` you likely will not be able to update without first updating 'dfu-util'.
 - If your update is crashing part-way into the update, there is sometimes an issue with older/fussy USB controllers (they can show up/disappear/then show up again)
--   Try a direct connection to the USB port, do not use a USB hub, and use shorter cable. If possible pick a port connected to the main board.
--   Switch to a different PC/Laptop and use different ports. USB-C ports are recommended but some have also reported having a fussy C port.
--   Also try to hold down the (-) button for the entire firmware update, do not release until near the end.
+    - Try a direct connection to the USB port, do not use a USB hub, and use shorter cable. If possible pick a port connected to the main board.
+    - Switch to a different PC/Laptop and use different ports. USB-C ports are recommended but some have also reported having a fussy C port.
+    - Hold down the (-) button for the entire firmware update, do not release until near the end.
 - `DC Low` message: pc/laptop can not fully power pinecil, it generally only gets 5V (non-PD) there to communicate for firmware updates and Pinecil will report 'DC Low'
 
 
