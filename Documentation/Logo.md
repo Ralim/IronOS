@@ -33,9 +33,7 @@ If you have flashed the `IronOS-dfu` alternative bootloader, you should use the 
 
 ### Pinecil
 
-For the Pinecil, we require to flash the logo using dfu-util instead.
-To flash the logo, use the following steps:
+For Pinecil, we require using dfu-util instead to flash the logo art (Pinecil does not use hex).
+Please see the [Meta repo](https://github.com/Ralim/IronOS-Meta) for the tooling for converting logo's as well as automatically generated logo's
 
 - `dfu-util -D logo_file.dfu`
-
-The converter will create a DFU instead of a HEX file if the .dfu extension is used.
