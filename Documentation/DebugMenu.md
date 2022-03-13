@@ -40,7 +40,7 @@ This is the raw tip reading in μV. This can be used when assessing the calibrat
 
 ### CTip
 
-This is the tip temperature in degree Celsius. 
+This is the tip temperature in degrees Celsius. 
 This can be used with RTip for assessing temperature processing performance.
 
 ### CHan
