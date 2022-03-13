@@ -15,7 +15,7 @@ This has some fairly large limitations, but it also has the benefit of being ext
 Conventionally a thermocouple is created using two dissimilar metals that join, and then the other ends of these metals are terminated to copper contacts. These copper contacts are also part of the construction of the thermocouple and are referred to as the cold junction.
 As there are these extra two joins between the thermocouple wires and the copper; these also have properties of their own in their reactions with temperature.
 
-If the cold junction is held at 0 degree's Celsius, then their effect is considered to be null, and so they can be ignored. However, in the real world the joins to copper are often at room temperature, and as such the measured voltage from the thermocouple must be compensated to remove the influence of these joints. This process is often called cold junction compensation.
+If the cold junction is held at 0 degrees Celsius, then their effect is considered to be null, and so they can be ignored. However, in the real world the joins to copper are often at room temperature, and as such the measured voltage from the thermocouple must be compensated to remove the influence of these joints. This process is often called cold junction compensation.
 
 Every time in the circuit there is a join between two different metals, there is a small thermocouple created, this means that _every_ soldered connection is also one. 
 
