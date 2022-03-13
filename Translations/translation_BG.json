@@ -212,7 +212,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the bootlogo"
+      "desc": "Sets the duration for the boot logo"
     }
   }
 }
