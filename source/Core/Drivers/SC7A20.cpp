@@ -75,7 +75,7 @@ void SC7A20::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
   // We can tell the accelerometer to output in LE mode which makes this simple
   uint16_t sensorData[3] = {0, 0, 0};
 
-  if (FRToSI2C::Mem_Read(isInImitationMode ? SC7A20_ADDRESS2 : SC7A20_ADDRESS, SC7A20_OUT_X_L, (uint8_t *)sensorData, 6) == false) {
+  if (FRToSI2C::Mem_Read(isInImitationMode ? SC7A20_ADDRESS2 : SC7A20_ADDRESS, isInImitationMode ? SC7A20_OUT_X_L_ALT : SC7A20_OUT_X_L, (uint8_t *)sensorData, 6) == false) {
     x = y = z = 0;
     return;
   }
