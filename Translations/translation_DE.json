@@ -12,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Ruhemodus...",
     "SleepingTipAdvancedString": "Temp:",
-    "IdleTipString": "Ist:",
-    "IdleSetString": " Soll:",
-    "TipDisconnectedString": "Spitze fehlt",
-    "SolderingAdvancedPowerPrompt": "Leistung: ",
     "OffString": "Aus"
   },
   "messagesWarn": {
@@ -47,7 +43,6 @@
     "SettingLockDisableChar": "A",
     "SettingLockBoostChar": "B",
     "SettingLockFullChar": "V",
-    "SettingNAChar": "-"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -205,8 +200,8 @@
       "desc": "Invertiert die Farben des OLED-Displays"
     },
     "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo"
+      "text2": ["Startlogo", "Anzeigedauer"],
+      "desc": "Legt die Dauer der Anzeige des Startlogos fest"
     }
   }
 }
