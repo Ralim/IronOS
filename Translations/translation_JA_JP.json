@@ -205,8 +205,8 @@
       "desc": "画面の色を反転する"
     },
     "LOGOTime": {
-      "text2": ["Boot", "logo"],
-      "desc": "Sets the duration for the bootlogo"
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo"
     }
   }
 }
