@@ -329,8 +329,8 @@ static void settings_displayInputVRange(void) {
 
 static bool settings_showInputVOptions(void) { return getSettingValue(SettingsOptions::MinDCVoltageCells) > 0; }
 static void settings_displayInputMinVRange(void) {
-  printShortDescription(SettingsItemIndex::MinVolCell, 4);
-  OLED::printNumber(getSettingValue(SettingsOptions::MinVoltageCells) / 10, 2, FontStyle::LARGE);
+  printShortDescription(SettingsItemIndex::MinVolCell, 5);
+  OLED::printNumber(getSettingValue(SettingsOptions::MinVoltageCells) / 10, 1, FontStyle::LARGE);
   OLED::print(SymbolDot, FontStyle::LARGE);
   OLED::printNumber(getSettingValue(SettingsOptions::MinVoltageCells) % 10, 1, FontStyle::LARGE);
 }
@@ -452,7 +452,6 @@ static bool settings_setTempF(void) {
 
 static void settings_displayTempF(void) {
   printShortDescription(SettingsItemIndex::TemperatureUnit, 7);
-
   OLED::print((getSettingValue(SettingsOptions::TemperatureInF)) ? SymbolDegF : SymbolDegC, FontStyle::LARGE);
 }
 
@@ -463,7 +462,6 @@ static void settings_displayAdvancedSolderingScreens(void) {
 
 static void settings_displayAdvancedIDLEScreens(void) {
   printShortDescription(SettingsItemIndex::AdvancedIdle, 7);
-
   OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedIDLE));
 }
 
@@ -758,9 +756,9 @@ static void settings_displayPowerPulseDuration(void) {
 
 static void settings_displayBrightnessLevel(void) {
   OLED::drawArea(0, 0, 16, 16, brightnessIcon);
-  OLED::setCursor(5 * FONT_12_WIDTH - 2, 0);
+  OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
   // printShortDescription(SettingsItemIndex::Brightness, 7);
-  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / 11 + 1), 3, FontStyle::LARGE);
+  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / 11 + 1), 1, FontStyle::LARGE);
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
 }
@@ -769,16 +767,20 @@ static void settings_displayInvertColor(void) {
   OLED::drawArea(0, 0, 24, 16, invertDisplayIcon);
   OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
   // printShortDescription(SettingsItemIndex::ColourInversion, 7);
-
   OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
 }
 
 static void settings_displayLogoTime(void) {
-  printShortDescription(SettingsItemIndex::LOGOTime, 7);
-  OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 1, FontStyle::LARGE);
-  OLED::print(SymbolSeconds, FontStyle::LARGE);
+  if (getSettingValue(SettingsOptions::LOGOTime) == 0) {
+    printShortDescription(SettingsItemIndex::LOGOTime, 5);
+    OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
+  } else {
+    printShortDescription(SettingsItemIndex::LOGOTime, 6);
+    OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 1, FontStyle::LARGE);
+    OLED::print(SymbolSeconds, FontStyle::LARGE);
+  }
 }
 
 #ifdef HALL_SENSOR
