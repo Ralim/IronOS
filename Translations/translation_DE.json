@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Startlogo", "Anzeigedauer"],
-      "desc": "Legt die Dauer der Anzeige des Startlogos fest"
+      "desc": "Legt die Dauer der Anzeige des Startlogos fest (S=Sekunden)"
     }
   }
 }

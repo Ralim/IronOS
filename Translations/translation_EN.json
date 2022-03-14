@@ -16,7 +16,7 @@
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Certain settings", "have been changed!"],
+    "SettingsResetMessage": ["Certain settings", "were changed!"],
     "NoAccelerometerMessage": ["No accelerometer", "detected!"],
     "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
     "LockingKeysString": "LOCKED",
@@ -116,7 +116,7 @@
       "desc": "Start tip temperature offset calibration"
     },
     "SettingsReset": {
-      "text2": ["Reset to", "factory settings?"],
+      "text2": ["Reset to factory", "settings?"],
       "desc": "Reset settings to default"
     },
     "VoltageCalibration": {
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo"
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }
