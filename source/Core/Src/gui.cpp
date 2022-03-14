@@ -756,9 +756,9 @@ static void settings_displayPowerPulseDuration(void) {
 
 static void settings_displayBrightnessLevel(void) {
   OLED::drawArea(0, 0, 16, 16, brightnessIcon);
-  OLED::setCursor(7 * FONT_12_WIDTH - 2, 0);
+  OLED::setCursor(6 * FONT_12_WIDTH - 2, 0);
   // printShortDescription(SettingsItemIndex::Brightness, 7);
-  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / 11 + 1), 1, FontStyle::LARGE);
+  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / 11 + 1), 2, FontStyle::LARGE);
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
 }
