@@ -132,7 +132,7 @@ dfu-util -D Pinecil_EN.dfu -a 0
     - Try a direct connection to the USB port, do not use a USB hub, and use shorter cable. If possible pick a port connected to the main board.
     - Switch to a different PC/Laptop and use different ports. USB-C ports are recommended but some have also reported having a fussy C port.
     - Hold down the (-) button for the entire firmware update, do not release until near the end.
-- `DC Low` message: a pc/laptop can not fully power pinecil, it generally can only get 5V (non-PD) to communicate for firmware updates and Pinecil will report 'DC Low'. This is normal.
+- `DC Low` message: a pc/laptop can not fully power pinecil, it generally can only get 5 V (non-PD) to communicate for firmware updates and Pinecil will report 'DC Low'. This is normal.
 
 
 ## Windows
