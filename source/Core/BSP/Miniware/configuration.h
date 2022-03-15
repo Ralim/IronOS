@@ -232,3 +232,5 @@
 #define TIP_RESISTANCE           45 // x10 ohms, 4.5 typical for ts80 tips
 #endif
 #endif
+
+#define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
