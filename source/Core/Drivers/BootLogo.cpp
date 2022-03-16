@@ -14,7 +14,6 @@ void BootLogo::handleShowingLogo(const uint8_t *ptrLogoArea) {
   OLED::clearScreen();
   OLED::refresh();
 }
-
 void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
 
   OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t *)(ptrLogoArea + 4));
@@ -25,6 +24,9 @@ void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
 }
 
 void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
+  if (getSettingValue(SettingsOptions::LOGOTime) == 0) {
+    return;
+  }
   // New logo format (a) fixes long standing byte swap quirk and (b) supports animation
   uint8_t interFrameDelay = ptrLogoArea[0];
   OLED::clearScreen();
@@ -36,6 +38,11 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
 
     int len = (showNewFrame(ptrLogoArea + position));
     OLED::refresh();
+    
+    // At end of animation
+    if (len == 0) {
+      goto wait;
+    }
     position += len;
     buttons = getButtonState();
 
@@ -46,16 +53,10 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
 
     if (interFrameDelay) {
       osDelay(interFrameDelay * 5);
-    } else {
-      // Delay here until button is pressed or its been the amount of seconds set by the user
-      waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
-      return;
-    }
-    // If this was an early exit; bail now
-    if (len == 0) {
-      return;
     }
   } while (position < 1022); // 1024 less the header type byte and the inter-frame-delay
+  // Delay here until button is pressed or its been the amount of seconds set by the user
+  wait: waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
 }
 int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
   uint8_t length = ptrLogoArea[0];
