@@ -200,7 +200,7 @@
       "desc": "Invertiert die Farben des OLED-Displays"
     },
     "LOGOTime": {
-      "text2": ["Startlogo", "Anzeigedauer"],
+      "text2": ["Startlogo", "Dauer"],
       "desc": "Legt die Dauer der Anzeige des Startlogos fest (S=Sekunden)"
     }
   }
