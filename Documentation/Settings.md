@@ -109,7 +109,7 @@ On device help text:
 
 Temperature used in "boost mode"
 
-### Setting: Heat on power up
+### Setting: Start-up behavior
 
 When the device powers up, should it enter into a special mode. These settings set it to either start into soldering mode, sleeping mode or auto mode (Enters into soldering mode on the first movement).
 
@@ -133,7 +133,7 @@ On device help text:
 
 Start tip temperature offset calibration
 
-### Setting: Factory reset?
+### Setting: Reset to factory settings?
 
 Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
 
@@ -189,7 +189,7 @@ On device help text:
 
 Maximum power the iron can use (W=watt)
 
-### Setting: Reverse + - keys
+### Setting: Swap + - keys
 
 Swaps which button increments and decrements on temperature change screens.
 
