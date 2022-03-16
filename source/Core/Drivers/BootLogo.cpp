@@ -14,6 +14,7 @@ void BootLogo::handleShowingLogo(const uint8_t *ptrLogoArea) {
   OLED::clearScreen();
   OLED::refresh();
 }
+
 void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
 
   OLED::drawAreaSwapped(0, 0, 96, 16, (uint8_t *)(ptrLogoArea + 4));
