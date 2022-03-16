@@ -117,7 +117,7 @@ On device help text:
 
 O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved
 
-### Setting: Cooldown blink
+### Setting: Cooldown flashing
 
 If the idle screen should blink the tip temperature for attention while the tip is over 50°C. Intended as a 'tip is still hot' warning.
 
@@ -285,7 +285,7 @@ On device help text:
 
 Current firmware language
 
-### Setting: Screen contrast
+### Setting: Screen brightness
 
 Display brightness. Higher values age the OLED faster due to burn-in. (However, it is notable that most of these screens die from other causes first.)
 
@@ -300,3 +300,13 @@ Inverts the entire OLED.
 On device help text:
 
 Invert the colours of the OLED screen
+
+### Setting: Boot logo duration
+
+Sets the duration of the boot logo from 1 second to 4 seconds.
+- For static images this sets the time the logo is displayed for.
+- For animations this sets the time the last frame is displayed for after the animation has been played.
+
+On device help text:
+
+Sets the duration for the boot logo (S=seconds)
