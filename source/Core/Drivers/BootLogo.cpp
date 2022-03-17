@@ -46,9 +46,13 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     if (interFrameDelay) {
       osDelay(interFrameDelay * 5);
     }
-  } while (position < 1022 && len > 0 && buttons == BUTTON_NONE); // 1024 less the header type byte and the inter-frame-delay
-  // Delay here until button is pressed or its been the amount of seconds set by the user
-  waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+    // 1024 less the header type byte and the inter-frame-delay
+    if (getSettingValue(SettingsOptions::LOGOTime) < 5 && (position == 1022 || len == 0)) {
+      // Delay here until button is pressed or its been the amount of seconds set by the user
+      waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+      return;
+    }
+  } while (buttons == BUTTON_NONE);
 }
 int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
   uint8_t length = ptrLogoArea[0];
