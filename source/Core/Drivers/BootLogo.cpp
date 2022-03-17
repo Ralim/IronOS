@@ -35,9 +35,9 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
 
   // Now draw in the frames
   int position = 1;
+  int len = (showNewFrame(ptrLogoArea + position));
   do {
 
-    int len = (showNewFrame(ptrLogoArea + position));
     OLED::refresh();
     position += len;
     buttons = getButtonState();
