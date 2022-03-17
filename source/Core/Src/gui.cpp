@@ -773,12 +773,13 @@ static void settings_displayInvertColor(void) {
 }
 
 static void settings_displayLogoTime(void) {
+  printShortDescription(SettingsItemIndex::LOGOTime, 5);
   if (getSettingValue(SettingsOptions::LOGOTime) == 0) {
-    printShortDescription(SettingsItemIndex::LOGOTime, 5);
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
+  } else if (getSettingValue(SettingsOptions::LOGOTime) == 5) {
+    OLED::drawArea(OLED_WIDTH - 24 - 2, 0, 24, 16, infinityIcon);
   } else {
-    printShortDescription(SettingsItemIndex::LOGOTime, 6);
-    OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 1, FontStyle::LARGE);
+    OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 2, FontStyle::LARGE);
     OLED::print(SymbolSeconds, FontStyle::LARGE);
   }
 }
