@@ -39,25 +39,15 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
 
     int len = (showNewFrame(ptrLogoArea + position));
     OLED::refresh();
-    
-    // At end of animation
-    if (len == 0) {
-      goto wait;
-    }
     position += len;
     buttons = getButtonState();
-
-    // Button pressed
-    if (buttons != BUTTON_NONE) {
-      return;
-    }
 
     if (interFrameDelay) {
       osDelay(interFrameDelay * 5);
     }
-  } while (position < 1022); // 1024 less the header type byte and the inter-frame-delay
+  } while (position < 1022 && len > 0 && buttons == BUTTON_NONE); // 1024 less the header type byte and the inter-frame-delay
   // Delay here until button is pressed or its been the amount of seconds set by the user
-  wait: waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+  waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
 }
 int BootLogo::showNewFrame(const uint8_t *ptrLogoArea) {
   uint8_t length = ptrLogoArea[0];
