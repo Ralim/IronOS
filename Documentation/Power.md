@@ -13,7 +13,7 @@ Combining these two gives the common equation, power is `Volts (V) squared / Res
 The resistance of the tip is fixed, ~7.5 ohms for the TS100/Pinecil and ~4.5 ohms for the TS80(P).
 
 This means that for both irons, the power delivered to the soldering tip is proportional to the voltage used, squared.
-This is why the TS100 performs poorly when run off 12V power supplies.
+This is why the TS100 performs poorly when run off 12 V power supplies.
 
 ## Output Control & Regulation
 

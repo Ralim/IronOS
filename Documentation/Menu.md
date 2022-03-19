@@ -22,7 +22,7 @@ Scrolling through the submenu will return you back to its entry location after y
 
 ### Calibrating input voltage
 
-Due to the tolerance on the resistors used for the input voltage divider, some irons can be up to 0.6V out on the voltage measurement.
+Due to the tolerance on the resistors used for the input voltage divider, some irons can be up to 0.6 V out on the voltage measurement.
 Please calibrate your iron if you have any issues with the cutoff voltage.
 Note that cutoff messages can also be triggered by using a power supply that is too weak and fails under the load of the iron.
 
