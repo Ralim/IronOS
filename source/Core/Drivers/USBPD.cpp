@@ -67,7 +67,19 @@ bool USBPowerDelivery::fusbPresent() {
   return detectionState == 1;
 }
 
-bool USBPowerDelivery::isVBUSConnected() { return fusb.isVBUSConnected(); }
+bool USBPowerDelivery::isVBUSConnected() {
+  static uint8_t state = 0;
+  if (state) {
+    return state == 1;
+  }
+  if (fusb.isVBUSConnected()) {
+    state = 1;
+    return true;
+  } else {
+    state = 2;
+    return false;
+  }
+}
 
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
 
