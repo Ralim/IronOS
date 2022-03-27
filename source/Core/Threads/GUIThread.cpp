@@ -797,6 +797,48 @@ void showDebugMenu(void) {
   }
 }
 
+#ifdef POW_PD
+static void showPDDebug(void) {
+  // Print out the USB-PD state
+  // Basically this is like the Debug menu, but instead we want to print out the PD status
+  uint8_t     screen = 0;
+  ButtonState b;
+  for (;;) {
+    OLED::clearScreen();                                // Ensure the buffer starts clean
+    OLED::setCursor(0, 0);                              // Position the cursor at the 0,0 (top left)
+    OLED::print(SymbolVersionNumber, FontStyle::SMALL); // Print Title
+    OLED::setCursor(0, 8);                              // second line
+    if (screen == 0) {
+      // Print the PD state machine
+      OLED::printNumber(USBPowerDelivery::getStateNumber())
+    } else {
+      // Print out the Proposed power options one by one
+      auto    lastCaps = USBPowerDelivery::getLastSeenCapabilities();
+      uint8_t numobj   = PD_NUMOBJ_GET(lastCaps);
+      if ((screen - 1) < numobj) {
+        int voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[screen - 1])); // voltage in mV units
+        int current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[screen - 1]);            // current in 10mA units
+
+        // print out this entry of the proposal
+        OLED::printNumber(screen); // print the entry number
+        // TODO: put a gap
+        OLED::printNumber(voltage_mv / 1000);   // print the voltage
+        OLED::printNumber(current_a_x100 / 10); // print the current in 0.1A res
+      } else {
+        screen = 0;
+      }
+    }
+
+    OLED::refresh();
+    if (b == BUTTON_B_SHORT)
+      return;
+    else if (b == BUTTON_F_SHORT) {
+      screen++;
+    }
+    GUIDelay();
+  }
+}
+#endif
 void showWarnings() {
   // Display alert if settings were reset
   if (settingsWereReset) {
@@ -898,8 +940,12 @@ void startGUITask(void const *argument) {
       showDebugMenu();
       break;
     case BUTTON_F_LONG:
+#ifdef POW_PD
+      showPDDebug();
+#else
       gui_solderingTempAdjust();
       saveSettings();
+#endif
       break;
     case BUTTON_F_SHORT:
       if (!isTipDisconnected()) {

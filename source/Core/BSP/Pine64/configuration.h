@@ -153,3 +153,5 @@
 #endif
 
 #define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
+
+#define HAS_POWER_DEBUG_MENU

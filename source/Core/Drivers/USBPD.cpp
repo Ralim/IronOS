@@ -80,9 +80,11 @@ bool USBPowerDelivery::isVBUSConnected() {
     return false;
   }
 }
+pd_msg  lastCapabilities;
+pd_msg *USBPowerDelivery::getLastSeenCapabilities() { return &lastCapabilities }
 
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
-
+  memcpy(&lastCapabilities, capabilities, sizeof(pd_msg));
   /* Get the number of PDOs */
   uint8_t numobj = PD_NUMOBJ_GET(capabilities);
 
