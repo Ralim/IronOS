@@ -2,10 +2,12 @@
 #define FREERTOS_CONFIG_H
 #include "nuclei_sdk_soc.h"
 #include <stdint.h>
+#define configISR_STACK_SIZE_WORDS              1024
+#define configCLINT_BASE_ADDRESS                0
 #define configUSE_PREEMPTION                    1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
 #define configUSE_TICKLESS_IDLE                 0
-#define configCPU_CLOCK_HZ                      ((uint32_t)SystemCoreClock)
+#define configCPU_CLOCK_HZ                      (108000000U / 4)
 #define configRTC_CLOCK_HZ                      ((uint32_t)32768)
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
 #define configMAX_PRIORITIES                    (4)

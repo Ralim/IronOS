@@ -8,6 +8,7 @@
 #include "IRQ.h"
 #include "Pins.h"
 #include "configuration.h"
+#include "main.hpp"
 volatile uint8_t  i2c_read_process  = 0;
 volatile uint8_t  i2c_write_process = 0;
 volatile uint8_t  i2c_slave_address = 0;

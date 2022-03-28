@@ -177,3 +177,5 @@ fabric.properties
 CoreCompileInputs.cache
 .vscode/settings.json
 source/compile_commands.json
+source/build/
+source/null.cpp

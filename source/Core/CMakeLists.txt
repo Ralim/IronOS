@@ -1,0 +1,6 @@
+add_subdirectory(brieflz)
+add_subdirectory(BSP)
+add_subdirectory(Drivers)
+add_subdirectory(LangSupport)
+add_subdirectory(Src)
+add_subdirectory(Threads)

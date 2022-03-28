@@ -52,7 +52,7 @@ MINIWARE_INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx
 MINIWARE_CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
 MINIWARE_HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
 MINIWARE_HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
-MINIWARE_STARTUP_DIR = ./Startup
+MINIWARE_STARTUP_DIR = ./Core/BSP/Miniware
 MINIWARE_INC_DIR = ./Core/BSP/Miniware
 MINIWARE_LD_FILE = ./Core/BSP/Miniware/stm32f103.ld
 
@@ -60,7 +60,7 @@ MHP30_INC_CMSIS_DEVICE = ./Core/BSP/MHP30/Vendor/CMSIS/Device/ST/STM32F1xx/Inclu
 MHP30_CMSIS_CORE_INC_DIR = ./Core/BSP/MHP30/Vendor/CMSIS/Include
 MHP30_HAL_INC_DIR = ./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc
 MHP30_HAL_LEGACY_INC_DIR = ./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
-MHP30_STARTUP_DIR = ./Startup
+MHP30_STARTUP_DIR = ./Core/BSP/MHP30
 MHP30_INC_DIR = ./Core/BSP/MHP30
 MHP30_LD_FILE = ./Core/BSP/MHP30/stm32f103.ld
 
@@ -71,8 +71,8 @@ PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
 
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
-FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
-FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
+FRTOS_CMIS_INC_DIR = ./Middlewares/FreeRTOS/Source/CMSIS_RTOS
+FRTOS_INC_DIR = ./Middlewares/FreeRTOS/Source/include
 DRIVER_INC_DIR =./Core/Drivers
 BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
