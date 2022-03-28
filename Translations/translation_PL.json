@@ -4,25 +4,15 @@
   "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Kalibracja udana!",
     "SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnęła temperaturę pokojową!",
     "SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
     "UVLOWarningString": "NIS. NAP",
     "UndervoltageString": "Zbyt niskie nap.",
     "InputVoltageString": "Nap. wej.:",
-    "WarningTipTempString": "Temp. grotu:",
-    "BadTipString": "ZŁY GROT",
     "SleepingSimpleString": "Zzz!",
     "SleepingAdvancedString": "Tr. uśpienia",
-    "WarningSimpleString": "HOT!",
-    "WarningAdvancedString": "GORĄCA KOŃCÓWKA!",
     "SleepingTipAdvancedString": "Grot:",
-    "IdleTipString": "Grot:",
-    "IdleSetString": " Ust:",
-    "TipDisconnectedString": "GROT ODŁĄCZONY",
-    "SolderingAdvancedPowerPrompt": "Moc: ",
-    "OffString": "Wył",
-    "YourGainMessage": "Us.zysk:"
+    "OffString": "Wył"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
@@ -52,8 +42,7 @@
     "SettingSensitivityHigh": "W",
     "SettingLockDisableChar": "W",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "P",
-    "SettingNAChar": "N/D"
+    "SettingLockFullChar": "P"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -188,7 +177,7 @@
     },
     "AnimSpeed": {
       "text2": ["Prędkosć", "animacji"],
-      "desc": "Prędkość animacji ikon w menu (O: wył. | L: mała | M: średnia | H: duża)"
+      "desc": "Prędkość animacji ikon w menu (O: wył. | W: mała | M: średnia | S: duża)"
     },
     "PowerPulseWait": {
       "text2": ["Czas między", "imp. mocy"],

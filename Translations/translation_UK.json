@@ -3,25 +3,15 @@
   "languageLocalName": "Українська",
   "fonts": ["ascii_basic", "latin_extended", "cyrillic"],
   "messages": {
-    "SettingsCalibrationDone": "Калібрування виконане!",
     "SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",
     "SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",
     "UVLOWarningString": "АККУМ--",
     "UndervoltageString": "Низька напруга",
     "InputVoltageString": "Жив.(B): ",
-    "WarningTipTempString": "Жало t°: ",
-    "BadTipString": "ЖАЛО--",
     "SleepingSimpleString": "ZzZzz",
     "SleepingAdvancedString": "Очікування...",
-    "WarningSimpleString": "ГАРЯЧЕ!",
-    "WarningAdvancedString": "!!! ГАРЯЧЕ !!!\n!!! ЖАЛО !!!",
     "SleepingTipAdvancedString": "Жало:",
-    "IdleTipString": "Жало:",
-    "IdleSetString": " ->",
-    "TipDisconnectedString": "Жало вимкнено!",
-    "SolderingAdvancedPowerPrompt": "Живлення: ",
-    "OffString": "Вимк",
-    "YourGainMessage": "Приріст:"
+    "OffString": "Вимк"
   },
   "messagesWarn": {
     "ResetOKMessage": "Скид. OK",
@@ -38,9 +28,9 @@
     "SettingLeftChar": "Л",
     "SettingAutoChar": "A",
     "SettingOffChar": "B",
-    "SettingSlowChar": "П",
+    "SettingSlowChar": "Н",
     "SettingMediumChar": "M",
-    "SettingFastChar": "Ш",
+    "SettingFastChar": "М",
     "SettingStartNoneChar": "В",
     "SettingStartSolderingChar": "П",
     "SettingStartSleepChar": "О",
@@ -51,8 +41,7 @@
     "SettingSensitivityHigh": "М",
     "SettingLockDisableChar": "В",
     "SettingLockBoostChar": "Т",
-    "SettingLockFullChar": "П",
-    "SettingNAChar": "Н/Д"
+    "SettingLockFullChar": "П"
   },
   "menuGroups": {
     "PowerMenu": {

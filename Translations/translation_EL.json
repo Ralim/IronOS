@@ -12,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Υπνος...",
     "SleepingTipAdvancedString": "Μύτη:",
-    "IdleTipString": "Μύτη:",
-    "IdleSetString": " Set:",
-    "TipDisconnectedString": "ΧΩΡΙΣ ΜΥΤΗ",
-    "SolderingAdvancedPowerPrompt": "Ενέργεια: ",
     "OffString": "Απ."
   },
   "messagesWarn": {
@@ -46,8 +42,7 @@
     "SettingSensitivityHigh": "Υ",
     "SettingLockDisableChar": "Α",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "Π",
-    "SettingNAChar": "Δ/Δ"
+    "SettingLockFullChar": "Π"
   },
   "menuGroups": {
     "PowerMenu": {

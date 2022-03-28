@@ -3,25 +3,15 @@
   "languageLocalName": "Türkçe",
   "fonts": ["ascii_basic", "latin_extended"],
   "messages": {
-    "SettingsCalibrationDone": "Kalibrasyon tamamlandı!",
     "SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
     "SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",
     "UVLOWarningString": "Güç Az",
     "UndervoltageString": "Düşük Voltaj",
     "InputVoltageString": "Giriş V: ",
-    "WarningTipTempString": "Uç Sıcaklığı: ",
-    "BadTipString": "KÖTÜ UÇ",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Bekleme Modu ...",
-    "WarningSimpleString": "SICAK!",
-    "WarningAdvancedString": "UYARI! UÇ SICAK!",
     "SleepingTipAdvancedString": "Uç:",
-    "IdleTipString": "Uç:",
-    "IdleSetString": " Ayarla:",
-    "TipDisconnectedString": "UÇ ÇIKARILDI",
-    "SolderingAdvancedPowerPrompt": "Güç: ",
-    "OffString": "Kapalı",
-    "YourGainMessage": "Kazancınız:"
+    "OffString": "Kapalı"
   },
   "messagesWarn": {
     "ResetOKMessage": ["Sıfırlama Tamam", ""],
@@ -51,8 +41,7 @@
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -182,12 +171,12 @@
       "desc": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
     },
     "HallEffSensitivity": {
-      "text2": ["Hall Eff", "Sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+      "text2": ["Hall sensor", "sensitivity"],
+      "desc": "Sensitivity of the Hall effect sensor to detect sleep (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
     },
     "LockingMode": {
-      "text2": ["Allow buttons", "locking"],
-      "desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+      "text2": ["Allow locking", "buttons"],
+      "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
     },
     "MinVolCell": {
       "text2": ["Minimum", "voltage"],
@@ -195,15 +184,15 @@
     },
     "AnimLoop": {
       "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in root menu"
+      "desc": "Loop icon animations in main menu"
     },
     "AnimSpeed": {
       "text2": ["Anim.", "speed"],
-      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+      "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+      "text2": ["Power pulse", "delay"],
+      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
@@ -214,11 +203,11 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
     },
     "LOGOTime": {

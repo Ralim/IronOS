@@ -3,23 +3,14 @@
   "languageLocalName": "Suomi",
   "fonts": ["ascii_basic", "latin_extended"],
   "messages": {
-    "SettingsCalibrationDone": "Kalibrointi tehty!",
     "SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",
     "SettingsResetWarning": "Haluatko varmasti palauttaa oletusarvot?",
     "UVLOWarningString": "DC ALH.",
     "UndervoltageString": "Alijännite",
     "InputVoltageString": "Jännite: ",
-    "WarningTipTempString": "Kärjet lämpö: ",
-    "BadTipString": "PAHA KÄRJET",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Lepotila...",
-    "WarningSimpleString": "KUUMA!",
-    "WarningAdvancedString": "!!! KUUMA KÄRJET !!!",
     "SleepingTipAdvancedString": "Kärki:",
-    "IdleTipString": "Pää:",
-    "IdleSetString": "Aseta:",
-    "TipDisconnectedString": "KÄRKI PUUTTUU",
-    "SolderingAdvancedPowerPrompt": "Teho: ",
     "OffString": "Off"
   },
   "messagesWarn": {
@@ -37,9 +28,9 @@
     "SettingLeftChar": "V",
     "SettingAutoChar": "A",
     "SettingOffChar": "P",
-    "SettingSlowChar": "H",
+    "SettingSlowChar": "A",
     "SettingMediumChar": "M",
-    "SettingFastChar": "N",
+    "SettingFastChar": "S",
     "SettingStartNoneChar": "E",
     "SettingStartSolderingChar": "J",
     "SettingStartSleepChar": "L",
@@ -50,8 +41,7 @@
     "SettingSensitivityHigh": "S",
     "SettingLockDisableChar": "P",
     "SettingLockBoostChar": "V",
-    "SettingLockFullChar": "K",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "K"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -201,11 +191,11 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
     },
     "LOGOTime": {

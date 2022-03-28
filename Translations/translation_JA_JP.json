@@ -12,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Sleeping...",
     "SleepingTipAdvancedString": "Tip:",
-    "IdleTipString": "Tip:",
-    "IdleSetString": " Set:",
-    "TipDisconnectedString": "NO TIP",
-    "SolderingAdvancedPowerPrompt": "Power: ",
     "OffString": "オフ"
   },
   "messagesWarn": {
@@ -46,8 +42,7 @@
     "SettingSensitivityHigh": "高",
     "SettingLockDisableChar": "×",
     "SettingLockBoostChar": "ブ",
-    "SettingLockFullChar": "全",
-    "SettingNAChar": "非適用"
+    "SettingLockFullChar": "全"
   },
   "menuGroups": {
     "PowerMenu": {

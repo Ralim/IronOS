@@ -4,25 +4,15 @@
   "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": true,
   "messages": {
-    "SettingsCalibrationDone": "Calibrare completa!",
     "SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful este la temperatura camerei, înainte de a continua!",
     "SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
     "UVLOWarningString": "DC LOW",
     "UndervoltageString": "Sub tensiune",
     "InputVoltageString": "Intrare V: ",
-    "WarningTipTempString": "Temp. varf: ",
-    "BadTipString": "VARF DEFECT",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Adormit...",
-    "WarningSimpleString": "FIERBINTE!",
-    "WarningAdvancedString": "!!! VARF FIERBINTE !!!",
     "SleepingTipAdvancedString": "Tip:",
-    "IdleTipString": "Tip:",
-    "IdleSetString": " Set:",
-    "TipDisconnectedString": "FĂRĂ VARF",
-    "SolderingAdvancedPowerPrompt": "Putere: ",
-    "OffString": "Nu",
-    "YourGainMessage": "Coeficient:"
+    "OffString": "Nu"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
@@ -52,8 +42,7 @@
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -188,7 +177,7 @@
     },
     "AnimSpeed": {
       "text2": ["Animatii", "viteză"],
-      "desc": "Ritmul animatiilor pictogramei din meniu (O=oprit | S=încet | M=mediu | F=rapid)"
+      "desc": "Ritmul animatiilor pictogramei din meniu (O=oprit | Î=încet | M=mediu | R=rapid)"
     },
     "PowerPulseWait": {
       "text2": ["Întârziere", "puls putere"],

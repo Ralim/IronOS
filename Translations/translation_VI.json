@@ -1,10 +1,7 @@
 {
   "languageCode": "VI",
   "languageLocalName": "Tieng Viet",
-  "fonts": [
-  "ascii_basic",
-    "latin_extended"
-  ],
+  "fonts": ["ascii_basic", "latin_extended"],
   "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Chac chan mui hàn o nhiet đo phòng truoc khi tiep tuc!",

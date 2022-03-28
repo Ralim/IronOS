@@ -12,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Ожидание...",
     "SleepingTipAdvancedString": "Жало:",
-    "IdleTipString": "Жало:",
-    "IdleSetString": " ->",
-    "TipDisconnectedString": "ЖАЛО ОТСОЕДИНЕНО",
-    "SolderingAdvancedPowerPrompt": "Питание: ",
     "OffString": "Вык"
   },
   "messagesWarn": {
@@ -46,8 +42,7 @@
     "SettingSensitivityHigh": "В",
     "SettingLockDisableChar": "О",
     "SettingLockBoostChar": "Т",
-    "SettingLockFullChar": "П",
-    "SettingNAChar": "Н/Д"
+    "SettingLockFullChar": "П"
   },
   "menuGroups": {
     "PowerMenu": {

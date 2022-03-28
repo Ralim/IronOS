@@ -11,10 +11,6 @@
     "SleepingSimpleString": "Zzz ",
     "SleepingAdvancedString": "Riposo",
     "SleepingTipAdvancedString": "Punta:",
-    "IdleTipString": "T punta:",
-    "IdleSetString": "/",
-    "TipDisconnectedString": "PUNTA ASSENTE",
-    "SolderingAdvancedPowerPrompt": "Potenz:",
     "OffString": "OFF"
   },
   "messagesWarn": {
@@ -45,8 +41,7 @@
     "SettingSensitivityHigh": "A",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "C",
-    "SettingNAChar": " NA"
+    "SettingLockFullChar": "C"
   },
   "menuGroups": {
     "PowerMenu": {
