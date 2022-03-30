@@ -133,13 +133,13 @@ On device help text:
 
 Start tip temperature offset calibration
 
-### Setting: Reset to factory settings?
+### Setting: Restore factory settings?
 
 Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
 
 On device help text:
 
-Reset settings to default
+Reset all settings to default
 
 ### Setting: Calibrate input voltage?
 
