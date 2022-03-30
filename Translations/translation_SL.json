@@ -2,6 +2,7 @@
   "languageCode": "SL",
   "languageLocalName": "Slovenščina",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Pred nadaljevanjem mora biti konica segreta na sobno temperaturo!",
     "SettingsResetWarning": "Res želite ponastaviti na privzete nastavitve?",

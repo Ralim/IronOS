@@ -2,6 +2,7 @@
   "languageCode": "TR",
   "languageLocalName": "Türkçe",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
     "SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",

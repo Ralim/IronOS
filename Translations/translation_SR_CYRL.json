@@ -2,6 +2,7 @@
   "languageCode": "SR_CYRL",
   "languageLocalName": "Српски",
   "fonts": ["ascii_basic", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Проверите да ли је врх охлађен на собну температуру пре него што наставите",
     "SettingsResetWarning": "Да ли заиста желите да вратите поставке на фабричке вредности?",

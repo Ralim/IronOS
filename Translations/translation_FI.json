@@ -2,6 +2,7 @@
   "languageCode": "FI",
   "languageLocalName": "Suomi",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",
     "SettingsResetWarning": "Haluatko varmasti palauttaa oletusarvot?",

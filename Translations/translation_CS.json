@@ -2,6 +2,7 @@
   "languageCode": "CS",
   "languageLocalName": "Český",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Ujistěte se, že hrot má pokojovou teplotu!",
     "SettingsResetWarning": "Opravdu chcete resetovat zařízení do továrního nastavení?",

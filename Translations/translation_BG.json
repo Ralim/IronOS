@@ -2,6 +2,7 @@
   "languageCode": "BG",
   "languageLocalName": "Български",
   "fonts": ["ascii_basic", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Уверете се, че върха на поялника е със стайна температура преди да продължите!",
     "SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",

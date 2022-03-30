@@ -2,6 +2,7 @@
   "languageCode": "ES",
   "languageLocalName": "Castellano",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "¡Asegúrate que la punta esté a temperatura ambiente antes de empezar!",
     "SettingsResetWarning": "¿Quieres restablecer los ajustes?",

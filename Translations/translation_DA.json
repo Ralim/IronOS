@@ -2,6 +2,7 @@
   "languageCode": "DA",
   "languageLocalName": "Dansk",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!",
     "SettingsResetWarning": "Are you sure to reset settings to default values?",
@@ -115,7 +116,7 @@
       "desc": "kalibrere spids temperatur."
     },
     "SettingsReset": {
-      "text2": ["Reset to factory", "settings?"],
+      "text2": ["Restore factory", "settings?"],
       "desc": "Gendan alle indstillinger"
     },
     "VoltageCalibration": {

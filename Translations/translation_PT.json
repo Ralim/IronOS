@@ -2,6 +2,7 @@
   "languageCode": "PT",
   "languageLocalName": "Português",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "A ponta deve estar à temperatura ambiente antes de continuar!",
     "SettingsResetWarning": "Definições de fábrica?",

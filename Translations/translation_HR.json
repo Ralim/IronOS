@@ -2,6 +2,7 @@
   "languageCode": "HR",
   "languageLocalName": "Hrvatski",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
     "SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",

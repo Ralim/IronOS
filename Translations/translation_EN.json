@@ -116,8 +116,8 @@
       "desc": "Start tip temperature offset calibration"
     },
     "SettingsReset": {
-      "text2": ["Reset to factory", "settings?"],
-      "desc": "Reset settings to default"
+      "text2": ["Restore factory", "settings?"],
+      "desc": "Reset all settings to default"
     },
     "VoltageCalibration": {
       "text2": ["Calibrate", "input voltage?"],

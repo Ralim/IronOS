@@ -2,6 +2,7 @@
   "languageCode": "SV",
   "languageLocalName": "Svenska",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Se till att spetsen är rumstemererad innan du fortsätter!",
     "SettingsResetWarning": "Är du säker på att du vill återställa inställningarna?",

@@ -2,6 +2,7 @@
   "languageCode": "UK",
   "languageLocalName": "Українська",
   "fonts": ["ascii_basic", "latin_extended", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",
     "SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",

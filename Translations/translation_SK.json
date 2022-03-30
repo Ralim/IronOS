@@ -2,6 +2,7 @@
   "languageCode": "SK",
   "languageLocalName": "Slovenčina",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Najprv sa prosím uistite, že hrot má izbovú teplotu!",
     "SettingsResetWarning": "Naozaj chcete obnoviť továrenské nastavenia?",

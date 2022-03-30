@@ -2,6 +2,7 @@
   "languageCode": "BE",
   "languageLocalName": "Беларуская",
   "fonts": ["ascii_basic", "latin_extended", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Перад тым, як працягнуць, каліласка, упэўнецеся, што джала мае комнатную тэмпературу!",
     "SettingsResetWarning": "Вы ўпэннены, што жадаеце зкінуць налады да першапачатковых значэнняў?",

@@ -2,6 +2,7 @@
   "languageCode": "NL_BE",
   "languageLocalName": "Vlaams",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Zorg vooraf dat de punt op kamertemperatuur is!",
     "SettingsResetWarning": "Ben je zeker dat je alle standaardwaarden wil resetten?",
