@@ -99,10 +99,6 @@
       "text2": ["GRNYÖN", ""],
       "desc": "Görüntü Yönlendirme (R=Sağlak | L=Solak | A=Otomatik)"
     },
-    "BoostEnabled": {
-      "text2": ["YÜKPER", ""],
-      "desc": "Lehimleme yaparken ön tuşa basmak anlık sıcaklık yükselişi sağlar. (450C)"
-    },
     "BoostTemperature": {
       "text2": ["YKSC", ""],
       "desc": "Yüksek Performans Modu Sıcaklığı"
@@ -142,14 +138,6 @@
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
       "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-    },
-    "PowerInput": {
-      "text2": ["Güç", "Miktarı(W)"],
-      "desc": "Kullanılan adaptörün watt biriminden güç miktarı"
-    },
-    "PowerLimitEnable": {
-      "text2": ["P Limit", "Enable"],
-      "desc": "Güç sınırlamayı aç"
     },
     "PowerLimit": {
       "text2": ["Power", "Limit"],
