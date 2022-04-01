@@ -27,20 +27,20 @@
   "characters": {
     "SettingRightChar": "R",
     "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "O",
-    "SettingSlowChar": "S",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "F",
+    "SettingAutoChar": "O",
+    "SettingOffChar": "K",
+    "SettingSlowChar": "Y",
+    "SettingMediumChar": "O",
+    "SettingFastChar": "H",
     "SettingStartNoneChar": "K",
     "SettingStartSolderingChar": "L",
     "SettingStartSleepChar": "U",
-    "SettingStartSleepOffChar": "O",
-    "SettingSensitivityOff": "O",
+    "SettingStartSleepOffChar": "S",
+    "SettingSensitivityOff": "K",
     "SettingSensitivityLow": "L",
-    "SettingSensitivityMedium": "M",
+    "SettingSensitivityMedium": "O",
     "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "D",
+    "SettingLockDisableChar": "K",
     "SettingLockBoostChar": "B",
     "SettingLockFullChar": "F"
   },
@@ -97,7 +97,7 @@
     },
     "DisplayRotation": {
       "text2": ["GRNYÖN", ""],
-      "desc": "Görüntü Yönlendirme (R=Sağlak | L=Solak | A=Otomatik)"
+      "desc": "Görüntü Yönlendirme (R=Sağlak | L=Solak | O=Otomatik)"
     },
     "BoostTemperature": {
       "text2": ["YKSC", ""],
@@ -105,7 +105,7 @@
     },
     "AutoStart": {
       "text2": ["OTOBAŞ", ""],
-      "desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | O=Uyku Modu Oda Sıcaklığı)"
+      "desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
     },
     "CooldownBlink": {
       "text2": ["SĞGÖST", ""],
@@ -129,34 +129,34 @@
     },
     "ScrollingSpeed": {
       "text2": ["YZKYHZ", ""],
-      "desc": "Bu yazının kayma hızı (S=Yavaş | F=Hızlı)"
+      "desc": "Bu yazının kayma hızı (Y=Yavaş | H=Hızlı)"
     },
     "QCMaxVoltage": {
       "text2": ["QC", "voltage"],
-      "desc": "Desired max QC Voltage negotiated for"
+      "desc": "Max QC voltage the iron should negotiate for"
     },
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
     },
     "PowerLimit": {
       "text2": ["Power", "limit"],
       "desc": "Havyanın kullanacağı en yüksek güç (Watts)"
     },
     "ReverseButtonTempChange": {
-      "text2": ["Key +-", "reverse?"],
+      "text2": ["Swap", "+ - keys"],
       "desc": "\"Düğme Yerleri Rotasyonu\" Sıcaklık ayar düğmelerinin yerini değiştirin"
     },
     "TempChangeShortStep": {
-      "text2": ["Temp change", "short?"],
+      "text2": ["Temp change", "short"],
       "desc": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
     },
     "TempChangeLongStep": {
-      "text2": ["Temp change", "long?"],
+      "text2": ["Temp change", "long"],
       "desc": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
     },
     "PowerPulsePower": {
-      "text2": ["Power", "Pulse W"],
+      "text2": ["Power", "pulse"],
       "desc": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
     },
     "HallEffSensitivity": {
@@ -165,7 +165,7 @@
     },
     "LockingMode": {
       "text2": ["Allow locking", "buttons"],
-      "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+      "desc": "While soldering, hold down both buttons to toggle locking them (K=Kapalı | B=boost mode only | F=full locking)"
     },
     "MinVolCell": {
       "text2": ["Minimum", "voltage"],
@@ -177,7 +177,7 @@
     },
     "AnimSpeed": {
       "text2": ["Anim.", "speed"],
-      "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+      "desc": "Pace of icon animations in menu (K=Kapalı | Y=Yavaş | O=Orta | H=Hızlı)"
     },
     "PowerPulseWait": {
       "text2": ["Power pulse", "delay"],
