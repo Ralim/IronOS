@@ -132,7 +132,7 @@
       "desc": "Bu yazının kayma hızı (S=Yavaş | F=Hızlı)"
     },
     "QCMaxVoltage": {
-      "text2": ["QC", "Voltage"],
+      "text2": ["QC", "voltage"],
       "desc": "Desired max QC Voltage negotiated for"
     },
     "PDNegTimeout": {
@@ -140,7 +140,7 @@
       "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
     },
     "PowerLimit": {
-      "text2": ["Power", "Limit"],
+      "text2": ["Power", "limit"],
       "desc": "Havyanın kullanacağı en yüksek güç (Watts)"
     },
     "ReverseButtonTempChange": {
