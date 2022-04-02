@@ -1321,10 +1321,10 @@ HAL_StatusTypeDef HAL_TIM_PWM_Start(TIM_HandleTypeDef *htim, uint32_t Channel) {
   /* Enable the Capture compare channel */
   TIM_CCxChannelCmd(htim->Instance, Channel, TIM_CCx_ENABLE);
 
-  if (IS_TIM_BREAK_INSTANCE(htim->Instance) != RESET) {
-    /* Enable the main output */
-    __HAL_TIM_MOE_ENABLE(htim);
-  }
+  // if (IS_TIM_BREAK_INSTANCE(htim->Instance) != RESET) {
+  //   /* Enable the main output */
+  //   __HAL_TIM_MOE_ENABLE(htim);
+  // }
 
   /* Enable the Peripheral, except in trigger mode where enable is automatically done with trigger */
   if (IS_TIM_SLAVE_INSTANCE(htim->Instance)) {
@@ -3450,39 +3450,6 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
       htim->PeriodElapsedCallback(htim);
 #else
       HAL_TIM_PeriodElapsedCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-    }
-  }
-  /* TIM Break input event */
-  if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_BREAK) != RESET) {
-    if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_BREAK) != RESET) {
-      __HAL_TIM_CLEAR_IT(htim, TIM_IT_BREAK);
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-      htim->BreakCallback(htim);
-#else
-      HAL_TIMEx_BreakCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-    }
-  }
-  /* TIM Trigger detection event */
-  if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_TRIGGER) != RESET) {
-    if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_TRIGGER) != RESET) {
-      __HAL_TIM_CLEAR_IT(htim, TIM_IT_TRIGGER);
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-      htim->TriggerCallback(htim);
-#else
-      HAL_TIM_TriggerCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-    }
-  }
-  /* TIM commutation event */
-  if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_COM) != RESET) {
-    if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_COM) != RESET) {
-      __HAL_TIM_CLEAR_IT(htim, TIM_FLAG_COM);
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-      htim->CommutationCallback(htim);
-#else
-      HAL_TIMEx_CommutCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
     }
   }

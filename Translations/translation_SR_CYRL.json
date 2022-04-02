@@ -2,30 +2,21 @@
   "languageCode": "SR_CYRL",
   "languageLocalName": "Српски",
   "fonts": ["ascii_basic", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Калибрација готова",
     "SettingsCalibrationWarning": "Проверите да ли је врх охлађен на собну температуру пре него што наставите",
     "SettingsResetWarning": "Да ли заиста желите да вратите поставке на фабричке вредности?",
     "UVLOWarningString": "НИЗ.НАП.",
     "UndervoltageString": "ПРЕНИЗАК НАПОН",
     "InputVoltageString": "Ул. напон: ",
-    "WarningTipTempString": "Темп. врха: ",
-    "BadTipString": "ЛОШ ВРХ",
     "SleepingSimpleString": "Сан",
     "SleepingAdvancedString": "Спавање...",
-    "WarningSimpleString": "ВРУЋ",
-    "WarningAdvancedString": "! ОПРЕЗ, ВРУЋЕ !",
     "SleepingTipAdvancedString": "Врх:",
-    "IdleTipString": "Врх:",
-    "IdleSetString": " / ",
-    "TipDisconnectedString": "ВРХ НИЈЕ СПОЈЕН",
-    "SolderingAdvancedPowerPrompt": "Снага: ",
-    "OffString": "Иск",
-    "YourGainMessage": "Your gain:"
+    "OffString": "Иск"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Settings were", "reset!"],
+    "SettingsResetMessage": ["Certain settings", "were changed!"],
     "NoAccelerometerMessage": ["No accelerometer", "detected!"],
     "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
     "LockingKeysString": "LOCKED",
@@ -51,8 +42,7 @@
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -147,35 +137,35 @@
     },
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
     },
     "PowerLimit": {
-      "text2": ["Power", "Limit"],
-      "desc": "Maximum power the iron can use (Watts)"
+      "text2": ["Power", "limit"],
+      "desc": "Maximum power the iron can use (W=watt)"
     },
     "ReverseButtonTempChange": {
-      "text2": ["Key +-", "reverse?"],
-      "desc": "Reverse the tip temperature change buttons plus minus assignment."
+      "text2": ["Swap", "+ - keys"],
+      "desc": "Reverse assignment of buttons for temperature adjustment"
     },
     "TempChangeShortStep": {
-      "text2": ["Temp change", "short?"],
-      "desc": "Temperature change steps on short button press!"
+      "text2": ["Temp change", "short"],
+      "desc": "Temperature-change-increment on short button press"
     },
     "TempChangeLongStep": {
-      "text2": ["Temp change", "long?"],
-      "desc": "Temperature change steps on long button press!"
+      "text2": ["Temp change", "long"],
+      "desc": "Temperature-change-increment on long button press"
     },
     "PowerPulsePower": {
-      "text2": ["Power", "Pulse W"],
-      "desc": "Keep awake pulse power intensity"
+      "text2": ["Power", "pulse"],
+      "desc": "Intensity of power of keep-awake-pulse (watt)"
     },
     "HallEffSensitivity": {
-      "text2": ["Hall Eff", "Sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (0=искључено | 1=најмање осетљиво | ... | 9=најосетљивије)"
+      "text2": ["Hall sensor", "sensitivity"],
+      "desc": "Sensitivity of the Hall effect sensor to detect sleep (0=искључено | 1=најмање осетљиво | ... | 9=најосетљивије)"
     },
     "LockingMode": {
-      "text2": ["Allow buttons", "locking"],
-      "desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+      "text2": ["Allow locking", "buttons"],
+      "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
     },
     "MinVolCell": {
       "text2": ["Minimum", "voltage"],
@@ -183,15 +173,15 @@
     },
     "AnimLoop": {
       "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in root menu"
+      "desc": "Loop icon animations in main menu"
     },
     "AnimSpeed": {
       "text2": ["Anim.", "speed"],
-      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+      "desc": "Pace of icon animations in menu (O=off | С=slow | M=medium | Б=fast)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5с)"
+      "text2": ["Power pulse", "delay"],
+      "desc": "Delay before keep-awake-pulse is triggered (x 2.5с)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
@@ -202,12 +192,16 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

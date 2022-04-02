@@ -2,33 +2,24 @@
   "languageCode": "BG",
   "languageLocalName": "Български",
   "fonts": ["ascii_basic", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Калибрацията завършена!",
     "SettingsCalibrationWarning": "Уверете се, че върха на поялника е със стайна температура преди да продължите!",
     "SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
     "UVLOWarningString": "Ниско DC Напрежение",
     "UndervoltageString": "Ниско Напрежение",
     "InputVoltageString": "Входно V: ",
-    "WarningTipTempString": "Темп.: ",
-    "BadTipString": "ЛОШ ВРЪХ",
     "SleepingSimpleString": "Сън",
     "SleepingAdvancedString": "Хър Хър Хър...",
-    "WarningSimpleString": "ОХ!",
-    "WarningAdvancedString": "ВНИМАНИЕ! ТОПЛО!",
     "SleepingTipAdvancedString": "Връх:",
-    "IdleTipString": "Връх:",
-    "IdleSetString": " Настройка:",
-    "TipDisconnectedString": "ПРЕКЪСНАТ ВРЪХ",
-    "SolderingAdvancedPowerPrompt": "Захранване: ",
-    "OffString": "Изкл.",
-    "YourGainMessage": "Усилване:"
+    "OffString": "Изкл."
   },
   "messagesWarn": {
     "ResetOKMessage": "Нулиране",
     "SettingsResetMessage": ["Настройките бяха", "нулирани!"],
     "NoAccelerometerMessage": ["No accelerometer", "detected!"],
     "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
-    "LockingKeysString": " LOCKED",
+    "LockingKeysString": "LOCKED",
     "UnlockingKeysString": "UNLOCKED",
     "WarningKeysLockedString": "!LOCKED!",
     "WarningThermalRunaway": ["Thermal", "Runaway"]
@@ -45,15 +36,13 @@
     "SettingStartSolderingChar": "Р",
     "SettingStartSleepChar": "С",
     "SettingStartSleepOffChar": "П",
-    "SettingStartNoneChar": "F",
     "SettingSensitivityOff": "O",
     "SettingSensitivityLow": "L",
     "SettingSensitivityMedium": "M",
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -148,7 +137,7 @@
     },
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
     },
     "PowerLimit": {
       "text2": ["Лимит на", "мощност"],
@@ -171,12 +160,12 @@
       "desc": "Поддържане на интензивност на захранващия импулс"
     },
     "HallEffSensitivity": {
-      "text2": ["Hall Eff", "Sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (0=Изключено | 1=Слабо | ... | 9=Силно)"
+      "text2": ["Hall sensor", "sensitivity"],
+      "desc": "Sensitivity of the Hall effect sensor to detect sleep (0=Изключено | 1=Слабо | ... | 9=Силно)"
     },
     "LockingMode": {
-      "text2": ["Allow buttons", "locking"],
-      "desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+      "text2": ["Allow locking", "buttons"],
+      "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
     },
     "MinVolCell": {
       "text2": ["Minimum", "voltage"],
@@ -184,15 +173,15 @@
     },
     "AnimLoop": {
       "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in root menu"
+      "desc": "Loop icon animations in main menu"
     },
     "AnimSpeed": {
       "text2": ["Anim.", "speed"],
-      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+      "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2,5с)"
+      "text2": ["Power pulse", "delay"],
+      "desc": "Delay before keep-awake-pulse is triggered (x 2,5с)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
@@ -203,12 +192,16 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

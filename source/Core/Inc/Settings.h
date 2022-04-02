@@ -49,9 +49,10 @@ enum SettingsOptions {
   PDNegTimeout                   = 32, // PD timeout in 100ms steps
   OLEDInversion                  = 33, // Invert the colours on the display
   OLEDBrightness                 = 34, // Brightness for the OLED display
+  LOGOTime                       = 35, // Duration the logo will be displayed for
 
   //
-  SettingsOptionsLength = 35, //
+  SettingsOptionsLength = 36, //
 };
 
 typedef enum {

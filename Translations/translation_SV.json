@@ -2,6 +2,7 @@
   "languageCode": "SV",
   "languageLocalName": "Svenska",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Se till att spetsen är rumstemererad innan du fortsätter!",
     "SettingsResetWarning": "Är du säker på att du vill återställa inställningarna?",
@@ -11,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Viloläge...",
     "SleepingTipAdvancedString": "Spets:",
-    "IdleTipString": "Spts:",
-    "IdleSetString": " Ang:",
-    "TipDisconnectedString": "SPETS URTAGEN",
-    "SolderingAdvancedPowerPrompt": "Ström: ",
     "OffString": "Av"
   },
   "messagesWarn": {
@@ -45,8 +42,7 @@
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "A",
     "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -184,8 +180,8 @@
       "desc": "Animationshastighet för ikoner i menyer (A=av | L=långsam | M=medel | S=snabb)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+      "text2": ["Power pulse", "delay"],
+      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
@@ -196,12 +192,16 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

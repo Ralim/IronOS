@@ -2,26 +2,17 @@
   "languageCode": "SL",
   "languageLocalName": "Slovenščina",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Kalibracija opravljena!",
     "SettingsCalibrationWarning": "Pred nadaljevanjem mora biti konica segreta na sobno temperaturo!",
     "SettingsResetWarning": "Res želite ponastaviti na privzete nastavitve?",
     "UVLOWarningString": "NIZKA U",
     "UndervoltageString": "Nizka napetost",
     "InputVoltageString": "Vhodna U: ",
-    "WarningTipTempString": "Temp. kon.: ",
-    "BadTipString": "KONICA?",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Spim...",
-    "WarningSimpleString": "VROČ",
-    "WarningAdvancedString": "!!VROČA KONICA!!",
     "SleepingTipAdvancedString": "Konica",
-    "IdleTipString": "Kon:",
-    "IdleSetString": " temp:",
-    "TipDisconnectedString": "NI KONICE",
-    "SolderingAdvancedPowerPrompt": "Moč: ",
-    "OffString": "Off",
-    "YourGainMessage": "Ojačenje"
+    "OffString": "Off"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
@@ -51,8 +42,7 @@
     "SettingSensitivityHigh": "V",
     "SettingLockDisableChar": "O",
     "SettingLockBoostChar": "L",
-    "SettingLockFullChar": "P",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "P"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -183,15 +173,15 @@
     },
     "AnimLoop": {
       "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in root menu"
+      "desc": "Loop icon animations in main menu"
     },
     "AnimSpeed": {
       "text2": ["Anim.", "speed"],
-      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+      "desc": "Pace of icon animations in menu (O=off | P=slow | M=medium | H=fast)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+      "text2": ["Power pulse", "delay"],
+      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
@@ -202,12 +192,16 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

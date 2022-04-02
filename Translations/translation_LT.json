@@ -12,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Miegu...",
     "SleepingTipAdvancedString": "Antg:",
-    "IdleTipString": "Ant:",
-    "IdleSetString": " Nust:",
-    "TipDisconnectedString": "NĖRA ANTGALIO",
-    "SolderingAdvancedPowerPrompt": "Galia: ",
     "OffString": "Išj"
   },
   "messagesWarn": {
@@ -46,8 +42,7 @@
     "SettingSensitivityHigh": "A",
     "SettingLockDisableChar": "I",
     "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "V",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "V"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -203,6 +198,10 @@
     "ColourInversion": {
       "text2": ["Ekrano", "invertavimas"],
       "desc": "Invertuoja OLED ekrano spalvas"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }
