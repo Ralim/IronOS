@@ -109,11 +109,11 @@
 
 #define OP_AMP_GAIN_STAGE_PINECIL (1 + (OP_AMP_Rf_Pinecil / OP_AMP_Rin_Pinecil))
 
-#if defined(MODEL_Pinecil) == 0
+#if defined(MODEL_Magic) == 0
 #error "No model defined!"
 #endif
 
-#ifdef MODEL_Pinecil
+#ifdef MODEL_Magic
 #define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV            467                       // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET     900                       // 900 - Default adc offset in uV

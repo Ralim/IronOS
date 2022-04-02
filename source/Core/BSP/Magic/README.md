@@ -1,3 +1,3 @@
-# BSP section for Pinecil 
+# BSP section for Magic
 
-This folder contains the hardware abstractions required for the Pinecil. A RISC-V based soldering iron.
+This folder contains the hardware abstractions required for the Magic. A RISC-V based soldering iron.

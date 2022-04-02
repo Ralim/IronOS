@@ -3,9 +3,10 @@ model:=TS100
 endif
 
 ALL_MINIWARE_MODELS=TS100 TS80 TS80P
-ALL_PINE_MODELS=Pinecil
+PINECIL_MODELS=Pinecil
+ALL_MAGIC_MODELS=Magic
 ALL_MHP30_MODELS=MHP30
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINE_MODELS) $(ALL_MHP30_MODELS)
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_MAGIC_MODELS)
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
@@ -70,6 +71,57 @@ PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include/
 PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
 
+MAGIC_DIR = ./Core/BSP/Magic
+MAGIC_SDK_DIR = $(MAGIC_DIR)/bl_mcu_sdk
+MAGIC_VENDOR_BSP_COMMON_DIR = $(MAGIC_SDK_DIR)/bsp/bsp_common
+
+MAGIC_VENDOR_EXAMPLES_DIR  = $(MAGIC_SDK_DIR)/examples
+MAGIC_COMMON_DIR = $(MAGIC_SDK_DIR)/common
+MAGIC_COMMON_BL_MATH_DIR = $(MAGIC_COMMON_DIR)/bl_math
+MAGIC_COMMON_DEVICE_DIR = $(MAGIC_COMMON_DIR)/device
+MAGIC_COMMON_LIST_DIR = $(MAGIC_COMMON_DIR)/list
+MAGIC_COMMON_MEMHEAP_DIR = $(MAGIC_COMMON_DIR)/memheap
+MAGIC_COMMON_MISC_DIR = $(MAGIC_COMMON_DIR)/misc
+MAGIC_COMMON_PARTITION_DIR = $(MAGIC_COMMON_DIR)/partition
+MAGIC_COMMON_PID_DIR = $(MAGIC_COMMON_DIR)/pid
+MAGIC_COMMON_RING_BUFFERDIR = $(MAGIC_COMMON_DIR)/ring_buffer
+MAGIC_COMMON_SOFT_CRC_DIR = $(MAGIC_COMMON_DIR)/soft_crc
+MAGIC_COMMON_TIMESTAMP_DIR = $(MAGIC_COMMON_DIR)/timestamp
+MAGIC_COMPONENTS_DIR = $(MAGIC_SDK_DIR)/components
+MAGIC_COMPONENTS_BLE_DIR = $(MAGIC_COMPONENTS_DIR)/ble
+MAGIC_COMPONENTS_FATFS_DIR = $(MAGIC_COMPONENTS_DIR)/fatfs
+
+MAGIC_COMPONENTS_FREERTOS_DIR = $(MAGIC_COMPONENTS_DIR)/freertos
+MAGIC_COMPONENTS_FREERTOS_BL602_DIR = $(MAGIC_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl602
+MAGIC_COMPONENTS_FREERTOS_INC_DIR = $(MAGIC_COMPONENTS_FREERTOS_DIR)/include
+
+
+MAGIC_COMPONENTS_LVGL_DIR = $(MAGIC_COMPONENTS_DIR)/lvgl
+MAGIC_COMPONENTS_LWIP_DIR = $(MAGIC_COMPONENTS_DIR)/lwip
+MAGIC_COMPONENTS_MAC154_DIR = $(MAGIC_COMPONENTS_DIR)/mac154
+MAGIC_COMPONENTS_MBEDTLS_DIR = $(MAGIC_COMPONENTS_DIR)/mbedtls
+MAGIC_COMPONENTS_NMSIS_DIR = $(MAGIC_COMPONENTS_DIR)/nmsis
+MAGIC_COMPONENTS_PIKASCRIPT_DIR = $(MAGIC_COMPONENTS_DIR)/pikascript
+MAGIC_COMPONENTS_ROMFS_DIR = $(MAGIC_COMPONENTS_DIR)/romfs
+# Excluded
+MAGIC_COMPONENTS_RT_THREAD_DIR = $(MAGIC_COMPONENTS_DIR)/rt-thread
+
+MAGIC_COMPONENTS_SHELL_DIR = $(MAGIC_COMPONENTS_DIR)/shell
+MAGIC_COMPONENTS_TFLITE_DIR = $(MAGIC_COMPONENTS_DIR)/tflite
+MAGIC_COMPONENTS_TINY_JPEG_DIR = $(MAGIC_COMPONENTS_DIR)/tiny_jpeg
+MAGIC_COMPONENTS_USB_STACK_DIR = $(MAGIC_COMPONENTS_DIR)/usb_stack
+MAGIC_COMPONENTS_XZ_DIR = $(MAGIC_COMPONENTS_DIR)/xz
+MAGIC_DRIVERS_DIR = $(MAGIC_SDK_DIR)/drivers/bl602_driver
+MAGIC_DRIVERS_HAL_DRV_INC_DIR = $(MAGIC_DRIVERS_DIR)/hal_drv/inc
+MAGIC_DRIVERS_HAL_DRV_DEF_DIR = $(MAGIC_DRIVERS_DIR)/hal_drv/default_config
+MAGIC_DRIVERS_REGS_DIR = $(MAGIC_DRIVERS_DIR)/regs
+MAGIC_DRIVERS_RISCV_DIR = $(MAGIC_DRIVERS_DIR)/risc-v
+MAGIC_DRIVERS_STARTUP_DIR = $(MAGIC_DRIVERS_DIR)/startup
+MAGIC_DRIVERS_STD_DRV_DIR = $(MAGIC_DRIVERS_DIR)/std_drv/inc
+
+
+
+
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
@@ -84,86 +136,155 @@ SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR = ./Core/Drivers/usb-pd/tests
 PD_DRIVER_DIR = ./Core/Drivers/usb-pd
-# Find-all's used for formatting
 
-ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
-ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+
+# Find-all's used for formatting; have to exclude external modules
+
+ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(MAGIC_SDK_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
+ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(MAGIC_SDK_DIR)  \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
-$(info Building for Miniware )
-DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
-	-I$(MINIWARE_INC_CMSIS_DEVICE)\
-	-I$(MINIWARE_CMSIS_CORE_INC_DIR)	\
-	-I$(MINIWARE_HAL_INC_DIR)	\
-	-I$(MINIWARE_HAL_LEGACY_INC_DIR)
-DEVICE_BSP_DIR = ./Core/BSP/Miniware
-S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
-LDSCRIPT=$(MINIWARE_LD_FILE)
-DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD 
-DEV_LDFLAGS= 
-DEV_AFLAGS=
-DEV_CFLAGS= 
-DEV_CXXFLAGS= 
-CPUFLAGS= -mcpu=cortex-m3     \
-		  -mthumb 			\
-		  -mfloat-abi=soft
-flash_size=64k
-bootldr_size=0x4000
-DEVICE_DFU_ADDRESS=0x08004000
-DEVICE_DFU_VID_PID=0x1209:0xDB42
+	$(info Building for Miniware )
+	DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
+		-I$(MINIWARE_INC_CMSIS_DEVICE)\
+		-I$(MINIWARE_CMSIS_CORE_INC_DIR)	\
+		-I$(MINIWARE_HAL_INC_DIR)	\
+		-I$(MINIWARE_HAL_LEGACY_INC_DIR)
+	DEVICE_BSP_DIR = ./Core/BSP/Miniware
+	S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
+	LDSCRIPT=$(MINIWARE_LD_FILE)
+	DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
+			-D ARM_MATH_CM3 	\
+			-D STM32F10X_MD 
+	DEV_LDFLAGS= 
+	DEV_AFLAGS=
+	DEV_CFLAGS= 
+	DEV_CXXFLAGS= 
+	CPUFLAGS= -mcpu=cortex-m3     \
+			-mthumb 			\
+			-mfloat-abi=soft
+	flash_size=64k
+	bootldr_size=0x4000
+	DEVICE_DFU_ADDRESS=0x08004000
+	DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
-$(info Building for MHP30 )
-DEVICE_INCLUDES = -I$(MHP30_INC_DIR) \
-	-I$(MHP30_INC_CMSIS_DEVICE)\
-	-I$(MHP30_CMSIS_CORE_INC_DIR)	\
-	-I$(MHP30_HAL_INC_DIR)	\
-	-I$(MHP30_HAL_LEGACY_INC_DIR)
-DEVICE_BSP_DIR = ./Core/BSP/MHP30
-S_SRCS := $(shell find $(MHP30_STARTUP_DIR) -type f -name '*.S')
-LDSCRIPT=$(MHP30_LD_FILE)
-DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD 
-DEV_LDFLAGS= 
-DEV_AFLAGS=
-DEV_CFLAGS= 
-DEV_CXXFLAGS= 
-CPUFLAGS= -mcpu=cortex-m3     \
-		  -mthumb 			\
-		  -mfloat-abi=soft
-flash_size=128k
-bootldr_size=32k
-DEVICE_DFU_ADDRESS=0x08008000
-DEVICE_DFU_VID_PID=0x1209:0xDB42
+	$(info Building for MHP30 )
+	DEVICE_INCLUDES = -I$(MHP30_INC_DIR) \
+		-I$(MHP30_INC_CMSIS_DEVICE)\
+		-I$(MHP30_CMSIS_CORE_INC_DIR)	\
+		-I$(MHP30_HAL_INC_DIR)	\
+		-I$(MHP30_HAL_LEGACY_INC_DIR)
+	DEVICE_BSP_DIR = ./Core/BSP/MHP30
+	S_SRCS := $(shell find $(MHP30_STARTUP_DIR) -type f -name '*.S')
+	LDSCRIPT=$(MHP30_LD_FILE)
+	DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
+			-D ARM_MATH_CM3 	\
+			-D STM32F10X_MD 
+	DEV_LDFLAGS= 
+	DEV_AFLAGS=
+	DEV_CFLAGS= 
+	DEV_CXXFLAGS= 
+	CPUFLAGS= -mcpu=cortex-m3     \
+			-mthumb 			\
+			-mfloat-abi=soft
+	flash_size=128k
+	bootldr_size=32k
+	DEVICE_DFU_ADDRESS=0x08008000
+	DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
 
-ifeq ($(model),$(ALL_PINE_MODELS))
-$(info Building for Pine64 )
-DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
--I$(PINE_VENDOR_INC_DIR) \
--I$(PINE_VENDOR_USB_INC_DIR) \
--I$(PINE_NMSIS_INC_DIR) \
--I$(PINE_FREERTOS_PORT_INC_DIR) 
-	
-DEVICE_BSP_DIR = ./Core/BSP/Pine64
-S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
-ASM_INC = -I$(PINE_RISCV_INC_DIR)
-LDSCRIPT=./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
-flash_size=128k
-bootldr_size=0x0
+ifeq ($(model),$(PINECIL_MODELS))
+	$(info Building for Pine64 )
+	DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
+	-I$(PINE_VENDOR_INC_DIR) \
+	-I$(PINE_VENDOR_USB_INC_DIR) \
+	-I$(PINE_NMSIS_INC_DIR) \
+	-I$(PINE_FREERTOS_PORT_INC_DIR) 
+		
+	DEVICE_BSP_DIR = ./Core/BSP/Pine64
+	S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
+	ASM_INC = -I$(PINE_RISCV_INC_DIR)
+	LDSCRIPT=./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
+	flash_size=128k
+	bootldr_size=0x0
+	# Flags
+	CPUFLAGS= -march=rv32imac \
+				-mabi=ilp32 \
+				-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles
+	DEV_LDFLAGS=-nostartfiles --specs=patch.specs
+	DEV_AFLAGS=  
+	DEV_GLOBAL_DEFS= -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+	DEV_CFLAGS=
+	DEV_CXXFLAGS=
+endif
+
+
+
+
+ifeq ($(model),$(ALL_MAGIC_MODELS))
+$(info Building for Magic ~~~~~ ^^__^^ )
+
+
+
+DEVICE_INCLUDES = -I$(MAGIC_DIR) \
+	-I$(MAGIC_SDK_DIR) \
+	-I$(MAGIC_VENDOR_BSP_COMMON_DIR) \
+	-I$(MAGIC_VENDOR_EXAMPLES_DIR) \
+	-I$(MAGIC_COMMON_DIR) \
+	-I$(MAGIC_COMMON_BL_MATH_DIR) \
+	-I$(MAGIC_COMMON_DEVICE_DIR) \
+	-I$(MAGIC_COMMON_LIST_DIR) \
+	-I$(MAGIC_COMMON_MEMHEAP_DIR) \
+	-I$(MAGIC_COMMON_MISC_DIR) \
+	-I$(MAGIC_COMMON_PARTITION_DIR) \
+	-I$(MAGIC_COMMON_PID_DIR) \
+	-I$(MAGIC_COMMON_RING_BUFFERDIR) \
+	-I$(MAGIC_COMMON_SOFT_CRC_DIR) \
+	-I$(MAGIC_COMMON_TIMESTAMP_DIR) \
+	-I$(MAGIC_COMPONENTS_DIR) \
+	-I$(MAGIC_COMPONENTS_BLE_DIR) \
+	-I$(MAGIC_COMPONENTS_FATFS_DIR) \
+	-I$(MAGIC_COMPONENTS_FREERTOS_DIR) \
+	-I$(MAGIC_COMPONENTS_FREERTOS_BL602_DIR) \
+	-I$(MAGIC_COMPONENTS_FREERTOS_INC_DIR) \
+	-I$(MAGIC_COMPONENTS_LVGL_DIR) \
+	-I$(MAGIC_COMPONENTS_LWIP_DIR) \
+	-I$(MAGIC_COMPONENTS_MAC154_DIR) \
+	-I$(MAGIC_COMPONENTS_MBEDTLS_DIR) \
+	-I$(MAGIC_COMPONENTS_NMSIS_DIR) \
+	-I$(MAGIC_COMPONENTS_PIKASCRIPT_DIR) \
+	-I$(MAGIC_COMPONENTS_ROMFS_DIR) \
+	-I$(MAGIC_COMPONENTS_SHELL_DIR) \
+	-I$(MAGIC_COMPONENTS_TFLITE_DIR) \
+	-I$(MAGIC_COMPONENTS_TINY_JPEG_DIR) \
+	-I$(MAGIC_COMPONENTS_USB_STACK_DIR) \
+	-I$(MAGIC_COMPONENTS_XZ_DIR) \
+	-I$(MAGIC_DRIVERS_DIR) \
+	-I$(MAGIC_DRIVERS_HAL_DRV_INC_DIR) \
+	-I$(MAGIC_DRIVERS_HAL_DRV_DEF_DIR) \
+	-I$(MAGIC_DRIVERS_REGS_DIR) \
+	-I$(MAGIC_DRIVERS_RISCV_DIR) \
+	-I$(MAGIC_DRIVERS_STARTUP_DIR) \
+	-I$(MAGIC_DRIVERS_STD_DRV_DIR) 
+
+
+DEVICE_BSP_DIR = ./Core/BSP/Magic
+S_SRCS := $(shell find $(MAGIC_DIR) -type d  \( -path $(MAGIC_VENDOR_EXAMPLES_DIR) -o -path $(MAGIC_COMPONENTS_RT_THREAD_DIR) -o -path $(MAGIC_VENDOR_BSP_COMMON_DIR) \) -prune -false -o  -type f -name '*.S') $(info $(S_SRCS) )
+ASM_INC = $(DEVICE_INCLUDES)
+LDSCRIPT=./Core/BSP/Magic/bl_mcu_sdk/drivers/bl602_driver/bl602_flash.ld
+
 # Flags
-CPUFLAGS= -march=rv32imac \
-			-mabi=ilp32 \
-			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles
+CPUFLAGS= -march=rv32imafc \
+			-mabi=ilp32f \
+			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
+			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler
 DEV_LDFLAGS=-nostartfiles --specs=patch.specs
 DEV_AFLAGS=  
-DEV_GLOBAL_DEFS= -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+DEV_GLOBAL_DEFS= 
 DEV_CFLAGS=
 DEV_CXXFLAGS=
 endif
@@ -181,14 +302,14 @@ INCLUDES = -I$(APP_INC_DIR)	\
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
-$(shell find $(DEVICE_BSP_DIR) -type f -name '*.c') \
+$(shell find $(DEVICE_BSP_DIR) -type d  \( -path $(MAGIC_VENDOR_EXAMPLES_DIR) -o -path $(MAGIC_COMPONENTS_RT_THREAD_DIR) -o -path $(MAGIC_VENDOR_BSP_COMMON_DIR)  \) -prune -false -o -type f -name '*.c')\
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') \
 $(SOURCE_BRIEFLZ_DIR)/depack.c
 # We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
 SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -path $(PD_DRIVER_TESTS_DIR) -prune -false -o -type f -name '*.cpp') \
-$(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
+$(shell find $(DEVICE_BSP_DIR) -type d  \( -path $(MAGIC_VENDOR_EXAMPLES_DIR) -o -path $(MAGIC_COMPONENTS_RT_THREAD_DIR) -o -path $(MAGIC_VENDOR_BSP_COMMON_DIR) \) -prune -false -o -type f -name '*.cpp')  \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
@@ -215,7 +336,7 @@ COMPILER=gcc
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),$(ALL_PINE_MODELS))
+ifeq ($(model),$(filter $(model),$(PINECIL_MODELS) $(ALL_MAGIC_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
 endif
 # programs ---------------------------------------------------------------------
@@ -396,6 +517,7 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
+	@echo $(CFLAGS)
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OUTPUT_DIR)/%.o : %.cpp Makefile

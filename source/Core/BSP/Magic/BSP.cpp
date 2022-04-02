@@ -7,7 +7,6 @@
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "configuration.h"
-#include "gd32vf103_timer.h"
 #include "history.hpp"
 #include "main.hpp"
 
@@ -17,7 +16,9 @@ const uint8_t  tempMeasureTicks = 14;
 
 uint16_t totalPWM; // Total length of the cycle's ticks
 
-void resetWatchdog() { fwdgt_counter_reload(); }
+void resetWatchdog() {
+  //#TODO
+}
 
 uint16_t getHandleTemperature(uint8_t sample) {
 #ifdef TEMP_TMP36
@@ -36,9 +37,10 @@ uint16_t getHandleTemperature(uint8_t sample) {
   result /= 993;
   return result;
 #else
-#error Pinecil only uses TMP36
+#error only uses TMP36
 #endif
 }
+
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
   uint32_t res = getADCVin(sample);
   res *= 4;
@@ -48,36 +50,48 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 
 void unstick_I2C() {
   /* configure SDA/SCL for GPIO */
-  GPIO_BC(GPIOB) |= SDA_Pin | SCL_Pin;
-  gpio_init(SDA_GPIO_Port, GPIO_MODE_OUT_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);
-  for (int i = 0; i < 8; i++) {
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    GPIO_BOP(GPIOB) |= SCL_Pin;
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    GPIO_BOP(GPIOB) &= SCL_Pin;
-  }
-  /* connect PB6 to I2C0_SCL */
-  /* connect PB7 to I2C0_SDA */
-  gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);
+  // GPIO_BC(GPIOB) |= SDA_Pin | SCL_Pin;
+  // gpio_init(SDA_GPIO_Port, GPIO_MODE_OUT_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);
+  // for (int i = 0; i < 8; i++) {
+  //   asm("nop");
+  //   asm("nop");
+  //   asm("nop");
+  //   asm("nop");
+  //   asm("nop");
+  //   GPIO_BOP(GPIOB) |= SCL_Pin;
+  //   asm("nop");
+  //   asm("nop");
+  //   asm("nop");
+  //   asm("nop");
+  //   asm("nop");
+  //   GPIO_BOP(GPIOB) &= SCL_Pin;
+  // }
+  // /* connect PB6 to I2C0_SCL */
+  // /* connect PB7 to I2C0_SDA */
+  // gpio_init(SDA_GPIO_Port, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);
 }
 
-uint8_t getButtonA() { return (gpio_input_bit_get(KEY_A_GPIO_Port, KEY_A_Pin) == SET) ? 1 : 0; }
-uint8_t getButtonB() { return (gpio_input_bit_get(KEY_B_GPIO_Port, KEY_B_Pin) == SET) ? 1 : 0; }
+uint8_t getButtonA() {
+  //#TODO
+  return false;
+  // return (gpio_input_bit_get(KEY_A_GPIO_Port, KEY_A_Pin) == SET) ? 1 : 0;
+}
+uint8_t getButtonB() {
+  //#TODO
+  return false;
+  // return (gpio_input_bit_get(KEY_B_GPIO_Port, KEY_B_Pin) == SET) ? 1 : 0;
+}
 
 void reboot() {
   // Spin for watchdog
   for (;;) {}
 }
 
-void     delay_ms(uint16_t count) { delay_1ms(count); }
+void delay_ms(uint16_t count) {
+  // delay_1ms(count);
+  //#TODO
+}
+
 uint32_t __get_IPSR(void) {
   return 0; // To shut-up CMSIS
 }
@@ -89,4 +103,6 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void setStatusLED(const enum StatusLED state) {}
+void setStatusLED(const enum StatusLED state) {
+  // Dont have one
+}
