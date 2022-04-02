@@ -2,26 +2,17 @@
   "languageCode": "FR",
   "languageLocalName": "Français",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Calibration effectuée !",
     "SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer !",
     "SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
     "UVLOWarningString": "DC FAIBL",
     "UndervoltageString": "Sous-tension",
     "InputVoltageString": "V d'entrée: ",
-    "WarningTipTempString": "Temp. Panne : ",
-    "BadTipString": "PANNE HS",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "En veille...",
-    "WarningSimpleString": "CHAUD !",
-    "WarningAdvancedString": "ATTENTION ! CHAUD !",
     "SleepingTipAdvancedString": "Panne:",
-    "IdleTipString": "Act:",
-    "IdleSetString": " Reg:",
-    "TipDisconnectedString": "PANNE DÉBRANCHÉE",
-    "SolderingAdvancedPowerPrompt": "Puiss.:",
-    "OffString": "Off",
-    "YourGainMessage": "Gain : "
+    "OffString": "Off"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
@@ -51,8 +42,7 @@
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "V"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -208,6 +198,10 @@
     "ColourInversion": {
       "text2": ["Inverser", "les couleurs"],
       "desc": "Inverser les couleurs de l'écran OLED"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

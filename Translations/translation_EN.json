@@ -12,15 +12,11 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Sleeping...",
     "SleepingTipAdvancedString": "Tip:",
-    "IdleTipString": "Tip:",
-    "IdleSetString": " Set:",
-    "TipDisconnectedString": "NO TIP",
-    "SolderingAdvancedPowerPrompt": "Power: ",
     "OffString": "Off"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Some settings", "changed"],
+    "SettingsResetMessage": ["Certain settings", "were changed!"],
     "NoAccelerometerMessage": ["No accelerometer", "detected!"],
     "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
     "LockingKeysString": "LOCKED",
@@ -46,8 +42,7 @@
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -106,14 +101,14 @@
     },
     "BoostTemperature": {
       "text2": ["Boost", "temp"],
-      "desc": "Temperature used in \"boost mode\""
+      "desc": "Tip temperature used in \"boost mode\""
     },
     "AutoStart": {
-      "text2": ["Heat", "on power up"],
-      "desc": "O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+      "text2": ["Start-up", "behavior"],
+      "desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
     },
     "CooldownBlink": {
-      "text2": ["Cooldown", "blink"],
+      "text2": ["Cooldown", "flashing"],
       "desc": "Flash the temperature reading after heating was halted while the tip is still hot"
     },
     "TemperatureCalibration": {
@@ -121,8 +116,8 @@
       "desc": "Start tip temperature offset calibration"
     },
     "SettingsReset": {
-      "text2": ["Factory", "reset?"],
-      "desc": "Reset settings to default"
+      "text2": ["Restore factory", "settings?"],
+      "desc": "Reset all settings to default"
     },
     "VoltageCalibration": {
       "text2": ["Calibrate", "input voltage?"],
@@ -149,7 +144,7 @@
       "desc": "Maximum power the iron can use (W=watt)"
     },
     "ReverseButtonTempChange": {
-      "text2": ["Reverse", "+ - keys"],
+      "text2": ["Swap", "+ - keys"],
       "desc": "Reverse assignment of buttons for temperature adjustment"
     },
     "TempChangeShortStep": {
@@ -197,12 +192,16 @@
       "desc": "Current firmware language"
     },
     "Brightness": {
-      "text2": ["Screen", "contrast"],
+      "text2": ["Screen", "brightness"],
       "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
       "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

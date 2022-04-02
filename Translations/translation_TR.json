@@ -2,26 +2,17 @@
   "languageCode": "TR",
   "languageLocalName": "Türkçe",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Kalibrasyon tamamlandı!",
     "SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
     "SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",
     "UVLOWarningString": "Güç Az",
     "UndervoltageString": "Düşük Voltaj",
     "InputVoltageString": "Giriş V: ",
-    "WarningTipTempString": "Uç Sıcaklığı: ",
-    "BadTipString": "KÖTÜ UÇ",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Bekleme Modu ...",
-    "WarningSimpleString": "SICAK!",
-    "WarningAdvancedString": "UYARI! UÇ SICAK!",
     "SleepingTipAdvancedString": "Uç:",
-    "IdleTipString": "Uç:",
-    "IdleSetString": " Ayarla:",
-    "TipDisconnectedString": "UÇ ÇIKARILDI",
-    "SolderingAdvancedPowerPrompt": "Güç: ",
-    "OffString": "Kapalı",
-    "YourGainMessage": "Kazancınız:"
+    "OffString": "Kapalı"
   },
   "messagesWarn": {
     "ResetOKMessage": ["Sıfırlama Tamam", ""],
@@ -36,23 +27,22 @@
   "characters": {
     "SettingRightChar": "R",
     "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "O",
-    "SettingSlowChar": "S",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "F",
+    "SettingAutoChar": "O",
+    "SettingOffChar": "K",
+    "SettingSlowChar": "Y",
+    "SettingMediumChar": "O",
+    "SettingFastChar": "H",
     "SettingStartNoneChar": "K",
     "SettingStartSolderingChar": "L",
     "SettingStartSleepChar": "U",
-    "SettingStartSleepOffChar": "O",
-    "SettingSensitivityOff": "O",
+    "SettingStartSleepOffChar": "S",
+    "SettingSensitivityOff": "K",
     "SettingSensitivityLow": "L",
-    "SettingSensitivityMedium": "M",
+    "SettingSensitivityMedium": "O",
     "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "D",
+    "SettingLockDisableChar": "K",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -107,11 +97,7 @@
     },
     "DisplayRotation": {
       "text2": ["GRNYÖN", ""],
-      "desc": "Görüntü Yönlendirme (R=Sağlak | L=Solak | A=Otomatik)"
-    },
-    "BoostEnabled": {
-      "text2": ["YÜKPER", ""],
-      "desc": "Lehimleme yaparken ön tuşa basmak anlık sıcaklık yükselişi sağlar. (450C)"
+      "desc": "Görüntü Yönlendirme (R=Sağlak | L=Solak | O=Otomatik)"
     },
     "BoostTemperature": {
       "text2": ["YKSC", ""],
@@ -119,7 +105,7 @@
     },
     "AutoStart": {
       "text2": ["OTOBAŞ", ""],
-      "desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | O=Uyku Modu Oda Sıcaklığı)"
+      "desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
     },
     "CooldownBlink": {
       "text2": ["SĞGÖST", ""],
@@ -143,51 +129,43 @@
     },
     "ScrollingSpeed": {
       "text2": ["YZKYHZ", ""],
-      "desc": "Bu yazının kayma hızı (S=Yavaş | F=Hızlı)"
+      "desc": "Bu yazının kayma hızı (Y=Yavaş | H=Hızlı)"
     },
     "QCMaxVoltage": {
-      "text2": ["QC", "Voltage"],
-      "desc": "Desired max QC Voltage negotiated for"
+      "text2": ["QC", "voltage"],
+      "desc": "Max QC voltage the iron should negotiate for"
     },
     "PDNegTimeout": {
       "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-    },
-    "PowerInput": {
-      "text2": ["Güç", "Miktarı(W)"],
-      "desc": "Kullanılan adaptörün watt biriminden güç miktarı"
-    },
-    "PowerLimitEnable": {
-      "text2": ["P Limit", "Enable"],
-      "desc": "Güç sınırlamayı aç"
+      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
     },
     "PowerLimit": {
-      "text2": ["Power", "Limit"],
+      "text2": ["Power", "limit"],
       "desc": "Havyanın kullanacağı en yüksek güç (Watts)"
     },
     "ReverseButtonTempChange": {
-      "text2": ["Key +-", "reverse?"],
+      "text2": ["Swap", "+ - keys"],
       "desc": "\"Düğme Yerleri Rotasyonu\" Sıcaklık ayar düğmelerinin yerini değiştirin"
     },
     "TempChangeShortStep": {
-      "text2": ["Temp change", "short?"],
+      "text2": ["Temp change", "short"],
       "desc": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
     },
     "TempChangeLongStep": {
-      "text2": ["Temp change", "long?"],
+      "text2": ["Temp change", "long"],
       "desc": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
     },
     "PowerPulsePower": {
-      "text2": ["Power", "Pulse W"],
+      "text2": ["Power", "pulse"],
       "desc": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
     },
     "HallEffSensitivity": {
-      "text2": ["Hall Eff", "Sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor in detecting sleep (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+      "text2": ["Hall sensor", "sensitivity"],
+      "desc": "Sensitivity of the Hall effect sensor to detect sleep (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
     },
     "LockingMode": {
-      "text2": ["Allow buttons", "locking"],
-      "desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+      "text2": ["Allow locking", "buttons"],
+      "desc": "While soldering, hold down both buttons to toggle locking them (K=Kapalı | B=boost mode only | F=full locking)"
     },
     "MinVolCell": {
       "text2": ["Minimum", "voltage"],
@@ -195,15 +173,15 @@
     },
     "AnimLoop": {
       "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in root menu"
+      "desc": "Loop icon animations in main menu"
     },
     "AnimSpeed": {
       "text2": ["Anim.", "speed"],
-      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+      "desc": "Pace of icon animations in menu (K=Kapalı | Y=Yavaş | O=Orta | H=Hızlı)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+      "text2": ["Power pulse", "delay"],
+      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
@@ -214,12 +192,16 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

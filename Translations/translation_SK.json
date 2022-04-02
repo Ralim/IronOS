@@ -2,6 +2,7 @@
   "languageCode": "SK",
   "languageLocalName": "Slovenčina",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Najprv sa prosím uistite, že hrot má izbovú teplotu!",
     "SettingsResetWarning": "Naozaj chcete obnoviť továrenské nastavenia?",
@@ -11,10 +12,6 @@
     "SleepingSimpleString": "Chrr",
     "SleepingAdvancedString": "Pokojový režim..",
     "SleepingTipAdvancedString": "Hrot:",
-    "IdleTipString": "Hrot:",
-    "IdleSetString": "Cieľ:",
-    "TipDisconnectedString": "HROT ODPOJENÝ",
-    "SolderingAdvancedPowerPrompt": "Výkon: ",
     "OffString": "Vyp"
   },
   "messagesWarn": {
@@ -45,8 +42,7 @@
     "SettingSensitivityHigh": "V",
     "SettingLockDisableChar": "Z",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "P",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "P"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -202,6 +198,10 @@
     "ColourInversion": {
       "text2": ["Invertovať", "obrazovku"],
       "desc": "Invertovať farby OLED displeja"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

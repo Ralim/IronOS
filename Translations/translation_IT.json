@@ -2,6 +2,7 @@
   "languageCode": "IT",
   "languageLocalName": "Italiano",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
     "SettingsCalibrationWarning": "Assicurarsi che la punta si trovi a temperatura ambiente prima di continuare!",
     "SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
@@ -11,10 +12,6 @@
     "SleepingSimpleString": "Zzz ",
     "SleepingAdvancedString": "Riposo",
     "SleepingTipAdvancedString": "Punta:",
-    "IdleTipString": "T punta:",
-    "IdleSetString": "/",
-    "TipDisconnectedString": "PUNTA ASSENTE",
-    "SolderingAdvancedPowerPrompt": "Potenz:",
     "OffString": "OFF"
   },
   "messagesWarn": {
@@ -45,8 +42,7 @@
     "SettingSensitivityHigh": "A",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "C",
-    "SettingNAChar": " NA"
+    "SettingLockFullChar": "C"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -202,6 +198,10 @@
     "ColourInversion": {
       "text2": ["Inverti", "colori"],
       "desc": "Inverti i colori dello schermo"
+    },
+    "LOGOTime": {
+      "text2": ["Durata", "logo"],
+      "desc": "Imposta la permanenza sullo schermo del logo iniziale [secondi]"
     }
   }
 }

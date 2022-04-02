@@ -12,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Sleeping...",
     "SleepingTipAdvancedString": "Tip:",
-    "IdleTipString": "Tip:",
-    "IdleSetString": " Set:",
-    "TipDisconnectedString": "NO TIP",
-    "SolderingAdvancedPowerPrompt": "Power: ",
     "OffString": "關"
   },
   "messagesWarn": {
@@ -46,8 +42,7 @@
     "SettingSensitivityHigh": "高",
     "SettingLockDisableChar": "無",
     "SettingLockBoostChar": "增",
-    "SettingLockFullChar": "全",
-    "SettingNAChar": "不適用"
+    "SettingLockFullChar": "全"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -203,6 +198,10 @@
     "ColourInversion": {
       "text2": "熒幕反轉色",
       "desc": "反轉OLED熒幕嘅黑白色"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

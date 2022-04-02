@@ -16,7 +16,7 @@ var def =
 		},
 		{
 			"id": "UndervoltageString",
-			"maxLen": 16,
+			"maxLen": 15,
 			"description": "Warning text shown when the unit turns off due to undervoltage in advanced mode."
 		},
 		{
@@ -33,7 +33,7 @@ var def =
 		},
 		{
 			"id": "SleepingAdvancedString",
-			"maxLen": 16,
+			"maxLen": 15,
 			"description": "The text shown to indicate the unit is in sleep mode when the advanced view is turned on."
 		},
 		{
@@ -285,20 +285,20 @@ var def =
 		{
 			"id": "TemperatureCalibration",
 			"maxLen": 8,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target."
 
 		},
 		{
 			"id": "SettingsReset",
 			"maxLen": 8,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's."
 		},
 		{
 			"id": "VoltageCalibration",
 			"maxLen": 8,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "Enters an adjustment mode where you can gradually adjust the measured voltage to compensate for any unit-to-unit variance in the voltage sense resistors."
 		},
 		{
@@ -317,13 +317,13 @@ var def =
 		{
 			"id": "QCMaxVoltage",
 			"maxLen": 8,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "This adjusts the maximum voltage the QC negotiation will adjust to. Does NOT affect USB-PD. Should be set safely based on the current rating of your power supply."
 		},
 		{
 			"id": "PDNegTimeout",
 			"maxLen": 8,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values."
 
 		},
@@ -338,27 +338,27 @@ var def =
 		{
 			"id": "ReverseButtonTempChange",
 			"maxLen": 6,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "Swaps which button increments and decrements on temperature change screens."
 		},
 		{
 			"id": "TempChangeShortStep",
 			"maxLen": 8,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "Factor by which the temperature is changed with a quick press of the buttons."
 
 		},
 		{
 			"id": "TempChangeLongStep",
 			"maxLen": 6,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "Factor by which the temperature is changed with a hold of the buttons."
 
 		},
 		{
 			"id": "PowerPulsePower",
 			"maxLen": 6,
-			"maxLen2": 16,
+			"maxLen2": 15,
 			"description": "Enables and sets the wattage of the power pulse. Power pulse causes the device to briefly turn on the heater to draw power to avoid power banks going to sleep."
 
 		},
@@ -422,6 +422,12 @@ var def =
 			"maxLen": 7,
 			"maxLen2": 15,
 			"description": "Inverts the entire OLED."
+		},
+		{
+			"id": "LOGOTime",
+			"maxLen": 7,
+			"maxLen2": 15,
+			"description": "Sets the duration for the boot logo (S=seconds)."
 		}
 	]
 }
