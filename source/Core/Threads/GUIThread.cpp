@@ -828,8 +828,13 @@ static void showPDDebug(void) {
         OLED::printNumber(screen, 1, FontStyle::SMALL, true); // print the entry number
         OLED::print(SymbolSpace, FontStyle::SMALL);
         OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
+        OLED::print(SymbolVolts, FontStyle::SMALL);
         OLED::print(SymbolSpace, FontStyle::SMALL);
-        OLED::printNumber(current_a_x100 / 10, 3, FontStyle::SMALL, true); // print the current in 0.1A res
+        OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+        OLED::print(SymbolDot, FontStyle::SMALL);
+        OLED::printNumber(current_a_x100 % 10, 1, FontStyle::SMALL, true); // print the current in 0.1A res
+        OLED::print(SymbolAmps, FontStyle::SMALL);
+
       } else {
         screen = 0;
       }

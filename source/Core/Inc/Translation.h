@@ -14,6 +14,7 @@ extern const bool HasFahrenheit;
 extern const char *SymbolPlus;
 extern const char *SymbolMinus;
 extern const char *SymbolSpace;
+extern const char *SymbolAmps;
 extern const char *SymbolDot;
 extern const char *SymbolDegC;
 extern const char *SymbolDegF;
