@@ -800,6 +800,7 @@ void showDebugMenu(void) {
 }
 
 #if POW_PD
+#ifdef HAS_POWER_DEBUG_MENU
 static void showPDDebug(void) {
   // Print out the USB-PD state
   // Basically this is like the Debug menu, but instead we want to print out the PD status
@@ -844,6 +845,7 @@ static void showPDDebug(void) {
     GUIDelay();
   }
 }
+#endif
 #endif
 void showWarnings() {
   // Display alert if settings were reset
