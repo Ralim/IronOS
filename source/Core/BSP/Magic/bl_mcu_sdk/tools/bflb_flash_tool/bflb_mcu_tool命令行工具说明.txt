@@ -1,0 +1,23 @@
+build
+bflb_mcu_tool.exe --chipname=bl602 --xtal=40M --flashclk=48M --firmware="D:\\bouffalolab\\tool\\bflb-flash-tool\\img\\project.bin" --build
+
+build + download
+bflb_mcu_tool.exe --chipname=bl602 --port=COM9 --xtal=40M --flashclk=48M --firmware="D:\\bouffalolab\\tool\\bflb-flash-tool\\img\\project.bin"
+
+
+--chipname：必填
+--interface：默认uart
+--bootsrc：默认flash
+--port：com口，默认自动查找
+--baudrate：波特率默认115200
+--xtal：xtal
+--flashclk：flash clock
+--pllclk：pll clock
+--firmware：默认img目录下的project.bin 
+--addr：烧写地址默认2000
+--build：只生成镜像
+--erase：擦除flash
+
+
+
+

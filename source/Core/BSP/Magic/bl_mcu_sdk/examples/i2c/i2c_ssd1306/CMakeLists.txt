@@ -1,0 +1,8 @@
+set(BSP_COMMON_DIR ${CMAKE_SOURCE_DIR}/bsp/bsp_common)
+set(TARGET_REQUIRED_PRIVATE_INCLUDE ${BSP_COMMON_DIR}/mcu_lcd)
+set(TARGET_REQUIRED_SRCS ${BSP_COMMON_DIR}/mcu_lcd/ssd1306.c ${BSP_COMMON_DIR}/mcu_lcd/font.c)
+set(mains main.c)
+generate_bin()
+
+
+

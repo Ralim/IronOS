@@ -1,0 +1,6 @@
+set(TARGET_REQUIRED_PRIVATE_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/..)
+list(APPEND TARGET_REQUIRED_SRCS conjugate.c inverse.c norm.c)
+list(APPEND TARGET_REQUIRED_SRCS normalize.c product_single.c product.c quaternion2rotation.c rotation2quaternion.c)
+set(TARGET_REQUIRED_LIBS nmsis)
+set(mains main.c)
+generate_bin()

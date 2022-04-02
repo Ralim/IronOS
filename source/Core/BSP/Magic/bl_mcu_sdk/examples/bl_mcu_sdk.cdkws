@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDK_Workspace Name="bl_mcu_sdk" Database="">
+  <Project Name="helloworld" Path="hellowd/helloworld/cdk/helloworld.cdkproj" Active="Yes"/>
+  <Project Name="adc_continuous_differential" Path="adc/adc_continuous_differential/cdk/adc_continuous_differential.cdkproj" Active="No"/>
+  <Project Name="adc_continuous_single_ended" Path="adc/adc_continuous_single_ended/cdk/adc_continuous_single_ended.cdkproj" Active="No"/>
+  <Project Name="adc_one_shot_differential" Path="adc/adc_one_shot_differential/cdk/adc_one_shot_differential.cdkproj" Active="No"/>
+  <Project Name="adc_one_shot_single_ended" Path="adc/adc_one_shot_single_ended/cdk/adc_one_shot_single_ended.cdkproj" Active="No"/>
+  <Project Name="adc_scan_single_ended" Path="adc/adc_scan_single_ended/cdk/adc_scan_single_ended.cdkproj" Active="No"/>
+  <Project Name="adc_vbat_poll" Path="adc/adc_vbat_poll/cdk/adc_vbat_poll.cdkproj" Active="No"/>
+  <Project Name="dac_dma" Path="dac/dac_dma/cdk/dac_dma.cdkproj" Active="No"/>
+  <Project Name="dma_m2m" Path="dma/dma_m2m/cdk/dma_m2m.cdkproj" Active="No"/>
+  <Project Name="gpio_blink" Path="gpio/gpio_blink/cdk/gpio_blink.cdkproj" Active="No"/>
+  <Project Name="i2c_at24cxx" Path="i2c/i2c_at24cxx/cdk/i2c_at24cxx.cdkproj" Active="No"/>
+  <Project Name="i2c_bmp180" Path="i2c/i2c_bmp180/cdk/i2c_bmp180.cdkproj" Active="No"/>
+  <Project Name="memheap" Path="memheap/cdk/memheap.cdkproj" Active="No"/>
+  <Project Name="spi_dma_sd" Path="spi/spi_dma_sd/cdk/spi_dma_sd.cdkproj" Active="No"/>
+  <Project Name="spi_loopback" Path="spi/spi_loopback/cdk/spi_loopback.cdkproj" Active="No"/>
+  <Project Name="spi_lcd" Path="spi/spi_lcd/cdk/spi_lcd.cdkproj" Active="No"/>
+  <Project Name="uart_dma" Path="uart/uart_dma/cdk/uart_dma.cdkproj" Active="No"/>
+  <Project Name="uart_poll" Path="uart/uart_poll/cdk/uart_poll.cdkproj" Active="No"/>
+  <Project Name="uart_rx_it" Path="uart/uart_rx_it/cdk/uart_rx_it.cdkproj" Active="No"/>
+  <Project Name="usb_cdc_loopback" Path="usb/usb_cdc_loopback/cdk/usb_cdc_loopback.cdkproj" Active="No"/>
+  <Project Name="usb_cdc_msc" Path="usb/usb_cdc_msc/cdk/usb_cdc_msc.cdkproj" Active="No"/>
+  <Project Name="usb_msc_ram" Path="usb/usb_msc_ram/cdk/usb_msc_ram.cdkproj" Active="No"/>
+  <Project Name="usb_msc_sd" Path="usb/usb_msc_sd/cdk/usb_msc_sd.cdkproj" Active="No"/>
+  <Project Name="usb_video" Path="usb/usb_video/cdk/usb_video.cdkproj" Active="No"/>
+  <Project Name="pwm_breath_led" Path="pwm/pwm_breath_led/cdk/pwm_breath_led.cdkproj" Active="No"/>
+  <Project Name="flash_rw_test" Path="flash/flash_rw_test/cdk/flash_rw_test.cdkproj" Active="No"/>
+  <Project Name="gpio_dht11" Path="gpio/gpio_dht11/cdk/gpio_dht11.cdkproj" Active="No"/>
+  <Project Name="gpio_int" Path="gpio/gpio_int/cdk/gpio_int.cdkproj" Active="No"/>
+  <Project Name="freertos_semaphore" Path="freertos/freertos_semaphore/cdk/freertos_semaphore.cdkproj" Active="No"/>
+  <Project Name="i2s_play_from_flash" Path="i2s/i2s_play_from_flash/cdk/i2s_play_from_flash.cdkproj" Active="No"/>
+  <Project Name="sec_dsa" Path="pka/sec_dsa/cdk/sec_dsa.cdkproj" Active="No"/>
+  <Project Name="sec_ecdh" Path="pka/sec_ecdh/cdk/sec_ecdh.cdkproj" Active="No"/>
+  <Project Name="sec_ecdsa" Path="pka/sec_ecdsa/cdk/sec_ecdsa.cdkproj" Active="No"/>
+  <Project Name="psram_random_w_r" Path="psram/psram_sf_random_write_read/cdk/psram_random_w_r.cdkproj" Active="No"/>
+  <Project Name="psram_w_r" Path="psram/psram_sf_write_read/cdk/psram_w_r.cdkproj" Active="No"/>
+  <Project Name="pwm_dc_motor" Path="pwm/pwm_dc_motor/cdk/pwm_dc_motor.cdkproj" Active="No"/>
+  <Project Name="pwm_it" Path="pwm/pwm_it/cdk/pwm_it.cdkproj" Active="No"/>
+  <Project Name="pwm_step_motor" Path="pwm/pwm_step_motor/cdk/pwm_step_motor.cdkproj" Active="No"/>
+  <Project Name="shell" Path="shell/cdk/shell.cdkproj" Active="No"/>
+  <Project Name="timer_basic" Path="timer/timer_basic/cdk/timer_basic.cdkproj" Active="No"/>
+  <Project Name="timer_int" Path="timer/timer_int/cdk/timer_int.cdkproj" Active="No"/>
+  <Project Name="camera_lcd" Path="camera/camera_lcd/cdk/camera_lcd.cdkproj" Active="No"/>
+  <Project Name="camera_interleave" Path="camera/camera_interleave/cdk/camera_interleave.cdkproj" Active="No"/>
+  <Project Name="camera_interleave_psram" Path="camera/camera_interleave_psram/cdk/camera_interleave_psram.cdkproj" Active="No"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="adc_continuous_differential" ConfigName="OpenOCD_Debug"/>
+      <Project Name="adc_continuous_single_ended" ConfigName="OpenOCD_Debug"/>
+      <Project Name="adc_one_shot_differential" ConfigName="OpenOCD_Debug"/>
+      <Project Name="adc_one_shot_single_ended" ConfigName="OpenOCD_Debug"/>
+      <Project Name="adc_scan_single_ended" ConfigName="OpenOCD_Debug"/>
+      <Project Name="adc_vbat_poll" ConfigName="OpenOCD_Debug"/>
+      <Project Name="camera_interleave" ConfigName="OpenOCD_Debug"/>
+      <Project Name="camera_interleave_psram" ConfigName="OpenOCD_Debug"/>
+      <Project Name="camera_lcd" ConfigName="OpenOCD_Debug"/>
+      <Project Name="dac_dma" ConfigName="OpenOCD_Debug"/>
+      <Project Name="dma_m2m" ConfigName="OpenOCD_Debug"/>
+      <Project Name="flash_rw_test" ConfigName="OpenOCD_Debug"/>
+      <Project Name="freertos_semaphore" ConfigName="OpenOCD_Debug"/>
+      <Project Name="gpio_blink" ConfigName="OpenOCD_Debug"/>
+      <Project Name="gpio_dht11" ConfigName="OpenOCD_Debug"/>
+      <Project Name="gpio_int" ConfigName="OpenOCD_Debug"/>
+      <Project Name="helloworld" ConfigName="OpenOCD_Debug"/>
+      <Project Name="i2c_at24cxx" ConfigName="OpenOCD_Debug"/>
+      <Project Name="i2c_bmp180" ConfigName="OpenOCD_Debug"/>
+      <Project Name="i2s_play_from_flash" ConfigName="OpenOCD_Debug"/>
+      <Project Name="memheap" ConfigName="OpenOCD_Debug"/>
+      <Project Name="psram_random_w_r" ConfigName="OpenOCD_Debug"/>
+      <Project Name="psram_w_r" ConfigName="OpenOCD_Debug"/>
+      <Project Name="pwm_breath_led" ConfigName="OpenOCD_Debug"/>
+      <Project Name="pwm_dc_motor" ConfigName="OpenOCD_Debug"/>
+      <Project Name="pwm_it" ConfigName="OpenOCD_Debug"/>
+      <Project Name="pwm_step_motor" ConfigName="OpenOCD_Debug"/>
+      <Project Name="sec_dsa" ConfigName="OpenOCD_Debug"/>
+      <Project Name="sec_ecdh" ConfigName="OpenOCD_Debug"/>
+      <Project Name="sec_ecdsa" ConfigName="OpenOCD_Debug"/>
+      <Project Name="shell" ConfigName="OpenOCD_Debug"/>
+      <Project Name="spi_dma_sd" ConfigName="OpenOCD_Debug"/>
+      <Project Name="spi_lcd" ConfigName="OpenOCD_Debug"/>
+      <Project Name="spi_loopback" ConfigName="OpenOCD_Debug"/>
+      <Project Name="timer_basic" ConfigName="OpenOCD_Debug"/>
+      <Project Name="timer_int" ConfigName="OpenOCD_Debug"/>
+      <Project Name="uart_dma" ConfigName="OpenOCD_Debug"/>
+      <Project Name="uart_poll" ConfigName="OpenOCD_Debug"/>
+      <Project Name="uart_rx_it" ConfigName="OpenOCD_Debug"/>
+      <Project Name="usb_cdc_loopback" ConfigName="OpenOCD_Debug"/>
+      <Project Name="usb_cdc_msc" ConfigName="OpenOCD_Debug"/>
+      <Project Name="usb_msc_ram" ConfigName="OpenOCD_Debug"/>
+      <Project Name="usb_msc_sd" ConfigName="OpenOCD_Debug"/>
+      <Project Name="usb_video" ConfigName="OpenOCD_Debug"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CDK_Workspace>

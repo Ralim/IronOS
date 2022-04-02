@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="sw_arch.svg">
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1582" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="164.86583"
+     inkscape:cy="237.36991"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1629"
+     inkscape:window-height="1040"
+     inkscape:window-x="103"
+     inkscape:window-y="20"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="图层 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:#fcfcfc;fill-opacity:1;stroke:#010101;stroke-width:0.273592;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect717"
+       width="124"
+       height="83.169548"
+       x="0.15000001"
+       y="16.980453"
+       rx="3"
+       ry="2.4950864"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#ffb380;fill-opacity:1;stroke:#010101;stroke-width:0.299922;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-7"
+       width="120"
+       height="16"
+       x="2.149961"
+       y="82.715889"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#ffeeaa;fill-opacity:1;stroke:#010101;stroke-width:0.209444;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-4"
+       width="60"
+       height="16"
+       x="2.149961"
+       y="50.715893"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#80ffb3;fill-opacity:1;stroke:#010101;stroke-width:0.299922;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-7-2"
+       width="90"
+       height="16"
+       x="2.149961"
+       y="66.715889"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#aaccff;fill-opacity:1;stroke:#010101;stroke-width:0.209444;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-4-5"
+       width="60"
+       height="32"
+       x="62.14996"
+       y="34.715893"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#ffd42a;fill-opacity:1;stroke:#010101;stroke-width:0.209444;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-4-8"
+       width="60"
+       height="16"
+       x="2.1499598"
+       y="34.715893"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#00ffff;fill-opacity:1;stroke:#010101;stroke-width:0.299922;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-7-2-8"
+       width="120"
+       height="16"
+       x="2.1499598"
+       y="18.715893"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="42.977337"
+       y="29.266012"
+       id="text1995"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan1993"
+         x="42.977337"
+         y="29.266012"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'MS Outlook';-inkscape-font-specification:'MS Outlook';fill:#000000;stroke-width:0.264583">Application </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="36.370693"
+       y="77.034882"
+       id="text1995-0"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan1993-8"
+         x="36.370693"
+         y="77.034882"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'MS Outlook';-inkscape-font-specification:'MS Outlook';fill:#000000;stroke-width:0.264583"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Consolas;-inkscape-font-specification:Consolas"
+           id="tspan2069">STD</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="51.113491"
+       y="93.471962"
+       id="text1995-07"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan1993-13"
+         x="51.113491"
+         y="93.471962"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'MS Outlook';-inkscape-font-specification:'MS Outlook';fill:#000000;stroke-width:0.264583">Hardware</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.29167px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="4.5666533"
+       y="60.953209"
+       id="text1995-0-6"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan1993-8-1"
+         x="4.5666533"
+         y="60.953209"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29167px;font-family:'MS Outlook';-inkscape-font-specification:'MS Outlook';fill:#000000;stroke-width:0.264583"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29167px;font-family:Consolas;-inkscape-font-specification:Consolas"
+           id="tspan2069-1">HAL</tspan><tspan
+           style="font-size:3.175px"
+           id="tspan57">(Peripheral driver adaptation )</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.29167px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="4.6949158"
+       y="44.516132"
+       id="text1995-0-2"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan1993-8-15"
+         x="4.6949158"
+         y="44.516132"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29167px;font-family:'MS Outlook';-inkscape-font-specification:'MS Outlook';fill:#000000;stroke-width:0.264583"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29167px;font-family:Consolas;-inkscape-font-specification:Consolas"
+           id="tspan2069-3">HAL<tspan
+   style="font-size:3.175px"
+   id="tspan51">(</tspan></tspan><tspan
+           style="font-size:3.175px"
+           id="tspan43">Device driver management )</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="74.313263"
+       y="52.801487"
+       id="text1995-0-6-8"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan1993-8-1-1"
+         x="74.313263"
+         y="52.801487"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'MS Outlook';-inkscape-font-specification:'MS Outlook';fill:#000000;stroke-width:0.264583"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Consolas;-inkscape-font-specification:Consolas"
+           id="tspan2069-1-8">Wireless</tspan></tspan></text>
+    <rect
+       style="fill:#5599ff;fill-opacity:1;stroke:#010101;stroke-width:0.299922;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-7-2-9"
+       width="10"
+       height="16"
+       x="92.149963"
+       y="66.715889"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#dedbe3;fill-opacity:1;stroke:#010101;stroke-width:0.299922;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-7-2-9-9"
+       width="10"
+       height="16"
+       x="102.14996"
+       y="66.715889"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <rect
+       style="fill:#80ff80;fill-opacity:1;stroke:#010101;stroke-width:0.299922;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1860-7-2-9-9-4"
+       width="10"
+       height="16"
+       x="112.14996"
+       y="66.715889"
+       rx="3"
+       ry="3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="94.47979"
+       y="75.77092"
+       id="text2206"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan2204"
+         x="94.47979"
+         y="75.77092"
+         style="font-size:3.52778px;stroke-width:0.264583">BLE</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="103.48456"
+       y="75.827522"
+       id="text2206-3"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan2204-5"
+         x="103.48456"
+         y="75.827522"
+         style="font-size:3.52778px;stroke-width:0.264583">Wifi</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.82222px;line-height:1.25;font-family:Consolas;-inkscape-font-specification:Consolas;stroke-width:0.264583"
+       x="112.57171"
+       y="75.426605"
+       id="text2206-8"
+       inkscape:export-xdpi="600"
+       inkscape:export-ydpi="600"><tspan
+         sodipodi:role="line"
+         id="tspan2204-8"
+         x="112.57171"
+         y="75.426605"
+         style="font-size:2.82222px;stroke-width:0.264583">ZigBee</tspan></text>
+  </g>
+</svg>

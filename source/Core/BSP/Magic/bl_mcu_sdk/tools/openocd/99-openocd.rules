@@ -1,0 +1,3 @@
+# Future Technology Devices International, Ltd FT2232C Dual USB-UART/FIFO IC
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6010", MODE="664", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor} =="0403",ATTR{idProduct} =="6010", MODE="664", GROUP="plugdev"

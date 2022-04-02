@@ -1,0 +1,15 @@
+set architecture riscv:rv32
+#target remote :3333
+#set disassemble-next-line on
+set mem inaccessible-by-default off
+#gdb_breakpoint_override [hard|soft|disable]
+
+mem 0x22008000 0x22014000 rw
+mem 0x42008000 0x42014000 rw
+mem 0x22014000 0x22020000 rw
+mem 0x42014000 0x42020000 rw
+mem 0x22020000 0x22030000 rw
+mem 0x42020000 0x42030000 rw
+mem 0x22030000 0x2204C000 rw
+mem 0x42030000 0x4204C000 rw
+mem 0x23000000 0x23400000 ro

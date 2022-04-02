@@ -1,0 +1,9 @@
+set(BSP_COMMON_DIR ${CMAKE_SOURCE_DIR}/bsp/bsp_common)
+set(TARGET_REQUIRED_LIBS usb_stack)
+set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/usb_audio_mouse.ld)
+set(TARGET_REQUIRED_PRIVATE_INCLUDE ${BSP_COMMON_DIR}/usb)
+set(TARGET_REQUIRED_SRCS ${BSP_COMMON_DIR}/usb/usb_dc.c)
+set(mains main.c)
+generate_bin()
+
+

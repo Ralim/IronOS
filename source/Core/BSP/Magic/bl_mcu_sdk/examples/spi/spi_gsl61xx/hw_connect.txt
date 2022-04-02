@@ -1,0 +1,5 @@
+MISO -- IO12
+SCK   -- IO11
+MOSI -- IO5
+CS     -- IO10
+RST   -- IO6

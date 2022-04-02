@@ -1,0 +1,808 @@
+/*
+ * Copyright (c) 2006-2021, RT-Thread Development Team
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2006-03-12     Bernard      first version
+ * 2006-04-29     Bernard      implement thread timer
+ * 2006-06-04     Bernard      implement rt_timer_control
+ * 2006-08-10     Bernard      fix the periodic timer bug
+ * 2006-09-03     Bernard      implement rt_timer_detach
+ * 2009-11-11     LiJin        add soft timer
+ * 2010-05-12     Bernard      fix the timer check bug.
+ * 2010-11-02     Charlie      re-implement tick overflow issue
+ * 2012-12-15     Bernard      fix the next timeout issue in soft timer
+ * 2014-07-12     Bernard      does not lock scheduler when invoking soft-timer
+ *                             timeout function.
+ * 2021-08-15     supperthomas add the comment
+ */
+
+#include <rtthread.h>
+#include <rthw.h>
+
+/* hard timer list */
+static rt_list_t rt_timer_list[RT_TIMER_SKIP_LIST_LEVEL];
+
+#ifdef RT_USING_TIMER_SOFT
+
+#define RT_SOFT_TIMER_IDLE              1
+#define RT_SOFT_TIMER_BUSY              0
+
+#ifndef RT_TIMER_THREAD_STACK_SIZE
+#define RT_TIMER_THREAD_STACK_SIZE     512
+#endif /* RT_TIMER_THREAD_STACK_SIZE */
+
+#ifndef RT_TIMER_THREAD_PRIO
+#define RT_TIMER_THREAD_PRIO           0
+#endif /* RT_TIMER_THREAD_PRIO */
+
+/* soft timer status */
+static rt_uint8_t soft_timer_status = RT_SOFT_TIMER_IDLE;
+/* soft timer list */
+static rt_list_t rt_soft_timer_list[RT_TIMER_SKIP_LIST_LEVEL];
+static struct rt_thread timer_thread;
+ALIGN(RT_ALIGN_SIZE)
+static rt_uint8_t timer_thread_stack[RT_TIMER_THREAD_STACK_SIZE];
+#endif /* RT_USING_TIMER_SOFT */
+
+#ifdef RT_USING_HOOK
+extern void (*rt_object_take_hook)(struct rt_object *object);
+extern void (*rt_object_put_hook)(struct rt_object *object);
+static void (*rt_timer_enter_hook)(struct rt_timer *timer);
+static void (*rt_timer_exit_hook)(struct rt_timer *timer);
+
+/**
+ * @addtogroup Hook
+ */
+
+/**@{*/
+
+/**
+ * @brief This function will set a hook function on timer,
+ * which will be invoked when enter timer timeout callback function.
+ *
+ * @param hook the function point of timer
+ */
+void rt_timer_enter_sethook(void (*hook)(struct rt_timer *timer))
+{
+    rt_timer_enter_hook = hook;
+}
+
+/**
+ * @brief This function will set a hook function, which will be
+ * invoked when exit * timer timeout callback function.
+ *
+ * @param hook the function point of timer
+ */
+void rt_timer_exit_sethook(void (*hook)(struct rt_timer *timer))
+{
+    rt_timer_exit_hook = hook;
+}
+
+/**@}*/
+#endif /* RT_USING_HOOK */
+
+
+/**
+ * @brief [internal] the init funtion of timer
+ *
+ * the internal called function of rt_timer_init
+ *
+ * @see rt_timer_init
+ *
+ * @param timer the static timer object
+ * @param timeout the timeout function
+ * @param parameter the parameter of timeout function
+ * @param time the tick of timer
+ * @param flag the flag of timer
+ */
+static void _rt_timer_init(rt_timer_t timer,
+                           void (*timeout)(void *parameter),
+                           void      *parameter,
+                           rt_tick_t  time,
+                           rt_uint8_t flag)
+{
+    int i;
+
+    /* set flag */
+    timer->parent.flag  = flag;
+
+    /* set deactivated */
+    timer->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+
+    timer->timeout_func = timeout;
+    timer->parameter    = parameter;
+
+    timer->timeout_tick = 0;
+    timer->init_tick    = time;
+
+    /* initialize timer list */
+    for (i = 0; i < RT_TIMER_SKIP_LIST_LEVEL; i++)
+    {
+        rt_list_init(&(timer->row[i]));
+    }
+}
+
+/**
+ * @brief  find the next emtpy timer
+ *
+ * @param timer_list the timer of the next timeout
+ *
+ * @return rt_tick_t the point of timer
+ */
+static rt_tick_t rt_timer_list_next_timeout(rt_list_t timer_list[])
+{
+    struct rt_timer *timer;
+    register rt_base_t level;
+    rt_tick_t timeout_tick = RT_TICK_MAX;
+
+    /* disable interrupt */
+    level = rt_hw_interrupt_disable();
+
+    if (!rt_list_isempty(&timer_list[RT_TIMER_SKIP_LIST_LEVEL - 1]))
+    {
+        timer = rt_list_entry(timer_list[RT_TIMER_SKIP_LIST_LEVEL - 1].next,
+                              struct rt_timer, row[RT_TIMER_SKIP_LIST_LEVEL - 1]);
+        timeout_tick = timer->timeout_tick;
+    }
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(level);
+
+    return timeout_tick;
+}
+
+/**
+ * @brief remove the timer
+ *
+ * @param timer the point of timer
+ */
+rt_inline void _rt_timer_remove(rt_timer_t timer)
+{
+    int i;
+
+    for (i = 0; i < RT_TIMER_SKIP_LIST_LEVEL; i++)
+    {
+        rt_list_remove(&timer->row[i]);
+    }
+}
+
+#if RT_DEBUG_TIMER
+/**
+ * @brief the number of timer
+ *
+ * @param timer
+ * @return int the count
+ */
+static int rt_timer_count_height(struct rt_timer *timer)
+{
+    int i, cnt = 0;
+
+    for (i = 0; i < RT_TIMER_SKIP_LIST_LEVEL; i++)
+    {
+        if (!rt_list_isempty(&timer->row[i]))
+            cnt++;
+    }
+    return cnt;
+}
+/**
+ * @brief dump the all timer information
+ *
+ * @param timer_heads the head of timer
+ */
+void rt_timer_dump(rt_list_t timer_heads[])
+{
+    rt_list_t *list;
+
+    for (list = timer_heads[RT_TIMER_SKIP_LIST_LEVEL - 1].next;
+         list != &timer_heads[RT_TIMER_SKIP_LIST_LEVEL - 1];
+         list = list->next)
+    {
+        struct rt_timer *timer = rt_list_entry(list,
+                                               struct rt_timer,
+                                               row[RT_TIMER_SKIP_LIST_LEVEL - 1]);
+        rt_kprintf("%d", rt_timer_count_height(timer));
+    }
+    rt_kprintf("\n");
+}
+#endif /* RT_DEBUG_TIMER */
+
+/**
+ * @addtogroup Clock
+ */
+
+/**@{*/
+
+/**
+ * @brief This function will initialize a timer
+ *        normally this function is used to initialize a static timer object.
+ * @param timer the static timer object
+ * @param name the name of timer
+ * @param timeout the timeout function
+ * @param parameter the parameter of timeout function
+ * @param time the tick of timer
+ * @param flag the flag of timer
+ */
+void rt_timer_init(rt_timer_t  timer,
+                   const char *name,
+                   void (*timeout)(void *parameter),
+                   void       *parameter,
+                   rt_tick_t   time,
+                   rt_uint8_t  flag)
+{
+    /* timer check */
+    RT_ASSERT(timer != RT_NULL);
+
+    /* timer object initialization */
+    rt_object_init(&(timer->parent), RT_Object_Class_Timer, name);
+
+    _rt_timer_init(timer, timeout, parameter, time, flag);
+}
+RTM_EXPORT(rt_timer_init);
+
+/**
+ * @brief This function will detach a timer from timer management.
+ *
+ * @param timer the timer to be detached
+ * @return rt_err_t RT_EOK
+ */
+rt_err_t rt_timer_detach(rt_timer_t timer)
+{
+    register rt_base_t level;
+
+    /* timer check */
+    RT_ASSERT(timer != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&timer->parent) == RT_Object_Class_Timer);
+    RT_ASSERT(rt_object_is_systemobject(&timer->parent));
+
+    /* disable interrupt */
+    level = rt_hw_interrupt_disable();
+
+    _rt_timer_remove(timer);
+    /* stop timer */
+    timer->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(level);
+
+    rt_object_detach(&(timer->parent));
+
+    return RT_EOK;
+}
+RTM_EXPORT(rt_timer_detach);
+
+#ifdef RT_USING_HEAP
+/**
+ * @brief This function will create a timer
+ *
+ * @param name the name of timer
+ * @param timeout the timeout function
+ * @param parameter the parameter of timeout function
+ * @param time the tick of timer
+ * @param flag the flag of timer
+ *
+ * @return the created timer object
+ */
+rt_timer_t rt_timer_create(const char *name,
+                           void (*timeout)(void *parameter),
+                           void       *parameter,
+                           rt_tick_t   time,
+                           rt_uint8_t  flag)
+{
+    struct rt_timer *timer;
+
+    /* allocate a object */
+    timer = (struct rt_timer *)rt_object_allocate(RT_Object_Class_Timer, name);
+    if (timer == RT_NULL)
+    {
+        return RT_NULL;
+    }
+
+    _rt_timer_init(timer, timeout, parameter, time, flag);
+
+    return timer;
+}
+RTM_EXPORT(rt_timer_create);
+
+/**
+ * @brief This function will delete a timer and release timer memory
+ *
+ * @param timer the timer to be deleted
+ *
+ * @return the operation status, RT_EOK on OK; RT_ERROR on error
+ */
+rt_err_t rt_timer_delete(rt_timer_t timer)
+{
+    register rt_base_t level;
+
+    /* timer check */
+    RT_ASSERT(timer != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&timer->parent) == RT_Object_Class_Timer);
+    RT_ASSERT(rt_object_is_systemobject(&timer->parent) == RT_FALSE);
+
+    /* disable interrupt */
+    level = rt_hw_interrupt_disable();
+
+    _rt_timer_remove(timer);
+    /* stop timer */
+    timer->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(level);
+
+    rt_object_delete(&(timer->parent));
+
+    return RT_EOK;
+}
+RTM_EXPORT(rt_timer_delete);
+#endif /* RT_USING_HEAP */
+
+/**
+ * @brief This function will start the timer
+ *
+ * @param timer the timer to be started
+ *
+ * @return the operation status, RT_EOK on OK, -RT_ERROR on error
+ */
+rt_err_t rt_timer_start(rt_timer_t timer)
+{
+    unsigned int row_lvl;
+    rt_list_t *timer_list;
+    register rt_base_t level;
+    rt_list_t *row_head[RT_TIMER_SKIP_LIST_LEVEL];
+    unsigned int tst_nr;
+    static unsigned int random_nr;
+
+    /* timer check */
+    RT_ASSERT(timer != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&timer->parent) == RT_Object_Class_Timer);
+
+    /* stop timer firstly */
+    level = rt_hw_interrupt_disable();
+    /* remove timer from list */
+    _rt_timer_remove(timer);
+    /* change status of timer */
+    timer->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+
+    RT_OBJECT_HOOK_CALL(rt_object_take_hook, (&(timer->parent)));
+
+    /*
+     * get timeout tick,
+     * the max timeout tick shall not great than RT_TICK_MAX/2
+     */
+    RT_ASSERT(timer->init_tick < RT_TICK_MAX / 2);
+    timer->timeout_tick = rt_tick_get() + timer->init_tick;
+
+#ifdef RT_USING_TIMER_SOFT
+    if (timer->parent.flag & RT_TIMER_FLAG_SOFT_TIMER)
+    {
+        /* insert timer to soft timer list */
+        timer_list = rt_soft_timer_list;
+    }
+    else
+#endif /* RT_USING_TIMER_SOFT */
+    {
+        /* insert timer to system timer list */
+        timer_list = rt_timer_list;
+    }
+
+    row_head[0]  = &timer_list[0];
+    for (row_lvl = 0; row_lvl < RT_TIMER_SKIP_LIST_LEVEL; row_lvl++)
+    {
+        for (; row_head[row_lvl] != timer_list[row_lvl].prev;
+             row_head[row_lvl]  = row_head[row_lvl]->next)
+        {
+            struct rt_timer *t;
+            rt_list_t *p = row_head[row_lvl]->next;
+
+            /* fix up the entry pointer */
+            t = rt_list_entry(p, struct rt_timer, row[row_lvl]);
+
+            /* If we have two timers that timeout at the same time, it's
+             * preferred that the timer inserted early get called early.
+             * So insert the new timer to the end the the some-timeout timer
+             * list.
+             */
+            if ((t->timeout_tick - timer->timeout_tick) == 0)
+            {
+                continue;
+            }
+            else if ((t->timeout_tick - timer->timeout_tick) < RT_TICK_MAX / 2)
+            {
+                break;
+            }
+        }
+        if (row_lvl != RT_TIMER_SKIP_LIST_LEVEL - 1)
+            row_head[row_lvl + 1] = row_head[row_lvl] + 1;
+    }
+
+    /* Interestingly, this super simple timer insert counter works very very
+     * well on distributing the list height uniformly. By means of "very very
+     * well", I mean it beats the randomness of timer->timeout_tick very easily
+     * (actually, the timeout_tick is not random and easy to be attacked). */
+    random_nr++;
+    tst_nr = random_nr;
+
+    rt_list_insert_after(row_head[RT_TIMER_SKIP_LIST_LEVEL - 1],
+                         &(timer->row[RT_TIMER_SKIP_LIST_LEVEL - 1]));
+    for (row_lvl = 2; row_lvl <= RT_TIMER_SKIP_LIST_LEVEL; row_lvl++)
+    {
+        if (!(tst_nr & RT_TIMER_SKIP_LIST_MASK))
+            rt_list_insert_after(row_head[RT_TIMER_SKIP_LIST_LEVEL - row_lvl],
+                                 &(timer->row[RT_TIMER_SKIP_LIST_LEVEL - row_lvl]));
+        else
+            break;
+        /* Shift over the bits we have tested. Works well with 1 bit and 2
+         * bits. */
+        tst_nr >>= (RT_TIMER_SKIP_LIST_MASK + 1) >> 1;
+    }
+
+    timer->parent.flag |= RT_TIMER_FLAG_ACTIVATED;
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(level);
+
+#ifdef RT_USING_TIMER_SOFT
+    if (timer->parent.flag & RT_TIMER_FLAG_SOFT_TIMER)
+    {
+        /* check whether timer thread is ready */
+        if ((soft_timer_status == RT_SOFT_TIMER_IDLE) &&
+           ((timer_thread.stat & RT_THREAD_STAT_MASK) == RT_THREAD_SUSPEND))
+        {
+            /* resume timer thread to check soft timer */
+            rt_thread_resume(&timer_thread);
+            rt_schedule();
+        }
+    }
+#endif /* RT_USING_TIMER_SOFT */
+
+    return RT_EOK;
+}
+RTM_EXPORT(rt_timer_start);
+
+/**
+ * @brief This function will stop the timer
+ *
+ * @param timer the timer to be stopped
+ *
+ * @return the operation status, RT_EOK on OK, -RT_ERROR on error
+ */
+rt_err_t rt_timer_stop(rt_timer_t timer)
+{
+    register rt_base_t level;
+
+    /* timer check */
+    RT_ASSERT(timer != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&timer->parent) == RT_Object_Class_Timer);
+
+    if (!(timer->parent.flag & RT_TIMER_FLAG_ACTIVATED))
+        return -RT_ERROR;
+
+    RT_OBJECT_HOOK_CALL(rt_object_put_hook, (&(timer->parent)));
+
+    /* disable interrupt */
+    level = rt_hw_interrupt_disable();
+
+    _rt_timer_remove(timer);
+    /* change status */
+    timer->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(level);
+
+    return RT_EOK;
+}
+RTM_EXPORT(rt_timer_stop);
+
+/**
+ * @brief This function will get or set some options of the timer
+ *
+ * @param timer the timer to be get or set
+ * @param cmd the control command
+ * @param arg the argument
+ *
+ * @return RT_EOK
+ */
+rt_err_t rt_timer_control(rt_timer_t timer, int cmd, void *arg)
+{
+    register rt_base_t level;
+
+    /* timer check */
+    RT_ASSERT(timer != RT_NULL);
+    RT_ASSERT(rt_object_get_type(&timer->parent) == RT_Object_Class_Timer);
+
+    level = rt_hw_interrupt_disable();
+    switch (cmd)
+    {
+    case RT_TIMER_CTRL_GET_TIME:
+        *(rt_tick_t *)arg = timer->init_tick;
+        break;
+
+    case RT_TIMER_CTRL_SET_TIME:
+        timer->init_tick = *(rt_tick_t *)arg;
+        break;
+
+    case RT_TIMER_CTRL_SET_ONESHOT:
+        timer->parent.flag &= ~RT_TIMER_FLAG_PERIODIC;
+        break;
+
+    case RT_TIMER_CTRL_SET_PERIODIC:
+        timer->parent.flag |= RT_TIMER_FLAG_PERIODIC;
+        break;
+
+    case RT_TIMER_CTRL_GET_STATE:
+        if(timer->parent.flag & RT_TIMER_FLAG_ACTIVATED)
+        {
+            /*timer is start and run*/
+            *(rt_tick_t *)arg = RT_TIMER_FLAG_ACTIVATED;
+        }
+        else
+        {
+            /*timer is stop*/
+            *(rt_tick_t *)arg = RT_TIMER_FLAG_DEACTIVATED;
+        }
+        break;
+
+    default:
+        break;
+    }
+    rt_hw_interrupt_enable(level);
+
+    return RT_EOK;
+}
+RTM_EXPORT(rt_timer_control);
+
+/**
+ * @brief This function will check timer list, if a timeout event happens,
+ *        the corresponding timeout function will be invoked.
+ *
+ * @note this function shall be invoked in operating system timer interrupt.
+ */
+void rt_timer_check(void)
+{
+    struct rt_timer *t;
+    rt_tick_t current_tick;
+    register rt_base_t level;
+    rt_list_t list;
+
+    rt_list_init(&list);
+
+    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check enter\n"));
+
+    current_tick = rt_tick_get();
+
+    /* disable interrupt */
+    level = rt_hw_interrupt_disable();
+
+    while (!rt_list_isempty(&rt_timer_list[RT_TIMER_SKIP_LIST_LEVEL - 1]))
+    {
+        t = rt_list_entry(rt_timer_list[RT_TIMER_SKIP_LIST_LEVEL - 1].next,
+                          struct rt_timer, row[RT_TIMER_SKIP_LIST_LEVEL - 1]);
+
+        /*
+         * It supposes that the new tick shall less than the half duration of
+         * tick max.
+         */
+        if ((current_tick - t->timeout_tick) < RT_TICK_MAX / 2)
+        {
+            RT_OBJECT_HOOK_CALL(rt_timer_enter_hook, (t));
+
+            /* remove timer from timer list firstly */
+            _rt_timer_remove(t);
+            if (!(t->parent.flag & RT_TIMER_FLAG_PERIODIC))
+            {
+                t->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+            }
+            /* add timer to temporary list  */
+            rt_list_insert_after(&list, &(t->row[RT_TIMER_SKIP_LIST_LEVEL - 1]));
+            /* call timeout function */
+            t->timeout_func(t->parameter);
+
+            /* re-get tick */
+            current_tick = rt_tick_get();
+
+            RT_OBJECT_HOOK_CALL(rt_timer_exit_hook, (t));
+            RT_DEBUG_LOG(RT_DEBUG_TIMER, ("current tick: %d\n", current_tick));
+
+            /* Check whether the timer object is detached or started again */
+            if (rt_list_isempty(&list))
+            {
+                continue;
+            }
+            rt_list_remove(&(t->row[RT_TIMER_SKIP_LIST_LEVEL - 1]));
+            if ((t->parent.flag & RT_TIMER_FLAG_PERIODIC) &&
+                (t->parent.flag & RT_TIMER_FLAG_ACTIVATED))
+            {
+                /* start it */
+                t->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+                rt_timer_start(t);
+            }
+        }
+        else break;
+    }
+
+    /* enable interrupt */
+    rt_hw_interrupt_enable(level);
+
+    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check leave\n"));
+}
+
+/**
+ * @brief This function will return the next timeout tick in the system.
+ *
+ * @return the next timeout tick in the system
+ */
+rt_tick_t rt_timer_next_timeout_tick(void)
+{
+    return rt_timer_list_next_timeout(rt_timer_list);
+}
+
+#ifdef RT_USING_TIMER_SOFT
+/**
+ * @brief This function will check software-timer list, if a timeout event happens, the
+ * corresponding timeout function will be invoked.
+ */
+void rt_soft_timer_check(void)
+{
+    rt_tick_t current_tick;
+    struct rt_timer *t;
+    register rt_base_t level;
+    rt_list_t list;
+
+    rt_list_init(&list);
+
+    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("software timer check enter\n"));
+
+    /* disable interrupt */
+    level = rt_hw_interrupt_disable();
+
+    while (!rt_list_isempty(&rt_soft_timer_list[RT_TIMER_SKIP_LIST_LEVEL - 1]))
+    {
+        t = rt_list_entry(rt_soft_timer_list[RT_TIMER_SKIP_LIST_LEVEL - 1].next,
+                            struct rt_timer, row[RT_TIMER_SKIP_LIST_LEVEL - 1]);
+
+        current_tick = rt_tick_get();
+
+        /*
+         * It supposes that the new tick shall less than the half duration of
+         * tick max.
+         */
+        if ((current_tick - t->timeout_tick) < RT_TICK_MAX / 2)
+        {
+            RT_OBJECT_HOOK_CALL(rt_timer_enter_hook, (t));
+
+            /* remove timer from timer list firstly */
+            _rt_timer_remove(t);
+            if (!(t->parent.flag & RT_TIMER_FLAG_PERIODIC))
+            {
+                t->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+            }
+            /* add timer to temporary list  */
+            rt_list_insert_after(&list, &(t->row[RT_TIMER_SKIP_LIST_LEVEL - 1]));
+
+            soft_timer_status = RT_SOFT_TIMER_BUSY;
+            /* enable interrupt */
+            rt_hw_interrupt_enable(level);
+
+            /* call timeout function */
+            t->timeout_func(t->parameter);
+
+            RT_OBJECT_HOOK_CALL(rt_timer_exit_hook, (t));
+            RT_DEBUG_LOG(RT_DEBUG_TIMER, ("current tick: %d\n", current_tick));
+
+            /* disable interrupt */
+            level = rt_hw_interrupt_disable();
+
+            soft_timer_status = RT_SOFT_TIMER_IDLE;
+            /* Check whether the timer object is detached or started again */
+            if (rt_list_isempty(&list))
+            {
+                continue;
+            }
+            rt_list_remove(&(t->row[RT_TIMER_SKIP_LIST_LEVEL - 1]));
+            if ((t->parent.flag & RT_TIMER_FLAG_PERIODIC) &&
+                (t->parent.flag & RT_TIMER_FLAG_ACTIVATED))
+            {
+                /* start it */
+                t->parent.flag &= ~RT_TIMER_FLAG_ACTIVATED;
+                rt_timer_start(t);
+            }
+        }
+        else break; /* not check anymore */
+    }
+    /* enable interrupt */
+    rt_hw_interrupt_enable(level);
+
+    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("software timer check leave\n"));
+}
+
+/**
+ * @brief system timer thread entry
+ *
+ * @param parameter
+ */
+static void rt_thread_timer_entry(void *parameter)
+{
+    rt_tick_t next_timeout;
+
+    while (1)
+    {
+        /* get the next timeout tick */
+        next_timeout = rt_timer_list_next_timeout(rt_soft_timer_list);
+        if (next_timeout == RT_TICK_MAX)
+        {
+            /* no software timer exist, suspend self. */
+            rt_thread_suspend(rt_thread_self());
+            rt_schedule();
+        }
+        else
+        {
+            rt_tick_t current_tick;
+
+            /* get current tick */
+            current_tick = rt_tick_get();
+
+            if ((next_timeout - current_tick) < RT_TICK_MAX / 2)
+            {
+                /* get the delta timeout tick */
+                next_timeout = next_timeout - current_tick;
+                rt_thread_delay(next_timeout);
+            }
+        }
+
+        /* check software timer */
+        rt_soft_timer_check();
+    }
+}
+#endif /* RT_USING_TIMER_SOFT */
+
+/**
+ * @ingroup SystemInit
+ *
+ * @brief This function will initialize system timer
+ */
+void rt_system_timer_init(void)
+{
+    int i;
+
+    for (i = 0; i < sizeof(rt_timer_list) / sizeof(rt_timer_list[0]); i++)
+    {
+        rt_list_init(rt_timer_list + i);
+    }
+}
+
+/**
+ * @ingroup SystemInit
+ *
+ * @brief This function will initialize system timer thread
+ */
+void rt_system_timer_thread_init(void)
+{
+#ifdef RT_USING_TIMER_SOFT
+    int i;
+
+    for (i = 0;
+         i < sizeof(rt_soft_timer_list) / sizeof(rt_soft_timer_list[0]);
+         i++)
+    {
+        rt_list_init(rt_soft_timer_list + i);
+    }
+
+    /* start software timer thread */
+    rt_thread_init(&timer_thread,
+                   "timer",
+                   rt_thread_timer_entry,
+                   RT_NULL,
+                   &timer_thread_stack[0],
+                   sizeof(timer_thread_stack),
+                   RT_TIMER_THREAD_PRIO,
+                   10);
+
+    /* startup */
+    rt_thread_startup(&timer_thread);
+#endif /* RT_USING_TIMER_SOFT */
+}
+
+/**@}*/

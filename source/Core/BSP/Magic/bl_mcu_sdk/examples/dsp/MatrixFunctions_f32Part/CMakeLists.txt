@@ -1,0 +1,6 @@
+set(TARGET_REQUIRED_PRIVATE_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/..)
+list(APPEND TARGET_REQUIRED_SRCS mat_add.c mat_cholesky.c mat_cmplx_mult.c mat_inverse.c mat_ldlt.c)
+list(APPEND TARGET_REQUIRED_SRCS mat_lower_solver.c mat_mult.c mat_scale.c mat_sub.c mat_trans.c mat_upper_solver.c)
+set(TARGET_REQUIRED_LIBS nmsis)
+set(mains main.c)
+# generate_bin()

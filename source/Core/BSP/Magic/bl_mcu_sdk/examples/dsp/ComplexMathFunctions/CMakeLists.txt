@@ -1,0 +1,5 @@
+set(TARGET_REQUIRED_PRIVATE_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/..)
+set(TARGET_REQUIRED_SRCS cmplx_conj.c cmplx_dot_prod.c cmplx_mag_squared.c cmplx_mag.c cmplx_mult_cmplx.c cmplx_mult_real.c)
+set(TARGET_REQUIRED_LIBS nmsis)
+set(mains main.c)
+generate_bin()

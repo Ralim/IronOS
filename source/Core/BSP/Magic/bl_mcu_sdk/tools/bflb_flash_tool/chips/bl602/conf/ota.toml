@@ -1,0 +1,5 @@
+[ota]
+#max length of version_hardware is 15 bytes
+version_hardware = "BFL_Module_v1.1"
+#max length of version_software is 15 bytes
+version_software = "EVENT_V1.1.1"

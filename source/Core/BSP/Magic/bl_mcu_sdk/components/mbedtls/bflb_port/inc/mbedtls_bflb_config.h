@@ -1,0 +1,19 @@
+#ifndef MBEDTLS_CONFIG_H
+#define MBEDTLS_CONFIG_H
+
+#include "mbedtls_port_config.h"
+
+#define MBEDTLS_AES_C
+#define MBEDTLS_AES_ROM_TABLES
+#define MBEDTLS_CCM_C
+#define MBEDTLS_CIPHER_C
+#define MBEDTLS_SHA256_C
+
+#define MBEDTLS_CIPHER_MODE_CBC
+#define MBEDTLS_CIPHER_MODE_CTR
+
+// #define MBEDTLS_PLATFORM_MEMORY
+// #define MBEDTLS_PLATFORM_FREE_MACRO
+// #define MBEDTLS_PLATFORM_CALLOC_MACRO
+
+#endif /* MBEDTLS_CONFIG_H */
