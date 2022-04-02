@@ -59,8 +59,8 @@ static const FRToSI2C::I2C_REG i2c_registers[] = {
 
     //
 };
-static const FRToSI2C::I2C_REG i2c_registers_alt[] = {{LIS_CTRL_REG1, 0x17, 0},       // 25Hz
-                                                      {LIS_CTRL_REG2, 0b00001000, 0}, // Highpass filter off
+static const FRToSI2C::I2C_REG i2c_registers_alt[] = {{LIS_CTRL_REG1, 0b00110111, 0}, // 200Hz XYZ
+                                                      {LIS_CTRL_REG2, 0b00000000, 0}, //
                                                       {LIS_CTRL_REG3, 0b01100000, 0}, // Setup interrupt pins
                                                       {LIS_CTRL_REG4, 0b00001000, 0}, // Block update mode off, HR on
                                                       {LIS_CTRL_REG5, 0b00000010, 0}, //
