@@ -816,6 +816,15 @@ static void showPDDebug(void) {
       OLED::print(SymbolState, FontStyle::SMALL);
       OLED::print(SymbolSpace, FontStyle::SMALL);
       OLED::printNumber(USBPowerDelivery::getStateNumber(), 2, FontStyle::SMALL, true);
+      OLED::print(SymbolSpace, FontStyle::SMALL);
+      // Also print vbus mod status
+      if (USBPowerDelivery::fusbPresent()) {
+        if (USBPowerDelivery::negotiationComplete()) {
+          if (!USBPowerDelivery::isVBUSConnected()) {
+            OLED::print(SymbolNoVBus, FontStyle::SMALL);
+          }
+        }
+      }
     } else {
       // Print out the Proposed power options one by one
       auto    lastCaps = USBPowerDelivery::getLastSeenCapabilities();
