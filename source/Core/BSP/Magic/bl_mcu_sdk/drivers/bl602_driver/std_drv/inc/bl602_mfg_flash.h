@@ -5,8 +5,6 @@
 #include "bl602_sflash.h"
 
 int8_t mfg_flash_init(SPI_Flash_Cfg_Type *flashCfg);
-static int8_t mfg_flash_program(void);
-static int8_t mfg_flash_read(void);
 int8_t mfg_flash_write_xtal_capcode_pre(uint8_t capcode, uint8_t program);
 void mfg_flash_write_xtal_capcode(void);
 int8_t mfg_flash_read_xtal_capcode(uint8_t *capcode, uint8_t reload);

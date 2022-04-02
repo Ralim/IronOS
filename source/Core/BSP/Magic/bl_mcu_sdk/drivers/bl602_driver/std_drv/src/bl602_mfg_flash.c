@@ -2,7 +2,7 @@
 #include "partition.h"
 #include "softcrc.h"
 
-static rf_para_flash_t rf_para;
+// static rf_para_flash_t rf_para;
 static uint32_t rf_para_addr = 0;
 static SPI_Flash_Cfg_Type *pFlashCfg;
 
@@ -103,16 +103,16 @@ static int8_t mfg_flash_read(void)
 
 int8_t mfg_flash_write_xtal_capcode_pre(uint8_t capcode, uint8_t program)
 {
-    rf_para.magic = RF_PARA_MAGIC_FLAG;
-    rf_para.capcode_valid = RF_PARA_VALID_FLAG;
-    rf_para.capcode = capcode;
-    rf_para.crc32 = BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8);
+    // rf_para.magic = RF_PARA_MAGIC_FLAG;
+    // rf_para.capcode_valid = RF_PARA_VALID_FLAG;
+    // rf_para.capcode = capcode;
+    // rf_para.crc32 = BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8);
 
-    if (program) {
-        return mfg_flash_program();
-    } else {
-        return 0;
-    }
+    // if (program) {
+    //     return mfg_flash_program();
+    // } else {
+    return 0;
+    // }
 }
 
 void mfg_flash_write_xtal_capcode(void)
@@ -126,32 +126,32 @@ int8_t mfg_flash_read_xtal_capcode(uint8_t *capcode, uint8_t reload)
         return -1;
     }
 
-    if (rf_para.magic == RF_PARA_MAGIC_FLAG) {
-        if (rf_para.crc32 == (BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8))) {
-            if (rf_para.capcode_valid == RF_PARA_VALID_FLAG) {
-                *capcode = rf_para.capcode;
-                return 0;
-            }
-        }
-    }
+    // if (rf_para.magic == RF_PARA_MAGIC_FLAG) {
+    //     if (rf_para.crc32 == (BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8))) {
+    //         if (rf_para.capcode_valid == RF_PARA_VALID_FLAG) {
+    //             *capcode = rf_para.capcode;
+    //             return 0;
+    //         }
+    //     }
+    // }
 
     return -1;
 }
 
 int8_t mfg_flash_write_poweroffset_pre(int8_t pwrOffset[14], uint8_t program)
 {
-    rf_para.magic = RF_PARA_MAGIC_FLAG;
-    rf_para.poweroffset_valid = RF_PARA_VALID_FLAG;
-    rf_para.poweroffset[0] = pwrOffset[0];
-    rf_para.poweroffset[1] = pwrOffset[6];
-    rf_para.poweroffset[2] = pwrOffset[12];
-    rf_para.crc32 = BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8);
+    // rf_para.magic = RF_PARA_MAGIC_FLAG;
+    // rf_para.poweroffset_valid = RF_PARA_VALID_FLAG;
+    // rf_para.poweroffset[0] = pwrOffset[0];
+    // rf_para.poweroffset[1] = pwrOffset[6];
+    // rf_para.poweroffset[2] = pwrOffset[12];
+    // rf_para.crc32 = BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8);
 
-    if (program) {
-        return mfg_flash_program();
-    } else {
-        return 0;
-    }
+    // if (program) {
+    //     return mfg_flash_program();
+    // } else {
+    return 0;
+    // }
 }
 
 void mfg_flash_write_poweroffset(void)
@@ -168,55 +168,55 @@ int8_t mfg_flash_read_poweroffset(int8_t pwrOffset[14], uint8_t reload)
         return -1;
     }
 
-    if (rf_para.magic == RF_PARA_MAGIC_FLAG) {
-        if (rf_para.crc32 == (BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8))) {
-            if (rf_para.poweroffset_valid == RF_PARA_VALID_FLAG) {
-                memset(pwrOffset, 0, 14);
-                pwrOffsetTmp[0] = rf_para.poweroffset[0];
-                pwrOffsetTmp[1] = rf_para.poweroffset[1];
-                pwrOffsetTmp[2] = rf_para.poweroffset[2];
+    // if (rf_para.magic == RF_PARA_MAGIC_FLAG) {
+    //     if (rf_para.crc32 == (BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8))) {
+    //         if (rf_para.poweroffset_valid == RF_PARA_VALID_FLAG) {
+    //             memset(pwrOffset, 0, 14);
+    //             pwrOffsetTmp[0] = rf_para.poweroffset[0];
+    //             pwrOffsetTmp[1] = rf_para.poweroffset[1];
+    //             pwrOffsetTmp[2] = rf_para.poweroffset[2];
 
-                pwrOffset[0] = pwrOffsetTmp[0];
+    //             pwrOffset[0] = pwrOffsetTmp[0];
 
-                step = (pwrOffsetTmp[1] - pwrOffsetTmp[0]) * 100 / 6;
-                pwrOffset[1] = (step + 50) / 100 + pwrOffsetTmp[0];
-                pwrOffset[2] = (step * 2 + 50) / 100 + pwrOffsetTmp[0];
-                pwrOffset[3] = (step * 3 + 50) / 100 + pwrOffsetTmp[0];
-                pwrOffset[4] = (step * 4 + 50) / 100 + pwrOffsetTmp[0];
-                pwrOffset[5] = (step * 5 + 50) / 100 + pwrOffsetTmp[0];
+    //             step = (pwrOffsetTmp[1] - pwrOffsetTmp[0]) * 100 / 6;
+    //             pwrOffset[1] = (step + 50) / 100 + pwrOffsetTmp[0];
+    //             pwrOffset[2] = (step * 2 + 50) / 100 + pwrOffsetTmp[0];
+    //             pwrOffset[3] = (step * 3 + 50) / 100 + pwrOffsetTmp[0];
+    //             pwrOffset[4] = (step * 4 + 50) / 100 + pwrOffsetTmp[0];
+    //             pwrOffset[5] = (step * 5 + 50) / 100 + pwrOffsetTmp[0];
 
-                pwrOffset[6] = pwrOffsetTmp[1];
+    //             pwrOffset[6] = pwrOffsetTmp[1];
 
-                step = (pwrOffsetTmp[2] - pwrOffsetTmp[1]) * 100 / 6;
-                pwrOffset[7] = (step + 50) / 100 + pwrOffsetTmp[1];
-                pwrOffset[8] = (step * 2 + 50) / 100 + pwrOffsetTmp[1];
-                pwrOffset[9] = (step * 3 + 50) / 100 + pwrOffsetTmp[1];
-                pwrOffset[10] = (step * 4 + 50) / 100 + pwrOffsetTmp[1];
-                pwrOffset[11] = (step * 5 + 50) / 100 + pwrOffsetTmp[1];
+    //             step = (pwrOffsetTmp[2] - pwrOffsetTmp[1]) * 100 / 6;
+    //             pwrOffset[7] = (step + 50) / 100 + pwrOffsetTmp[1];
+    //             pwrOffset[8] = (step * 2 + 50) / 100 + pwrOffsetTmp[1];
+    //             pwrOffset[9] = (step * 3 + 50) / 100 + pwrOffsetTmp[1];
+    //             pwrOffset[10] = (step * 4 + 50) / 100 + pwrOffsetTmp[1];
+    //             pwrOffset[11] = (step * 5 + 50) / 100 + pwrOffsetTmp[1];
 
-                pwrOffset[12] = pwrOffsetTmp[2];
+    //             pwrOffset[12] = pwrOffsetTmp[2];
 
-                pwrOffset[13] = (step * 7 + 50) / 100 + pwrOffsetTmp[1];
-                return 0;
-            }
-        }
-    }
+    //             pwrOffset[13] = (step * 7 + 50) / 100 + pwrOffsetTmp[1];
+    //             return 0;
+    //         }
+    //     }
+    // }
 
     return -1;
 }
 
 int8_t mfg_flash_write_macaddr_pre(uint8_t mac[6], uint8_t program)
 {
-    rf_para.magic = RF_PARA_MAGIC_FLAG;
-    rf_para.mac_valid = RF_PARA_VALID_FLAG;
-    memcpy(rf_para.mac, mac, 6);
-    rf_para.crc32 = BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8);
+    // rf_para.magic = RF_PARA_MAGIC_FLAG;
+    // rf_para.mac_valid = RF_PARA_VALID_FLAG;
+    // memcpy(rf_para.mac, mac, 6);
+    // rf_para.crc32 = BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8);
 
-    if (program) {
-        return mfg_flash_program();
-    } else {
-        return 0;
-    }
+    // if (program) {
+    //     return mfg_flash_program();
+    // } else {
+    return 0;
+    // }
 }
 
 void mfg_flash_write_macaddr(void)
@@ -231,14 +231,14 @@ int8_t mfg_flash_read_macaddr(uint8_t mac[6], uint8_t reload)
         return -1;
     }
 
-    if (rf_para.magic == RF_PARA_MAGIC_FLAG) {
-        if (rf_para.crc32 == (BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8))) {
-            if (rf_para.mac_valid == RF_PARA_VALID_FLAG) {
-                memcpy(mac, rf_para.mac, 6);
-                return 0;
-            }
-        }
-    }
+    // if (rf_para.magic == RF_PARA_MAGIC_FLAG) {
+    //     if (rf_para.crc32 == (BFLB_Soft_CRC32(&rf_para.capcode_valid, sizeof(rf_para) - 8))) {
+    //         if (rf_para.mac_valid == RF_PARA_VALID_FLAG) {
+    //             memcpy(mac, rf_para.mac, 6);
+    //             return 0;
+    //         }
+    //     }
+    // }
 
     return -1;
 }
