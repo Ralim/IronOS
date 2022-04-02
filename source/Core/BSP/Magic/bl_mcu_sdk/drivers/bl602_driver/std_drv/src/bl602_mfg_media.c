@@ -1,5 +1,6 @@
 #include "bl602_mfg_media.h"
-
+#include "bl602_mfg_efuse.h"
+#include "bl602_mfg_flash.h
 static uint8_t rf_para_on_flash = 0;
 
 int8_t mfg_media_init_need_lock(SPI_Flash_Cfg_Type *flashCfg)
@@ -183,7 +184,7 @@ int8_t mfg_media_write_macaddr_pre_with_lock(uint8_t mac[6], uint8_t program)
     return ret;
 }
 
-void mfg_media_write_macaddr_need_lock(void)
+int mfg_media_write_macaddr_need_lock(void)
 {
     if (rf_para_on_flash) {
         return mfg_flash_write_macaddr();
