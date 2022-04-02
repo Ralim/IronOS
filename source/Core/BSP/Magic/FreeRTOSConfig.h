@@ -45,15 +45,23 @@
 #define uartPRIMARY_PRIORITY (configMAX_PRIORITIES - 3)
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /* Normal assert() semantics without relying on the provision of an assert.h
 header file. */
 void vAssertCalled(void);
+
+void vPortEnterCritical(void);
+void vPortExitCritical(void);
+
 #define configASSERT(x) \
   if ((x) == 0)         \
   vAssertCalled()
-void vPortEnterCritical(void) {}
-void vPortExitCritical(void) {}
 
+#ifdef __cplusplus
+}
+#endif
 #if (configUSE_TICKLESS_IDLE != 0)
 void vApplicationSleep(uint32_t xExpectedIdleTime);
 #define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime) vApplicationSleep(xExpectedIdleTime)

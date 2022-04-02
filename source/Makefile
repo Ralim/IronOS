@@ -96,7 +96,6 @@ MAGIC_COMPONENTS_DIR = $(MAGIC_SDK_DIR)/components
 
 MAGIC_COMPONENTS_FREERTOS_DIR = $(MAGIC_COMPONENTS_DIR)/freertos
 MAGIC_COMPONENTS_FREERTOS_BL602_DIR = $(MAGIC_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl602
-MAGIC_COMPONENTS_FREERTOS_INC_DIR = $(MAGIC_COMPONENTS_FREERTOS_DIR)/include
 
 
 MAGIC_COMPONENTS_NMSIS_DIR = $(MAGIC_COMPONENTS_DIR)/nmsis
@@ -244,7 +243,6 @@ DEVICE_INCLUDES = -I$(MAGIC_DIR) \
 	-I$(MAGIC_COMPONENTS_DIR) \
 	-I$(MAGIC_COMPONENTS_FREERTOS_DIR) \
 	-I$(MAGIC_COMPONENTS_FREERTOS_BL602_DIR) \
-	-I$(MAGIC_COMPONENTS_FREERTOS_INC_DIR) \
 	-I$(MAGIC_COMPONENTS_NMSIS_DIR) \
 	-I$(MAGIC_COMPONENTS_USB_STACK_DIR) \
 	-I$(MAGIC_DRIVERS_DIR) \
@@ -278,6 +276,9 @@ DEV_GLOBAL_DEFS=
 #Required to be turned off due to their drivers tripping warnings
 DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough 
 DEV_CXXFLAGS= $(DEV_CFLAGS)
+flash_size=128k
+bootldr_size=0x0
+
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
@@ -483,6 +484,7 @@ $(HEXFILE_DIR)/$(model)_%.elf : \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
+	@echo $(CXXFLAGS) 
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \

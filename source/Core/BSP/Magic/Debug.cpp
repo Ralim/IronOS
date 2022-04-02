@@ -8,10 +8,6 @@
 #include "FreeRTOS.h"
 #include "Pins.h"
 
-extern "C" {
-
-#include "gd32vf103_usart.h"
-}
 char                    uartOutputBuffer[uartOutputBufferLength];
 volatile uint32_t       currentOutputPos = 0xFF;
 volatile uint32_t       outputLength     = 0;

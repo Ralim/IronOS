@@ -8,7 +8,6 @@
 #include "Pins.h"
 #include "QC3.h"
 #include "Settings.h"
-#include "gd32vf103_libopt.h"
 
 #ifdef POW_QC
 void QC_DPlusZero_Six() {
@@ -46,6 +45,7 @@ void QC_Post_Probe_En() {
 
 uint8_t QC_DM_PulledDown() {
   // return gpio_input_bit_get(USB_DM_LOW_GPIO_Port, USB_DM_Pin) == RESET ? 1 : 0;
+  return false;
 }
 #endif
 void QC_resync() {

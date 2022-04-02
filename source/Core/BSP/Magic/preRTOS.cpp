@@ -8,7 +8,6 @@
 #include "BSP.h"
 #include "Pins.h"
 #include "Setup.h"
-#include "gd32vf103_libopt.h"
 #include <I2C_Wrapper.hpp>
 void preRToSInit() {
   // Normal system bringup -- GPIO etc

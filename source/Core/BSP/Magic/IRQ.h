@@ -11,7 +11,6 @@
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
 #include "Setup.h"
-#include "gd32vf103.h"
 #include "main.hpp"
 
 #ifdef __cplusplus

@@ -7,8 +7,9 @@
 #include "Setup.h"
 #include "BSP.h"
 #include "Debug.h"
+#include "FreeRTOSConfig.h"
 #include "Pins.h"
-#include "gd32vf103.h"
+#include "bflb_platform.h"
 #include "history.hpp"
 #include <string.h>
 #define ADC_NORM_SAMPLES 16
@@ -38,10 +39,10 @@ uint16_t getADCVin(uint8_t sample) {
   if (sample) {
     uint16_t latestADC = 0;
 
-    latestADC += adc_inserted_data_read(ADC1, 0);
-    latestADC += adc_inserted_data_read(ADC1, 1);
-    latestADC += adc_inserted_data_read(ADC1, 2);
-    latestADC += adc_inserted_data_read(ADC1, 3);
+    // latestADC += adc_inserted_data_read(ADC1, 0);
+    // latestADC += adc_inserted_data_read(ADC1, 1);
+    // latestADC += adc_inserted_data_read(ADC1, 2);
+    // latestADC += adc_inserted_data_read(ADC1, 3);
     latestADC <<= 1;
     filter.update(latestADC);
   }
@@ -54,10 +55,10 @@ uint16_t getTipRawTemp(uint8_t sample) {
   if (sample) {
     uint16_t latestADC = 0;
 
-    latestADC += adc_inserted_data_read(ADC0, 0);
-    latestADC += adc_inserted_data_read(ADC0, 1);
-    latestADC += adc_inserted_data_read(ADC0, 2);
-    latestADC += adc_inserted_data_read(ADC0, 3);
+    // latestADC += adc_inserted_data_read(ADC0, 0);
+    // latestADC += adc_inserted_data_read(ADC0, 1);
+    // latestADC += adc_inserted_data_read(ADC0, 2);
+    // latestADC += adc_inserted_data_read(ADC0, 3);
     latestADC <<= 1;
     filter.update(latestADC);
     return latestADC;
@@ -68,3 +69,13 @@ uint16_t getTipRawTemp(uint8_t sample) {
 void setupFUSBIRQ() {
   // #TODO
 }
+
+void vAssertCalled(void) {
+  MSG((char *)"vAssertCalled\r\n");
+
+  while (1)
+    ;
+}
+
+void vPortEnterCritical(void) {}
+void vPortExitCritical(void) {}
