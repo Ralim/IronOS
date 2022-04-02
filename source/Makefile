@@ -73,7 +73,25 @@ PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portabl
 
 MAGIC_DIR = ./Core/BSP/Magic
 MAGIC_SDK_DIR = $(MAGIC_DIR)/bl_mcu_sdk
-MAGIC_VENDOR_BSP_COMMON_DIR = $(MAGIC_SDK_DIR)/bsp/bsp_common
+
+MAGIC_VENDOR_BSP_DIR = $(MAGIC_SDK_DIR)/bsp
+MAGIC_VENDOR_BSP_COMMON_DIR = $(MAGIC_VENDOR_BSP_DIR)/bsp_common
+MAGIC_VENDOR_BSP_BOARD_DIR = $(MAGIC_VENDOR_BSP_DIR)/board
+
+MAGIC_VENDOR_BSP_ES8388_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/es8388
+MAGIC_VENDOR_BSP_ETHERNET_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/ethernet
+MAGIC_VENDOR_BSP_FATFS_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/fatfs
+MAGIC_VENDOR_BSP_IL9341_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/il9341
+MAGIC_VENDOR_BSP_IMAGE_SENSOR_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/image_sensor
+MAGIC_VENDOR_BSP_LVGL_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/lvgl
+MAGIC_VENDOR_BSP_MCU_LCD_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/mcu_lcd
+MAGIC_VENDOR_BSP_PLATFORM_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/platform
+MAGIC_VENDOR_BSP_PSRAM_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/psram
+MAGIC_VENDOR_BSP_SPI_SD_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/spi_sd
+MAGIC_VENDOR_BSP_TOUCH_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/touch
+MAGIC_VENDOR_BSP_USB_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/usb
+MAGIC_VENDOR_BSP_WM8978_DIR = $(MAGIC_VENDOR_BSP_COMMON_DIR)/wm8978
+
 
 MAGIC_VENDOR_EXAMPLES_DIR  = $(MAGIC_SDK_DIR)/examples
 MAGIC_COMMON_DIR = $(MAGIC_SDK_DIR)/common
@@ -159,7 +177,7 @@ ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 			-D STM32F10X_MD 
 	DEV_LDFLAGS= 
 	DEV_AFLAGS=
-	DEV_CFLAGS= 
+	DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
 	DEV_CXXFLAGS= 
 	CPUFLAGS= -mcpu=cortex-m3     \
 			-mthumb 			\
@@ -185,7 +203,7 @@ ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
 			-D STM32F10X_MD 
 	DEV_LDFLAGS= 
 	DEV_AFLAGS=
-	DEV_CFLAGS= 
+	DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
 	DEV_CXXFLAGS= 
 	CPUFLAGS= -mcpu=cortex-m3     \
 			-mthumb 			\
@@ -218,7 +236,7 @@ ifeq ($(model),$(PINECIL_MODELS))
 	DEV_LDFLAGS=-nostartfiles --specs=patch.specs
 	DEV_AFLAGS=  
 	DEV_GLOBAL_DEFS= -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
-	DEV_CFLAGS=
+	DEV_CFLAGS= -D VECT_TAB_OFFSET=$(bootldr_size)U
 	DEV_CXXFLAGS=
 endif
 
@@ -233,6 +251,7 @@ $(info Building for Magic ~~~~~ ^^__^^ )
 DEVICE_INCLUDES = -I$(MAGIC_DIR) \
 	-I$(MAGIC_SDK_DIR) \
 	-I$(MAGIC_VENDOR_BSP_COMMON_DIR) \
+	-I$(MAGIC_VENDOR_BSP_PLATFORM_DIR) \
 	-I$(MAGIC_VENDOR_EXAMPLES_DIR) \
 	-I$(MAGIC_COMMON_DIR) \
 	-I$(MAGIC_COMMON_BL_MATH_DIR) \
@@ -269,7 +288,20 @@ DEVICE_INCLUDES = -I$(MAGIC_DIR) \
 	-I$(MAGIC_DRIVERS_REGS_DIR) \
 	-I$(MAGIC_DRIVERS_RISCV_DIR) \
 	-I$(MAGIC_DRIVERS_STARTUP_DIR) \
-	-I$(MAGIC_DRIVERS_STD_DRV_DIR) 
+	-I$(MAGIC_DRIVERS_STD_DRV_DIR) \
+	-I$(MAGIC_VENDOR_BSP_ES8388_DIR) \
+	-I$(MAGIC_VENDOR_BSP_ETHERNET_DIR) \
+	-I$(MAGIC_VENDOR_BSP_FATFS_DIR) \
+	-I$(MAGIC_VENDOR_BSP_IL9341_DIR) \
+	-I$(MAGIC_VENDOR_BSP_IMAGE_SENSOR_DIR) \
+	-I$(MAGIC_VENDOR_BSP_LVGL_DIR) \
+	-I$(MAGIC_VENDOR_BSP_MCU_LCD_DIR) \
+	-I$(MAGIC_VENDOR_BSP_PLATFORM_DIR) \
+	-I$(MAGIC_VENDOR_BSP_PSRAM_DIR) \
+	-I$(MAGIC_VENDOR_BSP_SPI_SD_DIR) \
+	-I$(MAGIC_VENDOR_BSP_TOUCH_DIR) \
+	-I$(MAGIC_VENDOR_BSP_USB_DIR) \
+	-I$(MAGIC_VENDOR_BSP_WM8978_DIR) 
 
 
 DEVICE_BSP_DIR = ./Core/BSP/Magic
@@ -281,11 +313,12 @@ LDSCRIPT=./Core/BSP/Magic/bl_mcu_sdk/drivers/bl602_driver/bl602_flash.ld
 CPUFLAGS= -march=rv32imafc \
 			-mabi=ilp32f \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
-			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler
+			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV
 DEV_LDFLAGS=-nostartfiles --specs=patch.specs
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= 
-DEV_CFLAGS=
+#Required to be turned off due to their drivers tripping warnings
+DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
 DEV_CXXFLAGS=
 endif
 
@@ -299,24 +332,39 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(INC_PD_DRIVERS_DIR) \
 	  $(DEVICE_INCLUDES) 
 
+EXCLUDED_DIRS := -o -path  $(MAGIC_VENDOR_BSP_ES8388_DIR) \
+-o -path  $(MAGIC_VENDOR_BSP_ETHERNET_DIR) \
+-o -path  $(MAGIC_VENDOR_BSP_FATFS_DIR) \
+-o -path  $(MAGIC_VENDOR_BSP_IL9341_DIR) \
+-o -path  $(MAGIC_VENDOR_BSP_IMAGE_SENSOR_DIR) \
+-o -path  $(MAGIC_VENDOR_BSP_LVGL_DIR) \
+-o -path  $(MAGIC_VENDOR_BSP_MCU_LCD_DIR) \
+-o -path  $(MAGIC_VENDOR_BSP_BOARD_DIR) \
+-o -path  $(MAGIC_COMPONENTS_RT_THREAD_DIR) \
+-o -path $(MAGIC_VENDOR_BSP_PSRAM_DIR) \
+-o -path $(MAGIC_VENDOR_BSP_SPI_SD_DIR) \
+-o -path $(MAGIC_VENDOR_BSP_TOUCH_DIR) \
+-o -path $(MAGIC_VENDOR_BSP_USB_DIR) \
+-o -path $(MAGIC_VENDOR_BSP_WM8978_DIR) 
+
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
-$(shell find $(DEVICE_BSP_DIR) -type d  \( -path $(MAGIC_VENDOR_EXAMPLES_DIR) -o -path $(MAGIC_COMPONENTS_RT_THREAD_DIR) -o -path $(MAGIC_VENDOR_BSP_COMMON_DIR)  \) -prune -false -o -type f -name '*.c')\
+$(shell find $(DEVICE_BSP_DIR) -type d  \( -path $(MAGIC_VENDOR_EXAMPLES_DIR) $(EXCLUDED_DIRS)  \) -prune -false -o -type f -name '*.c')\
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') \
 $(SOURCE_BRIEFLZ_DIR)/depack.c
 # We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
 SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -path $(PD_DRIVER_TESTS_DIR) -prune -false -o -type f -name '*.cpp') \
-$(shell find $(DEVICE_BSP_DIR) -type d  \( -path $(MAGIC_VENDOR_EXAMPLES_DIR) -o -path $(MAGIC_COMPONENTS_RT_THREAD_DIR) -o -path $(MAGIC_VENDOR_BSP_COMMON_DIR) \) -prune -false -o -type f -name '*.cpp')  \
+$(shell find $(DEVICE_BSP_DIR) -type d  \( -path $(MAGIC_VENDOR_EXAMPLES_DIR) $(EXCLUDED_DIRS) \) -prune -false -o -type f -name '*.cpp')  \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
 OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant -ffreestanding -fno-common
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U
+GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model)
 
 DEBUG=-g3 
 ifdef swd_enable
@@ -517,7 +565,6 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Compiling ${<}
-	@echo $(CFLAGS)
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OUTPUT_DIR)/%.o : %.cpp Makefile

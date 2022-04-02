@@ -24,16 +24,8 @@
 #ifndef __BL602_CONFIG_H__
 #define __BL602_CONFIG_H__
 
-#if defined(bl602_iot)
-#include "bl602_iot/peripheral_config.h"
-#include "bl602_iot/clock_config.h"
-#include "bl602_iot/pinmux_config.h"
-#elif defined(bl602_boot2)
-#include "bl602_boot2/peripheral_config.h"
-#include "bl602_boot2/clock_config.h"
-#include "bl602_boot2/pinmux_config.h"
-#else
-#error "do not find board,please check your board name"
-#endif
+#include "clock_config.h"
+#include "peripheral_config.h"
+#include "pinmux_config.h"
 
 #endif
