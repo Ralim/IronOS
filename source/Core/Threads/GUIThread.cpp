@@ -806,12 +806,14 @@ static void showPDDebug(void) {
   uint8_t     screen = 0;
   ButtonState b;
   for (;;) {
-    OLED::clearScreen();                                // Ensure the buffer starts clean
-    OLED::setCursor(0, 0);                              // Position the cursor at the 0,0 (top left)
-    OLED::print(SymbolVersionNumber, FontStyle::SMALL); // Print Title
-    OLED::setCursor(0, 8);                              // second line
+    OLED::clearScreen();                          // Ensure the buffer starts clean
+    OLED::setCursor(0, 0);                        // Position the cursor at the 0,0 (top left)
+    OLED::print(SymbolPDDebug, FontStyle::SMALL); // Print Title
+    OLED::setCursor(0, 8);                        // second line
     if (screen == 0) {
       // Print the PD state machine
+      OLED::print(SymbolState, FontStyle::SMALL);
+      OLED::print(SymbolSpace, FontStyle::SMALL);
       OLED::printNumber(USBPowerDelivery::getStateNumber(), 2, FontStyle::SMALL, true);
     } else {
       // Print out the Proposed power options one by one
@@ -823,8 +825,9 @@ static void showPDDebug(void) {
 
         // print out this entry of the proposal
         OLED::printNumber(screen, 1, FontStyle::SMALL, true); // print the entry number
-        // TODO: put a gap
-        OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true);   // print the voltage
+        OLED::print(SymbolSpace, FontStyle::SMALL);
+        OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
+        OLED::print(SymbolSpace, FontStyle::SMALL);
         OLED::printNumber(current_a_x100 / 10, 3, FontStyle::SMALL, true); // print the current in 0.1A res
       } else {
         screen = 0;
@@ -905,7 +908,14 @@ void startGUITask(void const *argument) {
   }
   getTipRawTemp(1); // reset filter
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
-
+  // If the front button is held down, on supported devices, show PD debugging metrics
+#if POW_PD
+#ifdef HAS_POWER_DEBUG_MENU
+  if (getButtonA()) {
+    showPDDebug();
+  }
+#endif
+#endif
   BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
@@ -943,12 +953,8 @@ void startGUITask(void const *argument) {
       showDebugMenu();
       break;
     case BUTTON_F_LONG:
-#if POW_PD
-      showPDDebug();
-#else
       gui_solderingTempAdjust();
       saveSettings();
-#endif
       break;
     case BUTTON_F_SHORT:
       if (!isTipDisconnected()) {

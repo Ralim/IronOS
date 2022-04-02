@@ -24,6 +24,8 @@ extern const char *SymbolVolts;
 extern const char *SymbolDC;
 extern const char *SymbolCellCount;
 extern const char *SymbolVersionNumber;
+extern const char *SymbolPDDebug;
+extern const char *SymbolState;
 
 extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
