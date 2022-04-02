@@ -1,7 +1,7 @@
 # Getting Started
 
-Getting started with Iron OS on your Pinecil/TS80/TS80P/TS100.
-If your device did not come with Iron OS already installed, or if you need to update to the latest version; please see the [Flashing Guide](/Documentation/Flashing.md).
+Getting started with IronOS on your Pinecil/TS80/TS80P/TS100.
+If your device did not come with IronOS already installed, or if you need to update to the latest version; please see the [Flashing Guide](/Documentation/Flashing.md). It is recommended to update to the newest stable release.
 
 Once your Iron has been flashed, on first power on it _may_ warn you about the system settings being reset.
 _Do not panic_; this is 100% completely normal. This is here to note to you that they have been reset to handle the internal structure changing.
@@ -18,7 +18,7 @@ By default this will show a screen similar to the one below:
 
 Note that this may be drawn mirrored depending on the orientation of your screen.
 
-The soldering iron symbol on the screen will appear near the tip. This is here to indicate that pressing the button closest to the front of the soldering iron will enter soldering mode.
+The soldering iron symbol on the screen will appear near the tip. This is here to indicate that pressing the button closest to the front of the iron will enter soldering mode.
 
 And naturally, the spanner like icon represents that pressing the button near the rear of the soldering iron will enter the settings menu.
 
@@ -40,40 +40,43 @@ If you press and hold the button near the rear of the iron it will take you into
 
 ## Soldering Mode
 
-When you press the button to enter into the soldering mode, the iron will instantly start to heat up the tip.
+When you press the button to enter the soldering mode, the iron will instantly start to heat up the tip.
 
-The firmware defaults to 320C as the set point for the soldering mode, however on this screen you can enter into the adjustment screen by pressing either button.
+The firmware defaults to 320 °C as the set point for the soldering mode, however on this screen you can enter into the adjustment screen by pressing either button.
 
-Pressing and holding the button near the tip will enter **boost** mode. This allows temporarily overriding the set temperature to a higher (or lower) value. This can be useful as a way to force the tip to a higher temperature to drive more wattage into a large joint when the thermal connection is not ideal.
+Pressing and holding the button near the tip will enter **Boost** mode. This allows a temporary override of the set temperature to a higher (or lower) value. This can be useful as a way to force the tip to a higher temperature to drive more wattage into a large joint when the thermal connection is not ideal.
 
 Pressing and holding the rear button will exit soldering mode and land you back at the home screen. You can also do this by pressing both buttons at once and this will also work, this is a bit harder to do but is kept for compatibility with the Miniware firmware.
 
 Pressing and holding **both** buttons at once will enter locked mode, which will prevent the buttons from doing anything. You can in the settings allow boost mode in locked mode optionally. This can be useful if you find yourself hitting the buttons and entering into the temperature adjustment screen by accident.
 
-### Idle sleep
+### Idle Sleep
 
-If the iron detects a period of time without any significant movement, it will enter into a sleep mode. This is indicated with a graphic on the screen similar to ZZzz (or text in detailed mode).
+If the iron detects a period of time without any significant movement, it will enter sleep mode. This is indicated with a screen graphic similar to Zzzz (or text in detailed mode).
 
-In this mode, the temperature of the iron will automatically reduce down to a temperature just below the melting point of the solder. This helps reduce the rate of oxidation and damage to the iron tip.
+In Sleep mode, the temperature of the iron automatically lowers to 150 °C (default), which is just below the melting point of the solder. This helps reduce rate of oxidation and damage to the iron tip. In general, when not using the iron, unplug it or let it sleep to increase the longevity of replaceable tips. The default sleep temperature can be customized.
 
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
-The Pinecil has a footprint (unpopulated) on the PCB for a hall effect sensor (Si7210). If you fit this then iron will additionally force sleep when it detects a strong magnetic field near the tip of the plastic body. This allows attaching a strong magnet near your iron holder to ensure it always enters sleep.
+Optional Hall Effect Feature (Pinecil only):
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Adding the sensor and placing a strong magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for details on [installation](/Documentation/HallSensor.md).
 
-### Idle shutdown
 
-If, after entering sleep mode the iron still does not see movement for a much longer time; it will shut down and return to the home screen.
+### Idle Shutdown
+
+If, after entering sleep mode, the iron still does not see movement for a much longer time (default=10 minutes); it will shut down and return to the home screen.
+
 
 ## Settings Menu
 
-The settings menu is the most often evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has a description so that you don't _need_ to come back here to figure them all out.
+The settings menu is the most often evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has an on-screen description so you don't _need_ to come back here to figure them all out.
 
 To navigate the menu, the two buttons act separately.
-The button that you pressed to enter the menu (rear) cycles down the options, and the other button (front) will change the current option.
+The button that you pressed to enter the menu (rear) scrolls down the options, and the other button (front) will enter and change the current option.
 
-To see a description of an option, just pause and wait and after a little bit, it will scroll across the screen.
+To see a description of an option, just wait and after a little time, it will scroll across the screen.
 
-The menu is comprised of a "main menu" of categories and then sub-items that allows you to adjust parameters.
+The menu is comprised of a 'main menu' of categories and then sub-items that allows you to adjust parameters.
 
 You can long hold buttons to change through options faster, and there is some acceleration when holding the buttons.
 
@@ -81,4 +84,4 @@ There is a small scrollbar that will be shown along the edge of the screen to in
 
 Additionally, this scrollbar will blink rapidly when you are on the last item in a menu choice.
 
-I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit you.
+I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs.

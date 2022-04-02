@@ -14,7 +14,7 @@ I highly recommend reading the installation guide fully when installing on your 
 For soldering irons that are designed to be powered by "smart" power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100 & Pinecil), settings for a cutoff voltage for battery protection are supported.
 
-There are 29 languages currently supported as of present. When downloading the firmware for your soldering iron take note of the language code in the file name.
+There are 30 languages currently supported as of present. When downloading the firmware for your soldering iron take note of the language code in the file name.
 
 This project is considered feature complete for use as a soldering iron, _so please suggest any feature improvements you would like!_
 
@@ -35,7 +35,7 @@ For notes on installation for your device, please refer to the [Flashing Guide](
 - Motion wake support
 - All settings exposed in the intuitive menu
 - (TS100) Set a voltage lower limit for Lithium batteries so you don't kill your battery pack
-- (TS80) Set 18W or 24W settings for your power bank
+- (TS80) Set 18 W or 24 W settings for your power bank
 - (TS80P) Automatically negotiates appropriate PD and falls back to QC mode like TS80
 - (Pinecil) Supports all 3 power modes (PD, QC, DC In).
 - Improved readability Fonts, supporting multiple languages

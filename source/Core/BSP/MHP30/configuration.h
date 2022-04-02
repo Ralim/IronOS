@@ -156,3 +156,5 @@
 #define NO_SLEEP_MODE
 #endif
 #endif
+
+#define FLASH_LOGOADDR (0x08000000 + (62 * 1024))

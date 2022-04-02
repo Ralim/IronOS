@@ -7,6 +7,7 @@
 extern "C" {
 #include "FreeRTOSConfig.h"
 }
+#include "BootLogo.h"
 #include "Buttons.hpp"
 #include "I2CBB.hpp"
 #include "LIS2DH12.hpp"
@@ -859,16 +860,8 @@ void startGUITask(void const *argument) {
   }
   getTipRawTemp(1); // reset filter
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
-  uint32_t ticks = xTaskGetTickCount();
-  ticks += (TICKS_SECOND * 4); // 4 seconds from now
-  while (xTaskGetTickCount() < ticks) {
-    if (showBootLogoIfavailable() == false)
-      ticks = xTaskGetTickCount();
-    ButtonState buttons = getButtonState();
-    if (buttons)
-      ticks = xTaskGetTickCount(); // make timeout now so we will exit
-    GUIDelay();
-  }
+
+  BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
 
