@@ -1,3 +1,6 @@
 [submodule "source/Core/Drivers/usb-pd"]
 	path = source/Core/Drivers/usb-pd
 	url = https://github.com/Ralim/usb-pd.git
+[submodule "source/Core/BSP/Magic/bl_mcu_sdk"]
+	path = source/Core/BSP/Magic/bl_mcu_sdk
+	url = https://github.com/bouffalolab/bl_mcu_sdk.git
