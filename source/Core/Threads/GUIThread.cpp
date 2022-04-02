@@ -819,7 +819,7 @@ static void showPDDebug(void) {
       OLED::print(SymbolSpace, FontStyle::SMALL);
       // Also print vbus mod status
       if (USBPowerDelivery::fusbPresent()) {
-        if (USBPowerDelivery::negotiationComplete()) {
+        if (USBPowerDelivery::negotiationComplete() || (xTaskGetTickCount() > (TICKS_SECOND * 10))) {
           if (!USBPowerDelivery::isVBUSConnected()) {
             OLED::print(SymbolNoVBus, FontStyle::SMALL);
           }
