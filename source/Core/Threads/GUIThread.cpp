@@ -822,6 +822,8 @@ static void showPDDebug(void) {
         if (USBPowerDelivery::negotiationComplete() || (xTaskGetTickCount() > (TICKS_SECOND * 10))) {
           if (!USBPowerDelivery::isVBUSConnected()) {
             OLED::print(SymbolNoVBus, FontStyle::SMALL);
+          } else {
+            OLED::print(SymbolVBus, FontStyle::SMALL);
           }
         }
       }

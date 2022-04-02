@@ -28,6 +28,7 @@ extern const char *SymbolVersionNumber;
 extern const char *SymbolPDDebug;
 extern const char *SymbolState;
 extern const char *SymbolNoVBus;
+extern const char *SymbolVBus;
 
 extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
