@@ -81,7 +81,7 @@ bool USBPowerDelivery::isVBUSConnected() {
   }
 }
 pd_msg  lastCapabilities;
-pd_msg *USBPowerDelivery::getLastSeenCapabilities() { return &lastCapabilities }
+pd_msg *USBPowerDelivery::getLastSeenCapabilities() { return &lastCapabilities; }
 
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   memcpy(&lastCapabilities, capabilities, sizeof(pd_msg));

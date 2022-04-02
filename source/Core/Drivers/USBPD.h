@@ -2,6 +2,7 @@
 #ifndef DRIVERS_USBPD_H_
 #define DRIVERS_USBPD_H_
 #include "configuration.h"
+#include "pdb_msg.h"
 #include <stdbool.h>
 #include <stdint.h>
 
