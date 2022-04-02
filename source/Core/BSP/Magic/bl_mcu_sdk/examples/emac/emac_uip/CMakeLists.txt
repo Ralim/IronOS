@@ -1,6 +1,0 @@
-set(BSP_COMMON_DIR ${CMAKE_SOURCE_DIR}/bsp/bsp_common)
-set(TARGET_REQUIRED_PRIVATE_INCLUDE ${BSP_COMMON_DIR}/ethernet)
-list(APPEND TARGET_REQUIRED_SRCS clock-arch.c tapdev.c timer.c uip.c uip_arp.c psock.c httpd.c httpd-cgi.c httpd-fs.c http-strings.c uip_main.c)
-list(APPEND TARGET_REQUIRED_SRCS ${BSP_COMMON_DIR}/ethernet/emac_phy.c)
-set(mains main.c)
-generate_bin()

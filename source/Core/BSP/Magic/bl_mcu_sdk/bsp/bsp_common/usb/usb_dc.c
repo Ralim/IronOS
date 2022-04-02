@@ -27,18 +27,22 @@
 
 struct device *usb;
 
+#ifdef USB_INDEX
 static void usb_dc_event_callback(struct device *dev, void *args, uint32_t size, uint32_t state)
 {
     usbd_event_notify_handler(state, args);
 }
-
+#endif
 struct device *usb_dc_init(void)
 {
+#ifdef USB_INDEX
     usb_dc_register(USB_INDEX, "usb");
     usb = device_find("usb");
     device_set_callback(usb, usb_dc_event_callback);
     device_open(usb, 0);
     return usb;
+#endif
+    return NULL;
 }
 
 int usbd_set_address(const uint8_t addr)

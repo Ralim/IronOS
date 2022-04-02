@@ -1,5 +1,0 @@
-set(TARGET_REQUIRED_PRIVATE_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/..)
-set(TARGET_REQUIRED_SRCS correlate.c)
-set(TARGET_REQUIRED_LIBS nmsis)
-set(mains main.c)
-generate_bin()

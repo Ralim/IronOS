@@ -1,5 +1,0 @@
-/bazel-*
-*.swp
-.vscode/
-*audio_frontend*
-*google*

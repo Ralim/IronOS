@@ -11,6 +11,7 @@ extern "C" {
 #include "Buttons.hpp"
 #include "I2CBB.hpp"
 #include "LIS2DH12.hpp"
+#include "OLED.hpp"
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"

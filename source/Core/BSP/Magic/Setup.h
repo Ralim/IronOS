@@ -7,7 +7,6 @@
 
 #ifndef PINE_SETUP_H_
 #define PINE_SETUP_H_
-#include "gd32vf103_libopt.h"
 #include <stdint.h>
 
 #ifdef __cplusplus

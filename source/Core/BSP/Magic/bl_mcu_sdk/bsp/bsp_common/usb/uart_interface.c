@@ -61,6 +61,7 @@ void uart_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t s
 }
 void uart1_init(void)
 {
+#ifdef UART1_INDEX
     uart_register(UART1_INDEX, "uart1");
     uart1 = device_find("uart1");
 
@@ -86,6 +87,7 @@ void uart1_init(void)
         DMA_DEV(dma_ch2)->dst_width = DMA_TRANSFER_WIDTH_8BIT;
         device_open(dma_ch2, 0);
     }
+#endif
 }
 
 void uart1_config(uint32_t baudrate, uart_databits_t databits, uart_parity_t parity, uart_stopbits_t stopbits)

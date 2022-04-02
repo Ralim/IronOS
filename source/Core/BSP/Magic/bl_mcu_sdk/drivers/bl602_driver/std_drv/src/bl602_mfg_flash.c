@@ -1,7 +1,7 @@
 #include "bl602_mfg_flash.h"
 #include "partition.h"
 #include "softcrc.h"
-
+#include "bl602_xip_sflash_ext.h"
 // static rf_para_flash_t rf_para;
 static uint32_t rf_para_addr = 0;
 static SPI_Flash_Cfg_Type *pFlashCfg;
@@ -17,47 +17,47 @@ static SPI_Flash_Cfg_Type *pFlashCfg;
 #define RF_PARA_VALID_FLAG 0x5A
 #define RF_PARA_PART_NAME  "rf_para"
 
-PtTable_Stuff_Config ptTableStuff[2];
-PtTable_Entry_Config ptEntry = { 0 };
+// PtTable_Stuff_Config ptTableStuff[2];
+// PtTable_Entry_Config ptEntry = { 0 };
 
 /*partiton need this*/
-void main(void)
-{
-}
+// void main(void)
+// {
+// }
 
-static BL_Err_Type PtTable_Flash_Read(uint32_t addr, uint8_t *data, uint32_t len)
-{
-    XIP_SFlash_Read_Need_Lock_Ext(pFlashCfg, addr, data, len);
-    return SUCCESS;
-}
+// static BL_Err_Type PtTable_Flash_Read(uint32_t addr, uint8_t *data, uint32_t len)
+// {
+//     XIP_SFlash_Read_Need_Lock_Ext(pFlashCfg, addr, data, len);
+//     return SUCCESS;
+// }
 
 int8_t mfg_flash_init(SPI_Flash_Cfg_Type *flashCfg)
 {
-    PtTable_ID_Type activeID;
-    PtTable_Error_Type ret;
+    // PtTable_ID_Type activeID;
+    // PtTable_Error_Type ret;
 
-    pFlashCfg = flashCfg;
+    // pFlashCfg = flashCfg;
 
-    if (pFlashCfg != NULL) {
-        PtTable_Set_Flash_Operation(NULL, NULL, PtTable_Flash_Read);
-        activeID = PtTable_Get_Active_Partition_Need_Lock(ptTableStuff);
+    // if (pFlashCfg != NULL) {
+    //     PtTable_Set_Flash_Operation(NULL, NULL, PtTable_Flash_Read);
+    //     activeID = PtTable_Get_Active_Partition_Need_Lock(ptTableStuff);
 
-        if (PT_TABLE_ID_INVALID == activeID) {
-            mfg_print("No valid PT\r\n");
-            return -1;
-        }
+    //     if (PT_TABLE_ID_INVALID == activeID) {
+    //         mfg_print("No valid PT\r\n");
+    //         return -1;
+    //     }
 
-        ret = PtTable_Get_Active_Entries_By_Name(&ptTableStuff[activeID], (uint8_t *)RF_PARA_PART_NAME, &ptEntry);
+    //     ret = PtTable_Get_Active_Entries_By_Name(&ptTableStuff[activeID], (uint8_t *)RF_PARA_PART_NAME, &ptEntry);
 
-        if (PT_ERROR_SUCCESS == ret) {
-            rf_para_addr = ptEntry.Address[0];
-            mfg_print("RF para flash address=%08x\r\n", (unsigned int)rf_para_addr);
-            return 0;
-        } else {
-            mfg_print("Not found " RF_PARA_PART_NAME "\r\n");
-            return -1;
-        }
-    }
+    //     if (PT_ERROR_SUCCESS == ret) {
+    //         rf_para_addr = ptEntry.Address[0];
+    //         mfg_print("RF para flash address=%08x\r\n", (unsigned int)rf_para_addr);
+    //         return 0;
+    //     } else {
+    //         mfg_print("Not found " RF_PARA_PART_NAME "\r\n");
+    //         return -1;
+    //     }
+    // }
 
     return -1;
 }
@@ -75,28 +75,28 @@ static int8_t mfg_flash_program(void)
         return -1;
     }
 
-    ret = XIP_SFlash_Write_Need_Lock_Ext(pFlashCfg, rf_para_addr, (uint8_t *)&rf_para, sizeof(rf_para));
+    // ret = XIP_SFlash_Write_Need_Lock_Ext(pFlashCfg, rf_para_addr, (uint8_t *)&rf_para, sizeof(rf_para));
 
-    if (ret != SUCCESS) {
-        mfg_print("Flash write error\r\n");
-        return -1;
-    }
+    // if (ret != SUCCESS) {
+    //     mfg_print("Flash write error\r\n");
+    return -1;
+    // }
 
-    return 0;
+    // return 0;
 }
 
 static int8_t mfg_flash_read(void)
 {
-    BL_Err_Type ret;
+    // BL_Err_Type ret;
 
     mfg_print("mfg_flash_read\r\n");
 
-    ret = XIP_SFlash_Read_Need_Lock_Ext(pFlashCfg, rf_para_addr, (uint8_t *)&rf_para, sizeof(rf_para));
+    // ret = XIP_SFlash_Read_Need_Lock_Ext(pFlashCfg, rf_para_addr, (uint8_t *)&rf_para, sizeof(rf_para));
 
-    if (ret != SUCCESS) {
-        mfg_print("Flash write error\r\n");
-        return -1;
-    }
+    // if (ret != SUCCESS) {
+    //     mfg_print("Flash write error\r\n");
+    //     return -1;
+    // }
 
     return 0;
 }
@@ -161,8 +161,8 @@ void mfg_flash_write_poweroffset(void)
 
 int8_t mfg_flash_read_poweroffset(int8_t pwrOffset[14], uint8_t reload)
 {
-    int8_t pwrOffsetTmp[3];
-    int32_t step = 0;
+    // int8_t pwrOffsetTmp[3];
+    // int32_t step = 0;
 
     if ((reload != 0) && (mfg_flash_read() != 0)) {
         return -1;
