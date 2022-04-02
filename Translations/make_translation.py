@@ -113,7 +113,6 @@ def get_constants(build_version: str) -> List[Tuple[str, str]]:
         ("SymbolPDDebug", "PD Debug"),
         ("SymbolState", "State"),
         ("SymbolNoVBus", "No VBus"),
-        
     ]
 
 
