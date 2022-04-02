@@ -68,6 +68,7 @@ enum class SettingsItemIndex : uint8_t {
   LanguageSwitch,
   Brightness,
   ColourInversion,
+  LOGOTime,
   NUM_ITEMS,
 };
 

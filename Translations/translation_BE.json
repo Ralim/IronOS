@@ -2,26 +2,17 @@
   "languageCode": "BE",
   "languageLocalName": "Беларуская",
   "fonts": ["ascii_basic", "latin_extended", "cyrillic"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Каліброўка закончана!",
     "SettingsCalibrationWarning": "Перад тым, як працягнуць, каліласка, упэўнецеся, што джала мае комнатную тэмпературу!",
     "SettingsResetWarning": "Вы ўпэннены, што жадаеце зкінуць налады да першапачатковых значэнняў?",
     "UVLOWarningString": "НАПРУГА--",
     "UndervoltageString": "Нізкая напруга",
     "InputVoltageString": "Сілкаванне В: ",
-    "WarningTipTempString": "Тэмп. джала: ",
-    "BadTipString": "ДЖАЛА--",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Чаканне...",
-    "WarningSimpleString": "ГОРАЧА!",
-    "WarningAdvancedString": "!!! ГАРАЧАЕ !!!\n!!! ДЖАЛА !!!",
     "SleepingTipAdvancedString": "Джала:",
-    "IdleTipString": "Джала:",
-    "IdleSetString": " ->",
-    "TipDisconnectedString": "ДЖАЛА АДЛУЧАНА",
-    "SolderingAdvancedPowerPrompt": "Сілкаванне: ",
-    "OffString": "Выкл.",
-    "YourGainMessage": "Прырост:"
+    "OffString": "Выкл."
   },
   "messagesWarn": {
     "ResetOKMessage": "Скід OK",
@@ -51,8 +42,7 @@
     "SettingSensitivityHigh": "В",
     "SettingLockDisableChar": "А",
     "SettingLockBoostChar": "Т",
-    "SettingLockFullChar": "П",
-    "SettingNAChar": "Н/Д"
+    "SettingLockFullChar": "П"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -208,6 +198,10 @@
     "ColourInversion": {
       "text2": ["Экран", "Інвертаваць"],
       "desc": "Інвертаваць колеры OLED-экрана"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

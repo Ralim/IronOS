@@ -2,30 +2,21 @@
   "languageCode": "PT",
   "languageLocalName": "Português",
   "fonts": ["ascii_basic", "latin_extended"],
+  "tempUnitFahrenheit": false,
   "messages": {
-    "SettingsCalibrationDone": "Calibração terminada!",
     "SettingsCalibrationWarning": "A ponta deve estar à temperatura ambiente antes de continuar!",
     "SettingsResetWarning": "Definições de fábrica?",
     "UVLOWarningString": "DC BAIXO",
     "UndervoltageString": "Subtensão",
     "InputVoltageString": "Tensão ",
-    "WarningTipTempString": "Temperatura ",
-    "BadTipString": "ER PONTA",
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Repouso...",
-    "WarningSimpleString": "TEMP",
-    "WarningAdvancedString": "TEMP ELEVADA!",
     "SleepingTipAdvancedString": "Ponta:",
-    "IdleTipString": "Ponta:",
-    "IdleSetString": " Aj:",
-    "TipDisconnectedString": "SEM PONTA",
-    "SolderingAdvancedPowerPrompt": "Power: ",
-    "OffString": "Off",
-    "YourGainMessage": "Your gain:"
+    "OffString": "Off"
   },
   "messagesWarn": {
     "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Settings were", "reset!"],
+    "SettingsResetMessage": ["Certain settings", "were changed!"],
     "NoAccelerometerMessage": ["No accelerometer", "detected!"],
     "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
     "LockingKeysString": "LOCKED",
@@ -38,9 +29,9 @@
     "SettingLeftChar": "C",
     "SettingAutoChar": "A",
     "SettingOffChar": "O",
-    "SettingSlowChar": "L",
+    "SettingSlowChar": "S",
     "SettingMediumChar": "M",
-    "SettingFastChar": "R",
+    "SettingFastChar": "F",
     "SettingStartNoneChar": "D",
     "SettingStartSolderingChar": "S",
     "SettingStartSleepChar": "H",
@@ -51,8 +42,7 @@
     "SettingSensitivityHigh": "H",
     "SettingLockDisableChar": "D",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -150,7 +140,7 @@
       "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
     },
     "PowerLimit": {
-      "text2": ["Power", "Limit"],
+      "text2": ["Power", "limit"],
       "desc": "Maximum power the iron can use (Watts)"
     },
     "ReverseButtonTempChange": {
@@ -187,11 +177,11 @@
     },
     "AnimSpeed": {
       "text2": ["Anim.", "speed"],
-      "desc": "Speed of icon animations in menu (O=off | L=low | M=medium | H=high)"
+      "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
     },
     "PowerPulseWait": {
-      "text2": ["Power pulse", "wait time"],
-      "desc": "Time to wait before triggering every keep-awake pulse (x 2.5s)"
+      "text2": ["Power pulse", "delay"],
+      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
     },
     "PowerPulseDuration": {
       "text2": ["Power pulse", "duration"],
@@ -202,12 +192,16 @@
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "Brightness"],
-      "desc": "Adjust the contrast/brightness of the OLED screen"
+      "text2": ["Screen", "brightness"],
+      "desc": "Adjust the brightness of the OLED screen"
     },
     "ColourInversion": {
-      "text2": ["Screen", "Invert"],
+      "text2": ["Invert", "screen"],
       "desc": "Invert the colours of the OLED screen"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }

@@ -109,7 +109,7 @@ On device help text:
 
 Temperature used in "boost mode"
 
-### Setting: Heat on power up
+### Setting: Start-up behavior
 
 When the device powers up, should it enter into a special mode. These settings set it to either start into soldering mode, sleeping mode or auto mode (Enters into soldering mode on the first movement).
 
@@ -117,7 +117,7 @@ On device help text:
 
 O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved
 
-### Setting: Cooldown blink
+### Setting: Cooldown flashing
 
 If the idle screen should blink the tip temperature for attention while the tip is over 50°C. Intended as a 'tip is still hot' warning.
 
@@ -133,13 +133,13 @@ On device help text:
 
 Start tip temperature offset calibration
 
-### Setting: Factory reset?
+### Setting: Restore factory settings?
 
 Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
 
 On device help text:
 
-Reset settings to default
+Reset all settings to default
 
 ### Setting: Calibrate input voltage?
 
@@ -189,7 +189,7 @@ On device help text:
 
 Maximum power the iron can use (W=watt)
 
-### Setting: Reverse + - keys
+### Setting: Swap + - keys
 
 Swaps which button increments and decrements on temperature change screens.
 
@@ -285,7 +285,7 @@ On device help text:
 
 Current firmware language
 
-### Setting: Screen contrast
+### Setting: Screen brightness
 
 Display brightness. Higher values age the OLED faster due to burn-in. (However, it is notable that most of these screens die from other causes first.)
 
@@ -300,3 +300,15 @@ Inverts the entire OLED.
 On device help text:
 
 Invert the colours of the OLED screen
+
+### Setting: Boot logo duration
+
+Sets the duration of the boot logo from 1 second to 4 seconds.
+- For static images this sets the time the logo is displayed for.
+- For animations this sets the time the last frame is displayed for after the animation has been played.
+
+The infinity icon sets a logo or the last frame of an animation to be displayed until a button is pressed.
+
+On device help text:
+
+Sets the duration for the boot logo (S=seconds)

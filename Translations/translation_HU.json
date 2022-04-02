@@ -12,10 +12,6 @@
     "SleepingSimpleString": "Zzzz",
     "SleepingAdvancedString": "Alvás...",
     "SleepingTipAdvancedString": "Hegy:",
-    "IdleTipString": "Hegy:",
-    "IdleSetString": " Cél:",
-    "TipDisconnectedString": "HEGY KIVÉVE",
-    "SolderingAdvancedPowerPrompt": "Áram: ",
     "OffString": "Ki"
   },
   "messagesWarn": {
@@ -46,8 +42,7 @@
     "SettingSensitivityHigh": "M",
     "SettingLockDisableChar": "K",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "T",
-    "SettingNAChar": "N/A"
+    "SettingLockFullChar": "T"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -203,6 +198,10 @@
     "ColourInversion": {
       "text2": ["Képernyő", "invertálás"],
       "desc": "Képernyő színeinek invertálása"
+    },
+    "LOGOTime": {
+      "text2": ["Boot logo", "duration"],
+      "desc": "Sets the duration for the boot logo (S=seconds)"
     }
   }
 }
