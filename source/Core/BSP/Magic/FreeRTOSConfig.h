@@ -1,6 +1,7 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 #include <stdint.h>
+
 #define portCHAR                                char
 #define configSUPPORT_STATIC_ALLOCATION         1
 #define configSUPPORT_DYNAMIC_ALLOCATION        0
@@ -66,8 +67,6 @@ void vPortExitCritical(void);
 void vApplicationSleep(uint32_t xExpectedIdleTime);
 #define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime) vApplicationSleep(xExpectedIdleTime)
 #endif
-
-#define portUSING_MPU_WRAPPERS 0
 
 #define INCLUDE_vTaskPrioritySet            1
 #define INCLUDE_uxTaskPriorityGet           1

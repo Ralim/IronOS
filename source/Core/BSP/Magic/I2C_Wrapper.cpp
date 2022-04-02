@@ -7,6 +7,10 @@
 #include "BSP.h"
 #include "IRQ.h"
 #include "Setup.h"
+extern "C" {
+#include "bl702_glb.h"
+#include "bl702_i2c.h"
+}
 #include <I2C_Wrapper.hpp>
 
 SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
@@ -27,7 +31,18 @@ uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
   if (!lock())
     return false;
-  bool res = false; // perform_i2c_transaction(DevAddress, read_address, p_buffer, number_of_byte, false, false);
+
+  I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
+  BL_Err_Type      err    = ERROR;
+  i2cCfg.slaveAddr        = DevAddress;
+  i2cCfg.stopEveryByte    = DISABLE;
+  i2cCfg.subAddr          = read_address;
+  i2cCfg.dataSize         = number_of_byte;
+  i2cCfg.data             = p_buffer;
+  i2cCfg.subAddrSize      = 1; // one byte address
+
+  err      = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
+  bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
   }
@@ -38,7 +53,18 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
   if (!lock())
     return false;
-  bool res = false; // perform_i2c_transaction(DevAddress, MemAddress, p_buffer, number_of_byte, true, false);
+
+  I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
+  BL_Err_Type      err    = ERROR;
+  i2cCfg.slaveAddr        = DevAddress;
+  i2cCfg.stopEveryByte    = DISABLE;
+  i2cCfg.subAddr          = MemAddress;
+  i2cCfg.dataSize         = number_of_byte;
+  i2cCfg.data             = p_buffer;
+  i2cCfg.subAddrSize      = 1; // one byte address
+
+  err      = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
+  bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
   }
@@ -80,7 +106,18 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
   // wakepart is a special case  where only the device address is sent
   if (!lock())
     return false;
-  bool res = false; // perform_i2c_transaction(DevAddress, 0, NULL, 0, false, true);
+
+  I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
+  BL_Err_Type      err    = ERROR;
+  i2cCfg.slaveAddr        = DevAddress;
+  i2cCfg.stopEveryByte    = DISABLE;
+  i2cCfg.subAddr          = 0;
+  i2cCfg.dataSize         = 0;
+  i2cCfg.data             = 0;
+  i2cCfg.subAddrSize      = 0; // one byte address
+
+  err      = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
+  bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
   }

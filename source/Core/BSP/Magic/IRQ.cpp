@@ -76,12 +76,12 @@ void ADC0_1_IRQHandler(void) {
 //   // TIMER_CH0CV(TIMER1) = powerPWM + holdoffTicks / 2;
 //   // TIMER_PSC(TIMER1)   = 36000;
 // }
-// void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
-//   // PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
-//   //                      // disabled if the PID task is not scheduled often enough.
-//   // pendingPWM = pulse;
-//   // fastPWM    = shouldUseFastModePWM;
-// }
+void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
+  //   // PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
+  //   //                      // disabled if the PID task is not scheduled often enough.
+  //   // pendingPWM = pulse;
+  //   // fastPWM    = shouldUseFastModePWM;
+}
 extern osThreadId POWTaskHandle;
 
 // void EXTI5_9_IRQHandler(void) {

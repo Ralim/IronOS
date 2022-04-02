@@ -8,13 +8,17 @@
 #include "BSP.h"
 #include "Pins.h"
 #include "Setup.h"
+#include "bflb_platform.h"
+#include "hal_gpio.h"
 #include <I2C_Wrapper.hpp>
+
 void preRToSInit() {
   // Normal system bringup -- GPIO etc
   // #TODO
+  bflb_platform_init(0);
   hardware_init();
-  // gpio_bit_reset(OLED_RESET_GPIO_Port, OLED_RESET_Pin);
+  gpio_write(OLED_RESET_Pin, 0);
   delay_ms(5);
-  // gpio_bit_set(OLED_RESET_GPIO_Port, OLED_RESET_Pin);
+  gpio_write(OLED_RESET_Pin, 1);
   FRToSI2C::FRToSInit();
 }

@@ -95,7 +95,7 @@ MAGIC_COMPONENTS_DIR = $(MAGIC_SDK_DIR)/components
 
 
 MAGIC_COMPONENTS_FREERTOS_DIR = $(MAGIC_COMPONENTS_DIR)/freertos
-MAGIC_COMPONENTS_FREERTOS_BL602_DIR = $(MAGIC_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl602
+MAGIC_COMPONENTS_FREERTOS_BL602_DIR = $(MAGIC_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl702
 
 
 MAGIC_COMPONENTS_NMSIS_DIR = $(MAGIC_COMPONENTS_DIR)/nmsis
@@ -107,7 +107,7 @@ MAGIC_COMPONENTS_USB_STACK_CORE_DIR = $(MAGIC_COMPONENTS_USB_STACK_DIR)/core
 MAGIC_COMPONENTS_USB_STACK_CDC_DIR = $(MAGIC_COMPONENTS_USB_STACK_DIR)/class/cdc
 MAGIC_COMPONENTS_USB_STACK_WINUSB_DIR = $(MAGIC_COMPONENTS_USB_STACK_DIR)/class/winusb
 
-MAGIC_DRIVERS_DIR = $(MAGIC_SDK_DIR)/drivers/bl602_driver
+MAGIC_DRIVERS_DIR = $(MAGIC_SDK_DIR)/drivers/bl702_driver
 MAGIC_DRIVERS_HAL_DRV_INC_DIR = $(MAGIC_DRIVERS_DIR)/hal_drv/inc
 MAGIC_DRIVERS_HAL_DRV_DEF_DIR = $(MAGIC_DRIVERS_DIR)/hal_drv/default_config
 MAGIC_DRIVERS_REGS_DIR = $(MAGIC_DRIVERS_DIR)/regs
@@ -263,18 +263,18 @@ DEVICE_INCLUDES = -I$(MAGIC_DIR) \
 DEVICE_BSP_DIR = ./Core/BSP/Magic
 S_SRCS := $(shell find $(MAGIC_DIR) -type d  \(  -path $(MAGIC_VENDOR_BSP_COMMON_DIR) \) -prune -false -o  -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC = $(DEVICE_INCLUDES)
-LDSCRIPT=./Core/BSP/Magic/bl_mcu_sdk/drivers/bl602_driver/bl602_flash.ld
+LDSCRIPT=./Core/BSP/Magic/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 
 # Flags
 CPUFLAGS= -march=rv32imafc \
 			-mabi=ilp32f \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
-			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0
+			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DportUSING_MPU_WRAPPERS=0
 DEV_LDFLAGS=-nostartfiles --specs=patch.specs
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= 
 #Required to be turned off due to their drivers tripping warnings
-DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough 
+DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
 DEV_CXXFLAGS= $(DEV_CFLAGS)
 flash_size=128k
 bootldr_size=0x0
@@ -343,7 +343,6 @@ CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 OBJDUMP=$(COMPILER_PREFIX)-objdump
-SIZE=$(COMPILER_PREFIX)-size
 # use gcc in assembler mode so we can use defines etc in assembly
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 
@@ -471,7 +470,6 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 	$(OBJCOPY) $< -O ihex $@
 
 %.bin : %.elf Makefile
-	$(SIZE)  --format=berkeley  $<
 	$(OBJCOPY) $< -O binary $@
 
 %.dfu : %.bin Makefile
@@ -484,7 +482,6 @@ $(HEXFILE_DIR)/$(model)_%.elf : \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
-	@echo $(CXXFLAGS) 
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
