@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": "待机超时",
-      "desc": "自动进入待机模式前的等候时间 <S=秒 | M=分钟>"
+        "desc": "自动进入待机模式前的等候时间 <s=秒 | m=分钟>"
     },
     "ShutdownTimeout": {
       "text2": "自动关机",
-      "desc": "自动关机前的等候时间 <M=分钟>"
+      "desc": "自动关机前的等候时间 <m=分钟>"
     },
     "MotionSensitivity": {
       "text2": "动作灵敏度",
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }
