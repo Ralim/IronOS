@@ -77,7 +77,7 @@
     },
     "SleepTimeout": {
       "text2": ["Timer", "riposo"],
-      "desc": "Imposta il timer per entrare in modalità Riposo [minuti/secondi]"
+      "desc": "Imposta il timer per entrare in modalità Riposo [secondi/minuti]"
     },
     "ShutdownTimeout": {
       "text2": ["Timer", "spegnimento"],

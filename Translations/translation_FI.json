@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": ["Lepotilan", "viive"],
-      "desc": "\"Lepotilan\" ajastus (S=sekuntia | M=minuuttia)"
+      "desc": "\"Lepotilan\" ajastus (s=sekuntia | m=minuuttia)"
     },
     "ShutdownTimeout": {
       "text2": ["Sammutus", "viive"],
-      "desc": "Automaattisen sammutuksen ajastus (M=minuuttia)"
+      "desc": "Automaattisen sammutuksen ajastus (m=minuuttia)"
     },
     "MotionSensitivity": {
       "text2": ["Liikkeen", "herkkyys"],
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }

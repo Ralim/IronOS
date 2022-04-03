@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": ["Ngu", "sau"],
-      "desc": "- thoi gian truoc khi \"Che đo ngu\" bat đau (S=giây | M=phút)"
+      "desc": "- thoi gian truoc khi \"Che đo ngu\" bat đau (s=giây | m=phút)"
     },
     "ShutdownTimeout": {
       "text2": ["Tat", "sau"],
-      "desc": "- khoang thoi gian truoc khi tay hàn tat (M=phút)"
+      "desc": "- khoang thoi gian truoc khi tay hàn tat (m=phút)"
     },
     "MotionSensitivity": {
       "text2": ["Cam bien", "cu đong"],
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }
