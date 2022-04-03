@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": ["Време до", "спавања"],
-      "desc": "Време мировања након кога лемилица спушта температуру. (M=минути | S=секунде)"
+      "desc": "Време мировања након кога лемилица спушта температуру. (m=минути | s=секунде)"
     },
     "ShutdownTimeout": {
       "text2": ["Време до", "гашења"],
-      "desc": "Време мировања након кога се лемилица гаси. (M=минути)"
+      "desc": "Време мировања након кога се лемилица гаси. (m=минути)"
     },
     "MotionSensitivity": {
       "text2": ["Осетљивост", "на покрет"],
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }
