@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": "待機遅延",
-      "desc": "スタンバイモードに入るまでの待機時間 <S=秒 | M=分>"
+      "desc": "スタンバイモードに入るまでの待機時間 <s=秒 | m=分>"
     },
     "ShutdownTimeout": {
       "text2": "自動オフ",
-      "desc": "自動電源オフまでの待機時間 <M=分>"
+      "desc": "自動電源オフまでの待機時間 <m=分>"
     },
     "MotionSensitivity": {
       "text2": "動きの感度",
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }
