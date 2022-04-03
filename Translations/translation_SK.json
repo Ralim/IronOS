@@ -77,7 +77,7 @@
     },
     "SleepTimeout": {
       "text2": ["Pokojový", "režim po"],
-      "desc": "Pokojový režim po (S=sekundách | M=minútach)"
+      "desc": "Pokojový režim po (s=sekundách | m=minútach)"
     },
     "ShutdownTimeout": {
       "text2": ["Vypnutie", "po"],
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }
