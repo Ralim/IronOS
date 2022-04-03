@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": ["Expirare", "repaus"],
-      "desc": "Interval înainte de lansarea \"modului de repaus\" în (S=secunde | M=minute)"
+      "desc": "Interval înainte de lansarea \"modului de repaus\" în (s=secunde | m=minute)"
     },
     "ShutdownTimeout": {
       "text2": ["Expirare", "oprire"],
-      "desc": "Interval înainte ca letconul să se oprească (M=minute)"
+      "desc": "Interval înainte ca letconul să se oprească (m=minute)"
     },
     "MotionSensitivity": {
       "text2": ["Sensibilitate", "la mişcare"],
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }
