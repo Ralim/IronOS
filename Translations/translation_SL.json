@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": ["Čas do", "spanja"],
-      "desc": "Čas pred spanjem (S=sekunde | M=minute)"
+      "desc": "Čas pred spanjem (s=sekunde | m=minute)"
     },
     "ShutdownTimeout": {
       "text2": ["Čas do", "izklopa"],
-      "desc": "Čas do izklopa (M=minute)"
+      "desc": "Čas do izklopa (m=minute)"
     },
     "MotionSensitivity": {
       "text2": ["Občutljivost", "premikanja"],
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }
