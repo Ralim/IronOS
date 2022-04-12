@@ -16,9 +16,10 @@ void preRToSInit() {
   // Normal system bringup -- GPIO etc
   // #TODO
   bflb_platform_init(0);
+
   hardware_init();
   gpio_write(OLED_RESET_Pin, 0);
-  delay_ms(5);
+  delay_ms(10);
   gpio_write(OLED_RESET_Pin, 1);
   FRToSI2C::FRToSInit();
 }
