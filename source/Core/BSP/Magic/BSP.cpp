@@ -14,7 +14,7 @@ const uint16_t powerPWM         = 255;
 const uint8_t  holdoffTicks     = 10;
 const uint8_t  tempMeasureTicks = 14;
 
-uint16_t totalPWM; // Total length of the cycle's ticks
+uint16_t totalPWM = 255; // Total length of the cycle's ticks
 
 void resetWatchdog() {
   //#TODO
@@ -89,7 +89,7 @@ void reboot() {
 
 void delay_ms(uint16_t count) {
   // delay_1ms(count);
-  //#TODO
+  BL702_Delay_MS(count);
 }
 
 uint32_t __get_IPSR(void) {

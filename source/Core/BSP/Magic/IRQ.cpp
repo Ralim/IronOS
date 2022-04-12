@@ -27,7 +27,7 @@ void ADC0_1_IRQHandler(void) {
 // static void switchToFastPWM(void);
 
 // volatile uint16_t PWMSafetyTimer = 0;
-// volatile uint8_t  pendingPWM     = 0;
+volatile uint8_t pendingPWM = 200;
 // void              TIMER1_IRQHandler(void) {
 //   static bool lastPeriodWasFast = false;
 

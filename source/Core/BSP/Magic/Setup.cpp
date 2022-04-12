@@ -22,11 +22,9 @@ uint16_t ADCReadings[ADC_NORM_SAMPLES]; // room for 32 lots of the pair of readi
 // Functions
 
 void hardware_init() {
-  // #TODO
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
-  gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
-  gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
-  I2C_SetPrd(I2C0_ID, 15);
+  // gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
+  // gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
 }
 
 uint16_t getADCHandleTemp(uint8_t sample) {
