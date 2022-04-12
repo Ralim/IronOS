@@ -8,6 +8,7 @@
 #include "IRQ.h"
 #include "Setup.h"
 extern "C" {
+#include "bflb_platform.h"
 #include "bl702_glb.h"
 #include "bl702_i2c.h"
 }
@@ -34,14 +35,15 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 
   I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
   BL_Err_Type      err    = ERROR;
-  i2cCfg.slaveAddr        = DevAddress;
+  i2cCfg.slaveAddr        = DevAddress >> 1;
   i2cCfg.stopEveryByte    = DISABLE;
   i2cCfg.subAddr          = read_address;
   i2cCfg.dataSize         = number_of_byte;
   i2cCfg.data             = p_buffer;
   i2cCfg.subAddrSize      = 1; // one byte address
 
-  err      = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
+  err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
+  MSG((char *)"I2C Mem_Read %02X - %d\r\n", DevAddress, err);
   bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
@@ -56,14 +58,15 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
 
   I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
   BL_Err_Type      err    = ERROR;
-  i2cCfg.slaveAddr        = DevAddress;
+  i2cCfg.slaveAddr        = DevAddress >> 1;
   i2cCfg.stopEveryByte    = DISABLE;
   i2cCfg.subAddr          = MemAddress;
   i2cCfg.dataSize         = number_of_byte;
   i2cCfg.data             = p_buffer;
   i2cCfg.subAddrSize      = 1; // one byte address
 
-  err      = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
+  err = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
+  MSG((char *)"I2C Mem_Write %02X - %d\r\n", DevAddress, err);
   bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
