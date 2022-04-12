@@ -89,23 +89,23 @@ void bflb_platform_init(uint32_t baudrate) {
 
     bl_show_info();
   }
+  static bool initialized = false;
+  if (!initialized) {
+    // system_mmheap[0].addr     = (uint8_t *)&__HeapBase;
+    // system_mmheap[0].mem_size = ((size_t)&__HeapLimit - (size_t)&__HeapBase);
 
-  //   if (!initialized) {
-  //     system_mmheap[0].addr     = (uint8_t *)&__HeapBase;
-  //     system_mmheap[0].mem_size = ((size_t)&__HeapLimit - (size_t)&__HeapBase);
+    // if (system_mmheap[0].mem_size > 0) {
+    //   mmheap_init(&mmheap_root, system_mmheap);
+    // }
 
-  //     if (system_mmheap[0].mem_size > 0) {
-  //       mmheap_init(&mmheap_root, system_mmheap);
-  //     }
-
-  //     MSG("dynamic memory init success,heap size = %d Kbyte \r\n", system_mmheap[0].mem_size / 1024);
-  //     initialized = 1;
-  //     if (ret != SUCCESS) {
-  //       MSG("flash init fail!!!\r\n");
-  //     }
-  //     bl_show_flashinfo();
-  //   }
-
+    // MSG("dynamic memory init success,heap size = %d Kbyte \r\n", system_mmheap[0].mem_size / 1024);
+    initialized = 1;
+    if (ret != SUCCESS) {
+      MSG("flash init fail!!!\r\n");
+    }
+    bl_show_flashinfo();
+  }
+  MSG("Enable IRQ's\r\n");
   cpu_global_irq_enable();
 }
 
