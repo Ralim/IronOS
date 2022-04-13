@@ -139,11 +139,11 @@
 #define POW_QC_20V 1
 #define ENABLE_QC2 1
 #define TEMP_TMP36
-#define ACCEL_BMA
-#define ACCEL_SC7
+// #define ACCEL_BMA
+// #define ACCEL_SC7
 #define HALL_SENSOR
 #define VBUS_MOD_TEST
-#define HALL_SI7210
+// #define HALL_SI7210
 #define DEBUG_UART_OUTPUT
 
 #define HARDWARE_MAX_WATTAGE_X10 750
