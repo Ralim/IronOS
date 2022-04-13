@@ -10,6 +10,7 @@
 #include "QC3.h"
 #include "Settings.h"
 #include "USBPD.h"
+#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"
@@ -19,11 +20,12 @@
 // Small worker thread to handle power (PD + QC) related steps
 
 void startPOWTask(void const *argument __unused) {
+  // MSG((char *)"startPOWTask\r\n");
   // Init any other misc sensors
   postRToSInit();
   // You have to run this once we are willing to answer PD messages
   // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
-
+  // MSG((char *)"POW_PD\r\n");
 #if POW_PD
   USBPowerDelivery::start();
   // Crank the handle at boot until we are stable and waiting for IRQ
@@ -40,20 +42,24 @@ void startPOWTask(void const *argument __unused) {
      * Then Good CRC is set while reading it out (racing on I2C read)
      * Then we would sleep as nothing to do, but 100ms> 20ms power supply typical timeout
      */
+    // MSG((char *)"getFUS302IRQLow\r\n");
     if (!getFUS302IRQLow()) {
       res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS);
     }
 
 #if POW_PD
-
+    // MSG((char *)"IRQ\r\n");
     if (res != pdFALSE || getFUS302IRQLow()) {
       USBPowerDelivery::IRQOccured();
     }
+    // MSG((char *)"Step\r\n");
     USBPowerDelivery::step();
+    // MSG((char *)"PPS\r\n");
     USBPowerDelivery::PPSTimerCallback();
 #else
     (void)res;
 #endif
+    // MSG((char *)"power_check\r\n");
     power_check();
   }
 }

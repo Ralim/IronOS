@@ -9,11 +9,13 @@
 #include "FreeRTOS.h"
 #include "Settings.h"
 #include "TipThermoModel.h"
+#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "history.hpp"
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
+
 static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
 static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
 TaskHandle_t      pidTaskNotification     = NULL;
@@ -28,6 +30,7 @@ static int32_t getX10WattageLimits();
 
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
+  MSG((char *)"startPIDTask\r\n");
   /*
    * We take the current tip temperature & evaluate the next step for the tip
    * control PWM.
