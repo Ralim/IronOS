@@ -8,7 +8,15 @@
 #include "IRQ.h"
 #include "Pins.h"
 #include "configuration.h"
-
+extern "C" {
+#include "bflb_platform.h"
+#include "bl702_glb.h"
+#include "bl702_pwm.h"
+#include "bl702_timer.h"
+#include "hal_clock.h"
+#include "hal_pwm.h"
+#include "hal_timer.h"
+}
 void ADC0_1_IRQHandler(void) {
 
   // adc_interrupt_flag_clear(ADC0, ADC_INT_FLAG_EOIC);
@@ -22,65 +30,85 @@ void ADC0_1_IRQHandler(void) {
   }
 }
 
-// static bool fastPWM;
-// static void switchToSlowPWM(void);
-// static void switchToFastPWM(void);
+static bool fastPWM;
+static void switchToSlowPWM(void);
+static void switchToFastPWM(void);
 
-// volatile uint16_t PWMSafetyTimer = 0;
-volatile uint8_t pendingPWM = 200;
-// void              TIMER1_IRQHandler(void) {
-//   static bool lastPeriodWasFast = false;
+volatile uint16_t PWMSafetyTimer    = 0;
+volatile uint8_t  pendingPWM        = 200;
+volatile bool     lastPeriodWasFast = false;
 
-//   if (timer_interrupt_flag_get(TIMER1, TIMER_INT_UP) == SET) {
-//     timer_interrupt_flag_clear(TIMER1, TIMER_INT_UP);
-//     // rollover turn on output if required
-//     if (PWMSafetyTimer) {
-//       PWMSafetyTimer--;
-//       if (lastPeriodWasFast != fastPWM) {
-//         if (fastPWM) {
-//           switchToFastPWM();
-//         } else {
-//           switchToSlowPWM();
-//         }
-//       }
-//       if (pendingPWM) {
-//         timer_channel_output_pulse_value_config(TIMER1, TIMER_CH_1, pendingPWM);
-//         timer_channel_output_pulse_value_config(TIMER2, TIMER_CH_0, 50);
-//       } else {
-//         timer_channel_output_pulse_value_config(TIMER2, TIMER_CH_0, 0);
-//       }
-//     }
-//   }
-//   if (timer_interrupt_flag_get(TIMER1, TIMER_INT_CH1) == SET) {
-//     timer_interrupt_flag_clear(TIMER1, TIMER_INT_CH1);
-//     timer_channel_output_pulse_value_config(TIMER2, TIMER_CH_0, 0);
-//   }
-// }
+// Timer 0 is used to co-ordinate the ADC and the output PWM
+void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t state) {
+  if (state == TIMER_EVENT_COMP0) {
+    // MSG((char *)"timer event comp0! \r\n");
+    // We use channel 0 to trigger the ADC, this occurs after the main PWM is done with a delay
 
-// void switchToFastPWM(void) {
-//   // fastPWM           = true;
-//   // totalPWM          = powerPWM + tempMeasureTicks + holdoffTicks;
-//   // TIMER_CAR(TIMER1) = (uint32_t)totalPWM;
+  } else if (state == TIMER_EVENT_COMP1) {
+    // MSG((char *)"timer event comp1! \r\n");
+    // Channel 1 is end of the main PWM section; so turn off the output PWM
+  } else if (state == TIMER_EVENT_COMP2) {
+    // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
+    if (PWMSafetyTimer) {
+      PWMSafetyTimer--;
+      if (lastPeriodWasFast != fastPWM) {
+        if (fastPWM) {
+          switchToFastPWM();
+        } else {
+          switchToSlowPWM();
+        }
+      }
+      // Update trigger for the end point of the PWM cycle
+      if (pendingPWM > 0) {
+        TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, pendingPWM - 1);
+        // Turn on output
+      } else {
+        TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
+        // Leave output off
+      }
+    }
+    // MSG((char *)"timer event comp2! \r\n");
+  }
+}
 
-//   // // ~10Hz
-//   // TIMER_CH0CV(TIMER1) = powerPWM + holdoffTicks;
-//   // // 1 kHz tick rate
-//   // TIMER_PSC(TIMER1) = 18000;
-// }
+void switchToFastPWM(void) {
+  fastPWM  = true;
+  totalPWM = powerPWM + tempMeasureTicks + holdoffTicks;
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
 
-// void switchToSlowPWM(void) {
-//   // 5Hz
-//   // fastPWM             = false;
-//   // totalPWM            = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
-//   // TIMER_CAR(TIMER1)   = (uint32_t)totalPWM;
-//   // TIMER_CH0CV(TIMER1) = powerPWM + holdoffTicks / 2;
-//   // TIMER_PSC(TIMER1)   = 36000;
-// }
+  // ~10Hz
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + holdoffTicks);
+  // Set divider to 11
+
+  uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
+
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 11);
+
+  BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
+}
+
+void switchToSlowPWM(void) {
+  // 5Hz
+  fastPWM  = false;
+  totalPWM = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
+
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
+  // Adjust ADC
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + (holdoffTicks / 2));
+
+  // Set divider to 22
+
+  uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
+
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 22);
+
+  BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
+}
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
-  //   // PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
-  //   //                      // disabled if the PID task is not scheduled often enough.
-  //   // pendingPWM = pulse;
-  //   // fastPWM    = shouldUseFastModePWM;
+  PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
+                       // disabled if the PID task is not scheduled often enough.
+  pendingPWM = pulse;
+  fastPWM    = shouldUseFastModePWM;
 }
 extern osThreadId POWTaskHandle;
 
