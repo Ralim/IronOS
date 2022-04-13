@@ -112,14 +112,15 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
 
   I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
   BL_Err_Type      err    = ERROR;
-  i2cCfg.slaveAddr        = DevAddress;
+  i2cCfg.slaveAddr        = DevAddress >> 1;
   i2cCfg.stopEveryByte    = DISABLE;
   i2cCfg.subAddr          = 0;
   i2cCfg.dataSize         = 0;
   i2cCfg.data             = 0;
   i2cCfg.subAddrSize      = 0; // one byte address
 
-  err      = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
+  err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
+  MSG((char *)"I2C wakePart %02X - %d\r\n", DevAddress, err);
   bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
