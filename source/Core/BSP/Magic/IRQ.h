@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t state);
-
+void adc_fifo_irq(void);
 #ifdef __cplusplus
 }
 #endif

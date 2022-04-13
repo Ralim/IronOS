@@ -11,10 +11,12 @@
 #include "Pins.h"
 extern "C" {
 #include "bflb_platform.h"
+#include "bl702_adc.h"
 #include "bl702_glb.h"
 #include "bl702_i2c.h"
 #include "bl702_pwm.h"
 #include "bl702_timer.h"
+#include "hal_adc.h"
 #include "hal_clock.h"
 #include "hal_pwm.h"
 #include "hal_timer.h"
@@ -29,6 +31,7 @@ uint16_t ADCReadings[ADC_NORM_SAMPLES]; // room for 32 lots of the pair of readi
 // Functions
 
 void setup_slow_PWM();
+void setup_adc(void);
 void hardware_init() {
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
   // gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
@@ -36,9 +39,46 @@ void hardware_init() {
   setup_slow_PWM();
 }
 
-struct device *timer0;
+void setup_adc(void) {
+  //
+  ADC_CFG_Type      adc_cfg      = {};
+  ADC_FIFO_Cfg_Type adc_fifo_cfg = {};
 
-volatile uint32_t cnt = 0;
+  CPU_Interrupt_Disable(GPADC_DMA_IRQn);
+  ADC_IntMask(ADC_INT_ALL, MASK);
+
+  adc_cfg.clkDiv = ADC_CLK_DIV_32;
+
+  adc_cfg.vref      = ADC_VREF_3P2V;
+  adc_cfg.resWidth  = ADC_DATA_WIDTH_16_WITH_128_AVERAGE;
+  adc_cfg.inputMode = ADC_INPUT_SINGLE_END;
+
+  adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
+  adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
+  adc_cfg.gain1          = ADC_PGA_GAIN_1;
+  adc_cfg.gain2          = ADC_PGA_GAIN_2;
+  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_PGA_ON;
+  adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
+  adc_cfg.vcm            = ADC_PGA_VCM_1V;
+  adc_cfg.offsetCalibEn  = DISABLE;
+  adc_cfg.offsetCalibVal = 0;
+
+  adc_fifo_cfg.dmaEn         = DISABLE;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_16;
+
+  Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
+
+  ADC_Disable();
+  ADC_Enable();
+
+  ADC_Reset();
+
+  ADC_Init(&adc_cfg);
+
+  ADC_FIFO_Cfg(&adc_fifo_cfg);
+}
+
+struct device *timer0;
 
 void setup_slow_PWM() {
 

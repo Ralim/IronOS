@@ -30,6 +30,22 @@ void ADC0_1_IRQHandler(void) {
   }
 }
 
+void adc_fifo_irq(void) {
+
+}
+
+void start_adc_tip(void) {
+  // Reconfigure the ADC to measure the tip temp
+  // Single channel input mode
+  // The ADC has a 32 sample FiFo; we set this up to fire and interrupt at 16 samples
+  // Then using that IRQ to know that sampling is done and can be stored
+  
+}
+void start_adc_misc(void) {
+  // Reconfigure the ADC to measure all other inputs in scan mode when we are not measuring the tip
+  
+}
+
 static bool fastPWM;
 static void switchToSlowPWM(void);
 static void switchToFastPWM(void);
