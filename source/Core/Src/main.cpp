@@ -7,6 +7,7 @@
 #include "main.hpp"
 #include "BSP.h"
 #include "Settings.h"
+#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "power.hpp"
 AccelType DetectedAccelerometerVersion = AccelType::Scanning;
@@ -37,10 +38,14 @@ osStaticThreadDef_t POWTaskControlBlock;
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
   preRToSInit();
-  setTipX10Watts(0); // force tip off
+  MSG((char *)"wdg\r\n");
   resetWatchdog();
   // Testing for which accelerometer is mounted
   settingsWereReset = loadSettings(); // load the settings from flash
+  MSG((char *)"tip\r\n");
+  setTipX10Watts(0); // force tip off
+
+  MSG((char *)"main\r\n");
   resetWatchdog();
   /* Create the thread(s) */
 
