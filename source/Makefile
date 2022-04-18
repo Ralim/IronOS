@@ -270,7 +270,7 @@ CPUFLAGS= -march=rv32imafc \
 			-mabi=ilp32f \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
 			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DportUSING_MPU_WRAPPERS=0
-DEV_LDFLAGS=-nostartfiles --specs=patch.specs
+DEV_LDFLAGS=-nostartfiles --specs=patch.specs -DDEBUG
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= 
 #Required to be turned off due to their drivers tripping warnings
@@ -355,7 +355,6 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 				-Wl,--print-memory-usage 					  \
-				-flto 										  \
 				--specs=nosys.specs 						  \
 			    --specs=nano.specs						      \
 				$(DEV_LDFLAGS)

@@ -7,20 +7,22 @@
 
 #ifndef BSP_PINE64_PINS_H_
 #define BSP_PINE64_PINS_H_
+#include "bl702_adc.h"
 #include "hal_gpio.h"
-#define KEY_B_Pin       GPIO_PIN_25
-#define TMP36_INPUT_Pin GPIO_PIN_20
-#define TMP36_ADC_CHANNEL
-#define TIP_TEMP_Pin GPIO_PIN_19
-#define TIP_TEMP_ADC_CHANNEL
 
-#define VIN_Pin GPIO_PIN_18
-#define VIN_ADC_CHANNEL
-#define OLED_RESET_Pin GPIO_PIN_3
-#define KEY_A_Pin      GPIO_PIN_28
-#define PWM_Out_Pin    GPIO_PIN_21
-#define SCL_Pin        GPIO_PIN_11
-#define SDA_Pin        GPIO_PIN_10
+#define KEY_B_Pin            GPIO_PIN_25
+#define TMP36_INPUT_Pin      GPIO_PIN_20
+#define TMP36_ADC_CHANNEL    ADC_CHAN10
+#define TIP_TEMP_Pin         GPIO_PIN_19
+#define TIP_TEMP_ADC_CHANNEL ADC_CHAN9
+
+#define VIN_Pin         GPIO_PIN_18
+#define VIN_ADC_CHANNEL ADC_CHAN8
+#define OLED_RESET_Pin  GPIO_PIN_3
+#define KEY_A_Pin       GPIO_PIN_28
+#define PWM_Out_Pin     GPIO_PIN_21
+#define SCL_Pin         GPIO_PIN_11
+#define SDA_Pin         GPIO_PIN_10
 
 // #define USB_DM_Pin    GPIO_PIN_8
 #define QC_DP_LOW_Pin GPIO_PIN_5

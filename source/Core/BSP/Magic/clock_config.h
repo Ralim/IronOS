@@ -49,7 +49,7 @@
 #define BSP_IR_CLOCK_SOURCE           ROOT_CLOCK_SOURCE_XCLK
 #define BSP_IR_CLOCK_DIV              0
 #define BSP_ADC_CLOCK_SOURCE          ROOT_CLOCK_SOURCE_XCLK
-#define BSP_ADC_CLOCK_DIV             0
+#define BSP_ADC_CLOCK_DIV             128
 #define BSP_DAC_CLOCK_SOURCE          ROOT_CLOCK_SOURCE_AUPLL_24000000_HZ
 #define BSP_DAC_CLOCK_DIV             2
 #define BSP_CAM_CLOCK_SOURCE          ROOT_CLOCK_SOURCE_PLL_96M

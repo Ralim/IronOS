@@ -9,18 +9,7 @@
 #include "Debug.h"
 #include "FreeRTOSConfig.h"
 #include "Pins.h"
-extern "C" {
-#include "bflb_platform.h"
-#include "bl702_adc.h"
-#include "bl702_glb.h"
-#include "bl702_i2c.h"
-#include "bl702_pwm.h"
-#include "bl702_timer.h"
-#include "hal_adc.h"
-#include "hal_clock.h"
-#include "hal_pwm.h"
-#include "hal_timer.h"
-}
+
 #include "IRQ.h"
 #include "history.hpp"
 #include <string.h>
@@ -37,45 +26,48 @@ void hardware_init() {
   // gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
   // gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
   setup_slow_PWM();
+  setup_adc();
 }
 
 void setup_adc(void) {
+  MSG((char *)"Setting up ADC\r\n");
   //
   ADC_CFG_Type      adc_cfg      = {};
   ADC_FIFO_Cfg_Type adc_fifo_cfg = {};
 
   CPU_Interrupt_Disable(GPADC_DMA_IRQn);
+
   ADC_IntMask(ADC_INT_ALL, MASK);
 
-  adc_cfg.clkDiv = ADC_CLK_DIV_32;
-
-  adc_cfg.vref      = ADC_VREF_3P2V;
-  adc_cfg.resWidth  = ADC_DATA_WIDTH_16_WITH_128_AVERAGE;
-  adc_cfg.inputMode = ADC_INPUT_SINGLE_END;
-
+  adc_cfg.clkDiv         = ADC_CLK_DIV_32;
+  adc_cfg.vref           = ADC_VREF_3P2V;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_256_AVERAGE;
+  adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
-  adc_cfg.gain1          = ADC_PGA_GAIN_1;
-  adc_cfg.gain2          = ADC_PGA_GAIN_2;
+  adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
+  adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
   adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_PGA_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
   adc_cfg.vcm            = ADC_PGA_VCM_1V;
   adc_cfg.offsetCalibEn  = DISABLE;
   adc_cfg.offsetCalibVal = 0;
 
-  adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_16;
-
-  Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
-
   ADC_Disable();
   ADC_Enable();
-
   ADC_Reset();
-
   ADC_Init(&adc_cfg);
-
+  adc_fifo_cfg.dmaEn         = DISABLE;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_16;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
+  // Enable FiFo IRQ
+  MSG((char *)"Int Enable\r\n");
+  Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
+  ADC_IntMask(ADC_INT_FIFO_READY, UNMASK);
+  CPU_Interrupt_Enable(GPADC_DMA_IRQn);
+  MSG((char *)"Start\r\n");
+  start_adc_misc();
+  MSG((char *)"Started\r\n");
 }
 
 struct device *timer0;
@@ -102,61 +94,6 @@ void setup_slow_PWM() {
   } else {
     MSG((char *)"timer device open failed! \n");
   }
-}
-
-/*
- * ADC
- * ADC is a bit of a mess as we dont have injected mode sampling to use with timers on this device
- * So instead we do this:
- *
- * Main timer0 runs at 5/10hz and schedules everything
- * Its running PWM in the 0-255 range for tip control + sample time at the end of the ADC
- * It triggers the ADC at the end of the PWM cycle
- *
- *
- */
-uint16_t getADCHandleTemp(uint8_t sample) {
-  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
-  if (sample) {
-    uint32_t sum = 0;
-    for (uint8_t i = 0; i < ADC_NORM_SAMPLES; i++) {
-      sum += ADCReadings[i];
-    }
-    filter.update(sum);
-  }
-  return filter.average() >> 1;
-}
-
-uint16_t getADCVin(uint8_t sample) {
-  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
-  if (sample) {
-    uint16_t latestADC = 0;
-
-    // latestADC += adc_inserted_data_read(ADC1, 0);
-    // latestADC += adc_inserted_data_read(ADC1, 1);
-    // latestADC += adc_inserted_data_read(ADC1, 2);
-    // latestADC += adc_inserted_data_read(ADC1, 3);
-    latestADC <<= 1;
-    filter.update(latestADC);
-  }
-  return filter.average();
-}
-
-// Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
-uint16_t getTipRawTemp(uint8_t sample) {
-  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
-  if (sample) {
-    uint16_t latestADC = 0;
-
-    // latestADC += adc_inserted_data_read(ADC0, 0);
-    // latestADC += adc_inserted_data_read(ADC0, 1);
-    // latestADC += adc_inserted_data_read(ADC0, 2);
-    // latestADC += adc_inserted_data_read(ADC0, 3);
-    latestADC <<= 1;
-    filter.update(latestADC);
-    return latestADC;
-  }
-  return filter.average();
 }
 
 void setupFUSBIRQ() {

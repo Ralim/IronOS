@@ -8,42 +8,80 @@
 #include "IRQ.h"
 #include "Pins.h"
 #include "configuration.h"
+#include "expMovingAverage.h"
+
 extern "C" {
 #include "bflb_platform.h"
+#include "bl702_adc.h"
 #include "bl702_glb.h"
 #include "bl702_pwm.h"
 #include "bl702_timer.h"
+#include "hal_adc.h"
 #include "hal_clock.h"
 #include "hal_pwm.h"
 #include "hal_timer.h"
 }
-void ADC0_1_IRQHandler(void) {
 
-  // adc_interrupt_flag_clear(ADC0, ADC_INT_FLAG_EOIC);
-  // unblock the PID controller thread
-  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    if (pidTaskNotification) {
-      vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
-      portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-    }
-  }
-}
+#define ADC_Filter_Weight 32
+expMovingAverage<uint16_t, ADC_Filter_Weight> ADC_Vin;
+expMovingAverage<uint16_t, ADC_Filter_Weight> ADC_Temp;
+expMovingAverage<uint16_t, ADC_Filter_Weight> ADC_Tip;
 
 void adc_fifo_irq(void) {
 
-}
+  if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
 
+    // Read out all entries in the fifo
+    const uint8_t cnt = ADC_Get_FIFO_Count();
+    for (uint8_t i = 0; i < cnt; i++) {
+      const uint32_t reading = ADC_Read_FIFO();
+      // As per manual, 26 bit reading; lowest 16 are the ADC
+      uint16_t sample = reading & 0xFFFF;
+      uint8_t  source = (reading >> 21) & 0b11111;
+      switch (source) {
+      case TMP36_ADC_CHANNEL:
+        ADC_Temp.update(sample);
+        break;
+      case TIP_TEMP_ADC_CHANNEL:
+        ADC_Tip.update(sample);
+        break;
+      case VIN_ADC_CHANNEL:
+        ADC_Vin.update(sample);
+        break;
+      case 0: // 0 turns up when an invalid reading is taken
+        break;
+      default:
+        // MSG((char *)"ADC Invalid chan %d\r\n", source);
+        break;
+      }
+    }
+    // MSG((char *)"ADC Reading %d %d %d\r\n", ADC_Temp.average(), ADC_Vin.average(), ADC_Tip.average());
+    // Clear IRQ
+    ADC_IntClr(ADC_INT_FIFO_READY);
+  }
+}
+const ADC_Chan_Type adc_tip_pos_chans[] = {TIP_TEMP_ADC_CHANNEL};
+const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND};
+static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
+// TODO Do we need to do the stop+start here or can we hot-write the config
 void start_adc_tip(void) {
   // Reconfigure the ADC to measure the tip temp
   // Single channel input mode
   // The ADC has a 32 sample FiFo; we set this up to fire and interrupt at 16 samples
   // Then using that IRQ to know that sampling is done and can be stored
-  
+  ADC_Stop();
+  ADC_Scan_Channel_Config((ADC_Chan_Type *)adc_tip_pos_chans, (ADC_Chan_Type *)adc_tip_neg_chans, 2, ENABLE);
+  ADC_Start();
 }
+const ADC_Chan_Type adc_misc_pos_chans[] = {TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL};
+const ADC_Chan_Type adc_misc_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND};
+static_assert(sizeof(adc_misc_pos_chans) == sizeof(adc_misc_neg_chans));
+
 void start_adc_misc(void) {
   // Reconfigure the ADC to measure all other inputs in scan mode when we are not measuring the tip
-  
+  ADC_Stop();
+  ADC_Scan_Channel_Config((ADC_Chan_Type *)adc_misc_pos_chans, (ADC_Chan_Type *)adc_misc_neg_chans, 2, ENABLE);
+  ADC_Start();
 }
 
 static bool fastPWM;
@@ -58,12 +96,14 @@ volatile bool     lastPeriodWasFast = false;
 void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t state) {
   if (state == TIMER_EVENT_COMP0) {
     // MSG((char *)"timer event comp0! \r\n");
-    // We use channel 0 to trigger the ADC, this occurs after the main PWM is done with a delay
-
+    // Used to start the ADC
+    start_adc_tip();
   } else if (state == TIMER_EVENT_COMP1) {
     // MSG((char *)"timer event comp1! \r\n");
-    // Channel 1 is end of the main PWM section; so turn off the output PWM
+    // Used to turn tip off at set point in cycle
+
   } else if (state == TIMER_EVENT_COMP2) {
+    start_adc_misc();
     // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
     if (PWMSafetyTimer) {
       PWMSafetyTimer--;
@@ -83,7 +123,15 @@ void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t
         // Leave output off
       }
     }
-    // MSG((char *)"timer event comp2! \r\n");
+    // unblock the PID controller thread
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+      BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+      if (pidTaskNotification) {
+        vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+      }
+    }
+    MSG((char *)"timer event comp2! \r\n");
   }
 }
 
@@ -150,3 +198,10 @@ bool getFUS302IRQLow() {
   return false;
   // return (RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin));
 }
+
+uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average(); }
+
+uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average(); }
+
+// Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
+uint16_t getTipRawTemp(uint8_t sample) { return ADC_Tip.average(); }
