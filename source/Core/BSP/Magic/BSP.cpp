@@ -47,6 +47,7 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 }
 
 void unstick_I2C() {
+  MSG((char *)"I2C Unstick\r\n");
   /* configure SDA/SCL for GPIO */
   // GPIO_BC(GPIOB) |= SDA_Pin | SCL_Pin;
   // gpio_init(SDA_GPIO_Port, GPIO_MODE_OUT_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);

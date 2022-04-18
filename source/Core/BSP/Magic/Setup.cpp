@@ -27,6 +27,7 @@ void hardware_init() {
   gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
   setup_slow_PWM();
   setup_adc();
+  I2C_ClockSet(I2C0_ID, 400000);
 }
 
 void setup_adc(void) {

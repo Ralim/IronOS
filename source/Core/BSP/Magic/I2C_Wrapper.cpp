@@ -30,9 +30,9 @@ uint8_t FRToSI2C::I2C_RegisterRead(uint8_t add, uint8_t reg) {
 }
 
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
-  if (!lock())
+  if (!lock()) {
     return false;
-
+  }
   I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
   BL_Err_Type      err    = ERROR;
   i2cCfg.slaveAddr        = DevAddress >> 1;
@@ -53,9 +53,9 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 }
 
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
-  if (!lock())
+  if (!lock()) {
     return false;
-
+  }
   I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
   BL_Err_Type      err    = ERROR;
   i2cCfg.slaveAddr        = DevAddress >> 1;
@@ -120,7 +120,7 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
   i2cCfg.subAddrSize      = 0; // one byte address
 
   err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
-  // MSG((char *)"I2C wakePart %02X - %d\r\n", DevAddress >> 1, err);
+  MSG((char *)"I2C wakePart %02X - %d\r\n", DevAddress >> 1, err);
   bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();

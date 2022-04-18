@@ -202,7 +202,7 @@ bool getFUS302IRQLow() {
 
 uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average() >> 1; }
 
-uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average(); }
+uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average() >> 1; }
 
 // Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
-uint16_t getTipRawTemp(uint8_t sample) { return ADC_Tip.average(); }
+uint16_t getTipRawTemp(uint8_t sample) { return ADC_Tip.average() >> 2; }
