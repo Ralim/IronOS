@@ -131,7 +131,7 @@ void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t
         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
       }
     }
-    MSG((char *)"timer event comp2! \r\n");
+    // MSG((char *)"timer event comp2! \r\n");
   }
 }
 
@@ -173,6 +173,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
                        // disabled if the PID task is not scheduled often enough.
   pendingPWM = pulse;
   fastPWM    = shouldUseFastModePWM;
+  MSG((char *)"PWM Output %d, %d\r\n", pulse, (int)shouldUseFastModePWM);
 }
 extern osThreadId POWTaskHandle;
 
@@ -199,7 +200,7 @@ bool getFUS302IRQLow() {
   // return (RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin));
 }
 
-uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average(); }
+uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average() >> 1; }
 
 uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average(); }
 

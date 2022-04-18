@@ -23,8 +23,8 @@ void setup_slow_PWM();
 void setup_adc(void);
 void hardware_init() {
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
-  // gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
-  // gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
+  gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
+  gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
   setup_slow_PWM();
   setup_adc();
 }

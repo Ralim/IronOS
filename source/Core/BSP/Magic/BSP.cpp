@@ -22,7 +22,7 @@ void resetWatchdog() {
 }
 
 uint16_t getHandleTemperature(uint8_t sample) {
-#ifdef TEMP_TMP36
+
   // We return the current handle temperature in X10 C
   // TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
   // example) STM32 = 4096 count @ 3.3V input -> But We oversample by 32/(2^2) =
@@ -37,9 +37,6 @@ uint16_t getHandleTemperature(uint8_t sample) {
   result *= 100;
   result /= 993;
   return result;
-#else
-#error only uses TMP36
-#endif
 }
 
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
@@ -73,14 +70,12 @@ void unstick_I2C() {
 }
 
 uint8_t getButtonA() {
-  //#TODO
-  return false;
-  // return (gpio_input_bit_get(KEY_A_GPIO_Port, KEY_A_Pin) == SET) ? 1 : 0;
+  uint8_t val = gpio_read(KEY_A_Pin);
+  return val;
 }
 uint8_t getButtonB() {
-  //#TODO
-  return false;
-  // return (gpio_input_bit_get(KEY_B_GPIO_Port, KEY_B_Pin) == SET) ? 1 : 0;
+  uint8_t val = gpio_read(KEY_B_Pin);
+  return val;
 }
 
 void reboot() {
