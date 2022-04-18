@@ -19,6 +19,7 @@ extern "C" {
 void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t state);
 void adc_fifo_irq(void);
 void start_adc_misc(void);
+void GPIO_IRQHandler(void);
 #ifdef __cplusplus
 }
 #endif

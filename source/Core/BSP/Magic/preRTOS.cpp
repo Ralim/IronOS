@@ -14,7 +14,6 @@
 
 void preRToSInit() {
   // Normal system bringup -- GPIO etc
-  // #TODO
   bflb_platform_init(0);
 
   hardware_init();

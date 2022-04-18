@@ -177,22 +177,36 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 }
 extern osThreadId POWTaskHandle;
 
-// void EXTI5_9_IRQHandler(void) {
-//   // #if POW_PD
-//   //   if (RESET != exti_interrupt_flag_get(EXTI_5)) {
-//   //     exti_interrupt_flag_clear(EXTI_5);
+void GPIO_IRQHandler(void) {
+  if (SET == GLB_Get_GPIO_IntStatus(FUSB302_IRQ_GLB_Pin)) {
+    GLB_GPIO_IntClear(FUSB302_IRQ_GLB_Pin, SET);
+    MSG((char *)"GPIO IRQ FUSB\r\n");
+#if POW_PD
+    if (POWTaskHandle != nullptr) {
+      MSG((char *)"Wake FUSB\r\n");
+      BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+      xTaskNotifyFromISR(POWTaskHandle, 1, eSetBits, &xHigherPriorityTaskWoken);
+      /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+      The macro used to do this is dependent on the port and may be called
+      portEND_SWITCHING_ISR. */
+      portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    }
+#endif
 
-//   //     if (POWTaskHandle != nullptr) {
-//   //       BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-//   //       xTaskNotifyFromISR(POWTaskHandle, 1, eSetBits, &xHigherPriorityTaskWoken);
-//   //       /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
-//   //       The macro used to do this is dependent on the port and may be called
-//   //       portEND_SWITCHING_ISR. */
-//   //       portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-//   //     }
-//   //   }
-//   // #endif
-// }
+    /* timeout check */
+    uint32_t timeOut = 32;
+
+    do {
+      timeOut--;
+    } while ((SET == GLB_Get_GPIO_IntStatus(FUSB302_IRQ_GLB_Pin)) && timeOut);
+
+    if (!timeOut) {
+      // MSG("WARNING: Clear GPIO interrupt status fail.\r\n");
+    }
+
+    GLB_GPIO_IntClear(FUSB302_IRQ_GLB_Pin, RESET);
+  }
+}
 
 bool getFUS302IRQLow() {
   // Return true if the IRQ line is still held low

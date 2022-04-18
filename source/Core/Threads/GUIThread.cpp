@@ -800,15 +800,15 @@ void showDebugMenu(void) {
 }
 
 void showWarnings() {
-  // MSG((char *)"showWarningsshowWarnings\r\n");
+  MSG((char *)"showWarningsshowWarnings\r\n");
   return;
   // Display alert if settings were reset
   if (settingsWereReset) {
-    // MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
-    // MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
-    // MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
-    // MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
-    // MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
+    MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
+    MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
+    MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
+    MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
+    MSG((char *)"WarnUser - %ld\r\n\r\n", (uint64_t)Tr);
 
     warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
   }
@@ -817,7 +817,7 @@ void showWarnings() {
   // In this case though, we dont want to nag the user _too_ much
   // So only show first 2 times
   while (DetectedAccelerometerVersion == AccelType::Scanning) {
-    // MSG((char *)"Accel Detect");
+    MSG((char *)"Accel Detect");
     osDelay(5);
   }
   // Display alert if accelerometer is not detected
@@ -847,14 +847,14 @@ uint8_t disconnectedTipF[sizeof(disconnectedTip)];
 /* StartGUITask function */
 void startGUITask(void const *argument) {
   (void)argument;
-  // MSG((char *)"startGUITask\r\n");
+  MSG((char *)"startGUITask\r\n");
   prepareTranslations();
-  // MSG((char *)"OLEDInit\r\n");
+  MSG((char *)"OLEDInit\r\n");
 
   OLED::initialize(); // start up the LCD
-  // MSG((char *)"setBrightness\r\n");
+  MSG((char *)"setBrightness\r\n");
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
-  // MSG((char *)"setInverseDisplay\r\n");
+  MSG((char *)"setInverseDisplay\r\n");
   OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
 
   uint8_t tempWarningState       = 0;
@@ -862,7 +862,7 @@ void startGUITask(void const *argument) {
   bool    tempOnDisplay          = false;
   bool    tipDisconnectedDisplay = false;
   bool    showExitMenuTransition = false;
-  // MSG((char *)"flip\r\n");
+  MSG((char *)"flip\r\n");
 
   {
     // Generate the flipped screen into ram for later use
@@ -875,24 +875,24 @@ void startGUITask(void const *argument) {
       }
     }
   }
-  // MSG((char *)"tipTemp\r\n");
+  MSG((char *)"tipTemp\r\n");
 
   getTipRawTemp(1); // reset filter
-  // MSG((char *)"setRotation\r\n");
+  MSG((char *)"setRotation\r\n");
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
-  // MSG((char *)"Bootlogo\r\n");
+  MSG((char *)"Bootlogo\r\n");
 
   // BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
-  // MSG((char *)"showWarnings\r\n");
+  MSG((char *)"showWarnings\r\n");
   showWarnings();
-  // MSG((char *)"AutoStartMode\r\n");
+  MSG((char *)"AutoStartMode\r\n");
   if (getSettingValue(SettingsOptions::AutoStartMode)) {
     // jump directly to the autostart mode
     gui_solderingMode(getSettingValue(SettingsOptions::AutoStartMode) - 1);
     buttonLockout = true;
   }
-  // MSG((char *)"GUI Thread Start\r\n");
+  MSG((char *)"GUI Thread Start\r\n");
 
   for (;;) {
     ButtonState buttons = getButtonState();

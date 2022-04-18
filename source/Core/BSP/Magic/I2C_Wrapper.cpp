@@ -43,7 +43,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
   i2cCfg.subAddrSize      = 1; // one byte address
 
   err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
-  // MSG((char *)"I2C Mem_Read %02X - %d - %d\r\n", DevAddress >> 1, err, number_of_byte);
+  MSG((char *)"I2C Mem_Read %02X - %d - %d\r\n", DevAddress >> 1, err, number_of_byte);
   bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
@@ -66,7 +66,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
   i2cCfg.subAddrSize      = 1; // one byte address
 
   err = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
-  // MSG((char *)"I2C Mem_Write %02X - %d\r\n", DevAddress >> 1, err);
+  MSG((char *)"I2C Mem_Write %02X - %d\r\n", DevAddress >> 1, err);
   bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();
@@ -107,17 +107,20 @@ bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *register
 
 bool FRToSI2C::wakePart(uint16_t DevAddress) {
   // wakepart is a special case  where only the device address is sent
-  if (!lock())
-    return false;
+  return false; // TODO
 
-  I2C_Transfer_Cfg i2cCfg = {0, DISABLE, 0, 0, 0, 0};
-  BL_Err_Type      err    = ERROR;
-  i2cCfg.slaveAddr        = DevAddress >> 1;
-  i2cCfg.stopEveryByte    = DISABLE;
-  i2cCfg.subAddr          = 0;
-  i2cCfg.dataSize         = 0;
-  i2cCfg.data             = 0;
-  i2cCfg.subAddrSize      = 0; // one byte address
+  if (!lock()) {
+    return false;
+  }
+  uint8_t          temp[1] = {0};
+  I2C_Transfer_Cfg i2cCfg  = {0, DISABLE, 0, 0, 0, 0};
+  BL_Err_Type      err     = ERROR;
+  i2cCfg.slaveAddr         = DevAddress >> 1;
+  i2cCfg.stopEveryByte     = DISABLE;
+  i2cCfg.subAddr           = 0;
+  i2cCfg.dataSize          = 1;
+  i2cCfg.data              = temp;
+  i2cCfg.subAddrSize       = 0;
 
   err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
   MSG((char *)"I2C wakePart %02X - %d\r\n", DevAddress >> 1, err);
@@ -126,5 +129,6 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
     I2C_Unstick();
   }
   unlock();
+  MSG((char *)"I2C probe done \r\n");
   return res;
 }

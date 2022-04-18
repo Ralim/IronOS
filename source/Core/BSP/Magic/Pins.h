@@ -31,7 +31,8 @@
 #define QC_DM_LOW_Pin  GPIO_PIN_4
 #define QC_DM_HIGH_Pin GPIO_PIN_6
 
-#define FUSB302_IRQ_Pin GPIO_PIN_16
+#define FUSB302_IRQ_Pin     GPIO_PIN_16
+#define FUSB302_IRQ_GLB_Pin GLB_GPIO_PIN_16
 
 // uart
 #define UART_TX_Pin GPIO_PIN_22

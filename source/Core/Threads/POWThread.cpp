@@ -34,6 +34,7 @@ void startPOWTask(void const *argument __unused) {
 #endif
   BaseType_t res;
   for (;;) {
+    MSG((char *)"POW Spin\r\n");
     res = pdFALSE;
     // While the interrupt is low, dont delay
     /*This is due to a possible race condition, where:

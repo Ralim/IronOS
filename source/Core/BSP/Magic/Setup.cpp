@@ -98,7 +98,19 @@ void setup_slow_PWM() {
 }
 
 void setupFUSBIRQ() {
-  // #TODO
+  return; // TODO
+
+  MSG((char *)"Setting up FUSB IRQ\r\n");
+  gpio_set_mode(FUSB302_IRQ_Pin, GPIO_SYNC_FALLING_TRIGER_INT_MODE);
+  MSG((char *)"Setting up FUSB IRQ1r\n");
+  CPU_Interrupt_Disable(GPIO_INT0_IRQn);
+  MSG((char *)"Setting up FUSB IRQ2\r\n");
+  Interrupt_Handler_Register(GPIO_INT0_IRQn, GPIO_IRQHandler);
+  MSG((char *)"Setting up FUSB IRQ3\r\n");
+  CPU_Interrupt_Enable(GPIO_INT0_IRQn);
+
+  MSG((char *)"Setting up FUSB IRQ4\r\n");
+  gpio_irq_enable(FUSB302_IRQ_Pin, ENABLE);
 }
 
 void vAssertCalled(void) {
