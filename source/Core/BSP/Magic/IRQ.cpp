@@ -70,7 +70,7 @@ void start_adc_tip(void) {
   // The ADC has a 32 sample FiFo; we set this up to fire and interrupt at 16 samples
   // Then using that IRQ to know that sampling is done and can be stored
   ADC_Stop();
-  ADC_Scan_Channel_Config((ADC_Chan_Type *)adc_tip_pos_chans, (ADC_Chan_Type *)adc_tip_neg_chans, 1, ENABLE);
+  ADC_Scan_Channel_Config(adc_tip_pos_chans, adc_tip_neg_chans, 1, ENABLE);
   ADC_Start();
 }
 const ADC_Chan_Type adc_misc_pos_chans[] = {TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL};
@@ -80,7 +80,7 @@ static_assert(sizeof(adc_misc_pos_chans) == sizeof(adc_misc_neg_chans));
 void start_adc_misc(void) {
   // Reconfigure the ADC to measure all other inputs in scan mode when we are not measuring the tip
   ADC_Stop();
-  ADC_Scan_Channel_Config((ADC_Chan_Type *)adc_misc_pos_chans, (ADC_Chan_Type *)adc_misc_neg_chans, 2, ENABLE);
+  ADC_Scan_Channel_Config(adc_misc_pos_chans, adc_misc_neg_chans, 2, ENABLE);
   ADC_Start();
 }
 
