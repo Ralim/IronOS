@@ -15,22 +15,22 @@ bool      settingsWereReset            = false;
 // FreeRTOS variables
 
 osThreadId          GUITaskHandle;
-static const size_t GUITaskStackSize = 1024 / 3;
+static const size_t GUITaskStackSize = 1024 / 2;
 uint32_t            GUITaskBuffer[GUITaskStackSize];
 osStaticThreadDef_t GUITaskControlBlock;
 
 osThreadId          PIDTaskHandle;
-static const size_t PIDTaskStackSize = 1024 / 3;
+static const size_t PIDTaskStackSize = 1024 / 2;
 uint32_t            PIDTaskBuffer[PIDTaskStackSize];
 osStaticThreadDef_t PIDTaskControlBlock;
 
 osThreadId          MOVTaskHandle;
-static const size_t MOVTaskStackSize = 1024 / 3;
+static const size_t MOVTaskStackSize = 1024 / 2;
 uint32_t            MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
 
 osThreadId          POWTaskHandle;
-static const size_t POWTaskStackSize = 512 / 3;
+static const size_t POWTaskStackSize = 512 / 2;
 uint32_t            POWTaskBuffer[POWTaskStackSize];
 osStaticThreadDef_t POWTaskControlBlock;
 
