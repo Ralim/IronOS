@@ -191,13 +191,13 @@ _ssize_t _write_r(struct _reent *ptr, int fd, const void *buf, size_t nbytes) {
 #endif
 }
 
-void *_malloc_r(struct _reent *ptr, size_t size) { return NULL; }
+// void *_malloc_r(struct _reent *ptr, size_t size) { return NULL; }
 
-void *_realloc_r(struct _reent *ptr, void *old, size_t newlen) { return NULL; }
+// void *_realloc_r(struct _reent *ptr, void *old, size_t newlen) { return NULL; }
 
-void *_calloc_r(struct _reent *ptr, size_t size, size_t len) { return NULL; }
+// void *_calloc_r(struct _reent *ptr, size_t size, size_t len) { return NULL; }
 
-void _free_r(struct _reent *ptr, void *addr) {}
+// void _free_r(struct _reent *ptr, void *addr) {}
 
 void *_sbrk_r(struct _reent *ptr, ptrdiff_t incr) { return NULL; }
 
@@ -207,9 +207,6 @@ void __attribute__((noreturn)) _exit(int status) {
 }
 
 void _system(const char *s) {}
-
-void __libc_init_array(void) { /* we not use __libc init_aray to initialize C++ objects */
-}
 
 mode_t umask(mode_t mask) { return 022; }
 
