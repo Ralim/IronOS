@@ -4,6 +4,7 @@
 
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
+#include "bflb_platform.h"
 #include "fusb302b.h"
 #include "main.hpp"
 #include "pd.h"
@@ -18,9 +19,11 @@
 
 void ms_delay(uint32_t delayms) {
   // Convert ms -> ticks
+  MSG((char *)"USB PD Delay %d\r\n", delayms);
   TickType_t ticks = delayms / portTICK_PERIOD_MS;
 
   vTaskDelay(ticks ? ticks : 1); /* Minimum delay = 1 tick */
+  MSG((char *)"USB PD Delay %d...Done\r\n", delayms);
 }
 uint32_t get_ms_timestamp() {
   // Convert ticks -> ms

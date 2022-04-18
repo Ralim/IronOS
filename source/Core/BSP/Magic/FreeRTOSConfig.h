@@ -28,18 +28,14 @@
 #define configUSE_COUNTING_SEMAPHORES           1
 #define configGENERATE_RUN_TIME_STATS           0
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
-#define configUSE_STATS_FORMATTING_FUNCTIONS    2
+#define configUSE_STATS_FORMATTING_FUNCTIONS    0
 #define configUSE_TICKLESS_IDLE                 0
 
 /* Co-routine definitions. */
-#define configUSE_CO_ROUTINES           0
-#define configMAX_CO_ROUTINE_PRIORITIES (2)
+#define configUSE_CO_ROUTINES 0
 
 /* Software timer definitions. */
-#define configUSE_TIMERS             0
-#define configTIMER_TASK_PRIORITY    (configMAX_PRIORITIES - 1)
-#define configTIMER_QUEUE_LENGTH     8
-#define configTIMER_TASK_STACK_DEPTH (160)
+#define configUSE_TIMERS 0
 
 /* Task priorities.  Allow these to be overridden. */
 #ifndef uartPRIMARY_PRIORITY
@@ -53,9 +49,6 @@ extern "C" {
 header file. */
 void vAssertCalled(void);
 
-void vPortEnterCritical(void);
-void vPortExitCritical(void);
-
 #define configASSERT(x) \
   if ((x) == 0)         \
   vAssertCalled()
@@ -68,9 +61,9 @@ void vApplicationSleep(uint32_t xExpectedIdleTime);
 #define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime) vApplicationSleep(xExpectedIdleTime)
 #endif
 
-#define INCLUDE_vTaskPrioritySet            1
-#define INCLUDE_uxTaskPriorityGet           1
-#define INCLUDE_vTaskDelete                 1
+#define INCLUDE_vTaskPrioritySet            0
+#define INCLUDE_uxTaskPriorityGet           0
+#define INCLUDE_vTaskDelete                 0
 #define INCLUDE_vTaskSuspend                1
 #define INCLUDE_xResumeFromISR              1
 #define INCLUDE_vTaskDelayUntil             1

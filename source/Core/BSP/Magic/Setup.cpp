@@ -119,6 +119,3 @@ void vAssertCalled(void) {
   while (1)
     ;
 }
-
-void vPortEnterCritical(void) {}
-void vPortExitCritical(void) {}
