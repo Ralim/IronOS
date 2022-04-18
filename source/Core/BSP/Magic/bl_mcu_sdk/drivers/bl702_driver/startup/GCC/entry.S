@@ -78,11 +78,20 @@ _enter:
 
     /* start load code to itcm like. */
     call start_load
+    // Register at exit cleanup (not required for embedded)
+    // la a0, __libc_fini_array
+    // call atexit
+    /* Call C/C++ constructor start up code */
+    call __libc_init_array
+
 
     jal System_Post_Init
+
     /* At this point we can enter the C runtime's startup file.  The arguments
      * to this function are designed to match those provided to the SEE, just
      * so we don't have to write another ABI. */
+    
+    //Sets argv,argc to 0/null
     csrr a0, mhartid
     li a1, 0
     li a2, 0

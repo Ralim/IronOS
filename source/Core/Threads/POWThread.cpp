@@ -25,7 +25,7 @@ void startPOWTask(void const *argument __unused) {
   postRToSInit();
   // You have to run this once we are willing to answer PD messages
   // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
-  // MSG((char *)"POW_PD\r\n");
+  MSG((char *)"POW_PD\r\n");
 #if POW_PD
   USBPowerDelivery::start();
   // Crank the handle at boot until we are stable and waiting for IRQ

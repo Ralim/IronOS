@@ -312,7 +312,7 @@ $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o 
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant -ffreestanding -fno-common
+OPTIM=-Os  -finline-small-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant -ffreestanding -fno-common
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model)
@@ -388,8 +388,8 @@ CHECKOPTIONS=		-Wall 				\
 			-Winline			\
 			-Wshadow			\
 			-Wno-unused-parameter \
-			-Wdouble-promotion \
-			-Werror 
+			-Wdouble-promotion 
+			
 			
 
 
