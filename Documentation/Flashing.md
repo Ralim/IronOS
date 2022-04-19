@@ -226,7 +226,6 @@ If you are on Windows, it's often best to try another computer (friends, work, p
 If you are an advanced user, and you have used `usb-dfu` tools before, or you would like to learn; there is an alternative bootloader for these irons.
 This will **NOT** show up as a USB storage drive, but instead show up using a standard DFU protocol device. You can then use dfu tools or GUI's to upgrade the iron using the `.bin` files that are posted to the releases page.
 
-To change to dapboot based alternative bootloader, you need to flash the hex file from [here](https://github.com/eDesignOSS/ts100-bl-flasher/releases).
-`ts100-stockbl.hex` will reflash the stock bootloader, `ts100-dapboot.hex` will flash the new dapboot based usb bootloader.
+To install this alternative bootloader, follow the instructions [here](https://github.com/Ralim/IronOS-dfu/blob/mainline/docs/Bootloader.md).
 
 Note that this is only recommended for users who know what they are doing. If you don't understand how this works, please don't flash this.
