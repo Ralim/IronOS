@@ -1,7 +1,7 @@
 # Startup Logos
 
 This firmware supports a user created bootup logo.
-By default there is _not_ one included in the firmware, as this means that once flashed they generally stay.
+By default, there is _not_ one included in the firmware, as this means that once flashed they generally stay.
 
 ## Generating the Logo files
 
@@ -27,7 +27,7 @@ Run `python3 img2logo.py --help` to see available options.
 ### Miniware (TS100/TS80/TS80P)
 
 Upload the HEX file to the iron in DFU mode and, if the file's extension changes to .RDY, your custom splash screen should show up on startup.
-You perform this the same way as if you were flashing a new firmware, and all of the existing notes around this apply.
+You perform this the same way as if you were flashing a new firmware, and all the existing notes around this apply.
 
 If you have flashed the `IronOS-dfu` alternative bootloader, you should use the `.dfu` files instead
 
