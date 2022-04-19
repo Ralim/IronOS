@@ -13,40 +13,42 @@
 void QC_DPlusZero_Six() {
   // pull down D+
   // #TODO
+  gpio_write(QC_DP_LOW_Pin, 0);
 }
 void QC_DNegZero_Six() {
-  // gpio_bit_set(QC_DM_HIGH_GPIO_Port, QC_DM_HIGH_Pin);
-  //  gpio_bit_reset(QC_DM_LOW_GPIO_Port, QC_DM_LOW_Pin);
+  gpio_write(QC_DM_HIGH_Pin, 1);
+  gpio_write(QC_DM_LOW_Pin, 0);
 }
 void QC_DPlusThree_Three() {
   // pull up D+
-  // gpio_bit_set(QC_DP_LOW_GPIO_Port, QC_DP_LOW_Pin);
+  gpio_write(QC_DP_LOW_Pin, 1);
 }
 void QC_DNegThree_Three() {
-  // gpio_bit_set(QC_DM_LOW_GPIO_Port, QC_DM_LOW_Pin);
-  // gpio_bit_set(QC_DM_HIGH_GPIO_Port, QC_DM_HIGH_Pin);
+  gpio_write(QC_DM_LOW_Pin, 1);
+  gpio_write(QC_DM_HIGH_Pin, 1);
 }
-void QC_DM_PullDown() { // gpio_init(USB_DM_LOW_GPIO_Port, GPIO_MODE_IPD, GPIO_OSPEED_2MHZ, USB_DM_Pin);
+void QC_DM_PullDown() {
+  // Turn on pulldown on D-
+  gpio_set_mode(USB_DM_Pin, GPIO_INPUT_PD_MODE);
 }
-void QC_DM_No_PullDown() { // gpio_init(USB_DM_LOW_GPIO_Port, GPIO_MODE_IN_FLOATING, GPIO_OSPEED_2MHZ, USB_DM_Pin);
+void QC_DM_No_PullDown() {
+  // Turn off pulldown on d-
+  gpio_set_mode(USB_DM_Pin, GPIO_INPUT_MODE);
 }
 void QC_Init_GPIO() {
   // Setup any GPIO into the right states for QC
   // D+ pulldown as output
-  // gpio_init(QC_DP_LOW_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ, QC_DP_LOW_Pin);
+  gpio_set_mode(QC_DP_LOW_Pin, GPIO_OUTPUT_MODE);
   // Make two D- pins floating
   QC_DM_PullDown();
 }
 void QC_Post_Probe_En() {
   // Make two D- pins outputs
-  // gpio_init(QC_DM_LOW_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ, QC_DM_LOW_Pin);
-  // gpio_init(QC_DM_HIGH_GPIO_Port, GPIO_MODE_OUT_PP, GPIO_OSPEED_2MHZ, QC_DM_HIGH_Pin);
+  gpio_set_mode(QC_DM_LOW_Pin, GPIO_OUTPUT_MODE);
+  gpio_set_mode(QC_DM_HIGH_Pin, GPIO_OUTPUT_MODE);
 }
 
-uint8_t QC_DM_PulledDown() {
-  // return gpio_input_bit_get(USB_DM_LOW_GPIO_Port, USB_DM_Pin) == RESET ? 1 : 0;
-  return false;
-}
+uint8_t QC_DM_PulledDown() { return gpio_read(USB_DM_Pin) == 0; }
 #endif
 void QC_resync() {
 #ifdef POW_QC
