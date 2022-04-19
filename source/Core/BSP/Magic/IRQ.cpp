@@ -100,7 +100,7 @@ void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t
   } else if (state == TIMER_EVENT_COMP1) {
     // MSG((char *)"timer event comp1! \r\n");
     // Used to turn tip off at set point in cycle
-
+    PWM_Channel_Disable(PWM_Channel);
   } else if (state == TIMER_EVENT_COMP2) {
     start_adc_misc();
     // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
@@ -117,9 +117,11 @@ void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t
       if (pendingPWM > 0) {
         TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, pendingPWM - 1);
         // Turn on output
+        PWM_Channel_Enable(PWM_Channel);
       } else {
         TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
         // Leave output off
+        PWM_Channel_Disable(PWM_Channel);
       }
     }
     // unblock the PID controller thread

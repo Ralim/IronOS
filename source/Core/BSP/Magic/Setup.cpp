@@ -49,7 +49,7 @@ void setup_pwm(void) {
   BL_Err_Type err     = PWM_Channel_Init(&cfg);
   uint32_t    pwm_clk = peripheral_clock_get(PERIPHERAL_CLOCK_PWM);
   MSG((char *)"PWM Setup returns %d %d\r\n", err, pwm_clk);
-  PWM_Channel_Enable(PWM_Channel);
+  PWM_Channel_Disable(PWM_Channel);
 }
 void setup_adc(void) {
   MSG((char *)"Setting up ADC\r\n");
