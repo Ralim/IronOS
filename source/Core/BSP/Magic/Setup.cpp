@@ -26,6 +26,9 @@ void hardware_init() {
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
   gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
   gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
+  gpio_set_mode(TMP36_INPUT_Pin, GPIO_INPUT_MODE);
+  gpio_set_mode(TIP_TEMP_Pin, GPIO_INPUT_MODE);
+  gpio_set_mode(VIN_Pin, GPIO_INPUT_MODE);
 
   setup_timer_scheduler();
   setup_adc();
@@ -51,6 +54,12 @@ void setup_pwm(void) {
   MSG((char *)"PWM Setup returns %d %d\r\n", err, pwm_clk);
   PWM_Channel_Disable(PWM_Channel);
 }
+
+const ADC_Chan_Type adc_tip_pos_chans[]
+    = {TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL};
+const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
+static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
+
 void setup_adc(void) {
   MSG((char *)"Setting up ADC\r\n");
   //
@@ -67,9 +76,9 @@ void setup_adc(void) {
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
-  adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
-  adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
-  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_PGA_ON;
+  adc_cfg.gain1          = ADC_PGA_GAIN_1;
+  adc_cfg.gain2          = ADC_PGA_GAIN_1;
+  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_PGA_RPC_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
   adc_cfg.vcm            = ADC_PGA_VCM_1V;
   adc_cfg.offsetCalibEn  = DISABLE;
@@ -80,16 +89,17 @@ void setup_adc(void) {
   ADC_Reset();
   ADC_Init(&adc_cfg);
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_16;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
+  ADC_MIC_Bias_Disable();
+
   // Enable FiFo IRQ
-  MSG((char *)"Int Enable\r\n");
   Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
   ADC_IntMask(ADC_INT_FIFO_READY, UNMASK);
   CPU_Interrupt_Enable(GPADC_DMA_IRQn);
-  MSG((char *)"Start\r\n");
-  start_adc_misc();
-  MSG((char *)"Started\r\n");
+  ADC_Stop();
+  ADC_Scan_Channel_Config(adc_tip_pos_chans, adc_tip_neg_chans, sizeof(adc_tip_pos_chans) / sizeof(ADC_Chan_Type), DISABLE);
+  ADC_FIFO_Clear();
 }
 
 struct device *timer0;

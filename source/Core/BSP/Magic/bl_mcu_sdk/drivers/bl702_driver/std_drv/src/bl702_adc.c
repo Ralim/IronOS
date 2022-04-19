@@ -105,14 +105,15 @@ static ADC_Gain_Coeff_Type adcGainCoeffCal            = {
  *  @{
  */
 
-/****************************************************************************/ /**
-                                                                                * @brief  Software reset the whole ADC
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  Software reset the whole ADC
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Reset(void) {
   uint32_t regCmd;
 
@@ -123,14 +124,15 @@ void ADC_Reset(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, BL_CLR_REG_BIT(regCmd, AON_GPADC_SOFT_RST));
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC glable enable
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC glable enable
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Enable(void) {
   uint32_t tmpVal;
 
@@ -139,14 +141,15 @@ void ADC_Enable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC glable disable
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC glable disable
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Disable(void) {
   uint32_t tmpVal;
 
@@ -155,14 +158,15 @@ void ADC_Disable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC normal mode init
-                                                                                *
-                                                                                * @param  cfg: ADC normal mode configuration
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC normal mode init
+ *
+ * @param  cfg: ADC normal mode configuration
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Init(ADC_CFG_Type *cfg) {
   uint32_t regCfg1;
   uint32_t regCfg2;
@@ -230,16 +234,17 @@ void ADC_Init(ADC_CFG_Type *cfg) {
   ADC_Gain_Trim();
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC normal mode channel config
-                                                                                *
-                                                                                * @param  posCh: ADC pos channel type
-                                                                                * @param  negCh: ADC neg channel type
-                                                                                * @param  contEn: ENABLE or DISABLE continuous mode
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC normal mode channel config
+ *
+ * @param  posCh: ADC pos channel type
+ * @param  negCh: ADC neg channel type
+ * @param  contEn: ENABLE or DISABLE continuous mode
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Channel_Config(ADC_Chan_Type posCh, ADC_Chan_Type negCh, BL_Fun_Type contEn) {
   uint32_t regCmd;
   uint32_t regCfg1;
@@ -260,17 +265,18 @@ void ADC_Channel_Config(ADC_Chan_Type posCh, ADC_Chan_Type negCh, BL_Fun_Type co
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG1, regCfg1);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC scan mode channel config
-                                                                                *
-                                                                                * @param  posChList[]: ADC pos channel list type
-                                                                                * @param  negChList[]: ADC neg channel list type
-                                                                                * @param  scanLength: ADC scan length
-                                                                                * @param  contEn: ENABLE or DISABLE continuous mode
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC scan mode channel config
+ *
+ * @param  posChList[]: ADC pos channel list type
+ * @param  negChList[]: ADC neg channel list type
+ * @param  scanLength: ADC scan length
+ * @param  contEn: ENABLE or DISABLE continuous mode
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Scan_Channel_Config(const ADC_Chan_Type posChList[], const ADC_Chan_Type negChList[], uint8_t scanLength, BL_Fun_Type contEn) {
   uint32_t tmpVal, i;
   uint32_t dealLen;
@@ -333,14 +339,15 @@ void ADC_Scan_Channel_Config(const ADC_Chan_Type posChList[], const ADC_Chan_Typ
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG1, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC normal mode convert start
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC normal mode convert start
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Start(void) {
   uint32_t regCmd;
 
@@ -357,14 +364,15 @@ void ADC_Start(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, regCmd);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC normal mode convert stop
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC normal mode convert stop
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Stop(void) {
   uint32_t regCmd;
 
@@ -374,14 +382,15 @@ void ADC_Stop(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, regCmd);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC FIFO configuration
-                                                                                *
-                                                                                * @param  fifoCfg: ADC FIFO confifuration pointer
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC FIFO configuration
+ *
+ * @param  fifoCfg: ADC FIFO confifuration pointer
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_FIFO_Cfg(ADC_FIFO_Cfg_Type *fifoCfg) {
   uint32_t tmpVal;
 
@@ -407,14 +416,15 @@ void ADC_FIFO_Cfg(ADC_FIFO_Cfg_Type *fifoCfg) {
   BL_WR_REG(GPIP_BASE, GPIP_GPADC_CONFIG, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC get DMA FIFO data count
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return data count in FIFO
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC get DMA FIFO data count
+ *
+ * @param  None
+ *
+ * @return data count in FIFO
+ *
+ *******************************************************************************/
 uint8_t ADC_Get_FIFO_Count(void) {
   uint32_t tmpVal;
 
@@ -423,14 +433,15 @@ uint8_t ADC_Get_FIFO_Count(void) {
   return BL_GET_REG_BITS_VAL(tmpVal, GPIP_GPADC_FIFO_DATA_COUNT);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC get DMA FIFO full status
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return SET or RESET
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC get DMA FIFO full status
+ *
+ * @param  None
+ *
+ * @return SET or RESET
+ *
+ *******************************************************************************/
 BL_Sts_Type ADC_FIFO_Is_Full(void) {
   uint32_t tmpVal;
 
@@ -443,14 +454,15 @@ BL_Sts_Type ADC_FIFO_Is_Full(void) {
   }
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC get DMA FIFO empty status
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return SET or RESET
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC get DMA FIFO empty status
+ *
+ * @param  None
+ *
+ * @return SET or RESET
+ *
+ *******************************************************************************/
 BL_Sts_Type ADC_FIFO_Is_Empty(void) {
   uint32_t tmpVal;
 
@@ -463,14 +475,15 @@ BL_Sts_Type ADC_FIFO_Is_Empty(void) {
   }
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC read DMA FIFO data
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return ADC result if return 0 that means this is error data,user should ignore this data.
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC read DMA FIFO data
+ *
+ * @param  None
+ *
+ * @return ADC result if return 0 that means this is error data,user should ignore this data.
+ *
+ *******************************************************************************/
 uint32_t ADC_Read_FIFO(void) {
   uint32_t tmpVal;
 
@@ -479,16 +492,17 @@ uint32_t ADC_Read_FIFO(void) {
   return (tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC parse result
-                                                                                *
-                                                                                * @param  orgVal: Original A to D value
-                                                                                * @param  len: Original AD vaule count
-                                                                                * @param  result: Final Result array pointer
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC parse result
+ *
+ * @param  orgVal: Original A to D value
+ * @param  len: Original AD vaule count
+ * @param  result: Final Result array pointer
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
   uint8_t             neg     = 0;
   uint32_t            tmpVal1 = 0, tmpVal2 = 0;
@@ -558,15 +572,16 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
   }
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC mask or unmask certain or all interrupt
-                                                                                *
-                                                                                * @param  intType: interrupt type
-                                                                                * @param  intMask: mask or unmask
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC mask or unmask certain or all interrupt
+ *
+ * @param  intType: interrupt type
+ * @param  intMask: mask or unmask
+ *
+ * @return None
+ *
+ *******************************************************************************/
 BL_Mask_Type ADC_IntGetMask(ADC_INT_Type intType) {
   uint32_t tmpVal;
 
@@ -610,15 +625,16 @@ BL_Mask_Type ADC_IntGetMask(ADC_INT_Type intType) {
   return 0;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC mask or unmask certain or all interrupt
-                                                                                *
-                                                                                * @param  intType: interrupt type
-                                                                                * @param  intMask: mask or unmask
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC mask or unmask certain or all interrupt
+ *
+ * @param  intType: interrupt type
+ * @param  intMask: mask or unmask
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_IntMask(ADC_INT_Type intType, BL_Mask_Type intMask) {
   uint32_t tmpVal;
 
@@ -745,14 +761,15 @@ void ADC_IntMask(ADC_INT_Type intType, BL_Mask_Type intMask) {
   }
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC clear certain or all interrupt
-                                                                                *
-                                                                                * @param  intType: interrupt type
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC clear certain or all interrupt
+ *
+ * @param  intType: interrupt type
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_IntClr(ADC_INT_Type intType) {
   uint32_t tmpVal;
 
@@ -891,14 +908,15 @@ void ADC_IntClr(ADC_INT_Type intType) {
   }
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC get interrupt status
-                                                                                *
-                                                                                * @param  intType: interrupt type
-                                                                                *
-                                                                                * @return SET or RESET
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC get interrupt status
+ *
+ * @param  intType: interrupt type
+ *
+ * @return SET or RESET
+ *
+ *******************************************************************************/
 BL_Sts_Type ADC_GetIntStatus(ADC_INT_Type intType) {
   uint32_t    tmpVal;
   BL_Sts_Type bitStatus = RESET;
@@ -947,15 +965,16 @@ BL_Sts_Type ADC_GetIntStatus(ADC_INT_Type intType) {
   return bitStatus;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC install interrupt callback
-                                                                                *
-                                                                                * @param  intType: ADC interrupt type
-                                                                                * @param  cbFun: ADC interrupt callback
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC install interrupt callback
+ *
+ * @param  intType: ADC interrupt type
+ * @param  cbFun: ADC interrupt callback
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Int_Callback_Install(ADC_INT_Type intType, intCallback_Type *cbFun) {
   /* Check the parameters */
   CHECK_PARAM(IS_GPIP_ADC_INT_TYPE(intType));
@@ -963,14 +982,15 @@ void ADC_Int_Callback_Install(ADC_INT_Type intType, intCallback_Type *cbFun) {
   adcIntCbfArra[intType] = cbFun;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC DMA interrupt handler
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC DMA interrupt handler
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 #ifndef BFLB_USE_HAL_DRIVER
 void GPADC_DMA_IRQHandler(void) {
   if (ADC_GetIntStatus(ADC_INT_POS_SATURATION) == SET) {
@@ -1023,14 +1043,15 @@ void GPADC_DMA_IRQHandler(void) {
 }
 #endif
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC VBAT enable
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC VBAT enable
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Vbat_Enable(void) {
   uint32_t tmpVal;
 
@@ -1039,14 +1060,15 @@ void ADC_Vbat_Enable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC VBAT disable
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC VBAT disable
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Vbat_Disable(void) {
   uint32_t tmpVal;
 
@@ -1055,14 +1077,15 @@ void ADC_Vbat_Disable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC TSEN Config
-                                                                                *
-                                                                                * @param  tsenMod: None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC TSEN Config
+ *
+ * @param  tsenMod: None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Tsen_Init(ADC_TSEN_MOD_Type tsenMod) {
   uint32_t tmpVal;
 
@@ -1118,12 +1141,13 @@ void ADC_Tsen_Init(ADC_TSEN_MOD_Type tsenMod) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC TSEN Enable
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC TSEN Enable
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Tsen_Enable(void) {
   uint32_t tmpVal;
 
@@ -1132,12 +1156,13 @@ void ADC_Tsen_Enable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC TSEN Disable
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC TSEN Disable
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_Tsen_Disable(void) {
   uint32_t tmpVal;
 
@@ -1146,12 +1171,13 @@ void ADC_Tsen_Disable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC Clear fifo
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC Clear fifo
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_FIFO_Clear(void) {
   uint32_t tmpVal;
 
@@ -1161,14 +1187,15 @@ void ADC_FIFO_Clear(void) {
   BL_WR_REG(GPIP_BASE, GPIP_GPADC_CONFIG, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  config pga
-                                                                                *
-                                                                                * @param  pga_vcmi_enable: enable or not vcmi
-                                                                                * @param  pga_os_cal: pga os cal value
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  config pga
+ *
+ * @param  pga_vcmi_enable: enable or not vcmi
+ * @param  pga_os_cal: pga os cal value
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_PGA_Config(uint8_t pga_vcmi_enable, uint8_t pga_os_cal) {
   uint32_t tmpVal;
 
@@ -1184,14 +1211,15 @@ void ADC_PGA_Config(uint8_t pga_vcmi_enable, uint8_t pga_os_cal) {
 
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, tmpVal);
 }
-/****************************************************************************/ /**
-                                                                                * @brief  TSEN_Get_V_Error
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  TSEN_Get_V_Error
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 uint32_t TSEN_Get_V_Error(void) {
   uint32_t        v0 = 0, v1 = 0;
   uint32_t        v_error = 0;
@@ -1243,14 +1271,15 @@ uint32_t TSEN_Get_V_Error(void) {
   return v_error;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Trim TSEN
-                                                                                *
-                                                                                * @param  tsen_offset: None
-                                                                                *
-                                                                                * @return SUCCESS or ERROR
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  Trim TSEN
+ *
+ * @param  tsen_offset: None
+ *
+ * @return SUCCESS or ERROR
+ *
+ *******************************************************************************/
 BL_Err_Type ATTR_CLOCK_SECTION ADC_Trim_TSEN(uint16_t *tsen_offset) {
   Efuse_TSEN_Refcode_Corner_Type trim;
 
@@ -1266,14 +1295,15 @@ BL_Err_Type ATTR_CLOCK_SECTION ADC_Trim_TSEN(uint16_t *tsen_offset) {
   return ERROR;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  SET ADC TSEN TSVBE LOW/HIGH
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  SET ADC TSEN TSVBE LOW/HIGH
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_SET_TSVBE_LOW(void) {
   uint32_t tmpVal;
   tmpVal = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG2);
@@ -1281,14 +1311,15 @@ void ADC_SET_TSVBE_LOW(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  SET ADC TSEN TSVBE LOW/HIGH
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  SET ADC TSEN TSVBE LOW/HIGH
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_SET_TSVBE_HIGH(void) {
   uint32_t tmpVal;
   tmpVal = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG2);
@@ -1296,14 +1327,15 @@ void ADC_SET_TSVBE_HIGH(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  SET ADC TSEN TSVBE LOW/HIGH
-                                                                                *
-                                                                                * @param  tsen_offset: tsen_offset form efuse trim data
-                                                                                *
-                                                                                * @return tempture
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  SET ADC TSEN TSVBE LOW/HIGH
+ *
+ * @param  tsen_offset: tsen_offset form efuse trim data
+ *
+ * @return tempture
+ *
+ *******************************************************************************/
 float TSEN_Get_Temp(uint32_t tsen_offset) {
   uint32_t        v0 = 0, v1 = 0;
   float           temp   = 0;
@@ -1360,14 +1392,15 @@ float TSEN_Get_Temp(uint32_t tsen_offset) {
   return temp;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC MIC Config
-                                                                                *
-                                                                                * @param  adc_mic_config: adc_mic_config
-                                                                                *
-                                                                                * @return success or not
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC MIC Config
+ *
+ * @param  adc_mic_config: adc_mic_config
+ *
+ * @return success or not
+ *
+ *******************************************************************************/
 BL_Err_Type ADC_Mic_Init(ADC_MIC_Type *adc_mic_config) {
   uint32_t tmpVal1 = 0, tmpVal2 = 0;
 
@@ -1404,14 +1437,15 @@ BL_Err_Type ADC_Mic_Init(ADC_MIC_Type *adc_mic_config) {
   return SUCCESS;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC MIC bias control
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC MIC bias control
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_MIC_Bias_Enable(void) {
   uint32_t tmpVal;
 
@@ -1420,14 +1454,15 @@ void ADC_MIC_Bias_Enable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  ADC MIC bias control
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  ADC MIC bias control
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void ADC_MIC_Bias_Disable(void) {
   uint32_t tmpVal;
 
@@ -1436,14 +1471,15 @@ void ADC_MIC_Bias_Disable(void) {
   BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Trim ADC Gain
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return SUCCESS or ERROR
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************/
+/**
+ * @brief  Trim ADC Gain
+ *
+ * @param  None
+ *
+ * @return SUCCESS or ERROR
+ *
+ *******************************************************************************/
 BL_Err_Type ATTR_CLOCK_SECTION ADC_Gain_Trim(void) {
   Efuse_ADC_Gain_Coeff_Type trim;
   uint32_t                  tmp;

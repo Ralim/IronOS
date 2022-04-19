@@ -23,19 +23,15 @@ void resetWatchdog() {
 
 uint16_t getHandleTemperature(uint8_t sample) {
 
-  // We return the current handle temperature in X10 C
-  // TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
-  // example) STM32 = 4096 count @ 3.3V input -> But We oversample by 32/(2^2) =
-  // 8 times oversampling Therefore 32768 is the 3.3V input, so 0.1007080078125
-  // mV per count So we need to subtract an offset of 0.5V to center on 0C
-  // (4964.8 counts)
-  //
   int32_t result = getADCHandleTemp(sample);
-  result -= 4965; // remove 0.5V offset
+  result -= 10240; // remove 0.5V offset
   // 10mV per C
-  // 99.29 counts per Deg C above 0C
-  result *= 100;
-  result /= 993;
+  // 204.7 counts per Deg C above 0C
+  result *= 10;
+  result /= 205;
+  if (result < 0) {
+    result = 0;
+  }
   return result;
 }
 
@@ -47,7 +43,6 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 }
 
 void unstick_I2C() {
-  MSG((char *)"I2C Unstick\r\n");
   /* configure SDA/SCL for GPIO */
   // GPIO_BC(GPIOB) |= SDA_Pin | SCL_Pin;
   // gpio_init(SDA_GPIO_Port, GPIO_MODE_OUT_OD, GPIO_OSPEED_50MHZ, SDA_Pin | SCL_Pin);

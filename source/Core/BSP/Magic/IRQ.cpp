@@ -8,7 +8,7 @@
 #include "IRQ.h"
 #include "Pins.h"
 #include "configuration.h"
-#include "expMovingAverage.h"
+#include "history.hpp"
 
 extern "C" {
 #include "bflb_platform.h"
@@ -21,14 +21,15 @@ extern "C" {
 #include "hal_timer.h"
 }
 
-#define ADC_Filter_Weight 32
-expMovingAverage<uint16_t, ADC_Filter_Weight> ADC_Vin;
-expMovingAverage<uint16_t, ADC_Filter_Weight> ADC_Temp;
-expMovingAverage<uint16_t, ADC_Filter_Weight> ADC_Tip;
+#define ADC_Filter_Smooth 4
+history<uint16_t, ADC_Filter_Smooth> ADC_Vin;
+history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
+history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
 
 void adc_fifo_irq(void) {
 
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
+    ADC_IntClr(ADC_INT_FIFO_READY);
 
     // Read out all entries in the fifo
     const uint8_t cnt = ADC_Get_FIFO_Count();
@@ -47,41 +48,26 @@ void adc_fifo_irq(void) {
       case VIN_ADC_CHANNEL:
         ADC_Vin.update(sample);
         break;
-      case 0: // 0 turns up when an invalid reading is taken
-        break;
+
       default:
-        // MSG((char *)"ADC Invalid chan %d\r\n", source);
+        MSG((char *)"ADC Invalid chan %d\r\n", source);
         break;
       }
     }
-    // MSG((char *)"ADC Reading %d %d %d\r\n", ADC_Temp.average(), ADC_Vin.average(), ADC_Tip.average());
+    MSG((char *)"ADC Reading %d %d %d\r\n", ADC_Temp.average(), ADC_Vin.average(), ADC_Tip.average());
     // Clear IRQ
-    ADC_IntClr(ADC_INT_FIFO_READY);
   }
 }
-const ADC_Chan_Type adc_tip_pos_chans[] = {TIP_TEMP_ADC_CHANNEL};
-const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND};
-static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
-// TODO Do we need to do the stop+start here or can we hot-write the config
+
 void start_adc_tip(void) {
   // Reconfigure the ADC to measure the tip temp
   // Single channel input mode
   // The ADC has a 32 sample FiFo; we set this up to fire and interrupt at 16 samples
   // Then using that IRQ to know that sampling is done and can be stored
-  ADC_Stop();
-  ADC_Scan_Channel_Config(adc_tip_pos_chans, adc_tip_neg_chans, 1, ENABLE);
   ADC_Start();
 }
-const ADC_Chan_Type adc_misc_pos_chans[] = {TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL};
-const ADC_Chan_Type adc_misc_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND};
-static_assert(sizeof(adc_misc_pos_chans) == sizeof(adc_misc_neg_chans));
 
-void start_adc_misc(void) {
-  // Reconfigure the ADC to measure all other inputs in scan mode when we are not measuring the tip
-  ADC_Stop();
-  ADC_Scan_Channel_Config(adc_misc_pos_chans, adc_misc_neg_chans, 2, ENABLE);
-  ADC_Start();
-}
+void stop_adc(void) {}
 
 static bool fastPWM;
 static void switchToSlowPWM(void);
@@ -102,7 +88,6 @@ void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t
     // Used to turn tip off at set point in cycle
     PWM_Channel_Disable(PWM_Channel);
   } else if (state == TIMER_EVENT_COMP2) {
-    start_adc_misc();
     // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
     if (PWMSafetyTimer) {
       PWMSafetyTimer--;
@@ -181,10 +166,8 @@ extern osThreadId POWTaskHandle;
 void GPIO_IRQHandler(void) {
   if (SET == GLB_Get_GPIO_IntStatus(FUSB302_IRQ_GLB_Pin)) {
     GLB_GPIO_IntClear(FUSB302_IRQ_GLB_Pin, SET);
-    MSG((char *)"GPIO IRQ FUSB\r\n");
 #if POW_PD
     if (POWTaskHandle != nullptr) {
-      MSG((char *)"Wake FUSB\r\n");
       BaseType_t xHigherPriorityTaskWoken = pdFALSE;
       xTaskNotifyFromISR(POWTaskHandle, 1, eSetBits, &xHigherPriorityTaskWoken);
       /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
@@ -215,13 +198,14 @@ bool getFUS302IRQLow() {
   // return (RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin));
 }
 uint16_t rescaleADC(const uint16_t value) {
+  // return value;
   uint32_t temp = value * 33;
   uint16_t res  = temp / 32;
   return res;
 }
-uint16_t getADCHandleTemp(uint8_t sample) { return rescaleADC(ADC_Temp.average() >> 1); }
+uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average(); }
 
-uint16_t getADCVin(uint8_t sample) { return rescaleADC(ADC_Vin.average() >> 1); }
+uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average(); }
 
 // Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
-uint16_t getTipRawTemp(uint8_t sample) { return rescaleADC(ADC_Tip.average() >> 2); }
+uint16_t getTipRawTemp(uint8_t sample) { return rescaleADC(ADC_Tip.average() >> 1); }

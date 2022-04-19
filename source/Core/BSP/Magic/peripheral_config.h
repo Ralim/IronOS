@@ -64,7 +64,7 @@
 #define ADC0_CONFIG                                                                                                                                                      \
   {                                                                                                                                                                      \
     .clk_div = ADC_CLOCK_DIV_32, .vref = ADC_VREF_3V2, .continuous_conv_mode = DISABLE, .differential_mode = DISABLE, .data_width = ADC_DATA_WIDTH_16B_WITH_256_AVERAGE, \
-    .fifo_threshold = ADC_FIFO_THRESHOLD_1BYTE, .gain = ADC_GAIN_1                                                                                                       \
+    .fifo_threshold = ADC_FIFO_THRESHOLD_8BYTE, .gain = ADC_GAIN_1                                                                                                       \
   }
 #endif
 #endif

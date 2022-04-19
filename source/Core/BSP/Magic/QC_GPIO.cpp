@@ -12,7 +12,6 @@
 #ifdef POW_QC
 void QC_DPlusZero_Six() {
   // pull down D+
-  // #TODO
   gpio_write(QC_DP_LOW_Pin, 0);
 }
 void QC_DNegZero_Six() {

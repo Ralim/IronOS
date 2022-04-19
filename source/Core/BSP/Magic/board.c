@@ -268,22 +268,22 @@ void bl_show_info(void) {
   MSG("Build:%s,%s\r\n", __TIME__, __DATE__);
   MSG("Copyright (c) 2021 Bouffalolab team\r\n");
 
-#if 0
-    MSG("root clock:%dM\r\n", system_clock_get(SYSTEM_CLOCK_ROOT_CLOCK) / 1000000); /*root clock before f_div*/
+#if 1
+  MSG("root clock:%dM\r\n", system_clock_get(SYSTEM_CLOCK_ROOT_CLOCK) / 1000000); /*root clock before f_div*/
 
-    MSG("fclk clock:%dM\r\n", system_clock_get(SYSTEM_CLOCK_FCLK) / 1000000);       /*after f_div,this is system core clock*/
-    MSG("bclk clock:%dM\r\n", system_clock_get(SYSTEM_CLOCK_BCLK) / 1000000);
+  MSG("fclk clock:%dM\r\n", system_clock_get(SYSTEM_CLOCK_FCLK) / 1000000); /*after f_div,this is system core clock*/
+  MSG("bclk clock:%dM\r\n", system_clock_get(SYSTEM_CLOCK_BCLK) / 1000000);
 
-    MSG("uart clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_UART) / 1000000);
-    MSG("spi clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_SPI) / 1000000);
-    MSG("i2c clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_I2C) / 1000000);
-    MSG("adc clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_ADC) / 1000000);
-    MSG("dac clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_DAC) / 1000000);
-    MSG("i2s clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_I2S) / 1000000);
-    MSG("pwm clock:%dhz\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_PWM));
-    MSG("cam clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_CAM) / 1000000);
-    MSG("timer0 clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_TIMER0) / 1000000);
-    MSG("timer1 clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_TIMER1) / 1000000);
+  MSG("uart clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_UART) / 1000000);
+  MSG("spi clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_SPI) / 1000000);
+  MSG("i2c clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_I2C) / 1000000);
+  MSG("adc clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_ADC) / 1000000);
+  MSG("dac clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_DAC) / 1000000);
+  MSG("i2s clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_I2S) / 1000000);
+  MSG("pwm clock:%dhz\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_PWM));
+  MSG("cam clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_CAM) / 1000000);
+  MSG("timer0 clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_TIMER0) / 1000000);
+  MSG("timer1 clock:%dM\r\n", peripheral_clock_get(PERIPHERAL_CLOCK_TIMER1) / 1000000);
 #endif
 }
 

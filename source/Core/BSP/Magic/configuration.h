@@ -115,7 +115,7 @@
 
 #ifdef MODEL_Magic
 #define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV            467                       // 467 - Default divider from schematic
+#define VOLTAGE_DIV            600                       // 290 - Default divider from schematic
 #define CALIBRATION_OFFSET     900                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET 100                       // Min value for calibration
 #define PID_POWER_LIMIT        70                        // Sets the max pwm power limit
