@@ -896,7 +896,6 @@ void startGUITask(void const *argument) {
 
   for (;;) {
     ButtonState buttons = getButtonState();
-    MSG((char *)"Buttons %d\r\n", int(buttons));
     if (buttons != BUTTON_NONE) {
       OLED::setDisplayState(OLED::DisplayState::ON);
     }
