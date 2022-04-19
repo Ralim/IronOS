@@ -39,9 +39,9 @@ Officially the bootloader on the devices only works under Windows (use the built
 7. If it didn't work the first time, try copying the file again without disconnecting the device, often it will work on the second shot.
 8. Disconnect the USB and power up the device. You're good to go.
 
-For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer.
+For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer, for easier installation follow the guide at the end of this document.
 
-On the bottom of the MCU riser PCB, there are 4 pads for programming. On v2.51A PCB revision `USB_D+` is shorted to `SWDIO` and `USB_D-` is shorted to `SWCLK` so debugging works without disassembly (attach while staying in the bootloader). Installing [dapboot from eDesignOSS](https://github.com/eDesignOSS/dapboot) (`make TARGET=TS100 -C src`) is recommended as it allows reliable flashing of binary files with [dfu-util](http://dfu-util.sourceforge.net/).
+On the bottom of the MCU riser PCB, there are 4 pads for programming. On v2.51A PCB revision `USB_D+` is shorted to `SWDIO` and `USB_D-` is shorted to `SWCLK` so debugging works without disassembly (attach while staying in the bootloader). Installing [IronOS-dfu](https://github.com/Ralim/IronOS-dfu) is recommended as it allows reliable flashing of binary files with [dfu-util](http://dfu-util.sourceforge.net/).
 
 There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need an SWD programmer to load onto the unit).
 
