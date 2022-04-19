@@ -32,11 +32,11 @@
 // #define BSP_USING_SPI0
 #define BSP_USING_I2C0
 // #define BSP_USING_I2S0
-#define BSP_USING_PWM_CH0
+// #define BSP_USING_PWM_CH0
 #define BSP_USING_PWM_CH1
-#define BSP_USING_PWM_CH2
-#define BSP_USING_PWM_CH3
-#define BSP_USING_PWM_CH4
+// #define BSP_USING_PWM_CH2
+// #define BSP_USING_PWM_CH3
+// #define BSP_USING_PWM_CH4
 #define BSP_USING_TIMER0
 #define BSP_USING_TIMER1
 #define BSP_USING_WDT
@@ -93,7 +93,7 @@
 #if defined(BSP_USING_PWM_CH1)
 #ifndef PWM_CH1_CONFIG
 #define PWM_CH1_CONFIG \
-  { .ch = 1, .polarity_invert_mode = DISABLE, .period = 0, .threshold_low = 0, .threshold_high = 0, .it_pulse_count = 0, }
+  { .ch = 1, .polarity_invert_mode = DISABLE, .period = 100, .threshold_low = 50, .threshold_high = 0, .it_pulse_count = 0, }
 #endif
 #endif
 

@@ -20,10 +20,8 @@
 void ms_delay(uint32_t delayms) {
   // Convert ms -> ticks
   TickType_t ticks = delayms / portTICK_PERIOD_MS;
-  MSG((char *)"USB PD Delay %ld\r\n", ticks);
 
   vTaskDelay(ticks ? ticks : 1); /* Minimum delay = 1 tick */
-  MSG((char *)"USB PD Delay %d...Done\r\n", delayms);
 }
 uint32_t get_ms_timestamp() {
   // Convert ticks -> ms

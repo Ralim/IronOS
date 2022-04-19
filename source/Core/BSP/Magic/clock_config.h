@@ -44,8 +44,8 @@
 #define BSP_TIMER1_CLOCK_DIV          31
 #define BSP_WDT_CLOCK_SOURCE          ROOT_CLOCK_SOURCE_FCLK
 #define BSP_WDT_CLOCK_DIV             0
-#define BSP_PWM_CLOCK_SOURCE          ROOT_CLOCK_SOURCE_32K_CLK
-#define BSP_PWM_CLOCK_DIV             31
+#define BSP_PWM_CLOCK_SOURCE          ROOT_CLOCK_SOURCE_XCLK
+#define BSP_PWM_CLOCK_DIV             22
 #define BSP_IR_CLOCK_SOURCE           ROOT_CLOCK_SOURCE_XCLK
 #define BSP_IR_CLOCK_DIV              0
 #define BSP_ADC_CLOCK_SOURCE          ROOT_CLOCK_SOURCE_XCLK

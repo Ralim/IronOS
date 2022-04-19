@@ -21,10 +21,11 @@
 #define OLED_RESET_Pin  GPIO_PIN_3
 #define KEY_A_Pin       GPIO_PIN_28
 #define PWM_Out_Pin     GPIO_PIN_21
+#define PWM_Channel     PWM_CH1
 #define SCL_Pin         GPIO_PIN_11
 #define SDA_Pin         GPIO_PIN_10
 
-// #define USB_DM_Pin    GPIO_PIN_8
+#define USB_DM_Pin    GPIO_PIN_8
 #define QC_DP_LOW_Pin GPIO_PIN_5
 
 // LOW = low resistance, HIGH = high resistance

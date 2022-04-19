@@ -3252,7 +3252,7 @@ BL_Err_Type GLB_GPIO_Func_Init(GLB_GPIO_FUNC_Type gpioFun, GLB_GPIO_Type *pinLis
         .gpioFun = (uint8_t)gpioFun,
         .gpioMode = GPIO_MODE_AF,
         .pullType = GPIO_PULL_UP,
-        .drive = 1,
+        .drive = 3,
         .smtCtrl = 1
     };
 
