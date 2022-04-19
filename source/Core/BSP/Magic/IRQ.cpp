@@ -173,7 +173,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
                        // disabled if the PID task is not scheduled often enough.
   pendingPWM = pulse;
   fastPWM    = shouldUseFastModePWM;
-  MSG((char *)"PWM Output %d, %d\r\n", pulse, (int)shouldUseFastModePWM);
+  // MSG((char *)"PWM Output %d, %d\r\n", pulse, (int)shouldUseFastModePWM);
 }
 extern osThreadId POWTaskHandle;
 
@@ -213,10 +213,14 @@ bool getFUS302IRQLow() {
   return false;
   // return (RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin));
 }
+uint16_t rescaleADC(const uint16_t value) {
+  uint32_t temp = value * 33;
+  uint16_t res  = temp / 32;
+  return res;
+}
+uint16_t getADCHandleTemp(uint8_t sample) { return rescaleADC(ADC_Temp.average() >> 1); }
 
-uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average() >> 1; }
-
-uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average() >> 1; }
+uint16_t getADCVin(uint8_t sample) { return rescaleADC(ADC_Vin.average() >> 1); }
 
 // Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
-uint16_t getTipRawTemp(uint8_t sample) { return ADC_Tip.average() >> 2; }
+uint16_t getTipRawTemp(uint8_t sample) { return rescaleADC(ADC_Tip.average() >> 2); }

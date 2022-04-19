@@ -17,9 +17,7 @@ extern "C" {
 SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 #define I2C_TIME_OUT (uint16_t)(12000)
-void FRToSI2C::CpltCallback() {
-  // TODO
-}
+void FRToSI2C::CpltCallback() {} // Not used
 
 bool FRToSI2C::I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data) { return Mem_Write(address, reg, &data, 1); }
 
