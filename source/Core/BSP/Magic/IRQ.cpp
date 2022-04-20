@@ -25,7 +25,6 @@ history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
 
 void adc_fifo_irq(void) {
-  MSG((char *)"ADC IRQ\r\n");
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
     // Read out all entries in the fifo
     const uint8_t cnt = ADC_Get_FIFO_Count();
@@ -64,16 +63,9 @@ volatile uint8_t  pendingPWM        = 200;
 volatile bool     lastPeriodWasFast = false;
 
 // Timer 0 is used to co-ordinate the ADC and the output PWM
-void timer0_comp0_callback(void) {
-  MSG((char *)"Timer CMP0\r\n");
-  ADC_Start();
-}
-void timer0_comp1_callback(void) {
-  MSG((char *)"Timer CMP1\r\n");
-  PWM_Channel_Disable(PWM_Channel);
-}
+void timer0_comp0_callback(void) { ADC_Start(); }
+void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); }
 void timer0_comp2_callback(void) {
-  MSG((char *)"Timer CMP2\r\n");
   // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
   if (PWMSafetyTimer) {
     PWMSafetyTimer--;

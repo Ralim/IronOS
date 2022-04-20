@@ -61,11 +61,9 @@ bool USBPowerDelivery::negotiationComplete() {
 }
 bool USBPowerDelivery::fusbPresent() {
   if (detectionState == 0) {
-    MSG((char *)"FUSB Probe\r\n");
     if (fusb.fusb_read_id()) {
       detectionState = 1;
     }
-    MSG((char *)"FUSB Probe - %d\r\n", detectionState);
   }
   return detectionState == 1;
 }

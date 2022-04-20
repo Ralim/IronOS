@@ -45,7 +45,6 @@ int main(void) {
 
   setTipX10Watts(0); // force tip off
 
-  MSG((char *)"main\r\n");
   resetWatchdog();
   /* Create the thread(s) */
 
