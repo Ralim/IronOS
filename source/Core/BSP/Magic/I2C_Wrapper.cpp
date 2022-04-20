@@ -120,7 +120,7 @@ bool FRToSI2C::wakePart(uint16_t DevAddress) {
   i2cCfg.subAddrSize       = 0;
 
   err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
-  MSG((char *)"I2C wakePart %02X - %d\r\n", DevAddress >> 1, err);
+  // MSG((char *)"I2C wakePart %02X - %d\r\n", DevAddress >> 1, err);
   bool res = err == SUCCESS;
   if (!res) {
     I2C_Unstick();

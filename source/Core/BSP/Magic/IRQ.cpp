@@ -16,9 +16,7 @@ extern "C" {
 #include "bl702_glb.h"
 #include "bl702_pwm.h"
 #include "bl702_timer.h"
-#include "hal_adc.h"
 #include "hal_clock.h"
-#include "hal_timer.h"
 }
 
 #define ADC_Filter_Smooth 4
@@ -27,10 +25,8 @@ history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
 
 void adc_fifo_irq(void) {
-
+  MSG((char *)"ADC IRQ\r\n");
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
-    ADC_IntClr(ADC_INT_FIFO_READY);
-
     // Read out all entries in the fifo
     const uint8_t cnt = ADC_Get_FIFO_Count();
     for (uint8_t i = 0; i < cnt; i++) {
@@ -50,27 +46,17 @@ void adc_fifo_irq(void) {
         break;
 
       default:
-        MSG((char *)"ADC Invalid chan %d\r\n", source);
+        // MSG((char *)"ADC Invalid chan %d\r\n", source);
         break;
       }
     }
-    MSG((char *)"ADC Reading %d %d %d\r\n", ADC_Temp.average(), ADC_Vin.average(), ADC_Tip.average());
+    // MSG((char *)"ADC Reading %d %d %d\r\n", ADC_Temp.average(), ADC_Vin.average(), ADC_Tip.average());
     // Clear IRQ
+    ADC_IntClr(ADC_INT_FIFO_READY);
   }
 }
 
-void start_adc_tip(void) {
-  // Reconfigure the ADC to measure the tip temp
-  // Single channel input mode
-  // The ADC has a 32 sample FiFo; we set this up to fire and interrupt at 16 samples
-  // Then using that IRQ to know that sampling is done and can be stored
-  ADC_Start();
-}
-
-void stop_adc(void) {}
-
-static bool fastPWM;
-static void switchToSlowPWM(void);
+static bool fastPWM = false;
 static void switchToFastPWM(void);
 
 volatile uint16_t PWMSafetyTimer    = 0;
@@ -78,46 +64,44 @@ volatile uint8_t  pendingPWM        = 200;
 volatile bool     lastPeriodWasFast = false;
 
 // Timer 0 is used to co-ordinate the ADC and the output PWM
-void timer0_irq_callback(struct device *dev, void *args, uint32_t size, uint32_t state) {
-  if (state == TIMER_EVENT_COMP0) {
-    // MSG((char *)"timer event comp0! \r\n");
-    // Used to start the ADC
-    start_adc_tip();
-  } else if (state == TIMER_EVENT_COMP1) {
-    // MSG((char *)"timer event comp1! \r\n");
-    // Used to turn tip off at set point in cycle
-    PWM_Channel_Disable(PWM_Channel);
-  } else if (state == TIMER_EVENT_COMP2) {
-    // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
-    if (PWMSafetyTimer) {
-      PWMSafetyTimer--;
-      if (lastPeriodWasFast != fastPWM) {
-        if (fastPWM) {
-          switchToFastPWM();
-        } else {
-          switchToSlowPWM();
-        }
-      }
-      // Update trigger for the end point of the PWM cycle
-      if (pendingPWM > 0) {
-        TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, pendingPWM - 1);
-        // Turn on output
-        PWM_Channel_Enable(PWM_Channel);
+void timer0_comp0_callback(void) {
+  MSG((char *)"Timer CMP0\r\n");
+  ADC_Start();
+}
+void timer0_comp1_callback(void) {
+  MSG((char *)"Timer CMP1\r\n");
+  PWM_Channel_Disable(PWM_Channel);
+}
+void timer0_comp2_callback(void) {
+  MSG((char *)"Timer CMP2\r\n");
+  // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
+  if (PWMSafetyTimer) {
+    PWMSafetyTimer--;
+    if (lastPeriodWasFast != fastPWM) {
+      if (fastPWM) {
+        switchToFastPWM();
       } else {
-        TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
-        // Leave output off
-        PWM_Channel_Disable(PWM_Channel);
+        switchToSlowPWM();
       }
     }
-    // unblock the PID controller thread
-    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-      BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-      if (pidTaskNotification) {
-        vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-      }
+    // Update trigger for the end point of the PWM cycle
+    if (pendingPWM > 0) {
+      TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, pendingPWM - 1);
+      // Turn on output
+      PWM_Channel_Enable(PWM_Channel);
+    } else {
+      TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
+      // Leave output off
+      PWM_Channel_Disable(PWM_Channel);
     }
-    // MSG((char *)"timer event comp2! \r\n");
+  }
+  // unblock the PID controller thread
+  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    if (pidTaskNotification) {
+      vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+      portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    }
   }
 }
 
@@ -132,7 +116,7 @@ void switchToFastPWM(void) {
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 11);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 20);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
@@ -150,7 +134,7 @@ void switchToSlowPWM(void) {
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 22);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 40);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
@@ -194,11 +178,11 @@ void GPIO_IRQHandler(void) {
 
 bool getFUS302IRQLow() {
   // Return true if the IRQ line is still held low
-  return false;
-  // return (RESET == gpio_input_bit_get(FUSB302_IRQ_GPIO_Port, FUSB302_IRQ_Pin));
+  return !gpio_read(FUSB302_IRQ_Pin);
 }
 uint16_t rescaleADC(const uint16_t value) {
-  // return value;
+  // TODO This can be removed once we figure out final op-amp scaling
+  //  return value;
   uint32_t temp = value * 33;
   uint16_t res  = temp / 32;
   return res;

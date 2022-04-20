@@ -572,22 +572,22 @@ BL_Err_Type I2C_MasterReceiveBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) 
   I2C_Init(i2cNo, I2C_READ, cfg);
   I2C_Enable(i2cNo);
   timeOut = I2C_FIFO_STATUS_TIMEOUT;
+  if (cfg->dataSize == 0 && cfg->subAddrSize == 0) {
+    while (BL_RD_REG(I2C_BASE, I2C_BUS_BUSY)) {
+      timeOut--;
 
-  while (BL_RD_REG(I2C_BASE, I2C_BUS_BUSY)) {
-    timeOut--;
+      if (timeOut == 0) {
+        I2C_Disable(i2cNo);
+        return TIMEOUT;
+      }
+    }
 
-    if (timeOut == 0) {
+    temp = BL_RD_REG(I2C_BASE, I2C_INT_STS); // TODO this sucks as a workaround
+    if (BL_IS_REG_BIT_SET(temp, I2C_NAK_INT)) {
+      temp = BL_RD_REG(I2C_BASE, I2C_BUS_BUSY);
       I2C_Disable(i2cNo);
-      MSG((char *)"I2C BSY\r\n");
       return TIMEOUT;
     }
-  }
-  temp = BL_RD_REG(I2C_BASE, I2C_INT_STS); // TODO this sucks as a workaround
-  if (BL_IS_REG_BIT_SET(temp, I2C_NAK_INT)) {
-    temp = BL_RD_REG(I2C_BASE, I2C_BUS_BUSY);
-    MSG((char *)"I2C NACK\r\n");
-    I2C_Disable(i2cNo);
-    return TIMEOUT;
   }
   /* Read I2C data */
   while (cfg->dataSize - i >= 4) {

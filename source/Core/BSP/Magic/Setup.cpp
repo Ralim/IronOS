@@ -38,20 +38,18 @@ void hardware_init() {
 void setup_pwm(void) {
   // Setup PWM we use for driving the tip
   PWM_CH_CFG_Type cfg = {
-      PWM_Channel,       // channel
-      PWM_CLK_XCLK,      // Clock
-      PWM_STOP_GRACEFUL, // Stop mode
-      PWM_POL_NORMAL,    // Normal Polarity
-      50,                // Clock Div
-      100,               // Period
-      0,                 // Thres 1 - start at beginng
-      50,                // Thres 2 - turn off at 50%
-      0,                 // Interrupt pulse count
+      PWM_Channel,     // channel
+      PWM_CLK_XCLK,    // Clock
+      PWM_STOP_ABRUPT, // Stop mode
+      PWM_POL_NORMAL,  // Normal Polarity
+      50,              // Clock Div
+      100,             // Period
+      0,               // Thres 1 - start at beginng
+      50,              // Thres 2 - turn off at 50%
+      0,               // Interrupt pulse count
   };
 
-  BL_Err_Type err     = PWM_Channel_Init(&cfg);
-  uint32_t    pwm_clk = peripheral_clock_get(PERIPHERAL_CLOCK_PWM);
-  MSG((char *)"PWM Setup returns %d %d\r\n", err, pwm_clk);
+  PWM_Channel_Init(&cfg);
   PWM_Channel_Disable(PWM_Channel);
 }
 
@@ -61,7 +59,6 @@ const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_
 static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
 
 void setup_adc(void) {
-  MSG((char *)"Setting up ADC\r\n");
   //
   ADC_CFG_Type      adc_cfg      = {};
   ADC_FIFO_Cfg_Type adc_fifo_cfg = {};
@@ -70,9 +67,9 @@ void setup_adc(void) {
 
   ADC_IntMask(ADC_INT_ALL, MASK);
 
-  adc_cfg.clkDiv         = ADC_CLK_DIV_32;
+  adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
-  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_256_AVERAGE;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_128_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
@@ -102,30 +99,36 @@ void setup_adc(void) {
   ADC_FIFO_Clear();
 }
 
-struct device *timer0;
-
 void setup_timer_scheduler() {
+  TIMER_Disable(TIMER_CH0);
 
-  timer_register(TIMER0_INDEX, "timer0");
+  TIMER_CFG_Type cfg = {
+      TIMER_CH0,                                              // Channel
+      TIMER_CLKSRC_32K,                                       // Clock source
+      TIMER_PRELOAD_TRIG_COMP2,                               // Trigger
+      TIMER_COUNT_PRELOAD,                                    // Counter mode
+      22,                                                     // Clock div
+      (uint16_t)(powerPWM + holdoffTicks),                    // CH0 compare (adc)
+      0,                                                      // CH1 compare (pwm out)
+      (uint16_t)(powerPWM + tempMeasureTicks + holdoffTicks), // CH2 comapre (total period)
+      0,                                                      // Preload
+  };
+  TIMER_Init(&cfg);
 
-  timer0 = device_find("timer0");
+  Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_0, timer0_comp0_callback);
+  Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_1, timer0_comp1_callback);
+  Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_2, timer0_comp2_callback);
 
-  if (timer0) {
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_0);
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_1);
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_2);
 
-    device_open(timer0, DEVICE_OFLAG_INT_TX); /* 1s,2s,3s timing*/
-    // Set interrupt handler
-    device_set_callback(timer0, timer0_irq_callback);
-    // Enable both interrupts (0 and 1)
-    device_control(timer0, DEVICE_CTRL_SET_INT, (void *)(TIMER_COMP0_IT | TIMER_COMP1_IT | TIMER_COMP2_IT));
-
-    TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, 255 + 10 - 2); // Channel 0 is used to trigger the ADC
-    TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 128 - 2);
-    TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, (255 + 10 + 10) - 2); // We are using compare 2 to set the max duration of the timer
-    TIMER_SetPreloadValue(TIMER_CH0, 0);
-    TIMER_SetCountMode(TIMER_CH0, TIMER_COUNT_PRELOAD);
-  } else {
-    MSG((char *)"timer device open failed! \n");
-  }
+  TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_0, UNMASK);
+  TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_1, UNMASK);
+  TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_2, UNMASK);
+  CPU_Interrupt_Enable(TIMER_CH0_IRQn);
+  TIMER_Enable(TIMER_CH0);
+  // switchToSlowPWM();
 }
 
 void setupFUSBIRQ() {

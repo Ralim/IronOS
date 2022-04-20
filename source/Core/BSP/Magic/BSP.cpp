@@ -12,8 +12,8 @@
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
-const uint8_t  holdoffTicks     = 10;
-const uint8_t  tempMeasureTicks = 14;
+const uint8_t  holdoffTicks     = 14;
+const uint8_t  tempMeasureTicks = 10;
 
 uint16_t totalPWM = 255; // Total length of the cycle's ticks
 
