@@ -35,7 +35,6 @@ static uint8_t uart_dbg_disable = 0;
 // struct heap_info mmheap_root;
 
 __WEAK__ void board_init(void) {}
-__WEAK__ void bl_show_info(void) {}
 
 __WEAK__ enum uart_index_type board_get_debug_uart_index(void) { return 0; }
 
@@ -86,8 +85,6 @@ void bflb_platform_init(uint32_t baudrate) {
       device_set_callback(uart, NULL);
       device_control(uart, DEVICE_CTRL_CLR_INT, (void *)(UART_RX_FIFO_IT));
     }
-
-    bl_show_info();
   }
   static bool initialized = false;
   if (!initialized) {
