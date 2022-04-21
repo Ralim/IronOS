@@ -26,6 +26,7 @@ history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
 
 void adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
+    bool wakePID = false;
     // Read out all entries in the fifo
     const uint8_t cnt = ADC_Get_FIFO_Count();
     for (uint8_t i = 0; i < cnt; i++) {
@@ -39,6 +40,7 @@ void adc_fifo_irq(void) {
         break;
       case TIP_TEMP_ADC_CHANNEL:
         ADC_Tip.update(sample);
+        wakePID = true;
         break;
       case VIN_ADC_CHANNEL:
         ADC_Vin.update(sample);
@@ -50,6 +52,16 @@ void adc_fifo_irq(void) {
       }
     }
     // MSG((char *)"ADC Reading %d %d %d\r\n", ADC_Temp.average(), ADC_Vin.average(), ADC_Tip.average());
+    if (wakePID) {
+      // unblock the PID controller thread
+      if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+        if (pidTaskNotification) {
+          vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+          portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        }
+      }
+    }
     // Clear IRQ
     ADC_IntClr(ADC_INT_FIFO_READY);
   }
@@ -66,6 +78,7 @@ volatile bool     lastPeriodWasFast = false;
 void timer0_comp0_callback(void) { ADC_Start(); }
 void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); }
 void timer0_comp2_callback(void) {
+
   // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
   if (PWMSafetyTimer) {
     PWMSafetyTimer--;
@@ -85,14 +98,6 @@ void timer0_comp2_callback(void) {
       TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
       // Leave output off
       PWM_Channel_Disable(PWM_Channel);
-    }
-  }
-  // unblock the PID controller thread
-  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    if (pidTaskNotification) {
-      vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
-      portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
     }
   }
 }
@@ -135,6 +140,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
                        // disabled if the PID task is not scheduled often enough.
   pendingPWM = pulse;
   fastPWM    = shouldUseFastModePWM;
+
   // MSG((char *)"PWM Output %d, %d\r\n", pulse, (int)shouldUseFastModePWM);
 }
 extern osThreadId POWTaskHandle;
