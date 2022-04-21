@@ -86,7 +86,7 @@ void setup_adc(void) {
   ADC_Reset();
   ADC_Init(&adc_cfg);
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_4;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
 

@@ -108,7 +108,7 @@ void switchToFastPWM(void) {
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 20);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 11);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
@@ -126,7 +126,7 @@ void switchToSlowPWM(void) {
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 40);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 22);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
