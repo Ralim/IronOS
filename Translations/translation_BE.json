@@ -200,8 +200,8 @@
       "desc": "Інвертаваць колеры OLED-экрана"
     },
     "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
+      "text2": ["Лагатып загрузкі", "працягласць"],
+      "desc": "Усталяваць працягласць лагатыпа загрузки (s=Секунды)"
     }
   }
 }
