@@ -29,6 +29,8 @@ void hardware_init() {
   gpio_set_mode(TMP36_INPUT_Pin, GPIO_INPUT_MODE);
   gpio_set_mode(TIP_TEMP_Pin, GPIO_INPUT_MODE);
   gpio_set_mode(VIN_Pin, GPIO_INPUT_MODE);
+  gpio_set_mode(Debug_Pin, GPIO_OUTPUT_MODE);
+  gpio_set_mode(Debug2_Pin, GPIO_OUTPUT_MODE);
 
   setup_timer_scheduler();
   setup_adc();

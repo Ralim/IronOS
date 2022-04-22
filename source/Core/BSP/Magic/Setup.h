@@ -17,7 +17,6 @@ extern "C" {
 #include "bl702_pwm.h"
 #include "bl702_timer.h"
 #include "hal_adc.h"
-#include "hal_clock.h"
 }
 #ifdef __cplusplus
 extern "C" {

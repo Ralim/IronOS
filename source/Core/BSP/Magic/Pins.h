@@ -16,6 +16,9 @@
 #define TIP_TEMP_Pin         GPIO_PIN_19
 #define TIP_TEMP_ADC_CHANNEL ADC_CHAN9
 
+#define Debug_Pin  GPIO_PIN_14
+#define Debug2_Pin GPIO_PIN_15
+
 #define VIN_Pin         GPIO_PIN_18
 #define VIN_ADC_CHANNEL ADC_CHAN8
 #define OLED_RESET_Pin  GPIO_PIN_3

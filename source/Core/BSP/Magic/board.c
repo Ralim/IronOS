@@ -24,7 +24,6 @@
 #include "bflb_platform.h"
 #include "bl702_config.h"
 #include "bl702_glb.h"
-#include "hal_clock.h"
 #include "hal_gpio.h"
 
 struct pin_mux_cfg {

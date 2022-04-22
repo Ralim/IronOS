@@ -16,7 +16,6 @@ extern "C" {
 #include "bl702_glb.h"
 #include "bl702_pwm.h"
 #include "bl702_timer.h"
-#include "hal_clock.h"
 }
 
 #define ADC_Filter_Smooth 4
@@ -47,11 +46,9 @@ void adc_fifo_irq(void) {
         break;
 
       default:
-        // MSG((char *)"ADC Invalid chan %d\r\n", source);
         break;
       }
     }
-    // MSG((char *)"ADC Reading %d %d %d\r\n", ADC_Temp.average(), ADC_Vin.average(), ADC_Tip.average());
     if (wakePID) {
       // unblock the PID controller thread
       if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
@@ -140,8 +137,6 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
                        // disabled if the PID task is not scheduled often enough.
   pendingPWM = pulse;
   fastPWM    = shouldUseFastModePWM;
-
-  // MSG((char *)"PWM Output %d, %d\r\n", pulse, (int)shouldUseFastModePWM);
 }
 extern osThreadId POWTaskHandle;
 
