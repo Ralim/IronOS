@@ -5,7 +5,7 @@ This is accessed by holding the rear (-/B) button on the iron while it is on the
 
 This menu is meant to be simple, so it has no fancy GUI animations.
 
-To move through the menu use the front (+/A) button.
+To move through the menu, use the front (+/A) button.
 To exit, use the rear (-/B) button again.
 
 ## Menu items
@@ -31,8 +31,8 @@ This just shows how many deciseconds the unit has been powered for.
 
 ### Move
 
-This is the last timestamp of movement. When the iron is moved this should update to match the time field (one before in the menu).
-This can be used for checking performance of the movement dection code.
+This is the last timestamp of movement. When the iron is moved, this should update to match the time field (one before in the menu).
+This can be used for checking performance of the movement detection code.
 
 ### RTip
 
@@ -74,12 +74,12 @@ This may change during power up as the sources are negotiated in turn.
 - **PD W. VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is connected to your input power source
 - **PD No VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is **NOT** connected to your input power source
 - If you successfully modified the Pinecil to support 24 V by cutting the trace line to Vbus, then 'PD No VBus' displays on screen.
-- Connect to any PD USB power to check Vbus status. It will not show any PD message when Pinecil is powered by DC port, QC, or USB 5 V (non PD).
+- Connect to any PD USB power to check Vbus status. It will not show any PD message when Pinecil is powered by DC port, QC, or USB 5 V (non-PD).
 
 ### Max
 
 This indicates the max temperature in degrees Celsius that the system estimates it can measure the tip reliably to.
-This is dependant on a few factors including the handle temperature so it can move around during use.
+This is dependent on a few factors including the handle temperature so it can move around during use.
 
 ### Hall
 
