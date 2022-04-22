@@ -196,12 +196,12 @@
       "desc": "Настройки контраста/яркости OLED экрана"
     },
     "ColourInversion": {
-      "text2": ["Инверт", "экрана"],
+      "text2": ["Инверсия", "экрана"],
       "desc": "Инвертировать цвета на OLED экране"
     },
     "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
+      "text2": ["Длительность", "показа логотипа"],
+      "desc": "Длительность отображения логотипа (в секундах)"
     }
   }
 }
