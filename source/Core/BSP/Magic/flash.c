@@ -10,27 +10,14 @@
 #include "hal_flash.h"
 #include "string.h"
 
-#define FLASH_PAGE_SIZE ((uint16_t)1024)
+#define FLASH_PAGE_SIZE (1024)
 
-#define SETTINGS_START_PAGE (1023 * 1024) // Hal auto offsets base addr
-#define SETTINGS_READ_PAGE  0x23000000 + SETTINGS_START_PAGE
+#define SETTINGS_START_PAGE (1023 * FLASH_PAGE_SIZE) // Hal auto offsets base addr
+
 uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
-  flash_erase(SETTINGS_START_PAGE, length);
-
-  flash_write(SETTINGS_START_PAGE, buffer, sizeof(length));
-
-  return 1;
+  BL_Err_Type err = flash_erase(SETTINGS_START_PAGE, FLASH_PAGE_SIZE);
+  err             = flash_write(SETTINGS_START_PAGE, buffer, length);
+  return err != SUCCESS;
 }
 
-void flash_read_buffer(uint8_t *buffer, const uint16_t length) {
-
-  /* read 0x00010000 flash data */
-  flash_read(SETTINGS_START_PAGE, buffer, sizeof(length));
-  return;
-  // #TODO
-  uint32_t *b  = (uint32_t *)buffer;
-  uint32_t *b2 = (uint32_t *)SETTINGS_START_PAGE;
-  for (int i = 0; i < length / 4; i++) {
-    b[i] = b2[i];
-  }
-}
+void flash_read_buffer(uint8_t *buffer, const uint16_t length) { flash_read(SETTINGS_START_PAGE, buffer, length); }
