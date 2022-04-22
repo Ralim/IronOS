@@ -21,7 +21,7 @@ StackSize = 0x1000; /*  4KB */
 
 MEMORY
 {
-    xip_memory  (rx)  : ORIGIN = 0x23000000, LENGTH = 1024K
+    xip_memory  (rx)  : ORIGIN = 0x23000000, LENGTH = 1022K /* 1024K, less the two pages we are using for settings and logo*/
     itcm_memory (rx)  : ORIGIN = 0x22014000, LENGTH = 16K
     dtcm_memory (rx)  : ORIGIN = 0x42018000, LENGTH = 16K
     ram_memory  (!rx) : ORIGIN = 0x4201C000, LENGTH = 80K
