@@ -8,7 +8,7 @@
  "tempUnitFahrenheit": false,
  "messages": {
   "SettingsCalibrationWarning": "Zorg ervoor dat de punt op kamertemperatuur is voor je verder gaat!",
-  "SettingsResetWarning": "Weet je zeker dat je de fabrieksinstellingen terug wil zetten?",
+  "SettingsResetWarning": "Weet je zeker dat je de fabrieksinstellingen terug wilt zetten?",
   "UVLOWarningString": "DC Laag",
   "UndervoltageString": "Onderspanning",
   "InputVoltageString": "Voeding V: ",
