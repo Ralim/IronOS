@@ -133,6 +133,30 @@ dfu-util -D Pinecil_EN.dfu -a 0
     - Switch to a different PC/Laptop and use different ports. USB-C ports are recommended but some have also reported having a fussy C port.
     - Hold down the (-) button for the entire firmware update, do not release until near the end.
 - `DC Low` message: a pc/laptop cannot fully power Pinecil, it generally can only get 5 V (non-PD) to communicate for firmware updates and Pinecil will report 'DC Low'. This is normal.
+- If `dfu-util` aborts with an error like
+  ```
+  dfu-util: Cannot open DFU device 28e9:0189 found on devnum 42 (LIBUSB_ERROR_IO)
+  ```
+  and `dmesg` reports USB errors like these
+  ```
+  kernel: usb 1-1: reset full-speed USB device number 42 using xhci_hcd
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: reset full-speed USB device number 42 using xhci_hcd
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: reset full-speed USB device number 42 using xhci_hcd
+  kernel: usb 1-1: Device not responding to setup address.
+  kernel: usb 1-1: Device not responding to setup address.
+  kernel: usb 1-1: device not accepting address 42, error -71
+  ```
+  then try to disable USB autosuspend.
+  This can be done with a set of udev rules specifically for the Pinecil:
+  ```udev
+  SUBSYSTEM=="usb", ATTR{idVendor}=="28e9", ATTR{idProduct}=="0189", MODE:="0660"
+  SUBSYSTEM=="usb", ATTR{idVendor}=="28e9", ATTR{idProduct}=="0189", GROUP="plugdev"
+  SUBSYSTEM=="usb", ATTR{idVendor}=="28e9", ATTR{idProduct}=="0189", TEST=="power/control", ATTR{power/control}="on"
+  ```
 
 
 ## Windows
