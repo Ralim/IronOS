@@ -1,207 +1,339 @@
 {
-  "languageCode": "NL",
-  "languageLocalName": "Nederlands",
-  "fonts": ["ascii_basic", "latin_extended"],
-  "tempUnitFahrenheit": false,
-  "messages": {
-    "SettingsCalibrationWarning": "Zorg ervoor dat te punt op kamertemperatuur is voor je verder gaat!",
-    "SettingsResetWarning": "Weet je zeker dat je de fabrieksinstellingen terug wil zetten?",
-    "UVLOWarningString": "DC Laag",
-    "UndervoltageString": "Onderspanning",
-    "InputVoltageString": "Input V: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "Slaapstand...",
-    "SleepingTipAdvancedString": "Punt:",
-    "OffString": "Uit"
+ "languageCode": "NL",
+ "languageLocalName": "Nederlands",
+ "fonts": [
+  "ascii_basic",
+  "latin_extended"
+ ],
+ "tempUnitFahrenheit": false,
+ "messages": {
+  "SettingsCalibrationWarning": "Zorg ervoor dat de punt op kamertemperatuur is voor je verder gaat!",
+  "SettingsResetWarning": "Weet je zeker dat je de fabrieksinstellingen terug wilt zetten?",
+  "UVLOWarningString": "DC Laag",
+  "UndervoltageString": "Onderspanning",
+  "InputVoltageString": "Voeding V: ",
+  "SleepingSimpleString": "Zzzz",
+  "SleepingAdvancedString": "Slaapstand...",
+  "SleepingTipAdvancedString": "Punt:",
+  "OffString": "Uit"
+ },
+ "messagesWarn": {
+  "ResetOKMessage": "Reset OK",
+  "SettingsResetMessage": [
+   "Instellingen",
+   "zijn gereset!"
+  ],
+  "NoAccelerometerMessage": [
+   "Geen accelerometer",
+   "gedetecteerd!"
+  ],
+  "NoPowerDeliveryMessage": [
+   "Geen USB-PD IC ",
+   "gedetecteerd!"
+  ],
+  "LockingKeysString": "GEBLOKKEERD",
+  "UnlockingKeysString": "GEDEBLOKKEERD",
+  "WarningKeysLockedString": "!GEBLOKKEERD!",
+  "WarningThermalRunaway": [
+   "Verwarming",
+   "Oncontroleerbaar"
+  ]
+ },
+ "characters": {
+  "SettingRightChar": "R",
+  "SettingLeftChar": "L",
+  "SettingAutoChar": "A",
+  "SettingOffChar": "U",
+  "SettingSlowChar": "L",
+  "SettingMediumChar": "G",
+  "SettingFastChar": "S",
+  "SettingStartNoneChar": "U",
+  "SettingStartSolderingChar": "G",
+  "SettingStartSleepChar": "S",
+  "SettingStartSleepOffChar": "B",
+  "SettingSensitivityOff": "U",
+  "SettingSensitivityLow": "L",
+  "SettingSensitivityMedium": "G",
+  "SettingSensitivityHigh": "H",
+  "SettingLockDisableChar": "U",
+  "SettingLockBoostChar": "B",
+  "SettingLockFullChar": "V"
+ },
+ "menuGroups": {
+  "PowerMenu": {
+   "text2": [
+    "Voeding",
+    "instellingen"
+   ],
+   "desc": "Voeding instellingen"
   },
-  "messagesWarn": {
-    "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Instellingen", "zijn gereset!"],
-    "NoAccelerometerMessage": ["No accelerometer", "detected!"],
-    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
-    "LockingKeysString": " GEBLOKKEERD",
-    "UnlockingKeysString": "GEDEBLOKKEERD",
-    "WarningKeysLockedString": "!GEBLOKKEERD!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
+  "SolderingMenu": {
+   "text2": [
+    "Soldeer",
+    "instellingen"
+   ],
+   "desc": "Soldeer instellingen"
   },
-  "characters": {
-    "SettingRightChar": "R",
-    "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "O",
-    "SettingSlowChar": "S",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "F",
-    "SettingStartNoneChar": "F",
-    "SettingStartSolderingChar": "T",
-    "SettingStartSleepChar": "S",
-    "SettingStartSleepOffChar": "K",
-    "SettingSensitivityOff": "O",
-    "SettingSensitivityLow": "L",
-    "SettingSensitivityMedium": "M",
-    "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "U",
-    "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V"
+  "PowerSavingMenu": {
+   "text2": [
+    "Slaap",
+    "Modes"
+   ],
+   "desc": "Stroom besparings instellingen"
   },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Power", "settings"],
-      "desc": "Power settings"
-    },
-    "SolderingMenu": {
-      "text2": ["Soldeer", "Instellingen"],
-      "desc": "Soldeer instellingen"
-    },
-    "PowerSavingMenu": {
-      "text2": ["Slaap", "Modes"],
-      "desc": "Stroom besparings instellingen"
-    },
-    "UIMenu": {
-      "text2": ["Gebruikers-", "interface"],
-      "desc": "Gebruikers-interface instellingen"
-    },
-    "AdvancedMenu": {
-      "text2": ["Geavanceerde", "Instellingen"],
-      "desc": "Geavanceerde Instellingen"
-    }
+  "UIMenu": {
+   "text2": [
+    "Weergave",
+    "instellingen"
+   ],
+   "desc": "Weergave instellingen"
   },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Spannings-", "bron"],
-      "desc": "Spanningsbron. Stelt drempelspanning in. (DC 10V) (S 3.3V per cel)"
-    },
-    "SleepTemperature": {
-      "text2": ["Slaap", "temp"],
-      "desc": "Temperatuur in slaapstand"
-    },
-    "SleepTimeout": {
-      "text2": ["Slaap", "time-out"],
-      "desc": "Slaap time-out (Minuten | Seconden)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Uitschakel", "time-out"],
-      "desc": "Automatisch afsluiten time-out (Minuten)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Bewegings-", "gevoeligheid"],
-      "desc": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
-    },
-    "TemperatureUnit": {
-      "text2": ["Temperatuur", "eenheid"],
-      "desc": "Temperatuureenheid (C=Celsius | F=Fahrenheit)"
-    },
-    "AdvancedIdle": {
-      "text2": ["Gedetailleerd", "startscherm"],
-      "desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het startscherm."
-    },
-    "DisplayRotation": {
-      "text2": ["Scherm-", "oriëntatie"],
-      "desc": "Schermoriëntatie (R=Rechtshandig | L=Linkshandig | A=Automatisch)"
-    },
-    "BoostTemperature": {
-      "text2": ["Boost", "temp"],
-      "desc": "Temperatuur in boostmode"
-    },
-    "AutoStart": {
-      "text2": ["Auto", "start"],
-      "desc": "Breng de soldeerbout direct op temperatuur bij het opstarten. (F=Uit | T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
-    },
-    "CooldownBlink": {
-      "text2": ["Afkoel", "flikker"],
-      "desc": "Temperatuur laten flikkeren in het hoofdmenu als de soldeerpunt aan het afkoelen is."
-    },
-    "TemperatureCalibration": {
-      "text2": ["Calibreer", "temperatuur?"],
-      "desc": "Temperatuursafwijking van de soldeerpunt calibreren."
-    },
-    "SettingsReset": {
-      "text2": ["Instellingen", "resetten?"],
-      "desc": "Alle instellingen terugzetten."
-    },
-    "VoltageCalibration": {
-      "text2": ["Calibreer", "input-voltage?"],
-      "desc": "VIN Calibreren. (druk lang om te sluiten)."
-    },
-    "AdvancedSoldering": {
-      "text2": ["Gedetailleerd", "soldeerscherm"],
-      "desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm."
-    },
-    "ScrollingSpeed": {
-      "text2": ["Scroll", "snelheid"],
-      "desc": "Snelheid waarmee de tekst scrolt."
-    },
-    "QCMaxVoltage": {
-      "text2": ["Power", "Wattage"],
-      "desc": "Wattage van de gebruikte voeding"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-    },
-    "PowerLimit": {
-      "text2": ["Vermogen", "limiet"],
-      "desc": "Maximaal vermogen (Watts)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["Draai", "+ - knoppen om"],
-      "desc": "Keer de +- knoppen om de termperatuur van de punt te regelen om."
-    },
-    "TempChangeShortStep": {
-      "text2": ["Temp veranderen", "kort"],
-      "desc": "Temperatuur verandering bij kort drukken"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Temp veranderen", "lang"],
-      "desc": "Temperatuur verandering bij lang drukken"
-    },
-    "PowerPulsePower": {
-      "text2": ["Vermogen", "Puls W"],
-      "desc": "Vermogen van puls om soldeerbout aan te houden"
-    },
-    "HallEffSensitivity": {
-      "text2": ["Hall sensor", "sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor to detect sleep (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
-    },
-    "LockingMode": {
-      "text2": ["Blokkeer", "knoppen"],
-      "desc": "Tijdens solderen lang op beide knoppen drukken, blokkeert ze. (U=Uit | B=Alleen boost | V=Volledig blokkeren)"
-    },
-    "MinVolCell": {
-      "text2": ["Minimum", "voltage"],
-      "desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in main menu"
-    },
-    "AnimSpeed": {
-      "text2": ["Anim.", "speed"],
-      "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Power pulse", "delay"],
-      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Power pulse", "duration"],
-      "desc": "Keep-awake-pulse duration (x 250ms)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Spraak :", " NL  Nederlands"],
-      "desc": ""
-    },
-    "Brightness": {
-      "text2": ["Screen", "brightness"],
-      "desc": "Adjust the brightness of the OLED screen"
-    },
-    "ColourInversion": {
-      "text2": ["Invert", "screen"],
-      "desc": "Invert the colours of the OLED screen"
-    },
-    "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
-    }
+  "AdvancedMenu": {
+   "text2": [
+    "Geavanceerde",
+    "instellingen"
+   ],
+   "desc": "Geavanceerde instellingen"
   }
+ },
+ "menuOptions": {
+  "DCInCutoff": {
+   "text2": [
+    "Spannings-",
+    "bron"
+   ],
+   "desc": "Spanningsbron. Stelt drempelspanning in. (DC 10V) (S 3.3V per cel)"
+  },
+  "SleepTemperature": {
+   "text2": [
+    "Slaap",
+    "temp"
+   ],
+   "desc": "Punt temperatuur in slaapstand"
+  },
+  "SleepTimeout": {
+   "text2": [
+    "Slaap",
+    "time-out"
+   ],
+   "desc": "Tijd voordat slaapmodus wordt geactiveerd (S=seconden | M=minuten)"
+  },
+  "ShutdownTimeout": {
+   "text2": [
+    "Uitschakel",
+    "time-out"
+   ],
+   "desc": "Tijd voordat soldeerbout automatisch uitschakelt (M=minuten)"
+  },
+  "MotionSensitivity": {
+   "text2": [
+    "Bewegings-",
+    "gevoeligheid"
+   ],
+   "desc": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+  },
+  "TemperatureUnit": {
+   "text2": [
+    "Temperatuur",
+    "eenheid"
+   ],
+   "desc": "Temperatuureenheid (C=Celsius | F=Fahrenheit)"
+  },
+  "AdvancedIdle": {
+   "text2": [
+    "Gedetailleerd",
+    "startscherm"
+   ],
+   "desc": "Gedetailleerde informatie weergeven in een kleine letters op het startscherm."
+  },
+  "DisplayRotation": {
+   "text2": [
+    "Scherm-",
+    "oriëntatie"
+   ],
+   "desc": "Schermoriëntatie (R=Rechtshandig | L=Linkshandig | A=Automatisch)"
+  },
+  "BoostTemperature": {
+   "text2": [
+    "Boost",
+    "temp"
+   ],
+   "desc": "Punt temperatuur in boostmode"
+  },
+  "AutoStart": {
+   "text2": [
+    "Opstart",
+    "gedrag"
+   ],
+   "desc": "Gedrag bij opstarten (U=Uit | G=Gebruiks-temperatuur | S=Slaapstand-temperatuur tot beweging | B=Uit tot beweging)"
+  },
+  "CooldownBlink": {
+   "text2": [
+    "Afkoel",
+    "flitsen"
+   ],
+   "desc": "Temperatuur laten flitsen in het hoofdmenu zo lang de punt nog warm is"
+  },
+  "TemperatureCalibration": {
+   "text2": [
+    "Kalibreer",
+    "temperatuur?"
+   ],
+   "desc": "Start punt temperatuur-kalibratie"
+  },
+  "SettingsReset": {
+   "text2": [
+    "Instellingen",
+    "resetten?"
+   ],
+   "desc": "Alle instellingen terugzetten naar fabrieksinstellingen"
+  },
+  "VoltageCalibration": {
+   "text2": [
+    "Kalibreer",
+    "input-voltage?"
+   ],
+   "desc": "Start VIN Kalibratie (druk lang om te sluiten)"
+  },
+  "AdvancedSoldering": {
+   "text2": [
+    "Gedetailleerd",
+    "soldeerscherm"
+   ],
+   "desc": "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm"
+  },
+  "ScrollingSpeed": {
+   "text2": [
+    "Scroll",
+    "snelheid"
+   ],
+   "desc": "Snelheid waarmee de tekst scrolt (S=Snel | L=Langzaam)"
+  },
+  "QCMaxVoltage": {
+   "text2": [
+    "QC",
+    "Voltage"
+   ],
+   "desc": "Maximaal QC voltage dat gevraagd mag worden"
+  },
+  "PDNegTimeout": {
+   "text2": [
+    "PD",
+    "timeout"
+   ],
+   "desc": "PD afstemmingsduur in stappen van 100ms (voor compatibiliteit met sommige QC laders)"
+  },
+  "PowerLimit": {
+   "text2": [
+    "Vermogen",
+    "limiet"
+   ],
+   "desc": "Maximaal vermogen (W=Watt)"
+  },
+  "ReverseButtonTempChange": {
+   "text2": [
+    "Draai",
+    "+ - knoppen om"
+   ],
+   "desc": "Keer de +- knoppen van de temperatuurregeling om"
+  },
+  "TempChangeShortStep": {
+   "text2": [
+    "Temp veranderen",
+    "kort"
+   ],
+   "desc": "Temperatuur verandering bij kort drukken"
+  },
+  "TempChangeLongStep": {
+   "text2": [
+    "Temp veranderen",
+    "lang"
+   ],
+   "desc": "Temperatuur verandering bij lang drukken"
+  },
+  "PowerPulsePower": {
+   "text2": [
+    "Stroom",
+    "Puls"
+   ],
+   "desc": "Intensiteit van stroompuls om voeding aan te houden (watt)"
+  },
+  "HallEffSensitivity": {
+   "text2": [
+    "Hall sensor",
+    "gevoeligheid"
+   ],
+   "desc": "Gevoeligheid van de Hall effect sensor om naar slaapmodus te gaan (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+  },
+  "LockingMode": {
+   "text2": [
+    "Knopblokkering",
+    "inschakelen"
+   ],
+   "desc": "Tijdens solderen lang op beide knoppen drukken blokkeert de knoppen (U=Uit | B=Alleen boost mode | V=Volledig blokkeren)"
+  },
+  "MinVolCell": {
+   "text2": [
+    "Minimum",
+    "voltage"
+   ],
+   "desc": "Minimum toegestaan voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+  },
+  "AnimLoop": {
+   "text2": [
+    "Animatie",
+    "herhaling"
+   ],
+   "desc": "Herhaal icoon animaties in hoofdmenu"
+  },
+  "AnimSpeed": {
+   "text2": [
+    "Animatie",
+    "snelheid"
+   ],
+   "desc": "Tempo van de icoon animaties in het hoofdmenu (U=uit | L=langzaam | G=gemiddeld | S=snel)"
+  },
+  "PowerPulseWait": {
+   "text2": [
+    "Stroompuls",
+    "interval"
+   ],
+   "desc": "Tijdsduur tussen voeding wakker-blijf-pulsen (x 2.5s)"
+  },
+  "PowerPulseDuration": {
+   "text2": [
+    "Power pulse",
+    "duur"
+   ],
+   "desc": "Duur van voeding-wakker-blijf-pulsen (x 250ms)"
+  },
+  "LanguageSwitch": {
+   "text2": [
+    "Taal:",
+    " NL  Nederlands"
+   ],
+   "desc": "Huidige firmware taal"
+  },
+  "Brightness": {
+   "text2": [
+    "Scherm",
+    "helderheid"
+   ],
+   "desc": "Pas helderheid van het OLED scherm aan"
+  },
+  "ColourInversion": {
+   "text2": [
+    "Inverteer",
+    "scherm"
+   ],
+   "desc": "Inverteer de kleuren van het OLED scherm"
+  },
+  "LOGOTime": {
+   "text2": [
+    "Opstart logo",
+    "duur"
+   ],
+   "desc": "Stelt de weergaveduur van het opstartlogo in (s=seconden)"
+  }
+ }
 }
