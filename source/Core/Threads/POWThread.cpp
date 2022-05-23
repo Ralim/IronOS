@@ -10,7 +10,6 @@
 #include "QC3.h"
 #include "Settings.h"
 #include "USBPD.h"
-#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"

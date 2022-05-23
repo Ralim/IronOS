@@ -5,7 +5,7 @@
  *      Author: Ralim
  */
 
-#ifndef BSP_PINE64_UNITSETTINGS_H_
-#define BSP_PINE64_UNITSETTINGS_H_
+#ifndef BSP_MAGIC_UNITSETTINGS_H_
+#define BSP_MAGIC_UNITSETTINGS_H_
 
-#endif /* BSP_PINE64_UNITSETTINGS_H_ */
+#endif /* BSP_MAGIC_UNITSETTINGS_H_ */

@@ -138,7 +138,7 @@
 #define POW_DC     1
 #define POW_QC_20V 1
 #define ENABLE_QC2 1
-#define TEMP_TMP36
+#define TEMP_NTC
 #define ACCEL_BMA
 #define ACCEL_SC7
 #define HALL_SENSOR

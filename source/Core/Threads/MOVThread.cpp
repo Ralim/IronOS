@@ -16,7 +16,6 @@
 #include "SC7A20.hpp"
 #include "Settings.h"
 #include "TipThermoModel.h"
-#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "history.hpp"

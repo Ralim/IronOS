@@ -9,7 +9,6 @@
 #include "FreeRTOS.h"
 #include "Settings.h"
 #include "TipThermoModel.h"
-#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "history.hpp"
 #include "main.hpp"

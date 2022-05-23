@@ -15,7 +15,6 @@ extern "C" {
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"
-#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"

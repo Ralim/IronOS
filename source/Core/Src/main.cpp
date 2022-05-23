@@ -7,7 +7,6 @@
 #include "main.hpp"
 #include "BSP.h"
 #include "Settings.h"
-#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "power.hpp"
 AccelType DetectedAccelerometerVersion = AccelType::Scanning;
