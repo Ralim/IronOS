@@ -173,16 +173,10 @@ bool getFUS302IRQLow() {
   // Return true if the IRQ line is still held low
   return !gpio_read(FUSB302_IRQ_Pin);
 }
-uint16_t rescaleADC(const uint16_t value) {
-  // TODO This can be removed once we figure out final op-amp scaling
-  //  return value;
-  uint32_t temp = value * 33;
-  uint16_t res  = temp / 32;
-  return res;
-}
+
 uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average(); }
 
 uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average(); }
 
 // Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
-uint16_t getTipRawTemp(uint8_t sample) { return rescaleADC(ADC_Tip.average() >> 1); }
+uint16_t getTipRawTemp(uint8_t sample) { return ADC_Tip.average() >> 1; }

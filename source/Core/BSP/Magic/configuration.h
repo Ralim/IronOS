@@ -104,7 +104,7 @@
 #define ANIMATION_LOOP           1  // 0: off 1: on
 #define ANIMATION_SPEED          settingOffSpeed_t::MEDIUM
 
-#define OP_AMP_Rf_Pinecil  850 * 1000 // 750  Kilo-ohms -> From schematic, R1
+#define OP_AMP_Rf_Pinecil  866 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_Pinecil 2370       // 2.37 Kilo-ohms -> From schematic, R2
 
 #define OP_AMP_GAIN_STAGE_PINECIL (1 + (OP_AMP_Rf_Pinecil / OP_AMP_Rin_Pinecil))
@@ -114,6 +114,7 @@
 #endif
 
 #ifdef MODEL_Magic
+#define ADC_VDD_MV             3200                      // ADC max reading millivolts
 #define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV            600                       // 290 - Default divider from schematic
 #define CALIBRATION_OFFSET     900                       // 900 - Default adc offset in uV
