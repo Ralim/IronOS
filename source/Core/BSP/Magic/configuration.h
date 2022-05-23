@@ -104,7 +104,7 @@
 #define ANIMATION_LOOP           1  // 0: off 1: on
 #define ANIMATION_SPEED          settingOffSpeed_t::MEDIUM
 
-#define OP_AMP_Rf_Pinecil  750 * 1000 // 750  Kilo-ohms -> From schematic, R1
+#define OP_AMP_Rf_Pinecil  850 * 1000 // 750  Kilo-ohms -> From schematic, R1
 #define OP_AMP_Rin_Pinecil 2370       // 2.37 Kilo-ohms -> From schematic, R2
 
 #define OP_AMP_GAIN_STAGE_PINECIL (1 + (OP_AMP_Rf_Pinecil / OP_AMP_Rin_Pinecil))

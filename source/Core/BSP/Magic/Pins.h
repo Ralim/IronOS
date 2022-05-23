@@ -10,7 +10,7 @@
 #include "bl702_adc.h"
 #include "hal_gpio.h"
 
-#define KEY_B_Pin            GPIO_PIN_25
+#define KEY_B_Pin            GPIO_PIN_28
 #define TMP36_INPUT_Pin      GPIO_PIN_20
 #define TMP36_ADC_CHANNEL    ADC_CHAN10
 #define TIP_TEMP_Pin         GPIO_PIN_19
@@ -22,7 +22,7 @@
 #define VIN_Pin         GPIO_PIN_18
 #define VIN_ADC_CHANNEL ADC_CHAN8
 #define OLED_RESET_Pin  GPIO_PIN_3
-#define KEY_A_Pin       GPIO_PIN_28
+#define KEY_A_Pin       GPIO_PIN_25
 #define PWM_Out_Pin     GPIO_PIN_21
 #define PWM_Channel     PWM_CH1
 #define SCL_Pin         GPIO_PIN_11
