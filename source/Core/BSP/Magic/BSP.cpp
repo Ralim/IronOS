@@ -6,9 +6,11 @@
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
+#include "USBPD.h"
 #include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
+
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
@@ -224,7 +226,7 @@ void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
 
-uint8_t  lastTipResistance = 75; // default safe
+uint8_t  lastTipResistance = 80; // default safe
 uint32_t lastTipReadinguV  = 0;
 uint8_t  getTipResitanceX10() {
   // Return tip resistance in x10 ohms
@@ -241,9 +243,10 @@ void startMeasureTipResistance() {
   // If tip is connected, and the tip is cold and the tip is not being heated
   // We can use the GPIO to inject a small current into the tip and measure this
   // The gpio is 5.1k -> diode -> tip -> gnd
-  // Which is around 0.65mA this will induce:
-  // 6 ohm tip -> 3.9mV (Real world ~= 3320)
-  // 8 ohm tip -> 5.2mV (Real world ~= 4500)
+  // Source is 3.3V-0.5V
+  // Which is around 0.54mA this will induce:
+  // 6 ohm tip -> 3.24mV (Real world ~= 3320)
+  // 8 ohm tip -> 4.32mV (Real world ~= 4500)
   // Which is definitely measureable
   // Taking shortcuts here as we know we only really have to pick apart 6 and 8 ohm tips
   // These are reported as 60 and 75 respectively
@@ -263,7 +266,21 @@ void FinishMeasureTipResistance() {
     return;
   }
   // newReading -= lastTipReadinguV;
-  MSG("Tip Delta %lu, %lu %lu \r\n", newReading - lastTipReadinguV, newReading, lastTipReadinguV);
+  // MSG("Tip Delta %lu, %lu %lu \r\n", newReading - lastTipReadinguV, newReading, lastTipReadinguV);
   newReading -= lastTipReadinguV;
-  lastTipReadinguV = newReading;
+  // As we are only detecting two resistances; we can split the difference for now
+  uint8_t newRes = 0;
+  if (newReading > 5000) {
+    return; // Change nothing as probably disconnected tip
+  } else if (newReading < 4000) {
+    newRes = 60;
+  } else {
+    newRes = 80;
+  }
+  if (lastTipResistance != newRes) {
+#ifdef POW_PD
+    USBPowerDelivery::triggerRenegotiation();
+#endif
+  }
+  lastTipResistance = newRes;
 }
