@@ -13,9 +13,6 @@
 #ifndef USB_PD_VMAX
 #error Max PD Voltage must be defined
 #endif
-#ifndef TIP_RESISTANCE
-#error Tip resistance must be defined
-#endif
 
 void ms_delay(uint32_t delayms) {
   // Convert ms -> ticks
@@ -98,10 +95,10 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
 #ifdef MODEL_HAS_DCDC
         // If this device has step down DC/DC inductor to smooth out current spikes
         // We can instead ignore resistance and go for max voltage we can accept
-        min_resistance_ohmsx10 = TIP_RESISTANCE;
+        min_resistance_ohmsx10 = getTipResitanceX10();
 #endif
         // Fudge of 0.5 ohms to round up a little to account for other losses
-        if (min_resistance_ohmsx10 <= (TIP_RESISTANCE + 5)) {
+        if (min_resistance_ohmsx10 <= (getTipResitanceX10() + 5)) {
           // This is a valid power source we can select as
           if ((voltage_mv > bestIndexVoltage) || bestIndex == 0xFF) {
             // Higher voltage and valid, select this instead
@@ -124,7 +121,7 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
       // Using the current and tip resistance, calculate the ideal max voltage
       // if this is range, then we will work with this voltage
       // if this is not in range; then max_voltage can be safely selected
-      int ideal_voltage_mv = (TIP_RESISTANCE * max_current);
+      int ideal_voltage_mv = (getTipResitanceX10() * max_current);
       if (ideal_voltage_mv > max_voltage) {
         ideal_voltage_mv = max_voltage; // constrain
       }
@@ -186,7 +183,7 @@ void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
   // if (requested_voltage_mv != 5000) {
   //   voltage = requested_voltage_mv;
   // }
-  // uint16_t current = (voltage) / TIP_RESISTANCE; // In centi-amps
+  // uint16_t current = (voltage) / getTipResitanceX10(); // In centi-amps
 
   // /* Add a PDO for the desired power. */
   // cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);

@@ -223,3 +223,47 @@ bool isTipDisconnected() {
 void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
+
+uint8_t  lastTipResistance = 75; // default safe
+uint32_t lastTipReadinguV  = 0;
+uint8_t  getTipResitanceX10() {
+  // Return tip resistance in x10 ohms
+  // We can measure this using the op-amp
+  return lastTipResistance;
+}
+void startMeasureTipResistance() {
+
+  if (isTipDisconnected()) {
+    return;
+  }
+
+  // We want to calculate lastTipResistance
+  // If tip is connected, and the tip is cold and the tip is not being heated
+  // We can use the GPIO to inject a small current into the tip and measure this
+  // The gpio is 5.1k -> diode -> tip -> gnd
+  // Which is around 0.65mA this will induce:
+  // 6 ohm tip -> 3.9mV (Real world ~= 3320)
+  // 8 ohm tip -> 5.2mV (Real world ~= 4500)
+  // Which is definitely measureable
+  // Taking shortcuts here as we know we only really have to pick apart 6 and 8 ohm tips
+  // These are reported as 60 and 75 respectively
+  lastTipReadinguV = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0));
+  gpio_write(TIP_RESISTANCE_SENSE, 1);
+  // Wait for next ADC measurement
+}
+
+void FinishMeasureTipResistance() {
+  gpio_write(TIP_RESISTANCE_SENSE, 0);
+  if (isTipDisconnected()) {
+    return;
+  }
+  // read the tip uV with the current source on
+  uint32_t newReading = (TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)));
+  if (newReading < lastTipReadinguV) {
+    return;
+  }
+  // newReading -= lastTipReadinguV;
+  MSG("Tip Delta %lu, %lu %lu \r\n", newReading - lastTipReadinguV, newReading, lastTipReadinguV);
+  newReading -= lastTipReadinguV;
+  lastTipReadinguV = newReading;
+}

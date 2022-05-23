@@ -116,17 +116,17 @@
 #ifdef MODEL_Magic
 #define ADC_VDD_MV             3200                      // ADC max reading millivolts
 #define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV            600                       // 290 - Default divider from schematic
-#define CALIBRATION_OFFSET     900                       // 900 - Default adc offset in uV
+#define VOLTAGE_DIV            600                       // 600 - Default divider from schematic
+#define CALIBRATION_OFFSET     800                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET 100                       // Min value for calibration
-#define PID_POWER_LIMIT        70                        // Sets the max pwm power limit
+#define PID_POWER_LIMIT        220                       // Sets the max pwm power limit
 #define POWER_LIMIT            0                         // 0 watts default limit
-#define MAX_POWER_LIMIT        70                        //
+#define MAX_POWER_LIMIT        220                       //
 #define POWER_LIMIT_STEPS      5                         //
 #define OP_AMP_GAIN_STAGE      OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                             // Use Hakko lookup table
 #define USB_PD_VMAX            20                        // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ             (8)                       // Tick rate of the PID loop
+#define PID_TIM_HZ             (10)                      // Tick rate of the PID loop
 #define MAX_TEMP_C             450                       // Max soldering temp selectable °C
 #define MAX_TEMP_F             850                       // Max soldering temp selectable °F
 #define MIN_TEMP_C             10                        // Min soldering temp selectable °C

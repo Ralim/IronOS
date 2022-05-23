@@ -29,8 +29,9 @@ void hardware_init() {
   gpio_set_mode(TMP36_INPUT_Pin, GPIO_INPUT_MODE);
   gpio_set_mode(TIP_TEMP_Pin, GPIO_INPUT_MODE);
   gpio_set_mode(VIN_Pin, GPIO_INPUT_MODE);
-  gpio_set_mode(TIP_RESISTANCE_SENSE, GPIO_INPUT_MODE);
-
+  gpio_set_mode(TIP_RESISTANCE_SENSE, GPIO_OUTPUT_PP_MODE);
+  gpio_write(TIP_RESISTANCE_SENSE, 0);
+  MSG("Magic Starting\r\n");
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();

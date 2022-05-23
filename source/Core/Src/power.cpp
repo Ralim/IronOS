@@ -49,7 +49,7 @@ uint32_t availableW10(uint8_t sample) {
   //				R = R*10
   // P therefore is in V^2*100/R*10 = W*10.
   uint32_t v                 = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), sample); // 100 = 10v
-  uint32_t availableWattsX10 = (v * v) / TIP_RESISTANCE;
+  uint32_t availableWattsX10 = (v * v) / getTipResitanceX10();
   // However, 100% duty cycle is not possible as there is a dead time while the ADC takes a reading
   // Therefore need to scale available milliwats by this
 

@@ -45,12 +45,15 @@ void startPIDTask(void const *argument __unused) {
     TipThermoModel::getTipInC(true);
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
-  int32_t x10WattsOut = 0;
-
+  int32_t x10WattsOut            = 0;
+  bool    measuringTipResistance = false;
   for (;;) {
     x10WattsOut = 0;
     // This is a call to block this thread until the ADC does its samples
     if (ulTaskNotifyTake(pdTRUE, 2000)) {
+      if (measuringTipResistance) {
+        FinishMeasureTipResistance();
+      }
       // Do the reading here to keep the temp calculations churning along
       uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
       PIDTempTarget              = currentTempTargetDegC;
@@ -72,6 +75,11 @@ void startPIDTask(void const *argument __unused) {
         detectThermalRunaway(currentTipTempInC, 0);
       }
       setOutputx10WattsViaFilters(x10WattsOut);
+      // If the output is off, take tip measurement reading
+      if (x10WattsOut == 0 && PIDTempTarget == 0) {
+        startMeasureTipResistance();
+        measuringTipResistance = true;
+      }
     } else {
       // ADC interrupt timeout
       setTipPWM(0, false);
