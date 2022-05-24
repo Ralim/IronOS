@@ -22,15 +22,11 @@ extern "C" {
 history<uint16_t, ADC_Filter_Smooth> ADC_Vin;
 history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
-
-
-void adc_fifo_irq(void) {
+void                                 adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
-    bool wakePID = false;
     // Read out all entries in the fifo
-    const uint8_t cnt = ADC_Get_FIFO_Count();
-    for (uint8_t i = 0; i < cnt; i++) {
-      const uint32_t reading = ADC_Read_FIFO();
+    while (ADC_Get_FIFO_Count()) {
+      volatile uint32_t reading = ADC_Read_FIFO();
       // As per manual, 26 bit reading; lowest 16 are the ADC
       uint16_t sample = reading & 0xFFFF;
       uint8_t  source = (reading >> 21) & 0b11111;
@@ -40,7 +36,6 @@ void adc_fifo_irq(void) {
         break;
       case TIP_TEMP_ADC_CHANNEL:
         ADC_Tip.update(sample);
-        wakePID = true;
         break;
       case VIN_ADC_CHANNEL:
         ADC_Vin.update(sample);
@@ -50,19 +45,18 @@ void adc_fifo_irq(void) {
         break;
       }
     }
-    if (wakePID) {
-      // unblock the PID controller thread
-      if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-        if (pidTaskNotification) {
-          vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
-          portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-        }
+
+    // unblock the PID controller thread
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+      BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+      if (pidTaskNotification) {
+        vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
       }
     }
-    // Clear IRQ
-    ADC_IntClr(ADC_INT_FIFO_READY);
   }
+  // Clear IRQ
+  ADC_IntClr(ADC_INT_ALL);
 }
 
 static bool fastPWM = false;

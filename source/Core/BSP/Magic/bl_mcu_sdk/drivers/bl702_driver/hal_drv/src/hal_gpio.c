@@ -69,7 +69,7 @@ void gpio_set_mode(uint32_t pin, uint32_t mode) {
     gpio_cfg.pullType = GPIO_PULL_NONE;
     break;
 
-  case GPIO_INPUT_PP_MODE:
+  case GPIO_INPUT_PU_MODE:
     gpio_cfg.gpioMode = GPIO_MODE_INPUT;
     gpio_cfg.pullType = GPIO_PULL_UP;
     break;

@@ -185,7 +185,7 @@ void ADC_Init(ADC_CFG_Type *cfg) {
   CHECK_PARAM(IS_ADC_DATA_WIDTH_TYPE(cfg->resWidth));
 
   /* config 1 */
-  regCfg1 = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG1);
+  regCfg1 = 0; // BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG1);
   regCfg1 = BL_SET_REG_BITS_VAL(regCfg1, AON_GPADC_V18_SEL, cfg->v18Sel);
   regCfg1 = BL_SET_REG_BITS_VAL(regCfg1, AON_GPADC_V11_SEL, cfg->v11Sel);
   regCfg1 = BL_CLR_REG_BIT(regCfg1, AON_GPADC_DITHER_EN);
@@ -200,11 +200,13 @@ void ADC_Init(ADC_CFG_Type *cfg) {
 
   /* config 2 */
   regCfg2 = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG2);
-  regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_DLY_SEL, 0x02);
+  regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_DLY_SEL, 0x00);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_PGA1_GAIN, cfg->gain1);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_PGA2_GAIN, cfg->gain2);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_BIAS_SEL, cfg->biasSel);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_CHOP_MODE, cfg->chopMode);
+  regCfg2 = BL_CLR_REG_BIT(regCfg2, AON_GPADC_VBAT_EN);   // vbat enabled (off)
+  regCfg2 = BL_CLR_REG_BIT(regCfg2, AON_GPADC_TSVBE_LOW); // tsen didoe current
   /* pga_vcmi_en is for mic */
   regCfg2 = BL_CLR_REG_BIT(regCfg2, AON_GPADC_PGA_VCMI_EN);
 
