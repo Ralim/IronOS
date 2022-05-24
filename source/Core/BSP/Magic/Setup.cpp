@@ -71,15 +71,15 @@ void setup_adc(void) {
 
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
-  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_128_AVERAGE;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_256_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
-  adc_cfg.gain1          = ADC_PGA_GAIN_1;
-  adc_cfg.gain2          = ADC_PGA_GAIN_1;
-  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_PGA_RPC_ON;
+  adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
+  adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
+  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
-  adc_cfg.vcm            = ADC_PGA_VCM_1V;
+  adc_cfg.vcm            = ADC_PGA_VCM_1P6V;
   adc_cfg.offsetCalibEn  = DISABLE;
   adc_cfg.offsetCalibVal = 0;
 
@@ -90,7 +90,9 @@ void setup_adc(void) {
   adc_fifo_cfg.dmaEn         = DISABLE;
   adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_4;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
-  ADC_MIC_Bias_Disable();
+  // ADC_MIC_Bias_Disable();
+  // ADC_SET_TSVBE_LOW();
+  // ADC_Tsen_Disable();
 
   // Enable FiFo IRQ
   Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
