@@ -234,11 +234,12 @@ uint8_t  getTipResitanceX10() {
   return lastTipResistance;
 }
 void startMeasureTipResistance() {
-
   if (isTipDisconnected()) {
     return;
   }
-
+  if (lastTipReadinguV) {
+    return;
+  }
   // We want to calculate lastTipResistance
   // If tip is connected, and the tip is cold and the tip is not being heated
   // We can use the GPIO to inject a small current into the tip and measure this
@@ -276,11 +277,6 @@ void FinishMeasureTipResistance() {
     newRes = 60;
   } else {
     newRes = 80;
-  }
-  if (lastTipResistance != newRes) {
-#ifdef POW_PD
-    USBPowerDelivery::triggerRenegotiation();
-#endif
   }
   lastTipResistance = newRes;
 }

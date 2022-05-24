@@ -68,6 +68,7 @@
 #define TEMP_CHANGE_LONG_STEP_MAX  90 // Temp change long step MAX value
 
 /* Power pulse for keeping power banks awake*/
+
 #define POWER_PULSE_INCREMENT    1
 #define POWER_PULSE_MAX          100 // x10 max watts
 #define POWER_PULSE_WAIT_MAX     9   // 9*2.5s = 22.5 seconds
@@ -114,7 +115,8 @@
 #endif
 
 #ifdef MODEL_Magic
-#define ADC_VDD_MV             3200                      // ADC max reading millivolts
+#define ADC_VDD_MV             3300                      // ADC max reading millivolts
+#define ADC_MAX_READING        42000                     // Maximum reading of the adc
 #define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV            600                       // 600 - Default divider from schematic
 #define CALIBRATION_OFFSET     800                       // 900 - Default adc offset in uV

@@ -29,13 +29,17 @@ void hardware_init() {
   gpio_set_mode(TMP36_INPUT_Pin, GPIO_INPUT_MODE);
   gpio_set_mode(TIP_TEMP_Pin, GPIO_INPUT_MODE);
   gpio_set_mode(VIN_Pin, GPIO_INPUT_MODE);
-  gpio_set_mode(TIP_RESISTANCE_SENSE, GPIO_OUTPUT_PP_MODE);
+
+  gpio_set_mode(TIP_RESISTANCE_SENSE, GPIO_OUTPUT_MODE);
   gpio_write(TIP_RESISTANCE_SENSE, 0);
+
   MSG((char *)"Magic Starting\r\n");
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
   I2C_ClockSet(I2C0_ID, 400000); // Sets clock to around 375kHz
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
+  PWM_Channel_Enable(PWM_Channel);
 }
 void setup_pwm(void) {
   // Setup PWM we use for driving the tip
@@ -56,8 +60,8 @@ void setup_pwm(void) {
 }
 
 const ADC_Chan_Type adc_tip_pos_chans[]
-    = {TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL};
-const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
+    = {VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL};
+const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
 static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
 
 void setup_adc(void) {
@@ -71,9 +75,9 @@ void setup_adc(void) {
 
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
-  adc_cfg.resWidth       = ADC_DATA_WIDTH_12;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_128_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
-  adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
+  adc_cfg.v18Sel         = ADC_V18_SEL_1P72V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
   adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
   adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
@@ -89,7 +93,7 @@ void setup_adc(void) {
 
   ADC_Init(&adc_cfg);
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_4;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
