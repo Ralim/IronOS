@@ -119,7 +119,7 @@
 #define ADC_MAX_READING        42000                     // Maximum reading of the adc
 #define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
 #define VOLTAGE_DIV            600                       // 600 - Default divider from schematic
-#define CALIBRATION_OFFSET     800                       // 900 - Default adc offset in uV
+#define CALIBRATION_OFFSET     900                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET 100                       // Min value for calibration
 #define PID_POWER_LIMIT        220                       // Sets the max pwm power limit
 #define POWER_LIMIT            0                         // 0 watts default limit
