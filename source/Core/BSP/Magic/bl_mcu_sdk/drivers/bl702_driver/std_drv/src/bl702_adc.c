@@ -231,7 +231,7 @@ void ADC_Init(ADC_CFG_Type *cfg) {
   Interrupt_Handler_Register(GPADC_DMA_IRQn, GPADC_DMA_IRQHandler);
 #endif
 
-  ADC_Gain_Trim();
+  // ADC_Gain_Trim();
 }
 
 /****************************************************************************/

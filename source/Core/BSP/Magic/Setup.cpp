@@ -31,7 +31,7 @@ void hardware_init() {
   gpio_set_mode(VIN_Pin, GPIO_INPUT_MODE);
   gpio_set_mode(TIP_RESISTANCE_SENSE, GPIO_OUTPUT_PP_MODE);
   gpio_write(TIP_RESISTANCE_SENSE, 0);
-  MSG("Magic Starting\r\n");
+  MSG((char *)"Magic Starting\r\n");
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
@@ -71,36 +71,36 @@ void setup_adc(void) {
 
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
-  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_256_AVERAGE;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_12;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
   adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
   adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
-  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_ON;
+  adc_cfg.chopMode       = ADC_CHOP_MOD_ALL_OFF;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
   adc_cfg.vcm            = ADC_PGA_VCM_1P6V;
-  adc_cfg.offsetCalibEn  = DISABLE;
+  adc_cfg.offsetCalibEn  = ENABLE;
   adc_cfg.offsetCalibVal = 0;
 
   ADC_Disable();
   ADC_Enable();
   ADC_Reset();
+
   ADC_Init(&adc_cfg);
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_4;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
-  // ADC_MIC_Bias_Disable();
-  // ADC_SET_TSVBE_LOW();
-  // ADC_Tsen_Disable();
+  ADC_MIC_Bias_Disable();
+  ADC_Tsen_Disable();
 
   // Enable FiFo IRQ
   Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
   ADC_IntMask(ADC_INT_FIFO_READY, UNMASK);
   CPU_Interrupt_Enable(GPADC_DMA_IRQn);
   ADC_Stop();
-  ADC_Scan_Channel_Config(adc_tip_pos_chans, adc_tip_neg_chans, sizeof(adc_tip_pos_chans) / sizeof(ADC_Chan_Type), DISABLE);
   ADC_FIFO_Clear();
+  ADC_Scan_Channel_Config(adc_tip_pos_chans, adc_tip_neg_chans, sizeof(adc_tip_pos_chans) / sizeof(ADC_Chan_Type), DISABLE);
 }
 
 void setup_timer_scheduler() {
