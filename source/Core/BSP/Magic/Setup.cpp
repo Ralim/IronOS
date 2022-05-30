@@ -37,7 +37,7 @@ void hardware_init() {
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
-  I2C_ClockSet(I2C0_ID, 400000); // Sets clock to around 375kHz
+  I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 275kHz
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
   PWM_Channel_Enable(PWM_Channel);
 }
@@ -60,7 +60,7 @@ void setup_pwm(void) {
 }
 
 const ADC_Chan_Type adc_tip_pos_chans[]
-    = {VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL, TMP36_ADC_CHANNEL, VIN_ADC_CHANNEL};
+    = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, VIN_ADC_CHANNEL};
 const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
 static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
 
@@ -81,7 +81,7 @@ void setup_adc(void) {
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
   adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
   adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
-  adc_cfg.chopMode       = ADC_CHOP_MOD_ALL_OFF;
+  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
   adc_cfg.vcm            = ADC_PGA_VCM_1P6V;
   adc_cfg.offsetCalibEn  = ENABLE;
