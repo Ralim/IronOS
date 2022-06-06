@@ -46,6 +46,10 @@ void startPIDTask(void const *argument __unused) {
   }
   int32_t x10WattsOut = 0;
 
+  while (preStartChecks()) {
+    ulTaskNotifyTake(pdTRUE, 2000);
+  }
+
   for (;;) {
     x10WattsOut = 0;
     // This is a call to block this thread until the ADC does its samples

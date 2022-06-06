@@ -348,68 +348,81 @@ void setPlatePullup(bool pullingUp) {
   HAL_GPIO_Init(PLATE_SENSOR_PULLUP_GPIO_Port, &GPIO_InitStruct);
 }
 
-uint16_t tipSenseResistancex10Ohms = 0;
-bool     isTipDisconnected() {
-  static bool       lastTipDisconnectedState = true;
-  static uint16_t   adcReadingPD1Set         = 0;
-  static TickType_t lastMeas                 = 0;
+uint16_t      tipSenseResistancex10Ohms = 0;
+volatile bool tipMeasurementOccuring    = false;
+void          performTipMeasurementStep(bool start) {
+  static uint16_t   adcReadingPD1Set = 0;
+  static TickType_t lastMeas         = 0;
+  // Inter state that performs the steps to measure the resistor on the tip
+  // Return 1 if a measurement is ongoing
+
+  // We want to perform our startup measurements of the tip resistance until we detect one fitted
+  if (start || tipSenseResistancex10Ohms == 0) {
+    tipMeasurementOccuring = true;
+    if (lastMeas == 0) {
+      lastMeas = xTaskGetTickCount();
+      setPlatePullup(true);
+    } else if (xTaskGetTickCount() - lastMeas > (TICKS_100MS)) {
+      lastMeas = xTaskGetTickCount();
+      // We are sensing the resistance
+      if (adcReadingPD1Set == 0) {
+        // We will record the reading for PD1 being set
+        adcReadingPD1Set = getADC(3);
+        setPlatePullup(false);
+      } else {
+        // We have taken reading one
+        uint16_t adcReadingPD1Cleared = getADC(3);
+        uint32_t a                    = ((int)adcReadingPD1Set - (int)adcReadingPD1Cleared);
+        a *= 10000;
+        uint32_t b = ((int)adcReadingPD1Cleared + (32768 - (int)adcReadingPD1Set));
+        if (b) {
+          tipSenseResistancex10Ohms = a / b;
+        } else {
+          tipSenseResistancex10Ohms = adcReadingPD1Set = lastMeas = 0;
+        }
+        if (tipSenseResistancex10Ohms > 1100 || tipSenseResistancex10Ohms < 900) {
+          tipSenseResistancex10Ohms = 0; // out of range
+          adcReadingPD1Set          = 0;
+          lastMeas                  = 0;
+        }
+      }
+    }
+  }
+  tipMeasurementOccuring = false;
+}
+bool isTipDisconnected() {
+  static bool lastTipDisconnectedState = true;
   // For the MHP30 we want to include a little extra logic in here
   // As when the tip is first connected we want to measure the ~100 ohm resistor on the base of the tip
   // And likewise if its removed we want to clear that measurement
   /*
    * plate_sensor_res = ((adc5_value_PD1_set - adc5_value_PD1_cleared) / (adc5_value_PD1_cleared + 4096 - adc5_value_PD1_set)) * 1000.0;
    * */
-
-  bool tipDisconnected = getADC(2) > (4090 * 8);
-  // We have to handle here that this ^ will trip while measuring the gain resistor
-  if (xTaskGetTickCount() - lastMeas < (TICKS_100MS * 2 + (TICKS_100MS / 2))) {
-    tipDisconnected = false;
+  if (tipMeasurementOccuring) {
+    performTipMeasurementStep(false);
+    return false; // We fake no tip disconnection during the measurement cycle to mask it
   }
 
+  bool tipDisconnected = getADC(2) > (4090 * 8);
+  // We have to handle here that this ^ will trip while measuring the gain resistor measurement
+  if (!tipDisconnected) {
+    if (tipSenseResistancex10Ohms == 0) {
+      performTipMeasurementStep(false);
+    }
+  }
   if (tipDisconnected != lastTipDisconnectedState) {
     if (tipDisconnected) {
       // Tip is now disconnected
-      tipSenseResistancex10Ohms = 0; // zero out the resistance
-      adcReadingPD1Set          = 0;
-      lastMeas                  = 0;
+      performTipMeasurementStep(true);
     }
     lastTipDisconnectedState = tipDisconnected;
   }
-  if (!tipDisconnected) {
-    if (tipSenseResistancex10Ohms == 0) {
-      if (lastMeas == 0) {
-        lastMeas = xTaskGetTickCount();
-        setPlatePullup(true);
-      } else if (xTaskGetTickCount() - lastMeas > (TICKS_100MS)) {
-        lastMeas = xTaskGetTickCount();
-        // We are sensing the resistance
-        if (adcReadingPD1Set == 0) {
-          // We will record the reading for PD1 being set
-          adcReadingPD1Set = getADC(3);
-          setPlatePullup(false);
-        } else {
-          // We have taken reading one
-          uint16_t adcReadingPD1Cleared = getADC(3);
-          uint32_t a                    = ((int)adcReadingPD1Set - (int)adcReadingPD1Cleared);
-          a *= 10000;
-          uint32_t b = ((int)adcReadingPD1Cleared + (32768 - (int)adcReadingPD1Set));
-          if (b) {
-            tipSenseResistancex10Ohms = a / b;
-          } else {
-            tipSenseResistancex10Ohms = adcReadingPD1Set = lastMeas = 0;
-          }
-          if (tipSenseResistancex10Ohms > 1100 || tipSenseResistancex10Ohms < 900) {
-            tipSenseResistancex10Ohms = 0; // out of range
-            adcReadingPD1Set          = 0;
-            lastMeas                  = 0;
-          }
-        }
-      }
-      return true; // we fake tip being disconnected until this is measured
-    }
-  }
-
   return tipDisconnected;
+}
+
+uint8_t preStartChecks() {
+  performTipMeasurementStep(false);
+  return tipMeasurementOccuring;
 }
 void setBuzzer(bool on) {
   if (on) {
