@@ -172,7 +172,7 @@ static void gui_drawBatteryIcon() {
 }
 static void gui_solderingTempAdjust() {
   uint32_t lastChange                = xTaskGetTickCount();
-  currentTempTargetDegC              = 0;
+  currentTempTargetDegC              = 0; // Turn off header while adjusting temp
   uint32_t    autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
   bool        waitForRelease         = false;
@@ -511,12 +511,8 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
         boostModeOn = false;
         break;
       case BUTTON_BOTH:
-        // exit
-        return;
-        break;
       case BUTTON_B_LONG:
         return; // exit on back long hold
-        break;
       case BUTTON_F_LONG:
         // if boost mode is enabled turn it on
         if (getSettingValue(SettingsOptions::BoostTemp))
@@ -665,8 +661,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     // If we have tripped thermal runaway, turn off heater and show warning
     if (heaterThermalRunaway) {
       currentTempTargetDegC = 0; // heater control off
-                                 // TODO WARNING
-
       warnUser(translatedString(Tr->WarningThermalRunaway), 10 * TICKS_SECOND);
       heaterThermalRunaway = false;
       return;
