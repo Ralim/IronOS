@@ -29,7 +29,7 @@ extern "C" {
 #include "pd.h"
 #endif
 // File local variables
-extern uint32_t   currentTempTargetDegC;
+
 extern TickType_t lastMovementTime;
 extern bool       heaterThermalRunaway;
 extern osThreadId GUITaskHandle;
@@ -645,7 +645,13 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     }
 #endif
 #ifdef NO_SLEEP_MODE
+    // No sleep mode, but still want shutdown timeout
 
+    if (shouldShutdown()) {
+      // shutdown
+      currentTempTargetDegC = 0;
+      return; // we want to exit soldering mode
+    }
 #endif
     if (shouldBeSleeping()) {
       if (gui_SolderingSleepingMode(false, false)) {
