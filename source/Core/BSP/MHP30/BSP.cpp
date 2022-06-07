@@ -362,6 +362,7 @@ void          performTipMeasurementStep(bool start) {
     if (lastMeas == 0) {
       lastMeas = xTaskGetTickCount();
       setPlatePullup(true);
+      return;
     } else if (xTaskGetTickCount() - lastMeas > (TICKS_100MS)) {
       lastMeas = xTaskGetTickCount();
       // We are sensing the resistance
@@ -369,6 +370,7 @@ void          performTipMeasurementStep(bool start) {
         // We will record the reading for PD1 being set
         adcReadingPD1Set = getADC(3);
         setPlatePullup(false);
+        return;
       } else {
         // We have taken reading one
         uint16_t adcReadingPD1Cleared = getADC(3);
@@ -384,6 +386,7 @@ void          performTipMeasurementStep(bool start) {
           tipSenseResistancex10Ohms = 0; // out of range
           adcReadingPD1Set          = 0;
           lastMeas                  = 0;
+          return;
         }
       }
     }
@@ -391,7 +394,6 @@ void          performTipMeasurementStep(bool start) {
   tipMeasurementOccuring = false;
 }
 bool isTipDisconnected() {
-  static bool lastTipDisconnectedState = true;
   // For the MHP30 we want to include a little extra logic in here
   // As when the tip is first connected we want to measure the ~100 ohm resistor on the base of the tip
   // And likewise if its removed we want to clear that measurement
@@ -405,17 +407,10 @@ bool isTipDisconnected() {
 
   bool tipDisconnected = getADC(2) > (4090 * 8);
   // We have to handle here that this ^ will trip while measuring the gain resistor measurement
-  if (!tipDisconnected) {
-    if (tipSenseResistancex10Ohms == 0) {
-      performTipMeasurementStep(false);
-    }
-  }
-  if (tipDisconnected != lastTipDisconnectedState) {
-    if (tipDisconnected) {
-      // Tip is now disconnected
-      performTipMeasurementStep(true);
-    }
-    lastTipDisconnectedState = tipDisconnected;
+
+  if (tipDisconnected) {
+    // Tip is now disconnected
+    performTipMeasurementStep(true);
   }
   return tipDisconnected;
 }
