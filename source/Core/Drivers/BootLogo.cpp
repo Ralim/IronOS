@@ -21,7 +21,11 @@ void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
   OLED::refresh();
 
   // Delay here until button is pressed or its been the amount of seconds set by the user
-  waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+  if (getSettingValue(SettingsOptions::LOGOTime) == 5) {
+    waitForButtonPress();
+  } else {
+    waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+  }
 }
 
 void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
@@ -46,9 +50,13 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
       osDelay(interFrameDelay * 5);
     }
     // 1024 less the header type byte and the inter-frame-delay
-    if (getSettingValue(SettingsOptions::LOGOTime) < 5 && (position == 1022 || len == 0)) {
+    if (getSettingValue(SettingsOptions::LOGOTime) > 0 && (position == 1022 || len == 0)) {
       // Delay here until button is pressed or its been the amount of seconds set by the user
-      waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+      if (getSettingValue(SettingsOptions::LOGOTime) == 5) {
+        waitForButtonPress();
+      } else {
+        waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+      }
       return;
     }
   } while (buttons == BUTTON_NONE);
