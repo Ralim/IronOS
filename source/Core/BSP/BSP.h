@@ -74,6 +74,9 @@ void log_system_state(int32_t PWMWattsx10);
 // Returns true if the tip is disconnected
 bool isTipDisconnected();
 
+// Return hardware unique ID if possible
+uint64_t getDeviceID();
+
 // Status LED controls
 
 enum StatusLED {

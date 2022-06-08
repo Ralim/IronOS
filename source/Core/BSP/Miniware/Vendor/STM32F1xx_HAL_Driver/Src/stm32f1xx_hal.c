@@ -514,6 +514,24 @@ void HAL_GetUID(uint32_t *UID) {
 }
 
 /**
+ * @brief  Returns first word of the unique device identifier (UID based on 96 bits)
+ * @retval Device identifier
+ */
+uint32_t HAL_GetUIDw0(void) { return (READ_REG(*((uint32_t *)UID_BASE))); }
+
+/**
+ * @brief  Returns second word of the unique device identifier (UID based on 96 bits)
+ * @retval Device identifier
+ */
+uint32_t HAL_GetUIDw1(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 4U)))); }
+
+/**
+ * @brief  Returns third word of the unique device identifier (UID based on 96 bits)
+ * @retval Device identifier
+ */
+uint32_t HAL_GetUIDw2(void) { return (READ_REG(*((uint32_t *)(UID_BASE + 8U)))); }
+
+/**
  * @}
  */
 
