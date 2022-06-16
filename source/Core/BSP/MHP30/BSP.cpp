@@ -471,3 +471,7 @@ void setStatusLED(const enum StatusLED state) {
     setBuzzer(false);
   }
 }
+uint64_t getDeviceID() {
+  //
+  return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
+}
