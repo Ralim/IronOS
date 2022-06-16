@@ -90,7 +90,7 @@ uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 }
 
 uint32_t TipThermoModel::getTipMaxInC() {
-  uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(ADC_MAX_READING - (21 * 3)); // back off approx 5 deg c from ADC max
-  maximumTipTemp += getHandleTemperature(0) / 10;                                               // Add handle offset
+  uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(ADC_MAX_READING - 1);
+  maximumTipTemp += getHandleTemperature(0) / 10; // Add handle offset
   return maximumTipTemp - 1;
 }
