@@ -115,32 +115,32 @@
 #endif
 
 #ifdef MODEL_Magic
-#define ADC_VDD_MV             3300                      // ADC max reading millivolts
-#define ADC_MAX_READING        (62000 >> 1)              // Maximum reading of the adc
-#define SOLDERING_TEMP         320                       // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV            600                       // 600 - Default divider from schematic
-#define CALIBRATION_OFFSET     900                       // 900 - Default adc offset in uV
-#define MIN_CALIBRATION_OFFSET 100                       // Min value for calibration
-#define PID_POWER_LIMIT        220                       // Sets the max pwm power limit
-#define POWER_LIMIT            0                         // 0 watts default limit
-#define MAX_POWER_LIMIT        220                       //
-#define POWER_LIMIT_STEPS      5                         //
-#define OP_AMP_GAIN_STAGE      OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
-#define TEMP_uV_LOOKUP_HAKKO                             // Use Hakko lookup table
-#define USB_PD_VMAX            20                        // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ             (10)                      // Tick rate of the PID loop
-#define MAX_TEMP_C             450                       // Max soldering temp selectable °C
-#define MAX_TEMP_F             850                       // Max soldering temp selectable °F
-#define MIN_TEMP_C             10                        // Min soldering temp selectable °C
-#define MIN_TEMP_F             60                        // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C       250                       // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
-
-#define POW_PD     1
-#define POW_QC     1
-#define POW_DC     1
-#define POW_QC_20V 1
-#define ENABLE_QC2 1
+#define ADC_VDD_MV                 3300                      // ADC max reading millivolts
+#define ADC_MAX_READING            (62000 >> 1)              // Maximum reading of the adc
+#define SOLDERING_TEMP             320                       // Default soldering temp is 320.0 °C
+#define VOLTAGE_DIV                600                       // 600 - Default divider from schematic
+#define CALIBRATION_OFFSET         900                       // 900 - Default adc offset in uV
+#define MIN_CALIBRATION_OFFSET     100                       // Min value for calibration
+#define PID_POWER_LIMIT            220                       // Sets the max pwm power limit
+#define POWER_LIMIT                0                         // 0 watts default limit
+#define MAX_POWER_LIMIT            220                       //
+#define POWER_LIMIT_STEPS          5                         //
+#define OP_AMP_GAIN_STAGE          OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
+#define TEMP_uV_LOOKUP_HAKKO                                 // Use Hakko lookup table
+#define USB_PD_VMAX                20                        // Maximum voltage for PD to negotiate
+#define PID_TIM_HZ                 (10)                      // Tick rate of the PID loop
+#define MAX_TEMP_C                 450                       // Max soldering temp selectable °C
+#define MAX_TEMP_F                 850                       // Max soldering temp selectable °F
+#define MIN_TEMP_C                 10                        // Min soldering temp selectable °C
+#define MIN_TEMP_F                 60                        // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C           250                       // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F           480                       // The min settable temp for boost mode °F
+#define DEVICE_HAS_VALIDATION_CODE                           // We have 2 digit validations
+#define POW_PD                     1
+#define POW_QC                     1
+#define POW_DC                     1
+#define POW_QC_20V                 1
+#define ENABLE_QC2                 1
 #define TEMP_NTC
 #define ACCEL_BMA
 #define ACCEL_SC7

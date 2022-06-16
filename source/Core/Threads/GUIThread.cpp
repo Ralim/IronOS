@@ -758,8 +758,14 @@ void showDebugMenu(void) {
       // Print device ID Numbers
       {
         uint64_t id = getDeviceID();
-        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 2);
-
+#ifdef DEVICE_HAS_VALIDATION_CODE
+        // If device has validation code; then we want to take over both lines of the screen
+        OLED::clearScreen();   // Ensure the buffer starts clean
+        OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
+        OLED::print(DebugMenu[screen], FontStyle::SMALL);
+        OLED::drawHex(getDeviceValidation(), FontStyle::SMALL, 8);
+        OLED::setCursor(0, 8); // second line
+#endif
         OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 8);
         OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL, 8);
       }

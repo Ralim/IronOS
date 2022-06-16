@@ -77,6 +77,9 @@ bool isTipDisconnected();
 // Return hardware unique ID if possible
 uint64_t getDeviceID();
 
+// If device has burned in validation code's, return the code
+uint32_t getDeviceValidation();
+
 // Status LED controls
 
 enum StatusLED {

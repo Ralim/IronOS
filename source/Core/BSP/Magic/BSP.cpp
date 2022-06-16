@@ -296,5 +296,23 @@ uint64_t getDeviceID() {
   // return tmp | (((uint64_t)tmp2) << 32);
   uint64_t tmp = 0;
   EF_Ctrl_Read_Chip_ID((uint8_t *)&tmp);
-  return tmp;
+
+  return __builtin_bswap64(tmp);
+}
+
+uint32_t getDeviceValidation() {
+  uint32_t userData = 0;
+  EF_Ctrl_Read_Sw_Usage(0, &userData);
+  // 4 byte user data burned in at factory
+  
+  return userData;
+}
+
+uint8_t getDeviceValidationStatus() {
+  uint32_t userData = 0;
+  EF_Ctrl_Read_Sw_Usage(0, &userData);
+  userData &= 0xFFFF; // We only want the lower two bytes
+  userData = 0xDEAD;  // TODO TESTING KEY
+
+  return 1; // Device is OK
 }
