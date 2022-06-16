@@ -60,8 +60,8 @@ void setup_pwm(void) {
 }
 
 const ADC_Chan_Type adc_tip_pos_chans[]
-    = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, VIN_ADC_CHANNEL};
-const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
+    = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL};
+const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
 static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
 
 void setup_adc(void) {
@@ -75,7 +75,7 @@ void setup_adc(void) {
 
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
-  adc_cfg.resWidth       = ADC_DATA_WIDTH_16_WITH_128_AVERAGE;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_14_WITH_64_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P72V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
@@ -93,7 +93,7 @@ void setup_adc(void) {
 
   ADC_Init(&adc_cfg);
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_4;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
