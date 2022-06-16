@@ -86,6 +86,10 @@ enum StatusLED {
 };
 void setStatusLED(const enum StatusLED state);
 
+// preStartChecks are run until they return 0
+// By the PID, after each ADC sample comes in
+// For example, on the MHP30 this is used to figure out the resistance of the hotplate
+uint8_t preStartChecks();
 #ifdef __cplusplus
 }
 #endif
