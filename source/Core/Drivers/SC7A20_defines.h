@@ -23,6 +23,7 @@
 #define SC7A20_REFERENCE      0x26
 #define SC7A20_STATUS_REG     0x27
 #define SC7A20_OUT_X_L        0x28
+#define SC7A20_OUT_X_L_ALT    0xA8
 #define SC7A20_OUT_X_H        0x29
 #define SC7A20_OUT_Y_L        0x2A
 #define SC7A20_OUT_Y_H        0x2B

@@ -102,13 +102,18 @@ def get_constants(build_version: str) -> List[Tuple[str, str]]:
         ("SymbolDot", "."),
         ("SymbolDegC", "C"),
         ("SymbolDegF", "F"),
-        ("SymbolMinutes", "M"),
-        ("SymbolSeconds", "S"),
+        ("SymbolMinutes", "m"),
+        ("SymbolSeconds", "s"),
         ("SymbolWatts", "W"),
         ("SymbolVolts", "V"),
+        ("SymbolAmps", "A"),
         ("SymbolDC", "DC"),
         ("SymbolCellCount", "S"),
         ("SymbolVersionNumber", build_version),
+        ("SymbolPDDebug", "PD Debug"),
+        ("SymbolState", "State"),
+        ("SymbolNoVBus", "No VBus"),
+        ("SymbolVBus", "VBus"),
     ]
 
 

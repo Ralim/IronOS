@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": ["Ruhever-", "zögerung"],
-      "desc": "Dauer vor Übergang in den Ruhemodus (S=Sekunden | M=Minuten)"
+      "desc": "Dauer vor Übergang in den Ruhemodus (s=Sekunden | m=Minuten)"
     },
     "ShutdownTimeout": {
       "text2": ["Abschalt-", "verzög."],
-      "desc": "Dauer vor automatischer Abschaltung (M=Minuten)"
+      "desc": "Dauer vor automatischer Abschaltung (m=Minuten)"
     },
     "MotionSensitivity": {
       "text2": ["Bewegungs-", "empfindlichk."],
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Startlogo-", "dauer"],
-      "desc": "Legt die Dauer der Anzeige des Startlogos fest (S=Sekunden)"
+      "desc": "Legt die Dauer der Anzeige des Startlogos fest (s=Sekunden)"
     }
   }
 }

@@ -1,11 +1,11 @@
 /*
- * gui.cpp
+ * settingsGUI.cpp
  *
  *  Created on: 3Sep.,2017
  *      Author: Ben V. Brown
  */
 
-#include "gui.hpp"
+#include "settingsGUI.hpp"
 #include "Buttons.hpp"
 #include "ScrollMessage.hpp"
 #include "TipThermoModel.h"

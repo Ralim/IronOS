@@ -14,7 +14,7 @@ Holding the button at the front of the iron will enter boost mode (if enabled).
 This menu allows you to cycle through all the options and set their values.
 The button near the USB cycles through the options, and the one near the tip changes the selected option.
 Note that settings are not saved until you exit the menu.
-If you leave the unit alone (ie don't press any buttons) on a setting, after 3 seconds the screen will scroll a rough description of the setting.
+If you leave the unit alone (i.e., don't press any buttons) on a setting, after 3 seconds the screen will scroll a rough description of the setting.
 
 The menu is arranged so that the most often used settings are first.
 With submenus being selected to enter using the front button (as if you were going to change the setting).
@@ -41,7 +41,7 @@ To calibrate your iron:
 Some tips will have an offset on their readings, to calibrate this out perform the following steps:
 
 1. Connect power to your iron
-2. Make sure the tip is at room temperature (ie. wait for a fair while after using the iron before calibration)
+2. Make sure the tip is at room temperature (i.e., wait for a fair while after using the iron before calibration)
 3. Enter the settings menu
 4. Scroll down to the advanced menu, and then the temperature calibration
 5. Press the button to change the option (tip button)
@@ -54,6 +54,6 @@ Some tips will have an offset on their readings, to calibrate this out perform t
 
 ### Boost mode
 
-This allows you to change the front key (one near the tip) to become a boost button when you hold it for > 2 seconds. This allows you to set this button to change the soldering temperature for short periods. For example when soldering a big joint and you want to boost the temperature a bit.
+This allows you to change the front key (one near the tip) to become a boost button when you hold it for > 2 seconds. This allows you to set this button to change the soldering temperature for short periods. For example, when soldering a big joint and you want to boost the temperature a bit.
 
 The boost temperature is set in the settings menu.

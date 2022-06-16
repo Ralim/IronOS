@@ -11,21 +11,22 @@ extern "C" {
 #include "Buttons.hpp"
 #include "I2CBB.hpp"
 #include "LIS2DH12.hpp"
+#include "MMA8652FC.hpp"
 #include "OLED.hpp"
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "configuration.h"
+#include "history.hpp"
 #include "main.hpp"
+#include "power.hpp"
+#include "settingsGUI.hpp"
 #include "stdlib.h"
 #include "string.h"
-#include <MMA8652FC.hpp>
-#include <gui.hpp>
-#include <history.hpp>
-#include <power.hpp>
 #if POW_PD
 #include "USBPD.h"
+#include "pd.h"
 #endif
 // File local variables
 extern uint32_t   currentTempTargetDegC;
@@ -796,6 +797,82 @@ void showDebugMenu(void) {
   }
 }
 
+#if POW_PD
+#ifdef HAS_POWER_DEBUG_MENU
+static void showPDDebug(void) {
+  // Print out the USB-PD state
+  // Basically this is like the Debug menu, but instead we want to print out the PD status
+  uint8_t     screen = 0;
+  ButtonState b;
+  for (;;) {
+    OLED::clearScreen();                          // Ensure the buffer starts clean
+    OLED::setCursor(0, 0);                        // Position the cursor at the 0,0 (top left)
+    OLED::print(SymbolPDDebug, FontStyle::SMALL); // Print Title
+    OLED::setCursor(0, 8);                        // second line
+    if (screen == 0) {
+      // Print the PD state machine
+      OLED::print(SymbolState, FontStyle::SMALL);
+      OLED::print(SymbolSpace, FontStyle::SMALL);
+      OLED::printNumber(USBPowerDelivery::getStateNumber(), 2, FontStyle::SMALL, true);
+      OLED::print(SymbolSpace, FontStyle::SMALL);
+      // Also print vbus mod status
+      if (USBPowerDelivery::fusbPresent()) {
+        if (USBPowerDelivery::negotiationComplete() || (xTaskGetTickCount() > (TICKS_SECOND * 10))) {
+          if (!USBPowerDelivery::isVBUSConnected()) {
+            OLED::print(SymbolNoVBus, FontStyle::SMALL);
+          } else {
+            OLED::print(SymbolVBus, FontStyle::SMALL);
+          }
+        }
+      }
+    } else {
+      // Print out the Proposed power options one by one
+      auto    lastCaps = USBPowerDelivery::getLastSeenCapabilities();
+      uint8_t numobj   = PD_NUMOBJ_GET(lastCaps);
+      if ((screen - 1) < numobj) {
+        int voltage_mv     = 0;
+        int min_voltage    = 0;
+        int current_a_x100 = 0;
+        if ((lastCaps->obj[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+          voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps->obj[screen - 1])); // voltage in mV units
+          current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps->obj[screen - 1]);            // current in 10mA units
+        } else {
+          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps->obj[screen - 1]));
+          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps->obj[screen - 1]));
+          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps->obj[screen - 1])); // max current in 10mA units
+        }
+        // print out this entry of the proposal
+        OLED::printNumber(screen, 1, FontStyle::SMALL, true); // print the entry number
+        OLED::print(SymbolSpace, FontStyle::SMALL);
+        if (min_voltage > 0) {
+          OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
+          OLED::print(SymbolMinus, FontStyle::SMALL);
+        }
+        OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
+        OLED::print(SymbolVolts, FontStyle::SMALL);
+        OLED::print(SymbolSpace, FontStyle::SMALL);
+        OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+        OLED::print(SymbolDot, FontStyle::SMALL);
+        OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+        OLED::print(SymbolAmps, FontStyle::SMALL);
+
+      } else {
+        screen = 0;
+      }
+    }
+
+    OLED::refresh();
+    b = getButtonState();
+    if (b == BUTTON_B_SHORT)
+      return;
+    else if (b == BUTTON_F_SHORT) {
+      screen++;
+    }
+    GUIDelay();
+  }
+}
+#endif
+#endif
 void showWarnings() {
   // Display alert if settings were reset
   if (settingsWereReset) {
@@ -863,8 +940,16 @@ void startGUITask(void const *argument) {
   getTipRawTemp(1); // reset filter
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
+  // If the front button is held down, on supported devices, show PD debugging metrics
+#if POW_PD
+#ifdef HAS_POWER_DEBUG_MENU
+  if (getButtonA()) {
+    showPDDebug();
+  }
+#endif
+#endif
+  BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
-  // BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
   showWarnings();
   if (getSettingValue(SettingsOptions::AutoStartMode)) {
     // jump directly to the autostart mode

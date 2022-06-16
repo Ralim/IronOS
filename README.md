@@ -20,7 +20,9 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
-To get started with this firmware, please jump over to [here](Documentation/GettingStarted.md).
+## Getting Started
+
+To get started with IronOS firmware, please jump to [Getting Started Guide](Documentation/GettingStarted.md).
 But the [TL;DR](https://www.merriam-webster.com/dictionary/TL%3BDR) is to press the button near the front of the iron to heat up. Use the button near the back of the iron to enter the settings menu.
 Long hold the rear button in soldering mode to exit back to the start screen.
 

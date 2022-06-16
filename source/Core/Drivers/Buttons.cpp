@@ -5,7 +5,7 @@
  *      Author: Ralim
  */
 #include "FreeRTOS.h"
-#include "gui.hpp"
+#include "settingsGUI.hpp"
 #include "task.h"
 #include <Buttons.hpp>
 uint32_t lastButtonTime = 0;

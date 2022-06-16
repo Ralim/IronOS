@@ -77,11 +77,11 @@
     },
     "SleepTimeout": {
       "text2": "待機延時",
-      "desc": "自動進入待機模式前的閒置等候時間 <S=秒 | M=分鐘>"
+      "desc": "自動進入待機模式前的閒置等候時間 <s=秒 | m=分鐘>"
     },
     "ShutdownTimeout": {
       "text2": "自動關機",
-      "desc": "自動關機前的閒置等候時間 <M=分鐘>"
+      "desc": "自動關機前的閒置等候時間 <m=分鐘>"
     },
     "MotionSensitivity": {
       "text2": "動作敏感度",
@@ -201,7 +201,7 @@
     },
     "LOGOTime": {
       "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (S=seconds)"
+      "desc": "Sets the duration for the boot logo (s=seconds)"
     }
   }
 }

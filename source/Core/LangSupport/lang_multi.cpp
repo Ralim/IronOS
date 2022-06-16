@@ -3,10 +3,10 @@
 #include "Translation_multi.h"
 #include "brieflz.h"
 #include "configuration.h"
-#include "gui.hpp"
+#include "settingsGUI.hpp"
 
 const TranslationIndexTable *Tr                 = nullptr;
-const char *                 TranslationStrings = nullptr;
+const char                  *TranslationStrings = nullptr;
 
 static uint8_t selectedLangIndex = 255;
 
@@ -38,7 +38,7 @@ void prepareTranslations() {
 
   const TranslationData *translationData;
   uint16_t               buffer_remaining_size = translation_data_out_buffer_size;
-  uint8_t *              buffer_next_ptr       = translation_data_out_buffer;
+  uint8_t               *buffer_next_ptr       = translation_data_out_buffer;
   if (langMeta.translation_is_compressed) {
     unsigned int outsize;
     outsize = blz_depack_srcsize(langMeta.translation_data, buffer_next_ptr, langMeta.translation_size);
@@ -55,7 +55,7 @@ void prepareTranslations() {
   memset(DynamicFontSections, 0, FontSectionsCount * sizeof(DynamicFontSections[0]));
   for (int i = 0; i < FontSectionDataCount; i++) {
     const auto &fontSectionDataInfo = FontSectionDataInfos[i];
-    auto &      fontSection         = DynamicFontSections[i];
+    auto       &fontSection         = DynamicFontSections[i];
     fontSection.symbol_start        = fontSectionDataInfo.symbol_start;
     fontSection.symbol_end          = fontSection.symbol_start + fontSectionDataInfo.symbol_count;
     const uint16_t font12_size      = fontSectionDataInfo.symbol_count * (12 * 16 / 8);

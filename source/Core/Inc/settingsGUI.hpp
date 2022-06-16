@@ -1,5 +1,5 @@
 /*
- * gui.h
+ * settingsGUI.h
  *
  *  Created on: 3Sep.,2017
  *      Author: Ben V. Brown

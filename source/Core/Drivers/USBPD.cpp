@@ -65,12 +65,25 @@ bool USBPowerDelivery::fusbPresent() {
   return detectionState == 1;
 }
 
-bool USBPowerDelivery::isVBUSConnected() { return fusb.isVBUSConnected(); }
-void USBPowerDelivery::triggerRenegotiation() {
-  
+void USBPowerDelivery::triggerRenegotiation() {}
+bool USBPowerDelivery::isVBUSConnected() {
+  static uint8_t state = 0;
+  if (state) {
+    return state == 1;
+  }
+  if (fusb.isVBUSConnected()) {
+    state = 1;
+    return true;
+  } else {
+    state = 2;
+    return false;
+  }
 }
-bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
+pd_msg  lastCapabilities;
+pd_msg *USBPowerDelivery::getLastSeenCapabilities() { return &lastCapabilities; }
 
+bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
+  memcpy(&lastCapabilities, capabilities, sizeof(pd_msg));
   /* Get the number of PDOs */
   uint8_t numobj = PD_NUMOBJ_GET(capabilities);
 
