@@ -282,4 +282,9 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void setStatusLED(const enum StatusLED state) {}
+void     setStatusLED(const enum StatusLED state) {}
+uint8_t  preStartChecks() { return 0; }
+uint64_t getDeviceID() {
+  //
+  return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
+}

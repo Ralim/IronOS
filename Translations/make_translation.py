@@ -120,9 +120,6 @@ def get_constants(build_version: str) -> List[Tuple[str, str]]:
 def get_debug_menu() -> List[str]:
     return [
         datetime.today().strftime("%d-%m-%y"),
-        "HW G ",
-        "HW M ",
-        "HW P ",
         "Time ",
         "Move ",
         "RTip ",
@@ -131,7 +128,11 @@ def get_debug_menu() -> List[str]:
         "Vin  ",
         "ACC  ",
         "PWR  ",
+        "ID   ",
         "Max  ",
+        "HW G ",
+        "HW M ",
+        "HW P ",
         "Hall ",
     ]
 
@@ -429,7 +430,24 @@ def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPer
 
 
 def get_forced_first_symbols() -> List[str]:
-    forced_first_symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    forced_first_symbols = [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+    ]
     return forced_first_symbols
 
 

@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:3.16
 LABEL maintainer="Ben V. Brown <ralim@ralimtek.com>"
 
 WORKDIR /build
@@ -14,6 +14,8 @@ RUN apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-el
 # Install Python3 packages
 
 RUN python3 -m pip install bdflib black
+# Git trust
+RUN git config --global --add safe.directory /build/source
 
 COPY . /build/source
 COPY ./ci /build/ci

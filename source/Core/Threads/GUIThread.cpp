@@ -29,7 +29,7 @@ extern "C" {
 #include "pd.h"
 #endif
 // File local variables
-extern uint32_t   currentTempTargetDegC;
+
 extern TickType_t lastMovementTime;
 extern bool       heaterThermalRunaway;
 extern osThreadId GUITaskHandle;
@@ -172,7 +172,7 @@ static void gui_drawBatteryIcon() {
 }
 static void gui_solderingTempAdjust() {
   uint32_t lastChange                = xTaskGetTickCount();
-  currentTempTargetDegC              = 0;
+  currentTempTargetDegC              = 0; // Turn off header while adjusting temp
   uint32_t    autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
   bool        waitForRelease         = false;
@@ -350,28 +350,11 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
 
     OLED::refresh();
     GUIDelay();
-#ifdef ACCEL_EXITS_ON_MOVEMENT
-    // If the accel works in reverse where movement will cause exiting the soldering mode
-    if (getSettingValue(SettingsOptions::Sensitivity)) {
-      if (lastMovementTime) {
-        if (lastMovementTime > TICKS_SECOND * 10) {
-          // If we have moved recently; in the last second
-          // Then exit soldering mode
-
-          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
-            currentTempTargetDegC = 0;
-            return 1;
-          }
-        }
-      }
-    }
-#else
 
     if (!shouldBeSleeping(autoStarted)) {
       return 0;
     }
 
-#endif
     if (shouldShutdown()) {
       // shutdown
       currentTempTargetDegC = 0;
@@ -511,12 +494,8 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
         boostModeOn = false;
         break;
       case BUTTON_BOTH:
-        // exit
-        return;
-        break;
       case BUTTON_B_LONG:
         return; // exit on back long hold
-        break;
       case BUTTON_F_LONG:
         // if boost mode is enabled turn it on
         if (getSettingValue(SettingsOptions::BoostTemp))
@@ -649,6 +628,31 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     }
 #endif
 
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+    // If the accel works in reverse where movement will cause exiting the soldering mode
+    if (getSettingValue(SettingsOptions::Sensitivity)) {
+      if (lastMovementTime) {
+        if (lastMovementTime > TICKS_SECOND * 10) {
+          // If we have moved recently; in the last second
+          // Then exit soldering mode
+
+          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
+            currentTempTargetDegC = 0;
+            return;
+          }
+        }
+      }
+    }
+#endif
+#ifdef NO_SLEEP_MODE
+    // No sleep mode, but still want shutdown timeout
+
+    if (shouldShutdown()) {
+      // shutdown
+      currentTempTargetDegC = 0;
+      return; // we want to exit soldering mode
+    }
+#endif
     if (shouldBeSleeping()) {
       if (gui_SolderingSleepingMode(false, false)) {
         return; // If the function returns non-0 then exit
@@ -665,8 +669,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     // If we have tripped thermal runaway, turn off heater and show warning
     if (heaterThermalRunaway) {
       currentTempTargetDegC = 0; // heater control off
-                                 // TODO WARNING
-
       warnUser(translatedString(Tr->WarningThermalRunaway), 10 * TICKS_SECOND);
       heaterThermalRunaway = false;
       return;
@@ -689,46 +691,34 @@ void showDebugMenu(void) {
     case 0: // Just prints date
       break;
     case 1:
-      // High water mark for GUI
-      OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
-      break;
-    case 2:
-      // High water mark for the Movement task
-      OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
-      break;
-    case 3:
-      // High water mark for the PID task
-      OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
-      break;
-    case 4:
       // system up time stamp
       OLED::printNumber(xTaskGetTickCount() / TICKS_100MS, 5, FontStyle::SMALL);
       break;
-    case 5:
+    case 2:
       // Movement time stamp
       OLED::printNumber(lastMovementTime / TICKS_100MS, 5, FontStyle::SMALL);
       break;
-    case 6:
+    case 3:
       // Raw Tip
       { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6, FontStyle::SMALL); }
       break;
-    case 7:
+    case 4:
       // Temp in C
       OLED::printNumber(TipThermoModel::getTipInC(), 5, FontStyle::SMALL);
       break;
-    case 8:
+    case 5:
       // Handle Temp
       OLED::printNumber(getHandleTemperature(0), 6, FontStyle::SMALL);
       break;
-    case 9:
+    case 6:
       // Voltage input
       printVoltage();
       break;
-    case 10:
+    case 7:
       // Print ACC type
       OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
       break;
-    case 11:
+    case 8:
       // Power negotiation status
       {
         int sourceNumber = 0;
@@ -764,12 +754,32 @@ void showDebugMenu(void) {
         OLED::print(PowerSourceNames[sourceNumber], FontStyle::SMALL);
       }
       break;
-    case 12:
+    case 9:
+      // Print device ID Numbers
+      {
+        uint64_t id = getDeviceID();
+        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL);
+        OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL);
+      }
+      break;
+    case 10:
       // Max deg C limit
       OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
-#ifdef HALL_SENSOR
+    case 11:
+      // High water mark for GUI
+      OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
+      break;
+    case 12:
+      // High water mark for the Movement task
+      OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
+      break;
     case 13:
+      // High water mark for the PID task
+      OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
+      break;
+#ifdef HALL_SENSOR
+    case 14:
       // Print raw hall effect value if availabe, none if hall effect disabled.
       {
         int16_t hallEffectStrength = getRawHallEffect();
@@ -779,6 +789,7 @@ void showDebugMenu(void) {
       }
       break;
 #endif
+
     default:
       break;
     }
@@ -790,9 +801,9 @@ void showDebugMenu(void) {
     else if (b == BUTTON_F_SHORT) {
       screen++;
 #ifdef HALL_SENSOR
-      screen = screen % 14;
+      screen = screen % 15;
 #else
-      screen = screen % 13;
+      screen = screen % 14;
 #endif
     }
     GUIDelay();
