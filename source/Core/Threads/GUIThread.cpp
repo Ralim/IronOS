@@ -758,8 +758,10 @@ void showDebugMenu(void) {
       // Print device ID Numbers
       {
         uint64_t id = getDeviceID();
-        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL);
-        OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL);
+        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 2);
+
+        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 8);
+        OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL, 8);
       }
       break;
     case 10:

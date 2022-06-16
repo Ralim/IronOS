@@ -423,9 +423,9 @@ inline void stripLeaderZeros(char *buffer, uint8_t places) {
     }
   }
 }
-void OLED::drawHex(uint32_t x, FontStyle fontStyle) {
+void OLED::drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits) {
   // print number to hex
-  for (uint_fast8_t i = 0; i < 8; i++) {
+  for (uint_fast8_t i = 0; i < digits; i++) {
     uint16_t value = (x >> (4 * (7 - i))) & 0b1111;
     drawChar(value + 2, fontStyle);
   }
