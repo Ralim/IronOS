@@ -427,7 +427,7 @@ void OLED::drawHex(uint32_t x, FontStyle fontStyle) {
   // print number to hex
   for (uint_fast8_t i = 0; i < 8; i++) {
     uint16_t value = (x >> (4 * (7 - i))) & 0b1111;
-    drawChar(value, fontStyle);
+    drawChar(value + 2, fontStyle);
   }
 }
 // maximum places is 5
