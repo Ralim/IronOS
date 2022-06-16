@@ -11,11 +11,10 @@
 #include "history.hpp"
 #include "main.hpp"
 
-
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
-const uint8_t  holdoffTicks     = 5; // This is the tick delay
-const uint8_t  tempMeasureTicks = 5;
+const uint8_t  holdoffTicks     = 25; // This is the tick delay
+const uint8_t  tempMeasureTicks = 25;
 
 uint16_t totalPWM = 255; // Total length of the cycle's ticks
 
