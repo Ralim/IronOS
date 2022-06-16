@@ -271,7 +271,7 @@ CPUFLAGS= -march=rv32imafc \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
 			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DportUSING_MPU_WRAPPERS=0
 # -DBFLB_USE_ROM_DRIVER=1
-DEV_LDFLAGS=-nostartfiles --specs=patch.specs -DDEBUG
+DEV_LDFLAGS=-nostartfiles  -DDEBUG
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= 
 #Required to be turned off due to their drivers tripping warnings
