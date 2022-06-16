@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     container:
-      image: alpine:3.15
+      image: alpine:3.16
     strategy:
       matrix:
         model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30"]
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
-          
+
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
@@ -57,7 +57,7 @@ jobs:
   build_multi-lang:
     runs-on: ubuntu-20.04
     container:
-      image: alpine:3.15
+      image: alpine:3.16
     strategy:
       matrix:
         model: ["Pinecil"]
@@ -72,10 +72,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      
+
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
-      
+
       - name: build ${{ matrix.model }}
         run: cd source && make -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
 
@@ -107,7 +107,7 @@ jobs:
   tests:
     runs-on: ubuntu-20.04
     container:
-      image: alpine:3.15
+      image: alpine:3.16
 
     steps:
       - name: deps
@@ -134,7 +134,7 @@ jobs:
   check_formatting:
     runs-on: ubuntu-20.04
     container:
-      image: alpine:3.15
+      image: alpine:3.16
 
     steps:
       - name: deps
