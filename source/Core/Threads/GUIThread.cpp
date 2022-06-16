@@ -29,7 +29,7 @@ extern "C" {
 #include "pd.h"
 #endif
 // File local variables
-extern uint32_t   currentTempTargetDegC;
+
 extern TickType_t lastMovementTime;
 extern bool       heaterThermalRunaway;
 extern osThreadId GUITaskHandle;
@@ -350,28 +350,11 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
 
     OLED::refresh();
     GUIDelay();
-#ifdef ACCEL_EXITS_ON_MOVEMENT
-    // If the accel works in reverse where movement will cause exiting the soldering mode
-    if (getSettingValue(SettingsOptions::Sensitivity)) {
-      if (lastMovementTime) {
-        if (lastMovementTime > TICKS_SECOND * 10) {
-          // If we have moved recently; in the last second
-          // Then exit soldering mode
-
-          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
-            currentTempTargetDegC = 0;
-            return 1;
-          }
-        }
-      }
-    }
-#else
 
     if (!shouldBeSleeping(autoStarted)) {
       return 0;
     }
 
-#endif
     if (shouldShutdown()) {
       // shutdown
       currentTempTargetDegC = 0;
@@ -645,6 +628,31 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     }
 #endif
 
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+    // If the accel works in reverse where movement will cause exiting the soldering mode
+    if (getSettingValue(SettingsOptions::Sensitivity)) {
+      if (lastMovementTime) {
+        if (lastMovementTime > TICKS_SECOND * 10) {
+          // If we have moved recently; in the last second
+          // Then exit soldering mode
+
+          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
+            currentTempTargetDegC = 0;
+            return;
+          }
+        }
+      }
+    }
+#endif
+#ifdef NO_SLEEP_MODE
+    // No sleep mode, but still want shutdown timeout
+
+    if (shouldShutdown()) {
+      // shutdown
+      currentTempTargetDegC = 0;
+      return; // we want to exit soldering mode
+    }
+#endif
     if (shouldBeSleeping()) {
       if (gui_SolderingSleepingMode(false, false)) {
         return; // If the function returns non-0 then exit
