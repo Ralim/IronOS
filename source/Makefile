@@ -1,5 +1,5 @@
 ifndef model
-model:=TS100
+model:=Pinecil
 endif
 
 ALL_MINIWARE_MODELS=TS100 TS80 TS80P
@@ -211,7 +211,7 @@ bootldr_size=0x0
 CPUFLAGS= -march=rv32imac \
 			-mabi=ilp32 \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles
-DEV_LDFLAGS=-nostartfiles --specs=patch.specs
+DEV_LDFLAGS=-nostartfiles 
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
 DEV_CFLAGS= -D VECT_TAB_OFFSET=$(bootldr_size)U
@@ -313,10 +313,10 @@ $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o 
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -finline-small-functions -fshort-wchar -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
+OPTIM=-Os -flto -finline-small-functions  -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
 
 # global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model)
+GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
 
 DEBUG=-g3 
 ifdef swd_enable
