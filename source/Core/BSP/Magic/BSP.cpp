@@ -280,3 +280,22 @@ void FinishMeasureTipResistance() {
   }
   lastTipResistance = newRes;
 }
+
+uint8_t preStartChecks() {
+  // startMeasureTipResistance();
+  // TODO
+  return 0;
+}
+
+// Return hardware unique ID if possible
+uint64_t getDeviceID() {
+  // uint32_t tmp  = 0;
+  // uint32_t tmp2 = 0;
+  // EF_Ctrl_Read_Sw_Usage(0, &tmp);
+  // EF_Ctrl_Read_Sw_Usage(1, &tmp2);
+
+  // return tmp | (((uint64_t)tmp2) << 32);
+  uint64_t tmp = 0;
+  EF_Ctrl_Read_Chip_ID((uint8_t *)&tmp);
+  return tmp;
+}
