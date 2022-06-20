@@ -8,6 +8,7 @@
 #include "TipThermoModel.h"
 #include "USBPD.h"
 #include "configuration.h"
+#include "crc16.hpp"
 #include "history.hpp"
 #include "main.hpp"
 
@@ -233,9 +234,7 @@ uint8_t  getTipResitanceX10() {
   return lastTipResistance;
 }
 void startMeasureTipResistance() {
-  if (isTipDisconnected()) {
-    return;
-  }
+
   if (lastTipReadinguV) {
     return;
   }
@@ -257,9 +256,6 @@ void startMeasureTipResistance() {
 
 void FinishMeasureTipResistance() {
   gpio_write(TIP_RESISTANCE_SENSE, 0);
-  if (isTipDisconnected()) {
-    return;
-  }
   // read the tip uV with the current source on
   uint32_t newReading = (TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)));
   if (newReading < lastTipReadinguV) {
@@ -279,11 +275,44 @@ void FinishMeasureTipResistance() {
   }
   lastTipResistance = newRes;
 }
+volatile bool    tipMeasurementOccuring    = false;
+volatile uint8_t tipSenseResistancex10Ohms = 0;
+
+void performTipMeasurementStep(bool start) {
+  static TickType_t lastMeas = 0;
+  // Inter state that performs the steps to measure the resistor on the tip
+  // Return 1 if a measurement is ongoing
+
+  // We want to perform our startup measurements of the tip resistance until we detect one fitted
+
+  // Step 1; if not setup, we turn on pullup and then wait
+  if (tipMeasurementOccuring == false && (start || tipSenseResistancex10Ohms == 0 || lastMeas == 0)) {
+    // Block starting if tip removed
+    if (isTipDisconnected()) {
+      return;
+    }
+    tipMeasurementOccuring    = true;
+    tipSenseResistancex10Ohms = 0;
+    lastMeas                  = xTaskGetTickCount();
+    startMeasureTipResistance();
+    return;
+  }
+
+  // Wait 100ms for settle time
+  if ((xTaskGetTickCount() - lastMeas) < (TICKS_100MS)) {
+    return;
+  }
+
+  lastMeas = xTaskGetTickCount();
+  // We are sensing the resistance
+  FinishMeasureTipResistance();
+
+  tipMeasurementOccuring = false;
+}
 
 uint8_t preStartChecks() {
-  // startMeasureTipResistance();
-  // TODO
-  return 0;
+  performTipMeasurementStep(false);
+  return tipMeasurementOccuring ? 1 : 0;
 }
 
 // Return hardware unique ID if possible
@@ -299,20 +328,32 @@ uint64_t getDeviceID() {
 
   return __builtin_bswap64(tmp);
 }
+uint16_t gethash() {
+  uint32_t userData = 0;
+  EF_Ctrl_Read_Sw_Usage(0, &userData);
+  userData &= 0xFFFF; // We only want the lower two bytes
+  // TODO FOR TESTING OVERRIDE
+  userData                        = 0xDEAD;
+  const uint16_t crcInitialVector = 0xCAFE;
+  uint8_t        crcPayload[]     = {userData & 0xFF, (userData >> 8) & 0xFF, 0, 0, 0, 0, 0, 0, 0, 0};
+  EF_Ctrl_Read_Chip_ID(crcPayload + 2);
 
+  uint32_t result = crcInitialVector;
+  for (int i = 0; i < 10; i++) {
+    result = crc16(result, crcPayload[i]);
+  }
+  return result & 0xFFFF;
+}
 uint32_t getDeviceValidation() {
   uint32_t userData = 0;
   EF_Ctrl_Read_Sw_Usage(0, &userData);
   // 4 byte user data burned in at factory
-  
+  // TODO TESTING
+  // userData |= gethash() << 16;
   return userData;
 }
 
 uint8_t getDeviceValidationStatus() {
-  uint32_t userData = 0;
-  EF_Ctrl_Read_Sw_Usage(0, &userData);
-  userData &= 0xFFFF; // We only want the lower two bytes
-  userData = 0xDEAD;  // TODO TESTING KEY
 
   return 1; // Device is OK
 }

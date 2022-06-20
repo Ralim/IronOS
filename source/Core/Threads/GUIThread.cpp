@@ -969,7 +969,7 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
-  BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
+  // BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
   if (getSettingValue(SettingsOptions::AutoStartMode)) {

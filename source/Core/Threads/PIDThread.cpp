@@ -77,11 +77,6 @@ void startPIDTask(void const *argument __unused) {
         detectThermalRunaway(currentTipTempInC, 0);
       }
       setOutputx10WattsViaFilters(x10WattsOut);
-      // If the output is off, take tip measurement reading
-      // if (x10WattsOut == 0 && PIDTempTarget == 0) {
-      //   startMeasureTipResistance();
-      //   measuringTipResistance = true;
-      // }
     } else {
       // ADC interrupt timeout
       setTipPWM(0, false);
