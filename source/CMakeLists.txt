@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.23)
 set(application_name "${MODEL}_${LANG}")
 set(elf_file ${application_name}.elf)
 set(bin_file ${application_name}.bin)
