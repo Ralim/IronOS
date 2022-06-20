@@ -1,4 +1,5 @@
 #include "USBPD.h"
+#include "Settings.h"
 #include "configuration.h"
 #if POW_PD
 

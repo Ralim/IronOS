@@ -1,7 +1,7 @@
 set(sources 
 freertos.c
 FreeRTOSHooks.c
-gui.cpp
+settingsGUI.cpp
 main.cpp
 power.cpp
 QC3.cpp
@@ -14,4 +14,4 @@ Translation.cpp
 
 add_library(mainSource ${sources})
 target_include_directories(mainSource PUBLIC .)
-target_link_libraries(mainSource PUBLIC brieflz BSP FreeRTOS drivers languages)
+target_link_libraries(mainSource PRIVATE brieflz BSP FreeRTOS drivers languages)

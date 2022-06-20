@@ -631,3 +631,36 @@ void OLED::drawHeatSymbol(uint8_t state) {
 }
 
 bool OLED::isInitDone() { return initDone; }
+bool OLED::getRotation() {
+#ifdef OLED_FLIP
+  return !inLeftHandedMode;
+#else
+  return inLeftHandedMode;
+#endif
+}
+
+void OLED::setCursor(int16_t x, int16_t y) {
+  cursor_x = x;
+  cursor_y = y;
+}
+void OLED::refresh() {
+  I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START + (OLED_WIDTH * 2));
+  // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
+  // or we need to goto double buffering
+}
+
+void OLED::setDisplayState(OLED::DisplayState state) {
+  displayState    = state;
+  screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
+}
+
+// Clears the buffer
+void OLED::clearScreen() { memset(firstStripPtr, 0, OLED_WIDTH * 2); }
+// Draws the battery level symbol
+void OLED::drawBattery(uint8_t state) { drawSymbol(3 + (state > 10 ? 10 : state)); }
+// Draws a checkbox
+void OLED::drawCheckbox(bool state) { drawSymbol((state) ? 16 : 17); }
+
+void OLED::drawImage(const uint8_t *buffer, uint8_t x, uint8_t width) { drawArea(x, 0, width, 16, buffer); }
+
+int16_t OLED::getCursorX() { return cursor_x; }

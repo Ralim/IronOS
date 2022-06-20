@@ -31,7 +31,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
 project(IronOS
-  #VERSION 0.0.0.0
   LANGUAGES C CXX ASM
 )
 #Setup outputs
@@ -59,7 +58,7 @@ add_subdirectory(Middlewares)
 
 
 
-target_link_libraries(${elf_file} PUBLIC BSP mainSource threads FreeRTOS languages drivers BSPImplementation)
+target_link_libraries(${elf_file} PRIVATE  BSP mainSource threads FreeRTOS languages  BSPImplementation drivers USBPDLib)
 
 if (MODEL STREQUAL TS100 OR MODEL STREQUAL TS80 OR MODEL STREQUAL TS80P)
     include(stm32f1)
@@ -80,7 +79,6 @@ target_compile_options(${elf_file} PRIVATE ${additional_compiler_flags})
 target_link_libraries(${elf_file} PRIVATE ${additional_linker_flags})
 
 # remove unused sections
-target_link_libraries(${elf_file} PUBLIC "-g -Wl,--gc-sections")
 
 
 

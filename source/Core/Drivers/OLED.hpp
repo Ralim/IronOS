@@ -14,13 +14,6 @@
 #include <BSP.h>
 #include <stdbool.h>
 #include <string.h>
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include "FreeRTOS.h"
-#ifdef __cplusplus
-}
-#endif
 
 #ifdef OLED_I2CBB
 #include "I2CBB.hpp"
@@ -48,46 +41,30 @@ public:
   static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
   static bool isInitDone();
   // Draw the buffer out to the LCD using the DMA Channel
-  static void refresh() {
-    I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START + (OLED_WIDTH * 2));
-    // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
-    // or we need to goto double buffering
-  }
+  static void refresh();
 
-  static void setDisplayState(DisplayState state) {
-    displayState    = state;
-    screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
-  }
+  static void setDisplayState(DisplayState state);
 
   static void setRotation(bool leftHanded); // Set the rotation for the screen
   // Get the current rotation of the LCD
-  static bool getRotation() {
-#ifdef OLED_FLIP
-    return !inLeftHandedMode;
-#else
-    return inLeftHandedMode;
-#endif
-  }
+  static bool    getRotation();
   static void    setBrightness(uint8_t contrast);
   static void    setInverseDisplay(bool inverted);
-  static int16_t getCursorX() { return cursor_x; }
+  static int16_t getCursorX();
   static void    print(const char *string, FontStyle fontStyle); // Draw a string to the current location, with selected font
   static void    printWholeScreen(const char *string);
   // Set the cursor location by pixels
-  static void setCursor(int16_t x, int16_t y) {
-    cursor_x = x;
-    cursor_y = y;
-  }
+  static void setCursor(int16_t x, int16_t y);
   // Draws an image to the buffer, at x offset from top to bottom (fixed height renders)
-  static void drawImage(const uint8_t *buffer, uint8_t x, uint8_t width) { drawArea(x, 0, width, 16, buffer); }
+  static void drawImage(const uint8_t *buffer, uint8_t x, uint8_t width);
   // Draws a number at the current cursor location
   static void printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros = true);
   // Clears the buffer
-  static void clearScreen() { memset(firstStripPtr, 0, OLED_WIDTH * 2); }
+  static void clearScreen();
   // Draws the battery level symbol
-  static void drawBattery(uint8_t state) { drawSymbol(3 + (state > 10 ? 10 : state)); }
+  static void drawBattery(uint8_t state);
   // Draws a checkbox
-  static void drawCheckbox(bool state) { drawSymbol((state) ? 16 : 17); }
+  static void drawCheckbox(bool state);
   static void debugNumber(int32_t val, FontStyle fontStyle);
   static void drawHex(uint32_t x, FontStyle fontStyle);
   static void drawSymbol(uint8_t symbolID);                                                           // Used for drawing symbols of a predictable width

@@ -9,7 +9,7 @@
 
 #ifndef FONT_H_
 #define FONT_H_
-#include "Translation.h"
+#include <stdint.h>
 
 #define FONT_12_WIDTH 12
 // THE MAIN FONTS ARE NO LONGER HERE, MOVED TO PYTHON AUTO GEN

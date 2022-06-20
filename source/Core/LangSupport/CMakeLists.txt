@@ -1,4 +1,7 @@
 
+if (LANG STREQUAL "")
+ message(FATAL_ERROR "You must specify a language")
+endif()
 
 
 add_custom_command(
@@ -18,5 +21,5 @@ lang_single.cpp
 
 
 add_library(languages ${sources})
-target_link_libraries(languages PUBLIC drivers brieflz )
+target_link_libraries(languages PRIVATE drivers brieflz mainSource )
 

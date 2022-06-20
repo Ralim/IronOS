@@ -1,6 +1,5 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
-#include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h

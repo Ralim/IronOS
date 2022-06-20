@@ -19,7 +19,7 @@ Utils.cpp
 
 
 add_library(drivers ${sources})
-target_link_libraries(drivers PUBLIC  BSP USBPDLib)
+target_link_libraries(drivers PRIVATE  BSP BSPImplementation mainSource languages PUBLIC USBPDLib FreeRTOS)
 target_include_directories(drivers PUBLIC .)
 
 add_subdirectory(usb-pd)
