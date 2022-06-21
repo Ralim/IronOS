@@ -91,18 +91,20 @@ pd_msg    *USBPowerDelivery::getLastSeenCapabilities() { return &lastCapabilitie
 // parseCapabilitiesArray returns true if a valid capability was found
 // caps is the array of capabilities objects
 // best* are output references
-bool parseCapabilitiesArray(const uint32_t *caps, const uint8_t numCaps, uint8_t &bestIndex, uint16_t &bestVoltage, uint16_t &bestCurrent) {
+bool parseCapabilitiesArray(const uint32_t *caps, const uint8_t numCaps, uint8_t &bestIndex, uint16_t &bestVoltage, uint16_t &bestCurrent, bool &bestIsPPS, bool &bestIsAVO) {
 
   // Walk the given capabilities array; and select the best option
-  // Given assumption of fixed tip resistance; this can be simplified to highest voltage 
-  uint16_t bestSeenVoltageMv = 0;
-  uint8_t  tipResistance     = getTipResitanceX10();
+  // Given assumption of fixed tip resistance; this can be simplified to highest voltage selection
+  bestIndex   = 0xFF; // Mark unselected
+  bestVoltage = 0;    //
+
+  // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
+  uint8_t tipResistance = getTipResitanceX10() + 5;
 #ifdef MODEL_HAS_DCDC
   // If this device has step down DC/DC inductor to smooth out current spikes
   // We can instead ignore resistance and go for max voltage we can accept; and rely on the DC/DC regulation to keep under current limit
   tipResistance = 255; // (Push to 25.5 ohms to effectively disable this check)
 #endif
-
 
   for (uint8_t i = 0; i < numCaps; i++) {
     /* If we have a fixed PDO, its V equals our desired V, and its I is
@@ -116,23 +118,17 @@ bool parseCapabilitiesArray(const uint32_t *caps, const uint8_t numCaps, uint8_t
       int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(caps[i]);            // current in 10mA units
       int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
       if (voltage_mv <= (USB_PD_VMAX * 1000)) {
-        // Fudge of 0.5 ohms to round up a little to account for other losses
-        if (min_resistance_ohmsx10 <= (getTipResitanceX10() + 5)) {
+        if (min_resistance_ohmsx10 <= tipResistance) {
           // This is a valid power source we can select as
-          if ((voltage_mv > bestIndexVoltage) || bestIndex == 0xFF) {
+          if (voltage_mv > bestVoltage) {
             // Higher voltage and valid, select this instead
-            bestIndex        = i;
-            bestIndexVoltage = voltage_mv;
-            bestIndexCurrent = current_a_x100;
-            bestIsPPS        = false;
-#ifdef MODEL_HAS_DCDC
-            // set limiter for wattage
-            powerSupplyWattageLimit = ((voltage_mv * current_a_x100) / 100 / 1000);
-#endif
+            bestIndex   = i;
+            bestVoltage = voltage_mv;
+            bestCurrent = current_a_x100 * 10;
           }
         }
       }
-    } else if ((caps[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (caps[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
+    } else if ((caps[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((caps[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) || ((caps[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS))) {
       // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(caps[i]));
       // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(caps[i]));
@@ -142,23 +138,23 @@ bool parseCapabilitiesArray(const uint32_t *caps, const uint8_t numCaps, uint8_t
       // if this is not in range; then max_voltage can be safely selected
       int ideal_voltage_mv = (getTipResitanceX10() * max_current);
       if (ideal_voltage_mv > max_voltage) {
-        ideal_voltage_mv = max_voltage; // constrain
+        ideal_voltage_mv = max_voltage; // constrain to what this PDO offers
       }
       if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
         ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max
       }
-      if (ideal_voltage_mv > bestIndexVoltage || bestIndex == 0xFF) {
-        bestIndex        = i;
-        bestIndexVoltage = ideal_voltage_mv;
-        bestIndexCurrent = max_current;
-        bestIsPPS        = true;
-#ifdef MODEL_HAS_DCDC
-        // set limiter for wattage
-        powerSupplyWattageLimit = ((ideal_voltage_mv * max_current) / 100 / 1000);
-#endif
+      if (ideal_voltage_mv > bestVoltage) {
+        bestIndex   = i;
+        bestVoltage = ideal_voltage_mv;
+        bestCurrent = max_current * 10;
+        bestIsPPS   = (caps[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS;
+        bestIsAVO   = (caps[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS;
       }
     }
   }
+
+  // Now that the best index is known, set the current values
+  return bestIndex != 0xFF; // have we selected one
 }
 
 bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) {
@@ -190,73 +186,15 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   /* Make sure we have configuration */
   /* Look at the PDOs to see if one matches our desires */
   // Look against USB_PD_Desired_Levels to select in order of preference
-  uint8_t bestIndex        = 0xFF;
-  int     bestIndexVoltage = 0;
-  int     bestIndexCurrent = 0;
-  bool    bestIsPPS        = false;
-  powerSupplyWattageLimit  = 0;
-  for (uint8_t i = 0; i < numobj; i++) {
-    /* If we have a fixed PDO, its V equals our desired V, and its I is
-     * at least our desired I */
-    if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-      // This is a fixed PDO entry
-      // Evaluate if it can produve sufficient current based on the TIP_RESISTANCE (ohms*10)
-      // V=I*R -> V/I => minimum resistance, if our tip resistance is >= this then we can use this supply
+  uint8_t  bestIndex        = 0xFF;
+  uint16_t bestIndexVoltage = 0;
+  uint16_t bestIndexCurrent = 0;
+  bool     bestIsPPS        = false;
+  bool     bestIsAVO        = false;
+  uint32_t caps[11];
+  memcpy(caps, capabilities->obj, numobj * sizeof(uint32_t)); // memcpy to avoid alignment breaking across function calls
 
-      int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(capabilities->obj[i])); // voltage in mV units
-      int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(capabilities->obj[i]);            // current in 10mA units
-      int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
-      if (voltage_mv <= (USB_PD_VMAX * 1000)) {
-#ifdef MODEL_HAS_DCDC
-        // If this device has step down DC/DC inductor to smooth out current spikes
-        // We can instead ignore resistance and go for max voltage we can accept
-        min_resistance_ohmsx10 = getTipResitanceX10();
-#endif
-        // Fudge of 0.5 ohms to round up a little to account for other losses
-        if (min_resistance_ohmsx10 <= (getTipResitanceX10() + 5)) {
-          // This is a valid power source we can select as
-          if ((voltage_mv > bestIndexVoltage) || bestIndex == 0xFF) {
-            // Higher voltage and valid, select this instead
-            bestIndex        = i;
-            bestIndexVoltage = voltage_mv;
-            bestIndexCurrent = current_a_x100;
-            bestIsPPS        = false;
-#ifdef MODEL_HAS_DCDC
-            // set limiter for wattage
-            powerSupplyWattageLimit = ((voltage_mv * current_a_x100) / 100 / 1000);
-#endif
-          }
-        }
-      }
-    } else if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (capabilities->obj[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
-      // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
-      uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(capabilities->obj[i]));
-      // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(capabilities->obj[i]));
-      uint16_t max_current = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(capabilities->obj[i])); // max current in 10mA units
-      // Using the current and tip resistance, calculate the ideal max voltage
-      // if this is range, then we will work with this voltage
-      // if this is not in range; then max_voltage can be safely selected
-      int ideal_voltage_mv = (getTipResitanceX10() * max_current);
-      if (ideal_voltage_mv > max_voltage) {
-        ideal_voltage_mv = max_voltage; // constrain
-      }
-      if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
-        ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max
-      }
-      if (ideal_voltage_mv > bestIndexVoltage || bestIndex == 0xFF) {
-        bestIndex        = i;
-        bestIndexVoltage = ideal_voltage_mv;
-        bestIndexCurrent = max_current;
-        bestIsPPS        = true;
-#ifdef MODEL_HAS_DCDC
-        // set limiter for wattage
-        powerSupplyWattageLimit = ((ideal_voltage_mv * max_current) / 100 / 1000);
-#endif
-      }
-    }
-  }
-
-  if (bestIndex != 0xFF) {
+  if (parseCapabilitiesArray(caps, numobj, bestIndex, bestIndexVoltage, bestIndexCurrent, bestIsPPS, bestIsAVO)) {
     /* We got what we wanted, so build a request for that */
     request->hdr = PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
     if (bestIsPPS) {
@@ -268,7 +206,8 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
     // request->obj[0] |= PD_RDO_USB_COMMS;
 
     /* Update requested voltage */
-    requested_voltage_mv = bestIndexVoltage;
+    requested_voltage_mv    = bestIndexVoltage;
+    powerSupplyWattageLimit = bestIndexVoltage * bestIndexCurrent / 100 / 1000; // Set watts for limit from PSU limit
 
   } else {
     /* Nothing matched (or no configuration), so get 5 V at low current */
