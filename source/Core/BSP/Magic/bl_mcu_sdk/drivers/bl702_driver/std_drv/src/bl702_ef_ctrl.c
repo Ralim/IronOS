@@ -1065,16 +1065,19 @@ BL_Err_Type EF_Ctrl_Get_Chip_PIDVID(uint16_t pid[1], uint16_t vid[1]) {
   return SUCCESS;
 }
 
-uint64_t EF_Ctrl_Get_Key_Slot_w0w1() {
-  uint64_t tmpVal;
+uint32_t EF_Ctrl_Get_Key_Slot_w0() {
 
   /* Trigger read data from efuse */
   EF_CTRL_LOAD_BEFORE_READ_R0;
 
-  tmpVal = BL_RD_REG(EF_DATA_BASE, EF_DATA_0_EF_KEY_SLOT_4_W0);
-  tmpVal |= ((uint64_t)BL_RD_REG(EF_DATA_BASE, EF_DATA_0_EF_KEY_SLOT_4_W1)) << 32;
+  return BL_RD_REG(EF_DATA_BASE, EF_DATA_0_EF_KEY_SLOT_4_W0);
+}
+uint32_t EF_Ctrl_Get_Key_Slot_w1() {
 
-  return tmpVal;
+  /* Trigger read data from efuse */
+  EF_CTRL_LOAD_BEFORE_READ_R0;
+
+  return BL_RD_REG(EF_DATA_BASE, EF_DATA_0_EF_KEY_SLOT_4_W1);
 }
 
 /****************************************************************************

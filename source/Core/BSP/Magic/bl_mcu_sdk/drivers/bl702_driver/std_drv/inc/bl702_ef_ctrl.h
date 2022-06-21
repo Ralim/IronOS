@@ -39,7 +39,6 @@
 #include "bl702_common.h"
 #include "ef_ctrl_reg.h"
 
-
 /** @addtogroup  BL702_Peripheral_Driver
  *  @{
  */
@@ -276,7 +275,8 @@ BL_Err_Type EF_Ctrl_Read_MAC_Address_Opt(uint8_t slot, uint8_t mac[8], uint8_t r
 BL_Err_Type EF_Ctrl_Read_Chip_ID(uint8_t id[8]);
 /*----------*/
 BL_Err_Type EF_Ctrl_Get_Chip_PIDVID(uint16_t pid[1], uint16_t vid[1]);
-uint64_t    EF_Ctrl_Get_Key_Slot_w0w1();
+uint32_t    EF_Ctrl_Get_Key_Slot_w0();
+uint32_t    EF_Ctrl_Get_Key_Slot_w1();
 BL_Err_Type EF_Ctrl_Get_Customer_PIDVID(uint16_t pid[1], uint16_t vid[1]);
 /*----------*/
 void        EF_Ctrl_Read_Device_Info(Efuse_Device_Info_Type *deviceInfo);
