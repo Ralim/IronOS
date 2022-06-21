@@ -8,7 +8,7 @@
 #include "TipThermoModel.h"
 #include "USBPD.h"
 #include "configuration.h"
-#include "crc16.hpp"
+#include "crc32.h"
 #include "history.hpp"
 #include "main.hpp"
 
@@ -328,32 +328,29 @@ uint64_t getDeviceID() {
 
   return __builtin_bswap64(tmp);
 }
-uint16_t gethash() {
-  uint32_t userData = 0;
-  EF_Ctrl_Read_Sw_Usage(0, &userData);
-  userData &= 0xFFFF; // We only want the lower two bytes
-  // TODO FOR TESTING OVERRIDE
-  userData                        = 0xDEAD;
-  const uint16_t crcInitialVector = 0xCAFE;
-  uint8_t        crcPayload[]     = {userData & 0xFF, (userData >> 8) & 0xFF, 0, 0, 0, 0, 0, 0, 0, 0};
-  EF_Ctrl_Read_Chip_ID(crcPayload + 2);
+auto crc32Table = CRC32Table<>();
 
-  uint32_t result = crcInitialVector;
-  for (int i = 0; i < 10; i++) {
-    result = crc16(result, crcPayload[i]);
+uint32_t gethash() {
+  static uint32_t computedHash = 0;
+  if (computedHash != 0) {
+    return computedHash;
   }
-  return result & 0xFFFF;
+
+  uint32_t       deviceKey        = EF_Ctrl_Get_Key_Slot_w0();
+  const uint32_t crcInitialVector = 0xCAFEF00D;
+  uint8_t        crcPayload[]     = {(uint8_t)(deviceKey), (uint8_t)(deviceKey >> 8), (uint8_t)(deviceKey >> 16), (uint8_t)(deviceKey >> 24), 0, 0, 0, 0, 0, 0, 0, 0};
+  EF_Ctrl_Read_Chip_ID(crcPayload + sizeof(deviceKey)); // Load device key into second half
+
+  computedHash = crc32Table.computeCRC32(crcInitialVector, crcPayload, sizeof(crcPayload));
+  return computedHash;
 }
 uint32_t getDeviceValidation() {
-  uint32_t userData = 0;
-  EF_Ctrl_Read_Sw_Usage(0, &userData);
   // 4 byte user data burned in at factory
-  // TODO TESTING
-  // userData |= gethash() << 16;
-  return userData;
+  return EF_Ctrl_Get_Key_Slot_w1();
 }
 
 uint8_t getDeviceValidationStatus() {
-
-  return 1; // Device is OK
+  uint32_t programmedHash = EF_Ctrl_Get_Key_Slot_w1();
+  uint32_t computedHash   = gethash();
+  return programmedHash == computedHash ? 0 : 1;
 }

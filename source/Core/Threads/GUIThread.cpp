@@ -897,8 +897,11 @@ static void showPDDebug(void) {
 void showWarnings() {
   // Display alert if settings were reset
   if (settingsWereReset) {
-
     warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
+  }
+  if (getDeviceValidationStatus()) {
+    // Warn user this device might be counterfeit
+    warnUser(translatedString(Tr->DeviceFailedValidationWarning), 10 * TICKS_SECOND);
   }
 #ifndef NO_WARN_MISSING
   // We also want to alert if accel or pd is not detected / not responding

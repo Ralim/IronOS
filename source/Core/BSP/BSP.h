@@ -79,6 +79,8 @@ uint64_t getDeviceID();
 
 // If device has burned in validation code's, return the code
 uint32_t getDeviceValidation();
+// If device validation passes returns 0
+uint8_t getDeviceValidationStatus();
 
 // Status LED controls
 
