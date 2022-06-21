@@ -148,7 +148,7 @@
 #define VBUS_MOD_TEST
 #define HALL_SI7210
 #define DEBUG_UART_OUTPUT
-
+#define HAS_POWER_DEBUG_MENU
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
