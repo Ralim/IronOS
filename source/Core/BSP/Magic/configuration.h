@@ -127,7 +127,7 @@
 #define POWER_LIMIT_STEPS          5                         //
 #define OP_AMP_GAIN_STAGE          OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                                 // Use Hakko lookup table
-#define USB_PD_VMAX                20                        // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX                28                        // Maximum voltage for PD to negotiate
 #define PID_TIM_HZ                 (10)                      // Tick rate of the PID loop
 #define MAX_TEMP_C                 450                       // Max soldering temp selectable °C
 #define MAX_TEMP_F                 850                       // Max soldering temp selectable °F
@@ -136,16 +136,16 @@
 #define MIN_BOOST_TEMP_C           250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F           480                       // The min settable temp for boost mode °F
 #define DEVICE_HAS_VALIDATION_CODE                           // We have 2 digit validations
-#define POW_PD                     1
-#define POW_QC                     1
-#define POW_DC                     1
-#define POW_QC_20V                 1
+#define POW_PD                     1                         // Supported features
+#define POW_QC                     1                         // Supported features
+#define POW_DC                     1                         // Supported features
+#define POW_QC_20V                 1                         // Supported features
+#define POW_EPR                    1
 #define ENABLE_QC2                 1
 #define TEMP_NTC
 #define ACCEL_BMA
 #define ACCEL_SC7
 #define HALL_SENSOR
-#define VBUS_MOD_TEST
 #define HALL_SI7210
 #define DEBUG_UART_OUTPUT
 #define HAS_POWER_DEBUG_MENU

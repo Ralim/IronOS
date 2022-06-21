@@ -26,8 +26,9 @@ uint32_t get_ms_timestamp() {
 }
 bool         pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request);
 void         pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3);
+bool         EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request);
 FUSB302      fusb((0x22 << 1), fusb_read_buf, fusb_write_buf, ms_delay); // Create FUSB driver
-PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability);
+PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc);
 int          USBPowerDelivery::detectionState = 0;
 uint16_t     requested_voltage_mv             = 0;
 
@@ -49,7 +50,7 @@ void    USBPowerDelivery::step() {
   while (pe.thread()) {}
 }
 
-void USBPowerDelivery::PPSTimerCallback() { pe.PPSTimerCallback(); }
+void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }
 bool USBPowerDelivery::negotiationComplete() {
   if (!fusbPresent()) {
     return true;
@@ -65,7 +66,10 @@ bool USBPowerDelivery::fusbPresent() {
   return detectionState == 1;
 }
 
-void USBPowerDelivery::triggerRenegotiation() {}
+void USBPowerDelivery::triggerRenegotiation() {
+  // TODO; trigger the source to send its capabilities again
+}
+
 bool USBPowerDelivery::isVBUSConnected() {
   static uint8_t state = 0;
   if (state) {
@@ -79,8 +83,104 @@ bool USBPowerDelivery::isVBUSConnected() {
     return false;
   }
 }
-pd_msg  lastCapabilities;
-pd_msg *USBPowerDelivery::getLastSeenCapabilities() { return &lastCapabilities; }
+pd_msg     lastCapabilities;
+epr_pd_msg lastEPRCapabilities;
+bool       EPRCapabilitiesSeen = false;
+pd_msg    *USBPowerDelivery::getLastSeenCapabilities() { return &lastCapabilities; }
+
+// parseCapabilitiesArray returns true if a valid capability was found
+// caps is the array of capabilities objects
+// best* are output references
+bool parseCapabilitiesArray(const uint32_t *caps, const uint8_t numCaps, uint8_t &bestIndex, uint16_t &bestVoltage, uint16_t &bestCurrent) {
+
+  // Walk the given capabilities array; and select the best option
+  // Given assumption of fixed tip resistance; this can be simplified to highest voltage 
+  uint16_t bestSeenVoltageMv = 0;
+  uint8_t  tipResistance     = getTipResitanceX10();
+#ifdef MODEL_HAS_DCDC
+  // If this device has step down DC/DC inductor to smooth out current spikes
+  // We can instead ignore resistance and go for max voltage we can accept; and rely on the DC/DC regulation to keep under current limit
+  tipResistance = 255; // (Push to 25.5 ohms to effectively disable this check)
+#endif
+
+
+  for (uint8_t i = 0; i < numCaps; i++) {
+    /* If we have a fixed PDO, its V equals our desired V, and its I is
+     * at least our desired I */
+    if ((caps[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+      // This is a fixed PDO entry
+      // Evaluate if it can produve sufficient current based on the TIP_RESISTANCE (ohms*10)
+      // V=I*R -> V/I => minimum resistance, if our tip resistance is >= this then we can use this supply
+
+      int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(caps[i])); // voltage in mV units
+      int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(caps[i]);            // current in 10mA units
+      int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
+      if (voltage_mv <= (USB_PD_VMAX * 1000)) {
+        // Fudge of 0.5 ohms to round up a little to account for other losses
+        if (min_resistance_ohmsx10 <= (getTipResitanceX10() + 5)) {
+          // This is a valid power source we can select as
+          if ((voltage_mv > bestIndexVoltage) || bestIndex == 0xFF) {
+            // Higher voltage and valid, select this instead
+            bestIndex        = i;
+            bestIndexVoltage = voltage_mv;
+            bestIndexCurrent = current_a_x100;
+            bestIsPPS        = false;
+#ifdef MODEL_HAS_DCDC
+            // set limiter for wattage
+            powerSupplyWattageLimit = ((voltage_mv * current_a_x100) / 100 / 1000);
+#endif
+          }
+        }
+      }
+    } else if ((caps[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (caps[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS) {
+      // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
+      uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(caps[i]));
+      // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(caps[i]));
+      uint16_t max_current = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(caps[i])); // max current in 10mA units
+      // Using the current and tip resistance, calculate the ideal max voltage
+      // if this is range, then we will work with this voltage
+      // if this is not in range; then max_voltage can be safely selected
+      int ideal_voltage_mv = (getTipResitanceX10() * max_current);
+      if (ideal_voltage_mv > max_voltage) {
+        ideal_voltage_mv = max_voltage; // constrain
+      }
+      if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
+        ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max
+      }
+      if (ideal_voltage_mv > bestIndexVoltage || bestIndex == 0xFF) {
+        bestIndex        = i;
+        bestIndexVoltage = ideal_voltage_mv;
+        bestIndexCurrent = max_current;
+        bestIsPPS        = true;
+#ifdef MODEL_HAS_DCDC
+        // set limiter for wattage
+        powerSupplyWattageLimit = ((ideal_voltage_mv * max_current) / 100 / 1000);
+#endif
+      }
+    }
+  }
+}
+
+bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) {
+#ifdef POW_EPR
+  // Select any EPR slots up to USB_PD_VMAX
+  memcpy(&lastEPRCapabilities, capabilities, sizeof(epr_pd_msg));
+  // PDO slots 1-7 shall be the standard PDO's
+  // PDO slots 8-11 shall be the >20V slots
+  uint8_t numobj = PD_NUMOBJ_GET(capabilities);
+  for (int i = 0; i < numobj; i++) {
+    if (i < 7) {
+      // SPR PDO
+      if ((capabilities->obj[i] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+        // These should match the same logic as "normal" PDO's
+      }
+    } else {
+      // EPR PDO
+    }
+  }
+#endif
+  return false;
+}
 
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   memcpy(&lastCapabilities, capabilities, sizeof(pd_msg));
