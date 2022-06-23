@@ -63,7 +63,7 @@ static bool fastPWM = false;
 static void switchToFastPWM(void);
 
 volatile uint16_t PWMSafetyTimer    = 0;
-volatile uint8_t  pendingPWM        = 200;
+volatile uint8_t  pendingPWM        = 0;
 volatile bool     lastPeriodWasFast = false;
 
 // Timer 0 is used to co-ordinate the ADC and the output PWM
@@ -91,6 +91,8 @@ void timer0_comp2_callback(void) {
       // Leave output off
       PWM_Channel_Disable(PWM_Channel);
     }
+  } else {
+    PWM_Channel_Disable(PWM_Channel);
   }
 }
 

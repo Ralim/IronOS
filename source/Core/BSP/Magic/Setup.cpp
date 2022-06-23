@@ -34,6 +34,7 @@ void hardware_init() {
   gpio_write(TIP_RESISTANCE_SENSE, 0);
 
   MSG((char *)"Magic Starting\r\n");
+  PWM_Channel_Disable(PWM_Channel);
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
@@ -57,6 +58,7 @@ void setup_pwm(void) {
 
   PWM_Channel_Init(&cfg);
   PWM_Channel_Disable(PWM_Channel);
+  gpio_set_mode(PWM_Out_Pin, GPIO21_FUN_PWM_CH1);
 }
 
 const ADC_Chan_Type adc_tip_pos_chans[]
