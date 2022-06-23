@@ -848,22 +848,21 @@ static void showPDDebug(void) {
       }
     } else {
       // Print out the Proposed power options one by one
-      auto    lastCaps = USBPowerDelivery::getLastSeenCapabilities();
-      uint8_t numobj   = PD_NUMOBJ_GET(lastCaps);
-      if ((screen - 1) < numobj) {
+      auto lastCaps = USBPowerDelivery::getLastSeenCapabilities();
+      if ((screen - 1) < 11) {
         int voltage_mv     = 0;
         int min_voltage    = 0;
         int current_a_x100 = 0;
-        if ((lastCaps->obj[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-          voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps->obj[screen - 1])); // voltage in mV units
-          current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps->obj[screen - 1]);            // current in 10mA units
+        if ((lastCaps[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+          voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps[screen - 1])); // voltage in mV units
+          current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps[screen - 1]);            // current in 10mA units
         } else {
-          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps->obj[screen - 1]));
-          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps->obj[screen - 1]));
-          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps->obj[screen - 1])); // max current in 10mA units
+          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps[screen - 1]));
+          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[screen - 1]));
+          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps[screen - 1])); // max current in 10mA units
         }
         // print out this entry of the proposal
-        OLED::printNumber(screen, 1, FontStyle::SMALL, true); // print the entry number
+        OLED::printNumber(screen, 2, FontStyle::SMALL, true); // print the entry number
         OLED::print(SymbolSpace, FontStyle::SMALL);
         if (min_voltage > 0) {
           OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage

@@ -40,7 +40,7 @@ void startPOWTask(void const *argument __unused) {
      * Then we would sleep as nothing to do, but 100ms> 20ms power supply typical timeout
      */
     if (!getFUS302IRQLow()) {
-      res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS);
+      res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS / 2);
     }
 
 #if POW_PD
@@ -49,9 +49,10 @@ void startPOWTask(void const *argument __unused) {
     }
     USBPowerDelivery::step();
     USBPowerDelivery::PPSTimerCallback();
+
 #else
     (void)res;
 #endif
-    power_check();
+    // power_check();
   }
 }
