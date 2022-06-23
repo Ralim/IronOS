@@ -90,14 +90,14 @@ static BL_Err_Type PWM_IntHandler(IRQn_Type intPeriph);
  *  @{
  */
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM interrupt handle
-                                                                                *
-                                                                                * @param  intPeriph: Select the peripheral, such as PWM0_IRQn
-                                                                                *
-                                                                                * @return SUCCESS
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM interrupt handle
+ *
+ * @param  intPeriph: Select the peripheral, such as PWM0_IRQn
+ *
+ * @return SUCCESS
+ *
+ *******************************************************************************/
 #ifndef BFLB_USE_HAL_DRIVER
 static BL_Err_Type PWM_IntHandler(IRQn_Type intPeriph) {
   uint32_t i;
@@ -145,14 +145,14 @@ static BL_Err_Type PWM_IntHandler(IRQn_Type intPeriph) {
  *  @{
  */
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel init
-                                                                                *
-                                                                                * @param  chCfg: PWM configuration
-                                                                                *
-                                                                                * @return SUCCESS
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel init
+ *
+ * @param  chCfg: PWM configuration
+ *
+ * @return SUCCESS
+ *
+ *******************************************************************************/
 BL_Err_Type PWM_Channel_Init(PWM_CH_CFG_Type *chCfg) {
   uint32_t tmpVal;
   uint32_t timeoutCnt = PWM_STOP_TIMEOUT_COUNT;
@@ -200,24 +200,20 @@ BL_Err_Type PWM_Channel_Init(PWM_CH_CFG_Type *chCfg) {
   // PWM_IntMask(chCfg->ch, PWM_INT_PULSE_CNT, chCfg->intPulseCnt != 0 ? UNMASK : MASK);
   CPU_Interrupt_Disable(PWM_IRQn);
 
-  // #ifndef BFLB_USE_HAL_DRIVER
-  //     Interrupt_Handler_Register(PWM_IRQn, PWM_IRQHandler);
-  // #endif
-
   return SUCCESS;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel update source memory address and len
-                                                                                *
-                                                                                * @param  ch: PWM channel
-                                                                                * @param  period: period
-                                                                                * @param  threshold1: threshold1
-                                                                                * @param  threshold2: threshold2
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel update source memory address and len
+ *
+ * @param  ch: PWM channel
+ * @param  period: period
+ * @param  threshold1: threshold1
+ * @param  threshold2: threshold2
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Update(PWM_CH_ID_Type ch, uint16_t period, uint16_t threshold1, uint16_t threshold2) {
   /* Get channel register */
   uint32_t PWMx = PWM_Get_Channel_Reg(ch);
@@ -231,15 +227,15 @@ void PWM_Channel_Update(PWM_CH_ID_Type ch, uint16_t period, uint16_t threshold1,
   BL_WR_REG(PWMx, PWM_PERIOD, period);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel update clock divider
-                                                                                *
-                                                                                * @param  ch: PWM channel
-                                                                                * @param  div: Clock divider
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel update clock divider
+ *
+ * @param  ch: PWM channel
+ * @param  div: Clock divider
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Set_Div(PWM_CH_ID_Type ch, uint16_t div) {
   /* Get channel register */
   uint32_t PWMx = PWM_Get_Channel_Reg(ch);
@@ -250,15 +246,15 @@ void PWM_Channel_Set_Div(PWM_CH_ID_Type ch, uint16_t div) {
   BL_WR_REG(PWMx, PWM_CLKDIV, div);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel update threshold1
-                                                                                *
-                                                                                * @param  ch: PWM channel
-                                                                                * @param  threshold1: threshold1
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel update threshold1
+ *
+ * @param  ch: PWM channel
+ * @param  threshold1: threshold1
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Set_Threshold1(PWM_CH_ID_Type ch, uint16_t threshold1) {
   /* Get channel register */
   uint32_t PWMx = PWM_Get_Channel_Reg(ch);
@@ -270,15 +266,15 @@ void PWM_Channel_Set_Threshold1(PWM_CH_ID_Type ch, uint16_t threshold1) {
   BL_WR_REG(PWMx, PWM_THRE1, threshold1);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel update threshold2
-                                                                                *
-                                                                                * @param  ch: PWM channel
-                                                                                * @param  threshold2: threshold2
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel update threshold2
+ *
+ * @param  ch: PWM channel
+ * @param  threshold2: threshold2
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Set_Threshold2(PWM_CH_ID_Type ch, uint16_t threshold2) {
   /* Get channel register */
   uint32_t PWMx = PWM_Get_Channel_Reg(ch);
@@ -290,15 +286,15 @@ void PWM_Channel_Set_Threshold2(PWM_CH_ID_Type ch, uint16_t threshold2) {
   BL_WR_REG(PWMx, PWM_THRE2, threshold2);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel update period
-                                                                                *
-                                                                                * @param  ch: PWM channel
-                                                                                * @param  period: period
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel update period
+ *
+ * @param  ch: PWM channel
+ * @param  period: period
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Set_Period(PWM_CH_ID_Type ch, uint16_t period) {
   /* Get channel register */
   uint32_t PWMx = PWM_Get_Channel_Reg(ch);
@@ -310,17 +306,17 @@ void PWM_Channel_Set_Period(PWM_CH_ID_Type ch, uint16_t period) {
   BL_WR_REG(PWMx, PWM_PERIOD, period);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM get configuration
-                                                                                *
-                                                                                * @param  ch: PWM channel
-                                                                                * @param  period: period pointer
-                                                                                * @param  threshold1: threshold1 pointer
-                                                                                * @param  threshold2: threshold2 pointer
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM get configuration
+ *
+ * @param  ch: PWM channel
+ * @param  period: period pointer
+ * @param  threshold1: threshold1 pointer
+ * @param  threshold2: threshold2 pointer
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Get(PWM_CH_ID_Type ch, uint16_t *period, uint16_t *threshold1, uint16_t *threshold2) {
   uint32_t tmpVal;
   /* Get channel register */
@@ -338,14 +334,14 @@ void PWM_Channel_Get(PWM_CH_ID_Type ch, uint16_t *period, uint16_t *threshold1, 
   *period     = BL_GET_REG_BITS_VAL(tmpVal, PWM_PERIOD);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM enable
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM enable
+ *
+ * @param  ch: PWM channel number
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Enable(PWM_CH_ID_Type ch) {
   uint32_t tmpVal;
   /* Get channel register */
@@ -359,14 +355,14 @@ void PWM_Channel_Enable(PWM_CH_ID_Type ch) {
   BL_WR_REG(PWMx, PWM_CONFIG, BL_CLR_REG_BIT(tmpVal, PWM_STOP_EN));
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM disable
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM disable
+ *
+ * @param  ch: PWM channel number
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Disable(PWM_CH_ID_Type ch) {
   uint32_t tmpVal;
   /* Get channel register */
@@ -381,15 +377,15 @@ void PWM_Channel_Disable(PWM_CH_ID_Type ch) {
   PWM_IntMask(ch, PWM_INT_PULSE_CNT, MASK);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel software mode enable or disable
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                * @param  enable: Enable or disable
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel software mode enable or disable
+ *
+ * @param  ch: PWM channel number
+ * @param  enable: Enable or disable
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_SW_Mode(PWM_CH_ID_Type ch, BL_Fun_Type enable) {
   uint32_t tmpVal;
   /* Get channel register */
@@ -402,15 +398,15 @@ void PWM_SW_Mode(PWM_CH_ID_Type ch, BL_Fun_Type enable) {
   BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BITS_VAL(tmpVal, PWM_SW_MODE, enable));
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel force output high or low
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                * @param  value: Output value
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel force output high or low
+ *
+ * @param  ch: PWM channel number
+ * @param  value: Output value
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_SW_Force_Value(PWM_CH_ID_Type ch, uint8_t value) {
   uint32_t tmpVal;
   /* Get channel register */
@@ -423,14 +419,14 @@ void PWM_SW_Force_Value(PWM_CH_ID_Type ch, uint8_t value) {
   BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BITS_VAL(tmpVal, PWM_SW_FORCE_VAL, value));
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM channel force output high
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM channel force output high
+ *
+ * @param  ch: PWM channel number
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Channel_Fource_Output(PWM_CH_ID_Type ch) {
   uint32_t tmpVal;
   /* Get channel register */
@@ -443,16 +439,16 @@ void PWM_Channel_Fource_Output(PWM_CH_ID_Type ch) {
   BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BIT(tmpVal, PWM_SW_MODE));
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Mask/Unmask the PWM interrupt
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                * @param  intType: Specifies the interrupt type
-                                                                                * @param  intMask: Enable/Disable Specified interrupt type
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  Mask/Unmask the PWM interrupt
+ *
+ * @param  ch: PWM channel number
+ * @param  intType: Specifies the interrupt type
+ * @param  intMask: Enable/Disable Specified interrupt type
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_IntMask(PWM_CH_ID_Type ch, PWM_INT_Type intType, BL_Mask_Type intMask) {
   uint32_t tmpVal;
   /* Get channel register */
@@ -492,28 +488,28 @@ void PWM_IntMask(PWM_CH_ID_Type ch, PWM_INT_Type intType, BL_Mask_Type intMask) 
   }
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Install PWM interrupt callback function
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                * @param  intType: PWM interrupt type
-                                                                                * @param  cbFun: Pointer to interrupt callback function. The type should be void (*fn)(void)
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  Install PWM interrupt callback function
+ *
+ * @param  ch: PWM channel number
+ * @param  intType: PWM interrupt type
+ * @param  cbFun: Pointer to interrupt callback function. The type should be void (*fn)(void)
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void PWM_Int_Callback_Install(PWM_CH_ID_Type ch, uint32_t intType, intCallback_Type *cbFun) { PWMIntCbfArra[ch][intType] = cbFun; }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM smart configure according to frequency and duty cycle function
-                                                                                *
-                                                                                * @param  ch: PWM channel number
-                                                                                * @param  frequency: PWM frequency
-                                                                                * @param  dutyCycle: PWM duty cycle
-                                                                                *
-                                                                                * @return SUCCESS or TIMEOUT
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM smart configure according to frequency and duty cycle function
+ *
+ * @param  ch: PWM channel number
+ * @param  frequency: PWM frequency
+ * @param  dutyCycle: PWM duty cycle
+ *
+ * @return SUCCESS or TIMEOUT
+ *
+ *******************************************************************************/
 BL_Err_Type PWM_Smart_Configure(PWM_CH_ID_Type ch, uint32_t frequency, uint8_t dutyCycle) {
   uint32_t tmpVal;
   uint16_t clkDiv, period, threshold2;
@@ -573,14 +569,14 @@ BL_Err_Type PWM_Smart_Configure(PWM_CH_ID_Type ch, uint32_t frequency, uint8_t d
   return SUCCESS;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  PWM interrupt function
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/****************************************************************************
+ * @brief  PWM interrupt function
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 #ifndef BFLB_USE_HAL_DRIVER
 void PWM_IRQHandler(void) { PWM_IntHandler(PWM_IRQn); }
 #endif
