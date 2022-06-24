@@ -143,6 +143,8 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
             *bestIndex   = i;
             *bestVoltage = voltage_mv;
             *bestCurrent = current_a_x100;
+            *bestIsPPS   = false;
+            *bestIsAVO   = false;
           }
         }
       }
@@ -166,27 +168,29 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
         *bestVoltage = ideal_voltage_mv;
         *bestCurrent = max_current;
         *bestIsPPS   = true;
+        *bestIsAVO   = false;
       }
     } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS))) {
       *bestIsAVO           = true;
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
-      uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCapabilities[i]));
       uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
 
-      // W = v^2/tip_resistance => Wattage*tip_resistance == Max_volage^2
-      auto ideal_max_voltage = sqrtI((max_wattage * tipResistance) / 10);
-      MSG((char *)"AVS min %d max %d wattage %d tipRes %d sqrt %d\r\n", min_voltage, max_voltage, max_wattage, tipResistance, ideal_max_voltage);
+      // W = v^2/tip_resistance => Wattage*tip_resistance == Max_voltage^2
+      auto ideal_max_voltage = sqrtI((max_wattage * tipResistance) / 10) * 1000;
       if (ideal_max_voltage > (USB_PD_VMAX * 1000)) {
         ideal_max_voltage = (USB_PD_VMAX * 1000); // constrain to model max voltage safe to select
       }
-      auto operating_current = (ideal_max_voltage / tipResistance) / 100; // Current in mA
+      if (ideal_max_voltage > (max_voltage)) {
+        ideal_max_voltage = (max_voltage); // constrain to model max voltage safe to select
+      }
+      auto operating_current = (ideal_max_voltage / tipResistance); // Current in centiamps
+      MSG((char *)"AVS  max %d wattage %d tipRes %d sqrt %d -> %d\r\n", max_voltage, max_wattage, tipResistance, ideal_max_voltage, operating_current);
 
-      MSG((char *)"AVS min %d max %d wattage %d tipRes %d sqrt %d -> %d\r\n", min_voltage, max_voltage, max_wattage, tipResistance, ideal_max_voltage, operating_current);
       if (ideal_max_voltage > *bestVoltage) {
         *bestIndex   = i;
         *bestVoltage = ideal_max_voltage;
         *bestCurrent = operating_current;
-        *bestIsPPS   = true;
+        *bestIsAVO   = true;
       }
     }
   }
@@ -208,11 +212,13 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
   uint16_t bestIndexCurrent = 0;
   bool     bestIsPPS        = false;
   bool     bestIsAVO        = false;
-  MSG((char *)"EPR Eval - %d\r\n", numobj);
+
   if (parseCapabilitiesArray(numobj, &bestIndex, &bestIndexVoltage, &bestIndexCurrent, &bestIsPPS, &bestIsAVO)) {
     /* We got what we wanted, so build a request for that */
     request->hdr    = PD_MSGTYPE_EPR_REQUEST | PD_NUMOBJ(2);
     request->obj[1] = lastCapabilities[bestIndex]; // Copy PDO into slot 2
+    MSG((char *)"Eval index %d volt %d current %d pps %d avo %d\r\n", bestIndex, bestIndexVoltage, bestIndexCurrent, bestIsPPS ? 1 : 0, bestIsAVO ? 1 : 0);
+
     if (bestIsAVO) {
       request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2APS(bestIndexVoltage)) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
     } else if (bestIsPPS) {
