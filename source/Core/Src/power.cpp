@@ -62,7 +62,7 @@ uint32_t availableW10(uint8_t sample) {
 }
 uint8_t X10WattsToPWM(int32_t x10Watts, uint8_t sample) {
   // Scale input x10Watts to the pwm range available
-  if (x10Watts < 0) {
+  if (x10Watts <= 0) {
     // keep the battery voltage updating the filter
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), sample);
     return 0;
