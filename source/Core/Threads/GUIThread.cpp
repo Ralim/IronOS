@@ -868,24 +868,29 @@ static void showPDDebug(void) {
           min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[screen - 1]));
           current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps[screen - 1])); // max current in 10mA units
         }
-        // print out this entry of the proposal
-        OLED::printNumber(screen, 2, FontStyle::SMALL, true); // print the entry number
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-        if (min_voltage > 0) {
-          OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
-          OLED::print(SymbolMinus, FontStyle::SMALL);
-        }
-        OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
-        OLED::print(SymbolVolts, FontStyle::SMALL);
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-        if (wattage) {
-          OLED::printNumber(wattage, 3, FontStyle::SMALL, true); // print the current in 0.1A res
-          OLED::print(SymbolWatts, FontStyle::SMALL);
+        // Skip not used entries
+        if (voltage_mv == 0) {
+          screen++;
         } else {
-          OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-          OLED::print(SymbolDot, FontStyle::SMALL);
-          OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-          OLED::print(SymbolAmps, FontStyle::SMALL);
+          // print out this entry of the proposal
+          OLED::printNumber(screen, 2, FontStyle::SMALL, true); // print the entry number
+          OLED::print(SymbolSpace, FontStyle::SMALL);
+          if (min_voltage > 0) {
+            OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
+            OLED::print(SymbolMinus, FontStyle::SMALL);
+          }
+          OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
+          OLED::print(SymbolVolts, FontStyle::SMALL);
+          OLED::print(SymbolSpace, FontStyle::SMALL);
+          if (wattage) {
+            OLED::printNumber(wattage, 3, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolWatts, FontStyle::SMALL);
+          } else {
+            OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolDot, FontStyle::SMALL);
+            OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolAmps, FontStyle::SMALL);
+          }
         }
       } else {
         screen = 0;
