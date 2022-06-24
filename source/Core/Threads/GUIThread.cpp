@@ -132,14 +132,14 @@ static bool checkVoltageForExit() {
 static void gui_drawBatteryIcon() {
 #if defined(POW_PD) || defined(POW_QC)
   if (!getIsPoweredByDCIN()) {
-    // On TS80 we replace this symbol with the voltage we are operating on
+    // On non-DC inputs we replace this symbol with the voltage we are operating on
     // If <9V then show single digit, if not show dual small ones vertically stacked
-    uint8_t V = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
+    uint16_t V = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
     if (V % 10 >= 5)
-      V = V / 10 + 1; // round up
+      V = (V / 10) + 1; // round up
     else
       V = V / 10;
-    if (V >= 10) {
+    if (V > 9) {
       int16_t xPos = OLED::getCursorX();
       OLED::printNumber(V / 10, 1, FontStyle::SMALL);
       OLED::setCursor(xPos, 8);
