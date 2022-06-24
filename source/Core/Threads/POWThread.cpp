@@ -47,8 +47,8 @@ void startPOWTask(void const *argument __unused) {
     if (res != pdFALSE || getFUS302IRQLow()) {
       USBPowerDelivery::IRQOccured();
     }
-    USBPowerDelivery::step();
     USBPowerDelivery::PPSTimerCallback();
+    USBPowerDelivery::step();
 
 #else
     (void)res;
