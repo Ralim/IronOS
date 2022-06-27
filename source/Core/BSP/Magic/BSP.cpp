@@ -226,7 +226,7 @@ void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
 
-uint8_t  lastTipResistance = 80; // default safe
+uint8_t  lastTipResistance = 85; // default safe
 uint32_t lastTipReadinguV  = 0;
 uint8_t  getTipResitanceX10() {
   // Return tip resistance in x10 ohms
@@ -234,10 +234,6 @@ uint8_t  getTipResitanceX10() {
   return lastTipResistance;
 }
 void startMeasureTipResistance() {
-
-  if (lastTipReadinguV) {
-    return;
-  }
   // We want to calculate lastTipResistance
   // If tip is connected, and the tip is cold and the tip is not being heated
   // We can use the GPIO to inject a small current into the tip and measure this
@@ -251,7 +247,6 @@ void startMeasureTipResistance() {
   // These are reported as 60 and 75 respectively
   lastTipReadinguV = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0));
   gpio_write(TIP_RESISTANCE_SENSE, 1);
-  // Wait for next ADC measurement
 }
 
 void FinishMeasureTipResistance() {
