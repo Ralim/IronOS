@@ -20,6 +20,15 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
+
+|  Device 	| DC Supported 	| QC Supported 	| PD Supported 	| Reccomended 	|
+|--------:	|:------------:	|:------------:	|:------------:	|:-----------:	|
+|   MHP30 	|       N      	|       N      	|       Y      	|      Y      	|
+| Pinecil 	|       Y      	|       Y      	|       Y      	|      Y      	|
+|   TS100 	|       Y      	|       N      	|       N      	|      N      	|
+|    TS80 	|       N      	|       Y      	|       N      	|      N      	|
+|   TS80P 	|       N      	|       Y      	|       Y      	|      Y      	|
+
 ## Getting Started
 
 To get started with IronOS firmware, please jump to [Getting Started Guide](Documentation/GettingStarted.md).
