@@ -53,6 +53,6 @@ void startPOWTask(void const *argument __unused) {
 #else
     (void)res;
 #endif
-    // power_check();
+    power_check();
   }
 }

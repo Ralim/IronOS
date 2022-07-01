@@ -29,6 +29,8 @@ void QC_DNegThree_Three() {
 void QC_DM_PullDown() {
   // Turn on pulldown on D-
   gpio_set_mode(USB_DM_Pin, GPIO_INPUT_PD_MODE);
+  gpio_set_mode(QC_DM_LOW_Pin, GPIO_INPUT_PD_MODE);
+  gpio_set_mode(QC_DM_HIGH_Pin, GPIO_INPUT_PD_MODE);
 }
 void QC_DM_No_PullDown() {
   // Turn off pulldown on d-
