@@ -775,19 +775,25 @@ void showDebugMenu(void) {
       OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
     case 11:
+      // Tip resistance
+      OLED::printNumber(getTipResitanceX10() / 10, 2, FontStyle::SMALL);
+      OLED::print(SymbolDot, FontStyle::SMALL);
+      OLED::printNumber(getTipResitanceX10() % 10, 1, FontStyle::SMALL);
+    case 12:
       // High water mark for GUI
       OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
       break;
-    case 12:
+    case 13:
       // High water mark for the Movement task
       OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
       break;
-    case 13:
+    case 14:
       // High water mark for the PID task
       OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
       break;
+      break;
 #ifdef HALL_SENSOR
-    case 14:
+    case 15:
       // Print raw hall effect value if availabe, none if hall effect disabled.
       {
         int16_t hallEffectStrength = getRawHallEffect();
@@ -809,9 +815,9 @@ void showDebugMenu(void) {
     else if (b == BUTTON_F_SHORT) {
       screen++;
 #ifdef HALL_SENSOR
-      screen = screen % 15;
+      screen = screen % 16;
 #else
-      screen = screen % 14;
+      screen = screen % 15;
 #endif
     }
     GUIDelay();

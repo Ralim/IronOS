@@ -248,7 +248,6 @@ void startMeasureTipResistance() {
   lastTipReadinguV = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0));
   gpio_write(TIP_RESISTANCE_SENSE, 1);
 }
-
 void FinishMeasureTipResistance() {
   gpio_write(TIP_RESISTANCE_SENSE, 0);
   // read the tip uV with the current source on
@@ -261,10 +260,10 @@ void FinishMeasureTipResistance() {
   newReading -= lastTipReadinguV;
   // As we are only detecting two resistances; we can split the difference for now
   uint8_t newRes = 0;
-  if (newReading > 5000) {
+  if (newReading > 8000) {
     return; // Change nothing as probably disconnected tip
-  } else if (newReading < 4000) {
-    newRes = 60;
+  } else if (newReading < 5000) {
+    newRes = 62;
   } else {
     newRes = 80;
   }

@@ -130,6 +130,7 @@ def get_debug_menu() -> List[str]:
         "PWR  ",
         "ID ",
         "Max  ",
+        "Tip Res",
         "HW G ",
         "HW M ",
         "HW P ",
