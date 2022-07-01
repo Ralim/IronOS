@@ -21,6 +21,9 @@
 void startPOWTask(void const *argument __unused) {
   // Init any other misc sensors
   postRToSInit();
+  while (preStartChecksDone() == 0) {
+    osDelay(3);
+  }
   // You have to run this once we are willing to answer PD messages
   // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
 #if POW_PD

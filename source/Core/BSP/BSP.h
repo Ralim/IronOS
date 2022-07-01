@@ -98,6 +98,7 @@ void setStatusLED(const enum StatusLED state);
 // By the PID, after each ADC sample comes in
 // For example, on the MHP30 this is used to figure out the resistance of the hotplate
 uint8_t preStartChecks();
+uint8_t preStartChecksDone();
 #ifdef __cplusplus
 }
 #endif

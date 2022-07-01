@@ -226,7 +226,7 @@ void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
 
-uint8_t  lastTipResistance = 85; // default safe
+uint8_t  lastTipResistance = 0; // default to unknown
 uint32_t lastTipReadinguV  = 0;
 uint8_t  getTipResitanceX10() {
   // Return tip resistance in x10 ohms
@@ -269,8 +269,7 @@ void FinishMeasureTipResistance() {
   }
   lastTipResistance = newRes;
 }
-volatile bool    tipMeasurementOccuring    = false;
-volatile uint8_t tipSenseResistancex10Ohms = 0;
+volatile bool tipMeasurementOccuring = false;
 
 void performTipMeasurementStep(bool start) {
   static TickType_t lastMeas = 0;
@@ -280,14 +279,14 @@ void performTipMeasurementStep(bool start) {
   // We want to perform our startup measurements of the tip resistance until we detect one fitted
 
   // Step 1; if not setup, we turn on pullup and then wait
-  if (tipMeasurementOccuring == false && (start || tipSenseResistancex10Ohms == 0 || lastMeas == 0)) {
+  if (tipMeasurementOccuring == false && (start || lastTipResistance == 0 || lastMeas == 0)) {
     // Block starting if tip removed
     if (isTipDisconnected()) {
       return;
     }
-    tipMeasurementOccuring    = true;
-    tipSenseResistancex10Ohms = 0;
-    lastMeas                  = xTaskGetTickCount();
+    tipMeasurementOccuring = true;
+    lastTipResistance      = 0;
+    lastMeas               = xTaskGetTickCount();
     startMeasureTipResistance();
     return;
   }
@@ -308,6 +307,7 @@ uint8_t preStartChecks() {
   performTipMeasurementStep(false);
   return tipMeasurementOccuring ? 1 : 0;
 }
+uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipMeasurementOccuring) ? 0 : 1; }
 
 // Return hardware unique ID if possible
 uint64_t getDeviceID() {
