@@ -87,7 +87,6 @@ void timer0_comp2_callback(void) {
       // Turn on output
       PWM_Channel_Enable(PWM_Channel);
     } else {
-      TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
       // Leave output off
       PWM_Channel_Disable(PWM_Channel);
     }

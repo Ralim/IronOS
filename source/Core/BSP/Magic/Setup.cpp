@@ -34,13 +34,11 @@ void hardware_init() {
   gpio_write(TIP_RESISTANCE_SENSE, 0);
 
   MSG((char *)"Magic Starting\r\n");
-  PWM_Channel_Disable(PWM_Channel);
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
   I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 275kHz
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
-  PWM_Channel_Enable(PWM_Channel);
 }
 void setup_pwm(void) {
   // Setup PWM we use for driving the tip
@@ -49,7 +47,7 @@ void setup_pwm(void) {
       PWM_CLK_XCLK,    // Clock
       PWM_STOP_ABRUPT, // Stop mode
       PWM_POL_NORMAL,  // Normal Polarity
-      50,              // Clock Div
+      60,              // Clock Div
       100,             // Period
       0,               // Thres 1 - start at beginng
       50,              // Thres 2 - turn off at 50%
@@ -151,6 +149,8 @@ void setupFUSBIRQ() {
 
 void vAssertCalled(void) {
   MSG((char *)"vAssertCalled\r\n");
+  PWM_Channel_Disable(PWM_Channel);
+  gpio_set_mode(PWM_Out_Pin, GPIO_INPUT_PD_MODE);
 
   while (1)
     ;
