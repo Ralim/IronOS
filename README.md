@@ -23,11 +23,11 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 |  Device 	| DC Supported 	| QC Supported 	| PD Supported 	| Reccomended 	|
 |--------:	|:------------:	|:------------:	|:------------:	|:-----------:	|
-|   MHP30 	|       N      	|       N      	|       Y      	|      Y      	|
-| Pinecil 	|       Y      	|       Y      	|       Y      	|      Y      	|
-|   TS100 	|       Y      	|       N      	|       N      	|      N      	|
-|    TS80 	|       N      	|       Y      	|       N      	|      N      	|
-|   TS80P 	|       N      	|       Y      	|       Y      	|      Y      	|
+|   MHP30 	|      ❌       |      ❌      |      ✔️      |      ✔️       |
+| Pinecil 	|      ✔️       |      ✔️      |      ✔️      |      ✔️       |
+|   TS100 	|      ✔️       |      ❌      |      ❌      |      ❌       |
+|    TS80 	|      ❌       |      ✔️      |      ❌      |      ❌       |
+|   TS80P 	|      ❌       |      ✔️      |      ✔️      |      ✔️       |
 
 ## Getting Started
 
