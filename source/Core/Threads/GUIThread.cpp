@@ -42,7 +42,7 @@ void              showWarnings();
 #define BUTTON_INACTIVITY_TIME   (60 * configTICK_RATE_HZ)
 static TickType_t lastHallEffectSleepStart = 0;
 static uint16_t   min(uint16_t a, uint16_t b) {
-  if (a > b)
+    if (a > b)
     return b;
   else
     return a;
@@ -776,7 +776,7 @@ void showDebugMenu(void) {
       break;
     case 11:
       // Tip resistance
-      OLED::printNumber(getTipResitanceX10() / 10, 2, FontStyle::SMALL);
+      OLED::printNumber(getTipResitanceX10() / 10, 5, FontStyle::SMALL); // large to pad over so that we cover ID left overs
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(getTipResitanceX10() % 10, 1, FontStyle::SMALL);
     case 12:
