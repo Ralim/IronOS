@@ -142,7 +142,7 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
   // so we basically double the need (gain = 2) to get what we want.
   return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
-                           TIP_THERMAL_MASS,                 // Inertia, smaller numbers increase dominance of the previous value
+                           getTipThermalMass(),              // Inertia, smaller numbers increase dominance of the previous value
                            2,                                // gain
                            rate,                             // PID cycle frequency
                            getX10WattageLimits());
