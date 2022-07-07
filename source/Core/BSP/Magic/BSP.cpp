@@ -229,9 +229,16 @@ void setStatusLED(const enum StatusLED state) {
 uint8_t  lastTipResistance = 0; // default to unknown
 uint32_t lastTipReadinguV  = 0;
 uint8_t  getTipResitanceX10() {
-  // Return tip resistance in x10 ohms
+   // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
   return lastTipResistance;
+}
+
+uint8_t getTipThermalMass() {
+  if (lastTipResistance >= 80) {
+    return TIP_THERMAL_MASS;
+  }
+  return (TIP_THERMAL_MASS * 25) / 10;
 }
 void startMeasureTipResistance() {
   // We want to calculate lastTipResistance
