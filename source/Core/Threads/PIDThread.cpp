@@ -46,7 +46,8 @@ void startPIDTask(void const *argument __unused) {
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
 
-  while (preStartChecks() != 0) {
+  while (preStartChecks() == 0) {
+    resetWatchdog();
     ulTaskNotifyTake(pdTRUE, 2000);
   }
 

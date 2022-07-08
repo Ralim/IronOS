@@ -226,8 +226,9 @@ void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
 
-uint8_t  lastTipResistance = 0; // default to unknown
-uint32_t lastTipReadinguV  = 0;
+uint8_t  lastTipResistance        = 0; // default to unknown
+uint32_t tipResistanceReadings[4] = {0, 0, 0, 0};
+uint8_t  tipResistanceReadingSlot = 0;
 uint8_t  getTipResitanceX10() {
    // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
@@ -240,70 +241,69 @@ uint8_t getTipThermalMass() {
   }
   return (TIP_THERMAL_MASS * 25) / 10;
 }
-void startMeasureTipResistance() {
-  // We want to calculate lastTipResistance
-  // If tip is connected, and the tip is cold and the tip is not being heated
-  // We can use the GPIO to inject a small current into the tip and measure this
-  // The gpio is 5.1k -> diode -> tip -> gnd
-  // Source is 3.3V-0.5V
-  // Which is around 0.54mA this will induce:
-  // 6 ohm tip -> 3.24mV (Real world ~= 3320)
-  // 8 ohm tip -> 4.32mV (Real world ~= 4500)
-  // Which is definitely measureable
-  // Taking shortcuts here as we know we only really have to pick apart 6 and 8 ohm tips
-  // These are reported as 60 and 75 respectively
-  lastTipReadinguV = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0));
-  gpio_write(TIP_RESISTANCE_SENSE, 1);
+// We want to calculate lastTipResistance
+// If tip is connected, and the tip is cold and the tip is not being heated
+// We can use the GPIO to inject a small current into the tip and measure this
+// The gpio is 5.1k -> diode -> tip -> gnd
+// Source is 3.3V-0.5V
+// Which is around 0.54mA this will induce:
+// 6 ohm tip -> 3.24mV (Real world ~= 3320)
+// 8 ohm tip -> 4.32mV (Real world ~= 4500)
+// Which is definitely measureable
+// Taking shortcuts here as we know we only really have to pick apart 6 and 8 ohm tips
+// These are reported as 60 and 75 respectively
+void performTipResistanceSampleReading() {
+  // 0 = read then turn on pullup, 1 = read then turn off pullup, 2 = read then turn on pullup, 3 = final read + turn off pullup
+  tipResistanceReadings[tipResistanceReadingSlot] = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0));
+  gpio_write(TIP_RESISTANCE_SENSE, (tipResistanceReadingSlot % 2) ? 0 : 1);
+  tipResistanceReadingSlot++;
 }
+
 void FinishMeasureTipResistance() {
-  gpio_write(TIP_RESISTANCE_SENSE, 0);
-  // read the tip uV with the current source on
-  uint32_t newReading = (TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0)));
-  if (newReading < lastTipReadinguV) {
-    return;
-  }
-  // newReading -= lastTipReadinguV;
-  // MSG("Tip Delta %lu, %lu %lu \r\n", newReading - lastTipReadinguV, newReading, lastTipReadinguV);
-  newReading -= lastTipReadinguV;
+
+  // Otherwise we now have the 4 samples;
+  //  _^_^ order, 3 delta's, combine these
+
+  int32_t steps[4] = {
+      // Close samples
+      tipResistanceReadings[1] - tipResistanceReadings[0],
+      tipResistanceReadings[3] - tipResistanceReadings[2],
+      tipResistanceReadings[1] - tipResistanceReadings[2],
+      // Longer time span samples
+      tipResistanceReadings[3] - tipResistanceReadings[0],
+
+  };
+  // The steps array now contains all 4 changes, these _should_ all be basically the same, but they may not be
+  // For example, a hot tip cooling down. In this case there will a difference in them proportional to the temp drop during that time
+  auto reading = (steps[0] + steps[1] + steps[2] + steps[3]) / 4;
+  // MSG("Tip reading %lu \r\n");
+
   // As we are only detecting two resistances; we can split the difference for now
   uint8_t newRes = 0;
-  if (newReading > 8000) {
-    return; // Change nothing as probably disconnected tip
-  } else if (newReading < 5000) {
+  if (reading > 8000) {
+    // return; // Change nothing as probably disconnected tip
+  } else if (reading < 5000) {
     newRes = 62;
   } else {
     newRes = 80;
   }
   lastTipResistance = newRes;
 }
-volatile bool tipMeasurementOccuring = false;
+volatile bool       tipMeasurementOccuring = true;
+volatile TickType_t nextTipMeasurement     = 100;
 
-void performTipMeasurementStep(bool start) {
-  static TickType_t lastMeas = 0;
-  // Inter state that performs the steps to measure the resistor on the tip
-  // Return 1 if a measurement is ongoing
-
-  // We want to perform our startup measurements of the tip resistance until we detect one fitted
-
-  // Step 1; if not setup, we turn on pullup and then wait
-  if (tipMeasurementOccuring == false && (start || lastTipResistance == 0 || lastMeas == 0)) {
-    // Block starting if tip removed
-    if (isTipDisconnected()) {
-      return;
-    }
-    tipMeasurementOccuring = true;
-    lastTipResistance      = 0;
-    lastMeas               = xTaskGetTickCount();
-    startMeasureTipResistance();
-    return;
-  }
+void performTipMeasurementStep() {
 
   // Wait 100ms for settle time
-  if ((xTaskGetTickCount() - lastMeas) < (TICKS_100MS)) {
+  if (xTaskGetTickCount() < (nextTipMeasurement)) {
+    return;
+  }
+  nextTipMeasurement = xTaskGetTickCount() + TICKS_100MS;
+  if (tipResistanceReadingSlot < 4) {
+    performTipResistanceSampleReading();
     return;
   }
 
-  lastMeas = xTaskGetTickCount();
   // We are sensing the resistance
   FinishMeasureTipResistance();
 
@@ -311,10 +311,10 @@ void performTipMeasurementStep(bool start) {
 }
 
 uint8_t preStartChecks() {
-  performTipMeasurementStep(false);
-  return tipMeasurementOccuring ? 1 : 0;
+  performTipMeasurementStep();
+  return preStartChecksDone();
 }
-uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipMeasurementOccuring) ? 0 : 1; }
+uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < 4 || tipMeasurementOccuring) ? 0 : 1; }
 
 // Return hardware unique ID if possible
 uint64_t getDeviceID() {
