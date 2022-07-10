@@ -47,7 +47,7 @@ void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
 bool    USBPowerDelivery::negotiationHasWorked() { return pe.pdHasNegotiated(); }
 uint8_t USBPowerDelivery::getStateNumber() { return pe.currentStateCode(true); }
 void    USBPowerDelivery::step() {
-  while (pe.thread()) {}
+     while (pe.thread()) {}
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }
@@ -160,6 +160,9 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
       if (ideal_voltage_mv > max_voltage) {
         ideal_voltage_mv = max_voltage; // constrain to what this PDO offers
       }
+      if (ideal_voltage_mv > 20000) {
+        ideal_voltage_mv = 20000; // Limit to 20V as some advertise 21 but are not stable at 21
+      }
       if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
         ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max voltage safe to select
       }
@@ -239,7 +242,7 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
     /* Nothing matched (or no configuration), so get 5 V at low current */
     request->hdr    = PD_MSGTYPE_EPR_REQUEST | PD_NUMOBJ(2);
     request->obj[1] = lastCapabilities[0];
-    request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_FV_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(1);
+    request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(100) | PD_RDO_FV_CURRENT_SET(100) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(1);
     // We dont do usb
     // request->obj[0] |= PD_RDO_USB_COMMS;
 
@@ -287,7 +290,7 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   } else {
     /* Nothing matched (or no configuration), so get 5 V at low current */
     request->hdr    = PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
-    request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_FV_CURRENT_SET(DPM_MIN_CURRENT) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(1);
+    request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(100) | PD_RDO_FV_CURRENT_SET(100) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(1);
     // We dont do usb
     // request->obj[0] |= PD_RDO_USB_COMMS;
 
