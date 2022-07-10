@@ -226,11 +226,12 @@ void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
 
-uint8_t  lastTipResistance        = 0; // default to unknown
-uint32_t tipResistanceReadings[4] = {0, 0, 0, 0};
-uint8_t  tipResistanceReadingSlot = 0;
-uint8_t  getTipResitanceX10() {
-   // Return tip resistance in x10 ohms
+uint8_t       lastTipResistance        = 0; // default to unknown
+const uint8_t numTipResistanceReadings = 3;
+uint32_t      tipResistanceReadings[3] = {0, 0, 0};
+uint8_t       tipResistanceReadingSlot = 0;
+uint8_t       getTipResitanceX10() {
+        // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
   return lastTipResistance;
 }
@@ -255,30 +256,25 @@ uint8_t getTipThermalMass() {
 void performTipResistanceSampleReading() {
   // 0 = read then turn on pullup, 1 = read then turn off pullup, 2 = read then turn on pullup, 3 = final read + turn off pullup
   tipResistanceReadings[tipResistanceReadingSlot] = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0));
-  gpio_write(TIP_RESISTANCE_SENSE, (tipResistanceReadingSlot % 2) ? 0 : 1);
+  gpio_write(TIP_RESISTANCE_SENSE, tipResistanceReadingSlot == 0);
   tipResistanceReadingSlot++;
 }
 
 void FinishMeasureTipResistance() {
 
   // Otherwise we now have the 4 samples;
-  //  _^_^ order, 3 delta's, combine these
+  //  _^_ order, 2 delta's, combine these
 
-  int32_t steps[4] = {
-      // Close samples
-      tipResistanceReadings[1] - tipResistanceReadings[0],
-      tipResistanceReadings[3] - tipResistanceReadings[2],
-      tipResistanceReadings[1] - tipResistanceReadings[2],
-      // Longer time span samples
-      tipResistanceReadings[3] - tipResistanceReadings[0],
+  int32_t calculatedSkew = tipResistanceReadings[0] - tipResistanceReadings[2]; // If positive tip is cooling
+  calculatedSkew /= 2;                                                          // divide by two to get offset per time constant
 
-  };
-  // The steps array now contains all 4 changes, these _should_ all be basically the same, but they may not be
-  // For example, a hot tip cooling down. In this case there will a difference in them proportional to the temp drop during that time
-  auto reading = (steps[0] + steps[1] + steps[2] + steps[3]) / 4;
-  // MSG("Tip reading %lu \r\n");
-
-  // As we are only detecting two resistances; we can split the difference for now
+  int32_t reading = (((tipResistanceReadings[1] - tipResistanceReadings[0]) + calculatedSkew) // jump 1 - skew
+                     +                                                                        // +
+                     ((tipResistanceReadings[1] - tipResistanceReadings[2]) + calculatedSkew) // jump 2 - skew
+                     )                                                                        //
+                    / 2;                                                                      // Take average
+  // lastTipResistance = reading / 100;
+  // // As we are only detecting two resistances; we can split the difference for now
   uint8_t newRes = 0;
   if (reading > 8000) {
     // return; // Change nothing as probably disconnected tip
@@ -299,7 +295,7 @@ void performTipMeasurementStep() {
     return;
   }
   nextTipMeasurement = xTaskGetTickCount() + TICKS_100MS;
-  if (tipResistanceReadingSlot < 4) {
+  if (tipResistanceReadingSlot < numTipResistanceReadings) {
     performTipResistanceSampleReading();
     return;
   }
@@ -314,7 +310,7 @@ uint8_t preStartChecks() {
   performTipMeasurementStep();
   return preStartChecksDone();
 }
-uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < 4 || tipMeasurementOccuring) ? 0 : 1; }
+uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring) ? 0 : 1; }
 
 // Return hardware unique ID if possible
 uint64_t getDeviceID() {
