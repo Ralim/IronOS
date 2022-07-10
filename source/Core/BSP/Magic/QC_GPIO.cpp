@@ -15,8 +15,8 @@ void QC_DPlusZero_Six() {
   gpio_write(QC_DP_LOW_Pin, 0);
 }
 void QC_DNegZero_Six() {
-  gpio_write(QC_DM_HIGH_Pin, 1);
-  gpio_write(QC_DM_LOW_Pin, 0);
+  gpio_write(QC_DM_HIGH_Pin, 0);
+  gpio_write(QC_DM_LOW_Pin, 1);
 }
 void QC_DPlusThree_Three() {
   // pull up D+
@@ -40,8 +40,11 @@ void QC_Init_GPIO() {
   // Setup any GPIO into the right states for QC
   // D+ pulldown as output
   gpio_set_mode(QC_DP_LOW_Pin, GPIO_OUTPUT_MODE);
+  gpio_write(QC_DP_LOW_Pin, 0);
   // Make two D- pins floating
-  QC_DM_PullDown();
+  gpio_set_mode(USB_DM_Pin, GPIO_INPUT_MODE);
+  gpio_set_mode(QC_DM_LOW_Pin, GPIO_INPUT_MODE);
+  gpio_set_mode(QC_DM_HIGH_Pin, GPIO_INPUT_MODE);
 }
 void QC_Post_Probe_En() {
   // Make two D- pins outputs
