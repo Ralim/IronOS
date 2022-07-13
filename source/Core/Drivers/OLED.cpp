@@ -423,6 +423,13 @@ inline void stripLeaderZeros(char *buffer, uint8_t places) {
     }
   }
 }
+void OLED::drawHex(uint32_t x, FontStyle fontStyle) {
+  // print number to hex
+  for (uint_fast8_t i = 0; i < 8; i++) {
+    uint16_t value = (x >> (4 * (7 - i))) & 0b1111;
+    drawChar(value + 2, fontStyle);
+  }
+}
 // maximum places is 5
 void OLED::printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros) {
   char buffer[7] = {0};

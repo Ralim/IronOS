@@ -17,7 +17,7 @@
 static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
 static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
 TaskHandle_t      pidTaskNotification     = NULL;
-uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
+volatile uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
 int32_t           powerSupplyWattageLimit = 0;
 bool              heaterThermalRunaway    = false;
 
@@ -39,21 +39,26 @@ void startPIDTask(void const *argument __unused) {
   pidTaskNotification    = xTaskGetCurrentTaskHandle();
   uint32_t PIDTempTarget = 0;
   // Pre-seed the adc filters
-  for (int i = 0; i < 128; i++) {
-    osDelay(5);
+  for (int i = 0; i < 32; i++) {
+    ulTaskNotifyTake(pdTRUE, 5);
     TipThermoModel::getTipInC(true);
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
+
+  while (preStartChecks() != 0) {
+    ulTaskNotifyTake(pdTRUE, 2000);
+  }
+
   int32_t x10WattsOut = 0;
 
   for (;;) {
     x10WattsOut = 0;
     // This is a call to block this thread until the ADC does its samples
-    if (ulTaskNotifyTake(pdTRUE, 2000)) {
+    if (ulTaskNotifyTake(pdTRUE, TICKS_SECOND * 2)) {
       // Do the reading here to keep the temp calculations churning along
       uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
       PIDTempTarget              = currentTempTargetDegC;
-      if (PIDTempTarget) {
+      if (PIDTempTarget > 0) {
         // Cap the max set point to 450C
         if (PIDTempTarget > (450)) {
           // Maximum allowed output
