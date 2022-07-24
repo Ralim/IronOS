@@ -23,6 +23,7 @@ ButtonState getButtonState() {
    * (downtime>filter)
    */
   static uint8_t  previousState       = 0;
+  static bool     longPressed         = false;
   static uint32_t previousStateChange = 0;
   const uint16_t  timeout             = TICKS_100MS * 4;
   uint8_t         currentState;
@@ -34,9 +35,10 @@ ButtonState getButtonState() {
   if (currentState == previousState) {
     if (currentState == 0)
       return BUTTON_NONE;
-    if ((xTaskGetTickCount() - previousStateChange) > timeout) {
+    if ((xTaskGetTickCount() - previousStateChange) >= timeout) {
       // User has been holding the button down
       // We want to send a button is held message
+      longPressed = true;
       if (currentState == 0x01)
         return BUTTON_F_LONG;
       else if (currentState == 0x02)
@@ -58,7 +60,7 @@ ButtonState getButtonState() {
       // User has released buttons
       // If they previously had the buttons down we want to check if they were <
       // long hold and trigger a press
-      if ((xTaskGetTickCount() - previousStateChange) < timeout) {
+      if ((xTaskGetTickCount() - previousStateChange) < timeout && !longPressed) {
         // The user didn't hold the button for long
         // So we send button press
 
@@ -70,6 +72,7 @@ ButtonState getButtonState() {
           retVal = BUTTON_BOTH; // Both being held case
       }
       previousState = 0;
+      longPressed = false;
     }
     previousStateChange = xTaskGetTickCount();
     return retVal;
