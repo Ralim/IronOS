@@ -50,14 +50,10 @@ ButtonState getButtonState() {
     ButtonState retVal = BUTTON_NONE;
     if (currentState) {
       // User has pressed a button down (nothing done on down)
-      if (currentState != previousState) {
-        // There has been a change in the button states
-        // If there is a rising edge on one of the buttons from double press we
-        // want to mask that out As users are having issues with not release
-        // both at once
-        if (previousState == 0x03)
-          currentState = 0x03;
-      }
+      // If there is a rising edge on one of the buttons from double press we
+      // want to mask that out As users are having issues with not release
+      // both at once
+      previousState |= currentState;
     } else {
       // User has released buttons
       // If they previously had the buttons down we want to check if they were <
@@ -73,8 +69,8 @@ ButtonState getButtonState() {
         else
           retVal = BUTTON_BOTH; // Both being held case
       }
+      previousState = 0;
     }
-    previousState       = currentState;
     previousStateChange = xTaskGetTickCount();
     return retVal;
   }
