@@ -60,7 +60,7 @@ ButtonState getButtonState() {
       // User has released buttons
       // If they previously had the buttons down we want to check if they were <
       // long hold and trigger a press
-      if ((xTaskGetTickCount() - previousStateChange) < timeout && !longPressed) {
+      if (!longPressed) {
         // The user didn't hold the button for long
         // So we send button press
 
