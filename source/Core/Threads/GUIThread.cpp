@@ -42,7 +42,7 @@ void              showWarnings();
 #define BUTTON_INACTIVITY_TIME   (60 * configTICK_RATE_HZ)
 static TickType_t lastHallEffectSleepStart = 0;
 static uint16_t   min(uint16_t a, uint16_t b) {
-  if (a > b)
+    if (a > b)
     return b;
   else
     return a;
@@ -171,9 +171,9 @@ static void gui_drawBatteryIcon() {
 #endif
 }
 static void gui_solderingTempAdjust() {
-  uint32_t lastChange                = xTaskGetTickCount();
+  TickType_t lastChange              = xTaskGetTickCount();
   currentTempTargetDegC              = 0; // Turn off header while adjusting temp
-  uint32_t    autoRepeatTimer        = 0;
+  TickType_t  autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
   bool        waitForRelease         = false;
   ButtonState buttons                = getButtonState();
@@ -370,7 +370,7 @@ static void display_countdown(int sleepThres) {
    * Print seconds or minutes (if > 99 seconds) until sleep
    * mode is triggered.
    */
-  int        lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
+  TickType_t lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
   TickType_t downCount     = sleepThres - xTaskGetTickCount() + lastEventTime;
   if (downCount > (99 * TICKS_SECOND)) {
     OLED::printNumber(downCount / 60000 + 1, 2, FontStyle::SMALL);

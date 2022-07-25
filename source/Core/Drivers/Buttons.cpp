@@ -8,7 +8,7 @@
 #include "settingsGUI.hpp"
 #include "task.h"
 #include <Buttons.hpp>
-uint32_t lastButtonTime = 0;
+TickType_t lastButtonTime = 0;
 
 ButtonState getButtonState() {
   /*
@@ -22,11 +22,11 @@ ButtonState getButtonState() {
    * press (buttons still down), or if release we trigger press
    * (downtime>filter)
    */
-  static uint8_t  previousState       = 0;
-  static bool     longPressed         = false;
-  static uint32_t previousStateChange = 0;
-  const uint16_t  timeout             = TICKS_100MS * 4;
-  uint8_t         currentState;
+  static uint8_t    previousState       = 0;
+  static bool       longPressed         = false;
+  static TickType_t previousStateChange = 0;
+  const TickType_t  timeout             = TICKS_100MS * 4;
+  uint8_t           currentState;
   currentState = (getButtonA()) << 0;
   currentState |= (getButtonB()) << 1;
 
@@ -72,7 +72,7 @@ ButtonState getButtonState() {
           retVal = BUTTON_BOTH; // Both being held case
       }
       previousState = 0;
-      longPressed = false;
+      longPressed   = false;
     }
     previousStateChange = xTaskGetTickCount();
     return retVal;
@@ -94,7 +94,7 @@ void waitForButtonPress() {
   }
 }
 
-void waitForButtonPressOrTimeout(uint32_t timeout) {
+void waitForButtonPressOrTimeout(TickType_t timeout) {
   timeout += xTaskGetTickCount();
   // calculate the exit point
 
