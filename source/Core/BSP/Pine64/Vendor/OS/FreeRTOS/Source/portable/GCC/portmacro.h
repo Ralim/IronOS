@@ -58,14 +58,9 @@ typedef portSTACK_TYPE StackType_t;
 typedef long           BaseType_t;
 typedef unsigned long  UBaseType_t;
 
-#if (configUSE_16_BIT_TICKS == 1)
-typedef uint16_t TickType_t;
-#define portMAX_DELAY (TickType_t)0xffff
-#else
 /* RISC-V TIMER is 64-bit long */
 typedef uint64_t TickType_t;
 #define portMAX_DELAY (TickType_t)0xFFFFFFFFFFFFFFFFULL
-#endif
 /*-----------------------------------------------------------*/
 
 /* Architecture specifics. */
