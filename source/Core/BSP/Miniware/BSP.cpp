@@ -291,4 +291,6 @@ uint64_t getDeviceID() {
 
 uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
 
+uint8_t preStartChecksDone() { return 1; }
+
 uint8_t getTipThermalMass() { return TIP_THERMAL_MASS; }
