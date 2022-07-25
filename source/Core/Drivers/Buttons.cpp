@@ -23,6 +23,7 @@ ButtonState getButtonState() {
    * (downtime>filter)
    */
   static uint8_t  previousState       = 0;
+  static bool     longPressed         = false;
   static uint32_t previousStateChange = 0;
   const uint16_t  timeout             = TICKS_100MS * 4;
   uint8_t         currentState;
@@ -34,9 +35,10 @@ ButtonState getButtonState() {
   if (currentState == previousState) {
     if (currentState == 0)
       return BUTTON_NONE;
-    if ((xTaskGetTickCount() - previousStateChange) > timeout) {
+    if ((xTaskGetTickCount() - previousStateChange) >= timeout) {
       // User has been holding the button down
       // We want to send a button is held message
+      longPressed = true;
       if (currentState == 0x01)
         return BUTTON_F_LONG;
       else if (currentState == 0x02)
@@ -50,19 +52,15 @@ ButtonState getButtonState() {
     ButtonState retVal = BUTTON_NONE;
     if (currentState) {
       // User has pressed a button down (nothing done on down)
-      if (currentState != previousState) {
-        // There has been a change in the button states
-        // If there is a rising edge on one of the buttons from double press we
-        // want to mask that out As users are having issues with not release
-        // both at once
-        if (previousState == 0x03)
-          currentState = 0x03;
-      }
+      // If there is a rising edge on one of the buttons from double press we
+      // want to mask that out As users are having issues with not release
+      // both at once
+      previousState |= currentState;
     } else {
       // User has released buttons
       // If they previously had the buttons down we want to check if they were <
       // long hold and trigger a press
-      if ((xTaskGetTickCount() - previousStateChange) < timeout) {
+      if (!longPressed) {
         // The user didn't hold the button for long
         // So we send button press
 
@@ -73,8 +71,9 @@ ButtonState getButtonState() {
         else
           retVal = BUTTON_BOTH; // Both being held case
       }
+      previousState = 0;
+      longPressed = false;
     }
-    previousState       = currentState;
     previousStateChange = xTaskGetTickCount();
     return retVal;
   }
