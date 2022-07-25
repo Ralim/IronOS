@@ -776,9 +776,10 @@ void showDebugMenu(void) {
       break;
     case 11:
       // Tip resistance
-      OLED::printNumber(getTipResitanceX10() / 10, 4, FontStyle::SMALL); // large to pad over so that we cover ID left overs
+      OLED::printNumber(getTipResistanceX10() / 10, 4, FontStyle::SMALL); // large to pad over so that we cover ID left overs
       OLED::print(SymbolDot, FontStyle::SMALL);
-      OLED::printNumber(getTipResitanceX10() % 10, 1, FontStyle::SMALL);
+      OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
+      break;
     case 12:
       // High water mark for GUI
       OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
@@ -920,10 +921,12 @@ void showWarnings() {
   if (settingsWereReset) {
     warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
   }
+#ifdef DEVICE_HAS_VALIDATION_SUPPORT
   if (getDeviceValidationStatus()) {
     // Warn user this device might be counterfeit
     warnUser(translatedString(Tr->DeviceFailedValidationWarning), 10 * TICKS_SECOND);
   }
+#endif
 #ifndef NO_WARN_MISSING
   // We also want to alert if accel or pd is not detected / not responding
   // In this case though, we dont want to nag the user _too_ much

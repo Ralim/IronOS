@@ -26,7 +26,7 @@ void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
 #ifdef TEMP_NTC
 // Lookup table for the NTC
 // Stored as ADCReading,Temp in degC
-static const uint16_t NTCHandleLookup[] = {
+static const int32_t NTCHandleLookup[] = {
     // ADC Reading , Temp in Cx10
     808,   1600, //
     832,   1590, //
@@ -475,3 +475,7 @@ uint64_t getDeviceID() {
   //
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
 }
+
+uint8_t preStartChecksDone() { return 1; }
+
+uint8_t getTipThermalMass() { return TIP_THERMAL_MASS; }

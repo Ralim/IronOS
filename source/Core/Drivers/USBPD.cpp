@@ -4,7 +4,6 @@
 
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
-#include "bflb_platform.h"
 #include "fusb302b.h"
 #include "main.hpp"
 #include "pd.h"
@@ -64,10 +63,6 @@ bool USBPowerDelivery::fusbPresent() {
     }
   }
   return detectionState == 1;
-}
-
-void USBPowerDelivery::triggerRenegotiation() {
-  // TODO; trigger the source to send its capabilities again
 }
 
 bool USBPowerDelivery::isVBUSConnected() {

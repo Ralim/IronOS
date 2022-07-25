@@ -109,6 +109,9 @@
 
 #define OP_AMP_GAIN_STAGE_PINECIL (1 + (OP_AMP_Rf_Pinecil / OP_AMP_Rin_Pinecil))
 
+#define ADC_MAX_READING (4096 * 8) // Maximum reading of the adc
+#define ADC_VDD_MV      3300       // ADC max reading millivolts
+
 #if defined(MODEL_Pinecil) == 0
 #error "No model defined!"
 #endif

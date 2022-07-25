@@ -154,7 +154,7 @@ uint8_t       lastTipResistance        = 0; // default to unknown
 const uint8_t numTipResistanceReadings = 3;
 uint32_t      tipResistanceReadings[3] = {0, 0, 0};
 uint8_t       tipResistanceReadingSlot = 0;
-uint8_t       getTipResitanceX10() {
+uint8_t       getTipResistanceX10() {
         // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
   return lastTipResistance;
