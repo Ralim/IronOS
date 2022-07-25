@@ -17,7 +17,7 @@
 static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
 static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
 TaskHandle_t      pidTaskNotification     = NULL;
-volatile uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
+volatile uint32_t currentTempTargetDegC   = 0; // Current temperature target in C
 int32_t           powerSupplyWattageLimit = 0;
 bool              heaterThermalRunaway    = false;
 
@@ -114,8 +114,8 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   static TickType_t          lastCall   = 0;
   static Integrator<int32_t> powerStore = {0};
 
-  const int rate = 1000 / (xTaskGetTickCount() - lastCall);
-  lastCall       = xTaskGetTickCount();
+  const TickType_t rate = 1000 / (xTaskGetTickCount() - lastCall);
+  lastCall              = xTaskGetTickCount();
   // Sandman note:
   // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't
   // want to overshot excessively (if at all) the setpoint temperature. In the same time we have 'imprecise'
