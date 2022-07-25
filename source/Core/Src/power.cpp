@@ -49,7 +49,7 @@ uint32_t availableW10(uint8_t sample) {
   //				R = R*10
   // P therefore is in V^2*100/R*10 = W*10.
   uint32_t v             = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), sample); // 100 = 10v
-  uint32_t tipResistance = getTipResitanceX10();
+  uint32_t tipResistance = getTipResistanceX10();
   if (tipResistance == 0) {
     return 100; // say 100 watt to force scale down
   }

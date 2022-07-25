@@ -17,3 +17,5 @@ void power_check() {
 }
 
 bool getIsPoweredByDCIN() { return false; }
+
+uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }

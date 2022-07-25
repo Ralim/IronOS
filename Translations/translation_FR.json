@@ -80,8 +80,8 @@
       "desc": "Délai avant mise en veille (s=secondes | m=minutes)"
     },
     "ShutdownTimeout": {
-      "text2": ["Délai", "extinction"],
-      "desc": "Délai avant extinction (m=minutes)"
+      "text2": ["Délai", "arrêt"],
+      "desc": "Délai avant l'arrêt du fer à souder (m=minutes)"
     },
     "MotionSensitivity": {
       "text2": ["Sensibilité", "au mouvement"],
@@ -136,7 +136,7 @@
       "desc": "Tension maximale désirée avec une alimentation QC"
     },
     "PDNegTimeout": {
-      "text2": ["Délai", "expiration PD"],
+      "text2": ["Délai", "expir. PD"],
       "desc": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
     },
     "PowerLimit": {
@@ -156,16 +156,16 @@
       "desc": "Incrément de changement de température sur appui long"
     },
     "PowerPulsePower": {
-      "text2": ["Puissance des", "impulsions"],
+      "text2": ["Puissance", "impulsions"],
       "desc": "Puissance des impulsions pour éviter la mise en veille des batteries (watts)"
-    },
-    "LockingMode": {
-      "text2": ["Verrouiller", "les boutons"],
-      "desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
     },
     "HallEffSensitivity": {
       "text2": ["Sensibilité", "capteur effet hall"],
       "desc": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
+    },
+    "LockingMode": {
+      "text2": ["Verrouiller", "les boutons"],
+      "desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
     },
     "MinVolCell": {
       "text2": ["Tension", "minimale"],
@@ -193,15 +193,15 @@
     },
     "Brightness": {
       "text2": ["Luminosité", "de l'écran"],
-      "desc": "Ajuster le contraste/luminosité de l'écran OLED"
+      "desc": "Ajuster la luminosité de l'écran OLED"
     },
     "ColourInversion": {
       "text2": ["Inverser", "les couleurs"],
       "desc": "Inverser les couleurs de l'écran OLED"
     },
     "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
+      "text2": ["Durée logo", "au démarrage"],
+      "desc": "Définit la durée d'affichage du logo au démarrage (s=secondes)"
     }
   }
 }

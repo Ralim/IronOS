@@ -19,7 +19,6 @@ public:
   static bool      negotiationHasWorked();    // Has PD negotiation worked (are we in a PD contract)
   static uint8_t   getStateNumber();          // Debugging - Get the internal state number
   static bool      isVBUSConnected();         // Is the VBus pin connected on the FUSB302
-  static void      triggerRenegotiation();    // Trigger a restart of voltage selection
   static uint32_t *getLastSeenCapabilities(); // returns pointer to the last seen capabilities from the powersource
 private:
   //

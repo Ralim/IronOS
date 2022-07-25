@@ -20,6 +20,18 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
+
+|  Device 	| DC Supported 	| QC Supported 	| PD Supported 	| Reccomended 	|
+|--------:	|:------------:	|:------------:	|:------------:	|:-----------:	|
+|   MHP30 	|      ❌       |      ❌      |      ✔️      |      ✔️       |
+| Pinecil 	|      ✔️       |      ✔️      |      ✔️      |      ✔️       |
+|   TS100 	|      ✔️       |      ❌      |      ❌      |      ❌       |
+|    TS80 	|      ❌       |      ✔️      |      ❌      |      ❌       |
+|   TS80P 	|      ❌       |      ✔️      |      ✔️      |      ✔️       |
+
+Please note that Miniware have started to ship TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. THis is the main reason why the TS100 is _no longer reccomended_.
+
+
 ## Getting Started
 
 To get started with IronOS firmware, please jump to [Getting Started Guide](Documentation/GettingStarted.md).

@@ -30,7 +30,7 @@ static uint16_t str_display_len(const char *const str) {
 
 uint16_t ScrollMessage::messageWidth(const char *message) { return FONT_12_WIDTH * str_display_len(message); }
 
-bool ScrollMessage::drawUpdate(const char *message, uint32_t currentTick) {
+bool ScrollMessage::drawUpdate(const char *message, TickType_t currentTick) {
   bool lcdRefresh = false;
 
   if (messageStart == 0) {

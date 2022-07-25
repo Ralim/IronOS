@@ -90,6 +90,7 @@ bool USBPowerDelivery::isVBUSConnected() {
 uint32_t  lastCapabilities[11];
 uint32_t *USBPowerDelivery::getLastSeenCapabilities() { return lastCapabilities; }
 
+#ifdef POW_EPR
 static unsigned int sqrtI(unsigned long sqrtArg) {
   unsigned int  answer, x;
   unsigned long temp;
@@ -108,6 +109,7 @@ static unsigned int sqrtI(unsigned long sqrtArg) {
   }
   return answer; // approximate root
 }
+#endif
 
 // parseCapabilitiesArray returns true if a valid capability was found
 // caps is the array of capabilities objects
@@ -119,7 +121,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
   *bestVoltage = 5000; // Default 5V
 
   // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
-  uint8_t tipResistance = getTipResitanceX10() + 5;
+  uint8_t tipResistance = getTipResistanceX10() + 5;
 #ifdef MODEL_HAS_DCDC
   // If this device has step down DC/DC inductor to smooth out current spikes
   // We can instead ignore resistance and go for max voltage we can accept; and rely on the DC/DC regulation to keep under current limit
@@ -173,7 +175,9 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
         *bestIsPPS   = true;
         *bestIsAVO   = false;
       }
-    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS))) {
+    }
+#ifdef POW_EPR
+    else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS))) {
       *bestIsAVO           = true;
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
       uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
@@ -187,7 +191,6 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
         ideal_max_voltage = (max_voltage); // constrain to model max voltage safe to select
       }
       auto operating_current = (ideal_max_voltage / tipResistance); // Current in centiamps
-      MSG((char *)"AVS  max %d wattage %d tipRes %d sqrt %d -> %d\r\n", max_voltage, max_wattage, tipResistance, ideal_max_voltage, operating_current);
 
       if (ideal_max_voltage > *bestVoltage) {
         *bestIndex   = i;
@@ -196,8 +199,8 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
         *bestIsAVO   = true;
       }
     }
+#endif
   }
-
   // Now that the best index is known, set the current values
   return *bestIndex != 0xFF; // have we selected one
 }
@@ -220,7 +223,6 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
     /* We got what we wanted, so build a request for that */
     request->hdr    = PD_MSGTYPE_EPR_REQUEST | PD_NUMOBJ(2);
     request->obj[1] = lastCapabilities[bestIndex]; // Copy PDO into slot 2
-    MSG((char *)"Eval index %d volt %d current %d pps %d avo %d\r\n", bestIndex, bestIndexVoltage, bestIndexCurrent, bestIsPPS ? 1 : 0, bestIsAVO ? 1 : 0);
 
     if (bestIsAVO) {
       request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2APS(bestIndexVoltage)) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
@@ -315,7 +317,7 @@ void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
   // if (requested_voltage_mv != 5000) {
   //   voltage = requested_voltage_mv;
   // }
-  // uint16_t current = (voltage) / getTipResitanceX10(); // In centi-amps
+  // uint16_t current = (voltage) / getTipResistanceX10(); // In centi-amps
 
   // /* Add a PDO for the desired power. */
   // cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);

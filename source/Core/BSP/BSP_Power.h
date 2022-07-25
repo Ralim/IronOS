@@ -17,7 +17,7 @@ extern "C" {
 void power_check();
 
 // Returns the tip resistance in x10 ohms, so 7.5 = 75; 14=140 etc
-uint8_t getTipResitanceX10();
+uint8_t getTipResistanceX10();
 
 uint8_t getTipThermalMass();
 

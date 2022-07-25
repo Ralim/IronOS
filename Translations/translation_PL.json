@@ -132,8 +132,8 @@
       "desc": "Szybkość przewijania tekstu"
     },
     "QCMaxVoltage": {
-      "text2": ["Moc", "w W"],
-      "desc": "Moc używanego zasilacza w (W)"
+      "text2": ["QC", "napięcie"],
+      "desc": "Maksymalne napięcie, które lutownica będzie próbowała wynegocjować z ładowarką Quick Charge (V)"
     },
     "PDNegTimeout": {
       "text2": ["Limit czasu", "PD"],

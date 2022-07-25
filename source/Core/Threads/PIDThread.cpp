@@ -116,8 +116,8 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   static TickType_t          lastCall   = 0;
   static Integrator<int32_t> powerStore = {0};
 
-  const int rate = 1000 / (xTaskGetTickCount() - lastCall);
-  lastCall       = xTaskGetTickCount();
+  const TickType_t rate = 1000 / (xTaskGetTickCount() - lastCall);
+  lastCall              = xTaskGetTickCount();
   // Sandman note:
   // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't
   // want to overshot excessively (if at all) the setpoint temperature. In the same time we have 'imprecise'
