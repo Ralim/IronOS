@@ -93,3 +93,5 @@ void setStatusLED(const enum StatusLED state) {}
 
 uint8_t  preStartChecks() { return 0; }
 uint64_t getDeviceID() { return dbg_id_get(); }
+
+uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
