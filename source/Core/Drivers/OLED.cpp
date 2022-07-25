@@ -221,7 +221,7 @@ void OLED::maskScrollIndicatorOnOLED() {
   // it from the screen buffer which is updated by `OLED::setRotation`.
   uint8_t rightmostColumn = screenBuffer[7];
   uint8_t maskCommands[]  = {
-      // Set column address:
+       // Set column address:
       //  A[6:0] - Column start address = rightmost column
       //  B[6:0] - Column end address = rightmost column
       0x80,
@@ -252,10 +252,10 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
   uint8_t *firstBackStripPtr  = &secondFrameBuffer[0];
   uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
 
-  uint32_t totalDuration = TICKS_100MS * 5; // 500ms
-  uint32_t duration      = 0;
-  uint32_t start         = xTaskGetTickCount();
-  uint8_t  offset        = 0;
+  TickType_t totalDuration = TICKS_100MS * 5; // 500ms
+  TickType_t duration      = 0;
+  TickType_t start         = xTaskGetTickCount();
+  uint8_t    offset        = 0;
 
   while (duration <= totalDuration) {
     duration         = xTaskGetTickCount() - start;
