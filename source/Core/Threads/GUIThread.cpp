@@ -972,6 +972,21 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
+  // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
+  if (getSettingValue(SettingsOptions::LOGOTime) > 0 &&
+      getSettingValue(SettingsOptions::LOGOTime) < 5 &&
+      getSettingValue(SettingsOptions::AutoStartMode) > 0 &&
+      getSettingValue(SettingsOptions::AutoStartMode) < 3) {
+    uint16_t sleepTempDegC;
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      sleepTempDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SleepTemp));
+    } else {
+      sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
+    }
+    // Only heat to sleep temperature (but no higher than 75*C for safety)
+    currentTempTargetDegC = min(sleepTempDegC, 75);
+  }
+
   BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
