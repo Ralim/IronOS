@@ -110,11 +110,11 @@
 
 #define OP_AMP_GAIN_STAGE_PINECIL (1 + (OP_AMP_Rf_Pinecil / OP_AMP_Rin_Pinecil))
 
-#if defined(MODEL_Magic) == 0
+#if defined(MODEL_Pinecilv2) == 0
 #error "No model defined!"
 #endif
 
-#ifdef MODEL_Magic
+#ifdef MODEL_Pinecilv2
 #define ADC_VDD_MV                 3300                      // ADC max reading millivolts
 #define ADC_MAX_READING            (62000 >> 1)              // Maximum reading of the adc
 #define SOLDERING_TEMP             320                       // Default soldering temp is 320.0 °C

@@ -33,7 +33,7 @@ void hardware_init() {
   gpio_set_mode(TIP_RESISTANCE_SENSE, GPIO_OUTPUT_MODE);
   gpio_write(TIP_RESISTANCE_SENSE, 0);
 
-  MSG((char *)"Magic Starting\r\n");
+  MSG((char *)"Pine64 Pinecilv2 Starting\r\n");
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();

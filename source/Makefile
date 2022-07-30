@@ -3,10 +3,10 @@ model:=Pinecil
 endif
 
 ALL_MINIWARE_MODELS=TS100 TS80 TS80P
-PINECIL_MODELS=Pinecil
-ALL_MAGIC_MODELS=Magic
+ALL_PINECIL_MODELS=Pinecil
+ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_MAGIC_MODELS)
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS)
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
@@ -65,13 +65,13 @@ MHP30_STARTUP_DIR = ./Startup
 MHP30_INC_DIR = ./Core/BSP/MHP30
 MHP30_LD_FILE = ./Core/BSP/MHP30/stm32f103.ld
 
-PINE_INC_DIR = ./Core/BSP/Pine64
-PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include
-PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include/Usb
-PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
-PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
+PINE_INC_DIR = ./Core/BSP/Pinecil
+PINE_VENDOR_INC_DIR = ./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include
+PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include/Usb
+PINE_NMSIS_INC_DIR = ./Core/BSP/Pinecil/Vendor/NMSIS/Core/Include
+PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pinecil/Vendor/OS/FreeRTOS/Source/portable/GCC
 
-MAGIC_DIR = ./Core/BSP/Magic
+MAGIC_DIR = ./Core/BSP/Pinecilv2
 MAGIC_SDK_DIR = $(MAGIC_DIR)/bl_mcu_sdk
 
 MAGIC_VENDOR_BSP_DIR = $(MAGIC_SDK_DIR)/bsp
@@ -193,18 +193,18 @@ DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
 
-ifeq ($(model),$(PINECIL_MODELS))
-$(info Building for Pine64 )
+ifeq ($(model),$(ALL_PINECIL_MODELS))
+$(info Building for Pine64 Pinecilv1)
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_VENDOR_INC_DIR) \
 -I$(PINE_VENDOR_USB_INC_DIR) \
 -I$(PINE_NMSIS_INC_DIR) \
 -I$(PINE_FREERTOS_PORT_INC_DIR) 
 	
-DEVICE_BSP_DIR = ./Core/BSP/Pine64
+DEVICE_BSP_DIR = ./Core/BSP/Pinecil
 S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
-LDSCRIPT=./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
+LDSCRIPT=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
 flash_size=128k
 bootldr_size=0x0
 # Flags
@@ -221,8 +221,8 @@ endif
 
 
 
-ifeq ($(model),$(ALL_MAGIC_MODELS))
-$(info Building for Magic ~~~~~ ^^__^^ )
+ifeq ($(model),$(ALL_PINECIL_V2_MODELS))
+$(info Building for Pine64 Pinecilv2 )
 
 
 
@@ -260,10 +260,10 @@ DEVICE_INCLUDES = -I$(MAGIC_DIR) \
 	-I$(MAGIC_COMPONENTS_USB_STACK_WINUSB_DIR) \
 	-I$(MAGIC_COMPONENTS_NMSIS_CORE_INC_DIR) 
 
-DEVICE_BSP_DIR = ./Core/BSP/Magic
+DEVICE_BSP_DIR = ./Core/BSP/Pinecilv2
 S_SRCS := $(shell find $(MAGIC_DIR) -type d  \(  -path $(MAGIC_VENDOR_BSP_COMMON_DIR) \) -prune -false -o  -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC = $(DEVICE_INCLUDES)
-LDSCRIPT=./Core/BSP/Magic/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
+LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 
 # Flags
 CPUFLAGS= -march=rv32imafc \
@@ -336,7 +336,7 @@ COMPILER=gcc
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),$(filter $(model),$(PINECIL_MODELS) $(ALL_MAGIC_MODELS)))
+ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
 endif
 # programs ---------------------------------------------------------------------

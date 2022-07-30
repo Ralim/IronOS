@@ -41,6 +41,8 @@ extern "C" {
  * These settings should not be altered.
  *-----------------------------------------------------------
  */
+#include <stddef.h>
+#include <stdint.h>
 
 /* Type definitions. */
 #if __riscv_xlen == 64
@@ -67,7 +69,7 @@ extern "C" {
 #endif
 
 typedef portSTACK_TYPE StackType_t;
-typedef portBASE_TYPE BaseType_t;
+typedef portBASE_TYPE  BaseType_t;
 typedef portUBASE_TYPE UBaseType_t;
 typedef portUBASE_TYPE TickType_t;
 
@@ -89,11 +91,11 @@ not need to be guarded with a critical section. */
 
 /* Scheduler utilities. */
 extern BaseType_t TrapNetCounter;
-extern void vTaskSwitchContext(void);
+extern void       vTaskSwitchContext(void);
 #define portYIELD() __asm volatile("ecall");
 #define portEND_SWITCHING_ISR(xSwitchRequired) \
-    if (xSwitchRequired)                       \
-    vTaskSwitchContext()
+  if (xSwitchRequired)                         \
+  vTaskSwitchContext()
 #define portYIELD_FROM_ISR(x) portEND_SWITCHING_ISR(x)
 /*-----------------------------------------------------------*/
 
@@ -151,13 +153,9 @@ not necessary for to use this port.  They are defined so the common demo files
 #define portFORCE_INLINE inline __attribute__((always_inline))
 #endif
 
-#define portMEMORY_BARRIER() __asm volatile("" :: \
-                                                : "memory")
+#define portMEMORY_BARRIER() __asm volatile("" ::: "memory")
 
-portFORCE_INLINE static BaseType_t xPortIsInsideInterrupt(void)
-{
-    return TrapNetCounter ? 1 : 0;
-}
+portFORCE_INLINE static BaseType_t xPortIsInsideInterrupt(void) { return TrapNetCounter ? 1 : 0; }
 
 #ifdef __cplusplus
 }
