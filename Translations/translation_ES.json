@@ -16,7 +16,7 @@
   },
   "messagesWarn": {
     "ResetOKMessage": "Hecho.",
-    "SettingsResetMessage": ["Los ajustes fueron", "¡Reinicio!"],
+    "SettingsResetMessage": ["Ajustes", "¡Reiniciados!"],
     "NoAccelerometerMessage": ["Sin acelerómetro", "¡Detectado!"],
     "NoPowerDeliveryMessage": ["Sin USB-PD IC", "¡Detectado!"],
     "LockingKeysString": " BLOQUEADO",
@@ -50,7 +50,7 @@
       "desc": "Ajustes de potencia"
     },
     "SolderingMenu": {
-      "text2": ["Ajustes de", "soldadura"],
+      "text2": ["Soldadura", "ajustes"],
       "desc": "Ajustes para soldar."
     },
     "PowerSavingMenu": {
@@ -188,20 +188,20 @@
       "desc": "Duración del impulso de mantenimiento de la vigilia (x 250ms)"
     },
     "LanguageSwitch": {
-      "text2": ["Language:", " ES  Castellano"],
+      "text2": ["Idioma:", " ES  Castellano"],
       "desc": ""
     },
     "Brightness": {
-      "text2": ["Screen", "brightness"],
-      "desc": "Adjust the brightness of the OLED screen"
+      "text2": ["Pantalla", "brillo"],
+      "desc": "Ajusta el brillo de la pantalla OLED"
     },
     "ColourInversion": {
-      "text2": ["Invert", "screen"],
-      "desc": "Invert the colours of the OLED screen"
+      "text2": ["Invertir", "pantalla"],
+      "desc": "Invertir la pantalla OLED"
     },
     "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
+      "text2": ["logo inicial", "duracion"],
+      "desc": "duracion de la animacion del logo inicial (s=segundos)"
     }
   }
 }
