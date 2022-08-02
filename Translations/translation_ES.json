@@ -200,8 +200,8 @@
       "desc": "Invertir la pantalla OLED"
     },
     "LOGOTime": {
-      "text2": ["logo inicial", "duracion"],
-      "desc": "duracion de la animacion del logo inicial (s=segundos)"
+      "text2": ["logo inicial", "duración"],
+      "desc": "Duración de la animación del logo inicial (s=segundos)"
     }
   }
 }
