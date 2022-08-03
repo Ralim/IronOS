@@ -14,7 +14,7 @@ The converter requires at least Python 3 and Pillow (if you don't have it, it wi
 Follow online instructions for installing Python and Pillow. For Windows, it is recommended to use Windows PowerShell instead of Command.
 Open Powershell (run as administrator), type python to install it, it will open microsoft store where you can install it.
 
-Go back to Powershell, What works can vary, but this command may work:
+Go back to Powershell, what works can vary, but this command may work:
 
     python -m pip install Pillow
 or 
