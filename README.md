@@ -29,7 +29,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 |    TS80 	|      ❌       |      ✔️      |      ❌      |      ❌       |      ❌       |
 |   TS80P 	|      ❌       |      ✔️      |      ✔️      |      ❌       |      ✔️       |
 
-`*` Only Pinecil version 2 sold after Aug 2, 2022 has support for EPR PD3.1 28V/140W. The new model also includes BLE bluetooth and has a teal color silicone thumb grip. Original Pinecil was black with a sky blue colored grip.
+*Only Pinecil version 2 sold after Aug 2, 2022 has support for EPR PD3.1 28V/140W. The new model also includes BLE bluetooth and has a teal color silicone thumb grip. Original Pinecil was black with a sky blue colored grip.
 
 ## Getting Started
 
