@@ -328,6 +328,10 @@ void OLED::transitionScrollDown() {
 
   // Scroll the screen by changing display start line.
   for (uint8_t current = startLine; current <= scrollTo; current++) {
+    if (getButtonState() != BUTTON_NONE) {
+      current = scrollTo;
+    }
+
     // Set display start line (0x40~0x7F):
     //  X[5:0] - display start line value
     uint8_t scrollCommandByte = 0b01000000 | (current & 0b00111111);
@@ -337,16 +341,6 @@ void OLED::transitionScrollDown() {
 
     I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
     osDelay(TICKS_100MS / 7);
-    if (getButtonState() != BUTTON_NONE) {
-
-      scrollCommandByte = 0b01000000 | (scrollTo & 0b00111111);
-
-      // Also update setup command for "set display start line":
-      OLED_Setup_Array[8].val = scrollCommandByte;
-
-      I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
-      return;
-    }
   }
 }
 
