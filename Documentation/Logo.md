@@ -1,26 +1,32 @@
 # Startup Logos
 
 This firmware supports a user created bootup logo.
-By default, there is _not_ one included in the firmware, as this means that once flashed they generally stay.
+By default, there is _not_ one included in the firmware. This means that once flashed they generally stay. If you want no logo again, you would have to flash a blank image to the bootup logo. 
 
 ## Generating the Logo files
 
-The [Python script](https://github.com/Ralim/IronOS-Meta/blob/main/Bootup%20Logos/img2logo.py) converts an image passed into it on the command line to a `.hex` file or a `.dfu` to be uploaded to the iron in DFU mode (similar to the process described above). The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image in an image editor and color the pixels black or white manually.
+The Python script and related files are in [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/). It converts an image passed into it on the command line to a `.hex` file or a `.dfu` to be uploaded to the iron in DFU mode. The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (Png or Bmp) in any image editor and color the pixels black & white manually. It is easiest to select green Code button, then Download Zip. This way you get all the files you need and some extras. You only need what is inside Boot Logos. Put your custom image inside Boot Logos folder with all python script files in there.
 
 There are community logo's already converted available for download in the releases in [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/).
 
 The converter requires at least Python 3 and Pillow (if you don't have it, it will tell you to install PIL, which is an old version of the same thing). See [this page](https://stackoverflow.com/a/20061019/6705343) on StackOverflow about installing it.
 
-What works can vary, but this command may work:
+Follow online instructions for installing Python and Pillow. For Windows, it is recommended to use Windows PowerShell instead of Command.
+Open Powershell (run as administrator), type python to install it, it will open microsoft store where you can install it.
 
-`python3 -m pip install pillow`
+Go back to Powershell, what works can vary, but this command may work:
+
+    python -m pip install Pillow
+or 
+    python3 -m pip install pillow
 
 Then, to convert an image:
 
-- `python3 img2logo.py infile.png out -m` for Miniware
-- `python3 img2logo.py infile.png out -p` for Pinecil
+- `python img2logo.py infile.png out -m` for Miniware
+- `python img2logo.py infile.png out -p` for Pinecil
 
-Run `python3 img2logo.py --help` to see available options.
+Run `python img2logo.py --help` to see available options. Replace word python with python3 if you have multiple versions of python installed.
+Make sure your image file is in the same folder as scripts img2logo.py, output_dfu.py, and output_hex.py.
 
 ## Flashing the Logo
 
@@ -33,7 +39,12 @@ If you have flashed the `IronOS-dfu` alternative bootloader, you should use the 
 
 ### Pinecil
 
-For Pinecil, we require using dfu-util instead to flash the logo art (Pinecil does not use hex).
-Please see the [Meta repo](https://github.com/Ralim/IronOS-Meta) for the tooling for converting logo's as well as automatically generated logo's
+For Pinecil, we require using dfu-util to flash the logo art (Pinecil does not use hex).
+[Pine64 Updater](https://github.com/pine64/pine64_updater/releases) is the easiest way to load the Bootup logo onto Pinecil as it already includes the necessary DFU library. Connect Pinecil to PC, and open the Updater the same as if you were updating firmware.
+  Select Custom > Browse to the DFU image file you just made > Update to install.
+
+The bootup logo is stored in a separate location than the IronOS firmware and you do not have to worry about it changing or breaking the IronOS.
+Please see the [Meta repo](https://github.com/Ralim/IronOS-Meta) for the tooling for converting logo's as well as automatically generated logo's.
+You could also use dfu-util and use Command line to install it.
 
 - `dfu-util -D logo_file.dfu`
