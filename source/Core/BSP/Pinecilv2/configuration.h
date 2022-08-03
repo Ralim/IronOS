@@ -156,4 +156,4 @@
 #endif
 #endif
 
-#define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
+#define FLASH_LOGOADDR (0x23000000 + (1022 * 1024))
