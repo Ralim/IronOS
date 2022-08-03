@@ -8,13 +8,13 @@ _This repository was formerly known as TS100, it's the same great code. Just wit
 
 Originally conceived as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
-The firmware implements all of the standard features of a "smart" soldering iron, with lots of little extras and tweaks.
+The firmware implements all of the standard features of a 'smart' soldering iron, with lots of little extras and tweaks.
 I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
 
-For soldering irons that are designed to be powered by "smart" power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
+For soldering irons that are designed to be powered by 'smart' power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100 & Pinecil), settings for a cutoff voltage for battery protection are supported.
 
-There are 30 languages currently supported as of present. When downloading the firmware for your soldering iron take note of the language code in the file name.
+There are 30 languages currently supported. When downloading the firmware for your soldering iron, take note of the language code in the file name.
 
 This project is considered feature complete for use as a soldering iron, _so please suggest any feature improvements you would like!_
 
@@ -29,9 +29,9 @@ _This firmware does **NOT** support the USB port while running for changing sett
 |    TS80 	|      ❌       |      ✔️      |      ❌      |      ❌       |      ❌       |
 |   TS80P 	|      ❌       |      ✔️      |      ✔️      |      ❌       |      ✔️       |
 
-*Only Pinecil version 2 sold after Aug 2, 2022 has support for EPR PD3.1 28V/140W. The new model also includes BLE bluetooth and has a teal color silicone thumb grip. Original Pinecil was black with a sky blue colored grip.
+_*Only Pinecil version 2 sold after Aug 2, 2022 has support for EPR PD3.1 28V/140W_. The new model also includes BLE bluetooth and has a teal color silicone thumb grip. Original Pinecil was black with a sky blue colored grip.
 
-Please note that Miniware have started to ship TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. THis is the main reason why the TS100 is _no longer reccomended_.
+Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is _no longer reccomended_.
 
 
 ## Getting Started
