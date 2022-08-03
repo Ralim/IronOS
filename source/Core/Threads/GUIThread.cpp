@@ -42,7 +42,7 @@ void              showWarnings();
 #define BUTTON_INACTIVITY_TIME   (60 * configTICK_RATE_HZ)
 static TickType_t lastHallEffectSleepStart = 0;
 static uint16_t   min(uint16_t a, uint16_t b) {
-    if (a > b)
+  if (a > b)
     return b;
   else
     return a;
@@ -997,10 +997,8 @@ void startGUITask(void const *argument) {
 #endif
 #endif
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
-  if (getSettingValue(SettingsOptions::LOGOTime) > 0 &&
-      getSettingValue(SettingsOptions::LOGOTime) < 5 &&
-      getSettingValue(SettingsOptions::AutoStartMode) > 0 &&
-      getSettingValue(SettingsOptions::AutoStartMode) < 3) {
+  if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
+      && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
     uint16_t sleepTempDegC;
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
       sleepTempDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SleepTemp));
@@ -1010,7 +1008,6 @@ void startGUITask(void const *argument) {
     // Only heat to sleep temperature (but no higher than 75*C for safety)
     currentTempTargetDegC = min(sleepTempDegC, 75);
   }
-
 
   BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 

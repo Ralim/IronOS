@@ -151,8 +151,8 @@ static uint32_t usbh_int_pipe(usb_core_driver *pudev) {
     \retval     operation status
 */
 static uint32_t usbh_int_txfifoempty(usb_core_driver *pudev, usb_pipe_mode pp_mode) {
-  uint8_t  pp_num     = 0U;
-  uint16_t word_count = 0U, len = 0U;
+  uint8_t        pp_num     = 0U;
+  uint16_t       word_count = 0U, len = 0U;
   __IO uint32_t *txfiforeg = 0U, txfifostate = 0U;
 
   if (PIPE_NON_PERIOD == pp_mode) {

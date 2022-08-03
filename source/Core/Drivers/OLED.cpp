@@ -221,7 +221,7 @@ void OLED::maskScrollIndicatorOnOLED() {
   // it from the screen buffer which is updated by `OLED::setRotation`.
   uint8_t rightmostColumn = screenBuffer[7];
   uint8_t maskCommands[]  = {
-       // Set column address:
+      // Set column address:
       //  A[6:0] - Column start address = rightmost column
       //  B[6:0] - Column end address = rightmost column
       0x80,
