@@ -3347,7 +3347,7 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
           htim->IC_CaptureCallback(htim);
 #else
-          HAL_TIM_IC_CaptureCallback(htim);
+          // HAL_TIM_IC_CaptureCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
         }
         /* Output compare event */
@@ -3356,8 +3356,8 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
           htim->OC_DelayElapsedCallback(htim);
           htim->PWM_PulseFinishedCallback(htim);
 #else
-          HAL_TIM_OC_DelayElapsedCallback(htim);
-          HAL_TIM_PWM_PulseFinishedCallback(htim);
+          // HAL_TIM_OC_DelayElapsedCallback(htim);
+          // HAL_TIM_PWM_PulseFinishedCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
         }
         htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
@@ -3374,7 +3374,7 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
         htim->IC_CaptureCallback(htim);
 #else
-        HAL_TIM_IC_CaptureCallback(htim);
+        // HAL_TIM_IC_CaptureCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
       }
       /* Output compare event */
@@ -3383,8 +3383,8 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
         htim->OC_DelayElapsedCallback(htim);
         htim->PWM_PulseFinishedCallback(htim);
 #else
-        HAL_TIM_OC_DelayElapsedCallback(htim);
-        HAL_TIM_PWM_PulseFinishedCallback(htim);
+        // HAL_TIM_OC_DelayElapsedCallback(htim);
+        // HAL_TIM_PWM_PulseFinishedCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
       }
       htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
@@ -3400,7 +3400,7 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
         htim->IC_CaptureCallback(htim);
 #else
-        HAL_TIM_IC_CaptureCallback(htim);
+        // HAL_TIM_IC_CaptureCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
       }
       /* Output compare event */
@@ -3409,8 +3409,8 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
         htim->OC_DelayElapsedCallback(htim);
         htim->PWM_PulseFinishedCallback(htim);
 #else
-        HAL_TIM_OC_DelayElapsedCallback(htim);
-        HAL_TIM_PWM_PulseFinishedCallback(htim);
+        // HAL_TIM_OC_DelayElapsedCallback(htim);
+        // HAL_TIM_PWM_PulseFinishedCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
       }
       htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
@@ -3426,7 +3426,7 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
         htim->IC_CaptureCallback(htim);
 #else
-        HAL_TIM_IC_CaptureCallback(htim);
+        // HAL_TIM_IC_CaptureCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
       }
       /* Output compare event */
@@ -3435,8 +3435,8 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
         htim->OC_DelayElapsedCallback(htim);
         htim->PWM_PulseFinishedCallback(htim);
 #else
-        HAL_TIM_OC_DelayElapsedCallback(htim);
-        HAL_TIM_PWM_PulseFinishedCallback(htim);
+        // HAL_TIM_OC_DelayElapsedCallback(htim);
+        // HAL_TIM_PWM_PulseFinishedCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
       }
       htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
@@ -4864,33 +4864,33 @@ __weak void HAL_TIM_PeriodElapsedHalfCpltCallback(TIM_HandleTypeDef *htim) {
    */
 }
 
-/**
- * @brief  Output Compare callback in non-blocking mode
- * @param  htim TIM OC handle
- * @retval None
- */
-__weak void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+// /**
+//  * @brief  Output Compare callback in non-blocking mode
+//  * @param  htim TIM OC handle
+//  * @retval None
+//  */
+// __weak void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim) {
+//   /* Prevent unused argument(s) compilation warning */
+//   UNUSED(htim);
 
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_TIM_OC_DelayElapsedCallback could be implemented in the user file
-   */
-}
+//   /* NOTE : This function should not be modified, when the callback is needed,
+//             the HAL_TIM_OC_DelayElapsedCallback could be implemented in the user file
+//    */
+// }
 
-/**
- * @brief  Input Capture callback in non-blocking mode
- * @param  htim TIM IC handle
- * @retval None
- */
-__weak void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+// /**
+//  * @brief  Input Capture callback in non-blocking mode
+//  * @param  htim TIM IC handle
+//  * @retval None
+//  */
+// __weak void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+//   /* Prevent unused argument(s) compilation warning */
+//   UNUSED(htim);
 
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_TIM_IC_CaptureCallback could be implemented in the user file
-   */
-}
+//   /* NOTE : This function should not be modified, when the callback is needed,
+//             the HAL_TIM_IC_CaptureCallback could be implemented in the user file
+//    */
+// }
 
 /**
  * @brief  Input Capture half complete callback in non-blocking mode
@@ -4906,19 +4906,19 @@ __weak void HAL_TIM_IC_CaptureHalfCpltCallback(TIM_HandleTypeDef *htim) {
    */
 }
 
-/**
- * @brief  PWM Pulse finished callback in non-blocking mode
- * @param  htim TIM handle
- * @retval None
- */
-__weak void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+// /**
+//  * @brief  PWM Pulse finished callback in non-blocking mode
+//  * @param  htim TIM handle
+//  * @retval None
+//  */
+// __weak void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
+//   /* Prevent unused argument(s) compilation warning */
+//   UNUSED(htim);
 
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_TIM_PWM_PulseFinishedCallback could be implemented in the user file
-   */
-}
+//   /* NOTE : This function should not be modified, when the callback is needed,
+//             the HAL_TIM_PWM_PulseFinishedCallback could be implemented in the user file
+//    */
+// }
 
 /**
  * @brief  PWM Pulse finished half complete callback in non-blocking mode
@@ -5629,7 +5629,7 @@ static void TIM_DMADelayPulseCplt(DMA_HandleTypeDef *hdma) {
 #if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
   htim->PWM_PulseFinishedCallback(htim);
 #else
-  HAL_TIM_PWM_PulseFinishedCallback(htim);
+  // HAL_TIM_PWM_PulseFinishedCallback(htim);
 #endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 
   htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
