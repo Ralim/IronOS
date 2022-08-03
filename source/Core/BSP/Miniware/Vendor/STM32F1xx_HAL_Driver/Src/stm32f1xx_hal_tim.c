@@ -3338,108 +3338,25 @@ void HAL_TIM_IRQHandler(TIM_HandleTypeDef *htim) {
   /* Capture compare 1 event */
   if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_CC1) != RESET) {
     if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_CC1) != RESET) {
-      {
-        __HAL_TIM_CLEAR_IT(htim, TIM_IT_CC1);
-        htim->Channel = HAL_TIM_ACTIVE_CHANNEL_1;
-
-        /* Input capture event */
-        if ((htim->Instance->CCMR1 & TIM_CCMR1_CC1S) != 0x00U) {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-          htim->IC_CaptureCallback(htim);
-#else
-          // HAL_TIM_IC_CaptureCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-        }
-        /* Output compare event */
-        else {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-          htim->OC_DelayElapsedCallback(htim);
-          htim->PWM_PulseFinishedCallback(htim);
-#else
-          // HAL_TIM_OC_DelayElapsedCallback(htim);
-          // HAL_TIM_PWM_PulseFinishedCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-        }
-        htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
-      }
+      { __HAL_TIM_CLEAR_IT(htim, TIM_IT_CC1); }
     }
   }
   /* Capture compare 2 event */
   if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_CC2) != RESET) {
     if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_CC2) != RESET) {
       __HAL_TIM_CLEAR_IT(htim, TIM_IT_CC2);
-      htim->Channel = HAL_TIM_ACTIVE_CHANNEL_2;
-      /* Input capture event */
-      if ((htim->Instance->CCMR1 & TIM_CCMR1_CC2S) != 0x00U) {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-        htim->IC_CaptureCallback(htim);
-#else
-        // HAL_TIM_IC_CaptureCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-      }
-      /* Output compare event */
-      else {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-        htim->OC_DelayElapsedCallback(htim);
-        htim->PWM_PulseFinishedCallback(htim);
-#else
-        // HAL_TIM_OC_DelayElapsedCallback(htim);
-        // HAL_TIM_PWM_PulseFinishedCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-      }
-      htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
     }
   }
   /* Capture compare 3 event */
   if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_CC3) != RESET) {
     if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_CC3) != RESET) {
       __HAL_TIM_CLEAR_IT(htim, TIM_IT_CC3);
-      htim->Channel = HAL_TIM_ACTIVE_CHANNEL_3;
-      /* Input capture event */
-      if ((htim->Instance->CCMR2 & TIM_CCMR2_CC3S) != 0x00U) {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-        htim->IC_CaptureCallback(htim);
-#else
-        // HAL_TIM_IC_CaptureCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-      }
-      /* Output compare event */
-      else {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-        htim->OC_DelayElapsedCallback(htim);
-        htim->PWM_PulseFinishedCallback(htim);
-#else
-        // HAL_TIM_OC_DelayElapsedCallback(htim);
-        // HAL_TIM_PWM_PulseFinishedCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-      }
-      htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
     }
   }
   /* Capture compare 4 event */
   if (__HAL_TIM_GET_FLAG(htim, TIM_FLAG_CC4) != RESET) {
     if (__HAL_TIM_GET_IT_SOURCE(htim, TIM_IT_CC4) != RESET) {
       __HAL_TIM_CLEAR_IT(htim, TIM_IT_CC4);
-      htim->Channel = HAL_TIM_ACTIVE_CHANNEL_4;
-      /* Input capture event */
-      if ((htim->Instance->CCMR2 & TIM_CCMR2_CC4S) != 0x00U) {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-        htim->IC_CaptureCallback(htim);
-#else
-        // HAL_TIM_IC_CaptureCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-      }
-      /* Output compare event */
-      else {
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-        htim->OC_DelayElapsedCallback(htim);
-        htim->PWM_PulseFinishedCallback(htim);
-#else
-        // HAL_TIM_OC_DelayElapsedCallback(htim);
-        // HAL_TIM_PWM_PulseFinishedCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
-      }
-      htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
     }
   }
   /* TIM Update event */
@@ -4836,19 +4753,19 @@ uint32_t HAL_TIM_ReadCapturedValue(TIM_HandleTypeDef *htim, uint32_t Channel) {
   * @{
   */
 
-/**
- * @brief  Period elapsed callback in non-blocking mode
- * @param  htim TIM handle
- * @retval None
- */
-__weak void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(htim);
+// /**
+//  * @brief  Period elapsed callback in non-blocking mode
+//  * @param  htim TIM handle
+//  * @retval None
+//  */
+// __weak void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+//   /* Prevent unused argument(s) compilation warning */
+//   UNUSED(htim);
 
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_TIM_PeriodElapsedCallback could be implemented in the user file
-   */
-}
+//   /* NOTE : This function should not be modified, when the callback is needed,
+//             the HAL_TIM_PeriodElapsedCallback could be implemented in the user file
+//    */
+// }
 
 /**
  * @brief  Period elapsed half complete callback in non-blocking mode
@@ -5625,12 +5542,6 @@ static void TIM_DMADelayPulseCplt(DMA_HandleTypeDef *hdma) {
   } else {
     /* nothing to do */
   }
-
-#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
-  htim->PWM_PulseFinishedCallback(htim);
-#else
-  // HAL_TIM_PWM_PulseFinishedCallback(htim);
-#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
 
   htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
 }
