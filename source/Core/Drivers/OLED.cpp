@@ -5,6 +5,7 @@
  *      Author: Ben V. Brown
  */
 
+#include "Buttons.hpp"
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "configuration.h"
@@ -332,7 +333,17 @@ void OLED::transitionScrollDown() {
     OLED_Setup_Array[8].val = scrollCommandByte;
 
     I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
-    osDelay(TICKS_100MS / 5);
+    osDelay(TICKS_100MS / 8);
+    if (getButtonState() != BUTTON_NONE) {
+
+      scrollCommandByte = 0b01000000 | (scrollTo & 0b00111111);
+
+      // Also update setup command for "set display start line":
+      OLED_Setup_Array[8].val = scrollCommandByte;
+
+      I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
+      return;
+    }
   }
 }
 
