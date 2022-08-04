@@ -8,7 +8,7 @@ By default, there is _not_ one included in the firmware. This means that once fl
 There are community logo's already converted and ready to use in [IronOS-Meta\releases](https://github.com/Ralim/IronOS-Meta/releases).
 Download the zip for Pinecil or Miniware and then install using the instructions in the Flashing section below.
 
-If you want to make custom art then it needa to be converted with a Python script. The script and other needed files are in [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/). Go to that folder, then it is easiest to select the green Code button (upper right), then Download Zip. This way you get all the files you need and some extras. You only need what is inside Boot Logos. Put your custom image inside the Boot Logos folder with all python script files already there.
+If you want to make custom art then it needs to be converted with a Python script. The script and other needed files are in [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/). Go to that folder, then it is easiest to select the green Code button (upper right), then Download Zip. This way you get all the files you need and some extras. You only need what is inside Boot Logos. Put your custom image inside the Boot Logos folder with all python script files already there.
 
 The Python script converts an image passed into it on the command line into both a `.hex` file and a `.dfu` to be uploaded to the iron in DFU mode. The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (Png or Bmp) in any image editor and color the pixels black & white manually.
 
