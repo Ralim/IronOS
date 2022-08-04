@@ -12,18 +12,20 @@ If you want to make custom art then it needs to be converted with a Python scrip
 
 The Python script converts an image passed into it on the command line into both a `.hex` file and a `.dfu` to be uploaded to the iron in DFU mode. The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (Png or Bmp) in any image editor and color the pixels black & white manually.
 
-The converter requires at least Python 3 and Pillow (if you don't have it, it will tell you to install PIL, which is an old version of the same thing). See [this page](https://stackoverflow.com/a/20061019/6705343) on StackOverflow about installing it.
+The converter requires at least Python3 and Pillow apps. Follow online instructions for installing Python and Pillow.
 
-Follow online instructions for installing Python and Pillow. For Windows, it is recommended to use Windows PowerShell instead of Command.
+For Windows, it is recommended to use Windows PowerShell instead of Command.
 Open Powershell (run as administrator), type python to install it, it will open microsoft store where you can install it free.
-
 Go back to Powershell and install Pillow. What works can vary, but this command may work:
 
     python -m pip install Pillow
 or 
     python3 -m pip install pillow
 
-Then, to convert a custom image (change infile.png to the name of your image):
+If the above does not work, see [this page](https://stackoverflow.com/a/20061019/6705343) on StackOverflow about installing Pillow.
+Now that Python and Pillow are successfuly installed, you can convert an image.
+
+Go back to Powershell and type this command (change infile.png to the name of your image):
 
 - `python img2logo.py infile.png out -m`   for Miniware
 - `python img2logo.py infile.png out -p`   for Pinecil
