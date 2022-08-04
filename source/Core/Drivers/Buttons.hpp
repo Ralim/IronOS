@@ -7,8 +7,8 @@
 #include "BSP.h"
 #ifndef INC_BUTTONS_H_
 #define INC_BUTTONS_H_
-
-extern uint32_t lastButtonTime;
+#include "portmacro.h"
+extern TickType_t lastButtonTime;
 
 enum ButtonState {
   BUTTON_NONE      = 0,  /* No buttons pressed / < filter time*/
@@ -29,7 +29,7 @@ enum ButtonState {
 // Returns what buttons are pressed (if any)
 ButtonState getButtonState();
 // Helpers
-void waitForButtonPressOrTimeout(uint32_t timeout);
+void waitForButtonPressOrTimeout(TickType_t timeout);
 void waitForButtonPress();
 
 #endif /* INC_BUTTONS_H_ */

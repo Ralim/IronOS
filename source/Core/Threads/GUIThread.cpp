@@ -42,7 +42,7 @@ void              showWarnings();
 #define BUTTON_INACTIVITY_TIME   (60 * configTICK_RATE_HZ)
 static TickType_t lastHallEffectSleepStart = 0;
 static uint16_t   min(uint16_t a, uint16_t b) {
-  if (a > b)
+    if (a > b)
     return b;
   else
     return a;
@@ -171,9 +171,9 @@ static void gui_drawBatteryIcon() {
 #endif
 }
 static void gui_solderingTempAdjust() {
-  uint32_t lastChange                = xTaskGetTickCount();
+  TickType_t lastChange              = xTaskGetTickCount();
   currentTempTargetDegC              = 0; // Turn off header while adjusting temp
-  uint32_t    autoRepeatTimer        = 0;
+  TickType_t  autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
   bool        waitForRelease         = false;
   ButtonState buttons                = getButtonState();
@@ -370,7 +370,7 @@ static void display_countdown(int sleepThres) {
    * Print seconds or minutes (if > 99 seconds) until sleep
    * mode is triggered.
    */
-  int        lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
+  TickType_t lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
   TickType_t downCount     = sleepThres - xTaskGetTickCount() + lastEventTime;
   if (downCount > (99 * TICKS_SECOND)) {
     OLED::printNumber(downCount / 60000 + 1, 2, FontStyle::SMALL);
@@ -840,35 +840,50 @@ static void showPDDebug(void) {
       }
     } else {
       // Print out the Proposed power options one by one
-      auto    lastCaps = USBPowerDelivery::getLastSeenCapabilities();
-      uint8_t numobj   = PD_NUMOBJ_GET(lastCaps);
-      if ((screen - 1) < numobj) {
+      auto lastCaps = USBPowerDelivery::getLastSeenCapabilities();
+      if ((screen - 1) < 11) {
         int voltage_mv     = 0;
         int min_voltage    = 0;
         int current_a_x100 = 0;
-        if ((lastCaps->obj[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-          voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps->obj[screen - 1])); // voltage in mV units
-          current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps->obj[screen - 1]);            // current in 10mA units
-        } else {
-          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps->obj[screen - 1]));
-          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps->obj[screen - 1]));
-          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps->obj[screen - 1])); // max current in 10mA units
-        }
-        // print out this entry of the proposal
-        OLED::printNumber(screen, 1, FontStyle::SMALL, true); // print the entry number
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-        if (min_voltage > 0) {
-          OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
-          OLED::print(SymbolMinus, FontStyle::SMALL);
-        }
-        OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
-        OLED::print(SymbolVolts, FontStyle::SMALL);
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-        OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-        OLED::print(SymbolDot, FontStyle::SMALL);
-        OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-        OLED::print(SymbolAmps, FontStyle::SMALL);
+        int wattage        = 0;
 
+        if ((lastCaps[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+          voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps[screen - 1])); // voltage in mV units
+          current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps[screen - 1]);            // current in 10mA units
+        } else if ((lastCaps[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED) {
+          voltage_mv  = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCaps[screen - 1]));
+          min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[screen - 1]));
+          // Last value is wattage
+          wattage = PD_APDO_AVS_MAX_POWER_GET(lastCaps[screen - 1]);
+        } else {
+          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps[screen - 1]));
+          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[screen - 1]));
+          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps[screen - 1])); // max current in 10mA units
+        }
+        // Skip not used entries
+        if (voltage_mv == 0) {
+          screen++;
+        } else {
+          // print out this entry of the proposal
+          OLED::printNumber(screen, 2, FontStyle::SMALL, true); // print the entry number
+          OLED::print(SymbolSpace, FontStyle::SMALL);
+          if (min_voltage > 0) {
+            OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
+            OLED::print(SymbolMinus, FontStyle::SMALL);
+          }
+          OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
+          OLED::print(SymbolVolts, FontStyle::SMALL);
+          OLED::print(SymbolSpace, FontStyle::SMALL);
+          if (wattage) {
+            OLED::printNumber(wattage, 3, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolWatts, FontStyle::SMALL);
+          } else {
+            OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolDot, FontStyle::SMALL);
+            OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolAmps, FontStyle::SMALL);
+          }
+        }
       } else {
         screen = 0;
       }
@@ -957,6 +972,22 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
+  // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
+  if (getSettingValue(SettingsOptions::LOGOTime) > 0 &&
+      getSettingValue(SettingsOptions::LOGOTime) < 5 &&
+      getSettingValue(SettingsOptions::AutoStartMode) > 0 &&
+      getSettingValue(SettingsOptions::AutoStartMode) < 3) {
+    uint16_t sleepTempDegC;
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      sleepTempDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SleepTemp));
+    } else {
+      sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
+    }
+    // Only heat to sleep temperature (but no higher than 75*C for safety)
+    currentTempTargetDegC = min(sleepTempDegC, 75);
+  }
+
+
   BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
