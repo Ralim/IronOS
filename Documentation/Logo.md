@@ -6,7 +6,7 @@ By default, there is _not_ one included in the firmware. This means that once fl
 ## Generating the Logo files
 
 There are community logo's already converted and ready to use in [IronOS-Meta\releases](https://github.com/Ralim/IronOS-Meta/releases).
-Download the Zip for Pinecil or Miniware and then install using the Flashing instructions below.
+Download the zip for Pinecil or Miniware and then install using the Flashing instructions below.
 
 If you want to make custom art then it needa to be converted with a Python script. The script and other needed files are in [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/). Go to that folder, then it is easiest to select the green Code button (upper right), then Download Zip. This way you get all the files you need and some extras. You only need what is inside Boot Logos. Put your custom image inside the Boot Logos folder with all python script files already there.
 
