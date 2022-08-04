@@ -27,10 +27,11 @@ Now that Python and Pillow are successfuly installed, you can convert an image.
 
 Go back to Powershell and type this command (change infile.png to the name of your image):
 
-- `python img2logo.py infile.png out -m`   for Miniware
-- `python img2logo.py infile.png out -p`   for Pinecil
+- `python img2logo.py infile.png out -m`  for Miniware
+- `python img2logo.py infile.png out -p`  for Pinecil
 
 Run `python img2logo.py --help` to see available options. Replace the word python with python3 if you have multiple versions of python installed. 
+
 _Note Bene_: make sure your image file is in the same folder as script files (img2logo.py, output_dfu.py, output_hex.py).
 
 ## Flashing the Logo
