@@ -32,7 +32,7 @@ Go back to Powershell and type this command (change infile.png to the name of yo
 
 Run `python img2logo.py --help` to see available options. Replace the word python with python3 if you have multiple versions of python installed. 
 
-_Note Bene_: make sure your image file is in the same folder as script files (img2logo.py, output_dfu.py, output_hex.py).
+Note: make sure your image file is in the same folder as script files (img2logo.py, output_dfu.py, output_hex.py).
 
 ## Flashing the Logo
 
