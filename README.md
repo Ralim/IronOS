@@ -22,11 +22,11 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 
 |  Device 	| DC Support| QC Support | PD Support | EPR Support | Battery | Recommended |
-|--------:	|:---------:|:----------:|:----------:|:-----------:|:-------:|:----------:|
+|--------:	|:---------:|:----------:|:----------:|:----------:|:--------:|:----------:|
 |   MHP30 	|     ❌    |    ❌     |     ✔️    |     ❌     |    ❌   |     ✔️     |
 |  Pinecil 	|     ✔️    |    ✔️     |     ✔️    |     ✔️*    |    ✔️   |     ✔️     |
 |   TS100 	|     ✔️    |    ❌     |     ❌    |     ❌     |    ✔️   |     ❌     |
-|  TS80  	  |     ❌    |    ✔️     |     ❌    |     ❌     |    ✔️   |     ❌     |
+|   TS80    |     ❌    |    ✔️     |     ❌    |     ❌     |    ✔️   |     ❌     |
 |   TS80P 	|     ❌    |    ✔️     |     ✔️    |     ❌     |    ✔️   |     ✔️     |
 
 _*Only Pinecil version 2 sold after Aug 2, 2022 has support for EPR PD3.1 28V/140W_. The new model includes BLE bluetooth and has a teal color silicone thumb grip. Original Pinecil was black with a sky blue colored grip.
