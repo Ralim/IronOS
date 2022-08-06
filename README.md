@@ -22,7 +22,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 
 
-|    Device | DC | QC | PD | EPR | BLE | Battery | Recommended |
+|   Device  | DC | QC | PD | EPR | BLE | Battery | Recommended |
 |----------:|:--:|:--:|:--:|:---:|:---:|:-------:|:-----------:|
 |     MHP30 |❌ | ❌ | ✔️ | ❌ | ❌ |   ❌    |     ✔️     |
 |   Pinecil |✔️ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
