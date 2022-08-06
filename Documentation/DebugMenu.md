@@ -88,11 +88,12 @@ This shows the current field strength reading from the sensor. It can be used to
 
 # PD Debug menu
 
-On the Pinecil; if the iron is booted up while holding the front button (+); it will show an extra menu for inspecting USB-PD power adapters.
+On the Pinecil; if the iron is booted up while holding the front button (+); it will show an extra menu for inspecting USB-PD power adapters. A Usb-C PD power supply is required to access this menu, but any will do including some cell phones with usb-c ports.
 
 The menu navigates like the debug menu, where pressing (+) cycles through elements, and (-) will exit the menu.
 
-First page shows the PD negotiation stage number; which can be used for diagnosing if PD is not working.
-After a few seconds or after PD negotiates (state above 5) it will show "No VBus" if the VBus mod is performed or "VBus" if the mod has not been done.
+The first page shows the PD negotiation stage number; which can be used for diagnosing if PD is not working. Once negotiation is complete; the other screens will show the advertised readings for voltage and current of the proposals.
 
-Once negotiation is complete; the other screens will show the advertised readings for voltage and current of the proposals.
+A simple user modification to the PCB on early model V1 allows it to safely use DC24V by cutting a trace line to the Vbus which held it back to 21V. You can check whether your Pinecil V1 needs the update by using the PD debug menu. After a few seconds or after PD negotiates (state above 5) it will show [No VBus] if the VBus modification is performed correctly or not needed (i.e., late model V1) or it shows [VBus] if the mod has not been done and there is still a connection to the Vbus.
+
+The mod method is shown in the February 2022 Pine64 community [Updates](https://www.pine64.org/2022/02/15/february-update-chat-with-the-machine/). Early Pinecil V1 models required cutting a trace. Late model V1 made sometime in 2022 came with [No Vbus] already displayed, and no mod required. The V2 model released Aug. 2, 2022 is completely overhauled PCB with 28V capable components and requires no mods.
