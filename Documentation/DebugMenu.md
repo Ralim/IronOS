@@ -10,20 +10,7 @@ To exit, use the rear (-/B) button again.
 
 ## Menu items
 
-Items are shown in the menu on a single line, so they use short codes
-
-### HW G
-
-This indicates the high water mark for the stack for the GUI thread. The smaller this number is, the less headroom we have in the stack.
-As this is a high-water mater, you should only trust this once you have walked through all GUI options to "hit" the worst one.
-
-### HW M
-
-This indicates the high water mark for the stack for the movement detection thread. The smaller this number is, the less headroom we have in the stack.
-
-### HW P
-
-This indicates the high water mark for the stack for the PID thread. The smaller this number is, the less headroom we have in the stack.
+Items are shown in the menu on a single line, so they use short codes and appear in this order:
 
 ### Time
 
@@ -71,14 +58,32 @@ This may change during power up as the sources are negotiated in turn.
 
 - **DC** input (dumb)
 - **QC** input (We used QC2/3 negotiation for current supply)
-- **PD W. VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is connected to your input power source
-- **PD No VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is **NOT** connected to your input power source
+- **PD W. VBus** input (PD subsystem is used to negotiate for current supply); and VBus is connected to your input power source
+- **PD No VBus** input (PD subsystem is used to negotiate for current supply); and VBus is **NOT** connected to your input power source
 - If you successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, or it is not required (i.e. late model V1) then 'PD No VBus' displays on screen, see details and PD Debug [below](/Documentation/DebugMenu.md#pd-debug-menu).
+
+### ID
+
+This is used by Irons that have authentication ID and serial number to help check if their Iron is authentic. Pinecil V1 shows the same ID number.
+The new Pinecil V2 released Aug.2, 2022 provides a ID/Serial number, which can be used to verify your Pinecil authenticity [here](https://pinecil.pine64.org/).
 
 ### Max
 
 This indicates the max temperature in degrees Celsius that the system estimates it can measure the tip reliably to.
 This is dependent on a few factors including the handle temperature so it can move around during use.
+
+### HW G
+
+This indicates the high water mark for the stack for the GUI thread. The smaller this number is, the less headroom we have in the stack.
+As this is a high-water mater, you should only trust this once you have walked through all GUI options to "hit" the worst one.
+
+### HW M
+
+This indicates the high water mark for the stack for the movement detection thread. The smaller this number is, the less headroom we have in the stack.
+
+### HW P
+
+This indicates the high water mark for the stack for the PID thread. The smaller this number is, the less headroom we have in the stack.
 
 ### Hall
 
