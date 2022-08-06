@@ -21,14 +21,15 @@ This project is considered feature complete for use as a soldering iron, _so ple
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
 
+
 |    Device | DC | QC | PD | EPR | BLE | Battery | Recommended |
 |----------:|:--:|:--:|:--:|:---:|:---:|:-------:|:-----------:|
+|     MHP30 |❌ | ❌ | ✔️ | ❌ | ❌ |   ❌    |     ✔️     |
+|   Pinecil |✔️ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
+| Pinecil 2 |✔️ | ✔️ | ✔️ | ✔️ | ✔️ |   ✔️    |     ✔️     |
 |     TS100 |✔️ | ❌ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
 |      TS80 |❌ | ✔️ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
 |     TS80P |❌ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
-|   Pinecil |✔️ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
-|     MHP30 |❌ | ❌ | ✔️ | ❌ | ❌ |   ❌    |     ✔️     |
-| Pinecil 2 |✔️ | ✔️ | ✔️ | ✔️ | ✔️ |   ✔️    |     ✔️     |
 
 _*Only Pinecil version 2 sold after Aug 2, 2022 has support for EPR PD3.1 28V/140W_. The new model includes BLE bluetooth and has a teal color silicone thumb grip. Original Pinecil was black with a sky blue colored grip.
 
