@@ -73,7 +73,7 @@ This may change during power up as the sources are negotiated in turn.
 - **QC** input (We used QC2/3 negotiation for current supply)
 - **PD W. VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is connected to your input power source
 - **PD No VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is **NOT** connected to your input power source
-- If you successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, or it is not required (i.e. late model V1) then 'PD No VBus' displays on screen, see PD Debug [below](/Documentation/DebugMenu.md#pd-debug-menu).
+- If you successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, or it is not required (i.e. late model V1) then 'PD No VBus' displays on screen, see details and PD Debug [below](/Documentation/DebugMenu.md#pd-debug-menu).
 
 ### Max
 
