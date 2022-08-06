@@ -73,8 +73,7 @@ This may change during power up as the sources are negotiated in turn.
 - **QC** input (We used QC2/3 negotiation for current supply)
 - **PD W. VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is connected to your input power source
 - **PD No VBus** input (We used the PD subsystem to negotiate for the current supply); and VBus is **NOT** connected to your input power source
-- If you successfully modified the Pinecil to support 24 V by cutting the trace line to Vbus, then 'PD No VBus' displays on screen.
-- Connect to any PD USB power to check Vbus status. It will not show any PD message when Pinecil is powered by DC port, QC, or USB 5 V (non-PD).
+- If you successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, or it is not requiered (i.e. late model V1) then 'PD No VBus' displays on screen, see PD Debug [below](/Documentation/DebugMenu.md#PD).
 
 ### Max
 
@@ -88,7 +87,7 @@ This shows the current field strength reading from the sensor. It can be used to
 
 # PD Debug menu
 
-On the Pinecil; if the iron is booted up while holding the front button (+); it will show an extra menu for inspecting USB-PD power adapters. A Usb-C PD power supply is required to access this menu, but any will do including some cell phones with usb-c ports.
+On the Pinecil; if the iron is booted up while holding the front button (+); it will show an extra menu for inspecting USB-PD power adapters. Connect to any PD USB power to check Vbus status, even some cell phones with a USB-C port will work. It will not show any PD message when Pinecil is powered by DC port, QC, or USB 5V (non-PD).
 
 The menu navigates like the debug menu, where pressing (+) cycles through elements, and (-) will exit the menu.
 
