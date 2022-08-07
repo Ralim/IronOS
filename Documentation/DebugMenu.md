@@ -64,7 +64,7 @@ This may change during power up as the sources are negotiated in turn.
 
 ### ID
 
-This is used by Irons that have authentication ID and serial number to help check if their Iron is authentic. All Pinecil V1 shows the same ID number.
+This is used by Irons that have authentication ID and serial number to help check if their iron is authentic. All Pinecil V1 shows the same ID number as they do not have an authentication method built-in.
 The new Pinecil V2 released Aug.2, 2022 provides a unique ID/Serial number to every iron, which can be used to verify your Pinecil authenticity [here](https://pinecil.pine64.org/).
 
 ### Max
