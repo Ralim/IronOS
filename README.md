@@ -31,7 +31,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 |      TS80 |❌ | ✔️ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
 |     TS80P |❌ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
 
-_*Only Pinecil version 2 sold after Aug 2, 2022 has support for EPR PD3.1 28V/140W_. The new model includes BLE bluetooth and has a teal color silicone thumb grip. Original Pinecil was black with a sky blue colored grip.
+
 
 Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is _no longer recommended_.
 
