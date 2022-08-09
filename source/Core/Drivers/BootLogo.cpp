@@ -52,7 +52,7 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     buttons = getButtonState();
 
     if (interFrameDelay) {
-      osDelay(interFrameDelay * 5);
+      osDelay(interFrameDelay * 4);
     }
     // 1024 less the header type byte and the inter-frame-delay
     if (getSettingValue(SettingsOptions::LOGOTime) > 0 && (position >= 1022 || len == 0)) {
