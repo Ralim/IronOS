@@ -99,4 +99,6 @@ The first page shows the PD negotiation stage number; which can be used for diag
 
 A simple user modification to the PCB on early model V1 allows it to safely use DC24V by cutting a trace line to the Vbus which held it back to 21V. You can check whether your Pinecil V1 needs the update by using the PD debug menu. After a few seconds or after PD negotiates (state above 5) it will show [No VBus] if the VBus modification is performed correctly or not needed (i.e., late model V1) or it shows [VBus] if the mod has not been done and there is still a connection to the Vbus.
 
-The mod method is shown in the February 2022 Pine64 community [Updates](https://www.pine64.org/2022/02/15/february-update-chat-with-the-machine/). Early Pinecil V1 models required cutting a trace. Late model V1 made sometime in 2022 came with [No Vbus] already displayed, and no mod required. The V2 model released Aug. 2, 2022 is a completely overhauled PCB with 28V capable components and requires no mods.
+The mod method is shown in the February 2022 Pine64 community [Updates](https://www.pine64.org/2022/02/15/february-update-chat-with-the-machine/). Early Pinecil V1 models required cutting a trace. Late model V1 made sometime in 2022 came with [No Vbus] already displayed, and no mod required.
+
+The V2 model released Aug. 2, 2022 is an overhauled PCB with all relevant components capable of 28V. V2 requires no mods to support use of 24V DC Barrel port charger.
