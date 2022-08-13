@@ -59,8 +59,7 @@ This may change during power up as the sources are negotiated in turn.
 - **DC** input (dumb)
 - **QC** input (We used QC2/3 negotiation for current supply)
 - **PD W. VBus** input (PD subsystem is used to negotiate for current supply); and VBus is connected to your input power source
-- **PD No VBus** input (PD subsystem is used to negotiate for current supply); and VBus is **NOT** connected to your input power source
-- If you successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, or it is not required (i.e. late model V1) then 'PD No VBus' displays on screen, see details and PD Debug [below](/Documentation/DebugMenu.md#pd-debug-menu).
+- **PD No VBus** input (PD subsystem is used to negotiate for current supply); and VBus is **NOT** connected to your input power source. If it is Not required or possible to do a special mod of your PCB (i.e. late model V1, some early Green PCB models) then 'PD No VBus' displays on screen, see details and PD Debug [below](/Documentation/DebugMenu.md#pd-debug-menu). Or if you had 'PD Vbus' displayed before and then successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, then you will see 'PD No Vbus' now as a confirmation that the cut worked.
 
 ### ID
 - This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
@@ -91,13 +90,16 @@ This shows the current field strength reading from the sensor. It can be used to
 
 # PD Debug menu
 
-On the Pinecil; if the iron is booted up while holding the front button (+); it will show an extra menu for inspecting USB-PD power adapters. Connect to any PD USB power to check Vbus status, even some cell phones with a USB-C port will work. It will not show any PD message when Pinecil is powered by DC port, QC, or USB 5V (non-PD).
+On the Pinecil; if the iron is booted up while holding the front button (+); it will show an extra menu for inspecting USB-PD power adapters. Connect to any PD USB power to check Vbus status, even some cell phones with a USB-C port will work if it is PD. It will not show any PD message when Pinecil is powered by DC port, QC, or USB 5V (non-PD).
 
 The menu navigates like the debug menu, where pressing (+) cycles through elements, and (-) will exit the menu.
 
 The first page shows the PD negotiation stage number; which can be used for diagnosing if PD is not working. Once negotiation is complete; the other screens will show the advertised readings for voltage and current of the proposals.
 
-A simple user modification to the PCB on early model V1 allows it to safely use DC24V by cutting a trace line to the Vbus which held it back to 21V. You can check whether your Pinecil V1 needs the update by using the PD debug menu. After a few seconds or after PD negotiates (state above 5) it will show [No VBus] if the VBus modification is performed correctly or not needed (i.e., late model V1) or it shows [VBus] if the mod has not been done and there is still a connection to the Vbus.
+##Below is a method for user modification to convert some early models of Pinecil V1 to safely support 24V on the DC5525 barrel.
+Warning (do this at your own risk, read everything in this debug document, and go to the Pine64 chat if you need tips). If you do the cut incorrectly, you could render the Pinecil non-working.
+
+A simple user modification to the PCB on some models of V1 allows it to safely use DC24V by cutting a trace line to the Vbus which held it back to 21V. You can check whether your Pinecil V1 needs the update or can benefit from it by using the PD debug menu. After a few seconds or after PD negotiates (state above 5) it will show [No VBus] if the VBus modification is performed correctly or not needed (i.e., late model V1) or it shows [VBus] if the mod has not been done and there is still a connection to the Vbus.
 
 The mod method is shown in the February 2022 Pine64 community [Updates](https://www.pine64.org/2022/02/15/february-update-chat-with-the-machine/). Early Pinecil V1 models required cutting a trace. Late model V1 made sometime in 2022 came with [No Vbus] already displayed, and no mod required.
 
