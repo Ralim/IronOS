@@ -1198,7 +1198,7 @@ HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, ui
       hadc->DMA_Handle->XferHalfCpltCallback = ADC_DMAHalfConvCplt;
 
       /* Set the DMA error callback */
-      // hadc->DMA_Handle->XferErrorCallback = ADC_DMAError;
+      hadc->DMA_Handle->XferErrorCallback = ADC_DMAError;
 
       /* Manage ADC and DMA start: ADC overrun interruption, DMA start, ADC   */
       /* start (in case of SW start):                                         */
@@ -1455,19 +1455,19 @@ __weak void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef *hadc) {
   */
 }
 
-// /**
-//  * @brief  ADC error callback in non blocking mode
-//  *        (ADC conversion with interruption or transfer by DMA)
-//  * @param  hadc: ADC handle
-//  * @retval None
-//  */
-// __weak void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc) {
-//   /* Prevent unused argument(s) compilation warning */
-//   UNUSED(hadc);
-//   /* NOTE : This function should not be modified. When the callback is needed,
-//             function HAL_ADC_ErrorCallback must be implemented in the user file.
-//   */
-// }
+/**
+ * @brief  ADC error callback in non blocking mode
+ *        (ADC conversion with interruption or transfer by DMA)
+ * @param  hadc: ADC handle
+ * @retval None
+ */
+__weak void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc) {
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hadc);
+  /* NOTE : This function should not be modified. When the callback is needed,
+            function HAL_ADC_ErrorCallback must be implemented in the user file.
+  */
+}
 
 /**
  * @}
@@ -1823,24 +1823,24 @@ void ADC_DMAHalfConvCplt(DMA_HandleTypeDef *hdma) {
   HAL_ADC_ConvHalfCpltCallback(hadc);
 }
 
-// /**
-//  * @brief  DMA error callback
-//  * @param  hdma: pointer to DMA handle.
-//  * @retval None
-//  */
-// void ADC_DMAError(DMA_HandleTypeDef *hdma) {
-//   /* Retrieve ADC handle corresponding to current DMA handle */
-//   ADC_HandleTypeDef *hadc = (ADC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
+/**
+ * @brief  DMA error callback
+ * @param  hdma: pointer to DMA handle.
+ * @retval None
+ */
+void ADC_DMAError(DMA_HandleTypeDef *hdma) {
+  /* Retrieve ADC handle corresponding to current DMA handle */
+  ADC_HandleTypeDef *hadc = (ADC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
-//   /* Set ADC state */
-//   SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_DMA);
+  /* Set ADC state */
+  SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_DMA);
 
-//   /* Set ADC error code to DMA error */
-//   SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_DMA);
+  /* Set ADC error code to DMA error */
+  SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_DMA);
 
-//   /* Error callback */
-//   HAL_ADC_ErrorCallback(hadc);
-// }
+  /* Error callback */
+  HAL_ADC_ErrorCallback(hadc);
+}
 
 /**
  * @}

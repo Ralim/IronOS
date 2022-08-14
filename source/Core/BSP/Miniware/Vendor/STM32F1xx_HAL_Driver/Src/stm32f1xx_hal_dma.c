@@ -603,29 +603,29 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *hdma) {
   }
 
   /* Transfer Error Interrupt management **************************************/
-  // else if ((RESET != (flag_it & (DMA_FLAG_TE1 << hdma->ChannelIndex))) && (RESET != (source_it & DMA_IT_TE))) {
-  //   /* When a DMA transfer error occurs */
-  //   /* A hardware clear of its EN bits is performed */
-  //   /* Disable ALL DMA IT */
-  //   __HAL_DMA_DISABLE_IT(hdma, (DMA_IT_TC | DMA_IT_HT | DMA_IT_TE));
+  else if ((RESET != (flag_it & (DMA_FLAG_TE1 << hdma->ChannelIndex))) && (RESET != (source_it & DMA_IT_TE))) {
+    /* When a DMA transfer error occurs */
+    /* A hardware clear of its EN bits is performed */
+    /* Disable ALL DMA IT */
+    __HAL_DMA_DISABLE_IT(hdma, (DMA_IT_TC | DMA_IT_HT | DMA_IT_TE));
 
-  //   /* Clear all flags */
-  //   hdma->DmaBaseAddress->IFCR = (DMA_ISR_GIF1 << hdma->ChannelIndex);
+    /* Clear all flags */
+    hdma->DmaBaseAddress->IFCR = (DMA_ISR_GIF1 << hdma->ChannelIndex);
 
-  //   /* Update error code */
-  //   hdma->ErrorCode = HAL_DMA_ERROR_TE;
+    /* Update error code */
+    hdma->ErrorCode = HAL_DMA_ERROR_TE;
 
-  //   /* Change the DMA state */
-  //   hdma->State = HAL_DMA_STATE_READY;
+    /* Change the DMA state */
+    hdma->State = HAL_DMA_STATE_READY;
 
-  //   /* Process Unlocked */
-  //   __HAL_UNLOCK(hdma);
+    /* Process Unlocked */
+    __HAL_UNLOCK(hdma);
 
-  //   if (hdma->XferErrorCallback != NULL) {
-  //     /* Transfer error callback */
-  //     hdma->XferErrorCallback(hdma);
-  //   }
-  // }
+    if (hdma->XferErrorCallback != NULL) {
+      /* Transfer error callback */
+      hdma->XferErrorCallback(hdma);
+    }
+  }
   return;
 }
 
