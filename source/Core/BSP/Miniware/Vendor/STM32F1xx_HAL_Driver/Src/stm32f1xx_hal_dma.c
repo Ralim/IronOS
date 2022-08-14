@@ -564,21 +564,10 @@ void HAL_DMA_IRQHandler(DMA_HandleTypeDef *hdma) {
 
   /* Half Transfer Complete Interrupt management ******************************/
   if (((flag_it & (DMA_FLAG_HT1 << hdma->ChannelIndex)) != RESET) && ((source_it & DMA_IT_HT) != RESET)) {
-    /* Disable the half transfer interrupt if the DMA mode is not CIRCULAR */
-    if ((hdma->Instance->CCR & DMA_CCR_CIRC) == 0U) {
-      /* Disable the half transfer interrupt */
-      __HAL_DMA_DISABLE_IT(hdma, DMA_IT_HT);
-    }
+
     /* Clear the half transfer complete flag */
     __HAL_DMA_CLEAR_FLAG(hdma, __HAL_DMA_GET_HT_FLAG_INDEX(hdma));
 
-    /* DMA peripheral state is not updated in Half Transfer */
-    /* but in Transfer Complete case */
-
-    if (hdma->XferHalfCpltCallback != NULL) {
-      /* Half transfer callback */
-      hdma->XferHalfCpltCallback(hdma);
-    }
   }
 
   /* Transfer Complete Interrupt management ***********************************/
