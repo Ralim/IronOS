@@ -149,6 +149,7 @@
 #define BATTFILTERDEPTH 8
 #define OLED_I2CBB
 #define ACCEL_EXITS_ON_MOVEMENT
+#define NEEDS_VBUS_PROBE 0
 
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // TODO, needs refinement

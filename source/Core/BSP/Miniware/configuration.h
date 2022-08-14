@@ -126,7 +126,7 @@
 #elif defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) == 0
 #error "No model defined!"
 #endif
-
+#define NEEDS_VBUS_PROBE 0
 // Miniware is swapping IMU's around a bit now, so we turn them all on
 
 #define ACCEL_MMA

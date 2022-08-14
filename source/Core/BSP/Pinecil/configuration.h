@@ -148,6 +148,7 @@
 #define VBUS_MOD_TEST
 #define HALL_SI7210
 #define DEBUG_UART_OUTPUT
+#define NEEDS_VBUS_PROBE 1
 
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
