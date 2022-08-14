@@ -17,78 +17,78 @@
 void gui_Menu(const menuitem *menu);
 
 #ifdef POW_DC
-static void settings_displayInputVRange(void);
-static bool settings_showInputVOptions(void);
-static void settings_displayInputMinVRange(void);
+static void displayInputVRange(void);
+static bool showInputVOptions(void);
+static void displayInputMinVRange(void);
 #endif
 #ifdef POW_QC
-static void settings_displayQCInputV(void);
+static void displayQCInputV(void);
 #endif
 #if POW_PD
-static void settings_displayPDNegTimeout(void);
+static void displayPDNegTimeout(void);
 #endif
-static void settings_displaySensitivity(void);
-static void settings_displayShutdownTime(void);
-static bool settings_showSleepOptions(void);
+static void displaySensitivity(void);
+static void displayShutdownTime(void);
+static bool showSleepOptions(void);
 #ifndef NO_SLEEP_MODE
-static bool settings_setSleepTemp(void);
-static void settings_displaySleepTemp(void);
-static void settings_displaySleepTime(void);
+static bool setSleepTemp(void);
+static void displaySleepTemp(void);
+static void displaySleepTime(void);
 #endif
-static bool settings_setTempF(void);
-static void settings_displayTempF(void);
-static void settings_displayAdvancedSolderingScreens(void);
-static void settings_displayAdvancedIDLEScreens(void);
-static void settings_displayScrollSpeed(void);
-static void settings_displayPowerLimit(void);
+static bool setTempF(void);
+static void displayTempF(void);
+static void displayAdvancedSolderingScreens(void);
+static void displayAdvancedIDLEScreens(void);
+static void displayScrollSpeed(void);
+static void displayPowerLimit(void);
 #ifndef NO_DISPLAY_ROTATE
-static bool settings_setDisplayRotation(void);
-static void settings_displayDisplayRotation(void);
+static bool setDisplayRotation(void);
+static void displayDisplayRotation(void);
 #endif
 
-static bool settings_setBoostTemp(void);
-static void settings_displayBoostTemp(void);
-static void settings_displayAutomaticStartMode(void);
-static void settings_displayLockingMode(void);
-static void settings_displayCoolingBlinkEnabled(void);
-static bool settings_setResetSettings(void);
-static void settings_displayResetSettings(void);
-static bool settings_setCalibrate(void);
-static void settings_displayCalibrate(void);
-static bool settings_setCalibrateVIN(void);
-static void settings_displayCalibrateVIN(void);
-static void settings_displayReverseButtonTempChangeEnabled(void);
-static void settings_displayTempChangeShortStep(void);
-static void settings_displayTempChangeLongStep(void);
-static void settings_displayPowerPulse(void);
-static bool settings_displayAnimationOptions(void);
-static void settings_displayAnimationSpeed(void);
-static void settings_displayAnimationLoop(void);
-static void settings_displayPowerPulseWait(void);
-static bool settings_showPowerPulseOptions(void);
-static void settings_displayPowerPulseDuration(void);
-static void settings_displayBrightnessLevel(void);
-static void settings_displayInvertColor(void);
-static void settings_displayLogoTime(void);
+static bool setBoostTemp(void);
+static void displayBoostTemp(void);
+static void displayAutomaticStartMode(void);
+static void displayLockingMode(void);
+static void displayCoolingBlinkEnabled(void);
+static bool setResetSettings(void);
+static void displayResetSettings(void);
+static bool setCalibrate(void);
+static void displayCalibrate(void);
+static bool setCalibrateVIN(void);
+static void displayCalibrateVIN(void);
+static void displayReverseButtonTempChangeEnabled(void);
+static void displayTempChangeShortStep(void);
+static void displayTempChangeLongStep(void);
+static void displayPowerPulse(void);
+static bool displayAnimationOptions(void);
+static void displayAnimationSpeed(void);
+static void displayAnimationLoop(void);
+static void displayPowerPulseWait(void);
+static bool showPowerPulseOptions(void);
+static void displayPowerPulseDuration(void);
+static void displayBrightnessLevel(void);
+static void displayInvertColor(void);
+static void displayLogoTime(void);
 
 #ifdef HALL_SENSOR
-static void settings_displayHallEffect(void);
-static bool settings_showHallEffect(void);
+static void displayHallEffect(void);
+static bool showHallEffect(void);
 #endif
 // Menu functions
 
 #if defined(POW_DC) || defined(POW_QC)
-static void settings_displayPowerMenu(void);
-static bool settings_enterPowerMenu(void);
+static void displayPowerMenu(void);
+static bool enterPowerMenu(void);
 #endif
-static void settings_displaySolderingMenu(void);
-static bool settings_enterSolderingMenu(void);
-static void settings_displayPowerSavingMenu(void);
-static bool settings_enterPowerSavingMenu(void);
-static void settings_displayUIMenu(void);
-static bool settings_enterUIMenu(void);
-static void settings_displayAdvancedMenu(void);
-static bool settings_enterAdvancedMenu(void);
+static void displaySolderingMenu(void);
+static bool enterSolderingMenu(void);
+static void displayPowerSavingMenu(void);
+static bool enterPowerSavingMenu(void);
+static void displayUIMenu(void);
+static bool enterUIMenu(void);
+static void displayAdvancedMenu(void);
+static bool enterAdvancedMenu(void);
 /*
  * Root Settings Menu
  *
@@ -146,12 +146,12 @@ const menuitem rootSettingsMenu[] {
    */
 
 #if defined(POW_DC) || defined(POW_QC)
-  {0, settings_enterPowerMenu, settings_displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Power*/
+  {0, enterPowerMenu, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Power*/
 #endif
-      {0, settings_enterSolderingMenu, settings_displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                     /*Soldering*/
-      {0, settings_enterPowerSavingMenu, settings_displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                 /*Sleep Options Menu*/
-      {0, settings_enterUIMenu, settings_displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                   /*UI Menu*/
-      {0, settings_enterAdvancedMenu, settings_displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                       /*Advanced Menu*/
+      {0, enterSolderingMenu, displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                       /*Soldering*/
+      {0, enterPowerSavingMenu, displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                   /*Sleep Options Menu*/
+      {0, enterUIMenu, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                                     /*UI Menu*/
+      {0, enterAdvancedMenu, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                         /*Advanced Menu*/
       {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, settings_showLanguageSwitch, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Language Switch*/
   {
     0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0
@@ -167,15 +167,14 @@ const menuitem powerMenu[] = {
  *  PD Timeout
  */
 #ifdef POW_DC
-    {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, settings_displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6}, /*Voltage input*/
-    {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, settings_displayInputMinVRange, settings_showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell,
-     5}, /*Minimum voltage input*/
+    {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},            /*Voltage input*/
+    {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, displayInputMinVRange, showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell, 5}, /*Minimum voltage input*/
 #endif
 #ifdef POW_QC
-    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, settings_displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4}, /*Voltage input*/
+    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4}, /*Voltage input*/
 #endif
 #if POW_PD
-    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, settings_displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
+    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
@@ -188,15 +187,14 @@ const menuitem solderingMenu[] = {
      *  Temp change long step
      *	Locking Mode
      */
-    {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), settings_setBoostTemp, settings_displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature,
-     5},                                                                                                                                                                  /*Boost Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::AutoStart), nullptr, settings_displayAutomaticStartMode, nullptr, SettingsOptions::AutoStartMode, SettingsItemIndex::AutoStart, 7}, /*Auto start*/
-    {SETTINGS_DESC(SettingsItemIndex::TempChangeShortStep), nullptr, settings_displayTempChangeShortStep, nullptr, SettingsOptions::TempChangeShortStep, SettingsItemIndex::TempChangeShortStep,
+    {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::AutoStart), nullptr, displayAutomaticStartMode, nullptr, SettingsOptions::AutoStartMode, SettingsItemIndex::AutoStart, 7},                   /*Auto start*/
+    {SETTINGS_DESC(SettingsItemIndex::TempChangeShortStep), nullptr, displayTempChangeShortStep, nullptr, SettingsOptions::TempChangeShortStep, SettingsItemIndex::TempChangeShortStep,
      6}, /*Temp change short step*/
-    {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), nullptr, settings_displayTempChangeLongStep, nullptr, SettingsOptions::TempChangeLongStep, SettingsItemIndex::TempChangeLongStep,
-     6},                                                                                                                                                             /*Temp change long step*/
-    {SETTINGS_DESC(SettingsItemIndex::LockingMode), nullptr, settings_displayLockingMode, nullptr, SettingsOptions::LockingMode, SettingsItemIndex::LockingMode, 7}, /*Locking Mode*/
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
+    {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), nullptr, displayTempChangeLongStep, nullptr, SettingsOptions::TempChangeLongStep, SettingsItemIndex::TempChangeLongStep,
+     6},                                                                                                                                                    /*Temp change long step*/
+    {SETTINGS_DESC(SettingsItemIndex::LockingMode), nullptr, displayLockingMode, nullptr, SettingsOptions::LockingMode, SettingsItemIndex::LockingMode, 7}, /*Locking Mode*/
+    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}                                                 // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
     /*
@@ -205,16 +203,15 @@ const menuitem PowerSavingMenu[] = {
      * 	-Sleep Time
      * 	-Shutdown Time
      */
-    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, settings_displaySensitivity, nullptr, SettingsOptions::Sensitivity, SettingsItemIndex::MotionSensitivity, 7}, /* Motion Sensitivity*/
+    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, displaySensitivity, nullptr, SettingsOptions::Sensitivity, SettingsItemIndex::MotionSensitivity, 7}, /* Motion Sensitivity*/
 #ifndef NO_SLEEP_MODE
-    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp, settings_showSleepOptions, SettingsOptions::SettingsOptionsLength,
-     SettingsItemIndex::SleepTemperature, 5},                                                                                                                                        /*Sleep Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, settings_displaySleepTime, settings_showSleepOptions, SettingsOptions::SleepTime, SettingsItemIndex::SleepTimeout, 5}, /*Sleep Time*/
+    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), setSleepTemp, displaySleepTemp, showSleepOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SleepTemperature,
+     5},                                                                                                                                                           /*Sleep Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, displaySleepTime, showSleepOptions, SettingsOptions::SleepTime, SettingsItemIndex::SleepTimeout, 5}, /*Sleep Time*/
 #endif
-    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime, SettingsItemIndex::ShutdownTimeout,
-     5}, /*Shutdown Time*/
+    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, displayShutdownTime, showSleepOptions, SettingsOptions::ShutdownTime, SettingsItemIndex::ShutdownTimeout, 5}, /*Shutdown Time*/
 #ifdef HALL_SENSOR
-    {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, settings_displayHallEffect, settings_showHallEffect, SettingsOptions::HallEffectSensitivity, SettingsItemIndex::HallEffSensitivity,
+    {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, displayHallEffect, showHallEffect, SettingsOptions::HallEffectSensitivity, SettingsItemIndex::HallEffSensitivity,
      7}, /* HallEffect Sensitivity*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
@@ -235,26 +232,24 @@ const menuitem UIMenu[] = {
      *  Detailed IDLE
      *  Detailed Soldering
      */
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), settings_setTempF, settings_displayTempF, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureUnit,
-     7}, /* Temperature units, this has to be the first element in the array to work with the logic in settings_enterUIMenu() */
+    {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), setTempF, displayTempF, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureUnit,
+     7}, /* Temperature units, this has to be the first element in the array to work with the logic in enterUIMenu() */
 #ifndef NO_DISPLAY_ROTATE
-    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), settings_setDisplayRotation, settings_displayDisplayRotation, nullptr, SettingsOptions::SettingsOptionsLength,
-     SettingsItemIndex::DisplayRotation, 7}, /*Display Rotation*/
+    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), setDisplayRotation, displayDisplayRotation, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::DisplayRotation,
+     7}, /*Display Rotation*/
 #endif
-    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, settings_displayCoolingBlinkEnabled, nullptr, SettingsOptions::CoolingTempBlink, SettingsItemIndex::CooldownBlink,
-     7}, /*Cooling blink warning*/
-    {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, settings_displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed,
+    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, displayCoolingBlinkEnabled, nullptr, SettingsOptions::CoolingTempBlink, SettingsItemIndex::CooldownBlink, 7}, /*Cooling blink warning*/
+    {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed,
      7}, /*Scroll Speed for descriptions*/
-    {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, settings_displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled,
-     SettingsItemIndex::ReverseButtonTempChange, 7}, /*Reverse Temp change buttons + - */
-    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, settings_displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7}, /*Animation Speed adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, settings_displayAnimationLoop, settings_displayAnimationOptions, SettingsOptions::AnimationLoop, SettingsItemIndex::AnimLoop,
-     7},                                                                                                                                                                  /*Animation Loop switch */
-    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, settings_displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness, SettingsItemIndex::Brightness, 6}, /*Brightness Level*/
-    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, settings_displayInvertColor, nullptr, SettingsOptions::OLEDInversion, SettingsItemIndex::ColourInversion, 7},  /*Invert screen colour*/
-    {SETTINGS_DESC(SettingsItemIndex::LOGOTime), nullptr, settings_displayLogoTime, nullptr, SettingsOptions::LOGOTime, SettingsItemIndex::LOGOTime, 5},                        /*Set logo duration*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, settings_displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE, SettingsItemIndex::AdvancedIdle, 7}, /*Advanced idle screen*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, settings_displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering, SettingsItemIndex::AdvancedSoldering,
+    {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled,
+     SettingsItemIndex::ReverseButtonTempChange, 7},                                                                                                          /*Reverse Temp change buttons + - */
+    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7}, /*Animation Speed adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, displayAnimationLoop, displayAnimationOptions, SettingsOptions::AnimationLoop, SettingsItemIndex::AnimLoop, 7}, /*Animation Loop switch */
+    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness, SettingsItemIndex::Brightness, 6},          /*Brightness Level*/
+    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, displayInvertColor, nullptr, SettingsOptions::OLEDInversion, SettingsItemIndex::ColourInversion, 7},     /*Invert screen colour*/
+    {SETTINGS_DESC(SettingsItemIndex::LOGOTime), nullptr, displayLogoTime, nullptr, SettingsOptions::LOGOTime, SettingsItemIndex::LOGOTime, 5},                           /*Set logo duration*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE, SettingsItemIndex::AdvancedIdle, 7},    /*Advanced idle screen*/
+    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering, SettingsItemIndex::AdvancedSoldering,
      7},                                                                                                    /*Advanced soldering screen*/
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
@@ -269,19 +264,17 @@ const menuitem advancedMenu[] = {
      *  -Power Pulse Delay
      *  -Power Pulse duration
      */
-    {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, settings_displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5}, /*Power limit*/
-    {SETTINGS_DESC(SettingsItemIndex::SettingsReset), settings_setResetSettings, settings_displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset,
-     7}, /*Resets settings*/
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), settings_setCalibrate, settings_displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength,
-     SettingsItemIndex::TemperatureCalibration, 5}, /*Calibrate tip*/
-    {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), settings_setCalibrateVIN, settings_displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength,
-     SettingsItemIndex::VoltageCalibration, 5}, /*Voltage input cal*/
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, settings_displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower,
-     5}, /*Power Pulse adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), nullptr, settings_displayPowerPulseWait, settings_showPowerPulseOptions, SettingsOptions::KeepAwakePulseWait, SettingsItemIndex::PowerPulseWait,
+    {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5},                              /*Power limit*/
+    {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
+    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureCalibration,
+     5}, /*Calibrate tip*/
+    {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
+     5},                                                                                                                                                              /*Voltage input cal*/
+    {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower, 5}, /*Power Pulse adjustment */
+    {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), nullptr, displayPowerPulseWait, showPowerPulseOptions, SettingsOptions::KeepAwakePulseWait, SettingsItemIndex::PowerPulseWait,
      7}, /*Power Pulse Wait adjustment*/
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, settings_displayPowerPulseDuration, settings_showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration,
-     SettingsItemIndex::PowerPulseDuration, 7},                                                             /*Power Pulse Duration adjustment*/
+    {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration,
+     7},                                                                                                    /*Power Pulse Duration adjustment*/
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 
@@ -333,7 +326,7 @@ static int userConfirmation(const char *message) {
 }
 #ifdef POW_DC
 
-static void settings_displayInputVRange(void) {
+static void displayInputVRange(void) {
 
   if (getSettingValue(SettingsOptions::MinDCVoltageCells)) {
     OLED::printNumber(2 + getSettingValue(SettingsOptions::MinDCVoltageCells), 1, FontStyle::LARGE);
@@ -343,8 +336,8 @@ static void settings_displayInputVRange(void) {
   }
 }
 
-static bool settings_showInputVOptions(void) { return getSettingValue(SettingsOptions::MinDCVoltageCells) > 0; }
-static void settings_displayInputMinVRange(void) {
+static bool showInputVOptions(void) { return getSettingValue(SettingsOptions::MinDCVoltageCells) > 0; }
+static void displayInputMinVRange(void) {
 
   OLED::printNumber(getSettingValue(SettingsOptions::MinVoltageCells) / 10, 1, FontStyle::LARGE);
   OLED::print(SymbolDot, FontStyle::LARGE);
@@ -353,7 +346,7 @@ static void settings_displayInputMinVRange(void) {
 #endif
 #ifdef POW_QC
 
-static void settings_displayQCInputV(void) {
+static void displayQCInputV(void) {
 
   // These are only used in QC modes
   // Allows setting the voltage negotiated for QC
@@ -367,7 +360,7 @@ static void settings_displayQCInputV(void) {
 
 #if POW_PD
 
-static void settings_displayPDNegTimeout(void) {
+static void displayPDNegTimeout(void) {
 
   auto value = getSettingValue(SettingsOptions::PDNegTimeout);
   if (value == 0) {
@@ -378,7 +371,7 @@ static void settings_displayPDNegTimeout(void) {
 }
 #endif
 
-static void settings_displayShutdownTime(void) {
+static void displayShutdownTime(void) {
 
   if (getSettingValue(SettingsOptions::ShutdownTime) == 0) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
@@ -388,12 +381,12 @@ static void settings_displayShutdownTime(void) {
   }
 }
 
-static void settings_displaySensitivity(void) { OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false); }
-static bool settings_showSleepOptions(void) { return getSettingValue(SettingsOptions::Sensitivity) > 0; }
+static void displaySensitivity(void) { OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false); }
+static bool showSleepOptions(void) { return getSettingValue(SettingsOptions::Sensitivity) > 0; }
 
 #ifndef NO_SLEEP_MODE
 
-static bool settings_setSleepTemp(void) {
+static bool setSleepTemp(void) {
   // If in C, 10 deg, if in F 20 deg
   uint16_t temp = getSettingValue(SettingsOptions::SleepTemp);
   if (getSettingValue(SettingsOptions::TemperatureInF)) {
@@ -411,9 +404,9 @@ static bool settings_setSleepTemp(void) {
   }
 }
 
-static void settings_displaySleepTemp(void) { OLED::printNumber(getSettingValue(SettingsOptions::SleepTemp), 3, FontStyle::LARGE); }
+static void displaySleepTemp(void) { OLED::printNumber(getSettingValue(SettingsOptions::SleepTemp), 3, FontStyle::LARGE); }
 
-static void settings_displaySleepTime(void) {
+static void displaySleepTime(void) {
 
   if (getSettingValue(SettingsOptions::SleepTime) == 0) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
@@ -427,7 +420,7 @@ static void settings_displaySleepTime(void) {
 }
 #endif
 
-static bool settings_setTempF(void) {
+static bool setTempF(void) {
   bool     res           = nextSettingValue(SettingsOptions::TemperatureInF);
   uint16_t BoostTemp     = getSettingValue(SettingsOptions::BoostTemp);
   uint16_t SolderingTemp = getSettingValue(SettingsOptions::SolderingTemp);
@@ -460,13 +453,13 @@ static bool settings_setTempF(void) {
   return res;
 }
 
-static void settings_displayTempF(void) { OLED::print((getSettingValue(SettingsOptions::TemperatureInF)) ? SymbolDegF : SymbolDegC, FontStyle::LARGE); }
+static void displayTempF(void) { OLED::print((getSettingValue(SettingsOptions::TemperatureInF)) ? SymbolDegF : SymbolDegC, FontStyle::LARGE); }
 
-static void settings_displayAdvancedSolderingScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedSoldering)); }
+static void displayAdvancedSolderingScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedSoldering)); }
 
-static void settings_displayAdvancedIDLEScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedIDLE)); }
+static void displayAdvancedIDLEScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedIDLE)); }
 
-static void settings_displayPowerLimit(void) {
+static void displayPowerLimit(void) {
 
   if (getSettingValue(SettingsOptions::PowerLimit) == 0) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
@@ -476,13 +469,10 @@ static void settings_displayPowerLimit(void) {
   }
 }
 
-static void settings_displayScrollSpeed(void) {
-
-  OLED::print(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar), FontStyle::LARGE);
-}
+static void displayScrollSpeed(void) { OLED::print(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar), FontStyle::LARGE); }
 
 #ifndef NO_DISPLAY_ROTATE
-static bool settings_setDisplayRotation(void) {
+static bool setDisplayRotation(void) {
   bool res = nextSettingValue(SettingsOptions::OrientationMode);
   switch (getSettingValue(SettingsOptions::OrientationMode)) {
   case 0:
@@ -500,7 +490,7 @@ static bool settings_setDisplayRotation(void) {
   return res;
 }
 
-static void settings_displayDisplayRotation(void) {
+static void displayDisplayRotation(void) {
 
   switch (getSettingValue(SettingsOptions::OrientationMode)) {
   case 0:
@@ -518,7 +508,7 @@ static void settings_displayDisplayRotation(void) {
   }
 }
 #endif
-static bool settings_setBoostTemp(void) {
+static bool setBoostTemp(void) {
   uint16_t value = getSettingValue(SettingsOptions::BoostTemp);
   if (getSettingValue(SettingsOptions::TemperatureInF)) {
     if (value == 0) {
@@ -545,7 +535,7 @@ static bool settings_setBoostTemp(void) {
   return value >= MAX_TEMP_C;
 }
 
-static void settings_displayBoostTemp(void) {
+static void displayBoostTemp(void) {
 
   if (getSettingValue(SettingsOptions::BoostTemp)) {
     OLED::printNumber(getSettingValue(SettingsOptions::BoostTemp), 3, FontStyle::LARGE);
@@ -554,7 +544,7 @@ static void settings_displayBoostTemp(void) {
   }
 }
 
-static void settings_displayAutomaticStartMode(void) {
+static void displayAutomaticStartMode(void) {
 
   switch (getSettingValue(SettingsOptions::AutoStartMode)) {
   case 0:
@@ -575,7 +565,7 @@ static void settings_displayAutomaticStartMode(void) {
   }
 }
 
-static void settings_displayLockingMode(void) {
+static void displayLockingMode(void) {
 
   switch (getSettingValue(SettingsOptions::LockingMode)) {
   case 0:
@@ -593,9 +583,9 @@ static void settings_displayLockingMode(void) {
   }
 }
 
-static void settings_displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CoolingTempBlink)); }
+static void displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CoolingTempBlink)); }
 
-static bool settings_setResetSettings(void) {
+static bool setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {
     resetSettings();
     warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
@@ -603,7 +593,7 @@ static bool settings_setResetSettings(void) {
   return false;
 }
 
-static void settings_displayResetSettings(void) {}
+static void displayResetSettings(void) {}
 
 static void setTipOffset() {
   uint16_t setoffset = 0;
@@ -637,7 +627,7 @@ static void setTipOffset() {
 
 // Provide the user the option to tune their own tip if custom is selected
 // If not only do single point tuning as per usual
-static bool settings_setCalibrate(void) {
+static bool setCalibrate(void) {
 
   if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
     // User confirmed
@@ -647,9 +637,9 @@ static bool settings_setCalibrate(void) {
   return false;
 }
 
-static void settings_displayCalibrate(void) {}
+static void displayCalibrate(void) {}
 
-static bool settings_setCalibrateVIN(void) {
+static bool setCalibrateVIN(void) {
   // Jump to the voltage calibration subscreen
   OLED::clearScreen();
 
@@ -688,13 +678,13 @@ static bool settings_setCalibrateVIN(void) {
   return false;
 }
 
-static void settings_displayReverseButtonTempChangeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)); }
+static void displayReverseButtonTempChangeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)); }
 
-static void settings_displayTempChangeShortStep(void) { OLED::printNumber(getSettingValue(SettingsOptions::TempChangeShortStep), 2, FontStyle::LARGE); }
+static void displayTempChangeShortStep(void) { OLED::printNumber(getSettingValue(SettingsOptions::TempChangeShortStep), 2, FontStyle::LARGE); }
 
-static void settings_displayTempChangeLongStep(void) { OLED::printNumber(getSettingValue(SettingsOptions::TempChangeLongStep), 2, FontStyle::LARGE); }
+static void displayTempChangeLongStep(void) { OLED::printNumber(getSettingValue(SettingsOptions::TempChangeLongStep), 2, FontStyle::LARGE); }
 
-static void settings_displayPowerPulse(void) {
+static void displayPowerPulse(void) {
 
   if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
     OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulse) / 10, 1, FontStyle::LARGE);
@@ -705,10 +695,10 @@ static void settings_displayPowerPulse(void) {
   }
 }
 
-static bool settings_displayAnimationOptions(void) { return getSettingValue(SettingsOptions::AnimationSpeed) > 0; }
-static void settings_displayAnimationLoop(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::AnimationLoop)); }
+static bool displayAnimationOptions(void) { return getSettingValue(SettingsOptions::AnimationSpeed) > 0; }
+static void displayAnimationLoop(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::AnimationLoop)); }
 
-static void settings_displayAnimationSpeed(void) {
+static void displayAnimationSpeed(void) {
 
   switch (getSettingValue(SettingsOptions::AnimationSpeed)) {
   case settingOffSpeed_t::SLOW:
@@ -726,26 +716,26 @@ static void settings_displayAnimationSpeed(void) {
   }
 }
 
-static bool settings_showPowerPulseOptions(void) { return getSettingValue(SettingsOptions::KeepAwakePulse) > 0; }
-static void settings_displayPowerPulseWait(void) { OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulseWait), 1, FontStyle::LARGE); }
+static bool showPowerPulseOptions(void) { return getSettingValue(SettingsOptions::KeepAwakePulse) > 0; }
+static void displayPowerPulseWait(void) { OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulseWait), 1, FontStyle::LARGE); }
 
-static void settings_displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulseDuration), 1, FontStyle::LARGE); }
+static void displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulseDuration), 1, FontStyle::LARGE); }
 
-static void settings_displayBrightnessLevel(void) {
+static void displayBrightnessLevel(void) {
 
   OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / 11 + 1), 2, FontStyle::LARGE);
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
 }
 
-static void settings_displayInvertColor(void) {
+static void displayInvertColor(void) {
 
   OLED::drawCheckbox(getSettingValue(SettingsOptions::OLEDInversion));
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
 }
 
-static void settings_displayLogoTime(void) {
+static void displayLogoTime(void) {
 
   if (getSettingValue(SettingsOptions::LOGOTime) == 0) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
@@ -758,8 +748,8 @@ static void settings_displayLogoTime(void) {
 }
 
 #ifdef HALL_SENSOR
-static void settings_displayHallEffect(void) { OLED::printNumber(getSettingValue(SettingsOptions::HallEffectSensitivity), 1, FontStyle::LARGE, false); }
-static bool settings_showHallEffect(void) { return getHallSensorFitted(); }
+static void displayHallEffect(void) { OLED::printNumber(getSettingValue(SettingsOptions::HallEffectSensitivity), 1, FontStyle::LARGE, false); }
+static bool showHallEffect(void) { return getHallSensorFitted(); }
 #endif
 
 // Indicates whether a menu transition is in progress, so that the menu icon
@@ -807,32 +797,32 @@ static void displayMenu(size_t index) {
   OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
 }
 
-static void settings_displayCalibrateVIN(void) {}
+static void displayCalibrateVIN(void) {}
 
 #if defined(POW_DC) || defined(POW_QC)
-static void settings_displayPowerMenu(void) { displayMenu(0); }
-static bool settings_enterPowerMenu(void) {
+static void displayPowerMenu(void) { displayMenu(0); }
+static bool enterPowerMenu(void) {
   gui_Menu(powerMenu);
   return false;
 }
 #endif
-static void settings_displaySolderingMenu(void) { displayMenu(1); }
-static bool settings_enterSolderingMenu(void) {
+static void displaySolderingMenu(void) { displayMenu(1); }
+static bool enterSolderingMenu(void) {
   gui_Menu(solderingMenu);
   return false;
 }
-static void settings_displayPowerSavingMenu(void) { displayMenu(2); }
-static bool settings_enterPowerSavingMenu(void) {
+static void displayPowerSavingMenu(void) { displayMenu(2); }
+static bool enterPowerSavingMenu(void) {
   gui_Menu(PowerSavingMenu);
   return false;
 }
-static void settings_displayUIMenu(void) { displayMenu(3); }
-static bool settings_enterUIMenu(void) {
+static void displayUIMenu(void) { displayMenu(3); }
+static bool enterUIMenu(void) {
   gui_Menu(HasFahrenheit ? UIMenu : UIMenu + 1);
   return false;
 }
-static void settings_displayAdvancedMenu(void) { displayMenu(4); }
-static bool settings_enterAdvancedMenu(void) {
+static void displayAdvancedMenu(void) { displayMenu(4); }
+static bool enterAdvancedMenu(void) {
   gui_Menu(advancedMenu);
   return false;
 }
