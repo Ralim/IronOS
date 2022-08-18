@@ -23,7 +23,7 @@ Scrolling through the submenu will return you back to its entry location after y
 ### Calibrating input voltage
 
 Due to the tolerance on the resistors used for the input voltage divider, some irons can be up to 0.6 V out on the voltage measurement.
-Please calibrate your iron if you have any issues with the cutoff voltage.
+Please calibrate your iron if you have any issues with the cutoff voltage. This calibration is not required if you have no issues.
 Note that cutoff messages can also be triggered by using a power supply that is too weak and fails under the load of the iron.
 
 To calibrate your iron:
@@ -31,29 +31,30 @@ To calibrate your iron:
 1. Measure the input voltage with a multimeter and note it down.
 2. Connect the input to your iron.
 3. Enter the settings menu
-4. Under the advanced submenu
+4. Under the Advanced submenu
 5. Select the calibrate voltage option
 6. Use the front and back buttons to adjust the displayed voltage to minimize the error to your original measurement
-7. Press both buttons at the same time to save and exit to the menu
+7. Press both buttons at the same time to Save and Exit to the menu
 
 ### Calibrating tip offset (Set tip model)
-
-Some tips will have an offset on their readings, to calibrate this out perform the following steps:
+This is normally not needed unless you have an issue with your temperature or your tips are wearing out prematurely.
+Some tips will have an offset on their readings, to calibrate this out, perform the following steps:
 
 1. Connect power to your iron
-2. Make sure the tip is at room temperature (i.e., wait for a fair while after using the iron before calibration)
-3. Enter the settings menu
-4. Scroll down to the advanced menu, and then the temperature calibration
-5. Press the button to change the option (tip button)
-6. The display will start to scroll a warning message to check that the tip is at ambient temperature!
-7. Press the button near the tip of the iron to confirm
-8. The display will go to "...." for a short period of time as the unit measures the tip temperature and the handle temperature and compares them
-9. The display will then go back to *TMP CAL* and it will display a number, this is your offset number. You generally don't need it unless debugging issues
+2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
+3. Enter the settings menu and press `+` (front button closer to the tip) to select items.
+4. Scroll down to Advanced menu > press `+` > Calibrate temperature? > press `+`
+5. The display will scroll a warning message to Check that the tip is at room/ambient temperature!
+6. Press the `+` button to confirm
+8. The display shows "...." for a short time as the unit measures the tip temperature and the handle temperature and compares them.
+9. The display will then go back to *TMP CAL* and it will display your Offset number. You generally don't need it unless debugging issues.
 10. Calibration is done, just exit the settings menu as normal
 11. You're done, enjoy your iron!
 
+Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration. 
+
 ### Boost mode
 
-This allows you to change the front key (one near the tip) to become a boost button when you hold it for > 2 seconds. This allows you to set this button to change the soldering temperature for short periods. For example, when soldering a big joint and you want to boost the temperature a bit.
+This allows you to change the front button `+` (one near the tip) to become a boost button when you hold it for > 2 seconds. This allows you to set this button to change the soldering temperature for short periods. For example, when soldering a big joint and you want to boost the temperature a bit.
 
 The boost temperature is set in the settings menu.
