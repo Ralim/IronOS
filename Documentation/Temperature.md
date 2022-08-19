@@ -27,23 +27,23 @@ This consists of an op-amp that is connected directly across the heating connect
 
 When the iron is **not** heating the tip, the microcontroller uses the ADC to read the output from the op-amp. This produces a voltage that _should_ be linear to the temperature of (tip-handle). This value is then offset compensated (to remove ADC+op-amp offsets), and then converted into a temperature delta in °C/K. This temperature delta can then be added to the handle temperature to derive the tip temperature in degrees Celsius.
 
-Depending on the construction of the tip, the lookup values used for converting the tip reading in µV into °C/K varies. It is worth noting, however, that TS100 and Pinecil tips are approximately the same as the Hakko T12 tips. (In @Ralim's testing, to within measurement error). This makes sense as these tips are cheap and would have made an excellent design for Miniware to have cloned in making the TS100 in the first place.
+Depending on the construction of the tip, the lookup values used for converting the tip reading in µV into °C/K varies. It is worth noting, however, that TS100 and Pinecil tips are approximately the same as the Hakko T12 tips. (In @Ralim's testing, to within measurement error). This makes sense as the T12 tips are an excellent and cheap design for Miniware to mimic in making the TS100 in the first place.
 
 ## Implications of this
 
 ### Reading accuracy vs Heating performance tradeoff
 
-Because the tip can only be measured when the unit is not heating, the more often the tip is measured (for finer temperature control) the less time the unit can spend heating up the tip. This means that for fast heat up and fine temperature control the firmware now implements two speeds to the controller loop. During heating up the system runs fewer temperature measurements and instead allows the tip to spend more time burning power. Once the unit is up to temperature the rate of taking temperature readings is doubled to allow for faster reaction times.
+Because the tip can only be measured when the unit is not heating, the more often the tip is measured (for finer temperature control) the less time the unit can spend heating up the tip. This means that for fast heat up and fine temperature control the firmware now implements two speeds to the controller loop. During heating up the system runs fewer temperature measurements and instead allows the tip to spend more time burning power. Once the unit is up to temperature, the rate of taking temperature readings is doubled to allow for faster reaction times.
 
 ### Tip heat up lag time
 
 As the temperature sensor is a part of the heater coil inside of the tip (or very close by, not entirely certain); the temperature reading is of the _inside_ of the tip, rather than the outside. The outside temperature is the most critical for the user as this is where the solder is actually melting and performing work.
 
-The PID controller in the firmware is tuned to be slightly underdamped and thus more "jumpy" than some people would expect. This is based on the theory that if the inside of the tip is seeing the temperature droop; the outside temperature has dropped more and so we should overcompensate until they equalise.
+The PID controller in the firmware is tuned to be slightly underdamped and thus more "jumpy" than some people would expect. This is based on the theory that if the inside of the tip is seeing the temperature drop; the outside temperature has dropped more and so we should overcompensate until they equalise.
 
 This is why sometimes the temperature may flick around a little during use but the tip temperature itself is quite stable. The thermal mass of the tip smooths these small amounts out nicely for the user. Though seeing larger jumps on some tips than others _may_ indicate that the tip does not have optimal internal thermal bonding between the heater coil and the tip itself.
 
-The firmware uses the theory that these irons are more towards the power users territory than most, so it tries to not hide the actual temperature. What some soldering iron controllers do is that they hide the actual measurement once you are within a certain tolerance of this. For example, on a digital Weller unit Ralim has to hand, if set to 350 °C, it will regulate to within around +-3 °C but not indicate you are outside of this bad until you exceed +-5 °C. This gives the illusion that it's holding the temperature perfectly when in actuality it's moving around as well.
+The firmware uses the theory that these irons are aimed more to the power users territory than most, so it tries to _not_ hide the actual temperature. Some soldering iron controllers hide the actual measurement once you are within a certain tolerance of this. For example, on a digital Weller unit that Ralim has, if set to 350°C, it will regulate to within around +/- 3°C but not indicate you are outside of this bad until you exceed +/- 5°C. This gives the illusion that it's holding the temperature perfectly when in actuality it's moving around as well.
 
 Given enough time (3-5 seconds) with no external cooling, the inside and outside temperatures of the tip will be equal. When testing the tip temperature accuracy try to allow time for the system to stabilise.
 
