@@ -9,6 +9,7 @@
 #include "BSP.h"
 #include "Settings.h"
 #include "Utils.h"
+#include "configuration.h"
 #include "main.hpp"
 #include "power.hpp"
 /*
@@ -32,10 +33,10 @@ uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool ski
   // This takes the raw ADC samples, converts these to uV
   // Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
   // Then remove the calibration value that is stored as a tip offset
-  uint32_t vddRailmVX10 = 33000; // The vreg is +-2%, but we have no higher accuracy available
+  uint32_t vddRailmVX10 = ADC_VDD_MV * 10; // The vreg is +-2%, but we have no higher accuracy available
   // 4096 * 8 readings for full scale
   // Convert the input ADC reading back into mV times 10 format.
-  uint32_t rawInputmVX10 = (rawADC * vddRailmVX10) / (4096 * 8);
+  uint32_t rawInputmVX10 = (rawADC * vddRailmVX10) / (ADC_MAX_READING);
 
   uint32_t valueuV = rawInputmVX10 * 100; // shift into uV
   // Now to divide this down by the gain
@@ -89,7 +90,7 @@ uint32_t TipThermoModel::getTipInF(bool sampleNow) {
 }
 
 uint32_t TipThermoModel::getTipMaxInC() {
-  uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(0x7FFF - (21 * 3)); // back off approx 5 deg c from ADC max
-  maximumTipTemp += getHandleTemperature(0) / 10;                                      // Add handle offset
+  uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(ADC_MAX_READING - 1);
+  maximumTipTemp += getHandleTemperature(0) / 10; // Add handle offset
   return maximumTipTemp - 1;
 }

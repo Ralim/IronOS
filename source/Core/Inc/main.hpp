@@ -1,6 +1,6 @@
 #ifndef __MAIN_H
 #define __MAIN_H
-
+#include <stdint.h>
 #include "OLED.hpp"
 #include "Setup.h"
 extern volatile uint32_t currentTempTargetDegC;

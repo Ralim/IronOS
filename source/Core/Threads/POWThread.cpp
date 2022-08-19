@@ -21,9 +21,11 @@
 void startPOWTask(void const *argument __unused) {
   // Init any other misc sensors
   postRToSInit();
+  while (preStartChecksDone() == 0) {
+    osDelay(3);
+  }
   // You have to run this once we are willing to answer PD messages
   // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
-
 #if POW_PD
   USBPowerDelivery::start();
   // Crank the handle at boot until we are stable and waiting for IRQ
@@ -41,16 +43,16 @@ void startPOWTask(void const *argument __unused) {
      * Then we would sleep as nothing to do, but 100ms> 20ms power supply typical timeout
      */
     if (!getFUS302IRQLow()) {
-      res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS);
+      res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS / 2);
     }
 
 #if POW_PD
-
     if (res != pdFALSE || getFUS302IRQLow()) {
       USBPowerDelivery::IRQOccured();
     }
-    USBPowerDelivery::step();
     USBPowerDelivery::PPSTimerCallback();
+    USBPowerDelivery::step();
+
 #else
     (void)res;
 #endif

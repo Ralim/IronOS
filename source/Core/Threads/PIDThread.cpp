@@ -14,6 +14,7 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
+
 static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
 static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
 TaskHandle_t      pidTaskNotification     = NULL;
@@ -45,7 +46,8 @@ void startPIDTask(void const *argument __unused) {
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
 
-  while (preStartChecks() != 0) {
+  while (preStartChecks() == 0) {
+    resetWatchdog();
     ulTaskNotifyTake(pdTRUE, 2000);
   }
 
@@ -141,7 +143,7 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
   // so we basically double the need (gain = 2) to get what we want.
   return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
-                           TIP_THERMAL_MASS,                 // Inertia, smaller numbers increase dominance of the previous value
+                           getTipThermalMass(),              // Inertia, smaller numbers increase dominance of the previous value
                            2,                                // gain
                            rate,                             // PID cycle frequency
                            getX10WattageLimits());

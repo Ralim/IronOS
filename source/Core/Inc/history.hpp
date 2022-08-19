@@ -14,7 +14,7 @@
 template <class T, uint8_t SIZE> struct history {
   static const uint8_t size = SIZE;
   T                    buf[size];
-  int32_t              sum;
+  uint32_t             sum;
   uint8_t              loc;
 
   void update(T const val) {

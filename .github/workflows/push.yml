@@ -9,7 +9,7 @@ jobs:
       image: alpine:3.16
     strategy:
       matrix:
-        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30"]
+        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2"]
       fail-fast: true
 
     steps:
@@ -41,6 +41,7 @@ jobs:
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
+            source/Hexfile/${{ matrix.model }}_*.bin
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
@@ -60,12 +61,12 @@ jobs:
       image: alpine:3.16
     strategy:
       matrix:
-        model: ["Pinecil"]
+        model: ["Pinecil", "Pinecilv2"]
       fail-fast: true
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash musl-dev
+        run: apk add --no-cache gcc-riscv-none-elf newlib-riscv-none-elf findutils python3 py3-pip make git bash musl-dev
       - name: Install dependencies (python)
         run: python3 -m pip install bdflib
 
@@ -91,18 +92,19 @@ jobs:
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
+            source/Hexfile/${{ matrix.model }}_*.bin
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
       - name: Generate json index file
-        run: cd source && python3 metadata.py Pinecil_multi-lang.json
+        run: cd source && python3 metadata.py ${{ matrix.model }}_multi-lang.json
 
       - name: Archive ${{ matrix.model }} index file
         uses: actions/upload-artifact@v3
         with:
           name: metadata
-          path: source/Hexfile/Pinecil_multi-lang.json
+          path: source/Hexfile/${{ matrix.model }}_multi-lang.json
 
   tests:
     runs-on: ubuntu-20.04

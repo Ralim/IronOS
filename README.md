@@ -20,21 +20,16 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
-
-
-|   Device  | DC | QC | PD | EPR | BLE | Battery | Recommended |
-|----------:|:--:|:--:|:--:|:---:|:---:|:-------:|:-----------:|
-|     MHP30 |❌ | ❌ | ✔️ | ❌ | ❌ |   ❌    |     ✔️     |
-|   Pinecil |✔️ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
-| Pinecil 2 |✔️ | ✔️ | ✔️ | ✔️ | ✔️ |   ✔️    |     ✔️     |
-|     TS100 |✔️ | ❌ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
-|      TS80 |❌ | ✔️ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
-|     TS80P |❌ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
-
-
+|    Device | DC  | QC  | PD  | EPR | BLE | Battery | Recommended |
+| --------: | :-: | :-: | :-: | :-: | :-: | :-----: | :---------: |
+|     MHP30 | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌    |     ✔️      |
+|   Pinecil | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
+| Pinecil 2 | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️    |     ✔️      |
+|     TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
+|      TS80 | ❌  | ✔️  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
+|     TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
 
 Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is _no longer recommended_.
-
 
 ## Getting Started
 
@@ -56,6 +51,7 @@ For notes on installation for your device, please refer to the [Flashing Guide](
 - (TS80) Set 18 W or 24 W settings for your power bank
 - (TS80P) Automatically negotiates appropriate PD and falls back to QC mode like TS80
 - (Pinecil) Supports all 3 power modes (PD, QC, DC In).
+- (Pinecilv2) Supports USB-PD EPR for 28V operation.
 - Improved readability Fonts, supporting multiple languages
 - Use hardware features to improve reliability
 - Can disable movement detection if desired
@@ -70,17 +66,17 @@ For notes on installation for your device, please refer to the [Flashing Guide](
 This new firmware uses a new menu system to allow access to the settings on the device.
 When on the main screen and having the tip plugged in, the unit shows a pair of prompts for the two most common operations.
 
-- Pressing the button near the tip enters the *soldering mode*
-- Pressing the button near the USB end enters the *settings menu*
-- When not in *soldering mode*, holding down the button near the tip will enter *soldering temperature adjust mode* (This is the same as the one in the *soldering mode*, but allows to adjust the temperature before heating up), in *soldering mode* however this will activate *boost mode* as long as you hold down the button.
-- Holding down the button near the USB end will show the *[debug menu](Documentation/DebugMenu.md).* In *soldering mode* this ends the heating.
+- Pressing the button near the tip enters the _soldering mode_
+- Pressing the button near the USB end enters the _settings menu_
+- When not in _soldering mode_, holding down the button near the tip will enter _soldering temperature adjust mode_ (This is the same as the one in the _soldering mode_, but allows to adjust the temperature before heating up), in _soldering mode_ however this will activate _boost mode_ as long as you hold down the button.
+- Holding down the button near the USB end will show the _[debug menu](Documentation/DebugMenu.md)._ In _soldering mode_ this ends the heating.
 
 Operation details are over in the [Menu information.](Documentation/Menu.md)
 
 ## Thanks
 
 If you love this firmware and want to continue my caffeine addiction, you can do so [here](https://paypal.me/RalimTek) (or email me for other options).
-I also want to give a shout out to all of the [Fantastic Contributors](https://github.com/Ralim/ts100/graphs/contributors).
+I also want to give a shout out to all of the [Fantastic Contributors](https://github.com/Ralim/IronOS/graphs/contributors).
 
 Especially to the following users, who have helped in various ways that are massively appreciated:
 
