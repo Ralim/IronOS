@@ -425,7 +425,7 @@ bool isTipDisconnected() {
 
 uint8_t preStartChecks() {
   performTipMeasurementStep(false);
-  return tipMeasurementOccuring ? 1 : 0;
+  return tipMeasurementOccuring ? 0 : 1;
 }
 void setBuzzer(bool on) {
   if (on) {
