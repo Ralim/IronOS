@@ -7,7 +7,7 @@
 
 #include <Utils.h>
 
-int32_t Utils::InterpolateLookupTable(const uint16_t *lookupTable, const int noItems, const uint16_t value) {
+int32_t Utils::InterpolateLookupTable(const int32_t *lookupTable, const int noItems, const int32_t value) {
   if (value) {
     for (int i = 1; i < (noItems - 1); i++) {
       // If current tip temp is less than current lookup, then this current lookup is the higher point to interpolate

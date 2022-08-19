@@ -74,6 +74,9 @@
 #define POWER_PULSE_WAIT_MAX     9   // 9*2.5s = 22.5 seconds
 #define POWER_PULSE_DURATION_MAX 9   // 9*250ms = 2.25 seconds
 
+#define ADC_MAX_READING (4096 * 8) // Maximum reading of the adc
+#define ADC_VDD_MV      3300       // ADC max reading millivolts
+
 #ifdef MODEL_TS100
 #define POWER_PULSE_DEFAULT 0
 #else
@@ -146,6 +149,7 @@
 #define BATTFILTERDEPTH 8
 #define OLED_I2CBB
 #define ACCEL_EXITS_ON_MOVEMENT
+#define NEEDS_VBUS_PROBE 0
 
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // TODO, needs refinement

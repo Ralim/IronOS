@@ -9,7 +9,7 @@
 #include "configuration.h"
 
 #ifdef TEMP_uV_LOOKUP_HAKKO
-const uint16_t uVtoDegC[] = {
+const int32_t uVtoDegC[] = {
     //
     //
     0,     0,   //
@@ -69,7 +69,7 @@ const uint16_t uVtoDegC[] = {
 
 #ifdef TEMP_uV_LOOKUP_TS80
 
-const uint16_t uVtoDegC[] = {
+const int32_t uVtoDegC[] = {
     //
     //
     530,   0,   //

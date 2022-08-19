@@ -92,11 +92,14 @@ must be set in the compiler's include path. */
 #endif
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#include "mpu_wrappers.h"
+#define PRIVILEGED_FUNCTION
+#define PRIVILEGED_DATA
+#define FREERTOS_SYSTEM_CALL
+#define portUSING_MPU_WRAPPERS 0
+// #include "mpu_wrappers.h"
 
 /*
  * Setup the stack of a new task so it is ready to be placed under the
@@ -106,9 +109,9 @@ extern "C"
  */
 #if (portUSING_MPU_WRAPPERS == 1)
 #if (portHAS_STACK_OVERFLOW_CHECKING == 1)
-	StackType_t *pxPortInitialiseStack(StackType_t *pxTopOfStack, StackType_t *pxEndOfStack, TaskFunction_t pxCode, void *pvParameters, BaseType_t xRunPrivileged) PRIVILEGED_FUNCTION;
+StackType_t *pxPortInitialiseStack(StackType_t *pxTopOfStack, StackType_t *pxEndOfStack, TaskFunction_t pxCode, void *pvParameters, BaseType_t xRunPrivileged) PRIVILEGED_FUNCTION;
 #else
-	StackType_t *pxPortInitialiseStack(StackType_t *pxTopOfStack, TaskFunction_t pxCode, void *pvParameters, BaseType_t xRunPrivileged) PRIVILEGED_FUNCTION;
+StackType_t *pxPortInitialiseStack(StackType_t *pxTopOfStack, TaskFunction_t pxCode, void *pvParameters, BaseType_t xRunPrivileged) PRIVILEGED_FUNCTION;
 #endif
 #else
 #if (portHAS_STACK_OVERFLOW_CHECKING == 1)
@@ -118,27 +121,25 @@ StackType_t *pxPortInitialiseStack(StackType_t *pxTopOfStack, TaskFunction_t pxC
 #endif
 #endif
 
-	/* Used by heap_5.c to define the start address and size of each memory region
+/* Used by heap_5.c to define the start address and size of each memory region
 that together comprise the total FreeRTOS heap space. */
-	typedef struct HeapRegion
-	{
-		uint8_t *pucStartAddress;
-		size_t xSizeInBytes;
-	} HeapRegion_t;
+typedef struct HeapRegion {
+  uint8_t *pucStartAddress;
+  size_t   xSizeInBytes;
+} HeapRegion_t;
 
-	/* Used to pass information about the heap out of vPortGetHeapStats(). */
-	typedef struct xHeapStats
-	{
-		size_t xAvailableHeapSpaceInBytes;		/* The total heap size currently available - this is the sum of all the free blocks, not the largest block that can be allocated. */
-		size_t xSizeOfLargestFreeBlockInBytes;	/* The maximum size, in bytes, of all the free blocks within the heap at the time vPortGetHeapStats() is called. */
-		size_t xSizeOfSmallestFreeBlockInBytes; /* The minimum size, in bytes, of all the free blocks within the heap at the time vPortGetHeapStats() is called. */
-		size_t xNumberOfFreeBlocks;				/* The number of free memory blocks within the heap at the time vPortGetHeapStats() is called. */
-		size_t xMinimumEverFreeBytesRemaining;	/* The minimum amount of total free memory (sum of all free blocks) there has been in the heap since the system booted. */
-		size_t xNumberOfSuccessfulAllocations;	/* The number of calls to pvPortMalloc() that have returned a valid memory block. */
-		size_t xNumberOfSuccessfulFrees;		/* The number of calls to vPortFree() that has successfully freed a block of memory. */
-	} HeapStats_t;
+/* Used to pass information about the heap out of vPortGetHeapStats(). */
+typedef struct xHeapStats {
+  size_t xAvailableHeapSpaceInBytes;      /* The total heap size currently available - this is the sum of all the free blocks, not the largest block that can be allocated. */
+  size_t xSizeOfLargestFreeBlockInBytes;  /* The maximum size, in bytes, of all the free blocks within the heap at the time vPortGetHeapStats() is called. */
+  size_t xSizeOfSmallestFreeBlockInBytes; /* The minimum size, in bytes, of all the free blocks within the heap at the time vPortGetHeapStats() is called. */
+  size_t xNumberOfFreeBlocks;             /* The number of free memory blocks within the heap at the time vPortGetHeapStats() is called. */
+  size_t xMinimumEverFreeBytesRemaining;  /* The minimum amount of total free memory (sum of all free blocks) there has been in the heap since the system booted. */
+  size_t xNumberOfSuccessfulAllocations;  /* The number of calls to pvPortMalloc() that have returned a valid memory block. */
+  size_t xNumberOfSuccessfulFrees;        /* The number of calls to vPortFree() that has successfully freed a block of memory. */
+} HeapStats_t;
 
-	/*
+/*
  * Used to define multiple heap regions for use by heap_5.c.  This function
  * must be called before any calls to pvPortMalloc() - not creating a task,
  * queue, semaphore, mutex, software timer, event group, etc. will result in
@@ -149,35 +150,35 @@ that together comprise the total FreeRTOS heap space. */
  * terminated by a HeapRegions_t structure that has a size of 0.  The region
  * with the lowest start address must appear first in the array.
  */
-	void vPortDefineHeapRegions(const HeapRegion_t *const pxHeapRegions) PRIVILEGED_FUNCTION;
+void vPortDefineHeapRegions(const HeapRegion_t *const pxHeapRegions) PRIVILEGED_FUNCTION;
 
-	/*
+/*
  * Returns a HeapStats_t structure filled with information about the current
  * heap state.
  */
-	void vPortGetHeapStats(HeapStats_t *pxHeapStats);
+void vPortGetHeapStats(HeapStats_t *pxHeapStats);
 
-	/*
+/*
  * Map to the memory management routines required for the port.
  */
-	void *pvPortMalloc(size_t xSize) PRIVILEGED_FUNCTION;
-	void vPortFree(void *pv) PRIVILEGED_FUNCTION;
-	void vPortInitialiseBlocks(void) PRIVILEGED_FUNCTION;
-	size_t xPortGetFreeHeapSize(void) PRIVILEGED_FUNCTION;
-	size_t xPortGetMinimumEverFreeHeapSize(void) PRIVILEGED_FUNCTION;
+void  *pvPortMalloc(size_t xSize) PRIVILEGED_FUNCTION;
+void   vPortFree(void *pv) PRIVILEGED_FUNCTION;
+void   vPortInitialiseBlocks(void) PRIVILEGED_FUNCTION;
+size_t xPortGetFreeHeapSize(void) PRIVILEGED_FUNCTION;
+size_t xPortGetMinimumEverFreeHeapSize(void) PRIVILEGED_FUNCTION;
 
-	/*
+/*
  * Setup the hardware ready for the scheduler to take control.  This generally
  * sets up a tick interrupt and sets timers for the correct tick frequency.
  */
-	BaseType_t xPortStartScheduler(void) PRIVILEGED_FUNCTION;
+BaseType_t xPortStartScheduler(void) PRIVILEGED_FUNCTION;
 
-	/*
+/*
  * Undo any hardware/ISR setup that was performed by xPortStartScheduler() so
  * the hardware is left in its original condition after the scheduler stops
  * executing.
  */
-	void vPortEndScheduler(void) PRIVILEGED_FUNCTION;
+void vPortEndScheduler(void) PRIVILEGED_FUNCTION;
 
 /*
  * The structures and methods of manipulating the MPU are contained within the
@@ -187,8 +188,8 @@ that together comprise the total FreeRTOS heap space. */
  * contained in xRegions.
  */
 #if (portUSING_MPU_WRAPPERS == 1)
-	struct xMEMORY_REGION;
-	void vPortStoreTaskMPUSettings(xMPU_SETTINGS *xMPUSettings, const struct xMEMORY_REGION *const xRegions, StackType_t *pxBottomOfStack, uint32_t ulStackDepth) PRIVILEGED_FUNCTION;
+struct xMEMORY_REGION;
+void vPortStoreTaskMPUSettings(xMPU_SETTINGS *xMPUSettings, const struct xMEMORY_REGION *const xRegions, StackType_t *pxBottomOfStack, uint32_t ulStackDepth) PRIVILEGED_FUNCTION;
 #endif
 
 #ifdef __cplusplus

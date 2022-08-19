@@ -222,7 +222,7 @@ void OLED::maskScrollIndicatorOnOLED() {
   // it from the screen buffer which is updated by `OLED::setRotation`.
   uint8_t rightmostColumn = screenBuffer[7];
   uint8_t maskCommands[]  = {
-       // Set column address:
+      // Set column address:
       //  A[6:0] - Column start address = rightmost column
       //  B[6:0] - Column end address = rightmost column
       0x80,
@@ -431,9 +431,9 @@ inline void stripLeaderZeros(char *buffer, uint8_t places) {
     }
   }
 }
-void OLED::drawHex(uint32_t x, FontStyle fontStyle) {
+void OLED::drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits) {
   // print number to hex
-  for (uint_fast8_t i = 0; i < 8; i++) {
+  for (uint_fast8_t i = 0; i < digits; i++) {
     uint16_t value = (x >> (4 * (7 - i))) & 0b1111;
     drawChar(value + 2, fontStyle);
   }
