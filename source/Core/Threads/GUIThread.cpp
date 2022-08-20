@@ -172,7 +172,7 @@ static void gui_drawBatteryIcon() {
 }
 static void gui_solderingTempAdjust() {
   TickType_t lastChange              = xTaskGetTickCount();
-//  currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
+  currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
   TickType_t  autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
   bool        waitForRelease         = false;
