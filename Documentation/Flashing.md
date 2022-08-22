@@ -86,8 +86,12 @@ rmdir /tmp/mntdfu
 Device will reboot and automount will rerun if not disabled.
 Check the extension of your firmware, it should be `.RDY` now.
 
+# Pinecil V2 (Pine64)
+- The MCU in V2 is Bouffalo BL706 and does not use usb-dfu for flashing as the previous MCU did.
+- The current firmware (2.18) is very fresh and no upgrade is available/needed.
+- When an update is released for V2, then IronOS will also include an update method to follow.
 
-# Pinecil (Pine64)
+# Pinecil V1 (Pine64)
 
 - The MCU used in Pinecil supports usb-dfu. Reference [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil).
 - Recommended Updater: the [Pine64 Updater](https://github.com/pine64/pinecil-firmware-updater/releases), is an easy-to-use GUI app. It is fast and works in several types of OS, i.e. Windows/Mac. It will automatically fetch the newest stable version of IronOS from GitHub.
