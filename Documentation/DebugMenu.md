@@ -12,7 +12,11 @@ To exit, use the rear (-/B) button again.
 
 Items are shown in the menu on a single line, so they use short codes and appear in this order:
 
-### Time
+### ID
+- This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
+- The new Pinecil V2 released Aug. 2, 2022 now uses BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your Pinecil authenticity [here](https://pinecil.pine64.org/).
+
+### UpTime
 
 This just shows how many deciseconds the unit has been powered for.
 
@@ -20,6 +24,20 @@ This just shows how many deciseconds the unit has been powered for.
 
 This is the last timestamp of movement. When the iron is moved, this should update to match the time field (one before in the menu).
 This can be used for checking performance of the movement detection code.
+
+### ACC
+
+This indicates the accelerometer that is fitted inside the unit.
+
+- MMA8652
+- LIS2DH12
+- BMA223
+- MSA301
+- SC7A20
+- None detected -> running in fallback without movement detection
+- Scanning -> Still searching I2C for one
+
+### Tip Res
 
 ### RTip
 
@@ -35,21 +53,14 @@ This can be used with RTip for assessing temperature processing performance.
 This is the handle temperature in °C. This is used for cold junction compensation of the tip temperature.
 This is shown in degrees Celsius x10, so 200 == 20.0 °C
 
+### CMax
+
+This indicates the max temperature in degrees Celsius that the system estimates it can measure the tip reliably to.
+This is dependent on a few factors including the handle temperature so it can move around during use.
+
 ### Vin
 
 The input voltage as read by the internal ADC. Can be used to sanity check its being read correctly.
-
-### ACC
-
-This indicates the accelerometer that is fitted inside the unit.
-
-- MMA8652
-- LIS2DH12
-- BMA223
-- MSA301
-- SC7A20
-- None detected -> running in fallback without movement detection
-- Scanning -> Still searching I2C for one
 
 ### PWR
 
@@ -60,15 +71,6 @@ This may change during power up as the sources are negotiated in turn.
 - **QC** input (We used QC2/3 negotiation for current supply)
 - **PD W. VBus** input (PD subsystem is used to negotiate for current supply); and VBus is connected to your input power source
 - **PD No VBus** input (PD subsystem is used to negotiate for current supply); and VBus is **NOT** connected to your input power source. If it is Not required or possible to do a special mod of your PCB (i.e. late model V1, some early Green PCB models) then 'PD No VBus' displays on screen, see details and PD Debug [below](/Documentation/DebugMenu.md#pd-debug-menu). Or if you had 'PD Vbus' displayed before and then successfully modified the Pinecil to support 24V by cutting the trace line to Vbus, then you will see 'PD No Vbus' now as a confirmation that the cut worked.
-
-### ID
-- This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
-- The new Pinecil V2 released Aug. 2, 2022 now uses BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your Pinecil authenticity [here](https://pinecil.pine64.org/).
-
-### Max
-
-This indicates the max temperature in degrees Celsius that the system estimates it can measure the tip reliably to.
-This is dependent on a few factors including the handle temperature so it can move around during use.
 
 ### HW G
 
