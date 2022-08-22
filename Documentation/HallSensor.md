@@ -2,9 +2,9 @@
 
 ## Sleep Mode Menu
 
-In Sleep mode, the temperature of the iron automatically lowers to 150 °C (default), which is just below the melting point of the solder. This helps reduce rate of oxidation and damage to the iron tip. In general, when not using the iron, unplug it or let it sleep to increase the longevity of replaceable tips. The default sleep temperature can be customized.
+In [Sleep mode](https://github.com/Ralim/IronOS/blob/dev/Documentation/Settings.md#setting-sleep-temp), the iron automatically lowers the temperature to 150 °C (default). This default was chosen as it is just below the melting point of many solders. A stand-by lower temperature helps reduce the rate of oxidation and prevents damage to iron tips. In general, when not using the iron, unplug it or let it sleep to increase the longevity of replaceable tips. The default sleep temperature can be customized.
 
-Simply moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake-up the iron.
+Simply moving the iron or pressing any button will wake it back up into soldering mode.
 
 ### Optional Hall Effect Feature (Pinecil only):
 
@@ -17,4 +17,3 @@ Inside the Sleep Menu is an additional type of sleep setting. Pinecil has an unp
   - Sensor is physically located near the copper contacts for the tip at the front of the handle. **[Reference Schematics U14](https://files.pine64.org/doc/Pinecil/Pinecil_schematic_v1.0a_20201120.pdf)**.
   - Positioning/type/quantity of magnets is important for best results. Sometimes too many magnets breaks the effect by distorting the magnetic field [as seen in this demo video](https://www.youtube.com/shorts/afkqKwCX00I). The video shows magnets at the top of the stand, and the pinecil goes correctly into Zzzz with *only* those magnets. When more magnets are added at the side, the Pinecil did not go to sleep, which is contrary to the goal. See the PDF below for details on magnetic fields with SI7210.
   - Orientation of North and South faces of magnets is important to increase reaction of the hall sensor [see data sheet SI7210-B-00-IV](https://www.silabs.com/documents/public/application-notes/an1018-si72xx-sensors.pdf).
-
