@@ -84,7 +84,7 @@ This indicates the high water mark for the stack for the PID thread. The smaller
 
 ### Hall
 
-This appears if your device is capable of having a magnetic hall effect sensor installed (Pinecil).
+This appears if your device is capable of having a hall effect sensor installed (Pinecil).
 This shows the current magnetic field strength reading from the sensor. It is used to check if the sensor is operational, and for diagnostics and optimal placement of magnets on a stand (higher number is better/stronger).
 
 # PD Debug menu
