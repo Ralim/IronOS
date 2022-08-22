@@ -62,7 +62,7 @@ This may change during power up as the sources are negotiated in turn.
 
 ### ID
 - This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
-- The new Pinecil V2 released Aug. 2, 2022 now uses BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your Pinecil authenticity [here](https://pinecil.pine64.org/).
+- The new Pinecil V2 released Aug. 2, 2022 now uses BL706, which enables generating a unique ID/Serial number to every iron. This can be used to [verify your V2 authenticity here](https://pinecil.pine64.org/).
 
 ### Max
 
@@ -85,7 +85,7 @@ This indicates the high water mark for the stack for the PID thread. The smaller
 ### Hall
 
 This appears if your device is capable of having a magnetic hall effect sensor installed (Pinecil).
-This shows the current field strength reading from the sensor. It can be used to check if the sensor is operational, and measure how strong the magnetic field is for diagnostics and optimal placement of magnets on a stand.
+This shows the current magnetic field strength reading from the sensor. It is used to check if the sensor is operational, and for diagnostics and optimal placement of magnets on a stand (higher number is better/stronger).
 
 # PD Debug menu
 
