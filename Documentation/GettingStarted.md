@@ -84,4 +84,4 @@ There is a small scrollbar dot that appears along the right edge of the screen t
 
 Additionally, this scrollbar will blink rapidly when you are on the last item in a menu choice.
 
-I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs. If you make want to start over, simply go to Advanced settings > Restore factory settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
+I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs. If you want to start over, simply go to Advanced settings > Restore factory settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
