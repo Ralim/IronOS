@@ -72,16 +72,16 @@ If, after entering sleep mode, the iron still does not see movement for a much l
 The settings menu is the most often evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has an on-screen description so you don't _need_ to come back here to figure them all out.
 
 To navigate the menu, the two buttons act separately.
-The button that you pressed to enter the menu (rear) scrolls down the options, and the other button (front) will enter and change the current option.
+The rear button (`-/B`) is pressed to enter the menu and scrolls down the main options, and the other front button (`+/A`) will enter and change the current option.
 
-To see a description of an option, just wait and after a little time, it will scroll across the screen.
+To see a description of an option, just wait, and after a little time, it will scroll across the screen.
 
-The menu is comprised of a 'main menu' of categories and then sub-items that allows you to adjust parameters.
+The menu is comprised of a 'main menu' of categories and then sub-items that allow you to adjust parameters.
 
 You can long hold buttons to change through options faster, and there is some acceleration when holding the buttons.
 
-There is a small scrollbar that will be shown along the edge of the screen to indicate how far through the current list you are.
+There is a small scrollbar dot that appears along the right edge of the screen to indicate how far through the current list you are.
 
 Additionally, this scrollbar will blink rapidly when you are on the last item in a menu choice.
 
-I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs.
+I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs. If you make want to start over, simply go to Advanced settings > Restore factory settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
