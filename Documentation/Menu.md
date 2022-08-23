@@ -38,7 +38,7 @@ To calibrate your iron:
 
 ### Calibrating tip offset (Set tip model)
 This is normally not needed unless you have an issue with your temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. If the method below is not followed, the iron could be worse than before calibration, repeat the method.
-Some tips have an offset on their readings which causes issues, i.e., the actually temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps:
+Some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps:
 
 1. Connect power to your iron
 2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
