@@ -55,6 +55,6 @@ The firmware only accounts for cold junction compensation and then treats the re
 While the error is small, it is actually composed of both a constant offset as well as an offset that is linear to the handle temperature.
 This offset that is linear to handle temperature is as of current not modelled into the firmware and is assumed to be constant. This is generally *close enough* as once the unit is in use, the handle temperature is usually within 10 °C as the components inside warm-up from use. This means that this error is "relatively" constant once the unit is being used. 
 
-`However, this can cause odd behaviour when the tip temperature ~= room temperature. And can cause some jumping and movement in the readings when attempting to control the tip to sub 100 °C.`
+`However, this can cause odd behaviour when the tip temperature ~= room temperature. It can cause some jumping and movement in the readings when attempting to control the tip to sub 100 °C.`
 
 This is a known tradeoff that is made as the irons intended use case means that it will spend most of its time above 150 °C, at which point these errors are no longer the dominant error sources in the system.
