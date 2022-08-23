@@ -1021,7 +1021,7 @@ void gui_Menu(const menuitem *menu) {
       autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
     }
 
-    if ((xTaskGetTickCount() - lastButtonTime) > (TICKS_SECOND * 30)) {
+    if ((xTaskGetTickCount() - lastButtonTime) > (TICKS_SECOND * 2 * 60)) {
       // If user has not pressed any buttons in 30 seconds, exit back a menu layer
       // This will trickle the user back to the main screen eventually
       earlyExit = true;
