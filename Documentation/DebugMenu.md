@@ -93,7 +93,7 @@ On the Pinecil; if the iron is booted up while long holding the front button (`+
 
 Pressing (`+`) cycles through elements, and (`-`) or unplugging will exit the menu.
 
-The first page shows the PD negotiation stage number; which can be used for diagnosing if PD is not working. Once negotiation is complete; the other screens will show the advertised readings for voltage and current of the proposals (State 12 means all is good with the PD charger).
+The first page shows the PD negotiation stage number; which can be used for diagnosing if PD is not working. Once negotiation is complete; use (`+`) button to advance to other screens which show the different proposals advertised for voltage and current (State 12 means all is good with the PD charger).
 
 #### Below is a method for user modification to convert some early models of Pinecil V1 to safely support 24V on the DC5525 barrel.
 ⚠️ Warning: do this at your own risk, read everything in this document, and go to the [Pine64 community chat](https://wiki.pine64.org/wiki/Pinecil#Community_links) if you desire advice. An incorrect cut of the trace could render the Pinecil non-working.
