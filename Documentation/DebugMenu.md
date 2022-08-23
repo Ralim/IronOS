@@ -102,4 +102,4 @@ Background: a simple user modification to the PCB on some models of original V1 
 
 The mod method is shown in the February 2022 [PINE64 community updates](https://www.pine64.org/2022/02/15/february-update-chat-with-the-machine/). Early Pinecil V1 models required cutting a trace. Late model V1 made sometime in 2022 came with '[No Vbus]' already displayed, and no mod is required.
 
-The V2 model released Aug. 2, 2022 is an overhaul of the PCB with all relevant components capable of 28V. V2 requires no mods to support the use of 24V DC Barrel port charger.
+The V2 model released Aug. 2, 2022 is an overhaul of the PCB with all relevant components capable of 28V. V2 requires no mods to support the use of 24V DC Barrel jack charger.
