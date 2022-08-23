@@ -5,20 +5,21 @@ In this firmware for these soldering irons, all settings are adjustable on the d
 ## Soldering mode
 
 In this mode the iron works as you would expect, pressing either button will take you to a temperature change screen.
-- Use each button to go up/down in temperature. Pressing both buttons will exit the temperature menu (or wait 3 seconds and it will time out).
+- Use each button to go up/down in temperature. Pressing both buttons exits the temperature menu (or wait 3 seconds and it will time out).
 - Pressing both buttons or holding the rear button (`-/B`) will exit Soldering Mode.
 - Holding the front button (`+/A`) will enter [Boost mode](/Documentation/Menu.md#boost-mode) (if enabled).
 
 ## Settings Mode
 
-This menu allows you to cycle through all the options and set their values.
-The button near the USB cycles through the options, and the one near the tip changes the selected option.
-Note that settings are not saved until you exit the menu.
-If you leave the unit alone (i.e., don't press any buttons) on a setting, after 3 seconds the screen will scroll a rough description of the setting.
-
+This menu allows you to cycle through all the options and set custom values.
 The menu is arranged so that the most often used settings are first.
-With submenus being selected to enter using the front button (as if you were going to change the setting).
-Scrolling through the submenu will return you back to its entry location after you scroll through all of the options.
+
+- The rear button (`-/B`) cycles through the main options.
+- The front button (`+/A`) changes the selected option.
+- Note that settings are not saved until you exit the menu.
+- If you idle on a setting (i.e., don't press any buttons), after 3 seconds, the screen scrolls a brief description (mini help guide).
+- Enter submenus using the front button (`+/A`) if you are going to change it or wish to view it.
+- Scrolling through the all options of a submenu will return you back to its entry location.
 
 ### Calibrating input voltage
 
