@@ -3,7 +3,7 @@
 In this firmware there is extra debugging information in a hidden sub-menu.
 This menu is meant to be simple, so it has no fancy GUI animations.
 
-- Access by holding the rear (``-/B``) button on the iron while it is on the home screen.
+- Access by pressing the rear (``-/B``) button on the iron while it is on the home screen.
 - To scroll through the menu, use the front (``+/A``) button.
 - To exit, use the rear (``-/B``) button again.
 
