@@ -42,7 +42,7 @@ Some tips have an offset on their readings which causes issues, i.e., the actual
 
 1. Connect power to your iron
 2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
-3. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate temperature? > press (`+/A`) twice
+3. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate temperature? > press (`+/A`)
 4. Important warning message is shown: *Please ensure the tip is at room temperature before proceeding!* 
 5. Press the (`+/A`) button to confirm (tip/handle are at ambient temperature).
 6. Display shows "...." for a short time as the unit measures and compares the tip temperature and the handle temperature.
