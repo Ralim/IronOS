@@ -42,14 +42,13 @@ Some tips will have an offset on their readings, to calibrate this out, perform 
 
 1. Connect power to your iron
 2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
-3. Enter the settings menu and press `+` (front button closer to the tip) to select items.
-4. Scroll down to Advanced menu > press `+` > Calibrate temperature? > press `+`
-5. The display will scroll a warning message to Check that the tip is at room/ambient temperature!
-6. Press the `+` button to confirm
-8. The display shows "...." for a short time as the unit measures the tip temperature and the handle temperature and compares them.
-9. The display will then go back to *TMP CAL* and it will display your Offset number. You generally don't need it unless debugging issues.
-10. Calibration is done, just exit the settings menu as normal
-11. You're done, enjoy your iron!
+3. Scroll down to Advanced menu > press `+` > Calibrate temperature? > press `+`
+4. The display will scroll a warning message to Check that the tip is at room/ambient temperature!
+5. Press the `+` button to confirm
+6. The display shows "...." for a short time as the unit measures the tip temperature and the handle temperature and compares them.
+7. The display will then go back to *TMP CAL* and it will display your Offset number. You generally don't need it unless debugging issues.
+8. Calibration is done, just exit the settings menu as normal
+9. You're done, enjoy your iron!
 
 Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration. 
 
