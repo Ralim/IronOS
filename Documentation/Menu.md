@@ -54,6 +54,6 @@ Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's t
 
 ### Boost mode
 
-This allows you to change the front button (`+`) (one near the tip) to become a boost button when you hold it for > 2 seconds. A boost button changes the soldering temperature for short periods. For example, when soldering a big joint and you need a much higher temperature, hold the (`+`) button down and it will temporarily increase the temperature to your 'boost' setting. When you release the button, the temperature will gradually go back to the normal set temperature.
+This allows you to change the front button (`+/A`) to become a boost button when you hold it for > 2 seconds. A boost button changes the soldering temperature for short periods. For example, when soldering a big joint and you need a much higher temperature, hold the (`+/A`) button down and it will temporarily increase the temperature to your 'boost' setting. When you release the button, the temperature will gradually go back to the normal set temperature.
 
 The boost temperature is set in Soldering settings.
