@@ -11,7 +11,7 @@ Originally conceived as an alternative firmware for the TS100, this firmware has
 The firmware implements all of the standard features of a 'smart' soldering iron, with lots of little extras and tweaks.
 I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
 
-For soldering irons that are designed to be powered by 'smart' power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
+For soldering irons that are designed to be powered by 'smart' power sources (PD and QC), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100 & Pinecil), settings for a cutoff voltage for battery protection are supported.
 
 There are 30 languages currently supported. When downloading the firmware for your soldering iron, take note of the language code in the file name.
