@@ -89,7 +89,7 @@ This shows the current magnetic field strength reading from the sensor. It is us
 
 # PD Debug menu
 
-On the Pinecil; if the iron is booted up while long holding the front button (`+`); it will show an extra menu for inspecting USB-PD power adapters. We can also connect to any PD USB power to check Vbus status, even some cell phones with a USB-C port will work if it is PD. It will not show PD messages when Pinecil is powered by DC port, QC, or USB 5V (non-PD). For example, if you connect to a QC charger, you may simply see "PD State 6" which indicates "waiting for source" as no PD messages will be ever be sent and you will not be about to use (`+`) to scroll through PD negotiated messages.
+On the Pinecil; if the iron is booted up while long holding the front button (`+`); it will show an extra menu for inspecting USB-PD power adapters. We can also connect to any PD USB power to check Vbus status, even some cell phones with a USB-C port will work if it is PD. It will not show PD messages when Pinecil is powered by DC port, QC, or USB 5V (non-PD). For example, if you connect to a QC charger, you may simply see "PD State 6" which indicates "waiting for source" as no PD messages will be ever be sent and you will not be able to use (`+`) to scroll through PD negotiated messages.
 
 The menu navigates like the debug menu, where pressing (`+`) cycles through elements, and (`-`) or unplugging will exit the menu.
 
