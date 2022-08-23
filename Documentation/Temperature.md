@@ -9,7 +9,7 @@ The downsides of this are twofold; one, it is made using non-optimal metals and 
 
 ##  How a thermocouple works (brief)
 
-A thermocouple uses a junction of two dissimilar metals to create a very small amount of power (microvolts). This can then be measured and used with a known transfer function to derive the temperature of the junction.
+[Thermocouples use a junction of two dissimilar metals](https://www.youtube.com/watch?v=g78f-tJ666c) to create a very small amount of power (microvolts). This can then be measured and used with a known transfer function to derive the temperature of the junction.
 This has some fairly large limitations, but it also has the benefit of being extremely cheap.
 
 Conventionally a thermocouple is created using two dissimilar metals that join, and then the other ends of these metals are terminated to copper contacts. These copper contacts are also part of the construction of the thermocouple and are referred to as the cold junction.
