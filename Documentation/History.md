@@ -1,5 +1,22 @@
 # Version Changes
 
+## V2.19
+- Bug-fix Infinite Boot Logo
+- Shutdown settings for MHP30
+- Accelerometer sensitivity for MHP30
+- Allow showing unique device ID
+- Bug-fix chance of a power pulse at device boot
+- Updated translations
+- Improved documents, added features table
+
+## V2.18
+- Support for animated bootup logo's
+- Bootup logo's moved to their own IronOS-Meta repo
+- New Vietnamese translation (limited due to screen size)
+- Fixes for SC7A20 in TS80(P)
+- Updated translations
+- Better Instructions/documents
+
 ## V2.17
 ### Big changes
 - Indicate status of VBus for modding Pinecil (debug menu)
