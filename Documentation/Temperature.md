@@ -51,7 +51,7 @@ Given enough time (3-5 seconds) with no external cooling, the inside and outside
 
 The firmware in these irons does a *best-effort* of calculating an accurate temperature. As always there is a tradeoff between perfect accuracy and firmware complexity and setup. These irons are built down to a cost; expecting accuracy greater than 1% is not really an option as the voltage reference is only 1% accurate at best. So _all_ measurements are affected by its accuracy. The low-cost chips used in the irons do not come calibrated from the factory so we do not have an internal calibration we can use to try and measure this inaccuracy.
 
-The firmware only accounts for cold junction compensation and then treats the remaining error as being a constant offset. 
+The firmware only accounts for [cold junction compensation](https://www.tegam.com/what-exactly-is-cold-junction-compensation/) and then treats the remaining error as being a constant offset. 
 While the error is small, it is actually composed of both a constant offset as well as an offset that is linear to the handle temperature.
 This offset that is linear to handle temperature is as of current not modelled into the firmware and is assumed to be constant. This is generally *close enough* as once the unit is in use, the handle temperature is usually within 10 °C as the components inside warm-up from use. This means that this error is "relatively" constant once the unit is being used. 
 
