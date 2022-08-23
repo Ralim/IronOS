@@ -11,7 +11,7 @@ In this mode the iron works as you would expect, pressing either button will tak
 
 ## Settings Mode
 
-This menu allows you to cycle through all the options and set custom values.
+This mode allows you to cycle through all the options and set custom values.
 The menu is arranged so that the most often used settings are first.
 
 - The rear button (`-/B`) cycles through the main options.
