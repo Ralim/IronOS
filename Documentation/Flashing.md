@@ -105,7 +105,7 @@ Check the extension of your firmware, it should be `.RDY` now.
 
 ### Steps
 
-⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
+⛔  Do not use the DC barrel jack while updating firmware or you may destroy your PC. ⛔
 
 1. Download and extract the firmware package from GitHub [IronOS Releases](https://github.com/Ralim/IronOS/releases).
 2. Highly recommend updating `dfu-util` to the newest version.
@@ -171,7 +171,7 @@ Two Options for Windows
 
 ### Steps
 
-⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
+⛔  Do not use the DC barrel jack while updating firmware or you may destroy your PC. ⛔
 
 1. Using command line `dfu-util` is similar to above for Linux / Mac.
 2. Highly recommend updating `dfu-util` to the newest version.
@@ -194,7 +194,7 @@ dfu-util -D Pinecil_EN.dfu
 
 ### Steps
 
-⛔  Do not use the DC power jack while updating firmware or you may destroy your PC. ⛔
+⛔  Do not use the DC barrel jack while updating firmware or you may destroy your PC. ⛔
 
 1. If you are uncomfortable with the command line, then this chip vendor supplied GUI tool/drivers is an option.
 2. Download and extract the firmware package from GitHub [IronOS Releases](https://github.com/Ralim/IronOS/releases).
