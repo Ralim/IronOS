@@ -44,7 +44,7 @@ Some tips will have an offset on their readings, to calibrate this out, perform 
 2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
 3. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate temperature? > press (`+/A`) twice
 4. Important warning message is shown: *Please ensure the tip is at room temperature before proceeding!* 
-5. Press the (`+/A`) button to confirm  (the tip and handle are at ambient temperature and not recently used).
+5. Press the (`+/A`) button to confirm (tip and handle are at ambient temperature and not recently used).
 6. The display shows "...." for a short time as the unit measures the tip temperature and the handle temperature and compares them.
 7. The display then goes back to *TMP CAL* and displays your *Offset number*. You generally don't need this offset number unless debugging issues.
 8. Calibration is done, just exit the settings menu as normal
