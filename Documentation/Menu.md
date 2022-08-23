@@ -47,7 +47,7 @@ Some tips have an offset on their readings which causes issues, i.e., the actual
 5. Press the (`+/A`) button to confirm (tip/handle are at ambient temperature).
 6. Display shows "...." for a short time as the unit measures and compares the tip and handle temperatures.
 7. The display then goes back to *TMP CAL* and displays your *Offset number*. You generally don't need this offset unless debugging issues.
-8. After you see an Offset number, Calibration is done, just exit the settings menu normally, use (`-/B`).
+8. After you see an Offset number, calibration is done, just exit the settings menu normally, use (`-/B`).
 9. You're done, enjoy your iron!
 
 Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration.
