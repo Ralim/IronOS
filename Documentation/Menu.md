@@ -1,6 +1,6 @@
 # Menu System
 
-In this firmware for these soldering irons, all settings are adjustable on the device itself. This means you do **not** require a computer to change any settings.
+In this firmware for these soldering irons, all settings are adjustable on the device itself. This means a computer is **not** required to change any setting.
 
 ## Soldering mode
 
