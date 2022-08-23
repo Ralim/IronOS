@@ -66,6 +66,7 @@ bool USBPowerDelivery::fusbPresent() {
 }
 
 bool USBPowerDelivery::isVBUSConnected() {
+#if NEEDS_VBUS_PROBE == 1
   static uint8_t state = 0;
   if (state) {
     return state == 1;
@@ -81,6 +82,9 @@ bool USBPowerDelivery::isVBUSConnected() {
     state = 2;
     return false;
   }
+#else
+  return false;
+#endif
 }
 uint32_t  lastCapabilities[11];
 uint32_t *USBPowerDelivery::getLastSeenCapabilities() { return lastCapabilities; }

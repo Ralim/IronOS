@@ -83,6 +83,7 @@ struct TranslationIndexTable {
   uint16_t SleepingAdvancedString;
   uint16_t SleepingTipAdvancedString;
   uint16_t OffString;
+  uint16_t DeviceFailedValidationWarning;
 
   uint16_t SettingsResetMessage;
   uint16_t NoAccelerometerMessage;

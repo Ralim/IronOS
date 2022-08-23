@@ -16,8 +16,10 @@ extern "C" {
 // Can be used to check any details for the power system
 void power_check();
 
-// Return the tip resistance in x10 ohms (8.5 -> 85)
+// Returns the tip resistance in x10 ohms, so 7.5 = 75; 14=140 etc
 uint8_t getTipResistanceX10();
+
+uint8_t getTipThermalMass();
 
 #ifdef __cplusplus
 }
