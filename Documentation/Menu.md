@@ -9,7 +9,7 @@ In this mode the iron works as you would expect, pressing either button will tak
 - Pressing both buttons or holding the rear button (`-/B`) will exit Soldering Mode.
 - Holding the front button (`+/A`) will enter [Boost mode](/Documentation/Menu.md#boost-mode) (if enabled).
 
-## Settings Mode
+## Settings mode
 
 This mode allows you to cycle through all the options and set custom values.
 The menu is arranged so that the most often used settings are first.
