@@ -688,38 +688,64 @@ void showDebugMenu(void) {
     OLED::setCursor(0, 8);                              // second line
     OLED::print(DebugMenu[screen], FontStyle::SMALL);
     switch (screen) {
-    case 0: // Just prints date
+    case 0: // Build Date
       break;
     case 1:
-      // system up time stamp
-      OLED::printNumber(xTaskGetTickCount() / TICKS_100MS, 5, FontStyle::SMALL);
+      // Device ID
+      {
+        uint64_t id = getDeviceID();
+#ifdef DEVICE_HAS_VALIDATION_CODE
+        // If device has validation code; then we want to take over both lines of the screen
+        OLED::clearScreen();   // Ensure the buffer starts clean
+        OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
+        OLED::print(DebugMenu[screen], FontStyle::SMALL);
+        OLED::drawHex(getDeviceValidation(), FontStyle::SMALL, 8);
+        OLED::setCursor(0, 8); // second line
+#endif
+        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 8);
+        OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL, 8);
+      }
       break;
     case 2:
-      // Movement time stamp
-      OLED::printNumber(lastMovementTime / TICKS_100MS, 5, FontStyle::SMALL);
+      // System Uptime
+      OLED::printNumber(xTaskGetTickCount() / TICKS_100MS, 5, FontStyle::SMALL);
       break;
     case 3:
-      // Raw Tip
-      { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6, FontStyle::SMALL); }
+      // Movement Timestamp
+      OLED::printNumber(lastMovementTime / TICKS_100MS, 5, FontStyle::SMALL);
       break;
     case 4:
+      // ACC Type
+      OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
+      break;
+    case 5:
+      // Tip Resistance
+      OLED::printNumber(getTipResistanceX10() / 10, 4, FontStyle::SMALL); // large to pad over so that we cover ID left overs
+      OLED::print(SymbolDot, FontStyle::SMALL);
+      OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
+      break;
+    case 6:
+      // Raw Tip in uV
+      { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6, FontStyle::SMALL); }
+      break;
+    case 7:
       // Temp in C
       OLED::printNumber(TipThermoModel::getTipInC(), 5, FontStyle::SMALL);
       break;
-    case 5:
-      // Handle Temp
+    case 8:
+      // Handle Temp in C
       OLED::printNumber(getHandleTemperature(0), 6, FontStyle::SMALL);
       break;
-    case 6:
-      // Voltage input
+    case 9:
+      // Max C Limit
+      OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
+      break;
+    case 10:
+      // Input Voltage
       printVoltage();
       break;
-    case 7:
-      // Print ACC type
-      OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
-      break;
-    case 8:
-      // Power negotiation status
+    case 11:
+      // Power Negotiation Status
       {
         int sourceNumber = 0;
         if (getIsPoweredByDCIN()) {
@@ -754,48 +780,22 @@ void showDebugMenu(void) {
         OLED::print(PowerSourceNames[sourceNumber], FontStyle::SMALL);
       }
       break;
-    case 9:
-      // Print device ID Numbers
-      {
-        uint64_t id = getDeviceID();
-#ifdef DEVICE_HAS_VALIDATION_CODE
-        // If device has validation code; then we want to take over both lines of the screen
-        OLED::clearScreen();   // Ensure the buffer starts clean
-        OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
-        OLED::print(DebugMenu[screen], FontStyle::SMALL);
-        OLED::drawHex(getDeviceValidation(), FontStyle::SMALL, 8);
-        OLED::setCursor(0, 8); // second line
-#endif
-        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 8);
-        OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL, 8);
-      }
-      break;
-    case 10:
-      // Max deg C limit
-      OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
-      break;
-    case 11:
-      // Tip resistance
-      OLED::printNumber(getTipResistanceX10() / 10, 4, FontStyle::SMALL); // large to pad over so that we cover ID left overs
-      OLED::print(SymbolDot, FontStyle::SMALL);
-      OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
-      break;
     case 12:
-      // High water mark for GUI
+      // High Water Mark for GUI
       OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
       break;
     case 13:
-      // High water mark for the Movement task
+      // High Water Mark for Movement Task
       OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
       break;
     case 14:
-      // High water mark for the PID task
+      // High Water Mark for PID Task
       OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
       break;
       break;
 #ifdef HALL_SENSOR
     case 15:
-      // Print raw hall effect value if availabe, none if hall effect disabled.
+      // Raw Hall Effect Value
       {
         int16_t hallEffectStrength = getRawHallEffect();
         if (hallEffectStrength < 0)
