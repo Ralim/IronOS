@@ -17,7 +17,7 @@ As there are these extra two joins between the thermocouple wires and the copper
 
 If the cold junction is held at 0 degrees Celsius, then their effect is considered to be null, and so they can be ignored. However, in the real world the joins to copper are often at room temperature, and as such the measured voltage from the thermocouple must be compensated to remove the influence of these joints. This process is often called cold junction compensation.
 
-Every time in the circuit there is a join between two different metals, there is a small thermocouple created, this means that _every_ soldered connection is also one. 
+Every time in the circuit there is a join between two different metals, then a small thermocouple is created, this means that _every_ soldered connection is also one. 
 
 
 ## How these irons implement the temperature reading
