@@ -74,14 +74,14 @@ The settings menu is the most often evolving aspect of the firmware, so each opt
 To navigate the menu, the two buttons act separately.
 The rear button (`-/B`) is pressed to enter the menu and scrolls down the main options, and the other front button (`+/A`) will enter and change the current option.
 
-To see a description of an option, just wait, and after a little time, it will scroll across the screen.
+To see a description of an option, just wait, and after a few seconds, it will scroll across the screen.
 
 The menu is comprised of a 'main menu' of categories and then sub-items that allow you to adjust parameters.
 
 You can long hold buttons to change through options faster, and there is some acceleration when holding the buttons.
 
-There is a small scrollbar dot that appears along the right edge of the screen to indicate how far through the current list you are.
+There is a small scrollbar that appears along the right edge of the screen to indicate how far through the current list you are (looks like a dot).
 
-Additionally, this scrollbar will blink rapidly when you are on the last item in a menu choice.
+Additionally, this scrollbar will blink rapidly when you are on the last value in a range of a sub-menu. For example, if you are in Motion Sensitivity, which has a range of 0 - 9,  it will blink when you are at 9.
 
 I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs. If you want to start over, simply go to Advanced settings > Restore factory settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
