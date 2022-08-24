@@ -11,7 +11,7 @@ Originally conceived as an alternative firmware for the TS100, this firmware has
 The firmware implements all of the standard features of a 'smart' soldering iron, with lots of little extras and tweaks.
 I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
 
-For soldering irons that are designed to be powered by 'smart' power sources (QC and PD), the firmware supports settings around the negotiated power and voltage.
+For soldering irons that are designed to be powered by 'smart' power sources (PD and QC), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100 & Pinecil), settings for a cutoff voltage for battery protection are supported.
 
 There are 30 languages currently supported. When downloading the firmware for your soldering iron, take note of the language code in the file name.
@@ -20,16 +20,17 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
 
-|    Device | DC  | QC  | PD  | EPR | BLE | Battery | Recommended |
-| --------: | :-: | :-: | :-: | :-: | :-: | :-----: | :---------: |
-|     MHP30 | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌    |     ✔️      |
-|   Pinecil | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
-| Pinecil 2 | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️    |     ✔️      |
-|     TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
-|      TS80 | ❌  | ✔️  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
-|     TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
 
-Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is _no longer recommended_.
+|   Device   | DC | QC | PD | EPR | BLE | Battery | Recommended |
+|-----------:|:--:|:--:|:--:|:---:|:---:|:-------:|:-----------:|
+|      MHP30 |❌ | ❌ | ✔️ | ❌ | ❌ |   ❌    |     ✔️     |
+| Pinecil V1 |✔️ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
+| Pinecil V2 |✔️ | ✔️ | ✔️ | ✔️ | ✔️ |   ✔️    |     ✔️     |
+|      TS100 |✔️ | ❌ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
+|       TS80 |❌ | ✔️ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
+|      TS80P |❌ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
+
+*Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is _no longer recommended_.
 
 ## Getting Started
 
