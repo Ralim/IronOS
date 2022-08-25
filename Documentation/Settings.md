@@ -125,13 +125,13 @@ On device help text:
 
 Flash the temperature reading after heating was halted while the tip is still hot
 
-### Setting: Calibrate temperature?
+### Setting: Calibrate Tip Offset?
 
-Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target.
+Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally *not required unless your device is reading more than 5°C off target temperature*.
 
 On device help text:
 
-Start tip temperature offset calibration
+Calibrate tip temperature offset; not required unless device > 5°C off target
 
 ### Setting: Restore factory settings?
 
