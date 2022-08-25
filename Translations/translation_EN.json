@@ -193,7 +193,7 @@
 				"Calibrate",
 				"input voltage?"
 			],
-			"desc": "Start V-IN calibration (long press to exit)"
+			"desc": "Start VIN calibration (long press to exit)"
 		},
 		"AdvancedSoldering": {
 			"text2": [
