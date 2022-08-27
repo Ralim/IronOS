@@ -8,7 +8,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Прежде чем продолжить, пожалуйста, убедитесь, что жало имеет комнатную температуру!",
+		"SettingsCalibrationWarning": "Прежде чем продолжить, убедитесь, что наконечник и ручка имеют комнатную температуру!",
 		"SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
 		"UVLOWarningString": "НАПРЯЖ--",
 		"UndervoltageString": "Низ. напряжение",
@@ -17,7 +17,7 @@
 		"SleepingAdvancedString": "Ожидание...",
 		"SleepingTipAdvancedString": "Жало:",
 		"OffString": "Вык",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Скорее всего, это устройство подделка!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Сброс OK",
@@ -181,7 +181,7 @@
 				"Калибровка",
 				"температуры"
 			],
-			"desc": "Калибровка термодатчика жала"
+			"desc": "Калибровка компенсации холодного спая жала (не требуется, если Delta T < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -265,7 +265,7 @@
 				"Датчик",
 				"Холла"
 			],
-			"desc": "Уровень чувствительности датчика холла в режиме сна (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
+			"desc": "Чувствительность датчика Холла к переходу в спящий режим (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
 		},
 		"LockingMode": {
 			"text2": [
