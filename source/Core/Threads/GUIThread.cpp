@@ -996,6 +996,22 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
+  // al_qu Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
+  if (tipDisconnected == false && tipTemp <= 32) {
+    uint16_t setoffset = 0;
+    // If the thermo-couple at the end of the tip, and the handle are at
+    // equilibrium, then the output should be zero, as there is no temperature
+    // differential.
+    while (setoffset == 0) {
+      uint32_t offset = 0;
+      for (uint8_t i = 0; i < 16; i++) {
+        offset += getTipRawTemp(1);
+        osDelay(100);
+      }
+      setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
+    }
+    setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
+  }
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
   if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
       && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
