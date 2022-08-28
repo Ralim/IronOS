@@ -364,8 +364,8 @@ var def = ///
             },
             {
                 "id": "HallEffSensitivity",
-                "maxLen": 6,
-                "maxLen2": 8,
+                "maxLen": 12,
+                "maxLen2": 15,
                 "description": "If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the device into sleep mode."
 
             },
