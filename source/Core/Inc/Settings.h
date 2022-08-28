@@ -53,7 +53,7 @@ enum SettingsOptions {
   CalibrateCJC                   = 36, // Toggle calibrate CJC at Boot
 
   //
-  SettingsOptionsLength = 36, //
+  SettingsOptionsLength = 37, //
 };
 
 typedef enum {
