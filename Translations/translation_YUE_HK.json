@@ -115,7 +115,7 @@
 			"text2": "降温時閃爍",
 			"desc": "停止加熱之後，當焫雞咀仲係熱嗰陣閃爍畫面"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": "温度校正？",
 			"desc": "開始校正焫雞咀温度位移"
 		},

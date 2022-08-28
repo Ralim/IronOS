@@ -175,7 +175,7 @@
 			],
 			"desc": "Blikanie ukazovateľa teploty počas chladnutia hrotu"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibrácia",
 				"teploty"

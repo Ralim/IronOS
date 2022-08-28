@@ -175,7 +175,7 @@
 			],
 			"desc": "Blikat teplotou při chladnutí dokud je hrot horký"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibrovat",
 				"teplotu?"

@@ -175,7 +175,7 @@
 			],
 			"desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Temperatur",
 				"kalibrieren?"

@@ -175,12 +175,12 @@
 			],
 			"desc": "Flash the temperature reading after heating was halted while the tip is still hot"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Calibrate",
 				"temperature"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation (not required if Delta T is < 5°C)"
+			"desc": "Calibrate tip Cold Junction Compensation at Boot(not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [
