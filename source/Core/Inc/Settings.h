@@ -50,6 +50,7 @@ enum SettingsOptions {
   OLEDInversion                  = 33, // Invert the colours on the display
   OLEDBrightness                 = 34, // Brightness for the OLED display
   LOGOTime                       = 35, // Duration the logo will be displayed for
+  CalibrateCJC                   = 36, // Toggle calibrate CJC at Boot
 
   //
   SettingsOptionsLength = 36, //
