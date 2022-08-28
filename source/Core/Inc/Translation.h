@@ -46,7 +46,7 @@ enum class SettingsItemIndex : uint8_t {
   BoostTemperature,
   AutoStart,
   CooldownBlink,
-  TemperatureCalibration,
+  CalibrateCJC,
   SettingsReset,
   VoltageCalibration,
   AdvancedSoldering,
@@ -69,7 +69,6 @@ enum class SettingsItemIndex : uint8_t {
   Brightness,
   ColourInversion,
   LOGOTime,
-  CalibrateCJC,
   NUM_ITEMS,
 };
 
