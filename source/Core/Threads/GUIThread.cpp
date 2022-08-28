@@ -1003,23 +1003,40 @@ void startGUITask(void const *argument) {
   // al_qu Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
   uint32_t tipTemp = TipThermoModel::getTipInC();
   if (!isTipDisconnected() && tipTemp <= 30 && getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
-    OLED::refresh();
+    // OLED::refresh();
+    // OLED::clearScreen(); 
     uint16_t setoffset = 0;
     // If the thermo-couple at the end of the tip, and the handle are at
     // equilibrium, then the output should be zero, as there is no temperature
     // differential.
+    // OLED::setCursor(0, 0);
+    // OLED::print(SymbolDot, FontStyle::SMALL);
     while (setoffset == 0) {
       uint32_t offset = 0;
       for (uint8_t i = 0; i < 16; i++) {
         offset += getTipRawTemp(1);
+        // cycle through the filter a fair bit to ensure we're stable.
+        OLED::clearScreen();
+        OLED::setCursor(0, 8);
+        OLED::print(SymbolDot, FontStyle::SMALL);
+        for (uint8_t x = 0; x < (i / 4); x++)
+          OLED::print(SymbolDot, FontStyle::LARGE);
+        OLED::refresh();
         osDelay(100);
       }
       setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
     }
     setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
+    OLED::clearScreen();
+    OLED::setCursor(0, 0);
+    OLED::drawCheckbox(true);
+    OLED::printNumber(setoffset, 5, FontStyle::LARGE);
+    OLED::refresh();
+    osDelay(1200);
     setSettingValue(SettingsOptions::CalibrateCJC, 0);
     saveSettings();
   }
+  
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
   if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
       && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
