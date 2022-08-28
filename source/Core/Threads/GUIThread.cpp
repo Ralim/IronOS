@@ -730,7 +730,7 @@ void showDebugMenu(void) {
       break;
     case 7:
       // Tip CJC
-      { OLED::printNumber(getSettingValue(SettingsOptions::CalibrateCJC), 6, FontStyle::SMALL); }
+      { OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 6, FontStyle::SMALL); }
       break;
     case 8:
       // Temp in C
