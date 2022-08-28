@@ -521,7 +521,7 @@
 				"Calibrate",
 				"temperature"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation (not required if Delta Temp is < 5 C)"
+			"desc": "Calibrate tip Cold Junction Compensation (not required if Delta Temp is less than 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
