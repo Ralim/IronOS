@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Warning: tip & handle must be at room temperature before starting!",
+		"SettingsCalibrationWarning": "Warning: tip & device must be at room temperature before starting!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
@@ -180,7 +180,7 @@
 				"Calibrate",
 				"Tip Offset?"
 			],
-			"desc": "Calibrate tip temperature offset; only required if device is more than 5 C off target"
+			"desc": "Calibrate tip temperature offset; not needed if device is within 5 C"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -348,7 +348,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make absolutely sure the tip & handle are at room temperature before proceeding!",
+		"SettingsCalibrationWarning": "Confirm, tip & device are at room temperature before starting!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
@@ -521,7 +521,7 @@
 				"Calibrate",
 				"temperature"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation (not required if Delta Temp is less than 5 C)"
+			"desc": "Calibrate tip Cold Junction Compensation (not required if temp is within 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
