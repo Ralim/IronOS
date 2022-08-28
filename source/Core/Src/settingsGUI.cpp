@@ -266,7 +266,7 @@ const menuitem advancedMenu[] = {
      */
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5},                              /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), nullptr, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureCalibration,
+    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), nullptr, displayCalibrate, nullptr, SettingsOptions::CalibrateCJC, SettingsItemIndex::TemperatureCalibration,
      5}, /*Calibrate CJC at Boot*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
      5},                                                                                                                                                              /*Voltage input cal*/
@@ -637,7 +637,7 @@ static bool setCalibrate(void) {
   return false;
 }*/
 
-static void displayCalibrate(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::SettingsOptionsLength)); }
+static void displayCalibrate(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CalibrateCJC)); }
 
 static bool setCalibrateVIN(void) {
   // Jump to the voltage calibration subscreen
