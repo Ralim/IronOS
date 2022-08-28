@@ -1,207 +1,340 @@
 {
-  "languageCode": "EN",
-  "languageLocalName": "English",
-  "fonts": ["ascii_basic"],
-  "tempUnitFahrenheit": true,
-  "messages": {
-    "SettingsCalibrationWarning": "Please ensure the tip is at room temperature, before proceeding!",
-    "SettingsResetWarning": "Are you sure you want to restore default settings?",
-    "UVLOWarningString": "DC LOW",
-    "UndervoltageString": "Undervoltage",
-    "InputVoltageString": "Input V: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "Sleeping...",
-    "SleepingTipAdvancedString": "Tip:",
-    "OffString": "Off"
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Certain settings", "were changed!"],
-    "NoAccelerometerMessage": ["No accelerometer", "detected!"],
-    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
-    "LockingKeysString": "LOCKED",
-    "UnlockingKeysString": "UNLOCKED",
-    "WarningKeysLockedString": "!LOCKED!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
-  },
-  "characters": {
-    "SettingRightChar": "R",
-    "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "O",
-    "SettingSlowChar": "S",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "F",
-    "SettingStartNoneChar": "O",
-    "SettingStartSolderingChar": "S",
-    "SettingStartSleepChar": "Z",
-    "SettingStartSleepOffChar": "R",
-    "SettingSensitivityOff": "O",
-    "SettingSensitivityLow": "L",
-    "SettingSensitivityMedium": "M",
-    "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "D",
-    "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Power", "settings"],
-      "desc": "Power settings"
-    },
-    "SolderingMenu": {
-      "text2": ["Soldering", "settings"],
-      "desc": "Soldering settings"
-    },
-    "PowerSavingMenu": {
-      "text2": ["Sleep", "mode"],
-      "desc": "Power saving settings"
-    },
-    "UIMenu": {
-      "text2": ["User", "interface"],
-      "desc": "User interface settings"
-    },
-    "AdvancedMenu": {
-      "text2": ["Advanced", "settings"],
-      "desc": "Advanced settings"
-    }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Power", "source"],
-      "desc": "Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)"
-    },
-    "SleepTemperature": {
-      "text2": ["Sleep", "temp"],
-      "desc": "Tip temperature while in \"sleep mode\""
-    },
-    "SleepTimeout": {
-      "text2": ["Sleep", "timeout"],
-      "desc": "Interval before \"sleep mode\" kicks in (s=seconds | m=minutes)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Shutdown", "timeout"],
-      "desc": "Interval before the iron shuts down (m=minutes)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Motion", "sensitivity"],
-      "desc": "0=off | 1=least sensitive | ... | 9=most sensitive"
-    },
-    "TemperatureUnit": {
-      "text2": ["Temperature", "unit"],
-      "desc": "C=Celsius | F=Fahrenheit"
-    },
-    "AdvancedIdle": {
-      "text2": ["Detailed", "idle screen"],
-      "desc": "Display detailed information in a smaller font on the idle screen"
-    },
-    "DisplayRotation": {
-      "text2": ["Display", "orientation"],
-      "desc": "R=right-handed | L=left-handed | A=automatic"
-    },
-    "BoostTemperature": {
-      "text2": ["Boost", "temp"],
-      "desc": "Tip temperature used in \"boost mode\""
-    },
-    "AutoStart": {
-      "text2": ["Start-up", "behavior"],
-      "desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
-    },
-    "CooldownBlink": {
-      "text2": ["Cooldown", "flashing"],
-      "desc": "Flash the temperature reading after heating was halted while the tip is still hot"
-    },
-    "TemperatureCalibration": {
-      "text2": ["Calibrate", "temperature?"],
-      "desc": "Start tip temperature offset calibration"
-    },
-    "SettingsReset": {
-      "text2": ["Restore factory", "settings?"],
-      "desc": "Reset all settings to default"
-    },
-    "VoltageCalibration": {
-      "text2": ["Calibrate", "input voltage?"],
-      "desc": "Start VIN calibration (long press to exit)"
-    },
-    "AdvancedSoldering": {
-      "text2": ["Detailed", "solder screen"],
-      "desc": "Display detailed information in a smaller font on soldering screen"
-    },
-    "ScrollingSpeed": {
-      "text2": ["Scrolling", "speed"],
-      "desc": "Speed info text scrolls past at (S=slow | F=fast)"
-    },
-    "QCMaxVoltage": {
-      "text2": ["QC", "voltage"],
-      "desc": "Max QC voltage the iron should negotiate for"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
-    },
-    "PowerLimit": {
-      "text2": ["Power", "limit"],
-      "desc": "Maximum power the iron can use (W=watt)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["Swap", "+ - keys"],
-      "desc": "Reverse assignment of buttons for temperature adjustment"
-    },
-    "TempChangeShortStep": {
-      "text2": ["Temp change", "short"],
-      "desc": "Temperature-change-increment on short button press"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Temp change", "long"],
-      "desc": "Temperature-change-increment on long button press"
-    },
-    "PowerPulsePower": {
-      "text2": ["Power", "pulse"],
-      "desc": "Intensity of power of keep-awake-pulse (watt)"
-    },
-    "HallEffSensitivity": {
-      "text2": ["Hall sensor", "sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor to detect sleep (0=off | 1=least sensitive | ... | 9=most sensitive)"
-    },
-    "LockingMode": {
-      "text2": ["Allow locking", "buttons"],
-      "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
-    },
-    "MinVolCell": {
-      "text2": ["Minimum", "voltage"],
-      "desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in main menu"
-    },
-    "AnimSpeed": {
-      "text2": ["Anim.", "speed"],
-      "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Power pulse", "delay"],
-      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Power pulse", "duration"],
-      "desc": "Keep-awake-pulse duration (x 250ms)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Language:", " EN     English"],
-      "desc": "Current firmware language"
-    },
-    "Brightness": {
-      "text2": ["Screen", "brightness"],
-      "desc": "Adjust the brightness of the OLED screen"
-    },
-    "ColourInversion": {
-      "text2": ["Invert", "screen"],
-      "desc": "Invert the colours of the OLED screen"
-    },
-    "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
-    }
-  }
+	"languageCode": "EN",
+	"languageLocalName": "English",
+	"fonts": [
+		"ascii_basic",
+		"latin_extended"
+	],
+	"tempUnitFahrenheit": true,
+	"messages": {
+		"SettingsCalibrationWarning": "Please make absolutely sure the tip and handle are at room temperature before proceeding!",
+		"SettingsResetWarning": "Are you sure you want to restore default settings?",
+		"UVLOWarningString": "DC LOW",
+		"UndervoltageString": "Undervoltage",
+		"InputVoltageString": "Input V: ",
+		"SleepingSimpleString": "Zzzz",
+		"SleepingAdvancedString": "Sleeping...",
+		"SleepingTipAdvancedString": "Tip:",
+		"OffString": "Off",
+		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+	},
+	"messagesWarn": {
+		"ResetOKMessage": "Reset OK",
+		"SettingsResetMessage": [
+			"Certain settings",
+			"were changed!"
+		],
+		"NoAccelerometerMessage": [
+			"No accelerometer",
+			"detected!"
+		],
+		"NoPowerDeliveryMessage": [
+			"No USB-PD IC",
+			"detected!"
+		],
+		"LockingKeysString": "LOCKED",
+		"UnlockingKeysString": "UNLOCKED",
+		"WarningKeysLockedString": "!LOCKED!",
+		"WarningThermalRunaway": [
+			"Thermal",
+			"Runaway"
+		]
+	},
+	"characters": {
+		"SettingRightChar": "R",
+		"SettingLeftChar": "L",
+		"SettingAutoChar": "A",
+		"SettingOffChar": "O",
+		"SettingSlowChar": "S",
+		"SettingMediumChar": "M",
+		"SettingFastChar": "F",
+		"SettingStartNoneChar": "O",
+		"SettingStartSolderingChar": "S",
+		"SettingStartSleepChar": "Z",
+		"SettingStartSleepOffChar": "R",
+		"SettingSensitivityOff": "O",
+		"SettingSensitivityLow": "L",
+		"SettingSensitivityMedium": "M",
+		"SettingSensitivityHigh": "H",
+		"SettingLockDisableChar": "D",
+		"SettingLockBoostChar": "B",
+		"SettingLockFullChar": "F"
+	},
+	"menuGroups": {
+		"PowerMenu": {
+			"text2": [
+				"Power",
+				"settings"
+			],
+			"desc": "Power settings"
+		},
+		"SolderingMenu": {
+			"text2": [
+				"Soldering",
+				"settings"
+			],
+			"desc": "Soldering settings"
+		},
+		"PowerSavingMenu": {
+			"text2": [
+				"Sleep",
+				"mode"
+			],
+			"desc": "Power saving settings"
+		},
+		"UIMenu": {
+			"text2": [
+				"User",
+				"interface"
+			],
+			"desc": "User interface settings"
+		},
+		"AdvancedMenu": {
+			"text2": [
+				"Advanced",
+				"settings"
+			],
+			"desc": "Advanced settings"
+		}
+	},
+	"menuOptions": {
+		"DCInCutoff": {
+			"text2": [
+				"Power",
+				"source"
+			],
+			"desc": "Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)"
+		},
+		"SleepTemperature": {
+			"text2": [
+				"Sleep",
+				"temp"
+			],
+			"desc": "Tip temperature while in \"sleep mode\""
+		},
+		"SleepTimeout": {
+			"text2": [
+				"Sleep",
+				"timeout"
+			],
+			"desc": "Interval before \"sleep mode\" kicks in (s=seconds | m=minutes)"
+		},
+		"ShutdownTimeout": {
+			"text2": [
+				"Shutdown",
+				"timeout"
+			],
+			"desc": "Interval before the iron shuts down (m=minutes)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Motion",
+				"sensitivity"
+			],
+			"desc": "0=off | 1=least sensitive | ... | 9=most sensitive"
+		},
+		"TemperatureUnit": {
+			"text2": [
+				"Temperature",
+				"unit"
+			],
+			"desc": "C=°Celsius | F=°Fahrenheit"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Detailed",
+				"idle screen"
+			],
+			"desc": "Display detailed information in a smaller font on the idle screen"
+		},
+		"DisplayRotation": {
+			"text2": [
+				"Display",
+				"orientation"
+			],
+			"desc": "R=right-handed | L=left-handed | A=automatic"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Boost",
+				"temp"
+			],
+			"desc": "Tip temperature used in \"boost mode\""
+		},
+		"AutoStart": {
+			"text2": [
+				"Start-up",
+				"behavior"
+			],
+			"desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+		},
+		"CooldownBlink": {
+			"text2": [
+				"Cooldown",
+				"flashing"
+			],
+			"desc": "Flash the temperature reading after heating was halted while the tip is still hot"
+		},
+		"TemperatureCalibration": {
+			"text2": [
+				"Calibrate",
+				"temperature"
+			],
+			"desc": "Calibrate tip Cold Junction Compensation (not required if Delta T is < 5°C)"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Restore factory",
+				"settings"
+			],
+			"desc": "Reset all settings to default"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Calibrate",
+				"input voltage"
+			],
+			"desc": "Start VIN calibration (long press to exit)"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Detailed",
+				"solder screen"
+			],
+			"desc": "Display detailed information in a smaller font on soldering screen"
+		},
+		"ScrollingSpeed": {
+			"text2": [
+				"Scrolling",
+				"speed"
+			],
+			"desc": "Speed info text scrolls past at (S=slow | F=fast)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"voltage"
+			],
+			"desc": "Max QC voltage the iron should negotiate for"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"timeout"
+			],
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Power",
+				"limit"
+			],
+			"desc": "Maximum power the iron can use (W=watt)"
+		},
+		"ReverseButtonTempChange": {
+			"text2": [
+				"Swap",
+				"+ - keys"
+			],
+			"desc": "Reverse assignment of buttons for temperature adjustment"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Temp change",
+				"short"
+			],
+			"desc": "Temperature-change-increment on short button press"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Temp change",
+				"long"
+			],
+			"desc": "Temperature-change-increment on long button press"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Power",
+				"pulse"
+			],
+			"desc": "Intensity of power of keep-awake-pulse (watt)"
+		},
+		"HallEffSensitivity": {
+			"text2": [
+				"Hall sensor",
+				"sensitivity"
+			],
+			"desc": "Sensitivity of the Hall effect sensor to trigger sleep mode (0=off | 1=least sensitive | ... | 9=most sensitive)"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow locking",
+				"buttons"
+			],
+			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"AnimLoop": {
+			"text2": [
+				"Anim.",
+				"loop"
+			],
+			"desc": "Loop icon animations in main menu"
+		},
+		"AnimSpeed": {
+			"text2": [
+				"Anim.",
+				"speed"
+			],
+			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Power pulse",
+				"delay"
+			],
+			"desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Power pulse",
+				"duration"
+			],
+			"desc": "Keep-awake-pulse duration (x 250ms)"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" EN     English"
+			],
+			"desc": "Current firmware language"
+		},
+		"Brightness": {
+			"text2": [
+				"Screen",
+				"brightness"
+			],
+			"desc": "Adjust the brightness of the OLED screen"
+		},
+		"ColourInversion": {
+			"text2": [
+				"Invert",
+				"screen"
+			],
+			"desc": "Invert the colours of the OLED screen"
+		},
+		"LOGOTime": {
+			"text2": [
+				"Boot logo",
+				"duration"
+			],
+			"desc": "Sets the duration for the boot logo (s=seconds)"
+		}
+	}
 }
