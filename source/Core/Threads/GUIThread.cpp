@@ -1018,6 +1018,7 @@ void startGUITask(void const *argument) {
     }
     setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
     setSettingValue(SettingsOptions::CalibrateCJC, 0);
+    saveSettings();
   }
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
   if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
