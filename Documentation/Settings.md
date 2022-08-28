@@ -125,15 +125,21 @@ On device help text:
 
 Flash the temperature reading after heating was halted while the tip is still hot
 
-### Setting: Calibrate temperature?
+### Setting: Calibrate CJC at next boot
 
-Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target.
+Note:
+If the difference between the target temperature and the measured temperature is less than 5°C, **calibration is NOT required at all**.
+
+This is used to calibrate the offset between ADC and Op-amp of the tip at next boot (Idealy it has to be done at boot, before internal components get warm.). But this setting is ***not permanent!*** It resetes after the calibration is completed (At next boot the checkbox will be unchecked!). If you need to repeat the calibration however, you have to set the checkbox *again*, unplug your device and let it cool down to room/ambient temperature & power it up, idealy while it sits on the desk.
+
+Hence, never repeat the calibration in quick succession!
+
 
 On device help text:
 
 Start tip temperature offset calibration
 
-### Setting: Restore factory settings?
+### Setting: Restore factory settings
 
 Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
 
@@ -141,7 +147,7 @@ On device help text:
 
 Reset all settings to default
 
-### Setting: Calibrate input voltage?
+### Setting: Calibrate input voltage
 
 Enters an adjustment mode where you can gradually adjust the measured voltage to compensate for any unit-to-unit variance in the voltage sense resistors.
 
