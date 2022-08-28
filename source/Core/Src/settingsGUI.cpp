@@ -53,7 +53,7 @@ static void displayLockingMode(void);
 static void displayCoolingBlinkEnabled(void);
 static bool setResetSettings(void);
 static void displayResetSettings(void);
-static bool setCalibrate(void);
+//static bool setCalibrate(void);
 static void displayCalibrate(void);
 static bool setCalibrateVIN(void);
 static void displayCalibrateVIN(void);
@@ -128,7 +128,7 @@ static bool enterAdvancedMenu(void);
  * Advanced
  *  Power Limit
  *  Factory Reset
- *  Calibrate Temperature
+ *  Calibrate CJC at Boot
  *  Calibrate Input V
  *  Power Pulse
  *  -Power Pulse Delay
@@ -258,7 +258,7 @@ const menuitem advancedMenu[] = {
     /*
      *  Power Limit
      *  Factory Reset
-     *  Calibrate Temperature
+     *  Calibrate CJC at Boot
      *  Calibrate Input V
      *  Power Pulse
      *  -Power Pulse Delay
@@ -266,8 +266,8 @@ const menuitem advancedMenu[] = {
      */
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5},                              /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureCalibration,
-     5}, /*Calibrate tip*/
+    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), nullptr, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureCalibration,
+     5}, /*Calibrate CJC at Boot*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
      5},                                                                                                                                                              /*Voltage input cal*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower, 5}, /*Power Pulse adjustment */
@@ -637,7 +637,7 @@ static bool setCalibrate(void) {
   return false;
 }*/
 
-static void displayCalibrate(void) {}
+static void displayCalibrate(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::SettingsOptionsLength)); }
 
 static bool setCalibrateVIN(void) {
   // Jump to the voltage calibration subscreen
