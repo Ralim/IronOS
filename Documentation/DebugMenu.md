@@ -46,7 +46,7 @@ This is the raw tip reading in μV. This can be used when assessing the calibrat
 
 ### Tip Off
 
-This is the offset resulting from the Cold Junction Compensation Calibration
+This is the offset resulting from the Cold Junction Compensation Calibration.
 
 ### CTip
 
