@@ -137,7 +137,7 @@ Hence, never repeat the calibration in quick succession!
 
 On device help text:
 
-Start tip temperature offset calibration
+Calibrate tip Cold Junction Compensation at the next Boot (not required if Delta T is < 5°C)
 
 ### Setting: Restore factory settings
 
