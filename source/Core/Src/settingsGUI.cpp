@@ -594,7 +594,7 @@ static bool setResetSettings(void) {
 }
 
 static void displayResetSettings(void) {}
-
+/* al_qu
 static void setTipOffset() {
   uint16_t setoffset = 0;
 
@@ -635,7 +635,7 @@ static bool setCalibrate(void) {
     setTipOffset();
   }
   return false;
-}
+}*/
 
 static void displayCalibrate(void) {}
 
