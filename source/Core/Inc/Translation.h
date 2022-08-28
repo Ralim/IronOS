@@ -69,6 +69,7 @@ enum class SettingsItemIndex : uint8_t {
   Brightness,
   ColourInversion,
   LOGOTime,
+  CalibrateCJC,
   NUM_ITEMS,
 };
 
