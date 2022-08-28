@@ -729,7 +729,7 @@ void showDebugMenu(void) {
       { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6, FontStyle::SMALL); }
       break;
     case 7:
-      // Tip CJC
+      // Tip Off
       { OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 6, FontStyle::SMALL); }
       break;
     case 8:
