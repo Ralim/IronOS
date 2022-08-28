@@ -729,22 +729,26 @@ void showDebugMenu(void) {
       { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6, FontStyle::SMALL); }
       break;
     case 7:
+      // Tip CJC
+      { OLED::printNumber(SettingsOptions::CalibrationOffset, 6, FontStyle::SMALL); }
+      break;
+    case 8:
       // Temp in C
       OLED::printNumber(TipThermoModel::getTipInC(), 5, FontStyle::SMALL);
       break;
-    case 8:
+    case 9:
       // Handle Temp in C
       OLED::printNumber(getHandleTemperature(0), 6, FontStyle::SMALL);
       break;
-    case 9:
+    case 10:
       // Max C Limit
       OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
-    case 10:
+    case 11:
       // Input Voltage
       printVoltage();
       break;
-    case 11:
+    case 12:
       // Power Negotiation Status
       {
         int sourceNumber = 0;
@@ -780,21 +784,21 @@ void showDebugMenu(void) {
         OLED::print(PowerSourceNames[sourceNumber], FontStyle::SMALL);
       }
       break;
-    case 12:
+    case 13:
       // High Water Mark for GUI
       OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
       break;
-    case 13:
+    case 14:
       // High Water Mark for Movement Task
       OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
       break;
-    case 14:
+    case 15:
       // High Water Mark for PID Task
       OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
       break;
       break;
 #ifdef HALL_SENSOR
-    case 15:
+    case 16:
       // Raw Hall Effect Value
       {
         int16_t hallEffectStrength = getRawHallEffect();
@@ -816,9 +820,9 @@ void showDebugMenu(void) {
     else if (b == BUTTON_F_SHORT) {
       screen++;
 #ifdef HALL_SENSOR
-      screen = screen % 16;
+      screen = screen % 17;
 #else
-      screen = screen % 15;
+      screen = screen % 16;
 #endif
     }
     GUIDelay();
