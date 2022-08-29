@@ -175,7 +175,7 @@
 			],
 			"desc": "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibracija",
 				"temperature"

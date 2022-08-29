@@ -174,7 +174,7 @@
 				"punta calda"],
 			"desc": "Evidenzia il valore di temperatura durante il raffreddamento se la punta è ancora calda"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Calibrazione",
 				"temperatura"

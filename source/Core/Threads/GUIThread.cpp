@@ -729,22 +729,26 @@ void showDebugMenu(void) {
       { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6, FontStyle::SMALL); }
       break;
     case 7:
+      // Tip Off
+      { OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 6, FontStyle::SMALL); }
+      break;
+    case 8:
       // Temp in C
       OLED::printNumber(TipThermoModel::getTipInC(), 5, FontStyle::SMALL);
       break;
-    case 8:
+    case 9:
       // Handle Temp in C
       OLED::printNumber(getHandleTemperature(0), 6, FontStyle::SMALL);
       break;
-    case 9:
+    case 10:
       // Max C Limit
       OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
-    case 10:
+    case 11:
       // Input Voltage
       printVoltage();
       break;
-    case 11:
+    case 12:
       // Power Negotiation Status
       {
         int sourceNumber = 0;
@@ -780,21 +784,21 @@ void showDebugMenu(void) {
         OLED::print(PowerSourceNames[sourceNumber], FontStyle::SMALL);
       }
       break;
-    case 12:
+    case 13:
       // High Water Mark for GUI
       OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
       break;
-    case 13:
+    case 14:
       // High Water Mark for Movement Task
       OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
       break;
-    case 14:
+    case 15:
       // High Water Mark for PID Task
       OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
       break;
       break;
 #ifdef HALL_SENSOR
-    case 15:
+    case 16:
       // Raw Hall Effect Value
       {
         int16_t hallEffectStrength = getRawHallEffect();
@@ -816,9 +820,9 @@ void showDebugMenu(void) {
     else if (b == BUTTON_F_SHORT) {
       screen++;
 #ifdef HALL_SENSOR
-      screen = screen % 16;
+      screen = screen % 17;
 #else
-      screen = screen % 15;
+      screen = screen % 16;
 #endif
     }
     GUIDelay();
@@ -996,6 +1000,40 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
+  // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
+  uint32_t Temp = TipThermoModel::getTipInC();
+  if (!isTipDisconnected() && Temp <= 30 && getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
+    uint16_t setoffset = 0;
+    // If the thermo-couple at the end of the tip, and the handle are at
+    // equilibrium, then the output should be zero, as there is no temperature
+    // differential.
+    while (setoffset == 0) {
+      uint32_t offset = 0;
+      for (uint8_t i = 0; i < 16; i++) {
+        offset += getTipRawTemp(1);
+        // cycle through the filter a fair bit to ensure we're stable.
+        OLED::clearScreen();
+        OLED::setCursor(0, 0);
+        OLED::print(SymbolDot, FontStyle::LARGE);
+        for (uint8_t x = 0; x < (i / 4); x++)
+          OLED::print(SymbolDot, FontStyle::LARGE);
+        OLED::refresh();
+        osDelay(100);
+      }
+      setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
+    }
+    setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
+    OLED::clearScreen();
+    OLED::setCursor(20, 0);
+    OLED::drawCheckbox(true);
+    OLED::printNumber(setoffset, 6, FontStyle::LARGE);
+    OLED::refresh();
+    osDelay(1200);
+    // Preventing to repeat calibration at boot automatically (only one shot).
+    setSettingValue(SettingsOptions::CalibrateCJC, 0);
+    saveSettings();
+  }
+  
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
   if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
       && getSettingValue(SettingsOptions::AutoStartMode) < 3) {

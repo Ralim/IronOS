@@ -44,6 +44,10 @@ This indicates the tip resistance that the device is currently using. For device
 
 This is the raw tip reading in μV. This can be used when assessing the calibration routines for example.
 
+### Tip Off
+
+This is the offset resulting from the Cold Junction Compensation Calibration.
+
 ### CTip
 
 This is the tip temperature in degrees Celsius.

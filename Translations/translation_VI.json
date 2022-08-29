@@ -175,7 +175,7 @@
 			],
 			"desc": "-Nhap nháy nhiet đo sau khi viec gia nhiet tam dung trong khi mui hàn van nóng"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Hieu chuan",
 				"nhiet đo?"

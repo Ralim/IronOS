@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Nur Fortfahren wenn Lötspitze & Gerät Raumtemperatur haben!",
+		"SettingsCalibrationWarning": "Nur Kalibrieren wenn Lötspitze & Gerät Raumtemperatur haben!",
 		"SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",
@@ -175,12 +175,12 @@
 			],
 			"desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Temperatur",
 				"kalibrieren?"
 			],
-			"desc": "Kalibrierung der Kaltstellenkompensation (nicht nötig wenn Delta T < 5°C)"
+			"desc": "Kalibrierung der Kaltstellenkompensation beim nächsten Start (nicht nötig wenn Delta T < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

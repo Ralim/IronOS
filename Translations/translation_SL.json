@@ -175,7 +175,7 @@
 			],
 			"desc": "Ko je konica še vroča, utripaj prikaz temperature med hlajenjem."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibriram",
 				"temperaturo?"
