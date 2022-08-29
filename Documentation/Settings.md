@@ -91,7 +91,7 @@ Should the device show an 'advanced' view on the idle screen. The advanced view 
 
 On device help text:
 
-Display detailed information in a smaller font on the idle screen
+Display detailed info in a smaller font on the idle screen
 
 ### Setting: Display orientation
 
@@ -132,16 +132,16 @@ Used to calibrate the ADC + Op-amp offsets for the tip. This calibration should 
 Generally *not required unless your device is reading more than 5 °C off target temperature*. This is intended to be performed at boot-up before internal components get warm. Avoid repeating the calibration, but if you must repeat it, unplug the unit, and wait for everything to go back to room temperature. Temperatures start to drift even after plugging in the device, which is why cold junction calibration is best done at a fresh boot-up.
 
 On device help text:
-- Tip Cold Junction Compensation (not required if temp is within 5 C)
+- Tip Cold Junction Compensation; not needed if temp is +/- 5 C
 - Confirm the tip & device are at room temperature before starting!
 
-### Setting: Restore factory settings?
+### Setting: Restore default settings?
 
-Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
+Resets all settings and calibrations to defaults included with the installed firmware version. Does NOT erase custom user boot up logo's.
 
 On device help text:
 
-Reset all settings to default
+Reset all settings to default?
 
 ### Setting: Calibrate input voltage?
 
@@ -157,7 +157,7 @@ Should the device show an 'advanced' soldering view. This is a text-based view t
 
 On device help text:
 
-Display detailed information in a smaller font on soldering screen
+Display detailed info in a smaller font on soldering screen
 
 ### Setting: Scrolling speed
 
