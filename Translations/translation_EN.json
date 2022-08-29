@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please be absolutely sure the tip and device are at room temperature before proceeding!",
+		"SettingsCalibrationWarning": "Confirm the tip & device are at room temperature before starting!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
@@ -94,7 +94,7 @@
 				"Advanced",
 				"settings"
 			],
-			"desc": "Advanced settings"
+			"desc": "Advanced options that require more thought before use."
 		}
 	},
 	"menuOptions": {
@@ -103,7 +103,7 @@
 				"Power",
 				"source"
 			],
-			"desc": "Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)"
+			"desc": "set Cutoff voltage to protect battery over-drain. (DC 10V) (S 3.3V per cell, disable power limit)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -180,7 +180,7 @@
 				"Calibrate",
 				"temperature"
 			],
-			"desc": "Adjust tip Cold Junction Compensation (not required if temp is within 5 C)"
+			"desc": "Tip Cold Junction Compensation (not required if temp is within 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -264,7 +264,7 @@
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Hall effect sensitivity to trigger sleep mode (0=off | 1=least sensitive | ... | 9=most sensitive)"
+			"desc": "Hall sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
 		},
 		"LockingMode": {
 			"text2": [
