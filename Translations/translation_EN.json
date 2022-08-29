@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make absolutely sure the tip and handle are at room temperature before proceeding!",
+		"SettingsCalibrationWarning": "Please make absolutely sure the tip and handle are at room temperature before calibration!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
@@ -175,12 +175,12 @@
 			],
 			"desc": "Flash the temperature reading after heating was halted while the tip is still hot"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
-				"Calibrate",
-				"temperature"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation (not required if Delta T is < 5°C)"
+			"desc": "Calibrate tip Cold Junction Compensation at the next Boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

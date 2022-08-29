@@ -175,7 +175,7 @@
 			],
 			"desc": "Villogjon a hőmérséklet kijelzése hűlés közben, amíg a forrasztó hegy forró"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Hőmérséklet",
 				"kalibrálása?"

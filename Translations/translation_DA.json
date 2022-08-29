@@ -175,7 +175,7 @@
 			],
 			"desc": "Blink temperaturen på skærmen, mens spidsen stadig er varm."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Calibrate",
 				"temperature?"

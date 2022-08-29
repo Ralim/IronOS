@@ -175,7 +175,7 @@
 			],
 			"desc": "Temperatuur knippert in hoofdmenu tijdens afkoeling."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Calibreer",
 				"temperatuur?"

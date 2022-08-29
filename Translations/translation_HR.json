@@ -175,7 +175,7 @@
 			],
 			"desc": "Bljeskanje temperature prilikom hlađenja, ako je lemilica vruća."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibracija",
 				"temperature"

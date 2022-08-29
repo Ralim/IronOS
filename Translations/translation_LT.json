@@ -175,7 +175,7 @@
 			],
 			"desc": "Ar mirksėti temperatūrą ekrane kol vėstantis antgalis vis dar karštas?"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibruoti",
 				"temperatūrą?"
