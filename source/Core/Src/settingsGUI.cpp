@@ -595,6 +595,16 @@ static bool setResetSettings(void) {
 
 static void displayResetSettings(void) {}
 
+static bool setCalibrate(void) {
+
+  if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
+    // User confirmed
+    // So we now set the tick
+    setSettingValue(SettingsOptions::CalibrateCJC, 1);
+  }
+  return false;
+}
+
 static void displayCalibrate(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CalibrateCJC)); }
 
 static bool setCalibrateVIN(void) {
