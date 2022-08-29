@@ -1000,7 +1000,7 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
-  // al_qu Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
+  // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
   uint32_t Temp = TipThermoModel::getTipInC();
   if (!isTipDisconnected() && Temp <= 30 && getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
     uint16_t setoffset = 0;
