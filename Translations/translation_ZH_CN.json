@@ -115,7 +115,7 @@
 			"text2": "降温时闪显",
 			"desc": "停止加热之后，闪动温度显示提醒烙铁头仍处于高温状态"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": "温度校正？",
 			"desc": "开始校正烙铁头温度偏移"
 		},

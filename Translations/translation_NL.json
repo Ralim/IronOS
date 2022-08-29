@@ -175,7 +175,7 @@
 			],
 			"desc": "Temperatuur laten flitsen in het hoofdmenu zo lang de punt nog warm is"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibreer",
 				"temperatuur?"

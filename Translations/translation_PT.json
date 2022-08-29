@@ -175,7 +175,7 @@
 			],
 			"desc": "Faz o valor da temperatura piscar durante o arrefecimento"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Calibrar",
 				"temperatura"

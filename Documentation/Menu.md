@@ -38,18 +38,18 @@ To calibrate your iron:
 7. Press both buttons at the same time to Save and Exit to the menu
 
 ### Calibrating tip offset (Set tip model)
-This is normally not needed unless you have an issue with your temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. If the method below is not followed, the iron could be worse than before calibration, repeat the method.
+This is normally not needed unless you have an issue with your temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. If the instructions are not followed, the iron could be worse than before calibration.
 Some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps:
 
-1. Connect power to your iron
-2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
-3. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate temperature? > press (`+/A`)
-4. Important warning message is shown: *Please ensure the tip is at room temperature before proceeding!* 
-5. Press the (`+/A`) button to confirm (tip/handle are at ambient temperature).
-6. Display shows **`....`** for a short time as the unit measures and compares the tip and handle temperatures.
-7. The display then goes back to *TMP CAL* and displays your *Offset number*. You generally don't need this offset unless debugging issues.
-8. After you see an Offset number, calibration is done, just exit the settings menu normally, use (`-/B`).
-9. You're done, enjoy your iron!
+1. Connect power to your device.
+2. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate CJC at next boot > press (`+/A`)
+3. Exit the settings menu normally, use (`-/B`).
+4. Unplug you device.
+5. **Critical: Wait until the tip & handle are at room temperature** (Wait a good while after having used the device.)
+6. Power the device up, idealy not holding it in your hands (You know it might get warm).
+7. Display shows **`....`** for a short time as the unit measures and compares the tip and handle temperatures.
+8. The display then goes back to *TMP CAL* and displays your *Offset number*. You generally don't need this offset unless debugging issues.
+9. After you see an Offset number, calibration is done.
 
 Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration.
 

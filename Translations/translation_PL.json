@@ -175,7 +175,7 @@
 			],
 			"desc": "Temperatura miga podczas wychładzania, gdy grot jest wciąż gorący"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibracja",
 				"temp. grotu"

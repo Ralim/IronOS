@@ -115,7 +115,7 @@
 			"text2": "冷却中に点滅",
 			"desc": "加熱の停止後、コテ先が熱い間は温度表示を点滅する"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": "温度校正",
 			"desc": "コテ先の温度校正を開始する"
 		},
