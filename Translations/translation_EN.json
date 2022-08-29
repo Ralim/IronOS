@@ -173,7 +173,7 @@
 				"Cooldown",
 				"flashing"
 			],
-			"desc": "If the tip is still hot after heat is halted, Flash temperature"
+			"desc": "If the tip is still hot after heat is halted, Flash temperature reading"
 		},
 		"TemperatureCalibration": {
 			"text2": [
