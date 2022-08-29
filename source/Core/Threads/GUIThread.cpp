@@ -1001,8 +1001,11 @@ void startGUITask(void const *argument) {
 #endif
 #endif
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
+  while (preStartChecks() == 0) {
+    ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+  }
   uint32_t Temp = TipThermoModel::getTipInC();
-  if (!isTipDisconnected() && Temp <= 30 && getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
+  if (!isTipDisconnected() && Temp <= 32 && getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
     uint16_t setoffset = 0;
     // If the thermo-couple at the end of the tip, and the handle are at
     // equilibrium, then the output should be zero, as there is no temperature
