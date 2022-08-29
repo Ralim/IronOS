@@ -1027,9 +1027,9 @@ void startGUITask(void const *argument) {
     }
     setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
     OLED::clearScreen();
-    OLED::setCursor(20, 0);
+    OLED::setCursor(0, 0);
     OLED::drawCheckbox(true);
-    OLED::printNumber(setoffset, 6, FontStyle::LARGE);
+    OLED::printNumber(setoffset, 5, FontStyle::LARGE);
     OLED::refresh();
     osDelay(1200);
     // Preventing to repeat calibration at boot automatically (only one shot).
