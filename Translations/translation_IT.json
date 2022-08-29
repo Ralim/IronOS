@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Riposo",
 		"SleepingTipAdvancedString": "Punta:",
 		"OffString": "OFF",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Il dispositivo in uso è molto probabilmente una contraffazione!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
