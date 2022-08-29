@@ -90,6 +90,7 @@ Check the extension of your firmware, it should be `.RDY` now.
 - The MCU in V2 is Bouffalo BL706 and does *not* use usb-dfu for flashing as the previous MCU did.
 - The current firmware (2.18) is very fresh and no upgrade is available/needed.
 - When an update is released for V2, then IronOS will also include an update method to follow.
+- Some background on the [BL706 chipset](https://lupyuen.github.io/articles/bl706)
 
 # Pinecil V1 (Pine64)
 
