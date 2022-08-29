@@ -185,7 +185,7 @@
 		"SettingsReset": {
 			"text2": [
 				"Restore default",
-				"settings"
+				"settings?"
 			],
 			"desc": "Reset all settings to default"
 		},
