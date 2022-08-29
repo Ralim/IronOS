@@ -597,19 +597,15 @@ static void displayResetSettings(void) {}
 
 static bool setCalibrate(void) {
 
-  OLED::setCursor(82, 0);
-  OLED::drawCheckbox(false);
-  
   if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
     // User confirmed
     // So we now set the tick
     setSettingValue(SettingsOptions::CalibrateCJC, 1);
-    OLED::drawCheckbox(true);
   }
   return false;
 }
 
-static void displayCalibrate(void) {} // OLED::drawCheckbox(getSettingValue(SettingsOptions::CalibrateCJC)); }
+static void displayCalibrate(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CalibrateCJC)); }
 
 static bool setCalibrateVIN(void) {
   // Jump to the voltage calibration subscreen
