@@ -39,11 +39,11 @@ This is the "on device help text".
 
 ### Setting: Power source
 
-When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery.
+When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery from over-draining.
 
 On device help text:
 
-Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)
+Set cutoff voltage to protect battery over-drain. (DC 10V) (S 3.3V per cell, disable power limit)
 
 ### Setting: Sleep temp
 
@@ -125,12 +125,13 @@ On device help text:
 
 Flash the temperature reading after heating was halted while the tip is still hot
 
-### Setting: Calibrate Tip Temperature Offset?
+### Setting: Calibrate temperature?
 
-Used to calibrate the ADC + Op-amp offsets for the tip. This calibration should only be performed when the tip and handle temperature are equal and at room/ambient temperature. Generally *not required unless your device is reading more than 5 °C off target temperature*. This is intended to be performed at boot-up before internal components get warm. Avoid repeating the calibration, but if you must repeat it, unplug the unit, and wait for everything to go back to room temperature.
+Used to calibrate the ADC + Op-amp offsets for the tip. This calibration should only be performed when the tip and handle temperature are equal and at room/ambient temperature. Generally *not required unless your device is reading more than 5 °C off target temperature*. This is intended to be performed at boot-up before internal components get warm. Avoid repeating the calibration, but if you must repeat it, unplug the unit, and wait for everything to go back to room temperature. Temperatures start to drift even after plugging in the device, which is why cold junction calibration is best done at a fresh boot-up.
 
 On device help text:
-Calibrate tip temperature offset; not required unless device > 5 C off target
+Tip Cold Junction Compensation (not required if temp is within 5 C)
+Confirm the tip & device are at room temperature before starting!
 
 ### Setting: Restore factory settings?
 
