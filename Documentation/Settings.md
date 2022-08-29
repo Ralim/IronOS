@@ -127,11 +127,13 @@ Flash the temperature reading after heating was halted while the tip is still ho
 
 ### Setting: Calibrate temperature?
 
-Used to calibrate the ADC + Op-amp offsets for the tip. This calibration should only be performed when the tip and handle temperature are equal and at room/ambient temperature. Generally *not required unless your device is reading more than 5 °C off target temperature*. This is intended to be performed at boot-up before internal components get warm. Avoid repeating the calibration, but if you must repeat it, unplug the unit, and wait for everything to go back to room temperature. Temperatures start to drift even after plugging in the device, which is why cold junction calibration is best done at a fresh boot-up.
+Used to calibrate the ADC + Op-amp offsets for the tip. This calibration should only be performed when the tip and handle temperature are equal and at room/ambient temperature. 
+
+Generally *not required unless your device is reading more than 5 °C off target temperature*. This is intended to be performed at boot-up before internal components get warm. Avoid repeating the calibration, but if you must repeat it, unplug the unit, and wait for everything to go back to room temperature. Temperatures start to drift even after plugging in the device, which is why cold junction calibration is best done at a fresh boot-up.
 
 On device help text:
-Tip Cold Junction Compensation (not required if temp is within 5 C)
-Confirm the tip & device are at room temperature before starting!
+- Tip Cold Junction Compensation (not required if temp is within 5 C)
+- Confirm the tip & device are at room temperature before starting!
 
 ### Setting: Restore factory settings?
 
