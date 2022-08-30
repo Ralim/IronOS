@@ -297,7 +297,7 @@ Display brightness. Higher values age the OLED faster due to burn-in. (However, 
 
 On device help text:
 
-Adjust the brightness of the OLED screen
+Adjust the OLED screen brightness
 
 ### Setting: Invert screen
 
@@ -305,7 +305,7 @@ Inverts the entire OLED.
 
 On device help text:
 
-Invert the colours of the OLED screen
+Invert OLED screen colours Black | White
 
 ### Setting: Boot logo duration
 
