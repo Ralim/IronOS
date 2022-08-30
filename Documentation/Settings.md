@@ -261,7 +261,7 @@ Loop icon animations in main menu
 
 ### Setting: Anim. speed
 
-How fast should the menu animations loop, or if they should not loop at all.
+How fast should the menu animations loop or off setting.
 
 On device help text:
 
