@@ -10,7 +10,7 @@ When the switch is on, the power in the resistor is `Current (I) times Volts (V)
 Current through the resistor is `Volts (V) divided by Resistance (R)`.
 Combining these two gives the common equation, power is `Volts (V) squared / Resistance (R)`.
 
-The resistance of the tip is fixed, ~7.5 ohms for the TS100/Pinecil and ~4.5 ohms for the TS80(P).
+The resistance of the tip is fixed, ~8 ohms for the TS100/Pinecil and ~4.5 ohms for the TS80(P).
 
 This means that for both irons, the power delivered to the soldering tip is proportional to the voltage used, squared.
 Therefore the TS100 performs poorly when run off 12 V power supplies.
