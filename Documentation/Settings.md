@@ -73,7 +73,7 @@ Interval before the iron shuts down (M=minutes)
 
 Scale of how sensitive the device is to movement. Higher numbers == more sensitive. 0 == motion detection turned off.
 
-On device help text:
+Adjust the90 device help text:
 
 0=off | 1=least sensitive | ... | 9=most sensitive
 
