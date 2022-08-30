@@ -17,7 +17,7 @@ Items are shown in the menu on a single line, so they use short codes and appear
 
 ### Time
 
-This is just uptime, and shows how many deciseconds the unit has been powered for.
+This is just uptime; it shows how many deciseconds the unit has been powered for (600 ds = 1 minute).
 
 ### Move
 
