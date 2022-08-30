@@ -26,10 +26,10 @@ Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies a
 | :--------: | :--: |:-:| :---: |:-:|:-----:|:-:| :---: |:-:|:-----:|
 | USB-C PD   | 20V  | / | 8.0 Ω | = |  2.5A | * |  20V  | = |  50W  |
 | USB-C PD   | 20V  | / | 6.2 Ω | = |  3.2A | * |  20V  | = |  64W  |
-| DC Barrel  | 24V  | / | 8.0 Ω | = |  2.5A | * |  24V  | = |  72W  |
-| DC Barrel  | 24V  | / | 6.2 Ω | = |  3.2A | * |  24V  | = |  92W  |
-| EPR PD3.1  | 28V  | / | 8.0 Ω | = |  2.5A | * |  28V  | = |  98W  |
-| EPR PD3.1  | 28V  | / | 6.2 Ω | = |  3.2A | * |  28V  | = |  126W  |
+| DC Barrel  | 24V  | / | 8.0 Ω | = |  3.0A | * |  24V  | = |  72W  |
+| DC Barrel  | 24V  | / | 6.2 Ω | = |  3.8A | * |  24V  | = |  92W  |
+| EPR PD3.1  | 28V  | / | 8.0 Ω | = |  3.5A | * |  28V  | = |  98W  |
+| EPR PD3.1  | 28V  | / | 6.2 Ω | = |  4.5A | * |  28V  | = |  126W |
 
 
 
