@@ -173,7 +173,7 @@
 				"Cooldown",
 				"flashing"
 			],
-			"desc": "Flash the temperature reading, if tip is still hot, after heating is halted"
+			"desc": "Flash the temperature reading if tip is still hot after halting heat"
 		},
 		"TemperatureCalibration": {
 			"text2": [
@@ -187,7 +187,7 @@
 				"Restore Default",
 				"settings"
 			],
-			"desc": "Reset default settings for this firmware version"
+			"desc": "Reset the default settings for this firmware version"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -201,7 +201,7 @@
 				"Detailed",
 				"solder screen"
 			],
-			"desc": "Display detailed information in a smaller font on soldering screen"
+			"desc": "Display detailed info in a smaller font on soldering screen"
 		},
 		"ScrollingSpeed": {
 			"text2": [
@@ -257,14 +257,14 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Power intensity of keep-awake-pulse (watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to trigger sleep mode (0=off | 1=least sensitive | ... | 9=most sensitive)"
+			"desc": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
 		},
 		"LockingMode": {
 			"text2": [
