@@ -38,7 +38,7 @@ To calibrate your iron:
 7. Press both buttons at the same time to Save and Exit to the menu
 
 ### Calibrate Tip CJC
-This performs a Cold Junction Calibration ([see Temperature for details](/Documentation/Temperature.md)). This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective, and measured resistance is close to specifications (short tips 6.2 Ω, long tips 8 Ω).
+This performs a Tip Cold Junction Calibration (CJC) ([see Temperature for details](/Documentation/Temperature.md)). This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective, and measured resistance is close to specifications (short tips 6.2 Ω, long tips 8 Ω).
 
 What this is for: some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps. 
 
