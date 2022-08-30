@@ -8,7 +8,7 @@ Irons at their simplest are just a resistor (Ω) connected to your power source 
 
 - When the switch is on, the power in the resistor is: $P(watts) = V(volts) \times\ I(current=amps)$
 - Current through the resistor is:  $I(amps) = V(volts) ÷ Ω (resistance)$
-- Combining these two gives the common equation or Power
+- Combining these gives some common equations for Power
 
    $P(watts) = V(volts) * I(amps)$ or $P = V^2 ÷ Ω$
 
