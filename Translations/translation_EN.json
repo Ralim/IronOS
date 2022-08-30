@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Sleeping...",
 		"SleepingTipAdvancedString": "Tip:",
 		"OffString": "Off",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Your device is most likely Counterfeit!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
@@ -103,7 +103,7 @@
 				"Power",
 				"source"
 			],
-			"desc": "Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)"
+			"desc": "Set cutoff voltage to protect battery drain. (DC 10V) (S=3.3V per cell, disable PWR limit)"
 		},
 		"SleepTemperature": {
 			"text2": [
