@@ -39,11 +39,11 @@ This is the "on device help text".
 
 ### Setting: Power source
 
-When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery.
+When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery from over-draining.
 
 On device help text:
 
-Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)
+Set cutoff voltage to protect battery over-drain. (DC 10V) (S 3.3V per cell, disable power limit)
 
 ### Setting: Sleep temp
 
@@ -55,7 +55,7 @@ Tip temperature while in "sleep mode"
 
 ### Setting: Sleep timeout
 
-How long of a period without movement / button-pressing is required before the device drops down to the sleep temperature.
+The time required with no movement or button-pressing before the device drops down to the sleep temperature.
 
 On device help text:
 
