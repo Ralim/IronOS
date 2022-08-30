@@ -327,14 +327,14 @@
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert OLED screen the colours black|white"
+			"desc": "Invert OLED screen colours black|white"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set Boot logo duration (s=seconds, off, infinity)"
 		}
 	}
 }
