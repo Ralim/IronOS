@@ -59,11 +59,11 @@ The time required with no movement or button-pressing before the device drops do
 
 On device help text:
 
-Interval before "sleep mode" kicks in (S=seconds | M=minutes)
+Interval before "sleep mode" starts (S=seconds | M=minutes)
 
 ### Setting: Shutdown timeout
 
-How long of a period without movement / button-pressing is required before the device turns off the tip heater completely and returns to the main idle screen.
+The time required with no movement or button-pressing before the device shuts off the tip heater completely and returns to the main idle screen.
 
 On device help text:
 
@@ -79,11 +79,11 @@ On device help text:
 
 ### Setting: Temperature unit
 
-If the device shows temperatures in °C or °F.
+Select a preference of °C or °F.
 
 On device help text:
 
-C=Celsius | F=Fahrenheit
+C=°Celsius | F=°Fahrenheit
 
 ### Setting: Detailed idle screen
 
@@ -115,7 +115,7 @@ When the device powers up, should it enter into a special mode. These settings s
 
 On device help text:
 
-O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved
+O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby at no heat heat until moved
 
 ### Setting: Cooldown flashing
 
@@ -123,7 +123,7 @@ If the idle screen should blink the tip temperature for attention while the tip 
 
 On device help text:
 
-Flash the temperature reading after heating was halted while the tip is still hot
+Flash the temperature reading, if tip is still hot, after halting heat
 
 ### Setting: Calibrate tip CJC?
 
@@ -161,7 +161,7 @@ Should the device show an 'advanced' soldering view. This is a text-based view t
 
 On device help text:
 
-Display detailed information in a smaller font on soldering screen
+Display detailed info in a smaller font on soldering screen
 
 ### Setting: Scrolling speed
 
