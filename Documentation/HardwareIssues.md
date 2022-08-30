@@ -30,7 +30,7 @@ you are expecting to see measurements in the range of 4-10 ohms. Anything higher
 ## Iron will not heat up and displays a high temperature
 Check the Rtip and CHan numbers ([see debug menu](/Documentation/DebugMenu.md)). Extremly high CHan is suspect to a problem with the cold junction compensation temperature sensor.
 
-For Pinecil V1, inspect near U10 which is the TMP36 sensor ([see issue here](https://github.com/Ralim/IronOS/issues/1234); you may be able to reflow/resolder chip at U10 (TMP36) to correct a weak solder joint.
+For Pinecil V1, inspect near U10 which is the TMP36 sensor ([see issue here](https://github.com/Ralim/IronOS/issues/1234). You may be able to reflow/resolder the TMP36 chip at U10 to correct a weak solder joint.
 
 If it worked on older firmware, but not on 2.16+, weak solder joints are suspect. The newer firmware runs the ADC a bit faster to keep tighter control of the tip temperature. Normally this wont cause an issue as the output from the TMP36 is powerful enough to keep up without any issue. But if you have a weak or cold solder joint this could cause issues.
 
