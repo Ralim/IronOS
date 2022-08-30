@@ -42,9 +42,9 @@ This performs a Cold Junction Calibration ([see Temperature for details](/Docume
 
 What this is for: some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps. 
 
-Note: if the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down.
+Caution: if the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down to room temperature.
 
-1. Connect power to your iron
+1. Connect power to your iron (tip should be installed).
 2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
 3. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate temperature? > press (`+/A`)
 4. Important warning message is shown: *Affirm the tip & device are at room temperature before starting!* 
