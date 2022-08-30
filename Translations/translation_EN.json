@@ -180,21 +180,21 @@
 				"Calibrate",
 				"tip CJC"
 			],
-			"desc": "Tip temperature Cold Junction Compensation; not needed if temp is +/- 5°C"
+			"desc": "Tip temperature Cold Junction Compensation; not needed if Tip is +/- 5°C of display"
 		},
 		"SettingsReset": {
 			"text2": [
-				"Restore factory",
+				"Restore Default",
 				"settings"
 			],
-			"desc": "Reset all settings to default"
+			"desc": "Reset default settings for this firmware version"
 		},
 		"VoltageCalibration": {
 			"text2": [
 				"Calibrate",
 				"input voltage"
 			],
-			"desc": "Start VIN calibration (long press to exit)"
+			"desc": "Start VIN calibration (long press -/B to exit)"
 		},
 		"AdvancedSoldering": {
 			"text2": [
