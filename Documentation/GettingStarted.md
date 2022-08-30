@@ -59,7 +59,7 @@ In Sleep mode, the temperature of the iron automatically lowers to 150 °C (defa
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
 #### Optional Hall Effect Feature (Pinecil only):
-Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](/Documentation/HallSensor.md).
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on-screen. The magnet is positioned on the stand in proximity to the sensor/handle which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](/Documentation/HallSensor.md).
 
 
 ### Idle Shutdown
@@ -69,7 +69,7 @@ If, after entering sleep mode, the iron still does not see movement for a much l
 
 ## Settings Menu
 
-The settings menu is the most often evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has an on-screen description so you don't _need_ to come back here to figure them all out.
+The settings menu is the most evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has an on-screen description so you don't _need_ to come back here to figure them all out.
 
 To navigate the menu, the two buttons act separately.
 The rear button (`-/B`) is pressed to enter the menu and scrolls down the main options, and the other front button (`+/A`) will enter and change the current option.
@@ -84,4 +84,6 @@ There is a small scrollbar that appears along the right edge of the screen to in
 
 Additionally, this scrollbar will blink rapidly when you are on the last value in a range of a sub-menu. For example, if you are in Motion Sensitivity, which has a range of 0 - 9,  it will blink when you are at 9.
 
-I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs. If you want to start over, simply go to Advanced settings > Restore factory settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
+I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs.
+
+If you want to start over, simply go to Advanced settings > Restore default settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
