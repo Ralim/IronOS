@@ -69,7 +69,7 @@ As the OLED runs on an I2C bus, there are pull up resistors on the SDA and SCL p
 
 ## Tip heats when not in heating mode
 
-** DISCONNECT YOUR TIP **
+⚠️ DISCONNECT YOUR TIP ⚠️
 
 Most likely you have either a blown MOSFET or shorted pin.
 Check the MOSFET and also its driver transistor.
@@ -77,4 +77,4 @@ The firmware will not enable the tip until you are in soldering mode.
 
 ## Accelerometer not detected
 
-This could be that your Iron has a new accelerometer that is not supported yet (happens every year or so) OR there is a soldering issue with the accelerometer
+Your Iron may have a new accelerometer that is not supported yet (happens every year or so) OR there is a soldering issue with the accelerometer.
