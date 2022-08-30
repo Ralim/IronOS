@@ -145,7 +145,7 @@
 				"Detailed",
 				"idle screen"
 			],
-			"desc": "Display detailed information in a smaller font on the idle screen"
+			"desc": "Display detailed info in a smaller font on idle screen"
 		},
 		"DisplayRotation": {
 			"text2": [
@@ -159,28 +159,28 @@
 				"Boost",
 				"temp"
 			],
-			"desc": "Tip temperature used in \"boost mode\""
+			"desc": "Tip temperature used in \"Boost mode\""
 		},
 		"AutoStart": {
 			"text2": [
 				"Start-up",
 				"behavior"
 			],
-			"desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+			"desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby at no heat until moved"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Cooldown",
 				"flashing"
 			],
-			"desc": "Flash the temperature reading after heating was halted while the tip is still hot"
+			"desc": "Flash the temperature reading, if tip is still hot, after heating is halted"
 		},
 		"TemperatureCalibration": {
 			"text2": [
 				"Calibrate",
-				"temperature"
+				"tip CJC"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation (not required if Delta T is < 5°C)"
+			"desc": "Tip temperature Cold Junction Compensation; not needed if temp is +/- 5C"
 		},
 		"SettingsReset": {
 			"text2": [
