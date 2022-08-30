@@ -2,7 +2,7 @@
 
 All of the irons are [PWM controlled](https://www.digikey.com/en/blog/pulse-width-modulation#) resistive heating elements.
 This means that the electronics in the handle can only turn the heating element on and off.
-This *means* that the power provided in the tip is 100% controlled by the supply voltage used.
+This *means* that the power provided in the tip is 100% controlled by the supply voltage used (higher voltage PSU = higher performance).
 
 Irons at their simplest are just a resistor (Ω) connected to your power source via a switch.
 
@@ -26,10 +26,10 @@ Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies a
 | :--------: | :--: |:-:| :---: |:-:|:-----:|:-:| :---: |:-:|:-----:|
 | USB-C PD   | 20V  | / | 8.0 Ω | = |  2.5A | * |  20V  | = |  50W  |
 | USB-C PD   | 20V  | / | 6.2 Ω | = |  3.2A | * |  20V  | = |  64W  |
-| DC Barrel  | 24V  | / | 8.0 Ω | = |  2.5A | * |  24V  | = |  50W  |
-| DC Barrel  | 24V  | / | 6.2 Ω | = |  3.2A | * |  24V  | = |  64W  |
-| EPR PD3.1  | 28V  | / | 8.0 Ω | = |  2.5A | * |  28V  | = |  50W  |
-| EPR PD3.1  | 28V  | / | 6.2 Ω | = |  3.2A | * |  28V  | = |  64W  |
+| DC Barrel  | 24V  | / | 8.0 Ω | = |  2.5A | * |  24V  | = |  72W  |
+| DC Barrel  | 24V  | / | 6.2 Ω | = |  3.2A | * |  24V  | = |  92W  |
+| EPR PD3.1  | 28V  | / | 8.0 Ω | = |  2.5A | * |  28V  | = |  98W  |
+| EPR PD3.1  | 28V  | / | 6.2 Ω | = |  3.2A | * |  28V  | = |  126W  |
 
 
 
@@ -41,5 +41,4 @@ To measure the tip temperature in the iron, the iron has a small op-amp connecte
                                                                                                                                                                                                              
 Once the output is turned off (via the FET), the system has a recovery time as the tip capacitance discharges and the op-amp exits saturation. After this delay period, the MCU's ADC (analog-to-digital converter) samples the output of the op-amp 8 times quickly and then sets a flag to turn the PWM output back on.
 This enforces a small dead time in the output signal while this occurs, so there is a balance between sampling the temperature often to maintain a stable tip temperature control and sampling less often to increase the maximum power deliverable to the tip ([see Complexity of measurement](/Documentation/Temperature.md#complexity-of-measurement)).
-
 
