@@ -303,11 +303,10 @@ Invert the colours of the OLED screen
 
 ### Setting: Boot logo duration
 
-Sets the duration of the boot logo from 1 second to 4 seconds.
+Sets the duration of the boot logo from 1 - 4 seconds.
 - For static images this sets the time the logo is displayed for.
 - For animations this sets the time the last frame is displayed for after the animation has been played.
-
-The infinity icon sets a logo or the last frame of an animation to be displayed until a button is pressed.
+- The infinity $∞$ icon sets a logo or the last frame of an animation to be displayed until a button is pressed.
 
 On device help text:
 
