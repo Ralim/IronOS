@@ -34,9 +34,9 @@ This OLED screen features burn-in protection; if no buttons or movement have bee
 
 Additionally to the two icons shown, there are two "hidden" actions that can be performed on this menu.
 
-If you press and hold on to the button near the tip of the soldering iron, this will bring up the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
+If you press and hold the button near the tip (`+/A`), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
 
-If you press and hold the button near the rear of the iron it will take you into the [debug menu](/Documentation/DebugMenu.md).
+If you press and hold the button near the rear of the iron (`-/B`), it will take you into the [debug menu](/Documentation/DebugMenu.md).
 
 ## Soldering Mode
 
@@ -58,8 +58,8 @@ In Sleep mode, the temperature of the iron automatically lowers to 150 °C (defa
 
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
-### Optional Hall Effect Feature (Pinecil only):
-Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for details on [installation](/Documentation/HallSensor.md).
+#### Optional Hall Effect Feature (Pinecil only):
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](/Documentation/HallSensor.md).
 
 
 ### Idle Shutdown
