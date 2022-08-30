@@ -1,6 +1,6 @@
 # Power & Performance
 
-All of the irons are PWM controlled resistive heating elements.
+All of the irons are [PWM controlled](https://www.digikey.com/en/blog/pulse-width-modulation#) resistive heating elements.
 This means that the electronics in the handle can only turn the heating element on and off.
 This *means* that the power provided in the tip is 100% controlled by the supply voltage used.
 
@@ -20,7 +20,7 @@ The resistance of the tip is a fixed constant in ohms (Ω):
 This means the power delivered to the soldering tip is proportional to the voltage squared.
 Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies and may issue a `Thermal Runaway` message (weak power supply).
 
-**[Power(watts) calculator](https://www.rapidtables.com/calc/electric/power-calculator.html#dc)**
+#### Potential Watts from power supplies:
 
 | Type         | Volts| / | Tip Ω | = |  Amps | * | Volts | = | Watts |
 | :----------: | :--: |:-:| :---: |:-:|:-----:|:-:| :---: |:-:|:-----:|
@@ -31,7 +31,7 @@ Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies a
 | \*EPR PD3.1  | 28V  | / | 8.0 Ω | = |  2.5A | * |  28V  | = |  50W  |
 | \*EPR PD3.1  | 28V  | / | 6.2 Ω | = |  3.2A | * |  28V  | = |  64W  |
 
-
+Use a **[Power calculator](https://www.rapidtables.com/calc/electric/power-calculator.html#dc)** to quickly derive watts.
 
 ## Output Control & Regulation
 
