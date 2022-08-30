@@ -77,4 +77,4 @@ The firmware will not enable the tip until you are in soldering mode.
 
 ## Accelerometer not detected
 
-Your Iron may have a new accelerometer that is not supported yet (happens every year or so) OR there is a soldering issue with the accelerometer.
+Your Iron may have a new accelerometer that is not supported yet (happens every year or so) OR there is a soldering issue with the accelerometer (reflow/resolder).
