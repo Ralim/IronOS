@@ -25,5 +25,5 @@ This enforces a small dead time in the output signal while this occurs, so there
 
 | Type         | Volts| / | Tip Ω | = | Amps | * | Volts | = | Watts |
 | :----------: | :--: |:-:| :---: |:-:| :---:|:-:| :---: |:-:|:-----:|
-| USB-C PD3.0  | 20V  | / | 8.0 Ω | = | 2.5A | * |  20V  | = |  50W  |
-| USB-C PD3.0  | 20V  | / | 6.2 Ω | = | 3.2A | * |  20V  | = |  64W  |
+| USB-C PD3.0  | 20V  |/| 8.0 Ω |=| 2.5A | * |  20V  | = |  50W  |
+| USB-C PD3.0  | 20V  |/| 6.2 Ω |=| 3.2A | * |  20V  | = |  64W  |
