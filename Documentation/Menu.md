@@ -37,14 +37,15 @@ To calibrate your iron:
 6. Use the front and back buttons to adjust the displayed voltage to minimize the error to your original measurement
 7. Press both buttons at the same time to Save and Exit to the menu
 
-### Calibrating tip offset (Set tip model)
-This is normally not needed unless you have an issue with your temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. If the method below is not followed, the iron could be worse than before calibration, repeat the method.
-Some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps:
+### Calibrate Tip CJC
+This performs a Cold Junction Calibration ([see Temperature for details](Documentation/Temperature.md)). This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective, and measured resistance is close to specifications (short tips 6.2 Ω, long tips 8 Ω).
+
+What this is for: some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps. If the method below is not followed, the iron could be worse than before calibration, repeat the method. 
 
 1. Connect power to your iron
 2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
 3. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate temperature? > press (`+/A`)
-4. Important warning message is shown: *Please ensure the tip is at room temperature before proceeding!* 
+4. Important warning message is shown: *Affirm the tip & device are at room temperature before starting!* 
 5. Press the (`+/A`) button to confirm (tip/handle are at ambient temperature).
 6. Display shows **`....`** for a short time as the unit measures and compares the tip and handle temperatures.
 7. The display then goes back to *TMP CAL* and displays your *Offset number*. You generally don't need this offset unless debugging issues.
