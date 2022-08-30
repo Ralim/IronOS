@@ -6,11 +6,15 @@ This *means* that the power provided in the tip is 100% controlled by the supply
 
 Irons at their simplest are just a resistor connected to your power source via a switch.
 
-When the switch is on, the power in the resistor is `Current (I) times Volts (V)`.
-Current through the resistor is `Volts (V) divided by Resistance (R)`.
-Combining these two gives the common equation, power is `Volts (V) squared / Resistance (R)`.
+- When the switch is on, the power in the resistor is: `P (watts) = Volts (V) x Current (I)`.
+- Current through the resistor is:  `I (amps) = Volts (V) ÷ by Resistance (R Ω)`.
+- Combining these two gives the common equation or Power:  `P (watts) = V (volts) x I (amps)`
 
-The resistance of the tip is fixed, ~4.5 ohms for the TS80(P), ~8 ohms for the TS100/Pinecil long tips, ~6.2 ohms for Pine64 short tips.
+The resistance of the tip is fixed ohms (Ω):
+- 6.2 Ω for Pine64 short tips.
+- 8 Ω for the TS100/Pinecil long tips
+- ~4.5 Ω for the TS80(P)
+  
 
 This means that the power delivered to the soldering tip is proportional to the voltage used, squared.
 Therefore the TS100and Pinecil perform poorly when run off 12 V power supplies and may issue a "Thermal Runaway" message.
