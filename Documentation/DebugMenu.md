@@ -42,7 +42,7 @@ This indicates the tip resistance that the device is currently using. For device
 
 ### RTip
 
-This is the raw tip reading in μV. This can be used when assessing the calibration routines for example. Tip should be installed; range of 700-1000 is normal.
+This is the raw tip reading in μV. Tip must be installed or reading will be high/inaccurate. At cool, the range of 700-1000 is normal for larger tips and ~1500 for smaller tips (TS80). This is used to evaluate the calibration routines.
 
 ### CTip
 
@@ -51,8 +51,9 @@ This can be used with RTip for assessing temperature processing performance.
 
 ### CHan
 
-This is the handle or PCB temperature in °C x 10 (200 == 20.0 °C). Range of 200-400 (20-40 °C) is normal depending on how hot/cold the room is and how long power has been running which warms the PCB further. This is used for cold junction compensation of the tip temperature.
- > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly.
+This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C x 10 (29.0 °C ambient should read as 290). Range of 200-400 (20-40 °C) is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
+This is used for CJC of the tip temperature.
+ > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly ([see Troubleshooting](/Documentation/Troubleshooting.md))
 
 
 ### CMax
