@@ -181,7 +181,7 @@ Max QC voltage the iron should negotiate for
 
 ### Setting: PD timeout
 
-How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values.
+How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values (leave default of 20 if no issues).
 
 On device help text:
 
@@ -197,7 +197,7 @@ Maximum power the iron can use (W=watt)
 
 ### Setting: Swap + - keys
 
-Swaps which button increments and decrements on temperature change screens.
+Swaps which button for increments / decrements on the temperature change screens.
 
 On device help text:
 
@@ -225,7 +225,7 @@ Enables and sets the wattage of the power pulse. Power pulse causes the device t
 
 On device help text:
 
-Intensity of power of keep-awake-pulse (watt)
+Power intensity of keep-awake-pulse (watt)
 
 ### Setting: Hall sensor sensitivity
 
@@ -233,7 +233,7 @@ If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is
 
 On device help text:
 
-Sensitivity of the Hall effect sensor to detect sleep (O=off | L=low | M=medium | H=high)
+Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)
 
 ### Setting: Allow locking buttons
 
@@ -249,7 +249,7 @@ When powered by a battery, this adjusts the minimum voltage per cell before shut
 
 On device help text:
 
-Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)
+Minimum allowed volts per cell (3S: 3 - 3.7V | 4S-6S: 2.4 - 3.7V)
 
 ### Setting: Anim. loop
 
