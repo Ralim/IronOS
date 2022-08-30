@@ -180,14 +180,14 @@
 				"Calibrate",
 				"tip CJC"
 			],
-			"desc": "Tip temperature Cold Junction Compensation; not needed if Tip is +/- 5°C of display"
+			"desc": "Tip-temperature Cold Junction Compensation; not needed if Tip is +/- 5°C of display"
 		},
 		"SettingsReset": {
 			"text2": [
-				"Restore Default",
+				"Restore default",
 				"settings"
 			],
-			"desc": "Reset the default settings for this firmware version"
+			"desc": "Reset all default settings for this firmware version"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -278,7 +278,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed volts per battery cell (recommend 3S: 3 - 3.7V | 4S-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -320,14 +320,14 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert OLED screen the colours black|white"
 		},
 		"LOGOTime": {
 			"text2": [
