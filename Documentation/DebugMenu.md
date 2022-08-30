@@ -15,13 +15,13 @@ Items are shown in the menu on a single line, so they use short codes and appear
 - This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
 - The new Pinecil V2 released Aug. 2, 2022 now uses BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your Pinecil authenticity [here](https://pinecil.pine64.org/).
 
-### UpTime
+### Time
 
-This just shows how many deciseconds the unit has been powered for.
+This is just uptime, and shows how many deciseconds the unit has been powered for.
 
 ### Move
 
-This is the last timestamp of movement. When the iron is moved, this should update to match the time field (one before in the menu).
+This is the last timestamp of movement. When the iron is moved, this should update to match the Time field (previous menu item).
 This can be used for checking performance of the movement detection code.
 
 ### ACC
@@ -42,7 +42,7 @@ This indicates the tip resistance that the device is currently using. For device
 
 ### RTip
 
-This is the raw tip reading in μV. This can be used when assessing the calibration routines for example.
+This is the raw tip reading in μV. This can be used when assessing the calibration routines for example. Tip should be installed; range of 700-1000 is normal.
 
 ### CTip
 
@@ -51,17 +51,17 @@ This can be used with RTip for assessing temperature processing performance.
 
 ### CHan
 
-This is the handle temperature in °C. This is used for cold junction compensation of the tip temperature.
-This is shown in degrees Celsius x10, so 200 == 20.0 °C
+This is the handle or PCB temperature in °C x 10 (200 == 20.0 °C). This is used for cold junction compensation of the tip temperature.
+If the CHan is extremely high, this indicates the temperature sensor isn't reading correctly. Range of 200-400 (20-40 °C) is normal depending on how hot/cold the room is and how long power has been running which warms the PCB.
 
 ### CMax
 
-This indicates the max temperature in degrees Celsius that the system estimates it can measure the tip reliably to.
-This is dependent on a few factors including the handle temperature so it can move around during use.
+This indicates the max temperature in °Celsius that the system estimates it can measure the tip reliably to.
+This is dependent on a few factors including the handle temperature so it can move around during use. As you use the iron, the Max increases to a point.
 
 ### Vin
 
-The input voltage as read by the internal ADC. Can be used to sanity check its being read correctly.
+The input voltage as read by the internal ADC. Can be used to sanity check it is being read correctly.
 
 ### PWR
 
