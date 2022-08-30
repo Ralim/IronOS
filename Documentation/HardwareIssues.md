@@ -35,3 +35,5 @@ For Pinecil V1, inspect near U10 which is the TMP36 sensor ([see issue here](htt
 If it worked on older firmware, but not on 2.16+, weak solder joints are suspect. The newer firmware runs the ADC a bit faster to keep tighter control of the tip temperature. Normally this wont cause an issue as the output from the TMP36 is powerful enough to keep up without any issue. But if you have a weak or cold solder joint this could cause issues.
 
 If the CHan is extremely high, and reflowing the temperature sensor does not resolve the issue; inspect the pins in the main MCU, possibly try giving them a light squeeze to the board while watching CHan.
+
+If you have a different device, follow the same logic and locate the temperature sensor on your device.
