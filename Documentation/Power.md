@@ -20,6 +20,7 @@ The resistance of the tip is a fixed constant in ohms (Ω):
 This means the power delivered to the soldering tip is proportional to the voltage squared.
 Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies and may issue a `Thermal Runaway` message (weak power supply).
 
+**[Power(watts) calculator](https://www.rapidtables.com/calc/electric/power-calculator.html#dc)**
 
 | Type         | Volts| / | Tip Ω | = |  Amps | * | Volts | = | Watts |
 | :----------: | :--: |:-:| :---: |:-:|:-----:|:-:| :---: |:-:|:-----:|
