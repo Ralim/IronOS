@@ -4,30 +4,31 @@ All of the irons are PWM controlled resistive heating elements.
 This means that the electronics in the handle can only turn the heating element on and off.
 This *means* that the power provided in the tip is 100% controlled by the supply voltage used.
 
-Irons at their simplest are just a resistor connected to your power source via a switch.
+Irons at their simplest are just a resistor (Ω) connected to your power source via a switch.
 
-- When the switch is on, the power in the resistor is: `P (watts) = Volts (V) x Current (I)`.
-- Current through the resistor is:  `I (amps) = Volts (V) ÷ by Resistance (R Ω)`.
-- Combining these two gives the common equation or Power:  `P (watts) = V (volts) x I (amps)`
+- When the switch is on, the power in the resistor is: $P(watts) = V(volts) \times\ I(current=amps)$
+- Current through the resistor is:  $I(amps) = V(volts) ÷ Ω (resistance)$
+- Combining these two gives the common equation or Power
 
-The resistance of the tip is fixed ohms (Ω):
-- 6.2 Ω for Pine64 short tips.
-- 8 Ω for the TS100/Pinecil long tips
-- ~4.5 Ω for the TS80(P)
-  
+   $P(watts) = V(volts) * I(amps)$ or $P = V^2 ÷ Ω$
 
-This means that the power delivered to the soldering tip is proportional to the voltage used, squared.
-Therefore the TS100and Pinecil perform poorly when run off 12 V power supplies and may issue a "Thermal Runaway" message.
+The resistance of the tip is a fixed constant in ohms (Ω):
+- 6.2 Ω for Pine64 short tip
+- 8 Ω for the TS100/Pinecil long tip
+- 4.5 Ω for the TS80(P)
+
+This means the power delivered to the soldering tip is proportional to the voltage squared.
+Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies and may issue a `Thermal Runaway` message (weak power supply).
 
 
-| Type         | Volts| / | Tip Ω | = | Amps | * | Volts | = | Watts |
-| :----------: | :--: |:-:| :---: |:-:| :---:|:-:| :---: |:-:|:-----:|
-| USB-C PD3.0  | 20V  | / | 8.0 Ω | = | 2.5A | * |  20V  | = |  50W  |
-| USB-C PD3.0  | 20V  | / | 6.2 Ω | = | 3.2A | * |  20V  | = |  64W  |
-| DC Barrel    | 20V  | / | 8.0 Ω | = | 2.5A | * |  20V  | = |  50W  |
-| DC Barrel    | 20V  | / | 6.2 Ω | = | 3.2A | * |  20V  | = |  64W  |
-| \*EPR PD3.1  | 20V  | / | 8.0 Ω | = | 2.5A | * |  20V  | = |  50W  |
-| \*EPR PD3.1  | 20V  | / | 6.2 Ω | = | 3.2A | * |  20V  | = |  64W  |
+| Type         | Volts| / | Tip Ω | = |  Amps | * | Volts | = | Watts |
+| :----------: | :--: |:-:| :---: |:-:|:-----:|:-:| :---: |:-:|:-----:|
+| USB-C PD     | 20V  | / | 8.0 Ω | = |  2.5A | * |  20V  | = |  50W  |
+| USB-C PD     | 20V  | / | 6.2 Ω | = |  3.2A | * |  20V  | = |  64W  |
+| DC Barrel    | 24V  | / | 8.0 Ω | = |  2.5A | * |  24V  | = |  50W  |
+| DC Barrel    | 24V  | / | 6.2 Ω | = |  3.2A | * |  24V  | = |  64W  |
+| \*EPR PD3.1  | 28V  | / | 8.0 Ω | = |  2.5A | * |  28V  | = |  50W  |
+| \*EPR PD3.1  | 28V  | / | 6.2 Ω | = |  3.2A | * |  28V  | = |  64W  |
 
 
 
