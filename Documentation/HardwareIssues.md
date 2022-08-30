@@ -22,7 +22,7 @@ Generally, this means either something went very awry in the firmware, or the ch
 
 ## No tip detected
 
-if your tip is not being detected, the most likely cause is that the heater element has been damaged from over-temperature, being dropped or bad luck. As the heater coil is part of the temperature measurement circuit neither will work if it's damaged.
+If your tip is not being detected, the most likely cause is that the heater element inside the tip has been damaged from over-temperature, being dropped or bad luck. As the heater coil is part of the temperature measurement circuit neither will work if it's damaged.
 
 The best way to see if this is the case is to measure the resistance across the contacts to the tip using a multimeter.
 you are expecting to see measurements in the range of 4-10 ohms. Anything higher than 10 ohms is _generally_ an issue.
