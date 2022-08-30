@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "En veille...",
 		"SleepingTipAdvancedString": "Panne:",
 		"OffString": "Off",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Votre appareil semble être une contrefaçon !"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
