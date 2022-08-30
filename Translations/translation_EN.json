@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Sleeping...",
 		"SleepingTipAdvancedString": "Tip:",
 		"OffString": "Off",
-		"DeviceFailedValidationWarning": "Your device is most likely Counterfeit!"
+		"DeviceFailedValidationWarning": "Your device is likely Counterfeit!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
