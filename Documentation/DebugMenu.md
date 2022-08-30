@@ -38,7 +38,7 @@ This indicates the accelerometer that is fitted inside the unit.
 
 ### Tip Res
 
-This indicates the tip resistance that the device is currently using. For devices with multiple possible values to choose from (Pinecil V2), the appropriate value is set automatically.
+This indicates the tip resistance that the device is currently using. For devices with multiple possible values to choose from (Pinecil V2), the appropriate value is automatically detected at every boot-up. Tip should be installed before boot-up or reading can not be done.
 
 ### RTip
 
