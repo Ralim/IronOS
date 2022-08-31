@@ -197,7 +197,7 @@ Maximum power the iron can use (W=watt)
 
 ### Setting: Swap + - keys
 
-Swaps which button for increments / decrements on the temperature change screens.
+Reverses the assignment of buttons for temperature increase/decrease.
 
 On device help text:
 
