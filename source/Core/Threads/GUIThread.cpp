@@ -1001,44 +1001,44 @@ void startGUITask(void const *argument) {
 #endif
 #endif
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
-  static void performCJC() {
-    while (preStartChecks() == 0) {
-      ulTaskNotifyTake(pdTRUE, TICKS_100MS);
-    }
-    uint32_t Temp = TipThermoModel::getTipInC();
-    if (!isTipDisconnected() || Temp <= 32) {
-      uint16_t setoffset = 0;
-      // If the thermo-couple at the end of the tip, and the handle are at
-      // equilibrium, then the output should be zero, as there is no temperature
-      // differential.
-      while (setoffset == 0) {
-        uint32_t offset = 0;
-        for (uint8_t i = 0; i < 16; i++) {
-          offset += getTipRawTemp(1);
-          // cycle through the filter a fair bit to ensure we're stable.
-          OLED::clearScreen();
-          OLED::setCursor(0, 0);
-          OLED::print(SymbolDot, FontStyle::LARGE);
-          for (uint8_t x = 0; x < (i / 4); x++)
-            OLED::print(SymbolDot, FontStyle::LARGE);
-          OLED::refresh();
-          osDelay(100);
-        }
-        setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
-      }
-      setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
-      OLED::clearScreen();
-      OLED::setCursor(0, 0);
-      OLED::drawCheckbox(true);
-      OLED::printNumber(setoffset, 5, FontStyle::LARGE);
-      OLED::refresh();
-      osDelay(1200);
-      // Preventing to repeat calibration at boot automatically (only one shot).
-      setSettingValue(SettingsOptions::CalibrateCJC, 0);
-      saveSettings();
-    }
+static void performCJC() {
+  while (preStartChecks() == 0) {
+    ulTaskNotifyTake(pdTRUE, TICKS_100MS);
   }
-  
+  uint32_t Temp = TipThermoModel::getTipInC();
+  if (!isTipDisconnected() || Temp <= 32) {
+    uint16_t setoffset = 0;
+    // If the thermo-couple at the end of the tip, and the handle are at
+    // equilibrium, then the output should be zero, as there is no temperature
+    // differential.
+    while (setoffset == 0) {
+      uint32_t offset = 0;
+      for (uint8_t i = 0; i < 16; i++) {
+        offset += getTipRawTemp(1);
+        // cycle through the filter a fair bit to ensure we're stable.
+        OLED::clearScreen();
+        OLED::setCursor(0, 0);
+        OLED::print(SymbolDot, FontStyle::LARGE);
+        for (uint8_t x = 0; x < (i / 4); x++)
+          OLED::print(SymbolDot, FontStyle::LARGE);
+        OLED::refresh();
+        osDelay(100);
+      }
+      setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
+    }
+    setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
+    OLED::clearScreen();
+    OLED::setCursor(0, 0);
+    OLED::drawCheckbox(true);
+    OLED::printNumber(setoffset, 5, FontStyle::LARGE);
+    OLED::refresh();
+    osDelay(1200);
+    // Preventing to repeat calibration at boot automatically (only one shot).
+    setSettingValue(SettingsOptions::CalibrateCJC, 0);
+    saveSettings();
+  }
+}
+
   if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
     performCJC();
   }
