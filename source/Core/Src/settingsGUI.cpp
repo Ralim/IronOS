@@ -120,19 +120,20 @@ static bool enterAdvancedMenu(void);
  *  Reverse Temp change buttons + -
  *  Animation Speed
  *  -Animation Loop
- *  OLED Brightnes
+ *  OLED Brightness
  *  Invert Screen
+ *  Logo Timeout
  *  Detailed IDLE
  *  Detailed Soldering
  *
  * Advanced
  *  Power Limit
- *  Factory Reset
  *  Calibrate Temperature
  *  Calibrate Input V
  *  Power Pulse
  *  -Power Pulse Delay
  *  -Power Pulse duration
+ *  Factory Reset
  *
  */
 const menuitem rootSettingsMenu[] {
@@ -144,7 +145,6 @@ const menuitem rootSettingsMenu[] {
    * Advanced Menu
    * Exit
    */
-
 #if defined(POW_DC) || defined(POW_QC)
   {0, enterPowerMenu, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Power*/
 #endif
@@ -160,12 +160,12 @@ const menuitem rootSettingsMenu[] {
 
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
 const menuitem powerMenu[] = {
-/*
- *  Power Source
- *  -Minimum Voltage
- *  QC Voltage
- *  PD Timeout
- */
+    /*
+     *  Power Source
+     *  -Minimum Voltage
+     *  QC Voltage
+     *  PD Timeout
+     */
 #ifdef POW_DC
     {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},            /*Voltage input*/
     {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, displayInputMinVRange, showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell, 5}, /*Minimum voltage input*/
@@ -181,7 +181,7 @@ const menuitem powerMenu[] = {
 #endif
 const menuitem solderingMenu[] = {
     /*
-     * 	Boost Temp
+     * 	Boost Mode Temp
      * 	Auto Start
      *  Temp change short step
      *  Temp change long step
@@ -226,7 +226,7 @@ const menuitem UIMenu[] = {
      *  Reverse Temp change buttons + -
      *  Animation Speed
      *  -Animation Loop
-     *  OLED Brightnes
+     *  OLED Brightness
      *  Invert Screen
      *  Logo Timeout
      *  Detailed IDLE
@@ -254,18 +254,16 @@ const menuitem UIMenu[] = {
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 const menuitem advancedMenu[] = {
-
     /*
      *  Power Limit
-     *  Factory Reset
      *  Calibrate Temperature
      *  Calibrate Input V
      *  Power Pulse
      *  -Power Pulse Delay
      *  -Power Pulse duration
+     *  Factory Reset
      */
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5},                              /*Power limit*/
-    {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
     {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureCalibration,
      5}, /*Calibrate tip*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
@@ -275,6 +273,7 @@ const menuitem advancedMenu[] = {
      7}, /*Power Pulse Wait adjustment*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration,
      7},                                                                                                    /*Power Pulse Duration adjustment*/
+    {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 
