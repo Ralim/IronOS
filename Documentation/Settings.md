@@ -43,7 +43,7 @@ When the device is powered by a battery, this adjusts the low voltage threshold 
 
 On device help text:
 
-Set cutoff voltage to protect battery over-drain. (DC 10V) (S 3.3V per cell, disable power limit)
+Set cutoff voltage to protect battery against over-drain. (DC 10V) (S 3.3V per cell, disable power limit)
 
 ### Setting: Sleep temp
 
