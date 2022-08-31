@@ -43,7 +43,7 @@ When the device is powered by a battery, this adjusts the low voltage threshold 
 
 On device help text:
 
-Set cutoff voltage to protect battery against over-drain. (DC 10V) (S 3.3V per cell, disable power limit)
+Set cutoff voltage to prevent battery over-drain. (DC 10V) (S 3.3V per cell, disable power limit)
 
 ### Setting: Sleep temp
 
@@ -79,7 +79,7 @@ Adjust the90 device help text:
 
 ### Setting: Temperature unit
 
-Select a preference of °C or °F.
+Select a display preference of °C or °F.
 
 On device help text:
 
@@ -115,7 +115,7 @@ When the device powers up, should it enter into a special mode. These settings s
 
 On device help text:
 
-O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby at no heat heat until moved
+O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby w/out heating until moved
 
 ### Setting: Cooldown flashing
 
@@ -157,7 +157,7 @@ Start VIN calibration (long press to exit)
 
 ### Setting: Detailed solder screen
 
-Should the device show an 'advanced' soldering view. This is a text-based view that shows more information at the cost of no nice graphics.
+Should the device show a detailed soldering view. This is a text-based view that shows more information in place of nice graphics.
 
 On device help text:
 
