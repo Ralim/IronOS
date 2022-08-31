@@ -43,7 +43,7 @@ When the device is powered by a battery, this adjusts the low voltage threshold 
 
 On device help text:
 
-Set cutoff voltage to prevent battery over-drain. (DC 10V) (S 3.3V per cell, disable power limit)
+Set cutoff voltage to prevent battery over-drain. (DC 10V) (S=3.3V per cell, disable PWR limit)
 
 ### Setting: Sleep temp
 
@@ -83,7 +83,7 @@ Select a display preference of °C or °F.
 
 On device help text:
 
-C=°Celsius | F=°Fahrenheit
+C=Celsius | F=Fahrenheit
 
 ### Setting: Detailed idle screen
 
@@ -91,7 +91,7 @@ Should the device show an 'advanced' view on the idle screen. The advanced view 
 
 On device help text:
 
-Display detailed information in a smaller font on the idle screen
+Display detailed info in a smaller font on idle screen
 
 ### Setting: Display orientation
 
@@ -107,7 +107,7 @@ When the unit is in soldering mode. You can hold down the button at the front of
 
 On device help text:
 
-Temperature used in "boost mode"
+Tip Temperature used in "boost mode"
 
 ### Setting: Start-up behavior
 
@@ -115,7 +115,7 @@ When the device powers up, should it enter into a special mode. These settings s
 
 On device help text:
 
-O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby w/out heating until moved
+O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved
 
 ### Setting: Cooldown flashing
 
@@ -123,7 +123,7 @@ If the idle screen should blink the tip temperature for attention while the tip 
 
 On device help text:
 
-Flash the temperature reading, if tip is still hot, after halting heat
+Flash the temperature reading after heating is halted if the tip is still hot
 
 ### Setting: Calibrate tip CJC?
 
@@ -132,20 +132,20 @@ Used to calibrate the ADC + Op-amp offsets for the tip. This calibration should 
 Generally *not required unless your device is reading more than 5 °C off target temperature*. This is intended to be performed at boot-up before internal components get warm. Avoid repeating the calibration, but if you must repeat it, unplug the unit, and wait for everything to go back to room temperature. Temperatures start to drift even after plugging in the device, which is why cold junction calibration is best done at a fresh boot-up.
 
 On device help text:
-- Tip Cold Junction Compensation; not needed if temp is +/- 5 C
-- Affirm the tip & device are at room temperature before starting!
+
+Tip-temperature Cold Junction Compensation; not needed if Tip is +/- 5 C of display
 
 On device help text:
 
-Start tip temperature offset calibration
+Affirm the tip & device are at room temperature before starting!
 
 ### Setting: Restore default settings?
 
-Resets settings and calibrations to defaults included in the installed firmware version. Does NOT erase custom user boot up logo's.
+Resets settings and calibrations to defaults included in the installed firmware version. Does NOT erase custom user boot up logos.
 
 On device help text:
 
-Reset all settings to default
+Reset default settings for this firmware version
 
 ### Setting: Calibrate input voltage?
 
@@ -249,7 +249,7 @@ When powered by a battery, this adjusts the minimum voltage per cell before shut
 
 On device help text:
 
-Minimum allowed volts per cell (3S: 3 - 3.7V | 4S-6S: 2.4 - 3.7V)
+Minimum allowed volts per battery cell (3S: 3 - 3.7V | 4S-6S: 2.4 - 3.7V)
 
 ### Setting: Anim. loop
 
@@ -297,7 +297,7 @@ Display brightness. Higher values age the OLED faster due to burn-in. (However, 
 
 On device help text:
 
-Adjust the OLED screen brightness
+Adjust OLED screen brightness
 
 ### Setting: Invert screen
 
@@ -305,7 +305,7 @@ Inverts the entire OLED.
 
 On device help text:
 
-Invert OLED screen colours Black | White
+Invert OLED screen colours
 
 ### Setting: Boot logo duration
 
@@ -316,4 +316,4 @@ Sets the duration of the boot logo from 1 - 4 seconds.
 
 On device help text:
 
-Sets the duration for the boot logo (S=seconds)
+Set Boot logo duration (off, s=seconds, infinity)
