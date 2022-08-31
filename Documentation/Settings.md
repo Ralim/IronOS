@@ -63,7 +63,7 @@ Interval before "sleep mode" starts (S=seconds | M=minutes)
 
 ### Setting: Shutdown timeout
 
-The time required with no movement or button-pressing before the device shuts off the tip heater completely and returns to the main idle screen.
+The amount of time, without movement or button presses, before the device shuts off the tip heater completely and returns to the main idle screen.
 
 On device help text:
 
