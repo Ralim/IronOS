@@ -5,7 +5,7 @@
 		"ascii_basic",
 		"latin_extended"
 	],
-	"tempUnitFahrenheit": false,
+	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationWarning": "Affirm the tip & device are at room temperature before starting!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
@@ -117,7 +117,7 @@
 				"Sleep",
 				"timeout"
 			],
-			"desc": "Interval before \"sleep mode\" kicks in (s=seconds | m=minutes)"
+			"desc": "Interval before \"sleep mode\" starts (s=seconds | m=minutes)"
 		},
 		"ShutdownTimeout": {
 			"text2": [
@@ -138,7 +138,7 @@
 				"Temperature",
 				"unit"
 			],
-			"desc": "C=°Celsius | F=°Fahrenheit"
+			"desc": "C=Celsius | F=Fahrenheit"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -159,35 +159,35 @@
 				"Boost",
 				"temp"
 			],
-			"desc": "Tip temperature used in \"Boost mode\""
+			"desc": "Tip temperature used in \"boost mode\""
 		},
 		"AutoStart": {
 			"text2": [
 				"Start-up",
 				"behavior"
 			],
-			"desc": "O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved"
+			"desc": "O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Cooldown",
 				"flashing"
 			],
-			"desc": "Flash the temperature reading after heat is halted, if tip is still hot"
+			"desc": "Flash the temperature reading after heating is halted if the tip is still hot"
 		},
 		"TemperatureCalibration": {
 			"text2": [
 				"Calibrate",
 				"tip CJC"
 			],
-			"desc": "Tip-temperature Cold Junction Compensation; not needed if Tip is +/- 5°C of display"
+			"desc": "Tip-temperature Cold Junction Compensation; not needed if Tip is +/- 5 C of display"
 		},
 		"SettingsReset": {
 			"text2": [
 				"Restore default",
 				"settings"
 			],
-			"desc": "Reset all default settings for this firmware ver."
+			"desc": "Reset default settings for this firmware version"
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -201,7 +201,7 @@
 				"Detailed",
 				"solder screen"
 			],
-			"desc": "Display detailed info in a smaller font on soldering screen"
+			"desc": "Display detailed information in a smaller font on soldering screen"
 		},
 		"ScrollingSpeed": {
 			"text2": [
@@ -264,7 +264,7 @@
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Hall effect sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
+			"desc": "sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -278,7 +278,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed volts per battery cell (recommend 3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -327,7 +327,7 @@
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert OLED screen colours"
+			"desc": "Invert OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
@@ -335,7 +335,6 @@
 				"duration"
 			],
 			"desc": "Set Boot logo duration (off, s=seconds, infinity)"
-
 		}
 	}
 }
