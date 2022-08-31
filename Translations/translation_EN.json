@@ -166,14 +166,14 @@
 				"Start-up",
 				"behavior"
 			],
-			"desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved"
+			"desc": "O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved"
 		},
 		"CooldownBlink": {
 			"text2": [
 				"Cooldown",
 				"flashing"
 			],
-			"desc": "Flash the temperature reading, if tip is still hot, after halting heat"
+			"desc": "Flash the temperature reading, after halting heat, if tip is still hot"
 		},
 		"TemperatureCalibration": {
 			"text2": [
