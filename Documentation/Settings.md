@@ -261,7 +261,7 @@ Loop icon animations in main menu
 
 ### Setting: Anim. speed
 
-How fast should the menu animations loop or off setting.
+Allows the pace of animations to be set or turned off.
 
 On device help text:
 
