@@ -166,7 +166,7 @@
 				"Start-up",
 				"behavior"
 			],
-			"desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby at no heat until moved"
+			"desc": "O=off | S=heat up to soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved"
 		},
 		"CooldownBlink": {
 			"text2": [
