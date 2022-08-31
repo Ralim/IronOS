@@ -5,7 +5,7 @@
 		"ascii_basic",
 		"latin_extended"
 	],
-	"tempUnitFahrenheit": false,
+	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationWarning": "Affirm the tip & device are at room temperature before starting!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
@@ -201,7 +201,7 @@
 				"Detailed",
 				"solder screen"
 			],
-			"desc": "Display detailed information in a smaller font on soldering screen"
+			"desc": "Display detailed info in a smaller font on soldering screen"
 		},
 		"ScrollingSpeed": {
 			"text2": [
