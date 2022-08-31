@@ -55,7 +55,7 @@ Tip temperature while in "sleep mode"
 
 ### Setting: Sleep timeout
 
-The time required with no movement or button-pressing before the device drops down to the sleep temperature.
+The time it takes before entering sleep mode while there is no motion or key press.
 
 On device help text:
 
