@@ -5,7 +5,7 @@
 		"ascii_basic",
 		"latin_extended"
 	],
-	"tempUnitFahrenheit": true,
+	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Affirm the tip & device are at room temperature before starting!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
