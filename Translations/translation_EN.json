@@ -187,7 +187,7 @@
 				"Restore default",
 				"settings"
 			],
-			"desc": "Reset all default settings for this firmware version"
+			"desc": "Reset all default settings for this firmware ver."
 		},
 		"VoltageCalibration": {
 			"text2": [
