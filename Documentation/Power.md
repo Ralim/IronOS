@@ -13,9 +13,9 @@ Irons at their simplest are just a resistor (Ω) connected to your power source 
    $P(watts) = V(volts) * I(amps)$ or $P = V^2 ÷ Ω$
 
 The resistance of the tip is a fixed constant in ohms (Ω):
-- 6.2 Ω for Pine64 short tip
-- 8 Ω for the TS100/Pinecil long tip
-- 4.5 Ω for the TS80(P)
+- 6.2 Ω  Pine64 short tip
+- 8.0 Ω  TS100/Pinecil long tip
+- 4.5 Ω  TS80(P)
 
 This means the power delivered to the soldering tip is proportional to the voltage squared.
 Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies and may issue a `Thermal Runaway` message (weak power supply).
