@@ -1000,7 +1000,7 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
-/*// Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
+// Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
 void performCJC() {
   while (preStartChecks() == 0) {
     ulTaskNotifyTake(pdTRUE, TICKS_100MS);
@@ -1037,7 +1037,7 @@ void performCJC() {
     setSettingValue(SettingsOptions::CalibrateCJC, 0);
     saveSettings();
   }
-}*/
+}
 
   if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
     performCJC();
