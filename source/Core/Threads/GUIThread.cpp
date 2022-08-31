@@ -1000,13 +1000,8 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
-
-  if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
-    performCJCC();
-  }
-  
 // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
-static void performCJCC() {
+void performCJCC() {
   while (preStartChecks() == 0) {
     ulTaskNotifyTake(pdTRUE, TICKS_100MS);
   }
@@ -1043,7 +1038,12 @@ static void performCJCC() {
     saveSettings();
   }
 }
-  
+
+  if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
+    performCJCC();
+  }
+
+
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
   if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
       && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
