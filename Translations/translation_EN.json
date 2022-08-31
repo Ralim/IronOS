@@ -173,28 +173,28 @@
 				"Cooldown",
 				"flashing"
 			],
-			"desc": "Flash the temperature reading after heating is halted if the tip is still hot"
+			"desc": "Flash the temperature reading after heating is halted and the tip is still hot"
 		},
 		"TemperatureCalibration": {
 			"text2": [
 				"Calibrate",
 				"tip CJC"
 			],
-			"desc": "Tip-temperature Cold Junction Compensation; not needed if Tip is +/- 5 C of display"
+			"desc": "Tip-temperature Cold Junction Compensation (not needed if Tip is +/- 5 C of display)"
 		},
 		"SettingsReset": {
 			"text2": [
 				"Restore default",
 				"settings"
 			],
-			"desc": "Reset default settings for this firmware version"
+			"desc": "Reset default settings for this firmware ver."
 		},
 		"VoltageCalibration": {
 			"text2": [
 				"Calibrate",
 				"input voltage"
 			],
-			"desc": "Start VIN calibration (long press -/B to exit)"
+			"desc": "Start VIN calibration (long press to exit)"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -257,14 +257,14 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Power intensity of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse (watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
+			"desc": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -320,14 +320,14 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust OLED screen brightness"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert OLED screen colors"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
