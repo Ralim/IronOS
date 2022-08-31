@@ -103,7 +103,7 @@
 				"Power",
 				"source"
 			],
-			"desc": "Set cutoff voltage to protect battery drain. (DC 10V) (S=3.3V per cell, disable PWR limit)"
+			"desc": "Set cutoff voltage to prevent battery over-drain. (DC 10V) (S=3.3V per cell, disable PWR limit)"
 		},
 		"SleepTemperature": {
 			"text2": [
