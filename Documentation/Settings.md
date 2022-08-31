@@ -141,7 +141,7 @@ Start tip temperature offset calibration
 
 ### Setting: Restore default settings?
 
-Resets settings and calibrations to defaults included with the installed firmware version. Does NOT erase custom user boot up logo's.
+Resets settings and calibrations to defaults included in the installed firmware version. Does NOT erase custom user boot up logo's.
 
 On device help text:
 
