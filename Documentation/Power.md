@@ -24,6 +24,8 @@ Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies a
 
 | Type       | Volts| / | Tip Ω | = |  Amps | * | Volts | = | Watts |
 | :--------: | :--: |:-:| :---: |:-:|:-----:|:-:| :---: |:-:|:-----:|
+| USB QC3.0  | 9V   | / | 4.5 Ω | = |  2.0A | * |  9V   | = |  18W  |
+| USB-C PD   | 12V  | / | 4.5 Ω | = |  3.0A | * |  12V  | = |  32W  |
 | USB-C PD   | 20V  | / | 8.0 Ω | = |  2.5A | * |  20V  | = |  50W  |
 | USB-C PD   | 20V  | / | 6.2 Ω | = |  3.2A | * |  20V  | = |  64W  |
 | DC Barrel  | 24V  | / | 8.0 Ω | = |  3.0A | * |  24V  | = |  72W  |
