@@ -16,27 +16,27 @@ By default this will show a screen similar to the one below:
 
 ![Home Screen](/Documentation/images/HomeScreen.png)
 
-Note that this may be drawn mirrored depending on the orientation of your screen.
+Note that this may be drawn mirrored depending on the orientation of your screen (detailed mode shows a different home screen).
 
 The soldering iron symbol on the screen will appear near the tip. This is here to indicate that pressing the button closest to the front of the iron will enter soldering mode.
 
 And naturally, the spanner like icon represents that pressing the button near the rear of the soldering iron will enter the settings menu.
 
-In the settings, you can turn on an advanced idle screen instead. The buttons still function the same, however, the image will be swapped for a text telling you the current status of the iron with extra details.
+In the settings, you can turn on a detailed idle screen instead. The buttons still function the same, however, the image will be swapped for a text telling you the current status of the iron with extra details.
 
-Depending on how your device is being powered, at one end of the screen, the firmware will either draw text to show you the current-voltage your unit is being provided with, a battery icon (if battery mode is enabled) or a power plug icon.
+Depending on how your device is being powered, at right side of the screen, the firmware will either show the voltage your unit is being provided with, a battery icon (if battery mode is enabled) or a power plug icon.
 
-If you see exclamation marks (!!!) where the soldering iron should be, this indicates that the firmware can't see the tip connected. This could indicate a problem with the iron or tip if there is one inserted. First, try removing and reinstalling the tip. If the issue persists please see the [hardware issues section](/Documentation/HardwareIssues.md).
+If you see an (**X**) where the soldering iron should be, this indicates that the firmware can't see the tip connected. This could indicate a problem with the iron or tip. First, try removing the tip screw and tip and gently reinstalling both; ensure that the tip is seated all the way back. If the issue persists please see the [hardware issues section](/Documentation/HardwareIssues.md).
 
-This screen features a burn-in protection feature, where if no buttons or movement have been detected for a while it will automatically blank the screen to try and reduce burn-in if the iron is left unattended. Any movement or button press will wake the screen.
+This OLED screen features burn-in protection; if no buttons or movement have been detected for a while it will automatically blank the screen to reduce burn-in when the iron is left unattended. Any movement or button press will wake the screen.
 
 ### Hidden Extras
 
 Additionally to the two icons shown, there are two "hidden" actions that can be performed on this menu.
 
-If you press and hold on to the button near the tip of the soldering iron, this will bring up the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
+If you press and hold the button near the tip (`+/A`), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
 
-If you press and hold the button near the rear of the iron it will take you into the [debug menu](/Documentation/DebugMenu.md).
+If you press and hold the button near the rear of the iron (`-/B`), it will take you into the [debug menu](/Documentation/DebugMenu.md).
 
 ## Soldering Mode
 
@@ -58,8 +58,8 @@ In Sleep mode, the temperature of the iron automatically lowers to 150 °C (defa
 
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
-Optional Hall Effect Feature (Pinecil only):
-Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210). Adding the sensor and placing a strong magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on the screen. The magnet is positioned on the stand in proximity to the sensor which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for details on [installation](/Documentation/HallSensor.md).
+#### Optional Hall Effect Feature (Pinecil only):
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on-screen. The magnet is positioned on the stand in proximity to the sensor/handle which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](/Documentation/HallSensor.md).
 
 
 ### Idle Shutdown
@@ -69,7 +69,7 @@ If, after entering sleep mode, the iron still does not see movement for a much l
 
 ## Settings Menu
 
-The settings menu is the most often evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has an on-screen description so you don't _need_ to come back here to figure them all out.
+The settings menu is the most evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has an on-screen description so you don't _need_ to come back here to figure them all out.
 
 To navigate the menu, the two buttons act separately.
 The rear button (`-/B`) is pressed to enter the menu and scrolls down the main options, and the other front button (`+/A`) will enter and change the current option.
@@ -84,4 +84,6 @@ There is a small scrollbar that appears along the right edge of the screen to in
 
 Additionally, this scrollbar will blink rapidly when you are on the last value in a range of a sub-menu. For example, if you are in Motion Sensitivity, which has a range of 0 - 9,  it will blink when you are at 9.
 
-I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs. If you want to start over, simply go to Advanced settings > Restore factory settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
+I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs.
+
+If you want to start over, simply go to Advanced settings > Restore default settings, confirm using the front (`+/A`) button. This sets all menu items to defaults, and keeps the same version firmware.
