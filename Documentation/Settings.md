@@ -123,7 +123,7 @@ If the idle screen should blink the tip temperature for attention while the tip 
 
 On device help text:
 
-Flash the temperature reading after heating is halted if the tip is still hot
+Flash temperature reading at idle if tip is hot
 
 ### Setting: Calibrate tip CJC?
 
