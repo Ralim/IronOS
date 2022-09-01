@@ -173,7 +173,7 @@
 				"Cooldown",
 				"flashing"
 			],
-			"desc": "Flash the temperature reading after heating is halted and the tip is still hot"
+			"desc": "flash temperature reading at idle if tip is hot"
 		},
 		"TemperatureCalibration": {
 			"text2": [
