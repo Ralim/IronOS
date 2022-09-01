@@ -39,7 +39,7 @@ This is the "on device help text".
 
 ### Setting: Power source
 
-When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery from over-draining.
+When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery.
 
 On device help text:
 
@@ -55,19 +55,19 @@ Tip temperature while in "sleep mode"
 
 ### Setting: Sleep timeout
 
-The time it takes before entering sleep mode while there is no motion or key press.
+How long of a period without movement / button-pressing is required before the device drops down to the sleep temperature.
 
 On device help text:
 
-Interval before "sleep mode" starts (S=seconds | M=minutes)
+Interval before "sleep mode" starts (s=seconds | m=minutes)
 
 ### Setting: Shutdown timeout
 
-The amount of time, without movement or button presses, before the device shuts off the tip heater completely and returns to the main idle screen.
+How long of a period without movement / button-pressing is required before the device turns off the tip heater completely and returns to the main idle screen.
 
 On device help text:
 
-Interval before the iron shuts down (M=minutes)
+Interval before the iron shuts down (m=minutes)
 
 ### Setting: Motion sensitivity
 
@@ -79,7 +79,7 @@ On device help text:
 
 ### Setting: Temperature unit
 
-Select a display preference of °C or °F.
+If the device shows temperatures in °C or °F.
 
 On device help text:
 
@@ -107,7 +107,7 @@ When the unit is in soldering mode. You can hold down the button at the front of
 
 On device help text:
 
-Tip Temperature used in "boost mode"
+Tip temperature used in "boost mode"
 
 ### Setting: Start-up behavior
 
@@ -125,29 +125,23 @@ On device help text:
 
 Flash temperature reading at idle if tip is hot
 
-### Setting: Calibrate tip CJC?
+### Setting: Calibrate tip CJC
 
-Used to calibrate the ADC + Op-amp offsets for the tip. This calibration should only be performed when the tip and device temperature are **equal** and at **room/ambient temperature**. 
-
-Generally *not required unless your device is reading more than 5 °C off target temperature*. This is intended to be performed at boot-up before internal components get warm. Avoid repeating the calibration, but if you must repeat it, unplug the unit, and wait for everything to go back to room temperature. Temperatures start to drift even after plugging in the device, which is why cold junction calibration is best done at a fresh boot-up.
+Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target.
 
 On device help text:
 
-Tip-temperature Cold Junction Compensation; not needed if Tip is +/- 5 C of display
+Tip-temperature Cold Junction Compensation (not needed if Tip is +/- 5 C of display)
+
+### Setting: Restore default settings
+
+Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
 
 On device help text:
 
-Affirm the tip & device are at room temperature before starting!
+Reset default settings for this firmware ver.
 
-### Setting: Restore default settings?
-
-Resets settings and calibrations to defaults included in the installed firmware version. Does NOT erase custom user boot up logos.
-
-On device help text:
-
-Reset default settings for this firmware version
-
-### Setting: Calibrate input voltage?
+### Setting: Calibrate input voltage
 
 Enters an adjustment mode where you can gradually adjust the measured voltage to compensate for any unit-to-unit variance in the voltage sense resistors.
 
@@ -157,7 +151,7 @@ Start VIN calibration (long press to exit)
 
 ### Setting: Detailed solder screen
 
-Should the device show a detailed soldering view. This is a text-based view that shows more information in place of nice graphics.
+Should the device show an 'advanced' soldering view. This is a text-based view that shows more information at the cost of no nice graphics.
 
 On device help text:
 
@@ -181,7 +175,7 @@ Max QC voltage the iron should negotiate for
 
 ### Setting: PD timeout
 
-How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values (leave default of 20 if no issues).
+How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values.
 
 On device help text:
 
@@ -197,7 +191,7 @@ Maximum power the iron can use (W=watt)
 
 ### Setting: Swap + - keys
 
-Reverses the assignment of buttons for temperature increase/decrease.
+Swaps which button increments and decrements on temperature change screens.
 
 On device help text:
 
@@ -225,7 +219,7 @@ Enables and sets the wattage of the power pulse. Power pulse causes the device t
 
 On device help text:
 
-Power intensity of keep-awake-pulse (watt)
+Intensity of power of keep-awake-pulse (watt)
 
 ### Setting: Hall sensor sensitivity
 
@@ -249,7 +243,7 @@ When powered by a battery, this adjusts the minimum voltage per cell before shut
 
 On device help text:
 
-Minimum allowed volts per battery cell (3S: 3 - 3.7V | 4S-6S: 2.4 - 3.7V)
+Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)
 
 ### Setting: Anim. loop
 
@@ -261,7 +255,7 @@ Loop icon animations in main menu
 
 ### Setting: Anim. speed
 
-Allows the pace of animations to be set or turned off.
+How fast should the menu animations loop, or if they should not loop at all.
 
 On device help text:
 
@@ -297,7 +291,7 @@ Display brightness. Higher values age the OLED faster due to burn-in. (However, 
 
 On device help text:
 
-Adjust OLED screen brightness
+Adjust the OLED screen brightness
 
 ### Setting: Invert screen
 
@@ -305,14 +299,11 @@ Inverts the entire OLED.
 
 On device help text:
 
-Invert OLED screen colours
+Invert the OLED screen colors
 
 ### Setting: Boot logo duration
 
-Sets the duration of the boot logo from 1 - 4 seconds.
-- For static images this sets the time the logo is displayed for.
-- For animations this sets the time the last frame is displayed for after the animation has been played.
-- The infinity $∞$ icon sets a logo or the last frame of an animation to be displayed until a button is pressed.
+Sets the duration for the boot logo (S=seconds).
 
 On device help text:
 
