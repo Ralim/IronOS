@@ -648,7 +648,6 @@ static bool setCalibrate(void) {
   if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
     // User confirmed
     // So we now set the tick
-    setSettingValue(SettingsOptions::CalibrateCJC, 1);
   }
   return false;
 }
