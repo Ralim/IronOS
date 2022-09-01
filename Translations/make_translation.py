@@ -844,7 +844,10 @@ def write_languages(
                     symbol_conversion_table,
                 )
             font_table_text += f"}}; // font_table_data_{font}\n"
-            current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
+            if len(current_sym_list)==0:
+                current_sym_start=0
+            else:
+                current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
             font_section_info_text += (
                 "  {\n"
                 f"    .symbol_start = {current_sym_start},\n"
