@@ -334,7 +334,7 @@
                 "Boot logo",
                 "duration"
             ],
-            "desc": "Set Boot logo duration (off, s=seconds, infinity)"
+            "desc": "Set Boot logo duration (off | s=seconds | infinity)"
         }
     }
 }

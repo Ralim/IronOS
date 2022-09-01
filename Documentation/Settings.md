@@ -307,4 +307,4 @@ Sets the duration for the boot logo (s=seconds).
 
 On device help text:
 
-Set Boot logo duration (off, s=seconds, infinity)
+Set Boot logo duration (off | s=seconds | infinity)
