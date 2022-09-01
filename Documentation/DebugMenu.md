@@ -46,7 +46,7 @@ This is the raw tip reading in μV. Tip must be installed or reading will be hig
 
 ### Tip Off
 
-This is the offset resulting from the Cold Junction Compensation Calibration.
+This is the offset resulting from the *'Cold Junction Compensation Calibration'*.
 
 ### CTip
 
