@@ -96,7 +96,7 @@ void gui_drawTipTemp(bool symbol, const FontStyle font) {
 }
 // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
 void performCJCC() {
-  while (preStartChecks() == 0) {
+  while (preStartChecks() != 0) {
     ulTaskNotifyTake(pdTRUE, TICKS_100MS);
   }
   uint32_t Temp = TipThermoModel::getTipInC();
