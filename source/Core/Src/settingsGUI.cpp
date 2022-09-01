@@ -644,15 +644,15 @@ static void displayPowerLimit(void) {
   }
 }
 
-static bool setCalibrate(void) {
-  if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
-    // User confirmed
-    // So we now set the tick
-    setSettingValue(SettingsOptions::CalibrateCJC, 1);
-  } else {
-    setSettingValue(SettingsOptions::CalibrateCJC, 0);    
+if (getSettingValue(SettingsOptions::CalibrateCJC) < 1) {
+  static bool setCalibrate(void) {
+    if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
+      // User confirmed
+      // So we now set the tick
+      setSettingValue(SettingsOptions::CalibrateCJC, 1);    
+    }
+    return false;
   }
-  return false;
 }
 
 static void displayCalibrate(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CalibrateCJC)); }
