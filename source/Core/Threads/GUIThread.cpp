@@ -1036,11 +1036,11 @@ void startGUITask(void const *argument) {
 #endif
 #endif
 
-  if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
-    while (preStartChecks() == 0) {
-      ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+  while (preStartChecks() == 0) {
+    ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+    if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
+      performCJCC();
     }
-    performCJCC();
   }
 
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
