@@ -365,7 +365,7 @@ var def = ///
             {
                 "id": "HallEffSensitivity",
                 "maxLen": 6,
-                "maxLen2": 8,
+                "maxLen2": 13,
                 "description": "If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the device into sleep mode."
 
             },
@@ -427,7 +427,7 @@ var def = ///
                 "id": "LOGOTime",
                 "maxLen": 7,
                 "maxLen2": 15,
-                "description": "Sets the duration for the boot logo (S=seconds)."
+                "description": "Sets the duration for the boot logo (s=seconds)."
             }
         ]
     }

@@ -43,9 +43,9 @@ You perform this the same way as if you were flashing a new firmware, and all th
 
 If you have flashed the `IronOS-dfu` alternative bootloader, you should use the `.dfu` files instead
 
-### Pinecil
+### Pinecil V1
 
-For Pinecil, we require using dfu-util to flash the logo art (Pinecil does not use hex).
+For Pinecil V1, we require using dfu-util to flash the logo art (Pinecil does not use hex).
 [Pine64 Updater](https://github.com/pine64/pine64_updater/releases) is the easiest way to load the Bootup logo onto Pinecil as it already includes the necessary DFU library. Connect Pinecil to a PC, and open the Updater the same as updating firmware.
   Select Custom > Browse to the DFU image file you just made > Update to install.
 

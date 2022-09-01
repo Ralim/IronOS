@@ -37,9 +37,12 @@ To calibrate your iron:
 6. Use the front and back buttons to adjust the displayed voltage to minimize the error to your original measurement
 7. Press both buttons at the same time to Save and Exit to the menu
 
-### Calibrating tip offset (Set tip model)
-This is normally not needed unless you have an issue with your temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. If the instructions are not followed, the iron could be worse than before calibration.
-Some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps:
+### Calibrate Tip CJC
+This performs a Tip Cold Junction Calibration (CJC) ([see Temperature for details](/Documentation/Temperature.md)). This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective, and measured resistance is close to specifications (Pinecil/TS100 short tips 6.2 Ω, long tips 8 Ω, TS80(P) ~4.5 Ω).
+
+What this is for: some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps. 
+
+Caution: if the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down to room temperature.
 
 1. Connect power to your device.
 2. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate CJC at next boot > press (`+/A`)
