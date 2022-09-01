@@ -45,14 +45,15 @@ What this is for: some tips have an offset on their readings which causes issues
 Caution: if the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down to room temperature.
 
 1. Connect power to your device.
-2. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate CJC at next boot > press (`+/A`)
-3. Exit the settings menu normally, use (`-/B`).
+2. Using (`-/B`) scroll to **`Advanced settings`**, press (`+/A`) to select it using (`-/B`) scroll to **`Calibrate CJC at next boot`** now press (`+/A`).
+3. Confirm the *'warning text'* with (`+/A`).
+3. Exit the settings menu as usual by pressing and holding (`-/B`).
 4. Unplug you device.
-5. **Critical: Wait until the tip & handle are at room temperature** (Wait a good while after having used the device.)
-6. Power the device up, idealy not holding it in your hands (You know it might get warm).
-7. Display shows **`....`** for a short time as the unit measures and compares the tip and handle temperatures.
-8. The display then goes back to *TMP CAL* and displays your *Offset number*. You generally don't need this offset unless debugging issues.
-9. After you see an Offset number, calibration is done.
+5. **Critical: Wait until the tip & handle are at room temperature** (Wait a reasonable amount of time after having used the device.)
+6. Power the device and ideally keep it out of your hands (You know it might get warm.).
+7. The display shows **`....`** for a short time while the device measures and compares the tip and handle voltages.
+8. As a result the new *Offset value* is displayed. This value can later be viewed in the **`Debug menu`**.
+9. Calibration is done and the device proceeds booting.
 
 Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration.
 
