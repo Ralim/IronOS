@@ -651,6 +651,8 @@ static bool setCalibrate(void) {
       // So we now set the tick
       setSettingValue(SettingsOptions::CalibrateCJC, 1);    
     }
+  } else {
+    setSettingValue(SettingsOptions::CalibrateCJC, 0);
   }
   return false;
 }
