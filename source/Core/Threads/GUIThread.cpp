@@ -94,7 +94,7 @@ void gui_drawTipTemp(bool symbol, const FontStyle font) {
     }
   }
 }
-void performCJCC() {}
+void performCJCC() {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
   while (preStartChecks() == 0) {
     ulTaskNotifyTake(pdTRUE, TICKS_100MS);
