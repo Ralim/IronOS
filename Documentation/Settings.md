@@ -131,7 +131,7 @@ Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be p
 
 On device help text:
 
-Tip-temperature Cold Junction Compensation (not needed if Tip is +/- 5 C of display)
+Tip-temperature Cold Junction Compensation (not needed if Tip is +/- 5°C of display)
 
 ### Setting: Restore default settings
 
@@ -303,7 +303,7 @@ Invert the OLED screen colors
 
 ### Setting: Boot logo duration
 
-Sets the duration for the boot logo (S=seconds).
+Sets the duration for the boot logo (s=seconds).
 
 On device help text:
 

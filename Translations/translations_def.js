@@ -427,7 +427,7 @@ var def = ///
                 "id": "LOGOTime",
                 "maxLen": 7,
                 "maxLen2": 15,
-                "description": "Sets the duration for the boot logo (S=seconds)."
+                "description": "Sets the duration for the boot logo (s=seconds)."
             }
         ]
     }

@@ -180,7 +180,7 @@
                 "Calibrate",
                 "tip CJC"
             ],
-            "desc": "Tip-temperature Cold Junction Compensation (not needed if Tip is +/- 5 C of display)"
+            "desc": "Tip-temperature Cold Junction Compensation (not needed if Tip is +/- 5°C of display)"
         },
         "SettingsReset": {
             "text2": [
