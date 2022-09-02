@@ -101,8 +101,8 @@ static bool enterAdvancedMenu(void);
  * Soldering
  *  Boost Mode Temp
  *  Auto Start
- *  Temp change short step
- *  Temp change long step
+ *  Temp Change Short Step
+ *  Temp Change Long Step
  *  Locking Mode
  *
  * Power Saving
@@ -114,10 +114,10 @@ static bool enterAdvancedMenu(void);
  *
  * UI
  *  Temperature Unit
- *  Display orientation
- *  Cooldown blink
+ *  Display Orientation
+ *  Cooldown Blink
  *  Scrolling Speed
- *  Reverse Temp change buttons + -
+ *  Swap Temp Change Buttons + -
  *  Animation Speed
  *  -Animation Loop
  *  OLED Brightness
@@ -128,11 +128,11 @@ static bool enterAdvancedMenu(void);
  *
  * Advanced
  *  Power Limit
- *  Calibrate CJC at next Boot
+ *  Calibrate CJC At Next Boot
  *  Calibrate Input V
  *  Power Pulse
  *  -Power Pulse Delay
- *  -Power Pulse duration
+ *  -Power Pulse Duration
  *  Factory Reset
  *
  */
@@ -184,8 +184,8 @@ const menuitem solderingMenu[] = {
     /*
      *  Boost Mode Temp
      *  Auto Start
-     *  Temp change short step
-     *  Temp change long step
+     *  Temp Change Short Step
+     *  Temp Change Long Step
      *  Locking Mode
      */
     {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
@@ -221,10 +221,10 @@ const menuitem PowerSavingMenu[] = {
 const menuitem UIMenu[] = {
     /*
      *  Temperature Unit
-     *  Display orientation
-     *  Cooldown blink
+     *  Display Orientation
+     *  Cooldown Blink
      *  Scrolling Speed
-     *  Reverse Temp change buttons + -
+     *  Swap Temp Change Buttons + -
      *  Animation Speed
      *  -Animation Loop
      *  OLED Brightness
@@ -257,16 +257,16 @@ const menuitem UIMenu[] = {
 const menuitem advancedMenu[] = {
     /*
      *  Power Limit
-     *  Calibrate CJC at next Boot
+     *  Calibrate CJC At Next Boot
      *  Calibrate Input V
      *  Power Pulse
      *  -Power Pulse Delay
-     *  -Power Pulse duration
+     *  -Power Pulse Duration
      *  Factory Reset
      */
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5},                              /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
-     7}, /*Calibrate CJC at next Boot*/
+     7}, /*Calibrate Cold Junktion Compensation at next boot*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
      5},                                                                                                                                                              /*Voltage input cal*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower, 5}, /*Power Pulse adjustment */
