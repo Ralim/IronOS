@@ -9,7 +9,7 @@ jobs:
       image: alpine:3.16
     strategy:
       matrix:
-        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2"]
+        model: [/*"TS100", "TS80", */"TS80P", "Pinecil"/*, "MHP30", "Pinecilv2"*/]
       fail-fast: true
 
     steps:
@@ -55,7 +55,7 @@ jobs:
           name: metadata
           path: source/Hexfile/${{ matrix.model }}.json
 
-  build_multi-lang:
+/*  build_multi-lang:
     runs-on: ubuntu-20.04
     container:
       image: alpine:3.16
@@ -105,7 +105,7 @@ jobs:
         with:
           name: metadata
           path: source/Hexfile/${{ matrix.model }}_multi-lang.json
-
+*/
   tests:
     runs-on: ubuntu-20.04
     container:
