@@ -776,7 +776,7 @@ void showDebugMenu(void) {
       break;
     case 9:
       // Handle Temp in C
-      OLED::printNumber(getHandleTemperature(0) / 10, 6, FontStyle::SMALL);
+      OLED::printNumber(getHandleTemperature(0) / 10, 5, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(getHandleTemperature(0) % 10, 1, FontStyle::SMALL);
       break;
