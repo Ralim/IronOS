@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 
-import argparse
-import functools
-import hashlib
 import json
 import logging
 import os
 import sys
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List
+
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+
 
 HERE = Path(__file__).resolve().parent
 TRANSLATION_DEFS_PATH = os.path.join(HERE, "translations_def.js")
