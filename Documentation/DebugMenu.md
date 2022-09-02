@@ -15,9 +15,9 @@ Items are shown in the menu on a single line, so they use short codes and appear
 - This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
 - The new Pinecil V2 released Aug. 2, 2022 now uses MCU BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your [Pinecil authenticity here](https://pinecil.pine64.org/).
 
-### Time
+### UpTime
 
-This is just uptime; it shows how many deciseconds the unit has been powered for (600 ds = 1 minute).
+This shows how many deciseconds the unit has been powered for (600 ds = 1 minute).
 
 ### Move
 
