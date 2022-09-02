@@ -45,11 +45,11 @@ What this is for: some tips have an offset on their readings which causes issues
 Caution: if the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down to room temperature.
 
 1. Connect power to your device.
-2. Using (`-/B`) scroll to **`Advanced settings`**, press (`+/A`) to select it using (`-/B`) scroll to **`Calibrate CJC at next boot`** now press (`+/A`).
-3. Confirm the *'warning text'* with (`+/A`).
+2. Go to **`Advanced Settings`** using (`-/B`) and press (`+/A`) to select it. Use (`-/B`) to scroll to **`Calibrate CJC at next boot`** and confirm with (`+/A`).
+3. Accept the *'warning text'* with (`+/A`).
 3. Exit the settings menu as usual by pressing and holding (`-/B`).
 4. Unplug you device.
-5. **Critical: Wait until the tip & handle are at room temperature** (Wait a reasonable amount of time after having used the device.)
+5. **Critical: Make sure a tip is attached & wait until the tip & handle are at room temperature.** (Wait a reasonable amount of time after having used the device.)
 6. Power the device and ideally keep it out of your hands (You know it might get warm.).
 7. The display shows **`....`** for a short time while the device measures and compares the tip and handle voltages.
 8. As a result the new *Offset value* is displayed. This value can later be viewed in the **`Debug menu`**.
