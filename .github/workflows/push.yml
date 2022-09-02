@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
 #        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2"]
-        model: ["TS80P", "Pinecil"]
+        model: ["TS80P"]
       fail-fast: true
 
     steps:
