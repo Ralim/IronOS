@@ -96,9 +96,10 @@ void gui_drawTipTemp(bool symbol, const FontStyle font) {
 }
 void performCJCC() {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
-  while (preStartChecks() == 0) {
-    ulTaskNotifyTake(pdTRUE, TICKS_100MS);
-  }
+  //while (preStartChecks() == 0) {
+  //  ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+  //}
+  osDelay(1200);
   uint32_t Temp = TipThermoModel::getTipInC();
   if (!isTipDisconnected() && Temp <= 32) {
     uint16_t setoffset = 0;
@@ -1039,6 +1040,10 @@ void startGUITask(void const *argument) {
 #endif
 #endif
 
+  if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
+    performCJCC();
+  }
+
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
   if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
       && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
@@ -1053,10 +1058,6 @@ void startGUITask(void const *argument) {
   }
 
   BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
-
-  if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
-    performCJCC();
-  }
 
   showWarnings();
   if (getSettingValue(SettingsOptions::AutoStartMode)) {
