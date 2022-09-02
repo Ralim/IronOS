@@ -98,8 +98,8 @@ void performCJCC() {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
   OLED::refresh();
   osDelay(50);
-  uint32_t Temp = TipThermoModel::getTipInC();
-  if (!isTipDisconnected() && (Temp - getHandleTemperature(0) / 10) < 10) {
+  // uint32_t Temp = TipThermoModel::getTipInC();
+  if (!isTipDisconnected() && (TipThermoModel::getTipInC() - getHandleTemperature(0) / 10) < 10) {
     uint16_t setoffset = 0;
     // If the thermo-couple at the end of the tip, and the handle are at
     // equilibrium, then the output should be zero, as there is no temperature
