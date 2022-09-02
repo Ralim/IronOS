@@ -17,7 +17,7 @@ If you can open up your iron, give it a good look at all the connection points, 
 
 If you are finding the tip is reading high; the first fields to check in the Debug menu are `RTip` and `CHan`.
 
-- `RTip` is the raw tip reading in μV; at cool this should be around 700-1000 for Larger tips and ~1500 for smaller tips (TS80's)
+- `RTip` is the raw tip reading in μV; at cool this should be around 700-1000 for larger tips and ~1500 for smaller tips (TS80's)
 - `CHan` is the temperature of the temperature sensor on the PCB in degrees Celsius \* 10. So 29 °C ambient should read as 290
 
 ### RTip is out of spec

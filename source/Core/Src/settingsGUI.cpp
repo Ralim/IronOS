@@ -27,13 +27,13 @@ static void settings_displayQCInputV(void);
 #if POW_PD
 static void settings_displayPDNegTimeout(void);
 #endif
-#ifndef NO_SLEEP_MODE
 static void settings_displaySensitivity(void);
+static void settings_displayShutdownTime(void);
 static bool settings_showSleepOptions(void);
+#ifndef NO_SLEEP_MODE
 static bool settings_setSleepTemp(void);
 static void settings_displaySleepTemp(void);
 static void settings_displaySleepTime(void);
-static void settings_displayShutdownTime(void);
 #endif
 static bool settings_setTempF(void);
 static void settings_displayTempF(void);
@@ -195,18 +195,18 @@ const menuitem solderingMenu[] = {
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength}                                                                                   // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
-/*
- * 	Motion Sensitivity
- * 	-Sleep Temp
- * 	-Sleep Time
- * 	-Shutdown Time
- */
+    /*
+     * 	Motion Sensitivity
+     * 	-Sleep Temp
+     * 	-Sleep Time
+     * 	-Shutdown Time
+     */
+    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, settings_displaySensitivity, nullptr, SettingsOptions::Sensitivity}, /* Motion Sensitivity*/
 #ifndef NO_SLEEP_MODE
-    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, settings_displaySensitivity, nullptr, SettingsOptions::Sensitivity},                                        /* Motion Sensitivity*/
     {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), settings_setSleepTemp, settings_displaySleepTemp, settings_showSleepOptions, SettingsOptions::SettingsOptionsLength}, /*Sleep Temp*/
     {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, settings_displaySleepTime, settings_showSleepOptions, SettingsOptions::SleepTime},                               /*Sleep Time*/
-    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime},                      /*Shutdown Time*/
 #endif
+    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, settings_displayShutdownTime, settings_showSleepOptions, SettingsOptions::ShutdownTime}, /*Shutdown Time*/
 #ifdef HALL_SENSOR
     {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, settings_displayHallEffect, settings_showHallEffect, SettingsOptions::HallEffectSensitivity}, /* HallEffect Sensitivity*/
 #endif
@@ -362,8 +362,6 @@ static void settings_displayPDNegTimeout(void) {
 }
 #endif
 
-#ifndef NO_SLEEP_MODE
-
 static void settings_displayShutdownTime(void) {
   printShortDescription(SettingsItemIndex::ShutdownTimeout, 5);
   if (getSettingValue(SettingsOptions::ShutdownTime) == 0) {
@@ -373,6 +371,14 @@ static void settings_displayShutdownTime(void) {
     OLED::print(SymbolMinutes, FontStyle::LARGE);
   }
 }
+
+static void settings_displaySensitivity(void) {
+  printShortDescription(SettingsItemIndex::MotionSensitivity, 7);
+  OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false);
+}
+static bool settings_showSleepOptions(void) { return getSettingValue(SettingsOptions::Sensitivity) > 0; }
+
+#ifndef NO_SLEEP_MODE
 
 static bool settings_setSleepTemp(void) {
   // If in C, 10 deg, if in F 20 deg
@@ -392,12 +398,6 @@ static bool settings_setSleepTemp(void) {
   }
 }
 
-static void settings_displaySensitivity(void) {
-  printShortDescription(SettingsItemIndex::MotionSensitivity, 7);
-  OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false);
-}
-
-static bool settings_showSleepOptions(void) { return getSettingValue(SettingsOptions::Sensitivity) > 0; }
 static void settings_displaySleepTemp(void) {
   printShortDescription(SettingsItemIndex::SleepTemperature, 5);
   OLED::printNumber(getSettingValue(SettingsOptions::SleepTemp), 3, FontStyle::LARGE);
