@@ -74,6 +74,14 @@ void log_system_state(int32_t PWMWattsx10);
 // Returns true if the tip is disconnected
 bool isTipDisconnected();
 
+// Return hardware unique ID if possible
+uint64_t getDeviceID();
+
+// If device has burned in validation code's, return the code
+uint32_t getDeviceValidation();
+// If device validation passes returns 0
+uint8_t getDeviceValidationStatus();
+
 // Status LED controls
 
 enum StatusLED {
@@ -86,6 +94,11 @@ enum StatusLED {
 };
 void setStatusLED(const enum StatusLED state);
 
+// preStartChecks are run until they return 0
+// By the PID, after each ADC sample comes in
+// For example, on the MHP30 this is used to figure out the resistance of the hotplate
+uint8_t preStartChecks();
+uint8_t preStartChecksDone();
 #ifdef __cplusplus
 }
 #endif

@@ -14,10 +14,11 @@
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
+
 static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
 static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
 TaskHandle_t      pidTaskNotification     = NULL;
-uint32_t          currentTempTargetDegC   = 0; // Current temperature target in C
+volatile uint32_t currentTempTargetDegC   = 0; // Current temperature target in C
 int32_t           powerSupplyWattageLimit = 0;
 bool              heaterThermalRunaway    = false;
 
@@ -39,21 +40,27 @@ void startPIDTask(void const *argument __unused) {
   pidTaskNotification    = xTaskGetCurrentTaskHandle();
   uint32_t PIDTempTarget = 0;
   // Pre-seed the adc filters
-  for (int i = 0; i < 128; i++) {
-    osDelay(5);
+  for (int i = 0; i < 32; i++) {
+    ulTaskNotifyTake(pdTRUE, 5);
     TipThermoModel::getTipInC(true);
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
   }
+
+  while (preStartChecks() == 0) {
+    resetWatchdog();
+    ulTaskNotifyTake(pdTRUE, 2000);
+  }
+
   int32_t x10WattsOut = 0;
 
   for (;;) {
     x10WattsOut = 0;
     // This is a call to block this thread until the ADC does its samples
-    if (ulTaskNotifyTake(pdTRUE, 2000)) {
+    if (ulTaskNotifyTake(pdTRUE, TICKS_SECOND * 2)) {
       // Do the reading here to keep the temp calculations churning along
       uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
       PIDTempTarget              = currentTempTargetDegC;
-      if (PIDTempTarget) {
+      if (PIDTempTarget > 0) {
         // Cap the max set point to 450C
         if (PIDTempTarget > (450)) {
           // Maximum allowed output
@@ -109,8 +116,8 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   static TickType_t          lastCall   = 0;
   static Integrator<int32_t> powerStore = {0};
 
-  const int rate = 1000 / (xTaskGetTickCount() - lastCall);
-  lastCall       = xTaskGetTickCount();
+  const TickType_t rate = 1000 / (xTaskGetTickCount() - lastCall);
+  lastCall              = xTaskGetTickCount();
   // Sandman note:
   // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't
   // want to overshot excessively (if at all) the setpoint temperature. In the same time we have 'imprecise'
@@ -136,7 +143,7 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
   // so we basically double the need (gain = 2) to get what we want.
   return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
-                           TIP_THERMAL_MASS,                 // Inertia, smaller numbers increase dominance of the previous value
+                           getTipThermalMass(),              // Inertia, smaller numbers increase dominance of the previous value
                            2,                                // gain
                            rate,                             // PID cycle frequency
                            getX10WattageLimits());

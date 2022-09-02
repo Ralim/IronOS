@@ -1,5 +1,46 @@
 # Version Changes
 
+## V2.19
+- Bug-fix Infinite Boot Logo
+- Shutdown settings for MHP30
+- Accelerometer sensitivity for MHP30
+- Allow showing unique device ID
+- Bug-fix chance of a power pulse at device boot
+- Updated translations
+- Improved documents, added features table
+
+## V2.18
+- Support for animated bootup logo's
+- Bootup logo's moved to their own IronOS-Meta repo
+- New Vietnamese translation (limited due to screen size)
+- Fixes for SC7A20 in TS80(P)
+- Updated translations
+- Better Instructions/documents
+
+## V2.17
+### Big changes
+- Indicate status of VBus for modding Pinecil (debug menu)
+- Better hall effect sensor sensitivity adjustment (larger range with more steps)
+- Temperature increment will "round" to nearest multiple of increase amount
+- Build setup migrated to Alpine (You can now build in docker easily, and on PinePhone/PinePhonePro)
+- -> Removed proprietary compiler for Pinecil RISCV now all uses normal gcc
+- -> Removed using the arm specific build of gcc for the one that alpine ships (Miniware devices)
+- Logo generator python script creates `.dfu` files for ease of use with Pinecil
+- Upgrades to translations
+- Support for new GD32103 based TS100 units turning up on the market
+- Raw hall effect reading now shows in the Pinecil debug menu
+- Fixed automatic orientation for newer TS80P's with the SC7 accelerometer
+- User interface slight changes
+- New `metadata.zip` file to allow the Pine Updater to automatically fetch information on releases
+### Notes
+- VBus mod detection may not play well with all PPS chargers. If your iron reboots when you view this in the debug menu its not a fault. ([#1226](https://github.com/Ralim/IronOS/issues/1226))
+- `metadata.zip` is only designed for use by automatic software, ignore it for normal use
+- More details on Pinecil VBus mod coming via other channels.
+- Hall effect sensor is not fitted to Pinecil's by default, you have to fit this yourself if you want the feature
+- Tweaks to the Accelerometer code means the drivers are slightly more fussy. If you run into any issues let us know in the discussion or issues.
+- -> Release has been updated to build `e065be3` after one bug with the BMA223 was found.
+
+
 ## V2.16
 
 * Overhaul of the Timer+ADC setup with help from @sandmanRO

@@ -29,7 +29,7 @@ extern "C" {
 #include "pd.h"
 #endif
 // File local variables
-extern uint32_t   currentTempTargetDegC;
+
 extern TickType_t lastMovementTime;
 extern bool       heaterThermalRunaway;
 extern osThreadId GUITaskHandle;
@@ -132,14 +132,14 @@ static bool checkVoltageForExit() {
 static void gui_drawBatteryIcon() {
 #if defined(POW_PD) || defined(POW_QC)
   if (!getIsPoweredByDCIN()) {
-    // On TS80 we replace this symbol with the voltage we are operating on
+    // On non-DC inputs we replace this symbol with the voltage we are operating on
     // If <9V then show single digit, if not show dual small ones vertically stacked
-    uint8_t V = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
+    uint16_t V = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
     if (V % 10 >= 5)
-      V = V / 10 + 1; // round up
+      V = (V / 10) + 1; // round up
     else
       V = V / 10;
-    if (V >= 10) {
+    if (V > 9) {
       int16_t xPos = OLED::getCursorX();
       OLED::printNumber(V / 10, 1, FontStyle::SMALL);
       OLED::setCursor(xPos, 8);
@@ -171,9 +171,9 @@ static void gui_drawBatteryIcon() {
 #endif
 }
 static void gui_solderingTempAdjust() {
-  uint32_t lastChange                = xTaskGetTickCount();
-  currentTempTargetDegC              = 0;
-  uint32_t    autoRepeatTimer        = 0;
+  TickType_t lastChange              = xTaskGetTickCount();
+  currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
+  TickType_t  autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
   bool        waitForRelease         = false;
   ButtonState buttons                = getButtonState();
@@ -350,28 +350,11 @@ static int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
 
     OLED::refresh();
     GUIDelay();
-#ifdef ACCEL_EXITS_ON_MOVEMENT
-    // If the accel works in reverse where movement will cause exiting the soldering mode
-    if (getSettingValue(SettingsOptions::Sensitivity)) {
-      if (lastMovementTime) {
-        if (lastMovementTime > TICKS_SECOND * 10) {
-          // If we have moved recently; in the last second
-          // Then exit soldering mode
-
-          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
-            currentTempTargetDegC = 0;
-            return 1;
-          }
-        }
-      }
-    }
-#else
 
     if (!shouldBeSleeping(autoStarted)) {
       return 0;
     }
 
-#endif
     if (shouldShutdown()) {
       // shutdown
       currentTempTargetDegC = 0;
@@ -387,7 +370,7 @@ static void display_countdown(int sleepThres) {
    * Print seconds or minutes (if > 99 seconds) until sleep
    * mode is triggered.
    */
-  int        lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
+  TickType_t lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
   TickType_t downCount     = sleepThres - xTaskGetTickCount() + lastEventTime;
   if (downCount > (99 * TICKS_SECOND)) {
     OLED::printNumber(downCount / 60000 + 1, 2, FontStyle::SMALL);
@@ -511,12 +494,8 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
         boostModeOn = false;
         break;
       case BUTTON_BOTH:
-        // exit
-        return;
-        break;
       case BUTTON_B_LONG:
         return; // exit on back long hold
-        break;
       case BUTTON_F_LONG:
         // if boost mode is enabled turn it on
         if (getSettingValue(SettingsOptions::BoostTemp))
@@ -649,6 +628,31 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     }
 #endif
 
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+    // If the accel works in reverse where movement will cause exiting the soldering mode
+    if (getSettingValue(SettingsOptions::Sensitivity)) {
+      if (lastMovementTime) {
+        if (lastMovementTime > TICKS_SECOND * 10) {
+          // If we have moved recently; in the last second
+          // Then exit soldering mode
+
+          if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
+            currentTempTargetDegC = 0;
+            return;
+          }
+        }
+      }
+    }
+#endif
+#ifdef NO_SLEEP_MODE
+    // No sleep mode, but still want shutdown timeout
+
+    if (shouldShutdown()) {
+      // shutdown
+      currentTempTargetDegC = 0;
+      return; // we want to exit soldering mode
+    }
+#endif
     if (shouldBeSleeping()) {
       if (gui_SolderingSleepingMode(false, false)) {
         return; // If the function returns non-0 then exit
@@ -665,8 +669,6 @@ static void gui_solderingMode(uint8_t jumpToSleep) {
     // If we have tripped thermal runaway, turn off heater and show warning
     if (heaterThermalRunaway) {
       currentTempTargetDegC = 0; // heater control off
-                                 // TODO WARNING
-
       warnUser(translatedString(Tr->WarningThermalRunaway), 10 * TICKS_SECOND);
       heaterThermalRunaway = false;
       return;
@@ -686,30 +688,44 @@ void showDebugMenu(void) {
     OLED::setCursor(0, 8);                              // second line
     OLED::print(DebugMenu[screen], FontStyle::SMALL);
     switch (screen) {
-    case 0: // Just prints date
+    case 0: // Build Date
       break;
     case 1:
-      // High water mark for GUI
-      OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
+      // Device ID
+      {
+        uint64_t id = getDeviceID();
+#ifdef DEVICE_HAS_VALIDATION_CODE
+        // If device has validation code; then we want to take over both lines of the screen
+        OLED::clearScreen();   // Ensure the buffer starts clean
+        OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
+        OLED::print(DebugMenu[screen], FontStyle::SMALL);
+        OLED::drawHex(getDeviceValidation(), FontStyle::SMALL, 8);
+        OLED::setCursor(0, 8); // second line
+#endif
+        OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 8);
+        OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL, 8);
+      }
       break;
     case 2:
-      // High water mark for the Movement task
-      OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
-      break;
-    case 3:
-      // High water mark for the PID task
-      OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
-      break;
-    case 4:
-      // system up time stamp
+      // System Uptime
       OLED::printNumber(xTaskGetTickCount() / TICKS_100MS, 5, FontStyle::SMALL);
       break;
-    case 5:
-      // Movement time stamp
+    case 3:
+      // Movement Timestamp
       OLED::printNumber(lastMovementTime / TICKS_100MS, 5, FontStyle::SMALL);
       break;
+    case 4:
+      // ACC Type
+      OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
+      break;
+    case 5:
+      // Tip Resistance
+      OLED::printNumber(getTipResistanceX10() / 10, 4, FontStyle::SMALL); // large to pad over so that we cover ID left overs
+      OLED::print(SymbolDot, FontStyle::SMALL);
+      OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
+      break;
     case 6:
-      // Raw Tip
+      // Raw Tip in uV
       { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 6, FontStyle::SMALL); }
       break;
     case 7:
@@ -717,19 +733,19 @@ void showDebugMenu(void) {
       OLED::printNumber(TipThermoModel::getTipInC(), 5, FontStyle::SMALL);
       break;
     case 8:
-      // Handle Temp
+      // Handle Temp in C
       OLED::printNumber(getHandleTemperature(0), 6, FontStyle::SMALL);
       break;
     case 9:
-      // Voltage input
-      printVoltage();
+      // Max C Limit
+      OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
       break;
     case 10:
-      // Print ACC type
-      OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
+      // Input Voltage
+      printVoltage();
       break;
     case 11:
-      // Power negotiation status
+      // Power Negotiation Status
       {
         int sourceNumber = 0;
         if (getIsPoweredByDCIN()) {
@@ -765,12 +781,21 @@ void showDebugMenu(void) {
       }
       break;
     case 12:
-      // Max deg C limit
-      OLED::printNumber(TipThermoModel::getTipMaxInC(), 3, FontStyle::SMALL);
+      // High Water Mark for GUI
+      OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 5, FontStyle::SMALL);
+      break;
+    case 13:
+      // High Water Mark for Movement Task
+      OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 5, FontStyle::SMALL);
+      break;
+    case 14:
+      // High Water Mark for PID Task
+      OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 5, FontStyle::SMALL);
+      break;
       break;
 #ifdef HALL_SENSOR
-    case 13:
-      // Print raw hall effect value if availabe, none if hall effect disabled.
+    case 15:
+      // Raw Hall Effect Value
       {
         int16_t hallEffectStrength = getRawHallEffect();
         if (hallEffectStrength < 0)
@@ -779,6 +804,7 @@ void showDebugMenu(void) {
       }
       break;
 #endif
+
     default:
       break;
     }
@@ -790,9 +816,9 @@ void showDebugMenu(void) {
     else if (b == BUTTON_F_SHORT) {
       screen++;
 #ifdef HALL_SENSOR
-      screen = screen % 14;
+      screen = screen % 16;
 #else
-      screen = screen % 13;
+      screen = screen % 15;
 #endif
     }
     GUIDelay();
@@ -829,35 +855,50 @@ static void showPDDebug(void) {
       }
     } else {
       // Print out the Proposed power options one by one
-      auto    lastCaps = USBPowerDelivery::getLastSeenCapabilities();
-      uint8_t numobj   = PD_NUMOBJ_GET(lastCaps);
-      if ((screen - 1) < numobj) {
+      auto lastCaps = USBPowerDelivery::getLastSeenCapabilities();
+      if ((screen - 1) < 11) {
         int voltage_mv     = 0;
         int min_voltage    = 0;
         int current_a_x100 = 0;
-        if ((lastCaps->obj[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
-          voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps->obj[screen - 1])); // voltage in mV units
-          current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps->obj[screen - 1]);            // current in 10mA units
-        } else {
-          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps->obj[screen - 1]));
-          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps->obj[screen - 1]));
-          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps->obj[screen - 1])); // max current in 10mA units
-        }
-        // print out this entry of the proposal
-        OLED::printNumber(screen, 1, FontStyle::SMALL, true); // print the entry number
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-        if (min_voltage > 0) {
-          OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
-          OLED::print(SymbolMinus, FontStyle::SMALL);
-        }
-        OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
-        OLED::print(SymbolVolts, FontStyle::SMALL);
-        OLED::print(SymbolSpace, FontStyle::SMALL);
-        OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-        OLED::print(SymbolDot, FontStyle::SMALL);
-        OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-        OLED::print(SymbolAmps, FontStyle::SMALL);
+        int wattage        = 0;
 
+        if ((lastCaps[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
+          voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps[screen - 1])); // voltage in mV units
+          current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps[screen - 1]);            // current in 10mA units
+        } else if ((lastCaps[screen - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED) {
+          voltage_mv  = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCaps[screen - 1]));
+          min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[screen - 1]));
+          // Last value is wattage
+          wattage = PD_APDO_AVS_MAX_POWER_GET(lastCaps[screen - 1]);
+        } else {
+          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps[screen - 1]));
+          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[screen - 1]));
+          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps[screen - 1])); // max current in 10mA units
+        }
+        // Skip not used entries
+        if (voltage_mv == 0) {
+          screen++;
+        } else {
+          // print out this entry of the proposal
+          OLED::printNumber(screen, 2, FontStyle::SMALL, true); // print the entry number
+          OLED::print(SymbolSpace, FontStyle::SMALL);
+          if (min_voltage > 0) {
+            OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
+            OLED::print(SymbolMinus, FontStyle::SMALL);
+          }
+          OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
+          OLED::print(SymbolVolts, FontStyle::SMALL);
+          OLED::print(SymbolSpace, FontStyle::SMALL);
+          if (wattage) {
+            OLED::printNumber(wattage, 3, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolWatts, FontStyle::SMALL);
+          } else {
+            OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolDot, FontStyle::SMALL);
+            OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::print(SymbolAmps, FontStyle::SMALL);
+          }
+        }
       } else {
         screen = 0;
       }
@@ -880,6 +921,12 @@ void showWarnings() {
   if (settingsWereReset) {
     warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
   }
+#ifdef DEVICE_HAS_VALIDATION_SUPPORT
+  if (getDeviceValidationStatus()) {
+    // Warn user this device might be counterfeit
+    warnUser(translatedString(Tr->DeviceFailedValidationWarning), 10 * TICKS_SECOND);
+  }
+#endif
 #ifndef NO_WARN_MISSING
   // We also want to alert if accel or pd is not detected / not responding
   // In this case though, we dont want to nag the user _too_ much
@@ -925,6 +972,7 @@ void startGUITask(void const *argument) {
   bool    tempOnDisplay          = false;
   bool    tipDisconnectedDisplay = false;
   bool    showExitMenuTransition = false;
+
   {
     // Generate the flipped screen into ram for later use
     // flipped is generated by flipping each row
@@ -936,7 +984,9 @@ void startGUITask(void const *argument) {
       }
     }
   }
+
   getTipRawTemp(1); // reset filter
+
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
   // If the front button is held down, on supported devices, show PD debugging metrics
 #if POW_PD
@@ -946,10 +996,22 @@ void startGUITask(void const *argument) {
   }
 #endif
 #endif
+  // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
+  if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
+      && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
+    uint16_t sleepTempDegC;
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      sleepTempDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SleepTemp));
+    } else {
+      sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
+    }
+    // Only heat to sleep temperature (but no higher than 75*C for safety)
+    currentTempTargetDegC = min(sleepTempDegC, 75);
+  }
+
   BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
 
   showWarnings();
-
   if (getSettingValue(SettingsOptions::AutoStartMode)) {
     // jump directly to the autostart mode
     gui_solderingMode(getSettingValue(SettingsOptions::AutoStartMode) - 1);

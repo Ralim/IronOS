@@ -48,8 +48,12 @@ uint32_t availableW10(uint8_t sample) {
   // P = V^2 / R, v*v = v^2 * 100
   //				R = R*10
   // P therefore is in V^2*100/R*10 = W*10.
-  uint32_t v                 = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), sample); // 100 = 10v
-  uint32_t availableWattsX10 = (v * v) / TIP_RESISTANCE;
+  uint32_t v             = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), sample); // 100 = 10v
+  uint32_t tipResistance = getTipResistanceX10();
+  if (tipResistance == 0) {
+    return 100; // say 100 watt to force scale down
+  }
+  uint32_t availableWattsX10 = (v * v) / tipResistance;
   // However, 100% duty cycle is not possible as there is a dead time while the ADC takes a reading
   // Therefore need to scale available milliwats by this
 
@@ -62,7 +66,7 @@ uint32_t availableW10(uint8_t sample) {
 }
 uint8_t X10WattsToPWM(int32_t x10Watts, uint8_t sample) {
   // Scale input x10Watts to the pwm range available
-  if (x10Watts < 0) {
+  if (x10Watts <= 0) {
     // keep the battery voltage updating the filter
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), sample);
     return 0;

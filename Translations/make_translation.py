@@ -120,18 +120,20 @@ def get_constants(build_version: str) -> List[Tuple[str, str]]:
 def get_debug_menu() -> List[str]:
     return [
         datetime.today().strftime("%d-%m-%y"),
-        "HW G ",
-        "HW M ",
-        "HW P ",
-        "Time ",
+        "ID ",
+        "UpTime ",
         "Move ",
+        "ACC  ",
+        "Tip Res",
         "RTip ",
         "CTip ",
         "CHan ",
+        "CMax  ",
         "Vin  ",
-        "ACC  ",
         "PWR  ",
-        "Max  ",
+        "HW G ",
+        "HW M ",
+        "HW P ",
         "Hall ",
     ]
 
@@ -429,7 +431,24 @@ def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPer
 
 
 def get_forced_first_symbols() -> List[str]:
-    forced_first_symbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    forced_first_symbols = [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+    ]
     return forced_first_symbols
 
 
@@ -825,7 +844,10 @@ def write_languages(
                     symbol_conversion_table,
                 )
             font_table_text += f"}}; // font_table_data_{font}\n"
-            current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
+            if len(current_sym_list) == 0:
+                current_sym_start = 0
+            else:
+                current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
             font_section_info_text += (
                 "  {\n"
                 f"    .symbol_start = {current_sym_start},\n"

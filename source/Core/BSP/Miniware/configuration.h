@@ -114,6 +114,9 @@
 
 #define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
 
+#define ADC_MAX_READING (4096 * 8) // Maximum reading of the adc
+#define ADC_VDD_MV      3300       // ADC max reading millivolts
+
 // Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
@@ -123,7 +126,7 @@
 #elif defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) == 0
 #error "No model defined!"
 #endif
-
+#define NEEDS_VBUS_PROBE 0
 // Miniware is swapping IMU's around a bit now, so we turn them all on
 
 #define ACCEL_MMA
@@ -132,104 +135,76 @@
 #define ACCEL_MSA
 #define ACCEL_BMA
 
+#define MIN_CALIBRATION_OFFSET 100 // Min value for calibration
+#define SOLDERING_TEMP         320 // Default soldering temp is 320.0 °C
+#define PID_TIM_HZ             (8) // Tick rate of the PID loop
+#define MAX_TEMP_C             450 // Max soldering temp selectable °C
+#define MAX_TEMP_F             850 // Max soldering temp selectable °F
+#define MIN_TEMP_C             10  // Min soldering temp selectable °C
+#define MIN_TEMP_F             60  // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C       250 // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
+
 #ifdef MODEL_TS100
-#define SOLDERING_TEMP         320                     // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV            467                     // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET     900                     // 900 - Default adc offset in uV
-#define MIN_CALIBRATION_OFFSET 100                     // Min value for calibration
-#define PID_POWER_LIMIT        70                      // Sets the max pwm power limit
-#define POWER_LIMIT            0                       // 0 watts default limit
-#define MAX_POWER_LIMIT        70                      //
-#define POWER_LIMIT_STEPS      5                       //
-#define OP_AMP_GAIN_STAGE      OP_AMP_GAIN_STAGE_TS100 //
-#define TEMP_uV_LOOKUP_HAKKO                           //
-#define USB_PD_VMAX            20                      // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ             (8)                     // Tick rate of the PID loop
-#define MAX_TEMP_C             450                     // Max soldering temp selectable °C
-#define MAX_TEMP_F             850                     // Max soldering temp selectable °F
-#define MIN_TEMP_C             10                      // Min soldering temp selectable °C
-#define MIN_TEMP_F             60                      // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C       250                     // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F       480                     // The min settable temp for boost mode °F
+#define VOLTAGE_DIV        467 // 467 - Default divider from schematic
+#define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    70
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
+#define TEMP_uV_LOOKUP_HAKKO
+#define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
+
+#define HARDWARE_MAX_WATTAGE_X10 750
+#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
+#define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
+
 #define POW_DC
-
 #define POW_PD 0
-
 #define TEMP_TMP36
 #endif
 
-#ifdef MODEL_TS80
-#define SOLDERING_TEMP         320                    // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV            780                    // Default divider from schematic
-#define PID_POWER_LIMIT        24                     // Sets the max pwm power limit
-#define CALIBRATION_OFFSET     900                    // the adc offset in uV
-#define MIN_CALIBRATION_OFFSET 100                    // Min value for calibration
-#define POWER_LIMIT            24                     // 24 watts default power limit
-#define MAX_POWER_LIMIT        40                     //
-#define POWER_LIMIT_STEPS      2                      //
-#define OP_AMP_GAIN_STAGE      OP_AMP_GAIN_STAGE_TS80 //
-#define TEMP_uV_LOOKUP_TS80                           //
-#define USB_PD_VMAX            12                     // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ             (8)                    // Tick rate of the PID loop
-#define MAX_TEMP_C             450                    // Max soldering temp selectable °C
-#define MAX_TEMP_F             850                    // Max soldering temp selectable °F
-#define MIN_TEMP_C             10                     // Min soldering temp selectable °C
-#define MIN_TEMP_F             60                     // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C       250                    // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F       480                    // The min settable temp for boost mode °F
+#if defined(MODEL_TS80) + defined(MODEL_TS80P) > 0
+#define MAX_POWER_LIMIT   40
+#define POWER_LIMIT_STEPS 2
+#define OP_AMP_GAIN_STAGE OP_AMP_GAIN_STAGE_TS80
+#define TEMP_uV_LOOKUP_TS80
+#define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
 
-#define POW_QC
-#define POW_PD 0
-#define TEMP_TMP36
+#define TIP_THERMAL_MASS 40
+#define TIP_RESISTANCE   45 // x10 ohms, 4.5 typical for ts80 tips
+
 #define LIS_ORI_FLIP
 #define OLED_FLIP
 #endif
 
+#ifdef MODEL_TS80
+#define VOLTAGE_DIV        780 // Default divider from schematic
+#define CALIBRATION_OFFSET 900 // the adc offset in uV
+#define PID_POWER_LIMIT    24  // Sets the max pwm power limit
+#define POWER_LIMIT        24  // 24 watts default power limit
+
+#define HARDWARE_MAX_WATTAGE_X10 180
+
+#define POW_QC
+#define POW_PD 0
+#define TEMP_TMP36
+#endif
+
 #ifdef MODEL_TS80P
-#define SOLDERING_TEMP         320                    // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV            650                    // Default for TS80P with slightly different resistors
-#define PID_POWER_LIMIT        35                     // Sets the max pwm power limit
-#define CALIBRATION_OFFSET     1500                   // the adc offset in uV
-#define MIN_CALIBRATION_OFFSET 100                    // Min value for calibration
-#define POWER_LIMIT            30                     // 30 watts default power limit
-#define MAX_POWER_LIMIT        40                     //
-#define POWER_LIMIT_STEPS      2                      //
-#define OP_AMP_GAIN_STAGE      OP_AMP_GAIN_STAGE_TS80 //
-#define TEMP_uV_LOOKUP_TS80                           //
-#define USB_PD_VMAX            12                     // Maximum voltage for PD to negotiate
-#define PID_TIM_HZ             (8)                    // Tick rate of the PID loop
-#define MAX_TEMP_C             450                    // Max soldering temp selectable °C
-#define MAX_TEMP_F             850                    // Max soldering temp selectable °F
-#define MIN_TEMP_C             10                     // Min soldering temp selectable °C
-#define MIN_TEMP_F             60                     // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C       250                    // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F       480                    // The min settable temp for boost mode °F
+#define VOLTAGE_DIV        650  // Default for TS80P with slightly different resistors
+#define CALIBRATION_OFFSET 1500 // the adc offset in uV
+#define PID_POWER_LIMIT    35   // Sets the max pwm power limit
+#define POWER_LIMIT        30   // 30 watts default power limit
+
+#define HARDWARE_MAX_WATTAGE_X10 300
 
 #define POW_PD 1
 #define POW_QC 1
 #define TEMP_NTC
 #define I2C_SOFT
-#define LIS_ORI_FLIP
 #define SC7_ORI_FLIP
-#define OLED_FLIP
-#endif
-
-#ifdef MODEL_TS100
-#define HARDWARE_MAX_WATTAGE_X10 750
-#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-#define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
-#endif
-
-#ifdef MODEL_TS80
-#define HARDWARE_MAX_WATTAGE_X10 180
-#define TIP_THERMAL_MASS         40
-#define TIP_RESISTANCE           45 // x10 ohms, 4.5 typical for ts80 tips
-#endif
-
-#ifdef MODEL_TS80P
-#define HARDWARE_MAX_WATTAGE_X10 300
-#define TIP_THERMAL_MASS         40
-#define TIP_RESISTANCE           45 // x10 ohms, 4.5 typical for ts80 tips
 #endif
 #endif
 

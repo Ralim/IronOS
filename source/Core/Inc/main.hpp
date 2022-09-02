@@ -1,11 +1,11 @@
 #ifndef __MAIN_H
 #define __MAIN_H
-
+#include <stdint.h>
 #include "OLED.hpp"
 #include "Setup.h"
-extern uint32_t currentTempTargetDegC;
-extern bool     settingsWereReset;
-extern bool     usb_pd_available;
+extern volatile uint32_t currentTempTargetDegC;
+extern bool              settingsWereReset;
+extern bool              usb_pd_available;
 #ifdef __cplusplus
 extern "C" {
 #endif

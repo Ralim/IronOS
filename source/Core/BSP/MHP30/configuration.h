@@ -74,6 +74,9 @@
 #define POWER_PULSE_WAIT_MAX     9   // 9*2.5s = 22.5 seconds
 #define POWER_PULSE_DURATION_MAX 9   // 9*250ms = 2.25 seconds
 
+#define ADC_MAX_READING (4096 * 8) // Maximum reading of the adc
+#define ADC_VDD_MV      3300       // ADC max reading millivolts
+
 #ifdef MODEL_TS100
 #define POWER_PULSE_DEFAULT 0
 #else
@@ -139,13 +142,17 @@
 #define MIN_BOOST_TEMP_F       300                     // The min settable temp for boost mode °F
 #define NO_DISPLAY_ROTATE                              // Disable OLED rotation by accel
 #define SLEW_LIMIT             50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
+
+#define ACCEL_SC7
 #define ACCEL_MSA
+
 #define POW_PD 1
 #define TEMP_NTC
 #define I2C_SOFT
 #define BATTFILTERDEPTH 8
 #define OLED_I2CBB
 #define ACCEL_EXITS_ON_MOVEMENT
+#define NEEDS_VBUS_PROBE 0
 
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // TODO, needs refinement

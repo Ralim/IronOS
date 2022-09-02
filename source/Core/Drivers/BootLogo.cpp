@@ -4,6 +4,15 @@
 #include "OLED.hpp"
 #include "cmsis_os.h"
 #define LOGO_PAGE_LENGTH 1024
+
+void delay() {
+  if (getSettingValue(SettingsOptions::LOGOTime) == 5) {
+    waitForButtonPress();
+  } else {
+    waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+  }
+}
+
 void BootLogo::handleShowingLogo(const uint8_t *ptrLogoArea) {
   // Read the first few bytes and figure out what format we are looking at
   if (OLD_LOGO_HEADER_VALUE == *(reinterpret_cast<const uint32_t *>(ptrLogoArea))) {
@@ -21,7 +30,7 @@ void BootLogo::showOldFormat(const uint8_t *ptrLogoArea) {
   OLED::refresh();
 
   // Delay here until button is pressed or its been the amount of seconds set by the user
-  waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+  delay();
 }
 
 void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
@@ -43,12 +52,12 @@ void BootLogo::showNewFormat(const uint8_t *ptrLogoArea) {
     buttons = getButtonState();
 
     if (interFrameDelay) {
-      osDelay(interFrameDelay * 5);
+      osDelay(interFrameDelay * 4);
     }
     // 1024 less the header type byte and the inter-frame-delay
-    if (getSettingValue(SettingsOptions::LOGOTime) < 5 && (position == 1022 || len == 0)) {
+    if (getSettingValue(SettingsOptions::LOGOTime) > 0 && (position >= 1022 || len == 0)) {
       // Delay here until button is pressed or its been the amount of seconds set by the user
-      waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+      delay();
       return;
     }
   } while (buttons == BUTTON_NONE);
