@@ -723,6 +723,7 @@ void showDebugMenu(void) {
     OLED::print(SymbolVersionNumber, FontStyle::SMALL); // Print version number
     OLED::setCursor(0, 8);                              // second line
     OLED::print(DebugMenu[screen], FontStyle::SMALL);
+    uint16_t tipTemp = TipThermoModel::getTipInC();
     switch (screen) {
     case 0: // Build Date
       break;
@@ -770,7 +771,6 @@ void showDebugMenu(void) {
       break;
     case 8:
       // Temp in C
-      uint16_t tipTemp = TipThermoModel::getTipInC();
       OLED::printNumber(tipTemp, 5, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber((tipTemp * 10) % 10, 1, FontStyle::SMALL);
