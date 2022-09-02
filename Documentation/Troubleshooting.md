@@ -46,13 +46,13 @@ If `CHan` is reading low:
 - Check the power pin connection on the TMP36
 - Check pullup resistor on the NTC thermistor
 - Check no bridged pins or weak shorts on the signal to nearby pins on MCU or temperature sensor
-- Reflow/resolder the the aforementioned components
+- Reflow/resolder the aforementioned components
 
 If `CHan` is reading higher
 
 - Check ground connections on the sensors
 - Check no bridged pins or weak shorts on the signal to nearby pins on MCU or temperature sensor
-- Reflow/resolder the the aforementioned components
+- Reflow/resolder the aforementioned components
 
 ## No display OR dots on the display
 
