@@ -9,7 +9,8 @@ jobs:
       image: alpine:3.16
     strategy:
       matrix:
-        model: [/*"TS100", "TS80", */"TS80P", "Pinecil"/*, "MHP30", "Pinecilv2"*/]
+#        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2"]
+        model: ["TS80P", "Pinecil"]
       fail-fast: true
 
     steps:
@@ -55,57 +56,57 @@ jobs:
           name: metadata
           path: source/Hexfile/${{ matrix.model }}.json
 
-/*  build_multi-lang:
-    runs-on: ubuntu-20.04
-    container:
-      image: alpine:3.16
-    strategy:
-      matrix:
-        model: ["Pinecil", "Pinecilv2"]
-      fail-fast: true
+#  build_multi-lang:
+#    runs-on: ubuntu-20.04
+#    container:
+#      image: alpine:3.16
+#    strategy:
+#      matrix:
+#        model: ["Pinecil", "Pinecilv2"]
+#      fail-fast: true
+#
+#    steps:
+#      - name: Install dependencies (apk)
+#        run: apk add --no-cache gcc-riscv-none-elf newlib-riscv-none-elf findutils python3 py3-pip make git bash musl-dev
+#      - name: Install dependencies (python)
+#        run: python3 -m pip install bdflib
+#
+#      - uses: actions/checkout@v3
+#        with:
+#          submodules: true
+#
+#      - name: Git ownership exception
+#        run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
+#
+#      - name: build ${{ matrix.model }}
+#        run: cd source && make -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
+#
+#      - name: copy license text
+#        run: |
+#          cp LICENSE source/Hexfile/LICENSE
+#          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+#
+#      - name: Archive ${{ matrix.model }} artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: ${{ matrix.model }}_multi-lang
+#          path: |
+#            source/Hexfile/${{ matrix.model }}_*.hex
+#            source/Hexfile/${{ matrix.model }}_*.dfu
+#            source/Hexfile/${{ matrix.model }}_*.bin
+#            source/Hexfile/LICENSE
+#            source/Hexfile/LICENSE_RELEASE.md
+#          if-no-files-found: error
+#
+#      - name: Generate json index file
+#        run: cd source && python3 metadata.py ${{ matrix.model }}_multi-lang.json
+#
+#      - name: Archive ${{ matrix.model }} index file
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: metadata
+#          path: source/Hexfile/${{ matrix.model }}_multi-lang.json
 
-    steps:
-      - name: Install dependencies (apk)
-        run: apk add --no-cache gcc-riscv-none-elf newlib-riscv-none-elf findutils python3 py3-pip make git bash musl-dev
-      - name: Install dependencies (python)
-        run: python3 -m pip install bdflib
-
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - name: Git ownership exception
-        run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
-
-      - name: build ${{ matrix.model }}
-        run: cd source && make -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
-
-      - name: copy license text
-        run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
-
-      - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.model }}_multi-lang
-          path: |
-            source/Hexfile/${{ matrix.model }}_*.hex
-            source/Hexfile/${{ matrix.model }}_*.dfu
-            source/Hexfile/${{ matrix.model }}_*.bin
-            source/Hexfile/LICENSE
-            source/Hexfile/LICENSE_RELEASE.md
-          if-no-files-found: error
-
-      - name: Generate json index file
-        run: cd source && python3 metadata.py ${{ matrix.model }}_multi-lang.json
-
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v3
-        with:
-          name: metadata
-          path: source/Hexfile/${{ matrix.model }}_multi-lang.json
-*/
   tests:
     runs-on: ubuntu-20.04
     container:
