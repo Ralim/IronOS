@@ -106,68 +106,68 @@ jobs:
 #        with:
 #          name: metadata
 #          path: source/Hexfile/${{ matrix.model }}_multi-lang.json
-
-  tests:
-    runs-on: ubuntu-20.04
-    container:
-      image: alpine:3.16
-
-    steps:
-      - name: deps
-        run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
-
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - name: install black
-        run: python3 -m pip install bdflib
-
-      - name: Run python tests
-        run: cd Translations && chmod +x make_translation_test.py && ./make_translation_test.py
-
-      - name: Run BriefLZ tests
-        run: |
-          cd source
-          make Objects/host/brieflz/libbrieflz.so
-          cd ../Translations
-          chmod +x brieflz_test.py
-          ./brieflz_test.py
-
-  check_formatting:
-    runs-on: ubuntu-20.04
-    container:
-      image: alpine:3.16
-
-    steps:
-      - name: deps
-        run: apk add --no-cache python3 py3-pip make git
-
-      - uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - name: install black
-        run: python3 -m pip install bdflib black flake8
-
-      - name: Check formatting with clang-format
-        run: cd source && make clean && make check-style
-
-      - name: Check python formatting with black
-        run: black --check Translations
-
-      - name: Check python with flake8
-        run: flake8 Translations
-
-  shellcheck:
-    name: runner / shellcheck
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: shellcheck
-        uses: reviewdog/action-shellcheck@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review # Change reporter.
-          exclude: "./.git/*" # Optional.
-          check_all_files_with_shebangs: "false" # Optional.
+#
+#  tests:
+#    runs-on: ubuntu-20.04
+#    container:
+#      image: alpine:3.16
+#
+#    steps:
+#      - name: deps
+#        run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
+#
+#      - uses: actions/checkout@v3
+#        with:
+#          submodules: true
+#
+#      - name: install black
+#        run: python3 -m pip install bdflib
+#
+#      - name: Run python tests
+#        run: cd Translations && chmod +x make_translation_test.py && ./make_translation_test.py
+#
+#      - name: Run BriefLZ tests
+#        run: |
+#          cd source
+#          make Objects/host/brieflz/libbrieflz.so
+#          cd ../Translations
+#          chmod +x brieflz_test.py
+#          ./brieflz_test.py
+#
+#  check_formatting:
+#    runs-on: ubuntu-20.04
+#    container:
+#      image: alpine:3.16
+#
+#    steps:
+#      - name: deps
+#        run: apk add --no-cache python3 py3-pip make git
+#
+#      - uses: actions/checkout@v3
+#        with:
+#          submodules: true
+#
+#      - name: install black
+#        run: python3 -m pip install bdflib black flake8
+#
+#      - name: Check formatting with clang-format
+#        run: cd source && make clean && make check-style
+#
+#      - name: Check python formatting with black
+#        run: black --check Translations
+#
+#      - name: Check python with flake8
+#        run: flake8 Translations
+#
+#  shellcheck:
+#    name: runner / shellcheck
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: shellcheck
+#        uses: reviewdog/action-shellcheck@v1
+#        with:
+#          github_token: ${{ secrets.github_token }}
+#          reporter: github-pr-review # Change reporter.
+#          exclude: "./.git/*" # Optional.
+#          check_all_files_with_shebangs: "false" # Optional.
