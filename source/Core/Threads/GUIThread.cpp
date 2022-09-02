@@ -771,8 +771,8 @@ void showDebugMenu(void) {
     case 8:
       // Temp in C
       OLED::printNumber(TipThermoModel::getTipInC(), 5, FontStyle::SMALL);
-      OLED::print(SymbolDot, FontStyle::SMALL);
-      OLED::printNumber((TipThermoModel::getTipInC() * 10) % 10, 1, FontStyle::SMALL);
+      // OLED::print(SymbolDot, FontStyle::SMALL);
+      // OLED::printNumber((TipThermoModel::getTipInC() * 10) % 10, 1, FontStyle::SMALL);
       break;
     case 9:
       // Handle Temp in C
