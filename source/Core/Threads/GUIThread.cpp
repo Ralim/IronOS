@@ -100,7 +100,7 @@ void performCJCC() {
   //  ulTaskNotifyTake(pdTRUE, TICKS_100MS);
   //}
   OLED::refresh();
-  osDelay(30);
+  osDelay(40);
   uint32_t Temp = TipThermoModel::getTipInC();
   if (!isTipDisconnected() && Temp <= 32) {
     uint16_t setoffset = 0;
