@@ -50,19 +50,19 @@ This is the offset resulting from the *'Cold Junction Compensation Calibration'*
 
 ### CTip
 
-This is the tip temperature in degrees Celsius.
+This is the tip temperature in °C.
 This can be used with RTip for assessing temperature processing performance.
 
 ### CHan
 
-This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C x 10 (29.0 °C ambient should read as 290). Range of 200-400 (20-40 °C) is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
+This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C. Range of 20-40 °C is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
 This is used for CJC of the tip temperature.
  > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly ([see Troubleshooting](/Documentation/Troubleshooting.md))
 
 
 ### CMax
 
-This indicates the max temperature in °Celsius that the system estimates it can measure the tip reliably to.
+This indicates the max temperature in °C that the system estimates it can measure the tip reliably to.
 This is dependent on a few factors including the handle temperature so it can move around during use. As you use the iron, the Max increases to a point.
 
 ### Vin
