@@ -11,9 +11,8 @@ import re
 import subprocess
 import sys
 from datetime import datetime
-from itertools import chain
 from pathlib import Path
-from typing import BinaryIO, Dict, List, Optional, TextIO, Tuple, Union
+from typing import Dict, List, Optional, TextIO, Tuple, Union
 from dataclasses import dataclass
 
 from bdflib import reader as bdfreader
