@@ -125,6 +125,7 @@ def get_debug_menu() -> List[str]:
         "ACC    ",
         "Tip Res",
         "RTip   ",
+        "Tip Off",
         "CTip   ",
         "CHan   ",
         "CMax   ",
