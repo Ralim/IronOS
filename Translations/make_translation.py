@@ -122,15 +122,15 @@ def get_debug_menu() -> List[str]:
         "ID ",
         "UpTime  ",
         "Move    ",
-        "ACC     ",
+        "ACC  ",
         "Tip Res ",
         "RTip    ",
         "Tip Off ",
         "CTip    ",
         "CHan    ",
         "CMax    ",
-        "Vin     ",
-        "PWR     ",
+        "Vin         ",
+        "PWR  ",
         "HW G    ",
         "HW M    ",
         "HW P    ",
@@ -140,20 +140,20 @@ def get_debug_menu() -> List[str]:
 
 def get_accel_names_list() -> List[str]:
     return [
-        "Scanning",
-        "None",
+        " Scanning",
+        "     None",
         "MMA8652FC",
-        "LIS2DH12",
-        "BMA223",
-        "MSA301",
-        "SC7A20",
+        " LIS2DH12",
+        "   BMA223",
+        "   MSA301",
+        "   SC7A20",
     ]
 
 
 def get_power_source_list() -> List[str]:
     return [
-        "DC",
-        "QC",
+        "        DC",
+        "        QC",
         "PD W. VBus",
         "PD No VBus",
     ]
