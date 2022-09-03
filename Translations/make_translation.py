@@ -119,7 +119,7 @@ def get_constants(build_version: str) -> List[Tuple[str, str]]:
 def get_debug_menu() -> List[str]:
     return [
         datetime.today().strftime("%d-%m-%y"),
-       "ID ",
+        "ID ",
         "ACC   ",
         "PWR   ",
         "Vin        ",
