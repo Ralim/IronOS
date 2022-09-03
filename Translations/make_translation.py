@@ -140,20 +140,20 @@ def get_debug_menu() -> List[str]:
 
 def get_accel_names_list() -> List[str]:
     return [
-        " Scanning",
-        "     None",
+        "Scanning",
+        "None",
         "MMA8652FC",
         " LIS2DH12",
-        "   BMA223",
-        "   MSA301",
-        "   SC7A20",
+        "BMA223",
+        "MSA301",
+        "SC7A20",
     ]
 
 
 def get_power_source_list() -> List[str]:
     return [
-        "        DC",
-        "        QC",
+        "DC",
+        "QC",
         "PD W. VBus",
         "PD No VBus",
     ]
