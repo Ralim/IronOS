@@ -756,7 +756,7 @@ void showDebugMenu(void) {
       break;
     case 5:
       // Tip Resistance
-      OLED::printNumber(getTipResistanceX10() / 10, 5, FontStyle::SMALL); // large to pad over so that we cover ID left overs
+      OLED::printNumber(getTipResistanceX10() / 10, 4, FontStyle::SMALL); // large to pad over so that we cover ID left overs
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
       break;
