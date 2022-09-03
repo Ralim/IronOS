@@ -744,11 +744,11 @@ void showDebugMenu(void) {
       break;
     case 2:
       // System Uptime
-      OLED::printNumber(xTaskGetTickCount() / TICKS_100MS, 7, FontStyle::SMALL);
+      OLED::printNumber(xTaskGetTickCount() / TICKS_100MS, 8, FontStyle::SMALL);
       break;
     case 3:
       // Movement Timestamp
-      OLED::printNumber(lastMovementTime / TICKS_100MS, 7, FontStyle::SMALL);
+      OLED::printNumber(lastMovementTime / TICKS_100MS, 8, FontStyle::SMALL);
       break;
     case 4:
       // ACC Type
@@ -762,25 +762,25 @@ void showDebugMenu(void) {
       break;
     case 6:
       // Raw Tip in uV
-      { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 7, FontStyle::SMALL); }
+      { OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 8, FontStyle::SMALL); }
       break;
     case 7:
       // Tip Off
-      { OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 7, FontStyle::SMALL); }
+      { OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 8, FontStyle::SMALL); }
       break;
     case 8:
       // Temp in C
-      OLED::printNumber(TipThermoModel::getTipInC(), 5, FontStyle::SMALL);
+      OLED::printNumber(TipThermoModel::getTipInC(), 6, FontStyle::SMALL);
       break;
     case 9:
       // Handle Temp in C
-      OLED::printNumber(getHandleTemperature(0) / 10, 5, FontStyle::SMALL);
+      OLED::printNumber(getHandleTemperature(0) / 10, 6, FontStyle::SMALL);
       OLED::print(SymbolDot, FontStyle::SMALL);
       OLED::printNumber(getHandleTemperature(0) % 10, 1, FontStyle::SMALL);
       break;
     case 10:
       // Max C Limit
-      OLED::printNumber(TipThermoModel::getTipMaxInC(), 5, FontStyle::SMALL);
+      OLED::printNumber(TipThermoModel::getTipMaxInC(), 6, FontStyle::SMALL);
       break;
     case 11:
       // Input Voltage
@@ -824,15 +824,15 @@ void showDebugMenu(void) {
       break;
     case 13:
       // High Water Mark for GUI
-      OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 7, FontStyle::SMALL);
+      OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 8, FontStyle::SMALL);
       break;
     case 14:
       // High Water Mark for Movement Task
-      OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 7, FontStyle::SMALL);
+      OLED::printNumber(uxTaskGetStackHighWaterMark(MOVTaskHandle), 8, FontStyle::SMALL);
       break;
     case 15:
       // High Water Mark for PID Task
-      OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 7, FontStyle::SMALL);
+      OLED::printNumber(uxTaskGetStackHighWaterMark(PIDTaskHandle), 8, FontStyle::SMALL);
       break;
       break;
 #ifdef HALL_SENSOR
@@ -842,7 +842,7 @@ void showDebugMenu(void) {
         int16_t hallEffectStrength = getRawHallEffect();
         if (hallEffectStrength < 0)
           hallEffectStrength = -hallEffectStrength;
-        OLED::printNumber(hallEffectStrength, 7, FontStyle::SMALL);
+        OLED::printNumber(hallEffectStrength, 8, FontStyle::SMALL);
       }
       break;
 #endif
