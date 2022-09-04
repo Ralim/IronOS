@@ -113,7 +113,7 @@ static unsigned int sqrtI(unsigned long sqrtArg) {
 // parseCapabilitiesArray returns true if a valid capability was found
 // caps is the array of capabilities objects
 // best* are output references
-bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t *bestVoltage, uint16_t *bestCurrent, bool *bestIsPPS, bool *bestIsAVO) {
+bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t *bestVoltage, uint16_t *bestCurrent, bool *bestIsPPS, bool *bestIsAVS) {
   // Walk the given capabilities array; and select the best option
   // Given assumption of fixed tip resistance; this can be simplified to highest voltage selection
   *bestIndex   = 0xFF; // Mark unselected
@@ -136,16 +136,19 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
       int voltage_mv             = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCapabilities[i])); // voltage in mV units
       int current_a_x100         = PD_PDO_SRC_FIXED_CURRENT_GET(lastCapabilities[i]);            // current in 10mA units
       int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
-      if (voltage_mv <= (USB_PD_VMAX * 1000)) {
-        if (min_resistance_ohmsx10 <= tipResistance) {
-          // This is a valid power source we can select as
-          if (voltage_mv > *bestVoltage) {
-            // Higher voltage and valid, select this instead
-            *bestIndex   = i;
-            *bestVoltage = voltage_mv;
-            *bestCurrent = current_a_x100;
-            *bestIsPPS   = false;
-            *bestIsAVO   = false;
+      if (voltage_mv > 0) {
+        if (voltage_mv <= (USB_PD_VMAX * 1000)) {
+          if (min_resistance_ohmsx10 <= tipResistance) {
+            // This is a valid power source we can select as
+            if (voltage_mv > *bestVoltage) {
+
+              // Higher voltage and valid, select this instead
+              *bestIndex   = i;
+              *bestVoltage = voltage_mv;
+              *bestCurrent = current_a_x100;
+              *bestIsPPS   = false;
+              *bestIsAVS   = false;
+            }
           }
         }
       }
@@ -172,12 +175,11 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
         *bestVoltage = ideal_voltage_mv;
         *bestCurrent = max_current;
         *bestIsPPS   = true;
-        *bestIsAVO   = false;
+        *bestIsAVS   = false;
       }
     }
 #ifdef POW_EPR
     else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS))) {
-      *bestIsAVO           = true;
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
       uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
 
@@ -195,7 +197,8 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
         *bestIndex   = i;
         *bestVoltage = ideal_max_voltage;
         *bestCurrent = operating_current;
-        *bestIsAVO   = true;
+        *bestIsAVS   = true;
+        *bestIsPPS   = false;
       }
     }
 #endif
@@ -216,21 +219,24 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
   uint16_t bestIndexVoltage = 0;
   uint16_t bestIndexCurrent = 0;
   bool     bestIsPPS        = false;
-  bool     bestIsAVO        = false;
+  bool     bestIsAVS        = false;
 
-  if (parseCapabilitiesArray(numobj, &bestIndex, &bestIndexVoltage, &bestIndexCurrent, &bestIsPPS, &bestIsAVO)) {
+  if (parseCapabilitiesArray(numobj, &bestIndex, &bestIndexVoltage, &bestIndexCurrent, &bestIsPPS, &bestIsAVS)) {
     /* We got what we wanted, so build a request for that */
     request->hdr    = PD_MSGTYPE_EPR_REQUEST | PD_NUMOBJ(2);
     request->obj[1] = lastCapabilities[bestIndex]; // Copy PDO into slot 2
 
-    if (bestIsAVO) {
-      request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2APS(bestIndexVoltage)) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
+
+    if (bestIsAVS) {
+      request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2APS(bestIndexVoltage));
     } else if (bestIsPPS) {
-      request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2PRV(bestIndexVoltage)) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
+      request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2PRV(bestIndexVoltage));
     } else {
-      request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(bestIndexCurrent) | PD_RDO_FV_CURRENT_SET(bestIndexCurrent) | PD_RDO_NO_USB_SUSPEND | PD_RDO_OBJPOS_SET(bestIndex + 1);
+      request->obj[0] = PD_RDO_FV_MAX_CURRENT_SET(bestIndexCurrent) | PD_RDO_FV_CURRENT_SET(bestIndexCurrent);
     }
     request->obj[0] |= PD_RDO_EPR_CAPABLE;
+    request->obj[0] |= PD_RDO_NO_USB_SUSPEND;
+    request->obj[0] |= PD_RDO_OBJPOS_SET(bestIndex + 1);
 
     // We dont do usb
     // request->obj[0] |= PD_RDO_USB_COMMS;
@@ -268,9 +274,9 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   uint16_t bestIndexVoltage = 0;
   uint16_t bestIndexCurrent = 0;
   bool     bestIsPPS        = false;
-  bool     bestIsAVO        = false;
+  bool     bestIsAVS        = false;
 
-  if (parseCapabilitiesArray(numobj, &bestIndex, &bestIndexVoltage, &bestIndexCurrent, &bestIsPPS, &bestIsAVO)) {
+  if (parseCapabilitiesArray(numobj, &bestIndex, &bestIndexVoltage, &bestIndexCurrent, &bestIsPPS, &bestIsAVS)) {
     /* We got what we wanted, so build a request for that */
     request->hdr = PD_MSGTYPE_REQUEST | PD_NUMOBJ(1);
     if (bestIsPPS) {
