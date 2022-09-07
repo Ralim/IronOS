@@ -724,10 +724,9 @@ void showDebugMenu(void) {
     OLED::setCursor(0, 8);                              // second line
     OLED::print(DebugMenu[screen], FontStyle::SMALL);
     switch (screen) {
-    case 0: // Build Date
+    case 0:  // Build Date
       break;
-    case 1:
-      // Device ID
+    case 1:  // Device ID
       {
         uint64_t id = getDeviceID();
 #ifdef DEVICE_HAS_VALIDATION_CODE
