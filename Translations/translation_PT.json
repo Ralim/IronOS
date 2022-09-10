@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "A ponta deve estar à temperatura ambiente antes de continuar!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Definições de fábrica?",
 		"UVLOWarningString": "DC BAIXO",
 		"UndervoltageString": "Subtensão",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrar",
-				"temperatura"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Calibra a temperatura"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

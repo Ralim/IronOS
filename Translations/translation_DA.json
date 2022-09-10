@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden du fortsætter!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Are you sure to reset settings to default values?",
 		"UVLOWarningString": "Lav Volt",
 		"UndervoltageString": "Undervoltage",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrate",
-				"temperature?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "kalibrere spids temperatur."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

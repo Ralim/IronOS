@@ -8,7 +8,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Перад тым, як працягнуць, каліласка, упэўнецеся, што джала мае комнатную тэмпературу!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Вы ўпэннены, што жадаеце зкінуць налады да першапачатковых значэнняў?",
 		"UVLOWarningString": "НАПРУГА--",
 		"UndervoltageString": "Нізкая напруга",
@@ -178,10 +178,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Каліброўка",
-				"тэмпературы"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Каліброўка тэрмадатчыка джала"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

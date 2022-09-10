@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Najprv sa prosím uistite, že hrot má izbovú teplotu!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Naozaj chcete obnoviť továrenské nastavenia?",
 		"UVLOWarningString": "Nízke U!",
 		"UndervoltageString": "Nízke napätie",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibrácia",
-				"teploty"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibrácia posunu teploty hrotu"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

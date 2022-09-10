@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a forrasztó hegy szobahőmérsékletű!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Biztos visszaállítja a beállításokat alapértékekre?",
 		"UVLOWarningString": "DC TÚL KEVÉS",
 		"UndervoltageString": "Alulfeszültség",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Hőmérséklet",
-				"kalibrálása?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Forrasztó hegy hőmérséklet-érzékelőjének kalibrálása"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Pred nadaljevanjem mora biti konica segreta na sobno temperaturo!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Res želite ponastaviti na privzete nastavitve?",
 		"UVLOWarningString": "NIZKA U",
 		"UndervoltageString": "Nizka napetost",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibriram",
-				"temperaturo?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibracija temperature na konici."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Πριν προχωρήσετε, παρακαλώ σιγουρευτείτε πως η μύτη βρίσκεται σε θερμοκρασία δωματίου!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Σίγουρα θέλετε επαναφορά αρχικών ρυθμίσεων;",
 		"UVLOWarningString": "Χαμηλ DC",
 		"UndervoltageString": "Υπόταση",
@@ -180,10 +180,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Βαθμονόμηση",
-				"θερμοκρασίας;"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Βαθμονόμηση αρχικής θερμοκρασίας μύτης"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",
 		"UVLOWarningString": "Güç Az",
 		"UndervoltageString": "Düşük Voltaj",
@@ -180,10 +180,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"SCK KAL?",
-				""
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Ucu kalibre et."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Zorg vooraf dat de punt op kamertemperatuur is!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ben je zeker dat je alle standaardwaarden wil resetten?",
 		"UVLOWarningString": "Voedingsspanning LAAG",
 		"UndervoltageString": "Onderspanning",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibreer",
-				"temperatuur?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Temperatuur van de punt calibreren."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

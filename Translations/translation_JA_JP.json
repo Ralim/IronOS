@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "続行する前に、コテ先が室温と同じになっていることを確認してください",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "設定をリセットしますか？",
 		"UVLOWarningString": "電圧が低すぎます",
 		"UndervoltageString": "Undervoltage",
@@ -116,8 +116,8 @@
 			"desc": "加熱の停止後、コテ先が熱い間は温度表示を点滅する"
 		},
 		"CalibrateCJC": {
-			"text2": "温度校正",
-			"desc": "コテ先の温度校正を開始する"
+			"text2": "Calibrate CJC",
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": "設定をリセット",

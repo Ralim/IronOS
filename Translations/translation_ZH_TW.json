@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "開始溫度校正前，請先確定烙鐵頭正處於室溫！",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "你是否確定要將全部設定重設到預設值？",
 		"UVLOWarningString": "電壓過低",
 		"UndervoltageString": "Undervoltage",
@@ -116,8 +116,8 @@
 			"desc": "停止加熱之後，當烙鐵頭仍處於高溫時閃爍畫面"
 		},
 		"CalibrateCJC": {
-			"text2": "溫度校正？",
-			"desc": "開始校正烙鐵頭溫度位移"
+			"text2": "Calibrate CJC",
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": "全部重設？",

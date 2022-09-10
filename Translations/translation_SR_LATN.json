@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Proverite da li je vrh ohlađen na sobnu temperaturu pre nego što nastavite",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Da li zaista želite da vratite postavke na fabričke vrednosti?",
 		"UVLOWarningString": "NIZ.NAP.",
 		"UndervoltageString": "PRENIZAK NAPON",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibracija",
-				"temperature"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibrisanje odstupanja temperature vrha u odnosu na dršku."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

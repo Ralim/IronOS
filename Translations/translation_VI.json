@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Chac chan mui hàn o nhiet đo phòng truoc khi tiep tuc!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?",
 		"UVLOWarningString": "DC thap",
 		"UndervoltageString": "Đien áp thap",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Hieu chuan",
-				"nhiet đo?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "-Bat đau hieu chuan bù nhiet cho mui hàn"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

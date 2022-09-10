@@ -8,7 +8,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Переконайтеся, що жало охололо до кімнатної температури, перш ніж продовжувати!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",
 		"UVLOWarningString": "АККУМ--",
 		"UndervoltageString": "Низька напруга",
@@ -178,10 +178,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Калібрування",
-				"температури"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Калібрування температурного датчика."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

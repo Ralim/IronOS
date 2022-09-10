@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "開始温度校正之前，請先確定焫雞咀係處於室温！",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "你係咪確定要將全部設定重設到預設值？",
 		"UVLOWarningString": "電壓過低",
 		"UndervoltageString": "Undervoltage",
@@ -116,8 +116,8 @@
 			"desc": "停止加熱之後，當焫雞咀仲係熱嗰陣閃爍畫面"
 		},
 		"CalibrateCJC": {
-			"text2": "温度校正？",
-			"desc": "開始校正焫雞咀温度位移"
+			"text2": "Calibrate CJC",
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": "全部重設？",

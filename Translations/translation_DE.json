@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Nur Kalibrieren wenn Lötspitze & Gerät Raumtemperatur haben!",
+		"SettingsCalibrationWarning": "Bitte sicherstellen, dass Lötspitze & Gerät beim nächsten Start Raumtemperatur haben!",
 		"SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",

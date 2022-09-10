@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer !",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
 		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Étalonner",
-				"température"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Étalonner température de la panne"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
 		"SettingsReset": {
 			"text2": [

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Уверете се, че върха на поялника е със стайна температура преди да продължите!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
 		"UVLOWarningString": "Ниско DC Напрежение",
 		"UndervoltageString": "Ниско Напрежение",
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Калибриране",
-				"температура?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Калибриране на температурата"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
