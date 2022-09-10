@@ -175,7 +175,7 @@
 			],
 			"desc": "Blinka temperaturen medan spetsen kyls av och fortfarande är varm."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibrera",
 				"temperatur?"

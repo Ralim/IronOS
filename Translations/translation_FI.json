@@ -175,7 +175,7 @@
 			],
 			"desc": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Kalibroi",
 				"lämpötila?"

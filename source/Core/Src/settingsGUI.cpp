@@ -101,8 +101,8 @@ static bool enterAdvancedMenu(void);
  * Soldering
  *  Boost Mode Temp
  *  Auto Start
- *  Temp change short step
- *  Temp change long step
+ *  Temp Change Short Step
+ *  Temp Change Long Step
  *  Locking Mode
  *
  * Power Saving
@@ -114,10 +114,10 @@ static bool enterAdvancedMenu(void);
  *
  * UI
  *  Temperature Unit
- *  Display orientation
- *  Cooldown blink
+ *  Display Orientation
+ *  Cooldown Blink
  *  Scrolling Speed
- *  Reverse Temp change buttons + -
+ *  Swap Temp Change Buttons + -
  *  Animation Speed
  *  -Animation Loop
  *  OLED Brightness
@@ -128,11 +128,11 @@ static bool enterAdvancedMenu(void);
  *
  * Advanced
  *  Power Limit
- *  Calibrate Temperature
+ *  Calibrate CJC At Next Boot
  *  Calibrate Input V
  *  Power Pulse
  *  -Power Pulse Delay
- *  -Power Pulse duration
+ *  -Power Pulse Duration
  *  Factory Reset
  *
  */
@@ -184,8 +184,8 @@ const menuitem solderingMenu[] = {
     /*
      *  Boost Mode Temp
      *  Auto Start
-     *  Temp change short step
-     *  Temp change long step
+     *  Temp Change Short Step
+     *  Temp Change Long Step
      *  Locking Mode
      */
     {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
@@ -221,10 +221,10 @@ const menuitem PowerSavingMenu[] = {
 const menuitem UIMenu[] = {
     /*
      *  Temperature Unit
-     *  Display orientation
-     *  Cooldown blink
+     *  Display Orientation
+     *  Cooldown Blink
      *  Scrolling Speed
-     *  Reverse Temp change buttons + -
+     *  Swap Temp Change Buttons + -
      *  Animation Speed
      *  -Animation Loop
      *  OLED Brightness
@@ -257,16 +257,16 @@ const menuitem UIMenu[] = {
 const menuitem advancedMenu[] = {
     /*
      *  Power Limit
-     *  Calibrate Temperature
+     *  Calibrate CJC At Next Boot
      *  Calibrate Input V
      *  Power Pulse
      *  -Power Pulse Delay
-     *  -Power Pulse duration
+     *  -Power Pulse Duration
      *  Factory Reset
      */
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5},                              /*Power limit*/
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureCalibration), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureCalibration,
-     5}, /*Calibrate tip*/
+    {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
+     7}, /*Calibrate Cold Junktion Compensation at next boot*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
      5},                                                                                                                                                              /*Voltage input cal*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower, 5}, /*Power Pulse adjustment */
@@ -644,49 +644,20 @@ static void displayPowerLimit(void) {
   }
 }
 
-static void setTipOffset() {
-  uint16_t setoffset = 0;
-
-  // If the thermo-couple at the end of the tip, and the handle are at
-  // equilibrium, then the output should be zero, as there is no temperature
-  // differential.
-  while (setoffset == 0) {
-    uint32_t offset = 0;
-    for (uint8_t i = 0; i < 16; i++) {
-      offset += getTipRawTemp(1);
-      // cycle through the filter a fair bit to ensure we're stable.
-      OLED::clearScreen();
-      OLED::setCursor(0, 0);
-      OLED::print(SymbolDot, FontStyle::LARGE);
-      for (uint8_t x = 0; x < (i / 4); x++)
-        OLED::print(SymbolDot, FontStyle::LARGE);
-      OLED::refresh();
-      osDelay(100);
-    }
-    setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
-  }
-  setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
-  OLED::clearScreen();
-  OLED::setCursor(0, 0);
-  OLED::drawCheckbox(true);
-  OLED::printNumber(setoffset, 4, FontStyle::LARGE);
-  OLED::refresh();
-  osDelay(1200);
-}
-
-// Provide the user the option to tune their own tip if custom is selected
-// If not only do single point tuning as per usual
 static bool setCalibrate(void) {
-
-  if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
-    // User confirmed
-    // So we now perform the actual calculation
-    setTipOffset();
+  if (getSettingValue(SettingsOptions::CalibrateCJC) < 1) {
+    if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
+      // User confirmed
+      // So we now set the tick
+      setSettingValue(SettingsOptions::CalibrateCJC, 1);    
+    }
+  } else {
+    setSettingValue(SettingsOptions::CalibrateCJC, 0);
   }
   return false;
 }
 
-static void displayCalibrate(void) {}
+static void displayCalibrate(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CalibrateCJC)); }
 
 static bool setCalibrateVIN(void) {
   // Jump to the voltage calibration subscreen

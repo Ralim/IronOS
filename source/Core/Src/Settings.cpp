@@ -85,6 +85,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, 0},                                                   // OLEDInversion
     {0, 99, 11, 33},                                                // OLEDBrightness
     {0, 5, 1, 1},                                                   // LOGOTime
+    {0, 1, 1, 0},                                                   // CalibrateCJC
 
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));

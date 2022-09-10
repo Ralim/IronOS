@@ -178,7 +178,7 @@
 			],
 			"desc": "Soğutma ekranında uç hala sıcakken derece gösterilsin."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"SCK KAL?",
 				""

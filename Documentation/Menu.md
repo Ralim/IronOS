@@ -44,15 +44,16 @@ What this is for: some tips have an offset on their readings which causes issues
 
 Caution: if the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down to room temperature.
 
-1. Connect power to your iron (tip should be installed).
-2. **Critical: make sure the tip & handle is at room temperature** (wait a good while after using the iron before calibration)
-3. Using (`-/B`) scroll down to Advanced settings > press (`+/A`) to select > then (`-/B`) to scroll to Calibrate temperature? > press (`+/A`)
-4. Important warning message is shown: *Confirm the tip & device are at room temperature before starting!* 
-5. Press the (`+/A`) button to confirm (tip/handle are at ambient temperature).
-6. Display shows **`....`** for a short time as the unit measures and compares the tip and handle temperatures.
-7. The display then goes back to *TMP CAL* and displays your *Offset number*. You generally don't need this offset unless debugging issues.
-8. After you see an Offset number, calibration is done, just exit the settings menu normally, use (`-/B`).
-9. You're done, enjoy your iron!
+1. Connect power to your device.
+2. Go to **`Advanced Settings`** using (`-/B`) and press (`+/A`) to select it. Use (`-/B`) to scroll to **`Calibrate CJC at next boot`** and confirm with (`+/A`).
+3. Accept the *'warning text'* with (`+/A`).
+3. Exit the settings menu as usual by pressing and holding (`-/B`).
+4. Unplug you device.
+5. **Critical: Make sure a tip is attached & wait until the tip & handle are at room temperature.** (Wait a reasonable amount of time after having used the device.)
+6. Power the device and ideally keep it out of your hands (You know it might get warm.).
+7. The display shows **`....`** for a short time while the device measures and compares the tip and handle voltages.
+8. As a result the new *Offset value* is displayed. This value can later be viewed in the **`Debug menu`**.
+9. Calibration is done and the device proceeds booting.
 
 Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration.
 

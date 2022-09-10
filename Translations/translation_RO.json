@@ -175,7 +175,7 @@
 			],
 			"desc": "Clipeste temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Calibrare",
 				"temperatură?"

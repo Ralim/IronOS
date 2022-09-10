@@ -125,13 +125,18 @@ On device help text:
 
 Flash temperature reading at idle if tip is hot
 
-### Setting: Calibrate tip CJC
+### Setting: Calibrate CJC at next boot
 
-Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target.
+Note:
+If the difference between the target temperature and the measured temperature is less than 5°C, **calibration is NOT required at all**.
+
+This is used to calibrate the offset between ADC and Op-amp of the tip at next boot (Idealy it has to be done at boot, before internal components get warm.). But this setting is ***not permanent!*** It resetes after the calibration is completed (At next boot the checkbox will be unchecked!). If you need to repeat the calibration however, you have to set the checkbox *again*, unplug your device and let it cool down to room/ambient temperature & power it up, idealy while it sits on the desk.
+
+Hence, never repeat the calibration in quick succession!
 
 On device help text:
 
-Tip-temperature Cold Junction Compensation (not needed if Tip is +/- 5°C of display)
+Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)
 
 ### Setting: Restore default settings
 

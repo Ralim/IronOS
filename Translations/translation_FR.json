@@ -175,7 +175,7 @@
 			],
 			"desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Étalonner",
 				"température"

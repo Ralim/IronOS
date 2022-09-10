@@ -175,7 +175,7 @@
 			],
 			"desc": "La temperatura en pantalla parpadea mientras la punta siga caliente."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"Calibrar temp.",
 				"de la punta"

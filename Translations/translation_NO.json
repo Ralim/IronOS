@@ -175,7 +175,7 @@
 			],
 			"desc": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
 		},
-		"TemperatureCalibration": {
+		"CalibrateCJC": {
 			"text2": [
 				"TempKal?",
 				""

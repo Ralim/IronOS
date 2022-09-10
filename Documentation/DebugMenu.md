@@ -3,9 +3,9 @@
 In this firmware there is extra debugging information in a hidden sub-menu.
 This menu is meant to be simple, so it has no fancy GUI animations.
 
-- Access by pressing the rear (``-/B``) button on the iron while it is on the home screen.
-- To scroll through the menu, use the front (``+/A``) button.
-- To exit, use the rear (``-/B``) button again.
+- Access it by pressing the rear button (`-/B`) on the iron while it is on the home screen.
+- Use the front button (`+/A`) to scroll through the menu.
+- To exit, use the rear button (`-/B`) again.
 
 ## Menu items
 
@@ -14,15 +14,6 @@ Items are shown in the menu on a single line, so they use short codes and appear
 ### ID
 - This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
 - The new Pinecil V2 released Aug. 2, 2022 now uses MCU BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your [Pinecil authenticity here](https://pinecil.pine64.org/).
-
-### Time
-
-This is just uptime; it shows how many deciseconds the unit has been powered for (600 ds = 1 minute).
-
-### Move
-
-This is the last timestamp of movement. When the iron is moved, this should update to match the Time field (previous menu item).
-This can be used for checking performance of the movement detection code.
 
 ### ACC
 
@@ -33,37 +24,8 @@ This indicates the accelerometer that is fitted inside the unit.
 - BMA223
 - MSA301
 - SC7A20
-- None detected -> running in fallback without movement detection
+- None -> running in fallback without movement detection
 - Scanning -> Still searching I2C for one
-
-### Tip Res
-
-This indicates the tip resistance that the device is currently using. For devices with multiple possible values to choose from (Pinecil V2), the appropriate value is automatically detected at every boot-up. Tip should be installed before boot-up or reading can not be done.
-
-### RTip
-
-This is the raw tip reading in μV. Tip must be installed or reading will be high/inaccurate. At cool, the range of 700-1000 is normal for larger tips and ~1500 for smaller tips (TS80). This is used to evaluate the calibration routines.
-
-### CTip
-
-This is the tip temperature in degrees Celsius.
-This can be used with RTip for assessing temperature processing performance.
-
-### CHan
-
-This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C x 10 (29.0 °C ambient should read as 290). Range of 200-400 (20-40 °C) is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
-This is used for CJC of the tip temperature.
- > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly ([see Troubleshooting](/Documentation/Troubleshooting.md))
-
-
-### CMax
-
-This indicates the max temperature in °Celsius that the system estimates it can measure the tip reliably to.
-This is dependent on a few factors including the handle temperature so it can move around during use. As you use the iron, the Max increases to a point.
-
-### Vin
-
-The input voltage as read by the internal ADC. Can be used to sanity check it is being read correctly.
 
 ### PWR
 
@@ -74,6 +36,48 @@ This may change during power up as the sources are negotiated in turn.
 - **QC** input (We used QC2/3 negotiation for current supply)
 - **PD W. VBus** input (PD subsystem is used to negotiate for current supply); and VBus is connected to your input power source
 - **PD No VBus** input (PD subsystem is used to negotiate for current supply); and VBus is **NOT** connected to your input power source. If it is Not required or possible to do a special mod of your PCB (i.e. late model V1, some early Green PCB models) then [PD No VBus] displays on-screen ([see details and PD Debug section below](/Documentation/DebugMenu.md#pd-debug-menu)).
+
+### Vin
+
+The input voltage as read by the internal ADC. Can be used to sanity check it is being read correctly.
+
+### Tip C
+
+This is the tip temperature in °C.
+This can be used with RTip for assessing temperature processing performance.
+
+### Han C
+
+This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C. Range of 20-40 °C is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
+This is used for CJC of the tip temperature.
+ > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly ([see Troubleshooting](/Documentation/Troubleshooting.md))
+
+
+### Max C
+
+This indicates the max temperature in °C that the system estimates it can measure the tip reliably to.
+This is dependent on a few factors including the handle temperature so it can move around during use. As you use the iron, the Max increases to a point.
+
+### UpTime
+
+This shows how many deciseconds the unit has been powered for (600 ds = 1 minute).
+
+### Move
+
+This is the last timestamp of movement. When the iron is moved, this should update to match the Time field (previous menu item).
+This can be used for checking performance of the movement detection code.
+
+### Tip Res
+
+This indicates the tip resistance that the device is currently using. For devices with multiple possible values to choose from (Pinecil V2), the appropriate value is automatically detected at every boot-up. Tip should be installed before boot-up or reading can not be done.
+
+### Tip R
+
+This is the raw tip reading in μV. Tip must be installed or reading will be high/inaccurate. At cool, the range of 700-1000 is normal for larger tips and ~1500 for smaller tips (TS80). This is used to evaluate the calibration routines.
+
+### Tip O
+
+This is the offset resulting from the *'Cold Junction Compensation Calibration'*.
 
 ### HW G
 
