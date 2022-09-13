@@ -334,7 +334,7 @@
 				"Trvání",
 				"boot loga"
 			],
-			"desc": "Nastavení doby trvání boot loga (Vyp | s=sekundy | infinity)"
+			"desc": "Nastavení doby trvání boot loga (s=sekundy)"
 		}
 	}
 }
