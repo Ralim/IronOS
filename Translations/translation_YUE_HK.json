@@ -204,7 +204,7 @@
 			"desc": "反轉OLED熒幕嘅黑白色"
 		},
 		"LOGOTime": {
-			"text2": "Boot logo duration"
+			"text2": "Boot logo duration",
 			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
