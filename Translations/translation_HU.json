@@ -66,35 +66,35 @@
 				"Táp",
 				"beállítások"
 			],
-			"desc": "Táp beállítások"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Forrasztási",
 				"beállítások"
 			],
-			"desc": "Forrasztási beállítások"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Alvási",
 				"módok"
 			],
-			"desc": "Energiatakarékossági beállítások"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Felhasználói",
 				"felület"
 			],
-			"desc": "Felhasználói felület beállításai"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Haladó",
 				"beállítások"
 			],
-			"desc": "Haladó beállítások"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -313,7 +313,7 @@
 				"Nyelv:",
 				" HU     Magyar"
 			],
-			"desc": "Firmware nyelve"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +334,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

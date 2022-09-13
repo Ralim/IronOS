@@ -256,7 +256,7 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
@@ -333,7 +333,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Set boot logo duration (off | s=seconds | infinity)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Postavke",
 				"lemljenja"
 			],
-			"desc": "Postavke režima lemljenja."
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Ušteda",
 				"energije"
 			],
-			"desc": "Postavke režima mirovanja."
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Korisničko",
 				"sučelje"
 			],
-			"desc": "Postavke korisničkog sučelja."
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Napredne",
 				"postavke"
 			],
-			"desc": "Napredne postavke."
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -257,14 +257,14 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
+			"desc": "Sensitivity to magnets (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -278,7 +278,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

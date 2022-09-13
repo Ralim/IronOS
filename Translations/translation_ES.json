@@ -66,35 +66,35 @@
 				"Potencia",
 				"ajustes"
 			],
-			"desc": "Ajustes de potencia"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldadura",
 				"ajustes"
 			],
-			"desc": "Ajustes para soldar."
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Modos de",
 				"reposo"
 			],
-			"desc": "Ajustes de ahorro energético."
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfaz",
 				"de usuario"
 			],
-			"desc": "Ajustes de interfaz de usuario."
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Ajustes",
 				"avanzados"
 			],
-			"desc": "Ajustes avanzados."
+			"desc": ""
 		}
 	},
 	"menuOptions": {

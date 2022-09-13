@@ -51,23 +51,23 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": "電源設定",
-			"desc": "電源設定"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": "焊接設定",
-			"desc": "焊接設定"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": "待機設定",
-			"desc": "自動待機省電設定"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": "使用者介面",
-			"desc": "使用者介面設定"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": "進階設定",
-			"desc": "進階設定"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -204,11 +204,8 @@
 			"desc": "反轉OLED螢幕的黑白色彩"
 		},
 		"LOGOTime": {
-			"text2": [
-			"Boot logo",
-			"duration"
-		],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"text2": "Boot logo duration"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

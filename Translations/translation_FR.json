@@ -66,35 +66,35 @@
 				"Paramètres",
 				"d'alim."
 			],
-			"desc": "Paramètres d'alimentation"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Paramètres",
 				"de soudure"
 			],
-			"desc": "Paramètres de soudure"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Mode",
 				"veille"
 			],
-			"desc": "Paramètres d'économie d'énergie"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interface",
 				"utilisateur"
 			],
-			"desc": "Paramètres de l'interface utilisateur"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Options",
 				"avancées"
 			],
-			"desc": "Options avancées"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -313,7 +313,7 @@
 				"Langue :",
 				" FR     Français"
 			],
-			"desc": "Langue du firmware"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [

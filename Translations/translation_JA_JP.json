@@ -51,23 +51,23 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": "電源設定",
-			"desc": "電源設定"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": "半田付け設定",
-			"desc": "半田付け設定"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": "待機設定",
-			"desc": "待機設定"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": "UI設定",
-			"desc": "ユーザーインターフェイスの設定"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": "高度な設定",
-			"desc": "高度な設定"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -207,11 +207,8 @@
 			"desc": "画面の色を反転する"
 		},
 		"LOGOTime": {
-			"text2": [
-			"Boot logo",
-			"duration"
-		],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"text2": "Boot logo duration"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

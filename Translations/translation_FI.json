@@ -66,35 +66,35 @@
 				"Virta-",
 				"asetukset"
 			],
-			"desc": "Virta-asetukset"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Juotos-",
 				"asetukset"
 			],
-			"desc": "Juotosasetukset"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Lepotilan",
 				"asetukset"
 			],
-			"desc": "Virransäästöasetukset"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Käyttö-",
 				"liittymä"
 			],
-			"desc": "Käyttöliittymän asetukset"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Lisä-",
 				"asetukset"
 			],
-			"desc": "Lisäasetukset"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -222,7 +222,7 @@
 				"PD",
 				"timeout"
 			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
 		},
 		"PowerLimit": {
 			"text2": [
@@ -257,7 +257,7 @@
 				"Herätyspulssin",
 				"voimakkuus"
 			],
-			"desc": "Herätyspulssin voimakkuus (watti)"
+			"desc": "Herätyspulssin voimakkuus (Watti)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

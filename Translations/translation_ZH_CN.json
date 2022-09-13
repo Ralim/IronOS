@@ -51,23 +51,23 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": "电源设置",
-			"desc": "电源设置"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": "焊接设置",
-			"desc": "焊接设置"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": "待机设置",
-			"desc": "自动待机省电设置"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": "用户界面",
-			"desc": "用户界面设置"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": "高级设置",
-			"desc": "高级设置"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -204,11 +204,8 @@
 			"desc": "反转OLED黑/白屏幕"
 		},
 		"LOGOTime": {
-			"text2": [
-			"Boot logo",
-			"duration"
-		],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"text2": "Boot logo duration"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

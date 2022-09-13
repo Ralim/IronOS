@@ -66,35 +66,35 @@
 				"Voeding",
 				"instellingen"
 			],
-			"desc": "Voeding instellingen"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldeer",
 				"instellingen"
 			],
-			"desc": "Soldeer instellingen"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Slaap",
 				"Modes"
 			],
-			"desc": "Stroom besparings instellingen"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Weergave",
 				"instellingen"
 			],
-			"desc": "Weergave instellingen"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Geavanceerde",
 				"instellingen"
 			],
-			"desc": "Geavanceerde instellingen"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -313,7 +313,7 @@
 				"Taal:",
 				" NL     Nederlands"
 			],
-			"desc": "Huidige firmware taal"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [

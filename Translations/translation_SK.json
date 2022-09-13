@@ -66,35 +66,35 @@
 				"Nastavenie",
 				"výkonu"
 			],
-			"desc": "Nastavenie výkonu"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Nastavenie",
 				"spájkovania"
 			],
-			"desc": "Nastavenie spájkovania"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Úsporný",
 				"režim"
 			],
-			"desc": "Nastavenia režimov úspory energie"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Nastavenie",
 				"zobrazenia"
 			],
-			"desc": "Nastavenie zobrazenia"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Pokročilé",
 				"nastavenia"
 			],
-			"desc": "Pokročilé nastavenia"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -313,7 +313,7 @@
 				"Jazyk:",
 				" SK     Slovenčina"
 			],
-			"desc": "Aktuálny jazyk"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +334,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

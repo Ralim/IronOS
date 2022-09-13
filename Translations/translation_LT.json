@@ -66,35 +66,35 @@
 				"Maitinimo",
 				"nustatymai"
 			],
-			"desc": "Su maitinblokiu susiję nustatymai"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Litavimo",
 				"nustatymai"
 			],
-			"desc": "Litavimo nustatymai"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Miego",
 				"režimai"
 			],
-			"desc": "Energijos tausojimo nustatymai"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Naudotojo",
 				"sąsaja"
 			],
-			"desc": "Naudotojo sąsajos nustatymai"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Išplėsti.",
 				"nustatymai"
 			],
-			"desc": "Išplėstiniai nustatymai"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -313,7 +313,7 @@
 				"Kalba:",
 				" LT     Lietuvių"
 			],
-			"desc": "Dabartinė programinės įrangos kalba"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +334,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

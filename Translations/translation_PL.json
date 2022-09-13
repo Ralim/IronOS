@@ -66,35 +66,35 @@
 				"Ustawienia",
 				"zasilania"
 			],
-			"desc": "Zasilanie i minimalne napięcie na komórkę"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Lutowanie",
 				""
 			],
-			"desc": "Ustawienia trybu lutowania"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Oszcz.",
 				"energii"
 			],
-			"desc": "Ustawienia oszczędzania energii"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfejs",
 				"użytkownika"
 			],
-			"desc": "Ustawienia interfejsu użytkownika"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Ustawienia",
 				"zaawans."
 			],
-			"desc": "Ustawienia zaawansowane"
+			"desc": ""
 		}
 	},
 	"menuOptions": {

@@ -66,35 +66,35 @@
 				"Energie-",
 				"einstellungen"
 			],
-			"desc": "Energieeinstellungen"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Löt-",
 				"einstellungen"
 			],
-			"desc": "Löteinstellungen"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Ruhe-",
 				"modus"
 			],
-			"desc": "Energiespareinstellungen"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Anzeige-",
 				"einstellungen"
 			],
-			"desc": "Menüeinstellungen"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Erweiterte",
 				"Einstellungen"
 			],
-			"desc": "Erweiterte Einstellungen"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -313,7 +313,7 @@
 				"Sprache:",
 				" DE     Deutsch"
 			],
-			"desc": "Sprache der Firmware ändern"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
