@@ -204,7 +204,7 @@
 			"desc": "反轉OLED螢幕的黑白色彩"
 		},
 		"LOGOTime": {
-			"text2": "Boot logo duration"
+			"text2": "Boot logo duration",
 			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
