@@ -65,35 +65,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldering",
 				"settings"
 			],
-			"desc": "Soldering settings"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Sleep",
 				"mode"
 			],
-			"desc": "Power saving settings"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"User",
 				"interface"
 			],
-			"desc": "User interface settings"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Advanced",
 				"settings"
 			],
-			"desc": "Advanced settings"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -312,7 +312,7 @@
 				"Language:",
 				" EN     English"
 			],
-			"desc": "Current firmware language"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
