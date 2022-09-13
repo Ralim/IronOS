@@ -2,8 +2,7 @@
 	"languageCode": "EN",
 	"languageLocalName": "English",
 	"fonts": [
-		"ascii_basic",
-		"latin_extended"
+		"ascii_basic"
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {

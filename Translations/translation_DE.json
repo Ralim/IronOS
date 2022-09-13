@@ -180,7 +180,7 @@
 				"Temperatur",
 				"kalibrieren?"
 			],
-			"desc": "Kalibrierung der Kaltstellenkompensation beim nächsten Start (nicht nötig wenn Delta T < 5°C)"
+			"desc": "Kalibrierung der Kaltstellenkompensation beim nächsten Start (nicht nötig wenn Delta T < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [

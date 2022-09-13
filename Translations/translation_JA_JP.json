@@ -141,9 +141,9 @@
 		},
 		"PDNegTimeout": {
 			"text2": [
-			"PD",
-			"timeout"
-		],
+				"PD",
+				"timeout"
+			],
 			"desc": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
 		},
 		"PowerLimit": {
