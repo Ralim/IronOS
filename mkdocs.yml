@@ -6,9 +6,22 @@ docs_dir: Documentation
 nav:
     - Home: index.md
     - Getting Started: GettingStarted.md
-    - Troubleshooting:
-      - Troubleshooting: Troubleshooting.md
-      - Known Hardware Issues: HardwareIssues.md
+    - Flashing the firmware: Flashing.md
+    - Operation:
+      - Main Menu: Menu.md
+      - Settings: Settings.md
+      - Debug Menu: DebugMenu.md
+      - Power: Power.md
+      - Temperature: Temperature.md
+    - Startup Logo: Logo.md
+    - Hardware:
+      - Hall Sensor (Pinecil): HallSensor.md
+      - Hardware Notes: Hardware.md
+      - Troubleshooting:
+        - Troubleshooting: Troubleshooting.md
+        - Known Hardware Issues: HardwareIssues.md
+    - Translations: Translation.md
+    - Development: Development.md
 
 
 theme: readthedocs
