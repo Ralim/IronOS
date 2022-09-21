@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Temperature/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Tip temperature measurement - IronOS</title>
+    <title>Temperature - IronOS</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Tip temperature measurement";
+        var mkdocs_page_name = "Temperature";
         var mkdocs_page_input_path = "Temperature.md";
         var mkdocs_page_url = "/IronOS/Temperature/";
       </script>
@@ -48,12 +48,65 @@
                 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                <li class="toctree-l1"><a class="reference internal" href="../Flashing/">Flashing the firmware</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Operation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../Menu/">Main Menu</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../Settings/">Settings</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DebugMenu/">Debug Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Power/">Power</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Temperature</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#how-a-thermocouple-works-brief">How a thermocouple works (brief)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-these-irons-implement-the-temperature-reading">How these irons implement the temperature reading</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implications-of-this">Implications of this</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#reading-accuracy-vs-heating-performance-tradeoff">Reading accuracy vs Heating performance tradeoff</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tip-heat-up-lag-time">Tip heat up lag time</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complexity-of-measurement">Complexity of measurement</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Logo/">Startup Logo</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Hardware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../HallSensor/">Hall Sensor (Pinecil)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Troubleshooting</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Translation/">Translations</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Development/">Development</a>
+                </li>
               </ul>
       </div>
     </div>
@@ -69,7 +122,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Tip temperature measurement</li>
+          <li>Operation &raquo;</li>
+      <li>Temperature</li>
     <li class="wy-breadcrumbs-aside">
         <a href="https://github.com/ralim/IronOS/edit/master/docs/Temperature.md"
           class="icon icon-github"> Edit on GitHub</a>
@@ -115,6 +169,10 @@ This offset that is linear to handle temperature is as of current not modelled i
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Power/" class="btn btn-neutral float-left" title="Power"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Logo/" class="btn btn-neutral float-right" title="Startup Logo">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -140,6 +198,10 @@ This offset that is linear to handle temperature is as of current not modelled i
         </span>
     
     
+      <span><a href="../Power/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Logo/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
