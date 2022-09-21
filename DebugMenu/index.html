@@ -200,7 +200,7 @@ This can be used with RTip for assessing temperature processing performance.</p>
 <p>This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C. Range of 20-40 °C is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
 This is used for CJC of the tip temperature.</p>
 <blockquote>
-<p>If CHan is extremely high, this indicates the temperature sensor isn't reading correctly (<a href="/Documentation/Troubleshooting.md">see Troubleshooting</a>)</p>
+<p>If CHan is extremely high, this indicates the temperature sensor isn't reading correctly (<a href="https://ralim.github.io/IronOS/Troubleshooting/">see Troubleshooting</a>)</p>
 </blockquote>
 <h3 id="max-c">Max C</h3>
 <p>This indicates the max temperature in °C that the system estimates it can measure the tip reliably to.
@@ -225,7 +225,7 @@ As this is a high-water mater, you should only trust this once you have walked t
 <p>This indicates the high-water mark for the stack for the PID thread. The smaller this number is, the less headroom we have in the stack.</p>
 <h3 id="hall">Hall</h3>
 <p>This appears if your device is capable of having a hall effect sensor installed (Pinecil).
-This shows the current magnetic field strength reading from the sensor. It is used to check if the sensor is operational, and for diagnostics and optimal placement of magnets on a stand (higher number is better/stronger). <a href="/Documentation/HallSensor.md">See Hall Sensor for details</a>. </p>
+This shows the current magnetic field strength reading from the sensor. It is used to check if the sensor is operational, and for diagnostics and optimal placement of magnets on a stand (higher number is better/stronger). <a href="https://ralim.github.io/IronOS/HallSensor/">See Hall Sensor for details</a>. </p>
 <h1 id="pd-debug-menu">PD Debug menu</h1>
 <p>On the Pinecil; if the iron is booted up while long holding the front button (<code>+</code>); it will show an extra hidden menu for inspecting USB-PD power adapters. We can also connect to any PD USB power to check Vbus status, even some cell phones with a USB-C port will work if it is PD. It will not show PD messages when Pinecil is powered by DC port, QC, or USB 5V (non-PD). For example, if you connect to a QC charger, you may simply see "PD State 6" which indicates "waiting for source" as no PD messages will be ever be sent and you will not be able to use (<code>+</code>) to scroll through PD negotiated messages.</p>
 <p>Pressing (<code>+</code>) cycles through elements, and (<code>-</code>) or unplugging will exit the menu.</p>
