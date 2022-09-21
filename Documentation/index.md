@@ -1,12 +1,4 @@
-![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
-![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
-![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
-
 # IronOS - Flexible Soldering iron control Firmware
-
-_This repository was formerly known as TS100, it's the same great code. Just with more supported devices._
-
-Originally conceived as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.
 
 The firmware implements all of the standard features of a 'smart' soldering iron, with lots of little extras and tweaks.
 I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
@@ -18,7 +10,7 @@ Currently **31** languages are supported. When downloading the firmware for your
 
 This project is considered feature complete for use as a soldering iron, _so please suggest any feature improvements you would like!_
 
-_This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
+_This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware._
 
 
 |   Device   | DC | QC | PD | EPR | BLE | Battery | Recommended |
@@ -34,13 +26,13 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 ## Getting Started
 
-To get started with IronOS firmware, please jump to [Getting Started Guide](Documentation/GettingStarted.md).
+To get started with IronOS firmware, please jump to [Getting Started Guide](https://ralim.github.io/IronOS/GettingStarted/).
 But the [TL;DR](https://www.merriam-webster.com/dictionary/TL%3BDR) is to press the button near the front of the iron to heat up. Use the button near the back of the iron to enter the settings menu.
 Long hold the rear button in soldering mode to exit back to the start screen.
 
 ## Installation
 
-For notes on installation for your device, please refer to the [Flashing Guide](Documentation/Flashing.md).
+For notes on installation for your device, please refer to the [Flashing Guide](https://ralim.github.io/IronOS/Flashing/).
 
 ## Key Features
 
@@ -59,7 +51,7 @@ For notes on installation for your device, please refer to the [Flashing Guide](
 - Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods)
 - (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
 - (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
-- [Custom boot up logo support](Documentation/Logo.md)
+- [Custom boot up logo support](https://ralim.github.io/IronOS/Logo/)
 - Automatic LCD rotation based on the orientation
 
 ## Menu System
@@ -70,40 +62,6 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 - Pressing the button near the tip enters the _soldering mode_
 - Pressing the button near the USB end enters the _settings menu_
 - When not in _soldering mode_, holding down the button near the tip will enter _soldering temperature adjust mode_ (This is the same as the one in the _soldering mode_, but allows to adjust the temperature before heating up), in _soldering mode_ however this will activate _boost mode_ as long as you hold down the button.
-- Holding down the button near the USB end will show the _[debug menu](Documentation/DebugMenu.md)._ In _soldering mode_ this ends the heating.
+- Holding down the button near the USB end will show the _[debug menu](https://ralim.github.io/IronOS/DebugMenu/)._ In _soldering mode_ this ends the heating.
 
-Operation details are over in the [Menu information.](Documentation/Menu.md)
-
-## Thanks
-
-If you love this firmware and want to continue my caffeine addiction, you can do so [here](https://paypal.me/RalimTek) (or email me for other options).
-I also want to give a shout out to all of the [Fantastic Contributors](https://github.com/Ralim/IronOS/graphs/contributors).
-
-Especially to the following users, who have helped in various ways that are massively appreciated:
-
-- [Dhiltonp](https://github.com/dhiltonp)
-- [Mrkvozrout](https://github.com/Mrkvozrout)
-- [JonnieZG](https://github.com/jonnieZG)
-- [Federck](https://github.com/federck)
-- [Jvitkauskas](https://github.com/jvitkauskas)
-- [Doegox](https://github.com/doegox)
-- [Perillamint](https://github.com/perillamint)
-- [GeminiServer](https://github.com/GeminiServer)
-- [Patrick Horlebein](https://github.com/PixelPirate)
-- [Firebie](https://github.com/Firebie)
-- [Agatti](https://github.com/agatti)
-- [Discip](https://github.com/discip)
-- [Paul Fertser](https://github.com/paulfertser)
-
-Plus the huge number of people who have contributed translations, your effort is massively appreciated.
-
-## Licence
-
-The code created by the community is GNU GPLv3. Unless noted elsewhere.
-Other components such as FreeRTOS/USB-PD have their own licence.
-
-## Commercial Use
-
-This software is provided as-is, so I cannot provide any commercial support for the firmware.
-However, you are more than welcome to distribute links to the firmware or provide irons with this software on them.
-Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around.
+Operation details are over in the [Menu information.](https://ralim.github.io/IronOS/Menu/)
