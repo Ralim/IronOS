@@ -14,7 +14,7 @@ This is the landing page of the firmware, from here you can choose to either go 
 
 By default this will show a screen similar to the one below:
 
-![Home Screen](/Documentation/images/HomeScreen.png)
+![Home Screen](https://raw.githubusercontent.com/Ralim/IronOS/dev/Documentation/images/HomeScreen.png)
 
 Note that this may be drawn mirrored depending on the orientation of your screen (detailed mode shows a different home screen).
 
