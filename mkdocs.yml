@@ -7,11 +7,11 @@ nav:
   - Home: index.md
   - Getting Started: GettingStarted.md
   - Flashing the firmware:
-      - MHP30:Flashing/MP30.md
-      - Pinecil V1:Flashing/Pinecil V1.md
-      - Pinecil V2:Flashing/Pinecil V2.md
+      - MHP30: Flashing/MHP30.md
+      - Pinecil V1: Flashing/Pinecil V1.md
+      - Pinecil V2: Flashing/Pinecil V2.md
       - TS80(P): Flashing/TS80(P).md
-      - TS100:Flashing/TS100.md
+      - TS100: Flashing/TS100.md
   - Operation:
       - Main Menu: Menu.md
       - Settings: Settings.md
