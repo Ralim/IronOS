@@ -18,7 +18,8 @@ Currently **31** languages are supported. When downloading the firmware for your
 
 This project is considered feature complete for use as a soldering iron, _so please suggest any feature improvements you would like!_
 
-_This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode._
+_This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware._
+
 
 
 |   Device   | DC | QC | PD | EPR | BLE | Battery | Recommended |
