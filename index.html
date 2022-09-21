@@ -51,12 +51,6 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#menu-system">Menu System</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#thanks">Thanks</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#licence">Licence</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#commercial-use">Commercial Use</a>
-    </li>
     </ul>
                 </li>
               </ul>
@@ -133,19 +127,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <p><img alt="CI" src="https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg" />
-<img alt="GitHub all" src="https://img.shields.io/github/downloads/ralim/IronOS/total" />
-<img alt="Latest Release" src="https://img.shields.io/github/v/release/ralim/IronOS" /></p>
-<h1 id="ironos-flexible-soldering-iron-control-firmware">IronOS - Flexible Soldering iron control Firmware</h1>
-<p><em>This repository was formerly known as TS100, it's the same great code. Just with more supported devices.</em></p>
-<p>Originally conceived as an alternative firmware for the TS100, this firmware has evolved into a complex soldering iron control firmware.</p>
+                <h1 id="ironos-flexible-soldering-iron-control-firmware">IronOS - Flexible Soldering iron control Firmware</h1>
 <p>The firmware implements all of the standard features of a 'smart' soldering iron, with lots of little extras and tweaks.
 I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.</p>
 <p>For soldering irons that are designed to be powered by 'smart' power sources (PD and QC), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100 &amp; Pinecil), settings for a cutoff voltage for battery protection are supported.</p>
 <p>Currently <strong>31</strong> languages are supported. When downloading the firmware for your soldering iron, take note of the language code in the file name.</p>
 <p>This project is considered feature complete for use as a soldering iron, <em>so please suggest any feature improvements you would like!</em></p>
-<p><em>This firmware does <strong>NOT</strong> support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited using the tool or python script and uploaded in DFU mode.</em></p>
+<p><em>This firmware does <strong>NOT</strong> support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware.</em></p>
 <table>
 <thead>
 <tr>
@@ -224,11 +213,11 @@ For soldering irons that are designed to be powered by batteries (TS100 &amp; Pi
 </table>
 <p>*Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is <strong><em>no longer recommended</em></strong>.</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>To get started with IronOS firmware, please jump to <a href="Documentation/GettingStarted.md">Getting Started Guide</a>.
+<p>To get started with IronOS firmware, please jump to <a href="https://ralim.github.io/IronOS/GettingStarted/">Getting Started Guide</a>.
 But the <a href="https://www.merriam-webster.com/dictionary/TL%3BDR">TL;DR</a> is to press the button near the front of the iron to heat up. Use the button near the back of the iron to enter the settings menu.
 Long hold the rear button in soldering mode to exit back to the start screen.</p>
 <h2 id="installation">Installation</h2>
-<p>For notes on installation for your device, please refer to the <a href="Documentation/Flashing.md">Flashing Guide</a>.</p>
+<p>For notes on installation for your device, please refer to the <a href="https://ralim.github.io/IronOS/Flashing/">Flashing Guide</a>.</p>
 <h2 id="key-features">Key Features</h2>
 <ul>
 <li>PID style iron temperature control</li>
@@ -246,7 +235,7 @@ Long hold the rear button in soldering mode to exit back to the start screen.</p
 <li>Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods)</li>
 <li>(TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count</li>
 <li>(TS80/TS80P/Pinecil) Power bank operating voltage is displayed</li>
-<li><a href="Documentation/Logo.md">Custom boot up logo support</a></li>
+<li><a href="https://ralim.github.io/IronOS/Logo/">Custom boot up logo support</a></li>
 <li>Automatic LCD rotation based on the orientation</li>
 </ul>
 <h2 id="menu-system">Menu System</h2>
@@ -256,36 +245,9 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 <li>Pressing the button near the tip enters the <em>soldering mode</em></li>
 <li>Pressing the button near the USB end enters the <em>settings menu</em></li>
 <li>When not in <em>soldering mode</em>, holding down the button near the tip will enter <em>soldering temperature adjust mode</em> (This is the same as the one in the <em>soldering mode</em>, but allows to adjust the temperature before heating up), in <em>soldering mode</em> however this will activate <em>boost mode</em> as long as you hold down the button.</li>
-<li>Holding down the button near the USB end will show the <em><a href="Documentation/DebugMenu.md">debug menu</a>.</em> In <em>soldering mode</em> this ends the heating.</li>
+<li>Holding down the button near the USB end will show the <em><a href="https://ralim.github.io/IronOS/DebugMenu/">debug menu</a>.</em> In <em>soldering mode</em> this ends the heating.</li>
 </ul>
-<p>Operation details are over in the <a href="Documentation/Menu.md">Menu information.</a></p>
-<h2 id="thanks">Thanks</h2>
-<p>If you love this firmware and want to continue my caffeine addiction, you can do so <a href="https://paypal.me/RalimTek">here</a> (or email me for other options).
-I also want to give a shout out to all of the <a href="https://github.com/Ralim/IronOS/graphs/contributors">Fantastic Contributors</a>.</p>
-<p>Especially to the following users, who have helped in various ways that are massively appreciated:</p>
-<ul>
-<li><a href="https://github.com/dhiltonp">Dhiltonp</a></li>
-<li><a href="https://github.com/Mrkvozrout">Mrkvozrout</a></li>
-<li><a href="https://github.com/jonnieZG">JonnieZG</a></li>
-<li><a href="https://github.com/federck">Federck</a></li>
-<li><a href="https://github.com/jvitkauskas">Jvitkauskas</a></li>
-<li><a href="https://github.com/doegox">Doegox</a></li>
-<li><a href="https://github.com/perillamint">Perillamint</a></li>
-<li><a href="https://github.com/GeminiServer">GeminiServer</a></li>
-<li><a href="https://github.com/PixelPirate">Patrick Horlebein</a></li>
-<li><a href="https://github.com/Firebie">Firebie</a></li>
-<li><a href="https://github.com/agatti">Agatti</a></li>
-<li><a href="https://github.com/discip">Discip</a></li>
-<li><a href="https://github.com/paulfertser">Paul Fertser</a></li>
-</ul>
-<p>Plus the huge number of people who have contributed translations, your effort is massively appreciated.</p>
-<h2 id="licence">Licence</h2>
-<p>The code created by the community is GNU GPLv3. Unless noted elsewhere.
-Other components such as FreeRTOS/USB-PD have their own licence.</p>
-<h2 id="commercial-use">Commercial Use</h2>
-<p>This software is provided as-is, so I cannot provide any commercial support for the firmware.
-However, you are more than welcome to distribute links to the firmware or provide irons with this software on them.
-Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around.</p>
+<p>Operation details are over in the <a href="https://ralim.github.io/IronOS/Menu/">Menu information.</a></p>
               
             </div>
           </div><footer>
@@ -337,5 +299,5 @@ Please do not re-host the files, but rather link to this page, so that there are
 
 <!--
 MkDocs version : 1.3.1
-Build Date UTC : 2022-09-21 09:20:58.889745+00:00
+Build Date UTC : 2022-09-21 09:23:47.108670+00:00
 -->
