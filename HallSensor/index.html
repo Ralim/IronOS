@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/HallSensor/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Hall Effect Sensor - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Hall Effect Sensor";
+        var mkdocs_page_input_path = "HallSensor.md";
+        var mkdocs_page_url = "/IronOS/HallSensor/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Hall Effect Sensor</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/HallSensor.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="hall-effect-sensor">Hall Effect Sensor</h1>
+<h2 id="sleep-mode-menu">Sleep Mode Menu</h2>
+<p>In Sleep mode, the iron automatically lowers the temperature to 150 °C (default). This default was chosen as it is just below the melting point of many solders. A stand-by lower temperature helps reduce the rate of oxidation and prevents damage to iron tips. In general, when not using the iron, unplug it or let it sleep to increase the longevity of replaceable tips. The default sleep temperature can be customized.</p>
+<p>Simply moving the iron or pressing any button will wake it back up into soldering mode.</p>
+<h3 id="optional-hall-effect-feature-pinecil-only">Optional Hall Effect Feature (Pinecil only):</h3>
+<p>Inside the <a href="https://github.com/Ralim/IronOS/blob/dev/Documentation/Settings.md#setting-sleep-temp">Sleep Menu</a> is an additional type of sleep setting. Pinecil has an unpopulated footprint (<strong>U14</strong>) for a hall effect sensor, Silicon Labs <strong>Si7210-B-00-IV</strong>. After installing the hall effect sensor (HES), it is possible to auto-trigger Pinecil to enter sleep mode when it enters the stand, and <em>Zzzz</em> will appear (or text in detailed mode). This could be a fun enhancement for any Pinecil and adds a feature typically only found in more expensive high-end irons. The HES is available at many electronic stores for ~$2-$6.</p>
+<p>After installing the HES on the PCB, place a magnet on the stand close enough to the sensor to activate one of ten user selectable settings.
+  - 0=off, 1=1000, 2=750, 3=500, 4=250, 5=150, 6=100, 7=75, 8=50, 9=25   (9 has the highest sensitivity to magnets)
+  - Setting of 1 might be used if you solder on PCBs with magnets and do not wish Pinecil to auto-sleep constantly. A very strong/large magnet would be required on the stand to activate the sleep mode if you use setting 1.
+  - Setting of 9 would be useful if you only had a small magnet and are not concerned about Pinecil falsely triggering sleep mode near magnetized items/tools.
+  - Actively watch the <em>hall</em> number change while you slowly move the magnet around to seek the best locations &amp; whether you have too many or too few magnets. Position the magnet(s) where you have the highest hall number will ensure consistent sleep mode when you place the iron in the stand. This requires some experimenting.
+  - <a href="/Documentation/DebugMenu.md">See debug menu for how to display the <em>Hall</em> number</a>
+  - Note that the sensor is physically located near the copper contacts for the tip at the front of the handle. <a href="https://files.pine64.org/doc/Pinecil/Pinecil_schematic_v1.0a_20201120.pdf">Reference Schematics U14</a>.
+  - Neodymium magnets are recommended. If using small magnets, 2-3 may be required, but too many could also be detrimental.
+  - Positioning/type/quantity of magnets is important for best results. Sometimes too many magnets breaks the effect by distorting the magnetic field <strong><a href="https://www.youtube.com/shorts/afkqKwCX00I">as seen in this demo video</a></strong>. The video shows magnets at the top of the stand, and the pinecil goes correctly into Zzzz with <em>only</em> those magnets. When more magnets are added at the side, the Pinecil did not go to sleep, which is contrary to the goal. See the PDF below for details on magnetic fields with SI7210-B.
+  - Orientation of North and South faces of magnets is important to increase reaction of the hall sensor <a href="https://www.silabs.com/documents/public/application-notes/an1018-si72xx-sensors.pdf">see data sheet SI7210-B-00-IV</a>.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

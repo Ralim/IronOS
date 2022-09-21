@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Settings/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Settings - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Settings";
+        var mkdocs_page_input_path = "Settings.md";
+        var mkdocs_page_url = "/IronOS/Settings/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Settings</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/Settings.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!-- This is an automatically generated file. DO NOT EDIT. Edit gen_menu_docs.py instead -->
+
+<h1 id="ironos-settings-menu">IronOS Settings Menu</h1>
+<p>The below breaks down the menu's and what each setting means.</p>
+<h2 id="menu-categories">Menu Categories</h2>
+<p>In the menu there are a few main categories that are used to keep the list manageable.</p>
+<h3 id="category-power-settings">Category: Power settings</h3>
+<p>Menu for settings related to power. Main settings to do with the input voltage.</p>
+<h3 id="category-soldering-settings">Category: Soldering settings</h3>
+<p>Settings for soldering mode, such as boost temps, the increment used when pressing buttons and if button locking is enabled.</p>
+<h3 id="category-sleep-mode">Category: Sleep mode</h3>
+<p>Settings to do with power saving, such as sleep mode, sleep temps, and shutdown modes.</p>
+<h3 id="category-user-interface">Category: User interface</h3>
+<p>User interface related settings, such as units.</p>
+<h3 id="category-advanced-settings">Category: Advanced settings</h3>
+<p>Advanced settings. Misc catchall for settings that don't fit anywhere else or settings that require some thought before use.</p>
+<h2 id="settings">Settings</h2>
+<p>These are all of the settings possible in the menu.
+<strong>Not all settings are visible for all devices.</strong>
+For example, the TS100 does not have USB-PD settings.</p>
+<p>When using the device, if unsure you can pause (press nothing) on a setting and after a short delay help text will scroll across the screen.
+This is the "on device help text".</p>
+<h3 id="setting-power-source">Setting: Power source</h3>
+<p>When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery.</p>
+<p>On device help text:</p>
+<p>Set cutoff voltage to prevent battery over-drain. (DC 10V) (S=3.3V per cell, disable PWR limit)</p>
+<h3 id="setting-sleep-temp">Setting: Sleep temp</h3>
+<p>Temperature the device will drop down to while asleep. Typically around halfway between off and soldering temperature.</p>
+<p>On device help text:</p>
+<p>Tip temperature while in "sleep mode"</p>
+<h3 id="setting-sleep-timeout">Setting: Sleep timeout</h3>
+<p>How long of a period without movement / button-pressing is required before the device drops down to the sleep temperature.</p>
+<p>On device help text:</p>
+<p>Interval before "sleep mode" starts (s=seconds | m=minutes)</p>
+<h3 id="setting-shutdown-timeout">Setting: Shutdown timeout</h3>
+<p>How long of a period without movement / button-pressing is required before the device turns off the tip heater completely and returns to the main idle screen.</p>
+<p>On device help text:</p>
+<p>Interval before the iron shuts down (m=minutes)</p>
+<h3 id="setting-motion-sensitivity">Setting: Motion sensitivity</h3>
+<p>Scale of how sensitive the device is to movement. Higher numbers == more sensitive. 0 == motion detection turned off.</p>
+<p>On device help text:</p>
+<p>0=off | 1=least sensitive | ... | 9=most sensitive</p>
+<h3 id="setting-temperature-unit">Setting: Temperature unit</h3>
+<p>If the device shows temperatures in °C or °F.</p>
+<p>On device help text:</p>
+<p>C=Celsius | F=Fahrenheit</p>
+<h3 id="setting-detailed-idle-screen">Setting: Detailed idle screen</h3>
+<p>Should the device show an 'advanced' view on the idle screen. The advanced view uses text to show more details than the typical icons.</p>
+<p>On device help text:</p>
+<p>Display detailed info in a smaller font on idle screen</p>
+<h3 id="setting-display-orientation">Setting: Display orientation</h3>
+<p>If the display should rotate automatically or if it should be fixed for left- or right-handed mode.</p>
+<p>On device help text:</p>
+<p>R=right-handed | L=left-handed | A=automatic</p>
+<h3 id="setting-boost-temp">Setting: Boost temp</h3>
+<p>When the unit is in soldering mode. You can hold down the button at the front of the device to temporarily override the soldering temperature to this value. This SETS the temperature, it does not ADD to it.</p>
+<p>On device help text:</p>
+<p>Tip temperature used in "boost mode"</p>
+<h3 id="setting-start-up-behavior">Setting: Start-up behavior</h3>
+<p>When the device powers up, should it enter into a special mode. These settings set it to either start into soldering mode, sleeping mode or auto mode (Enters into soldering mode on the first movement).</p>
+<p>On device help text:</p>
+<p>O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved</p>
+<h3 id="setting-cooldown-flashing">Setting: Cooldown flashing</h3>
+<p>If the idle screen should blink the tip temperature for attention while the tip is over 50°C. Intended as a 'tip is still hot' warning.</p>
+<p>On device help text:</p>
+<p>Flash temperature reading at idle if tip is hot</p>
+<h3 id="setting-calibrate-cjc-at-next-boot">Setting: Calibrate CJC at next boot</h3>
+<p>Note:
+If the difference between the target temperature and the measured temperature is less than 5°C, <strong>calibration is NOT required at all</strong>.</p>
+<p>This is used to calibrate the offset between ADC and Op-amp of the tip at next boot (Idealy it has to be done at boot, before internal components get warm.). But this setting is <strong><em>not permanent!</em></strong> It resetes after the calibration is completed (At next boot the checkbox will be unchecked!). If you need to repeat the calibration however, you have to set the checkbox <em>again</em>, unplug your device and let it cool down to room/ambient temperature &amp; power it up, idealy while it sits on the desk.</p>
+<p>Hence, never repeat the calibration in quick succession!</p>
+<p>On device help text:</p>
+<p>Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is &lt; 5°C)</p>
+<h3 id="setting-restore-default-settings">Setting: Restore default settings</h3>
+<p>Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.</p>
+<p>On device help text:</p>
+<p>Reset default settings for this firmware ver.</p>
+<h3 id="setting-calibrate-input-voltage">Setting: Calibrate input voltage</h3>
+<p>Enters an adjustment mode where you can gradually adjust the measured voltage to compensate for any unit-to-unit variance in the voltage sense resistors.</p>
+<p>On device help text:</p>
+<p>Start VIN calibration (long press to exit)</p>
+<h3 id="setting-detailed-solder-screen">Setting: Detailed solder screen</h3>
+<p>Should the device show an 'advanced' soldering view. This is a text-based view that shows more information at the cost of no nice graphics.</p>
+<p>On device help text:</p>
+<p>Display detailed info in a smaller font on soldering screen</p>
+<h3 id="setting-scrolling-speed">Setting: Scrolling speed</h3>
+<p>How fast the description text scrolls when hovering on a menu. Faster speeds may induce tearing, but allow reading the whole description faster.</p>
+<p>On device help text:</p>
+<p>Speed info text scrolls past at (S=slow | F=fast)</p>
+<h3 id="setting-qc-voltage">Setting: QC voltage</h3>
+<p>This adjusts the maximum voltage the QC negotiation will adjust to. Does NOT affect USB-PD. Should be set safely based on the current rating of your power supply.</p>
+<p>On device help text:</p>
+<p>Max QC voltage the iron should negotiate for</p>
+<h3 id="setting-pd-timeout">Setting: PD timeout</h3>
+<p>How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values.</p>
+<p>On device help text:</p>
+<p>PD negotiation timeout in 100ms steps for compatibility with some QC chargers</p>
+<h3 id="setting-power-limit">Setting: Power limit</h3>
+<p>Allows setting a custom wattage for the device to aim to keep the AVERAGE power below. The unit can't control its peak power no matter how you set this. (Except for MHP30 which will regulate nicely to this). If USB-PD is in use, the limit will be set to the lower of this and the supplies advertised wattage.</p>
+<p>On device help text:</p>
+<p>Maximum power the iron can use (W=watt)</p>
+<h3 id="setting-swap-keys">Setting: Swap + - keys</h3>
+<p>Swaps which button increments and decrements on temperature change screens.</p>
+<p>On device help text:</p>
+<p>Reverse assignment of buttons for temperature adjustment</p>
+<h3 id="setting-temp-change-short">Setting: Temp change short</h3>
+<p>Factor by which the temperature is changed with a quick press of the buttons.</p>
+<p>On device help text:</p>
+<p>Temperature-change-increment on short button press</p>
+<h3 id="setting-temp-change-long">Setting: Temp change long</h3>
+<p>Factor by which the temperature is changed with a hold of the buttons.</p>
+<p>On device help text:</p>
+<p>Temperature-change-increment on long button press</p>
+<h3 id="setting-power-pulse">Setting: Power pulse</h3>
+<p>Enables and sets the wattage of the power pulse. Power pulse causes the device to briefly turn on the heater to draw power to avoid power banks going to sleep.</p>
+<p>On device help text:</p>
+<p>Intensity of power of keep-awake-pulse (watt)</p>
+<h3 id="setting-hall-sensor-sensitivity">Setting: Hall sensor sensitivity</h3>
+<p>If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the device into sleep mode.</p>
+<p>On device help text:</p>
+<p>Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)</p>
+<h3 id="setting-allow-locking-buttons">Setting: Allow locking buttons</h3>
+<p>If locking the buttons against accidental presses is enabled.</p>
+<p>On device help text:</p>
+<p>While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)</p>
+<h3 id="setting-minimum-voltage">Setting: Minimum voltage</h3>
+<p>When powered by a battery, this adjusts the minimum voltage per cell before shutdown. (This is multiplied by the cell count.)</p>
+<p>On device help text:</p>
+<p>Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)</p>
+<h3 id="setting-anim-loop">Setting: Anim. loop</h3>
+<p>Should the menu animations loop. Only visible if the animation speed is not set to "Off"</p>
+<p>On device help text:</p>
+<p>Loop icon animations in main menu</p>
+<h3 id="setting-anim-speed">Setting: Anim. speed</h3>
+<p>How fast should the menu animations loop, or if they should not loop at all.</p>
+<p>On device help text:</p>
+<p>Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)</p>
+<h3 id="setting-power-pulse-delay">Setting: Power pulse delay</h3>
+<p>Adjusts the time interval between power pulses. Longer gaps reduce undesired heating of the tip, but needs to be fast enough to keep your power bank awake.</p>
+<p>On device help text:</p>
+<p>Delay before keep-awake-pulse is triggered (x 2.5s)</p>
+<h3 id="setting-power-pulse-duration">Setting: Power pulse duration</h3>
+<p>How long should the power pulse go for. Some power banks require seeing the power draw be sustained for a certain duration to keep awake. Should be kept as short as possible to avoid wasting power / undesired heating of the tip.</p>
+<p>On device help text:</p>
+<p>Keep-awake-pulse duration (x 250ms)</p>
+<h3 id="setting-language-en-english">Setting: Language:  EN     English</h3>
+<p>Changes the device language on multi-lingual builds.</p>
+<p>On device help text:</p>
+<p>Current firmware language</p>
+<h3 id="setting-screen-brightness">Setting: Screen brightness</h3>
+<p>Display brightness. Higher values age the OLED faster due to burn-in. (However, it is notable that most of these screens die from other causes first.)</p>
+<p>On device help text:</p>
+<p>Adjust the OLED screen brightness</p>
+<h3 id="setting-invert-screen">Setting: Invert screen</h3>
+<p>Inverts the entire OLED.</p>
+<p>On device help text:</p>
+<p>Invert the OLED screen colors</p>
+<h3 id="setting-boot-logo-duration">Setting: Boot logo duration</h3>
+<p>Sets the duration for the boot logo (s=seconds).</p>
+<p>On device help text:</p>
+<p>Set Boot logo duration (off | s=seconds | infinity)</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Flashing/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Flashing / Upgrading your iron - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Flashing / Upgrading your iron";
+        var mkdocs_page_input_path = "Flashing.md";
+        var mkdocs_page_url = "/IronOS/Flashing/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Flashing / Upgrading your iron</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/Flashing.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="flashing-upgrading-your-iron">Flashing / Upgrading your iron</h1>
+<h2 id="downloading-source-file">Downloading source file</h2>
+<p>In the development of this firmware, there are three <em>types</em> of firmware released.
+These are the "Main" stable releases, which generally have high confidence in being bug free.
+Release candidates are released slightly more often, and these are generally perfectly fine for everyday use. These are released early to allow for translation checking and for wonderful people to help spot bugs and regressions.
+Finally, there are the "mainline" builds, which are built from the main git branch.
+These are built on every change and can be found on the Actions tab (see below).</p>
+<h3 id="main-release">Main release</h3>
+<p>Main releases are made to the <a href="https://github.com/Ralim/IronOS/releases">releases page</a>.
+Download the zip file that matches your model of soldering iron and extract it.
+Select the appropriate file type for your unit, in general Miniware devices need <code>.hex</code> and Pinecil needs <code>.dfu</code>.
+Flash according to details below</p>
+<h3 id="bleeding-edge-latest">Bleeding edge / latest</h3>
+<p>For the <em>latest</em> code, you will need to download the zip file from the artifacts page on the build for what you want.
+Head to the <a href="https://github.com/Ralim/IronOS/actions">Actions</a> page and then select the run for the appropriate branch you would like.
+In general you probably want <code>master</code>.</p>
+<p>Once you click on a run, scroll down to the "Artifacts" section and then click on your model to download a zip file.
+Then this works the same as a production release (use the correct file).</p>
+<h1 id="miniware-devices-ts100-ts80-ts80p-mhp30">Miniware devices (TS100, TS80, TS80P &amp; MHP30)</h1>
+<p>This is completely safe, but if it goes wrong just put the <code>.hex</code> file from the official website (<a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=868&amp;extra=page%3D1">TS100</a>, <a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=3202&amp;extra=page%3D1">TS80</a>, <a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=4070&amp;extra=page%3D1">TS80P</a> &amp; <a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=4385&amp;extra=page%3D1">MHP30</a>) onto the unit and you're back to the old firmware. Downloads for the <code>.hex</code> files to flash are available on the <a href="https://github.com/Ralim/IronOS/releases">releases page.</a> The file you want is called <em>(MODEL)_EN.hex</em> unless you want the translations, they are (MODEL)_<em>language short name</em>.hex. Where (MODEL) is either TS100 or TS80.</p>
+<p>Officially the bootloader on the devices only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under Mac, and can be made to work under Linux <em>sometimes</em>. Details over on the <a href="https://github.com/Ralim/ts100/wiki/Upgrading-Firmware">wiki page</a>.</p>
+<ol>
+<li>Hold the button closest to the tip (MHP30 the left button on the back), and plug in the USB to the computer.</li>
+<li>The unit will appear as a USB drive. (Screen will say <code>DFU</code> on it.)</li>
+<li>Drag the <code>.hex</code> file onto the USB drive.</li>
+<li>The unit will disconnect and reconnect.</li>
+<li>The filename will have changed to end in <em>.RDY</em> or <em>.ERR</em></li>
+<li>If it ends with <em>.RDY</em> you're done! Otherwise, something went wrong.</li>
+<li>If it didn't work the first time, try copying the file again without disconnecting the device, often it will work on the second shot.</li>
+<li>Disconnect the USB and power up the device. You're good to go.</li>
+</ol>
+<p>For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer, for easier installation follow the guide at the end of this document.</p>
+<p>On the bottom of the MCU riser PCB, there are 4 pads for programming. On v2.51A PCB revision <code>USB_D+</code> is shorted to <code>SWDIO</code> and <code>USB_D-</code> is shorted to <code>SWCLK</code> so debugging works without disassembly (attach while staying in the bootloader). Installing <a href="https://github.com/Ralim/IronOS-dfu">IronOS-dfu</a> is recommended as it allows reliable flashing of binary files with <a href="http://dfu-util.sourceforge.net/">dfu-util</a>.</p>
+<p>There is a complete device flash backup included in this repository. (Note this includes the bootloader, so will need an SWD programmer to load onto the unit).</p>
+<p>For the TS80 the SWD pins are used for the QC negotiation, so you can actually connect to the SWD power via the USB connector.</p>
+<h2 id="mac">Mac</h2>
+<p>sgr1ff1n (Shane) commented in <a href="https://github.com/Ralim/ts100/issues/11">issue 11</a> that upgrading worked on their Mac as per normal:</p>
+<blockquote>
+<p>I just wanted to say that I was able to update the firmware on my ts100 from the stock version to 1.08 found in this repository using my Mac. I simply followed the same steps however through Finder. I have a MacBook Pro (13-inch, Mid 2012) running Sierra 10.12.4 (16E195).</p>
+</blockquote>
+<h2 id="linux">Linux</h2>
+<p>While in the past there were reports of unreliable upgrades, the consensus in <a href="https://github.com/Ralim/ts100/issues/11">issue 11</a> is that things work mostly as expected in Linux.</p>
+<p>@awigen has contributed a script <a href="https://raw.githubusercontent.com/Ralim/ts100/master/Flashing/flash_ts100_linux.sh">flash_ts100_linux.sh</a> that works on Ubuntu 16.04 as well as other distros.</p>
+<p>If you want to do it manually (or if the script does not work for some reason) the general procedure is the same as for Windows, the differences are in the way to mount the unit and copy the firmware.
+Remember that after flashing, the firmware filename will have changed to end in <code>.RDY</code> or <code>.ERR</code> or <code>.NOT</code> and only <code>.RDY</code> means the flashing was successful!</p>
+<ul>
+<li>The unit has to be mounted as <code>msdos</code> type (thanks @balrog-kun for having spotted it). You may disable automount, but unmounting the automounted drive and remounting as <code>msdos</code> works fine. You do not need to turn off automounting, but you do need to unmount the device with <code>umount</code>.</li>
+<li>It is recommended to use an all-caps filename for the firmware, even if successful flashing were done with lower case names.</li>
+<li>Avoid USB hubs, plug directly in your computer.</li>
+<li>If it fails, try again several times without unplugging. Just let it remount.</li>
+</ul>
+<p>Example, to be run as root, once the unit has been plugged in DFU mode and auto-mounted:</p>
+<pre><code class="language-bash">FW=ts100.hex
+unset NAME
+eval $(lsblk -P -p -d --output NAME,MODEL|grep &quot;DFU[ _]Disk&quot;)
+[ -z ${NAME+x} ] &amp;&amp; exit 1  # Could not find DFU device
+umount &quot;$NAME&quot;
+mkdir /tmp/mntdfu
+mount -t msdos &quot;$NAME&quot; /tmp/mntdfu
+cp &quot;$FW&quot; &quot;/tmp/mntdfu/$(basename $FW|tr a-z A-Z)&quot;
+sync
+umount /tmp/mntdfu
+rmdir /tmp/mntdfu
+</code></pre>
+<p>Device will reboot and automount will rerun if not disabled.
+Check the extension of your firmware, it should be <code>.RDY</code> now.</p>
+<h1 id="pinecil-v2-pine64">Pinecil V2 (Pine64)</h1>
+<ul>
+<li>The MCU in V2 is Bouffalo BL706 and does <em>not</em> use usb-dfu for flashing as the previous MCU did.</li>
+<li>The current firmware (2.18) is very fresh and no upgrade is available/needed.</li>
+<li>When an update is released for V2, then IronOS will also include an update method to follow.</li>
+<li>Background on the <a href="https://lupyuen.github.io/articles/bl706">BL706 chipset</a></li>
+</ul>
+<h1 id="pinecil-v1-pine64">Pinecil V1 (Pine64)</h1>
+<ul>
+<li>The MCU used in Pinecil supports usb-dfu. Reference <a href="https://wiki.pine64.org/wiki/Pinecil">Pinecil Wiki</a>.</li>
+<li>Recommended Updater: the <a href="https://github.com/pine64/pinecil-firmware-updater/releases">Pine64 Updater</a>, is an easy-to-use GUI app. It is fast and works in several types of OS, i.e. Windows/Mac. It will automatically fetch the newest stable version of IronOS from GitHub.</li>
+<li>Troubleshooting: if you have issues using the Pine64 Updater or your install fails, please go to troubleshooting tips below.</li>
+<li>Community chat: if troubleshooting doesn't work, then join the Pine64 &gt; Pinecil channel. There are knowledgeable members in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine volunteers/members can see advice for Pinecil and related items or just get tips on which Power supply to purchase.</li>
+<li>One advantage of Pinecil is that you cannot permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. But no worries, simply re-flashing with a working firmware copy will fix everything.</li>
+<li>USB-C cable is required to do an update. Generally, all USB controllers work, but some hubs have issues, so it is preferred to avoid USB hubs for updates.</li>
+<li>Alternate Update Methods: if your OS is not currently supported by the <a href="https://github.com/pine64/pinecil-firmware-updater/releases">Updater</a> or it does not meet your needs, i.e., you want to install a beta version, the below manual methods may be used. </li>
+</ul>
+<h2 id="linux-and-mac">Linux and Mac</h2>
+<h3 id="steps">Steps</h3>
+<p>⛔  Do not use the DC barrel jack while updating firmware or you may destroy your PC. ⛔</p>
+<ol>
+<li>Highly recommend updating <code>dfu-util</code> to the newest version before starting.</li>
+<li>Download and extract the firmware package from GitHub <a href="https://github.com/Ralim/IronOS/releases">IronOS Releases</a>.</li>
+<li>Enter DFU mode: press and hold (<code>-</code>) button at the back of the iron before you connect the USB-C cable.</li>
+<li>Connect USB to PC, and USB-C to back of Pinecil, keep holding (<code>-</code>) button down.</li>
+<li>Once the USB cable is connected at two ends, wait ~10 seconds more, then release the (<code>-</code>) button.</li>
+<li>The screen will stay <strong>black/off</strong> to indicate the Pinecil is in DFU mode. This is normal.</li>
+<li>Using <code>dfu-util</code> you can flash the firmware using a command line like this:</li>
+</ol>
+<pre><code>dfu-util -D Pinecil_EN.dfu
+</code></pre>
+<p>Choose the file name from the folder with the appropriate 2-letter country code for your chosen language (i.e., EN = English).</p>
+<h3 id="troubleshooting">Troubleshooting:</h3>
+<ul>
+<li>If you get a message stating that <code>More than one DFU capable USB device found!</code> when running the above command you probably have an old version of <code>dfu-util</code> installed. Might be worth updating. You can still install on the old version, but you will have to specify which DFU interface to flash to. Running the command <code>dfu-util -l</code> will show you if there are several DFU devices detected. Example:</li>
+</ul>
+<pre><code>Found DFU: [28e9:0189] ver=0100, devnum=48, cfg=1, intf=0, path=&quot;1-1&quot;, alt=1, name=&quot;@Option Bytes  /0x1FFFF800/01*016Be&quot;, serial=&quot;??&quot;
+Found DFU: [28e9:0189] ver=0100, devnum=48, cfg=1, intf=0, path=&quot;1-1&quot;, alt=0, name=&quot;@Internal Flash  /0x08000000/128*001Kg&quot;, serial=&quot;??&quot;
+</code></pre>
+<p>In this example we see that more than one part of the Pinecil is detected as a DFU interface and we need to specify which one we want to flash to. We want the <code>Internal Flash</code> so in this case we can use <code>alt=0</code> to identify which interface to target. The command would then look like this:</p>
+<pre><code>dfu-util -D Pinecil_EN.dfu -a 0
+</code></pre>
+<ul>
+<li>Note: if you use an older release of <code>dfu-util</code> and do not see <code>alt=0, name="@Internal Flash  /0x08000000/128*001Kg"</code> when running <code>dfu-util -l</code> you likely will not be able to update without first updating 'dfu-util'.</li>
+<li>If your update is crashing part-way into the update, there is sometimes an issue with older/fussy USB controllers (they can show up/disappear/then show up again)<ul>
+<li>Try a direct connection to the USB port, do not use a USB hub, and use shorter cable. If possible, pick a port connected to the main board.</li>
+<li>Switch to a different PC/Laptop and use different ports. USB-C ports are recommended but some have also reported having a fussy C port.</li>
+<li>Hold down the (-) button for the entire firmware update, do not release until near the end.</li>
+</ul>
+</li>
+<li><code>DC Low</code> message: a pc/laptop cannot fully power Pinecil, it generally can only get 5 V (non-PD) to communicate for firmware updates and Pinecil will report 'DC Low'. This is normal.</li>
+<li>If <code>dfu-util</code> aborts with an error like
+  <code>dfu-util: Cannot open DFU device 28e9:0189 found on devnum 42 (LIBUSB_ERROR_IO)</code>
+  and <code>dmesg</code> reports USB errors like these
+  <code>kernel: usb 1-1: reset full-speed USB device number 42 using xhci_hcd
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: reset full-speed USB device number 42 using xhci_hcd
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: device descriptor read/64, error -71
+  kernel: usb 1-1: reset full-speed USB device number 42 using xhci_hcd
+  kernel: usb 1-1: Device not responding to setup address.
+  kernel: usb 1-1: Device not responding to setup address.
+  kernel: usb 1-1: device not accepting address 42, error -71</code>
+  then try to disable USB autosuspend.
+  This can be done with a set of udev rules specifically for the Pinecil:
+  <code>udev
+  SUBSYSTEM=="usb", ATTR{idVendor}=="28e9", ATTR{idProduct}=="0189", MODE:="0660"
+  SUBSYSTEM=="usb", ATTR{idVendor}=="28e9", ATTR{idProduct}=="0189", GROUP="plugdev"
+  SUBSYSTEM=="usb", ATTR{idVendor}=="28e9", ATTR{idProduct}=="0189", TEST=="power/control", ATTR{power/control}="on"</code></li>
+</ul>
+<h2 id="windows">Windows</h2>
+<p>Two Options for Windows</p>
+<h3 id="option-1-use-command-line">Option 1: use command line</h3>
+<h3 id="steps_1">Steps</h3>
+<p>⛔  Do not use the DC barrel jack while updating firmware or you may destroy your PC. ⛔</p>
+<ol>
+<li>Using command line <code>dfu-util</code> is similar to above for Linux / Mac.</li>
+<li>Highly recommend updating <code>dfu-util</code> to the newest version.</li>
+<li>Download and extract the firmware package from GitHub <a href="https://github.com/Ralim/IronOS/releases">IronOS Releases</a>.</li>
+<li>Enter DFU mode: press and hold (-) button at the back of the iron (do not release).</li>
+<li>Connect USB to PC, and USB-C to the back of Pinecil, keep holding (-) button down.</li>
+<li>Screen will stay <strong>black/off</strong> to indicate the Pinecil is in DFU mode. This is normal.</li>
+<li>After the USB cable is connected at both ends, wait ~10 seconds more, then release the (-) button.</li>
+<li>Open PowerShell or Command window.</li>
+<li>Change to the directory of the unzipped firmware files</li>
+<li>Using <code>dfu-util,</code>  flash the firmware using a command like this:</li>
+</ol>
+<pre><code>dfu-util -D Pinecil_EN.dfu
+</code></pre>
+<ul>
+<li>If you have errors, see Troubleshooting <a href="/Documentation/Flashing.md#troubleshooting">above</a>.</li>
+</ul>
+<h3 id="option-2-use-the-gui-tool-from-chip-vendor">Option 2: use the GUI tool from chip vendor</h3>
+<h3 id="steps_2">Steps</h3>
+<p>⛔  Do not use the DC barrel jack while updating firmware or you may destroy your PC. ⛔</p>
+<ol>
+<li>If you are uncomfortable with the command line, then this chip vendor supplied GUI tool/drivers is an option.</li>
+<li>Download and extract the firmware package from GitHub <a href="https://github.com/Ralim/IronOS/releases">IronOS Releases</a>.</li>
+<li>Download both the <code>GD32 MCU DFU TOOL</code> and the <code>GD32 Dfu Drivers</code>.</li>
+<li>GD32 DFU Tool <a href="http://www.gd32mcu.com/en/download?kw=GD32+MCU+Dfu+Tool&amp;lan=en">here</a>. If the link breaks, search for "GD32 MCU Dfu Tool" at this <a href="http://www.gd32mcu.com/en/download/">link</a>.</li>
+<li>GD32 DFU Drivers <a href="http://www.gd32mcu.com/en/download?kw=GD32+Dfu+Drivers&amp;lan=en">here</a>. If the link breaks, search for "GD32 Dfu Drivers" at this <a href="http://www.gd32mcu.com/en/download/">link</a>.</li>
+<li>Check properties of both downloads, tick Unblock if needed, then Unzip</li>
+<li>Install the drivers and the GD32 DFU tool (ignore prompts to update the tool).</li>
+<li>Enter DFU mode: press and hold (<code>-</code>) button at the back of Pinecil (do not release).</li>
+<li>Connect Pinecil to a PC via USB cable (do not release the (<code>-</code>) yet).</li>
+<li>Screen will stay <strong>black/off</strong> to indicate the Pinecil is in DFU mode. This is normal.</li>
+<li>You may hear a beep from Windows as it connects to Pinecil in DFU mode.</li>
+<li>If you see windows notification that it <code>does not recognize USB device</code>, then you didn't connect, repeat step 3-8.</li>
+<li>Open the GD32 DFU Tool (ignore prompts to update tool).</li>
+<li>At the top of the DFU tool, you should see <code>GD DFU DEVICE 1</code> appear if you successfully connected Pinecil.</li>
+<li>If DFU Device box at top is blank, then Pinecil is not connected in DFU mode, repeat steps 3-11.</li>
+<li>If it has been more than 10 seconds since you connected the USB cable, Release the (<code>-</code>) button. (don't use Upload from Device section)</li>
+<li>Select <code>Download to device</code> &gt; Open &gt; Browse to folder you unzipped in step 2.  </li>
+<li>Select the <code>hex</code> file for language. English is Pinecil_EN.hex , tick <code>Verify after download</code>.</li>
+<li>Click <code>OK</code> at bottom. After a few minutes you will see 0-100%, Download successfully!  Click <code>Leave DFU</code> at the top. </li>
+<li>Disconnect Pinecil cable from PC, plug it into a power supply.</li>
+<li>Do not need to press any buttons, a new screen should appear.</li>
+<li>
+<p>To confirm upgrade, hold the minus (<code>-</code>) button down for a few seconds, it then shows new firmware version v2.xx.x....date</p>
+</li>
+<li>
+<p>If you have errors, see Troubleshooting <a href="/Documentation/Flashing.md#troubleshooting">above</a>.</p>
+</li>
+</ol>
+<h2 id="faq">FAQ</h2>
+<h4 id="miniware-the-file-is-showing-up-with-the-extension-err">[Miniware] The file is showing up with the extension <code>.ERR</code></h4>
+<p>This can occur during the programming process if any of the checks in the bootloader fail. This is often triggered by anti-virus software or using a non-Windows host OS.</p>
+<p>First, try just copying the file a second time.</p>
+<ol>
+<li>Attach the iron in DFU mode.</li>
+<li>Copy the <code>.hex</code> file to the device.</li>
+<li>The device disconnects and connects with the <code>.ERR</code> file.</li>
+<li>Copy the same <code>.hex</code> file again <strong>⛔ DO NOT TRY AND DELETE THE OLD ONE ⛔</strong>.</li>
+<li>The device will disconnect and reconnect again.</li>
+<li>The device <em>should</em> now have the <code>.RDY</code> file.</li>
+<li>You're done.</li>
+</ol>
+<p>If this fails and you are on Mac or Linux reading the wiki page about programming can help. There is also a very long issue thread going through all of the different attempts around this too.</p>
+<p>If you are on Windows, it's often best to try another computer (friends, work, partners etc.).</p>
+<h4 id="miniware-device-randomly-disconnects-or-does-not-show-up-in-dfu-mode">[Miniware] Device randomly disconnects or does not show up in DFU mode</h4>
+<ol>
+<li>
+<p>Check if the USB cable you are using has the data pins; test it on another device. There are a surprisingly large number of micro-USB cables that are power <em>only</em>.</p>
+</li>
+<li>
+<p>Try other USB ports. Often different USB controllers will interact with the units differently due to design quirks in the Miniware design.</p>
+</li>
+</ol>
+<h3 id="miniware-alternative-bootloader">[Miniware] Alternative bootloader</h3>
+<p>If you are an advanced user, and you have used <code>usb-dfu</code> tools before, or you would like to learn; there is an alternative bootloader for these irons.
+This will <strong>NOT</strong> show up as a USB storage drive, but instead show up using a standard DFU protocol device. You can then use dfu tools or GUIs to upgrade the iron using the <code>.bin</code> files that are posted to the releases page.</p>
+<p>To install this alternative bootloader, follow the instructions <a href="https://github.com/Ralim/IronOS-dfu/blob/mainline/docs/Bootloader.md">here</a>.</p>
+<p>Note that this is only recommended for users who know what they are doing. If you don't understand how this works, please don't flash this.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

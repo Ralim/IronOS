@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/History/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Version Changes - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Version Changes";
+        var mkdocs_page_input_path = "History.md";
+        var mkdocs_page_url = "/IronOS/History/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Version Changes</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/History.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="version-changes">Version Changes</h1>
+<h2 id="v219">V2.19</h2>
+<ul>
+<li>Bug-fix Infinite Boot Logo</li>
+<li>Shutdown settings for MHP30</li>
+<li>Accelerometer sensitivity for MHP30</li>
+<li>Allow showing unique device ID</li>
+<li>Bug-fix chance of a power pulse at device boot</li>
+<li>Updated translations</li>
+<li>Improved documents, added features table</li>
+</ul>
+<h2 id="v218">V2.18</h2>
+<ul>
+<li>Support for animated bootup logo's</li>
+<li>Bootup logo's moved to their own IronOS-Meta repo</li>
+<li>New Vietnamese translation (limited due to screen size)</li>
+<li>Fixes for SC7A20 in TS80(P)</li>
+<li>Updated translations</li>
+<li>Better Instructions/documents</li>
+</ul>
+<h2 id="v217">V2.17</h2>
+<h3 id="big-changes">Big changes</h3>
+<ul>
+<li>Indicate status of VBus for modding Pinecil (debug menu)</li>
+<li>Better hall effect sensor sensitivity adjustment (larger range with more steps)</li>
+<li>Temperature increment will "round" to nearest multiple of increase amount</li>
+<li>Build setup migrated to Alpine (You can now build in docker easily, and on PinePhone/PinePhonePro)</li>
+<li>-&gt; Removed proprietary compiler for Pinecil RISCV now all uses normal gcc</li>
+<li>-&gt; Removed using the arm specific build of gcc for the one that alpine ships (Miniware devices)</li>
+<li>Logo generator python script creates <code>.dfu</code> files for ease of use with Pinecil</li>
+<li>Upgrades to translations</li>
+<li>Support for new GD32103 based TS100 units turning up on the market</li>
+<li>Raw hall effect reading now shows in the Pinecil debug menu</li>
+<li>Fixed automatic orientation for newer TS80P's with the SC7 accelerometer</li>
+<li>User interface slight changes</li>
+<li>New <code>metadata.zip</code> file to allow the Pine Updater to automatically fetch information on releases</li>
+</ul>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>VBus mod detection may not play well with all PPS chargers. If your iron reboots when you view this in the debug menu its not a fault. (<a href="https://github.com/Ralim/IronOS/issues/1226">#1226</a>)</li>
+<li><code>metadata.zip</code> is only designed for use by automatic software, ignore it for normal use</li>
+<li>More details on Pinecil VBus mod coming via other channels.</li>
+<li>Hall effect sensor is not fitted to Pinecil's by default, you have to fit this yourself if you want the feature</li>
+<li>Tweaks to the Accelerometer code means the drivers are slightly more fussy. If you run into any issues let us know in the discussion or issues.</li>
+<li>-&gt; Release has been updated to build <code>e065be3</code> after one bug with the BMA223 was found.</li>
+</ul>
+<h2 id="v216">V2.16</h2>
+<ul>
+<li>Overhaul of the Timer+ADC setup with help from @sandmanRO</li>
+<li>Overhaul of the PID with help from @sandmanRO</li>
+<li>Settings <em>should</em> now upgrade in place to future versions, with resets only happening to new/changed settings</li>
+<li>Shows error if tip runaway (failed temperature sensor) is detected</li>
+<li>USB-PD now has a timeout, to allow forcing QC3 negotiation to start faster</li>
+<li>QC3 Voltages are now adjustable to user desired setpoint</li>
+<li>Added a small tolerance to allow "overvoltage" on QC3 above unit specifications.</li>
+<li>
+<ul>
+<li>Please note: Doing this is entirely at your own risk!</li>
+</ul>
+</li>
+<li>New Advanced view that is much nicer to use and a very good daily driver option from @Mel-kior</li>
+<li>OLED brightness and contrast thanks to @alvinhochun</li>
+<li>Scrollbar is fixed so it doesnt jump around when menus are shown/hidden</li>
+<li>Moved to <code>.dfu</code> files from <code>.bin</code> to make flashing commands easier</li>
+<li>Every language had translation updates I believe</li>
+<li>Romanian language added</li>
+</ul>
+<h2 id="v215">V2.15</h2>
+<h2 id="feature-upgrades">Feature upgrades:</h2>
+<ul>
+<li>MHP30 support</li>
+<li>Multi-lingual firmware combinations now exist for Pinecil</li>
+<li>More fine grained voltage controlled options</li>
+<li>USB-PD improvements (version one and two)</li>
+<li>More configuration options for power pulse</li>
+<li>All font / character encoding has been very reworked</li>
+<li>More translation updates than one can count </li>
+<li>More languages 😱 </li>
+</ul>
+<h3 id="mhp30">MHP30</h3>
+<p>The MHP30 is a small reflow station from Miniware.
+Thanks to a massive amount of help from @g3gg0 this firmware brings the beginnings of support for this unit.
+Also kudo's to @Vinigas  and @GoJian for helping with testing.
+This is not a <em>final</em> version I'm sure, but this is a working, usable version of firmware support.
+Programs the same as any one Miniware unit using drag and drop.
+<strong>Note: The boot logo scripts will need updates for this unit, so not supported yet.</strong></p>
+<p>The flood doors are now open for feature requests for this unit :)</p>
+<h2 id="v214">V2.14</h2>
+<ul>
+<li>Fixing auto rotation bug in the LIS accelerometer in the TS80/TS80P</li>
+<li>Adds support for two new accelerometers
+  -- SC7A20 (Future Pinecil batch) #786
+  -- MSA301 (Newer TS80P) #761</li>
+<li>Add warnings if accelerometer or USB-PD IC's are not detected #752
+  -- Only shows for first few boots, to help catch unsupported models</li>
+<li>Fixed cooling down blink to be sane speed #769</li>
+<li>
+<p>Cleanup of threads and slightly faster power negotiation #790</p>
+</li>
+<li>
+<p>Updates to flashing scripts #775</p>
+</li>
+<li>Documentation updates all over the place (and the wiki was given a cleanup)|</li>
+<li>Updates to makefile #792 #787</li>
+<li>Cleanup the folder name of the source code #800</li>
+<li>clang-format spec setup #801</li>
+</ul>
+<h2 id="v213">V2.13</h2>
+<ul>
+<li>First <em>official</em> Pinecil release</li>
+<li>All of the wire for Pinecil releases added</li>
+<li>Updated Translations</li>
+<li>Delay accelerometer to help with entering sleep on startup</li>
+<li>Dual speed PWM to help with power limit control</li>
+<li>Improve heat up time</li>
+<li>Adds locking mode</li>
+<li>Improved docs all over the place</li>
+<li>Repo rename occured TS100 -&gt; IronOS</li>
+<li>Hall effect sensor support added (not fitted in Pinecil but optional)</li>
+<li>QC 20V support for Pinecil</li>
+<li>CI upgrades for faster builds</li>
+<li>Fixed bug with accelerometer model on Pinecil</li>
+<li>Rework of all of the temperature curves for better accuracy</li>
+</ul>
+<h2 id="v212">V2.12</h2>
+<ul>
+<li>Only released as pre-release</li>
+<li>[TS80P] Improvements to the PD negotiation to handle a few more adapters cleanly</li>
+<li>Pause on the last item in a list</li>
+<li>Clean up the menu (removed both enables and settings, so that you can turn things off easier)</li>
+<li>Removing the very old single line menu style.</li>
+</ul>
+<h2 id="v211">V2.11</h2>
+<ul>
+<li>First TS80P support</li>
+<li>Added in a USB-PD driver stack for the FUSB302</li>
+<li>Fixed some graphical glitches</li>
+</ul>
+<h2 id="v210">V2.10</h2>
+<ul>
+<li>GUI polish (animations and scroll bars)</li>
+<li>Power pulse to keep power supplies alive</li>
+<li>Adjustable tip response gain</li>
+</ul>
+<h2 id="v209">V2.09</h2>
+<ul>
+<li>Adjustable steps in temperature adjustment</li>
+<li>Git hash now in build string</li>
+<li>Adjustable language to set if US units are available or not</li>
+<li>Some minor QC3 improvements</li>
+</ul>
+<h2 id="v208">V2.08</h2>
+<ul>
+<li>Fixes auto start in sleep mode</li>
+<li>Power limiters</li>
+</ul>
+<h2 id="v207">V2.07</h2>
+<ul>
+<li>QC fixes</li>
+<li>Cosmetic fixes for leading 0's</li>
+</ul>
+<h2 id="v206">V2.06</h2>
+<ul>
+<li>Warning on settings reset</li>
+<li>Temp temp re-write</li>
+<li>Display calibration offset</li>
+<li>Hide some leading 0's</li>
+<li>Menu timeouts</li>
+</ul>
+<h2 id="v205">V2.05</h2>
+<ul>
+<li>Language updates</li>
+</ul>
+<h2 id="v204">V2.04</h2>
+<ul>
+<li>GUI updates</li>
+</ul>
+<h2 id="v203">V2.03</h2>
+<ul>
+<li>Support for new accelerometers</li>
+</ul>
+<h2 id="v202">V2.02</h2>
+<ul>
+<li>Adds small font</li>
+</ul>
+<h2 id="v201">V2.01</h2>
+<ul>
+<li>Newer settings menu</li>
+</ul>
+<h2 id="v200">V2.00</h2>
+<ul>
+<li>Complete re-write of the low layer system to use the STM32 HAL for easier development</li>
+<li>This allowed easier setup for the new ADC auto measuring system</li>
+<li>Better tip PWM control</li>
+<li>Moved to FreeRTOS for scheduling</li>
+<li>Complete re-write from blank</li>
+<li>Added detailed screen views</li>
+<li>Added smaller font for said screen views</li>
+</ul>
+<h2 id="v117">V1.17</h2>
+<ul>
+<li>Added blinking cooldown display</li>
+<li>Allowed smaller sleep timeout values</li>
+<li>New font!</li>
+<li>Automatic startup option</li>
+</ul>
+<h2 id="v116">V1.16</h2>
+<ul>
+<li>Added automatic rotation support</li>
+<li>Added power display graph</li>
+</ul>
+<h2 id="v115">V1.15</h2>
+<ul>
+<li>Added support for a custom bootup logo to be programmed via the DFU bootloader</li>
+</ul>
+<h2 id="v114">V1.14</h2>
+<ul>
+<li>Changed input voltage cutoff to be based on cell count rather than voltage</li>
+</ul>
+<h2 id="v113">V1.13</h2>
+<ul>
+<li>Swapped buttons for menu to prevent accidentally changing first menu item</li>
+<li>Added auto key repeat</li>
+</ul>
+<h2 id="v112">V1.12</h2>
+<ul>
+<li>Increases sensitivity options to be 1*9 with 0 off state</li>
+<li>Fixes issue where going from COOL *&gt; soldering can leave screen off</li>
+</ul>
+<h2 id="v111">V1.11</h2>
+<ul>
+<li>Boost mode</li>
+<li>Change sensitivity options to be 1*8</li>
+</ul>
+<h2 id="v110">V1.10</h2>
+<ul>
+<li>Adds help text to settings</li>
+<li>Improves settings for the display update rate</li>
+</ul>
+<h2 id="v109">V1.09</h2>
+<ul>
+<li>Adds display modes, for slowing down or simplifying the display</li>
+</ul>
+<h2 id="v108">V1.08</h2>
+<ul>
+<li>Fix settings menu not showing flip display</li>
+</ul>
+<h2 id="v107">V1.07</h2>
+<ul>
+<li>Adds shutdown time to automatically shutdown the iron after inactivity</li>
+</ul>
+<h2 id="v106">V1.06</h2>
+<ul>
+<li>Changes H and C when the iron is heating to the minidso chevron like images</li>
+</ul>
+<h2 id="v105">V1.05</h2>
+<ul>
+<li>Adds ability to calibrate the input voltage measurement</li>
+</ul>
+<h2 id="v104">V1.04</h2>
+<ul>
+<li>Increased accuracy of the temperature control</li>
+<li>Improved PID response slightly</li>
+<li>Allows temperature offset calibration</li>
+<li>Nicer idle screen</li>
+</ul>
+<h2 id="v103">V1.03</h2>
+<ul>
+<li>Improved Button handling</li>
+<li>Ability to set motion sensitivity</li>
+<li>DC voltmeter page shows input voltage</li>
+</ul>
+<h2 id="v102">V1.02</h2>
+<ul>
+<li>Adds hold both buttons on IDLE to access the therometer mode</li>
+<li>Changes the exit soldering mode to be holding both buttons (Like original firmware)</li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

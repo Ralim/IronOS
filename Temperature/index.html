@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Temperature/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Tip temperature measurement - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Tip temperature measurement";
+        var mkdocs_page_input_path = "Temperature.md";
+        var mkdocs_page_url = "/IronOS/Temperature/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Tip temperature measurement</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/Temperature.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="tip-temperature-measurement">Tip temperature measurement</h1>
+<p>The soldering irons use a modified N-type thermocouple in the tip to measure the tip temperature.
+This is constructed for free by using a different type of metal to join one of the rings to the heating coil. This effectively creates a free temperature sensor for very low cost and construction difficulty.</p>
+<p>The downsides of this are twofold; one, it is made using non-optimal metals and has a non-constant temperature response; and two, as this uses the same connections as the heating current, you can't measure the temperature while you are heating the tip.</p>
+<h2 id="how-a-thermocouple-works-brief">How a thermocouple works (brief)</h2>
+<p><a href="https://www.youtube.com/watch?v=v7NUi88Lxi8">Thermocouples use a junction of two dissimilar metals</a> to create a very small amount of power (microvolts). This can then be measured and used with a known transfer function to derive the temperature of the junction.
+This has some fairly large limitations, but it also has the benefit of being extremely cheap.</p>
+<p>Conventionally a thermocouple is created using two dissimilar metals that join, and then the other ends of these metals are terminated to copper contacts. These copper contacts are also part of the construction of the thermocouple and are referred to as the cold junction.
+As there are these extra two joins between the thermocouple wires and the copper; these also have properties of their own in their reactions with temperature.</p>
+<p>If the cold junction is held at 0 degrees Celsius, then their effect is considered to be null, and so they can be ignored. However, in the real world the joins to copper are often at room temperature, and as such the measured voltage from the thermocouple must be compensated to remove the influence of these joints. This process is often called cold junction compensation.</p>
+<p>Every time in the circuit there is a join between two different metals, then a small thermocouple is created, this means that <em>every</em> soldered connection is also one. </p>
+<h2 id="how-these-irons-implement-the-temperature-reading">How these irons implement the temperature reading</h2>
+<p>If you analyse one of the open circuit schematics (Pinecil, TS100, TS80) they all use the same approximate formula.
+This consists of an op-amp that is connected directly across the heating connections to the tip, and a separate handle temperature sensor.</p>
+<p>When the iron is <strong>not</strong> heating the tip, the microcontroller uses the ADC to read the output from the op-amp. This produces a voltage that <em>should</em> be linear to the temperature of (tip-handle). This value is then offset compensated (to remove ADC+op-amp offsets), and then converted into a temperature delta in °C/K. This temperature delta can then be added to the handle temperature to derive the tip temperature in degrees Celsius.</p>
+<p>Depending on the construction of the tip, the lookup values used for converting the tip reading in µV into °C/K varies. It is worth noting, however, that TS100 and Pinecil tips are approximately the same as the Hakko T12 tips. (In @Ralim's testing, to within measurement error). This makes sense as the T12 tips are an excellent and cheap design for Miniware to mimic in making the TS100 in the first place.</p>
+<h2 id="implications-of-this">Implications of this</h2>
+<h3 id="reading-accuracy-vs-heating-performance-tradeoff">Reading accuracy vs Heating performance tradeoff</h3>
+<p>Because the tip can only be measured when the unit is not heating, the more often the tip is measured (for finer temperature control) the less time the unit can spend heating up the tip. This means that for fast heat up and fine temperature control the firmware now implements two speeds to the controller loop. During heating up the system runs fewer temperature measurements and instead allows the tip to spend more time burning power. Once the unit is up to temperature, the rate of taking temperature readings is doubled to allow for faster reaction times.</p>
+<h3 id="tip-heat-up-lag-time">Tip heat up lag time</h3>
+<p>As the temperature sensor is a part of the heater coil inside of the tip (or very close by, not entirely certain); the temperature reading is of the <em>inside</em> of the tip, rather than the outside. The outside temperature is the most critical for the user as this is where the solder is actually melting and performing work.</p>
+<p>The PID controller in the firmware is tuned to be slightly underdamped and thus more "jumpy" than some people would expect. This is based on the theory that if the inside of the tip is seeing the temperature drop; the outside temperature has dropped more and so we should overcompensate until they equalise.</p>
+<p>This is why sometimes the temperature may flick around a little during use but the tip temperature itself is quite stable. The thermal mass of the tip smooths these small amounts out nicely for the user. Though seeing larger jumps on some tips than others <em>may</em> indicate that the tip does not have optimal internal thermal bonding between the heater coil and the tip itself.</p>
+<p>The firmware uses the theory that these irons are aimed more to the power users territory than most, so it tries to <em>not</em> hide the actual temperature. Some soldering iron controllers hide the actual measurement once you are within a certain tolerance of this. For example, on a digital Weller unit that Ralim has, if set to 350 °C, it will regulate to within around +/- 3°C but not indicate you are outside of the margin of error until you exceed +/- 5°C. This gives the illusion that it's holding the temperature perfectly when in actuality it's moving around as well.</p>
+<p>Given enough time (3-5 seconds) with no external cooling, the inside and outside temperatures of the tip will be equal. When testing the tip temperature accuracy try to allow time for the system to stabilise.</p>
+<h3 id="complexity-of-measurement">Complexity of measurement</h3>
+<p>The firmware in these irons does a <em>best-effort</em> of calculating an accurate temperature. As always there is a tradeoff between perfect accuracy and firmware complexity and setup. These irons are built down to a cost; expecting accuracy greater than 1% is not really an option as the voltage reference is only 1% accurate at best. So <em>all</em> measurements are affected by its accuracy. The low-cost chips used in the irons do not come calibrated from the factory so we do not have an internal calibration we can use to try and measure this inaccuracy.</p>
+<p>The firmware only accounts for <a href="https://www.tegam.com/what-exactly-is-cold-junction-compensation/">cold junction compensation</a> and then treats the remaining error as being a constant offset. 
+While the error is small, it is actually composed of both a constant offset as well as an offset that is linear to the handle temperature.
+This offset that is linear to handle temperature is as of current not modelled into the firmware and is assumed to be constant. This is generally <em>close enough</em> as once the unit is in use, the handle temperature is usually within 10 °C as the components inside warm-up from use. This means that this error is "relatively" constant once the unit is being used. </p>
+<p><code>However, this can cause odd behaviour when the tip temperature ~= room temperature. It can cause some jumping and movement in the readings when attempting to control the tip to sub 100 °C.</code></p>
+<p>This is a known tradeoff that is made as the irons intended use case means that it will spend most of its time above 150 °C, at which point these errors are no longer the dominant error sources in the system.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

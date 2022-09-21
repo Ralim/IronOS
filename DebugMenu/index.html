@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/DebugMenu/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Debugging Menu - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Debugging Menu";
+        var mkdocs_page_input_path = "DebugMenu.md";
+        var mkdocs_page_url = "/IronOS/DebugMenu/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Debugging Menu</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/DebugMenu.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="debugging-menu">Debugging Menu</h1>
+<p>In this firmware there is extra debugging information in a hidden sub-menu.
+This menu is meant to be simple, so it has no fancy GUI animations.</p>
+<ul>
+<li>Access it by pressing the rear button (<code>-/B</code>) on the iron while it is on the home screen.</li>
+<li>Use the front button (<code>+/A</code>) to scroll through the menu.</li>
+<li>To exit, use the rear button (<code>-/B</code>) again.</li>
+</ul>
+<h2 id="menu-items">Menu items</h2>
+<p>Items are shown in the menu on a single line, so they use short codes and appear in this order:</p>
+<h3 id="id">ID</h3>
+<ul>
+<li>This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.</li>
+<li>The new Pinecil V2 released Aug. 2, 2022 now uses MCU BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your <a href="https://pinecil.pine64.org/">Pinecil authenticity here</a>.</li>
+</ul>
+<h3 id="acc">ACC</h3>
+<p>This indicates the accelerometer that is fitted inside the unit.</p>
+<ul>
+<li>MMA8652</li>
+<li>LIS2DH12</li>
+<li>BMA223</li>
+<li>MSA301</li>
+<li>SC7A20</li>
+<li>None -&gt; running in fallback without movement detection</li>
+<li>Scanning -&gt; Still searching I2C for one</li>
+</ul>
+<h3 id="pwr">PWR</h3>
+<p>This indicates the current power source for the iron.
+This may change during power up as the sources are negotiated in turn.</p>
+<ul>
+<li><strong>DC</strong> input (dumb)</li>
+<li><strong>QC</strong> input (We used QC2/3 negotiation for current supply)</li>
+<li><strong>PD W. VBus</strong> input (PD subsystem is used to negotiate for current supply); and VBus is connected to your input power source</li>
+<li><strong>PD No VBus</strong> input (PD subsystem is used to negotiate for current supply); and VBus is <strong>NOT</strong> connected to your input power source. If it is Not required or possible to do a special mod of your PCB (i.e. late model V1, some early Green PCB models) then [PD No VBus] displays on-screen (<a href="/Documentation/DebugMenu.md#pd-debug-menu">see details and PD Debug section below</a>).</li>
+</ul>
+<h3 id="vin">Vin</h3>
+<p>The input voltage as read by the internal ADC. Can be used to sanity check it is being read correctly.</p>
+<h3 id="tip-c">Tip C</h3>
+<p>This is the tip temperature in °C.
+This can be used with RTip for assessing temperature processing performance.</p>
+<h3 id="han-c">Han C</h3>
+<p>This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C. Range of 20-40 °C is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
+This is used for CJC of the tip temperature.</p>
+<blockquote>
+<p>If CHan is extremely high, this indicates the temperature sensor isn't reading correctly (<a href="/Documentation/Troubleshooting.md">see Troubleshooting</a>)</p>
+</blockquote>
+<h3 id="max-c">Max C</h3>
+<p>This indicates the max temperature in °C that the system estimates it can measure the tip reliably to.
+This is dependent on a few factors including the handle temperature so it can move around during use. As you use the iron, the Max increases to a point.</p>
+<h3 id="uptime">UpTime</h3>
+<p>This shows how many deciseconds the unit has been powered for (600 ds = 1 minute).</p>
+<h3 id="move">Move</h3>
+<p>This is the last timestamp of movement. When the iron is moved, this should update to match the Time field (previous menu item).
+This can be used for checking performance of the movement detection code.</p>
+<h3 id="tip-res">Tip Res</h3>
+<p>This indicates the tip resistance that the device is currently using. For devices with multiple possible values to choose from (Pinecil V2), the appropriate value is automatically detected at every boot-up. Tip should be installed before boot-up or reading can not be done.</p>
+<h3 id="tip-r">Tip R</h3>
+<p>This is the raw tip reading in μV. Tip must be installed or reading will be high/inaccurate. At cool, the range of 700-1000 is normal for larger tips and ~1500 for smaller tips (TS80). This is used to evaluate the calibration routines.</p>
+<h3 id="tip-o">Tip O</h3>
+<p>This is the offset resulting from the <em>'Cold Junction Compensation Calibration'</em>.</p>
+<h3 id="hw-g">HW G</h3>
+<p>This indicates the high water mark for the stack for the GUI thread. The smaller this number is, the less headroom we have in the stack.
+As this is a high-water mater, you should only trust this once you have walked through all GUI options to "hit" the worst one.</p>
+<h3 id="hw-m">HW M</h3>
+<p>This indicates the high-water mark for the stack for the movement detection thread. The smaller this number is, the less headroom we have in the stack.</p>
+<h3 id="hw-p">HW P</h3>
+<p>This indicates the high-water mark for the stack for the PID thread. The smaller this number is, the less headroom we have in the stack.</p>
+<h3 id="hall">Hall</h3>
+<p>This appears if your device is capable of having a hall effect sensor installed (Pinecil).
+This shows the current magnetic field strength reading from the sensor. It is used to check if the sensor is operational, and for diagnostics and optimal placement of magnets on a stand (higher number is better/stronger). <a href="/Documentation/HallSensor.md">See Hall Sensor for details</a>. </p>
+<h1 id="pd-debug-menu">PD Debug menu</h1>
+<p>On the Pinecil; if the iron is booted up while long holding the front button (<code>+</code>); it will show an extra hidden menu for inspecting USB-PD power adapters. We can also connect to any PD USB power to check Vbus status, even some cell phones with a USB-C port will work if it is PD. It will not show PD messages when Pinecil is powered by DC port, QC, or USB 5V (non-PD). For example, if you connect to a QC charger, you may simply see "PD State 6" which indicates "waiting for source" as no PD messages will be ever be sent and you will not be able to use (<code>+</code>) to scroll through PD negotiated messages.</p>
+<p>Pressing (<code>+</code>) cycles through elements, and (<code>-</code>) or unplugging will exit the menu.</p>
+<p>The first page shows the PD negotiation stage number; which can be used for diagnosing if PD is not working. Once negotiation is complete; use (<code>+</code>) button to advance to other screens which show the different proposals advertised for voltage and current (State 12 means all is good with the PD charger).</p>
+<h4 id="below-is-a-method-for-user-modification-to-convert-some-early-models-of-pinecil-v1-to-safely-support-24v-on-the-dc5525-barrel">Below is a method for user modification to convert some early models of Pinecil V1 to safely support 24V on the DC5525 barrel.</h4>
+<p>⚠️ Warning: do this at your own risk, read everything in this document, and go to the <a href="https://wiki.pine64.org/wiki/Pinecil#Community_links">Pine64 community chat</a> if you desire advice. An incorrect cut of the trace could render the Pinecil non-working.</p>
+<p>Background: a simple user modification to the PCB on <em>some models</em> of original V1 allows it to safely use DC barrel 24V by cutting a trace line to the Vbus which held it back to 21V. You can check whether your Pinecil V1 needs the update or can benefit from it by using a hidden trick in the PD debug menu.</p>
+<ul>
+<li>Follow instructions above to enter the PD Debug menu.</li>
+<li>After a few seconds or after PD negotiates (state above 5) it will show <code>[PD No VBus]</code> if it is not needed (i.e., late model V1). Alternately, if it shows <code>[VBus]</code>, then the mod has not been done and there is still a connection to the Vbus (the Vbus connection limits you to 21V until you do the mod).</li>
+<li>If you need to do the mod, then follow the instructions/links below which have photos. Careful to only cut the trace and nothing else.</li>
+<li>Then use the PD debug menu again to check for <code>[PD No Vbus]</code> before attaching any 24V PSU to the DC barrel. If you do not get the message, then try cutting the trace a little deeper or using alcohol to clear the gap of copper dust. Then check PD messages again. If you need advice/tips, join the Pine64 chat room. </li>
+</ul>
+<p>The mod method is shown in the <a href="https://www.pine64.org/2022/02/15/february-update-chat-with-the-machine/">February 2022 PINE64 community updates</a>. Early Pinecil V1 models required cutting a trace to achieve 24V safety with DC barrel PSU. Late model V1 made sometime in 2022 came with <code>[No Vbus]</code> already displayed, and no mod is required.</p>
+<p>| Pinecil V2 model released Aug. 2, 2022 is an overhaul of the PCB with all relevant components capable of 28V. V2 requires no mods to support the use of 24V DC Barrel jack charger. |
+:--------</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

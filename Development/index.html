@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Development/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Development - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Development";
+        var mkdocs_page_input_path = "Development.md";
+        var mkdocs_page_url = "/IronOS/Development/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Development</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/Development.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="development">Development</h1>
+<p>Building this software can be performed two ways: using the STM32CubeIDE or using command line tools.</p>
+<h2 id="stm32cubeide">STM32CubeIDE</h2>
+<p>The easiest way to start working with the STM32CubeIDE is to create a new project for the STM32F103RCTx.
+Once this is created, remove the auto-generated source code.
+Next, drag the contents of the <code>source</code> folder into the project and choose to link to files.
+You will need to update the build settings for include paths and point to the new <code>.ld</code> linker file.</p>
+<h2 id="command-line-tools-and-building-a-release">Command line tools and building a release</h2>
+<p>In the <code>source</code> folder there is a <code>Makefile</code> that can be used to build the repository using command line tools.
+When running the <code>make</code> command, specify which model of the device and the language(s) you would like to use.</p>
+<h3 id="macos">macOS</h3>
+<p>Use the following steps to set up a build environment for IronOS on the command line (in Terminal).</p>
+<ol>
+<li><a href="https://github.com/glegrain/STM32-with-macOS#0---installing-the-toolchain">Follow steps 1 – 3 here to install the toolchain</a> needed to compile for STM32 microcontrollers.</li>
+<li>Install <code>python</code>:</li>
+</ol>
+<pre><code>brew install python
+</code></pre>
+<ol>
+<li>(Optional) Update <code>pip</code> so it doesn't warn you about being out-of-date:</li>
+</ol>
+<pre><code>python3 -m pip install --upgrade pip
+</code></pre>
+<ol>
+<li>Change to the <code>source</code> directory:</li>
+</ol>
+<pre><code>cd source
+</code></pre>
+<ol>
+<li>Create a Python virtual environment for IronOS named <code>ironos-venv</code> to keep your Python installation clean:</li>
+</ol>
+<pre><code>python3 -m venv ironos-venv
+</code></pre>
+<ol>
+<li>Activate the Python virtual environment:</li>
+</ol>
+<pre><code>source ironos-venv/bin/activate
+</code></pre>
+<ol>
+<li>Install the dependencies required to run <code>make-translation.py</code>:</li>
+</ol>
+<pre><code>pip install bdflib
+</code></pre>
+<ol>
+<li>All done! See some examples below for how you can build your own IronOS.</li>
+</ol>
+<h3 id="examples">Examples</h3>
+<p>To build a single language Simplified Chinese firmware for the TS80P with 8 simultaneous jobs:</p>
+<pre><code>make -j8 model=TS80P firmware-ZH_CN
+</code></pre>
+<p>To build a European multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on Linux:</p>
+<pre><code>make -j$(nproc) model=Pinecil firmware-multi_European
+</code></pre>
+<p>To build a Cyrillic compressed multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on macOS:</p>
+<pre><code>make -j$(sysctl -n hw.logicalcpu) model=Pinecil firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian
+</code></pre>
+<p>To build a custom multi-language firmware including English and Simplified Chinese for the TS80:</p>
+<pre><code>make -j8 model=TS80 custom_multi_langs=&quot;EN ZH_CN&quot; firmware-multi_Custom
+</code></pre>
+<p>To build a custom compressed multi-language firmware including German, Spanish, and French for the TS100 (note if <code>model</code> is unspecified, it will default to <code>TS100</code>):</p>
+<pre><code>make -j8 custom_multi_langs=&quot;DE ES FR&quot; firmware-multi_compressed_Custom
+</code></pre>
+<p>To build a release instead, run the <code>build.sh</code> script. This will update translations and also build every language for all device models. For macOS users, replace <code>make -j$(nproc)</code> in the script with <code>make -j$(sysctl -n hw.logicalcpu)</code> before running.</p>
+<h2 id="updating-languages">Updating languages</h2>
+<p>To update the language translation files and their associated font maps, execute the <code>make_translation.py</code> code from the <code>Translations</code> directory.
+If you edit the translation definitions or the English translation, please also run <code>gen_menu_docs.py</code> to update the settings menu documentation automatically.</p>
+<h2 id="building-pinecil-v1">Building Pinecil V1</h2>
+<p>I highly recommend using the command line tools and using Docker to run the compiler.
+It's a bit fussier on setup than the STM tooling, and this is by far the easiest way.
+If you <em>need</em> an IDE I have used <a href="https://nucleisys.com/download.php">Nuclei's IDE</a>.
+Follow the same idea as the STM Cube IDE notes above.</p>
+<h2 id="building-pinecil-v2">Building Pinecil V2</h2>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

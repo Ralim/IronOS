@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Logo/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Startup Logos - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Startup Logos";
+        var mkdocs_page_input_path = "Logo.md";
+        var mkdocs_page_url = "/IronOS/Logo/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Troubleshooting</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Startup Logos</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/Logo.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="startup-logos">Startup Logos</h1>
+<p>This firmware supports a user created bootup logo.
+By default, there is <em>not</em> one included in the firmware. This means that once flashed they generally stay. If you want no logo again, you would have to flash a blank image to the bootup logo. </p>
+<h2 id="generating-the-logo-files">Generating the Logo files</h2>
+<p>There are community logo's already converted and ready to use in <a href="https://github.com/Ralim/IronOS-Meta/releases">IronOS-Meta/releases</a>.
+Download the zip for Pinecil or Miniware and then install using the instructions in the Flashing section below.</p>
+<p>If you want to make custom art then it needs to be converted with a Python script. The script and other needed files are in <a href="https://github.com/Ralim/IronOS-Meta/">IronOS-Meta</a>. Go to that folder, then it is easiest to select the green Code button (upper right), then Download Zip. This way you get all the files you need and some extras. You only need what is inside Boot Logos. Put your custom image inside the Boot Logos folder with all python script files already there.</p>
+<p>The Python script converts an image passed into it on the command line into both a <code>.hex</code> file and a <code>.dfu</code> to be uploaded to the iron in DFU mode. The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (Png or Bmp) in any image editor and color the pixels black &amp; white manually.</p>
+<p>The converter requires at least Python3 and Pillow apps. Follow online instructions for installing Python and Pillow.</p>
+<p>For Windows, it is recommended to use Windows PowerShell instead of Command.
+Open Powershell (run as administrator), type python to install it, it will open microsoft store where you can install it free.
+Go back to Powershell and install Pillow. What works can vary, but this command may work:</p>
+<pre><code>python -m pip install Pillow
+</code></pre>
+<p>or 
+    python3 -m pip install pillow</p>
+<p>If the above does not work, see <a href="https://stackoverflow.com/a/20061019/6705343">this page</a> on StackOverflow about installing Pillow.
+Now that Python and Pillow are successfuly installed, you can convert an image.</p>
+<p>Go back to Powershell and type this command (change infile.png to the name of your image):</p>
+<ul>
+<li><code>python img2logo.py infile.png out -m</code>  for Miniware</li>
+<li><code>python img2logo.py infile.png out -p</code>  for Pinecil</li>
+</ul>
+<p>Run <code>python img2logo.py --help</code> to see available options. Replace the word python with python3 if you have multiple versions of python installed. </p>
+<p>Note: make sure your image file is in the same folder as script files (img2logo.py, output_dfu.py, output_hex.py).</p>
+<h2 id="flashing-the-logo">Flashing the Logo</h2>
+<h3 id="miniware-ts100ts80ts80p">Miniware (TS100/TS80/TS80P)</h3>
+<p>Upload the HEX file to the iron in DFU mode and, if the file's extension changes to .RDY, your custom splash screen should show up on startup.
+You perform this the same way as if you were flashing a new firmware, and all the existing notes around this apply.</p>
+<p>If you have flashed the <code>IronOS-dfu</code> alternative bootloader, you should use the <code>.dfu</code> files instead</p>
+<h3 id="pinecil-v1">Pinecil V1</h3>
+<p>For Pinecil V1, we require using dfu-util to flash the logo art (Pinecil does not use hex).
+<a href="https://github.com/pine64/pine64_updater/releases">Pine64 Updater</a> is the easiest way to load the Bootup logo onto Pinecil as it already includes the necessary DFU library. Connect Pinecil to a PC, and open the Updater the same as updating firmware.
+  Select Custom &gt; Browse to the DFU image file you just made &gt; Update to install.</p>
+<p>The bootup logo is stored in a separate location than the IronOS firmware and you do not have to worry about it changing or breaking the IronOS.</p>
+<p>You could also use dfu-util and use Command line to install it.</p>
+<ul>
+<li><code>dfu-util -D logo_file.dfu</code></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
