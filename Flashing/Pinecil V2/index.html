@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Flashing/Pinecil%20V2/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Flashing / Upgrading your iron - IronOS</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Flashing / Upgrading your iron";
+        var mkdocs_page_input_path = "Flashing/Pinecil V2.md";
+        var mkdocs_page_url = "/IronOS/Flashing/Pinecil%20V2/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Flashing the firmware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="MHP30:Flashing/MP30.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../Pinecil V1:Flashing/Pinecil V1.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../Pinecil V2:Flashing/Pinecil V2.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../TS80%28P%29/">TS80(P)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="TS100:Flashing/TS100.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Operation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Menu/">Main Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../DebugMenu/">Debug Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Power/">Power</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Temperature/">Temperature</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../Logo/">Startup Logo</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Hardware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../HallSensor/">Hall Sensor (Pinecil)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Hardware/">Hardware Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Troubleshooting</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../Troubleshooting/">Troubleshooting</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../HardwareIssues/">Known Hardware Issues</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../Translation/">Translations</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../Development/">Development</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Flashing / Upgrading your iron</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/Flashing/Pinecil V2.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="flashing-upgrading-your-iron">Flashing / Upgrading your iron</h1>
+<h2 id="downloading-source-file">Downloading source file</h2>
+<p>In the development of this firmware, there are three <em>types</em> of firmware released.
+These are the "Main" stable releases, which generally have high confidence in being bug free.
+Release candidates are released slightly more often, and these are generally perfectly fine for everyday use. These are released early to allow for translation checking and for wonderful people to help spot bugs and regressions.
+Finally, there are the "mainline" builds, which are built from the main git branch.
+These are built on every change and can be found on the Actions tab (see below).</p>
+<h3 id="main-release">Main release</h3>
+<p>Main releases are made to the <a href="https://github.com/Ralim/IronOS/releases">releases page</a>.
+Download the zip file that matches your model of soldering iron and extract it.
+Select the appropriate file type for your unit, in general Miniware devices need <code>.hex</code> and Pinecil needs <code>.dfu</code>.
+Flash according to details below</p>
+<h3 id="bleeding-edge-latest">Bleeding edge / latest</h3>
+<p>For the <em>latest</em> code, you will need to download the zip file from the artifacts page on the build for what you want.
+Head to the <a href="https://github.com/Ralim/IronOS/actions">Actions</a> page and then select the run for the appropriate branch you would like.
+In general you probably want <code>master</code>.</p>
+<p>Once you click on a run, scroll down to the "Artifacts" section and then click on your model to download a zip file.
+Then this works the same as a production release (use the correct file).</p>
+<h1 id="pinecil-v2">Pinecil V2</h1>
+<ul>
+<li>The MCU in V2 is Bouffalo BL706 and does <em>not</em> use usb-dfu for flashing as the previous MCU did.</li>
+<li>The current firmware (2.18) is very fresh and no upgrade is available/needed.</li>
+<li>When an update is released for V2, then IronOS will also include an update method to follow.</li>
+<li>Background on the <a href="https://lupyuen.github.io/articles/bl706">BL706 chipset</a></li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

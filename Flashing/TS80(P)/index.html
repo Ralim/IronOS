@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Flashing/TS80%28P%29/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>TS80(P) - IronOS</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "TS80(P)";
+        var mkdocs_page_input_path = "Flashing/TS80(P).md";
+        var mkdocs_page_url = "/IronOS/Flashing/TS80%28P%29/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Flashing the firmware</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="" href="MHP30:Flashing/MP30.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../Pinecil V1:Flashing/Pinecil V1.md">None</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../../Pinecil V2:Flashing/Pinecil V2.md">None</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">TS80(P)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#downloading-source-file">Downloading source file</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#main-release">Main release</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bleeding-edge-latest">Bleeding edge / latest</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="TS100:Flashing/TS100.md">None</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Operation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Menu/">Main Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../DebugMenu/">Debug Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Power/">Power</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Temperature/">Temperature</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../Logo/">Startup Logo</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Hardware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../HallSensor/">Hall Sensor (Pinecil)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Hardware/">Hardware Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Troubleshooting</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../Troubleshooting/">Troubleshooting</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../HardwareIssues/">Known Hardware Issues</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../Translation/">Translations</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../Development/">Development</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Flashing the firmware &raquo;</li>
+      <li>TS80(P)</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/ralim/IronOS/edit/master/docs/Flashing/TS80(P).md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="flashing-upgrading-your-iron">Flashing / Upgrading your iron</h1>
+<h2 id="downloading-source-file">Downloading source file</h2>
+<p>In the development of this firmware, there are three <em>types</em> of firmware released.
+These are the "Main" stable releases, which generally have high confidence in being bug free.
+Release candidates are released slightly more often, and these are generally perfectly fine for everyday use. These are released early to allow for translation checking and for wonderful people to help spot bugs and regressions.
+Finally, there are the "mainline" builds, which are built from the main git branch.
+These are built on every change and can be found on the Actions tab (see below).</p>
+<h3 id="main-release">Main release</h3>
+<p>Main releases are made to the <a href="https://github.com/Ralim/IronOS/releases">releases page</a>.
+Download the zip file that matches your model of soldering iron and extract it.
+Select the appropriate file type for your unit, in general Miniware devices need <code>.hex</code> and Pinecil needs <code>.dfu</code>.
+Flash according to details below</p>
+<h3 id="bleeding-edge-latest">Bleeding edge / latest</h3>
+<p>For the <em>latest</em> code, you will need to download the zip file from the artifacts page on the build for what you want.
+Head to the <a href="https://github.com/Ralim/IronOS/actions">Actions</a> page and then select the run for the appropriate branch you would like.
+In general you probably want <code>master</code>.</p>
+<p>Once you click on a run, scroll down to the "Artifacts" section and then click on your model to download a zip file.
+Then this works the same as a production release (use the correct file).</p>
+<h1 id="ts80-ts80p">TS80 / TS80P</h1>
+<p>This is completely safe, but if it goes wrong just put the <code>.hex</code> file from the official website (<a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=868&amp;extra=page%3D1">TS80</a>/<a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=4070&amp;extra=page%3D1">TS80P</a> onto the unit and you're back to the old firmware. Downloads for the <code>.hex</code> files to flash are available on the <a href="https://github.com/Ralim/IronOS/releases">releases page.</a> The file you want is called TS80.zip or TS80P.zip. Inside the zip file (make sure to extract the file before flashing with it) will be a file called <code>TS80_{Language-Code}.hex</code>/<code>TS80P_{Language-Code}.hex</code>.</p>
+<p>Officially the bootloader on the devices only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under Mac, and can be made to work under Linux <em>sometimes</em>. Details over on the <a href="https://github.com/Ralim/TS80/wiki/Upgrading-Firmware">wiki page</a>.</p>
+<ol>
+<li>Hold the button closest to the tip (MHP30 the left button on the back), and plug in the USB to the computer.</li>
+<li>The unit will appear as a USB drive. (Screen will say <code>DFU</code> on it.)</li>
+<li>Drag the <code>.hex</code> file onto the USB drive.</li>
+<li>The unit will disconnect and reconnect.</li>
+<li>The filename will have changed to end in <em>.RDY</em> or <em>.ERR</em></li>
+<li>If it ends with <em>.RDY</em> you're done! Otherwise, something went wrong.</li>
+<li>If it didn't work the first time, try copying the file again without disconnecting the device, often it will work on the second shot.</li>
+<li>Disconnect the USB and power up the device. You're good to go.</li>
+</ol>
+<p>For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer, for easier installation follow the guide at the end of this document.</p>
+<p>On the USB port, <code>USB_D+</code> is shorted to <code>SWDIO</code> and <code>USB_D-</code> is shorted to <code>SWCLK</code> so debugging works without disassembly (attach while staying in the bootloader). Installing <a href="https://github.com/Ralim/IronOS-dfu">IronOS-dfu</a> is recommended as it allows reliable flashing of binary files with <a href="http://dfu-util.sourceforge.net/">dfu-util</a>.</p>
+<h2 id="mac">Mac</h2>
+<p>sgr1ff1n (Shane) commented in <a href="https://github.com/Ralim/IronOS/issues/11">issue 11</a> that upgrading worked on their Mac as per normal:</p>
+<blockquote>
+<p>I just wanted to say that I was able to update the firmware on my TS100 from the stock version to 1.08 found in this repository using my Mac. I simply followed the same steps however through Finder. I have a MacBook Pro (13-inch, Mid 2012) running Sierra 10.12.4 (16E195).</p>
+</blockquote>
+<h2 id="linux">Linux</h2>
+<p>While in the past there were reports of unreliable upgrades, the consensus in <a href="https://github.com/Ralim/IronOS/issues/11">issue 11</a> is that things work mostly as expected in Linux.</p>
+<p>@awigen has contributed a script <a href="https://raw.githubusercontent.com/Ralim/IronOS/master/Flashing/flash_TS100_linux.sh">flash_TS100_linux.sh</a> that works on Ubuntu 16.04 as well as other distros.</p>
+<p>If you want to do it manually (or if the script does not work for some reason) the general procedure is the same as for Windows, the differences are in the way to mount the unit and copy the firmware.
+Remember that after flashing, the firmware filename will have changed to end in <code>.RDY</code> or <code>.ERR</code> or <code>.NOT</code> and only <code>.RDY</code> means the flashing was successful!</p>
+<ul>
+<li>The unit has to be mounted as <code>msdos</code> type (thanks @balrog-kun for having spotted it). You may disable automount, but unmounting the automounted drive and remounting as <code>msdos</code> works fine. You do not need to turn off automounting, but you do need to unmount the device with <code>umount</code>.</li>
+<li>It is recommended to use an all-caps filename for the firmware, even if successful flashing were done with lower case names.</li>
+<li>Avoid USB hubs, plug directly in your computer.</li>
+<li>If it fails, try again several times without unplugging. Just let it remount.</li>
+</ul>
+<p>Example, to be run as root, once the unit has been plugged in DFU mode and auto-mounted:</p>
+<pre><code class="language-bash">FW=TS80.hex
+unset NAME
+eval $(lsblk -P -p -d --output NAME,MODEL|grep &quot;DFU[ _]Disk&quot;)
+[ -z ${NAME+x} ] &amp;&amp; exit 1  # Could not find DFU device
+umount &quot;$NAME&quot;
+mkdir /tmp/mntdfu
+mount -t msdos &quot;$NAME&quot; /tmp/mntdfu
+cp &quot;$FW&quot; &quot;/tmp/mntdfu/$(basename $FW|tr a-z A-Z)&quot;
+sync
+umount /tmp/mntdfu
+rmdir /tmp/mntdfu
+</code></pre>
+<p>Device will reboot and automount will rerun if not disabled.
+Check the extension of your firmware, it should be <code>.RDY</code> now.</p>
+<h2 id="faq">FAQ</h2>
+<h4 id="the-file-is-showing-up-with-the-extension-err">The file is showing up with the extension <code>.ERR</code></h4>
+<p>This can occur during the programming process if any of the checks in the bootloader fail. This is often triggered by anti-virus software or using a non-Windows host OS.</p>
+<p>First, try just copying the file a second time.</p>
+<ol>
+<li>Attach the iron in DFU mode.</li>
+<li>Copy the <code>.hex</code> file to the device.</li>
+<li>The device disconnects and connects with the <code>.ERR</code> file.</li>
+<li>Copy the same <code>.hex</code> file again <strong>⛔ DO NOT TRY AND DELETE THE OLD ONE ⛔</strong>.</li>
+<li>The device will disconnect and reconnect again.</li>
+<li>The device <em>should</em> now have the <code>.RDY</code> file.</li>
+<li>You're done.</li>
+</ol>
+<p>If this fails and you are on Mac or Linux reading the wiki page about programming can help. There is also a very long issue thread going through all of the different attempts around this too.</p>
+<p>If you are on Windows, it's often best to try another computer (friends, work, partners etc.).</p>
+<h4 id="device-randomly-disconnects-or-does-not-show-up-in-dfu-mode">Device randomly disconnects or does not show up in DFU mode</h4>
+<ol>
+<li>
+<p>Check if the USB cable you are using has the data pins; test it on another device. There are a surprisingly large number of micro-USB cables that are power <em>only</em>.</p>
+</li>
+<li>
+<p>Try other USB ports. Often different USB controllers will interact with the units differently due to design quirks in the Miniware design.</p>
+</li>
+</ol>
+<h3 id="alternative-bootloader">Alternative bootloader</h3>
+<p>If you are an advanced user, and you have used <code>usb-dfu</code> tools before, or you would like to learn; there is an alternative bootloader for these irons.
+This will <strong>NOT</strong> show up as a USB storage drive, but instead show up using a standard DFU protocol device. You can then use dfu tools or GUIs to upgrade the iron using the <code>.bin</code> files that are posted to the releases page.</p>
+<p>To install this alternative bootloader, follow the instructions <a href="https://github.com/Ralim/IronOS-dfu/blob/mainline/docs/Bootloader.md">here</a>.</p>
+<p>Note that this is only recommended for users who know what they are doing. If you don't understand how this works, please don't flash this.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../GettingStarted/" class="btn btn-neutral float-left" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../Menu/" class="btn btn-neutral float-right" title="Main Menu">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../GettingStarted/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../Menu/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
