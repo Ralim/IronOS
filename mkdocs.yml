@@ -22,9 +22,8 @@ nav:
   - Hardware:
       - Hall Sensor (Pinecil): HallSensor.md
       - Hardware Notes: Hardware.md
-      - Troubleshooting:
-          - Troubleshooting: Troubleshooting.md
-          - Known Hardware Issues: HardwareIssues.md
+      - Troubleshooting: Troubleshooting.md
+      - Known Hardware Issues: HardwareIssues.md
   - Translations: Translation.md
   - Development: Development.md
 

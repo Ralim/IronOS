@@ -20,16 +20,14 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware._
 
-
-
-|   Device   | DC | QC | PD | EPR | BLE | Battery | Recommended |
-|:----------:|:--:|:--:|:--:|:---:|:---:|:-------:|:-----------:|
-|      MHP30 |❌ | ❌ | ✔️ | ❌ | ❌ |   ❌    |     ✔️     |
-| Pinecil V1 |✔️ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
-| Pinecil V2 |✔️ | ✔️ | ✔️ | ✔️ | ✔️ |   ✔️    |     ✔️     |
-|      TS80P |❌ | ✔️ | ✔️ | ❌ | ❌ |   ✔️    |     ✔️     |
-|      TS100 |✔️ | ❌ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
-|       TS80 |❌ | ✔️ | ❌ | ❌ | ❌ |   ✔️    |     ❌     |
+|   Device   | DC  | QC  | PD  | EPR | BLE | Battery | Recommended |
+| :--------: | :-: | :-: | :-: | :-: | :-: | :-----: | :---------: |
+|   MHP30    | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌    |     ✔️      |
+| Pinecil V1 | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
+| Pinecil V2 | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️    |     ✔️      |
+|   TS80P    | ❌  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
+|   TS100    | ✔️  | ❌  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
+|    TS80    | ❌  | ✔️  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
 
 \*Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is **_no longer recommended_**.
 
@@ -41,7 +39,13 @@ Long hold the rear button in soldering mode to exit back to the start screen.
 
 ## Installation
 
-For notes on installation for your device, please refer to the [Flashing Guide](https://ralim.github.io/IronOS/Flashing/).
+For notes on installation for your device, please refer to the flashing guide for your device:
+
+- [MHP30](https://ralim.github.io/IronOS/Flashing/MHP30)
+- [Pinecil V1](https://ralim.github.io/IronOS/Flashing/Pinecil%20V1/)
+- [Pinecil V2](https://ralim.github.io/IronOS/Flashing/Pinecil%20V2/)
+- [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
+- [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
 
 ## Key Features
 

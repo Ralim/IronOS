@@ -1,7 +1,15 @@
 # Getting Started
 
 Getting started with IronOS on your Pinecil/TS80/TS80P/TS100.
-If your device did not come with IronOS already installed, or if you need to update to the latest version; please see the [Flashing Guide](https://ralim.github.io/IronOS/Flashing/). It is recommended to update to the newest stable release.
+If your device did not come with IronOS already installed, or if you need to update to the latest version; please see the flashing guide for your device:
+
+- [MHP30](https://ralim.github.io/IronOS/Flashing/MHP30)
+- [Pinecil V1](https://ralim.github.io/IronOS/Flashing/Pinecil%20V1/)
+- [Pinecil V2](https://ralim.github.io/IronOS/Flashing/Pinecil%20V2/)
+- [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
+- [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
+
+It is recommended to update to the newest stable release.
 
 Once your Iron has been flashed, on first power on it _may_ warn you about the system settings being reset.
 _Do not panic_; this is 100% completely normal. This is here to note to you that they have been reset to handle the internal structure changing.
@@ -59,13 +67,12 @@ In Sleep mode, the temperature of the iron automatically lowers to 150 °C (defa
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
 #### Optional Hall Effect Feature (Pinecil only):
-Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on-screen. The magnet is positioned on the stand in proximity to the sensor/handle which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](https://ralim.github.io/IronOS/HallSensor/).
 
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on-screen. The magnet is positioned on the stand in proximity to the sensor/handle which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](https://ralim.github.io/IronOS/HallSensor/).
 
 ### Idle Shutdown
 
 If, after entering sleep mode, the iron still does not see movement for a much longer time (default=10 minutes); it will shut down and return to the home screen.
-
 
 ## Settings Menu
 
@@ -82,7 +89,7 @@ You can long hold buttons to change through options faster, and there is some ac
 
 There is a small scrollbar that appears along the right edge of the screen to indicate how far through the current list you are (looks like a dot).
 
-Additionally, this scrollbar will blink rapidly when you are on the last value in a range of a sub-menu. For example, if you are in Motion Sensitivity, which has a range of 0 - 9,  it will blink when you are at 9.
+Additionally, this scrollbar will blink rapidly when you are on the last value in a range of a sub-menu. For example, if you are in Motion Sensitivity, which has a range of 0 - 9, it will blink when you are at 9.
 
 I highly recommend taking a few minutes to go through all of the options in the menu to get a feel for what you can change, almost every aspect of the internal system is adjustable to suit your needs.
 

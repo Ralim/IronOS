@@ -125,7 +125,7 @@ Two Options for Windows
 dfu-util -D Pinecil_EN.dfu
 ```
 
-- If you have errors, see Troubleshooting [above](https://ralim.github.io/IronOS/Flashing/#troubleshooting).
+- If you have errors, see Troubleshooting above.
 
 ### Option 2: use the GUI tool from chip vendor
 
@@ -156,4 +156,4 @@ dfu-util -D Pinecil_EN.dfu
 18. Do not need to press any buttons, a new screen should appear.
 19. To confirm upgrade, hold the minus (`-`) button down for a few seconds, it then shows new firmware version v2.xx.x....date
 
-- If you have errors, see Troubleshooting [above](https://ralim.github.io/IronOS/Flashing/#troubleshooting).
+- If you have errors, see Troubleshooting above.
