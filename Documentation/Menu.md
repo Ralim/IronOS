@@ -7,7 +7,7 @@ In this firmware for these soldering irons, all settings are adjustable on the d
 In this mode the iron works as you would expect, pressing either button will take you to a temperature change screen.
 - Use each button to go up/down in temperature. Pressing both buttons exits the temperature menu (or wait 3 seconds and it will time out).
 - Pressing both buttons or holding the rear button (`-/B`) will exit Soldering Mode.
-- Holding the front button (`+/A`) will enter [Boost mode](/Documentation/Menu.md#boost-mode) (if enabled).
+- Holding the front button (`+/A`) will enter [Boost mode](https://ralim.github.io/IronOS/Menu/#boost-mode) (if enabled).
 
 ## Settings mode
 

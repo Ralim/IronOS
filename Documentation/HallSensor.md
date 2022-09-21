@@ -8,7 +8,7 @@ Simply moving the iron or pressing any button will wake it back up into solderin
 
 ### Optional Hall Effect Feature (Pinecil only):
 
-Inside the [Sleep Menu](https://github.com/Ralim/IronOS/blob/dev/Documentation/Settings.md#setting-sleep-temp) is an additional type of sleep setting. Pinecil has an unpopulated footprint (**U14**) for a hall effect sensor, Silicon Labs **Si7210-B-00-IV**. After installing the hall effect sensor (HES), it is possible to auto-trigger Pinecil to enter sleep mode when it enters the stand, and *Zzzz* will appear (or text in detailed mode). This could be a fun enhancement for any Pinecil and adds a feature typically only found in more expensive high-end irons. The HES is available at many electronic stores for ~$2-$6.
+Inside the [Sleep Menu](https://ralim.github.io/IronOS/Settings/#setting-sleep-temp) is an additional type of sleep setting. Pinecil has an unpopulated footprint (**U14**) for a hall effect sensor, Silicon Labs **Si7210-B-00-IV**. After installing the hall effect sensor (HES), it is possible to auto-trigger Pinecil to enter sleep mode when it enters the stand, and *Zzzz* will appear (or text in detailed mode). This could be a fun enhancement for any Pinecil and adds a feature typically only found in more expensive high-end irons. The HES is available at many electronic stores for ~$2-$6.
 
 After installing the HES on the PCB, place a magnet on the stand close enough to the sensor to activate one of ten user selectable settings.
   - 0=off, 1=1000, 2=750, 3=500, 4=250, 5=150, 6=100, 7=75, 8=50, 9=25   (9 has the highest sensitivity to magnets)

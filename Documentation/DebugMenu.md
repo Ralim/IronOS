@@ -35,7 +35,7 @@ This may change during power up as the sources are negotiated in turn.
 - **DC** input (dumb)
 - **QC** input (We used QC2/3 negotiation for current supply)
 - **PD W. VBus** input (PD subsystem is used to negotiate for current supply); and VBus is connected to your input power source
-- **PD No VBus** input (PD subsystem is used to negotiate for current supply); and VBus is **NOT** connected to your input power source. If it is Not required or possible to do a special mod of your PCB (i.e. late model V1, some early Green PCB models) then [PD No VBus] displays on-screen ([see details and PD Debug section below](/Documentation/DebugMenu.md#pd-debug-menu)).
+- **PD No VBus** input (PD subsystem is used to negotiate for current supply); and VBus is **NOT** connected to your input power source. If it is Not required or possible to do a special mod of your PCB (i.e. late model V1, some early Green PCB models) then [PD No VBus] displays on-screen ([see details and PD Debug section below](https://ralim.github.io/IronOS/DebugMenu/#pd-debug-menu)).
 
 ### Vin
 
