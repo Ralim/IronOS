@@ -1,12 +1,12 @@
 # Getting Started
 
 Getting started with IronOS on your Pinecil/TS80/TS80P/TS100.
-If your device did not come with IronOS already installed, or if you need to update to the latest version; please see the [Flashing Guide](/Documentation/Flashing.md). It is recommended to update to the newest stable release.
+If your device did not come with IronOS already installed, or if you need to update to the latest version; please see the [Flashing Guide](https://ralim.github.io/IronOS/Flashing/). It is recommended to update to the newest stable release.
 
 Once your Iron has been flashed, on first power on it _may_ warn you about the system settings being reset.
 _Do not panic_; this is 100% completely normal. This is here to note to you that they have been reset to handle the internal structure changing.
 
-If you receive a warning about the accelerometer or USB-PD not being detected, please see [here](/Documentation/HardwareIssues.md).
+If you receive a warning about the accelerometer or USB-PD not being detected, please see [here](https://ralim.github.io/IronOS/HardwareIssues/).
 
 ## The Home screen (or idle screen)
 
@@ -26,7 +26,7 @@ In the settings, you can turn on a detailed idle screen instead. The buttons sti
 
 Depending on how your device is being powered, at right side of the screen, the firmware will either show the voltage your unit is being provided with, a battery icon (if battery mode is enabled) or a power plug icon.
 
-If you see an (**X**) where the soldering iron should be, this indicates that the firmware can't see the tip connected. This could indicate a problem with the iron or tip. First, try removing the tip screw and tip and gently reinstalling both; ensure that the tip is seated all the way back. If the issue persists please see the [hardware issues section](/Documentation/HardwareIssues.md).
+If you see an (**X**) where the soldering iron should be, this indicates that the firmware can't see the tip connected. This could indicate a problem with the iron or tip. First, try removing the tip screw and tip and gently reinstalling both; ensure that the tip is seated all the way back. If the issue persists please see the [hardware issues section](https://ralim.github.io/IronOS/HardwareIssues/).
 
 This OLED screen features burn-in protection; if no buttons or movement have been detected for a while it will automatically blank the screen to reduce burn-in when the iron is left unattended. Any movement or button press will wake the screen.
 
@@ -36,7 +36,7 @@ Additionally to the two icons shown, there are two "hidden" actions that can be 
 
 If you press and hold the button near the tip (`+/A`), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
 
-If you press and hold the button near the rear of the iron (`-/B`), it will take you into the [debug menu](/Documentation/DebugMenu.md).
+If you press and hold the button near the rear of the iron (`-/B`), it will take you into the [debug menu](https://ralim.github.io/IronOS/DebugMenu/).
 
 ## Soldering Mode
 
@@ -59,7 +59,7 @@ In Sleep mode, the temperature of the iron automatically lowers to 150 °C (defa
 Simply picking up or moving the iron will wake it back up into soldering mode. You can also press any button and this will also wake the iron up.
 
 #### Optional Hall Effect Feature (Pinecil only):
-Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on-screen. The magnet is positioned on the stand in proximity to the sensor/handle which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](/Documentation/HallSensor.md).
+Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on-screen. The magnet is positioned on the stand in proximity to the sensor/handle which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for [details on installation](https://ralim.github.io/IronOS/HallSensor/).
 
 
 ### Idle Shutdown

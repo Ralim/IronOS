@@ -50,7 +50,7 @@ This can be used with RTip for assessing temperature processing performance.
 
 This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C. Range of 20-40 °C is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
 This is used for CJC of the tip temperature.
- > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly ([see Troubleshooting](/Documentation/Troubleshooting.md))
+ > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly ([see Troubleshooting](https://ralim.github.io/IronOS/Troubleshooting/))
 
 
 ### Max C
@@ -95,7 +95,7 @@ This indicates the high-water mark for the stack for the PID thread. The smaller
 ### Hall
 
 This appears if your device is capable of having a hall effect sensor installed (Pinecil).
-This shows the current magnetic field strength reading from the sensor. It is used to check if the sensor is operational, and for diagnostics and optimal placement of magnets on a stand (higher number is better/stronger). [See Hall Sensor for details](/Documentation/HallSensor.md). 
+This shows the current magnetic field strength reading from the sensor. It is used to check if the sensor is operational, and for diagnostics and optimal placement of magnets on a stand (higher number is better/stronger). [See Hall Sensor for details](https://ralim.github.io/IronOS/HallSensor/). 
 
 # PD Debug menu
 
