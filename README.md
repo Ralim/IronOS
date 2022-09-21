@@ -34,13 +34,13 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 ## Getting Started
 
-To get started with IronOS firmware, please jump to [Getting Started Guide](Documentation/GettingStarted.md).
+To get started with IronOS firmware, please jump to [Getting Started Guide](https://ralim.github.io/IronOS/GettingStarted/).
 But the [TL;DR](https://www.merriam-webster.com/dictionary/TL%3BDR) is to press the button near the front of the iron to heat up. Use the button near the back of the iron to enter the settings menu.
 Long hold the rear button in soldering mode to exit back to the start screen.
 
 ## Installation
 
-For notes on installation for your device, please refer to the [Flashing Guide](Documentation/Flashing.md).
+For notes on installation for your device, please refer to the [Flashing Guide](https://ralim.github.io/IronOS/Flashing/).
 
 ## Key Features
 
@@ -59,7 +59,7 @@ For notes on installation for your device, please refer to the [Flashing Guide](
 - Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods)
 - (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
 - (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
-- [Custom boot up logo support](Documentation/Logo.md)
+- [Custom boot up logo support](https://ralim.github.io/IronOS/Logo/)
 - Automatic LCD rotation based on the orientation
 
 ## Menu System
@@ -70,9 +70,9 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 - Pressing the button near the tip enters the _soldering mode_
 - Pressing the button near the USB end enters the _settings menu_
 - When not in _soldering mode_, holding down the button near the tip will enter _soldering temperature adjust mode_ (This is the same as the one in the _soldering mode_, but allows to adjust the temperature before heating up), in _soldering mode_ however this will activate _boost mode_ as long as you hold down the button.
-- Holding down the button near the USB end will show the _[debug menu](Documentation/DebugMenu.md)._ In _soldering mode_ this ends the heating.
+- Holding down the button near the USB end will show the _[debug menu](https://ralim.github.io/IronOS/DebugMenu/)._ In _soldering mode_ this ends the heating.
 
-Operation details are over in the [Menu information.](Documentation/Menu.md)
+Operation details are over in the [Menu information.](https://ralim.github.io/IronOS/Menu/)
 
 ## Thanks
 
