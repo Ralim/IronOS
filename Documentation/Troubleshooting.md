@@ -2,7 +2,7 @@
 
 If your device is not operating as expected; and you are within the manufacturer support window, please first contact your manufacturer and RMA / warranty your device.
 
-If your iron is not working as expected, [the Debug menu](DebugMenu.md) exposes internal measurements to help you narrow down the root cause of the issue.
+If your iron is not working as expected, [the Debug menu](https://ralim.github.io/IronOS/DebugMenu/) exposes internal measurements to help you narrow down the root cause of the issue.
 
 Alongside all of these, issues with the soldering of the main MCU could cause all of these as well; and should always be checked.
 
