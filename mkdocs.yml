@@ -1,0 +1,30 @@
+site_name: IronOS
+site_url: https://ralim.github.io/IronOS/
+repo_url: https://github.com/ralim/IronOS/
+site_description: "IronOS Open Source Soldering Iron firmware for Miniware and Pinecil"
+docs_dir: Documentation
+nav:
+  - Home: index.md
+  - Getting Started: GettingStarted.md
+  - Flashing the firmware:
+      - MHP30: Flashing/MHP30.md
+      - Pinecil V1: Flashing/Pinecil V1.md
+      - Pinecil V2: Flashing/Pinecil V2.md
+      - TS80(P): Flashing/TS80(P).md
+      - TS100: Flashing/TS100.md
+  - Operation:
+      - Main Menu: Menu.md
+      - Settings: Settings.md
+      - Debug Menu: DebugMenu.md
+      - Power: Power.md
+      - Temperature: Temperature.md
+  - Startup Logo: Logo.md
+  - Hardware:
+      - Hall Sensor (Pinecil): HallSensor.md
+      - Hardware Notes: Hardware.md
+      - Troubleshooting: Troubleshooting.md
+      - Known Hardware Issues: HardwareIssues.md
+  - Translations: Translation.md
+  - Development: Development.md
+
+theme: readthedocs

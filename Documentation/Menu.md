@@ -7,7 +7,7 @@ In this firmware for these soldering irons, all settings are adjustable on the d
 In this mode the iron works as you would expect, pressing either button will take you to a temperature change screen.
 - Use each button to go up/down in temperature. Pressing both buttons exits the temperature menu (or wait 3 seconds and it will time out).
 - Pressing both buttons or holding the rear button (`-/B`) will exit Soldering Mode.
-- Holding the front button (`+/A`) will enter [Boost mode](/Documentation/Menu.md#boost-mode) (if enabled).
+- Holding the front button (`+/A`) will enter [Boost mode](https://ralim.github.io/IronOS/Menu/#boost-mode) (if enabled).
 
 ## Settings mode
 
@@ -38,7 +38,7 @@ To calibrate your iron:
 7. Press both buttons at the same time to Save and Exit to the menu
 
 ### Calibrate Tip CJC
-This performs a Tip Cold Junction Calibration (CJC) ([see Temperature for details](/Documentation/Temperature.md)). This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective, and measured resistance is close to specifications (Pinecil/TS100 short tips 6.2 Ω, long tips 8 Ω, TS80(P) ~4.5 Ω).
+This performs a Tip Cold Junction Calibration (CJC) ([see Temperature for details](https://ralim.github.io/IronOS/Temperature/)). This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective, and measured resistance is close to specifications (Pinecil/TS100 short tips 6.2 Ω, long tips 8 Ω, TS80(P) ~4.5 Ω).
 
 What this is for: some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps. 
 
