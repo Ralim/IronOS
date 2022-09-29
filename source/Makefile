@@ -152,8 +152,8 @@ S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=$(MINIWARE_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD 
-DEV_LDFLAGS= -Wl,--wrap=printf
+		-D STM32F10X_MD 				
+DEV_LDFLAGS= -Wl,--wrap=printf  -Wl,--no-wchar-size-warning 
 DEV_AFLAGS=
 DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
 DEV_CXXFLAGS= 
@@ -313,7 +313,7 @@ $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o 
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os  -fshort-wchar -flto -finline-small-functions  -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
+OPTIM=-Os -fshort-wchar -flto -finline-small-functions  -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
@@ -358,7 +358,6 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 				-Wl,--print-memory-usage 					  \
 				--specs=nosys.specs 						  \
-				-Wl,--no-wchar-size-warning \
 			    --specs=nano.specs						      \
 				$(DEV_LDFLAGS)
 
