@@ -153,14 +153,14 @@ LDSCRIPT=$(MINIWARE_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD 
-DEV_LDFLAGS= 
+DEV_LDFLAGS= -Wl,--wrap=printf
 DEV_AFLAGS=
 DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
 DEV_CXXFLAGS= 
 CPUFLAGS= -mcpu=cortex-m3     \
 		-mthumb 			\
 		-mfloat-abi=soft
-flash_size=64k
+flash_size=62k
 bootldr_size=0x4000
 DEVICE_DFU_ADDRESS=0x08004000
 DEVICE_DFU_VID_PID=0x1209:0xDB42
@@ -186,7 +186,7 @@ DEV_CXXFLAGS=
 CPUFLAGS= -mcpu=cortex-m3     \
 		-mthumb 			\
 		-mfloat-abi=soft
-flash_size=128k
+flash_size=126k
 bootldr_size=32k
 DEVICE_DFU_ADDRESS=0x08008000
 DEVICE_DFU_VID_PID=0x1209:0xDB42
@@ -313,7 +313,7 @@ $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o 
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -finline-small-functions  -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
+OPTIM=-Os  -fshort-wchar -flto -finline-small-functions  -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
@@ -343,6 +343,7 @@ endif
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
+SIZE=$(COMPILER_PREFIX)-size
 OBJDUMP=$(COMPILER_PREFIX)-objdump
 # use gcc in assembler mode so we can use defines etc in assembly
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
@@ -357,6 +358,7 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 				-Wl,--print-memory-usage 					  \
 				--specs=nosys.specs 						  \
+				-Wl,--no-wchar-size-warning \
 			    --specs=nano.specs						      \
 				$(DEV_LDFLAGS)
 
@@ -405,7 +407,7 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 		-D${COMPILER}  		     \
 		-MMD 				     \
 		$(CHECKOPTIONS)		     \
-		-std=c++14			     \
+		-std=c++17			     \
 		$(OPTIM) 			     \
 		-fno-rtti 			     \
 		-fno-exceptions 	     \
@@ -469,6 +471,7 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 
 %.bin : %.elf Makefile
 	$(OBJCOPY) $< -O binary $@
+	$(SIZE) $<
 
 %.dfu : %.bin Makefile
 	python3 dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
