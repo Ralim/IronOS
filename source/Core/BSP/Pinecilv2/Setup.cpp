@@ -37,7 +37,7 @@ void hardware_init() {
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
-  I2C_ClockSet(I2C0_ID, 200000); // Sets clock to around 175kHz
+  I2C_ClockSet(I2C0_ID, 100000); // Sets clock to around 175kHz
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
 }
 void setup_pwm(void) {
