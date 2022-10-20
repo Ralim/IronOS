@@ -105,6 +105,69 @@
 			],
 			"desc": "Imposta una tensione minima di alimentazione attraverso la selezione di una sorgente [DC: 10 V; 3S/4S/5S/6S: 3,3 V per cella]"
 		},
+		"MinVolCell": {
+			"text2": [
+				"Tensione",
+				"min celle"
+			],
+			"desc": "Modifica la tensione di minima carica delle celle di una batteria Li-Po [3S: 3,0-3,7 V; 4S/5S/6S: 2,4-3,7 V]"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"Voltaggio",
+				"QC"
+			],
+			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge [volt]"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"Abilitazione",
+				"USB PD"
+			],
+			"desc": "Regola il massimo tempo utile per la negoziazione del protocollo USB Power Delivery con alimentatori compatibili [0: disattiva; multipli di 100 ms]"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Temp",
+				"Turbo"
+			],
+			"desc": "Imposta la temperatura della funzione Turbo [°C/°F]"
+		},
+		"AutoStart": {
+			"text2": [
+				"Avvio",
+				"automatico"
+			],
+			"desc": "Attiva automaticamente il saldatore quando viene alimentato [D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente]"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Temp passo",
+				"breve"
+			],
+			"desc": "Imposta il passo dei valori di temperatura per una breve pressione dei tasti"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Temp passo",
+				"lungo"
+			],
+			"desc": "Imposta il passo dei valori di temperatura per una lunga pressione dei tasti"
+		},
+		"LockingMode": {
+			"text2": [
+				"Blocco",
+				"tasti"
+			],
+			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Sensibilità",
+				"al movimento"
+			],
+			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [0: nessuna; 1: minima; 9: massima]"
+		},
 		"SleepTemperature": {
 			"text2": [
 				"Temp",
@@ -126,12 +189,12 @@
 			],
 			"desc": "Imposta il timer per lo spegnimento [minuti]"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
-				"Sensibilità",
-				"al movimento"
+				"Sensore",
+				"Hall"
 			],
-			"desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [0: nessuna; 1: minima; 9: massima]"
+			"desc": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità Riposo [0: nessuna; 1: minima; 9: massima]"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "Scegli l'unità di misura per la temperatura [C: grado Celsius; F: grado Farenheit]"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"Interfaccia",
-				"testuale"
-			],
-			"desc": "Mostra informazioni dettagliate all'interno della schermata principale"
-		},
 		"DisplayRotation": {
 			"text2": [
 				"Orientamento",
 				"schermo"
 			],
 			"desc": "Imposta l'orientamento dello schermo [D: mano destra; S: mano sinistra; A: automatico]"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Temp",
-				"Turbo"
-			],
-			"desc": "Imposta la temperatura della funzione Turbo [°C/°F]"
-		},
-		"AutoStart": {
-			"text2": [
-				"Avvio",
-				"automatico"
-			],
-			"desc": "Attiva automaticamente il saldatore quando viene alimentato [D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente]"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,61 +217,12 @@
 			],
 			"desc": "Evidenzia il valore di temperatura durante il raffreddamento se la punta è ancora calda"
 		},
-		"CalibrateCJC": {
-			"text2": [
-				"Calibrate CJC",
-				"at next boot"
-			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Ripristino",
-				"impostazioni"
-			],
-			"desc": "Ripristina le impostazioni allo stato iniziale"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Calibrazione",
-				"tensione"
-			],
-			"desc": "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Dettagli",
-				"saldatura"
-			],
-			"desc": "Mostra informazioni dettagliate durante la modalità Saldatura"
-		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Velocità",
 				"testo"
 			],
 			"desc": "Imposta la velocità di scorrimento del testo [L: lenta; V: veloce]"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Voltaggio",
-				"QC"
-			],
-			"desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge [volt]"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"Abilitazione",
-				"USB PD"
-			],
-			"desc": "Regola il massimo tempo utile per la negoziazione del protocollo USB Power Delivery con alimentatori compatibili [0: disattiva; multipli di 100 ms]"
-		},
-		"PowerLimit": {
-			"text2": [
-				"Limite",
-				"potenza"
-			],
-			"desc": "Imposta il valore di potenza massima erogabile al saldatore [watt]"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -238,55 +231,6 @@
 			],
 			"desc": "Inverti i tasti per aumentare o diminuire la temperatura della punta"
 		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Temp passo",
-				"breve"
-			],
-			"desc": "Imposta il passo dei valori di temperatura per una breve pressione dei tasti"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Temp passo",
-				"lungo"
-			],
-			"desc": "Imposta il passo dei valori di temperatura per una lunga pressione dei tasti"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Potenza",
-				"impulso"
-			],
-			"desc": "Regola la potenza di un \"impulso sveglia\" atto a prevenire lo standby eventuale dell'alimentatore [watt]"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Sensore",
-				"Hall"
-			],
-			"desc": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità Riposo [0: nessuna; 1: minima; 9: massima]"
-		},
-		"LockingMode": {
-			"text2": [
-				"Blocco",
-				"tasti"
-			],
-			"desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Tensione",
-				"min celle"
-			],
-			"desc": "Modifica la tensione di minima carica delle celle di una batteria Li-Po [3S: 3,0-3,7 V; 4S/5S/6S: 2,4-3,7 V]"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Ciclo",
-				"animazioni"
-			],
-			"desc": "Abilita la riproduzione ciclica delle animazioni del menù principale"
-		},
 		"AnimSpeed": {
 			"text2": [
 				"Velocità",
@@ -294,26 +238,12 @@
 			],
 			"desc": "Imposta la velocità di riproduzione delle animazioni del menù principale [O: OFF; L: lenta; M: media; V: veloce]"
 		},
-		"PowerPulseWait": {
+		"AnimLoop": {
 			"text2": [
-				"Distanza",
-				"impulsi"
+				"Ciclo",
+				"animazioni"
 			],
-			"desc": "Imposta il tempo che deve intercorrere tra due \"impulsi sveglia\" [multipli di 2,5 s]"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Durata",
-				"impulso"
-			],
-			"desc": "Regola la durata dell'«impulso sveglia» [multipli di 250 ms]"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Lingua:",
-				" IT     Italiano"
-			],
-			"desc": ""
+			"desc": "Abilita la riproduzione ciclica delle animazioni del menù principale"
 		},
 		"Brightness": {
 			"text2": [
@@ -335,6 +265,76 @@
 				"logo"
 			],
 			"desc": "Imposta la permanenza sullo schermo del logo iniziale [secondi]"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Interfaccia",
+				"testuale"
+			],
+			"desc": "Mostra informazioni dettagliate all'interno della schermata principale"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Dettagli",
+				"saldatura"
+			],
+			"desc": "Mostra informazioni dettagliate durante la modalità Saldatura"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Limite",
+				"potenza"
+			],
+			"desc": "Imposta il valore di potenza massima erogabile al saldatore [watt]"
+		},
+		"CalibrateCJC": {
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Calibrazione",
+				"tensione"
+			],
+			"desc": "Calibra la tensione in ingresso; regola con entrambi i tasti, tieni premuto il tasto superiore per uscire"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Potenza",
+				"impulso"
+			],
+			"desc": "Regola la potenza di un \"impulso sveglia\" atto a prevenire lo standby eventuale dell'alimentatore [watt]"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Distanza",
+				"impulsi"
+			],
+			"desc": "Imposta il tempo che deve intercorrere tra due \"impulsi sveglia\" [multipli di 2,5 s]"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Durata",
+				"impulso"
+			],
+			"desc": "Regola la durata dell'«impulso sveglia» [multipli di 250 ms]"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Ripristino",
+				"impostazioni"
+			],
+			"desc": "Ripristina le impostazioni allo stato iniziale"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Lingua:",
+				" IT     Italiano"
+			],
+			"desc": ""
 		}
 	}
 }
