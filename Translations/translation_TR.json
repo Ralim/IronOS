@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Lütfen devam etmeden önce ucun oda sıcaklığında olduğunu garantiye alın!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",
 		"UVLOWarningString": "Güç Az",
 		"UndervoltageString": "Düşük Voltaj",
@@ -32,16 +32,16 @@
 			"detected!"
 		],
 		"NoPowerDeliveryMessage": [
-				"No USB-PD IC",
+			"No USB-PD IC",
 			"detected!"
 		],
 		"LockingKeysString": "LOCKED",
 		"UnlockingKeysString": "UNLOCKED",
 		"WarningKeysLockedString": "!LOCKED!",
 		"WarningThermalRunaway": [
-				"Thermal",
+			"Thermal",
 			"Runaway"
-			]
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
@@ -69,35 +69,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Lehimleme",
 				"Ayarları"
 			],
-			"desc": "Lehimleme Ayarları"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Uyku",
 				"Modları"
 			],
-			"desc": "Güç Tasarrufu Ayarları"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Kullanıcı",
 				"Arayüzü"
 			],
-			"desc": "Kullanıcı Arayüzü Ayarları"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Gelişmiş",
 				"Ayarlar"
 			],
-			"desc": "Gelişmiş Ayarlar"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -180,10 +180,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"SCK KAL?",
-				""
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Ucu kalibre et."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -267,7 +267,7 @@
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+			"desc": "Sensitivity to magnets (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -281,7 +281,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -323,21 +323,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Zorg ervoor dat de punt op kamertemperatuur is voor je verder gaat!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Weet je zeker dat je de fabrieksinstellingen terug wilt zetten?",
 		"UVLOWarningString": "DC Laag",
 		"UndervoltageString": "Onderspanning",
@@ -66,35 +66,35 @@
 				"Voeding",
 				"instellingen"
 			],
-			"desc": "Voeding instellingen"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldeer",
 				"instellingen"
 			],
-			"desc": "Soldeer instellingen"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Slaap",
 				"Modes"
 			],
-			"desc": "Stroom besparings instellingen"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Weergave",
 				"instellingen"
 			],
-			"desc": "Weergave instellingen"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Geavanceerde",
 				"instellingen"
 			],
-			"desc": "Geavanceerde instellingen"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibreer",
-				"temperatuur?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Start punt temperatuur-kalibratie"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -313,7 +313,7 @@
 				"Taal:",
 				" NL     Nederlands"
 			],
-			"desc": "Huidige firmware taal"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [

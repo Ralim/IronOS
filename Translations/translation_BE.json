@@ -8,7 +8,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Перад тым, як працягнуць, каліласка, упэўнецеся, што джала мае комнатную тэмпературу!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Вы ўпэннены, што жадаеце зкінуць налады да першапачатковых значэнняў?",
 		"UVLOWarningString": "НАПРУГА--",
 		"UndervoltageString": "Нізкая напруга",
@@ -67,35 +67,35 @@
 				"Налады",
 				"сілкавання"
 			],
-			"desc": "Крыніца сілкавання і мінімальная напруга на ячэйку"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Налады",
 				"пайкі"
 			],
-			"desc": "Налады пайкі"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Рэжымы",
 				"сну"
 			],
-			"desc": "Налады рэжыму чакання"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Налады",
 				"інтэрфейсу"
 			],
-			"desc": "Карыстальніцкія налады знешняга выгляду"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Дадатковыя",
 				"налады"
 			],
-			"desc": "Дадатковыя налады"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -178,10 +178,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Каліброўка",
-				"тэмпературы"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Каліброўка тэрмадатчыка джала"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [

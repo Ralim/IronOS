@@ -2,12 +2,11 @@
 	"languageCode": "EN",
 	"languageLocalName": "English",
 	"fonts": [
-		"ascii_basic",
-		"latin_extended"
+		"ascii_basic"
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature before calibration!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
@@ -66,35 +65,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldering",
 				"settings"
 			],
-			"desc": "Soldering settings"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Sleep",
 				"mode"
 			],
-			"desc": "Power saving settings"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"User",
 				"interface"
 			],
-			"desc": "User interface settings"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Advanced",
 				"settings"
 			],
-			"desc": "Advanced settings"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -138,7 +137,7 @@
 				"Temperature",
 				"unit"
 			],
-			"desc": "C=°Celsius | F=°Fahrenheit"
+			"desc": "C=Celsius | F=Fahrenheit"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -180,7 +179,7 @@
 				"Calibrate CJC",
 				"at next boot"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -257,7 +256,7 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
@@ -313,7 +312,7 @@
 				"Language:",
 				" EN     English"
 			],
-			"desc": "Current firmware language"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +333,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Set boot logo duration (off | s=seconds | infinity)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

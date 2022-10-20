@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Provjerite da je vršak ohlađen na sobnu temperaturu prije nego što nastavite!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?",
 		"UVLOWarningString": "BATERIJA",
 		"UndervoltageString": "PRENIZAK NAPON",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Postavke",
 				"lemljenja"
 			],
-			"desc": "Postavke pri lemljenju"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Ušteda",
 				"energije"
 			],
-			"desc": "Postavke spavanja i štednje energije"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Korisničko",
 				"sučelje"
 			],
-			"desc": "Postavke korisničkog sučelja"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Napredne",
 				"opcije"
 			],
-			"desc": "Upravljanje naprednim opcijama"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibracija",
-				"temperature"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibriranje temperature mjeri razliku temperatura vrška i drške, dok je lemilica hladna."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -257,7 +257,7 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
@@ -278,7 +278,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

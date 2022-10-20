@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Assicurarsi che la punta si trovi a temperatura ambiente prima di continuare!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",
 		"UndervoltageString": "DC INSUFFICIENTE",
@@ -66,35 +66,35 @@
 				"Opzioni",
 				"alimentaz"
 			],
-			"desc": "Menù d'impostazioni per l'alimentazione"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Opzioni",
 				"saldatura"
 			],
-			"desc": "Menù d'impostazioni della modalità Saldatura"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Risparmio",
 				"energetico"
 			],
-			"desc": "Menù d'impostazioni per il risparmio energetico"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfaccia",
 				"utente"
 			],
-			"desc": "Menù d'impostazioni dell'interfaccia utente"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Opzioni",
 				"avanzate"
 			],
-			"desc": "Menù d'impostazioni avanzate"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -176,10 +176,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrazione",
-				"temperatura"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Calibra le rilevazioni di temperatura"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -312,7 +312,7 @@
 				"Lingua:",
 				" IT     Italiano"
 			],
-			"desc": "Imposta la lingua del dispositivo"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Zorg vooraf dat de punt op kamertemperatuur is!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ben je zeker dat je alle standaardwaarden wil resetten?",
 		"UVLOWarningString": "Voedingsspanning LAAG",
 		"UndervoltageString": "Onderspanning",
@@ -21,8 +21,8 @@
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
-			"Settings were",
-			"reset!"
+			"Certain settings",
+			"were changed!"
 		],
 		"NoAccelerometerMessage": [
 			"No accelerometer",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldeer",
 				"Instellingen"
 			],
-			"desc": "Soldeerinstellingen"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Slaap",
 				"standen"
 			],
-			"desc": "Batterijspaarstanden"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Gebruikers-",
 				"Interface"
 			],
-			"desc": "Gebruikersinterface Instellingen"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Gevorderde",
 				"Instellingen"
 			],
-			"desc": "Gevorderde Instellingen"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibreer",
-				"temperatuur?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Temperatuur van de punt calibreren."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -257,14 +257,14 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+			"desc": "Sensitivity to magnets (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

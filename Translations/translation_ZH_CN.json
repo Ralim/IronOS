@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "开始温度校正前，请先确定烙铁头正处于室温！",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "你是否确定要将全部设定重置为默认值？",
 		"UVLOWarningString": "电压过低",
 		"UndervoltageString": "Undervoltage",
@@ -51,23 +51,23 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": "电源设置",
-			"desc": "电源设置"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": "焊接设置",
-			"desc": "焊接设置"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": "待机设置",
-			"desc": "自动待机省电设置"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": "用户界面",
-			"desc": "用户界面设置"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": "高级设置",
-			"desc": "高级设置"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -116,8 +116,8 @@
 			"desc": "停止加热之后，闪动温度显示提醒烙铁头仍处于高温状态"
 		},
 		"CalibrateCJC": {
-			"text2": "温度校正？",
-			"desc": "开始校正烙铁头温度偏移"
+			"text2": "Calibrate CJC",
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": "全部重置？",
@@ -204,11 +204,8 @@
 			"desc": "反转OLED黑/白屏幕"
 		},
 		"LOGOTime": {
-			"text2": [
-			"Boot logo",
-			"duration"
-		],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"text2": "Boot logo duration",
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

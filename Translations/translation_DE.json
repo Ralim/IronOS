@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Nur Kalibrieren wenn Lötspitze & Gerät Raumtemperatur haben!",
+		"SettingsCalibrationWarning": "Bitte sicherstellen, dass Lötspitze & Gerät beim nächsten Start Raumtemperatur haben!",
 		"SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",
@@ -66,35 +66,35 @@
 				"Energie-",
 				"einstellungen"
 			],
-			"desc": "Energieeinstellungen"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Löt-",
 				"einstellungen"
 			],
-			"desc": "Löteinstellungen"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Ruhe-",
 				"modus"
 			],
-			"desc": "Energiespareinstellungen"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Anzeige-",
 				"einstellungen"
 			],
-			"desc": "Menüeinstellungen"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Erweiterte",
 				"Einstellungen"
 			],
-			"desc": "Erweiterte Einstellungen"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -180,7 +180,7 @@
 				"Temperatur",
 				"kalibrieren?"
 			],
-			"desc": "Kalibrierung der Kaltstellenkompensation beim nächsten Start (nicht nötig wenn Delta T < 5°C)"
+			"desc": "Kalibrierung der Kaltstellenkompensation beim nächsten Start (nicht nötig wenn Delta T < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -313,7 +313,7 @@
 				"Sprache:",
 				" DE     Deutsch"
 			],
-			"desc": "Sprache der Firmware ändern"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Se till att spetsen är rumstemererad innan du fortsätter!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Är du säker på att du vill återställa inställningarna?",
 		"UVLOWarningString": "DC LÅG",
 		"UndervoltageString": "Underspänning",
@@ -66,35 +66,35 @@
 				"Effekt-",
 				"inställning"
 			],
-			"desc": "Effektinställningar"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Lödnings-",
 				"inställning"
 			],
-			"desc": "Lödningsinställningar"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Vilo-",
 				"läge"
 			],
-			"desc": "Viloläges-inställningar"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Användar-",
 				"gränssnitt"
 			],
-			"desc": "Användargränssnitts-inställningar"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Avancerade",
 				"alternativ"
 			],
-			"desc": "Avancerade alternativ"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -159,7 +159,7 @@
 				"Turbo-",
 				"temp"
 			],
-			"desc": "Temperatur i \"turbo\"-läge"
+			"desc": "Temperatur i \"turbo-läge\""
 		},
 		"AutoStart": {
 			"text2": [
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibrera",
-				"temperatur?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibrera spets-kompensation."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -222,7 +222,7 @@
 				"PD",
 				"timeout"
 			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
 		},
 		"PowerLimit": {
 			"text2": [
@@ -255,9 +255,9 @@
 		"PowerPulsePower": {
 			"text2": [
 				"Power",
-				"Pulse W"
+				"pulse"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

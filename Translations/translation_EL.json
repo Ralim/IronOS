@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Πριν προχωρήσετε, παρακαλώ σιγουρευτείτε πως η μύτη βρίσκεται σε θερμοκρασία δωματίου!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Σίγουρα θέλετε επαναφορά αρχικών ρυθμίσεων;",
 		"UVLOWarningString": "Χαμηλ DC",
 		"UndervoltageString": "Υπόταση",
@@ -69,35 +69,35 @@
 				"Ρυθμίσεις",
 				"ενέργειας"
 			],
-			"desc": "Ρυθμίσεις ενέργειας"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Ρυθμίσεις",
 				"κόλλησης"
 			],
-			"desc": "Ρυθμίσεις κόλλησης"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Λειτουργία",
 				"ύπνου"
 			],
-			"desc": "Ρυθμίσεις εξοικ. ενέργ."
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Διεπαφή",
 				"χρήστη"
 			],
-			"desc": "Ρυθμίσεις διεπαφής χρήστη"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Προηγμένες",
 				"ρυθμίσεις"
 			],
-			"desc": "Προηγμένες ρυθμίσεις"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -180,10 +180,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Βαθμονόμηση",
-				"θερμοκρασίας;"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Βαθμονόμηση αρχικής θερμοκρασίας μύτης"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -260,7 +260,7 @@
 				"Παλμός",
 				"ενέργειας"
 			],
-			"desc": "Ένταση ενέργειας παλμού διατήρησης λειτουργίας (watt)"
+			"desc": "Ένταση ενέργειας παλμού διατήρησης λειτουργίας (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
@@ -295,7 +295,7 @@
 				"Ταχύτητα",
 				"κιν. εικονιδ."
 			],
-			"desc": "Ρυθμός κίνησης εικονιδίων στο μενού (0=off | Α=αργός | Μ=μέτριος | Γ=γρήγορος"
+			"desc": "Ρυθμός κίνησης εικονιδίων στο μενού (0=off | Α=αργός | Μ=μέτριος | Γ=γρήγορος)"
 		},
 		"PowerPulseWait": {
 			"text2": [
@@ -316,7 +316,7 @@
 				"Γλώσσα",
 				" GR     Ελληνικά"
 			],
-			"desc": "Τρέχουσα γλώσσα λογισμικού"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [

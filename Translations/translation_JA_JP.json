@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "続行する前に、コテ先が室温と同じになっていることを確認してください",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "設定をリセットしますか？",
 		"UVLOWarningString": "電圧が低すぎます",
 		"UndervoltageString": "Undervoltage",
@@ -51,23 +51,23 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": "電源設定",
-			"desc": "電源設定"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": "半田付け設定",
-			"desc": "半田付け設定"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": "待機設定",
-			"desc": "待機設定"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": "UI設定",
-			"desc": "ユーザーインターフェイスの設定"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": "高度な設定",
-			"desc": "高度な設定"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -116,8 +116,8 @@
 			"desc": "加熱の停止後、コテ先が熱い間は温度表示を点滅する"
 		},
 		"CalibrateCJC": {
-			"text2": "温度校正",
-			"desc": "コテ先の温度校正を開始する"
+			"text2": "Calibrate CJC",
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": "設定をリセット",
@@ -141,9 +141,9 @@
 		},
 		"PDNegTimeout": {
 			"text2": [
-			"PD",
-			"timeout"
-		],
+				"PD",
+				"timeout"
+			],
 			"desc": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
 		},
 		"PowerLimit": {
@@ -207,11 +207,8 @@
 			"desc": "画面の色を反転する"
 		},
 		"LOGOTime": {
-			"text2": [
-			"Boot logo",
-			"duration"
-		],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"text2": "Boot logo duration",
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

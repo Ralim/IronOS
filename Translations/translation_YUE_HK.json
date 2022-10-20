@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "開始温度校正之前，請先確定焫雞咀係處於室温！",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "你係咪確定要將全部設定重設到預設值？",
 		"UVLOWarningString": "電壓過低",
 		"UndervoltageString": "Undervoltage",
@@ -51,23 +51,23 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": "電源設定",
-			"desc": "電源設定"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": "焊接設定",
-			"desc": "焊接設定"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": "待機設定",
-			"desc": "自動待機慳電設定"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": "使用者介面",
-			"desc": "使用者介面設定"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": "進階設定",
-			"desc": "進階設定"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -116,8 +116,8 @@
 			"desc": "停止加熱之後，當焫雞咀仲係熱嗰陣閃爍畫面"
 		},
 		"CalibrateCJC": {
-			"text2": "温度校正？",
-			"desc": "開始校正焫雞咀温度位移"
+			"text2": "Calibrate CJC",
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": "全部重設？",
@@ -204,11 +204,8 @@
 			"desc": "反轉OLED熒幕嘅黑白色"
 		},
 		"LOGOTime": {
-			"text2": [
-			"Boot logo",
-			"duration"
-		],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"text2": "Boot logo duration",
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

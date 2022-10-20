@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
 		"UVLOWarningString": "MAŽ VOLT",
 		"UndervoltageString": "Žema įtampa",
@@ -66,35 +66,35 @@
 				"Maitinimo",
 				"nustatymai"
 			],
-			"desc": "Su maitinblokiu susiję nustatymai"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Litavimo",
 				"nustatymai"
 			],
-			"desc": "Litavimo nustatymai"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Miego",
 				"režimai"
 			],
-			"desc": "Energijos tausojimo nustatymai"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Naudotojo",
 				"sąsaja"
 			],
-			"desc": "Naudotojo sąsajos nustatymai"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Išplėsti.",
 				"nustatymai"
 			],
-			"desc": "Išplėstiniai nustatymai"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibruoti",
-				"temperatūrą?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Antgalio temperatūros kalibravimas"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -313,7 +313,7 @@
 				"Kalba:",
 				" LT     Lietuvių"
 			],
-			"desc": "Dabartinė programinės įrangos kalba"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +334,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

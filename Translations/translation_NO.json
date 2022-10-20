@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Sørg for at loddespissen har romtemperatur før du fortsetter!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Er du sikker på at du vil tilbakestille til standardinnstillinger?",
 		"UVLOWarningString": "Lavspenn",
 		"UndervoltageString": "Underspenning",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Lodde-",
 				"innst."
 			],
-			"desc": "Loddeinnstillinger"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Dvale-",
 				"innst."
 			],
-			"desc": "Dvaleinnstillinger"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Bruker-",
 				"grensesn."
 			],
-			"desc": "Brukergrensesnitt-innstillinger"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Avanserte",
 				"valg"
 			],
-			"desc": "Avanserte valg"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -159,7 +159,7 @@
 				"KTmp",
 				""
 			],
-			"desc": "Temperatur i \"kraft\"-modus"
+			"desc": "Temperatur i \"kraft-modus\""
 		},
 		"AutoStart": {
 			"text2": [
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"TempKal?",
-				""
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibrer spiss-temperatur."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -257,14 +257,14 @@
 				"Power",
 				"pulse"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
 				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
+			"desc": "Sensitivity to magnets (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
 		},
 		"LockingMode": {
 			"text2": [
@@ -278,7 +278,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

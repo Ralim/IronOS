@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "A ponta deve estar à temperatura ambiente antes de continuar!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Definições de fábrica?",
 		"UVLOWarningString": "DC BAIXO",
 		"UndervoltageString": "Subtensão",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Configurações",
 				"Solda"
 			],
-			"desc": "Configurações de soldagem"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Modos",
 				"Repouso"
 			],
-			"desc": "Configurações de economia de energia"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interface",
 				"Utilizador"
 			],
-			"desc": "Configurações do interface do utilizador"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Menu",
 				"Avançado"
 			],
-			"desc": "Opções avançadas"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -159,7 +159,7 @@
 				"Modo turbo",
 				"temperat."
 			],
-			"desc": "Ajuste de temperatura do modo \"turbo\""
+			"desc": "Ajuste de temperatura do \"modo turbo\""
 		},
 		"AutoStart": {
 			"text2": [
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrar",
-				"temperatura"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Calibra a temperatura"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -229,63 +229,63 @@
 				"Power",
 				"limit"
 			],
-			"desc": "Maximum power the iron can use (Watts)"
+			"desc": "Maximum power the iron can use (W=watt)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Swap",
+				"+ - keys"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Reverse assignment of buttons for temperature adjustment"
 		},
 		"TempChangeShortStep": {
 			"text2": [
 				"Temp change",
-				"short?"
+				"short"
 			],
-			"desc": "Temperature change steps on short button press!"
+			"desc": "Temperature-change-increment on short button press"
 		},
 		"TempChangeLongStep": {
 			"text2": [
 				"Temp change",
-				"long?"
+				"long"
 			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Temperature-change-increment on long button press"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Power",
-				"Pulse W"
+				"pulse"
 			],
-			"desc": "Keep awake pulse power intensity"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall Eff",
-				"Sensitivity"
+				"Hall sensor",
+				"sensitivity"
 			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep (0=Desligado | 1=Menor | ... | 9=Maior)"
+			"desc": "Sensitivity to magnets (0=Desligado | 1=Menor | ... | 9=Maior)"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow buttons",
-				"locking"
+				"Allow locking",
+				"buttons"
 			],
-			"desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
+			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
 		},
 		"MinVolCell": {
 			"text2": [
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
 				"Anim.",
 				"loop"
 			],
-			"desc": "Loop icon animations in root menu"
+			"desc": "Loop icon animations in main menu"
 		},
 		"AnimSpeed": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

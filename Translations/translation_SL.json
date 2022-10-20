@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Pred nadaljevanjem mora biti konica segreta na sobno temperaturo!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Res želite ponastaviti na privzete nastavitve?",
 		"UVLOWarningString": "NIZKA U",
 		"UndervoltageString": "Nizka napetost",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Nastavitve",
 				"spajkanja"
 			],
-			"desc": "Nastavitve spajkanja"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Način",
 				"spanja"
 			],
-			"desc": "Nastavitve varčevanja z energijo"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Uporabniški",
 				"vmesnik"
 			],
-			"desc": "Nastavitve uporabniškega vmesnika"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Napredne",
 				"možnosti"
 			],
-			"desc": "Napredne možnosti"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibriram",
-				"temperaturo?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibracija temperature na konici."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -222,7 +222,7 @@
 				"PD",
 				"timeout"
 			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
 		},
 		"PowerLimit": {
 			"text2": [
@@ -278,7 +278,7 @@
 				"Minimum",
 				"voltage"
 			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -320,21 +320,21 @@
 				"Screen",
 				"brightness"
 			],
-			"desc": "Adjust the brightness of the OLED screen"
+			"desc": "Adjust the OLED screen brightness"
 		},
 		"ColourInversion": {
 			"text2": [
 				"Invert",
 				"screen"
 			],
-			"desc": "Invert the colours of the OLED screen"
+			"desc": "Invert the OLED screen colors"
 		},
 		"LOGOTime": {
 			"text2": [
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful este la temperatura camerei, înainte de a continua!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Sub tensiune",
@@ -66,35 +66,35 @@
 				"Setări de",
 				"alimentare"
 			],
-			"desc": "Setări de alimentare"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Setări de",
 				"lipire"
 			],
-			"desc": "Setări de lipire"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Modul",
 				"repaus"
 			],
-			"desc": "Setări de economisire a energiei"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfată",
 				"utilizator"
 			],
-			"desc": "Setări interfată utilizator"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Optiuni",
 				"avansate"
 			],
-			"desc": "Optiuni avansate"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrare",
-				"temperatură?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Începeti calibrarea compensării de temperatură a vârfului"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -313,7 +313,7 @@
 				"Limbă:",
 				" RO     Română"
 			],
-			"desc": "Limba curenta"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +334,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

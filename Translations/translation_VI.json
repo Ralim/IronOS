@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Chac chan mui hàn o nhiet đo phòng truoc khi tiep tuc!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?",
 		"UVLOWarningString": "DC thap",
 		"UndervoltageString": "Đien áp thap",
@@ -66,35 +66,35 @@
 				"Cài đat",
 				"nguon đien"
 			],
-			"desc": "Cài đat nguon đien"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Cài đat",
 				"tay hàn"
 			],
-			"desc": "Cài đat tay hàn"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Che đo",
 				"ngu"
 			],
-			"desc": "Cài đat che đo tiet kiem đien"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Giao dien",
 				"nguoi dùng"
 			],
-			"desc": "Cài đat giao dien nguoi dùng"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Cài đat",
 				"nâng cao"
 			],
-			"desc": "Cài đat nâng cao"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Hieu chuan",
-				"nhiet đo?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "-Bat đau hieu chuan bù nhiet cho mui hàn"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -213,7 +213,7 @@
 		"QCMaxVoltage": {
 			"text2": [
 				"QC",
-				"Voltage"
+				"voltage"
 			],
 			"desc": "Đien áp QC toi đa mà tay hàn yêu cau"
 		},
@@ -313,7 +313,7 @@
 				"Ngôn ngu:",
 				"VI     Tieng Viet"
 			],
-			"desc": "-Ngôn ngu firmware hien tai"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +334,7 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
 		}
 	}
 }

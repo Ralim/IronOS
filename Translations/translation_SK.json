@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Najprv sa prosím uistite, že hrot má izbovú teplotu!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Naozaj chcete obnoviť továrenské nastavenia?",
 		"UVLOWarningString": "Nízke U!",
 		"UndervoltageString": "Nízke napätie",
@@ -66,35 +66,35 @@
 				"Nastavenie",
 				"výkonu"
 			],
-			"desc": "Nastavenie výkonu"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Nastavenie",
 				"spájkovania"
 			],
-			"desc": "Nastavenie spájkovania"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Úsporný",
 				"režim"
 			],
-			"desc": "Nastavenia režimov úspory energie"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Nastavenie",
 				"zobrazenia"
 			],
-			"desc": "Nastavenie zobrazenia"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Pokročilé",
 				"nastavenia"
 			],
-			"desc": "Pokročilé nastavenia"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibrácia",
-				"teploty"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibrácia posunu teploty hrotu"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -313,7 +313,7 @@
 				"Jazyk:",
 				" SK  Slovenčina"
 			],
-			"desc": "Aktuálny jazyk"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [

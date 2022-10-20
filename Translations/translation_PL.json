@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Przed kontynuowaniem upewnij się, że końcówka osiągnęła temperaturę pokojową!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
 		"UVLOWarningString": "NIS. NAP",
 		"UndervoltageString": "Zbyt niskie nap.",
@@ -66,35 +66,35 @@
 				"Ustawienia",
 				"zasilania"
 			],
-			"desc": "Zasilanie i minimalne napięcie na komórkę"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Lutowanie",
 				""
 			],
-			"desc": "Ustawienia trybu lutowania"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Oszcz.",
 				"energii"
 			],
-			"desc": "Ustawienia oszczędzania energii"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfejs",
 				"użytkownika"
 			],
-			"desc": "Ustawienia interfejsu użytkownika"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Ustawienia",
 				"zaawans."
 			],
-			"desc": "Ustawienia zaawansowane"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Kalibracja",
-				"temp. grotu"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Kalibracja temperatury grotu lutownicy"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [

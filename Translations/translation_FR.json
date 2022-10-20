@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer !",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
 		"UVLOWarningString": "DC FAIBL",
 		"UndervoltageString": "Sous-tension",
@@ -66,35 +66,35 @@
 				"Paramètres",
 				"d'alim."
 			],
-			"desc": "Paramètres d'alimentation"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Paramètres",
 				"de soudure"
 			],
-			"desc": "Paramètres de soudure"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Mode",
 				"veille"
 			],
-			"desc": "Paramètres d'économie d'énergie"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interface",
 				"utilisateur"
 			],
-			"desc": "Paramètres de l'interface utilisateur"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Options",
 				"avancées"
 			],
-			"desc": "Options avancées"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -177,10 +177,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Étalonner",
-				"température"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Étalonner température de la panne"
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -313,7 +313,7 @@
 				"Langue :",
 				" FR     Français"
 			],
-			"desc": "Langue du firmware"
+			"desc": ""
 		},
 		"Brightness": {
 			"text2": [
