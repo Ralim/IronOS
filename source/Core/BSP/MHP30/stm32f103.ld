@@ -116,17 +116,6 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
   } >RAM AT> ROM
 
-  .logo_page (NOLOAD) :
-  {
-    . = ABSOLUTE(__FLASH_END_ADDR__ - 2048);
-    KEEP (*(.logo_page*))
-  } > ROM
-
-  .settings_page (NOLOAD) :
-  {
-    . = ABSOLUTE(__FLASH_END_ADDR__ - 1024);
-    KEEP (*(.settings_page*))
-  } > ROM
 
   .bss :
   {

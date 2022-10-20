@@ -13,10 +13,10 @@
 		"UndervoltageString": "Nízke napätie",
 		"InputVoltageString": "Vstupné U: ",
 		"SleepingSimpleString": "Chrr",
-		"SleepingAdvancedString": "Pokojový režim..",
+		"SleepingAdvancedString": "Pokojový režim.",
 		"SleepingTipAdvancedString": "Hrot:",
 		"OffString": "Vyp",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Vaše zariadenie je pravdepodobne falzifikát!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
@@ -311,7 +311,7 @@
 		"LanguageSwitch": {
 			"text2": [
 				"Jazyk:",
-				" SK     Slovenčina"
+				" SK  Slovenčina"
 			],
 			"desc": ""
 		},
@@ -331,10 +331,10 @@
 		},
 		"LOGOTime": {
 			"text2": [
-				"Boot logo",
-				"duration"
+				"Trvanie",
+				"boot loga"
 			],
-			"desc": "Set boot logo duration (s=seconds)"
+			"desc": "Doba trvania boot loga (s=sekundy)"
 		}
 	}
 }
