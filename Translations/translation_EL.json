@@ -39,9 +39,9 @@
 			"ΠΛΗΚΤΡΑ!"
 		],
 		"WarningThermalRunaway": [
-				"Θερμική",
-				"Φυγή"
-			]
+			"Θερμική",
+			"Φυγή"
+		]
 	},
 	"characters": {
 		"SettingRightChar": "R",
