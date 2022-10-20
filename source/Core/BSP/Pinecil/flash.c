@@ -10,8 +10,6 @@
 #include "gd32vf103_libopt.h"
 #include "string.h"
 #define FMC_PAGE_SIZE ((uint16_t)0x400U)
-// static uint16_t settings_page[FMC_PAGE_SIZE] __attribute__ ((section (".settings_page")));
-// Linker script doesnt want to play, so for now its hard coded
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 
