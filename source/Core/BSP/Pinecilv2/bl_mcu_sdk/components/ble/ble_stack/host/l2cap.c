@@ -26,7 +26,7 @@
 #include "conn_internal.h"
 #include "l2cap_internal.h"
 
-#include "config.h"
+#include "ble_config.h"
 
 #define LE_CHAN_RTX(_w) CONTAINER_OF(_w, struct bt_l2cap_le_chan, chan.rtx_work)
 #define CHAN_RX(_w)     CONTAINER_OF(_w, struct bt_l2cap_le_chan, rx_work)

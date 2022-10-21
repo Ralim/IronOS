@@ -30,7 +30,7 @@
 #include <gatt.h>
 #include <hci_driver.h>
 #if defined(BFLB_BLE)
-#include "config.h"
+#include "ble_config.h"
 #include <util.h>
 #endif
 

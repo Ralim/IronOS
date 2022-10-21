@@ -7,6 +7,7 @@
  */
 
 #include <zephyr.h>
+#include <ble_config.h>
 #include <string.h>
 #include <errno.h>
 #include <atomic.h>

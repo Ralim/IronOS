@@ -35,7 +35,7 @@
 #include "att_internal.h"
 #include "gatt_internal.h"
 #if defined(BFLB_BLE)
-#include "config.h"
+#include "ble_config.h"
 
 extern struct k_sem g_poll_sem;
 #endif

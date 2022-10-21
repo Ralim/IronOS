@@ -22,7 +22,7 @@ NOTES
 #include "uuid.h"
 #include "ble_peripheral_tp_server.h"
 #include "log.h"
-
+#include "bl702_glb.h"
 static void ble_tp_connected(struct bt_conn *conn, u8_t err);
 static void ble_tp_disconnected(struct bt_conn *conn, u8_t reason);
 
