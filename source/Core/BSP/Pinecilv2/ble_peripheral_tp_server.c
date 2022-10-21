@@ -24,7 +24,7 @@ NOTES
 #include "log.h"
 #include "hal_clock.h"
 
-extern bool pds_start;
+ bool pds_start;
 
 static void ble_tp_connected(struct bt_conn *conn, u8_t err);
 static void ble_tp_disconnected(struct bt_conn *conn, u8_t reason);
