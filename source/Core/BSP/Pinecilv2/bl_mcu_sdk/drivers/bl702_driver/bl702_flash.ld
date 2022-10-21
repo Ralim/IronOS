@@ -32,7 +32,7 @@ SECTIONS
 {
     PROVIDE(__metal_chicken_bit = 0);
 
-    .text :
+     .text :
     {
         . = ALIGN(4);
         __text_code_start__ = .;
@@ -73,8 +73,18 @@ SECTIONS
                         *bl702_xip_sflash_ext*.o* \
                         *bl702_ef_ctrl*.o*) .rodata*)
 
+        *(.rodata)
+        *(.rodata.*)
+
         *(.srodata)
         *(.srodata.*)
+
+		_bt_gatt_service_static_list_start = .;
+        KEEP(*(SORT_BY_NAME("._bt_gatt_service_static.static.*")))
+        _bt_gatt_service_static_list_end = .;
+        _bt_l2cap_fixed_chan_list_start = .;
+        KEEP(*(SORT_BY_NAME("._bt_l2cap_fixed_chan.static.*")))
+        _bt_l2cap_fixed_chan_list_end = .;
 
         . = ALIGN(4);
         __text_code_end__ = .;
