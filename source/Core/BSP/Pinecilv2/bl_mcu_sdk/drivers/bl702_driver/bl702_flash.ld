@@ -85,6 +85,9 @@ SECTIONS
         _bt_l2cap_fixed_chan_list_start = .;
         KEEP(*(SORT_BY_NAME("._bt_l2cap_fixed_chan.static.*")))
         _bt_l2cap_fixed_chan_list_end = .;
+        _bt_l2cap_br_fixed_chan_list_start = .;
+        KEEP(*(SORT_BY_NAME("._bt_l2cap_br_fixed_chan.static.*")))
+        _bt_l2cap_br_fixed_chan_list_end = .;
 
         . = ALIGN(4);
         __text_code_end__ = .;
