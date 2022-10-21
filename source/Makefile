@@ -405,11 +405,7 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 # compiler flags ---------------------------------------------------------------
 
 
-CHECKOPTIONS=		-Wall 				\
-			-Wextra				\
-			-Wunused			\
-			-Wcomment 			\
-			-Wtrigraphs			\
+CHECKOPTIONS=-Wtrigraphs			\
 			-Wuninitialized		\
 			-Wmissing-braces	\
 			-Wfloat-equal		\
@@ -428,7 +424,6 @@ CHECKOPTIONS=		-Wall 				\
 			-Waddress			\
 			-Waggregate-return	\
 			-Wmissing-field-initializers	\
-			-Winline			\
 			-Wshadow			\
 			-Wno-unused-parameter \
 			-Wdouble-promotion 

@@ -24,9 +24,17 @@
  *
  */
 
+#ifndef DEPRECATED_DEFINITIONS_H
+#define DEPRECATED_DEFINITIONS_H
 
-#ifndef _MSC_VER /* Visual Studio doesn't support #warning. */
-    #warning The name of this file has changed to stack_macros.h.  Please update your code accordingly.  This source file (which has the original name) will be removed in future released.
-#endif
+/* Each FreeRTOS port has a unique portmacro.h header file.  Originally a
+ * pre-processor definition was used to ensure the pre-processor found the correct
+ * portmacro.h file for the port being used.  That scheme was deprecated in favour
+ * of setting the compiler's include path such that it found the correct
+ * portmacro.h file - removing the need for the constant and allowing the
+ * portmacro.h file to be located anywhere in relation to the port being used.  The
+ * definitions below remain in the code for backward compatibility only.  New
+ * projects should not use them. */
+#include "portmacro.h"
 
-#include "stack_macros.h"
+#endif /* DEPRECATED_DEFINITIONS_H */

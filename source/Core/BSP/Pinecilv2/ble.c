@@ -61,12 +61,12 @@ void ble_stack_start(void)
     GLB_Set_EM_Sel(GLB_EM_8KB);
     ble_controller_init(configMAX_PRIORITIES - 1);
 
-    // Initialize BLE Host stack
-    MSG("[OS] hci_driver_init...\r\n");
-    hci_driver_init();
+    // // Initialize BLE Host stack
+    // MSG("[OS] hci_driver_init...\r\n");
+    // hci_driver_init();
 
-    MSG("[OS] bt_enable...\r\n");
-    bt_enable(bt_enable_cb);
+    // MSG("[OS] bt_enable...\r\n");
+    // bt_enable(bt_enable_cb);
 }
 
 
