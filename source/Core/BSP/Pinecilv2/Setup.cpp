@@ -159,12 +159,3 @@ void setupFUSBIRQ() {
   CPU_Interrupt_Enable(GPIO_INT0_IRQn);
   gpio_irq_enable(FUSB302_IRQ_Pin, ENABLE);
 }
-
-void vAssertCalled(void) {
-  MSG((char *)"vAssertCalled\r\n");
-  PWM_Channel_Disable(PWM_Channel);
-  gpio_set_mode(PWM_Out_Pin, GPIO_INPUT_PD_MODE);
-
-  while (1)
-    ;
-}
