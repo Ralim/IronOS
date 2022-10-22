@@ -309,7 +309,6 @@ static HAL_StatusTypeDef I2C_MasterTransmit_BTF(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_MasterReceive_RXNE(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_MasterReceive_BTF(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_Master_SB(I2C_HandleTypeDef *hi2c);
-static HAL_StatusTypeDef I2C_Master_ADD10(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_Master_ADDR(I2C_HandleTypeDef *hi2c);
 
 /**
@@ -3718,18 +3717,6 @@ static HAL_StatusTypeDef I2C_Master_SB(I2C_HandleTypeDef *hi2c) {
   return HAL_OK;
 }
 
-/**
- * @brief  Handle ADD10 flag for Master
- * @param  hi2c Pointer to a I2C_HandleTypeDef structure that contains
- *         the configuration information for I2C module
- * @retval HAL status
- */
-static HAL_StatusTypeDef I2C_Master_ADD10(I2C_HandleTypeDef *hi2c) {
-  /* Send slave address */
-  hi2c->Instance->DR = I2C_10BIT_ADDRESS(hi2c->Devaddress);
-
-  return HAL_OK;
-}
 
 /**
  * @brief  Handle ADDR flag for Master

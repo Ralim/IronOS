@@ -1439,7 +1439,6 @@ void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc) {
  */
 HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConfTypeDef *sConfig) {
   HAL_StatusTypeDef tmp_hal_status  = HAL_OK;
-  __IO uint32_t     wait_loop_index = 0U;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
