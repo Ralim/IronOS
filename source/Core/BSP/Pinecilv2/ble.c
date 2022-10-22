@@ -49,9 +49,14 @@ int ble_start_adv(void)
 
 void bt_enable_cb(int err)
 {
+    MSG("[OS] bt_enable_cb...\r\n");
+    MSG("[OS] ble_tp_init...\r\n");
     ble_tp_init();
+    MSG("[OS] ble_tp_init...Done\r\n");
 
+    MSG("[OS] ble_start_adv...\r\n");
     ble_start_adv();
+    MSG("[OS] ble_start_adv...Done\r\n");
 }
 
 
