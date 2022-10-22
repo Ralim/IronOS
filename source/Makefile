@@ -473,30 +473,6 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 
 $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation.%.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
-		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.%.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.$*.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
-		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
@@ -506,6 +482,7 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.$*.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
