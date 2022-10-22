@@ -17,7 +17,7 @@ extern "C" {
  */
 
 // Erase the flash, then save the buffer. Returns 1 if worked
-uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length);
+void flash_save_buffer(const uint8_t *buffer, const uint16_t length);
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length);
 #ifdef __cplusplus
