@@ -607,7 +607,7 @@ BT_SMP_DIST_ENC_KEY bit is not cleared while remote ENC_KEY is received.*/
 #define BFLB_BLE_PATCH_CLEAR_REMOTE_KEY_BIT
 
 #if defined(CONFIG_BT_CENTRAL) || defined(CONFIG_BT_OBSERVER)
-#define BFLB_BLE_NOTIFY_ADV_DISCARDED
+// #define BFLB_BLE_NOTIFY_ADV_DISCARDED
 #endif
 #if defined(__cplusplus)
 }
