@@ -29,6 +29,7 @@ MEMORY
     ram_memory  (!rx) : ORIGIN = 0x42020000, LENGTH = 32K
     rsvd_memory (!rx) : ORIGIN = 0x42028000, LENGTH = 1K
     ram2_memory (!rx) : ORIGIN = 0x42028400, LENGTH = (31K - __EM_SIZE)
+    hbn_memory (rx) : ORIGIN = 0x40010000, LENGTH = 0xE00 /* hbn ram 4K used 3.5K*/
 }
 
 SECTIONS
@@ -92,6 +93,67 @@ SECTIONS
         . = ALIGN(4);
         __text_code_end__ = .;
     } > xip_memory
+ .preinit_array  :
+    {
+        PROVIDE_HIDDEN (__preinit_array_start = .);
+        KEEP (*(.preinit_array))
+        PROVIDE_HIDDEN (__preinit_array_end = .);
+    } >xip_memory AT>xip_memory
+
+    .init_array     :
+    {
+        PROVIDE_HIDDEN (__init_array_start = .);
+        KEEP (*(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*)))
+        KEEP (*(.init_array EXCLUDE_FILE (*crtbegin.o *crtbegin?.o *crtend.o *crtend?.o ) .ctors))
+        PROVIDE_HIDDEN (__init_array_end = .);
+    } >xip_memory AT>xip_memory
+
+    .fini_array     :
+    {
+        PROVIDE_HIDDEN (__fini_array_start = .);
+        KEEP (*(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*)))
+        KEEP (*(.fini_array EXCLUDE_FILE (*crtbegin.o *crtbegin?.o *crtend.o *crtend?.o ) .dtors))
+        PROVIDE_HIDDEN (__fini_array_end = .);
+    } >xip_memory AT>xip_memory
+
+  .ctors          :
+  {
+    /* gcc uses crtbegin.o to find the start of
+     * the constructors, so we make sure it is
+     * first.  Because this is a wildcard, it
+     * doesn't matter if the user does not
+     * actually link against crtbegin.o; the
+     * linker won't look for a file to match a
+     * wildcard.  The wildcard also means that it
+     * doesn't matter which directory crtbegin.o
+     * is in.
+     */
+    KEEP (*crtbegin.o(.ctors))
+    KEEP (*crtbegin?.o(.ctors))
+    /* We don't want to include the .ctor section from
+     * the crtend.o file until after the sorted ctors.
+     * The .ctor section from the crtend file contains the
+     * end of ctors marker and it must be last
+     */
+    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .ctors))
+    KEEP (*(SORT(.ctors.*)))
+    KEEP (*(.ctors))
+  } >xip_memory AT>xip_memory
+
+  .dtors          :
+  {
+    KEEP (*crtbegin.o(.dtors))
+    KEEP (*crtbegin?.o(.dtors))
+    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .dtors))
+    KEEP (*(SORT(.dtors.*)))
+    KEEP (*(.dtors))
+  } >xip_memory AT>xip_memory
+
+  .lalign         :
+  {
+    . = ALIGN(4);
+    PROVIDE( _data_lma = . );
+  } >xip_memory AT>xip_memory
 
     . = ALIGN(4);
     __itcm_load_addr = .;
@@ -122,7 +184,20 @@ SECTIONS
         __tcm_code_end__ = .;
     } > itcm_memory
 
-    __dtcm_load_addr = __itcm_load_addr + SIZEOF(.itcm_region);
+ __hbn_load_addr = __itcm_load_addr + SIZEOF(.itcm_region);
+
+    .hbn_ram_region : AT (__hbn_load_addr)
+    {
+        . = ALIGN(4);
+        __hbn_ram_start__ = .;
+        *bl702_hbn_wakeup*.o*(.rodata*)
+        *(.hbn_ram_code*)
+        *(.hbn_ram_data)
+        . = ALIGN(4);
+        __hbn_ram_end__ = .;
+    } > hbn_memory
+
+    __dtcm_load_addr = __hbn_load_addr + SIZEOF(.hbn_ram_region);
 
     .dtcm_region : AT (__dtcm_load_addr)
     {
