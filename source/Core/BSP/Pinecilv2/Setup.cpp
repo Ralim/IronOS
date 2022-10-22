@@ -17,12 +17,25 @@
 #define ADC_FILTER_LEN   4
 uint16_t ADCReadings[ADC_NORM_SAMPLES]; // room for 32 lots of the pair of readings
 
+// Heap
+
+extern uint8_t      _heap_start;
+extern uint8_t      _heap_size; // @suppress("Type cannot be resolved")
+static HeapRegion_t xHeapRegions[] = {
+    {&_heap_start, (unsigned int)&_heap_size},
+    {NULL, 0}, /* Terminates the array. */
+    {NULL, 0}  /* Terminates the array. */
+};
+
 // Functions
 
 void setup_timer_scheduler(void);
 void setup_pwm(void);
 void setup_adc(void);
 void hardware_init() {
+
+  vPortDefineHeapRegions(xHeapRegions);
+
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
   gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
   gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);

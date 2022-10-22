@@ -14,7 +14,7 @@
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
 #define configMAX_PRIORITIES                    (7)
 #define configMINIMAL_STACK_SIZE                ((unsigned short)160) /* Only needs to be this high as some demo tasks also use this constant.  In production only the idle task would use this. */
-#define configTOTAL_HEAP_SIZE                   ((size_t)1024 * 4)
+#define configTOTAL_HEAP_SIZE                   ((size_t)1024 * 8)
 #define configMAX_TASK_NAME_LEN                 (24)
 #define configUSE_TRACE_FACILITY                0
 #define configUSE_16_BIT_TICKS                  0
