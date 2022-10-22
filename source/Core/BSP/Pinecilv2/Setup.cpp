@@ -8,9 +8,9 @@
 #include "BSP.h"
 #include "Debug.h"
 #include "FreeRTOSConfig.h"
-#include "Pins.h"
-
 #include "IRQ.h"
+#include "Pins.h"
+#include "bl702_sec_eng.h"
 #include "history.hpp"
 #include <string.h>
 #define ADC_NORM_SAMPLES 16
@@ -35,6 +35,18 @@ void setup_adc(void);
 void hardware_init() {
 
   vPortDefineHeapRegions(xHeapRegions);
+  HBN_Set_XCLK_CLK_Sel(HBN_XCLK_CLK_XTAL);
+
+  // Set capcode
+  {
+    uint32_t tmpVal = 0;
+    tmpVal          = BL_RD_REG(AON_BASE, AON_XTAL_CFG);
+    tmpVal          = BL_SET_REG_BITS_VAL(tmpVal, AON_XTAL_CAPCODE_IN_AON, 33);
+    tmpVal          = BL_SET_REG_BITS_VAL(tmpVal, AON_XTAL_CAPCODE_OUT_AON, 33);
+    BL_WR_REG(AON_BASE, AON_XTAL_CFG, tmpVal);
+  }
+
+  Sec_Eng_Trng_Enable();
 
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
   gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
