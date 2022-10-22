@@ -11,21 +11,6 @@ extern TIM_HandleTypeDef htim1; // used for the systick
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */
 /******************************************************************************/
 
-void NMI_Handler(void) {}
-
-// We have the assembly for a breakpoint trigger here to halt the system when a debugger is connected
-// Hardfault handler, often a screwup in the code
-void HardFault_Handler(void) {}
-
-// Memory management unit had an error
-void MemManage_Handler(void) {}
-
-// Prefetcher or busfault occured
-void BusFault_Handler(void) {}
-
-void UsageFault_Handler(void) {}
-
-void DebugMon_Handler(void) {}
 
 // Systick is used by FreeRTOS tick
 void SysTick_Handler(void) { osSystickHandler(); }

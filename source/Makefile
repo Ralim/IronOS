@@ -152,7 +152,7 @@ S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=$(MINIWARE_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD 				
+		-D STM32F10X_MD -finline-limit=9999999
 DEV_LDFLAGS= -Wl,--wrap=printf  -Wl,--no-wchar-size-warning 
 DEV_AFLAGS=
 DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
@@ -271,7 +271,7 @@ CPUFLAGS= -march=rv32imafc \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
 			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DportUSING_MPU_WRAPPERS=0
 # -DBFLB_USE_ROM_DRIVER=1
-DEV_LDFLAGS=-nostartfiles  -DDEBUG
+DEV_LDFLAGS=-nostartfiles
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= 
 #Required to be turned off due to their drivers tripping warnings
@@ -313,12 +313,11 @@ $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o 
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -fshort-wchar -flto -finline-small-functions  -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
+OPTIM=-Os -foptimize-strlen -faggressive-loop-optimizations -fdevirtualize-at-ltrans -fmerge-all-constants -fshort-wchar -flto -finline-small-functions -finline-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common -fno-math-errno -ffast-math -ffinite-math-only -fno-signed-zeros -fsingle-precision-constant
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
 
-DEBUG=-g3 
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
 endif
@@ -400,7 +399,6 @@ CHECKOPTIONS_C=	$(CHECKOPTIONS) -Wbad-function-cast
 
 CXXFLAGS=$(DEV_CXXFLAGS)         \
         $(CPUFLAGS)              \
-		$(DEBUG) 			     \
 		$(INCLUDES)              \
 		$(GLOBAL_DEFINES) 	     \
 		-D${COMPILER}  		     \
@@ -419,7 +417,6 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 
 CFLAGS=$(DEV_CFLAGS) 			\
         $(CPUFLAGS) 			\
-		$(DEBUG) 				\
 		$(INCLUDES) 			\
 		$(CHECKOPTIONS_C) 		\
 		$(GLOBAL_DEFINES) 		\
@@ -436,7 +433,6 @@ AFLAGS= $(CPUFLAGS)    			\
 		$(DEV_AFLAGS)  			\
 		$(GLOBAL_DEFINES) 		\
 		$(OPTIM) 				\
-		$(DEBUG)      			\
 		$(ASM_INC)    			\
 		$(INCLUDES)
 
@@ -477,30 +473,6 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 
 $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation.%.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
-		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.%.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		Makefile $(LDSCRIPT)
-	@test -d $(@D) || mkdir -p $(@D)
-	@echo Linking $@
-	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
-		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.$*.o \
-		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
-		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
-
-$(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
-		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		Makefile $(LDSCRIPT)
@@ -510,6 +482,7 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.$*.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
+
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
@@ -546,12 +519,12 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
 
 $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/depack.c
 	@test -d $(@D) || mkdir -p $(@D)

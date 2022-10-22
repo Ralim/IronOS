@@ -11,7 +11,7 @@
 #include "string.h"
 #define FMC_PAGE_SIZE ((uint16_t)0x400U)
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
-uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
+void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 
   /* unlock the flash program/erase controller */
   fmc_unlock();
@@ -32,7 +32,6 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
     resetWatchdog();
   }
   fmc_lock();
-  return 1;
 }
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length) {

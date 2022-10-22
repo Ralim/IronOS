@@ -232,8 +232,8 @@ typedef struct {
 /** @defgroup I2C_addressing_mode I2C addressing mode
  * @{
  */
-#define I2C_ADDRESSINGMODE_7BIT  0x00004000U
-#define I2C_ADDRESSINGMODE_10BIT (I2C_OAR1_ADDMODE | 0x00004000U)
+#define I2C_ADDRESSINGMODE_7BIT 0x00004000U
+// #define I2C_ADDRESSINGMODE_10BIT (I2C_OAR1_ADDMODE | 0x00004000U)
 /**
  * @}
  */
@@ -307,17 +307,17 @@ typedef struct {
 /** @defgroup I2C_Flag_definition I2C Flag definition
  * @{
  */
-#define I2C_FLAG_SMBALERT   0x00018000U
-#define I2C_FLAG_TIMEOUT    0x00014000U
-#define I2C_FLAG_PECERR     0x00011000U
-#define I2C_FLAG_OVR        0x00010800U
-#define I2C_FLAG_AF         0x00010400U
-#define I2C_FLAG_ARLO       0x00010200U
-#define I2C_FLAG_BERR       0x00010100U
-#define I2C_FLAG_TXE        0x00010080U
-#define I2C_FLAG_RXNE       0x00010040U
-#define I2C_FLAG_STOPF      0x00010010U
-#define I2C_FLAG_ADD10      0x00010008U
+#define I2C_FLAG_SMBALERT 0x00018000U
+#define I2C_FLAG_TIMEOUT  0x00014000U
+#define I2C_FLAG_PECERR   0x00011000U
+#define I2C_FLAG_OVR      0x00010800U
+#define I2C_FLAG_AF       0x00010400U
+#define I2C_FLAG_ARLO     0x00010200U
+#define I2C_FLAG_BERR     0x00010100U
+#define I2C_FLAG_TXE      0x00010080U
+#define I2C_FLAG_RXNE     0x00010040U
+#define I2C_FLAG_STOPF    0x00010010U
+// #define I2C_FLAG_ADD10      0x00010008U
 #define I2C_FLAG_BTF        0x00010004U
 #define I2C_FLAG_ADDR       0x00010002U
 #define I2C_FLAG_SB         0x00010001U

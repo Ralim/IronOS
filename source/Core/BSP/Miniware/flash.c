@@ -12,7 +12,7 @@
 
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
 
-uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
+void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   FLASH_EraseInitTypeDef pEraseInit;
   pEraseInit.TypeErase    = FLASH_TYPEERASE_PAGES;
   pEraseInit.Banks        = FLASH_BANK_1;
@@ -32,10 +32,10 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   HAL_FLASH_Unlock();
   for (uint16_t i = 0; i < (length / 2); i++) {
     resetWatchdog();
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, SETTINGS_START_PAGE+ (i*sizeof(uint32_t)), data[i]);
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, SETTINGS_START_PAGE+ (i*sizeof(uint16_t)), data[i]);
   }
   HAL_FLASH_Lock();
-  return 1;
+  
 }
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length) { memcpy(buffer, (uint8_t*)SETTINGS_START_PAGE, length); }
