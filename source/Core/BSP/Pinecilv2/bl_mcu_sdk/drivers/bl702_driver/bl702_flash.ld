@@ -18,21 +18,24 @@ OUTPUT_ARCH( "riscv" )
 ENTRY(_enter)
 
 StackSize = 0x1000; /*  4KB */
+HeapSize  = 0x1000; /*  4KB */
+__EM_SIZE = DEFINED(ble_controller_init) ? 8K : 0K;
 
 MEMORY
 {
-    xip_memory  (rx)  : ORIGIN = 0x23000000, LENGTH = 1022K /* 1024K, less the two pages we are using for settings and logo*/
+    xip_memory  (rx)  : ORIGIN = 0x23000000, LENGTH = 1022K
     itcm_memory (rx)  : ORIGIN = 0x22014000, LENGTH = 16K
-    dtcm_memory (rx)  : ORIGIN = 0x42018000, LENGTH = 16K
-    ram_memory  (!rx) : ORIGIN = 0x4201C000, LENGTH = 80K
-    hbn_memory  (rx)  : ORIGIN = 0x40010000, LENGTH = 0xE00     /* hbn ram 4K used 3.5K*/
+    dtcm_memory (rx)  : ORIGIN = 0x42018000, LENGTH = 32K
+    ram_memory  (!rx) : ORIGIN = 0x42020000, LENGTH = 32K
+    rsvd_memory (!rx) : ORIGIN = 0x42028000, LENGTH = 1K
+    ram2_memory (!rx) : ORIGIN = 0x42028400, LENGTH = (31K - __EM_SIZE)
 }
 
 SECTIONS
 {
     PROVIDE(__metal_chicken_bit = 0);
 
-     .text :
+    .text :
     {
         . = ALIGN(4);
         __text_code_start__ = .;
@@ -85,77 +88,10 @@ SECTIONS
         _bt_l2cap_fixed_chan_list_start = .;
         KEEP(*(SORT_BY_NAME("._bt_l2cap_fixed_chan.static.*")))
         _bt_l2cap_fixed_chan_list_end = .;
-        _bt_l2cap_br_fixed_chan_list_start = .;
-        KEEP(*(SORT_BY_NAME("._bt_l2cap_br_fixed_chan.static.*")))
-        _bt_l2cap_br_fixed_chan_list_end = .;
 
         . = ALIGN(4);
         __text_code_end__ = .;
     } > xip_memory
-
-
-    .preinit_array  :
-    {
-        PROVIDE_HIDDEN (__preinit_array_start = .);
-        KEEP (*(.preinit_array))
-        PROVIDE_HIDDEN (__preinit_array_end = .);
-    } >xip_memory AT>xip_memory
-
-    .init_array     :
-    {
-        PROVIDE_HIDDEN (__init_array_start = .);
-        KEEP (*(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*)))
-        KEEP (*(.init_array EXCLUDE_FILE (*crtbegin.o *crtbegin?.o *crtend.o *crtend?.o ) .ctors))
-        PROVIDE_HIDDEN (__init_array_end = .);
-    } >xip_memory AT>xip_memory
-
-    .fini_array     :
-    {
-        PROVIDE_HIDDEN (__fini_array_start = .);
-        KEEP (*(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*)))
-        KEEP (*(.fini_array EXCLUDE_FILE (*crtbegin.o *crtbegin?.o *crtend.o *crtend?.o ) .dtors))
-        PROVIDE_HIDDEN (__fini_array_end = .);
-    } >xip_memory AT>xip_memory
-
-  .ctors          :
-  {
-    /* gcc uses crtbegin.o to find the start of
-     * the constructors, so we make sure it is
-     * first.  Because this is a wildcard, it
-     * doesn't matter if the user does not
-     * actually link against crtbegin.o; the
-     * linker won't look for a file to match a
-     * wildcard.  The wildcard also means that it
-     * doesn't matter which directory crtbegin.o
-     * is in.
-     */
-    KEEP (*crtbegin.o(.ctors))
-    KEEP (*crtbegin?.o(.ctors))
-    /* We don't want to include the .ctor section from
-     * the crtend.o file until after the sorted ctors.
-     * The .ctor section from the crtend file contains the
-     * end of ctors marker and it must be last
-     */
-    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .ctors))
-    KEEP (*(SORT(.ctors.*)))
-    KEEP (*(.ctors))
-  } >xip_memory AT>xip_memory
-
-  .dtors          :
-  {
-    KEEP (*crtbegin.o(.dtors))
-    KEEP (*crtbegin?.o(.dtors))
-    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .dtors))
-    KEEP (*(SORT(.dtors.*)))
-    KEEP (*(.dtors))
-  } >xip_memory AT>xip_memory
-
-  .lalign         :
-  {
-    . = ALIGN(4);
-    PROVIDE( _data_lma = . );
-  } >xip_memory AT>xip_memory
-
 
     . = ALIGN(4);
     __itcm_load_addr = .;
@@ -186,20 +122,7 @@ SECTIONS
         __tcm_code_end__ = .;
     } > itcm_memory
 
-    __hbn_load_addr = __itcm_load_addr + SIZEOF(.itcm_region);
-
-    .hbn_ram_region : AT (__hbn_load_addr)
-    {
-        . = ALIGN(4);
-        __hbn_ram_start__ = .;
-        *bl702_hbn_wakeup*.o*(.rodata*)
-        *(.hbn_ram_code*)
-        *(.hbn_ram_data)
-        . = ALIGN(4);
-        __hbn_ram_end__ = .;
-    } > hbn_memory
-
-    __dtcm_load_addr = __hbn_load_addr + SIZEOF(.hbn_ram_region);
+    __dtcm_load_addr = __itcm_load_addr + SIZEOF(.itcm_region);
 
     .dtcm_region : AT (__dtcm_load_addr)
     {
@@ -212,6 +135,22 @@ SECTIONS
         . = ALIGN(4);
         __tcm_data_end__ = .;
     } > dtcm_memory
+
+    /* .heap_dummy section doesn't contains any symbols. It is only
+     * used for linker to calculate size of heap sections, and assign
+     * values to heap symbols later */
+    .heap_dummy (NOLOAD):
+    {
+        . = ALIGN(0x4);
+        . = . + HeapSize;
+        . = ALIGN(0x4);
+    } > dtcm_memory
+
+    _HeapBase = ORIGIN(dtcm_memory) + LENGTH(dtcm_memory) - StackSize - HeapSize;
+    _HeapSize = HeapSize;
+
+    /* Check if data + heap + stack exceeds RAM limit */
+    ASSERT(_HeapBase >= __tcm_data_end__, "region RAM overflowed with stack")
 
     /*************************************************************************/
     /* .stack_dummy section doesn't contains any symbols. It is only
@@ -297,16 +236,17 @@ SECTIONS
         . = ALIGN(4);
         __HeapBase = .;
 
+        /*__end__ = .;*/
+        /*end = __end__;*/
         KEEP(*(.heap*))
 
         . = ALIGN(4);
         __HeapLimit = .;
     } > ram_memory
-
-    PROVIDE (__heap_min_size = 0x400);
     __HeapLimit = ORIGIN(ram_memory) + LENGTH(ram_memory);
 
-    ASSERT((__HeapLimit -  __HeapBase ) >= __heap_min_size, "heap size is too short.")
+    PROVIDE( _heap_start = ORIGIN(ram2_memory) );
+    PROVIDE( _heap_size = LENGTH(ram2_memory) );
 
 }
 
