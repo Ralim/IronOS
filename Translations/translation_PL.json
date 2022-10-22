@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Tr. uśpienia",
 		"SleepingTipAdvancedString": "Grot:",
 		"OffString": "Wył",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Twoje urządzenie jest najprawdopodobniej podróbką!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
