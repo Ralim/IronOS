@@ -89,10 +89,10 @@ extern "C" {
 
 #if defined(CONFIG_BT_ASSERT)
 #if defined(BFLB_BLE)
-extern void user_vAssertCalled(void);
+extern void vAssertCalled(void);
 #define BT_ASSERT(cond) \
     if ((cond) == 0)    \
-    user_vAssertCalled()
+    vAssertCalled()
 #else
 #define BT_ASSERT(cond)                   \
     if (!(cond)) {                        \
