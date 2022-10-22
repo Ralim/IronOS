@@ -271,7 +271,7 @@ CPUFLAGS= -march=rv32imafc \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
 			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DportUSING_MPU_WRAPPERS=0
 # -DBFLB_USE_ROM_DRIVER=1
-DEV_LDFLAGS=-nostartfiles  -DDEBUG
+DEV_LDFLAGS=-nostartfiles
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= 
 #Required to be turned off due to their drivers tripping warnings
@@ -318,7 +318,6 @@ OPTIM=-Os -foptimize-strlen -faggressive-loop-optimizations -fdevirtualize-at-lt
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
 
-DEBUG=-g3 
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
 endif
@@ -400,7 +399,6 @@ CHECKOPTIONS_C=	$(CHECKOPTIONS) -Wbad-function-cast
 
 CXXFLAGS=$(DEV_CXXFLAGS)         \
         $(CPUFLAGS)              \
-		$(DEBUG) 			     \
 		$(INCLUDES)              \
 		$(GLOBAL_DEFINES) 	     \
 		-D${COMPILER}  		     \
@@ -419,7 +417,6 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 
 CFLAGS=$(DEV_CFLAGS) 			\
         $(CPUFLAGS) 			\
-		$(DEBUG) 				\
 		$(INCLUDES) 			\
 		$(CHECKOPTIONS_C) 		\
 		$(GLOBAL_DEFINES) 		\
@@ -436,7 +433,6 @@ AFLAGS= $(CPUFLAGS)    			\
 		$(DEV_AFLAGS)  			\
 		$(GLOBAL_DEFINES) 		\
 		$(OPTIM) 				\
-		$(DEBUG)      			\
 		$(ASM_INC)    			\
 		$(INCLUDES)
 
@@ -546,12 +542,12 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
 
 $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/depack.c
 	@test -d $(@D) || mkdir -p $(@D)
