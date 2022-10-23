@@ -10,14 +10,14 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 
-static uint16_t settings_page[512] __attribute__((section(".settings_page")));
+#define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
 
-uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
+void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   FLASH_EraseInitTypeDef pEraseInit;
   pEraseInit.TypeErase    = FLASH_TYPEERASE_PAGES;
   pEraseInit.Banks        = FLASH_BANK_1;
   pEraseInit.NbPages      = 1;
-  pEraseInit.PageAddress  = (uint32_t)settings_page;
+  pEraseInit.PageAddress  = (uint32_t)SETTINGS_START_PAGE;
   uint32_t failingAddress = 0;
   resetWatchdog();
   __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGERR | FLASH_FLAG_BSY);
@@ -32,10 +32,10 @@ uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   HAL_FLASH_Unlock();
   for (uint16_t i = 0; i < (length / 2); i++) {
     resetWatchdog();
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)&settings_page[i], data[i]);
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, SETTINGS_START_PAGE+ (i*sizeof(uint16_t)), data[i]);
   }
   HAL_FLASH_Lock();
-  return 1;
+  
 }
 
-void flash_read_buffer(uint8_t *buffer, const uint16_t length) { memcpy(buffer, settings_page, length); }
+void flash_read_buffer(uint8_t *buffer, const uint16_t length) { memcpy(buffer, (uint8_t*)SETTINGS_START_PAGE, length); }

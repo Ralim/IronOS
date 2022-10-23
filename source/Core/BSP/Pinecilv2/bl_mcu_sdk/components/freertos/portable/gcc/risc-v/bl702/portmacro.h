@@ -41,6 +41,7 @@ extern "C" {
  * These settings should not be altered.
  *-----------------------------------------------------------
  */
+#include "FreeRTOSConfig.h"
 #include <stddef.h>
 #include <stdint.h>
 
