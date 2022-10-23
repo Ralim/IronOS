@@ -14,10 +14,9 @@
 
 #define SETTINGS_START_PAGE (1023 * FLASH_PAGE_SIZE) // Hal auto offsets base addr
 
-uint8_t flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
+void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   BL_Err_Type err = flash_erase(SETTINGS_START_PAGE, FLASH_PAGE_SIZE);
   err             = flash_write(SETTINGS_START_PAGE, buffer, length);
-  return err != SUCCESS;
 }
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length) { flash_read(SETTINGS_START_PAGE, buffer, length); }

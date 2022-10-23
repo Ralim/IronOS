@@ -278,8 +278,8 @@ typedef struct {
 #define ADC_CHANNEL_16 ((uint32_t)(ADC_SQR3_SQ1_4))
 #define ADC_CHANNEL_17 ((uint32_t)(ADC_SQR3_SQ1_4 | ADC_SQR3_SQ1_0))
 
-#define ADC_CHANNEL_TEMPSENSOR ADC_CHANNEL_16 /* ADC internal channel (no connection on device pin) */
-#define ADC_CHANNEL_VREFINT    ADC_CHANNEL_17 /* ADC internal channel (no connection on device pin) */
+// #define ADC_CHANNEL_TEMPSENSOR ADC_CHANNEL_16 /* ADC internal channel (no connection on device pin) */
+// #define ADC_CHANNEL_VREFINT    ADC_CHANNEL_17 /* ADC internal channel (no connection on device pin) */
 /**
  * @}
  */
@@ -812,10 +812,6 @@ uint32_t HAL_ADC_GetValue(ADC_HandleTypeDef *hadc);
 
 /* ADC IRQHandler and Callbacks used in non-blocking modes (Interruption and DMA) */
 void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc);
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
-void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc);
-void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef *hadc);
-void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc);
 /**
  * @}
  */
@@ -852,8 +848,6 @@ HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef *hadc);
 HAL_StatusTypeDef ADC_ConversionStop_Disable(ADC_HandleTypeDef *hadc);
 void              ADC_StabilizationTime(uint32_t DelayUs);
 void              ADC_DMAConvCplt(DMA_HandleTypeDef *hdma);
-void              ADC_DMAHalfConvCplt(DMA_HandleTypeDef *hdma);
-void              ADC_DMAError(DMA_HandleTypeDef *hdma);
 /**
  * @}
  */

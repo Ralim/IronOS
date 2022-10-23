@@ -661,11 +661,6 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeStart_DMA(ADC_HandleTypeDef *hadc, uint32_t
     /* Set the DMA transfer complete callback */
     hadc->DMA_Handle->XferCpltCallback = ADC_DMAConvCplt;
 
-    /* Set the DMA half transfer complete callback */
-    hadc->DMA_Handle->XferHalfCpltCallback = ADC_DMAHalfConvCplt;
-
-    /* Set the DMA error callback */
-    hadc->DMA_Handle->XferErrorCallback = ADC_DMAError;
 
     /* Manage ADC and DMA start: ADC overrun interruption, DMA start, ADC     */
     /* start (in case of SW start):                                           */
@@ -905,7 +900,6 @@ __weak void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc) {
  */
 HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_InjectionConfTypeDef *sConfigInjected) {
   HAL_StatusTypeDef tmp_hal_status  = HAL_OK;
-  __IO uint32_t     wait_loop_index = 0U;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
@@ -1034,11 +1028,8 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
     MODIFY_REG(hadc->Instance->SMPR2, ADC_SMPR2(ADC_SMPR2_SMP0, sConfigInjected->InjectedChannel), ADC_SMPR2(sConfigInjected->InjectedSamplingTime, sConfigInjected->InjectedChannel));
   }
 
-  /* If ADC1 InjectedChannel_16 or InjectedChannel_17 is selected, enable Temperature sensor  */
-  /* and VREFINT measurement path.                                            */
-  if ((sConfigInjected->InjectedChannel == ADC_CHANNEL_TEMPSENSOR) || (sConfigInjected->InjectedChannel == ADC_CHANNEL_VREFINT)) {
-    SET_BIT(hadc->Instance->CR2, ADC_CR2_TSVREFE);
-  }
+
+
 
   /* Configure the offset: offset enable/disable, InjectedChannel, offset value */
   switch (sConfigInjected->InjectedRank) {
@@ -1060,33 +1051,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
     break;
   }
 
-  /* If ADC1 Channel_16 or Channel_17 is selected, enable Temperature sensor  */
-  /* and VREFINT measurement path.                                            */
-  if ((sConfigInjected->InjectedChannel == ADC_CHANNEL_TEMPSENSOR) || (sConfigInjected->InjectedChannel == ADC_CHANNEL_VREFINT)) {
-    /* For STM32F1 devices with several ADC: Only ADC1 can access internal    */
-    /* measurement channels (VrefInt/TempSensor). If these channels are       */
-    /* intended to be set on other ADC instances, an error is reported.       */
-    if (hadc->Instance == ADC1) {
-      if (READ_BIT(hadc->Instance->CR2, ADC_CR2_TSVREFE) == RESET) {
-        SET_BIT(hadc->Instance->CR2, ADC_CR2_TSVREFE);
-
-        if ((sConfigInjected->InjectedChannel == ADC_CHANNEL_TEMPSENSOR)) {
-          /* Delay for temperature sensor stabilization time */
-          /* Compute number of CPU cycles to wait for */
-          wait_loop_index = (ADC_TEMPSENSOR_DELAY_US * (SystemCoreClock / 1000000U));
-          while (wait_loop_index != 0U) {
-            wait_loop_index--;
-          }
-        }
-      }
-    } else {
-      /* Update ADC state machine to error */
-      SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_CONFIG);
-
-      tmp_hal_status = HAL_ERROR;
-    }
-  }
-
+ 
   /* Process unlocked */
   __HAL_UNLOCK(hadc);
 
