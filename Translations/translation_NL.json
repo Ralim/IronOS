@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Slaapstand...",
 		"SleepingTipAdvancedString": "Punt:",
 		"OffString": "Uit",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Jouw toestel is wellicht een namaak-versie!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Reset OK",
