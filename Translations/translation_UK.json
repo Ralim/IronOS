@@ -17,7 +17,7 @@
 		"SleepingAdvancedString": "Очікування...",
 		"SleepingTipAdvancedString": "Жало:",
 		"OffString": "Вимк",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Ваш пристрій, швидше за все, підробка!"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "Скид. OK",
