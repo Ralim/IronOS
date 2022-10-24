@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "¡Asegúrate que la punta esté a temperatura ambiente al inicio",
+
 		"SettingsResetWarning": "¿Quieres restablecer los ajustes?",
 		"UVLOWarningString": "CC BAJA",
 		"UndervoltageString": "Voltaje bajo",
