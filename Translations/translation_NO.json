@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Sørg for at loddespissen har romtemperatur før du fortsetter!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Er du sikker på at du vil tilbakestille til standardinnstillinger?",
 		"UVLOWarningString": "Lavspenn",
 		"UndervoltageString": "Underspenning",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Lodde-",
 				"innst."
 			],
-			"desc": "Loddeinnstillinger"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Dvale-",
 				"innst."
 			],
-			"desc": "Dvaleinnstillinger"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Bruker-",
 				"grensesn."
 			],
-			"desc": "Brukergrensesnitt-innstillinger"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Avanserte",
 				"valg"
 			],
-			"desc": "Avanserte valg"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -104,6 +104,69 @@
 				""
 			],
 			"desc": "Strømforsyning. Sett nedre spenning for automatisk nedstenging. (DC 10V) (S 3.3V per celle)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"voltage"
+			],
+			"desc": "Max QC voltage the iron should negotiate for"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"timeout"
+			],
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"KTmp",
+				""
+			],
+			"desc": "Temperatur i \"kraft-modus\""
+		},
+		"AutoStart": {
+			"text2": [
+				"AStart",
+				""
+			],
+			"desc": "Start automatisk med lodding når strøm kobles til. (I=Inaktiv | L=Lodding | D=Dvale | R=Dvale romtemperatur)"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Temp change",
+				"short"
+			],
+			"desc": "Temperature-change-increment on short button press"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Temp change",
+				"long"
+			],
+			"desc": "Temperature-change-increment on long button press"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow locking",
+				"buttons"
+			],
+			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"BSensr",
+				""
+			],
+			"desc": "Bevegelsesfølsomhet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -126,12 +189,12 @@
 			],
 			"desc": "Tid før automatisk nedstenging (Minutter)"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
-				"BSensr",
-				""
+				"Hall sensor",
+				"sensitivity"
 			],
-			"desc": "Bevegelsesfølsomhet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
+			"desc": "Sensitivity to magnets (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "Temperaturskala (C=Celsius | F=Fahrenheit)"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"AvDvSk",
-				""
-			],
-			"desc": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
-		},
 		"DisplayRotation": {
 			"text2": [
 				"SkRetn",
 				""
 			],
 			"desc": "Skjermretning (H=Høyrehendt | V=Venstrehendt | A=Automatisk)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"KTmp",
-				""
-			],
-			"desc": "Temperatur i \"kraft\"-modus"
-		},
-		"AutoStart": {
-			"text2": [
-				"AStart",
-				""
-			],
-			"desc": "Start automatisk med lodding når strøm kobles til. (I=Inaktiv | L=Lodding | D=Dvale | R=Dvale romtemperatur)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,61 +217,12 @@
 			],
 			"desc": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
 		},
-		"CalibrateCJC": {
-			"text2": [
-				"TempKal?",
-				""
-			],
-			"desc": "Kalibrer spiss-temperatur."
-		},
-		"SettingsReset": {
-			"text2": [
-				"TilbStl?",
-				""
-			],
-			"desc": "Tilbakestill alle innstillinger"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"KalSpIn?",
-				""
-			],
-			"desc": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"AvLdSk",
-				""
-			],
-			"desc": "Vis detaljert informasjon ved lodding"
-		},
 		"ScrollingSpeed": {
 			"text2": [
 				"RullHa",
 				""
 			],
 			"desc": "Hastigheten på rulletekst"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"QC",
-				"voltage"
-			],
-			"desc": "Max QC voltage the iron should negotiate for"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"PD",
-				"timeout"
-			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
-		},
-		"PowerLimit": {
-			"text2": [
-				"Power",
-				"limit"
-			],
-			"desc": "Maximum power the iron can use (W=watt)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -238,47 +231,12 @@
 			],
 			"desc": "Reverse assignment of buttons for temperature adjustment"
 		},
-		"TempChangeShortStep": {
+		"AnimSpeed": {
 			"text2": [
-				"Temp change",
-				"short"
+				"Anim.",
+				"speed"
 			],
-			"desc": "Temperature-change-increment on short button press"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Temp change",
-				"long"
-			],
-			"desc": "Temperature-change-increment on long button press"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Power",
-				"pulse"
-			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall sensor",
-				"sensitivity"
-			],
-			"desc": "Sensitivity of the Hall effect sensor to detect sleep (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Allow locking",
-				"buttons"
-			],
-			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimum",
-				"voltage"
-			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -287,12 +245,68 @@
 			],
 			"desc": "Loop icon animations in main menu"
 		},
-		"AnimSpeed": {
+		"Brightness": {
 			"text2": [
-				"Anim.",
-				"speed"
+				"Screen",
+				"brightness"
 			],
-			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+			"desc": "Adjust the OLED screen brightness"
+		},
+		"ColourInversion": {
+			"text2": [
+				"Invert",
+				"screen"
+			],
+			"desc": "Invert the OLED screen colors"
+		},
+		"LOGOTime": {
+			"text2": [
+				"Boot logo",
+				"duration"
+			],
+			"desc": "Set boot logo duration (s=seconds)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"AvDvSk",
+				""
+			],
+			"desc": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"AvLdSk",
+				""
+			],
+			"desc": "Vis detaljert informasjon ved lodding"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Power",
+				"limit"
+			],
+			"desc": "Maximum power the iron can use (W=watt)"
+		},
+		"CalibrateCJC": {
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"KalSpIn?",
+				""
+			],
+			"desc": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Power",
+				"pulse"
+			],
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"PowerPulseWait": {
 			"text2": [
@@ -308,33 +322,19 @@
 			],
 			"desc": "Keep-awake-pulse duration (x 250ms)"
 		},
+		"SettingsReset": {
+			"text2": [
+				"TilbStl?",
+				""
+			],
+			"desc": "Tilbakestill alle innstillinger"
+		},
 		"LanguageSwitch": {
 			"text2": [
 				"Språk:",
-				" NO     Norsk"
+				" NO       Norsk"
 			],
 			"desc": ""
-		},
-		"Brightness": {
-			"text2": [
-				"Screen",
-				"brightness"
-			],
-			"desc": "Adjust the brightness of the OLED screen"
-		},
-		"ColourInversion": {
-			"text2": [
-				"Invert",
-				"screen"
-			],
-			"desc": "Invert the colours of the OLED screen"
-		},
-		"LOGOTime": {
-			"text2": [
-				"Boot logo",
-				"duration"
-			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
 		}
 	}
 }

@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature before calibration!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Are you sure you want to restore default settings?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Undervoltage",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Soldering",
 				"settings"
 			],
-			"desc": "Soldering settings"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Sleep",
 				"mode"
 			],
-			"desc": "Power saving settings"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"User",
 				"interface"
 			],
-			"desc": "User interface settings"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Advanced",
 				"settings"
 			],
-			"desc": "Advanced settings"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -104,6 +104,69 @@
 				"source"
 			],
 			"desc": "Set cutoff voltage to prevent battery overdrainage (DC 10V) (S=3.3V per cell, disable PWR limit)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"voltage"
+			],
+			"desc": "Max QC voltage the iron should negotiate for"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"timeout"
+			],
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Boost",
+				"temp"
+			],
+			"desc": "Tip temperature used in \"boost mode\""
+		},
+		"AutoStart": {
+			"text2": [
+				"Start-up",
+				"behavior"
+			],
+			"desc": "O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Temp change",
+				"short"
+			],
+			"desc": "Temperature-change-increment on short button press"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Temp change",
+				"long"
+			],
+			"desc": "Temperature-change-increment on long button press"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow locking",
+				"buttons"
+			],
+			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Motion",
+				"sensitivity"
+			],
+			"desc": "0=off | 1=least sensitive | ... | 9=most sensitive"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -126,12 +189,12 @@
 			],
 			"desc": "Interval before the iron shuts down (m=minutes)"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
-				"Motion",
+				"Hall sensor",
 				"sensitivity"
 			],
-			"desc": "0=off | 1=least sensitive | ... | 9=most sensitive"
+			"desc": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "C=°Celsius | F=°Fahrenheit"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"Detailed",
-				"idle screen"
-			],
-			"desc": "Display detailed info in a smaller font on idle screen"
-		},
 		"DisplayRotation": {
 			"text2": [
 				"Display",
 				"orientation"
 			],
 			"desc": "R=right-handed | L=left-handed | A=automatic"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Boost",
-				"temp"
-			],
-			"desc": "Tip temperature used in \"boost mode\""
-		},
-		"AutoStart": {
-			"text2": [
-				"Start-up",
-				"behavior"
-			],
-			"desc": "O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,61 +217,12 @@
 			],
 			"desc": "Flash temp reading at idle while tip is hot"
 		},
-		"CalibrateCJC": {
-			"text2": [
-				"Calibrate CJC",
-				"at next boot"
-			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Restore default",
-				"settings"
-			],
-			"desc": "Reset all settings to default"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Calibrate",
-				"input voltage"
-			],
-			"desc": "Start VIN calibration (long press to exit)"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Detailed",
-				"solder screen"
-			],
-			"desc": "Display detailed info in a smaller font on soldering screen"
-		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Scrolling",
 				"speed"
 			],
 			"desc": "Speed info text scrolls past at (S=slow | F=fast)"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"QC",
-				"voltage"
-			],
-			"desc": "Max QC voltage the iron should negotiate for"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"PD",
-				"timeout"
-			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
-		},
-		"PowerLimit": {
-			"text2": [
-				"Power",
-				"limit"
-			],
-			"desc": "Maximum power the iron can use (W=watt)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -238,55 +231,6 @@
 			],
 			"desc": "Reverse assignment of buttons for temperature adjustment"
 		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Temp change",
-				"short"
-			],
-			"desc": "Temperature-change-increment on short button press"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Temp change",
-				"long"
-			],
-			"desc": "Temperature-change-increment on long button press"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Power",
-				"pulse"
-			],
-			"desc": "Intensity of power of keep-awake-pulse (watt)"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall sensor",
-				"sensitivity"
-			],
-			"desc": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Allow locking",
-				"buttons"
-			],
-			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimum",
-				"voltage"
-			],
-			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Anim.",
-				"loop"
-			],
-			"desc": "Loop icon animations in main menu"
-		},
 		"AnimSpeed": {
 			"text2": [
 				"Anim.",
@@ -294,26 +238,12 @@
 			],
 			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
 		},
-		"PowerPulseWait": {
+		"AnimLoop": {
 			"text2": [
-				"Power pulse",
-				"delay"
+				"Anim.",
+				"loop"
 			],
-			"desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Power pulse",
-				"duration"
-			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Language:",
-				" EN     English"
-			],
-			"desc": "Current firmware language"
+			"desc": "Loop icon animations in main menu"
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +264,77 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Set boot logo duration (off | s=seconds | infinity)"
+			"desc": "Set boot logo duration (s=seconds)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Detailed",
+				"idle screen"
+			],
+			"desc": "Display detailed info in a smaller font on idle screen"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Detailed",
+				"solder screen"
+			],
+			"desc": "Display detailed info in a smaller font on soldering screen"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Power",
+				"limit"
+			],
+			"desc": "Maximum power the iron can use (W=watt)"
+		},
+		"CalibrateCJC": {
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Calibrate",
+				"input voltage"
+			],
+			"desc": "Start VIN calibration (long press to exit)"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Power",
+				"pulse"
+			],
+			"desc": "Intensity of power of keep-awake-pulse (watt)"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Power pulse",
+				"delay"
+			],
+			"desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Power pulse",
+				"duration"
+			],
+			"desc": "Keep-awake-pulse duration (x 250ms)"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Restore default",
+				"settings"
+			],
+			"desc": "Reset all settings to default"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Language:",
+				" EN     English"
+			],
+			"desc": ""
 		}
 	}
 }
