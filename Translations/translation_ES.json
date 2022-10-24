@@ -295,7 +295,8 @@
 				"en el próximo inicio"
 
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "Calibrar compensación de punta fría en el próximo inicio (no necesario si Delta T es < 5°C)"
+
 		},
 		"VoltageCalibration": {
 			"text2": [
