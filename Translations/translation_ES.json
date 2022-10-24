@@ -292,7 +292,8 @@
 			"text2": [
 				"Calibrar CJC",
 
-				"at next boot"
+				"en el próximo inicio"
+
 			],
 			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
