@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Vă rugăm să vă asigurați că vârful și mânerul sunt la temperatura camerei la următoarea pornire!",
+		"SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful si mânerul sunt la temperatura camerei la următoarea pornire!",
 		"SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Sub tensiune",
@@ -166,7 +166,7 @@
 				"Sensibilitate",
 				"la mişcare"
 			],
-			"desc": "Sensibilitate senzor mișcare (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
+			"desc": "Sensibilitate senzor miscare (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -264,7 +264,7 @@
 				"Durată",
 				"logo încărcare"
 			],
-			"desc": "Setați durata logo de pornire (s=secunde)"
+			"desc": "Setati durata logo de pornire (s=secunde)"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -292,7 +292,7 @@
 				"Calibrare CJC",
 				"la următoarea pornire"
 			],
-			"desc": "Calibrați vârful Cold Jonction Compensation la următoarea pornire (nu este necesar dacă Delta T este < 5°C)"
+			"desc": "Calibrati vârful Cold Jonction Compensation la următoarea pornire (nu este necesar dacă Delta T este < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
