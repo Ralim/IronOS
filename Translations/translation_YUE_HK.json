@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "喺下次開機嗰陣時，請確定焫雞咀同機身都係處於室温！",
 		"SettingsResetWarning": "你係咪確定要將全部設定重設到預設值？",
 		"UVLOWarningString": "電壓過低",
 		"UndervoltageString": "Undervoltage",
@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Sleeping...",
 		"SleepingTipAdvancedString": "Tip:",
 		"OffString": "關",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "依支焫雞好有可能係冒牌貨！"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "已重設！",
@@ -164,8 +164,8 @@
 			"desc": "反轉OLED熒幕嘅黑白色"
 		},
 		"LOGOTime": {
-			"text2": "Boot logo duration",
-			"desc": "Set boot logo duration (s=seconds)"
+			"text2": "開機畫面",
+			"desc": "設定開機畫面顯示時長 <s=秒>"
 		},
 		"AdvancedIdle": {
 			"text2": "詳細閒置畫面",
@@ -180,8 +180,8 @@
 			"desc": "限制焫雞可用嘅最大功率 <W=watt（火）>"
 		},
 		"CalibrateCJC": {
-			"text2": "Calibrate CJC",
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
+			"text2": "校正CJC",
+			"desc": "喺下次開機時校正焫雞咀熱電偶温度感應嘅冷接點補償（温度差低過攝氏5度嘅話唔使校正）"
 		},
 		"VoltageCalibration": {
 			"text2": "輸入電壓校正？",
