@@ -37,8 +37,8 @@
 		"UnlockingKeysString": "РАЗБЛОК",
 		"WarningKeysLockedString": "!ЗАБЛОК!",
 		"WarningThermalRunaway": [
-			"Thermal",
-			"Runaway"
+			"Утечка",
+			"Температуры"
 		]
 	},
 	"characters": {
