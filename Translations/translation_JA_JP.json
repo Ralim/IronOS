@@ -84,7 +84,10 @@
 			"desc": "QC電源使用時に要求する目標電圧"
 		},
 		"PDNegTimeout": {
-			"text2": "PD timeout",
+			"text2": [
+				"PD",
+				"timeout"
+			],
 			"desc": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
 		},
 		"BoostTemperature": {
@@ -164,7 +167,10 @@
 			"desc": "画面の色を反転する"
 		},
 		"LOGOTime": {
-			"text2": "Boot logo duration",
+			"text2": [
+				"Boot logo",
+				"duration"
+			],
 			"desc": "Set boot logo duration (s=seconds)"
 		},
 		"AdvancedIdle": {
@@ -180,7 +186,10 @@
 			"desc": "最大電力を制限する <W=ワット>"
 		},
 		"CalibrateCJC": {
-			"text2": "Calibrate CJC",
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
 			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"VoltageCalibration": {
