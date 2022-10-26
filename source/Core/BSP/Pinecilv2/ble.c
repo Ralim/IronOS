@@ -1,14 +1,3 @@
-/****************************************************************************
-FILE NAME
-    ble_peripheral_tp_server.c
-
-DESCRIPTION
-    test profile demo
-
-NOTES
-*/
-/****************************************************************************/
-
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -21,62 +10,27 @@ NOTES
 #include "gatt.h"
 #include "hci_core.h"
 #include "uuid.h"
-#include "ble_peripheral_tp_server.h"
+#include "ble_peripheral.h"
 #include "log.h"
 #include "bl702_glb.h"
+#include "ble_characteristics.h"
+#include "hal_clock.h"
+#include "ble.h"
 
-
-
-
-int ble_start_adv(void)
-{
-    struct bt_le_adv_param adv_param = {
-        //options:3, connectable undirected, adv one time
-        .options = 3,
-        .interval_min = BT_GAP_ADV_FAST_INT_MIN_3,
-        .interval_max = BT_GAP_ADV_FAST_INT_MAX_3,
-    };
-
-    char *adv_name = "BL_TEST_01"; // This name must be the same as adv_name in ble_central
-    struct bt_data adv_data[2] = {
-        BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_NO_BREDR | BT_LE_AD_GENERAL)),
-        BT_DATA(BT_DATA_NAME_COMPLETE, adv_name, strlen(adv_name)),
-    };
-
-    return bt_le_adv_start(&adv_param, adv_data, ARRAY_SIZE(adv_data), &adv_data[1], 1);
-}
-
-
-void bt_enable_cb(int err)
-{
-    MSG("[OS] bt_enable_cb...\r\n");
-    MSG("[OS] ble_tp_init...\r\n");
-    ble_tp_init();
-    MSG("[OS] ble_tp_init...Done\r\n");
-
-    MSG("[OS] ble_start_adv...\r\n");
-    ble_start_adv();
-    MSG("[OS] ble_start_adv...Done\r\n");
-}
 
 
 
 void ble_stack_start(void)
 {
-    MSG("[OS] ble_stack_start...\r\n");
+    MSG("BLE Starting\n");
     GLB_Set_EM_Sel(GLB_EM_8KB);
-    MSG("[OS] ble_controller_init...\r\n");
     ble_controller_init(configMAX_PRIORITIES - 1);
-    MSG("[OS] ble_controller_init...Done\r\n");
 
     // // Initialize BLE Host stack
-    MSG("[OS] hci_driver_init...\r\n");
     hci_driver_init();
-    MSG("[OS] hci_driver_init...Done\r\n");
 
-    MSG("[OS] bt_enable...\r\n");
     bt_enable(bt_enable_cb);
-    MSG("[OS] bt_enable...Done\r\n");
+    MSG("BLE Starting...Done\n");
 }
 
 
