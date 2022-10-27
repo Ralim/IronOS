@@ -292,7 +292,7 @@
 				"Calibrare CJC",
 				"la următoarea pornire"
 			],
-			"desc": "Calibrati vârful Cold Jonction Compensation la următoarea pornire (nu este necesar dacă Delta T este < 5°C)"
+			"desc": "Calibrati vârful Cold Junction Compensation la următoarea pornire (nu este necesar dacă Delta T este < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
