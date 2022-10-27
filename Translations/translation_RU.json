@@ -8,7 +8,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "Пожалуйста, убедитесь, что кончик и ручка имеют комнатную температуру при следующей загрузке!",
 		"SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
 		"UVLOWarningString": "НАПРЯЖ--",
 		"UndervoltageString": "Низ. напряжение",
@@ -37,8 +37,8 @@
 		"UnlockingKeysString": "РАЗБЛОК",
 		"WarningKeysLockedString": "!ЗАБЛОК!",
 		"WarningThermalRunaway": [
-			"Thermal",
-			"Runaway"
+			"Утечка",
+			"Температуры"
 		]
 	},
 	"characters": {
