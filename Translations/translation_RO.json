@@ -164,7 +164,7 @@
 		"MotionSensitivity": {
 			"text2": [
 				"Sensibilitate",
-				"la mişcare"
+				"la miscare"
 			],
 			"desc": "Sensibilitate senzor miscare (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
 		},
