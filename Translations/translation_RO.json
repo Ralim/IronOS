@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful si mânerul sunt la temperatura camerei la următoarea pornire!",
 		"SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Sub tensiune",
@@ -164,9 +164,9 @@
 		"MotionSensitivity": {
 			"text2": [
 				"Sensibilitate",
-				"la mişcare"
+				"la miscare"
 			],
-			"desc": "0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil"
+			"desc": "Sensibilitate senzor miscare (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -261,10 +261,10 @@
 		},
 		"LOGOTime": {
 			"text2": [
-				"Boot logo",
-				"duration"
+				"Durată",
+				"logo încărcare"
 			],
-			"desc": "Set boot logo duration (s=seconds)"
+			"desc": "Setati durata logo de pornire (s=secunde)"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -289,10 +289,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrate CJC",
-				"at next boot"
+				"Calibrare CJC",
+				"la următoarea pornire"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "Calibrati vârful Cold Junction Compensation la următoarea pornire (nu este necesar dacă Delta T este < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
