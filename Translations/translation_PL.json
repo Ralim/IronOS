@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!",
 		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
 		"UVLOWarningString": "NIS. NAP",
 		"UndervoltageString": "Zbyt niskie nap.",
