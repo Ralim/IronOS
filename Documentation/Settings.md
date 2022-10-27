@@ -134,7 +134,7 @@ This is used to calibrate the offset between ADC and Op-amp of the tip **at next
 
 Also, the calibration will only take place if both of the following conditions are met:
 - The tip must be installed.
-- The temperature difference between tip and handle must be less than 10°C.
+- The temperature difference between tip and handle must be less than 10°C. (~ ambient / room temperature)
 
 Otherwise, the calibration will be performed the next time the device is started and both conditions are met, unless the corresponding checkbox is unchecked.
 
