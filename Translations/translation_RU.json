@@ -8,7 +8,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Пожалуйста, убедитесь, что кончик и ручка имеют комнатную температуру при следующей загрузке!",
+		"SettingsCalibrationWarning": "Пожалуйста, убедитесь, что жало и корпус имеют комнатную температуру при следующей загрузке!",
 		"SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
 		"UVLOWarningString": "НАПРЯЖ--",
 		"UndervoltageString": "Низ. напряжение",
@@ -37,8 +37,8 @@
 		"UnlockingKeysString": "РАЗБЛОК",
 		"WarningKeysLockedString": "!ЗАБЛОК!",
 		"WarningThermalRunaway": [
-			"Утечка",
-			"Температуры"
+			"Thermal",
+			"Runaway"
 		]
 	},
 	"characters": {
@@ -293,7 +293,7 @@
 				"Калибровка",
 				"температуры"
 			],
-			"desc": "Калибровка компенсации холодного спая жала при следующей загрузке (не требуется, если Delta T < 5°C)"
+			"desc": "Калибровка датчика температуры жала при следующей загрузке (не требуется, если разница менее 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
