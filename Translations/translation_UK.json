@@ -8,7 +8,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Під час наступного завантаження переконайтеся, що наконечник і ручка мають кімнатну температуру!",
+		"SettingsCalibrationWarning": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!",
 		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",
 		"UVLOWarningString": "АККУМ--",
 		"UndervoltageString": "Низька напруга",
@@ -37,8 +37,8 @@
 		"UnlockingKeysString": "РОЗБЛОК.",
 		"WarningKeysLockedString": "!ЗАБЛОК!",
 		"WarningThermalRunaway": [
-			"Тепловий",
-			"Втікач"
+			"Некерований",
+			"розігрів"
 		]
 	},
 	"characters": {
@@ -290,10 +290,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrate CJC",
-				"at next boot"
+				"Калібрувати КХС",
+				"при наступному завантаженні"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "Калібрувати Компенсацію Холодного Спаю жала при наступному завантаженні(непотрібне при різниці температур < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
