@@ -1,13 +1,13 @@
 {
-	"languageCode": "NO",
-	"languageLocalName": "Norsk",
+	"languageCode": "NB",
+	"languageLocalName": "Norsk bokmål",
 	"fonts": [
 		"ascii_basic",
 		"latin_extended"
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "Sørg for at loddespissen har romtemperatur før du fortsetter!",
 		"SettingsResetWarning": "Er du sikker på at du vil tilbakestille til standardinnstillinger?",
 		"UVLOWarningString": "Lavspenn",
 		"UndervoltageString": "Underspenning",
@@ -16,28 +16,28 @@
 		"SleepingAdvancedString": "Dvale...",
 		"SleepingTipAdvancedString": "Spiss:",
 		"OffString": "Av",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "Enheten din er sannsynligvis en forfalskning!"
 	},
 	"messagesWarn": {
-		"ResetOKMessage": "Reset OK",
+		"ResetOKMessage": "Tilbakestilling OK",
 		"SettingsResetMessage": [
-			"Certain settings",
-			"were changed!"
+			"Noen innstillinger",
+			"ble endret!"
 		],
 		"NoAccelerometerMessage": [
-			"No accelerometer",
-			"detected!"
+			"Ingen akselerometer",
+			"funnet!"
 		],
 		"NoPowerDeliveryMessage": [
-			"No USB-PD IC",
-			"detected!"
+			"Ingen USB-PD IC",
+			"funnet!"
 		],
-		"LockingKeysString": "LOCKED",
-		"UnlockingKeysString": "UNLOCKED",
-		"WarningKeysLockedString": "!LOCKED!",
+		"LockingKeysString": "LÅST",
+		"UnlockingKeysString": "ÅPNET",
+		"WarningKeysLockedString": "!LÅST!",
 		"WarningThermalRunaway": [
-			"Thermal",
-			"Runaway"
+			"Termisk",
+			"rømling"
 		]
 	},
 	"characters": {
@@ -63,8 +63,8 @@
 	"menuGroups": {
 		"PowerMenu": {
 			"text2": [
-				"Power",
-				"settings"
+				"Effekt-",
+				"innst."
 			],
 			"desc": ""
 		},
@@ -108,23 +108,23 @@
 		"MinVolCell": {
 			"text2": [
 				"Minimum",
-				"voltage"
+				"spenning"
 			],
-			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Minimum tillatt spenning per celle (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
 		},
 		"QCMaxVoltage": {
 			"text2": [
-				"QC",
-				"voltage"
+				"QC-",
+				"spenning"
 			],
-			"desc": "Max QC voltage the iron should negotiate for"
+			"desc": "Maks QC-spenning bolten skal forhandle om"
 		},
 		"PDNegTimeout": {
 			"text2": [
-				"PD",
-				"timeout"
+				"PD-",
+				"tidsavb."
 			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+			"desc": "PD-forhandlingstidsavbrudd i steg på 100 ms for kompatibilitet med noen QC-ladere"
 		},
 		"BoostTemperature": {
 			"text2": [
@@ -142,24 +142,24 @@
 		},
 		"TempChangeShortStep": {
 			"text2": [
-				"Temp change",
-				"short"
+				"Temp-endring",
+				"kort"
 			],
-			"desc": "Temperature-change-increment on short button press"
+			"desc": "Hvor mye temperaturen skal endres ved kort trykk på knapp"
 		},
 		"TempChangeLongStep": {
 			"text2": [
-				"Temp change",
-				"long"
+				"Temp-endring",
+				"lang"
 			],
-			"desc": "Temperature-change-increment on long button press"
+			"desc": "Hvor mye temperaturen skal endres ved langt trykk på knapp"
 		},
 		"LockingMode": {
 			"text2": [
-				"Allow locking",
-				"buttons"
+				"Tillat å låse",
+				"knapper"
 			],
-			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+			"desc": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (D=deaktiver | B=kun boost | F=full lås)"
 		},
 		"MotionSensitivity": {
 			"text2": [
@@ -191,10 +191,10 @@
 		},
 		"HallEffSensitivity": {
 			"text2": [
-				"Hall sensor",
-				"sensitivity"
+				"Hall-sensor",
+				"følsomhet"
 			],
-			"desc": "Sensitivity to magnets (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
+			"desc": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -226,45 +226,45 @@
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
-				"Swap",
-				"+ - keys"
+				"Bytt",
+				"+ - kn."
 			],
-			"desc": "Reverse assignment of buttons for temperature adjustment"
+			"desc": "Bytt om på knappene for å stille temperatur"
 		},
 		"AnimSpeed": {
 			"text2": [
 				"Anim.",
-				"speed"
+				"hastighet"
 			],
-			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+			"desc": "Hastigheten til animasjonene i menyen (O=off | S=slow | M=medium | F=fast)"
 		},
 		"AnimLoop": {
 			"text2": [
 				"Anim.",
 				"loop"
 			],
-			"desc": "Loop icon animations in main menu"
+			"desc": "Loop ikon-animasjoner i hovedmenyen"
 		},
 		"Brightness": {
 			"text2": [
-				"Screen",
-				"brightness"
+				"Skjerm-",
+				"lysstyrke"
 			],
-			"desc": "Adjust the OLED screen brightness"
+			"desc": "Juster lysstyrken til OLED-skjermen"
 		},
 		"ColourInversion": {
 			"text2": [
-				"Invert",
-				"screen"
+				"Inverter",
+				"skjerm"
 			],
-			"desc": "Invert the OLED screen colors"
+			"desc": "Inverter fargene på OLED-skjermen"
 		},
 		"LOGOTime": {
 			"text2": [
-				"Boot logo",
-				"duration"
+				"Oppstartlogo",
+				"varighet"
 			],
-			"desc": "Set boot logo duration (s=seconds)"
+			"desc": "Setter varigheten til oppstartlogoen (s=sekunder)"
 		},
 		"AdvancedIdle": {
 			"text2": [
@@ -282,17 +282,17 @@
 		},
 		"PowerLimit": {
 			"text2": [
-				"Power",
-				"limit"
+				"Effekt-",
+				"grense"
 			],
-			"desc": "Maximum power the iron can use (W=watt)"
+			"desc": "Maks effekt jernet kan bruke (W=watt)"
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrate CJC",
-				"at next boot"
+				"TempKal?",
+				""
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "Kalibrer spiss-temperatur."
 		},
 		"VoltageCalibration": {
 			"text2": [
@@ -303,24 +303,24 @@
 		},
 		"PowerPulsePower": {
 			"text2": [
-				"Power",
-				"pulse"
+				"Effekt-",
+				"puls"
 			],
-			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
+			"desc": "Hvor høy effekt pulsen for å holde laderen våken skal ha (watt)"
 		},
 		"PowerPulseWait": {
 			"text2": [
-				"Power pulse",
-				"delay"
+				"Effektpuls",
+				"forsink."
 			],
-			"desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+			"desc": "Forsinkelse før effektpulsen utløses (x 2.5s)"
 		},
 		"PowerPulseDuration": {
 			"text2": [
-				"Power pulse",
-				"duration"
+				"Effektpuls",
+				"varighet"
 			],
-			"desc": "Keep-awake-pulse duration (x 250ms)"
+			"desc": "Hvor lenge holde-våken-pulsen varer (x 250ms)"
 		},
 		"SettingsReset": {
 			"text2": [
@@ -332,7 +332,7 @@
 		"LanguageSwitch": {
 			"text2": [
 				"Språk:",
-				" NO       Norsk"
+				" NB    Norsk bm"
 			],
 			"desc": ""
 		}
