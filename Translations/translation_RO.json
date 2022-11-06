@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful este la temperatura camerei, înainte de a continua!",
+		"SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful si mânerul sunt la temperatura camerei la următoarea pornire!",
 		"SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
 		"UVLOWarningString": "DC LOW",
 		"UndervoltageString": "Sub tensiune",
@@ -66,35 +66,35 @@
 				"Setări de",
 				"alimentare"
 			],
-			"desc": "Setări de alimentare"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Setări de",
 				"lipire"
 			],
-			"desc": "Setări de lipire"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Modul",
 				"repaus"
 			],
-			"desc": "Setări de economisire a energiei"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interfată",
 				"utilizator"
 			],
-			"desc": "Setări interfată utilizator"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Optiuni",
 				"avansate"
 			],
-			"desc": "Optiuni avansate"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -104,6 +104,69 @@
 				"alimentare"
 			],
 			"desc": "Sursa de alimentare. Setează tensiunea de întrerupere. (DC 10V) (S 3.3V per celulă, dezactivati limita de alimentare)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Voltaj",
+				"minim"
+			],
+			"desc": "Tensiunea minimă admisă pe celulă (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"voltaj"
+			],
+			"desc": "Tensiunea maximă QC dorită pentru care negociază letconul"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"timeout"
+			],
+			"desc": "Timp limita de negociere pentru tranzactia PD, in pasi de 100ms, pentru compatibilitate cu alimentatoarele QC"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Boost",
+				"temp"
+			],
+			"desc": "Temperatura utilizată în \"modul boost\""
+		},
+		"AutoStart": {
+			"text2": [
+				"Auto",
+				"start"
+			],
+			"desc": "Start letcon în modul de lipire la pornire (O=oprit | S=lipire | Z=repaus | R=repaus la temperatura camerei)"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Schimbare temp.",
+				"apăsare scută"
+			],
+			"desc": "Schimbarea temperaturii la apăsarea scurtă a butonului"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Schimbare temp.",
+				"apăsare lungă"
+			],
+			"desc": "Schimbarea temperaturii la apăsarea lungă a butonului"
+		},
+		"LockingMode": {
+			"text2": [
+				"Blocare",
+				"butoane"
+			],
+			"desc": "Când lipiti, apăsati lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Sensibilitate",
+				"la miscare"
+			],
+			"desc": "Sensibilitate senzor miscare (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -126,12 +189,12 @@
 			],
 			"desc": "Interval înainte ca letconul să se oprească (m=minute)"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
 				"Sensibilitate",
-				"la mişcare"
+				"senzor Hall"
 			],
-			"desc": "0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil"
+			"desc": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "C=Celsius | F=Fahrenheit"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"Detalii,",
-				"ecran inactiv"
-			],
-			"desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de repaus"
-		},
 		"DisplayRotation": {
 			"text2": [
 				"Orientare",
 				"ecran"
 			],
 			"desc": "R=dreptaci | L=stângaci | A=auto"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Boost",
-				"temp"
-			],
-			"desc": "Temperatura utilizată în \"modul boost\""
-		},
-		"AutoStart": {
-			"text2": [
-				"Auto",
-				"start"
-			],
-			"desc": "Start letcon în modul de lipire la pornire (O=oprit | S=lipire | Z=repaus | R=repaus la temperatura camerei)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,61 +217,12 @@
 			],
 			"desc": "Clipeste temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
 		},
-		"CalibrateCJC": {
-			"text2": [
-				"Calibrare",
-				"temperatură?"
-			],
-			"desc": "Începeti calibrarea compensării de temperatură a vârfului"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Setări",
-				"din fabrică"
-			],
-			"desc": "Reveniti la setările din fabrică"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Calibrare tens.",
-				"de intrare?"
-			],
-			"desc": "Porniti calibrarea VIN (apăsati lung pentru a iesi)"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Detalii",
-				"ecran lipire"
-			],
-			"desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de lipire"
-		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Viteză",
 				"derulare"
 			],
 			"desc": "Viteză derulare text cu informatii la (S=lent | F=rapid)"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"QC",
-				"voltaj"
-			],
-			"desc": "Tensiunea maximă QC dorită pentru care negociază letconul"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"PD",
-				"timeout"
-			],
-			"desc": "Timp limita de negociere pentru tranzactia PD, in pasi de 100ms, pentru compatibilitate cu alimentatoarele QC"
-		},
-		"PowerLimit": {
-			"text2": [
-				"Putere",
-				"limită"
-			],
-			"desc": "Puterea maximă pe care letconul o poate folosi (W=watt)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -238,55 +231,6 @@
 			],
 			"desc": "Inversarea butoanelor de reglare a temperaturii"
 		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Schimbare temp.",
-				"apăsare scută"
-			],
-			"desc": "Schimbarea temperaturii la apăsarea scurtă a butonului"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Schimbare temp.",
-				"apăsare lungă"
-			],
-			"desc": "Schimbarea temperaturii la apăsarea lungă a butonului"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Putere",
-				"puls"
-			],
-			"desc": "Puterea pulsului de mentinere activa a blocului de alimentare (watt)"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Sensibilitate",
-				"senzor Hall"
-			],
-			"desc": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Blocare",
-				"butoane"
-			],
-			"desc": "Când lipiti, apăsati lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Voltaj",
-				"minim"
-			],
-			"desc": "Tensiunea minimă admisă pe celulă (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Animatii",
-				"buclă"
-			],
-			"desc": "Animatii de pictograme în meniul principal"
-		},
 		"AnimSpeed": {
 			"text2": [
 				"Animatii",
@@ -294,26 +238,12 @@
 			],
 			"desc": "Ritmul animatiilor pictogramei din meniu (O=oprit | Î=încet | M=mediu | R=rapid)"
 		},
-		"PowerPulseWait": {
+		"AnimLoop": {
 			"text2": [
-				"Întârziere",
-				"puls putere"
+				"Animatii",
+				"buclă"
 			],
-			"desc": "Perioada pulsului de mentinere (x 2.5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Durată",
-				"puls putere"
-			],
-			"desc": "Durata pulsului de mentinere (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Limbă:",
-				" RO     Română"
-			],
-			"desc": "Limba curenta"
+			"desc": "Animatii de pictograme în meniul principal"
 		},
 		"Brightness": {
 			"text2": [
@@ -331,10 +261,80 @@
 		},
 		"LOGOTime": {
 			"text2": [
-				"Boot logo",
-				"duration"
+				"Durată",
+				"logo încărcare"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Setati durata logo de pornire (s=secunde)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Detalii,",
+				"ecran inactiv"
+			],
+			"desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de repaus"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Detalii",
+				"ecran lipire"
+			],
+			"desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de lipire"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Putere",
+				"limită"
+			],
+			"desc": "Puterea maximă pe care letconul o poate folosi (W=watt)"
+		},
+		"CalibrateCJC": {
+			"text2": [
+				"Calibrare CJC",
+				"la următoarea pornire"
+			],
+			"desc": "Calibrati vârful Cold Junction Compensation la următoarea pornire (nu este necesar dacă Delta T este < 5°C)"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Calibrare tens.",
+				"de intrare?"
+			],
+			"desc": "Porniti calibrarea VIN (apăsati lung pentru a iesi)"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Putere",
+				"puls"
+			],
+			"desc": "Puterea pulsului de mentinere activa a blocului de alimentare (watt)"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Întârziere",
+				"puls putere"
+			],
+			"desc": "Perioada pulsului de mentinere (x 2.5s)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Durată",
+				"puls putere"
+			],
+			"desc": "Durata pulsului de mentinere (x 250ms)"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Setări",
+				"din fabrică"
+			],
+			"desc": "Reveniti la setările din fabrică"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Limbă:",
+				" RO      Română"
+			],
+			"desc": ""
 		}
 	}
 }

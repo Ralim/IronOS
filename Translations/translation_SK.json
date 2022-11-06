@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Najprv sa prosím uistite, že hrot má izbovú teplotu!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Naozaj chcete obnoviť továrenské nastavenia?",
 		"UVLOWarningString": "Nízke U!",
 		"UndervoltageString": "Nízke napätie",
@@ -66,35 +66,35 @@
 				"Nastavenie",
 				"výkonu"
 			],
-			"desc": "Nastavenie výkonu"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Nastavenie",
 				"spájkovania"
 			],
-			"desc": "Nastavenie spájkovania"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Úsporný",
 				"režim"
 			],
-			"desc": "Nastavenia režimov úspory energie"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Nastavenie",
 				"zobrazenia"
 			],
-			"desc": "Nastavenie zobrazenia"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Pokročilé",
 				"nastavenia"
 			],
-			"desc": "Pokročilé nastavenia"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -104,6 +104,69 @@
 				"napätia"
 			],
 			"desc": "Zdroj napätia. Nastavenie napätia pre vypnutie (cutoff)  (DC=10V | nS=n*3.3V pre LiIon články)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimálne",
+				"napätie"
+			],
+			"desc": "Minimálne napätie povolené na jeden článok (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"Obmedzenie QC",
+				"napätia"
+			],
+			"desc": "Maximálne QC napätie ktoré si má systém vyžiadať"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"Čas vypršania",
+				"Power Delivery"
+			],
+			"desc": "Čas vyjednávania Power Delivery v 100ms krokoch pre kompatibilitu s niektorými QC nabíjačkami (0: vypnuté)"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Boost",
+				"teplota"
+			],
+			"desc": "Cieľová teplota pre prudký náhrev (v nastavených jednotkách)"
+		},
+		"AutoStart": {
+			"text2": [
+				"Automatické",
+				"spustenie"
+			],
+			"desc": "Pri štarte spustiť režim spájkovania (V=Vyp | Z=Spájkovanie | S=Spanok | I=Spanok izbová teplota)"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Malý krok",
+				"teploty"
+			],
+			"desc": "Zmena teploty pri krátkom stlačení tlačidla"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Veľký krok",
+				"teploty"
+			],
+			"desc": "Zmena teploty pri držaní tlačidla"
+		},
+		"LockingMode": {
+			"text2": [
+				"Povoliť zámok",
+				"tlačidiel"
+			],
+			"desc": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania (Z=Zakázať | B=Okrem boost | P=Plné zamknutie)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Citlivosť",
+				"pohybu"
+			],
+			"desc": "Citlivosť detekcie pohybu (0=Vyp | 1=Min | ... | 9=Max)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -126,12 +189,12 @@
 			],
 			"desc": "Čas na vypnutie (minúty)"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
-				"Citlivosť",
-				"pohybu"
+				"Citliv.",
+				"Hall"
 			],
-			"desc": "Citlivosť detekcie pohybu (0=Vyp | 1=Min | ... | 9=Max)"
+			"desc": "Citlivosť Hallovho senzora pre detekciu spánku (0=Vyp | 1=Min | ... | 9=Max)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "Jednotky merania teploty (C=stupne Celzia | F=stupne Fahrenheita)"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"Detaily v",
-				"pokoj. režime"
-			],
-			"desc": "Zobraziť detailné informácie v pokojovom režime (T=Zap | F=Vyp)"
-		},
 		"DisplayRotation": {
 			"text2": [
 				"Orientácia",
 				"displeja"
 			],
 			"desc": "Orientácia displeja (P=Pravák | L=Ľavák | A=Auto)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Boost",
-				"teplota"
-			],
-			"desc": "Cieľová teplota pre prudký náhrev (v nastavených jednotkách)"
-		},
-		"AutoStart": {
-			"text2": [
-				"Automatické",
-				"spustenie"
-			],
-			"desc": "Pri štarte spustiť režim spájkovania (V=Vyp | Z=Spájkovanie | S=Spanok | I=Spanok izbová teplota)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,61 +217,12 @@
 			],
 			"desc": "Blikanie ukazovateľa teploty počas chladnutia hrotu"
 		},
-		"CalibrateCJC": {
-			"text2": [
-				"Kalibrácia",
-				"teploty"
-			],
-			"desc": "Kalibrácia posunu teploty hrotu"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Obnovenie",
-				"nastavení"
-			],
-			"desc": "Obnovenie nastavení na pôvodné hodnoty"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Kalibrácia",
-				"nap. napätia"
-			],
-			"desc": "Kalibrácia napájacieho napätia. Krátke stlačenie mení nastavenie, dlhé stlačenie pre návrat"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Detaily počas",
-				"spájkovania"
-			],
-			"desc": "Zobrazenie detailov počas spájkovania"
-		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Rýchlosť",
 				"skrolovania"
 			],
 			"desc": "Rýchlosť pohybu tohto textu"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Obmedzenie QC",
-				"napätia"
-			],
-			"desc": "Maximálne QC napätie ktoré si má systém vyžiadať"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"Čas vypršania",
-				"Power Delivery"
-			],
-			"desc": "Čas vyjednávania Power Delivery v 100ms krokoch pre kompatibilitu s niektorými QC nabíjačkami (0: vypnuté)"
-		},
-		"PowerLimit": {
-			"text2": [
-				"Obmedzenie",
-				"výkonu"
-			],
-			"desc": "Obmedzenie výkonu podľa použitého zdroja (watt)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -238,55 +231,6 @@
 			],
 			"desc": "Prehodenie tlačidiel na nastavovanie teploty"
 		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Malý krok",
-				"teploty"
-			],
-			"desc": "Zmena teploty pri krátkom stlačení tlačidla"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Veľký krok",
-				"teploty"
-			],
-			"desc": "Zmena teploty pri držaní tlačidla"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Intenzita",
-				"impulzu"
-			],
-			"desc": "Impulz udržujúci napájací zdroj zapnutý (power banky) (watt)"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Citliv.",
-				"Hall"
-			],
-			"desc": "Citlivosť Hallovho senzora pre detekciu spánku (0=Vyp | 1=Min | ... | 9=Max)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Povoliť zámok",
-				"tlačidiel"
-			],
-			"desc": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania (Z=Zakázať | B=Okrem boost | P=Plné zamknutie)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimálne",
-				"napätie"
-			],
-			"desc": "Minimálne napätie povolené na jeden článok (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Opakovanie",
-				"animácií"
-			],
-			"desc": "Opakovanie animácií ikoniek v hlavnom menu"
-		},
 		"AnimSpeed": {
 			"text2": [
 				"Rýchlosť",
@@ -294,26 +238,12 @@
 			],
 			"desc": "Rýchlosť animácií ikoniek v menu (O=off | P=pomaly | S=stredne | R=rýchlo)"
 		},
-		"PowerPulseWait": {
+		"AnimLoop": {
 			"text2": [
-				"Interval",
-				"impulzu"
+				"Opakovanie",
+				"animácií"
 			],
-			"desc": "Interval medzi impulzami udržujúcimi napájací zdroj zapnutý (x 2.5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Dĺžka impulzu",
-				""
-			],
-			"desc": "Dĺžka impulzu udržujúci napájací zdroj zapnutý (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Jazyk:",
-				" SK  Slovenčina"
-			],
-			"desc": "Aktuálny jazyk"
+			"desc": "Opakovanie animácií ikoniek v hlavnom menu"
 		},
 		"Brightness": {
 			"text2": [
@@ -335,6 +265,76 @@
 				"boot loga"
 			],
 			"desc": "Doba trvania boot loga (s=sekundy)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Detaily v",
+				"pokoj. režime"
+			],
+			"desc": "Zobraziť detailné informácie v pokojovom režime (T=Zap | F=Vyp)"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Detaily počas",
+				"spájkovania"
+			],
+			"desc": "Zobrazenie detailov počas spájkovania"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Obmedzenie",
+				"výkonu"
+			],
+			"desc": "Obmedzenie výkonu podľa použitého zdroja (watt)"
+		},
+		"CalibrateCJC": {
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Kalibrácia",
+				"nap. napätia"
+			],
+			"desc": "Kalibrácia napájacieho napätia. Krátke stlačenie mení nastavenie, dlhé stlačenie pre návrat"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Intenzita",
+				"impulzu"
+			],
+			"desc": "Impulz udržujúci napájací zdroj zapnutý (power banky) (watt)"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Interval",
+				"impulzu"
+			],
+			"desc": "Interval medzi impulzami udržujúcimi napájací zdroj zapnutý (x 2.5s)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Dĺžka impulzu",
+				""
+			],
+			"desc": "Dĺžka impulzu udržujúci napájací zdroj zapnutý (x 250ms)"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Obnovenie",
+				"nastavení"
+			],
+			"desc": "Obnovenie nastavení na pôvodné hodnoty"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Jazyk:",
+				" SK  Slovenčina"
+			],
+			"desc": ""
 		}
 	}
 }

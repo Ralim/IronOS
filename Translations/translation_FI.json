@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Varmista että kärki on huoneenlämpöinen ennen jatkamista!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Haluatko varmasti palauttaa oletusarvot?",
 		"UVLOWarningString": "DC ALH.",
 		"UndervoltageString": "Alijännite",
@@ -66,35 +66,35 @@
 				"Virta-",
 				"asetukset"
 			],
-			"desc": "Virta-asetukset"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Juotos-",
 				"asetukset"
 			],
-			"desc": "Juotosasetukset"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Lepotilan",
 				"asetukset"
 			],
-			"desc": "Virransäästöasetukset"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Käyttö-",
 				"liittymä"
 			],
-			"desc": "Käyttöliittymän asetukset"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Lisä-",
 				"asetukset"
 			],
-			"desc": "Lisäasetukset"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -104,6 +104,69 @@
 				"DC"
 			],
 			"desc": "Virtalähde. Asettaa katkaisujännitteen. (DC 10V) (S 3.3V per kenno, poistaa virtarajoitukset)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Pienin",
+				"jännite"
+			],
+			"desc": "Pienin sallittu jännite per kenno (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"QC",
+				"jännite"
+			],
+			"desc": "Ensisijainen maksimi QC jännite"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"timeout"
+			],
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Tehostus-",
+				"lämpötila"
+			],
+			"desc": "Tehostustilan lämpötila"
+		},
+		"AutoStart": {
+			"text2": [
+				"Autom.",
+				"käynnistys"
+			],
+			"desc": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (E=Ei käytössä | J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Lämmön muutos",
+				"lyhyt painal."
+			],
+			"desc": "Lämpötilan muutos lyhyellä painalluksella"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Lämmön muutos",
+				"pitkä painal."
+			],
+			"desc": "Lämpötilan muutos pitkällä painalluksella"
+		},
+		"LockingMode": {
+			"text2": [
+				"Salli nappien",
+				"lukitus"
+			],
+			"desc": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (P=pois | V=vain tehostus | K=kaikki)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Liikkeen",
+				"herkkyys"
+			],
+			"desc": "0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -126,12 +189,12 @@
 			],
 			"desc": "Automaattisen sammutuksen ajastus (m=minuuttia)"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
-				"Liikkeen",
-				"herkkyys"
+				"Hall-",
+				"herk."
 			],
-			"desc": "0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys"
+			"desc": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "C=celsius, F=fahrenheit"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"Tiedot",
-				"lepotilassa"
-			],
-			"desc": "Näyttää yksityiskohtaisemmat pienemmällä fontilla tiedot lepotilassa."
-		},
 		"DisplayRotation": {
 			"text2": [
 				"Näytön",
 				"kierto"
 			],
 			"desc": "O=oikeakätinen | V=vasenkätinen | A=automaattinen"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Tehostus-",
-				"lämpötila"
-			],
-			"desc": "Tehostustilan lämpötila"
-		},
-		"AutoStart": {
-			"text2": [
-				"Autom.",
-				"käynnistys"
-			],
-			"desc": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (E=Ei käytössä | J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,61 +217,12 @@
 			],
 			"desc": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma"
 		},
-		"CalibrateCJC": {
-			"text2": [
-				"Kalibroi",
-				"lämpötila?"
-			],
-			"desc": "Kalibroi kärjen lämpötilaeron"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Palauta",
-				"tehdasasetukset?"
-			],
-			"desc": "Palauta kaikki asetukset oletusarvoihin"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Kalibroi",
-				"tulojännite?"
-			],
-			"desc": "Tulojännitten kalibrointi (VIN) (paina pitkään poistuaksesi)"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Tarkempi",
-				"juotosnäyttö"
-			],
-			"desc": "Näyttää yksityiskohtaisemmat tiedot pienellä fontilla juotostilassa"
-		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Selityksien",
 				"nopeus"
 			],
 			"desc": "Selityksien vieritysnopeus (H=hidas | N=nopea)"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"QC",
-				"jännite"
-			],
-			"desc": "Ensisijainen maksimi QC jännite"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"PD",
-				"timeout"
-			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-		},
-		"PowerLimit": {
-			"text2": [
-				"Tehon-",
-				"rajoitus"
-			],
-			"desc": "Suurin sallittu teho (Watti)"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -238,47 +231,12 @@
 			],
 			"desc": "Lämpötilapainikkeiden suunnan vaihtaminen"
 		},
-		"TempChangeShortStep": {
+		"AnimSpeed": {
 			"text2": [
-				"Lämmön muutos",
-				"lyhyt painal."
+				"Animaation",
+				"nopeus"
 			],
-			"desc": "Lämpötilan muutos lyhyellä painalluksella"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Lämmön muutos",
-				"pitkä painal."
-			],
-			"desc": "Lämpötilan muutos pitkällä painalluksella"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Herätyspulssin",
-				"voimakkuus"
-			],
-			"desc": "Herätyspulssin voimakkuus (watti)"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall-",
-				"herk."
-			],
-			"desc": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Salli nappien",
-				"lukitus"
-			],
-			"desc": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (P=pois | V=vain tehostus | K=kaikki)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Pienin",
-				"jännite"
-			],
-			"desc": "Pienin sallittu jännite per kenno (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+			"desc": "Animaatioiden nopeus valikossa (P=pois | A=alhainen | K=keskiverto | S=suuri)"
 		},
 		"AnimLoop": {
 			"text2": [
@@ -287,12 +245,68 @@
 			],
 			"desc": "Toista animaatiot valikossa"
 		},
-		"AnimSpeed": {
+		"Brightness": {
 			"text2": [
-				"Animaation",
-				"nopeus"
+				"Screen",
+				"brightness"
 			],
-			"desc": "Animaatioiden nopeus valikossa (P=pois | A=alhainen | K=keskiverto | S=suuri)"
+			"desc": "Adjust the OLED screen brightness"
+		},
+		"ColourInversion": {
+			"text2": [
+				"Invert",
+				"screen"
+			],
+			"desc": "Invert the OLED screen colors"
+		},
+		"LOGOTime": {
+			"text2": [
+				"Boot logo",
+				"duration"
+			],
+			"desc": "Set boot logo duration (s=seconds)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Tiedot",
+				"lepotilassa"
+			],
+			"desc": "Näyttää yksityiskohtaisemmat pienemmällä fontilla tiedot lepotilassa."
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Tarkempi",
+				"juotosnäyttö"
+			],
+			"desc": "Näyttää yksityiskohtaisemmat tiedot pienellä fontilla juotostilassa"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Tehon-",
+				"rajoitus"
+			],
+			"desc": "Suurin sallittu teho (Watti)"
+		},
+		"CalibrateCJC": {
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Kalibroi",
+				"tulojännite?"
+			],
+			"desc": "Tulojännitten kalibrointi (VIN) (paina pitkään poistuaksesi)"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Herätyspulssin",
+				"voimakkuus"
+			],
+			"desc": "Herätyspulssin voimakkuus (Watti)"
 		},
 		"PowerPulseWait": {
 			"text2": [
@@ -308,33 +322,19 @@
 			],
 			"desc": "Herätyspulssin kesto (x 250ms)"
 		},
+		"SettingsReset": {
+			"text2": [
+				"Palauta",
+				"tehdasasetukset?"
+			],
+			"desc": "Palauta kaikki asetukset oletusarvoihin"
+		},
 		"LanguageSwitch": {
 			"text2": [
 				"Kieli:",
-				" FI     Suomi"
+				" FI       Suomi"
 			],
 			"desc": ""
-		},
-		"Brightness": {
-			"text2": [
-				"Screen",
-				"brightness"
-			],
-			"desc": "Adjust the brightness of the OLED screen"
-		},
-		"ColourInversion": {
-			"text2": [
-				"Invert",
-				"screen"
-			],
-			"desc": "Invert the colours of the OLED screen"
-		},
-		"LOGOTime": {
-			"text2": [
-				"Boot logo",
-				"duration"
-			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
 		}
 	}
 }
