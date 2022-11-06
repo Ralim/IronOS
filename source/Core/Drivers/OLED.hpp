@@ -10,10 +10,12 @@
 #ifndef OLED_HPP_
 #define OLED_HPP_
 #include "Font.h"
+#include "cmsis_os.h"
 #include "configuration.h"
 #include <BSP.h>
 #include <stdbool.h>
 #include <string.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -63,8 +65,13 @@ public:
   }
 
   static void setDisplayState(DisplayState state) {
-    displayState    = state;
-    screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
+    if (state != displayState) {
+      displayState    = state;
+      screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
+      // Dump the screen state change out _now_
+      I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START - 1);
+      osDelay(TICKS_10MS);
+    }
   }
 
   static void setRotation(bool leftHanded); // Set the rotation for the screen
