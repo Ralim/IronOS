@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "次に電源を入れるときは、コテ先と本体が室温と同じになっていることを確認してください",
 		"SettingsResetWarning": "設定をリセットしますか？",
 		"UVLOWarningString": "電圧が低すぎます",
 		"UndervoltageString": "Undervoltage",
@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Sleeping...",
 		"SleepingTipAdvancedString": "Tip:",
 		"OffString": "オフ",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "このデバイスはおそらく偽造品です"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "リセットOK",
@@ -84,7 +84,10 @@
 			"desc": "QC電源使用時に要求する目標電圧"
 		},
 		"PDNegTimeout": {
-			"text2": "PD timeout",
+			"text2": [
+				"PD",
+				"timeout"
+			],
 			"desc": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
 		},
 		"BoostTemperature": {
@@ -164,8 +167,8 @@
 			"desc": "画面の色を反転する"
 		},
 		"LOGOTime": {
-			"text2": "Boot logo duration",
-			"desc": "Set boot logo duration (s=seconds)"
+			"text2": "起動画面",
+			"desc": "起動画面の表示時間を設定する"
 		},
 		"AdvancedIdle": {
 			"text2": "詳細な待受画面",
@@ -180,7 +183,10 @@
 			"desc": "最大電力を制限する <W=ワット>"
 		},
 		"CalibrateCJC": {
-			"text2": "Calibrate CJC",
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
 			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
 		},
 		"VoltageCalibration": {

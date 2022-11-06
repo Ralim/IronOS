@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "於下次開機時，請確定烙鐵頭和機身均處於室溫！",
 		"SettingsResetWarning": "你是否確定要將全部設定重設到預設值？",
 		"UVLOWarningString": "電壓過低",
 		"UndervoltageString": "Undervoltage",
@@ -16,7 +16,7 @@
 		"SleepingAdvancedString": "Sleeping...",
 		"SleepingTipAdvancedString": "Tip:",
 		"OffString": "關",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+		"DeviceFailedValidationWarning": "這支電烙鐵很有可能是冒牌貨！"
 	},
 	"messagesWarn": {
 		"ResetOKMessage": "已重設！",
@@ -164,8 +164,8 @@
 			"desc": "反轉OLED螢幕的黑白色彩"
 		},
 		"LOGOTime": {
-			"text2": "Boot logo duration",
-			"desc": "Set boot logo duration (s=seconds)"
+			"text2": "開機畫面",
+			"desc": "設定開機畫面顯示時長 <s=秒>"
 		},
 		"AdvancedIdle": {
 			"text2": "詳細閒置畫面",
@@ -180,8 +180,8 @@
 			"desc": "限制烙鐵可用的最大功率 <W=watt（瓦特）>"
 		},
 		"CalibrateCJC": {
-			"text2": "Calibrate CJC",
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
+			"text2": "校正CJC",
+			"desc": "於下次開機時校正烙鐵頭熱電偶溫度感應的冷接點補償（溫度差低於攝氏5度的話則無需校正）"
 		},
 		"VoltageCalibration": {
 			"text2": "輸入電壓校正？",
