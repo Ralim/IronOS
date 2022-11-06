@@ -25,7 +25,7 @@ bool               OLED::initDone = false;
 uint8_t            OLED::displayOffset;
 uint8_t            OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10]; // The data buffer
 uint8_t            OLED::secondFrameBuffer[OLED_WIDTH * 2];
-
+uint32_t           OLED::displayChecksum;
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
@@ -222,7 +222,7 @@ void OLED::maskScrollIndicatorOnOLED() {
   // it from the screen buffer which is updated by `OLED::setRotation`.
   uint8_t rightmostColumn = screenBuffer[7];
   uint8_t maskCommands[]  = {
-      // Set column address:
+       // Set column address:
       //  A[6:0] - Column start address = rightmost column
       //  B[6:0] - Column end address = rightmost column
       0x80,
