@@ -14,9 +14,10 @@ In this mode the iron works as you would expect, pressing either button will tak
 This mode allows you to cycle through all the options and set custom values.
 The menu is arranged so that the most often used settings are first.
 
-- The rear button (`-/B`) cycles through the main options.
-- The front button (`+/A`) changes the selected option.
-- Note that settings are not saved until you exit the menu.
+- The rear button (`-/B`) cycles through the main options. (declines i.e. Additional warning to proceed.)
+- The front button (`+/A`) either enters a submenu or changes the selected option. (accepts i.e. Additional warning to proceed.)
+- If the device is unplugged before exiting the main menu settings will not be saved.
+- To exit the menu, either continue to press (`-/B`) or hold it until the idle screen is reached. Alternatively, you could press (`-/A`) & (`-/B`) simultaneously to exit the submenu and once more to exit the main menu.
 - If you idle on a setting (i.e., don't press any buttons), after 3 seconds, the screen scrolls a brief description (mini help guide).
 - Enter submenus using the front button (`+/A`) if you are going to change it or wish to view it.
 - Scrolling through the all options of a submenu will return you back to its entry location.

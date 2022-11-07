@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Folytatás előtt győződjön meg róla, hogy a forrasztó hegy szobahőmérsékletű!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Biztos visszaállítja a beállításokat alapértékekre?",
 		"UVLOWarningString": "DC TÚL KEVÉS",
 		"UndervoltageString": "Alulfeszültség",
@@ -66,35 +66,35 @@
 				"Táp",
 				"beállítások"
 			],
-			"desc": "Táp beállítások"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Forrasztási",
 				"beállítások"
 			],
-			"desc": "Forrasztási beállítások"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Alvási",
 				"módok"
 			],
-			"desc": "Energiatakarékossági beállítások"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Felhasználói",
 				"felület"
 			],
-			"desc": "Felhasználói felület beállításai"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Haladó",
 				"beállítások"
 			],
-			"desc": "Haladó beállítások"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -104,6 +104,69 @@
 				"forrás"
 			],
 			"desc": "Kikapcsolási feszültség beállítása (DC:10V | S:3.3V/LiPo cella | ki)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"feszültség"
+			],
+			"desc": "Minimális engedélyezett cellafeszültség (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"Max. USB",
+				"feszültség"
+			],
+			"desc": "Maximális USB feszültség (QuickCharge)"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"időtúllépés"
+			],
+			"desc": "PD egyeztetés időkerete (kompatibilitás QC töltőkkel) (x 100ms)"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Boost",
+				"hőmérséklet"
+			],
+			"desc": "Hőmérséklet \"boost\" módban"
+		},
+		"AutoStart": {
+			"text2": [
+				"Automatikus",
+				"indítás"
+			],
+			"desc": "Bekapcsolás után automatikusan lépjen forrasztás módba (K=ki | F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Hőm. állítás",
+				"rövid"
+			],
+			"desc": "Hőmérséklet állítás rövid gombnyomásra (C | F)"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Hőm. állítás",
+				"hosszú"
+			],
+			"desc": "Hőmérséklet állítás hosszú gombnyomásra (C | F)"
+		},
+		"LockingMode": {
+			"text2": [
+				"Lezárás",
+				"engedélyezés"
+			],
+			"desc": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (K=ki | B=csak \"boost\" módban | T=teljes lezárás)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Mozgás",
+				"érzékenység"
+			],
+			"desc": "Mozgás érzékenység beállítása (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -126,12 +189,12 @@
 			],
 			"desc": "Kikapcsolási időzítő (perc)"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
-				"Mozgás",
+				"Alvásérzékelő",
 				"érzékenység"
 			],
-			"desc": "Mozgás érzékenység beállítása (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
+			"desc": "Alvásérzékelő gyorsulásmérő érzékenysége (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "Hőmérséklet mértékegysége (C=Celsius | F=Fahrenheit)"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"Részletes",
-				"készenlét"
-			],
-			"desc": "Részletes információk megjelenítése kisebb betűméretben a készenléti képernyőn"
-		},
 		"DisplayRotation": {
 			"text2": [
 				"Kijelző",
 				"tájolása"
 			],
 			"desc": "Kijelző tájolása (J=jobbkezes | B=balkezes | A=automatikus)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Boost",
-				"hőmérséklet"
-			],
-			"desc": "Hőmérséklet \"boost\" módban"
-		},
-		"AutoStart": {
-			"text2": [
-				"Automatikus",
-				"indítás"
-			],
-			"desc": "Bekapcsolás után automatikusan lépjen forrasztás módba (K=ki | F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,61 +217,12 @@
 			],
 			"desc": "Villogjon a hőmérséklet kijelzése hűlés közben, amíg a forrasztó hegy forró"
 		},
-		"CalibrateCJC": {
-			"text2": [
-				"Hőmérséklet",
-				"kalibrálása?"
-			],
-			"desc": "Forrasztó hegy hőmérséklet-érzékelőjének kalibrálása"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Gyári",
-				"beállítások?"
-			],
-			"desc": "Beállítások alaphelyzetbe állítása"
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Bemeneti fesz.",
-				"kalibrálása?"
-			],
-			"desc": "Bemeneti feszültség kalibrálása (hosszan nyomva kilép)"
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Részletes",
-				"forrasztás infó"
-			],
-			"desc": "Részletes információk megjelenítése forrasztás közben"
-		},
 		"ScrollingSpeed": {
 			"text2": [
 				"Görgetés",
 				"sebessége"
 			],
 			"desc": "Szöveggörgetés sebessége"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Max. USB",
-				"feszültség"
-			],
-			"desc": "Maximális USB feszültség (QuickCharge)"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"PD",
-				"időtúllépés"
-			],
-			"desc": "PD egyeztetés időkerete (kompatibilitás QC töltőkkel) (x 100ms)"
-		},
-		"PowerLimit": {
-			"text2": [
-				"Teljesítmény",
-				"maximum"
-			],
-			"desc": "Maximális felvett teljesitmény beállitása"
 		},
 		"ReverseButtonTempChange": {
 			"text2": [
@@ -238,55 +231,6 @@
 			],
 			"desc": "Forrasztó hegy hőmérsékletállító gombok felcserélése"
 		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Hőm. állítás",
-				"rövid"
-			],
-			"desc": "Hőmérséklet állítás rövid gombnyomásra (C | F)"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Hőm. állítás",
-				"hosszú"
-			],
-			"desc": "Hőmérséklet állítás hosszú gombnyomásra (C | F)"
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Ébr. pulzus",
-				"nagysága"
-			],
-			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok nagysága (W)"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Alvásérzékelő",
-				"érzékenység"
-			],
-			"desc": "Alvásérzékelő gyorsulásmérő érzékenysége (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Lezárás",
-				"engedélyezés"
-			],
-			"desc": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (K=ki | B=csak \"boost\" módban | T=teljes lezárás)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimum",
-				"feszültség"
-			],
-			"desc": "Minimális engedélyezett cellafeszültség (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Folytonos",
-				"animáció"
-			],
-			"desc": "Főmenü ikonjainak folytonos animációja"
-		},
 		"AnimSpeed": {
 			"text2": [
 				"Animáció",
@@ -294,26 +238,12 @@
 			],
 			"desc": "Menüikonok animációjának sebessége (0=ki | L=lassú | K=közepes | Gy=gyors)"
 		},
-		"PowerPulseWait": {
+		"AnimLoop": {
 			"text2": [
-				"Ébr. pulzus",
-				"időköze"
+				"Folytonos",
+				"animáció"
 			],
-			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időköze (x 2.5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Ébr. pulzus",
-				"időtartama"
-			],
-			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időtartama (x 250ms)"
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Nyelv:",
-				" HU     Magyar"
-			],
-			"desc": "Firmware nyelve"
+			"desc": "Főmenü ikonjainak folytonos animációja"
 		},
 		"Brightness": {
 			"text2": [
@@ -334,7 +264,77 @@
 				"Boot logo",
 				"duration"
 			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
+			"desc": "Set boot logo duration (s=seconds)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Részletes",
+				"készenlét"
+			],
+			"desc": "Részletes információk megjelenítése kisebb betűméretben a készenléti képernyőn"
+		},
+		"AdvancedSoldering": {
+			"text2": [
+				"Részletes",
+				"forrasztás infó"
+			],
+			"desc": "Részletes információk megjelenítése forrasztás közben"
+		},
+		"PowerLimit": {
+			"text2": [
+				"Teljesítmény",
+				"maximum"
+			],
+			"desc": "Maximális felvett teljesitmény beállitása"
+		},
+		"CalibrateCJC": {
+			"text2": [
+				"Calibrate CJC",
+				"at next boot"
+			],
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+		},
+		"VoltageCalibration": {
+			"text2": [
+				"Bemeneti fesz.",
+				"kalibrálása?"
+			],
+			"desc": "Bemeneti feszültség kalibrálása (hosszan nyomva kilép)"
+		},
+		"PowerPulsePower": {
+			"text2": [
+				"Ébr. pulzus",
+				"nagysága"
+			],
+			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok nagysága (W)"
+		},
+		"PowerPulseWait": {
+			"text2": [
+				"Ébr. pulzus",
+				"időköze"
+			],
+			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időköze (x 2.5s)"
+		},
+		"PowerPulseDuration": {
+			"text2": [
+				"Ébr. pulzus",
+				"időtartama"
+			],
+			"desc": "Powerbankot ébrentartó áramfelvételi pulzusok időtartama (x 250ms)"
+		},
+		"SettingsReset": {
+			"text2": [
+				"Gyári",
+				"beállítások?"
+			],
+			"desc": "Beállítások alaphelyzetbe állítása"
+		},
+		"LanguageSwitch": {
+			"text2": [
+				"Nyelv:",
+				" HU      Magyar"
+			],
+			"desc": ""
 		}
 	}
 }

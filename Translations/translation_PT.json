@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "A ponta deve estar à temperatura ambiente antes de continuar!",
+		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
 		"SettingsResetWarning": "Definições de fábrica?",
 		"UVLOWarningString": "DC BAIXO",
 		"UndervoltageString": "Subtensão",
@@ -66,35 +66,35 @@
 				"Power",
 				"settings"
 			],
-			"desc": "Power settings"
+			"desc": ""
 		},
 		"SolderingMenu": {
 			"text2": [
 				"Configurações",
 				"Solda"
 			],
-			"desc": "Configurações de soldagem"
+			"desc": ""
 		},
 		"PowerSavingMenu": {
 			"text2": [
 				"Modos",
 				"Repouso"
 			],
-			"desc": "Configurações de economia de energia"
+			"desc": ""
 		},
 		"UIMenu": {
 			"text2": [
 				"Interface",
 				"Utilizador"
 			],
-			"desc": "Configurações do interface do utilizador"
+			"desc": ""
 		},
 		"AdvancedMenu": {
 			"text2": [
 				"Menu",
 				"Avançado"
 			],
-			"desc": "Opções avançadas"
+			"desc": ""
 		}
 	},
 	"menuOptions": {
@@ -104,6 +104,69 @@
 				"alimentação"
 			],
 			"desc": "Fonte de alimentação. Define a tensão de corte. (DC=10V) (S=3.3V/célula)"
+		},
+		"MinVolCell": {
+			"text2": [
+				"Minimum",
+				"voltage"
+			],
+			"desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+		},
+		"QCMaxVoltage": {
+			"text2": [
+				"Potência",
+				"Fonte"
+			],
+			"desc": "Potência da fonte usada (Watt)"
+		},
+		"PDNegTimeout": {
+			"text2": [
+				"PD",
+				"timeout"
+			],
+			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+		},
+		"BoostTemperature": {
+			"text2": [
+				"Modo turbo",
+				"temperat."
+			],
+			"desc": "Ajuste de temperatura do \"modo turbo\""
+		},
+		"AutoStart": {
+			"text2": [
+				"Partida",
+				"automática"
+			],
+			"desc": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
+		},
+		"TempChangeShortStep": {
+			"text2": [
+				"Temp change",
+				"short"
+			],
+			"desc": "Temperature-change-increment on short button press"
+		},
+		"TempChangeLongStep": {
+			"text2": [
+				"Temp change",
+				"long"
+			],
+			"desc": "Temperature-change-increment on long button press"
+		},
+		"LockingMode": {
+			"text2": [
+				"Allow locking",
+				"buttons"
+			],
+			"desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+		},
+		"MotionSensitivity": {
+			"text2": [
+				"Sensibilidade",
+				"movimento"
+			],
+			"desc": "Sensibilidade ao movimento (0=Desligado | 1=Menor | ... | 9=Maior)"
 		},
 		"SleepTemperature": {
 			"text2": [
@@ -126,12 +189,12 @@
 			],
 			"desc": "Tempo para desligamento (Minutos)"
 		},
-		"MotionSensitivity": {
+		"HallEffSensitivity": {
 			"text2": [
-				"Sensibilidade",
-				"movimento"
+				"Hall sensor",
+				"sensitivity"
 			],
-			"desc": "Sensibilidade ao movimento (0=Desligado | 1=Menor | ... | 9=Maior)"
+			"desc": "Sensitivity to magnets (0=Desligado | 1=Menor | ... | 9=Maior)"
 		},
 		"TemperatureUnit": {
 			"text2": [
@@ -140,33 +203,12 @@
 			],
 			"desc": "Unidade de temperatura (C=Celsius | F=Fahrenheit)"
 		},
-		"AdvancedIdle": {
-			"text2": [
-				"Tela repouso",
-				"avançada"
-			],
-			"desc": "Exibe informações avançadas quando em espera"
-		},
 		"DisplayRotation": {
 			"text2": [
 				"Orientação",
 				"tela"
 			],
 			"desc": "Orientação da tela (D=estro | C=anhoto | A=utomática)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Modo turbo",
-				"temperat."
-			],
-			"desc": "Ajuste de temperatura do modo \"turbo\""
-		},
-		"AutoStart": {
-			"text2": [
-				"Partida",
-				"automática"
-			],
-			"desc": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
 		},
 		"CooldownBlink": {
 			"text2": [
@@ -175,26 +217,61 @@
 			],
 			"desc": "Faz o valor da temperatura piscar durante o arrefecimento"
 		},
-		"CalibrateCJC": {
+		"ScrollingSpeed": {
 			"text2": [
-				"Calibrar",
-				"temperatura"
+				"Velocidade",
+				"texto ajuda"
 			],
-			"desc": "Calibra a temperatura"
+			"desc": "Velocidade a que o texto é exibido"
 		},
-		"SettingsReset": {
+		"ReverseButtonTempChange": {
 			"text2": [
-				"Reset de",
-				"fábrica?"
+				"Swap",
+				"+ - keys"
 			],
-			"desc": "Reverte todos ajustes"
+			"desc": "Reverse assignment of buttons for temperature adjustment"
 		},
-		"VoltageCalibration": {
+		"AnimSpeed": {
 			"text2": [
-				"Calibrar",
-				"tensão"
+				"Anim.",
+				"speed"
 			],
-			"desc": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair"
+			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+		},
+		"AnimLoop": {
+			"text2": [
+				"Anim.",
+				"loop"
+			],
+			"desc": "Loop icon animations in main menu"
+		},
+		"Brightness": {
+			"text2": [
+				"Screen",
+				"brightness"
+			],
+			"desc": "Adjust the OLED screen brightness"
+		},
+		"ColourInversion": {
+			"text2": [
+				"Invert",
+				"screen"
+			],
+			"desc": "Invert the OLED screen colors"
+		},
+		"LOGOTime": {
+			"text2": [
+				"Boot logo",
+				"duration"
+			],
+			"desc": "Set boot logo duration (s=seconds)"
+		},
+		"AdvancedIdle": {
+			"text2": [
+				"Tela repouso",
+				"avançada"
+			],
+			"desc": "Exibe informações avançadas quando em espera"
 		},
 		"AdvancedSoldering": {
 			"text2": [
@@ -203,96 +280,33 @@
 			],
 			"desc": "Exibe informações avançadas durante o uso"
 		},
-		"ScrollingSpeed": {
-			"text2": [
-				"Velocidade",
-				"texto ajuda"
-			],
-			"desc": "Velocidade a que o texto é exibido"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Potência",
-				"Fonte"
-			],
-			"desc": "Potência da fonte usada (Watt)"
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"PD",
-				"timeout"
-			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-		},
 		"PowerLimit": {
 			"text2": [
 				"Power",
 				"limit"
 			],
-			"desc": "Maximum power the iron can use (Watts)"
+			"desc": "Maximum power the iron can use (W=watt)"
 		},
-		"ReverseButtonTempChange": {
+		"CalibrateCJC": {
 			"text2": [
-				"Key +-",
-				"reverse?"
+				"Calibrate CJC",
+				"at next boot"
 			],
-			"desc": "Reverse the tip temperature change buttons plus minus assignment."
+			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
 		},
-		"TempChangeShortStep": {
+		"VoltageCalibration": {
 			"text2": [
-				"Temp change",
-				"short?"
+				"Calibrar",
+				"tensão"
 			],
-			"desc": "Temperature change steps on short button press!"
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Temp change",
-				"long?"
-			],
-			"desc": "Temperature change steps on long button press!"
+			"desc": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair"
 		},
 		"PowerPulsePower": {
 			"text2": [
 				"Power",
-				"Pulse W"
+				"pulse"
 			],
-			"desc": "Keep awake pulse power intensity"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall Eff",
-				"Sensitivity"
-			],
-			"desc": "Sensitivity of the Hall effect sensor in detecting sleep (0=Desligado | 1=Menor | ... | 9=Maior)"
-		},
-		"LockingMode": {
-			"text2": [
-				"Allow buttons",
-				"locking"
-			],
-			"desc": "When soldering, long press on both buttons lock them (D=Disable | B=Boost only | F=Full locking)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Minimum",
-				"voltage"
-			],
-			"desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Anim.",
-				"loop"
-			],
-			"desc": "Loop icon animations in root menu"
-		},
-		"AnimSpeed": {
-			"text2": [
-				"Anim.",
-				"speed"
-			],
-			"desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+			"desc": "Intensity of power of keep-awake-pulse (W=watt)"
 		},
 		"PowerPulseWait": {
 			"text2": [
@@ -308,33 +322,19 @@
 			],
 			"desc": "Keep-awake-pulse duration (x 250ms)"
 		},
+		"SettingsReset": {
+			"text2": [
+				"Reset de",
+				"fábrica?"
+			],
+			"desc": "Reverte todos ajustes"
+		},
 		"LanguageSwitch": {
 			"text2": [
-				"Idioma :",
-				" PT     Português"
+				"Idioma:",
+				" PT   Português"
 			],
 			"desc": ""
-		},
-		"Brightness": {
-			"text2": [
-				"Screen",
-				"brightness"
-			],
-			"desc": "Adjust the brightness of the OLED screen"
-		},
-		"ColourInversion": {
-			"text2": [
-				"Invert",
-				"screen"
-			],
-			"desc": "Invert the colours of the OLED screen"
-		},
-		"LOGOTime": {
-			"text2": [
-				"Boot logo",
-				"duration"
-			],
-			"desc": "Sets the duration for the boot logo (s=seconds)"
 		}
 	}
 }
