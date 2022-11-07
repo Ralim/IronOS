@@ -10,10 +10,12 @@
 #ifndef OLED_HPP_
 #define OLED_HPP_
 #include "Font.h"
+#include "cmsis_os.h"
 #include "configuration.h"
 #include <BSP.h>
 #include <stdbool.h>
 #include <string.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -47,16 +49,29 @@ public:
 
   static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
   static bool isInitDone();
-  // Draw the buffer out to the LCD using the DMA Channel
+  // Draw the buffer out to the LCD if any content has changed.
   static void refresh() {
-    I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START + (OLED_WIDTH * 2));
-    // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
-    // or we need to goto double buffering
+    uint32_t  hash = 0;
+    const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+    for (int i = 0; i < len; i++) {
+      hash += (i * screenBuffer[i]);
+    }
+    if (hash != displayChecksum) {
+      displayChecksum = hash;
+      I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
+      // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
+      // or we need to goto double buffering
+    }
   }
 
   static void setDisplayState(DisplayState state) {
-    displayState    = state;
-    screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
+    if (state != displayState) {
+      displayState    = state;
+      screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
+      // Dump the screen state change out _now_
+      I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START - 1);
+      osDelay(TICKS_10MS);
+    }
   }
 
   static void setRotation(bool leftHanded); // Set the rotation for the screen
@@ -112,6 +127,7 @@ private:
   static DisplayState displayState;
   static int16_t      cursor_x, cursor_y;
   static uint8_t      displayOffset;
+  static uint32_t     displayChecksum;
   static uint8_t      screenBuffer[16 + (OLED_WIDTH * 2) + 10]; // The data buffer
   static uint8_t      secondFrameBuffer[OLED_WIDTH * 2];
 };
