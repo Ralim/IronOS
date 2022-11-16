@@ -8,7 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "¡Asegúrate que la punta esté a temperatura ambiente al inicio",
-
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "¿Quieres restablecer los ajustes?",
 		"UVLOWarningString": "CC BAJA",
 		"UndervoltageString": "Voltaje bajo",
@@ -20,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Hecho.",
 		"SettingsResetMessage": [
 			"Ajustes",

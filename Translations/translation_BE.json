@@ -9,6 +9,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Пераканайцеся, што пры наступнай загрузцы наканечнік і ручка маюць пакаёвую тэмпературу!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Вы ўпэннены, што жадаеце зкінуць налады да першапачатковых значэнняў?",
 		"UVLOWarningString": "НАПРУГА--",
 		"UndervoltageString": "Нізкая напруга",
@@ -20,6 +21,10 @@
 		"DeviceFailedValidationWarning": "Ваша прылада, хутчэй за ўсё, падробка!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Скід OK",
 		"SettingsResetMessage": [
 			"Налады",

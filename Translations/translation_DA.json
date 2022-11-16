@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden næste start!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Er du sikker du vil resette indstillingerne til standard?",
 		"UVLOWarningString": "Lav Volt",
 		"UndervoltageString": "Undervolt",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Din enhed er højst sandsyneligt en Kopivare!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Visse indstillinger",

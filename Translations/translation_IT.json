@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Assicurarsi che la punta e il manico si trovino a temperatura ambiente prima di continuare!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",
 		"UndervoltageString": "DC INSUFFICIENTE",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Il dispositivo in uso è molto probabilmente una contraffazione!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Impostazioni",

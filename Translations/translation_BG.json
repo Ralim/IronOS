@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
 		"UVLOWarningString": "Ниско DC Напрежение",
 		"UndervoltageString": "Ниско Напрежение",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Нулиране",
 		"SettingsResetMessage": [
 			"Настройките бяха",

@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
 		"UVLOWarningString": "NIS. NAP",
 		"UndervoltageString": "Zbyt niskie nap.",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Twoje urządzenie jest najprawdopodobniej podróbką!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Ust. zresetowane",

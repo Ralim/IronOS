@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": true,
 	"messages": {
 		"SettingsCalibrationWarning": "于下次开机时，请确定烙铁头和机身均处于室温！",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "你是否确定要将全部设定重置为默认值？",
 		"UVLOWarningString": "电压过低",
 		"UndervoltageString": "Undervoltage",
@@ -19,6 +20,7 @@
 		"DeviceFailedValidationWarning": "这支电烙铁很有可能是冒牌货！"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": "Calibration done!",
 		"ResetOKMessage": "已重置！",
 		"SettingsResetMessage": "设定已被重置！",
 		"NoAccelerometerMessage": "未检测到加速度计",

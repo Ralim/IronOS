@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Är du säker på att du vill återställa inställningarna?",
 		"UVLOWarningString": "DC LÅG",
 		"UndervoltageString": "Underspänning",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Inställningar",

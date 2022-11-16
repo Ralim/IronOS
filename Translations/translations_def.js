@@ -5,6 +5,10 @@ var def = ///
                 "description": "Confirmation message shown before performing an offset calibration. Should warn the user to make sure tip and handle are at the same temperature."
             },
             {
+                "id": "CJCCalibrating",
+                "description": "Message indicating CJC is being calibrated."
+            },
+            {
                 "id": "SettingsResetWarning",
                 "description": "Confirmation message shown before confirming a settings reset."
             },
@@ -51,6 +55,10 @@ var def = ///
             }
         ],
         "messagesWarn": [{
+                "id": "CJCCalibrationDone",
+                "description": "Confirmation message indicating CJC calibration is complete."
+            },
+            {
                 "id": "SettingsResetMessage",
                 "description": "Shown when the settings are reset to factory defaults either by the user or by incompatible firmware changes."
             },

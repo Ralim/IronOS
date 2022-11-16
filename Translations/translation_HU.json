@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Biztos visszaállítja a beállításokat alapértékekre?",
 		"UVLOWarningString": "DC TÚL KEVÉS",
 		"UndervoltageString": "Alulfeszültség",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Törlés OK",
 		"SettingsResetMessage": [
 			"Beállítások",

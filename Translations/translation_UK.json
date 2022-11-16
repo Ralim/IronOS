@@ -9,6 +9,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",
 		"UVLOWarningString": "АККУМ--",
 		"UndervoltageString": "Низька напруга",
@@ -20,6 +21,10 @@
 		"DeviceFailedValidationWarning": "Ваш пристрій, швидше за все, підробка!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Скид. OK",
 		"SettingsResetMessage": [
 			"Налаштування",

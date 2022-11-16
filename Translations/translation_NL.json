@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Weet je zeker dat je de fabrieksinstellingen terug wilt zetten?",
 		"UVLOWarningString": "DC Laag",
 		"UndervoltageString": "Onderspanning",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Jouw toestel is wellicht een namaak-versie!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Instellingen",

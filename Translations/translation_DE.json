@@ -8,6 +8,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Bitte sicherstellen, dass Lötspitze & Gerät beim nächsten Start Raumtemperatur haben!",
+		"CJCCalibrating": "kalibriere",
 		"SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
 		"UVLOWarningString": "V niedr.",
 		"UndervoltageString": "Unterspannung",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Höchstwahrscheinlich ist das Gerät eine Fälschung!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Erfolgreich",
+			"kalibriert!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Einstellungen",
