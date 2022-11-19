@@ -186,7 +186,7 @@
 		},
 		"CalibrateCJC": {
 			"text2": "Calibrate CJC",
-			"desc": "At the next boot the tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+			"desc": "At the next boot the tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
 		},
 		"VoltageCalibration": {
 			"text2": "電圧校正",
