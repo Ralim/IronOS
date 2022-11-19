@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Bitte sicherstellen, dass Lötspitze & Gerät beim nächsten Start Raumtemperatur haben!",
+		"SettingsCalibrationWarning": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!",
 		"CJCCalibrating": "kalibriere",
 		"SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
 		"UVLOWarningString": "V niedr.",
@@ -297,7 +297,7 @@
 				"Temperatur",
 				"kalibrieren?"
 			],
-			"desc": "Kalibrierung der Kaltstellenkompensation beim nächsten Start (nicht nötig wenn Delta T < 5°C)"
+			"desc": "Beim nächsten Start wird die Kaltstellenkompensation kalibriert (nicht nötig wenn Delta T < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [

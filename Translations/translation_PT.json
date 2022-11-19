@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
 		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Definições de fábrica?",
 		"UVLOWarningString": "DC BAIXO",
@@ -297,7 +297,7 @@
 				"Calibrate CJC",
 				"at next boot"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "At the next boot the tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [

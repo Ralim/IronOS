@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "Vă rugăm să vă asigurati că vârful si mânerul sunt la temperatura camerei la următoarea pornire!",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
 		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
 		"UVLOWarningString": "DC LOW",
@@ -297,7 +297,7 @@
 				"Calibrare CJC",
 				"la următoarea pornire"
 			],
-			"desc": "Calibrati vârful Cold Junction Compensation la următoarea pornire (nu este necesar dacă Delta T este < 5°C)"
+			"desc": "At the next boot the tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [

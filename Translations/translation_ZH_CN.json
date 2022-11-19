@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "于下次开机时，请确定烙铁头和机身均处于室温！",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
 		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "你是否确定要将全部设定重置为默认值？",
 		"UVLOWarningString": "电压过低",
@@ -183,7 +183,7 @@
 		},
 		"CalibrateCJC": {
 			"text2": "校正CJC",
-			"desc": "于下次开机时校正烙铁头热电偶温度感应的冷接点补偿（温度差低于摄氏5度的话则无需校正）"
+			"desc": "At the next boot the tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": "输入电压校正？",

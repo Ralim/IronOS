@@ -7,7 +7,7 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "¡Asegúrate que la punta esté a temperatura ambiente al inicio",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
 		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "¿Quieres restablecer los ajustes?",
 		"UVLOWarningString": "CC BAJA",
@@ -297,10 +297,8 @@
 				"Calibrar CJC",
 
 				"en el próximo inicio"
-
 			],
-			"desc": "Calibrar compensación de punta fría en el próximo inicio (no necesario si Delta T es < 5°C)"
-
+			"desc": "At the next boot the tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
