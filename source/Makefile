@@ -310,8 +310,7 @@ LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 CPUFLAGS= -march=rv32imafc \
 			-mabi=ilp32f \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
-			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DBL702
-# -DBFLB_USE_ROM_DRIVER=1
+			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DBL702 -DBFLB_USE_ROM_DRIVER=1
 DEV_LDFLAGS=-nostartfiles  -L $(PINECILV2_BLE_CRAPWARE_BLOB_DIR) -L $(PINECILV2_RF_CRAPWARE_BLOB_DIR) -l blecontroller_702_m0s1s -l bl702_rf
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= -DCFG_FREERTOS \
