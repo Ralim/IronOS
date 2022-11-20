@@ -68,13 +68,33 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
   return 0;
 }
 
-int ble_tp_recv_wr(struct bt_conn *conn, const struct bt_gatt_attr *attr, const void *buf, u16_t len, u16_t offset, u8_t flags) {
-  BT_WARN("recv data len=%d, offset=%d, flag=%d\n", len, offset, flags);
-  BT_WARN("recv data:%s\n", bt_hex(buf, len));
+int ble_char_read_setting_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
+  if (attr == NULL || attr->uuid == NULL) {
+    return 0;
+  }
+  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  uint16_t temp       = 0;
+  if (uuid_value == 0) {
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+  } else if (uuid_value <= SettingsOptions::SettingsOptionsLength) {
+    temp = getSettingValue((SettingsOptions)(uuid_value - 1));
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+  }
+
+  MSG("Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
+  return 0;
+}
+
+int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, const void *buf, u16_t len, u16_t offset, u8_t flags) {
 
   if (flags & BT_GATT_WRITE_FLAG_PREPARE) {
     // Don't use prepare write data, execute write will upload data again.
     BT_WARN("recv prepare write request\n");
+    return 0;
+  }
+  if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
 
@@ -85,6 +105,20 @@ int ble_tp_recv_wr(struct bt_conn *conn, const struct bt_gatt_attr *attr, const 
     // Use write request / execute write data.
     BT_WARN("recv write request / exce write\n");
   }
-
-  return len;
+  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  if (len == 2) {
+    uint16_t new_value = 0;
+    memcpy(&new_value, buf, sizeof(new_value));
+    if (uuid_value == 0) {
+      if (new_value == 1) {
+        saveSettings();
+        return len;
+      }
+    } else if (uuid_value < SettingsOptions::SettingsOptionsLength) {
+      setSettingValue((SettingsOptions)(uuid_value - 1), new_value);
+      return len;
+    }
+  }
+  MSG("Unhandled attr write %d | %d\n", (uint32_t)attr->uuid, uuid_value);
+  return 0;
 }
