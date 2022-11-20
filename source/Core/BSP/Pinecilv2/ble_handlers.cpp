@@ -8,28 +8,30 @@
 
 #include "types.h"
 
+#include "BSP.h"
+#include "TipThermoModel.h"
 #include "ble_peripheral.h"
 #include "bluetooth.h"
+#include "configuration.h"
 #include "conn.h"
 #include "gatt.h"
 #include "hal_clock.h"
 #include "hci_core.h"
 #include "log.h"
 #include "uuid.h"
-#include "configuration.h"
-#include "BSP.h"
-#include "TipThermoModel.h"
 
+#include "USBPD.h"
 #include "ble_characteristics.h"
 #include "ble_handlers.h"
+#include "pd.h"
 #include "power.hpp"
 
- int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
+int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
   uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
-  uint32_t temp=0;
+  uint32_t temp       = 0;
   switch (uuid_value) {
   case 1: // Live temp
   {
@@ -37,7 +39,7 @@
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
   } break;
-  case 2://Setpoint temp
+  case 2: // Setpoint temp
     temp = getSettingValue(SettingsOptions::SolderingTemp);
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
@@ -57,20 +59,14 @@
     temp = X10WattsToPWM(x10WattHistory.average());
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
- 
     break;
   case 6: // power src
- // Todo return enum for current power source
+    // Todo return enum for current power source
     break;
   }
   MSG("Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
 }
-
-/*************************************************************************
-NAME
-    ble_tp_recv_wr(receive data from client)
-*/
 
 int ble_tp_recv_wr(struct bt_conn *conn, const struct bt_gatt_attr *attr, const void *buf, u16_t len, u16_t offset, u8_t flags) {
   BT_WARN("recv data len=%d, offset=%d, flag=%d\n", len, offset, flags);
