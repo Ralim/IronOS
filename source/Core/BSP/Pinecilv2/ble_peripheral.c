@@ -27,6 +27,7 @@ NOTES
 #include "uuid.h"
 
 #include "ble_characteristics.h"
+#include "ble_handlers.h"
 
 bool pds_start;
 
@@ -54,9 +55,9 @@ NAME
 static void ble_tx_mtu_change_callback(struct bt_conn *conn, u8_t err, struct bt_gatt_exchange_params *params) {
   if (!err) {
     tx_mtu_size = bt_gatt_get_mtu(ble_tp_conn);
-    BT_WARN("ble tp echange mtu size success, mtu size: %d", tx_mtu_size);
+    BT_WARN("ble tp echange mtu size success, mtu size: %d\n", tx_mtu_size);
   } else {
-    BT_WARN("ble tp echange mtu size failure, err: %d", err);
+    BT_WARN("ble tp echange mtu size failure, err: %d\n", err);
   }
 }
 /*************************************************************************
@@ -80,9 +81,9 @@ static void ble_device_connected(struct bt_conn *conn, u8_t err) {
   ret = bt_le_set_data_len(ble_tp_conn, tx_octets, tx_time);
 
   if (!ret) {
-    BT_INFO("ble tp set data length success");
+    BT_INFO("ble tp set data length success\n");
   } else {
-    BT_WARN("ble tp set data length failure, err: %d", ret);
+    BT_WARN("ble tp set data length failure, err: %d\n", ret);
   }
 
   // exchange mtu size after connected.
@@ -90,9 +91,9 @@ static void ble_device_connected(struct bt_conn *conn, u8_t err) {
   ret            = bt_gatt_exchange_mtu(ble_tp_conn, &exchg_mtu);
 
   if (!ret) {
-    BT_INFO("ble tp exchange mtu size pending");
+    BT_INFO("ble tp exchange mtu size pending\n");
   } else {
-    BT_WARN("ble tp exchange mtu size failure, err: %d", ret);
+    BT_WARN("ble tp exchange mtu size failure, err: %d\n", ret);
   }
 }
 
@@ -104,7 +105,7 @@ static void ble_device_disconnected(struct bt_conn *conn, u8_t reason) {
   BT_WARN("Tp disconnected");
 
   if (created_tp_task) {
-    BT_WARN("Delete throughput tx task");
+    BT_WARN("Delete throughput tx task\n");
     vTaskDelete(ble_tp_task_h);
     created_tp_task = 0;
   }
@@ -126,44 +127,6 @@ static void ble_connection_param_changed(struct bt_conn *conn, u16_t interval, u
 
 /*************************************************************************
 NAME
-    ble_tp_recv_rd
-*/
-static int ble_tp_recv_rd(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
-  int  size    = 9;
-  char data[9] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
-
-  memcpy(buf, data, size);
-
-  return size;
-}
-
-/*************************************************************************
-NAME
-    ble_tp_recv_wr(receive data from client)
-*/
-static int ble_tp_recv_wr(struct bt_conn *conn, const struct bt_gatt_attr *attr, const void *buf, u16_t len, u16_t offset, u8_t flags) {
-  BT_WARN("recv data len=%d, offset=%d, flag=%d", len, offset, flags);
-  BT_WARN("recv data:%s", bt_hex(buf, len));
-
-  if (flags & BT_GATT_WRITE_FLAG_PREPARE) {
-    // Don't use prepare write data, execute write will upload data again.
-    BT_WARN("recv prepare write request");
-    return 0;
-  }
-
-  if (flags & BT_GATT_WRITE_FLAG_CMD) {
-    // Use write command data.
-    BT_WARN("recv write command");
-  } else {
-    // Use write request / execute write data.
-    BT_WARN("recv write request / exce write");
-  }
-
-  return len;
-}
-
-/*************************************************************************
-NAME
     ble_tp_ind_ccc_changed
 */
 static void ble_tp_ind_ccc_changed(const struct bt_gatt_attr *attr, u16_t value) {
@@ -172,7 +135,7 @@ static void ble_tp_ind_ccc_changed(const struct bt_gatt_attr *attr, u16_t value)
 
   if (value == BT_GATT_CCC_INDICATE) {
     err = bl_tp_send_indicate(ble_tp_conn, get_attr(BT_CHAR_BLE_TP_IND_ATTR_VAL_INDEX), data, 9);
-    BT_WARN("ble tp send indicate: %d", err);
+    BT_WARN("ble tp send indicate: %d\n", err);
   }
 }
 
@@ -182,8 +145,14 @@ static void ble_tp_ind_ccc_changed(const struct bt_gatt_attr *attr, u16_t value)
 static struct bt_gatt_attr attrs[] = {
     BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_LIVE_DATA),
 
-    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_SETPOINT_TEMP, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_tp_recv_rd, NULL, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_LIVE_TEMP, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_callback, NULL, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_SETPOINT_TEMP, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_callback, NULL, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_DC_INPUT, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_callback, NULL, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_HANDLE_TEMP, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_callback, NULL, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_POWER_LEVEL, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_callback, NULL, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_POWER_SRC, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_callback, NULL, NULL),
 
+    BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_SETTINGS_DATA),
 };
 
 /*************************************************************************
