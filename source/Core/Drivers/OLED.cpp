@@ -361,13 +361,17 @@ void OLED::setRotation(bool leftHanded) {
     OLED_Setup_Array[9].val = 0xA0;
   }
   I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
-
+  osDelay(TICKS_10MS);
   inLeftHandedMode = leftHanded;
 
   screenBuffer[5] = inLeftHandedMode ? 0 : 32;    // display is shifted by 32 in left handed
                                                   // mode as driver ram is 128 wide
   screenBuffer[7] = inLeftHandedMode ? 95 : 0x7F; // End address of the ram segment we are writing to (96 wide)
   screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
+  //Force a screen refresh
+  const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+  I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
+  osDelay(TICKS_10MS);
 }
 
 void OLED::setBrightness(uint8_t contrast) {

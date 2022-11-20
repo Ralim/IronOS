@@ -1105,17 +1105,18 @@ void startGUITask(void const *argument) {
     } else {
       setStatusLED(LED_STANDBY);
     }
-    // Preemptively turn the display on.  Turn it off if and only if
+    // Turn it off if and only if
     // the tip temperature is below 50 degrees C *and* motion sleep
     // detection is enabled *and* there has been no activity (movement or
     // button presses) in a while.
     // This is zero cost really as state is only changed on display updates
-    OLED::setDisplayState(OLED::DisplayState::ON);
 
     if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity)
         && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
       OLED::setDisplayState(OLED::DisplayState::OFF);
       setStatusLED(LED_OFF);
+    }else {
+          OLED::setDisplayState(OLED::DisplayState::ON);
     }
     // Clear the lcd buffer
     OLED::clearScreen();
