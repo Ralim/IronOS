@@ -289,10 +289,10 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrate CJC",
-				"at next boot"
+				"Kalibracja temperatury",
+				"przy następnym uruchomieniu"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "Kalibracja czujnika temperatury końcówki przy następnym rozruchu (nie jest wymagana, jeśli różnica jest mniejsza niż 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
