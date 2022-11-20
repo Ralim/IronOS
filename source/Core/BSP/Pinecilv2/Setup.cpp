@@ -37,7 +37,11 @@ void hardware_init() {
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
-  I2C_ClockSet(I2C0_ID, 100000); // Sets clock to around 175kHz
+  I2C_SetSclSync(I2C0_ID,1);
+  I2C_SetDeglitchCount(I2C0_ID,1); // Turn on de-glitch
+  //Note on I2C clock rate @ 100Khz the screen update == 20ms which is too long for USB-PD to work
+  //200kHz and above works
+  I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 25 kHz less than set here
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
 }
 void setup_pwm(void) {
