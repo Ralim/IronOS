@@ -295,8 +295,8 @@
 		},
 		"CalibrateCJC": {
 			"text2": [
-				"Calibrate CJC",
-				"at next boot"
+				"Каліброўка тэмпературы",
+				"пры наступнай загрузцы"
 			],
 			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
@@ -312,7 +312,7 @@
 				"Сіла імп.",
 				"сілкав. Вт"
 			],
-			"desc": "Сіла імпульса ўтрымливаючага ад сну павербанку ці іншай крыніцы сілкавання"
+			"desc": "Моц імпульса ўтрымливаючага ад сну павербанку ці іншай крыніцы сілкавання"
 		},
 		"PowerPulseWait": {
 			"text2": [
