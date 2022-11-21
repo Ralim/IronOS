@@ -25,6 +25,12 @@
 #include "ble_handlers.h"
 #include "pd.h"
 #include "power.hpp"
+#if POW_PD
+#include "USBPD.h"
+#include "pd.h"
+#endif
+
+extern TickType_t lastMovementTime;
 
 int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
@@ -62,12 +68,122 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
     break;
   case 6: // power src
     // Todo return enum for current power source
+    if (getIsPoweredByDCIN()) {
+      temp = 0;
+    } else if (USBPowerDelivery::negotiationComplete()) {
+      temp = 1;
+    } else {
+      temp = 2;
+    }
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+    break;
+  case 7:
+    // Tip resistance
+    temp = getTipResistanceX10();
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+    break;
+  case 8:
+    // uptime
+    temp = xTaskGetTickCount() / TICKS_100MS;
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+    break;
+  case 9:
+    // movement
+    temp = lastMovementTime / TICKS_100MS;
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+
+    break;
+  case 10:
+    // max temp
+    temp = TipThermoModel::getTipMaxInC();
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+    break;
+  case 11:
+    // raw tip
+    temp = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true);
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
+    break;
+  case 12:
+    // hall sensor
+    {
+      int16_t hallEffectStrength = getRawHallEffect();
+      if (hallEffectStrength < 0)
+        hallEffectStrength = -hallEffectStrength;
+      temp = hallEffectStrength;
+      memcpy(buf, &temp, sizeof(temp));
+      return sizeof(temp);
+    }
+    break;
+  case 13:
+    // Operating mode
+    // TODO: Needs tracking
+    break;
+  case 14:
+    // Estimated watts
+    temp = x10WattHistory.average();
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
     break;
   }
   MSG("Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
 }
+int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
+  if (attr == NULL || attr->uuid == NULL) {
+    return 0;
+  }
+  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  // Bulk is the non-const size service
+  switch (uuid_value) {
+  case 1:
+    // Bulk data
+    {
+      uint32_t bulkData[] = {
+          TipThermoModel::getTipInC(),                                         // Current temp
+          getSettingValue(SettingsOptions::SolderingTemp),                     // Setpoint
+          getHandleTemperature(0),                                             // Handle X10 Temp in C
+          getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0), // Input voltage
+          x10WattHistory.average(),                                            // Estimated Wattage
+          X10WattsToPWM(x10WattHistory.average()),                             // Power as PWM level
+          TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true),        // Raw tip
+      };
+      int lenToCopy = sizeof(bulkData) - offset;
+      if (lenToCopy > len) {
+        lenToCopy = len;
+      }
+      if (lenToCopy < 0) {
+        lenToCopy = 0;
+      }
+      memcpy(buf, ((uint8_t *)bulkData) + offset, lenToCopy);
+      return lenToCopy;
+    }
 
+    break;
+  case 2:
+    // Accelerometer name
+    // TODO: Need to store non-encoded version
+    break;
+  case 3:
+    // Build
+    // TODO: Need to store non-encoded version
+    break;
+  case 4:
+    // Device unique id
+    {
+      uint64_t id = getDeviceID();
+      memcpy(buf, &id, sizeof(id));
+      return sizeof(id);
+    }
+    break;
+  }
+  return 0;
+}
 int ble_char_read_setting_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
