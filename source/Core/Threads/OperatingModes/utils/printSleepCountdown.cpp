@@ -1,4 +1,6 @@
+#include "Buttons.hpp"
 #include "OperatingModeUtilities.h"
+extern TickType_t lastMovementTime;
 #ifndef NO_SLEEP_MODE
 void printCountdownUntilSleep(int sleepThres) {
   /*
