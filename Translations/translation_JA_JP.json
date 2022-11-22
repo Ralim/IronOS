@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "次に電源を入れるときは、コテ先と本体が室温と同じになっていることを確認してください",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "設定をリセットしますか？",
 		"UVLOWarningString": "電圧が低すぎます",
 		"UndervoltageString": "Undervoltage",
@@ -19,6 +20,7 @@
 		"DeviceFailedValidationWarning": "このデバイスはおそらく偽造品です"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": "Calibration done!",
 		"ResetOKMessage": "リセットOK",
 		"SettingsResetMessage": "初期化されました",
 		"NoAccelerometerMessage": "加速度計未検出",
@@ -183,11 +185,8 @@
 			"desc": "最大電力を制限する <W=ワット>"
 		},
 		"CalibrateCJC": {
-			"text2": [
-				"Calibrate CJC",
-				"at next boot"
-			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5 C)"
+			"text2": "Calibrate CJC",
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
 		},
 		"VoltageCalibration": {
 			"text2": "電圧校正",

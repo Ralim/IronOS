@@ -8,7 +8,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",
 		"UVLOWarningString": "АККУМ--",
 		"UndervoltageString": "Низька напруга",
@@ -20,6 +21,10 @@
 		"DeviceFailedValidationWarning": "Ваш пристрій, швидше за все, підробка!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Скид. OK",
 		"SettingsResetMessage": [
 			"Налаштування",
@@ -293,7 +298,7 @@
 				"Калібрувати КХС",
 				"при наступному завантаженні"
 			],
-			"desc": "Калібрувати Компенсацію Холодного Спаю жала при наступному завантаженні(непотрібне при різниці температур < 5°C)"
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [

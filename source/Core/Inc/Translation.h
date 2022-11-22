@@ -74,6 +74,7 @@ enum class SettingsItemIndex : uint8_t {
 
 struct TranslationIndexTable {
   uint16_t SettingsCalibrationWarning;
+  uint16_t CJCCalibrating;
   uint16_t SettingsResetWarning;
   uint16_t UVLOWarningString;
   uint16_t UndervoltageString;
@@ -85,6 +86,7 @@ struct TranslationIndexTable {
   uint16_t OffString;
   uint16_t DeviceFailedValidationWarning;
 
+  uint16_t CJCCalibrationDone;
   uint16_t SettingsResetMessage;
   uint16_t NoAccelerometerMessage;
   uint16_t NoPowerDeliveryMessage;

@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Sørg for at loddespissen har romtemperatur før du fortsetter!",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Er du sikker på at du vil tilbakestille til standardinnstillinger?",
 		"UVLOWarningString": "Lavspenn",
 		"UndervoltageString": "Underspenning",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Enheten din er sannsynligvis en forfalskning!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Tilbakestilling OK",
 		"SettingsResetMessage": [
 			"Noen innstillinger",
@@ -292,7 +297,7 @@
 				"TempKal?",
 				""
 			],
-			"desc": "Kalibrer spiss-temperatur."
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
