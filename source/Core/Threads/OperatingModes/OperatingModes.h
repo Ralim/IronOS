@@ -36,5 +36,7 @@ void gui_solderingMode(uint8_t jumpToSleep);                    // Main mode for
 void showDebugMenu(void);                                       // Debugging values
 void showPDDebug(void);                                         // Debugging menu that hows PD adaptor info
 void showWarnings(void);                                        // Shows user warnings if required
+void drawHomeScreen(bool buttonLockout) __NO_RETURN;            // IDLE / Home screen
+void renderHomeScreenAssets(void);                              // Called to act as start delay and used to render out flipped images for home screen graphics
 //
 #endif
