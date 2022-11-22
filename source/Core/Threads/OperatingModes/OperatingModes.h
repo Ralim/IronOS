@@ -4,11 +4,7 @@
 extern "C" {
 #include "FreeRTOSConfig.h"
 }
-#include "BootLogo.h"
 #include "Buttons.hpp"
-#include "I2CBB.hpp"
-#include "LIS2DH12.hpp"
-#include "MMA8652FC.hpp"
 #include "OLED.hpp"
 #include "OperatingModeUtilities.h"
 #include "Settings.h"
