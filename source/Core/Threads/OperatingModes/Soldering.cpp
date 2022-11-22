@@ -1,5 +1,8 @@
 
 #include "OperatingModes.h"
+
+extern bool heaterThermalRunaway;
+
 void gui_solderingMode(uint8_t jumpToSleep) {
   /*
    * * Soldering (gui_solderingMode)
@@ -219,7 +222,7 @@ void gui_solderingMode(uint8_t jumpToSleep) {
       return; // we want to exit soldering mode
     }
 #endif
-    if (shouldBeSleeping()) {
+    if (shouldBeSleeping(false)) {
       if (gui_SolderingSleepingMode(false, false)) {
         return; // If the function returns non-0 then exit
       }

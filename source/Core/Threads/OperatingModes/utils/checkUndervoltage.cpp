@@ -1,5 +1,8 @@
-
+#include "Buttons.hpp"
+#include "OperatingModeUtilities.h"
+#include "configuration.h"
 #ifdef POW_DC
+extern volatile uint32_t currentTempTargetDegC;
 // returns true if undervoltage has occured
 bool checkForUnderVoltage(void) {
   if (!getIsPoweredByDCIN()) {

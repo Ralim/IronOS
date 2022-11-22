@@ -5,6 +5,7 @@
  *      Author: Ralim
  */
 #include "FreeRTOS.h"
+#include "OperatingModeUtilities.h"
 #include "settingsGUI.hpp"
 #include "task.h"
 #include <Buttons.hpp>
