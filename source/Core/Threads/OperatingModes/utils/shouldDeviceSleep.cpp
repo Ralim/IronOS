@@ -1,4 +1,8 @@
+#include "Buttons.hpp"
 #include "OperatingModeUtilities.h"
+
+TickType_t        lastHallEffectSleepStart = 0;
+extern TickType_t lastMovementTime;
 
 bool shouldBeSleeping(bool inAutoStart) {
 #ifndef NO_SLEEP_MODE
