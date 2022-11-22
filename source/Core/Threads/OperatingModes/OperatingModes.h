@@ -10,6 +10,7 @@ extern "C" {
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
 #include "OLED.hpp"
+#include "OperatingModeUtilities.h"
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"
@@ -31,5 +32,9 @@ extern "C" {
 void performCJCC(void);                                         // Used to calibrate the Cold Junction offset
 void gui_solderingTempAdjust(void);                             // For adjusting the setpoint temperature of the iron
 int  gui_SolderingSleepingMode(bool stayOff, bool autoStarted); // Sleep mode
-void gui_solderingMode(uint8_t jumpToSleep);
+void gui_solderingMode(uint8_t jumpToSleep);                    // Main mode for hot pointy tool
+void showDebugMenu(void);                                       // Debugging values
+void showPDDebug(void);                                         // Debugging menu that hows PD adaptor info
+void showWarnings(void);                                        // Shows user warnings if required
+//
 #endif
