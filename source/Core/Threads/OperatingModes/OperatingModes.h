@@ -29,14 +29,14 @@ extern "C" {
 
 // Exposed modes
 
-void performCJCC(void);                                         // Used to calibrate the Cold Junction offset
-void gui_solderingTempAdjust(void);                             // For adjusting the setpoint temperature of the iron
-int  gui_SolderingSleepingMode(bool stayOff, bool autoStarted); // Sleep mode
-void gui_solderingMode(uint8_t jumpToSleep);                    // Main mode for hot pointy tool
-void showDebugMenu(void);                                       // Debugging values
-void showPDDebug(void);                                         // Debugging menu that hows PD adaptor info
-void showWarnings(void);                                        // Shows user warnings if required
-void drawHomeScreen(bool buttonLockout);                        // IDLE / Home screen
-void renderHomeScreenAssets(void);                              // Called to act as start delay and used to render out flipped images for home screen graphics
+void performCJCC(void);                                            // Used to calibrate the Cold Junction offset
+void gui_solderingTempAdjust(void);                                // For adjusting the setpoint temperature of the iron
+int  gui_SolderingSleepingMode(bool stayOff, bool autoStarted);    // Sleep mode
+void gui_solderingMode(uint8_t jumpToSleep);                       // Main mode for hot pointy tool
+void showDebugMenu(void);                                          // Debugging values
+void showPDDebug(void);                                            // Debugging menu that hows PD adaptor info
+void showWarnings(void);                                           // Shows user warnings if required
+void drawHomeScreen(bool buttonLockout) __attribute__((noreturn)); // IDLE / Home screen
+void renderHomeScreenAssets(void);                                 // Called to act as start delay and used to render out flipped images for home screen graphics
 //
 #endif
