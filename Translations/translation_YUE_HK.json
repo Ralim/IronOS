@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "喺下次開機嗰陣時，請確定焫雞咀同機身都係處於室温！",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "你係咪確定要將全部設定重設到預設值？",
 		"UVLOWarningString": "電壓過低",
 		"UndervoltageString": "Undervoltage",
@@ -19,6 +20,7 @@
 		"DeviceFailedValidationWarning": "依支焫雞好有可能係冒牌貨！"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": "Calibration done!",
 		"ResetOKMessage": "已重設！",
 		"SettingsResetMessage": "設定已被重設！",
 		"NoAccelerometerMessage": "未能偵測加速度計",
@@ -181,7 +183,7 @@
 		},
 		"CalibrateCJC": {
 			"text2": "校正CJC",
-			"desc": "喺下次開機時校正焫雞咀熱電偶温度感應嘅冷接點補償（温度差低過攝氏5度嘅話唔使校正）"
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
 		},
 		"VoltageCalibration": {
 			"text2": "輸入電壓校正？",

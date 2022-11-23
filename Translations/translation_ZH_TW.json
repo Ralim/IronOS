@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": true,
 	"messages": {
-		"SettingsCalibrationWarning": "於下次開機時，請確定烙鐵頭和機身均處於室溫！",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "你是否確定要將全部設定重設到預設值？",
 		"UVLOWarningString": "電壓過低",
 		"UndervoltageString": "Undervoltage",
@@ -19,6 +20,7 @@
 		"DeviceFailedValidationWarning": "這支電烙鐵很有可能是冒牌貨！"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": "Calibration done!",
 		"ResetOKMessage": "已重設！",
 		"SettingsResetMessage": "設定已被重設！",
 		"NoAccelerometerMessage": "未能偵測加速度計",
@@ -181,7 +183,7 @@
 		},
 		"CalibrateCJC": {
 			"text2": "校正CJC",
-			"desc": "於下次開機時校正烙鐵頭熱電偶溫度感應的冷接點補償（溫度差低於攝氏5度的話則無需校正）"
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
 		},
 		"VoltageCalibration": {
 			"text2": "輸入電壓校正？",

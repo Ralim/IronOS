@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Czy na pewno chcesz przywrócić ustawienia fabryczne?",
 		"UVLOWarningString": "NIS. NAP",
 		"UndervoltageString": "Zbyt niskie nap.",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Twoje urządzenie jest najprawdopodobniej podróbką!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Ust. zresetowane",
@@ -292,7 +297,7 @@
 				"Kalibracja temperatury",
 				"przy następnym uruchomieniu"
 			],
-			"desc": "Kalibracja czujnika temperatury końcówki przy następnym rozruchu (nie jest wymagana, jeśli różnica jest mniejsza niż 5°C)"
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [

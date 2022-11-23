@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Sørg for at loddespidsen er ved stuetemperatur, inden næste start!",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Er du sikker du vil resette indstillingerne til standard?",
 		"UVLOWarningString": "Lav Volt",
 		"UndervoltageString": "Undervolt",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Din enhed er højst sandsyneligt en Kopivare!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
 			"Visse indstillinger",
@@ -292,7 +297,7 @@
 				"kalibrere CJK",
 				"under næste opstart"
 			],
-			"desc": "Kalibrer spids Cold Junction Kompensation ved næste opstart (ikke påkrævet, hvis Delta T er < 5°C)"
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
