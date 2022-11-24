@@ -1,7 +1,7 @@
 {
     "languageCode": "NL_BE",
     "languageLocalName": "Vlaams",
-    "tempUnitFahrenheit": false,
+    "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Calibration\ndone!"
