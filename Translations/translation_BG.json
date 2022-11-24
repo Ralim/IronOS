@@ -1,7 +1,7 @@
 {
     "languageCode": "BG",
     "languageLocalName": "Български",
-    "tempUnitFahrenheit": false,
+    "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Calibration\ndone!"
