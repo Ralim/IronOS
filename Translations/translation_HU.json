@@ -1,7 +1,7 @@
 {
     "languageCode": "HU",
     "languageLocalName": "Magyar",
-    "tempUnitFahrenheit": false,
+    "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Kalibráció\nkész!"
