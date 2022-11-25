@@ -89,14 +89,14 @@ intCallback_Type *i2cIntCbfArra[I2C_ID_MAX][I2C_INT_ALL] = {{NULL}};
  *  @{
  */
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C interrupt handler
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C interrupt handler
+ *
+ * @param  i2cNo: I2C ID type
+ *
+ * @return None
+ *
+ *******************************************************************************/
 #ifndef BFLB_USE_HAL_DRIVER
 static void I2C_IntHandler(I2C_ID_Type i2cNo) {
   uint32_t tmpVal;
@@ -157,15 +157,15 @@ static void I2C_IntHandler(I2C_ID_Type i2cNo) {
  *  @{
  */
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C write word data
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  data: Data word
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C write word data
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  data: Data word
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_SendWord(I2C_ID_Type i2cNo, uint32_t data) {
   uint32_t I2Cx = I2C_BASE;
 
@@ -174,14 +174,14 @@ void I2C_SendWord(I2C_ID_Type i2cNo, uint32_t data) {
   BL_WR_REG(I2Cx, I2C_FIFO_WDATA, data);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C read word data
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                *
-                                                                                * @return word data
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C read word data
+ *
+ * @param  i2cNo: I2C ID type
+ *
+ * @return word data
+ *
+ *******************************************************************************/
 uint32_t I2C_RecieveWord(I2C_ID_Type i2cNo) {
   uint32_t I2Cx = I2C_BASE;
 
@@ -190,14 +190,14 @@ uint32_t I2C_RecieveWord(I2C_ID_Type i2cNo) {
   return BL_RD_REG(I2Cx, I2C_FIFO_RDATA);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C enable
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C enable
+ *
+ * @param  i2cNo: I2C ID type
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_Enable(I2C_ID_Type i2cNo) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -210,14 +210,14 @@ void I2C_Enable(I2C_ID_Type i2cNo) {
   BL_WR_REG(I2Cx, I2C_CONFIG, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C disable
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C disable
+ *
+ * @param  i2cNo: I2C ID type
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_Disable(I2C_ID_Type i2cNo) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -243,14 +243,14 @@ void I2C_Disable(I2C_ID_Type i2cNo) {
   BL_WR_REG(I2Cx, I2C_INT_STS, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C set global reset function
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                *
-                                                                                * @return SUCCESS or ERROR
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C set global reset function
+ *
+ * @param  i2cNo: I2C ID type
+ *
+ * @return SUCCESS or ERROR
+ *
+ *******************************************************************************/
 BL_Err_Type I2C_Reset(I2C_ID_Type i2cNo) {
   /* Check the parameters */
   CHECK_PARAM(IS_I2C_ID_TYPE(i2cNo));
@@ -259,16 +259,16 @@ BL_Err_Type I2C_Reset(I2C_ID_Type i2cNo) {
   return SUCCESS;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C init function
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  direct: I2C read or write direct
-                                                                                * @param  cfg: I2C transfer config struct
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C init function
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  direct: I2C read or write direct
+ * @param  cfg: I2C transfer config struct
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_Init(I2C_ID_Type i2cNo, I2C_Direction_Type direct, I2C_Transfer_Cfg *cfg) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -308,15 +308,15 @@ void I2C_Init(I2C_ID_Type i2cNo, I2C_Direction_Type direct, I2C_Transfer_Cfg *cf
 #endif
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Set de-glitch function cycle count value
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  cnt: De-glitch function cycle count
-                                                                                *
-                                                                                * @return SUCCESS
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  Set de-glitch function cycle count value
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  cnt: De-glitch function cycle count
+ *
+ * @return SUCCESS
+ *
+ *******************************************************************************/
 BL_Err_Type I2C_SetDeglitchCount(I2C_ID_Type i2cNo, uint8_t cnt) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -343,15 +343,15 @@ BL_Err_Type I2C_SetDeglitchCount(I2C_ID_Type i2cNo, uint8_t cnt) {
   return SUCCESS;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Set i2c prd
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  phase: I2C phase value
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  Set i2c prd
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  phase: I2C phase value
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_SetPrd(I2C_ID_Type i2cNo, uint8_t phase) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -380,15 +380,15 @@ void I2C_SetPrd(I2C_ID_Type i2cNo, uint8_t phase) {
   BL_WR_REG(I2Cx, I2C_PRD_DATA, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C set scl output clock
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  clk: Clock set
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C set scl output clock
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  clk: Clock set
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_ClockSet(I2C_ID_Type i2cNo, uint32_t clk) {
   uint8_t bclkDiv = 0;
 
@@ -412,15 +412,15 @@ void I2C_ClockSet(I2C_ID_Type i2cNo, uint32_t clk) {
   }
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C set scl sync
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  enable: Enable or disable I2C scl sync
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C set scl sync
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  enable: Enable or disable I2C scl sync
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_SetSclSync(I2C_ID_Type i2cNo, uint8_t enable) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -439,14 +439,14 @@ void I2C_SetSclSync(I2C_ID_Type i2cNo, uint8_t enable) {
   BL_WR_REG(I2Cx, I2C_CONFIG, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Get i2c busy state
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                *
-                                                                                * @return RESET or SET
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  Get i2c busy state
+ *
+ * @param  i2cNo: I2C ID type
+ *
+ * @return RESET or SET
+ *
+ *******************************************************************************/
 BL_Sts_Type I2C_IsBusy(I2C_ID_Type i2cNo) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -458,14 +458,14 @@ BL_Sts_Type I2C_IsBusy(I2C_ID_Type i2cNo) {
   return ((BL_IS_REG_BIT_SET(tmpVal, I2C_STS_I2C_BUS_BUSY)) ? SET : RESET);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Get i2c transfer end state
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                *
-                                                                                * @return RESET or SET
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  Get i2c transfer end state
+ *
+ * @param  i2cNo: I2C ID type
+ *
+ * @return RESET or SET
+ *
+ *******************************************************************************/
 BL_Sts_Type I2C_TransferEndStatus(I2C_ID_Type i2cNo) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -477,15 +477,15 @@ BL_Sts_Type I2C_TransferEndStatus(I2C_ID_Type i2cNo) {
   return ((BL_IS_REG_BIT_SET(tmpVal, I2C_END_INT)) ? SET : RESET);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C master write block data
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  cfg: I2C transfer config struct
-                                                                                *
-                                                                                * @return SUCCESS or ERROR
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C master write block data
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  cfg: I2C transfer config struct
+ *
+ * @return SUCCESS or ERROR
+ *
+ *******************************************************************************/
 BL_Err_Type I2C_MasterSendBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) {
   uint8_t  i;
   uint32_t timeOut = 0;
@@ -550,15 +550,15 @@ BL_Err_Type I2C_MasterSendBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) {
   return SUCCESS;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C master read block data
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  cfg: I2C transfer config struct
-                                                                                *
-                                                                                * @return SUCCESS or ERROR
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C master read block data
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  cfg: I2C transfer config struct
+ *
+ * @return SUCCESS or ERROR
+ *
+ *******************************************************************************/
 BL_Err_Type I2C_MasterReceiveBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) {
   uint8_t  i       = 0;
   uint32_t timeOut = 0;
@@ -643,16 +643,16 @@ BL_Err_Type I2C_MasterReceiveBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) 
   return SUCCESS;
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Mask/Unmask the I2C interrupt
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  intType: Specifies the interrupt type
-                                                                                * @param  intMask: Enable/Disable Specified interrupt type
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  Mask/Unmask the I2C interrupt
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  intType: Specifies the interrupt type
+ * @param  intMask: Enable/Disable Specified interrupt type
+ *
+ * @return None
+ *
+ *******************************************************************************/
 void I2C_IntMask(I2C_ID_Type i2cNo, I2C_INT_Type intType, BL_Mask_Type intMask) {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -783,16 +783,16 @@ void I2C_IntMask(I2C_ID_Type i2cNo, I2C_INT_Type intType, BL_Mask_Type intMask) 
   BL_WR_REG(I2Cx, I2C_INT_STS, tmpVal);
 }
 
-/****************************************************************************/ /**
-                                                                                * @brief  Install I2C interrupt callback function
-                                                                                *
-                                                                                * @param  i2cNo: I2C ID type
-                                                                                * @param  intType: Specifies the interrupt type
-                                                                                * @param  cbFun: Pointer to interrupt callback function. The type should be void (*fn)(void)
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  Install I2C interrupt callback function
+ *
+ * @param  i2cNo: I2C ID type
+ * @param  intType: Specifies the interrupt type
+ * @param  cbFun: Pointer to interrupt callback function. The type should be void (*fn)(void)
+ *
+ * @return None
+ *
+ *******************************************************************************/
 #ifndef BFLB_USE_HAL_DRIVER
 void I2C_Int_Callback_Install(I2C_ID_Type i2cNo, I2C_INT_Type intType, intCallback_Type *cbFun) {
   /* Check the parameters */
@@ -803,14 +803,14 @@ void I2C_Int_Callback_Install(I2C_ID_Type i2cNo, I2C_INT_Type intType, intCallba
 }
 #endif
 
-/****************************************************************************/ /**
-                                                                                * @brief  I2C IRQ handler
-                                                                                *
-                                                                                * @param  None
-                                                                                *
-                                                                                * @return None
-                                                                                *
-                                                                                *******************************************************************************/
+/**
+ * @brief  I2C IRQ handler
+ *
+ * @param  None
+ *
+ * @return None
+ *
+ *******************************************************************************/
 #ifndef BFLB_USE_HAL_DRIVER
 void I2C_IRQHandler(void) { I2C_IntHandler(I2C0_ID); }
 #endif

@@ -8,8 +8,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-		"CJCCalibrating": "calibrating",
+		"SettingsCalibrationWarning": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!",
+		"CJCCalibrating": "калібрування",
 		"SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",
 		"UVLOWarningString": "АККУМ--",
 		"UndervoltageString": "Низька напруга",

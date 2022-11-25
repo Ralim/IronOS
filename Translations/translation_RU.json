@@ -8,8 +8,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-		"CJCCalibrating": "calibrating",
+		"SettingsCalibrationWarning": "Пожалуйста, убедитесь, что жало и корпус имеют комнатную температуру при следующей загрузке!",
+		"CJCCalibrating": "калибровка",
 		"SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
 		"UVLOWarningString": "НАПРЯЖ--",
 		"UndervoltageString": "Низ. напряжение",
