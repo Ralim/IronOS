@@ -7,7 +7,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Please make sure tip & handle are at room temperature at next boot!",
+		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+		"CJCCalibrating": "calibrating",
 		"SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",
 		"UVLOWarningString": "Güç Az",
 		"UndervoltageString": "Düşük Voltaj",
@@ -19,6 +20,10 @@
 		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Sıfırlama Tamam",
 		"SettingsResetMessage": [
 			"Ayarlar",
@@ -292,7 +297,7 @@
 				"Calibrate CJC",
 				"at next boot"
 			],
-			"desc": "Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)"
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [

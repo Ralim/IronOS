@@ -9,6 +9,7 @@
 	"tempUnitFahrenheit": false,
 	"messages": {
 		"SettingsCalibrationWarning": "Пожалуйста, убедитесь, что жало и корпус имеют комнатную температуру при следующей загрузке!",
+		"CJCCalibrating": "калибровка",
 		"SettingsResetWarning": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?",
 		"UVLOWarningString": "НАПРЯЖ--",
 		"UndervoltageString": "Низ. напряжение",
@@ -20,6 +21,10 @@
 		"DeviceFailedValidationWarning": "Скорее всего, это устройство подделка!"
 	},
 	"messagesWarn": {
+		"CJCCalibrationDone": [
+			"Calibration",
+			"done!"
+		],
 		"ResetOKMessage": "Сброс OK",
 		"SettingsResetMessage": [
 			"Настройки",
@@ -293,7 +298,7 @@
 				"Калибровка",
 				"температуры"
 			],
-			"desc": "Калибровка датчика температуры жала при следующей загрузке (не требуется, если разница менее 5°C)"
+			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [

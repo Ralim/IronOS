@@ -98,7 +98,7 @@ void performCJCC() {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
   OLED::refresh();
   osDelay(50);
-  if (!isTipDisconnected() && (TipThermoModel::getTipInC() - getHandleTemperature(0) / 10) < 10) {
+  if (!isTipDisconnected() && abs( int(TipThermoModel::getTipInC() - getHandleTemperature(0) / 10)) < 10) {
     uint16_t setoffset = 0;
     // If the thermo-couple at the end of the tip, and the handle are at
     // equilibrium, then the output should be zero, as there is no temperature
@@ -110,9 +110,11 @@ void performCJCC() {
         // cycle through the filter a fair bit to ensure we're stable.
         OLED::clearScreen();
         OLED::setCursor(0, 0);
-        OLED::print(SymbolDot, FontStyle::LARGE);
+        OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
+        OLED::setCursor(0, 8);
+        OLED::print(SymbolDot, FontStyle::SMALL);
         for (uint8_t x = 0; x < (i / 4); x++)
-          OLED::print(SymbolDot, FontStyle::LARGE);
+          OLED::print(SymbolDot, FontStyle::SMALL);
         OLED::refresh();
         osDelay(100);
       }
@@ -120,11 +122,8 @@ void performCJCC() {
     }
     setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
     OLED::clearScreen();
-    OLED::setCursor(0, 0);
-    OLED::drawCheckbox(true);
-    OLED::printNumber(setoffset, 5, FontStyle::LARGE);
+    warnUser(translatedString(Tr->CJCCalibrationDone), 3 * TICKS_SECOND);
     OLED::refresh();
-    osDelay(1200);
     // Preventing to repeat calibration at boot automatically (only one shot).
     setSettingValue(SettingsOptions::CalibrateCJC, 0);
     saveSettings();
