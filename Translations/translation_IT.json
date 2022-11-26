@@ -7,8 +7,8 @@
 	],
 	"tempUnitFahrenheit": false,
 	"messages": {
-		"SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-		"CJCCalibrating": "calibrating",
+		"SettingsCalibrationWarning": "Prima di riavvire assicurarsi che la punta e l'impugnatura siano a temperatura ambiente!",
+		"CJCCalibrating": "Calibrazione in corso",
 		"SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
 		"UVLOWarningString": "DC BASSA",
 		"UndervoltageString": "DC INSUFFICIENTE",
@@ -17,12 +17,12 @@
 		"SleepingAdvancedString": "Riposo",
 		"SleepingTipAdvancedString": "Punta:",
 		"OffString": "OFF",
-		"DeviceFailedValidationWarning": "Il dispositivo in uso è molto probabilmente una contraffazione!"
+		"DeviceFailedValidationWarning": "È probabile che il dispositivo in uso sia contraffatto!"
 	},
 	"messagesWarn": {
 		"CJCCalibrationDone": [
-			"Calibration",
-			"done!"
+			"Calibrazione",
+			"completata"
 		],
 		"ResetOKMessage": "Reset OK",
 		"SettingsResetMessage": [
@@ -297,7 +297,7 @@
 				"Calibra T",
 				"all'avvio"
 			],
-			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+			"desc": "La calibrazione della termocoppia verrà effettuata al prossimo riavvio (non necessario se il Delta T<5 °C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
