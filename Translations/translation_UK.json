@@ -18,12 +18,12 @@
 		"SleepingAdvancedString": "Очікування...",
 		"SleepingTipAdvancedString": "Жало:",
 		"OffString": "Вимк",
-		"DeviceFailedValidationWarning": "Ваш пристрій, швидше за все, підробка!"
+		"DeviceFailedValidationWarning": "Вірогідно ваш пристрій підробний!"
 	},
 	"messagesWarn": {
 		"CJCCalibrationDone": [
-			"Calibration",
-			"done!"
+			"КХС",
+			"відкалібровано!"
 		],
 		"ResetOKMessage": "Скид. OK",
 		"SettingsResetMessage": [
@@ -298,7 +298,7 @@
 				"Калібрувати КХС",
 				"при наступному завантаженні"
 			],
-			"desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+			"desc": "При наступному завантаження буде відкалібровано Компенсацію Холодного Спаю жала (непотрібне при різниці температур < 5°C)"
 		},
 		"VoltageCalibration": {
 			"text2": [
