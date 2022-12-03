@@ -1,5 +1,36 @@
 {
-    "messages": [{
+    "messagesWarn": [{
+            "id": "CJCCalibrationDone",
+            "description": "Confirmation message indicating CJC calibration is complete."
+        },
+        {
+            "id": "SettingsResetMessage",
+            "description": "Shown when the settings are reset to factory defaults either by the user or by incompatible firmware changes."
+        },
+        {
+            "id": "NoAccelerometerMessage",
+            "description": "No accelerometer could be communicated with. This means that either the device's accelerometer is broken or unknown to IronOS. All motion-based settings are disabled and motion-based features will not work."
+        },
+        {
+            "id": "NoPowerDeliveryMessage",
+            "description": "The IC required for USB-PD could not be communicated with. This is an error warning that USB-PD WILL NOT FUNCTION. Generally indicative of either a hardware or software issues."
+        },
+        {
+            "id": "LockingKeysString",
+            "description": "Shown when keys are locked"
+        },
+        {
+            "id": "UnlockingKeysString",
+            "description": "Shown when keys are unlocked"
+        },
+        {
+            "id": "WarningKeysLockedString",
+            "description": "Warning that is shown when input is ignored due to the key lock being on"
+        },
+        {
+            "id": "WarningThermalRunaway",
+            "description": "Warning text shown when the software has disabled the heater as a safety precaution as the temperature reading didn't react as expected."
+        }, {
             "id": "SettingsCalibrationWarning",
             "description": "Confirmation message shown before performing an offset calibration. Should warn the user to make sure tip and handle are at the same temperature."
         },
@@ -51,39 +82,6 @@
             "id": "DeviceFailedValidationWarning",
             "default": "Device may be\ncounterfeit",
             "description": "Warning shown if the device may be a clone or counterfeit unit."
-        }
-    ],
-    "messagesWarn": [{
-            "id": "CJCCalibrationDone",
-            "description": "Confirmation message indicating CJC calibration is complete."
-        },
-        {
-            "id": "SettingsResetMessage",
-            "description": "Shown when the settings are reset to factory defaults either by the user or by incompatible firmware changes."
-        },
-        {
-            "id": "NoAccelerometerMessage",
-            "description": "No accelerometer could be communicated with. This means that either the device's accelerometer is broken or unknown to IronOS. All motion-based settings are disabled and motion-based features will not work."
-        },
-        {
-            "id": "NoPowerDeliveryMessage",
-            "description": "The IC required for USB-PD could not be communicated with. This is an error warning that USB-PD WILL NOT FUNCTION. Generally indicative of either a hardware or software issues."
-        },
-        {
-            "id": "LockingKeysString",
-            "description": "Shown when keys are locked"
-        },
-        {
-            "id": "UnlockingKeysString",
-            "description": "Shown when keys are unlocked"
-        },
-        {
-            "id": "WarningKeysLockedString",
-            "description": "Warning that is shown when input is ignored due to the key lock being on"
-        },
-        {
-            "id": "WarningThermalRunaway",
-            "description": "Warning text shown when the software has disabled the heater as a safety precaution as the temperature reading didn't react as expected."
         }
     ],
     "characters": [{

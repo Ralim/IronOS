@@ -165,24 +165,12 @@ def get_letter_counts(
     obj = lang["menuOptions"]
     for mod in defs["menuOptions"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["desc"])
-
-    obj = lang["messages"]
-    for mod in defs["messages"]:
-        eid = mod["id"]
-        if eid not in obj:
-            text_list.append(mod["default"])
-        else:
-            text_list.append(obj[eid])
+        text_list.append(obj[eid]["description"])
 
     obj = lang["messagesWarn"]
     for mod in defs["messagesWarn"]:
         eid = mod["id"]
-        if isinstance(obj[eid], list):
-            text_list.append(obj[eid][0])
-            text_list.append(obj[eid][1])
-        else:
-            text_list.append(obj[eid])
+        text_list.append(obj[eid]["message"])
 
     obj = lang["characters"]
 
@@ -193,25 +181,17 @@ def get_letter_counts(
     obj = lang["menuOptions"]
     for mod in defs["menuOptions"]:
         eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            text_list.append(obj[eid]["text2"][0])
-            text_list.append(obj[eid]["text2"][1])
-        else:
-            text_list.append(obj[eid]["text2"])
+        text_list.append(obj[eid]["displayText"])
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
         eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            text_list.append(obj[eid]["text2"][0])
-            text_list.append(obj[eid]["text2"][1])
-        else:
-            text_list.append(obj[eid]["text2"])
+        text_list.append(obj[eid]["displayText"])
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["desc"])
+        text_list.append(obj[eid]["description"])
     constants = get_constants(build_version)
     for x in constants:
         text_list.append(x[1])
@@ -355,6 +335,7 @@ class FontMapsPerFont:
 
 
 def get_font_map_per_font(text_list: List[str]) -> FontMapsPerFont:
+    print(text_list)
     pending_sym_set = set(text_list)
     if len(pending_sym_set) != len(text_list):
         raise ValueError("`text_list` contains duplicated symbols")
@@ -367,7 +348,6 @@ def get_font_map_per_font(text_list: List[str]) -> FontMapsPerFont:
         raise ValueError(
             f"Error, too many used symbols for this version (total {total_symbol_count})"
         )
-
     logging.info(f"Generating fonts for {total_symbol_count} symbols")
 
     # Collect font bitmaps by the defined font order:
@@ -416,6 +396,12 @@ def get_font_map_per_font(text_list: List[str]) -> FontMapsPerFont:
 
 
 def get_forced_first_symbols() -> List[str]:
+    """Get the list of symbols that must always occur at start of small and large fonts
+    Used by firmware for displaying numbers and hex strings
+
+    Returns:
+        List[str]: List of single character strings that must be the first N entries in a font table
+    """
     forced_first_symbols = [
         "0",
         "1",
@@ -1028,33 +1014,19 @@ def get_translation_strings_and_indices_text(
         str_group_settingdesc.append(
             TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
-        str_table.append(obj[eid]["desc"])
+        str_table.append(obj[eid]["description"])
 
     # ----- Reading Message strings
 
-    obj = lang["messages"]
-
-    for mod in defs["messages"]:
-        eid = mod["id"]
-        source_text = ""
-        if "default" in mod:
-            source_text = mod["default"]
-        if eid in obj:
-            source_text = obj[eid]
-        str_group_messages.append(TranslationItem(eid, len(str_table)))
-        str_table.append(source_text)
 
     obj = lang["messagesWarn"]
 
     for mod in defs["messagesWarn"]:
         eid = mod["id"]
-        if isinstance(obj[eid], list):
-            if not obj[eid][1]:
-                source_text = obj[eid][0]
-            else:
-                source_text = obj[eid][0] + "\n" + obj[eid][1]
-        else:
-            source_text = "\n" + obj[eid]
+        source_text = obj[eid]["message"]
+        if "\n" not in source_text:
+            source_text="\n"+source_text
+        
         str_group_messageswarn.append(TranslationItem(eid, len(str_table)))
         str_table.append(source_text)
 
@@ -1072,13 +1044,11 @@ def get_translation_strings_and_indices_text(
 
     for index, mod in enumerate(defs["menuOptions"]):
         eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            if not obj[eid]["text2"][1]:
-                source_text = obj[eid]["text2"][0]
-            else:
-                source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
-        else:
-            source_text = "\n" + obj[eid]["text2"]
+        
+        source_text = obj[eid]["displayText"]
+        
+        if "\n" not in source_text:
+            source_text="\n"+source_text
         str_group_settingshortnames.append(
             TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
@@ -1089,13 +1059,10 @@ def get_translation_strings_and_indices_text(
 
     for index, mod in enumerate(defs["menuGroups"]):
         eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            if not obj[eid]["text2"][1]:
-                source_text = obj[eid]["text2"][0]
-            else:
-                source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
-        else:
-            source_text = "\n" + obj[eid]["text2"]
+        source_text = obj[eid]["displayText"]
+        
+        if "\n" not in source_text:
+            source_text="\n"+source_text
         str_group_settingmenuentries.append(
             TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
@@ -1109,7 +1076,7 @@ def get_translation_strings_and_indices_text(
         str_group_settingmenuentriesdesc.append(
             TranslationItem(f"[{index:02d}] {eid}", len(str_table))
         )
-        str_table.append(obj[eid]["desc"])
+        str_table.append(obj[eid]["description"])
 
     @dataclass
     class RemappedTranslationItem:
@@ -1355,6 +1322,7 @@ def main() -> None:
                 compress_font=args.compress_font,
             )
         else:
+            language_data.font_map.font06
             write_language(language_data, out_, compress_font=args.compress_font)
     else:
         if args.strings_obj:
