@@ -30,7 +30,7 @@
             "detected!"
         ],
         "NoPowerDeliveryMessage": [
-            "No USB-PD IC",
+            "No USB-PD IC\ndetected!",
             "detected!"
         ],
         "LockingKeysString": "LOCKED",
