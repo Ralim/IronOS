@@ -34,10 +34,8 @@ def cjk_font() -> Font:
 
 
 # Loading a single JSON file
-def load_json(filename: str, skip_first_line: bool) -> dict:
+def load_json(filename: str) -> dict:
     with open(filename) as f:
-        if skip_first_line:
-            f.readline()
         return json.loads(f.read())
 
 
@@ -57,7 +55,7 @@ def read_translation(json_root: Union[str, Path], lang_code: str) -> dict:
     file_with_path = os.path.join(json_root, filename)
 
     try:
-        lang = load_json(file_with_path, skip_first_line=False)
+        lang = load_json(file_with_path)
     except json.decoder.JSONDecodeError as e:
         logging.error(f"Failed to decode {filename}")
         logging.exception(str(e))
@@ -1331,7 +1329,7 @@ def main() -> None:
         logging.info(f"Build version: {build_version}")
         logging.info(f"Making {args.languageCodes} from {json_dir}")
 
-        defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
+        defs_ = load_json(os.path.join(json_dir, "translations_definitions.json"))
         if len(args.languageCodes) == 1:
             lang_ = read_translation(json_dir, args.languageCodes[0])
             language_data = prepare_language(lang_, defs_, build_version)
