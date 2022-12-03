@@ -14,7 +14,7 @@ jobs:
       - uses: repo-sync/pull-request@v2
         name: pull-request
         with:
-          destination_branch: "main"
+          destination_branch: "dev"
           pr_title: "Merging newest translations into dev" # Title of pull request
           pr_body: | # Full markdown support, requires pr_title to be set
             Translations automatically submitted by Weblate
