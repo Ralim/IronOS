@@ -1,7 +1,7 @@
 name: Weblate PR
 on:
   create:
-    branches: ["translations"]
+    branches: ["^translations$"]
 
 jobs:
   pull-request:
