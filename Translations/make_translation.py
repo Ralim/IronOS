@@ -543,6 +543,9 @@ def get_forced_first_symbols() -> List[str]:
         "d",
         "e",
         "f",
+        " ",# We lock these to ease printing functions; and they are always included due to constants
+        "-",
+        "+"
     ]
     return forced_first_symbols
 
@@ -1031,7 +1034,7 @@ def get_translation_common_text(
         if x[0].startswith("Small"):
             translation_common_text += f'const char* {x[0]} = "{convert_string(small_symbol_conversion_table, x[1])}";//{x[1]} \n'
         elif x[0].startswith("Large"):
-            str = "\n"+x[1]
+            str = x[1]
             translation_common_text += f'const char* {x[0]} = "{convert_string(large_symbol_conversion_table, str)}";//{x[1]} \n'
         else:
             raise ValueError(f"Constant {x} is not size encoded")
@@ -1115,14 +1118,15 @@ def get_translation_strings_and_indices_text(
         record = TranslatedStringLocation(len(byte_encoded_strings) - 1, 0)
         translated_string_lookups[translation_id] = record
 
-    def encode_string_and_add(message: str, translation_id: str):
+    def encode_string_and_add(message: str, translation_id: str,force_large_text:bool=False):
         encoded_data: bytes
-        if test_is_small_font(message):
+        if force_large_text is False and test_is_small_font(message):
             encoded_data = convert_string_bytes(
                 small_font_symbol_conversion_table, message
             )
         else:
-            message = "\n" + message
+            if force_large_text is False:
+                message = "\n" + message
             encoded_data = convert_string_bytes(
                 large_font_symbol_conversion_table, message
             )
@@ -1132,7 +1136,7 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["menuOptions"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["description"], "menuOptions" + record["id"] + "description"
+            lang_data["description"], "menuOptions" + record["id"] + "description",True
         )
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
@@ -1142,7 +1146,7 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["menuGroups"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["description"], "menuGroups" + record["id"] + "description"
+            lang_data["description"], "menuGroups" + record["id"] + "description",True
         )
         encode_string_and_add(
             lang_data["displayText"], "menuGroups" + record["id"] + "displayText"
@@ -1152,13 +1156,13 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["messagesWarn"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["message"], "messagesWarn" + record["id"] + "Message"
+            lang_data["message"], "messagesWarn" + record["id"] + "Message",True
         )
 
     for index, record in enumerate(defs["characters"]):
         lang_data = lang["characters"][record["id"]]
         # Add to translations the menu text and the description
-        encode_string_and_add(lang_data, "characters" + record["id"] + "Message")
+        encode_string_and_add(lang_data, "characters" + record["id"] + "Message",True)
 
     # ----- Write the string table:
     offset = 0
@@ -1187,7 +1191,7 @@ def get_translation_strings_and_indices_text(
     position = 0
     for string in byte_encoded_strings:
         string_index_commulative_lengths.append(position)
-        position += len(string)
+        position += len(string)+1
 
     translation_indices_text = "  .indices = {\n"
 

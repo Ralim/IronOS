@@ -118,14 +118,14 @@ void drawHomeScreen(bool buttonLockout) {
         }
         uint32_t Vlt = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
         OLED::printNumber(Vlt / 10, 2, FontStyle::LARGE);
-        OLED::print(SymbolDot, FontStyle::LARGE);
+        OLED::print(LargeSymbolDot, FontStyle::LARGE);
         OLED::printNumber(Vlt % 10, 1, FontStyle::LARGE);
         if (OLED::getRotation()) {
           OLED::setCursor(48, 8);
         } else {
           OLED::setCursor(91, 8);
         }
-        OLED::print(SymbolVolts, FontStyle::SMALL);
+        OLED::print(SmallSymbolVolts, FontStyle::SMALL);
       } else {
         if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300)))
           // Blink temp if setting enable and temp < 55°
@@ -139,16 +139,16 @@ void drawHomeScreen(bool buttonLockout) {
         }
         OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::SMALL); // draw set temp
         if (getSettingValue(SettingsOptions::TemperatureInF))
-          OLED::print(SymbolDegF, FontStyle::SMALL);
+          OLED::print(SmallSymbolDegF, FontStyle::SMALL);
         else
-          OLED::print(SymbolDegC, FontStyle::SMALL);
+          OLED::print(SmallSymbolDegC, FontStyle::SMALL);
         if (OLED::getRotation()) {
           OLED::setCursor(0, 8);
         } else {
           OLED::setCursor(67, 8); // bottom right
         }
         printVoltage(); // draw voltage then symbol (v)
-        OLED::print(SymbolVolts, FontStyle::SMALL);
+        OLED::print(SmallSymbolVolts, FontStyle::SMALL);
       }
 
     } else {
