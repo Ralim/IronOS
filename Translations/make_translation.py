@@ -168,7 +168,7 @@ def get_power_source_list() -> List[str]:
 
 
 def test_is_small_font(msg: str) -> bool:
-    return "\n" in msg
+    return "\n" in msg and msg[0] != "\n"
 
 
 def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
@@ -186,11 +186,6 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     small_font_messages = []
 
     # iterate over all strings
-    obj = lang["menuOptions"]
-    for mod in defs["menuOptions"]:
-        eid = mod["id"]
-        msg = obj[eid]["description"]
-        big_font_messages.append(msg)
 
     obj = lang["messagesWarn"]
     for mod in defs["messagesWarn"]:
@@ -219,6 +214,13 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
             small_font_messages.append(msg)
         else:
             big_font_messages.append(msg)
+            
+    obj = lang["menuOptions"]
+    for mod in defs["menuOptions"]:
+        eid = mod["id"]
+        msg = obj[eid]["description"]
+        big_font_messages.append(msg)
+
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
@@ -235,13 +237,15 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
         msg = obj[eid]["description"]
         big_font_messages.append(msg)
 
+            
     constants = get_constants()
     for x in constants:
-        msg = x[1]
-        if test_is_small_font(msg):
-            small_font_messages.append(msg)
+        if x[0].startswith("Small"):
+            small_font_messages.append(x[1])
         else:
-            big_font_messages.append(msg)
+            big_font_messages.append(x[1])
+            
+
     small_font_messages.extend(get_debug_menu())
     small_font_messages.extend(get_accel_names_list())
     small_font_messages.extend(get_power_source_list())
@@ -322,9 +326,11 @@ def merge_letter_count_info(a: Dict, b: Dict) -> Dict:
     }
 
 
-def get_cjk_glyph(sym: str) -> bytes:
-    glyph: Glyph = cjk_font()[ord(sym)]
-
+def get_cjk_glyph(sym: str) -> Optional[bytes]:
+    try:
+        glyph: Glyph = cjk_font()[ord(sym)]
+    except KeyError:
+        return None
     data = glyph.data
     src_left, src_bottom, src_w, src_h = glyph.get_bounding_box()
     dst_w = 12
@@ -615,8 +621,9 @@ def convert_string_bytes(symbol_conversion_table: Dict[str, bytes], text: str) -
     output_string = b""
     for c in text.replace("\\r", "").replace("\\n", "\n"):
         if c not in symbol_conversion_table:
+            print(symbol_conversion_table)
             logging.error(f"Missing font definition for {c}")
-            sys.exit(1)
+            raise KeyError(f"Missing font definition for {c}")
         else:
             output_string += symbol_conversion_table[c]
     return output_string
@@ -913,7 +920,6 @@ def write_languages(
             "const FontSectionDataInfo FontSectionDataInfos[] = {\n"
         )
         for font, current_sym_list in sym_lists_by_font.items():
-            print(font, current_sym_list)
             if len(current_sym_list) == 0:
                 continue
             current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
@@ -1044,12 +1050,10 @@ def get_translation_common_text(
     translation_common_text += "const char* DebugMenu[] = {\n"
 
     for c in get_debug_menu():
-        print(c,convert_string(small_symbol_conversion_table, c))
         translation_common_text += (
             f'\t "{convert_string(small_symbol_conversion_table, c)}",//"{c}" \n'
         )
     translation_common_text += "};\n\n"
-    print(small_symbol_conversion_table)
 
     # accel names
     translation_common_text += "const char* AccelTypeNames[] = {\n"
@@ -1107,7 +1111,7 @@ def get_translation_strings_and_indices_text(
     ):
         for i, byte_data in enumerate(byte_encoded_strings):
             if byte_data.endswith(encoded_string):
-                logging.info(f"Collapsing {translation_id} into index {i}")
+                logging.info(f"Collapsing {translation_id}")
                 record = TranslatedStringLocation(
                     i, len(byte_data) - len(encoded_string)
                 )
@@ -1156,7 +1160,7 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["messagesWarn"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["message"], "messagesWarn" + record["id"] + "Message",True
+            lang_data["message"], "messagesWarn" + record["id"] + "Message"
         )
 
     for index, record in enumerate(defs["characters"]):
