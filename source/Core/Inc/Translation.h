@@ -11,24 +11,38 @@
 
 extern const bool HasFahrenheit;
 
-extern const char *SymbolPlus;
-extern const char *SymbolMinus;
-extern const char *SymbolSpace;
-extern const char *SymbolAmps;
-extern const char *SymbolDot;
-extern const char *SymbolDegC;
-extern const char *SymbolDegF;
-extern const char *SymbolMinutes;
-extern const char *SymbolSeconds;
-extern const char *SymbolWatts;
-extern const char *SymbolVolts;
-extern const char *SymbolDC;
-extern const char *SymbolCellCount;
-extern const char *SymbolVersionNumber;
-extern const char *SymbolPDDebug;
-extern const char *SymbolState;
-extern const char *SymbolNoVBus;
-extern const char *SymbolVBus;
+extern const char *SmallSymbolPlus;
+extern const char *LargeSymbolPlus;
+extern const char *SmallSymbolMinus;
+extern const char *LargeSymbolMinus;
+extern const char *SmallSymbolSpace;
+extern const char *LargeSymbolSpace;
+extern const char *SmallSymbolAmps;
+extern const char *LargeSymbolAmps;
+extern const char *SmallSymbolDot;
+extern const char *LargeSymbolDot;
+extern const char *SmallSymbolDegC;
+extern const char *LargeSymbolDegC;
+extern const char *SmallSymbolDegF;
+extern const char *LargeSymbolDegF;
+extern const char *LargeSymbolMinutes;
+extern const char *SmallSymbolMinutes;
+extern const char *LargeSymbolSeconds;
+extern const char *SmallSymbolSeconds;
+extern const char *LargeSymbolWatts;
+extern const char *SmallSymbolWatts;
+extern const char *LargeSymbolVolts;
+extern const char *SmallSymbolVolts;
+extern const char *LargeSymbolDC;
+extern const char *SmallSymbolDC;
+extern const char *LargeSymbolCellCount;
+extern const char *SmallSymbolCellCount;
+//
+extern const char *SmallSymbolVersionNumber;
+extern const char *SmallSymbolPDDebug;
+extern const char *SmallSymbolState;
+extern const char *SmallSymbolNoVBus;
+extern const char *SmallSymbolVBus;
 
 extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
@@ -137,8 +151,7 @@ struct FontSection {
   const uint8_t *font06_start_ptr;
 };
 
-extern const FontSection *const FontSections;
-extern const uint8_t            FontSectionsCount;
+extern const struct FontSection FontSectionsData;
 
 constexpr uint8_t settings_item_index(const SettingsItemIndex i) { return static_cast<uint8_t>(i); }
 // Use a constexpr function for type-checking.
