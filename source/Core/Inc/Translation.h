@@ -116,8 +116,8 @@ struct TranslationIndexTable {
 
   uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
   uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
-  uint16_t SettingsMenuEntries[5];
   uint16_t SettingsMenuEntriesDescriptions[5]; // unused
+  uint16_t SettingsMenuEntries[5];
 };
 
 extern const TranslationIndexTable *Tr;
@@ -133,10 +133,6 @@ struct TranslationData {
 };
 
 struct FontSection {
-  /// Start index of font section, inclusive
-  uint16_t symbol_start;
-  /// End index of font section, exclusive
-  uint16_t       symbol_end;
   const uint8_t *font12_start_ptr;
   const uint8_t *font06_start_ptr;
 };
