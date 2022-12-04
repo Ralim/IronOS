@@ -180,10 +180,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["menuOptions"]:
         eid = mod["id"]
         msg = obj[eid]["description"]
-        if test_is_small_font(msg):
-            small_font_messages.append(msg)
-        else:
-            big_font_messages.append(msg)
+        big_font_messages.append(msg)
 
     obj = lang["messagesWarn"]
     for mod in defs["messagesWarn"]:
@@ -226,10 +223,8 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["menuGroups"]:
         eid = mod["id"]
         msg = obj[eid]["description"]
-        if test_is_small_font(msg):
-            small_font_messages.append(msg)
-        else:
-            big_font_messages.append(msg)
+        big_font_messages.append(msg)
+        
     constants = get_constants(build_version)
     for x in constants:
         msg = x[1]
