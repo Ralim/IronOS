@@ -157,65 +157,133 @@ def get_power_source_list() -> List[str]:
     ]
 
 
-def get_letter_counts(
-    defs: dict, lang: dict, build_version: str
-) -> Tuple[List[str], Dict[str, int]]:
-    text_list = []
+def test_is_small_font(msg: str) -> bool:
+    return "\n" in msg
+
+
+def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
+    """From the source definitions, language file and build version; calculates the ranked symbol list
+
+    Args:
+        defs (dict): _description_
+        lang (dict): _description_
+        build_version (str): _description_
+
+    Returns:
+        Dict: _description_
+    """
+    big_font_messages = []
+    small_font_messages = []
+
     # iterate over all strings
     obj = lang["menuOptions"]
     for mod in defs["menuOptions"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["description"])
+        msg = obj[eid]["description"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["messagesWarn"]
     for mod in defs["messagesWarn"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["message"])
+        msg = obj[eid]["message"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["characters"]
 
     for mod in defs["characters"]:
         eid = mod["id"]
-        text_list.append(obj[eid])
+        msg = obj[eid]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["menuOptions"]
     for mod in defs["menuOptions"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["displayText"])
+        msg = obj[eid]["displayText"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["displayText"])
+        msg = obj[eid]["displayText"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["description"])
+        msg = obj[eid]["description"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
     constants = get_constants(build_version)
     for x in constants:
-        text_list.append(x[1])
-    text_list.extend(get_debug_menu())
-    text_list.extend(get_accel_names_list())
-    text_list.extend(get_power_source_list())
+        msg = x[1]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
+    small_font_messages.extend(get_debug_menu())
+    small_font_messages.extend(get_accel_names_list())
+    small_font_messages.extend(get_power_source_list())
 
     # collapse all strings down into the composite letters and store totals for these
+    # Doing this seperately for small and big font
+    def sort_and_count(list: List[str]):
 
-    symbol_counts: dict[str, int] = {}
-    for line in text_list:
-        line = line.replace("\n", "").replace("\r", "")
-        line = line.replace("\\n", "").replace("\\r", "")
-        if line:
-            for letter in line:
-                symbol_counts[letter] = symbol_counts.get(letter, 0) + 1
-    # swap to Big -> little sort order
-    symbols_by_occurrence = [
-        x[0]
-        for x in sorted(
-            symbol_counts.items(), key=lambda kv: (kv[1], kv[0]), reverse=True
-        )
+        symbol_counts: dict[str, int] = {}
+        for line in text_list:
+            line = line.replace("\n", "").replace("\r", "")
+            line = line.replace("\\n", "").replace("\\r", "")
+            if line:
+                for letter in line:
+                    symbol_counts[letter] = symbol_counts.get(letter, 0) + 1
+        # swap to Big -> little sort order
+        symbols_by_occurrence = [
+            x[0]
+            for x in sorted(
+                symbol_counts.items(), key=lambda kv: (kv[1], kv[0]), reverse=True
+            )
+        ]
+        return symbols_by_occurrence, symbol_counts
+
+    small_symbols_ranked, small_symbol_counts = sort_and_count(small_font_messages)
+    big_symbols_ranked, big_symbol_counts = sort_and_count(big_font_messages)
+    forced_first_symbols = get_forced_first_symbols()
+    small_symbols_ranked_forced = forced_first_symbols + [
+        x for x in small_symbols_ranked if x not in forced_first_symbols
     ]
-    return symbols_by_occurrence, symbol_counts
+    big_symbols_ranked_forced = forced_first_symbols + [
+        x for x in big_symbols_ranked if x not in forced_first_symbols
+    ]
+    # Force a ranking on these too
+    for symbol in forced_first_symbols:
+        if small_symbol_counts.get(symbol, None) == None:
+            small_symbol_counts[symbol] = 1000
+    for symbol in forced_first_symbols:
+        if big_symbol_counts.get(symbol, None) == None:
+            big_symbol_counts[symbol] = 1000
+
+    return {
+        "smallFontSymbols": small_symbols_ranked_forced,
+        "smallFontCounts": small_symbol_counts,
+        "bigFontSymbols": big_symbols_ranked_forced,
+        "bigFontCounts": big_symbol_counts,
+    }
 
 
 def get_cjk_glyph(sym: str) -> bytes:
