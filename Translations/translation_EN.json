@@ -87,23 +87,23 @@
     "menuGroups": {
         "PowerMenu": {
             "displayText": "Power\nsettings",
-            "description": "Settings for Power Supply (Batteries, Quick Charge, PD etc)"
+            "description": ""
         },
         "SolderingMenu": {
             "displayText": "Soldering\nsettings",
-            "description": "Soldering settings, boost modes; how the iron operates"
+            "description": ""
         },
         "PowerSavingMenu": {
             "displayText": "Sleep\nmode",
-            "description": "Sleep modes; methods we use to save power on the device by shutting down"
+            "description": ""
         },
         "UIMenu": {
             "displayText": "User\ninterface",
-            "description": "User interactions (how it looks, animations, units etc)"
+            "description": ""
         },
         "AdvancedMenu": {
             "displayText": "Advanced\nsettings",
-            "description": "Advanced or Misc options."
+            "description": ""
         }
     },
     "menuOptions": {
