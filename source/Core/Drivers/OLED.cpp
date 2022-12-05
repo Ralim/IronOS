@@ -179,7 +179,7 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
       break;
     }
 
-    currentFont = fontStyle == FontStyle::SMALL ? FontSectionsData.font06_start_ptr : FontSectionsData.font12_start_ptr;
+    currentFont = fontStyle == FontStyle::SMALL ? FontSectionInfo.font06_start_ptr : FontSectionInfo.font12_start_ptr;
     index       = charCode - 2;
     break;
   }
