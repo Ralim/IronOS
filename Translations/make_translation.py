@@ -214,13 +214,12 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
             small_font_messages.append(msg)
         else:
             big_font_messages.append(msg)
-            
+
     obj = lang["menuOptions"]
     for mod in defs["menuOptions"]:
         eid = mod["id"]
         msg = obj[eid]["description"]
         big_font_messages.append(msg)
-
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
@@ -237,14 +236,12 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
         msg = obj[eid]["description"]
         big_font_messages.append(msg)
 
-            
     constants = get_constants()
     for x in constants:
         if x[0].startswith("Small"):
             small_font_messages.append(x[1])
         else:
             big_font_messages.append(x[1])
-            
 
     small_font_messages.extend(get_debug_menu())
     small_font_messages.extend(get_accel_names_list())
@@ -549,9 +546,9 @@ def get_forced_first_symbols() -> List[str]:
         "d",
         "e",
         "f",
-        " ",# We lock these to ease printing functions; and they are always included due to constants
+        " ",  # We lock these to ease printing functions; and they are always included due to constants
         "-",
-        "+"
+        "+",
     ]
     return forced_first_symbols
 
@@ -718,18 +715,17 @@ def prepare_languages(
         font_data,
     )
 
-def render_font_block(  data: LanguageData,
-    f: TextIO,
-    compress_font: bool = False):
+
+def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False):
     font_map = data.font_map
-    
+
     small_font_symbol_conversion_table = build_symbol_conversion_map(
         data.small_text_symbols
     )
     large_font_symbol_conversion_table = build_symbol_conversion_map(
         data.large_text_symbols
     )
-    
+
     if not compress_font:
         font_table_text = make_font_table_cpp(
             data.small_text_symbols,
@@ -757,7 +753,7 @@ def render_font_block(  data: LanguageData,
         logging.info(
             f"Font table 12x16 compressed from {len(font12_uncompressed)} to {len(font12_compressed)} bytes (ratio {len(font12_compressed) / len(font12_uncompressed):.3})"
         )
-        
+
         write_bytes_as_c_array(f, "font_12x16_brieflz", font12_compressed)
         font06_uncompressed = bytearray()
         for sym in data.large_text_symbols:
@@ -766,9 +762,9 @@ def render_font_block(  data: LanguageData,
         logging.info(
             f"Font table 06x08 compressed from {len(font06_uncompressed)} to {len(font06_compressed)} bytes (ratio {len(font06_compressed) / len(font06_uncompressed):.3})"
         )
-        
+
         write_bytes_as_c_array(f, "font_06x08_brieflz", font06_compressed)
-        
+
         f.write(
             f"static uint8_t font12_out_buffer[{len(font12_uncompressed)}];\n"
             f"static uint8_t font06_out_buffer[{len(font06_uncompressed)}];\n"
@@ -781,6 +777,7 @@ def render_font_block(  data: LanguageData,
             "    .font06_compressed_source = font_06x08_brieflz,\n"
             "};\n"
         )
+
 
 def write_language(
     data: LanguageData,
@@ -814,7 +811,7 @@ def write_language(
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
-    render_font_block(data,f,compress_font)
+    render_font_block(data, f, compress_font)
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
@@ -875,8 +872,6 @@ def write_languages(
     compress_font: bool = False,
 ) -> None:
     defs = data.defs
-    build_version = data.build_version
-    font_map = data.font_map
 
     small_font_symbol_conversion_table = build_symbol_conversion_map(
         data.small_text_symbols
@@ -884,7 +879,6 @@ def write_languages(
     large_font_symbol_conversion_table = build_symbol_conversion_map(
         data.large_text_symbols
     )
-
 
     language_codes: List[str] = [lang["languageCode"] for lang in data.langs]
     logging.info(f"Generating block for {language_codes}")
@@ -897,11 +891,10 @@ def write_languages(
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
 
-    render_font_block(data,f,compress_font)
+    render_font_block(data, f, compress_font)
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
 
-   
     translation_common_text = get_translation_common_text(
         small_font_symbol_conversion_table, large_font_symbol_conversion_table
     )
@@ -917,7 +910,11 @@ def write_languages(
             lang_code = lang["languageCode"]
             translation_strings_and_indices_text = (
                 get_translation_strings_and_indices_text(
-                    lang, defs, small_font_symbol_conversion_table,large_font_symbol_conversion_table, suffix=f"_{lang_code}"
+                    lang,
+                    defs,
+                    small_font_symbol_conversion_table,
+                    large_font_symbol_conversion_table,
+                    suffix=f"_{lang_code}",
                 )
             )
             f.write(translation_strings_and_indices_text)
@@ -1068,7 +1065,9 @@ def get_translation_strings_and_indices_text(
         record = TranslatedStringLocation(len(byte_encoded_strings) - 1, 0)
         translated_string_lookups[translation_id] = record
 
-    def encode_string_and_add(message: str, translation_id: str,force_large_text:bool=False):
+    def encode_string_and_add(
+        message: str, translation_id: str, force_large_text: bool = False
+    ):
         encoded_data: bytes
         if force_large_text is False and test_is_small_font(message):
             encoded_data = convert_string_bytes(
@@ -1086,7 +1085,7 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["menuOptions"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["description"], "menuOptions" + record["id"] + "description",True
+            lang_data["description"], "menuOptions" + record["id"] + "description", True
         )
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
@@ -1096,7 +1095,7 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["menuGroups"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["description"], "menuGroups" + record["id"] + "description",True
+            lang_data["description"], "menuGroups" + record["id"] + "description", True
         )
         encode_string_and_add(
             lang_data["displayText"], "menuGroups" + record["id"] + "displayText"
@@ -1112,7 +1111,7 @@ def get_translation_strings_and_indices_text(
     for index, record in enumerate(defs["characters"]):
         lang_data = lang["characters"][record["id"]]
         # Add to translations the menu text and the description
-        encode_string_and_add(lang_data, "characters" + record["id"] + "Message",True)
+        encode_string_and_add(lang_data, "characters" + record["id"] + "Message", True)
 
     # ----- Write the string table:
     offset = 0
@@ -1125,9 +1124,7 @@ def get_translation_strings_and_indices_text(
             translation_strings_text += ' "\\0"\n'
 
         # Write a comment of what it is
-        translation_strings_text += (
-            f"    // {offset: >4}: {escape(byte_encoded_strings_unencoded_reference[i])}\n"
-        )
+        translation_strings_text += f"    // {offset: >4}: {escape(byte_encoded_strings_unencoded_reference[i])}\n"
         # Write the actual data
         translation_strings_text += f'    "{bytes_to_escaped(encoded_bytes)}"'
         offset += len(encoded_bytes) + 1
@@ -1141,7 +1138,7 @@ def get_translation_strings_and_indices_text(
     position = 0
     for string in byte_encoded_strings:
         string_index_commulative_lengths.append(position)
-        position += len(string)+1
+        position += len(string) + 1
 
     translation_indices_text = "  .indices = {\n"
 
@@ -1154,7 +1151,8 @@ def get_translation_strings_and_indices_text(
         translated_index = translated_string_lookups[key]
         string_index = translated_index.byte_encoded_translation_index
         start_index = (
-            string_index_commulative_lengths[string_index] + translated_index.str_start_offset
+            string_index_commulative_lengths[string_index]
+            + translated_index.str_start_offset
         )
 
         translation_indices_text += (
@@ -1172,7 +1170,8 @@ def get_translation_strings_and_indices_text(
         translated_index = translated_string_lookups[key]
         string_index = translated_index.byte_encoded_translation_index
         start_index = (
-            string_index_commulative_lengths[string_index] + translated_index.str_start_offset
+            string_index_commulative_lengths[string_index]
+            + translated_index.str_start_offset
         )
 
         translation_indices_text += (
@@ -1183,7 +1182,7 @@ def get_translation_strings_and_indices_text(
 
     # Now for the fun ones, where they are nested and ordered
 
-    def write_grouped_indexes(output_text:str,name: str, mainKey: str, subKey: str):
+    def write_grouped_indexes(output_text: str, name: str, mainKey: str, subKey: str):
         max_len = 30
         output_text += f"    .{name} = {{\n"
         for index, record in enumerate(defs[mainKey]):
@@ -1193,7 +1192,8 @@ def get_translation_strings_and_indices_text(
             translated_index = translated_string_lookups[key]
             string_index = translated_index.byte_encoded_translation_index
             start_index = (
-                string_index_commulative_lengths[string_index] + translated_index.str_start_offset
+                string_index_commulative_lengths[string_index]
+                + translated_index.str_start_offset
             )
 
             output_text += f"      /* {record['id'].ljust(max_len)[:max_len]} */ {start_index}, // {escape(raw_string)}\n"
@@ -1201,12 +1201,21 @@ def get_translation_strings_and_indices_text(
         output_text += f"    }}, // {name}\n\n"
         return output_text
 
-    translation_indices_text=write_grouped_indexes(translation_indices_text,"SettingsDescriptions", "menuOptions", "description")
-    translation_indices_text=write_grouped_indexes(translation_indices_text,"SettingsShortNames", "menuOptions", "displayText")
-    translation_indices_text=write_grouped_indexes(translation_indices_text,
-        "SettingsMenuEntriesDescriptions", "menuGroups", "description"
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text, "SettingsDescriptions", "menuOptions", "description"
     )
-    translation_indices_text=write_grouped_indexes(translation_indices_text,"SettingsMenuEntries", "menuGroups", "displayText")
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text, "SettingsShortNames", "menuOptions", "displayText"
+    )
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text,
+        "SettingsMenuEntriesDescriptions",
+        "menuGroups",
+        "description",
+    )
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text, "SettingsMenuEntries", "menuGroups", "displayText"
+    )
 
     translation_indices_text += "  }, // .indices\n\n"
 

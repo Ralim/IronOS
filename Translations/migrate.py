@@ -51,7 +51,7 @@ for key in data["menuGroups"]:
         data["menuGroups"][key]["displayText"] = new_data
         del data["menuGroups"][key]["text2"]
     else:
-        data["menuGroups"][key]["displayText"] = old_data["text2"].replace("\n","")
+        data["menuGroups"][key]["displayText"] = old_data["text2"].replace("\n", "")
         del data["menuGroups"][key]["text2"]
     data["menuGroups"][key]["description"] = data["menuGroups"][key]["desc"]
     del data["menuGroups"][key]["desc"]
@@ -66,7 +66,7 @@ for key in data["menuOptions"]:
         data["menuOptions"][key]["displayText"] = new_data
         del data["menuOptions"][key]["text2"]
     else:
-        data["menuOptions"][key]["displayText"] =old_data["text2"].replace("\n","")
+        data["menuOptions"][key]["displayText"] = old_data["text2"].replace("\n", "")
         del data["menuOptions"][key]["text2"]
     data["menuOptions"][key]["description"] = data["menuOptions"][key]["desc"]
     del data["menuOptions"][key]["desc"]
