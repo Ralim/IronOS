@@ -1,6 +1,7 @@
 ![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
 ![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
 ![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
+[![Translation status](https://hosted.weblate.org/widgets/ironos/-/glossary/svg-badge.svg)](https://hosted.weblate.org/engage/ironos/)
 
 # IronOS - Flexible Soldering iron control Firmware
 
