@@ -1049,6 +1049,8 @@ def get_translation_strings_and_indices_text(
 
     translated_string_lookups: Dict[str, TranslatedStringLocation] = {}
 
+    # We do the collapse on the encoded strings; since we are doing different fonts, this avoids needing to track fonts
+    # Also means if things line up nicely for us; we can do it across fonts (rare)
     def add_encoded_string(
         unencoded_string: str, encoded_string: bytes, translation_id: str
     ):
