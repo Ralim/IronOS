@@ -688,8 +688,6 @@ def prepare_languages(
     language_codes: List[str] = [lang["languageCode"] for lang in langs]
     logging.info(f"Preparing language data for {language_codes}")
 
-    forced_first_symbols = get_forced_first_symbols()
-
     # Build the full font maps
     total_symbol_counts: Dict[str, Dict[str, int]] = {}
     for lang in langs:
@@ -789,7 +787,6 @@ def write_language(
         raise ValueError("More than 1 languages are provided")
     lang = data.langs[0]
     defs = data.defs
-    font_map = data.font_map
 
     small_font_symbol_conversion_table = build_symbol_conversion_map(
         data.small_text_symbols
