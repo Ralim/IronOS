@@ -80,6 +80,11 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 
 Operation details are over in the [Menu information.](https://ralim.github.io/IronOS/Menu/)
 
+## Translations
+
+Is your preferred language missing localisation of languages?
+This project is using Weblate for managing translations in a user friendly way; [the user interface for this is on their hosted website.](https://hosted.weblate.org/engage/ironos/)
+
 ## Thanks
 
 If you love this firmware and want to continue my caffeine addiction, you can do so [here](https://paypal.me/RalimTek) (or email me for other options).
