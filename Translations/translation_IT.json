@@ -3,7 +3,7 @@
     "languageLocalName": "Italiano",
     "tempUnitFahrenheit": false,
     "messages": {
-        "SettingsCalibrationWarning": "Prima di riavvire assicurarsi che la punta e l'impugnatura siano a temperatura ambiente!",
+        "SettingsCalibrationWarning": "Prima di riavvire assicurati che la punta e l'impugnatura siano a temperatura ambiente!",
         "CJCCalibrating": "Calibrazione in corso",
         "SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
         "UVLOWarningString": "DC BASSA",
@@ -18,7 +18,7 @@
     "messagesWarn": {
         "CJCCalibrationDone": [
             "Calibrazione",
-            "completata"
+            "completata!"
         ],
         "ResetOKMessage": "Reset OK",
         "SettingsResetMessage": [
@@ -293,7 +293,7 @@
                 "Calibra T",
                 "all'avvio"
             ],
-            "desc": "La calibrazione della termocoppia verrà effettuata al prossimo riavvio (non necessario se il Delta T<5 °C)"
+            "desc": "Calibra le rilevazioni di temperatura al prossimo riavvio (non necessario se il Delta T<5 °C)"
         },
         "VoltageCalibration": {
             "text2": [
