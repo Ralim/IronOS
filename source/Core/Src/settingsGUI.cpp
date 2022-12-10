@@ -720,6 +720,7 @@ static bool setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {
     resetSettings();
     warnUser(translatedString(Tr->ResetOKMessage), 10 * TICKS_SECOND);
+    break;
     return 0;
   }
   return false;
