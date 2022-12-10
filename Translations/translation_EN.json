@@ -20,10 +20,7 @@
             "Calibration",
             "done!"
         ],
-        "ResetOKMessage": [
-            "Default settings",
-            "restored!"
-        ],
+        "ResetOKMessage": "Reset OK",
         "SettingsResetMessage": [
             "Certain settings",
             "changed!"
