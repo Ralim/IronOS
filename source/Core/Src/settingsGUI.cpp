@@ -721,7 +721,7 @@ static bool setResetSettings(void) {
     resetSettings();
     warnUser(translatedString(Tr->ResetOKMessage), 10 * TICKS_SECOND);
   }
-  return 0;
+  return false;
 }
 
 static void displayResetSettings(void) {}
