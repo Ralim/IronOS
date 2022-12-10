@@ -9,12 +9,8 @@ var def = ///
                 "description": "Message indicating CJC is being calibrated."
             },
             {
-                "id": "ResetOKMessage",
-                "description": "Confirmation message shown after a successful settings-reset."
-            },
-            {
                 "id": "SettingsResetWarning",
-                "description": "Messasge shown after a firmware update if certain settings have been changed."
+                "description": "Warning shown before confirming a settings reset."
             },
             {
                 "id": "UVLOWarningString",
@@ -63,8 +59,12 @@ var def = ///
                 "description": "Confirmation message indicating CJC calibration is complete."
             },
             {
+                "id": "ResetOKMessage",
+                "description": "Confirmation message shown after a successful settings-reset."
+            },
+            {
                 "id": "SettingsResetMessage",
-                "description": "Shown when the settings are reset to factory defaults either by the user or by incompatible firmware changes."
+                "description": "Shown after a firmware update when certain settings have been reset to factory defaults due to incompatible firmware changes."
             },
             {
                 "id": "NoAccelerometerMessage",
