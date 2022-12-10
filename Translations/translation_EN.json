@@ -20,10 +20,13 @@
             "Calibration",
             "done!"
         ],
-        "ResetOKMessage": "Reset OK",
+        "ResetOKMessage": [
+            "Default setting",
+            "restored!"
+        ],
         "SettingsResetMessage": [
             "Certain settings",
-            "were changed!"
+            "changed!"
         ],
         "NoAccelerometerMessage": [
             "No accelerometer",
