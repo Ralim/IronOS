@@ -9,8 +9,12 @@ var def = ///
                 "description": "Message indicating CJC is being calibrated."
             },
             {
+                "id": "ResetOKMessage",
+                "description": "Confirmation message shown after a successful settings-reset."
+            },
+            {
                 "id": "SettingsResetWarning",
-                "description": "Confirmation message shown before confirming a settings reset."
+                "description": "Messasge shown after a firmware update if certain settings have been changed."
             },
             {
                 "id": "UVLOWarningString",
