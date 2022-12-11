@@ -385,6 +385,7 @@ void OLED::print(const char *const str, FontStyle fontStyle) {
   const uint8_t *next = reinterpret_cast<const uint8_t *>(str);
   if (next[0] == 0x01) {
     fontStyle = FontStyle::LARGE;
+    next++;
   }
   while (next[0]) {
     uint16_t index;
