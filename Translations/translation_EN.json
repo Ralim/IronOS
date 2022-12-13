@@ -23,7 +23,7 @@
         "ResetOKMessage": "Reset OK",
         "SettingsResetMessage": [
             "Certain settings",
-            "were changed!"
+            "changed!"
         ],
         "NoAccelerometerMessage": [
             "No accelerometer",

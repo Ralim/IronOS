@@ -87,6 +87,7 @@ struct TranslationIndexTable {
   uint16_t DeviceFailedValidationWarning;
 
   uint16_t CJCCalibrationDone;
+  uint16_t ResetOKMessage;
   uint16_t SettingsResetMessage;
   uint16_t NoAccelerometerMessage;
   uint16_t NoPowerDeliveryMessage;
