@@ -309,7 +309,6 @@ static HAL_StatusTypeDef I2C_MasterTransmit_BTF(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_MasterReceive_RXNE(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_MasterReceive_BTF(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_Master_SB(I2C_HandleTypeDef *hi2c);
-static HAL_StatusTypeDef I2C_Master_ADD10(I2C_HandleTypeDef *hi2c);
 static HAL_StatusTypeDef I2C_Master_ADDR(I2C_HandleTypeDef *hi2c);
 
 /**
@@ -957,16 +956,7 @@ HAL_StatusTypeDef HAL_I2C_Slave_Transmit(I2C_HandleTypeDef *hi2c, uint8_t *pData
     /* Clear ADDR flag */
     __HAL_I2C_CLEAR_ADDRFLAG(hi2c);
 
-    /* If 10bit addressing mode is selected */
-    if (hi2c->Init.AddressingMode == I2C_ADDRESSINGMODE_10BIT) {
-      /* Wait until ADDR flag is set */
-      if (I2C_WaitOnFlagUntilTimeout(hi2c, I2C_FLAG_ADDR, RESET, Timeout, tickstart) != HAL_OK) {
-        return HAL_TIMEOUT;
-      }
-
-      /* Clear ADDR flag */
-      __HAL_I2C_CLEAR_ADDRFLAG(hi2c);
-    }
+  
 
     while (hi2c->XferSize > 0U) {
       /* Wait until TXE flag is set */
@@ -3083,10 +3073,6 @@ void HAL_I2C_EV_IRQHandler(I2C_HandleTypeDef *hi2c) {
     if (((sr1itflags & I2C_FLAG_SB) != RESET) && ((itsources & I2C_IT_EVT) != RESET)) {
       I2C_Master_SB(hi2c);
     }
-    /* ADD10 Set -------------------------------------------------------------*/
-    else if (((sr1itflags & I2C_FLAG_ADD10) != RESET) && ((itsources & I2C_IT_EVT) != RESET)) {
-      I2C_Master_ADD10(hi2c);
-    }
     /* ADDR Set --------------------------------------------------------------*/
     else if (((sr1itflags & I2C_FLAG_ADDR) != RESET) && ((itsources & I2C_IT_EVT) != RESET)) {
       I2C_Master_ADDR(hi2c);
@@ -3731,18 +3717,6 @@ static HAL_StatusTypeDef I2C_Master_SB(I2C_HandleTypeDef *hi2c) {
   return HAL_OK;
 }
 
-/**
- * @brief  Handle ADD10 flag for Master
- * @param  hi2c Pointer to a I2C_HandleTypeDef structure that contains
- *         the configuration information for I2C module
- * @retval HAL status
- */
-static HAL_StatusTypeDef I2C_Master_ADD10(I2C_HandleTypeDef *hi2c) {
-  /* Send slave address */
-  hi2c->Instance->DR = I2C_10BIT_ADDRESS(hi2c->Devaddress);
-
-  return HAL_OK;
-}
 
 /**
  * @brief  Handle ADDR flag for Master
@@ -3760,14 +3734,6 @@ static HAL_StatusTypeDef I2C_Master_ADDR(I2C_HandleTypeDef *hi2c) {
     if ((hi2c->EventCount == 0U) && (CurrentMode == HAL_I2C_MODE_MEM)) {
       /* Clear ADDR flag */
       __HAL_I2C_CLEAR_ADDRFLAG(hi2c);
-    } else if ((hi2c->EventCount == 0U) && (hi2c->Init.AddressingMode == I2C_ADDRESSINGMODE_10BIT)) {
-      /* Clear ADDR flag */
-      __HAL_I2C_CLEAR_ADDRFLAG(hi2c);
-
-      /* Generate Restart */
-      hi2c->Instance->CR1 |= I2C_CR1_START;
-
-      hi2c->EventCount++;
     } else {
       if (hi2c->XferCount == 0U) {
         /* Clear ADDR flag */
@@ -3996,22 +3962,8 @@ static HAL_StatusTypeDef I2C_MasterRequestWrite(I2C_HandleTypeDef *hi2c, uint16_
   if (hi2c->Init.AddressingMode == I2C_ADDRESSINGMODE_7BIT) {
     /* Send slave address */
     hi2c->Instance->DR = I2C_7BIT_ADD_WRITE(DevAddress);
-  } else {
-    /* Send header of slave address */
-    hi2c->Instance->DR = I2C_10BIT_HEADER_WRITE(DevAddress);
-
-    /* Wait until ADD10 flag is set */
-    if (I2C_WaitOnMasterAddressFlagUntilTimeout(hi2c, I2C_FLAG_ADD10, Timeout, Tickstart) != HAL_OK) {
-      if (hi2c->ErrorCode == HAL_I2C_ERROR_AF) {
-        return HAL_ERROR;
-      } else {
-        return HAL_TIMEOUT;
-      }
-    }
-
-    /* Send slave address */
-    hi2c->Instance->DR = I2C_10BIT_ADDRESS(DevAddress);
   }
+  
 
   /* Wait until ADDR flag is set */
   if (I2C_WaitOnMasterAddressFlagUntilTimeout(hi2c, I2C_FLAG_ADDR, Timeout, Tickstart) != HAL_OK) {
@@ -4059,45 +4011,8 @@ static HAL_StatusTypeDef I2C_MasterRequestRead(I2C_HandleTypeDef *hi2c, uint16_t
   if (hi2c->Init.AddressingMode == I2C_ADDRESSINGMODE_7BIT) {
     /* Send slave address */
     hi2c->Instance->DR = I2C_7BIT_ADD_READ(DevAddress);
-  } else {
-    /* Send header of slave address */
-    hi2c->Instance->DR = I2C_10BIT_HEADER_WRITE(DevAddress);
-
-    /* Wait until ADD10 flag is set */
-    if (I2C_WaitOnMasterAddressFlagUntilTimeout(hi2c, I2C_FLAG_ADD10, Timeout, Tickstart) != HAL_OK) {
-      if (hi2c->ErrorCode == HAL_I2C_ERROR_AF) {
-        return HAL_ERROR;
-      } else {
-        return HAL_TIMEOUT;
-      }
-    }
-
-    /* Send slave address */
-    hi2c->Instance->DR = I2C_10BIT_ADDRESS(DevAddress);
-
-    /* Wait until ADDR flag is set */
-    if (I2C_WaitOnMasterAddressFlagUntilTimeout(hi2c, I2C_FLAG_ADDR, Timeout, Tickstart) != HAL_OK) {
-      if (hi2c->ErrorCode == HAL_I2C_ERROR_AF) {
-        return HAL_ERROR;
-      } else {
-        return HAL_TIMEOUT;
-      }
-    }
-
-    /* Clear ADDR flag */
-    __HAL_I2C_CLEAR_ADDRFLAG(hi2c);
-
-    /* Generate Restart */
-    hi2c->Instance->CR1 |= I2C_CR1_START;
-
-    /* Wait until SB flag is set */
-    if (I2C_WaitOnFlagUntilTimeout(hi2c, I2C_FLAG_SB, RESET, Timeout, Tickstart) != HAL_OK) {
-      return HAL_TIMEOUT;
-    }
-
-    /* Send header of slave address */
-    hi2c->Instance->DR = I2C_10BIT_HEADER_READ(DevAddress);
   }
+  
 
   /* Wait until ADDR flag is set */
   if (I2C_WaitOnMasterAddressFlagUntilTimeout(hi2c, I2C_FLAG_ADDR, Timeout, Tickstart) != HAL_OK) {

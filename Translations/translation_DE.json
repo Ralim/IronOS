@@ -1,207 +1,341 @@
 {
-  "languageCode": "DE",
-  "languageLocalName": "Deutsch",
-  "fonts": ["ascii_basic", "latin_extended"],
-  "tempUnitFahrenheit": false,
-  "messages": {
-    "SettingsCalibrationWarning": "Vor dem Fortfahren muss die Lötspitze vollständig abgekühlt sein!",
-    "SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
-    "UVLOWarningString": "V niedr.",
-    "UndervoltageString": "Unterspannung",
-    "InputVoltageString": "V Eingang: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "Ruhemodus...",
-    "SleepingTipAdvancedString": "Temp:",
-    "OffString": "Aus"
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Einstellungen", "zurückgesetzt!"],
-    "NoAccelerometerMessage": ["Bewegungssensor", "nicht erkannt!"],
-    "NoPowerDeliveryMessage": ["USB-PD IC", "nicht erkannt!"],
-    "LockingKeysString": "GESPERRT",
-    "UnlockingKeysString": "ENTSPERRT",
-    "WarningKeysLockedString": "!GESPERRT!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
-  },
-  "characters": {
-    "SettingRightChar": "R",
-    "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "A",
-    "SettingSlowChar": "L",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "S",
-    "SettingStartNoneChar": "A",
-    "SettingStartSolderingChar": "L",
-    "SettingStartSleepChar": "R",
-    "SettingStartSleepOffChar": "K",
-    "SettingSensitivityOff": "A",
-    "SettingSensitivityLow": "N",
-    "SettingSensitivityMedium": "M",
-    "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "A",
-    "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Energie-", "einstellungen"],
-      "desc": "Energieeinstellungen"
+    "languageCode": "DE",
+    "languageLocalName": "Deutsch",
+    "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!",
+        "CJCCalibrating": "kalibriere",
+        "SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
+        "UVLOWarningString": "V niedr.",
+        "UndervoltageString": "Unterspannung",
+        "InputVoltageString": "V Eingang: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "Ruhemodus...",
+        "SleepingTipAdvancedString": "Temp:",
+        "OffString": "Aus",
+        "DeviceFailedValidationWarning": "Höchstwahrscheinlich ist das Gerät eine Fälschung!"
     },
-    "SolderingMenu": {
-      "text2": ["Löt-", "einstellungen"],
-      "desc": "Löteinstellungen"
+    "messagesWarn": {
+        "CJCCalibrationDone": [
+            "Erfolgreich",
+            "kalibriert!"
+        ],
+        "ResetOKMessage": "Reset OK",
+        "SettingsResetMessage": [
+            "Einstellungen",
+            "zurückgesetzt!"
+        ],
+        "NoAccelerometerMessage": [
+            "Bewegungssensor",
+            "nicht erkannt!"
+        ],
+        "NoPowerDeliveryMessage": [
+            "USB-PD IC",
+            "nicht erkannt!"
+        ],
+        "LockingKeysString": "GESPERRT",
+        "UnlockingKeysString": "ENTSPERRT",
+        "WarningKeysLockedString": "!GESPERRT!",
+        "WarningThermalRunaway": [
+            "Thermal",
+            "Runaway"
+        ]
     },
-    "PowerSavingMenu": {
-      "text2": ["Ruhe-", "modus"],
-      "desc": "Energiespareinstellungen"
+    "characters": {
+        "SettingRightChar": "R",
+        "SettingLeftChar": "L",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "A",
+        "SettingSlowChar": "L",
+        "SettingMediumChar": "M",
+        "SettingFastChar": "S",
+        "SettingStartNoneChar": "A",
+        "SettingStartSolderingChar": "L",
+        "SettingStartSleepChar": "R",
+        "SettingStartSleepOffChar": "K",
+        "SettingSensitivityOff": "A",
+        "SettingSensitivityLow": "N",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "A",
+        "SettingLockBoostChar": "B",
+        "SettingLockFullChar": "V"
     },
-    "UIMenu": {
-      "text2": ["Anzeige-", "einstellungen"],
-      "desc": "Menüeinstellungen"
+    "menuGroups": {
+        "PowerMenu": {
+            "text2": [
+                "Energie-",
+                "einstellungen"
+            ],
+            "desc": ""
+        },
+        "SolderingMenu": {
+            "text2": [
+                "Löt-",
+                "einstellungen"
+            ],
+            "desc": ""
+        },
+        "PowerSavingMenu": {
+            "text2": [
+                "Ruhe-",
+                "modus"
+            ],
+            "desc": ""
+        },
+        "UIMenu": {
+            "text2": [
+                "Anzeige-",
+                "einstellungen"
+            ],
+            "desc": ""
+        },
+        "AdvancedMenu": {
+            "text2": [
+                "Erweiterte",
+                "Einstellungen"
+            ],
+            "desc": ""
+        }
     },
-    "AdvancedMenu": {
-      "text2": ["Erweiterte", "Einstellungen"],
-      "desc": "Erweiterte Einstellungen"
+    "menuOptions": {
+        "DCInCutoff": {
+            "text2": [
+                "Spannungs-",
+                "quelle"
+            ],
+            "desc": "Spannungsquelle (Abschaltspannung) (DC=10V | nS=n*3.3V für n LiIon-Zellen)"
+        },
+        "MinVolCell": {
+            "text2": [
+                "Minimale",
+                "Spannung"
+            ],
+            "desc": "Minimal zulässige Spannung pro Zelle (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+        },
+        "QCMaxVoltage": {
+            "text2": [
+                "Spannungs-",
+                "maximum"
+            ],
+            "desc": "Maximal zulässige Spannung der verwendeten Spannungsversorgung (V=Volt)"
+        },
+        "PDNegTimeout": {
+            "text2": [
+                "PD",
+                "timeout"
+            ],
+            "desc": "PD Abfragedauer in 100ms Schritten (Kompatibilität mit best. QC-Ladegeräten)"
+        },
+        "BoostTemperature": {
+            "text2": [
+                "Boost-",
+                "temperatur"
+            ],
+            "desc": "Temperatur der Lötspitze im Boostmodus"
+        },
+        "AutoStart": {
+            "text2": [
+                "Start im",
+                "Lötmodus"
+            ],
+            "desc": "Heizverhalten beim Einschalten der Spannungsversorgung (A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze)"
+        },
+        "TempChangeShortStep": {
+            "text2": [
+                "Temp-Schritt",
+                "Druck kurz"
+            ],
+            "desc": "Schrittweite für Temperaturwechsel bei kurzem Tastendruck"
+        },
+        "TempChangeLongStep": {
+            "text2": [
+                "Temp-Schritt",
+                "Druck lang"
+            ],
+            "desc": "Schrittweite für Temperaturwechsel bei langem Tastendruck"
+        },
+        "LockingMode": {
+            "text2": [
+                "Tasten-",
+                "sperre"
+            ],
+            "desc": "Langes drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
+        },
+        "MotionSensitivity": {
+            "text2": [
+                "Bewegungs-",
+                "empfindlichk."
+            ],
+            "desc": "0=aus | 1=minimal | ... | 9=maximal"
+        },
+        "SleepTemperature": {
+            "text2": [
+                "Ruhe-",
+                "temperatur"
+            ],
+            "desc": "Ruhetemperatur der Spitze"
+        },
+        "SleepTimeout": {
+            "text2": [
+                "Ruhever-",
+                "zögerung"
+            ],
+            "desc": "Dauer vor Übergang in den Ruhemodus (s=Sekunden | m=Minuten)"
+        },
+        "ShutdownTimeout": {
+            "text2": [
+                "Abschalt-",
+                "verzög."
+            ],
+            "desc": "Dauer vor automatischer Abschaltung (m=Minuten)"
+        },
+        "HallEffSensitivity": {
+            "text2": [
+                "Empfindlichkeit",
+                "der Hall-Sonde"
+            ],
+            "desc": "Empfindlichkeit der Hall-Sonde um den Ruhemodus auszulösen (0=aus | 1=minimal | ... | 9=maximal)"
+        },
+        "TemperatureUnit": {
+            "text2": [
+                "Temperatur-",
+                "einheit"
+            ],
+            "desc": "C=°Celsius | F=°Fahrenheit"
+        },
+        "DisplayRotation": {
+            "text2": [
+                "Anzeige-",
+                "ausrichtung"
+            ],
+            "desc": "R=rechtshändig | L=linkshändig | A=automatisch"
+        },
+        "CooldownBlink": {
+            "text2": [
+                "Abkühl-",
+                "blinken"
+            ],
+            "desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist"
+        },
+        "ScrollingSpeed": {
+            "text2": [
+                "Scroll-",
+                "geschw."
+            ],
+            "desc": "Scrollgeschwindigkeit der Erläuterungen (L=langsam | S=schnell)"
+        },
+        "ReverseButtonTempChange": {
+            "text2": [
+                "+- Tasten",
+                "umkehren?"
+            ],
+            "desc": "Tastenbelegung zur Temperaturänderung umkehren"
+        },
+        "AnimSpeed": {
+            "text2": [
+                "Anim.",
+                "Geschw."
+            ],
+            "desc": "Geschwindigkeit der Icon-Animationen im Menü (A=aus | L=langsam | M=mittel | S=schnell)"
+        },
+        "AnimLoop": {
+            "text2": [
+                "Anim.",
+                "Schleife"
+            ],
+            "desc": "Icon-Animationen im Hauptmenü wiederholen"
+        },
+        "Brightness": {
+            "text2": [
+                "Bildschirm-",
+                "kontrast"
+            ],
+            "desc": "Verändert die Helligkeit des OLED-Displays"
+        },
+        "ColourInversion": {
+            "text2": [
+                "Farben",
+                "umkehren"
+            ],
+            "desc": "Invertiert die Farben des OLED-Displays"
+        },
+        "LOGOTime": {
+            "text2": [
+                "Startlogo-",
+                "dauer"
+            ],
+            "desc": "Legt die Dauer der Anzeige des Startlogos fest (s=Sekunden)"
+        },
+        "AdvancedIdle": {
+            "text2": [
+                "Detaillierte",
+                "Ruheansicht"
+            ],
+            "desc": "Detaillierte Anzeige im Ruhemodus"
+        },
+        "AdvancedSoldering": {
+            "text2": [
+                "Detaillierte",
+                "Lötansicht"
+            ],
+            "desc": "Detaillierte Anzeige im Lötmodus"
+        },
+        "PowerLimit": {
+            "text2": [
+                "Leistungs-",
+                "maximum"
+            ],
+            "desc": "Maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
+        },
+        "CalibrateCJC": {
+            "text2": [
+                "Temperatur",
+                "kalibrieren?"
+            ],
+            "desc": "Beim nächsten Start wird die Kaltstellenkompensation kalibriert (nicht nötig wenn Delta T < 5°C)"
+        },
+        "VoltageCalibration": {
+            "text2": [
+                "Eingangsspannung",
+                "kalibrieren?"
+            ],
+            "desc": "Kalibrierung der Eingangsspannung (Langer Tastendruck zum Verlassen)"
+        },
+        "PowerPulsePower": {
+            "text2": [
+                "Leistungs-",
+                "impuls"
+            ],
+            "desc": "Powerbank mit einem Impuls wach halten (Watt)"
+        },
+        "PowerPulseWait": {
+            "text2": [
+                "Impuls-",
+                "verzögerung"
+            ],
+            "desc": "Dauer vor Abgabe von Wachhalteimpulsen (x 2,5s)"
+        },
+        "PowerPulseDuration": {
+            "text2": [
+                "Impuls-",
+                "dauer"
+            ],
+            "desc": "Dauer des Wachhalteimpulses (x 250ms)"
+        },
+        "SettingsReset": {
+            "text2": [
+                "Einstellungen",
+                "zurücksetzen?"
+            ],
+            "desc": "Werte auf Werkseinstellungen zurücksetzen"
+        },
+        "LanguageSwitch": {
+            "text2": [
+                "Sprache:",
+                " DE     Deutsch"
+            ],
+            "desc": ""
+        }
     }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Spannungs-", "quelle"],
-      "desc": "Spannungsquelle (Abschaltspannung) (DC=10V | nS=n*3.3V für n LiIon-Zellen)"
-    },
-    "SleepTemperature": {
-      "text2": ["Ruhe-", "temperatur"],
-      "desc": "Ruhetemperatur der Spitze"
-    },
-    "SleepTimeout": {
-      "text2": ["Ruhever-", "zögerung"],
-      "desc": "Dauer vor Übergang in den Ruhemodus (s=Sekunden | m=Minuten)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Abschalt-", "verzög."],
-      "desc": "Dauer vor automatischer Abschaltung (m=Minuten)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Bewegungs-", "empfindlichk."],
-      "desc": "0=aus | 1=minimal | ... | 9=maximal"
-    },
-    "TemperatureUnit": {
-      "text2": ["Temperatur-", "einheit"],
-      "desc": "C=Celsius | F=Fahrenheit"
-    },
-    "AdvancedIdle": {
-      "text2": ["Detaillierte", "Ruheansicht"],
-      "desc": "Detaillierte Anzeige im Ruhemodus"
-    },
-    "DisplayRotation": {
-      "text2": ["Anzeige-", "ausrichtung"],
-      "desc": "R=rechtshändig | L=linkshändig | A=automatisch"
-    },
-    "BoostTemperature": {
-      "text2": ["Boost-", "temperatur"],
-      "desc": "Temperatur der Lötspitze im Boostmodus"
-    },
-    "AutoStart": {
-      "text2": ["Start im", "Lötmodus"],
-      "desc": "Heizverhalten beim Einschalten der Spannungsversorgung (A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze)"
-    },
-    "CooldownBlink": {
-      "text2": ["Abkühl-", "blinken"],
-      "desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist"
-    },
-    "TemperatureCalibration": {
-      "text2": ["Temperatur", "kalibrieren?"],
-      "desc": "Kalibrierung der Lötspitzentemperatur"
-    },
-    "SettingsReset": {
-      "text2": ["Einstellungen", "zurücksetzen?"],
-      "desc": "Werte auf Werkseinstellungen zurücksetzen"
-    },
-    "VoltageCalibration": {
-      "text2": ["Eingangsspannung", "kalibrieren?"],
-      "desc": "Kalibrierung der Eingangsspannung (Langer Tastendruck zum Verlassen)"
-    },
-    "AdvancedSoldering": {
-      "text2": ["Detaillierte", "Lötansicht"],
-      "desc": "Detaillierte Anzeige im Lötmodus"
-    },
-    "ScrollingSpeed": {
-      "text2": ["Scroll-", "geschw."],
-      "desc": "Scrollgeschwindigkeit der Erläuterungen (L=langsam | S=schnell)"
-    },
-    "QCMaxVoltage": {
-      "text2": ["Spannungs-", "maximum"],
-      "desc": "Maximal zulässige Spannung der verwendeten Spannungsversorgung (V=Volt)"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD Abfragedauer in 100ms Schritten (Kompatibilität mit best. QC-Ladegeräten)"
-    },
-    "PowerLimit": {
-      "text2": ["Leistungs-", "maximum"],
-      "desc": "Maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["+- Tasten", "umkehren?"],
-      "desc": "Tastenbelegung zur Temperaturänderung umkehren"
-    },
-    "TempChangeShortStep": {
-      "text2": ["Temp-Schritt", "Druck kurz"],
-      "desc": "Schrittweite für Temperaturwechsel bei kurzem Tastendruck"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Temp-Schritt", "Druck lang"],
-      "desc": "Schrittweite für Temperaturwechsel bei langem Tastendruck"
-    },
-    "PowerPulsePower": {
-      "text2": ["Leistungs-", "impuls"],
-      "desc": "Powerbank mit einem Impuls wach halten (Watt)"
-    },
-    "HallEffSensitivity": {
-      "text2": ["Empfindlichkeit", "der Hall-Sonde"],
-      "desc": "Empfindlichkeit der Hall-Sonde beim Erkennen des Ruhemodus (0=aus | 1=minimal | ... | 9=maximal)"
-    },
-    "LockingMode": {
-      "text2": ["Tasten-", "sperre"],
-      "desc": "Langes drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
-    },
-    "MinVolCell": {
-      "text2": ["Minimale", "Spannung"],
-      "desc": "Minimal zulässige Spannung pro Zelle (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Anim.", "Schleife"],
-      "desc": "Icon-Animationen im Hauptmenü wiederholen"
-    },
-    "AnimSpeed": {
-      "text2": ["Anim.", "Geschw."],
-      "desc": "Geschwindigkeit der Icon-Animationen im Menü (A=aus | L=langsam | M=mittel | S=schnell)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Impuls-", "verzögerung"],
-      "desc": "Dauer vor Abgabe von Wachhalteimpulsen (x 2,5s)"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Impuls-", "dauer"],
-      "desc": "Dauer des Wachhalteimpulses (x 250ms)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Sprache:", " DE     Deutsch"],
-      "desc": "Sprache der Firmware ändern"
-    },
-    "Brightness": {
-      "text2": ["Bildschirm-", "kontrast"],
-      "desc": "Verändert die Helligkeit des OLED-Displays"
-    },
-    "ColourInversion": {
-      "text2": ["Farben", "umkehren"],
-      "desc": "Invertiert die Farben des OLED-Displays"
-    },
-    "LOGOTime": {
-      "text2": ["Startlogo-", "dauer"],
-      "desc": "Legt die Dauer der Anzeige des Startlogos fest (s=Sekunden)"
-    }
-  }
 }

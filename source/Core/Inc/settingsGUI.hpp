@@ -29,11 +29,12 @@ typedef struct {
   void (*const draw)(void);
   bool (*const isVisible)(void);
   // If this is set, we will automatically use the settings increment handler instead, set >= num settings to disable
-  SettingsOptions autoSettingOption;
+  SettingsOptions   autoSettingOption;
+  SettingsItemIndex shortDescriptionIndex;
+  uint8_t           shortDescriptionSize;
 } menuitem;
 
 void                  enterSettingsMenu();
-void                  GUIDelay();
 void                  warnUser(const char *warning, const int timeout);
 extern const menuitem rootSettingsMenu[];
 

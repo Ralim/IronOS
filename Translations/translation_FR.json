@@ -1,207 +1,341 @@
 {
-  "languageCode": "FR",
-  "languageLocalName": "Français",
-  "fonts": ["ascii_basic", "latin_extended"],
-  "tempUnitFahrenheit": false,
-  "messages": {
-    "SettingsCalibrationWarning": "Assurez-vous que la panne soit à température ambiante avant de continuer !",
-    "SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
-    "UVLOWarningString": "DC FAIBL",
-    "UndervoltageString": "Sous-tension",
-    "InputVoltageString": "V d'entrée: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "En veille...",
-    "SleepingTipAdvancedString": "Panne:",
-    "OffString": "Off"
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Réglages", "réinitialisés !"],
-    "NoAccelerometerMessage": ["Accéléromètre", "non détecté !"],
-    "NoPowerDeliveryMessage": ["USB-PD", "non détecté !"],
-    "LockingKeysString": "VERROUIL",
-    "UnlockingKeysString": "DEVERROU",
-    "WarningKeysLockedString": "! VERR. !",
-    "WarningThermalRunaway": ["Emballement", "thermique"]
-  },
-  "characters": {
-    "SettingRightChar": "D",
-    "SettingLeftChar": "G",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "D",
-    "SettingSlowChar": "L",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "R",
-    "SettingStartNoneChar": "D",
-    "SettingStartSolderingChar": "A",
-    "SettingStartSleepChar": "V",
-    "SettingStartSleepOffChar": "O",
-    "SettingSensitivityOff": "D",
-    "SettingSensitivityLow": "B",
-    "SettingSensitivityMedium": "M",
-    "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "D",
-    "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Paramètres", "d'alim."],
-      "desc": "Paramètres d'alimentation"
+    "languageCode": "FR",
+    "languageLocalName": "Français",
+    "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
+        "UVLOWarningString": "DC FAIBL",
+        "UndervoltageString": "Sous-tension",
+        "InputVoltageString": "V d'entrée: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "En veille...",
+        "SleepingTipAdvancedString": "Panne:",
+        "OffString": "Off",
+        "DeviceFailedValidationWarning": "Votre appareil semble être une contrefaçon !"
     },
-    "SolderingMenu": {
-      "text2": ["Paramètres", "de soudure"],
-      "desc": "Paramètres de soudure"
+    "messagesWarn": {
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Reset OK",
+        "SettingsResetMessage": [
+            "Réglages",
+            "réinitialisés !"
+        ],
+        "NoAccelerometerMessage": [
+            "Accéléromètre",
+            "non détecté !"
+        ],
+        "NoPowerDeliveryMessage": [
+            "USB-PD",
+            "non détecté !"
+        ],
+        "LockingKeysString": "VERROUIL",
+        "UnlockingKeysString": "DEVERROU",
+        "WarningKeysLockedString": "! VERR. !",
+        "WarningThermalRunaway": [
+            "Emballement",
+            "thermique"
+        ]
     },
-    "PowerSavingMenu": {
-      "text2": ["Mode", "veille"],
-      "desc": "Paramètres d'économie d'énergie"
+    "characters": {
+        "SettingRightChar": "D",
+        "SettingLeftChar": "G",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "D",
+        "SettingSlowChar": "L",
+        "SettingMediumChar": "M",
+        "SettingFastChar": "R",
+        "SettingStartNoneChar": "D",
+        "SettingStartSolderingChar": "A",
+        "SettingStartSleepChar": "V",
+        "SettingStartSleepOffChar": "O",
+        "SettingSensitivityOff": "D",
+        "SettingSensitivityLow": "B",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "D",
+        "SettingLockBoostChar": "B",
+        "SettingLockFullChar": "V"
     },
-    "UIMenu": {
-      "text2": ["Interface", "utilisateur"],
-      "desc": "Paramètres de l'interface utilisateur"
+    "menuGroups": {
+        "PowerMenu": {
+            "text2": [
+                "Paramètres",
+                "d'alim."
+            ],
+            "desc": ""
+        },
+        "SolderingMenu": {
+            "text2": [
+                "Paramètres",
+                "de soudure"
+            ],
+            "desc": ""
+        },
+        "PowerSavingMenu": {
+            "text2": [
+                "Mode",
+                "veille"
+            ],
+            "desc": ""
+        },
+        "UIMenu": {
+            "text2": [
+                "Interface",
+                "utilisateur"
+            ],
+            "desc": ""
+        },
+        "AdvancedMenu": {
+            "text2": [
+                "Options",
+                "avancées"
+            ],
+            "desc": ""
+        }
     },
-    "AdvancedMenu": {
-      "text2": ["Options", "avancées"],
-      "desc": "Options avancées"
+    "menuOptions": {
+        "DCInCutoff": {
+            "text2": [
+                "Source",
+                "d'alim."
+            ],
+            "desc": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
+        },
+        "MinVolCell": {
+            "text2": [
+                "Tension",
+                "minimale"
+            ],
+            "desc": "Tension minimale autorisée par cellule (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+        },
+        "QCMaxVoltage": {
+            "text2": [
+                "Tension",
+                "QC"
+            ],
+            "desc": "Tension maximale désirée avec une alimentation QC"
+        },
+        "PDNegTimeout": {
+            "text2": [
+                "Délai",
+                "expir. PD"
+            ],
+            "desc": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
+        },
+        "BoostTemperature": {
+            "text2": [
+                "Temp.",
+                "boost"
+            ],
+            "desc": "Température utilisée en \"mode boost\""
+        },
+        "AutoStart": {
+            "text2": [
+                "Chauffer au",
+                "démarrage"
+            ],
+            "desc": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
+        },
+        "TempChangeShortStep": {
+            "text2": [
+                "Incrément",
+                "appui court"
+            ],
+            "desc": "Incrément de changement de température sur appui court"
+        },
+        "TempChangeLongStep": {
+            "text2": [
+                "Incrément",
+                "appui long"
+            ],
+            "desc": "Incrément de changement de température sur appui long"
+        },
+        "LockingMode": {
+            "text2": [
+                "Verrouiller",
+                "les boutons"
+            ],
+            "desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
+        },
+        "MotionSensitivity": {
+            "text2": [
+                "Sensibilité",
+                "au mouvement"
+            ],
+            "desc": "0=désactivé | 1=peu sensible | ... | 9=très sensible"
+        },
+        "SleepTemperature": {
+            "text2": [
+                "Temp.",
+                "veille"
+            ],
+            "desc": "Température de la panne en \"mode veille\""
+        },
+        "SleepTimeout": {
+            "text2": [
+                "Délai",
+                "veille"
+            ],
+            "desc": "Délai avant mise en veille (s=secondes | m=minutes)"
+        },
+        "ShutdownTimeout": {
+            "text2": [
+                "Délai",
+                "arrêt"
+            ],
+            "desc": "Délai avant l'arrêt du fer à souder (m=minutes)"
+        },
+        "HallEffSensitivity": {
+            "text2": [
+                "Sensibilité",
+                "capteur effet hall"
+            ],
+            "desc": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
+        },
+        "TemperatureUnit": {
+            "text2": [
+                "Unité de",
+                "température"
+            ],
+            "desc": "C=Celsius | F=Fahrenheit"
+        },
+        "DisplayRotation": {
+            "text2": [
+                "Orientation",
+                "de l'écran"
+            ],
+            "desc": "D=droitier | G=gaucher | A=automatique"
+        },
+        "CooldownBlink": {
+            "text2": [
+                "Refroidir en",
+                "clignotant"
+            ],
+            "desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
+        },
+        "ScrollingSpeed": {
+            "text2": [
+                "Vitesse de",
+                "défilement"
+            ],
+            "desc": "Vitesse de défilement du texte (R=rapide | L=lent)"
+        },
+        "ReverseButtonTempChange": {
+            "text2": [
+                "Inverser les",
+                "touches + -"
+            ],
+            "desc": "Inverser les boutons d'ajustement de température"
+        },
+        "AnimSpeed": {
+            "text2": [
+                "Vitesse",
+                "anim. icônes"
+            ],
+            "desc": "Vitesse des animations des icônes dans le menu (D=désactivé | L=lente | M=moyenne | R=rapide)"
+        },
+        "AnimLoop": {
+            "text2": [
+                "Rejouer",
+                "anim. icônes"
+            ],
+            "desc": "Rejouer en boucle les animations des icônes dans le menu principal"
+        },
+        "Brightness": {
+            "text2": [
+                "Luminosité",
+                "de l'écran"
+            ],
+            "desc": "Ajuster la luminosité de l'écran OLED"
+        },
+        "ColourInversion": {
+            "text2": [
+                "Inverser",
+                "les couleurs"
+            ],
+            "desc": "Inverser les couleurs de l'écran OLED"
+        },
+        "LOGOTime": {
+            "text2": [
+                "Durée logo",
+                "au démarrage"
+            ],
+            "desc": "Définit la durée d'affichage du logo au démarrage (s=secondes)"
+        },
+        "AdvancedIdle": {
+            "text2": [
+                "Écran veille",
+                "détaillé"
+            ],
+            "desc": "Afficher les informations détaillées sur l'écran de veille"
+        },
+        "AdvancedSoldering": {
+            "text2": [
+                "Écran soudure",
+                "détaillé"
+            ],
+            "desc": "Afficher les informations détaillées sur l'écran de soudure"
+        },
+        "PowerLimit": {
+            "text2": [
+                "Limite de",
+                "puissance"
+            ],
+            "desc": "Puissance maximale utilisable (W=watts)"
+        },
+        "CalibrateCJC": {
+            "text2": [
+                "Calibrate CJC",
+                "at next boot"
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+        },
+        "VoltageCalibration": {
+            "text2": [
+                "Étalonner",
+                "tension d'entrée"
+            ],
+            "desc": "Étalonner tension d'entrée (appui long pour quitter)"
+        },
+        "PowerPulsePower": {
+            "text2": [
+                "Puissance",
+                "impulsions"
+            ],
+            "desc": "Puissance des impulsions pour éviter la mise en veille des batteries (watts)"
+        },
+        "PowerPulseWait": {
+            "text2": [
+                "Délai entre",
+                "les impulsions"
+            ],
+            "desc": "Délai entre chaque impulsion pour empêcher la mise en veille (x 2.5s)"
+        },
+        "PowerPulseDuration": {
+            "text2": [
+                "Durée des",
+                "impulsions"
+            ],
+            "desc": "Durée des impulsions pour empêcher la mise en veille (x 250ms)"
+        },
+        "SettingsReset": {
+            "text2": [
+                "Réinitialisation",
+                "d'usine"
+            ],
+            "desc": "Réinitialiser tous les réglages"
+        },
+        "LanguageSwitch": {
+            "text2": [
+                "Langue:",
+                " FR    Français"
+            ],
+            "desc": ""
+        }
     }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Source", "d'alim."],
-      "desc": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
-    },
-    "SleepTemperature": {
-      "text2": ["Temp.", "veille"],
-      "desc": "Température de la panne en \"mode veille\""
-    },
-    "SleepTimeout": {
-      "text2": ["Délai", "veille"],
-      "desc": "Délai avant mise en veille (s=secondes | m=minutes)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Délai", "arrêt"],
-      "desc": "Délai avant l'arrêt du fer à souder (m=minutes)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Sensibilité", "au mouvement"],
-      "desc": "0=désactivé | 1=peu sensible | ... | 9=très sensible"
-    },
-    "TemperatureUnit": {
-      "text2": ["Unité de", "température"],
-      "desc": "C=Celsius | F=Fahrenheit"
-    },
-    "AdvancedIdle": {
-      "text2": ["Écran veille", "détaillé"],
-      "desc": "Afficher les informations détaillées sur l'écran de veille"
-    },
-    "DisplayRotation": {
-      "text2": ["Orientation", "de l'écran"],
-      "desc": "D=droitier | G=gaucher | A=automatique"
-    },
-    "BoostTemperature": {
-      "text2": ["Temp.", "boost"],
-      "desc": "Température utilisée en \"mode boost\""
-    },
-    "AutoStart": {
-      "text2": ["Chauffer au", "démarrage"],
-      "desc": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
-    },
-    "CooldownBlink": {
-      "text2": ["Refroidir en", "clignotant"],
-      "desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
-    },
-    "TemperatureCalibration": {
-      "text2": ["Étalonner", "température"],
-      "desc": "Étalonner température de la panne"
-    },
-    "SettingsReset": {
-      "text2": ["Réinitialisation", "d'usine"],
-      "desc": "Réinitialiser tous les réglages"
-    },
-    "VoltageCalibration": {
-      "text2": ["Étalonner", "tension d'entrée"],
-      "desc": "Étalonner tension d'entrée (appui long pour quitter)"
-    },
-    "AdvancedSoldering": {
-      "text2": ["Écran soudure", "détaillé"],
-      "desc": "Afficher les informations détaillées sur l'écran de soudure"
-    },
-    "ScrollingSpeed": {
-      "text2": ["Vitesse de", "défilement"],
-      "desc": "Vitesse de défilement du texte (R=rapide | L=lent)"
-    },
-    "QCMaxVoltage": {
-      "text2": ["Tension", "QC"],
-      "desc": "Tension maximale désirée avec une alimentation QC"
-    },
-    "PDNegTimeout": {
-      "text2": ["Délai", "expir. PD"],
-      "desc": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
-    },
-    "PowerLimit": {
-      "text2": ["Limite de", "puissance"],
-      "desc": "Puissance maximale utilisable (W=watts)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["Inverser les", "touches + -"],
-      "desc": "Inverser les boutons d'ajustement de température"
-    },
-    "TempChangeShortStep": {
-      "text2": ["Incrément", "appui court"],
-      "desc": "Incrément de changement de température sur appui court"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Incrément", "appui long"],
-      "desc": "Incrément de changement de température sur appui long"
-    },
-    "PowerPulsePower": {
-      "text2": ["Puissance", "impulsions"],
-      "desc": "Puissance des impulsions pour éviter la mise en veille des batteries (watts)"
-    },
-    "HallEffSensitivity": {
-      "text2": ["Sensibilité", "capteur effet hall"],
-      "desc": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
-    },
-    "LockingMode": {
-      "text2": ["Verrouiller", "les boutons"],
-      "desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
-    },
-    "MinVolCell": {
-      "text2": ["Tension", "minimale"],
-      "desc": "Tension minimale autorisée par cellule (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Rejouer", "anim. icônes"],
-      "desc": "Rejouer en boucle les animations des icônes dans le menu principal"
-    },
-    "AnimSpeed": {
-      "text2": ["Vitesse", "anim. icônes"],
-      "desc": "Vitesse des animations des icônes dans le menu (D=désactivé | L=lente | M=moyenne | R=rapide)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Délai entre", "les impulsions"],
-      "desc": "Délai entre chaque impulsion pour empêcher la mise en veille (x 2.5s)"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Durée des", "impulsions"],
-      "desc": "Durée des impulsions pour empêcher la mise en veille (x 250ms)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Langue :", " FR    Français"],
-      "desc": "Langue du firmware"
-    },
-    "Brightness": {
-      "text2": ["Luminosité", "de l'écran"],
-      "desc": "Ajuster la luminosité de l'écran OLED"
-    },
-    "ColourInversion": {
-      "text2": ["Inverser", "les couleurs"],
-      "desc": "Inverser les couleurs de l'écran OLED"
-    },
-    "LOGOTime": {
-      "text2": ["Durée logo", "au démarrage"],
-      "desc": "Définit la durée d'affichage du logo au démarrage (s=secondes)"
-    }
-  }
 }

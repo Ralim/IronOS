@@ -43,7 +43,7 @@ When the device is powered by a battery, this adjusts the low voltage threshold 
 
 On device help text:
 
-Power source. Sets cutoff voltage. (DC 10V) (S 3.3V per cell, disable power limit)
+Set cutoff voltage to prevent battery over-drain. (DC 10V) (S=3.3V per cell, disable PWR limit)
 
 ### Setting: Sleep temp
 
@@ -59,7 +59,7 @@ How long of a period without movement / button-pressing is required before the d
 
 On device help text:
 
-Interval before "sleep mode" kicks in (S=seconds | M=minutes)
+Interval before "sleep mode" starts (s=seconds | m=minutes)
 
 ### Setting: Shutdown timeout
 
@@ -67,7 +67,7 @@ How long of a period without movement / button-pressing is required before the d
 
 On device help text:
 
-Interval before the iron shuts down (M=minutes)
+Interval before the iron shuts down (m=minutes)
 
 ### Setting: Motion sensitivity
 
@@ -91,7 +91,7 @@ Should the device show an 'advanced' view on the idle screen. The advanced view 
 
 On device help text:
 
-Display detailed information in a smaller font on the idle screen
+Display detailed info in a smaller font on idle screen
 
 ### Setting: Display orientation
 
@@ -107,7 +107,7 @@ When the unit is in soldering mode. You can hold down the button at the front of
 
 On device help text:
 
-Temperature used in "boost mode"
+Tip temperature used in "boost mode"
 
 ### Setting: Start-up behavior
 
@@ -115,7 +115,7 @@ When the device powers up, should it enter into a special mode. These settings s
 
 On device help text:
 
-O=off | S=soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved
+O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby, heat-off until moved
 
 ### Setting: Cooldown flashing
 
@@ -123,25 +123,36 @@ If the idle screen should blink the tip temperature for attention while the tip 
 
 On device help text:
 
-Flash the temperature reading after heating was halted while the tip is still hot
+Flash temperature reading at idle if tip is hot
 
-### Setting: Calibrate temperature?
+### Setting: Calibrate CJC at next boot
 
-Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target.
+Note:
+If the difference between the target temperature and the measured temperature is less than 5°C, **calibration is NOT required at all**.
+
+This is used to calibrate the offset between ADC and Op-amp of the tip **at next boot** (Ideally it has to be done at boot, before internal components get warm.). If the checkbox is set, the calibration will only be performed at the next boot. After a successful calibration the checkbox will be unchecked again! If you need to repeat the calibration however, you have to set the checkbox *again*, unplug your device and let it cool down to room/ambient temperature & power it up, ideally while it sits on the desk.
+
+Also, the calibration will only take place if both of the following conditions are met:
+- The tip must be installed.
+- The temperature difference between tip and handle must be less than 10°C. (~ ambient / room temperature)
+
+Otherwise, the calibration will be performed the next time the device is started and both conditions are met, unless the corresponding checkbox is unchecked.
+
+Hence, never repeat the calibration in quick succession!
 
 On device help text:
 
-Start tip temperature offset calibration
+Calibrate tip Cold Junction Compensation at the next boot (not required if Delta T is < 5°C)
 
-### Setting: Restore factory settings?
+### Setting: Restore default settings
 
 Resets all settings and calibrations to factory defaults. Does NOT erase custom user boot up logo's.
 
 On device help text:
 
-Reset all settings to default
+Reset default settings for this firmware ver.
 
-### Setting: Calibrate input voltage?
+### Setting: Calibrate input voltage
 
 Enters an adjustment mode where you can gradually adjust the measured voltage to compensate for any unit-to-unit variance in the voltage sense resistors.
 
@@ -155,7 +166,7 @@ Should the device show an 'advanced' soldering view. This is a text-based view t
 
 On device help text:
 
-Display detailed information in a smaller font on soldering screen
+Display detailed info in a smaller font on soldering screen
 
 ### Setting: Scrolling speed
 
@@ -227,7 +238,7 @@ If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is
 
 On device help text:
 
-Sensitivity of the Hall effect sensor to detect sleep (O=off | L=low | M=medium | H=high)
+Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)
 
 ### Setting: Allow locking buttons
 
@@ -243,7 +254,7 @@ When powered by a battery, this adjusts the minimum voltage per cell before shut
 
 On device help text:
 
-Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)
+Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)
 
 ### Setting: Anim. loop
 
@@ -291,7 +302,7 @@ Display brightness. Higher values age the OLED faster due to burn-in. (However, 
 
 On device help text:
 
-Adjust the brightness of the OLED screen
+Adjust the OLED screen brightness
 
 ### Setting: Invert screen
 
@@ -299,16 +310,12 @@ Inverts the entire OLED.
 
 On device help text:
 
-Invert the colours of the OLED screen
+Invert the OLED screen colors
 
 ### Setting: Boot logo duration
 
-Sets the duration of the boot logo from 1 second to 4 seconds.
-- For static images this sets the time the logo is displayed for.
-- For animations this sets the time the last frame is displayed for after the animation has been played.
-
-The infinity icon sets a logo or the last frame of an animation to be displayed until a button is pressed.
+Sets the duration for the boot logo (s=seconds).
 
 On device help text:
 
-Sets the duration for the boot logo (S=seconds)
+Set Boot logo duration (off | s=seconds | infinity)

@@ -1,0 +1,25 @@
+name: Weblate PR
+on:
+  create:
+    branches: ["^translations$"]
+
+jobs:
+  pull-request:
+    name: Open PR to dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: checkout
+
+      - uses: repo-sync/pull-request@v2
+        name: pull-request
+        with:
+          destination_branch: "dev"
+          pr_title: "Merging newest translations into dev" # Title of pull request
+          pr_body: | # Full markdown support, requires pr_title to be set
+            Translations automatically submitted by Weblate
+
+            _Translations from [Weblate](https://hosted.weblate.org/projects/ironos/main-firmware/)_
+          pr_reviewer: "ralim"
+          pr_draft: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}

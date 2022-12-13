@@ -189,24 +189,27 @@ StackType_t *pxPortInitialiseStack(StackType_t *pxTopOfStack, TaskFunction_t pxC
 /*-----------------------------------------------------------*/
 
 static void prvTaskExitError(void) {
-  volatile uint32_t ulDummy = 0UL;
+  // volatile uint32_t ulDummy = 0UL;
 
-  /* A function that implements a task must not exit or attempt to return to
-   its caller as there is nothing to return to.  If a task wants to exit it
-   should instead call vTaskDelete( NULL ).
+  // /* A function that implements a task must not exit or attempt to return to
+  //  its caller as there is nothing to return to.  If a task wants to exit it
+  //  should instead call vTaskDelete( NULL ).
 
-   Artificially force an assert() to be triggered if configASSERT() is
-   defined, then stop here so application writers can catch the error. */
-  configASSERT(uxCriticalNesting == ~0UL);
-  portDISABLE_INTERRUPTS();
-  while (ulDummy == 0) {
-    /* This file calls prvTaskExitError() after the scheduler has been
-     started to remove a compiler warning about the function being defined
-     but never called.  ulDummy is used purely to quieten other warnings
-     about code appearing after this function is called - making ulDummy
-     volatile makes the compiler think the function could return and
-     therefore not output an 'unreachable code' warning for code that appears
-     after it. */
+  //  Artificially force an assert() to be triggered if configASSERT() is
+  //  defined, then stop here so application writers can catch the error. */
+  // configASSERT(uxCriticalNesting == ~0UL);
+  // portDISABLE_INTERRUPTS();
+  // while (ulDummy == 0) {
+  //   /* This file calls prvTaskExitError() after the scheduler has been
+  //    started to remove a compiler warning about the function being defined
+  //    but never called.  ulDummy is used purely to quieten other warnings
+  //    about code appearing after this function is called - making ulDummy
+  //    volatile makes the compiler think the function could return and
+  //    therefore not output an 'unreachable code' warning for code that appears
+  //    after it. */
+  // }
+  for(;;){
+    
   }
 }
 /*-----------------------------------------------------------*/

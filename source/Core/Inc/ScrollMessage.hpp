@@ -1,14 +1,14 @@
 #ifndef SCROLL_MESSAGE_HPP_
 #define SCROLL_MESSAGE_HPP_
 
+#include "portmacro.h"
 #include <stdint.h>
-
 /**
  * A helper class for showing a full-screen scrolling message.
  */
 class ScrollMessage {
-  uint32_t messageStart = 0;
-  int16_t  lastOffset   = -1;
+  TickType_t messageStart = 0;
+  int16_t    lastOffset   = -1;
 
   /**
    * Calcualte the width in pixels of the message string, in the large
@@ -47,7 +47,7 @@ public:
    * @param currentTick The current tick as returned by `xTaskGetTickCount()`.
    * @return Whether the OLED framebuffer has been modified.
    */
-  bool drawUpdate(const char *message, uint32_t currentTick);
+  bool drawUpdate(const char *message, TickType_t currentTick);
 };
 
 #endif /* SCROLL_MESSAGE_HPP_ */

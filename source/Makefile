@@ -3,9 +3,10 @@ model:=Pinecil
 endif
 
 ALL_MINIWARE_MODELS=TS100 TS80 TS80P
-ALL_PINE_MODELS=Pinecil
+ALL_PINECIL_MODELS=Pinecil
+ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINE_MODELS) $(ALL_MHP30_MODELS)
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS)
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
@@ -16,7 +17,7 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
 
-ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NO PL PT RU SK SL SR_CYRL SR_LATN SV TR UK VI YUE_HK ZH_CN ZH_TW
+ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NB PL PT RU SK SL SR_CYRL SR_LATN SV TR UK VI YUE_HK ZH_CN ZH_TW
 
 LANGUAGE_GROUP_CJK_LANGS=EN JA_JP YUE_HK ZH_TW ZH_CN
 LANGUAGE_GROUP_CJK_NAME=Chinese+Japanese
@@ -64,11 +65,58 @@ MHP30_STARTUP_DIR = ./Startup
 MHP30_INC_DIR = ./Core/BSP/MHP30
 MHP30_LD_FILE = ./Core/BSP/MHP30/stm32f103.ld
 
-PINE_INC_DIR = ./Core/BSP/Pine64
-PINE_VENDOR_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include
-PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Common/Include/Usb
-PINE_NMSIS_INC_DIR = ./Core/BSP/Pine64/Vendor/NMSIS/Core/Include
-PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pine64/Vendor/OS/FreeRTOS/Source/portable/GCC
+PINE_INC_DIR = ./Core/BSP/Pinecil
+PINE_VENDOR_INC_DIR = ./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include
+PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include/Usb
+PINE_NMSIS_INC_DIR = ./Core/BSP/Pinecil/Vendor/NMSIS/Core/Include
+PINE_FREERTOS_PORT_INC_DIR = ./Core/BSP/Pinecil/Vendor/OS/FreeRTOS/Source/portable/GCC
+
+PINECILV2_DIR = ./Core/BSP/Pinecilv2
+PINECILV2_SDK_DIR = $(PINECILV2_DIR)/bl_mcu_sdk
+
+PINECILV2_VENDOR_BSP_DIR = $(PINECILV2_SDK_DIR)/bsp
+PINECILV2_VENDOR_BSP_COMMON_DIR = $(PINECILV2_VENDOR_BSP_DIR)/bsp_common
+PINECILV2_VENDOR_BSP_BOARD_DIR = $(PINECILV2_VENDOR_BSP_DIR)/board
+PINECILV2_VENDOR_BSP_PLATFORM_DIR = $(PINECILV2_VENDOR_BSP_COMMON_DIR)/platform
+PINECILV2_VENDOR_BSP_USB_DIR = $(PINECILV2_VENDOR_BSP_COMMON_DIR)/usb
+
+
+PINECILV2_COMMON_DIR = $(PINECILV2_SDK_DIR)/common
+PINECILV2_COMMON_BL_MATH_DIR = $(PINECILV2_COMMON_DIR)/bl_math
+PINECILV2_COMMON_DEVICE_DIR = $(PINECILV2_COMMON_DIR)/device
+PINECILV2_COMMON_LIST_DIR = $(PINECILV2_COMMON_DIR)/list
+PINECILV2_COMMON_MISC_DIR = $(PINECILV2_COMMON_DIR)/misc
+PINECILV2_COMMON_PARTITION_DIR = $(PINECILV2_COMMON_DIR)/partition
+PINECILV2_COMMON_PID_DIR = $(PINECILV2_COMMON_DIR)/pid
+PINECILV2_COMMON_RING_BUFFERDIR = $(PINECILV2_COMMON_DIR)/ring_buffer
+PINECILV2_COMMON_SOFT_CRC_DIR = $(PINECILV2_COMMON_DIR)/soft_crc
+PINECILV2_COMMON_TIMESTAMP_DIR = $(PINECILV2_COMMON_DIR)/timestamp
+PINECILV2_COMPONENTS_DIR = $(PINECILV2_SDK_DIR)/components
+
+
+PINECILV2_COMPONENTS_FREERTOS_DIR = $(PINECILV2_COMPONENTS_DIR)/freertos
+PINECILV2_COMPONENTS_FREERTOS_BL602_DIR = $(PINECILV2_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl702
+
+
+PINECILV2_COMPONENTS_NMSIS_DIR = $(PINECILV2_COMPONENTS_DIR)/nmsis
+PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR = $(PINECILV2_COMPONENTS_NMSIS_DIR)/core/inc
+
+PINECILV2_COMPONENTS_USB_STACK_DIR = $(PINECILV2_COMPONENTS_DIR)/usb_stack
+PINECILV2_COMPONENTS_USB_STACK_COMMON_DIR = $(PINECILV2_COMPONENTS_USB_STACK_DIR)/common
+PINECILV2_COMPONENTS_USB_STACK_CORE_DIR = $(PINECILV2_COMPONENTS_USB_STACK_DIR)/core
+PINECILV2_COMPONENTS_USB_STACK_CDC_DIR = $(PINECILV2_COMPONENTS_USB_STACK_DIR)/class/cdc
+PINECILV2_COMPONENTS_USB_STACK_WINUSB_DIR = $(PINECILV2_COMPONENTS_USB_STACK_DIR)/class/winusb
+
+PINECILV2_DRIVERS_DIR = $(PINECILV2_SDK_DIR)/drivers/bl702_driver
+PINECILV2_DRIVERS_HAL_DRV_INC_DIR = $(PINECILV2_DRIVERS_DIR)/hal_drv/inc
+PINECILV2_DRIVERS_HAL_DRV_DEF_DIR = $(PINECILV2_DRIVERS_DIR)/hal_drv/default_config
+PINECILV2_DRIVERS_REGS_DIR = $(PINECILV2_DRIVERS_DIR)/regs
+PINECILV2_DRIVERS_RISCV_DIR = $(PINECILV2_DRIVERS_DIR)/risc-v
+PINECILV2_DRIVERS_STARTUP_DIR = $(PINECILV2_DRIVERS_DIR)/startup
+PINECILV2_DRIVERS_STD_DRV_DIR = $(PINECILV2_DRIVERS_DIR)/std_drv/inc
+
+
+
 
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
@@ -76,6 +124,8 @@ FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 DRIVER_INC_DIR =./Core/Drivers
 BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
+THREADS_OP_MODES_INC_DIR = ./Core/Threads/OperatingModes
+THREADS_OP_MODES_TOOLS_INC_DIR = ./Core/Threads/OperatingModes/utils
 
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
@@ -84,10 +134,12 @@ SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR = ./Core/Drivers/usb-pd/tests
 PD_DRIVER_DIR = ./Core/Drivers/usb-pd
-# Find-all's used for formatting
 
-ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
-ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+
+# Find-all's used for formatting; have to exclude external modules
+
+ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
+ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR)  \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
@@ -102,15 +154,15 @@ S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=$(MINIWARE_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD 
-DEV_LDFLAGS= 
+		-D STM32F10X_MD -finline-limit=9999999
+DEV_LDFLAGS= -Wl,--wrap=printf  -Wl,--no-wchar-size-warning 
 DEV_AFLAGS=
-DEV_CFLAGS= 
+DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
 DEV_CXXFLAGS= 
 CPUFLAGS= -mcpu=cortex-m3     \
-		  -mthumb 			\
-		  -mfloat-abi=soft
-flash_size=64k
+		-mthumb 			\
+		-mfloat-abi=soft
+flash_size=62k
 bootldr_size=0x4000
 DEVICE_DFU_ADDRESS=0x08004000
 DEVICE_DFU_VID_PID=0x1209:0xDB42
@@ -131,30 +183,30 @@ DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32
 		-D STM32F10X_MD 
 DEV_LDFLAGS= 
 DEV_AFLAGS=
-DEV_CFLAGS= 
+DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
 DEV_CXXFLAGS= 
 CPUFLAGS= -mcpu=cortex-m3     \
-		  -mthumb 			\
-		  -mfloat-abi=soft
-flash_size=128k
+		-mthumb 			\
+		-mfloat-abi=soft
+flash_size=126k
 bootldr_size=32k
 DEVICE_DFU_ADDRESS=0x08008000
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
 
-ifeq ($(model),$(ALL_PINE_MODELS))
-$(info Building for Pine64 )
+ifeq ($(model),$(ALL_PINECIL_MODELS))
+$(info Building for Pine64 Pinecilv1)
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_VENDOR_INC_DIR) \
 -I$(PINE_VENDOR_USB_INC_DIR) \
 -I$(PINE_NMSIS_INC_DIR) \
 -I$(PINE_FREERTOS_PORT_INC_DIR) 
 	
-DEVICE_BSP_DIR = ./Core/BSP/Pine64
+DEVICE_BSP_DIR = ./Core/BSP/Pinecil
 S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
-LDSCRIPT=./Core/BSP/Pine64/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
+LDSCRIPT=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
 flash_size=128k
 bootldr_size=0x0
 # Flags
@@ -164,8 +216,72 @@ CPUFLAGS= -march=rv32imac \
 DEV_LDFLAGS=-nostartfiles 
 DEV_AFLAGS=  
 DEV_GLOBAL_DEFS= -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
-DEV_CFLAGS=
+DEV_CFLAGS= -D VECT_TAB_OFFSET=$(bootldr_size)U
 DEV_CXXFLAGS=
+endif
+
+
+
+
+ifeq ($(model),$(ALL_PINECIL_V2_MODELS))
+$(info Building for Pine64 Pinecilv2 )
+
+
+
+DEVICE_INCLUDES = -I$(PINECILV2_DIR) \
+	-I$(PINECILV2_SDK_DIR) \
+	-I$(PINECILV2_VENDOR_BSP_COMMON_DIR) \
+	-I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR) \
+	-I$(PINECILV2_COMMON_DIR) \
+	-I$(PINECILV2_COMMON_BL_MATH_DIR) \
+	-I$(PINECILV2_COMMON_DEVICE_DIR) \
+	-I$(PINECILV2_COMMON_LIST_DIR) \
+	-I$(PINECILV2_COMMON_MISC_DIR) \
+	-I$(PINECILV2_COMMON_PARTITION_DIR) \
+	-I$(PINECILV2_COMMON_PID_DIR) \
+	-I$(PINECILV2_COMMON_RING_BUFFERDIR) \
+	-I$(PINECILV2_COMMON_SOFT_CRC_DIR) \
+	-I$(PINECILV2_COMMON_TIMESTAMP_DIR) \
+	-I$(PINECILV2_COMPONENTS_DIR) \
+	-I$(PINECILV2_COMPONENTS_FREERTOS_DIR) \
+	-I$(PINECILV2_COMPONENTS_FREERTOS_BL602_DIR) \
+	-I$(PINECILV2_COMPONENTS_NMSIS_DIR) \
+	-I$(PINECILV2_COMPONENTS_USB_STACK_DIR) \
+	-I$(PINECILV2_DRIVERS_DIR) \
+	-I$(PINECILV2_DRIVERS_HAL_DRV_INC_DIR) \
+	-I$(PINECILV2_DRIVERS_HAL_DRV_DEF_DIR) \
+	-I$(PINECILV2_DRIVERS_REGS_DIR) \
+	-I$(PINECILV2_DRIVERS_RISCV_DIR) \
+	-I$(PINECILV2_DRIVERS_STARTUP_DIR) \
+	-I$(PINECILV2_DRIVERS_STD_DRV_DIR) \
+	-I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR) \
+	-I$(PINECILV2_VENDOR_BSP_USB_DIR) \
+	-I$(PINECILV2_COMPONENTS_USB_STACK_COMMON_DIR) \
+	-I$(PINECILV2_COMPONENTS_USB_STACK_CORE_DIR) \
+	-I$(PINECILV2_COMPONENTS_USB_STACK_CDC_DIR) \
+	-I$(PINECILV2_COMPONENTS_USB_STACK_WINUSB_DIR) \
+	-I$(PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR) 
+
+DEVICE_BSP_DIR = ./Core/BSP/Pinecilv2
+S_SRCS := $(shell find $(PINECILV2_DIR) -type d  \(  -path $(PINECILV2_VENDOR_BSP_COMMON_DIR) \) -prune -false -o  -type f -name '*.S') $(info $(S_SRCS) )
+ASM_INC = $(DEVICE_INCLUDES)
+LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
+
+# Flags
+CPUFLAGS= -march=rv32imafc \
+			-mabi=ilp32f \
+			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
+			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DportUSING_MPU_WRAPPERS=0 -DDBFLB_USE_ROM_DRIVER=1
+			
+DEV_LDFLAGS=-nostartfiles
+DEV_AFLAGS=  
+DEV_GLOBAL_DEFS= 
+#Required to be turned off due to their drivers tripping warnings
+DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
+DEV_CXXFLAGS= $(DEV_CFLAGS)
+flash_size=128k
+bootldr_size=0x0
+
 endif
 
 INCLUDES = -I$(APP_INC_DIR)	\
@@ -175,29 +291,37 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
 	-I$(THREADS_INC_DIR) \
+	-I$(THREADS_OP_MODES_INC_DIR) \
+	-I$(THREADS_OP_MODES_TOOLS_INC_DIR) \
 	-I$(INC_PD_DRIVERS_DIR) \
-	  $(DEVICE_INCLUDES) 
+	$(DEVICE_INCLUDES) 
+
+EXCLUDED_DIRS := -path  $(PINECILV2_VENDOR_BSP_ES8388_DIR) \
+-o -path  $(PINECILV2_VENDOR_BSP_IMAGE_SENSOR_DIR) \
+-o -path  $(PINECILV2_VENDOR_BSP_LVGL_DIR) \
+-o -path  $(PINECILV2_VENDOR_BSP_MCU_LCD_DIR) \
+-o -path  $(PINECILV2_VENDOR_BSP_BOARD_DIR) \
+-o -path $(PINECILV2_VENDOR_BSP_USB_DIR) \
 
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
-$(shell find $(DEVICE_BSP_DIR) -type f -name '*.c') \
+$(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS)  \) -prune -false -o -type f -name '*.c')\
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') \
 $(SOURCE_BRIEFLZ_DIR)/depack.c
 # We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
 SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -path $(PD_DRIVER_TESTS_DIR) -prune -false -o -type f -name '*.cpp') \
-$(shell find $(DEVICE_BSP_DIR) -type f -name '*.cpp') \
+$(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o -type f -name '*.cpp')  \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -flto -finline-small-functions  -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common
+OPTIM=-Os -foptimize-strlen -faggressive-loop-optimizations -fdevirtualize-at-ltrans -fmerge-all-constants -fshort-wchar -flto -finline-small-functions -finline-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common -fno-math-errno -ffast-math -ffinite-math-only -fno-signed-zeros -fsingle-precision-constant
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
 
-DEBUG=-g3 
 ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
 endif
@@ -215,15 +339,15 @@ COMPILER=gcc
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),$(ALL_PINE_MODELS))
+ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
 endif
 # programs ---------------------------------------------------------------------
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
-OBJDUMP=$(COMPILER_PREFIX)-objdump
 SIZE=$(COMPILER_PREFIX)-size
+OBJDUMP=$(COMPILER_PREFIX)-objdump
 # use gcc in assembler mode so we can use defines etc in assembly
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 
@@ -236,7 +360,6 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
 			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
 				-Wl,--print-memory-usage 					  \
-				-flto 										  \
 				--specs=nosys.specs 						  \
 			    --specs=nano.specs						      \
 				$(DEV_LDFLAGS)
@@ -270,8 +393,8 @@ CHECKOPTIONS=		-Wall 				\
 			-Winline			\
 			-Wshadow			\
 			-Wno-unused-parameter \
-			-Wdouble-promotion \
-			-Werror 
+			-Wdouble-promotion 
+			
 			
 
 
@@ -280,13 +403,12 @@ CHECKOPTIONS_C=	$(CHECKOPTIONS) -Wbad-function-cast
 
 CXXFLAGS=$(DEV_CXXFLAGS)         \
         $(CPUFLAGS)              \
-		$(DEBUG) 			     \
 		$(INCLUDES)              \
 		$(GLOBAL_DEFINES) 	     \
 		-D${COMPILER}  		     \
 		-MMD 				     \
 		$(CHECKOPTIONS)		     \
-		-std=c++14			     \
+		-std=c++17			     \
 		$(OPTIM) 			     \
 		-fno-rtti 			     \
 		-fno-exceptions 	     \
@@ -299,7 +421,6 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 
 CFLAGS=$(DEV_CFLAGS) 			\
         $(CPUFLAGS) 			\
-		$(DEBUG) 				\
 		$(INCLUDES) 			\
 		$(CHECKOPTIONS_C) 		\
 		$(GLOBAL_DEFINES) 		\
@@ -316,7 +437,6 @@ AFLAGS= $(CPUFLAGS)    			\
 		$(DEV_AFLAGS)  			\
 		$(GLOBAL_DEFINES) 		\
 		$(OPTIM) 				\
-		$(DEBUG)      			\
 		$(ASM_INC)    			\
 		$(INCLUDES)
 
@@ -349,8 +469,8 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 	$(OBJCOPY) $< -O ihex $@
 
 %.bin : %.elf Makefile
-	$(SIZE)  --format=berkeley  $<
 	$(OBJCOPY) $< -O binary $@
+	$(SIZE) $<
 
 %.dfu : %.bin Makefile
 	python3 dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
@@ -426,12 +546,12 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto -g3,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
 
 $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/depack.c
 	@test -d $(@D) || mkdir -p $(@D)

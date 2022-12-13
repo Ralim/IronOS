@@ -124,7 +124,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_xPSR(void) {
   \return               PSP Register value
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSP(void) {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile("MRS %0, psp\n" : "=r"(result));
   return (result);
@@ -143,7 +143,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProc
   \return               MSP Register value
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSP(void) {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile("MRS %0, msp\n" : "=r"(result));
   return (result);

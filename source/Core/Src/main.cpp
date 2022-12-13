@@ -14,22 +14,22 @@ bool      settingsWereReset            = false;
 // FreeRTOS variables
 
 osThreadId          GUITaskHandle;
-static const size_t GUITaskStackSize = 1024 / 4;
+static const size_t GUITaskStackSize = 1024 / 2;
 uint32_t            GUITaskBuffer[GUITaskStackSize];
 osStaticThreadDef_t GUITaskControlBlock;
 
 osThreadId          PIDTaskHandle;
-static const size_t PIDTaskStackSize = 1024 / 4;
+static const size_t PIDTaskStackSize = 1024 / 2;
 uint32_t            PIDTaskBuffer[PIDTaskStackSize];
 osStaticThreadDef_t PIDTaskControlBlock;
 
 osThreadId          MOVTaskHandle;
-static const size_t MOVTaskStackSize = 1024 / 4;
+static const size_t MOVTaskStackSize = 1024 / 2;
 uint32_t            MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
 
 osThreadId          POWTaskHandle;
-static const size_t POWTaskStackSize = 512 / 4;
+static const size_t POWTaskStackSize = 512 / 2;
 uint32_t            POWTaskBuffer[POWTaskStackSize];
 osStaticThreadDef_t POWTaskControlBlock;
 
@@ -37,10 +37,13 @@ osStaticThreadDef_t POWTaskControlBlock;
 // Main sets up the hardware then hands over to the FreeRTOS kernel
 int main(void) {
   preRToSInit();
-  setTipX10Watts(0); // force tip off
+
   resetWatchdog();
   // Testing for which accelerometer is mounted
   settingsWereReset = loadSettings(); // load the settings from flash
+
+  setTipX10Watts(0); // force tip off
+
   resetWatchdog();
   /* Create the thread(s) */
 

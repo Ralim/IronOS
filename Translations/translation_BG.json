@@ -1,207 +1,341 @@
 {
-  "languageCode": "BG",
-  "languageLocalName": "Български",
-  "fonts": ["ascii_basic", "cyrillic"],
-  "tempUnitFahrenheit": false,
-  "messages": {
-    "SettingsCalibrationWarning": "Уверете се, че върха на поялника е със стайна температура преди да продължите!",
-    "SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
-    "UVLOWarningString": "Ниско DC Напрежение",
-    "UndervoltageString": "Ниско Напрежение",
-    "InputVoltageString": "Входно V: ",
-    "SleepingSimpleString": "Сън",
-    "SleepingAdvancedString": "Хър Хър Хър...",
-    "SleepingTipAdvancedString": "Връх:",
-    "OffString": "Изкл."
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "Нулиране",
-    "SettingsResetMessage": ["Настройките бяха", "нулирани!"],
-    "NoAccelerometerMessage": ["No accelerometer", "detected!"],
-    "NoPowerDeliveryMessage": ["No USB-PD IC", "detected!"],
-    "LockingKeysString": "LOCKED",
-    "UnlockingKeysString": "UNLOCKED",
-    "WarningKeysLockedString": "!LOCKED!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
-  },
-  "characters": {
-    "SettingRightChar": "R",
-    "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "O",
-    "SettingSlowChar": "S",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "F",
-    "SettingStartNoneChar": "И",
-    "SettingStartSolderingChar": "Р",
-    "SettingStartSleepChar": "С",
-    "SettingStartSleepOffChar": "П",
-    "SettingSensitivityOff": "O",
-    "SettingSensitivityLow": "L",
-    "SettingSensitivityMedium": "M",
-    "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "D",
-    "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Power", "settings"],
-      "desc": "Power settings"
+    "languageCode": "BG",
+    "languageLocalName": "Български",
+    "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Сигурни ли сте, че искате да върнете фабричните настройки?",
+        "UVLOWarningString": "Ниско DC Напрежение",
+        "UndervoltageString": "Ниско Напрежение",
+        "InputVoltageString": "Входно V: ",
+        "SleepingSimpleString": "Сън",
+        "SleepingAdvancedString": "Хър Хър Хър...",
+        "SleepingTipAdvancedString": "Връх:",
+        "OffString": "Изкл.",
+        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
-    "SolderingMenu": {
-      "text2": ["Поялник", "Настройки"],
-      "desc": "Настройки на поялника"
+    "messagesWarn": {
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Нулиране",
+        "SettingsResetMessage": [
+            "Настройките бяха",
+            "нулирани!"
+        ],
+        "NoAccelerometerMessage": [
+            "No accelerometer",
+            "detected!"
+        ],
+        "NoPowerDeliveryMessage": [
+            "No USB-PD IC",
+            "detected!"
+        ],
+        "LockingKeysString": "LOCKED",
+        "UnlockingKeysString": "UNLOCKED",
+        "WarningKeysLockedString": "!LOCKED!",
+        "WarningThermalRunaway": [
+            "Thermal",
+            "Runaway"
+        ]
     },
-    "PowerSavingMenu": {
-      "text2": ["Режими", "Настройки"],
-      "desc": "Настройки енергоспестяване"
+    "characters": {
+        "SettingRightChar": "R",
+        "SettingLeftChar": "L",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "O",
+        "SettingSlowChar": "S",
+        "SettingMediumChar": "M",
+        "SettingFastChar": "F",
+        "SettingStartNoneChar": "И",
+        "SettingStartSolderingChar": "Р",
+        "SettingStartSleepChar": "С",
+        "SettingStartSleepOffChar": "П",
+        "SettingSensitivityOff": "O",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "D",
+        "SettingLockBoostChar": "B",
+        "SettingLockFullChar": "F"
     },
-    "UIMenu": {
-      "text2": ["Интерфейс", "Настройки"],
-      "desc": "Настройки на интерфейса"
+    "menuGroups": {
+        "PowerMenu": {
+            "text2": [
+                "Power",
+                "settings"
+            ],
+            "desc": ""
+        },
+        "SolderingMenu": {
+            "text2": [
+                "Поялник",
+                "Настройки"
+            ],
+            "desc": ""
+        },
+        "PowerSavingMenu": {
+            "text2": [
+                "Режими",
+                "Настройки"
+            ],
+            "desc": ""
+        },
+        "UIMenu": {
+            "text2": [
+                "Интерфейс",
+                "Настройки"
+            ],
+            "desc": ""
+        },
+        "AdvancedMenu": {
+            "text2": [
+                "Разширени",
+                "Настройки"
+            ],
+            "desc": ""
+        }
     },
-    "AdvancedMenu": {
-      "text2": ["Разширени", "Настройки"],
-      "desc": "Допълнителни настройки"
+    "menuOptions": {
+        "DCInCutoff": {
+            "text2": [
+                "Източник",
+                "захранване"
+            ],
+            "desc": "Източник на захранване. Минимално напрежение. (DC 10V) (S 3,3V за клетка)"
+        },
+        "MinVolCell": {
+            "text2": [
+                "Minimum",
+                "voltage"
+            ],
+            "desc": "Minimum allowed voltage per battery cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+        },
+        "QCMaxVoltage": {
+            "text2": [
+                "Мощност на",
+                "захранване"
+            ],
+            "desc": "Мощност на избраното захранване"
+        },
+        "PDNegTimeout": {
+            "text2": [
+                "PD",
+                "timeout"
+            ],
+            "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+        },
+        "BoostTemperature": {
+            "text2": [
+                "Турбо",
+                "темп."
+            ],
+            "desc": "Температура за \"турбо\" режим"
+        },
+        "AutoStart": {
+            "text2": [
+                "Автоматичен",
+                "работен режим"
+            ],
+            "desc": "Режим на поялника при включване на захранването. (И=Изключен | Р=Работен | С=Сън | П=Сън температура помещение)"
+        },
+        "TempChangeShortStep": {
+            "text2": [
+                "Промяна T",
+                "бързо?"
+            ],
+            "desc": "Промяна на температура при бързо натискане на бутон!"
+        },
+        "TempChangeLongStep": {
+            "text2": [
+                "Промяна Т",
+                "задържане?"
+            ],
+            "desc": "Промяна на температура при задържане на бутон!"
+        },
+        "LockingMode": {
+            "text2": [
+                "Allow locking",
+                "buttons"
+            ],
+            "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+        },
+        "MotionSensitivity": {
+            "text2": [
+                "Усещане",
+                "за движение"
+            ],
+            "desc": "Усещане за движение (0=Изключено | 1=Слабо | ... | 9=Силно)"
+        },
+        "SleepTemperature": {
+            "text2": [
+                "Темп.",
+                "сън"
+            ],
+            "desc": "Температура при режим \"сън\" (C)"
+        },
+        "SleepTimeout": {
+            "text2": [
+                "Време",
+                "сън"
+            ],
+            "desc": "Включване в режим \"сън\" след: (Минути | Секунди)"
+        },
+        "ShutdownTimeout": {
+            "text2": [
+                "Време",
+                "изкл."
+            ],
+            "desc": "Изключване след (Минути)"
+        },
+        "HallEffSensitivity": {
+            "text2": [
+                "Hall sensor",
+                "sensitivity"
+            ],
+            "desc": "Sensitivity to magnets (0=Изключено | 1=Слабо | ... | 9=Силно)"
+        },
+        "TemperatureUnit": {
+            "text2": [
+                "Единици за",
+                "температура"
+            ],
+            "desc": "Единици за температура (C=Целзии | F=Фаренхайт)"
+        },
+        "DisplayRotation": {
+            "text2": [
+                "Ориентация",
+                "на дисплея"
+            ],
+            "desc": "Ориентация на дисплея (R=Дясна Ръка | L=Лява Ръка | A=Автоматично)"
+        },
+        "CooldownBlink": {
+            "text2": [
+                "Мигай при",
+                "топъл поялник"
+            ],
+            "desc": "След изключване от работен режим, индикатора за температура да мига докато човката на поялника все още е топла"
+        },
+        "ScrollingSpeed": {
+            "text2": [
+                "Скорост",
+                "на текста"
+            ],
+            "desc": "Скорост на движение на този текст"
+        },
+        "ReverseButtonTempChange": {
+            "text2": [
+                "Размяна",
+                "бутони +-?"
+            ],
+            "desc": "Обръщане на бутоните \"+\" и \"-\" за промяна на температурата на върха на поялника"
+        },
+        "AnimSpeed": {
+            "text2": [
+                "Anim.",
+                "speed"
+            ],
+            "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+        },
+        "AnimLoop": {
+            "text2": [
+                "Anim.",
+                "loop"
+            ],
+            "desc": "Loop icon animations in main menu"
+        },
+        "Brightness": {
+            "text2": [
+                "Screen",
+                "brightness"
+            ],
+            "desc": "Adjust the OLED screen brightness"
+        },
+        "ColourInversion": {
+            "text2": [
+                "Invert",
+                "screen"
+            ],
+            "desc": "Invert the OLED screen colors"
+        },
+        "LOGOTime": {
+            "text2": [
+                "Boot logo",
+                "duration"
+            ],
+            "desc": "Set boot logo duration (s=seconds)"
+        },
+        "AdvancedIdle": {
+            "text2": [
+                "Детайлен",
+                "екран в покой"
+            ],
+            "desc": "Покажи детайлна информация със ситен шрифт на екрана в режим на покой."
+        },
+        "AdvancedSoldering": {
+            "text2": [
+                "Детайлен",
+                "работен екран"
+            ],
+            "desc": "Детайлна информация в работен режим при запояване"
+        },
+        "PowerLimit": {
+            "text2": [
+                "Лимит на",
+                "мощност"
+            ],
+            "desc": "Максимална мощност на поялника (Watt)"
+        },
+        "CalibrateCJC": {
+            "text2": [
+                "Calibrate CJC",
+                "at next boot"
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+        },
+        "VoltageCalibration": {
+            "text2": [
+                "Калибриране",
+                "напрежение?"
+            ],
+            "desc": "Калибриране на входното напрежение. Задръжте бутонa за изход"
+        },
+        "PowerPulsePower": {
+            "text2": [
+                "Захранващ",
+                "импулс"
+            ],
+            "desc": "Поддържане на интензивност на захранващия импулс"
+        },
+        "PowerPulseWait": {
+            "text2": [
+                "Power pulse",
+                "delay"
+            ],
+            "desc": "Delay before keep-awake-pulse is triggered (x 2,5с)"
+        },
+        "PowerPulseDuration": {
+            "text2": [
+                "Power pulse",
+                "duration"
+            ],
+            "desc": "Keep-awake-pulse duration (x 250мс)"
+        },
+        "SettingsReset": {
+            "text2": [
+                "Фабрични",
+                "настройки?"
+            ],
+            "desc": "Връщане на фабрични настройки"
+        },
+        "LanguageSwitch": {
+            "text2": [
+                "Език:",
+                " BG   Български"
+            ],
+            "desc": ""
+        }
     }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Източник", "захранване"],
-      "desc": "Източник на захранване. Минимално напрежение. (DC 10V) (S 3,3V за клетка)"
-    },
-    "SleepTemperature": {
-      "text2": ["Темп.", "сън"],
-      "desc": "Температура при режим \"сън\" (C)"
-    },
-    "SleepTimeout": {
-      "text2": ["Време", "сън"],
-      "desc": "Включване в режим \"сън\" след: (Минути | Секунди)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Време", "изкл."],
-      "desc": "Изключване след (Минути)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Усещане", "за движение"],
-      "desc": "Усещане за движение (0=Изключено | 1=Слабо | ... | 9=Силно)"
-    },
-    "TemperatureUnit": {
-      "text2": ["Единици за", "температура"],
-      "desc": "Единици за температура (C=Целзии | F=Фаренхайт)"
-    },
-    "AdvancedIdle": {
-      "text2": ["Детайлен", "екран в покой"],
-      "desc": "Покажи детайлна информация със ситен шрифт на екрана в режим на покой."
-    },
-    "DisplayRotation": {
-      "text2": ["Ориентация", "на дисплея"],
-      "desc": "Ориентация на дисплея (R=Дясна Ръка | L=Лява Ръка | A=Автоматично)"
-    },
-    "BoostTemperature": {
-      "text2": ["Турбо", "темп."],
-      "desc": "Температура за \"турбо\" режим"
-    },
-    "AutoStart": {
-      "text2": ["Автоматичен", "работен режим"],
-      "desc": "Режим на поялника при включване на захранването. (И=Изключен | Р=Работен | С=Сън | П=Сън температура помещение)"
-    },
-    "CooldownBlink": {
-      "text2": ["Мигай при", "топъл поялник"],
-      "desc": "След изключване от работен режим, индикатора за температура да мига докато човката на поялника все още е топла"
-    },
-    "TemperatureCalibration": {
-      "text2": ["Калибриране", "температура?"],
-      "desc": "Калибриране на температурата"
-    },
-    "SettingsReset": {
-      "text2": ["Фабрични", "настройки?"],
-      "desc": "Връщане на фабрични настройки"
-    },
-    "VoltageCalibration": {
-      "text2": ["Калибриране", "напрежение?"],
-      "desc": "Калибриране на входното напрежение. Задръжте бутонa за изход"
-    },
-    "AdvancedSoldering": {
-      "text2": ["Детайлен", "работен екран"],
-      "desc": "Детайлна информация в работен режим при запояване"
-    },
-    "ScrollingSpeed": {
-      "text2": ["Скорост", "на текста"],
-      "desc": "Скорост на движение на този текст"
-    },
-    "QCMaxVoltage": {
-      "text2": ["Мощност на", "захранване"],
-      "desc": "Мощност на избраното захранване"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
-    },
-    "PowerLimit": {
-      "text2": ["Лимит на", "мощност"],
-      "desc": "Максимална мощност на поялника (Watt)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["Размяна", "бутони +-?"],
-      "desc": "Обръщане на бутоните \"+\" и \"-\" за промяна на температурата на върха на поялника"
-    },
-    "TempChangeShortStep": {
-      "text2": ["Промяна T", "бързо?"],
-      "desc": "Промяна на температура при бързо натискане на бутон!"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Промяна Т", "задържане?"],
-      "desc": "Промяна на температура при задържане на бутон!"
-    },
-    "PowerPulsePower": {
-      "text2": ["Захранващ", "импулс"],
-      "desc": "Поддържане на интензивност на захранващия импулс"
-    },
-    "HallEffSensitivity": {
-      "text2": ["Hall sensor", "sensitivity"],
-      "desc": "Sensitivity of the Hall effect sensor to detect sleep (0=Изключено | 1=Слабо | ... | 9=Силно)"
-    },
-    "LockingMode": {
-      "text2": ["Allow locking", "buttons"],
-      "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
-    },
-    "MinVolCell": {
-      "text2": ["Minimum", "voltage"],
-      "desc": "Minimum allowed voltage per cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Anim.", "loop"],
-      "desc": "Loop icon animations in main menu"
-    },
-    "AnimSpeed": {
-      "text2": ["Anim.", "speed"],
-      "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Power pulse", "delay"],
-      "desc": "Delay before keep-awake-pulse is triggered (x 2,5с)"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Power pulse", "duration"],
-      "desc": "Keep-awake-pulse duration (x 250мс)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Език:", " BG   Български"],
-      "desc": ""
-    },
-    "Brightness": {
-      "text2": ["Screen", "brightness"],
-      "desc": "Adjust the brightness of the OLED screen"
-    },
-    "ColourInversion": {
-      "text2": ["Invert", "screen"],
-      "desc": "Invert the colours of the OLED screen"
-    },
-    "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
-    }
-  }
 }

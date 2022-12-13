@@ -5,6 +5,7 @@
  *      Author: Ben V. Brown
  */
 
+#include "Buttons.hpp"
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "configuration.h"
@@ -24,7 +25,7 @@ bool               OLED::initDone = false;
 uint8_t            OLED::displayOffset;
 uint8_t            OLED::screenBuffer[16 + (OLED_WIDTH * 2) + 10]; // The data buffer
 uint8_t            OLED::secondFrameBuffer[OLED_WIDTH * 2];
-
+uint32_t           OLED::displayChecksum;
 /*Setup params for the OLED screen*/
 /*http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf*/
 /*All commands are prefixed with 0x80*/
@@ -221,7 +222,7 @@ void OLED::maskScrollIndicatorOnOLED() {
   // it from the screen buffer which is updated by `OLED::setRotation`.
   uint8_t rightmostColumn = screenBuffer[7];
   uint8_t maskCommands[]  = {
-      // Set column address:
+       // Set column address:
       //  A[6:0] - Column start address = rightmost column
       //  B[6:0] - Column end address = rightmost column
       0x80,
@@ -252,10 +253,10 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
   uint8_t *firstBackStripPtr  = &secondFrameBuffer[0];
   uint8_t *secondBackStripPtr = &secondFrameBuffer[OLED_WIDTH];
 
-  uint32_t totalDuration = TICKS_100MS * 5; // 500ms
-  uint32_t duration      = 0;
-  uint32_t start         = xTaskGetTickCount();
-  uint8_t  offset        = 0;
+  TickType_t totalDuration = TICKS_100MS * 5; // 500ms
+  TickType_t duration      = 0;
+  TickType_t start         = xTaskGetTickCount();
+  uint8_t    offset        = 0;
 
   while (duration <= totalDuration) {
     duration         = xTaskGetTickCount() - start;
@@ -285,7 +286,10 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
     memmove(&secondStripPtr[newStart], &secondBackStripPtr[newEnd], progress);
 
     refresh();
-    osDelay(TICKS_100MS / 5);
+    osDelay(TICKS_100MS / 7);
+    if (getButtonState() != BUTTON_NONE) {
+      return;
+    }
   }
 }
 
@@ -324,6 +328,10 @@ void OLED::transitionScrollDown() {
 
   // Scroll the screen by changing display start line.
   for (uint8_t current = startLine; current <= scrollTo; current++) {
+    if (getButtonState() != BUTTON_NONE) {
+      current = scrollTo;
+    }
+
     // Set display start line (0x40~0x7F):
     //  X[5:0] - display start line value
     uint8_t scrollCommandByte = 0b01000000 | (current & 0b00111111);
@@ -332,7 +340,7 @@ void OLED::transitionScrollDown() {
     OLED_Setup_Array[8].val = scrollCommandByte;
 
     I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
-    osDelay(TICKS_100MS / 5);
+    osDelay(TICKS_100MS / 7);
   }
 }
 
@@ -353,13 +361,17 @@ void OLED::setRotation(bool leftHanded) {
     OLED_Setup_Array[9].val = 0xA0;
   }
   I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
-
+  osDelay(TICKS_10MS);
   inLeftHandedMode = leftHanded;
 
   screenBuffer[5] = inLeftHandedMode ? 0 : 32;    // display is shifted by 32 in left handed
                                                   // mode as driver ram is 128 wide
   screenBuffer[7] = inLeftHandedMode ? 95 : 0x7F; // End address of the ram segment we are writing to (96 wide)
   screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
+  //Force a screen refresh
+  const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+  I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
+  osDelay(TICKS_10MS);
 }
 
 void OLED::setBrightness(uint8_t contrast) {
@@ -423,9 +435,9 @@ inline void stripLeaderZeros(char *buffer, uint8_t places) {
     }
   }
 }
-void OLED::drawHex(uint32_t x, FontStyle fontStyle) {
+void OLED::drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits) {
   // print number to hex
-  for (uint_fast8_t i = 0; i < 8; i++) {
+  for (uint_fast8_t i = 0; i < digits; i++) {
     uint16_t value = (x >> (4 * (7 - i))) & 0b1111;
     drawChar(value + 2, fontStyle);
   }

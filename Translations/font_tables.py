@@ -989,6 +989,14 @@ NAME_CYRILLIC: Final = "cyrillic"
 NAME_CJK: Final = "cjk"
 NAME_GREEK: Final = "greek"
 
+ALL_FONTS = [
+    NAME_ASCII_BASIC,
+    NAME_LATIN_EXTENDED,
+    NAME_CYRILLIC,
+    NAME_GREEK,
+    NAME_CJK,  # CJK must come last
+]
+
 
 def get_font_maps_for_name(
     font_name: str,

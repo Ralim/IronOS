@@ -1,207 +1,341 @@
 {
-  "languageCode": "LT",
-  "languageLocalName": "Lietuvių",
-  "fonts": ["ascii_basic", "latin_extended"],
-  "tempUnitFahrenheit": false,
-  "messages": {
-    "SettingsCalibrationWarning": "Prieš tęsdami įsitikinkite, kad antgalis yra kambario temperatūros!",
-    "SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
-    "UVLOWarningString": "MAŽ VOLT",
-    "UndervoltageString": "Žema įtampa",
-    "InputVoltageString": "Įvestis V: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "Miegu...",
-    "SleepingTipAdvancedString": "Antg:",
-    "OffString": "Išj"
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "Atstatyta",
-    "SettingsResetMessage": ["Nust. atstatyti!", ""],
-    "NoAccelerometerMessage": ["Nerastas", "akselerometras!"],
-    "NoPowerDeliveryMessage": ["Nerastas", "USB-PD IC!"],
-    "LockingKeysString": "UŽRAKIN",
-    "UnlockingKeysString": "ATRAKIN",
-    "WarningKeysLockedString": "!UŽRAK!",
-    "WarningThermalRunaway": ["Perkaitimo", "pavojus"]
-  },
-  "characters": {
-    "SettingRightChar": "D",
-    "SettingLeftChar": "K",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "I",
-    "SettingSlowChar": "L",
-    "SettingMediumChar": "V",
-    "SettingFastChar": "G",
-    "SettingStartNoneChar": "N",
-    "SettingStartSolderingChar": "T",
-    "SettingStartSleepChar": "M",
-    "SettingStartSleepOffChar": "K",
-    "SettingSensitivityOff": "I",
-    "SettingSensitivityLow": "Ž",
-    "SettingSensitivityMedium": "V",
-    "SettingSensitivityHigh": "A",
-    "SettingLockDisableChar": "I",
-    "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "V"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Maitinimo", "nustatymai"],
-      "desc": "Su maitinblokiu susiję nustatymai"
+    "languageCode": "LT",
+    "languageLocalName": "Lietuvių",
+    "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Ar norite atstatyti nustatymus į numatytas reikšmes?",
+        "UVLOWarningString": "MAŽ VOLT",
+        "UndervoltageString": "Žema įtampa",
+        "InputVoltageString": "Įvestis V: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "Miegu...",
+        "SleepingTipAdvancedString": "Antg:",
+        "OffString": "Išj",
+        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
-    "SolderingMenu": {
-      "text2": ["Litavimo", "nustatymai"],
-      "desc": "Litavimo nustatymai"
+    "messagesWarn": {
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Atstatyta",
+        "SettingsResetMessage": [
+            "Nust. atstatyti!",
+            ""
+        ],
+        "NoAccelerometerMessage": [
+            "Nerastas",
+            "akselerometras!"
+        ],
+        "NoPowerDeliveryMessage": [
+            "Nerastas",
+            "USB-PD IC!"
+        ],
+        "LockingKeysString": "UŽRAKIN",
+        "UnlockingKeysString": "ATRAKIN",
+        "WarningKeysLockedString": "!UŽRAK!",
+        "WarningThermalRunaway": [
+            "Perkaitimo",
+            "pavojus"
+        ]
     },
-    "PowerSavingMenu": {
-      "text2": ["Miego", "režimai"],
-      "desc": "Energijos tausojimo nustatymai"
+    "characters": {
+        "SettingRightChar": "D",
+        "SettingLeftChar": "K",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "I",
+        "SettingSlowChar": "L",
+        "SettingMediumChar": "V",
+        "SettingFastChar": "G",
+        "SettingStartNoneChar": "N",
+        "SettingStartSolderingChar": "T",
+        "SettingStartSleepChar": "M",
+        "SettingStartSleepOffChar": "K",
+        "SettingSensitivityOff": "I",
+        "SettingSensitivityLow": "Ž",
+        "SettingSensitivityMedium": "V",
+        "SettingSensitivityHigh": "A",
+        "SettingLockDisableChar": "I",
+        "SettingLockBoostChar": "T",
+        "SettingLockFullChar": "V"
     },
-    "UIMenu": {
-      "text2": ["Naudotojo", "sąsaja"],
-      "desc": "Naudotojo sąsajos nustatymai"
+    "menuGroups": {
+        "PowerMenu": {
+            "text2": [
+                "Maitinimo",
+                "nustatymai"
+            ],
+            "desc": ""
+        },
+        "SolderingMenu": {
+            "text2": [
+                "Litavimo",
+                "nustatymai"
+            ],
+            "desc": ""
+        },
+        "PowerSavingMenu": {
+            "text2": [
+                "Miego",
+                "režimai"
+            ],
+            "desc": ""
+        },
+        "UIMenu": {
+            "text2": [
+                "Naudotojo",
+                "sąsaja"
+            ],
+            "desc": ""
+        },
+        "AdvancedMenu": {
+            "text2": [
+                "Išplėsti.",
+                "nustatymai"
+            ],
+            "desc": ""
+        }
     },
-    "AdvancedMenu": {
-      "text2": ["Išplėsti.", "nustatymai"],
-      "desc": "Išplėstiniai nustatymai"
+    "menuOptions": {
+        "DCInCutoff": {
+            "text2": [
+                "Maitinimo",
+                "šaltinis"
+            ],
+            "desc": "Išjungimo įtampa. (DC 10V) (arba celių [S] kiekis [3.3V per celę])"
+        },
+        "MinVolCell": {
+            "text2": [
+                "Minimalus",
+                "voltažas"
+            ],
+            "desc": "Minimalus voltažas, kuris yra leidžiamas kiekvienam baterijos elementui (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+        },
+        "QCMaxVoltage": {
+            "text2": [
+                "QC mait.",
+                "įtampa"
+            ],
+            "desc": "Maksimali QC maitinimo bloko įtampa"
+        },
+        "PDNegTimeout": {
+            "text2": [
+                "PD",
+                "laikas"
+            ],
+            "desc": "PD suderinimo laikas žingsniais po 100ms suderinamumui su kai kuriais QC įkrovikliais"
+        },
+        "BoostTemperature": {
+            "text2": [
+                "Turbo",
+                "temperat."
+            ],
+            "desc": "Temperatūra turbo režimu"
+        },
+        "AutoStart": {
+            "text2": [
+                "Automatinis",
+                "paleidimas"
+            ],
+            "desc": "Ar pradėti kaitininti iš karto įjungus lituoklį (N=Ne | T=Taip | M=Miegas | K=Miegoti kambario temperatūroje)"
+        },
+        "TempChangeShortStep": {
+            "text2": [
+                "Temp.keitim.",
+                "trump.spust."
+            ],
+            "desc": "Temperatūros keitimo žingsnis trumpai spustėlėjus mygtuką"
+        },
+        "TempChangeLongStep": {
+            "text2": [
+                "Temp.keitim.",
+                "ilgas pasp."
+            ],
+            "desc": "Temperatūros keitimo žingsnis ilgai paspaudus mygtuką"
+        },
+        "LockingMode": {
+            "text2": [
+                "Mygtukų",
+                "užraktas"
+            ],
+            "desc": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte (I=Išjungta | T=leidžiamas tik Turbo režimas | V=Visiškas užrakinimas)"
+        },
+        "MotionSensitivity": {
+            "text2": [
+                "Judesio",
+                "jautrumas"
+            ],
+            "desc": "Judesio jautrumas (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
+        },
+        "SleepTemperature": {
+            "text2": [
+                "Miego",
+                "temperat."
+            ],
+            "desc": "Antgalio temperatūra miego režimu"
+        },
+        "SleepTimeout": {
+            "text2": [
+                "Miego",
+                "laikas"
+            ],
+            "desc": "Užmigimo laikas (sekundės | minutės)"
+        },
+        "ShutdownTimeout": {
+            "text2": [
+                "Išjungimo",
+                "laikas"
+            ],
+            "desc": "Išjungimo laikas (minutės)"
+        },
+        "HallEffSensitivity": {
+            "text2": [
+                "Holo",
+                "jutiklis"
+            ],
+            "desc": "Holo jutiklio jautrumas nustatant miegą (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
+        },
+        "TemperatureUnit": {
+            "text2": [
+                "Temperatūros",
+                "vienetai"
+            ],
+            "desc": "Temperatūros vienetai (C=Celsijus | F=Farenheitas)"
+        },
+        "DisplayRotation": {
+            "text2": [
+                "Ekrano",
+                "orientacija"
+            ],
+            "desc": "Ekrano orientacija (D=Dešiniarankiams | K=Kairiarankiams | A=Automatinė)"
+        },
+        "CooldownBlink": {
+            "text2": [
+                "Atvėsimo",
+                "mirksėjimas"
+            ],
+            "desc": "Ar mirksėti temperatūrą ekrane kol vėstantis antgalis vis dar karštas?"
+        },
+        "ScrollingSpeed": {
+            "text2": [
+                "Aprašymo",
+                "greitis"
+            ],
+            "desc": "Greitis, kuriuo šis tekstas slenka"
+        },
+        "ReverseButtonTempChange": {
+            "text2": [
+                "Sukeisti + -",
+                "mygtukus?"
+            ],
+            "desc": "Sukeisti + - temperatūros keitimo mygtukus vietomis"
+        },
+        "AnimSpeed": {
+            "text2": [
+                "Animacijų",
+                "greitis"
+            ],
+            "desc": "Paveiksliukų animacijų greitis meniu punktuose (I=Išjungtas | L=Lėtas | V=Vidutinis | G=Greitas)"
+        },
+        "AnimLoop": {
+            "text2": [
+                "Animacijų",
+                "pakartojimas"
+            ],
+            "desc": "Leidžia kartoti animacijas be sustojimo pagrindiniame meniu"
+        },
+        "Brightness": {
+            "text2": [
+                "Ekrano",
+                "šviesumas"
+            ],
+            "desc": "Nustato OLED ekrano kontrastą/šviesumą."
+        },
+        "ColourInversion": {
+            "text2": [
+                "Ekrano",
+                "invertavimas"
+            ],
+            "desc": "Invertuoja OLED ekrano spalvas"
+        },
+        "LOGOTime": {
+            "text2": [
+                "Boot logo",
+                "duration"
+            ],
+            "desc": "Set boot logo duration (s=seconds)"
+        },
+        "AdvancedIdle": {
+            "text2": [
+                "Detalus lau-",
+                "kimo ekranas"
+            ],
+            "desc": "Ar rodyti papildomą informaciją mažesniu šriftu laukimo ekrane"
+        },
+        "AdvancedSoldering": {
+            "text2": [
+                "Detalus lita-",
+                "vimo ekranas"
+            ],
+            "desc": "Ar rodyti išsamią informaciją lituojant"
+        },
+        "PowerLimit": {
+            "text2": [
+                "Galios",
+                "riba"
+            ],
+            "desc": "Didžiausia galia, kurią gali naudoti lituoklis (Vatai)"
+        },
+        "CalibrateCJC": {
+            "text2": [
+                "Calibrate CJC",
+                "at next boot"
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+        },
+        "VoltageCalibration": {
+            "text2": [
+                "Kalibruoti",
+                "įvesties įtampą?"
+            ],
+            "desc": "Įvesties įtampos kalibravimas. Trumpai paspauskite, norėdami nustatyti, ilgai paspauskite, kad išeitumėte."
+        },
+        "PowerPulsePower": {
+            "text2": [
+                "Galios",
+                "pulso W"
+            ],
+            "desc": "Periodinis galios pulso intensyvumas maitinblokiui, neleidžiantis jam užmigti."
+        },
+        "PowerPulseWait": {
+            "text2": [
+                "Galios pulso",
+                "dažnumas"
+            ],
+            "desc": "Pasikartojantis laiko intervalas (x 2.5s), ties kuriuo kartojamas galios pulsas maitinblokiui, neleidžiantis jam užmigti"
+        },
+        "PowerPulseDuration": {
+            "text2": [
+                "Galios pulso",
+                "trukmė"
+            ],
+            "desc": "Galios pulso aktyvioji trukmė (x 250ms)"
+        },
+        "SettingsReset": {
+            "text2": [
+                "Atstatyti",
+                "nustatymus?"
+            ],
+            "desc": "Nustato nustatymus į numatytuosius"
+        },
+        "LanguageSwitch": {
+            "text2": [
+                "Kalba:",
+                " LT    Lietuvių"
+            ],
+            "desc": ""
+        }
     }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Maitinimo", "šaltinis"],
-      "desc": "Išjungimo įtampa. (DC 10V) (arba celių [S] kiekis [3.3V per celę])"
-    },
-    "SleepTemperature": {
-      "text2": ["Miego", "temperat."],
-      "desc": "Antgalio temperatūra miego režimu"
-    },
-    "SleepTimeout": {
-      "text2": ["Miego", "laikas"],
-      "desc": "Užmigimo laikas (sekundės | minutės)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Išjungimo", "laikas"],
-      "desc": "Išjungimo laikas (minutės)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Judesio", "jautrumas"],
-      "desc": "Judesio jautrumas (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
-    },
-    "TemperatureUnit": {
-      "text2": ["Temperatūros", "vienetai"],
-      "desc": "Temperatūros vienetai (C=Celsijus | F=Farenheitas)"
-    },
-    "AdvancedIdle": {
-      "text2": ["Detalus lau-", "kimo ekranas"],
-      "desc": "Ar rodyti papildomą informaciją mažesniu šriftu laukimo ekrane"
-    },
-    "DisplayRotation": {
-      "text2": ["Ekrano", "orientacija"],
-      "desc": "Ekrano orientacija (D=Dešiniarankiams | K=Kairiarankiams | A=Automatinė)"
-    },
-    "BoostTemperature": {
-      "text2": ["Turbo", "temperat."],
-      "desc": "Temperatūra turbo režimu"
-    },
-    "AutoStart": {
-      "text2": ["Automatinis", "paleidimas"],
-      "desc": "Ar pradėti kaitininti iš karto įjungus lituoklį (N=Ne | T=Taip | M=Miegas | K=Miegoti kambario temperatūroje)"
-    },
-    "CooldownBlink": {
-      "text2": ["Atvėsimo", "mirksėjimas"],
-      "desc": "Ar mirksėti temperatūrą ekrane kol vėstantis antgalis vis dar karštas?"
-    },
-    "TemperatureCalibration": {
-      "text2": ["Kalibruoti", "temperatūrą?"],
-      "desc": "Antgalio temperatūros kalibravimas"
-    },
-    "SettingsReset": {
-      "text2": ["Atstatyti", "nustatymus?"],
-      "desc": "Nustato nustatymus į numatytuosius"
-    },
-    "VoltageCalibration": {
-      "text2": ["Kalibruoti", "įvesties įtampą?"],
-      "desc": "Įvesties įtampos kalibravimas. Trumpai paspauskite, norėdami nustatyti, ilgai paspauskite, kad išeitumėte."
-    },
-    "AdvancedSoldering": {
-      "text2": ["Detalus lita-", "vimo ekranas"],
-      "desc": "Ar rodyti išsamią informaciją lituojant"
-    },
-    "ScrollingSpeed": {
-      "text2": ["Aprašymo", "greitis"],
-      "desc": "Greitis, kuriuo šis tekstas slenka"
-    },
-    "QCMaxVoltage": {
-      "text2": ["QC mait.", "įtampa"],
-      "desc": "Maksimali QC maitinimo bloko įtampa"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "laikas"],
-      "desc": "PD suderinimo laikas žingsniais po 100ms suderinamumui su kai kuriais QC įkrovikliais"
-    },
-    "PowerLimit": {
-      "text2": ["Galios", "riba"],
-      "desc": "Didžiausia galia, kurią gali naudoti lituoklis (Vatai)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["Sukeisti + -", "mygtukus?"],
-      "desc": "Sukeisti + - temperatūros keitimo mygtukus vietomis"
-    },
-    "TempChangeShortStep": {
-      "text2": ["Temp.keitim.", "trump.spust."],
-      "desc": "Temperatūros keitimo žingsnis trumpai spustėlėjus mygtuką"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Temp.keitim.", "ilgas pasp."],
-      "desc": "Temperatūros keitimo žingsnis ilgai paspaudus mygtuką"
-    },
-    "PowerPulsePower": {
-      "text2": ["Galios", "pulso W"],
-      "desc": "Periodinis galios pulso intensyvumas maitinblokiui, neleidžiantis jam užmigti."
-    },
-    "HallEffSensitivity": {
-      "text2": ["Holo", "jutiklis"],
-      "desc": "Holo jutiklio jautrumas nustatant miegą (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
-    },
-    "LockingMode": {
-      "text2": ["Mygtukų", "užraktas"],
-      "desc": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte (I=Išjungta | T=leidžiamas tik Turbo režimas | V=Visiškas užrakinimas)"
-    },
-    "MinVolCell": {
-      "text2": ["Minimalus", "voltažas"],
-      "desc": "Minimalus voltažas, kuris yra leidžiamas kiekvienam baterijos elementui (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Animacijų", "pakartojimas"],
-      "desc": "Leidžia kartoti animacijas be sustojimo pagrindiniame meniu"
-    },
-    "AnimSpeed": {
-      "text2": ["Animacijų", "greitis"],
-      "desc": "Paveiksliukų animacijų greitis meniu punktuose (I=Išjungtas | L=Lėtas | V=Vidutinis | G=Greitas)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Galios pulso", "dažnumas"],
-      "desc": "Pasikartojantis laiko intervalas (x 2.5s), ties kuriuo kartojamas galios pulsas maitinblokiui, neleidžiantis jam užmigti"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Galios pulso", "trukmė"],
-      "desc": "Galios pulso aktyvioji trukmė (x 250ms)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Kalba:", " LT    Lietuvių"],
-      "desc": "Dabartinė programinės įrangos kalba"
-    },
-    "Brightness": {
-      "text2": ["Ekrano", "šviesumas"],
-      "desc": "Nustato OLED ekrano kontrastą/šviesumą."
-    },
-    "ColourInversion": {
-      "text2": ["Ekrano", "invertavimas"],
-      "desc": "Invertuoja OLED ekrano spalvas"
-    },
-    "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
-    }
-  }
 }

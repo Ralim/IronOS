@@ -1,207 +1,341 @@
 {
-  "languageCode": "SV",
-  "languageLocalName": "Svenska",
-  "fonts": ["ascii_basic", "latin_extended"],
-  "tempUnitFahrenheit": false,
-  "messages": {
-    "SettingsCalibrationWarning": "Se till att spetsen är rumstemererad innan du fortsätter!",
-    "SettingsResetWarning": "Är du säker på att du vill återställa inställningarna?",
-    "UVLOWarningString": "DC LÅG",
-    "UndervoltageString": "Underspänning",
-    "InputVoltageString": "Inspän. V: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "Viloläge...",
-    "SleepingTipAdvancedString": "Spets:",
-    "OffString": "Av"
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Inställningar", "återställda"],
-    "NoAccelerometerMessage": ["Ingen", "accelerometer"],
-    "NoPowerDeliveryMessage": ["Ingen USB-PD IC", "hittades!"],
-    "LockingKeysString": "LÅST",
-    "UnlockingKeysString": "UPPLÅST",
-    "WarningKeysLockedString": "!LÅST!",
-    "WarningThermalRunaway": ["Thermal", "Runaway"]
-  },
-  "characters": {
-    "SettingRightChar": "H",
-    "SettingLeftChar": "V",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "A",
-    "SettingSlowChar": "L",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "S",
-    "SettingStartNoneChar": "A",
-    "SettingStartSolderingChar": "L",
-    "SettingStartSleepChar": "V",
-    "SettingStartSleepOffChar": "R",
-    "SettingSensitivityOff": "A",
-    "SettingSensitivityLow": "L",
-    "SettingSensitivityMedium": "M",
-    "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "A",
-    "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "F"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Effekt-", "inställning"],
-      "desc": "Effektinställningar"
+    "languageCode": "SV",
+    "languageLocalName": "Svenska",
+    "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Är du säker på att du vill återställa inställningarna?",
+        "UVLOWarningString": "DC LÅG",
+        "UndervoltageString": "Underspänning",
+        "InputVoltageString": "Inspän. V: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "Viloläge...",
+        "SleepingTipAdvancedString": "Spets:",
+        "OffString": "Av",
+        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
-    "SolderingMenu": {
-      "text2": ["Lödnings-", "inställning"],
-      "desc": "Lödningsinställningar"
+    "messagesWarn": {
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Reset OK",
+        "SettingsResetMessage": [
+            "Inställningar",
+            "återställda"
+        ],
+        "NoAccelerometerMessage": [
+            "Ingen",
+            "accelerometer"
+        ],
+        "NoPowerDeliveryMessage": [
+            "Ingen USB-PD IC",
+            "hittades!"
+        ],
+        "LockingKeysString": "LÅST",
+        "UnlockingKeysString": "UPPLÅST",
+        "WarningKeysLockedString": "!LÅST!",
+        "WarningThermalRunaway": [
+            "Thermal",
+            "Runaway"
+        ]
     },
-    "PowerSavingMenu": {
-      "text2": ["Vilo-", "läge"],
-      "desc": "Viloläges-inställningar"
+    "characters": {
+        "SettingRightChar": "H",
+        "SettingLeftChar": "V",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "A",
+        "SettingSlowChar": "L",
+        "SettingMediumChar": "M",
+        "SettingFastChar": "S",
+        "SettingStartNoneChar": "A",
+        "SettingStartSolderingChar": "L",
+        "SettingStartSleepChar": "V",
+        "SettingStartSleepOffChar": "R",
+        "SettingSensitivityOff": "A",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "A",
+        "SettingLockBoostChar": "T",
+        "SettingLockFullChar": "F"
     },
-    "UIMenu": {
-      "text2": ["Användar-", "gränssnitt"],
-      "desc": "Användargränssnitts-inställningar"
+    "menuGroups": {
+        "PowerMenu": {
+            "text2": [
+                "Effekt-",
+                "inställning"
+            ],
+            "desc": ""
+        },
+        "SolderingMenu": {
+            "text2": [
+                "Lödnings-",
+                "inställning"
+            ],
+            "desc": ""
+        },
+        "PowerSavingMenu": {
+            "text2": [
+                "Vilo-",
+                "läge"
+            ],
+            "desc": ""
+        },
+        "UIMenu": {
+            "text2": [
+                "Användar-",
+                "gränssnitt"
+            ],
+            "desc": ""
+        },
+        "AdvancedMenu": {
+            "text2": [
+                "Avancerade",
+                "alternativ"
+            ],
+            "desc": ""
+        }
     },
-    "AdvancedMenu": {
-      "text2": ["Avancerade", "alternativ"],
-      "desc": "Avancerade alternativ"
+    "menuOptions": {
+        "DCInCutoff": {
+            "text2": [
+                "Ström-",
+                "källa"
+            ],
+            "desc": "Strömkälla. Anger lägsta spänning. (DC 10V) (S 3.3V per cell)"
+        },
+        "MinVolCell": {
+            "text2": [
+                "Minimim-",
+                "spänning"
+            ],
+            "desc": "Minimumspänning per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+        },
+        "QCMaxVoltage": {
+            "text2": [
+                "QC",
+                "spänning"
+            ],
+            "desc": "Maximal QC-spänning enheten skall efterfråga"
+        },
+        "PDNegTimeout": {
+            "text2": [
+                "PD",
+                "timeout"
+            ],
+            "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+        },
+        "BoostTemperature": {
+            "text2": [
+                "Turbo-",
+                "temp"
+            ],
+            "desc": "Temperatur i \"turbo-läge\""
+        },
+        "AutoStart": {
+            "text2": [
+                "Auto",
+                "start"
+            ],
+            "desc": "Startar automatiskt lödpennan vid uppstart. (A=Av | L=Lödning | V=Viloläge | R=Viloläge Rumstemperatur)"
+        },
+        "TempChangeShortStep": {
+            "text2": [
+                "Temp.just",
+                "korttryck"
+            ],
+            "desc": "Temperaturjustering vid kort knapptryckning"
+        },
+        "TempChangeLongStep": {
+            "text2": [
+                "Temp.just",
+                "långtryck"
+            ],
+            "desc": "Temperaturjustering vid lång knapptryckning"
+        },
+        "LockingMode": {
+            "text2": [
+                "Tillåt lås",
+                "via knappar"
+            ],
+            "desc": "Vid lödning, håll nere bägge knappar för att slå på lås (A=Av | T=Bara turbo | F=Fullt lås)"
+        },
+        "MotionSensitivity": {
+            "text2": [
+                "Rörelse-",
+                "känslighet"
+            ],
+            "desc": "Rörelsekänslighet (0=Av | 1=minst känslig | ... | 9=mest känslig)"
+        },
+        "SleepTemperature": {
+            "text2": [
+                "Vilo-",
+                "temp"
+            ],
+            "desc": "Vilotemperatur (C)"
+        },
+        "SleepTimeout": {
+            "text2": [
+                "Vilo-",
+                "timeout"
+            ],
+            "desc": "Vilo-timeout (m=Minuter | s=Sekunder)"
+        },
+        "ShutdownTimeout": {
+            "text2": [
+                "Avstängn.",
+                "timeout"
+            ],
+            "desc": "Avstängnings-timeout (Minuter)"
+        },
+        "HallEffSensitivity": {
+            "text2": [
+                "Sensor-",
+                "känslght"
+            ],
+            "desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (0=Av | 1=minst känslig | ... | 9=mest känslig)"
+        },
+        "TemperatureUnit": {
+            "text2": [
+                "Temperatur-",
+                "enheter"
+            ],
+            "desc": "Temperaturenhet (C=Celsius | F=Fahrenheit)"
+        },
+        "DisplayRotation": {
+            "text2": [
+                "Visnings",
+                "läge"
+            ],
+            "desc": "Visningsläge (H=Högerhänt | V=Vänsterhänt | A=Automatisk)"
+        },
+        "CooldownBlink": {
+            "text2": [
+                "Nedkylnings-",
+                "blink"
+            ],
+            "desc": "Blinka temperaturen medan spetsen kyls av och fortfarande är varm."
+        },
+        "ScrollingSpeed": {
+            "text2": [
+                "Beskrivning",
+                "rullhast."
+            ],
+            "desc": "Hastighet som den här texten rullar i"
+        },
+        "ReverseButtonTempChange": {
+            "text2": [
+                "Omvända",
+                "+- knappar"
+            ],
+            "desc": "Omvänd ordning för temperaturjustering via plus/minus knapparna"
+        },
+        "AnimSpeed": {
+            "text2": [
+                "Anim.-",
+                "hastighet"
+            ],
+            "desc": "Animationshastighet för ikoner i menyer (A=av | L=långsam | M=medel | S=snabb)"
+        },
+        "AnimLoop": {
+            "text2": [
+                "Anim.",
+                "loop"
+            ],
+            "desc": "Loopa animationer i huvudmeny"
+        },
+        "Brightness": {
+            "text2": [
+                "Screen",
+                "brightness"
+            ],
+            "desc": "Adjust the OLED screen brightness"
+        },
+        "ColourInversion": {
+            "text2": [
+                "Invert",
+                "screen"
+            ],
+            "desc": "Invert the OLED screen colors"
+        },
+        "LOGOTime": {
+            "text2": [
+                "Boot logo",
+                "duration"
+            ],
+            "desc": "Set boot logo duration (s=seconds)"
+        },
+        "AdvancedIdle": {
+            "text2": [
+                "Detaljerad",
+                "vid inaktiv"
+            ],
+            "desc": "Visa detaljerad information i mindre typsnitt när inaktiv."
+        },
+        "AdvancedSoldering": {
+            "text2": [
+                "Detaljerad",
+                "lödng.skärm"
+            ],
+            "desc": "Visa detaljerad information vid lödning"
+        },
+        "PowerLimit": {
+            "text2": [
+                "Max-",
+                "effekt"
+            ],
+            "desc": "Maximal effekt som enheten kan använda (Watt)"
+        },
+        "CalibrateCJC": {
+            "text2": [
+                "Calibrate CJC",
+                "at next boot"
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+        },
+        "VoltageCalibration": {
+            "text2": [
+                "Kalibrera",
+                "inspänning?"
+            ],
+            "desc": "Inspänningskalibrering. Knapparna justerar, håll inne för avslut"
+        },
+        "PowerPulsePower": {
+            "text2": [
+                "Power",
+                "pulse"
+            ],
+            "desc": "Intensity of power of keep-awake-pulse (W=watt)"
+        },
+        "PowerPulseWait": {
+            "text2": [
+                "Power pulse",
+                "delay"
+            ],
+            "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+        },
+        "PowerPulseDuration": {
+            "text2": [
+                "Power pulse",
+                "duration"
+            ],
+            "desc": "Keep-awake-pulse duration (x 250ms)"
+        },
+        "SettingsReset": {
+            "text2": [
+                "Fabriks-",
+                "inställ?"
+            ],
+            "desc": "Återställ alla inställningar"
+        },
+        "LanguageSwitch": {
+            "text2": [
+                "Språk:",
+                " SV     Svenska"
+            ],
+            "desc": ""
+        }
     }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Ström-", "källa"],
-      "desc": "Strömkälla. Anger lägsta spänning. (DC 10V) (S 3.3V per cell)"
-    },
-    "SleepTemperature": {
-      "text2": ["Vilo-", "temp"],
-      "desc": "Vilotemperatur (C)"
-    },
-    "SleepTimeout": {
-      "text2": ["Vilo-", "timeout"],
-      "desc": "Vilo-timeout (m=Minuter | s=Sekunder)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Avstängn.", "timeout"],
-      "desc": "Avstängnings-timeout (Minuter)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Rörelse-", "känslighet"],
-      "desc": "Rörelsekänslighet (0=Av | 1=minst känslig | ... | 9=mest känslig)"
-    },
-    "TemperatureUnit": {
-      "text2": ["Temperatur-", "enheter"],
-      "desc": "Temperaturenhet (C=Celsius | F=Fahrenheit)"
-    },
-    "AdvancedIdle": {
-      "text2": ["Detaljerad", "vid inaktiv"],
-      "desc": "Visa detaljerad information i mindre typsnitt när inaktiv."
-    },
-    "DisplayRotation": {
-      "text2": ["Visnings", "läge"],
-      "desc": "Visningsläge (H=Högerhänt | V=Vänsterhänt | A=Automatisk)"
-    },
-    "BoostTemperature": {
-      "text2": ["Turbo-", "temp"],
-      "desc": "Temperatur i \"turbo\"-läge"
-    },
-    "AutoStart": {
-      "text2": ["Auto", "start"],
-      "desc": "Startar automatiskt lödpennan vid uppstart. (A=Av | L=Lödning | V=Viloläge | R=Viloläge Rumstemperatur)"
-    },
-    "CooldownBlink": {
-      "text2": ["Nedkylnings-", "blink"],
-      "desc": "Blinka temperaturen medan spetsen kyls av och fortfarande är varm."
-    },
-    "TemperatureCalibration": {
-      "text2": ["Kalibrera", "temperatur?"],
-      "desc": "Kalibrera spets-kompensation."
-    },
-    "SettingsReset": {
-      "text2": ["Fabriks-", "inställ?"],
-      "desc": "Återställ alla inställningar"
-    },
-    "VoltageCalibration": {
-      "text2": ["Kalibrera", "inspänning?"],
-      "desc": "Inspänningskalibrering. Knapparna justerar, håll inne för avslut"
-    },
-    "AdvancedSoldering": {
-      "text2": ["Detaljerad", "lödng.skärm"],
-      "desc": "Visa detaljerad information vid lödning"
-    },
-    "ScrollingSpeed": {
-      "text2": ["Beskrivning", "rullhast."],
-      "desc": "Hastighet som den här texten rullar i"
-    },
-    "QCMaxVoltage": {
-      "text2": ["QC", "spänning"],
-      "desc": "Maximal QC-spänning enheten skall efterfråga"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-    },
-    "PowerLimit": {
-      "text2": ["Max-", "effekt"],
-      "desc": "Maximal effekt som enheten kan använda (Watt)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["Omvända", "+- knappar"],
-      "desc": "Omvänd ordning för temperaturjustering via plus/minus knapparna"
-    },
-    "TempChangeShortStep": {
-      "text2": ["Temp.just", "korttryck"],
-      "desc": "Temperaturjustering vid kort knapptryckning"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Temp.just", "långtryck"],
-      "desc": "Temperaturjustering vid lång knapptryckning"
-    },
-    "PowerPulsePower": {
-      "text2": ["Power", "Pulse W"],
-      "desc": "Keep awake pulse power intensity"
-    },
-    "HallEffSensitivity": {
-      "text2": ["Sensor-", "känslght"],
-      "desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (0=Av | 1=minst känslig | ... | 9=mest känslig)"
-    },
-    "LockingMode": {
-      "text2": ["Tillåt lås", "via knappar"],
-      "desc": "Vid lödning, håll nere bägge knappar för att slå på lås (A=Av | T=Bara turbo | F=Fullt lås)"
-    },
-    "MinVolCell": {
-      "text2": ["Minimim-", "spänning"],
-      "desc": "Minimumspänning per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Anim.", "loop"],
-      "desc": "Loopa animationer i huvudmeny"
-    },
-    "AnimSpeed": {
-      "text2": ["Anim.-", "hastighet"],
-      "desc": "Animationshastighet för ikoner i menyer (A=av | L=långsam | M=medel | S=snabb)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Power pulse", "delay"],
-      "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Power pulse", "duration"],
-      "desc": "Keep-awake-pulse duration (x 250ms)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Språk:", " SV     Svenska"],
-      "desc": ""
-    },
-    "Brightness": {
-      "text2": ["Screen", "brightness"],
-      "desc": "Adjust the brightness of the OLED screen"
-    },
-    "ColourInversion": {
-      "text2": ["Invert", "screen"],
-      "desc": "Invert the colours of the OLED screen"
-    },
-    "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
-    }
-  }
 }

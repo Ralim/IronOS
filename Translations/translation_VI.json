@@ -1,207 +1,341 @@
 {
-  "languageCode": "VI",
-  "languageLocalName": "Tieng Viet",
-  "fonts": ["ascii_basic", "latin_extended"],
-  "tempUnitFahrenheit": false,
-  "messages": {
-    "SettingsCalibrationWarning": "Chac chan mui hàn o nhiet đo phòng truoc khi tiep tuc!",
-    "SettingsResetWarning": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?",
-    "UVLOWarningString": "DC thap",
-    "UndervoltageString": "Đien áp thap",
-    "InputVoltageString": "Đau vào V: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "Đang ngu...",
-    "SleepingTipAdvancedString": "Meo:",
-    "OffString": "Tat"
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "Reset OK",
-    "SettingsResetMessage": ["Mot so cài đat", "đã thay đoi"],
-    "NoAccelerometerMessage": ["Không phát hien", "gia toc ke!"],
-    "NoPowerDeliveryMessage": ["Không phát hien", "USB-PD IC!"],
-    "LockingKeysString": "Đã khóa",
-    "UnlockingKeysString": "Mo khóa",
-    "WarningKeysLockedString": "Đã khóa!",
-    "WarningThermalRunaway": ["Nhiet", "Tat gia nhiet"]
-  },
-  "characters": {
-    "SettingRightChar": "R",
-    "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingOffChar": "O",
-    "SettingSlowChar": "S",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "F",
-    "SettingStartNoneChar": "O",
-    "SettingStartSolderingChar": "S",
-    "SettingStartSleepChar": "Z",
-    "SettingStartSleepOffChar": "R",
-    "SettingSensitivityOff": "O",
-    "SettingSensitivityLow": "L",
-    "SettingSensitivityMedium": "M",
-    "SettingSensitivityHigh": "H",
-    "SettingLockDisableChar": "D",
-    "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": ["Cài đat", "nguon đien"],
-      "desc": "Cài đat nguon đien"
+    "languageCode": "VI",
+    "languageLocalName": "Tieng Viet",
+    "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?",
+        "UVLOWarningString": "DC thap",
+        "UndervoltageString": "Đien áp thap",
+        "InputVoltageString": "Đau vào V: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "Đang ngu...",
+        "SleepingTipAdvancedString": "Meo:",
+        "OffString": "Tat",
+        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
-    "SolderingMenu": {
-      "text2": ["Cài đat", "tay hàn"],
-      "desc": "Cài đat tay hàn"
+    "messagesWarn": {
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Reset OK",
+        "SettingsResetMessage": [
+            "Mot so cài đat",
+            "đã thay đoi"
+        ],
+        "NoAccelerometerMessage": [
+            "Không phát hien",
+            "gia toc ke!"
+        ],
+        "NoPowerDeliveryMessage": [
+            "Không phát hien",
+            "USB-PD IC!"
+        ],
+        "LockingKeysString": "Đã khóa",
+        "UnlockingKeysString": "Mo khóa",
+        "WarningKeysLockedString": "Đã khóa!",
+        "WarningThermalRunaway": [
+            "Nhiet",
+            "Tat gia nhiet"
+        ]
     },
-    "PowerSavingMenu": {
-      "text2": ["Che đo", "ngu"],
-      "desc": "Cài đat che đo tiet kiem đien"
+    "characters": {
+        "SettingRightChar": "R",
+        "SettingLeftChar": "L",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "O",
+        "SettingSlowChar": "S",
+        "SettingMediumChar": "M",
+        "SettingFastChar": "F",
+        "SettingStartNoneChar": "O",
+        "SettingStartSolderingChar": "S",
+        "SettingStartSleepChar": "Z",
+        "SettingStartSleepOffChar": "R",
+        "SettingSensitivityOff": "O",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "D",
+        "SettingLockBoostChar": "B",
+        "SettingLockFullChar": "F"
     },
-    "UIMenu": {
-      "text2": ["Giao dien", "nguoi dùng"],
-      "desc": "Cài đat giao dien nguoi dùng"
+    "menuGroups": {
+        "PowerMenu": {
+            "text2": [
+                "Cài đat",
+                "nguon đien"
+            ],
+            "desc": ""
+        },
+        "SolderingMenu": {
+            "text2": [
+                "Cài đat",
+                "tay hàn"
+            ],
+            "desc": ""
+        },
+        "PowerSavingMenu": {
+            "text2": [
+                "Che đo",
+                "ngu"
+            ],
+            "desc": ""
+        },
+        "UIMenu": {
+            "text2": [
+                "Giao dien",
+                "nguoi dùng"
+            ],
+            "desc": ""
+        },
+        "AdvancedMenu": {
+            "text2": [
+                "Cài đat",
+                "nâng cao"
+            ],
+            "desc": ""
+        }
     },
-    "AdvancedMenu": {
-      "text2": ["Cài đat", "nâng cao"],
-      "desc": "Cài đat nâng cao"
+    "menuOptions": {
+        "DCInCutoff": {
+            "text2": [
+                "Nguon",
+                "đien"
+            ],
+            "desc": "Nguon đien, đat đien áp giam. (DC 10V) (S 3.3V moi cell, tat gioi han công suat)"
+        },
+        "MinVolCell": {
+            "text2": [
+                "Voltage",
+                "toi thieu"
+            ],
+            "desc": "Đien áp toi thieu cho phép trên moi cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+        },
+        "QCMaxVoltage": {
+            "text2": [
+                "QC",
+                "voltage"
+            ],
+            "desc": "Đien áp QC toi đa mà tay hàn yêu cau"
+        },
+        "PDNegTimeout": {
+            "text2": [
+                "PD",
+                "sau"
+            ],
+            "desc": "Thoi gian cho đàm phán PD trong các buoc 100ms đe tuong thích voi mot so bo sac QC"
+        },
+        "BoostTemperature": {
+            "text2": [
+                "Tăng",
+                "nhiet đo"
+            ],
+            "desc": "Nhiet đo dùng trong che đo \"tăng cuong\""
+        },
+        "AutoStart": {
+            "text2": [
+                "Nhiet đo",
+                "đang tăng"
+            ],
+            "desc": "- O=tat | S=nhiet đo hàn | Z=cho o nhiet đo ngu đen khi cu đong | R=cho mà không gia nhiet đen khi cu đong"
+        },
+        "TempChangeShortStep": {
+            "text2": [
+                "Thay đoi n.đo",
+                "an nút nhanh"
+            ],
+            "desc": "Biên đo tăng/giam nhiet đo khi an nút nhanh"
+        },
+        "TempChangeLongStep": {
+            "text2": [
+                "Thay đoi n.đo",
+                "an nút lâu"
+            ],
+            "desc": "Biên đo tăng/giam nhiet đo khi an nút lâu"
+        },
+        "LockingMode": {
+            "text2": [
+                "Cho phép khóa",
+                "các nút"
+            ],
+            "desc": "Trong khi hàn, giu ca 2 nút đe khóa(D=tat | B=chi che đo tăng cuong | F=khóa hoàn toàn)"
+        },
+        "MotionSensitivity": {
+            "text2": [
+                "Cam bien",
+                "cu đong"
+            ],
+            "desc": "- 0=tat | 1=đo nhay thap nhat| ... | 9=đo nhay cao nhat"
+        },
+        "SleepTemperature": {
+            "text2": [
+                "Nhiet đo",
+                "khi ngu"
+            ],
+            "desc": "Giam nhiet đo khi o \"Che đo ngu\""
+        },
+        "SleepTimeout": {
+            "text2": [
+                "Ngu",
+                "sau"
+            ],
+            "desc": "- thoi gian truoc khi \"Che đo ngu\" bat đau (s=giây | m=phút)"
+        },
+        "ShutdownTimeout": {
+            "text2": [
+                "Tat",
+                "sau"
+            ],
+            "desc": "- khoang thoi gian truoc khi tay hàn tat (m=phút)"
+        },
+        "HallEffSensitivity": {
+            "text2": [
+                "Hall",
+                "đo nhay"
+            ],
+            "desc": "Đo nhay cam bien Hall đe phát hien che đo ngu (0=tat | 1=ít nhay nhat |...| 9=nhay nhat)"
+        },
+        "TemperatureUnit": {
+            "text2": [
+                "Đon vi",
+                "nhiet đo"
+            ],
+            "desc": "C= Đo C | F= Đo F"
+        },
+        "DisplayRotation": {
+            "text2": [
+                "Huong",
+                "hien thi"
+            ],
+            "desc": "- R=huong tay phai | L=huong tay trái | A=tu đong"
+        },
+        "CooldownBlink": {
+            "text2": [
+                "Nguoi đi",
+                "chop mat"
+            ],
+            "desc": "-Nhap nháy nhiet đo sau khi viec gia nhiet tam dung trong khi mui hàn van nóng"
+        },
+        "ScrollingSpeed": {
+            "text2": [
+                "Toc đo",
+                "cuon"
+            ],
+            "desc": "Toc đo cuon văn ban(S=cham | F=nhanh)"
+        },
+        "ReverseButtonTempChange": {
+            "text2": [
+                "Đao nguoc",
+                "nút + -"
+            ],
+            "desc": "Đao nguoc chuc năng các nút đieu chinh nhiet đo"
+        },
+        "AnimSpeed": {
+            "text2": [
+                "Toc đo",
+                "hoat anh"
+            ],
+            "desc": "-Toc đo cua hoat anh menu (O=tat | S=cham | M=trung bình | F=nhanh)"
+        },
+        "AnimLoop": {
+            "text2": [
+                "Hoat anh",
+                "lap lai"
+            ],
+            "desc": "Lap lai các hoat anh trong màn hình chính"
+        },
+        "Brightness": {
+            "text2": [
+                "Đo tuong phan",
+                "màn hình"
+            ],
+            "desc": "-Đieu chinh đo sáng màn hình OLED"
+        },
+        "ColourInversion": {
+            "text2": [
+                "Đao nguoc màu",
+                "màn hình"
+            ],
+            "desc": "-Đao nguoc màu màn hình OLED"
+        },
+        "LOGOTime": {
+            "text2": [
+                "Boot logo",
+                "duration"
+            ],
+            "desc": "Set boot logo duration (s=seconds)"
+        },
+        "AdvancedIdle": {
+            "text2": [
+                "Chi tiet",
+                "màn hình cho"
+            ],
+            "desc": "- hien thi thông tin chi tiet bang phông chu nho hon trên màn hình cho"
+        },
+        "AdvancedSoldering": {
+            "text2": [
+                "Chi tiet",
+                "màn hình hàn"
+            ],
+            "desc": "-Hien thi thông tin bang phông chu nho hon trên màn hình hàn"
+        },
+        "PowerLimit": {
+            "text2": [
+                "Công suat",
+                "gioi han"
+            ],
+            "desc": "-Công suat toi đa mà tay hàn có the su dung (W=watt)"
+        },
+        "CalibrateCJC": {
+            "text2": [
+                "Calibrate CJC",
+                "at next boot"
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+        },
+        "VoltageCalibration": {
+            "text2": [
+                "Hieu chinh",
+                "đien áp đau vào?"
+            ],
+            "desc": "-bat đau hieu chuan VIN (nhan và giu đe thoát)"
+        },
+        "PowerPulsePower": {
+            "text2": [
+                "Công suat",
+                "kích nguon"
+            ],
+            "desc": "-Cuong đo công suat kích nguon (watt)"
+        },
+        "PowerPulseWait": {
+            "text2": [
+                "Trì hoãn",
+                "đien áp kích"
+            ],
+            "desc": "Trì hoãn truoc khi kích hoat kích nguon(x 2,5 giây)"
+        },
+        "PowerPulseDuration": {
+            "text2": [
+                "Thoi luong",
+                "kích nguon"
+            ],
+            "desc": "-thoi luong kích nguon (x 250ms)"
+        },
+        "SettingsReset": {
+            "text2": [
+                "Khôi phuc",
+                "cài đat goc?"
+            ],
+            "desc": "-đat lai tat ca cài đat ve mac đinh"
+        },
+        "LanguageSwitch": {
+            "text2": [
+                "Ngôn ngu:",
+                " VI  Tieng Viet"
+            ],
+            "desc": ""
+        }
     }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": ["Nguon", "đien"],
-      "desc": "Nguon đien, đat đien áp giam. (DC 10V) (S 3.3V moi cell, tat gioi han công suat)"
-    },
-    "SleepTemperature": {
-      "text2": ["Nhiet đo", "khi ngu"],
-      "desc": "Giam nhiet đo khi o \"Che đo ngu\""
-    },
-    "SleepTimeout": {
-      "text2": ["Ngu", "sau"],
-      "desc": "- thoi gian truoc khi \"Che đo ngu\" bat đau (s=giây | m=phút)"
-    },
-    "ShutdownTimeout": {
-      "text2": ["Tat", "sau"],
-      "desc": "- khoang thoi gian truoc khi tay hàn tat (m=phút)"
-    },
-    "MotionSensitivity": {
-      "text2": ["Cam bien", "cu đong"],
-      "desc": "- 0=tat | 1=đo nhay thap nhat| ... | 9=đo nhay cao nhat"
-    },
-    "TemperatureUnit": {
-      "text2": ["Đon vi", "nhiet đo"],
-      "desc": "C= Đo C | F= Đo F"
-    },
-    "AdvancedIdle": {
-      "text2": ["Chi tiet", "màn hình cho"],
-      "desc": "- hien thi thông tin chi tiet bang phông chu nho hon trên màn hình cho"
-    },
-    "DisplayRotation": {
-      "text2": ["Huong", "hien thi"],
-      "desc": "- R=huong tay phai | L=huong tay trái | A=tu đong"
-    },
-    "BoostTemperature": {
-      "text2": ["Tăng", "nhiet đo"],
-      "desc": "Nhiet đo dùng trong che đo \"tăng cuong\""
-    },
-    "AutoStart": {
-      "text2": ["Nhiet đo", "đang tăng"],
-      "desc": "- O=tat | S=nhiet đo hàn | Z=cho o nhiet đo ngu đen khi cu đong | R=cho mà không gia nhiet đen khi cu đong"
-    },
-    "CooldownBlink": {
-      "text2": ["Nguoi đi", "chop mat"],
-      "desc": "-Nhap nháy nhiet đo sau khi viec gia nhiet tam dung trong khi mui hàn van nóng"
-    },
-    "TemperatureCalibration": {
-      "text2": ["Hieu chuan", "nhiet đo?"],
-      "desc": "-Bat đau hieu chuan bù nhiet cho mui hàn"
-    },
-    "SettingsReset": {
-      "text2": ["Khôi phuc", "cài đat goc?"],
-      "desc": "-đat lai tat ca cài đat ve mac đinh"
-    },
-    "VoltageCalibration": {
-      "text2": ["Hieu chinh", "đien áp đau vào?"],
-      "desc": "-bat đau hieu chuan VIN (nhan và giu đe thoát)"
-    },
-    "AdvancedSoldering": {
-      "text2": ["Chi tiet", "màn hình hàn"],
-      "desc": "-Hien thi thông tin bang phông chu nho hon trên màn hình hàn"
-    },
-    "ScrollingSpeed": {
-      "text2": ["Toc đo", "cuon"],
-      "desc": "Toc đo cuon văn ban(S=cham | F=nhanh)"
-    },
-    "QCMaxVoltage": {
-      "text2": ["QC", "Voltage"],
-      "desc": "Đien áp QC toi đa mà tay hàn yêu cau"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "sau"],
-      "desc": "Thoi gian cho đàm phán PD trong các buoc 100ms đe tuong thích voi mot so bo sac QC"
-    },
-    "PowerLimit": {
-      "text2": ["Công suat", "gioi han"],
-      "desc": "-Công suat toi đa mà tay hàn có the su dung (W=watt)"
-    },
-    "ReverseButtonTempChange": {
-      "text2": ["Đao nguoc", "nút + -"],
-      "desc": "Đao nguoc chuc năng các nút đieu chinh nhiet đo"
-    },
-    "TempChangeShortStep": {
-      "text2": ["Thay đoi n.đo", "an nút nhanh"],
-      "desc": "Biên đo tăng/giam nhiet đo khi an nút nhanh"
-    },
-    "TempChangeLongStep": {
-      "text2": ["Thay đoi n.đo", "an nút lâu"],
-      "desc": "Biên đo tăng/giam nhiet đo khi an nút lâu"
-    },
-    "PowerPulsePower": {
-      "text2": ["Công suat", "kích nguon"],
-      "desc": "-Cuong đo công suat kích nguon (watt)"
-    },
-    "HallEffSensitivity": {
-      "text2": ["Hall", "đo nhay"],
-      "desc": "Đo nhay cam bien Hall đe phát hien che đo ngu (0=tat | 1=ít nhay nhat |...| 9=nhay nhat)"
-    },
-    "LockingMode": {
-      "text2": ["Cho phép khóa", "các nút"],
-      "desc": "Trong khi hàn, giu ca 2 nút đe khóa(D=tat | B=chi che đo tăng cuong | F=khóa hoàn toàn)"
-    },
-    "MinVolCell": {
-      "text2": ["Voltage", "toi thieu"],
-      "desc": "Đien áp toi thieu cho phép trên moi cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
-    },
-    "AnimLoop": {
-      "text2": ["Hoat anh", "lap lai"],
-      "desc": "Lap lai các hoat anh trong màn hình chính"
-    },
-    "AnimSpeed": {
-      "text2": ["Toc đo", "hoat anh"],
-      "desc": "-Toc đo cua hoat anh menu (O=tat | S=cham | M=trung bình | F=nhanh)"
-    },
-    "PowerPulseWait": {
-      "text2": ["Trì hoãn", "đien áp kích"],
-      "desc": "Trì hoãn truoc khi kích hoat kích nguon(x 2,5 giây)"
-    },
-    "PowerPulseDuration": {
-      "text2": ["Thoi luong", "kích nguon"],
-      "desc": "-thoi luong kích nguon (x 250ms)"
-    },
-    "LanguageSwitch": {
-      "text2": ["Ngôn ngu:", "VI Tieng Viet"],
-      "desc": "-Ngôn ngu firmware hien tai"
-    },
-    "Brightness": {
-      "text2": ["Đo tuong phan", "màn hình"],
-      "desc": "-Đieu chinh đo sáng màn hình OLED"
-    },
-    "ColourInversion": {
-      "text2": ["Đao nguoc màu", "màn hình"],
-      "desc": "-Đao nguoc màu màn hình OLED"
-    },
-    "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
-    }
-  }
 }

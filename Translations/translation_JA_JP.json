@@ -1,207 +1,212 @@
 {
-  "languageCode": "JA_JP",
-  "languageLocalName": "日本語",
-  "fonts": ["ascii_basic", "cjk"],
-  "tempUnitFahrenheit": true,
-  "messages": {
-    "SettingsCalibrationWarning": "続行する前に、コテ先が室温と同じになっていることを確認してください",
-    "SettingsResetWarning": "設定をリセットしますか？",
-    "UVLOWarningString": "電圧が低すぎます",
-    "UndervoltageString": "Undervoltage",
-    "InputVoltageString": "Input V: ",
-    "SleepingSimpleString": "Zzzz",
-    "SleepingAdvancedString": "Sleeping...",
-    "SleepingTipAdvancedString": "Tip:",
-    "OffString": "オフ"
-  },
-  "messagesWarn": {
-    "ResetOKMessage": "リセットOK",
-    "SettingsResetMessage": "初期化されました",
-    "NoAccelerometerMessage": "加速度計未検出",
-    "NoPowerDeliveryMessage": "PD IC未検出",
-    "LockingKeysString": "ボタンロック",
-    "UnlockingKeysString": "ロックを解除",
-    "WarningKeysLockedString": "!入力ロック中!",
-    "WarningThermalRunaway": "過熱"
-  },
-  "characters": {
-    "SettingRightChar": "右",
-    "SettingLeftChar": "左",
-    "SettingAutoChar": "自",
-    "SettingOffChar": "×",
-    "SettingSlowChar": "遅",
-    "SettingMediumChar": "中",
-    "SettingFastChar": "速",
-    "SettingStartNoneChar": "×",
-    "SettingStartSolderingChar": "熱",
-    "SettingStartSleepChar": "待",
-    "SettingStartSleepOffChar": "室",
-    "SettingSensitivityOff": "×",
-    "SettingSensitivityLow": "低",
-    "SettingSensitivityMedium": "中",
-    "SettingSensitivityHigh": "高",
-    "SettingLockDisableChar": "×",
-    "SettingLockBoostChar": "ブ",
-    "SettingLockFullChar": "全"
-  },
-  "menuGroups": {
-    "PowerMenu": {
-      "text2": "電源設定",
-      "desc": "電源設定"
+    "languageCode": "JA_JP",
+    "languageLocalName": "日本語",
+    "tempUnitFahrenheit": true,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "設定をリセットしますか？",
+        "UVLOWarningString": "電圧が低すぎます",
+        "UndervoltageString": "Undervoltage",
+        "InputVoltageString": "Input V: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "Sleeping...",
+        "SleepingTipAdvancedString": "Tip:",
+        "OffString": "オフ",
+        "DeviceFailedValidationWarning": "このデバイスはおそらく偽造品です"
     },
-    "SolderingMenu": {
-      "text2": "半田付け設定",
-      "desc": "半田付け設定"
+    "messagesWarn": {
+        "CJCCalibrationDone": "Calibration done!",
+        "ResetOKMessage": "リセットOK",
+        "SettingsResetMessage": "初期化されました",
+        "NoAccelerometerMessage": "加速度計未検出",
+        "NoPowerDeliveryMessage": "PD IC未検出",
+        "LockingKeysString": "ボタンロック",
+        "UnlockingKeysString": "ロックを解除",
+        "WarningKeysLockedString": "!入力ロック中!",
+        "WarningThermalRunaway": "過熱"
     },
-    "PowerSavingMenu": {
-      "text2": "待機設定",
-      "desc": "待機設定"
+    "characters": {
+        "SettingRightChar": "右",
+        "SettingLeftChar": "左",
+        "SettingAutoChar": "自",
+        "SettingOffChar": "×",
+        "SettingSlowChar": "遅",
+        "SettingMediumChar": "中",
+        "SettingFastChar": "速",
+        "SettingStartNoneChar": "×",
+        "SettingStartSolderingChar": "熱",
+        "SettingStartSleepChar": "待",
+        "SettingStartSleepOffChar": "室",
+        "SettingSensitivityOff": "×",
+        "SettingSensitivityLow": "低",
+        "SettingSensitivityMedium": "中",
+        "SettingSensitivityHigh": "高",
+        "SettingLockDisableChar": "×",
+        "SettingLockBoostChar": "ブ",
+        "SettingLockFullChar": "全"
     },
-    "UIMenu": {
-      "text2": "UI設定",
-      "desc": "ユーザーインターフェイスの設定"
+    "menuGroups": {
+        "PowerMenu": {
+            "text2": "電源設定",
+            "desc": ""
+        },
+        "SolderingMenu": {
+            "text2": "半田付け設定",
+            "desc": ""
+        },
+        "PowerSavingMenu": {
+            "text2": "待機設定",
+            "desc": ""
+        },
+        "UIMenu": {
+            "text2": "UI設定",
+            "desc": ""
+        },
+        "AdvancedMenu": {
+            "text2": "高度な設定",
+            "desc": ""
+        }
     },
-    "AdvancedMenu": {
-      "text2": "高度な設定",
-      "desc": "高度な設定"
+    "menuOptions": {
+        "DCInCutoff": {
+            "text2": "下限電圧",
+            "desc": "下限電圧を指定する <DC=10V | S=セルあたり3.3V、電力制限を無効化>"
+        },
+        "MinVolCell": {
+            "text2": "最低電圧",
+            "desc": "セルあたりの最低電圧 <ボルト> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+        },
+        "QCMaxVoltage": {
+            "text2": "QC電圧",
+            "desc": "QC電源使用時に要求する目標電圧"
+        },
+        "PDNegTimeout": {
+            "text2": [
+                "PD",
+                "timeout"
+            ],
+            "desc": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
+        },
+        "BoostTemperature": {
+            "text2": "ブースト温度",
+            "desc": "ブーストモードで使用される温度"
+        },
+        "AutoStart": {
+            "text2": "自動加熱",
+            "desc": "電源投入時に自動的に加熱する <×=オフ | 熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
+        },
+        "TempChangeShortStep": {
+            "text2": "温度変化 短",
+            "desc": "ボタンを短く押した時の温度変化値"
+        },
+        "TempChangeLongStep": {
+            "text2": "温度変化 長",
+            "desc": "ボタンを長押しした時の温度変化値"
+        },
+        "LockingMode": {
+            "text2": "ボタンロック",
+            "desc": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <×=オフ | ブ=ブーストのみ許可 | 全=すべてをロック>"
+        },
+        "MotionSensitivity": {
+            "text2": "動きの感度",
+            "desc": "0=オフ | 1=最低感度 | ... | 9=最高感度"
+        },
+        "SleepTemperature": {
+            "text2": "待機温度",
+            "desc": "スタンバイ時のコテ先温度"
+        },
+        "SleepTimeout": {
+            "text2": "待機遅延",
+            "desc": "スタンバイモードに入るまでの待機時間 <s=秒 | m=分>"
+        },
+        "ShutdownTimeout": {
+            "text2": "自動オフ",
+            "desc": "自動電源オフまでの待機時間 <m=分>"
+        },
+        "HallEffSensitivity": {
+            "text2": "磁界感度",
+            "desc": "スタンバイモードに入るのに使用される磁場センサーの感度 <0=オフ | 1=最低感度 | ... | 9=最高感度>"
+        },
+        "TemperatureUnit": {
+            "text2": "温度単位",
+            "desc": "C=摂氏 | F=華氏"
+        },
+        "DisplayRotation": {
+            "text2": "画面の向き",
+            "desc": "右=右利き | 左=左利き | 自=自動"
+        },
+        "CooldownBlink": {
+            "text2": "冷却中に点滅",
+            "desc": "加熱の停止後、コテ先が熱い間は温度表示を点滅する"
+        },
+        "ScrollingSpeed": {
+            "text2": "スクロール速度",
+            "desc": "テキストをスクロールする速さ <遅=遅い | 速=速い>"
+        },
+        "ReverseButtonTempChange": {
+            "text2": "キー入れ替え",
+            "desc": "温度設定時に+ボタンと-ボタンを入れ替える"
+        },
+        "AnimSpeed": {
+            "text2": "動画の速度",
+            "desc": "メニューアイコンのアニメーションの速さ <×=再生しない | 遅=低速 | 中=中速 | 速=高速>"
+        },
+        "AnimLoop": {
+            "text2": "動画をループ",
+            "desc": "メニューアイコンのアニメーションをループする"
+        },
+        "Brightness": {
+            "text2": "画面輝度",
+            "desc": "画面の明るさ・コントラストを変更する"
+        },
+        "ColourInversion": {
+            "text2": "色反転",
+            "desc": "画面の色を反転する"
+        },
+        "LOGOTime": {
+            "text2": "起動画面",
+            "desc": "起動画面の表示時間を設定する"
+        },
+        "AdvancedIdle": {
+            "text2": "詳細な待受画面",
+            "desc": "待ち受け画面に詳細情報を表示する"
+        },
+        "AdvancedSoldering": {
+            "text2": "詳細な作業画面",
+            "desc": "半田付け画面に詳細情報を表示する"
+        },
+        "PowerLimit": {
+            "text2": "電力制限",
+            "desc": "最大電力を制限する <W=ワット>"
+        },
+        "CalibrateCJC": {
+            "text2": "Calibrate CJC",
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+        },
+        "VoltageCalibration": {
+            "text2": "電圧校正",
+            "desc": "入力電圧(VIN)の校正を開始する <長押しで終了>"
+        },
+        "PowerPulsePower": {
+            "text2": "電力パルス",
+            "desc": "電源をオンに保つための電力パルス <ワット>"
+        },
+        "PowerPulseWait": {
+            "text2": "パルス間隔",
+            "desc": "電源をオンに保つための電力パルスの時間間隔 <x2.5s（秒）>"
+        },
+        "PowerPulseDuration": {
+            "text2": "パルス時間長",
+            "desc": "電源をオンに保つための電力パルスの時間長 <x250ms（ミリ秒）>"
+        },
+        "SettingsReset": {
+            "text2": "設定をリセット",
+            "desc": "すべての設定を初期化する"
+        },
+        "LanguageSwitch": {
+            "text2": "言語： 日本語",
+            "desc": ""
+        }
     }
-  },
-  "menuOptions": {
-    "DCInCutoff": {
-      "text2": "下限電圧",
-      "desc": "下限電圧を指定する <DC=10V | S=セルあたり3.3V、電力制限を無効化>"
-    },
-    "SleepTemperature": {
-      "text2": "待機温度",
-      "desc": "スタンバイ時のコテ先温度"
-    },
-    "SleepTimeout": {
-      "text2": "待機遅延",
-      "desc": "スタンバイモードに入るまでの待機時間 <s=秒 | m=分>"
-    },
-    "ShutdownTimeout": {
-      "text2": "自動オフ",
-      "desc": "自動電源オフまでの待機時間 <m=分>"
-    },
-    "MotionSensitivity": {
-      "text2": "動きの感度",
-      "desc": "0=オフ | 1=最低感度 | ... | 9=最高感度"
-    },
-    "TemperatureUnit": {
-      "text2": "温度単位",
-      "desc": "C=摂氏 | F=華氏"
-    },
-    "AdvancedIdle": {
-      "text2": "詳細な待受画面",
-      "desc": "待ち受け画面に詳細情報を表示する"
-    },
-    "DisplayRotation": {
-      "text2": "画面の向き",
-      "desc": "右=右利き | 左=左利き | 自=自動"
-    },
-    "BoostTemperature": {
-      "text2": "ブースト温度",
-      "desc": "ブーストモードで使用される温度"
-    },
-    "AutoStart": {
-      "text2": "自動加熱",
-      "desc": "電源投入時に自動的に加熱する <×=オフ | 熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
-    },
-    "CooldownBlink": {
-      "text2": "冷却中に点滅",
-      "desc": "加熱の停止後、コテ先が熱い間は温度表示を点滅する"
-    },
-    "TemperatureCalibration": {
-      "text2": "温度校正",
-      "desc": "コテ先の温度校正を開始する"
-    },
-    "SettingsReset": {
-      "text2": "設定をリセット",
-      "desc": "すべての設定を初期化する"
-    },
-    "VoltageCalibration": {
-      "text2": "電圧校正",
-      "desc": "入力電圧(VIN)の校正を開始する <長押しで終了>"
-    },
-    "AdvancedSoldering": {
-      "text2": "詳細な作業画面",
-      "desc": "半田付け画面に詳細情報を表示する"
-    },
-    "ScrollingSpeed": {
-      "text2": "スクロール速度",
-      "desc": "テキストをスクロールする速さ <遅=遅い | 速=速い>"
-    },
-    "QCMaxVoltage": {
-      "text2": "QC電圧",
-      "desc": "QC電源使用時に要求する目標電圧"
-    },
-    "PDNegTimeout": {
-      "text2": ["PD", "timeout"],
-      "desc": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
-    },
-    "PowerLimit": {
-      "text2": "電力制限",
-      "desc": "最大電力を制限する <W=ワット>"
-    },
-    "ReverseButtonTempChange": {
-      "text2": "キー入れ替え",
-      "desc": "温度設定時に+ボタンと-ボタンを入れ替える"
-    },
-    "TempChangeShortStep": {
-      "text2": "温度変化 短",
-      "desc": "ボタンを短く押した時の温度変化値"
-    },
-    "TempChangeLongStep": {
-      "text2": "温度変化 長",
-      "desc": "ボタンを長押しした時の温度変化値"
-    },
-    "PowerPulsePower": {
-      "text2": "電力パルス",
-      "desc": "電源をオンに保つための電力パルス <ワット>"
-    },
-    "HallEffSensitivity": {
-      "text2": "磁界感度",
-      "desc": "スタンバイモードに入るのに使用される磁場センサーの感度 <0=オフ | 1=最低感度 | ... | 9=最高感度>"
-    },
-    "LockingMode": {
-      "text2": "ボタンロック",
-      "desc": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <×=オフ | ブ=ブーストのみ許可 | 全=すべてをロック>"
-    },
-    "MinVolCell": {
-      "text2": "最低電圧",
-      "desc": "セルあたりの最低電圧 <ボルト> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
-    },
-    "AnimLoop": {
-      "text2": "動画をループ",
-      "desc": "メニューアイコンのアニメーションをループする"
-    },
-    "AnimSpeed": {
-      "text2": "動画の速度",
-      "desc": "メニューアイコンのアニメーションの速さ <×=再生しない | 遅=低速 | 中=中速 | 速=高速>"
-    },
-    "PowerPulseWait": {
-      "text2": "パルス間隔",
-      "desc": "電源をオンに保つための電力パルスの時間間隔 <x2.5s（秒）>"
-    },
-    "PowerPulseDuration": {
-      "text2": "パルス時間長",
-      "desc": "電源をオンに保つための電力パルスの時間長 <x250ms（ミリ秒）>"
-    },
-    "LanguageSwitch": {
-      "text2": "言語： 日本語",
-      "desc": ""
-    },
-    "Brightness": {
-      "text2": "画面輝度",
-      "desc": "画面の明るさ・コントラストを変更する"
-    },
-    "ColourInversion": {
-      "text2": "色反転",
-      "desc": "画面の色を反転する"
-    },
-    "LOGOTime": {
-      "text2": ["Boot logo", "duration"],
-      "desc": "Sets the duration for the boot logo (s=seconds)"
-    }
-  }
 }

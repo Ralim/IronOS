@@ -11,9 +11,8 @@ import re
 import subprocess
 import sys
 from datetime import datetime
-from itertools import chain
 from pathlib import Path
-from typing import BinaryIO, Dict, List, Optional, TextIO, Tuple, Union
+from typing import Dict, List, Optional, TextIO, Tuple, Union
 from dataclasses import dataclass
 
 from bdflib import reader as bdfreader
@@ -120,20 +119,22 @@ def get_constants(build_version: str) -> List[Tuple[str, str]]:
 def get_debug_menu() -> List[str]:
     return [
         datetime.today().strftime("%d-%m-%y"),
-        "Time ",
-        "Move ",
-        "RTip ",
-        "CTip ",
-        "CHan ",
-        "Vin  ",
-        "ACC  ",
-        "PWR  ",
-        "ID   ",
-        "Max  ",
-        "HW G ",
-        "HW M ",
-        "HW P ",
-        "Hall ",
+        "ID ",
+        "ACC   ",
+        "PWR   ",
+        "Vin        ",
+        "Tip C  ",
+        "Han C  ",
+        "Max C  ",
+        "UpTime ",
+        "Move   ",
+        "Tip Res",
+        "Tip R  ",
+        "Tip O  ",
+        "HW G   ",
+        "HW M   ",
+        "HW P   ",
+        "Hall   ",
     ]
 
 
@@ -355,15 +356,10 @@ class FontMapsPerFont:
     sym_lists: Dict[str, List[str]]
 
 
-def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPerFont:
+def get_font_map_per_font(text_list: List[str]) -> FontMapsPerFont:
     pending_sym_set = set(text_list)
     if len(pending_sym_set) != len(text_list):
         raise ValueError("`text_list` contains duplicated symbols")
-
-    if fonts[0] != font_tables.NAME_ASCII_BASIC:
-        raise ValueError(
-            f'First item in `fonts` must be "{font_tables.NAME_ASCII_BASIC}"'
-        )
 
     total_symbol_count = len(text_list)
     # \x00 is for NULL termination and \x01 is for newline, so the maximum
@@ -380,19 +376,13 @@ def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPer
     font12_maps: Dict[str, Dict[str, bytes]] = {}
     font06_maps: Dict[str, Dict[str, Optional[bytes]]] = {}
     sym_lists: Dict[str, List[str]] = {}
-    for font in fonts:
+    for font in font_tables.ALL_FONTS:
         font12_maps[font] = {}
         font12_map = font12_maps[font]
         font06_maps[font] = {}
         font06_map = font06_maps[font]
         sym_lists[font] = []
         sym_list = sym_lists[font]
-
-        if len(pending_sym_set) == 0:
-            logging.warning(
-                f"Font {font} not used because all symbols already have font bitmaps"
-            )
-            continue
 
         if font == font_tables.NAME_CJK:
             is_cjk = True
@@ -421,10 +411,8 @@ def get_font_map_per_font(text_list: List[str], fonts: List[str]) -> FontMapsPer
             sym_list.append(sym)
             pending_sym_set.remove(sym)
 
-        if len(sym_list) == 0:
-            logging.warning(f"Font {font} not used by any symbols on the list")
     if len(pending_sym_set) > 0:
-        raise KeyError(f"Symbols not found in specified fonts: {pending_sym_set}")
+        raise KeyError(f"Symbols not found in our fonts: {pending_sym_set}")
 
     return FontMapsPerFont(font12_maps, font06_maps, sym_lists)
 
@@ -452,16 +440,16 @@ def get_forced_first_symbols() -> List[str]:
 
 
 def get_sym_list_and_font_map(
-    text_list: List[str], fonts: List[str]
+    text_list: List[str],
 ) -> Tuple[List[str], Dict[str, List[str]], FontMap]:
-    font_maps = get_font_map_per_font(text_list, fonts)
+    font_maps = get_font_map_per_font(text_list)
     font12_maps = font_maps.font12_maps
     font06_maps = font_maps.font06_maps
 
     # Build the full font maps
     font12_map = {}
     font06_map = {}
-    for font in fonts:
+    for font in font_tables.ALL_FONTS:
         font12_map.update(font12_maps[font])
         font06_map.update(font06_maps[font])
 
@@ -587,7 +575,6 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
     # Iterate over all of the text to build up the symbols & counts
     text_list, _ = get_letter_counts(defs, lang, build_version)
     # From the letter counts, need to make a symbol translator & write out the font
-    fonts = lang["fonts"]
 
     forced_first_symbols = get_forced_first_symbols()
 
@@ -596,7 +583,7 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
         x for x in text_list if x not in forced_first_symbols
     ]
 
-    sym_list, sym_lists_by_font, font_map = get_sym_list_and_font_map(text_list, fonts)
+    sym_list, sym_lists_by_font, font_map = get_sym_list_and_font_map(text_list)
     return LanguageData(
         [lang], defs, build_version, sym_list, sym_lists_by_font, font_map
     )
@@ -610,13 +597,6 @@ def prepare_languages(
 
     forced_first_symbols = get_forced_first_symbols()
 
-    all_fonts = [
-        font_tables.NAME_ASCII_BASIC,
-        font_tables.NAME_LATIN_EXTENDED,
-        font_tables.NAME_CYRILLIC,
-        font_tables.NAME_CJK,
-    ]
-
     # Build the full font maps
     font12_map = {}
     font06_map = {}
@@ -624,12 +604,11 @@ def prepare_languages(
     total_sym_counts: Dict[str, Dict[str, int]] = {}
     for lang in langs:
         text_list, sym_counts = get_letter_counts(defs, lang, build_version)
-        fonts = lang["fonts"]
         text_list = forced_first_symbols + [
             x for x in text_list if x not in forced_first_symbols
         ]
-        font_maps = get_font_map_per_font(text_list, fonts)
-        for font in fonts:
+        font_maps = get_font_map_per_font(text_list)
+        for font in font_tables.ALL_FONTS:
             font12_map.update(font_maps.font12_maps[font])
             font06_map.update(font_maps.font06_maps[font])
         for font, font_sym_list in font_maps.sym_lists.items():
@@ -642,7 +621,7 @@ def prepare_languages(
 
     sym_lists_by_font: Dict[str, List[str]] = {}
     combined_sym_list = []
-    for font in all_fonts:
+    for font in font_tables.ALL_FONTS:
         if font not in total_sym_counts:
             continue
         # swap to Big -> little sort order
@@ -843,7 +822,10 @@ def write_languages(
                     symbol_conversion_table,
                 )
             font_table_text += f"}}; // font_table_data_{font}\n"
-            current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
+            if len(current_sym_list) == 0:
+                current_sym_start = 0
+            else:
+                current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
             font_section_info_text += (
                 "  {\n"
                 f"    .symbol_start = {current_sym_start},\n"
@@ -870,6 +852,9 @@ def write_languages(
             "const FontSectionDataInfo FontSectionDataInfos[] = {\n"
         )
         for font, current_sym_list in sym_lists_by_font.items():
+            print(font, current_sym_list)
+            if len(current_sym_list) == 0:
+                continue
             current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
             font_uncompressed = bytearray()
             for sym in current_sym_list:

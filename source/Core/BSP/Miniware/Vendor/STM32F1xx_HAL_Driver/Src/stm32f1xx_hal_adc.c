@@ -1194,11 +1194,6 @@ HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, ui
       /* Set the DMA transfer complete callback */
       hadc->DMA_Handle->XferCpltCallback = ADC_DMAConvCplt;
 
-      /* Set the DMA half transfer complete callback */
-      hadc->DMA_Handle->XferHalfCpltCallback = ADC_DMAHalfConvCplt;
-
-      /* Set the DMA error callback */
-      hadc->DMA_Handle->XferErrorCallback = ADC_DMAError;
 
       /* Manage ADC and DMA start: ADC overrun interruption, DMA start, ADC   */
       /* start (in case of SW start):                                         */
@@ -1357,8 +1352,6 @@ void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc) {
         }
       }
 
-      /* Conversion complete callback */
-      HAL_ADC_ConvCpltCallback(hadc);
 
       /* Clear regular group conversion flag */
       __HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_STRT | ADC_FLAG_EOC);
@@ -1401,73 +1394,10 @@ void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc) {
     }
   }
 
-  /* ========== Check Analog watchdog flags ========== */
-  if (__HAL_ADC_GET_IT_SOURCE(hadc, ADC_IT_AWD)) {
-    if (__HAL_ADC_GET_FLAG(hadc, ADC_FLAG_AWD)) {
-      /* Set ADC state */
-      SET_BIT(hadc->State, HAL_ADC_STATE_AWD1);
 
-      /* Level out of window callback */
-      HAL_ADC_LevelOutOfWindowCallback(hadc);
-
-      /* Clear the ADC analog watchdog flag */
-      __HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_AWD);
-    }
-  }
 }
 
-/**
- * @brief  Conversion complete callback in non blocking mode
- * @param  hadc: ADC handle
- * @retval None
- */
-__weak void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hadc);
-  /* NOTE : This function should not be modified. When the callback is needed,
-            function HAL_ADC_ConvCpltCallback must be implemented in the user file.
-   */
-}
 
-/**
- * @brief  Conversion DMA half-transfer callback in non blocking mode
- * @param  hadc: ADC handle
- * @retval None
- */
-__weak void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hadc);
-  /* NOTE : This function should not be modified. When the callback is needed,
-            function HAL_ADC_ConvHalfCpltCallback must be implemented in the user file.
-  */
-}
-
-/**
- * @brief  Analog watchdog callback in non blocking mode.
- * @param  hadc: ADC handle
- * @retval None
- */
-__weak void HAL_ADC_LevelOutOfWindowCallback(ADC_HandleTypeDef *hadc) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hadc);
-  /* NOTE : This function should not be modified. When the callback is needed,
-            function HAL_ADC_LevelOutOfWindowCallback must be implemented in the user file.
-  */
-}
-
-/**
- * @brief  ADC error callback in non blocking mode
- *        (ADC conversion with interruption or transfer by DMA)
- * @param  hadc: ADC handle
- * @retval None
- */
-__weak void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc) {
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hadc);
-  /* NOTE : This function should not be modified. When the callback is needed,
-            function HAL_ADC_ErrorCallback must be implemented in the user file.
-  */
-}
 
 /**
  * @}
@@ -1509,7 +1439,6 @@ __weak void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc) {
  */
 HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConfTypeDef *sConfig) {
   HAL_StatusTypeDef tmp_hal_status  = HAL_OK;
-  __IO uint32_t     wait_loop_index = 0U;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
@@ -1543,32 +1472,7 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConf
     MODIFY_REG(hadc->Instance->SMPR2, ADC_SMPR2(ADC_SMPR2_SMP0, sConfig->Channel), ADC_SMPR2(sConfig->SamplingTime, sConfig->Channel));
   }
 
-  /* If ADC1 Channel_16 or Channel_17 is selected, enable Temperature sensor  */
-  /* and VREFINT measurement path.                                            */
-  if ((sConfig->Channel == ADC_CHANNEL_TEMPSENSOR) || (sConfig->Channel == ADC_CHANNEL_VREFINT)) {
-    /* For STM32F1 devices with several ADC: Only ADC1 can access internal    */
-    /* measurement channels (VrefInt/TempSensor). If these channels are       */
-    /* intended to be set on other ADC instances, an error is reported.       */
-    if (hadc->Instance == ADC1) {
-      if (READ_BIT(hadc->Instance->CR2, ADC_CR2_TSVREFE) == RESET) {
-        SET_BIT(hadc->Instance->CR2, ADC_CR2_TSVREFE);
-
-        if ((sConfig->Channel == ADC_CHANNEL_TEMPSENSOR)) {
-          /* Delay for temperature sensor stabilization time */
-          /* Compute number of CPU cycles to wait for */
-          wait_loop_index = (ADC_TEMPSENSOR_DELAY_US * (SystemCoreClock / 1000000U));
-          while (wait_loop_index != 0U) {
-            wait_loop_index--;
-          }
-        }
-      }
-    } else {
-      /* Update ADC state machine to error */
-      SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_CONFIG);
-
-      tmp_hal_status = HAL_ERROR;
-    }
-  }
+ 
 
   /* Process unlocked */
   __HAL_UNLOCK(hadc);
@@ -1802,45 +1706,16 @@ void ADC_DMAConvCplt(DMA_HandleTypeDef *hdma) {
       }
     }
 
-    /* Conversion complete callback */
-    HAL_ADC_ConvCpltCallback(hadc);
   } else {
     /* Call DMA error callback */
     hadc->DMA_Handle->XferErrorCallback(hdma);
   }
 }
 
-/**
- * @brief  DMA half transfer complete callback.
- * @param  hdma: pointer to DMA handle.
- * @retval None
- */
-void ADC_DMAHalfConvCplt(DMA_HandleTypeDef *hdma) {
-  /* Retrieve ADC handle corresponding to current DMA handle */
-  ADC_HandleTypeDef *hadc = (ADC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
-  /* Half conversion callback */
-  HAL_ADC_ConvHalfCpltCallback(hadc);
-}
 
-/**
- * @brief  DMA error callback
- * @param  hdma: pointer to DMA handle.
- * @retval None
- */
-void ADC_DMAError(DMA_HandleTypeDef *hdma) {
-  /* Retrieve ADC handle corresponding to current DMA handle */
-  ADC_HandleTypeDef *hadc = (ADC_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent;
 
-  /* Set ADC state */
-  SET_BIT(hadc->State, HAL_ADC_STATE_ERROR_DMA);
 
-  /* Set ADC error code to DMA error */
-  SET_BIT(hadc->ErrorCode, HAL_ADC_ERROR_DMA);
-
-  /* Error callback */
-  HAL_ADC_ErrorCallback(hadc);
-}
 
 /**
  * @}

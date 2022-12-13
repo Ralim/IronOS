@@ -36,44 +36,45 @@ extern const char *PowerSourceNames[];
 
 enum class SettingsItemIndex : uint8_t {
   DCInCutoff,
+  MinVolCell,
+  QCMaxVoltage,
+  PDNegTimeout,
+  BoostTemperature,
+  AutoStart,
+  TempChangeShortStep,
+  TempChangeLongStep,
+  LockingMode,
+  MotionSensitivity,
   SleepTemperature,
   SleepTimeout,
   ShutdownTimeout,
-  MotionSensitivity,
-  TemperatureUnit,
-  AdvancedIdle,
-  DisplayRotation,
-  BoostTemperature,
-  AutoStart,
-  CooldownBlink,
-  TemperatureCalibration,
-  SettingsReset,
-  VoltageCalibration,
-  AdvancedSoldering,
-  ScrollingSpeed,
-  QCMaxVoltage,
-  PDNegTimeout,
-  PowerLimit,
-  ReverseButtonTempChange,
-  TempChangeShortStep,
-  TempChangeLongStep,
-  PowerPulsePower,
   HallEffSensitivity,
-  LockingMode,
-  MinVolCell,
-  AnimLoop,
+  TemperatureUnit,
+  DisplayRotation,
+  CooldownBlink,
+  ScrollingSpeed,
+  ReverseButtonTempChange,
   AnimSpeed,
-  PowerPulseWait,
-  PowerPulseDuration,
-  LanguageSwitch,
+  AnimLoop,
   Brightness,
   ColourInversion,
   LOGOTime,
+  AdvancedIdle,
+  AdvancedSoldering,
+  PowerLimit,
+  CalibrateCJC,
+  VoltageCalibration,
+  PowerPulsePower,
+  PowerPulseWait,
+  PowerPulseDuration,
+  SettingsReset,
+  LanguageSwitch,
   NUM_ITEMS,
 };
 
 struct TranslationIndexTable {
   uint16_t SettingsCalibrationWarning;
+  uint16_t CJCCalibrating;
   uint16_t SettingsResetWarning;
   uint16_t UVLOWarningString;
   uint16_t UndervoltageString;
@@ -83,7 +84,10 @@ struct TranslationIndexTable {
   uint16_t SleepingAdvancedString;
   uint16_t SleepingTipAdvancedString;
   uint16_t OffString;
+  uint16_t DeviceFailedValidationWarning;
 
+  uint16_t CJCCalibrationDone;
+  uint16_t ResetOKMessage;
   uint16_t SettingsResetMessage;
   uint16_t NoAccelerometerMessage;
   uint16_t NoPowerDeliveryMessage;

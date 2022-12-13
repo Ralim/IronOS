@@ -191,11 +191,11 @@
  * @retval None
  */
 void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init) {
-  uint32_t position;
-  uint32_t ioposition = 0x00U;
-  uint32_t iocurrent  = 0x00U;
-  uint32_t temp       = 0x00U;
-  uint32_t config     = 0x00U;
+  uint32_t       position;
+  uint32_t       ioposition = 0x00U;
+  uint32_t       iocurrent  = 0x00U;
+  uint32_t       temp       = 0x00U;
+  uint32_t       config     = 0x00U;
   __IO uint32_t *configregister;      /* Store the address of CRL or CRH register based on pin number */
   uint32_t       registeroffset = 0U; /* offset used during computation of CNF and MODE bits placement inside CRL or CRH register */
 
@@ -340,9 +340,9 @@ void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init) {
  * @retval None
  */
 void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin) {
-  uint32_t position  = 0x00U;
-  uint32_t iocurrent = 0x00U;
-  uint32_t tmp       = 0x00U;
+  uint32_t       position  = 0x00U;
+  uint32_t       iocurrent = 0x00U;
+  uint32_t       tmp       = 0x00U;
   __IO uint32_t *configregister; /* Store the address of CRL or CRH register based on pin number */
   uint32_t       registeroffset = 0U;
 
