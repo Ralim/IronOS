@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Repouso...",
         "SleepingTipAdvancedString": "Ponta:",
-        "OffString": "Off",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "C",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "D",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "H",
         "SettingStartSleepOffChar": "A",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "L",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -139,7 +131,7 @@
                 "Partida",
                 "automática"
             ],
-            "desc": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
+            "desc": "Aquece a ponta automaticamente ao ligar (S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Allow locking",
                 "buttons"
             ],
-            "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "desc": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Sensibilidade",
                 "movimento"
             ],
-            "desc": "Sensibilidade ao movimento (0=Desligado | 1=Menor | ... | 9=Maior)"
+            "desc": "Sensibilidade ao movimento (1=Menor | ... | 9=Maior)"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Hall sensor",
                 "sensitivity"
             ],
-            "desc": "Sensitivity to magnets (0=Desligado | 1=Menor | ... | 9=Maior)"
+            "desc": "Sensitivity to magnets (1=Menor | ... | 9=Maior)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Anim.",
                 "speed"
             ],
-            "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+            "desc": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
             "text2": [

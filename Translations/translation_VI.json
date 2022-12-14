@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Đang ngu...",
         "SleepingTipAdvancedString": "Meo:",
-        "OffString": "Tat",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "O",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "R",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "L",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -139,7 +131,7 @@
                 "Nhiet đo",
                 "đang tăng"
             ],
-            "desc": "- O=tat | S=nhiet đo hàn | Z=cho o nhiet đo ngu đen khi cu đong | R=cho mà không gia nhiet đen khi cu đong"
+            "desc": "S=nhiet đo hàn | Z=cho o nhiet đo ngu đen khi cu đong | R=cho mà không gia nhiet đen khi cu đong"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Cho phép khóa",
                 "các nút"
             ],
-            "desc": "Trong khi hàn, giu ca 2 nút đe khóa(D=tat | B=chi che đo tăng cuong | F=khóa hoàn toàn)"
+            "desc": "Trong khi hàn, giu ca 2 nút đe khóa (B=chi che đo tăng cuong | F=khóa hoàn toàn)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Cam bien",
                 "cu đong"
             ],
-            "desc": "- 0=tat | 1=đo nhay thap nhat| ... | 9=đo nhay cao nhat"
+            "desc": "1=đo nhay thap nhat| ... | 9=đo nhay cao nhat"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Hall",
                 "đo nhay"
             ],
-            "desc": "Đo nhay cam bien Hall đe phát hien che đo ngu (0=tat | 1=ít nhay nhat |...| 9=nhay nhat)"
+            "desc": "Đo nhay cam bien Hall đe phát hien che đo ngu (1=ít nhay nhat |...| 9=nhay nhat)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Toc đo",
                 "hoat anh"
             ],
-            "desc": "-Toc đo cua hoat anh menu (O=tat | S=cham | M=trung bình | F=nhanh)"
+            "desc": "-Toc đo cua hoat anh menu (S=cham | M=trung bình | F=nhanh)"
         },
         "AnimLoop": {
             "text2": [

@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Сън",
         "SleepingAdvancedString": "Хър Хър Хър...",
         "SleepingTipAdvancedString": "Връх:",
-        "OffString": "Изкл.",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "И",
         "SettingStartSolderingChar": "Р",
         "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "П",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "L",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -139,7 +131,7 @@
                 "Автоматичен",
                 "работен режим"
             ],
-            "desc": "Режим на поялника при включване на захранването. (И=Изключен | Р=Работен | С=Сън | П=Сън температура помещение)"
+            "desc": "Режим на поялника при включване на захранването. (Р=Работен | С=Сън | П=Сън температура помещение)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Allow locking",
                 "buttons"
             ],
-            "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "desc": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Усещане",
                 "за движение"
             ],
-            "desc": "Усещане за движение (0=Изключено | 1=Слабо | ... | 9=Силно)"
+            "desc": "Усещане за движение (1=Слабо | ... | 9=Силно)"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Hall sensor",
                 "sensitivity"
             ],
-            "desc": "Sensitivity to magnets (0=Изключено | 1=Слабо | ... | 9=Силно)"
+            "desc": "Sensitivity to magnets (1=Слабо | ... | 9=Силно)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Anim.",
                 "speed"
             ],
-            "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+            "desc": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
             "text2": [

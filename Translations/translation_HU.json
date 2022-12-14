@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Alvás...",
         "SleepingTipAdvancedString": "Hegy:",
-        "OffString": "Ki",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "J",
         "SettingLeftChar": "B",
         "SettingAutoChar": "A",
-        "SettingOffChar": "0",
         "SettingSlowChar": "L",
         "SettingMediumChar": "K",
         "SettingFastChar": "Gy",
-        "SettingStartNoneChar": "K",
         "SettingStartSolderingChar": "F",
         "SettingStartSleepChar": "A",
         "SettingStartSleepOffChar": "Sz",
-        "SettingSensitivityOff": "0",
-        "SettingSensitivityLow": "A",
-        "SettingSensitivityMedium": "K",
-        "SettingSensitivityHigh": "M",
-        "SettingLockDisableChar": "K",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "T"
     },
@@ -139,7 +131,7 @@
                 "Automatikus",
                 "indítás"
             ],
-            "desc": "Bekapcsolás után automatikusan lépjen forrasztás módba (K=ki | F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
+            "desc": "Bekapcsolás után automatikusan lépjen forrasztás módba (F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Lezárás",
                 "engedélyezés"
             ],
-            "desc": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (K=ki | B=csak \"boost\" módban | T=teljes lezárás)"
+            "desc": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (B=csak \"boost\" módban | T=teljes lezárás)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Mozgás",
                 "érzékenység"
             ],
-            "desc": "Mozgás érzékenység beállítása (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
+            "desc": "Mozgás érzékenység beállítása (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Alvásérzékelő",
                 "érzékenység"
             ],
-            "desc": "Alvásérzékelő gyorsulásmérő érzékenysége (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
+            "desc": "Alvásérzékelő gyorsulásmérő érzékenysége (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Animáció",
                 "sebessége"
             ],
-            "desc": "Menüikonok animációjának sebessége (0=ki | L=lassú | K=közepes | Gy=gyors)"
+            "desc": "Menüikonok animációjának sebessége (L=lassú | K=közepes | Gy=gyors)"
         },
         "AnimLoop": {
             "text2": [

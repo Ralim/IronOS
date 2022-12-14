@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Spim...",
         "SleepingTipAdvancedString": "Konica",
-        "OffString": "Off",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "L",
         "SettingAutoChar": "S",
-        "SettingOffChar": "U",
         "SettingSlowChar": "P",
         "SettingMediumChar": "M",
         "SettingFastChar": "H",
-        "SettingStartNoneChar": "U",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "V",
-        "SettingSensitivityOff": "U",
-        "SettingSensitivityLow": "N",
-        "SettingSensitivityMedium": "S",
-        "SettingSensitivityHigh": "V",
-        "SettingLockDisableChar": "O",
         "SettingLockBoostChar": "L",
         "SettingLockFullChar": "P"
     },
@@ -139,7 +131,7 @@
                 "Samodejni",
                 "zagon"
             ],
-            "desc": "Samodejno gretje konice ob vklopu (U=ugasnjeno | S=spajkanje | Z=spanje | V=spanje na sobni temperaturi)"
+            "desc": "Samodejno gretje konice ob vklopu (S=spajkanje | Z=spanje | V=spanje na sobni temperaturi)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Omogoči",
                 "zaklep gumbov"
             ],
-            "desc": "Za zaklep med spajkanjem drži oba gumba (O=onemogoči | L=le pospešeno | P=polno)"
+            "desc": "Za zaklep med spajkanjem drži oba gumba (L=le pospešeno | P=polno)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Občutljivost",
                 "premikanja"
             ],
-            "desc": "0=izklopljeno | 1=najmanjša | ... | 9=največja"
+            "desc": "1=najmanjša | ... | 9=največja"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Občut.",
                 "Hall son"
             ],
-            "desc": "Občutljivost Hallove sonde za zaznavanje spanja (0=izklopljeno | 1=najmanjša | ... | 9=največja)"
+            "desc": "Občutljivost Hallove sonde za zaznavanje spanja (1=najmanjša | ... | 9=največja)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Anim.",
                 "speed"
             ],
-            "desc": "Pace of icon animations in menu (O=off | P=slow | M=medium | H=fast)"
+            "desc": "Pace of icon animations in menu (P=slow | M=medium | H=fast)"
         },
         "AnimLoop": {
             "text2": [

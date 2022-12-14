@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzz ",
         "SleepingAdvancedString": "Riposo",
         "SleepingTipAdvancedString": "Punta:",
-        "OffString": "OFF",
         "DeviceFailedValidationWarning": "È probabile che il dispositivo in uso sia contraffatto!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "S",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "V",
-        "SettingStartNoneChar": "D",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "R",
         "SettingStartSleepOffChar": "A",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "B",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "A",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "T",
         "SettingLockFullChar": "C"
     },
@@ -139,7 +131,7 @@
                 "Avvio",
                 "automatico"
             ],
-            "desc": "Attiva automaticamente il saldatore quando viene alimentato [D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente]"
+            "desc": "Attiva automaticamente il saldatore quando viene alimentato [S: saldatura; R: riposo; A: temperatura ambiente]"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Blocco",
                 "tasti"
             ],
-            "desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
+            "desc": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [T: consenti Turbo; C: blocco completo]"
         },
         "MotionSensitivity": {
             "text2": [
                 "Sensibilità",
                 "al movimento"
             ],
-            "desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [0: nessuna; 1: minima; 9: massima]"
+            "desc": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [1: minima; 9: massima]"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Sensore",
                 "Hall"
             ],
-            "desc": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità Riposo [0: nessuna; 1: minima; 9: massima]"
+            "desc": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità Riposo [1: minima; 9: massima]"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Velocità",
                 "animazioni"
             ],
-            "desc": "Imposta la velocità di riproduzione delle animazioni del menù principale [O: OFF; L: lenta; M: media; V: veloce]"
+            "desc": "Imposta la velocità di riproduzione delle animazioni del menù principale [L: lenta; M: media; V: veloce]"
         },
         "AnimLoop": {
             "text2": [

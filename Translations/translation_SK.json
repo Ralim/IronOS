@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Chrr",
         "SleepingAdvancedString": "Pokojový režim.",
         "SleepingTipAdvancedString": "Hrot:",
-        "OffString": "Vyp",
         "DeviceFailedValidationWarning": "Vaše zariadenie je pravdepodobne falzifikát!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "P",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "Z",
         "SettingSlowChar": "P",
         "SettingMediumChar": "S",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "V",
         "SettingStartSolderingChar": "Z",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "I",
-        "SettingSensitivityOff": "Z",
-        "SettingSensitivityLow": "N",
-        "SettingSensitivityMedium": "S",
-        "SettingSensitivityHigh": "V",
-        "SettingLockDisableChar": "Z",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "P"
     },
@@ -139,7 +131,7 @@
                 "Automatické",
                 "spustenie"
             ],
-            "desc": "Pri štarte spustiť režim spájkovania (V=Vyp | Z=Spájkovanie | S=Spanok | I=Spanok izbová teplota)"
+            "desc": "Pri štarte spustiť režim spájkovania (Z=Spájkovanie | S=Spanok | I=Spanok izbová teplota)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Povoliť zámok",
                 "tlačidiel"
             ],
-            "desc": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania (Z=Zakázať | B=Okrem boost | P=Plné zamknutie)"
+            "desc": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania (B=Okrem boost | P=Plné zamknutie)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Citlivosť",
                 "pohybu"
             ],
-            "desc": "Citlivosť detekcie pohybu (0=Vyp | 1=Min | ... | 9=Max)"
+            "desc": "Citlivosť detekcie pohybu (1=Min | ... | 9=Max)"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Citliv.",
                 "Hall"
             ],
-            "desc": "Citlivosť Hallovho senzora pre detekciu spánku (0=Vyp | 1=Min | ... | 9=Max)"
+            "desc": "Citlivosť Hallovho senzora pre detekciu spánku (1=Min | ... | 9=Max)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Rýchlosť",
                 "animácií"
             ],
-            "desc": "Rýchlosť animácií ikoniek v menu (O=off | P=pomaly | S=stredne | R=rýchlo)"
+            "desc": "Rýchlosť animácií ikoniek v menu (P=pomaly | S=stredne | R=rýchlo)"
         },
         "AnimLoop": {
             "text2": [

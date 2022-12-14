@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Sleeping...",
         "SleepingTipAdvancedString": "Tip:",
-        "OffString": "關",
         "DeviceFailedValidationWarning": "依支焫雞好有可能係冒牌貨！"
     },
     "messagesWarn": {
@@ -30,19 +29,12 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
-        "SettingOffChar": "關",
         "SettingSlowChar": "慢",
         "SettingMediumChar": "中",
         "SettingFastChar": "快",
-        "SettingStartNoneChar": "無",
         "SettingStartSolderingChar": "焊",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
-        "SettingSensitivityOff": "關",
-        "SettingSensitivityLow": "低",
-        "SettingSensitivityMedium": "中",
-        "SettingSensitivityHigh": "高",
-        "SettingLockDisableChar": "無",
         "SettingLockBoostChar": "增",
         "SettingLockFullChar": "全"
     },
@@ -91,7 +83,7 @@
         },
         "AutoStart": {
             "text2": "自動啓用",
-            "desc": "開機時自動啓用 <無=停用 | 焊=焊接模式 | 待=待機模式 | 室=室温待機>"
+            "desc": "開機時自動啓用 <焊=焊接模式 | 待=待機模式 | 室=室温待機>"
         },
         "TempChangeShortStep": {
             "text2": "温度調整 短",
@@ -103,11 +95,11 @@
         },
         "LockingMode": {
             "text2": "撳掣鎖定",
-            "desc": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <無=停用 | 增=淨係容許增熱模式 | 全=鎖定全部>"
+            "desc": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 < 增=淨係容許增熱模式 | 全=鎖定全部>"
         },
         "MotionSensitivity": {
             "text2": "動作敏感度",
-            "desc": "0=停用 | 1=最低敏感度 | ... | 9=最高敏感度"
+            "desc": "1=最低敏感度 | ... | 9=最高敏感度"
         },
         "SleepTemperature": {
             "text2": "待機温度",
@@ -123,7 +115,7 @@
         },
         "HallEffSensitivity": {
             "text2": "磁場敏感度",
-            "desc": "磁場感應器用嚟啓動待機模式嘅敏感度 <0=停用 | 1=最低敏感度 | ... | 9=最高敏感度>"
+            "desc": "磁場感應器用嚟啓動待機模式嘅敏感度 <1=最低敏感度 | ... | 9=最高敏感度>"
         },
         "TemperatureUnit": {
             "text2": "温度單位",
@@ -147,7 +139,7 @@
         },
         "AnimSpeed": {
             "text2": "動畫速度",
-            "desc": "功能表圖示動畫嘅速度 <關=不顯示動畫 | 慢=慢速 | 中=中速 | 快=快速>"
+            "desc": "功能表圖示動畫嘅速度 <慢=慢速 | 中=中速 | 快=快速>"
         },
         "AnimLoop": {
             "text2": "動畫循環",

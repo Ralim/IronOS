@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Dvale...",
         "SleepingTipAdvancedString": "Tip:",
-        "OffString": "Off",
         "DeviceFailedValidationWarning": "Din enhed er højst sandsyneligt en Kopivare!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "H",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "S",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "D",
         "SettingStartSleepOffChar": "R",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "L",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -139,7 +131,7 @@
                 "Start-up",
                 "Opførsel"
             ],
-            "desc": "Start automatisk med lodning når strøm sættes til. (S=Slukket | L=Lodning | D=Dvale tilstand | R=Dvale tilstand rumtemperatur)"
+            "desc": "Start automatisk med lodning når strøm sættes til. (L=Lodning | D=Dvale tilstand | R=Dvale tilstand rumtemperatur)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Tillad låsning",
                 "af knapperne"
             ],
-            "desc": "Hold begge knapper nede under lodning for at låse dem (D=deaktiver | B=kun boost-tilstand | F=fuld låsning)"
+            "desc": "Hold begge knapper nede under lodning for at låse dem (B=kun boost-tilstand | F=fuld låsning)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Bevægelses",
                 "følsomhed"
             ],
-            "desc": "Bevægelsesfølsomhed (0=Slukket | 1=Mindst følsom | ... | 9=Mest følsom)"
+            "desc": "Bevægelsesfølsomhed (1=Mindst følsom | ... | 9=Mest følsom)"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Hall sensor",
                 "følsomhed"
             ],
-            "desc": "følsomhed overfor magneten (0=Slukket | 1=Mindst følsom | ... | 9=Mest følsom)"
+            "desc": "følsomhed overfor magneten (1=Mindst følsom | ... | 9=Mest følsom)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Anim.",
                 "Hastighed"
             ],
-            "desc": "Hastigheden for ikonanimationer i menuen (O=fra | S=langsomt | M=medium | F=hurtigt)"
+            "desc": "Hastigheden for ikonanimationer i menuen (S=langsomt | M=medium | F=hurtigt)"
         },
         "AnimLoop": {
             "text2": [

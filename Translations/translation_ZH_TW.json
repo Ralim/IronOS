@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Sleeping...",
         "SleepingTipAdvancedString": "Tip:",
-        "OffString": "關",
         "DeviceFailedValidationWarning": "這支電烙鐵很有可能是冒牌貨！"
     },
     "messagesWarn": {
@@ -30,19 +29,12 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
-        "SettingOffChar": "關",
         "SettingSlowChar": "慢",
         "SettingMediumChar": "中",
         "SettingFastChar": "快",
-        "SettingStartNoneChar": "無",
         "SettingStartSolderingChar": "焊",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
-        "SettingSensitivityOff": "關",
-        "SettingSensitivityLow": "低",
-        "SettingSensitivityMedium": "中",
-        "SettingSensitivityHigh": "高",
-        "SettingLockDisableChar": "無",
         "SettingLockBoostChar": "增",
         "SettingLockFullChar": "全"
     },
@@ -91,7 +83,7 @@
         },
         "AutoStart": {
             "text2": "自動啟用",
-            "desc": "開機時自動啟用 <無=停用 | 焊=焊接模式 | 待=待機模式 | 室=室溫待機>"
+            "desc": "開機時自動啟用 <焊=焊接模式 | 待=待機模式 | 室=室溫待機>"
         },
         "TempChangeShortStep": {
             "text2": "溫度調整 短",
@@ -103,11 +95,11 @@
         },
         "LockingMode": {
             "text2": "按鍵鎖定",
-            "desc": "於焊接模式時，同時長按兩個按鍵啟用按鍵鎖定 <無=停用 | 增=只容許增熱模式 | 全=鎖定全部>"
+            "desc": "於焊接模式時，同時長按兩個按鍵啟用按鍵鎖定 <增=只容許增熱模式 | 全=鎖定全部>"
         },
         "MotionSensitivity": {
             "text2": "動作敏感度",
-            "desc": "0=停用 | 1=最低敏感度 | ... | 9=最高敏感度"
+            "desc": "1=最低敏感度 | ... | 9=最高敏感度"
         },
         "SleepTemperature": {
             "text2": "待機溫度",
@@ -123,7 +115,7 @@
         },
         "HallEffSensitivity": {
             "text2": "磁場敏感度",
-            "desc": "磁場感應器用作啟動待機模式的敏感度 <0=停用 | 1=最低敏感度 | ... | 9=最高敏感度>"
+            "desc": "磁場感應器用作啟動待機模式的敏感度 <1=最低敏感度 | ... | 9=最高敏感度>"
         },
         "TemperatureUnit": {
             "text2": "溫標",
@@ -147,7 +139,7 @@
         },
         "AnimSpeed": {
             "text2": "動畫速度",
-            "desc": "功能表圖示動畫的速度 <關=不顯示動畫 | 慢=慢速 | 中=中速 | 快=快速>"
+            "desc": "功能表圖示動畫的速度 <慢=慢速 | 中=中速 | 快=快速>"
         },
         "AnimLoop": {
             "text2": "動畫循環",

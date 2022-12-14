@@ -12,7 +12,6 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Ожидание...",
         "SleepingTipAdvancedString": "Жало:",
-        "OffString": "Вык",
         "DeviceFailedValidationWarning": "Скорее всего, это устройство подделка!"
     },
     "messagesWarn": {
@@ -45,19 +44,12 @@
         "SettingRightChar": "П",
         "SettingLeftChar": "Л",
         "SettingAutoChar": "А",
-        "SettingOffChar": "О",
         "SettingSlowChar": "М",
         "SettingMediumChar": "С",
         "SettingFastChar": "Б",
-        "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
         "SettingStartSleepChar": "О",
         "SettingStartSleepOffChar": "К",
-        "SettingSensitivityOff": "О",
-        "SettingSensitivityLow": "Н",
-        "SettingSensitivityMedium": "С",
-        "SettingSensitivityHigh": "В",
-        "SettingLockDisableChar": "О",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
     },
@@ -139,7 +131,7 @@
                 "Авто",
                 "старт"
             ],
-            "desc": "Режим, в котором запускается паяльник при подаче питания (В=Выкл. | П=Пайка | О=Ожидание | К=Ожидание при комн. темп.)"
+            "desc": "Режим, в котором запускается паяльник при подаче питания (П=Пайка | О=Ожидание | К=Ожидание при комн. темп.)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -160,14 +152,14 @@
                 "Разрешить",
                 "блок. кнопок"
             ],
-            "desc": "При работе длинное нажатие обеих кнопок блокирует их (О=Отключено | Т=Только турбо | П=Полная блокировка)"
+            "desc": "При работе длинное нажатие обеих кнопок блокирует их (Т=Только турбо | П=Полная блокировка)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Чувствительн.",
                 "акселерометра"
             ],
-            "desc": "Чувствительность акселерометра (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
+            "desc": "Чувствительность акселерометра (1=Мин. | ... | 9=Макс.)"
         },
         "SleepTemperature": {
             "text2": [
@@ -195,7 +187,7 @@
                 "Датчик",
                 "Холла"
             ],
-            "desc": "Чувствительность датчика Холла к переходу в спящий режим (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
+            "desc": "Чувствительность датчика Холла к переходу в спящий режим (1=Мин. | ... | 9=Макс.)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -237,7 +229,7 @@
                 "Скорость",
                 "анимации"
             ],
-            "desc": "Скорость анимации иконок в главном меню (Милисекунды) (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
+            "desc": "Скорость анимации иконок в главном меню (Милисекунды) (Н=Низкий | С=Средний | В=Высокий)"
         },
         "AnimLoop": {
             "text2": [
