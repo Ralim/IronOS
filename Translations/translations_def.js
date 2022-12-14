@@ -44,6 +44,11 @@ var def = ///
                 "description": "The prefix text shown before tip temperature when the unit is sleeping with advanced view on."
             },
             {
+                "id": "OffString",
+                "maxLen": 3,
+                "description": "Shown when a setting is turned off."
+            },
+            {
                 "id": "DeviceFailedValidationWarning",
                 "default": "Device may be\ncounterfeit",
                 "description": "Warning shown if the device may be a clone or counterfeit unit."
@@ -117,6 +122,11 @@ var def = ///
                 "description": "Shown when a setting is set to a medium value i.e. animation speed"
             },
             {
+                "id": "SettingOffChar",
+                "len": 1,
+                "description": "Shown when a setting is turned off"
+            },
+            {
                 "id": "SettingStartSolderingChar",
                 "len": 1,
                 "description": "Shown when the auto start mode is set to go straight to soldering."
@@ -130,6 +140,37 @@ var def = ///
                 "id": "SettingStartSleepOffChar",
                 "len": 1,
                 "description": "Shown when the auto start state is set to go to an off state, but on movement wake into soldering mode."
+            },
+            {
+                "id": "SettingStartNoneChar",
+                "len": 1,
+                "description": "Shown when autostart state is to do nothing and go to a normal boot"
+            },
+            {
+                "id": "SettingSensitivityOff",
+                "len": 1,
+                "description": "Shown when a sensitivity (hall effect sensor) is disabled. Turning off the sensor."
+            },
+            {
+                "id": "SettingSensitivityLow",
+                "len": 1,
+                "description": "Shown when a sensitivity (hall effect) is not very sensitive"
+            },
+            {
+                "id": "SettingSensitivityMedium",
+                "len": 1,
+                "description": "Shown when a sensitivity (hall effect) is average sensitive"
+            },
+            {
+                "id": "SettingSensitivityHigh",
+                "len": 1,
+                "description": "Shown when a sensitivity (hall effect) is highly sensitive"
+            },
+            {
+                "id": "SettingLockDisableChar",
+                "len": 1,
+                "default": "D",
+                "description": "Shown when locking mode is turned off."
             },
             {
                 "id": "SettingLockBoostChar",

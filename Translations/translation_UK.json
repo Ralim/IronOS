@@ -12,6 +12,7 @@
         "SleepingSimpleString": "ZzZzz",
         "SleepingAdvancedString": "Очікування...",
         "SleepingTipAdvancedString": "Жало:",
+        "OffString": "Вимк",
         "DeviceFailedValidationWarning": "Вірогідно ваш пристрій підробний!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "П",
         "SettingLeftChar": "Л",
         "SettingAutoChar": "A",
+        "SettingOffChar": "B",
         "SettingSlowChar": "Н",
         "SettingMediumChar": "M",
         "SettingFastChar": "М",
+        "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
         "SettingStartSleepChar": "О",
         "SettingStartSleepOffChar": "К",
+        "SettingSensitivityOff": "В",
+        "SettingSensitivityLow": "Н",
+        "SettingSensitivityMedium": "С",
+        "SettingSensitivityHigh": "М",
+        "SettingLockDisableChar": "В",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
     },
@@ -131,7 +139,7 @@
                 "Гарячий",
                 "старт"
             ],
-            "desc": "Режим в якому запускається паяльник при ввімкненні (П=Пайка | О=Очікування | К=Очікування при кімн. темп.)"
+            "desc": "Режим в якому запускається паяльник при ввімкненні (В=Вимк. | П=Пайка | О=Очікування | К=Очікування при кімн. темп.)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -152,14 +160,14 @@
                 "Дозволити",
                 "блок. кнопок"
             ],
-            "desc": "Під час пайки тривале натискання обох кнопок заблокує їх (Т=Тільки турбо | П=Повне)"
+            "desc": "Під час пайки тривале натискання обох кнопок заблокує їх (В=Вимк | Т=Тільки турбо | П=Повне)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Чутливість",
                 "сенсору руху"
             ],
-            "desc": "Акселерометр (1=мін. чутливості | ... | 9=макс. чутливості)"
+            "desc": "Акселерометр (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Чутливість",
                 "Ефекту Холла"
             ],
-            "desc": "Чутливість датчика ефекту Холла при виявленні сну (1=мін. чутливості | ... | 9=макс. чутливості)"
+            "desc": "Чутливість датчика ефекту Холла при виявленні сну (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Швидкість",
                 "анімації"
             ],
-            "desc": "Швидкість анімації іконок у головному меню (Мілісекунди) (Н=Низькa | С=Середня | М=Макс)"
+            "desc": "Швидкість анімації іконок у головному меню (Мілісекунди) (В=Вимк | Н=Низькa | С=Середня | М=Макс)"
         },
         "AnimLoop": {
             "text2": [

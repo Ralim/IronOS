@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Bekleme Modu ...",
         "SleepingTipAdvancedString": "Uç:",
+        "OffString": "Kapalı",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "O",
+        "SettingOffChar": "K",
         "SettingSlowChar": "Y",
         "SettingMediumChar": "O",
         "SettingFastChar": "H",
+        "SettingStartNoneChar": "K",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "U",
         "SettingStartSleepOffChar": "S",
+        "SettingSensitivityOff": "K",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "O",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "K",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -131,7 +139,7 @@
                 "OTOBAŞ",
                 ""
             ],
-            "desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
+            "desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -152,14 +160,14 @@
                 "Allow locking",
                 "buttons"
             ],
-            "desc": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+            "desc": "While soldering, hold down both buttons to toggle locking them (K=Kapalı | B=boost mode only | F=full locking)"
         },
         "MotionSensitivity": {
             "text2": [
                 "HARHAS",
                 ""
             ],
-            "desc": "Hareket Hassasiyeti (1=En az duyarlı | ... | 9=En duyarlı)"
+            "desc": "Hareket Hassasiyeti (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Hall sensor",
                 "sensitivity"
             ],
-            "desc": "Sensitivity to magnets (1=En az duyarlı | ... | 9=En duyarlı)"
+            "desc": "Sensitivity to magnets (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Anim.",
                 "speed"
             ],
-            "desc": "Pace of icon animations in menu (Y=Yavaş | O=Orta | H=Hızlı)"
+            "desc": "Pace of icon animations in menu (K=Kapalı | Y=Yavaş | O=Orta | H=Hızlı)"
         },
         "AnimLoop": {
             "text2": [

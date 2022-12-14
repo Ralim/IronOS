@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Sleeping...",
         "SleepingTipAdvancedString": "Tip:",
+        "OffString": "オフ",
         "DeviceFailedValidationWarning": "このデバイスはおそらく偽造品です"
     },
     "messagesWarn": {
@@ -29,12 +30,19 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
+        "SettingOffChar": "×",
         "SettingSlowChar": "遅",
         "SettingMediumChar": "中",
         "SettingFastChar": "速",
+        "SettingStartNoneChar": "×",
         "SettingStartSolderingChar": "熱",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
+        "SettingSensitivityOff": "×",
+        "SettingSensitivityLow": "低",
+        "SettingSensitivityMedium": "中",
+        "SettingSensitivityHigh": "高",
+        "SettingLockDisableChar": "×",
         "SettingLockBoostChar": "ブ",
         "SettingLockFullChar": "全"
     },
@@ -86,7 +94,7 @@
         },
         "AutoStart": {
             "text2": "自動加熱",
-            "desc": "電源投入時に自動的に加熱する <熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
+            "desc": "電源投入時に自動的に加熱する <×=オフ | 熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
         },
         "TempChangeShortStep": {
             "text2": "温度変化 短",
@@ -98,11 +106,11 @@
         },
         "LockingMode": {
             "text2": "ボタンロック",
-            "desc": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <ブ=ブーストのみ許可 | 全=すべてをロック>"
+            "desc": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <×=オフ | ブ=ブーストのみ許可 | 全=すべてをロック>"
         },
         "MotionSensitivity": {
             "text2": "動きの感度",
-            "desc": "1=最低感度 | ... | 9=最高感度"
+            "desc": "0=オフ | 1=最低感度 | ... | 9=最高感度"
         },
         "SleepTemperature": {
             "text2": "待機温度",
@@ -118,7 +126,7 @@
         },
         "HallEffSensitivity": {
             "text2": "磁界感度",
-            "desc": "スタンバイモードに入るのに使用される磁場センサーの感度 <1=最低感度 | ... | 9=最高感度>"
+            "desc": "スタンバイモードに入るのに使用される磁場センサーの感度 <0=オフ | 1=最低感度 | ... | 9=最高感度>"
         },
         "TemperatureUnit": {
             "text2": "温度単位",
@@ -142,7 +150,7 @@
         },
         "AnimSpeed": {
             "text2": "動画の速度",
-            "desc": "メニューアイコンのアニメーションの速さ <遅=低速 | 中=中速 | 速=高速>"
+            "desc": "メニューアイコンのアニメーションの速さ <×=再生しない | 遅=低速 | 中=中速 | 速=高速>"
         },
         "AnimLoop": {
             "text2": "動画をループ",

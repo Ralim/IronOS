@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Υπνος...",
         "SleepingTipAdvancedString": "Μύτη:",
+        "OffString": "Απ.",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -47,12 +48,19 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "Α",
+        "SettingOffChar": "0",
         "SettingSlowChar": "Α",
         "SettingMediumChar": "Μ",
         "SettingFastChar": "Γ",
+        "SettingStartNoneChar": "0",
         "SettingStartSolderingChar": "Κ",
         "SettingStartSleepChar": "Ζ",
         "SettingStartSleepOffChar": "Υ",
+        "SettingSensitivityOff": "0",
+        "SettingSensitivityLow": "Χ",
+        "SettingSensitivityMedium": "Μ",
+        "SettingSensitivityHigh": "Υ",
+        "SettingLockDisableChar": "Α",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "Π"
     },
@@ -134,7 +142,7 @@
                 "Ζέσταμα",
                 "κατά την εν."
             ],
-            "desc": "Κ=θερμ. κόλλησης | Z=αναμονή σε θερμοκρασία ύπνου μέχρι την κίνηση | Υ=αναμονή χωρίς ζέσταμα μέχρι την κίνηση"
+            "desc": "0=off | Κ=θερμ. κόλλησης | Z=αναμονή σε θερμοκρασία ύπνου μέχρι την κίνηση | Υ=αναμονή χωρίς ζέσταμα μέχρι την κίνηση"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -155,14 +163,14 @@
                 "Κλείδωμα",
                 "πλήκτρων"
             ],
-            "desc": "Κατά την κόλληση, κρατήστε και τα δύο πλήκτρα για κλείδωμα (B=μόνο λειτ. boost | Π=πλήρες κλείδωμα)"
+            "desc": "Κατά την κόλληση, κρατήστε και τα δύο πλήκτρα για κλείδωμα (A=απενεργοποίηση | B=μόνο λειτ. boost | Π=πλήρες κλείδωμα)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Ευαισθησία",
                 "κίνησης"
             ],
-            "desc": "1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο"
+            "desc": "0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο"
         },
         "SleepTemperature": {
             "text2": [
@@ -190,7 +198,7 @@
                 "Ευαισθ. αισθ. ",
                 "φαιν. Hall"
             ],
-            "desc": "Ευαισθησία του αισθητήρα φαινομένου Hall για εντοπισμό αδράνειας (1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο)"
+            "desc": "Ευαισθησία του αισθητήρα φαινομένου Hall για εντοπισμό αδράνειας (0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -232,7 +240,7 @@
                 "Ταχύτητα",
                 "κιν. εικονιδ."
             ],
-            "desc": "Ρυθμός κίνησης εικονιδίων στο μενού (Α=αργός | Μ=μέτριος | Γ=γρήγορος)"
+            "desc": "Ρυθμός κίνησης εικονιδίων στο μενού (0=off | Α=αργός | Μ=μέτριος | Γ=γρήγορος)"
         },
         "AnimLoop": {
             "text2": [

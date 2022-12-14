@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzz ",
         "SleepingAdvancedString": "Slaapstand...",
         "SleepingTipAdvancedString": "Punt:",
+        "OffString": "Uit",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
+        "SettingOffChar": "O",
         "SettingSlowChar": "T",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
+        "SettingStartNoneChar": "F",
         "SettingStartSolderingChar": "T",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "K",
+        "SettingSensitivityOff": "O",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -131,7 +139,7 @@
                 "Auto",
                 "start"
             ],
-            "desc": "Breng de soldeerbout op temperatuur bij het opstarten. ( T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
+            "desc": "Breng de soldeerbout op temperatuur bij het opstarten. (F=Uit | T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -152,14 +160,14 @@
                 "Allow locking",
                 "buttons"
             ],
-            "desc": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+            "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Bewegings-",
                 "gevoeligheid"
             ],
-            "desc": "Bewegingsgevoeligheid (1=minst gevoelig | ... | 9=meest gevoelig)"
+            "desc": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Hall sensor",
                 "sensitivity"
             ],
-            "desc": "Sensitivity to magnets (1=minst gevoelig | ... | 9=meest gevoelig)"
+            "desc": "Sensitivity to magnets (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Anim.",
                 "speed"
             ],
-            "desc": "Pace of icon animations in menu (T=slow | M=medium | S=fast)"
+            "desc": "Pace of icon animations in menu (O=off | T=slow | M=medium | S=fast)"
         },
         "AnimLoop": {
             "text2": [

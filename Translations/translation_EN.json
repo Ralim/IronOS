@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Sleeping...",
         "SleepingTipAdvancedString": "Tip:",
+        "OffString": "Off",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
+        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
+        "SettingStartNoneChar": "O",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "R",
+        "SettingSensitivityOff": "O",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -131,7 +139,7 @@
                 "Start-up",
                 "behavior"
             ],
-            "desc": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+            "desc": "O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -159,7 +167,7 @@
                 "Motion",
                 "sensitivity"
             ],
-            "desc": "1=least sensitive | ... | 9=most sensitive"
+            "desc": "0=off | 1=least sensitive | ... | 9=most sensitive"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Hall sensor",
                 "sensitivity"
             ],
-            "desc": "Sensitivity to magnets (1=least sensitive | ... | 9=most sensitive)"
+            "desc": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Anim.",
                 "speed"
             ],
-            "desc": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
+            "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
             "text2": [

@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Dvale...",
         "SleepingTipAdvancedString": "Spiss:",
+        "OffString": "Av",
         "DeviceFailedValidationWarning": "Enheten din er sannsynligvis en forfalskning!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "H",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
+        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
+        "SettingStartNoneChar": "I",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "D",
         "SettingStartSleepOffChar": "R",
+        "SettingSensitivityOff": "O",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -131,7 +139,7 @@
                 "AStart",
                 ""
             ],
-            "desc": "Start automatisk med lodding når strøm kobles til. (L=Lodding | D=Dvale | R=Dvale romtemperatur)"
+            "desc": "Start automatisk med lodding når strøm kobles til. (I=Inaktiv | L=Lodding | D=Dvale | R=Dvale romtemperatur)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -152,14 +160,14 @@
                 "Tillat å låse",
                 "knapper"
             ],
-            "desc": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (B=kun boost | F=full lås)"
+            "desc": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (D=deaktiver | B=kun boost | F=full lås)"
         },
         "MotionSensitivity": {
             "text2": [
                 "BSensr",
                 ""
             ],
-            "desc": "Bevegelsesfølsomhet (1=Minst følsom | ... | 9=Mest følsom)"
+            "desc": "Bevegelsesfølsomhet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Hall-sensor",
                 "følsomhet"
             ],
-            "desc": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (1=Minst følsom | ... | 9=Mest følsom)"
+            "desc": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Anim.",
                 "hastighet"
             ],
-            "desc": "Hastigheten til animasjonene i menyen (S=slow | M=medium | F=fast)"
+            "desc": "Hastigheten til animasjonene i menyen (O=off | S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
             "text2": [

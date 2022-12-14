@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Viloläge...",
         "SleepingTipAdvancedString": "Spets:",
+        "OffString": "Av",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "H",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
+        "SettingOffChar": "A",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
+        "SettingStartNoneChar": "A",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "V",
         "SettingStartSleepOffChar": "R",
+        "SettingSensitivityOff": "A",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "A",
         "SettingLockBoostChar": "T",
         "SettingLockFullChar": "F"
     },
@@ -131,7 +139,7 @@
                 "Auto",
                 "start"
             ],
-            "desc": "Startar automatiskt lödpennan vid uppstart. (L=Lödning | V=Viloläge | R=Viloläge Rumstemperatur)"
+            "desc": "Startar automatiskt lödpennan vid uppstart. (A=Av | L=Lödning | V=Viloläge | R=Viloläge Rumstemperatur)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -152,14 +160,14 @@
                 "Tillåt lås",
                 "via knappar"
             ],
-            "desc": "Vid lödning, håll nere bägge knappar för att slå på lås (T=Bara turbo | F=Fullt lås)"
+            "desc": "Vid lödning, håll nere bägge knappar för att slå på lås (A=Av | T=Bara turbo | F=Fullt lås)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Rörelse-",
                 "känslighet"
             ],
-            "desc": "Rörelsekänslighet (1=minst känslig | ... | 9=mest känslig)"
+            "desc": "Rörelsekänslighet (0=Av | 1=minst känslig | ... | 9=mest känslig)"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Sensor-",
                 "känslght"
             ],
-            "desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (1=minst känslig | ... | 9=mest känslig)"
+            "desc": "Känslighet för halleffekt-sensorn för viloläges-detektering (0=Av | 1=minst känslig | ... | 9=mest känslig)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Anim.-",
                 "hastighet"
             ],
-            "desc": "Animationshastighet för ikoner i menyer (L=långsam | M=medel | S=snabb)"
+            "desc": "Animationshastighet för ikoner i menyer (A=av | L=långsam | M=medel | S=snabb)"
         },
         "AnimLoop": {
             "text2": [

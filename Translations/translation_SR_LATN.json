@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzz",
         "SleepingAdvancedString": "Spavanje...",
         "SleepingTipAdvancedString": "Vrh:",
+        "OffString": "Isk",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
+        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "B",
+        "SettingStartNoneChar": "I",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "X",
+        "SettingSensitivityOff": "O",
+        "SettingSensitivityLow": "L",
+        "SettingSensitivityMedium": "M",
+        "SettingSensitivityHigh": "H",
+        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -131,7 +139,7 @@
                 "Vrući",
                 "start"
             ],
-            "desc": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (L=lemljenje | S=spavati | X=spavati sobna temperatura)"
+            "desc": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (I=isključiti | L=lemljenje | S=spavati | X=spavati sobna temperatura)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -152,14 +160,14 @@
                 "Allow locking",
                 "buttons"
             ],
-            "desc": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+            "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Osetljivost",
                 "na pokret"
             ],
-            "desc": "Osetljivost senzora pokreta. (1=najmanje osetljivo | ... | 9=najosetljivije)"
+            "desc": "Osetljivost senzora pokreta. (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Hall sensor",
                 "sensitivity"
             ],
-            "desc": "Sensitivity to magnets (1=najmanje osetljivo | ... | 9=najosetljivije)"
+            "desc": "Sensitivity to magnets (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Anim.",
                 "speed"
             ],
-            "desc": "Pace of icon animations in menu (S=slow | M=medium | B=fast)"
+            "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | B=fast)"
         },
         "AnimLoop": {
             "text2": [

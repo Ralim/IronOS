@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Lepotila...",
         "SleepingTipAdvancedString": "Kärki:",
+        "OffString": "Off",
         "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
     },
     "messagesWarn": {
@@ -44,12 +45,19 @@
         "SettingRightChar": "O",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
+        "SettingOffChar": "P",
         "SettingSlowChar": "A",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
+        "SettingStartNoneChar": "E",
         "SettingStartSolderingChar": "J",
         "SettingStartSleepChar": "L",
         "SettingStartSleepOffChar": "H",
+        "SettingSensitivityOff": "P",
+        "SettingSensitivityLow": "A",
+        "SettingSensitivityMedium": "K",
+        "SettingSensitivityHigh": "S",
+        "SettingLockDisableChar": "P",
         "SettingLockBoostChar": "V",
         "SettingLockFullChar": "K"
     },
@@ -131,7 +139,7 @@
                 "Autom.",
                 "käynnistys"
             ],
-            "desc": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
+            "desc": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (E=Ei käytössä | J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
         },
         "TempChangeShortStep": {
             "text2": [
@@ -152,14 +160,14 @@
                 "Salli nappien",
                 "lukitus"
             ],
-            "desc": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (V=vain tehostus | K=kaikki)"
+            "desc": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (P=pois | V=vain tehostus | K=kaikki)"
         },
         "MotionSensitivity": {
             "text2": [
                 "Liikkeen",
                 "herkkyys"
             ],
-            "desc": "1=vähäinen herkkyys | ... | 9=suurin herkkyys"
+            "desc": "0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys"
         },
         "SleepTemperature": {
             "text2": [
@@ -187,7 +195,7 @@
                 "Hall-",
                 "herk."
             ],
-            "desc": "Hall-efektianturin herkkyys lepotilan tunnistuksessa ( 1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
+            "desc": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
         },
         "TemperatureUnit": {
             "text2": [
@@ -229,7 +237,7 @@
                 "Animaation",
                 "nopeus"
             ],
-            "desc": "Animaatioiden nopeus valikossa (A=alhainen | K=keskiverto | S=suuri)"
+            "desc": "Animaatioiden nopeus valikossa (P=pois | A=alhainen | K=keskiverto | S=suuri)"
         },
         "AnimLoop": {
             "text2": [

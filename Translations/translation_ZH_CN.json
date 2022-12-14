@@ -12,6 +12,7 @@
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Zzzz...",
         "SleepingTipAdvancedString": "--->",
+        "OffString": "关",
         "DeviceFailedValidationWarning": "这支电烙铁很有可能是冒牌货！"
     },
     "messagesWarn": {
@@ -29,12 +30,19 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
+        "SettingOffChar": "关",
         "SettingSlowChar": "慢",
         "SettingMediumChar": "中",
         "SettingFastChar": "快",
+        "SettingStartNoneChar": "无",
         "SettingStartSolderingChar": "焊",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
+        "SettingSensitivityOff": "关",
+        "SettingSensitivityLow": "低",
+        "SettingSensitivityMedium": "中",
+        "SettingSensitivityHigh": "高",
+        "SettingLockDisableChar": "无",
         "SettingLockBoostChar": "增",
         "SettingLockFullChar": "全"
     },
@@ -83,7 +91,7 @@
         },
         "AutoStart": {
             "text2": "自动启动",
-            "desc": "开机时自动启动 <焊=焊接模式 | 待=待机模式 | 室=室温待机>"
+            "desc": "开机时自动启动 <无=禁用 | 焊=焊接模式 | 待=待机模式 | 室=室温待机>"
         },
         "TempChangeShortStep": {
             "text2": "短按温度调整",
@@ -95,11 +103,11 @@
         },
         "LockingMode": {
             "text2": "按键锁定",
-            "desc": "焊接模式时，同时长按两个按键启用按键锁定 <增=只容许增热模式 | 全=完全锁定>"
+            "desc": "焊接模式时，同时长按两个按键启用按键锁定 <无=禁用 | 增=只容许增热模式 | 全=完全锁定>"
         },
         "MotionSensitivity": {
             "text2": "动作灵敏度",
-            "desc": "1=最低灵敏度 | ... | 9=最高灵敏度"
+            "desc": "0=禁用 | 1=最低灵敏度 | ... | 9=最高灵敏度"
         },
         "SleepTemperature": {
             "text2": "待机温度",
@@ -115,7 +123,7 @@
         },
         "HallEffSensitivity": {
             "text2": "磁场灵敏度",
-            "desc": "霍尔效应传感器用作启动待机模式的灵敏度 <1=最低灵敏度 | ... | 9=最高灵敏度>"
+            "desc": "霍尔效应传感器用作启动待机模式的灵敏度 <0=禁用 | 1=最低灵敏度 | ... | 9=最高灵敏度>"
         },
         "TemperatureUnit": {
             "text2": "温度单位",
@@ -139,7 +147,7 @@
         },
         "AnimSpeed": {
             "text2": "动画速度",
-            "desc": "主菜单中功能图标动画的播放速度 <慢=慢速 | 中=中速 | 快=快速>"
+            "desc": "主菜单中功能图标动画的播放速度 <关=不显示动画 | 慢=慢速 | 中=中速 | 快=快速>"
         },
         "AnimLoop": {
             "text2": "动画循环",
