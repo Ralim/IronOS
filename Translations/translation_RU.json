@@ -53,10 +53,6 @@
         "SettingStartSolderingChar": "П",
         "SettingStartSleepChar": "О",
         "SettingStartSleepOffChar": "К",
-        "SettingSensitivityOff": "О",
-        "SettingSensitivityLow": "Н",
-        "SettingSensitivityMedium": "С",
-        "SettingSensitivityHigh": "В",
         "SettingLockDisableChar": "О",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
