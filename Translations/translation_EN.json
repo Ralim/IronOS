@@ -219,7 +219,7 @@
                 "Scrolling",
                 "speed"
             ],
-            "desc": "Speed info text scrolls past at (S=slow | F=fast)"
+            "desc": "Scrolling speed of info text (S=slow | F=fast)"
         },
         "ReverseButtonTempChange": {
             "text2": [
@@ -289,7 +289,7 @@
                 "Calibrate CJC",
                 "at next boot"
             ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "desc": "Calbrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
             "text2": [
@@ -303,7 +303,7 @@
                 "Power",
                 "pulse"
             ],
-            "desc": "Intensity of power of keep-awake-pulse (watt)"
+            "desc": "Intensity of power of keep-awake-pulse (W=watt)"
         },
         "PowerPulseWait": {
             "text2": [
