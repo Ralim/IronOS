@@ -53,10 +53,6 @@
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "R",
         "SettingStartSleepOffChar": "K",
-        "SettingSensitivityOff": "A",
-        "SettingSensitivityLow": "N",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
         "SettingLockDisableChar": "A",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "V"
