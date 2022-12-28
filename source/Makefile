@@ -147,6 +147,8 @@ FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 DRIVER_INC_DIR =./Core/Drivers
 BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
+THREADS_OP_MODES_INC_DIR = ./Core/Threads/OperatingModes
+THREADS_OP_MODES_TOOLS_INC_DIR = ./Core/Threads/OperatingModes/utils
 
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
@@ -372,6 +374,8 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
 	-I$(THREADS_INC_DIR) \
+	-I$(THREADS_OP_MODES_INC_DIR) \
+	-I$(THREADS_OP_MODES_TOOLS_INC_DIR) \
 	-I$(INC_PD_DRIVERS_DIR) \
 	$(DEVICE_INCLUDES) 
 

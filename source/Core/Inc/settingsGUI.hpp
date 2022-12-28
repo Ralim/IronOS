@@ -35,7 +35,6 @@ typedef struct {
 } menuitem;
 
 void                  enterSettingsMenu();
-void                  GUIDelay();
 void                  warnUser(const char *warning, const int timeout);
 extern const menuitem rootSettingsMenu[];
 
