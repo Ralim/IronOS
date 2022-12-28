@@ -3,22 +3,22 @@
     "languageLocalName": "Magyar",
     "tempUnitFahrenheit": false,
     "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-        "CJCCalibrating": "calibrating",
+        "SettingsCalibrationWarning": "Újraindítás előtt a hegy és az eszköz legyen szobahőmérsékletű!",
+        "CJCCalibrating": "Kalibrálás",
         "SettingsResetWarning": "Biztos visszaállítja a beállításokat alapértékekre?",
-        "UVLOWarningString": "DC TÚL KEVÉS",
+        "UVLOWarningString": "DC túl alacsony",
         "UndervoltageString": "Alulfeszültség",
         "InputVoltageString": "Bemenet V: ",
         "SleepingSimpleString": "Zzzz",
         "SleepingAdvancedString": "Alvás...",
         "SleepingTipAdvancedString": "Hegy:",
         "OffString": "Ki",
-        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+        "DeviceFailedValidationWarning": "Az eszköz valószínűleg nem eredeti!"
     },
     "messagesWarn": {
         "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
+            "Kalibráció",
+            "kész!"
         ],
         "ResetOKMessage": "Törlés OK",
         "SettingsResetMessage": [
@@ -263,9 +263,9 @@
         "LOGOTime": {
             "text2": [
                 "Boot logo",
-                "duration"
+                "megjelenítés"
             ],
-            "desc": "Set boot logo duration (s=seconds)"
+            "desc": "Boot logo megjelenítési idejének beállítása (s=seconds)"
         },
         "AdvancedIdle": {
             "text2": [
@@ -291,9 +291,9 @@
         "CalibrateCJC": {
             "text2": [
                 "Calibrate CJC",
-                "at next boot"
+                "köv. indításnál"
             ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "desc": "Következő indításnál a hegy Cold Junction Compensation kalibrálása (nem szükséges ha Delta T kisebb mint 5°C)"
         },
         "VoltageCalibration": {
             "text2": [

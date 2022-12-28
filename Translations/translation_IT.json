@@ -3,9 +3,9 @@
     "languageLocalName": "Italiano",
     "tempUnitFahrenheit": false,
     "messages": {
-        "SettingsCalibrationWarning": "Prima di riavvire assicurati che la punta e l'impugnatura siano a temperatura ambiente!",
+        "SettingsCalibrationWarning": "Prima di riavviare assicurati che punta e impugnatura siano a temperatura ambiente!",
         "CJCCalibrating": "Calibrazione in corso",
-        "SettingsResetWarning": "Ripristinare le impostazioni iniziali?",
+        "SettingsResetWarning": "Ripristinare le impostazioni di default?",
         "UVLOWarningString": "DC BASSA",
         "UndervoltageString": "DC INSUFFICIENTE",
         "InputVoltageString": "V in:",
@@ -13,7 +13,7 @@
         "SleepingAdvancedString": "Riposo",
         "SleepingTipAdvancedString": "Punta:",
         "OffString": "OFF",
-        "DeviceFailedValidationWarning": "È probabile che il dispositivo in uso sia contraffatto!"
+        "DeviceFailedValidationWarning": "È probabile che questo dispositivo sia contraffatto!"
     },
     "messagesWarn": {
         "CJCCalibrationDone": [
@@ -115,10 +115,10 @@
         },
         "QCMaxVoltage": {
             "text2": [
-                "Voltaggio",
+                "Tensione",
                 "QC"
             ],
-            "desc": "Imposta il massimo voltaggio negoziabile con un alimentatore Quick Charge [volt]"
+            "desc": "Imposta la tensione massima negoziabile con un alimentatore Quick Charge [volt]"
         },
         "PDNegTimeout": {
             "text2": [
@@ -328,7 +328,7 @@
                 "Ripristino",
                 "impostazioni"
             ],
-            "desc": "Ripristina le impostazioni allo stato iniziale"
+            "desc": "Ripristina le impostazioni di default"
         },
         "LanguageSwitch": {
             "text2": [
