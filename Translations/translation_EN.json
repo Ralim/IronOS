@@ -53,10 +53,6 @@
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "R",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "L",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
         "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
@@ -67,35 +63,35 @@
                 "Power",
                 "settings"
             ],
-            "desc": "Settings for Power Supply (Batteries, Quick Charge, PD etc)"
+            "desc": ""
         },
         "SolderingMenu": {
             "text2": [
                 "Soldering",
                 "settings"
             ],
-            "desc": "Soldering settings, boost modes; how the iron operates"
+            "desc": ""
         },
         "PowerSavingMenu": {
             "text2": [
                 "Sleep",
                 "mode"
             ],
-            "desc": "Sleep modes; methods we use to save power on the device by shutting down"
+            "desc": ""
         },
         "UIMenu": {
             "text2": [
                 "User",
                 "interface"
             ],
-            "desc": "User interactions (how it looks, animations, units etc)"
+            "desc": ""
         },
         "AdvancedMenu": {
             "text2": [
                 "Advanced",
                 "settings"
             ],
-            "desc": "Advanced or Misc options."
+            "desc": ""
         }
     },
     "menuOptions": {
@@ -223,7 +219,7 @@
                 "Scrolling",
                 "speed"
             ],
-            "desc": "Speed info text scrolls past at (S=slow | F=fast)"
+            "desc": "Scrolling speed of info text (S=slow | F=fast)"
         },
         "ReverseButtonTempChange": {
             "text2": [
@@ -293,7 +289,7 @@
                 "Calibrate CJC",
                 "at next boot"
             ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "desc": "Calbrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
             "text2": [
@@ -307,7 +303,7 @@
                 "Power",
                 "pulse"
             ],
-            "desc": "Intensity of power of keep-awake-pulse (watt)"
+            "desc": "Intensity of power of keep-awake-pulse (W=watt)"
         },
         "PowerPulseWait": {
             "text2": [
@@ -335,7 +331,7 @@
                 "Language:",
                 " EN     English"
             ],
-            "desc": "Toggle active language"
+            "desc": ""
         }
     }
 }
