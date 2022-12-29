@@ -71,7 +71,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {1, POWER_PULSE_WAIT_MAX, 1, POWER_PULSE_WAIT_DEFAULT},         // KeepAwakePulseWait
     {1, POWER_PULSE_DURATION_MAX, 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
     {360, 900, 1, VOLTAGE_DIV},                                     // VoltageDiv
-    {MIN_TEMP_C, MAX_TEMP_F, 10, BOOST_TEMP},                       // BoostTemp
+    {0, MAX_TEMP_F, 10, BOOST_TEMP},                                // BoostTemp
     {MIN_CALIBRATION_OFFSET, 2500, 1, CALIBRATION_OFFSET},          // CalibrationOffset
     {0, MAX_POWER_LIMIT, POWER_LIMIT_STEPS, POWER_LIMIT},           // PowerLimit
     {0, 1, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
