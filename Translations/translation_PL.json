@@ -17,8 +17,8 @@
     },
     "messagesWarn": {
         "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
+            "Kalibracja",
+            "wykonana!"
         ],
         "ResetOKMessage": "Reset OK",
         "SettingsResetMessage": [
