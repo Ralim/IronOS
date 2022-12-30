@@ -289,7 +289,7 @@
                 "Каліброўка тэмпературы",
                 "пры наступнай загрузцы"
             ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "desc": "Каліброўка тэмпературы пры наступным уключэнні (не патрабуецца, калі розніца тэмператур меньш за 5°C)"
         },
         "VoltageCalibration": {
             "text2": [
