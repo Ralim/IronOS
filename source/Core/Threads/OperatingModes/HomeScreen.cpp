@@ -166,7 +166,7 @@ void drawHomeScreen(bool buttonLockout) {
       tipDisconnectedDisplay = false;
       if (tipTemp > 55)
         tempOnDisplay = true;
-      else  (tipTemp < 45)
+      else if (tipTemp < 45)
         tempOnDisplay = false;
       if (isTipDisconnected()) {
         tempOnDisplay          = false;
