@@ -39,11 +39,13 @@ To calibrate your iron:
 7. Press both buttons at the same time to Save and Exit to the menu
 
 ### Calibrate Tip CJC
-This performs a Tip Cold Junction Calibration (CJC) ([see Temperature for details](https://ralim.github.io/IronOS/Temperature/)). This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective, and measured resistance is close to specifications (Pinecil/TS100 short tips 6.2 Ω, long tips 8 Ω, TS80(P) ~4.5 Ω).
+This calibrates the [Cold Junction Compensation](https://ralim.github.io/IronOS/Temperature/) *(CJC)* for the tip. This is normally not needed unless you have an issue with tip temperature or your tips are wearing out prematurely. Changing tip lengths does not necessarily mean a calibration is needed. Check first that your tips are not defective and measured resistance is close to specifications *[Pinecil / TS100 short tips **6.2 Ω**, long tips **8 Ω**, TS80/P ~**4.5 Ω**]*.
 
-What this is for: some tips have an offset on their readings which causes issues, i.e., the actual temperature of the tip is much higher than displayed. To calibrate this out, perform the following steps. 
+What this is for:<br>
+Some tips have an offset on their readings which causes issues, i.e. The actual temperature of the tip is much higher than displayed. Follow the steps below to calibrate this.
 
-Caution: if the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down to room temperature.
+Caution:<br>
+If the method below is not followed, the iron could be worse than before calibration. If you need to repeat the method, first unplug and let the handle/PCB cool down to room temperature.
 
 1. Connect power to your device.
 2. Go to **`Advanced Settings`** using (`-/B`) and press (`+/A`) to select it. Use (`-/B`) to scroll to **`Calibrate CJC at next boot`** and confirm with (`+/A`).
@@ -52,11 +54,11 @@ Caution: if the method below is not followed, the iron could be worse than befor
 4. Unplug you device.
 5. **Critical: Make sure a tip is attached & wait until the tip & handle are at room temperature.** (Wait a reasonable amount of time after having used the device.)
 6. Power the device and ideally keep it out of your hands (You know it might get warm.).
-7. The display shows **`....`** for a short time while the device measures and compares the tip and handle voltages.
-8. As a result the new *Offset value* is displayed. This value can later be viewed in the **`Debug menu`**.
+7. The display shows **`calibrating ....`** for a short time while the device measures and compares the tip and handle voltages.
+8. **`Calibration done!`** is displayed for 3 seconds. The new offset value can later be viewed in the **`Debug menu`**.
 9. Calibration is done and the device proceeds booting.
 
-Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration.
+Note: offsets are dependant on your tip, temperature sensor, and the MCU. It's the culmination of tolerances at rest. Typical values are 700-1000 range. This is only designed to be used at boot while cold (ambient / room temperature), as temperatures drift apart as soon as power is connected. Doing this reading repeatedly could result in wide varience of the offset number and/or incorrect calibration.
 
 ### Boost mode
 
