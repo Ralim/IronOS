@@ -186,7 +186,7 @@ void drawHomeScreen(bool buttonLockout) {
         // If we have a tip connected draw the temp, if not we leave it blank
         if (!tipDisconnectedDisplay) {
           // draw in the temp
-          if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 260 < 160)))
+          if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300)))
             gui_drawTipTemp(false, FontStyle::LARGE); // draw in the temp
         } else {
           // Draw in missing tip symbol
