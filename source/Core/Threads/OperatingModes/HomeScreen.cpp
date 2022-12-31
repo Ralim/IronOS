@@ -164,11 +164,10 @@ void drawHomeScreen(bool buttonLockout) {
         gui_drawBatteryIcon();
       }
       tipDisconnectedDisplay = false;
-      if (tipTemp > 55) {
+      if (tipTemp > 55)
         tempOnDisplay = true;
-      } else {
+      else  (tipTemp < 45)
         tempOnDisplay = false;
-      }  
       if (isTipDisconnected()) {
         tempOnDisplay          = false;
         tipDisconnectedDisplay = true;
