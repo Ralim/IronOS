@@ -7,7 +7,8 @@
 
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
-#include "stdint.h"
+#include <stdbool.h>
+#include <stdint.h>
 
 extern const bool HasFahrenheit;
 

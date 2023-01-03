@@ -51,16 +51,15 @@ void prepareTranslations() {
   }
   Tr                 = &translationData->indices;
   TranslationStrings = translationData->strings;
-  // Font 12 can be compressed; if it is then we want to decompress it to ram
 
+  // Font 12 can be compressed; if it is then we want to decompress it to ram
   if (FontSectionInfo.font12_compressed_source != NULL) {
-    unsigned int outsize;
-    outsize = blz_depack(FontSectionInfo.font06_compressed_source, (uint8_t *)FontSectionInfo.font12_start_ptr, FontSectionInfo.font12_decompressed_size);
+    blz_depack(FontSectionInfo.font12_compressed_source, (uint8_t *)FontSectionInfo.font12_start_ptr, FontSectionInfo.font12_decompressed_size);
   }
 
+  // Font 06 can be compressed; if it is then we want to decompress it to ram
   if (FontSectionInfo.font06_compressed_source != NULL) {
-    unsigned int outsize;
-    outsize = blz_depack(FontSectionInfo.font06_compressed_source, (uint8_t *)FontSectionInfo.font06_start_ptr, FontSectionInfo.font06_decompressed_size);
+    blz_depack(FontSectionInfo.font06_compressed_source, (uint8_t *)FontSectionInfo.font06_start_ptr, FontSectionInfo.font06_decompressed_size);
   }
 }
 
