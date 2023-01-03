@@ -72,10 +72,7 @@ void unstick_I2C() {
 uint8_t getButtonA() { return (gpio_input_bit_get(KEY_A_GPIO_Port, KEY_A_Pin) == SET) ? 1 : 0; }
 uint8_t getButtonB() { return (gpio_input_bit_get(KEY_B_GPIO_Port, KEY_B_Pin) == SET) ? 1 : 0; }
 
-void reboot() {
-  // Spin for watchdog
-  for (;;) {}
-}
+void reboot() { eclic_system_reset(); }
 
 void     delay_ms(uint16_t count) { delay_1ms(count); }
 uint32_t __get_IPSR(void) {
