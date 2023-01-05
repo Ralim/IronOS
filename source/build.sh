@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 TRANSLATION_DIR="../Translations"
-TRANSLATION_SCRIPT="make_translation.py"
+#TRANSLATION_SCRIPT="make_translation.py"
 
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
 AVAILABLE_LANGUAGES=()
@@ -61,7 +61,7 @@ checkLastCommand() {
 }
 
 forceExit() {
-    if [ ! -z "$*" ]; then
+    if [ -n "$*" ]; then
         echo -e "\n\n    [Error]: $*"
     else
         echo "    [Error]"
@@ -114,7 +114,7 @@ echo " ${AVAILABLE_LANGUAGES[*]}"
 echo -n "Requested languages : "
 if ((${#largs[@]})); then
     for i in "${largs[@]}"; do
-        i=$(echo ${i} | tr 'a-z' 'A-Z')
+        i=$(echo "${i}" | tr '[:lower:]' '[:upper:]')
         if isInArray "$i" "${AVAILABLE_LANGUAGES[@]}"; then
             echo -n "$i "
             BUILD_LANGUAGES+=("$i")
@@ -124,7 +124,7 @@ if ((${#largs[@]})); then
     done
     echo ""
 fi
-if [ -z $BUILD_LANGUAGES ]; then
+if [ -z "$BUILD_LANGUAGES" ]; then
     echo "    No custom languages selected."
     echo "    Building: [ALL LANGUAGES]"
     BUILD_LANGUAGES+=("${AVAILABLE_LANGUAGES[@]}")
@@ -139,7 +139,7 @@ if ((${#margs[@]})); then
     for i in "${margs[@]}"; do
         
         if [[ "$i" != "Pinecil" ]] && [[ "$i" != "Pinecilv2" ]]; then # Dirty. Need to adapt the Build process to use upper cases only
-            i=$(echo ${i} | tr 'a-z' 'A-Z')
+            i=$(echo "${i}" | tr '[:lower:]' '[:upper:]')
         fi
         
         if isInArray "$i" "${AVAILABLE_MODELS[@]}"; then
@@ -152,7 +152,7 @@ if ((${#margs[@]})); then
     echo ""
 fi
 
-if [ -z $BUILD_MODELS ]; then
+if [ -z "$BUILD_MODELS" ]; then
     echo "    No custom models selected."
     echo "    Building: [ALL MODELS]"
     BUILD_MODELS+=("${AVAILABLE_MODELS[@]}")
