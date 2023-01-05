@@ -137,7 +137,11 @@ echo " ${AVAILABLE_MODELS[*]}"
 echo -n "Requested models : "
 if ((${#margs[@]})); then
     for i in "${margs[@]}"; do
-        i=$(echo ${i} | tr 'a-z' 'A-Z')
+        
+        if [[ "$i" != "Pinecil" ]] && [[ "$i" != "Pinecilv2" ]]; then # Dirty. Need to adapt the Build process to use upper cases only
+            i=$(echo ${i} | tr 'a-z' 'A-Z')
+        fi
+        
         if isInArray "$i" "${AVAILABLE_MODELS[@]}"; then
             echo -n "$i "
             BUILD_MODELS+=("$i")
