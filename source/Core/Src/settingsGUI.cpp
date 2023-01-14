@@ -682,6 +682,7 @@ static bool setCalibrateVIN(void) {
     case BUTTON_F_LONG:
     case BUTTON_B_LONG:
       saveSettings();
+      OLED::clearScreen();
       OLED::setCursor(0, 0);
       OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::LARGE);
       OLED::refresh();
