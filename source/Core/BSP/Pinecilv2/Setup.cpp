@@ -100,6 +100,7 @@ void setup_adc(void) {
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
+  ADC_Gain_Trim();
 
   // Enable FiFo IRQ
   Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);

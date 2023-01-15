@@ -115,10 +115,10 @@
 #endif
 
 #ifdef MODEL_Pinecilv2
-#define ADC_VDD_MV                 3300                      // ADC max reading millivolts
-#define ADC_MAX_READING            (62000 >> 1)              // Maximum reading of the adc
+#define ADC_VDD_MV                 3200                      // ADC max reading millivolts
+#define ADC_MAX_READING            ((1 << 16) >> 1)          // Maximum reading of the adc
 #define SOLDERING_TEMP             320                       // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV                600                       // 600 - Default divider from schematic
+#define VOLTAGE_DIV                630                       // 600 - Default divider from schematic
 #define CALIBRATION_OFFSET         900                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET     100                       // Min value for calibration
 #define PID_POWER_LIMIT            220                       // Sets the max pwm power limit
