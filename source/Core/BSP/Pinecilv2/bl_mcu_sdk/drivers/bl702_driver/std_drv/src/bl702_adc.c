@@ -75,7 +75,7 @@
  *  @{
  */
 static intCallback_Type   *adcIntCbfArra[ADC_INT_ALL] = {NULL};
-static ADC_Gain_Coeff_Type adcGainCoeffCal            = {
+ADC_Gain_Coeff_Type adcGainCoeffCal            = {
                .adcGainCoeffEnable = DISABLE,
                .adcgainCoeffVal    = 0,
                .coe                = 1,
