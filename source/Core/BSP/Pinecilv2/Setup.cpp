@@ -80,14 +80,14 @@ void setup_adc(void) {
   adc_cfg.vref           = ADC_VREF_3P2V;
   adc_cfg.resWidth       = ADC_DATA_WIDTH_14_WITH_64_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
-  adc_cfg.v18Sel         = ADC_V18_SEL_1P72V;
+  adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
-  adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
-  adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
-  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_ON;
+  adc_cfg.gain1          = ADC_PGA_GAIN_1;
+  adc_cfg.gain2          = ADC_PGA_GAIN_1;
+  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_PGA_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
-  adc_cfg.vcm            = ADC_PGA_VCM_1P6V;
-  adc_cfg.offsetCalibEn  = ENABLE;
+  adc_cfg.vcm            = ADC_PGA_VCM_1P2V;
+  adc_cfg.offsetCalibEn  = DISABLE;
   adc_cfg.offsetCalibVal = 0;
 
   ADC_Disable();
