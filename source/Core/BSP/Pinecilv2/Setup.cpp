@@ -95,6 +95,26 @@ void setup_adc(void) {
   ADC_Reset();
 
   ADC_Init(&adc_cfg);
+#if 0
+  // This is the change that enables MIC2_DIFF, for now deciding not to enable it, since it seems to make results slightly worse
+  {
+    uint32_t tmpVal;
+    tmpVal = BL_RD_REG(AON_BASE,AON_GPADC_REG_CMD);
+    tmpVal = BL_SET_REG_BITS_VAL(tmpVal,AON_GPADC_MIC2_DIFF,1);
+    BL_WR_REG(AON_BASE,AON_GPADC_REG_CMD,tmpVal);
+  }
+#endif
+
+#if 1
+  // this sets the CVSP field (ADC conversion speed)
+  {
+    uint32_t regCfg2;
+    regCfg2 = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG2);
+    regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_DLY_SEL, 0x02);
+    BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, regCfg2);
+  }
+#endif
+
   adc_fifo_cfg.dmaEn         = DISABLE;
   adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
