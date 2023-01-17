@@ -31,13 +31,13 @@ void                                 adc_fifo_irq(void) {
       ADC_Parse_Result(&reading, 1, &parsed);
       switch (parsed.posChan) {
       case TMP36_ADC_CHANNEL:
-        ADC_Temp.update(parsed.value * 4);
+        ADC_Temp.update(parsed.value << 2);
         break;
       case TIP_TEMP_ADC_CHANNEL:
-        ADC_Tip.update(parsed.value * 4);
+        ADC_Tip.update(parsed.value << 2);
         break;
       case VIN_ADC_CHANNEL:
-        ADC_Vin.update(parsed.value * 4);
+        ADC_Vin.update(parsed.value << 2);
         break;
 
       default:
