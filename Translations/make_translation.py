@@ -754,7 +754,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
 
         write_bytes_as_c_array(f, "font_12x16_brieflz", font12_compressed)
         font06_uncompressed = bytearray()
-        for sym in data.large_text_symbols:
+        for sym in data.small_text_symbols:
             font06_uncompressed.extend(font_map.font06_maps[sym])
         font06_compressed = brieflz.compress(bytes(font06_uncompressed))
         logging.info(
