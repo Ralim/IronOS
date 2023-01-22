@@ -1,6 +1,7 @@
 ![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
 ![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
 ![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
+[![Translation status](https://hosted.weblate.org/widgets/ironos/-/glossary/svg-badge.svg)](https://hosted.weblate.org/engage/ironos/)
 
 # IronOS - Flexible Soldering iron control Firmware
 
@@ -78,6 +79,11 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 - Holding down the button near the USB end will show the _[debug menu](https://ralim.github.io/IronOS/DebugMenu/)._ In _soldering mode_ this ends the heating.
 
 Operation details are over in the [Menu information.](https://ralim.github.io/IronOS/Menu/)
+
+## Translations
+
+Is your preferred language missing localisation of languages?
+This project is using Weblate for managing translations in a user friendly way; [the user interface for this is on their hosted website.](https://hosted.weblate.org/engage/ironos/)
 
 ## Thanks
 

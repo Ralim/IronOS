@@ -7,10 +7,10 @@ void showDebugMenu(void) {
   uint8_t     screen = 0;
   ButtonState b;
   for (;;) {
-    OLED::clearScreen();                                // Ensure the buffer starts clean
-    OLED::setCursor(0, 0);                              // Position the cursor at the 0,0 (top left)
-    OLED::print(SymbolVersionNumber, FontStyle::SMALL); // Print version number
-    OLED::setCursor(0, 8);                              // second line
+    OLED::clearScreen();                                     // Ensure the buffer starts clean
+    OLED::setCursor(0, 0);                                   // Position the cursor at the 0,0 (top left)
+    OLED::print(SmallSymbolVersionNumber, FontStyle::SMALL); // Print version number
+    OLED::setCursor(0, 8);                                   // second line
     OLED::print(DebugMenu[screen], FontStyle::SMALL);
     switch (screen) {
     case 0: // Build Date
@@ -74,7 +74,7 @@ void showDebugMenu(void) {
       break;
     case 6: // Handle Temp in °C
       OLED::printNumber(getHandleTemperature(0) / 10, 6, FontStyle::SMALL);
-      OLED::print(SymbolDot, FontStyle::SMALL);
+      OLED::print(SmallSymbolDot, FontStyle::SMALL);
       OLED::printNumber(getHandleTemperature(0) % 10, 1, FontStyle::SMALL);
       break;
     case 7: // Max Temp Limit in °C
@@ -88,7 +88,7 @@ void showDebugMenu(void) {
       break;
     case 10:                                                              // Tip Resistance in Ω
       OLED::printNumber(getTipResistanceX10() / 10, 6, FontStyle::SMALL); // large to pad over so that we cover ID left overs
-      OLED::print(SymbolDot, FontStyle::SMALL);
+      OLED::print(SmallSymbolDot, FontStyle::SMALL);
       OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
       break;
     case 11: // Raw Tip in µV

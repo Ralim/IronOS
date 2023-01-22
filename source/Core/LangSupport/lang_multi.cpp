@@ -52,29 +52,14 @@ void prepareTranslations() {
   Tr                 = &translationData->indices;
   TranslationStrings = translationData->strings;
 
-  memset(DynamicFontSections, 0, FontSectionsCount * sizeof(DynamicFontSections[0]));
-  for (int i = 0; i < FontSectionDataCount; i++) {
-    const auto &fontSectionDataInfo = FontSectionDataInfos[i];
-    auto       &fontSection         = DynamicFontSections[i];
-    fontSection.symbol_start        = fontSectionDataInfo.symbol_start;
-    fontSection.symbol_end          = fontSection.symbol_start + fontSectionDataInfo.symbol_count;
-    const uint16_t font12_size      = fontSectionDataInfo.symbol_count * (12 * 16 / 8);
-    uint16_t       dataSize;
-    if (fontSectionDataInfo.data_is_compressed) {
-      unsigned int outsize;
-      outsize = blz_depack_srcsize(fontSectionDataInfo.data_ptr, buffer_next_ptr, fontSectionDataInfo.data_size);
+  // Font 12 can be compressed; if it is then we want to decompress it to ram
+  if (FontSectionInfo.font12_compressed_source != NULL) {
+    blz_depack(FontSectionInfo.font12_compressed_source, (uint8_t *)FontSectionInfo.font12_start_ptr, FontSectionInfo.font12_decompressed_size);
+  }
 
-      fontSection.font12_start_ptr = buffer_next_ptr;
-      dataSize                     = outsize;
-      buffer_remaining_size -= outsize;
-      buffer_next_ptr += outsize;
-    } else {
-      fontSection.font12_start_ptr = fontSectionDataInfo.data_ptr;
-      dataSize                     = fontSectionDataInfo.data_size;
-    }
-    if (dataSize > font12_size) {
-      fontSection.font06_start_ptr = fontSection.font12_start_ptr + font12_size;
-    }
+  // Font 06 can be compressed; if it is then we want to decompress it to ram
+  if (FontSectionInfo.font06_compressed_source != NULL) {
+    blz_depack(FontSectionInfo.font06_compressed_source, (uint8_t *)FontSectionInfo.font06_start_ptr, FontSectionInfo.font06_decompressed_size);
   }
 }
 

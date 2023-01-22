@@ -21,9 +21,9 @@ void gui_drawTipTemp(bool symbol, const FontStyle font) {
     } else {
       // Otherwise fall back to chars
       if (getSettingValue(SettingsOptions::TemperatureInF))
-        OLED::print(SymbolDegF, FontStyle::SMALL);
+        OLED::print(SmallSymbolDegF, FontStyle::SMALL);
       else
-        OLED::print(SymbolDegC, FontStyle::SMALL);
+        OLED::print(SmallSymbolDegC, FontStyle::SMALL);
     }
   }
 }

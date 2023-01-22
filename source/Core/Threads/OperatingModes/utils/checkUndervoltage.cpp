@@ -22,7 +22,7 @@ bool checkForUnderVoltage(void) {
         OLED::setCursor(0, 8);
         OLED::print(translatedString(Tr->InputVoltageString), FontStyle::SMALL);
         printVoltage();
-        OLED::print(SymbolVolts, FontStyle::SMALL);
+        OLED::print(SmallSymbolVolts, FontStyle::SMALL);
       } else {
         OLED::print(translatedString(Tr->UVLOWarningString), FontStyle::LARGE);
       }

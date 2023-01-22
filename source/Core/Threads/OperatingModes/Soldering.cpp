@@ -119,7 +119,7 @@ void gui_solderingMode(uint8_t jumpToSleep) {
         } else {
           OLED::setCursor(55, 8);
         }
-        OLED::print(SymbolPlus, FontStyle::SMALL);
+        OLED::print(SmallSymbolPlus, FontStyle::SMALL);
       }
 
       if (OLED::getRotation()) {
@@ -128,9 +128,9 @@ void gui_solderingMode(uint8_t jumpToSleep) {
         OLED::setCursor(67, 0);
       }
       OLED::printNumber(x10WattHistory.average() / 10, 2, FontStyle::SMALL);
-      OLED::print(SymbolDot, FontStyle::SMALL);
+      OLED::print(SmallSymbolDot, FontStyle::SMALL);
       OLED::printNumber(x10WattHistory.average() % 10, 1, FontStyle::SMALL);
-      OLED::print(SymbolWatts, FontStyle::SMALL);
+      OLED::print(SmallSymbolWatts, FontStyle::SMALL);
 
       if (OLED::getRotation()) {
         OLED::setCursor(0, 8);
@@ -138,22 +138,22 @@ void gui_solderingMode(uint8_t jumpToSleep) {
         OLED::setCursor(67, 8);
       }
       printVoltage();
-      OLED::print(SymbolVolts, FontStyle::SMALL);
+      OLED::print(SmallSymbolVolts, FontStyle::SMALL);
     } else {
       OLED::setCursor(0, 0);
       // We switch the layout direction depending on the orientation of the oled
       if (OLED::getRotation()) {
         // battery
         gui_drawBatteryIcon();
-        OLED::print(SymbolSpace, FontStyle::LARGE); // Space out gap between battery <-> temp
-        gui_drawTipTemp(true, FontStyle::LARGE);    // Draw current tip temp
+        OLED::print(LargeSymbolSpace, FontStyle::LARGE); // Space out gap between battery <-> temp
+        gui_drawTipTemp(true, FontStyle::LARGE);         // Draw current tip temp
 
         // We draw boost arrow if boosting, or else gap temp <-> heat
         // indicator
         if (boostModeOn)
           OLED::drawSymbol(2);
         else
-          OLED::print(SymbolSpace, FontStyle::LARGE);
+          OLED::print(LargeSymbolSpace, FontStyle::LARGE);
 
         // Draw heating/cooling symbols
         OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory.average()));
@@ -165,10 +165,10 @@ void gui_solderingMode(uint8_t jumpToSleep) {
         if (boostModeOn)
           OLED::drawSymbol(2);
         else
-          OLED::print(SymbolSpace, FontStyle::LARGE);
+          OLED::print(LargeSymbolSpace, FontStyle::LARGE);
         gui_drawTipTemp(true, FontStyle::LARGE); // Draw current tip temp
 
-        OLED::print(SymbolSpace, FontStyle::LARGE); // Space out gap between battery <-> temp
+        OLED::print(LargeSymbolSpace, FontStyle::LARGE); // Space out gap between battery <-> temp
 
         gui_drawBatteryIcon();
       }
