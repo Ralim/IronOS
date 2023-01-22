@@ -9,7 +9,7 @@
         },
         {
             "id": "SettingsResetMessage",
-            "description": "Shown when some settings are reset to factory defaults either by by incompatible firmware changes."
+            "description": "Shown when certain settings are reset to factory defaults due to incompatible firmware changes."
         },
         {
             "id": "NoAccelerometerMessage",
