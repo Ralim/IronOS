@@ -4,8 +4,12 @@
             "description": "Confirmation message indicating CJC calibration is complete."
         },
         {
+            "id": "ResetOKMessage",
+            "description": "Shown when the settings are reset to factory defaults by the user."
+        },
+        {
             "id": "SettingsResetMessage",
-            "description": "Shown when the settings are reset to factory defaults either by the user or by incompatible firmware changes."
+            "description": "Shown when some settings are reset to factory defaults either by by incompatible firmware changes."
         },
         {
             "id": "NoAccelerometerMessage",
