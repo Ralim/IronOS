@@ -38,10 +38,6 @@
         "SettingStartSolderingChar": "焊",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
-        "SettingSensitivityOff": "關",
-        "SettingSensitivityLow": "低",
-        "SettingSensitivityMedium": "中",
-        "SettingSensitivityHigh": "高",
         "SettingLockDisableChar": "無",
         "SettingLockBoostChar": "增",
         "SettingLockFullChar": "全"

@@ -107,9 +107,9 @@ var def = ///
                 "description": "Shown for automatic display rotation."
             },
             {
-                "id": "SettingFastChar",
+                "id": "SettingOffChar",
                 "len": 1,
-                "description": "Shown when a setting is set to a fast value i.e. animation speed"
+                "description": "Shown when a setting is turned off"
             },
             {
                 "id": "SettingSlowChar",
@@ -122,9 +122,14 @@ var def = ///
                 "description": "Shown when a setting is set to a medium value i.e. animation speed"
             },
             {
-                "id": "SettingOffChar",
+                "id": "SettingFastChar",
                 "len": 1,
-                "description": "Shown when a setting is turned off"
+                "description": "Shown when a setting is set to a fast value i.e. animation speed"
+            },
+            {
+                "id": "SettingStartNoneChar",
+                "len": 1,
+                "description": "Shown when autostart state is to do nothing and go to a normal boot"
             },
             {
                 "id": "SettingStartSolderingChar",
@@ -140,31 +145,6 @@ var def = ///
                 "id": "SettingStartSleepOffChar",
                 "len": 1,
                 "description": "Shown when the auto start state is set to go to an off state, but on movement wake into soldering mode."
-            },
-            {
-                "id": "SettingStartNoneChar",
-                "len": 1,
-                "description": "Shown when autostart state is to do nothing and go to a normal boot"
-            },
-            {
-                "id": "SettingSensitivityOff",
-                "len": 1,
-                "description": "Shown when a sensitivity (hall effect sensor) is disabled. Turning off the sensor."
-            },
-            {
-                "id": "SettingSensitivityLow",
-                "len": 1,
-                "description": "Shown when a sensitivity (hall effect) is not very sensitive"
-            },
-            {
-                "id": "SettingSensitivityMedium",
-                "len": 1,
-                "description": "Shown when a sensitivity (hall effect) is average sensitive"
-            },
-            {
-                "id": "SettingSensitivityHigh",
-                "len": 1,
-                "description": "Shown when a sensitivity (hall effect) is highly sensitive"
             },
             {
                 "id": "SettingLockDisableChar",

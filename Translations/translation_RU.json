@@ -17,8 +17,8 @@
     },
     "messagesWarn": {
         "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
+            "Калибровка",
+            "завершена!"
         ],
         "ResetOKMessage": "Сброс OK",
         "SettingsResetMessage": [
@@ -53,10 +53,6 @@
         "SettingStartSolderingChar": "П",
         "SettingStartSleepChar": "О",
         "SettingStartSleepOffChar": "К",
-        "SettingSensitivityOff": "О",
-        "SettingSensitivityLow": "Н",
-        "SettingSensitivityMedium": "С",
-        "SettingSensitivityHigh": "В",
         "SettingLockDisableChar": "О",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
@@ -167,14 +163,14 @@
                 "Чувствительн.",
                 "акселерометра"
             ],
-            "desc": "Чувствительность акселерометра (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
+            "desc": "Чувствительность акселерометра (0=Выкл. | 1=мин. | ... | 9=макс.)"
         },
         "SleepTemperature": {
             "text2": [
                 "Темп.",
                 "ожидания"
             ],
-            "desc": "Температура режима ожидания"
+            "desc": "Температура жала в режиме ожидания"
         },
         "SleepTimeout": {
             "text2": [
@@ -188,21 +184,21 @@
                 "Таймаут",
                 "выключения"
             ],
-            "desc": "Время до отключения паяльника (Минуты)"
+            "desc": "Время до выключения паяльника (минуты)"
         },
         "HallEffSensitivity": {
             "text2": [
                 "Датчик",
                 "Холла"
             ],
-            "desc": "Чувствительность датчика Холла к переходу в спящий режим (0=Выкл. | 1=Мин. | ... | 9=Макс.)"
+            "desc": "Чувствительность датчика Холла к переходу в спящий режим (0=Выкл. | 1=мин. | ... | 9=макс.)"
         },
         "TemperatureUnit": {
             "text2": [
                 "Единицы",
                 "температуры"
             ],
-            "desc": "Единицы измерения температуры (C=Цельcия | F=Фаренгейта)"
+            "desc": "Единицы измерения температуры (C=°Цельcия | F=°Фаренгейта)"
         },
         "DisplayRotation": {
             "text2": [
@@ -227,10 +223,10 @@
         },
         "ReverseButtonTempChange": {
             "text2": [
-                "Инвертировать",
-                "кнопки"
+                "Поменять",
+                "кнопки+-"
             ],
-            "desc": "Инвертировать кнопки изменения температуры"
+            "desc": "Поменять кнопки изменения температуры"
         },
         "AnimSpeed": {
             "text2": [
@@ -293,7 +289,7 @@
                 "Калибровка",
                 "температуры"
             ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "desc": "Калибровка температуры (CJC) при следующем включении (не требуется при разнице менее 5°C)"
         },
         "VoltageCalibration": {
             "text2": [
