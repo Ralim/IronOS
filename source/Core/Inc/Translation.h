@@ -7,6 +7,7 @@
 
 #ifndef TRANSLATION_H_
 #define TRANSLATION_H_
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -89,6 +90,7 @@ enum class SettingsItemIndex : uint8_t {
 
 struct TranslationIndexTable {
   uint16_t CJCCalibrationDone;
+  uint16_t ResetOKMessage;
   uint16_t SettingsResetMessage;
   uint16_t NoAccelerometerMessage;
   uint16_t NoPowerDeliveryMessage;
@@ -113,18 +115,14 @@ struct TranslationIndexTable {
   uint16_t SettingRightChar;
   uint16_t SettingLeftChar;
   uint16_t SettingAutoChar;
-  uint16_t SettingFastChar;
+  uint16_t SettingOffChar;
   uint16_t SettingSlowChar;
   uint16_t SettingMediumChar;
-  uint16_t SettingOffChar;
+  uint16_t SettingFastChar;
+  uint16_t SettingStartNoneChar;
   uint16_t SettingStartSolderingChar;
   uint16_t SettingStartSleepChar;
   uint16_t SettingStartSleepOffChar;
-  uint16_t SettingStartNoneChar;
-  uint16_t SettingSensitivityOff;
-  uint16_t SettingSensitivityLow;
-  uint16_t SettingSensitivityMedium;
-  uint16_t SettingSensitivityHigh;
   uint16_t SettingLockDisableChar;
   uint16_t SettingLockBoostChar;
   uint16_t SettingLockFullChar;
