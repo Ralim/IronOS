@@ -2,67 +2,44 @@
     "languageCode": "FR",
     "languageLocalName": "Français",
     "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?",
+        "UVLOWarningString": "DC FAIBL",
+        "UndervoltageString": "Sous-tension",
+        "InputVoltageString": "V d'entrée: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "En veille...",
+        "SleepingTipAdvancedString": "Panne:",
+        "OffString": "Off",
+        "DeviceFailedValidationWarning": "Votre appareil semble être une contrefaçon !"
+    },
     "messagesWarn": {
-        "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Reset OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Réglages\nréinitialisés !"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Accéléromètre\nnon détecté !"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "USB-PD\nnon détecté !"
-        },
-        "LockingKeysString": {
-            "message": "VERROUIL"
-        },
-        "UnlockingKeysString": {
-            "message": "DEVERROU"
-        },
-        "WarningKeysLockedString": {
-            "message": "! VERR. !"
-        },
-        "WarningThermalRunaway": {
-            "message": "Emballement\nthermique"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating"
-        },
-        "SettingsResetWarning": {
-            "message": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?"
-        },
-        "UVLOWarningString": {
-            "message": "DC FAIBL"
-        },
-        "UndervoltageString": {
-            "message": "Sous-tension"
-        },
-        "InputVoltageString": {
-            "message": "V d'entrée: "
-        },
-        "SleepingSimpleString": {
-            "message": "Zzzz"
-        },
-        "SleepingAdvancedString": {
-            "message": "En veille..."
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Panne:"
-        },
-        "OffString": {
-            "message": "Off"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Votre appareil semble être une contrefaçon !"
-        }
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Reset OK",
+        "SettingsResetMessage": [
+            "Réglages",
+            "réinitialisés !"
+        ],
+        "NoAccelerometerMessage": [
+            "Accéléromètre",
+            "non détecté !"
+        ],
+        "NoPowerDeliveryMessage": [
+            "USB-PD",
+            "non détecté !"
+        ],
+        "LockingKeysString": "VERROUIL",
+        "UnlockingKeysString": "DEVERROU",
+        "WarningKeysLockedString": "! VERR. !",
+        "WarningThermalRunaway": [
+            "Emballement",
+            "thermique"
+        ]
     },
     "characters": {
         "SettingRightChar": "D",
@@ -76,172 +53,285 @@
         "SettingStartSolderingChar": "A",
         "SettingStartSleepChar": "V",
         "SettingStartSleepOffChar": "O",
-        "SettingSensitivityOff": "D",
-        "SettingSensitivityLow": "B",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
         "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "V"
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Paramètres\nd'alim.",
-            "description": ""
+            "text2": [
+                "Paramètres",
+                "d'alim."
+            ],
+            "desc": ""
         },
         "SolderingMenu": {
-            "displayText": "Paramètres\nde soudure",
-            "description": ""
+            "text2": [
+                "Paramètres",
+                "de soudure"
+            ],
+            "desc": ""
         },
         "PowerSavingMenu": {
-            "displayText": "Mode\nveille",
-            "description": ""
+            "text2": [
+                "Mode",
+                "veille"
+            ],
+            "desc": ""
         },
         "UIMenu": {
-            "displayText": "Interface\nutilisateur",
-            "description": ""
+            "text2": [
+                "Interface",
+                "utilisateur"
+            ],
+            "desc": ""
         },
         "AdvancedMenu": {
-            "displayText": "Options\navancées",
-            "description": ""
+            "text2": [
+                "Options",
+                "avancées"
+            ],
+            "desc": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "displayText": "Source\nd'alim.",
-            "description": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
+            "text2": [
+                "Source",
+                "d'alim."
+            ],
+            "desc": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
         },
         "MinVolCell": {
-            "displayText": "Tension\nminimale",
-            "description": "Tension minimale autorisée par cellule (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "text2": [
+                "Tension",
+                "minimale"
+            ],
+            "desc": "Tension minimale autorisée par cellule (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "Tension\nQC",
-            "description": "Tension maximale désirée avec une alimentation QC"
+            "text2": [
+                "Tension",
+                "QC"
+            ],
+            "desc": "Tension maximale désirée avec une alimentation QC"
         },
         "PDNegTimeout": {
-            "displayText": "Délai\nexpir. PD",
-            "description": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
+            "text2": [
+                "Délai",
+                "expir. PD"
+            ],
+            "desc": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
         },
         "BoostTemperature": {
-            "displayText": "Temp.\nboost",
-            "description": "Température utilisée en \"mode boost\""
+            "text2": [
+                "Temp.",
+                "boost"
+            ],
+            "desc": "Température utilisée en \"mode boost\""
         },
         "AutoStart": {
-            "displayText": "Chauffer au\ndémarrage",
-            "description": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
+            "text2": [
+                "Chauffer au",
+                "démarrage"
+            ],
+            "desc": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
         },
         "TempChangeShortStep": {
-            "displayText": "Incrément\nappui court",
-            "description": "Incrément de changement de température sur appui court"
+            "text2": [
+                "Incrément",
+                "appui court"
+            ],
+            "desc": "Incrément de changement de température sur appui court"
         },
         "TempChangeLongStep": {
-            "displayText": "Incrément\nappui long",
-            "description": "Incrément de changement de température sur appui long"
+            "text2": [
+                "Incrément",
+                "appui long"
+            ],
+            "desc": "Incrément de changement de température sur appui long"
         },
         "LockingMode": {
-            "displayText": "Verrouiller\nles boutons",
-            "description": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
+            "text2": [
+                "Verrouiller",
+                "les boutons"
+            ],
+            "desc": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
         },
         "MotionSensitivity": {
-            "displayText": "Sensibilité\nau mouvement",
-            "description": "0=désactivé | 1=peu sensible | ... | 9=très sensible"
+            "text2": [
+                "Sensibilité",
+                "au mouvement"
+            ],
+            "desc": "0=désactivé | 1=peu sensible | ... | 9=très sensible"
         },
         "SleepTemperature": {
-            "displayText": "Temp.\nveille",
-            "description": "Température de la panne en \"mode veille\""
+            "text2": [
+                "Temp.",
+                "veille"
+            ],
+            "desc": "Température de la panne en \"mode veille\""
         },
         "SleepTimeout": {
-            "displayText": "Délai\nveille",
-            "description": "Délai avant mise en veille (s=secondes | m=minutes)"
+            "text2": [
+                "Délai",
+                "veille"
+            ],
+            "desc": "Délai avant mise en veille (s=secondes | m=minutes)"
         },
         "ShutdownTimeout": {
-            "displayText": "Délai\narrêt",
-            "description": "Délai avant l'arrêt du fer à souder (m=minutes)"
+            "text2": [
+                "Délai",
+                "arrêt"
+            ],
+            "desc": "Délai avant l'arrêt du fer à souder (m=minutes)"
         },
         "HallEffSensitivity": {
-            "displayText": "Sensibilité\ncapteur effet hall",
-            "description": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
+            "text2": [
+                "Sensibilité",
+                "capteur effet hall"
+            ],
+            "desc": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
         },
         "TemperatureUnit": {
-            "displayText": "Unité de\ntempérature",
-            "description": "C=Celsius | F=Fahrenheit"
+            "text2": [
+                "Unité de",
+                "température"
+            ],
+            "desc": "C=Celsius | F=Fahrenheit"
         },
         "DisplayRotation": {
-            "displayText": "Orientation\nde l'écran",
-            "description": "D=droitier | G=gaucher | A=automatique"
+            "text2": [
+                "Orientation",
+                "de l'écran"
+            ],
+            "desc": "D=droitier | G=gaucher | A=automatique"
         },
         "CooldownBlink": {
-            "displayText": "Refroidir en\nclignotant",
-            "description": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
+            "text2": [
+                "Refroidir en",
+                "clignotant"
+            ],
+            "desc": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
         },
         "ScrollingSpeed": {
-            "displayText": "Vitesse de\ndéfilement",
-            "description": "Vitesse de défilement du texte (R=rapide | L=lent)"
+            "text2": [
+                "Vitesse de",
+                "défilement"
+            ],
+            "desc": "Vitesse de défilement du texte (R=rapide | L=lent)"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Inverser les\ntouches + -",
-            "description": "Inverser les boutons d'ajustement de température"
+            "text2": [
+                "Inverser les",
+                "touches + -"
+            ],
+            "desc": "Inverser les boutons d'ajustement de température"
         },
         "AnimSpeed": {
-            "displayText": "Vitesse\nanim. icônes",
-            "description": "Vitesse des animations des icônes dans le menu (D=désactivé | L=lente | M=moyenne | R=rapide)"
+            "text2": [
+                "Vitesse",
+                "anim. icônes"
+            ],
+            "desc": "Vitesse des animations des icônes dans le menu (D=désactivé | L=lente | M=moyenne | R=rapide)"
         },
         "AnimLoop": {
-            "displayText": "Rejouer\nanim. icônes",
-            "description": "Rejouer en boucle les animations des icônes dans le menu principal"
+            "text2": [
+                "Rejouer",
+                "anim. icônes"
+            ],
+            "desc": "Rejouer en boucle les animations des icônes dans le menu principal"
         },
         "Brightness": {
-            "displayText": "Luminosité\nde l'écran",
-            "description": "Ajuster la luminosité de l'écran OLED"
+            "text2": [
+                "Luminosité",
+                "de l'écran"
+            ],
+            "desc": "Ajuster la luminosité de l'écran OLED"
         },
         "ColourInversion": {
-            "displayText": "Inverser\nles couleurs",
-            "description": "Inverser les couleurs de l'écran OLED"
+            "text2": [
+                "Inverser",
+                "les couleurs"
+            ],
+            "desc": "Inverser les couleurs de l'écran OLED"
         },
         "LOGOTime": {
-            "displayText": "Durée logo\nau démarrage",
-            "description": "Définit la durée d'affichage du logo au démarrage (s=secondes)"
+            "text2": [
+                "Durée logo",
+                "au démarrage"
+            ],
+            "desc": "Définit la durée d'affichage du logo au démarrage (s=secondes)"
         },
         "AdvancedIdle": {
-            "displayText": "Écran veille\ndétaillé",
-            "description": "Afficher les informations détaillées sur l'écran de veille"
+            "text2": [
+                "Écran veille",
+                "détaillé"
+            ],
+            "desc": "Afficher les informations détaillées sur l'écran de veille"
         },
         "AdvancedSoldering": {
-            "displayText": "Écran soudure\ndétaillé",
-            "description": "Afficher les informations détaillées sur l'écran de soudure"
+            "text2": [
+                "Écran soudure",
+                "détaillé"
+            ],
+            "desc": "Afficher les informations détaillées sur l'écran de soudure"
         },
         "PowerLimit": {
-            "displayText": "Limite de\npuissance",
-            "description": "Puissance maximale utilisable (W=watts)"
+            "text2": [
+                "Limite de",
+                "puissance"
+            ],
+            "desc": "Puissance maximale utilisable (W=watts)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "text2": [
+                "Calibrate CJC",
+                "at next boot"
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
-            "displayText": "Étalonner\ntension d'entrée",
-            "description": "Étalonner tension d'entrée (appui long pour quitter)"
+            "text2": [
+                "Étalonner",
+                "tension d'entrée"
+            ],
+            "desc": "Étalonner tension d'entrée (appui long pour quitter)"
         },
         "PowerPulsePower": {
-            "displayText": "Puissance\nimpulsions",
-            "description": "Puissance des impulsions pour éviter la mise en veille des batteries (watts)"
+            "text2": [
+                "Puissance",
+                "impulsions"
+            ],
+            "desc": "Puissance des impulsions pour éviter la mise en veille des batteries (watts)"
         },
         "PowerPulseWait": {
-            "displayText": "Délai entre\nles impulsions",
-            "description": "Délai entre chaque impulsion pour empêcher la mise en veille (x 2.5s)"
+            "text2": [
+                "Délai entre",
+                "les impulsions"
+            ],
+            "desc": "Délai entre chaque impulsion pour empêcher la mise en veille (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Durée des\nimpulsions",
-            "description": "Durée des impulsions pour empêcher la mise en veille (x 250ms)"
+            "text2": [
+                "Durée des",
+                "impulsions"
+            ],
+            "desc": "Durée des impulsions pour empêcher la mise en veille (x 250ms)"
         },
         "SettingsReset": {
-            "displayText": "Réinitialisation\nd'usine",
-            "description": "Réinitialiser tous les réglages"
+            "text2": [
+                "Réinitialisation",
+                "d'usine"
+            ],
+            "desc": "Réinitialiser tous les réglages"
         },
         "LanguageSwitch": {
-            "displayText": "Langue:\n FR    Français",
-            "description": ""
+            "text2": [
+                "Langue:",
+                " FR    Français"
+            ],
+            "desc": ""
         }
     }
 }

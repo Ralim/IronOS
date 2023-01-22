@@ -126,8 +126,7 @@ uint8_t getButtonB() {
 }
 
 void reboot() {
-  // Spin for watchdog
-  for (;;) {}
+  hal_system_reset();
 }
 
 void delay_ms(uint16_t count) {

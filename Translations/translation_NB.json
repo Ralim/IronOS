@@ -2,67 +2,44 @@
     "languageCode": "NB",
     "languageLocalName": "Norsk bokmål",
     "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Er du sikker på at du vil tilbakestille til standardinnstillinger?",
+        "UVLOWarningString": "Lavspenn",
+        "UndervoltageString": "Underspenning",
+        "InputVoltageString": "Innspenn.: ",
+        "SleepingSimpleString": "Zzzz",
+        "SleepingAdvancedString": "Dvale...",
+        "SleepingTipAdvancedString": "Spiss:",
+        "OffString": "Av",
+        "DeviceFailedValidationWarning": "Enheten din er sannsynligvis en forfalskning!"
+    },
     "messagesWarn": {
-        "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Tilbakestilling OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Noen innstillinger\nble endret!"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Ingen akselerometer\nfunnet!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "Ingen USB-PD IC\nfunnet!"
-        },
-        "LockingKeysString": {
-            "message": "LÅST"
-        },
-        "UnlockingKeysString": {
-            "message": "ÅPNET"
-        },
-        "WarningKeysLockedString": {
-            "message": "!LÅST!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Termisk\nrømling"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating"
-        },
-        "SettingsResetWarning": {
-            "message": "Er du sikker på at du vil tilbakestille til standardinnstillinger?"
-        },
-        "UVLOWarningString": {
-            "message": "Lavspenn"
-        },
-        "UndervoltageString": {
-            "message": "Underspenning"
-        },
-        "InputVoltageString": {
-            "message": "Innspenn.: "
-        },
-        "SleepingSimpleString": {
-            "message": "Zzzz"
-        },
-        "SleepingAdvancedString": {
-            "message": "Dvale..."
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Spiss:"
-        },
-        "OffString": {
-            "message": "Av"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Enheten din er sannsynligvis en forfalskning!"
-        }
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Tilbakestilling OK",
+        "SettingsResetMessage": [
+            "Noen innstillinger",
+            "ble endret!"
+        ],
+        "NoAccelerometerMessage": [
+            "Ingen akselerometer",
+            "funnet!"
+        ],
+        "NoPowerDeliveryMessage": [
+            "Ingen USB-PD IC",
+            "funnet!"
+        ],
+        "LockingKeysString": "LÅST",
+        "UnlockingKeysString": "ÅPNET",
+        "WarningKeysLockedString": "!LÅST!",
+        "WarningThermalRunaway": [
+            "Termisk",
+            "rømling"
+        ]
     },
     "characters": {
         "SettingRightChar": "H",
@@ -76,172 +53,285 @@
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "D",
         "SettingStartSleepOffChar": "R",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "L",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
         "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Effekt-\ninnst.",
-            "description": ""
+            "text2": [
+                "Effekt-",
+                "innst."
+            ],
+            "desc": ""
         },
         "SolderingMenu": {
-            "displayText": "Lodde-\ninnst.",
-            "description": ""
+            "text2": [
+                "Lodde-",
+                "innst."
+            ],
+            "desc": ""
         },
         "PowerSavingMenu": {
-            "displayText": "Dvale-\ninnst.",
-            "description": ""
+            "text2": [
+                "Dvale-",
+                "innst."
+            ],
+            "desc": ""
         },
         "UIMenu": {
-            "displayText": "Bruker-\ngrensesn.",
-            "description": ""
+            "text2": [
+                "Bruker-",
+                "grensesn."
+            ],
+            "desc": ""
         },
         "AdvancedMenu": {
-            "displayText": "Avanserte\nvalg",
-            "description": ""
+            "text2": [
+                "Avanserte",
+                "valg"
+            ],
+            "desc": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "displayText": "Kilde\n",
-            "description": "Strømforsyning. Sett nedre spenning for automatisk nedstenging. (DC 10V) (S 3.3V per celle)"
+            "text2": [
+                "Kilde",
+                ""
+            ],
+            "desc": "Strømforsyning. Sett nedre spenning for automatisk nedstenging. (DC 10V) (S 3.3V per celle)"
         },
         "MinVolCell": {
-            "displayText": "Minimum\nspenning",
-            "description": "Minimum tillatt spenning per celle (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "text2": [
+                "Minimum",
+                "spenning"
+            ],
+            "desc": "Minimum tillatt spenning per celle (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "QC-\nspenning",
-            "description": "Maks QC-spenning bolten skal forhandle om"
+            "text2": [
+                "QC-",
+                "spenning"
+            ],
+            "desc": "Maks QC-spenning bolten skal forhandle om"
         },
         "PDNegTimeout": {
-            "displayText": "PD-\ntidsavb.",
-            "description": "PD-forhandlingstidsavbrudd i steg på 100 ms for kompatibilitet med noen QC-ladere"
+            "text2": [
+                "PD-",
+                "tidsavb."
+            ],
+            "desc": "PD-forhandlingstidsavbrudd i steg på 100 ms for kompatibilitet med noen QC-ladere"
         },
         "BoostTemperature": {
-            "displayText": "KTmp\n",
-            "description": "Temperatur i \"kraft-modus\""
+            "text2": [
+                "KTmp",
+                ""
+            ],
+            "desc": "Temperatur i \"kraft-modus\""
         },
         "AutoStart": {
-            "displayText": "AStart\n",
-            "description": "Start automatisk med lodding når strøm kobles til. (I=Inaktiv | L=Lodding | D=Dvale | R=Dvale romtemperatur)"
+            "text2": [
+                "AStart",
+                ""
+            ],
+            "desc": "Start automatisk med lodding når strøm kobles til. (I=Inaktiv | L=Lodding | D=Dvale | R=Dvale romtemperatur)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp-endring\nkort",
-            "description": "Hvor mye temperaturen skal endres ved kort trykk på knapp"
+            "text2": [
+                "Temp-endring",
+                "kort"
+            ],
+            "desc": "Hvor mye temperaturen skal endres ved kort trykk på knapp"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp-endring\nlang",
-            "description": "Hvor mye temperaturen skal endres ved langt trykk på knapp"
+            "text2": [
+                "Temp-endring",
+                "lang"
+            ],
+            "desc": "Hvor mye temperaturen skal endres ved langt trykk på knapp"
         },
         "LockingMode": {
-            "displayText": "Tillat å låse\nknapper",
-            "description": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (D=deaktiver | B=kun boost | F=full lås)"
+            "text2": [
+                "Tillat å låse",
+                "knapper"
+            ],
+            "desc": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (D=deaktiver | B=kun boost | F=full lås)"
         },
         "MotionSensitivity": {
-            "displayText": "BSensr\n",
-            "description": "Bevegelsesfølsomhet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
+            "text2": [
+                "BSensr",
+                ""
+            ],
+            "desc": "Bevegelsesfølsomhet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
         },
         "SleepTemperature": {
-            "displayText": "DTmp\n",
-            "description": "Dvaletemperatur (C)"
+            "text2": [
+                "DTmp",
+                ""
+            ],
+            "desc": "Dvaletemperatur (C)"
         },
         "SleepTimeout": {
-            "displayText": "DTid\n",
-            "description": "Tid før dvale (Minutter | Sekunder)"
+            "text2": [
+                "DTid",
+                ""
+            ],
+            "desc": "Tid før dvale (Minutter | Sekunder)"
         },
         "ShutdownTimeout": {
-            "displayText": "AvTid\n",
-            "description": "Tid før automatisk nedstenging (Minutter)"
+            "text2": [
+                "AvTid",
+                ""
+            ],
+            "desc": "Tid før automatisk nedstenging (Minutter)"
         },
         "HallEffSensitivity": {
-            "displayText": "Hall-sensor\nfølsomhet",
-            "description": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
+            "text2": [
+                "Hall-sensor",
+                "følsomhet"
+            ],
+            "desc": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
         },
         "TemperatureUnit": {
-            "displayText": "TmpEnh\n",
-            "description": "Temperaturskala (C=Celsius | F=Fahrenheit)"
+            "text2": [
+                "TmpEnh",
+                ""
+            ],
+            "desc": "Temperaturskala (C=Celsius | F=Fahrenheit)"
         },
         "DisplayRotation": {
-            "displayText": "SkRetn\n",
-            "description": "Skjermretning (H=Høyrehendt | V=Venstrehendt | A=Automatisk)"
+            "text2": [
+                "SkRetn",
+                ""
+            ],
+            "desc": "Skjermretning (H=Høyrehendt | V=Venstrehendt | A=Automatisk)"
         },
         "CooldownBlink": {
-            "displayText": "KjBlnk\n",
-            "description": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
+            "text2": [
+                "KjBlnk",
+                ""
+            ],
+            "desc": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
         },
         "ScrollingSpeed": {
-            "displayText": "RullHa\n",
-            "description": "Hastigheten på rulletekst"
+            "text2": [
+                "RullHa",
+                ""
+            ],
+            "desc": "Hastigheten på rulletekst"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Bytt\n+ - kn.",
-            "description": "Bytt om på knappene for å stille temperatur"
+            "text2": [
+                "Bytt",
+                "+ - kn."
+            ],
+            "desc": "Bytt om på knappene for å stille temperatur"
         },
         "AnimSpeed": {
-            "displayText": "Anim.\nhastighet",
-            "description": "Hastigheten til animasjonene i menyen (O=off | S=slow | M=medium | F=fast)"
+            "text2": [
+                "Anim.",
+                "hastighet"
+            ],
+            "desc": "Hastigheten til animasjonene i menyen (O=off | S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop ikon-animasjoner i hovedmenyen"
+            "text2": [
+                "Anim.",
+                "loop"
+            ],
+            "desc": "Loop ikon-animasjoner i hovedmenyen"
         },
         "Brightness": {
-            "displayText": "Skjerm-\nlysstyrke",
-            "description": "Juster lysstyrken til OLED-skjermen"
+            "text2": [
+                "Skjerm-",
+                "lysstyrke"
+            ],
+            "desc": "Juster lysstyrken til OLED-skjermen"
         },
         "ColourInversion": {
-            "displayText": "Inverter\nskjerm",
-            "description": "Inverter fargene på OLED-skjermen"
+            "text2": [
+                "Inverter",
+                "skjerm"
+            ],
+            "desc": "Inverter fargene på OLED-skjermen"
         },
         "LOGOTime": {
-            "displayText": "Oppstartlogo\nvarighet",
-            "description": "Setter varigheten til oppstartlogoen (s=sekunder)"
+            "text2": [
+                "Oppstartlogo",
+                "varighet"
+            ],
+            "desc": "Setter varigheten til oppstartlogoen (s=sekunder)"
         },
         "AdvancedIdle": {
-            "displayText": "AvDvSk\n",
-            "description": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
+            "text2": [
+                "AvDvSk",
+                ""
+            ],
+            "desc": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
         },
         "AdvancedSoldering": {
-            "displayText": "AvLdSk\n",
-            "description": "Vis detaljert informasjon ved lodding"
+            "text2": [
+                "AvLdSk",
+                ""
+            ],
+            "desc": "Vis detaljert informasjon ved lodding"
         },
         "PowerLimit": {
-            "displayText": "Effekt-\ngrense",
-            "description": "Maks effekt jernet kan bruke (W=watt)"
+            "text2": [
+                "Effekt-",
+                "grense"
+            ],
+            "desc": "Maks effekt jernet kan bruke (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "TempKal?\n",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "text2": [
+                "TempKal?",
+                ""
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
-            "displayText": "KalSpIn?\n",
-            "description": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
+            "text2": [
+                "KalSpIn?",
+                ""
+            ],
+            "desc": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
         },
         "PowerPulsePower": {
-            "displayText": "Effekt-\npuls",
-            "description": "Hvor høy effekt pulsen for å holde laderen våken skal ha (watt)"
+            "text2": [
+                "Effekt-",
+                "puls"
+            ],
+            "desc": "Hvor høy effekt pulsen for å holde laderen våken skal ha (watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Effektpuls\nforsink.",
-            "description": "Forsinkelse før effektpulsen utløses (x 2.5s)"
+            "text2": [
+                "Effektpuls",
+                "forsink."
+            ],
+            "desc": "Forsinkelse før effektpulsen utløses (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Effektpuls\nvarighet",
-            "description": "Hvor lenge holde-våken-pulsen varer (x 250ms)"
+            "text2": [
+                "Effektpuls",
+                "varighet"
+            ],
+            "desc": "Hvor lenge holde-våken-pulsen varer (x 250ms)"
         },
         "SettingsReset": {
-            "displayText": "TilbStl?\n",
-            "description": "Tilbakestill alle innstillinger"
+            "text2": [
+                "TilbStl?",
+                ""
+            ],
+            "desc": "Tilbakestill alle innstillinger"
         },
         "LanguageSwitch": {
-            "displayText": "Språk:\n NB    Norsk bm",
-            "description": ""
+            "text2": [
+                "Språk:",
+                " NB    Norsk bm"
+            ],
+            "desc": ""
         }
     }
 }

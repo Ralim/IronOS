@@ -2,67 +2,44 @@
     "languageCode": "NL_BE",
     "languageLocalName": "Vlaams",
     "tempUnitFahrenheit": false,
+    "messages": {
+        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "CJCCalibrating": "calibrating",
+        "SettingsResetWarning": "Ben je zeker dat je alle standaardwaarden wil resetten?",
+        "UVLOWarningString": "Voedingsspanning LAAG",
+        "UndervoltageString": "Onderspanning",
+        "InputVoltageString": "Voedingsspanning: ",
+        "SleepingSimpleString": "Zzz ",
+        "SleepingAdvancedString": "Slaapstand...",
+        "SleepingTipAdvancedString": "Punt:",
+        "OffString": "Uit",
+        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+    },
     "messagesWarn": {
-        "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Reset OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Certain settings\nwere changed!"
-        },
-        "NoAccelerometerMessage": {
-            "message": "No accelerometer\ndetected!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "No USB-PD IC\ndetected!"
-        },
-        "LockingKeysString": {
-            "message": "LOCKED"
-        },
-        "UnlockingKeysString": {
-            "message": "UNLOCKED"
-        },
-        "WarningKeysLockedString": {
-            "message": "!LOCKED!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating"
-        },
-        "SettingsResetWarning": {
-            "message": "Ben je zeker dat je alle standaardwaarden wil resetten?"
-        },
-        "UVLOWarningString": {
-            "message": "Voedingsspanning LAAG"
-        },
-        "UndervoltageString": {
-            "message": "Onderspanning"
-        },
-        "InputVoltageString": {
-            "message": "Voedingsspanning: "
-        },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
-        "SleepingAdvancedString": {
-            "message": "Slaapstand..."
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Punt:"
-        },
-        "OffString": {
-            "message": "Uit"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
-        }
+        "CJCCalibrationDone": [
+            "Calibration",
+            "done!"
+        ],
+        "ResetOKMessage": "Reset OK",
+        "SettingsResetMessage": [
+            "Certain settings",
+            "were changed!"
+        ],
+        "NoAccelerometerMessage": [
+            "No accelerometer",
+            "detected!"
+        ],
+        "NoPowerDeliveryMessage": [
+            "No USB-PD IC",
+            "detected!"
+        ],
+        "LockingKeysString": "LOCKED",
+        "UnlockingKeysString": "UNLOCKED",
+        "WarningKeysLockedString": "!LOCKED!",
+        "WarningThermalRunaway": [
+            "Thermal",
+            "Runaway"
+        ]
     },
     "characters": {
         "SettingRightChar": "R",
@@ -76,172 +53,285 @@
         "SettingStartSolderingChar": "T",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "K",
-        "SettingSensitivityOff": "O",
-        "SettingSensitivityLow": "L",
-        "SettingSensitivityMedium": "M",
-        "SettingSensitivityHigh": "H",
         "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Power\nsettings",
-            "description": ""
+            "text2": [
+                "Power",
+                "settings"
+            ],
+            "desc": ""
         },
         "SolderingMenu": {
-            "displayText": "Soldeer\nInstellingen",
-            "description": ""
+            "text2": [
+                "Soldeer",
+                "Instellingen"
+            ],
+            "desc": ""
         },
         "PowerSavingMenu": {
-            "displayText": "Slaap\nstanden",
-            "description": ""
+            "text2": [
+                "Slaap",
+                "standen"
+            ],
+            "desc": ""
         },
         "UIMenu": {
-            "displayText": "Gebruikers-\nInterface",
-            "description": ""
+            "text2": [
+                "Gebruikers-",
+                "Interface"
+            ],
+            "desc": ""
         },
         "AdvancedMenu": {
-            "displayText": "Gevorderde\nInstellingen",
-            "description": ""
+            "text2": [
+                "Gevorderde",
+                "Instellingen"
+            ],
+            "desc": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "displayText": "Spannings-\nbron",
-            "description": "Spanningsbron. Stelt minimumspanning in. (DC 10V) (S 3.3V per cel)"
+            "text2": [
+                "Spannings-",
+                "bron"
+            ],
+            "desc": "Spanningsbron. Stelt minimumspanning in. (DC 10V) (S 3.3V per cel)"
         },
         "MinVolCell": {
-            "displayText": "Minimum\nvoltage",
-            "description": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "text2": [
+                "Minimum",
+                "voltage"
+            ],
+            "desc": "Minimum allowed voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "Vermogen\nWatt",
-            "description": "Vermogen van de adapter"
+            "text2": [
+                "Vermogen",
+                "Watt"
+            ],
+            "desc": "Vermogen van de adapter"
         },
         "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+            "text2": [
+                "PD",
+                "timeout"
+            ],
+            "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
         "BoostTemperature": {
-            "displayText": "Verhogings\ntemp",
-            "description": "Verhogingstemperatuur"
+            "text2": [
+                "Verhogings",
+                "temp"
+            ],
+            "desc": "Verhogingstemperatuur"
         },
         "AutoStart": {
-            "displayText": "Auto\nstart",
-            "description": "Breng de soldeerbout op temperatuur bij het opstarten. (F=Uit | T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
+            "text2": [
+                "Auto",
+                "start"
+            ],
+            "desc": "Breng de soldeerbout op temperatuur bij het opstarten. (F=Uit | T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp change\nshort",
-            "description": "Temperature-change-increment on short button press"
+            "text2": [
+                "Temp change",
+                "short"
+            ],
+            "desc": "Temperature-change-increment on short button press"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp change\nlong",
-            "description": "Temperature-change-increment on long button press"
+            "text2": [
+                "Temp change",
+                "long"
+            ],
+            "desc": "Temperature-change-increment on long button press"
         },
         "LockingMode": {
-            "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "text2": [
+                "Allow locking",
+                "buttons"
+            ],
+            "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
         },
         "MotionSensitivity": {
-            "displayText": "Bewegings-\ngevoeligheid",
-            "description": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+            "text2": [
+                "Bewegings-",
+                "gevoeligheid"
+            ],
+            "desc": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "SleepTemperature": {
-            "displayText": "Slaap\ntemp",
-            "description": "Temperatuur in slaapstand (°C)"
+            "text2": [
+                "Slaap",
+                "temp"
+            ],
+            "desc": "Temperatuur in slaapstand (°C)"
         },
         "SleepTimeout": {
-            "displayText": "Slaap\ntime-out",
-            "description": "Slaapstand time-out (Minuten | Seconden)"
+            "text2": [
+                "Slaap",
+                "time-out"
+            ],
+            "desc": "Slaapstand time-out (Minuten | Seconden)"
         },
         "ShutdownTimeout": {
-            "displayText": "Uitschakel\ntime-out",
-            "description": "Automatisch afsluiten time-out (Minuten)"
+            "text2": [
+                "Uitschakel",
+                "time-out"
+            ],
+            "desc": "Automatisch afsluiten time-out (Minuten)"
         },
         "HallEffSensitivity": {
-            "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+            "text2": [
+                "Hall sensor",
+                "sensitivity"
+            ],
+            "desc": "Sensitivity to magnets (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "TemperatureUnit": {
-            "displayText": "Temperatuur\nschaal",
-            "description": "Temperatuurschaal (°C=Celsius | °F=Fahrenheit)"
+            "text2": [
+                "Temperatuur",
+                "schaal"
+            ],
+            "desc": "Temperatuurschaal (°C=Celsius | °F=Fahrenheit)"
         },
         "DisplayRotation": {
-            "displayText": "Scherm-\noriëntatie",
-            "description": "Schermoriëntatie (R=Rechtshandig | L=Linkshandig | A=Automatisch)"
+            "text2": [
+                "Scherm-",
+                "oriëntatie"
+            ],
+            "desc": "Schermoriëntatie (R=Rechtshandig | L=Linkshandig | A=Automatisch)"
         },
         "CooldownBlink": {
-            "displayText": "Afkoel\nknipper",
-            "description": "Temperatuur knippert in hoofdmenu tijdens afkoeling."
+            "text2": [
+                "Afkoel",
+                "knipper"
+            ],
+            "desc": "Temperatuur knippert in hoofdmenu tijdens afkoeling."
         },
         "ScrollingSpeed": {
-            "displayText": "Scrol\nsnelheid",
-            "description": "Scrolsnelheid van de tekst."
+            "text2": [
+                "Scrol",
+                "snelheid"
+            ],
+            "desc": "Scrolsnelheid van de tekst."
         },
         "ReverseButtonTempChange": {
-            "displayText": "Swap\n+ - keys",
-            "description": "Reverse assignment of buttons for temperature adjustment"
+            "text2": [
+                "Swap",
+                "+ - keys"
+            ],
+            "desc": "Reverse assignment of buttons for temperature adjustment"
         },
         "AnimSpeed": {
-            "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | T=slow | M=medium | S=fast)"
+            "text2": [
+                "Anim.",
+                "speed"
+            ],
+            "desc": "Pace of icon animations in menu (O=off | T=slow | M=medium | S=fast)"
         },
         "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop icon animations in main menu"
+            "text2": [
+                "Anim.",
+                "loop"
+            ],
+            "desc": "Loop icon animations in main menu"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
+            "text2": [
+                "Screen",
+                "brightness"
+            ],
+            "desc": "Adjust the OLED screen brightness"
         },
         "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
+            "text2": [
+                "Invert",
+                "screen"
+            ],
+            "desc": "Invert the OLED screen colors"
         },
         "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
+            "text2": [
+                "Boot logo",
+                "duration"
+            ],
+            "desc": "Set boot logo duration (s=seconds)"
         },
         "AdvancedIdle": {
-            "displayText": "Gedetailleerd\nslaapscherm",
-            "description": "Gedetailleerde informatie in een kleiner lettertype in het slaapscherm."
+            "text2": [
+                "Gedetailleerd",
+                "slaapscherm"
+            ],
+            "desc": "Gedetailleerde informatie in een kleiner lettertype in het slaapscherm."
         },
         "AdvancedSoldering": {
-            "displayText": "Gedetailleerd\nsoldeerscherm",
-            "description": "Gedetailleerde informatie in kleiner lettertype in soldeerscherm."
+            "text2": [
+                "Gedetailleerd",
+                "soldeerscherm"
+            ],
+            "desc": "Gedetailleerde informatie in kleiner lettertype in soldeerscherm."
         },
         "PowerLimit": {
-            "displayText": "Power\nlimit",
-            "description": "Maximum power the iron can use (W=watt)"
+            "text2": [
+                "Power",
+                "limit"
+            ],
+            "desc": "Maximum power the iron can use (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "text2": [
+                "Calibrate CJC",
+                "at next boot"
+            ],
+            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
-            "displayText": "Calibreer\nvoedingsspanning?",
-            "description": "VIN Calibreren. Bevestigen door knoppen lang in te drukken."
+            "text2": [
+                "Calibreer",
+                "voedingsspanning?"
+            ],
+            "desc": "VIN Calibreren. Bevestigen door knoppen lang in te drukken."
         },
         "PowerPulsePower": {
-            "displayText": "Power\npulse",
-            "description": "Intensity of power of keep-awake-pulse (W=watt)"
+            "text2": [
+                "Power",
+                "pulse"
+            ],
+            "desc": "Intensity of power of keep-awake-pulse (W=watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
-            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+            "text2": [
+                "Power pulse",
+                "delay"
+            ],
+            "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Power pulse\nduration",
-            "description": "Keep-awake-pulse duration (x 250ms)"
+            "text2": [
+                "Power pulse",
+                "duration"
+            ],
+            "desc": "Keep-awake-pulse duration (x 250ms)"
         },
         "SettingsReset": {
-            "displayText": "Instellingen\nresetten?",
-            "description": "Alle instellingen resetten."
+            "text2": [
+                "Instellingen",
+                "resetten?"
+            ],
+            "desc": "Alle instellingen resetten."
         },
         "LanguageSwitch": {
-            "displayText": "Spraak:\n NL_BE   Vlaams",
-            "description": ""
+            "text2": [
+                "Spraak:",
+                " NL_BE   Vlaams"
+            ],
+            "desc": ""
         }
     }
 }

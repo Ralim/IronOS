@@ -682,6 +682,7 @@ static bool setCalibrateVIN(void) {
     case BUTTON_F_LONG:
     case BUTTON_B_LONG:
       saveSettings();
+      OLED::clearScreen();
       OLED::setCursor(0, 0);
       OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::LARGE);
       OLED::refresh();
@@ -719,7 +720,8 @@ static void displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(
 static bool setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {
     resetSettings();
-    warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
+    warnUser(translatedString(Tr->ResetOKMessage), 3 * TICKS_SECOND);
+    reboot();
   }
   return false;
 }
