@@ -31,13 +31,13 @@
             "message": "Temperatura\nfuori controllo"
         },
         "SettingsCalibrationWarning": {
-            "message": "Prima di riavviare assicurati che punta e impugnatura siano a temperatura ambiente!"
+            "message": "Prima di riavviare assicurati che la punta e l'impugnatura siano a temperatura ambiente!"
         },
         "CJCCalibrating": {
             "message": "Calibrazione in corso"
         },
         "SettingsResetWarning": {
-            "message": "Ripristinare le impostazioni di default?"
+            "message": "Ripristinare le impostazioni predefinite?"
         },
         "UVLOWarningString": {
             "message": "DC BASSA"
@@ -113,7 +113,7 @@
         },
         "QCMaxVoltage": {
             "displayText": "Tensione\nQC",
-            "description": "Imposta la tensione massima negoziabile con un alimentatore Quick Charge [volt]"
+            "description": "Imposta la massima tensione negoziabile con un alimentatore Quick Charge [volt]"
         },
         "PDNegTimeout": {
             "displayText": "Abilitazione\nUSB PD",
@@ -233,14 +233,14 @@
         },
         "SettingsReset": {
             "displayText": "Ripristino\nimpostazioni",
-            "description": "Ripristina le impostazioni di default"
+            "description": "Ripristina le impostazioni predefinite"
         },
         "LanguageSwitch": {
             "displayText": "Lingua:\n IT    Italiano",
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
+            "displayText": "Bluetooth LE\nabilitato",
             "description": ""
         }
     }
