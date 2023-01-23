@@ -85,6 +85,7 @@ enum class SettingsItemIndex : uint8_t {
   PowerPulseDuration,
   SettingsReset,
   LanguageSwitch,
+  BLEEnabled,
   NUM_ITEMS,
 };
 

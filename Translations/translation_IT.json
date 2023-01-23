@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Lingua:\n IT    Italiano",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

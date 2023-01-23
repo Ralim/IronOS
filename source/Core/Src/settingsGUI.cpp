@@ -41,6 +41,9 @@ static void displayAdvancedSolderingScreens(void);
 static void displayAdvancedIDLEScreens(void);
 static void displayScrollSpeed(void);
 static void displayPowerLimit(void);
+#ifdef BLE_ENABLED
+static void displayBLEEnabled(void);
+#endif
 #ifndef NO_DISPLAY_ROTATE
 static bool setDisplayRotation(void);
 static void displayDisplayRotation(void);
@@ -255,15 +258,19 @@ const menuitem UIMenu[] = {
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 const menuitem advancedMenu[] = {
-    /*
-     *  Power Limit
-     *  Calibrate CJC At Next Boot
-     *  Calibrate Input V
-     *  Power Pulse
-     *  -Power Pulse Delay
-     *  -Power Pulse Duration
-     *  Factory Reset
-     */
+/*
+ *  BLE Enabled or not
+ *  Power Limit
+ *  Calibrate CJC At Next Boot
+ *  Calibrate Input V
+ *  Power Pulse
+ *  -Power Pulse Delay
+ *  -Power Pulse Duration
+ *  Factory Reset
+ */
+#ifdef BLE_ENABLED
+    {SETTINGS_DESC(SettingsItemIndex::BLEEnabled), nullptr, displayBLEEnabled, nullptr, SettingsOptions::BLEEnabled, SettingsItemIndex::BLEEnabled, 7}, /*Advanced idle screen*/
+#endif
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5}, /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
      7}, /*Calibrate Cold Junktion Compensation at next boot*/
@@ -633,7 +640,9 @@ static void displayLogoTime(void) {
 static void displayAdvancedIDLEScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedIDLE)); }
 
 static void displayAdvancedSolderingScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedSoldering)); }
-
+#ifdef BLE_ENABLED
+static void displayBLEEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::BLEEnabled)); }
+#endif
 static void displayPowerLimit(void) {
 
   if (getSettingValue(SettingsOptions::PowerLimit) == 0) {

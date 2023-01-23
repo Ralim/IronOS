@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Taal:\n NL  Nederlands",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Sprog:\n DA       Dansk",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

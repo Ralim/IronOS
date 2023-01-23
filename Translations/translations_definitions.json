@@ -396,6 +396,12 @@
             "maxLen": 7,
             "maxLen2": 15,
             "description": "Changes the device language on multi-lingual builds."
+        },
+        {
+            "id": "BLEEnabled",
+            "maxLen": 7,
+            "maxLen2": 15,
+            "description": "Should BLE be enabled at boot time."
         }
     ]
 }
