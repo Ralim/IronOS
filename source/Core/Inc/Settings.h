@@ -54,7 +54,7 @@ enum SettingsOptions {
   BLEEnabled                     = 37, // Should BLE hardware be enabled if present
 
   //
-  SettingsOptionsLength = 37, //
+  SettingsOptionsLength = 38, //
 };
 
 typedef enum {
