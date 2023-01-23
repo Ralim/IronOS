@@ -16,10 +16,8 @@ void gui_solderingMode(uint8_t jumpToSleep) {
    * PID control
    * --> Long hold back button to exit
    * --> Double button to exit
-   * --> Long hold double button to toggle key lock
    */
   bool boostModeOn   = false;
-  bool buttonsLocked = false;
 
   if (jumpToSleep) {
     if (gui_SolderingSleepingMode(jumpToSleep == 2, true) == 1) {
@@ -29,65 +27,31 @@ void gui_solderingMode(uint8_t jumpToSleep) {
   }
   for (;;) {
     ButtonState buttons = getButtonState();
-    if (buttonsLocked && (getSettingValue(SettingsOptions::LockingMode) != 0)) { // If buttons locked
-      switch (buttons) {
-      case BUTTON_NONE:
-        boostModeOn = false;
-        break;
-      case BUTTON_BOTH_LONG:
-        // Unlock buttons
-        buttonsLocked = false;
-        warnUser(translatedString(Tr->UnlockingKeysString), TICKS_SECOND);
-        break;
-      case BUTTON_F_LONG:
-        // if boost mode is enabled turn it on
-        if (getSettingValue(SettingsOptions::BoostTemp) && (getSettingValue(SettingsOptions::LockingMode) == 1)) {
-          boostModeOn = true;
-        }
-        break;
-        // fall through
-      case BUTTON_BOTH:
-      case BUTTON_B_LONG:
-      case BUTTON_F_SHORT:
-      case BUTTON_B_SHORT:
-        // Do nothing and display a lock warning
-        warnUser(translatedString(Tr->WarningKeysLockedString), TICKS_SECOND / 2);
-        break;
-      default:
-        break;
+    switch (buttons) {
+    case BUTTON_NONE:
+      // stay
+      boostModeOn = false;
+      break;
+    case BUTTON_BOTH:
+    case BUTTON_B_LONG:
+      return; // exit on back long hold
+    case BUTTON_F_LONG:
+      // if boost mode is enabled turn it on
+      if (getSettingValue(SettingsOptions::BoostTemp))
+        boostModeOn = true;
+      break;
+    case BUTTON_F_SHORT:
+    case BUTTON_B_SHORT: {
+      uint16_t oldTemp = getSettingValue(SettingsOptions::SolderingTemp);
+      gui_solderingTempAdjust(); // goto adjust temp mode
+      if (oldTemp != getSettingValue(SettingsOptions::SolderingTemp)) {
+        saveSettings(); // only save on change
+      
       }
-    } else { // Button not locked
-      switch (buttons) {
-      case BUTTON_NONE:
-        // stay
-        boostModeOn = false;
-        break;
-      case BUTTON_BOTH:
-      case BUTTON_B_LONG:
-        return; // exit on back long hold
-      case BUTTON_F_LONG:
-        // if boost mode is enabled turn it on
-        if (getSettingValue(SettingsOptions::BoostTemp))
-          boostModeOn = true;
-        break;
-      case BUTTON_F_SHORT:
-      case BUTTON_B_SHORT: {
-        uint16_t oldTemp = getSettingValue(SettingsOptions::SolderingTemp);
-        gui_solderingTempAdjust(); // goto adjust temp mode
-        if (oldTemp != getSettingValue(SettingsOptions::SolderingTemp)) {
-          saveSettings(); // only save on change
-        }
-      } break;
-      case BUTTON_BOTH_LONG:
-        if (getSettingValue(SettingsOptions::LockingMode) != 0) {
-          // Lock buttons
-          buttonsLocked = true;
-          warnUser(translatedString(Tr->LockingKeysString), TICKS_SECOND);
-        }
-        break;
-      default:
-        break;
-      }
+    }
+      break;
+    default:
+      break;
     }
     // else we update the screen information
 

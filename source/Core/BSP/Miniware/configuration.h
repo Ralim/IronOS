@@ -43,16 +43,6 @@
 #define AUTO_START_MODE 0 // Default to none
 
 /**
- * Locking Mode
- * When in soldering mode a long press on both keys toggle the lock of the buttons
- * Possible values are:
- *  0 - Desactivated
- *  1 - Lock except boost
- *  2 - Full lock
- */
-#define LOCKING_MODE 0 // Default to desactivated for safety
-
-/**
  * OLED Orientation
  *
  */

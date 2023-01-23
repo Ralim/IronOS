@@ -31,30 +31,29 @@ enum SettingsOptions {
   DetailedSoldering              = 14, // Detailed soldering screens
   TemperatureInF                 = 15, // Should the temp be in F or C (true is F)
   DescriptionScrollSpeed         = 16, // Description scroll speed
-  LockingMode                    = 17, // Store the locking mode
-  KeepAwakePulse                 = 18, // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
-  KeepAwakePulseWait             = 19, // Time between Keep Awake pulses in 2500 ms = 2.5 s increments
-  KeepAwakePulseDuration         = 20, // Duration of the Keep Awake pusle in 250 ms increments
-  VoltageDiv                     = 21, // Voltage divisor factor
-  BoostTemp                      = 22, // Boost mode set point for the iron
-  CalibrationOffset              = 23, // This stores the temperature offset for this tip in the iron.
-  PowerLimit                     = 24, // Maximum power iron allowed to output
-  ReverseButtonTempChangeEnabled = 25, // Change the plus and minus button assigment
-  TempChangeLongStep             = 26, // Change the plus and minus button assigment
-  TempChangeShortStep            = 27, // Change the plus and minus button assigment
-  HallEffectSensitivity          = 28, // Operating mode of the hall effect sensor
-  AccelMissingWarningCounter     = 29, // Counter of how many times we have warned we cannot detect the accelerometer
-  PDMissingWarningCounter        = 30, // Counter of how many times we have warned we cannot detect the pd interface
-  UILanguage                     = 31, // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
-  PDNegTimeout                   = 32, // PD timeout in 100ms steps
-  OLEDInversion                  = 33, // Invert the colours on the display
-  OLEDBrightness                 = 34, // Brightness for the OLED display
-  LOGOTime                       = 35, // Duration the logo will be displayed for
-  CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
-  BLEEnabled                     = 37, // Should BLE hardware be enabled if present
+  KeepAwakePulse                 = 17, // Keep Awake pulse power in 0.1 watts (10 = 1Watt)
+  KeepAwakePulseWait             = 18, // Time between Keep Awake pulses in 2500 ms = 2.5 s increments
+  KeepAwakePulseDuration         = 19, // Duration of the Keep Awake pusle in 250 ms increments
+  VoltageDiv                     = 20, // Voltage divisor factor
+  BoostTemp                      = 21, // Boost mode set point for the iron
+  CalibrationOffset              = 22, // This stores the temperature offset for this tip in the iron.
+  PowerLimit                     = 23, // Maximum power iron allowed to output
+  ReverseButtonTempChangeEnabled = 24, // Change the plus and minus button assigment
+  TempChangeLongStep             = 25, // Change the plus and minus button assigment
+  TempChangeShortStep            = 26, // Change the plus and minus button assigment
+  HallEffectSensitivity          = 27, // Operating mode of the hall effect sensor
+  AccelMissingWarningCounter     = 28, // Counter of how many times we have warned we cannot detect the accelerometer
+  PDMissingWarningCounter        = 29, // Counter of how many times we have warned we cannot detect the pd interface
+  UILanguage                     = 30, // Selected UI Language code, null-terminated *only if* the length is less than 8 chars
+  PDNegTimeout                   = 31, // PD timeout in 100ms steps
+  OLEDInversion                  = 32, // Invert the colours on the display
+  OLEDBrightness                 = 33, // Brightness for the OLED display
+  LOGOTime                       = 34, // Duration the logo will be displayed for
+  CalibrateCJC                   = 35, // Toggle calibrate CJC at next boot
+  BLEEnabled                     = 36, // Should BLE hardware be enabled if present
 
   //
-  SettingsOptionsLength = 38, //
+  SettingsOptionsLength = 37, //
 };
 
 typedef enum {
