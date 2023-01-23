@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Hrot:"
         },
-        "OffString": {
-            "message": "Vyp"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "P",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "D",
         "SettingSlowChar": "P",
         "SettingMediumChar": "S",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "V",
         "SettingStartSolderingChar": "P",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "M",
-        "SettingLockDisableChar": "Z",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "U"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Chování\npři startu",
-            "description": "V=vypnuto | P=pájecí teplota | S=spánková teplota | M=zahřát hrot po pohybu"
+            "description": "P=pájecí teplota | S=spánková teplota | M=zahřát hrot po pohybu"
         },
         "TempChangeShortStep": {
             "displayText": "Krok teploty\nkrátký?",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Povolit zamč.\ntlačítek",
-            "description": "Při pájení podržte obě tlačítka pro jejich zamčení (Z=zakázáno | B=pouze v režimu boost | U=úplné zamčení)"
+            "description": "Při pájení podržte obě tlačítka pro jejich zamčení (B=pouze v režimu boost | U=úplné zamčení)"
         },
         "MotionSensitivity": {
             "displayText": "Citlivost\nna pohyb",
-            "description": "0=vyp | 1=nejméně citlivé | ... | 9=nejvíce citlivé"
+            "description": "1=nejméně citlivé | ... | 9=nejvíce citlivé"
         },
         "SleepTemperature": {
             "displayText": "Teplota\nve spánku",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Citlivost\nHall. čidla",
-            "description": "Citlivost Hallova čidla pro detekci spánku (0=vypnuto | 1=nejméně citlivé | ... | 9=nejvíce citlivé)"
+            "description": "Citlivost Hallova čidla pro detekci spánku (1=nejméně citlivé | ... | 9=nejvíce citlivé)"
         },
         "TemperatureUnit": {
             "displayText": "Jednotka\nteploty",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nrychlost",
-            "description": "Tempo animace ikon v menu (O=vypnuto | P=pomalu | S=středně | R=rychle)"
+            "description": "Tempo animace ikon v menu (P=pomalu | S=středně | R=rychle)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nsmyčka",

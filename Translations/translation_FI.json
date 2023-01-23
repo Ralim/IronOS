@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Kärki:"
         },
-        "OffString": {
-            "message": "Off"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "O",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
-        "SettingOffChar": "P",
         "SettingSlowChar": "A",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
-        "SettingStartNoneChar": "E",
         "SettingStartSolderingChar": "J",
         "SettingStartSleepChar": "L",
         "SettingStartSleepOffChar": "H",
-        "SettingLockDisableChar": "P",
         "SettingLockBoostChar": "V",
         "SettingLockFullChar": "K"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Autom.\nkäynnistys",
-            "description": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (E=Ei käytössä | J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
+            "description": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
         },
         "TempChangeShortStep": {
             "displayText": "Lämmön muutos\nlyhyt painal.",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Salli nappien\nlukitus",
-            "description": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (P=pois | V=vain tehostus | K=kaikki)"
+            "description": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (V=vain tehostus | K=kaikki)"
         },
         "MotionSensitivity": {
             "displayText": "Liikkeen\nherkkyys",
-            "description": "0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys"
+            "description": "1=vähäinen herkkyys | ... | 9=suurin herkkyys"
         },
         "SleepTemperature": {
             "displayText": "Lepotilan\nlämpötila",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall-\nherk.",
-            "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
+            "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
         },
         "TemperatureUnit": {
             "displayText": "Lämpötilan\nyksikkö",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Animaation\nnopeus",
-            "description": "Animaatioiden nopeus valikossa (P=pois | A=alhainen | K=keskiverto | S=suuri)"
+            "description": "Animaatioiden nopeus valikossa (A=alhainen | K=keskiverto | S=suuri)"
         },
         "AnimLoop": {
             "displayText": "Animaation\ntoistaminen",

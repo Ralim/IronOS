@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Temp:"
         },
-        "OffString": {
-            "message": "Aus"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Höchstwahrscheinlich ist das Gerät eine Fälschung!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "A",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
-        "SettingStartNoneChar": "A",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "R",
         "SettingStartSleepOffChar": "K",
-        "SettingLockDisableChar": "A",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "V"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Start im\nLötmodus",
-            "description": "Heizverhalten beim Einschalten der Spannungsversorgung (A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze)"
+            "description": "Heizverhalten beim Einschalten der Spannungsversorgung (L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp-Schritt\nDruck kurz",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Tasten-\nsperre",
-            "description": "Langes drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
+            "description": "Langes drücken beider Tasten im Lötmodus sperrt diese (B=nur Boost | V=vollständig)"
         },
         "MotionSensitivity": {
             "displayText": "Bewegungs-\nempfindlichk.",
-            "description": "0=aus | 1=minimal | ... | 9=maximal"
+            "description": "1=minimal | ... | 9=maximal"
         },
         "SleepTemperature": {
             "displayText": "Ruhe-\ntemperatur",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Empfindlichkeit\nder Hall-Sonde",
-            "description": "Empfindlichkeit der Hall-Sonde um den Ruhemodus auszulösen (0=aus | 1=minimal | ... | 9=maximal)"
+            "description": "Empfindlichkeit der Hall-Sonde um den Ruhemodus auszulösen (1=minimal | ... | 9=maximal)"
         },
         "TemperatureUnit": {
             "displayText": "Temperatur-\neinheit",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nGeschw.",
-            "description": "Geschwindigkeit der Icon-Animationen im Menü (A=aus | L=langsam | M=mittel | S=schnell)"
+            "description": "Geschwindigkeit der Icon-Animationen im Menü (L=langsam | M=mittel | S=schnell)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nSchleife",

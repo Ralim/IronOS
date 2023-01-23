@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Връх:"
         },
-        "OffString": {
-            "message": "Изкл."
-        },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "И",
         "SettingStartSolderingChar": "Р",
         "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "П",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Автоматичен\nработен режим",
-            "description": "Режим на поялника при включване на захранването. (И=Изключен | Р=Работен | С=Сън | П=Сън температура помещение)"
+            "description": "Режим на поялника при включване на захранването. (Р=Работен | С=Сън | П=Сън температура помещение)"
         },
         "TempChangeShortStep": {
             "displayText": "Промяна T\nбързо?",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
         },
         "MotionSensitivity": {
             "displayText": "Усещане\nза движение",
-            "description": "Усещане за движение (0=Изключено | 1=Слабо | ... | 9=Силно)"
+            "description": "Усещане за движение (1=Слабо | ... | 9=Силно)"
         },
         "SleepTemperature": {
             "displayText": "Темп.\nсън",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=Изключено | 1=Слабо | ... | 9=Силно)"
+            "description": "Sensitivity to magnets (1=Слабо | ... | 9=Силно)"
         },
         "TemperatureUnit": {
             "displayText": "Единици за\nтемпература",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+            "description": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",

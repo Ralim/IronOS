@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Tip:"
         },
-        "OffString": {
-            "message": "Off"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Din enhed er højst sandsyneligt en Kopivare!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "H",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "S",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "D",
         "SettingStartSleepOffChar": "R",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Start-up\nOpførsel",
-            "description": "Start automatisk med lodning når strøm sættes til. (S=Slukket | L=Lodning | D=Dvale tilstand | R=Dvale tilstand rumtemperatur)"
+            "description": "Start automatisk med lodning når strøm sættes til. (L=Lodning | D=Dvale tilstand | R=Dvale tilstand rumtemperatur)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp ændring\nkort",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Tillad låsning\naf knapperne",
-            "description": "Hold begge knapper nede under lodning for at låse dem (D=deaktiver | B=kun boost-tilstand | F=fuld låsning)"
+            "description": "Hold begge knapper nede under lodning for at låse dem (B=kun boost-tilstand | F=fuld låsning)"
         },
         "MotionSensitivity": {
             "displayText": "Bevægelses\nfølsomhed",
-            "description": "Bevægelsesfølsomhed (0=Slukket | 1=Mindst følsom | ... | 9=Mest følsom)"
+            "description": "Bevægelsesfølsomhed (1=Mindst følsom | ... | 9=Mest følsom)"
         },
         "SleepTemperature": {
             "displayText": "Dvale\ntemp",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall sensor\nfølsomhed",
-            "description": "følsomhed overfor magneten (0=Slukket | 1=Mindst følsom | ... | 9=Mest følsom)"
+            "description": "følsomhed overfor magneten (1=Mindst følsom | ... | 9=Mest følsom)"
         },
         "TemperatureUnit": {
             "displayText": "Temperatur\nEnhed",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nHastighed",
-            "description": "Hastigheden for ikonanimationer i menuen (O=fra | S=langsomt | M=medium | F=hurtigt)"
+            "description": "Hastigheden for ikonanimationer i menuen (S=langsomt | M=medium | F=hurtigt)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nsløfe",

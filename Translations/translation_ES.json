@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Punta:"
         },
-        "OffString": {
-            "message": " No"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "I",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "N",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "R",
         "SettingStartSleepOffChar": "F",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Calentar\nal enchufar",
-            "description": "Se calienta él solo al arrancar (N=no | S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
+            "description": "Se calienta él solo al arrancar (S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
         },
         "TempChangeShortStep": {
             "displayText": "Cambio temp.\npuls. cortas",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Permitir botones\nbloqueo",
-            "description": "Al soldar, una pulsación larga en ambos botones los bloquea (D=desactivar | B=sólo potenciar | F=bloqueo total)."
+            "description": "Al soldar, una pulsación larga en ambos botones los bloquea (B=sólo potenciar | F=bloqueo total)."
         },
         "MotionSensitivity": {
             "displayText": "Detección de\nmovimiento",
-            "description": "Tiempo de reacción al agarrar (0=no | 1=menos sensible | ... | 9=más sensible)"
+            "description": "Tiempo de reacción al agarrar (1=menos sensible | ... | 9=más sensible)"
         },
         "SleepTemperature": {
             "displayText": "Temperatura\nen reposo",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall Eff\nSensibilidad",
-            "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (0=no | 1=menos sensible | ... | 9=más sensible)"
+            "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
         },
         "TemperatureUnit": {
             "displayText": "Unidad de\ntemperatura",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nvelocidad",
-            "description": "Velocidad de las animaciones de los iconos en el menú (O=off | L=low | M=medium | R=high)"
+            "description": "Velocidad de las animaciones de los iconos en el menú (L=low | M=medium | R=high)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nbucle",

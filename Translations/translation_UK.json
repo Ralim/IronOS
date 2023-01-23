@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Жало:"
         },
-        "OffString": {
-            "message": "Вимк"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Вірогідно ваш пристрій підробний!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "П",
         "SettingLeftChar": "Л",
         "SettingAutoChar": "A",
-        "SettingOffChar": "B",
         "SettingSlowChar": "Н",
         "SettingMediumChar": "M",
         "SettingFastChar": "М",
-        "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
         "SettingStartSleepChar": "О",
         "SettingStartSleepOffChar": "К",
-        "SettingLockDisableChar": "В",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Гарячий\nстарт",
-            "description": "Режим в якому запускається паяльник при ввімкненні (В=Вимк. | П=Пайка | О=Очікування | К=Очікування при кімн. темп.)"
+            "description": "Режим в якому запускається паяльник при ввімкненні (П=Пайка | О=Очікування | К=Очікування при кімн. темп.)"
         },
         "TempChangeShortStep": {
             "displayText": "Зміна темп.\nкоротко?",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Дозволити\nблок. кнопок",
-            "description": "Під час пайки тривале натискання обох кнопок заблокує їх (В=Вимк | Т=Тільки турбо | П=Повне)"
+            "description": "Під час пайки тривале натискання обох кнопок заблокує їх (Т=Тільки турбо | П=Повне)"
         },
         "MotionSensitivity": {
             "displayText": "Чутливість\nсенсору руху",
-            "description": "Акселерометр (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
+            "description": "Акселерометр (1=мін. чутливості | ... | 9=макс. чутливості)"
         },
         "SleepTemperature": {
             "displayText": "Темпер.\nсну",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Чутливість\nЕфекту Холла",
-            "description": "Чутливість датчика ефекту Холла при виявленні сну (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
+            "description": "Чутливість датчика ефекту Холла при виявленні сну (1=мін. чутливості | ... | 9=макс. чутливості)"
         },
         "TemperatureUnit": {
             "displayText": "Формат темпе-\nратури(C°/F°)",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Швидкість\nанімації",
-            "description": "Швидкість анімації іконок у головному меню (Мілісекунди) (В=Вимк | Н=Низькa | С=Середня | М=Макс)"
+            "description": "Швидкість анімації іконок у головному меню (Мілісекунди) (Н=Низькa | С=Середня | М=Макс)"
         },
         "AnimLoop": {
             "displayText": "Циклічна\nанімація",

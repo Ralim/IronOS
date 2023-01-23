@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Panne:"
         },
-        "OffString": {
-            "message": "Off"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Votre appareil semble être une contrefaçon !"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "G",
         "SettingAutoChar": "A",
-        "SettingOffChar": "D",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "D",
         "SettingStartSolderingChar": "A",
         "SettingStartSleepChar": "V",
         "SettingStartSleepOffChar": "O",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "V"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Chauffer au\ndémarrage",
-            "description": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
+            "description": "A=activé | V=mode veille | O=mode veille à température ambiante"
         },
         "TempChangeShortStep": {
             "displayText": "Incrément\nappui court",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Verrouiller\nles boutons",
-            "description": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
+            "description": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (B=boost seulement | V=verr. total)"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilité\nau mouvement",
-            "description": "0=désactivé | 1=peu sensible | ... | 9=très sensible"
+            "description": "1=peu sensible | ... | 9=très sensible"
         },
         "SleepTemperature": {
             "displayText": "Temp.\nveille",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensibilité\ncapteur effet hall",
-            "description": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
+            "description": "Sensibilité du capteur à effet Hall pour la mise en veille (1=peu sensible | ... | 9=très sensible)"
         },
         "TemperatureUnit": {
             "displayText": "Unité de\ntempérature",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Vitesse\nanim. icônes",
-            "description": "Vitesse des animations des icônes dans le menu (D=désactivé | L=lente | M=moyenne | R=rapide)"
+            "description": "Vitesse des animations des icônes dans le menu (L=lente | M=moyenne | R=rapide)"
         },
         "AnimLoop": {
             "displayText": "Rejouer\nanim. icônes",

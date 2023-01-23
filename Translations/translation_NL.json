@@ -57,9 +57,6 @@
         "SleepingTipAdvancedString": {
             "message": "Punt:"
         },
-        "OffString": {
-            "message": "Uit"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Jouw toestel is wellicht een namaak-versie!"
         }
@@ -68,15 +65,12 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "U",
         "SettingSlowChar": "L",
         "SettingMediumChar": "G",
         "SettingFastChar": "S",
-        "SettingStartNoneChar": "U",
         "SettingStartSolderingChar": "G",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "B",
-        "SettingLockDisableChar": "U",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "V"
     },
@@ -125,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "Opstart\ngedrag",
-            "description": "Gedrag bij opstarten (U=Uit | G=Gebruiks-temperatuur | S=Slaapstand-temperatuur tot beweging | B=Uit tot beweging)"
+            "description": "Gedrag bij opstarten (G=Gebruiks-temperatuur | S=Slaapstand-temperatuur tot beweging | B=Uit tot beweging)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp veranderen\nkort",
@@ -137,11 +131,11 @@
         },
         "LockingMode": {
             "displayText": "Knopblokkering\ninschakelen",
-            "description": "Tijdens solderen lang op beide knoppen drukken blokkeert de knoppen (U=Uit | B=Alleen boost mode | V=Volledig blokkeren)"
+            "description": "Tijdens solderen lang op beide knoppen drukken blokkeert de knoppen (B=Alleen boost mode | V=Volledig blokkeren)"
         },
         "MotionSensitivity": {
             "displayText": "Bewegings-\ngevoeligheid",
-            "description": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+            "description": "Bewegingsgevoeligheid (1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "SleepTemperature": {
             "displayText": "Slaap\ntemp",
@@ -157,7 +151,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall sensor\ngevoeligheid",
-            "description": "Gevoeligheid van de Hall effect sensor om naar slaapmodus te gaan (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
+            "description": "Gevoeligheid van de Hall effect sensor om naar slaapmodus te gaan (1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "TemperatureUnit": {
             "displayText": "Temperatuur\neenheid",
@@ -181,7 +175,7 @@
         },
         "AnimSpeed": {
             "displayText": "Animatie\nsnelheid",
-            "description": "Tempo van de icoon animaties in het hoofdmenu (U=uit | L=langzaam | G=gemiddeld | S=snel)"
+            "description": "Tempo van de icoon animaties in het hoofdmenu (L=langzaam | G=gemiddeld | S=snel)"
         },
         "AnimLoop": {
             "displayText": "Animatie\nherhaling",
