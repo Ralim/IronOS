@@ -1,6 +1,6 @@
 # Translation
-If you would like to contribute a translation, use the [Translation Editor](http://htmlpreview.github.io/?https://github.com/Ralim/ts100/blob/master/Translations/TranslationEditor.html).
 
-[Open a reference language file and optionally a target language file](https://github.com/Ralim/ts100/tree/master/Translations).
+Moving forward (after 2022/12/07); IronOS is using Weblate to provide the visual interface to doing translations to make it easier for people to work with.
+Currently there is a translation going on, so not _everything_ is perfect but its leaps in the right direction to help make it friendlier for people to edit and also subscribe to be notified when things are updated.
 
-You can create a pull request with the new / updated json configuration file, and this will include this language into the new builds for the firmware.
+This can be accessed on the [weblate hosted instance](https://hosted.weblate.org/projects/ironos/main-firmware/).

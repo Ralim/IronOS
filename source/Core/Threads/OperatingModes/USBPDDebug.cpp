@@ -8,23 +8,23 @@ void showPDDebug(void) {
   uint8_t     screen = 0;
   ButtonState b;
   for (;;) {
-    OLED::clearScreen();                          // Ensure the buffer starts clean
-    OLED::setCursor(0, 0);                        // Position the cursor at the 0,0 (top left)
-    OLED::print(SymbolPDDebug, FontStyle::SMALL); // Print Title
-    OLED::setCursor(0, 8);                        // second line
+    OLED::clearScreen();                               // Ensure the buffer starts clean
+    OLED::setCursor(0, 0);                             // Position the cursor at the 0,0 (top left)
+    OLED::print(SmallSymbolPDDebug, FontStyle::SMALL); // Print Title
+    OLED::setCursor(0, 8);                             // second line
     if (screen == 0) {
       // Print the PD state machine
-      OLED::print(SymbolState, FontStyle::SMALL);
-      OLED::print(SymbolSpace, FontStyle::SMALL);
+      OLED::print(SmallSymbolState, FontStyle::SMALL);
+      OLED::print(SmallSymbolSpace, FontStyle::SMALL);
       OLED::printNumber(USBPowerDelivery::getStateNumber(), 2, FontStyle::SMALL, true);
-      OLED::print(SymbolSpace, FontStyle::SMALL);
+      OLED::print(SmallSymbolSpace, FontStyle::SMALL);
       // Also print vbus mod status
       if (USBPowerDelivery::fusbPresent()) {
         if (USBPowerDelivery::negotiationComplete() || (xTaskGetTickCount() > (TICKS_SECOND * 10))) {
           if (!USBPowerDelivery::isVBUSConnected()) {
-            OLED::print(SymbolNoVBus, FontStyle::SMALL);
+            OLED::print(SmallSymbolNoVBus, FontStyle::SMALL);
           } else {
-            OLED::print(SymbolVBus, FontStyle::SMALL);
+            OLED::print(SmallSymbolVBus, FontStyle::SMALL);
           }
         }
       }
@@ -56,22 +56,22 @@ void showPDDebug(void) {
         } else {
           // print out this entry of the proposal
           OLED::printNumber(screen, 2, FontStyle::SMALL, true); // print the entry number
-          OLED::print(SymbolSpace, FontStyle::SMALL);
+          OLED::print(SmallSymbolSpace, FontStyle::SMALL);
           if (min_voltage > 0) {
             OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
-            OLED::print(SymbolMinus, FontStyle::SMALL);
+            OLED::print(SmallSymbolMinus, FontStyle::SMALL);
           }
           OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
-          OLED::print(SymbolVolts, FontStyle::SMALL);
-          OLED::print(SymbolSpace, FontStyle::SMALL);
+          OLED::print(SmallSymbolVolts, FontStyle::SMALL);
+          OLED::print(SmallSymbolSpace, FontStyle::SMALL);
           if (wattage) {
             OLED::printNumber(wattage, 3, FontStyle::SMALL, true); // print the current in 0.1A res
-            OLED::print(SymbolWatts, FontStyle::SMALL);
+            OLED::print(SmallSymbolWatts, FontStyle::SMALL);
           } else {
             OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-            OLED::print(SymbolDot, FontStyle::SMALL);
+            OLED::print(SmallSymbolDot, FontStyle::SMALL);
             OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-            OLED::print(SymbolAmps, FontStyle::SMALL);
+            OLED::print(SmallSymbolAmps, FontStyle::SMALL);
           }
         }
       } else {

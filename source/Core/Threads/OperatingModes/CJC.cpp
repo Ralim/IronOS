@@ -19,9 +19,9 @@ void performCJCC(void) {
         OLED::setCursor(0, 0);
         OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
         OLED::setCursor(0, 8);
-        OLED::print(SymbolDot, FontStyle::SMALL);
+        OLED::print(SmallSymbolDot, FontStyle::SMALL);
         for (uint8_t x = 0; x < (i / 4); x++)
-          OLED::print(SymbolDot, FontStyle::SMALL);
+          OLED::print(SmallSymbolDot, FontStyle::SMALL);
         OLED::refresh();
         osDelay(100);
       }

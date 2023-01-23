@@ -87,23 +87,23 @@ void gui_solderingTempAdjust(void) {
       return; // exit if user just doesn't press anything for a bit
 
     if (OLED::getRotation()) {
-      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolPlus : SymbolMinus, FontStyle::LARGE);
+      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
     } else {
-      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolMinus : SymbolPlus, FontStyle::LARGE);
+      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus, FontStyle::LARGE);
     }
 
-    OLED::print(SymbolSpace, FontStyle::LARGE);
+    OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::LARGE);
     if (getSettingValue(SettingsOptions::TemperatureInF))
       OLED::drawSymbol(0);
     else {
       OLED::drawSymbol(1);
     }
-    OLED::print(SymbolSpace, FontStyle::LARGE);
+    OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     if (OLED::getRotation()) {
-      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolMinus : SymbolPlus, FontStyle::LARGE);
+      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus, FontStyle::LARGE);
     } else {
-      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? SymbolPlus : SymbolMinus, FontStyle::LARGE);
+      OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
     }
     OLED::refresh();
     GUIDelay();

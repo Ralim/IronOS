@@ -606,7 +606,7 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 
 Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ../Translations/translation_%.json \
 		../Translations/make_translation.py \
-		../Translations/translations_def.js \
+		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
 		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
 	@test -d Core/Gen || mkdir -p Core/Gen
@@ -687,7 +687,7 @@ $(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf : \
 
 Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.json,$(3)) \
 		../Translations/make_translation.py \
-		../Translations/translations_def.js \
+		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
 		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
 	@test -d Core/Gen || mkdir -p Core/Gen
