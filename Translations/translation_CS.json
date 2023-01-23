@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Jazyk:\n CS       Český",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

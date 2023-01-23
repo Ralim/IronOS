@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Ngôn ngu:\n VI  Tieng Viet",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

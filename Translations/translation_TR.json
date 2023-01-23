@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Dil:\n TR      Türkçe",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

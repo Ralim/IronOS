@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Nyelv:\n HU      Magyar",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

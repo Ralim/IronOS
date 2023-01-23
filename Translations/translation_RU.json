@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Язык:\n RU     Русский",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

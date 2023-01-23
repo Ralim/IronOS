@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Мова:\n UK  Українська",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }
