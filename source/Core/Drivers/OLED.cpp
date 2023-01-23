@@ -367,6 +367,7 @@ void OLED::setRotation(bool leftHanded) {
   const int len = FRAMEBUFFER_START + (OLED_WIDTH * 2);
   I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
   osDelay(TICKS_10MS);
+  checkDisplayBufferChecksum();
 }
 
 void OLED::setBrightness(uint8_t contrast) {
