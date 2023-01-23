@@ -17,6 +17,7 @@ extern "C" {
 #include "bl702_pwm.h"
 #include "bl702_timer.h"
 }
+void start_PWM_output(void);
 
 #define ADC_Filter_Smooth 4
 history<uint16_t, ADC_Filter_Smooth> ADC_Vin;
@@ -24,6 +25,7 @@ history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
 void                                 adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
+    start_PWM_output(); // Restart the tip PWM
     // Read out all entries in the fifo
     while (ADC_Get_FIFO_Count()) {
       volatile uint32_t reading = ADC_Read_FIFO();
@@ -45,7 +47,6 @@ void                                 adc_fifo_irq(void) {
         break;
       }
     }
-
     // unblock the PID controller thread
     if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
       BaseType_t xHigherPriorityTaskWoken = pdFALSE;
@@ -66,12 +67,10 @@ volatile uint16_t PWMSafetyTimer    = 0;
 volatile uint8_t  pendingPWM        = 0;
 volatile bool     lastPeriodWasFast = false;
 
-// Timer 0 is used to co-ordinate the ADC and the output PWM
-void timer0_comp0_callback(void) { ADC_Start(); }
-void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); }
-void timer0_comp2_callback(void) {
+void start_PWM_output(void) {
 
-  // This occurs at timer rollover, so if we want to turn on the output PWM; we do so
+  TIMER_Enable(TIMER_CH0);
+
   if (PWMSafetyTimer) {
     PWMSafetyTimer--;
     if (lastPeriodWasFast != fastPWM) {
@@ -94,6 +93,10 @@ void timer0_comp2_callback(void) {
     PWM_Channel_Disable(PWM_Channel);
   }
 }
+
+// Timer 0 is used to co-ordinate the ADC and the output PWM
+void timer0_comp0_callback(void) { ADC_Start(); }
+void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); } // Trigged at end of output cycle; turn off the tip PWM
 
 void switchToFastPWM(void) {
   fastPWM  = true;
