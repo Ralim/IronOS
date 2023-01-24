@@ -34,7 +34,7 @@
             "message": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!"
         },
         "CJCCalibrating": {
-            "message": "kalibracja"
+            "message": "kalibracja\n"
         },
         "SettingsResetWarning": {
             "message": "Czy na pewno chcesz przywrócić ustawienia fabryczne?"
