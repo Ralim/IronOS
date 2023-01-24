@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "语言：简体中文",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

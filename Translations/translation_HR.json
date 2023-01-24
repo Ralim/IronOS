@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Jezik:\n HR    Hrvatski",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }
