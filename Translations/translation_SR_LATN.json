@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Jezik:\n SR      Srpski",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

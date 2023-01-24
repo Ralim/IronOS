@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Språk:\n NB    Norsk bm",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }
