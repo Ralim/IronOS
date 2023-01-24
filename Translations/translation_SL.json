@@ -10,13 +10,13 @@
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Nastavitve OK!"
+            "message": "Nastavitve \nOK!"
         },
         "NoAccelerometerMessage": {
-            "message": "Ni pospeševalnik"
+            "message": "Ni \npospeševalnik"
         },
         "NoPowerDeliveryMessage": {
-            "message": "Ni USB-PD čipa!"
+            "message": "Ni USB-PD \nčipa!"
         },
         "LockingKeysString": {
             "message": "ZAKLENJ."
