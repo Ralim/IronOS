@@ -34,7 +34,7 @@
             "message": "Prima di riavviare assicurati che la punta e l'impugnatura siano a temperatura ambiente!"
         },
         "CJCCalibrating": {
-            "message": "Calibrazione in corso"
+            "message": "Calibrazione in corso\n"
         },
         "SettingsResetWarning": {
             "message": "Ripristinare le impostazioni predefinite?"

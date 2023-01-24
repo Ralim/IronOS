@@ -34,7 +34,7 @@
             "message": "Újraindítás előtt a hegy és az eszköz legyen szobahőmérsékletű!"
         },
         "CJCCalibrating": {
-            "message": "Kalibrálás"
+            "message": "Kalibrálás\n"
         },
         "SettingsResetWarning": {
             "message": "Biztos visszaállítja a beállításokat alapértékekre?"
