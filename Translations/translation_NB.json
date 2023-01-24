@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Er du sikker på at du vil tilbakestille til standardinnstillinger?"
