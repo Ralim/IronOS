@@ -10,7 +10,7 @@
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Ust. zresetowane\n"
+            "message": "Ust. zresetowane"
         },
         "NoAccelerometerMessage": {
             "message": "Nie rozpoznano\nakcelerometru!"
@@ -34,7 +34,7 @@
             "message": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!"
         },
         "CJCCalibrating": {
-            "message": "kalibracja"
+            "message": "kalibracja\n"
         },
         "SettingsResetWarning": {
             "message": "Czy na pewno chcesz przywrócić ustawienia fabryczne?"
@@ -80,7 +80,7 @@
             "description": ""
         },
         "SolderingMenu": {
-            "displayText": "Lutowanie\n",
+            "displayText": "Lutowanie",
             "description": ""
         },
         "PowerSavingMenu": {

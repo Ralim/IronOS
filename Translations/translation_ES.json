@@ -1,7 +1,7 @@
 {
     "languageCode": "ES",
     "languageLocalName": "Castellano",
-    "tempUnitFahrenheit": false,
+    "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Calibration\ndone!"
@@ -19,7 +19,7 @@
             "message": "Sin USB-PD IC\n¡Detectado!"
         },
         "LockingKeysString": {
-            "message": " BLOQUEADO"
+            "message": "BLOQUEADO"
         },
         "UnlockingKeysString": {
             "message": "DESBLOQUEADO"
@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "¿Quieres restablecer los ajustes?"

@@ -1,7 +1,7 @@
 {
     "languageCode": "HR",
     "languageLocalName": "Hrvatski",
-    "tempUnitFahrenheit": false,
+    "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Kalibracija\ndovršena!"
@@ -34,7 +34,7 @@
             "message": "Prije restarta provjerite da su vrh i ručka na sobnoj temperaturi!"
         },
         "CJCCalibrating": {
-            "message": "kalibriram"
+            "message": "kalibriram\n"
         },
         "SettingsResetWarning": {
             "message": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?"

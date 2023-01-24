@@ -10,7 +10,7 @@
             "message": "Atstatyta"
         },
         "SettingsResetMessage": {
-            "message": "Nust. atstatyti!\n"
+            "message": "Nust. atstatyti!"
         },
         "NoAccelerometerMessage": {
             "message": "Nerastas\nakselerometras!"
@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Ar norite atstatyti nustatymus į numatytas reikšmes?"

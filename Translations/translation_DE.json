@@ -34,7 +34,7 @@
             "message": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!"
         },
         "CJCCalibrating": {
-            "message": "kalibriere"
+            "message": "kalibriere\n"
         },
         "SettingsResetWarning": {
             "message": "Sicher, dass alle Werte zurückgesetzt werden sollen?"
