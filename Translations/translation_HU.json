@@ -34,7 +34,7 @@
             "message": "Újraindítás előtt a hegy és az eszköz legyen szobahőmérsékletű!"
         },
         "CJCCalibrating": {
-            "message": "Kalibrálás"
+            "message": "Kalibrálás\n"
         },
         "SettingsResetWarning": {
             "message": "Biztos visszaállítja a beállításokat alapértékekre?"
@@ -71,11 +71,11 @@
         "SettingOffChar": "0",
         "SettingSlowChar": "L",
         "SettingMediumChar": "K",
-        "SettingFastChar": "Gy",
+        "SettingFastChar": "G",
         "SettingStartNoneChar": "K",
         "SettingStartSolderingChar": "F",
         "SettingStartSleepChar": "A",
-        "SettingStartSleepOffChar": "Sz",
+        "SettingStartSleepOffChar": "S",
         "SettingLockDisableChar": "K",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "T"
