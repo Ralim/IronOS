@@ -95,7 +95,10 @@ void start_PWM_output(void) {
 }
 
 // Timer 0 is used to co-ordinate the ADC and the output PWM
-void timer0_comp0_callback(void) { ADC_Start(); }
+void timer0_comp0_callback(void) {
+  PWM_Channel_Disable(PWM_Channel);
+  ADC_Start();
+}
 void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); } // Trigged at end of output cycle; turn off the tip PWM
 
 void switchToFastPWM(void) {
