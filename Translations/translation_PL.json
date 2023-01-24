@@ -10,7 +10,7 @@
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Ust. zresetowane\n"
+            "message": "Ust. zresetowane"
         },
         "NoAccelerometerMessage": {
             "message": "Nie rozpoznano\nakcelerometru!"
@@ -86,7 +86,7 @@
             "description": ""
         },
         "SolderingMenu": {
-            "displayText": "Lutowanie\n",
+            "displayText": "Lutowanie",
             "description": ""
         },
         "PowerSavingMenu": {
