@@ -71,11 +71,11 @@
         "SettingOffChar": "0",
         "SettingSlowChar": "L",
         "SettingMediumChar": "K",
-        "SettingFastChar": "G",
+        "SettingFastChar": "Gy",
         "SettingStartNoneChar": "K",
         "SettingStartSolderingChar": "F",
         "SettingStartSleepChar": "A",
-        "SettingStartSleepOffChar": "S",
+        "SettingStartSleepOffChar": "Sz",
         "SettingLockDisableChar": "K",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "T"
