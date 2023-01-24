@@ -119,7 +119,7 @@
         },
         "AutoStart": {
             "displayText": "OTOBAŞ\n",
-            "description": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
+            "description": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp change\nshort",
@@ -135,7 +135,7 @@
         },
         "MotionSensitivity": {
             "displayText": "HARHAS\n",
-            "description": "Hareket Hassasiyeti (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+            "description": "Hareket Hassasiyeti (1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "SleepTemperature": {
             "displayText": "BKSC",
