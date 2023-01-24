@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Γλώσσα:\n GR    Ελληνικά",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

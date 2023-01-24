@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Мова:\n BY  Беларуская",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

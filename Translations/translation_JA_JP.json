@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "言語： 日本語",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

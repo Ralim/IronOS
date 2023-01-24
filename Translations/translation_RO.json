@@ -238,6 +238,10 @@
         "LanguageSwitch": {
             "displayText": "Limbă:\n RO      Română",
             "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Enabled",
+            "description": ""
         }
     }
 }

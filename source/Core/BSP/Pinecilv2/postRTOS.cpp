@@ -19,7 +19,10 @@ void postRToSInit() {
     hall_effect_present = Si7210::init();
   }
 #endif
-  ble_stack_start();
+
+  if (getSettingValue(SettingsOptions::BLEEnabled)) {
+    ble_stack_start();
+  }
 }
 int16_t getRawHallEffect() {
   if (hall_effect_present) {
