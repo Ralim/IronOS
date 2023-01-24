@@ -10,13 +10,13 @@
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Nastavitve OK!\n"
+            "message": "Nastavitve OK!"
         },
         "NoAccelerometerMessage": {
-            "message": "Ni pospeševalnik\n"
+            "message": "Ni pospeševalnik"
         },
         "NoPowerDeliveryMessage": {
-            "message": "Ni USB-PD čipa!\n"
+            "message": "Ni USB-PD čipa!"
         },
         "LockingKeysString": {
             "message": "ZAKLENJ."
@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Res želite ponastaviti na privzete nastavitve?"
