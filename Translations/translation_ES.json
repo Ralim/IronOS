@@ -19,7 +19,7 @@
             "message": "Sin USB-PD IC\n¡Detectado!"
         },
         "LockingKeysString": {
-            "message": " BLOQUEADO"
+            "message": "BLOQUEADO"
         },
         "UnlockingKeysString": {
             "message": "DESBLOQUEADO"
@@ -58,7 +58,7 @@
             "message": "Punta:"
         },
         "OffString": {
-            "message": " No"
+            "message": "No"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
