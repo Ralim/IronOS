@@ -1,7 +1,7 @@
 {
     "languageCode": "DE",
     "languageLocalName": "Deutsch",
-    "tempUnitFahrenheit": false,
+    "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Erfolgreich\nkalibriert!"
