@@ -1,7 +1,7 @@
 {
     "languageCode": "UK",
     "languageLocalName": "Українська",
-    "tempUnitFahrenheit": false,
+    "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "КХС\nвідкалібровано!"
