@@ -52,7 +52,7 @@
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Sleeping..."
+            "message": "Sleeping...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Tip:"
