@@ -43,19 +43,19 @@
             "message": "DC BAIXO"
         },
         "UndervoltageString": {
-            "message": "Subtensão"
+            "message": "Subtensão\n"
         },
         "InputVoltageString": {
-            "message": "Tensão "
+            "message": "Tensão: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Repouso..."
+            "message": "Repouso...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Ponta:"
+            "message": "Ponta: \n"
         },
         "OffString": {
             "message": "Off"

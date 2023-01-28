@@ -43,19 +43,19 @@
             "message": "Ниско DC Напрежение"
         },
         "UndervoltageString": {
-            "message": "Ниско Напрежение"
+            "message": "Ниско Напрежение\n"
         },
         "InputVoltageString": {
-            "message": "Входно V: "
+            "message": "Входно V: \n"
         },
         "SleepingSimpleString": {
             "message": "Сън"
         },
         "SleepingAdvancedString": {
-            "message": "Хър Хър Хър..."
+            "message": "Хър Хър Хър...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Връх:"
+            "message": "Връх: \n"
         },
         "OffString": {
             "message": "Изкл."

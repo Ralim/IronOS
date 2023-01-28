@@ -43,19 +43,19 @@
             "message": "НИЗ.НАП."
         },
         "UndervoltageString": {
-            "message": "ПРЕНИЗАК НАПОН"
+            "message": "ПРЕНИЗАК НАПОН\n"
         },
         "InputVoltageString": {
-            "message": "Ул. напон: "
+            "message": "Ул. напон: \n"
         },
         "SleepingSimpleString": {
             "message": "Сан"
         },
         "SleepingAdvancedString": {
-            "message": "Спавање..."
+            "message": "Спавање...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Врх:"
+            "message": "Врх: \n"
         },
         "OffString": {
             "message": "Иск"

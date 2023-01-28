@@ -43,19 +43,19 @@
             "message": "CC BAJA"
         },
         "UndervoltageString": {
-            "message": "Voltaje bajo"
+            "message": "Voltaje bajo\n"
         },
         "InputVoltageString": {
-            "message": "Voltaje: "
+            "message": "Voltaje: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "En reposo..."
+            "message": "En reposo...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Punta:"
+            "message": "Punta: \n"
         },
         "OffString": {
             "message": "No"

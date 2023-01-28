@@ -43,19 +43,19 @@
             "message": "DC ALH."
         },
         "UndervoltageString": {
-            "message": "Alijännite"
+            "message": "Alijännite\n"
         },
         "InputVoltageString": {
-            "message": "Jännite: "
+            "message": "Jännite: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Lepotila..."
+            "message": "Lepotila...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Kärki:"
+            "message": "Kärki: \n"
         },
         "OffString": {
             "message": "Off"

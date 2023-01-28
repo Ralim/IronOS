@@ -43,19 +43,19 @@
             "message": "NIZKA U"
         },
         "UndervoltageString": {
-            "message": "Nizka napetost"
+            "message": "Nizka napetost\n"
         },
         "InputVoltageString": {
-            "message": "Vhodna U: "
+            "message": "Vhodna U: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Spim..."
+            "message": "Spim...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Konica"
+            "message": "Konica \n"
         },
         "OffString": {
             "message": "Off"
