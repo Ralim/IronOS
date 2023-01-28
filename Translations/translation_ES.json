@@ -241,7 +241,7 @@
         },
         "BLEEnabled": {
             "displayText": "BLE\n Activado",
-            "description": ""
+            "description": "Habilita BLE"
         }
     }
 }
