@@ -43,19 +43,19 @@
             "message": "DC Laag"
         },
         "UndervoltageString": {
-            "message": "Onderspanning"
+            "message": "Onderspanning\n"
         },
         "InputVoltageString": {
-            "message": "Voeding V: "
+            "message": "Voeding V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Slaapstand..."
+            "message": "Slaapstand...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Punt:"
+            "message": "Punt: \n"
         },
         "OffString": {
             "message": "Uit"
