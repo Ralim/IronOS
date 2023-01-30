@@ -43,19 +43,19 @@
             "message": "Χαμηλ DC"
         },
         "UndervoltageString": {
-            "message": "Υπόταση"
+            "message": "Υπόταση\n"
         },
         "InputVoltageString": {
-            "message": "Είσοδος V: "
+            "message": "Είσοδος V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Υπνος..."
+            "message": "Υπνος...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Μύτη:"
+            "message": "Μύτη: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"

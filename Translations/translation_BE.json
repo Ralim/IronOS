@@ -43,19 +43,19 @@
             "message": "НАПРУГА--"
         },
         "UndervoltageString": {
-            "message": "Нізкая напруга"
+            "message": "Нізкая напруга\n"
         },
         "InputVoltageString": {
-            "message": "Сілкаванне В: "
+            "message": "Сілкаванне В: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Чаканне..."
+            "message": "Чаканне...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Джала:"
+            "message": "Джала: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Ваша прылада, хутчэй за ўсё, падробка!"

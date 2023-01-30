@@ -43,19 +43,19 @@
             "message": "DC LOW"
         },
         "UndervoltageString": {
-            "message": "Sub tensiune"
+            "message": "Sub tensiune\n"
         },
         "InputVoltageString": {
-            "message": "Intrare V: "
+            "message": "Intrare V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Adormit..."
+            "message": "Adormit...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Tip:"
+            "message": "Tip: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"

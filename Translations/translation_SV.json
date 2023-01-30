@@ -43,19 +43,19 @@
             "message": "DC LÅG"
         },
         "UndervoltageString": {
-            "message": "Underspänning"
+            "message": "Underspänning\n"
         },
         "InputVoltageString": {
-            "message": "Inspän. V: "
+            "message": "Inspän. V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Viloläge..."
+            "message": "Viloläge...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Spets:"
+            "message": "Spets: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"

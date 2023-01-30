@@ -1,7 +1,7 @@
 {
     "languageCode": "TR",
     "languageLocalName": "Türkçe",
-    "tempUnitFahrenheit": true,
+    "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Calibration\ndone!"
@@ -43,19 +43,19 @@
             "message": "Güç Az"
         },
         "UndervoltageString": {
-            "message": "Düşük Voltaj"
+            "message": "Düşük Voltaj\n"
         },
         "InputVoltageString": {
-            "message": "Giriş V: "
+            "message": "Giriş V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Bekleme Modu ..."
+            "message": "Bekleme Modu...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Uç:"
+            "message": "Uç: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
@@ -98,7 +98,7 @@
     },
     "menuOptions": {
         "DCInCutoff": {
-            "displayText": "GÇKYN",
+            "displayText": "GÇKYN\n",
             "description": "\"Güç Kaynağı\". En düşük çalışma voltajını ayarlar. (DC 10V) (S 3.3V hücre başına)"
         },
         "MinVolCell": {
@@ -114,7 +114,7 @@
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
         "BoostTemperature": {
-            "displayText": "YKSC",
+            "displayText": "YKSC\n",
             "description": "Yüksek Performans Modu Sıcaklığı"
         },
         "AutoStart": {
@@ -138,15 +138,15 @@
             "description": "Hareket Hassasiyeti (1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "SleepTemperature": {
-            "displayText": "BKSC",
+            "displayText": "BKSC\n",
             "description": "Bekleme Modu Sıcaklığı (C)"
         },
         "SleepTimeout": {
-            "displayText": "BMZA",
+            "displayText": "BMZA\n",
             "description": "Bekleme Modu Zaman Aşımı (Dakika | Saniye)"
         },
         "ShutdownTimeout": {
-            "displayText": "KPTZA",
+            "displayText": "KPTZA\n",
             "description": "Kapatma Zaman Aşımı (Dakika)"
         },
         "HallEffSensitivity": {
@@ -154,19 +154,19 @@
             "description": "Sensitivity to magnets (1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "TemperatureUnit": {
-            "displayText": "SCKBRM",
+            "displayText": "SCKBRM\n",
             "description": "Sıcaklık Birimi (C=Celsius | F=Fahrenheit)"
         },
         "DisplayRotation": {
-            "displayText": "GRNYÖN",
+            "displayText": "GRNYÖN\n",
             "description": "Görüntü Yönlendirme (R=Sağlak | L=Solak | O=Otomatik)"
         },
         "CooldownBlink": {
-            "displayText": "SĞGÖST",
+            "displayText": "SĞGÖST\n",
             "description": "Soğutma ekranında uç hala sıcakken derece gösterilsin."
         },
         "ScrollingSpeed": {
-            "displayText": "YZKYHZ",
+            "displayText": "YZKYHZ\n",
             "description": "Bu yazının kayma hızı (Y=Yavaş | H=Hızlı)"
         },
         "ReverseButtonTempChange": {
@@ -194,11 +194,11 @@
             "description": "Set boot logo duration (s=seconds)"
         },
         "AdvancedIdle": {
-            "displayText": "AYRBİL",
+            "displayText": "AYRBİL\n",
             "description": "Boş ekranda ayrıntılı bilgileri daha küçük bir yazı tipi ile göster."
         },
         "AdvancedSoldering": {
-            "displayText": "GELLHM",
+            "displayText": "GELLHM\n",
             "description": "\"Gelişmiş Lehimleme\" Lehimleme yaparken detaylı bilgi göster"
         },
         "PowerLimit": {
@@ -210,7 +210,7 @@
             "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
-            "displayText": "VOL KAL?",
+            "displayText": "VOL KAL?\n",
             "description": "Voltaj Girişi Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas."
         },
         "PowerPulsePower": {
@@ -226,7 +226,7 @@
             "description": "Keep-awake-pulse duration (x 250ms)"
         },
         "SettingsReset": {
-            "displayText": "SIFIRLA?",
+            "displayText": "SIFIRLA?\n",
             "description": "Bütün ayarları sıfırlar"
         },
         "LanguageSwitch": {

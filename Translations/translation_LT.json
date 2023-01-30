@@ -10,7 +10,7 @@
             "message": "Atstatyta"
         },
         "SettingsResetMessage": {
-            "message": "Nust. atstatyti!"
+            "message": "Nust. \natstatyti!"
         },
         "NoAccelerometerMessage": {
             "message": "Nerastas\nakselerometras!"
@@ -43,19 +43,19 @@
             "message": "MAŽ VOLT"
         },
         "UndervoltageString": {
-            "message": "Žema įtampa"
+            "message": "Žema įtampa\n"
         },
         "InputVoltageString": {
-            "message": "Įvestis V: "
+            "message": "Įvestis V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Miegu..."
+            "message": "Miegu...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Antg:"
+            "message": "Antg: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"

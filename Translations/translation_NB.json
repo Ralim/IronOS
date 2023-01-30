@@ -1,7 +1,7 @@
 {
     "languageCode": "NB",
     "languageLocalName": "Norsk bokmål",
-    "tempUnitFahrenheit": true,
+    "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Calibration\ndone!"
@@ -43,19 +43,19 @@
             "message": "Lavspenn"
         },
         "UndervoltageString": {
-            "message": "Underspenning"
+            "message": "Underspenning\n"
         },
         "InputVoltageString": {
-            "message": "Innspenn.: "
+            "message": "Innspenn.: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Dvale..."
+            "message": "Dvale...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Spiss:"
+            "message": "Spiss: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Enheten din er sannsynligvis en forfalskning!"

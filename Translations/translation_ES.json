@@ -7,7 +7,7 @@
             "message": "Calibration\ndone!"
         },
         "ResetOKMessage": {
-            "message": "Hecho."
+            "message": "Hecho"
         },
         "SettingsResetMessage": {
             "message": "Ajustes\n¡Reiniciados!"
@@ -28,13 +28,13 @@
             "message": "¡BLOQUEADO!"
         },
         "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
+            "message": "Térmico\nFuera de control"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "¡Antes de reiniciar, asegúrese de que la punta y el mango estén a temperatura ambiente!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "calibrando\n"
         },
         "SettingsResetWarning": {
             "message": "¿Quieres restablecer los ajustes?"
@@ -43,22 +43,22 @@
             "message": "CC BAJA"
         },
         "UndervoltageString": {
-            "message": "Voltaje bajo"
+            "message": "Voltaje bajo\n"
         },
         "InputVoltageString": {
-            "message": "Voltaje: "
+            "message": "Voltaje: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzzz"
+            "message": "Reposo"
         },
         "SleepingAdvancedString": {
-            "message": "En reposo..."
+            "message": "En reposo...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Punta:"
+            "message": "Punta: \n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "¡Lo más probable es que su dispositivo sea una falsificación!"
         }
     },
     "characters": {
@@ -107,15 +107,15 @@
         },
         "QCMaxVoltage": {
             "displayText": "Potencia de\nentrada",
-            "description": "Potencia en vatios del adaptador de corriente utilizado."
+            "description": "Potencia en vatios del adaptador de corriente utilizado"
         },
         "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
+            "displayText": "PD\ntiempo de espera",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
         },
         "BoostTemperature": {
             "displayText": "Ajustar la\ntemp. extra",
-            "description": "Temperatura momentánea que se alcanza al apretar el botón del modo extra."
+            "description": "Temperatura de la punta utilizada en el \"modo de impulso\""
         },
         "AutoStart": {
             "displayText": "Calentar\nal enchufar",
@@ -123,15 +123,15 @@
         },
         "TempChangeShortStep": {
             "displayText": "Cambio temp.\npuls. cortas",
-            "description": "Subir y bajar X grados de temperatura con cada pulsación corta de los botones +/-."
+            "description": "Aumento de la temperatura al pulsar brevemente un botón"
         },
         "TempChangeLongStep": {
             "displayText": "Cambio temp.\npuls. largas",
-            "description": "Subir y bajar X grados de temperatura con cada pulsación larga de los botones +/-."
+            "description": "Aumento de la temperatura al pulsar prolongadamente un botón"
         },
         "LockingMode": {
             "displayText": "Permitir botones\nbloqueo",
-            "description": "Al soldar, una pulsación larga en ambos botones los bloquea (B=sólo potenciar | F=bloqueo total)."
+            "description": "Mientras suelda, mantenga pulsados ambos botones para alternar su bloqueo (B=sólo modo boost | F=bloqueo total)"
         },
         "MotionSensitivity": {
             "displayText": "Detección de\nmovimiento",
@@ -139,7 +139,7 @@
         },
         "SleepTemperature": {
             "displayText": "Temperatura\nen reposo",
-            "description": "Temperatura de la punta en reposo."
+            "description": "Temperatura de la punta en \"reposo\""
         },
         "SleepTimeout": {
             "displayText": "Entrar\nen reposo",
@@ -163,7 +163,7 @@
         },
         "CooldownBlink": {
             "displayText": "Parpadear\nal enfriar",
-            "description": "La temperatura en pantalla parpadea mientras la punta siga caliente."
+            "description": "Lectura de la temperatura al ralentí mientras la punta está caliente"
         },
         "ScrollingSpeed": {
             "displayText": "Velocidad\ndel texto",
@@ -171,7 +171,7 @@
         },
         "ReverseButtonTempChange": {
             "displayText": "Invertir\nbotones +/-",
-            "description": "Intercambia las funciones de subir y bajar la temperatura de los botones +/- para que funcionen al revés."
+            "description": "Intercambio inversa de los botones para ajustar la temperatura"
         },
         "AnimSpeed": {
             "displayText": "Anim.\nvelocidad",
@@ -195,14 +195,14 @@
         },
         "AdvancedIdle": {
             "displayText": "Info extra en\nmodo reposo",
-            "description": "Muestra información detallada en letra pequeña al reposar."
+            "description": "Mostrar información detallada en una fuente más pequeña en la pantalla inactiva"
         },
         "AdvancedSoldering": {
             "displayText": "Info extra\nal soldar",
-            "description": "Muestra más datos por pantalla cuando se está soldando."
+            "description": "Mostrar información detallada en una fuente más pequeña en la pantalla de soldadura"
         },
         "PowerLimit": {
-            "displayText": "Ajustar la\npotenc. máx.",
+            "displayText": "Potencia\nlímite",
             "description": "Elige el límite de potencia máxima del soldador (en vatios)"
         },
         "CalibrateCJC": {
@@ -211,11 +211,11 @@
         },
         "VoltageCalibration": {
             "displayText": "Calibrar voltaje\nde entrada",
-            "description": "Calibra VIN. Ajusta con ambos botones y mantén pulsado para salir."
+            "description": "Iniciar calibración VIN (pulsación larga para salir)"
         },
         "PowerPulsePower": {
             "displayText": "Pulsos bat.\nconstantes",
-            "description": "Aplica unos pulsos necesarios para mantener encendidas ciertas baterías portátiles. En vatios."
+            "description": "Intensidad de la potencia del pulso de mantenimiento del estado de vigilia (W=vatio)"
         },
         "PowerPulseWait": {
             "displayText": "Impulso de potencia\ntiempo de espera",
@@ -227,15 +227,15 @@
         },
         "SettingsReset": {
             "displayText": "Volver a ajustes\nde fábrica",
-            "description": "Restablece todos los ajustes a los valores originales."
+            "description": "Restablecer todos los ajustes por defecto"
         },
         "LanguageSwitch": {
             "displayText": "Idioma:\n ES  Castellano",
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
+            "displayText": "BLE\n Activado",
+            "description": "Habilita BLE"
         }
     }
 }

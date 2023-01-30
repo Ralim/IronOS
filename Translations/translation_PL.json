@@ -10,7 +10,7 @@
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Ust. zresetowane"
+            "message": "Ust. \nzresetowane"
         },
         "NoAccelerometerMessage": {
             "message": "Nie rozpoznano\nakcelerometru!"
@@ -43,19 +43,19 @@
             "message": "NIS. NAP"
         },
         "UndervoltageString": {
-            "message": "Zbyt niskie nap."
+            "message": "Zbyt niskie nap.\n"
         },
         "InputVoltageString": {
-            "message": "Nap. wej.:"
+            "message": "Nap. wej.: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz!"
         },
         "SleepingAdvancedString": {
-            "message": "Tr. uśpienia"
+            "message": "Tr. uśpienia\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Grot:"
+            "message": "Grot: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Twoje urządzenie jest najprawdopodobniej podróbką!"
@@ -80,7 +80,7 @@
             "description": ""
         },
         "SolderingMenu": {
-            "displayText": "Lutowanie",
+            "displayText": "Lutowanie\n",
             "description": ""
         },
         "PowerSavingMenu": {

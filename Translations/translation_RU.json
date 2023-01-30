@@ -43,19 +43,19 @@
             "message": "НАПРЯЖ--"
         },
         "UndervoltageString": {
-            "message": "Низ. напряжение"
+            "message": "Низ. напряжение\n"
         },
         "InputVoltageString": {
-            "message": "Питание В: "
+            "message": "Питание В: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Ожидание..."
+            "message": "Ожидание...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Жало:"
+            "message": "Жало: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Скорее всего, это устройство подделка!"

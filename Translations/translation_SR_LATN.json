@@ -43,19 +43,19 @@
             "message": "NIZ.NAP."
         },
         "UndervoltageString": {
-            "message": "PRENIZAK NAPON"
+            "message": "PRENIZAK NAPON\n"
         },
         "InputVoltageString": {
-            "message": "Ul. napon: "
+            "message": "Ul. napon: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz"
         },
         "SleepingAdvancedString": {
-            "message": "Spavanje..."
+            "message": "Spavanje...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Vrh:"
+            "message": "Vrh: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"

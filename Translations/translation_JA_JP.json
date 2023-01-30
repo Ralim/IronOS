@@ -55,7 +55,7 @@
             "message": "Sleeping..."
         },
         "SleepingTipAdvancedString": {
-            "message": "Tip:"
+            "message": "Tip: "
         },
         "DeviceFailedValidationWarning": {
             "message": "このデバイスはおそらく偽造品です"
@@ -234,8 +234,8 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
+            "displayText": "BLE Enabled",
+            "description": "Enables BLE"
         }
     }
 }

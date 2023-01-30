@@ -43,19 +43,19 @@
             "message": "Nízke U!"
         },
         "UndervoltageString": {
-            "message": "Nízke napätie"
+            "message": "Nízke napätie\n"
         },
         "InputVoltageString": {
-            "message": "Vstupné U: "
+            "message": "Vstupné U: \n"
         },
         "SleepingSimpleString": {
             "message": "Chrr"
         },
         "SleepingAdvancedString": {
-            "message": "Pokojový režim."
+            "message": "Pokojový režim.\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Hrot:"
+            "message": "Hrot: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Vaše zariadenie je pravdepodobne falzifikát!"
@@ -222,7 +222,7 @@
             "description": "Interval medzi impulzami udržujúcimi napájací zdroj zapnutý (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Dĺžka impulzu",
+            "displayText": "Dĺžka\nimpulzu",
             "description": "Dĺžka impulzu udržujúci napájací zdroj zapnutý (x 250ms)"
         },
         "SettingsReset": {

@@ -43,19 +43,19 @@
             "message": "DC LOW"
         },
         "UndervoltageString": {
-            "message": "Undervoltage"
+            "message": "Undervoltage\n"
         },
         "InputVoltageString": {
-            "message": "Input V: "
+            "message": "Input V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Sleeping..."
+            "message": "Sleeping...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Tip:"
+            "message": "Tip: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
@@ -235,7 +235,7 @@
         },
         "BLEEnabled": {
             "displayText": "BLE\n Enabled",
-            "description": ""
+            "description": "Enables BLE"
         }
     }
 }

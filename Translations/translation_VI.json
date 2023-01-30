@@ -43,19 +43,19 @@
             "message": "DC thap"
         },
         "UndervoltageString": {
-            "message": "Đien áp thap"
+            "message": "Đien áp thap\n"
         },
         "InputVoltageString": {
-            "message": "Đau vào V: "
+            "message": "Đau vào V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Đang ngu..."
+            "message": "Đang ngu...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Meo:"
+            "message": "Meo: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"

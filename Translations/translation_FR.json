@@ -43,19 +43,19 @@
             "message": "DC FAIBL"
         },
         "UndervoltageString": {
-            "message": "Sous-tension"
+            "message": "Sous-tension\n"
         },
         "InputVoltageString": {
-            "message": "V d'entrée: "
+            "message": "V d'entrée: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "En veille..."
+            "message": "En veille...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Panne:"
+            "message": "Panne: \n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Votre appareil semble être une contrefaçon !"

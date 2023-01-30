@@ -1,6 +1,12 @@
 # Translation
 
-Moving forward (after 2022/12/07); IronOS is using Weblate to provide the visual interface to doing translations to make it easier for people to work with.
-Currently there is a translation going on, so not _everything_ is perfect but its leaps in the right direction to help make it friendlier for people to edit and also subscribe to be notified when things are updated.
+At the present time the main way of performing translations is to open a PR to this repository.
+All translations are stored as `json` files in the repository. Currently there is ongoing work to look into a more user friendly method of editing translations than these but for now these are reliable.
 
-This can be accessed on the [weblate hosted instance](https://hosted.weblate.org/projects/ironos/main-firmware/).
+You can create a pull request with the new / updated json configuration file, and this will include this language into the new builds for the firmware.
+
+For testing you can build locally and test of course; but if you dont want to figure out the build environment; you can just open a PR and github will build the firmware for you using the _actions_ feature.
+
+This means that once you have a github account you can perform all of your edits inside Github should this be desired.
+
+Translations are _NOT_ accepted via issues/discussions or email.
