@@ -1,7 +1,6 @@
 ![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
 ![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
 ![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
-[![Translation status](https://hosted.weblate.org/widgets/ironos/-/glossary/svg-badge.svg)](https://hosted.weblate.org/engage/ironos/)
 
 # IronOS - Flexible Soldering iron control Firmware
 
@@ -82,8 +81,9 @@ Operation details are over in the [Menu information.](https://ralim.github.io/Ir
 
 ## Translations
 
-Is your preferred language missing localisation of languages?
-This project is using Weblate for managing translations in a user friendly way; [the user interface for this is on their hosted website.](https://hosted.weblate.org/engage/ironos/)
+Is your preferred language missing localisation of some of the text?
+Translations are stored as `json` files in the Translations folder.
+PR's are loved and accepted to enhance the firmware.
 
 ## Thanks
 
