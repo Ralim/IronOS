@@ -1,7 +1,7 @@
 {
     "languageCode": "HR",
     "languageLocalName": "Hrvatski",
-    "tempUnitFahrenheit": true,
+    "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
             "message": "Kalibracija\ndovršena!"
@@ -43,19 +43,19 @@
             "message": "BAT!!!"
         },
         "UndervoltageString": {
-            "message": "PRENIZAK NAPON"
+            "message": "PRENIZAK NAPON\n"
         },
         "InputVoltageString": {
-            "message": "Napon V: "
+            "message": "Napon V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz "
         },
         "SleepingAdvancedString": {
-            "message": "SPAVAM..."
+            "message": "SPAVAM...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Vrh: "
+            "message": "Vrh: \n"
         },
         "OffString": {
             "message": "Off"

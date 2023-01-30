@@ -62,10 +62,10 @@ void hardware_init() {
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
-  I2C_SetSclSync(I2C0_ID,1);
-  I2C_SetDeglitchCount(I2C0_ID,1); // Turn on de-glitch
-  //Note on I2C clock rate @ 100Khz the screen update == 20ms which is too long for USB-PD to work
-  //200kHz and above works
+  I2C_SetSclSync(I2C0_ID, 1);
+  I2C_SetDeglitchCount(I2C0_ID, 1); // Turn on de-glitch
+  // Note on I2C clock rate @ 100Khz the screen update == 20ms which is too long for USB-PD to work
+  // 200kHz and above works
   I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 25 kHz less than set here
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
 }
@@ -139,32 +139,28 @@ void setup_timer_scheduler() {
   TIMER_Disable(TIMER_CH0);
 
   TIMER_CFG_Type cfg = {
-      TIMER_CH0,                                              // Channel
-      TIMER_CLKSRC_32K,                                       // Clock source
-      TIMER_PRELOAD_TRIG_COMP2,                               // Trigger
-      TIMER_COUNT_PRELOAD,                                    // Counter mode
-      22,                                                     // Clock div
-      (uint16_t)(powerPWM + holdoffTicks),                    // CH0 compare (adc)
-      0,                                                      // CH1 compare (pwm out)
-      (uint16_t)(powerPWM + tempMeasureTicks + holdoffTicks), // CH2 comapre (total period)
-      0,                                                      // Preload
+      TIMER_CH0,                           // Channel
+      TIMER_CLKSRC_32K,                    // Clock source
+      TIMER_PRELOAD_TRIG_COMP0,            // Trigger; reset after trigger 0
+      TIMER_COUNT_PRELOAD,                 // Counter mode
+      22,                                  // Clock div
+      (uint16_t)(powerPWM + holdoffTicks), // CH0 compare (adc)
+      0,                                   // CH1 compare (pwm out)
+      0,                                   // CH2 compare not used
+      0,                                   // Preload
   };
   TIMER_Init(&cfg);
 
   Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_0, timer0_comp0_callback);
   Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_1, timer0_comp1_callback);
-  Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_2, timer0_comp2_callback);
 
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_0);
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_1);
-  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_2);
 
   TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_0, UNMASK);
   TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_1, UNMASK);
-  TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_2, UNMASK);
   CPU_Interrupt_Enable(TIMER_CH0_IRQn);
   TIMER_Enable(TIMER_CH0);
-  // switchToSlowPWM();
 }
 
 void setupFUSBIRQ() {

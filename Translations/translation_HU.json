@@ -43,19 +43,19 @@
             "message": "DC túl alacsony"
         },
         "UndervoltageString": {
-            "message": "Alulfeszültség"
+            "message": "Alulfeszültség\n"
         },
         "InputVoltageString": {
-            "message": "Bemenet V: "
+            "message": "Bemenet V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Alvás..."
+            "message": "Alvás...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Hegy:"
+            "message": "Hegy: \n"
         },
         "OffString": {
             "message": "Ki"

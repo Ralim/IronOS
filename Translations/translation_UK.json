@@ -43,19 +43,19 @@
             "message": "АККУМ--"
         },
         "UndervoltageString": {
-            "message": "Низька напруга"
+            "message": "Низька напруга\n"
         },
         "InputVoltageString": {
-            "message": "Жив.(B): "
+            "message": "Жив.(B): \n"
         },
         "SleepingSimpleString": {
             "message": "ZzZzz"
         },
         "SleepingAdvancedString": {
-            "message": "Очікування..."
+            "message": "Очікування...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Жало:"
+            "message": "Жало: \n"
         },
         "OffString": {
             "message": "Вимк"
