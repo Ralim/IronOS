@@ -43,19 +43,19 @@
             "message": "Voedingsspanning LAAG"
         },
         "UndervoltageString": {
-            "message": "Onderspanning"
+            "message": "Onderspanning\n"
         },
         "InputVoltageString": {
-            "message": "Voedingsspanning: "
+            "message": "Voedingsspanning: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz "
         },
         "SleepingAdvancedString": {
-            "message": "Slaapstand..."
+            "message": "Slaapstand...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Punt:"
+            "message": "Punt: \n"
         },
         "OffString": {
             "message": "Uit"

@@ -43,19 +43,19 @@
             "message": "V niedr."
         },
         "UndervoltageString": {
-            "message": "Unterspannung"
+            "message": "Unterspannung\n"
         },
         "InputVoltageString": {
-            "message": "V Eingang: "
+            "message": "V Eingang: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Ruhemodus..."
+            "message": "Ruhemodus...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Temp:"
+            "message": "Temp: \n"
         },
         "OffString": {
             "message": "Aus"
@@ -241,7 +241,7 @@
         },
         "BLEEnabled": {
             "displayText": "BLE\n Enabled",
-            "description": ""
+            "description": "Aktiviert BLE"
         }
     }
 }

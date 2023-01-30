@@ -43,19 +43,19 @@
             "message": "Nízké DC"
         },
         "UndervoltageString": {
-            "message": "Nízké napětí"
+            "message": "Nízké napětí\n"
         },
         "InputVoltageString": {
-            "message": "Napětí: "
+            "message": "Napětí: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz "
         },
         "SleepingAdvancedString": {
-            "message": "Režim spánku..."
+            "message": "Režim spánku...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Hrot:"
+            "message": "Hrot: \n"
         },
         "OffString": {
             "message": "Vyp"
