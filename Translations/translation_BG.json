@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Сигурни ли сте, че искате да върнете фабричните настройки?"
@@ -43,19 +43,19 @@
             "message": "Ниско DC Напрежение"
         },
         "UndervoltageString": {
-            "message": "Ниско Напрежение"
+            "message": "Ниско Напрежение\n"
         },
         "InputVoltageString": {
-            "message": "Входно V: "
+            "message": "Входно V: \n"
         },
         "SleepingSimpleString": {
             "message": "Сън"
         },
         "SleepingAdvancedString": {
-            "message": "Хър Хър Хър..."
+            "message": "Хър Хър Хър...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Връх:"
+            "message": "Връх: \n"
         },
         "OffString": {
             "message": "Изкл."

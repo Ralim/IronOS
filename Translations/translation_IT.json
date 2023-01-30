@@ -34,7 +34,7 @@
             "message": "Prima di riavviare assicurati che la punta e l'impugnatura siano a temperatura ambiente!"
         },
         "CJCCalibrating": {
-            "message": "Calibrazione in corso"
+            "message": "Calibrazione in corso\n"
         },
         "SettingsResetWarning": {
             "message": "Ripristinare le impostazioni predefinite?"
@@ -43,19 +43,19 @@
             "message": "DC BASSA"
         },
         "UndervoltageString": {
-            "message": "DC INSUFFICIENTE"
+            "message": "DC INSUFFICIENTE\n"
         },
         "InputVoltageString": {
-            "message": "V in:"
+            "message": "V in: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz "
         },
         "SleepingAdvancedString": {
-            "message": "Riposo"
+            "message": "Riposo\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Punta:"
+            "message": "Punta: \n"
         },
         "OffString": {
             "message": "OFF"

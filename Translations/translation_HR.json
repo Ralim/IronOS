@@ -34,7 +34,7 @@
             "message": "Prije restarta provjerite da su vrh i ručka na sobnoj temperaturi!"
         },
         "CJCCalibrating": {
-            "message": "kalibriram"
+            "message": "kalibriram\n"
         },
         "SettingsResetWarning": {
             "message": "Jeste li sigurni da želite sve postavke vratiti na tvorničke vrijednosti?"
@@ -43,19 +43,19 @@
             "message": "BAT!!!"
         },
         "UndervoltageString": {
-            "message": "PRENIZAK NAPON"
+            "message": "PRENIZAK NAPON\n"
         },
         "InputVoltageString": {
-            "message": "Napon V: "
+            "message": "Napon V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz "
         },
         "SleepingAdvancedString": {
-            "message": "SPAVAM..."
+            "message": "SPAVAM...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Vrh: "
+            "message": "Vrh: \n"
         },
         "OffString": {
             "message": "Off"

@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Σίγουρα θέλετε επαναφορά αρχικών ρυθμίσεων;"
@@ -43,19 +43,19 @@
             "message": "Χαμηλ DC"
         },
         "UndervoltageString": {
-            "message": "Υπόταση"
+            "message": "Υπόταση\n"
         },
         "InputVoltageString": {
-            "message": "Είσοδος V: "
+            "message": "Είσοδος V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Υπνος..."
+            "message": "Υπνος...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Μύτη:"
+            "message": "Μύτη: \n"
         },
         "OffString": {
             "message": "Απ."

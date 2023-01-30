@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Sigur doriti să restaurati la setările implicite?"
@@ -43,19 +43,19 @@
             "message": "DC LOW"
         },
         "UndervoltageString": {
-            "message": "Sub tensiune"
+            "message": "Sub tensiune\n"
         },
         "InputVoltageString": {
-            "message": "Intrare V: "
+            "message": "Intrare V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Adormit..."
+            "message": "Adormit...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Tip:"
+            "message": "Tip: \n"
         },
         "OffString": {
             "message": "Nu"

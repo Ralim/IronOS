@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?"
@@ -43,19 +43,19 @@
             "message": "Güç Az"
         },
         "UndervoltageString": {
-            "message": "Düşük Voltaj"
+            "message": "Düşük Voltaj\n"
         },
         "InputVoltageString": {
-            "message": "Giriş V: "
+            "message": "Giriş V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Bekleme Modu ..."
+            "message": "Bekleme Modu...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Uç:"
+            "message": "Uç: \n"
         },
         "OffString": {
             "message": "Kapalı"

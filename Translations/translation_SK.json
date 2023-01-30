@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Naozaj chcete obnoviť továrenské nastavenia?"
@@ -43,19 +43,19 @@
             "message": "Nízke U!"
         },
         "UndervoltageString": {
-            "message": "Nízke napätie"
+            "message": "Nízke napätie\n"
         },
         "InputVoltageString": {
-            "message": "Vstupné U: "
+            "message": "Vstupné U: \n"
         },
         "SleepingSimpleString": {
             "message": "Chrr"
         },
         "SleepingAdvancedString": {
-            "message": "Pokojový režim."
+            "message": "Pokojový režim.\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Hrot:"
+            "message": "Hrot: \n"
         },
         "OffString": {
             "message": "Vyp"
@@ -228,7 +228,7 @@
             "description": "Interval medzi impulzami udržujúcimi napájací zdroj zapnutý (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Dĺžka impulzu\n",
+            "displayText": "Dĺžka\nimpulzu",
             "description": "Dĺžka impulzu udržujúci napájací zdroj zapnutý (x 250ms)"
         },
         "SettingsReset": {

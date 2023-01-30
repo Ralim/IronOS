@@ -55,7 +55,7 @@
             "message": "Sleeping..."
         },
         "SleepingTipAdvancedString": {
-            "message": "Tip:"
+            "message": "Tip: "
         },
         "OffString": {
             "message": "關"
@@ -240,7 +240,7 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
+            "displayText": "BLE Enabled",
             "description": ""
         }
     }

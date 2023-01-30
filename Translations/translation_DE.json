@@ -34,7 +34,7 @@
             "message": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!"
         },
         "CJCCalibrating": {
-            "message": "kalibriere"
+            "message": "kalibriere\n"
         },
         "SettingsResetWarning": {
             "message": "Sicher, dass alle Werte zurückgesetzt werden sollen?"
@@ -43,19 +43,19 @@
             "message": "V niedr."
         },
         "UndervoltageString": {
-            "message": "Unterspannung"
+            "message": "Unterspannung\n"
         },
         "InputVoltageString": {
-            "message": "V Eingang: "
+            "message": "V Eingang: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Ruhemodus..."
+            "message": "Ruhemodus...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Temp:"
+            "message": "Temp: \n"
         },
         "OffString": {
             "message": "Aus"
@@ -241,7 +241,7 @@
         },
         "BLEEnabled": {
             "displayText": "BLE\n Enabled",
-            "description": ""
+            "description": "Aktiviert BLE"
         }
     }
 }

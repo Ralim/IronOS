@@ -10,13 +10,13 @@
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Nastavitve OK!\n"
+            "message": "Nastavitve \nOK!"
         },
         "NoAccelerometerMessage": {
-            "message": "Ni pospeševalnik\n"
+            "message": "Ni \npospeševalnik"
         },
         "NoPowerDeliveryMessage": {
-            "message": "Ni USB-PD čipa!\n"
+            "message": "Ni USB-PD \nčipa!"
         },
         "LockingKeysString": {
             "message": "ZAKLENJ."
@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Res želite ponastaviti na privzete nastavitve?"
@@ -43,19 +43,19 @@
             "message": "NIZKA U"
         },
         "UndervoltageString": {
-            "message": "Nizka napetost"
+            "message": "Nizka napetost\n"
         },
         "InputVoltageString": {
-            "message": "Vhodna U: "
+            "message": "Vhodna U: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Spim..."
+            "message": "Spim...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Konica"
+            "message": "Konica \n"
         },
         "OffString": {
             "message": "Off"

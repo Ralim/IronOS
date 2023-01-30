@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Da li zaista želite da vratite postavke na fabričke vrednosti?"
@@ -43,19 +43,19 @@
             "message": "NIZ.NAP."
         },
         "UndervoltageString": {
-            "message": "PRENIZAK NAPON"
+            "message": "PRENIZAK NAPON\n"
         },
         "InputVoltageString": {
-            "message": "Ul. napon: "
+            "message": "Ul. napon: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz"
         },
         "SleepingAdvancedString": {
-            "message": "Spavanje..."
+            "message": "Spavanje...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Vrh:"
+            "message": "Vrh: \n"
         },
         "OffString": {
             "message": "Isk"

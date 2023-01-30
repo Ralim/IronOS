@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Er du sikker du vil resette indstillingerne til standard?"
@@ -43,19 +43,19 @@
             "message": "Lav Volt"
         },
         "UndervoltageString": {
-            "message": "Undervolt"
+            "message": "Undervolt\n"
         },
         "InputVoltageString": {
-            "message": "Input V: "
+            "message": "Input V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Dvale..."
+            "message": "Dvale...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Tip:"
+            "message": "Tip: \n"
         },
         "OffString": {
             "message": "Off"

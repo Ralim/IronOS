@@ -34,7 +34,7 @@
             "message": "Пожалуйста, убедитесь, что жало и корпус имеют комнатную температуру при следующей загрузке!"
         },
         "CJCCalibrating": {
-            "message": "калибровка"
+            "message": "калибровка\n"
         },
         "SettingsResetWarning": {
             "message": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?"
@@ -43,19 +43,19 @@
             "message": "НАПРЯЖ--"
         },
         "UndervoltageString": {
-            "message": "Низ. напряжение"
+            "message": "Низ. напряжение\n"
         },
         "InputVoltageString": {
-            "message": "Питание В: "
+            "message": "Питание В: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Ожидание..."
+            "message": "Ожидание...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Жало:"
+            "message": "Жало: \n"
         },
         "OffString": {
             "message": "Вык"

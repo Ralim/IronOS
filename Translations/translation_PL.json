@@ -10,7 +10,7 @@
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Ust. zresetowane\n"
+            "message": "Ust. \nzresetowane"
         },
         "NoAccelerometerMessage": {
             "message": "Nie rozpoznano\nakcelerometru!"
@@ -34,7 +34,7 @@
             "message": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!"
         },
         "CJCCalibrating": {
-            "message": "kalibracja"
+            "message": "kalibracja\n"
         },
         "SettingsResetWarning": {
             "message": "Czy na pewno chcesz przywrócić ustawienia fabryczne?"
@@ -43,19 +43,19 @@
             "message": "NIS. NAP"
         },
         "UndervoltageString": {
-            "message": "Zbyt niskie nap."
+            "message": "Zbyt niskie nap.\n"
         },
         "InputVoltageString": {
-            "message": "Nap. wej.:"
+            "message": "Nap. wej.: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzz!"
         },
         "SleepingAdvancedString": {
-            "message": "Tr. uśpienia"
+            "message": "Tr. uśpienia\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Grot:"
+            "message": "Grot: \n"
         },
         "OffString": {
             "message": "Wył"

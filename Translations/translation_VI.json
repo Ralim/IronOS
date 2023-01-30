@@ -34,7 +34,7 @@
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "calibrating\n"
         },
         "SettingsResetWarning": {
             "message": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?"
@@ -43,19 +43,19 @@
             "message": "DC thap"
         },
         "UndervoltageString": {
-            "message": "Đien áp thap"
+            "message": "Đien áp thap\n"
         },
         "InputVoltageString": {
-            "message": "Đau vào V: "
+            "message": "Đau vào V: \n"
         },
         "SleepingSimpleString": {
             "message": "Zzzz"
         },
         "SleepingAdvancedString": {
-            "message": "Đang ngu..."
+            "message": "Đang ngu...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Meo:"
+            "message": "Meo: \n"
         },
         "OffString": {
             "message": "Tat"
