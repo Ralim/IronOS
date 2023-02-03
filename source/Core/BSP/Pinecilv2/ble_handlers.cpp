@@ -32,7 +32,7 @@
 #endif
 
 extern TickType_t lastMovementTime;
-OperatingMode currentMode = OperatingMode::idle;
+extern OperatingMode currentMode;
 
 int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
