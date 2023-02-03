@@ -25,12 +25,14 @@
 #include "ble_handlers.h"
 #include "pd.h"
 #include "power.hpp"
+#include "OperatingModes.h"
 #if POW_PD
 #include "USBPD.h"
 #include "pd.h"
 #endif
 
 extern TickType_t lastMovementTime;
+OperatingMode currentMode = OperatingMode::idle;
 
 int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
@@ -123,6 +125,9 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
   case 13:
     // Operating mode
     // TODO: Needs tracking
+    temp = currentMode;
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
     break;
   case 14:
     // Estimated watts

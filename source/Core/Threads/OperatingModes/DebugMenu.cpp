@@ -2,8 +2,10 @@
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
+extern OperatingMode currentMode;
 
 void showDebugMenu(void) {
+  currentMode = OperatingMode::debug;
   uint8_t     screen = 0;
   ButtonState b;
   for (;;) {
