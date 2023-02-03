@@ -1,7 +1,7 @@
 
 #include "OperatingModes.h"
 
-extern bool heaterThermalRunaway;
+extern bool          heaterThermalRunaway;
 extern OperatingMode currentMode;
 
 void gui_solderingMode(uint8_t jumpToSleep) {
@@ -21,7 +21,7 @@ void gui_solderingMode(uint8_t jumpToSleep) {
    */
   bool boostModeOn   = false;
   bool buttonsLocked = false;
-  currentMode = OperatingMode::soldering;
+  currentMode        = OperatingMode::soldering;
 
   if (jumpToSleep) {
     if (gui_SolderingSleepingMode(jumpToSleep == 2, true) == 1) {

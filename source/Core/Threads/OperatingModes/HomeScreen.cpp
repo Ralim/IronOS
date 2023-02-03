@@ -30,7 +30,7 @@ void drawHomeScreen(bool buttonLockout) {
   renderHomeScreenAssets();
 
   for (;;) {
-    currentMode = OperatingMode::idle;
+    currentMode         = OperatingMode::idle;
     ButtonState buttons = getButtonState();
     if (buttons != BUTTON_NONE) {
       OLED::setDisplayState(OLED::DisplayState::ON);
