@@ -8,6 +8,7 @@
 uint8_t buttonAF[sizeof(buttonA)];
 uint8_t buttonBF[sizeof(buttonB)];
 uint8_t disconnectedTipF[sizeof(disconnectedTip)];
+extern OperatingMode currentMode;
 
 void renderHomeScreenAssets(void) {
 
@@ -29,6 +30,7 @@ void drawHomeScreen(bool buttonLockout) {
   renderHomeScreenAssets();
 
   for (;;) {
+    currentMode         = OperatingMode::idle;
     ButtonState buttons = getButtonState();
     if (buttons != BUTTON_NONE) {
       OLED::setDisplayState(OLED::DisplayState::ON);
@@ -63,6 +65,7 @@ void drawHomeScreen(bool buttonLockout) {
       }
       break;
     case BUTTON_B_SHORT:
+      currentMode = OperatingMode::settings;
       enterSettingsMenu(); // enter the settings menu
       {
         OLED::useSecondaryFramebuffer(true);
