@@ -140,14 +140,14 @@ jobs:
 
     steps:
       - name: deps
-        run: apk add --no-cache python3 py3-pip make git
+        run: apk add --no-cache python3 py3-pip make git black
 
       - uses: actions/checkout@v3
         with:
           submodules: true
 
       - name: install black
-        run: python3 -m pip install bdflib black flake8
+        run: python3 -m pip install bdflib flake8
 
       - name: Check formatting with clang-format
         run: cd source && make clean && make check-style
