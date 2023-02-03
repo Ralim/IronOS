@@ -9,11 +9,11 @@ WORKDIR /build
 # musl-dev is required for the multi lang firmwares
 # clang is required for clang-format (for dev)
 
-RUN apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git musl-dev clang bash clang-extra-tools
+RUN apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip black make git musl-dev clang bash clang-extra-tools
 
 # Install Python3 packages
 
-RUN python3 -m pip install bdflib black
+RUN python3 -m pip install bdflib
 # Git trust
 RUN git config --global --add safe.directory /build/source
 
