@@ -20,6 +20,7 @@
 #include "log.h"
 #include "uuid.h"
 
+#include "OperatingModes.h"
 #include "USBPD.h"
 #include "ble_characteristics.h"
 #include "ble_handlers.h"
@@ -30,7 +31,8 @@
 #include "pd.h"
 #endif
 
-extern TickType_t lastMovementTime;
+extern TickType_t    lastMovementTime;
+extern OperatingMode currentMode;
 
 int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
@@ -123,6 +125,9 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
   case 13:
     // Operating mode
     // TODO: Needs tracking
+    temp = currentMode;
+    memcpy(buf, &temp, sizeof(temp));
+    return sizeof(temp);
     break;
   case 14:
     // Estimated watts
