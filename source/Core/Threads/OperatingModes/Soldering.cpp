@@ -45,6 +45,7 @@ void gui_solderingMode(uint8_t jumpToSleep) {
         // if boost mode is enabled turn it on
         if (getSettingValue(SettingsOptions::BoostTemp) && (getSettingValue(SettingsOptions::LockingMode) == 1)) {
           boostModeOn = true;
+          currentMode = OperatingMode::boost;
         }
         break;
         // fall through
@@ -63,14 +64,17 @@ void gui_solderingMode(uint8_t jumpToSleep) {
       case BUTTON_NONE:
         // stay
         boostModeOn = false;
+        currentMode = OperatingMode::soldering;
         break;
       case BUTTON_BOTH:
       case BUTTON_B_LONG:
         return; // exit on back long hold
       case BUTTON_F_LONG:
         // if boost mode is enabled turn it on
-        if (getSettingValue(SettingsOptions::BoostTemp))
+        if (getSettingValue(SettingsOptions::BoostTemp)) {
           boostModeOn = true;
+          currentMode = OperatingMode::boost;
+        }
         break;
       case BUTTON_F_SHORT:
       case BUTTON_B_SHORT: {
