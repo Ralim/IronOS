@@ -143,20 +143,20 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
     // Bulk data
     {
       uint32_t bulkData[] = {
-              TipThermoModel::getTipInC(),                                          // 0  - Current temp
-              getSettingValue(SettingsOptions::SolderingTemp),                      // 1  - Setpoint
-              getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0),  // 2  - Input voltage
-              getHandleTemperature(0),                                              // 3  - Handle X10 Temp in C
-              X10WattsToPWM(x10WattHistory.average()),                              // 4  - Power as PWM level
-              getPowerSrc(),                                                        // 5  - power src
-              getTipResistanceX10(),                                                // 6  - Tip resistance
-              xTaskGetTickCount() / TICKS_100MS,                                    // 7  - uptime in deciseconds
-              lastMovementTime / TICKS_100MS,                                       // 8  - last movement time (deciseconds)
-              TipThermoModel::getTipMaxInC(),                                       // 9  - max temp
-              TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true),         // 10 - Raw tip in μV
-              abs(getRawHallEffect()),                                              // 11 - hall sensor
-              currentMode,                                                          // 12 - Operating mode
-              x10WattHistory.average(),                                             // 13 - Estimated Wattage *10
+          TipThermoModel::getTipInC(),                                         // 0  - Current temp
+          getSettingValue(SettingsOptions::SolderingTemp),                     // 1  - Setpoint
+          getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0), // 2  - Input voltage
+          getHandleTemperature(0),                                             // 3  - Handle X10 Temp in C
+          X10WattsToPWM(x10WattHistory.average()),                             // 4  - Power as PWM level
+          getPowerSrc(),                                                       // 5  - power src
+          getTipResistanceX10(),                                               // 6  - Tip resistance
+          xTaskGetTickCount() / TICKS_100MS,                                   // 7  - uptime in deciseconds
+          lastMovementTime / TICKS_100MS,                                      // 8  - last movement time (deciseconds)
+          TipThermoModel::getTipMaxInC(),                                      // 9  - max temp
+          TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true),        // 10 - Raw tip in μV
+          abs(getRawHallEffect()),                                             // 11 - hall sensor
+          currentMode,                                                         // 12 - Operating mode
+          x10WattHistory.average(),                                            // 13 - Estimated Wattage *10
       };
       int lenToCopy = sizeof(bulkData) - offset;
       if (lenToCopy > len) {
@@ -254,15 +254,15 @@ uint32_t getPowerSrc() {
     bool pdHasVBUSConnected = false;
 #if POW_PD
     if (USBPowerDelivery::fusbPresent()) {
-          // We are PD capable
-          if (USBPowerDelivery::negotiationComplete()) {
-            // We are powered via PD
-            poweredbyPD = true;
+      // We are PD capable
+      if (USBPowerDelivery::negotiationComplete()) {
+        // We are powered via PD
+        poweredbyPD = true;
 #ifdef VBUS_MOD_TEST
-            pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
+        pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
 #endif
-          }
-        }
+      }
+    }
 #endif
     if (poweredbyPD) {
 

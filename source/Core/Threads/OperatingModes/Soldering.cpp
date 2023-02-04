@@ -73,7 +73,7 @@ void gui_solderingMode(uint8_t jumpToSleep) {
         // if boost mode is enabled turn it on
         if (getSettingValue(SettingsOptions::BoostTemp))
           boostModeOn = true;
-          currentMode = OperatingMode::boost;
+        currentMode = OperatingMode::boost;
         break;
       case BUTTON_F_SHORT:
       case BUTTON_B_SHORT: {
