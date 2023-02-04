@@ -70,13 +70,7 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
     break;
   case 6: // power src
     // Todo return enum for current power source
-    if (getIsPoweredByDCIN()) {
-      temp = 0;
-    } else if (USBPowerDelivery::negotiationComplete()) {
-      temp = 1;
-    } else {
-      temp = 2;
-    }
+    temp = getPowerSrc();
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
     break;
@@ -124,7 +118,6 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
     break;
   case 13:
     // Operating mode
-    // TODO: Needs tracking
     temp = currentMode;
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
@@ -150,13 +143,20 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
     // Bulk data
     {
       uint32_t bulkData[] = {
-          TipThermoModel::getTipInC(),                                         // Current temp
-          getSettingValue(SettingsOptions::SolderingTemp),                     // Setpoint
-          getHandleTemperature(0),                                             // Handle X10 Temp in C
-          getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0), // Input voltage
-          x10WattHistory.average(),                                            // Estimated Wattage
-          X10WattsToPWM(x10WattHistory.average()),                             // Power as PWM level
-          TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true),        // Raw tip
+              TipThermoModel::getTipInC(),                                          // 0  - Current temp
+              getSettingValue(SettingsOptions::SolderingTemp),                      // 1  - Setpoint
+              getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0),  // 2  - Input voltage
+              getHandleTemperature(0),                                              // 3  - Handle X10 Temp in C
+              X10WattsToPWM(x10WattHistory.average()),                              // 4  - Power as PWM level
+              getPowerSrc(),                                                        // 5  - power src
+              getTipResistanceX10(),                                                // 6  - Tip resistance
+              xTaskGetTickCount() / TICKS_100MS,                                    // 7  - uptime in deciseconds
+              lastMovementTime / TICKS_100MS,                                       // 8  - last movement time (deciseconds)
+              TipThermoModel::getTipMaxInC(),                                       // 9  - max temp
+              TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true),         // 10 - Raw tip in μV
+              abs(getRawHallEffect()),                                              // 11 - hall sensor
+              currentMode,                                                          // 12 - Operating mode
+              x10WattHistory.average(),                                             // 13 - Estimated Wattage *10
       };
       int lenToCopy = sizeof(bulkData) - offset;
       if (lenToCopy > len) {
@@ -242,4 +242,38 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
   }
   MSG("Unhandled attr write %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
+}
+
+uint32_t getPowerSrc() {
+  int sourceNumber = 0;
+  if (getIsPoweredByDCIN()) {
+    sourceNumber = 0;
+  } else {
+    // We are not powered via DC, so want to display the appropriate state for PD or QC
+    bool poweredbyPD        = false;
+    bool pdHasVBUSConnected = false;
+#if POW_PD
+    if (USBPowerDelivery::fusbPresent()) {
+          // We are PD capable
+          if (USBPowerDelivery::negotiationComplete()) {
+            // We are powered via PD
+            poweredbyPD = true;
+#ifdef VBUS_MOD_TEST
+            pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
+#endif
+          }
+        }
+#endif
+    if (poweredbyPD) {
+
+      if (pdHasVBUSConnected) {
+        sourceNumber = 2;
+      } else {
+        sourceNumber = 3;
+      }
+    } else {
+      sourceNumber = 1;
+    }
+  }
+  return sourceNumber;
 }
