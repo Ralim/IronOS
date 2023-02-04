@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Étalonnage\nterminé!"
         },
         "ResetOKMessage": {
             "message": "Reset OK"
@@ -31,10 +31,10 @@
             "message": "Emballement\nthermique"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Avant de redémarrer, assurez-vous que la panne et la poignée sont à température ambiante !"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "Etalonnage\n"
         },
         "SettingsResetWarning": {
             "message": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?"
@@ -212,8 +212,8 @@
             "description": "Puissance maximale utilisable (W=watts)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Étalonner CJC\nau prochain démarage",
+            "description": "Au prochain démarrage, la compensation de soudure froide sera calibrée (non nécessaire si Delta T est < 5°C)."
         },
         "VoltageCalibration": {
             "displayText": "Étalonner\ntension d'entrée",
@@ -240,7 +240,7 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
+            "displayText": "BLE\n Activé",
             "description": ""
         }
     }
