@@ -268,12 +268,17 @@ int ble_start_adv(void) {
       .interval_max = BT_GAP_ADV_FAST_INT_MAX_3,
   };
 
+  // scan and response data must each stay < 31 bytes
   struct bt_data adv_data[2] = {
       BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_NO_BREDR | BT_LE_AD_GENERAL)),
-      BT_DATA(BT_DATA_NAME_COMPLETE, DEVICE_BLE_NAME, strlen(DEVICE_BLE_NAME)),
+      BT_DATA(BT_DATA_NAME_COMPLETE, DEVICE_BLE_NAME, strlen(DEVICE_BLE_NAME))
   };
 
-  return bt_le_adv_start(&adv_param, adv_data, ARRAY_SIZE(adv_data), &adv_data[1], 1);
+  struct bt_data scan_response_data[1] = {
+      BT_DATA(BT_DATA_UUID128_SOME, ((struct bt_uuid_128 *)BT_UUID_SVC_BULK_DATA)->val, 16)
+  };
+
+  return bt_le_adv_start(&adv_param, adv_data,   ARRAY_SIZE(adv_data), scan_response_data, ARRAY_SIZE(scan_response_data));
 }
 
 // Callback that the ble stack will call once it has been kicked off running

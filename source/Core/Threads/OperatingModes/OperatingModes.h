@@ -27,9 +27,10 @@ extern "C" {
 enum OperatingMode {
     idle      = 0,
     soldering = 1,
-    sleeping  = 2,
-    settings  = 3,
-    debug     = 4
+    boost     = 2,
+    sleeping  = 3,
+    settings  = 4,
+    debug     = 5
 };
 
 void performCJCC(void);                                            // Used to calibrate the Cold Junction offset

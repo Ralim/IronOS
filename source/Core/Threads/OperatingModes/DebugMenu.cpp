@@ -1,7 +1,7 @@
 #include "OperatingModes.h"
-extern osThreadId GUITaskHandle;
-extern osThreadId MOVTaskHandle;
-extern osThreadId PIDTaskHandle;
+extern osThreadId    GUITaskHandle;
+extern osThreadId    MOVTaskHandle;
+extern osThreadId    PIDTaskHandle;
 extern OperatingMode currentMode;
 
 void showDebugMenu(void) {

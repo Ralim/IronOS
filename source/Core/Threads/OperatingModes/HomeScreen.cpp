@@ -5,9 +5,9 @@
 #define MOVEMENT_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
 #define BUTTON_INACTIVITY_TIME   (60 * configTICK_RATE_HZ)
 
-uint8_t buttonAF[sizeof(buttonA)];
-uint8_t buttonBF[sizeof(buttonB)];
-uint8_t disconnectedTipF[sizeof(disconnectedTip)];
+uint8_t              buttonAF[sizeof(buttonA)];
+uint8_t              buttonBF[sizeof(buttonB)];
+uint8_t              disconnectedTipF[sizeof(disconnectedTip)];
 extern OperatingMode currentMode;
 
 void renderHomeScreenAssets(void) {
