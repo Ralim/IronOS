@@ -240,7 +240,7 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "Bluetooth LE\nabilitato",
+            "displayText": "Abilita\nBluetooth LE",
             "description": ""
         }
     }
