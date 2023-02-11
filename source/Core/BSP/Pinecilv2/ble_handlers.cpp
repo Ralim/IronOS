@@ -129,7 +129,7 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
     return sizeof(temp);
     break;
   }
-  MSG("Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
+  MSG((char *)"Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
 }
 int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
@@ -204,7 +204,7 @@ int ble_char_read_setting_value_callback(struct bt_conn *conn, const struct bt_g
     return sizeof(temp);
   }
 
-  MSG("Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
+  MSG((char *)"Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
 }
 
@@ -212,7 +212,7 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
 
   if (flags & BT_GATT_WRITE_FLAG_PREPARE) {
     // Don't use prepare write data, execute write will upload data again.
-    BT_WARN("recv prepare write request\n");
+    BT_WARN((char *)"recv prepare write request\n");
     return 0;
   }
   if (attr == NULL || attr->uuid == NULL) {
@@ -221,10 +221,10 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
 
   if (flags & BT_GATT_WRITE_FLAG_CMD) {
     // Use write command data.
-    BT_WARN("recv write command\n");
+    BT_WARN((char *)"recv write command\n");
   } else {
     // Use write request / execute write data.
-    BT_WARN("recv write request / exce write\n");
+    BT_WARN((char *)"recv write request / exce write\n");
   }
   uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
   if (len == 2) {
@@ -240,7 +240,7 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
       return len;
     }
   }
-  MSG("Unhandled attr write %d | %d\n", (uint32_t)attr->uuid, uuid_value);
+  MSG((char *)"Unhandled attr write %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
 }
 
