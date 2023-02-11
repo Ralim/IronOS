@@ -167,8 +167,6 @@ static struct bt_gatt_attr attrs[] = {
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_DEV_ID, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_bulk_value_callback, NULL, NULL),
 
     BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_SETTINGS_DATA),
-    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_SAVE, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
-                           ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_1, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_2, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
@@ -242,6 +240,11 @@ static struct bt_gatt_attr attrs[] = {
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_36, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_37, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+                           ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_SAVE, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+                           ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
+
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_RESET, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
 
 };
