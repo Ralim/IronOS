@@ -194,12 +194,12 @@ int ble_char_read_setting_value_callback(struct bt_conn *conn, const struct bt_g
     return 0;
   }
   uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
-  uint16_t temp       = 0;
-  if (uuid_value == 0) {
+  uint16_t temp       = 0xFFFF;
+  if (uuid_value <= SettingsOptions::SettingsOptionsLength) {
+    temp = getSettingValue((SettingsOptions)(uuid_value));
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
-  } else if (uuid_value <= SettingsOptions::SettingsOptionsLength) {
-    temp = getSettingValue((SettingsOptions)(uuid_value - 1));
+  } else {
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
   }
@@ -230,13 +230,18 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
   if (len == 2) {
     uint16_t new_value = 0;
     memcpy(&new_value, buf, sizeof(new_value));
-    if (uuid_value == 0) {
+    if (uuid_value == 0xFFFF) {
       if (new_value == 1) {
         saveSettings();
         return len;
       }
+    } else if (uuid_value == 0xFFFE) {
+      if (new_value == 1) {
+        resetSettings();
+        return len;
+      }
     } else if (uuid_value < SettingsOptions::SettingsOptionsLength) {
-      setSettingValue((SettingsOptions)(uuid_value - 1), new_value);
+      setSettingValue((SettingsOptions)(uuid_value), new_value);
       return len;
     }
   }
