@@ -26,9 +26,9 @@ NOTES
 #include "log.h"
 #include "uuid.h"
 
+#include "BSP.h"
 #include "ble_characteristics.h"
 #include "ble_handlers.h"
-
 bool pds_start;
 
 static void          ble_device_connected(struct bt_conn *conn, u8_t err);
@@ -167,7 +167,7 @@ static struct bt_gatt_attr attrs[] = {
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_DEV_ID, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_bulk_value_callback, NULL, NULL),
 
     BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_SETTINGS_DATA),
-    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_SAVE, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_0, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_1, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
@@ -243,6 +243,11 @@ static struct bt_gatt_attr attrs[] = {
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_37, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_SAVE, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+                           ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
+
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_RESET, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+                           ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
 
 };
 
@@ -250,13 +255,9 @@ static struct bt_gatt_attr attrs[] = {
 NAME
     get_attr
 */
-struct bt_gatt_attr *get_attr(u8_t index) {
-  return &attrs[index];
-}
+struct bt_gatt_attr *get_attr(u8_t index) { return &attrs[index]; }
 
 static struct bt_gatt_service ble_tp_server = BT_GATT_SERVICE(attrs);
-
-const char *DEVICE_BLE_NAME = "Pinecil";
 
 // Start advertising with expected default values
 int ble_start_adv(void) {
@@ -267,18 +268,15 @@ int ble_start_adv(void) {
       .interval_min = BT_GAP_ADV_FAST_INT_MIN_3,
       .interval_max = BT_GAP_ADV_FAST_INT_MAX_3,
   };
+  char nameBuffer[16];
+  int  nameLen = snprintf(nameBuffer, 16, "Pinecil-%03d", (int)(getDeviceID() & 0xFFFF));
 
   // scan and response data must each stay < 31 bytes
-  struct bt_data adv_data[2] = {
-      BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_NO_BREDR | BT_LE_AD_GENERAL)),
-      BT_DATA(BT_DATA_NAME_COMPLETE, DEVICE_BLE_NAME, strlen(DEVICE_BLE_NAME))
-  };
+  struct bt_data adv_data[2] = {BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_NO_BREDR | BT_LE_AD_GENERAL)), BT_DATA(BT_DATA_NAME_COMPLETE, nameBuffer, nameLen)};
 
-  struct bt_data scan_response_data[1] = {
-      BT_DATA(BT_DATA_UUID128_SOME, ((struct bt_uuid_128 *)BT_UUID_SVC_BULK_DATA)->val, 16)
-  };
+  struct bt_data scan_response_data[1] = {BT_DATA(BT_DATA_UUID128_SOME, ((struct bt_uuid_128 *)BT_UUID_SVC_BULK_DATA)->val, 16)};
 
-  return bt_le_adv_start(&adv_param, adv_data,   ARRAY_SIZE(adv_data), scan_response_data, ARRAY_SIZE(scan_response_data));
+  return bt_le_adv_start(&adv_param, adv_data, ARRAY_SIZE(adv_data), scan_response_data, ARRAY_SIZE(scan_response_data));
 }
 
 // Callback that the ble stack will call once it has been kicked off running
