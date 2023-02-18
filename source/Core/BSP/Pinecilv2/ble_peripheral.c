@@ -268,8 +268,10 @@ int ble_start_adv(void) {
       .interval_min = BT_GAP_ADV_FAST_INT_MIN_3,
       .interval_max = BT_GAP_ADV_FAST_INT_MAX_3,
   };
-  char nameBuffer[16];
-  int  nameLen = snprintf(nameBuffer, 16, "Pinecil-%03d", (int)(getDeviceID() & 0xFFFF));
+  char     nameBuffer[16];
+  uint32_t scratch = getDeviceID() & 0xFFFFFFFF;
+  scratch ^= (getDeviceID() >> 32) & 0xFFFFFFFF;
+  int nameLen = snprintf(nameBuffer, 16, "Pinecil-%08X", (int)scratch);
 
   // scan and response data must each stay < 31 bytes
   struct bt_data adv_data[2] = {BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_NO_BREDR | BT_LE_AD_GENERAL)), BT_DATA(BT_DATA_NAME_COMPLETE, nameBuffer, nameLen)};
