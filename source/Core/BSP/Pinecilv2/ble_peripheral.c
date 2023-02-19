@@ -243,6 +243,8 @@ static struct bt_gatt_attr attrs[] = {
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_37, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_38, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+                           ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_SAVE, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
 
