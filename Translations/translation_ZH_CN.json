@@ -245,7 +245,7 @@
         },
 	"PDVpdoEnabled": {
             "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
+	    "description": ""
 	}
     }
 }
