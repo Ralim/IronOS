@@ -87,7 +87,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 5, 1, 1},                                                   // LOGOTime
     {0, 1, 1, 0},                                                   // CalibrateCJC
     {0, 1, 1, 1},                                                   // BLEEnabled
-
+    {0, 1, 1, 1},                                                   // PDVpdoEnabled
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 

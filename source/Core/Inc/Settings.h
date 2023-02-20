@@ -52,9 +52,9 @@ enum SettingsOptions {
   LOGOTime                       = 35, // Duration the logo will be displayed for
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
   BLEEnabled                     = 37, // Should BLE hardware be enabled if present
-
+  PDVpdoEnabled                  = 38, // Should PPS/EPR be enabled
   //
-  SettingsOptionsLength = 38, //
+  SettingsOptionsLength = 39, //
 };
 
 typedef enum {
