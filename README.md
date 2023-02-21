@@ -22,14 +22,17 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 |   Device   | DC  | QC  | PD  | EPR | BLE | Battery | Recommended |
 | :--------: | :-: | :-: | :-: | :-: | :-: | :-----: | :---------: |
-|   MHP30    | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌    |     ✔️      |
-| Pinecil V1 | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
-| Pinecil V2 | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️    |     ✔️      |
-|   TS80P    | ❌  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
-|   TS100    | ✔️  | ❌  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
-|    TS80    | ❌  | ✔️  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
+|   MHP30    | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌    |      ✔️       |
+| Pinecil V1 | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |      ✔️       |
+| Pinecil V2 | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️    |      ✔️       |
+|   TS80P    | ❌  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |      ✔️       |
+|   TS100    | ✔️  | ❌  | ❌  | ❌  | ❌  |   ✔️    |      ❌*      |
+|    TS80    | ❌  | ✔️  | ❌  | ❌  | ❌  |   ✔️    |     ❌**      |
 
 \*Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is **_no longer recommended_**.
+
+\**TS80 is replaced by TS80P. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior TS80P instead. This is the main reason why the \
+TS80 is **_no longer recommended_**.
 
 ## Getting Started
 
