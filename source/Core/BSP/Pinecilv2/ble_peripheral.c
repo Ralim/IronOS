@@ -243,6 +243,8 @@ static struct bt_gatt_attr attrs[] = {
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_37, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_38, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+                           ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_SAVE, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
 
@@ -268,8 +270,10 @@ int ble_start_adv(void) {
       .interval_min = BT_GAP_ADV_FAST_INT_MIN_3,
       .interval_max = BT_GAP_ADV_FAST_INT_MAX_3,
   };
-  char nameBuffer[16];
-  int  nameLen = snprintf(nameBuffer, 16, "Pinecil-%03d", (int)(getDeviceID() & 0xFFFF));
+  char     nameBuffer[16];
+  uint32_t scratch = getDeviceID() & 0xFFFFFFFF;
+  scratch ^= (getDeviceID() >> 32) & 0xFFFFFFFF;
+  int nameLen = snprintf(nameBuffer, 16, "Pinecil-%08X", (int)scratch);
 
   // scan and response data must each stay < 31 bytes
   struct bt_data adv_data[2] = {BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_NO_BREDR | BT_LE_AD_GENERAL)), BT_DATA(BT_DATA_NAME_COMPLETE, nameBuffer, nameLen)};

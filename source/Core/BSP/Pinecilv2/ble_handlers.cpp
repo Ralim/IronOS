@@ -21,6 +21,7 @@
 #include "uuid.h"
 
 #include "OperatingModes.h"
+#include "OLED.hpp"
 #include "USBPD.h"
 #include "ble_characteristics.h"
 #include "ble_handlers.h"
@@ -242,6 +243,16 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
       }
     } else if (uuid_value < SettingsOptions::SettingsOptionsLength) {
       setSettingValue((SettingsOptions)(uuid_value), new_value);
+      // @TODO refactor to make this more usable
+      if (uuid_value == SettingsOptions::OLEDInversion) {
+        OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
+      }
+      if (uuid_value == SettingsOptions::OLEDBrightness){
+        OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
+      }
+      if (uuid_value == SettingsOptions::OrientationMode){
+        OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
+      }
       return len;
     }
   }

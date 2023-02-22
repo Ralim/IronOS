@@ -26,6 +26,7 @@ static void displayQCInputV(void);
 #endif
 #if POW_PD
 static void displayPDNegTimeout(void);
+static void displayPDVpdoEnabled(void);
 #endif
 static void displaySensitivity(void);
 static void displayShutdownTime(void);
@@ -177,6 +178,7 @@ const menuitem powerMenu[] = {
 #endif
 #if POW_PD
     {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
+    {SETTINGS_DESC(SettingsItemIndex::PDVpdoEnabled), nullptr, displayPDVpdoEnabled, nullptr, SettingsOptions::PDVpdoEnabled, SettingsItemIndex::PDVpdoEnabled, 7 }, /*Toggle whether to use PPS/EPR*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
@@ -372,6 +374,7 @@ static void displayPDNegTimeout(void) {
     OLED::printNumber(value, 3, FontStyle::LARGE);
   }
 }
+static void displayPDVpdoEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::PDVpdoEnabled)); }
 #endif
 
 static bool setBoostTemp(void) {
