@@ -140,15 +140,16 @@ void resetSettings() {
 
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue) {
   const auto constants                       = settingsConstants[(int)option];
-  systemSettings.settingsValues[(int)option] = newValue;
-  // If less than min, constrain
-  if (systemSettings.settingsValues[(int)option] < constants.min) {
-    systemSettings.settingsValues[(int)option] = constants.min;
+  uint16_t constrainedValue = newValue;
+  if (constrainedValue < constants.min) {
+    // If less than min, constrain
+    constrainedValue = constants.min;
   }
-  // If hit max, constrain
-  if (systemSettings.settingsValues[(int)option] > constants.max) {
-    systemSettings.settingsValues[(int)option] = constants.max;
+  else if (constrainedValue > constants.max) {
+    // If hit max, constrain
+    constrainedValue = constants.max;
   }
+  systemSettings.settingsValues[(int)option] = constrainedValue;
 }
 // Lookup wrapper for ease of use (with typing)
 uint16_t getSettingValue(const enum SettingsOptions option) { return systemSettings.settingsValues[(int)option]; }
