@@ -236,6 +236,10 @@
         "BLEEnabled": {
             "displayText": "BLE\n Activado",
             "description": "Habilita BLE"
-        }
+        },
+	"PDVpdoEnabled": {
+            "displayText": "PD VPDO\nEnabled",
+	    "description": "Enables PPS/EPR modes."
+	}
     }
 }

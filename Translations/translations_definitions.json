@@ -381,6 +381,12 @@
             "maxLen": 7,
             "maxLen2": 15,
             "description": "Should BLE be enabled at boot time."
-        }
+        },
+        {
+            "id": "PDVpdoEnabled",
+	    "maxLen": 7,
+	    "maxLen2": 15,
+	    "description": "Enabled PPS/EPR modes."
+	}
     ]
 }

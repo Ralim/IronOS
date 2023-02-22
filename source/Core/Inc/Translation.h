@@ -86,6 +86,7 @@ enum class SettingsItemIndex : uint8_t {
   SettingsReset,
   LanguageSwitch,
   BLEEnabled,
+  PDVpdoEnabled,
   NUM_ITEMS,
 };
 

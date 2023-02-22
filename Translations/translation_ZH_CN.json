@@ -236,6 +236,10 @@
         "BLEEnabled": {
             "displayText": "BLE Enabled",
             "description": ""
-        }
+        },
+	"PDVpdoEnabled": {
+            "displayText": "PD VPDO\nEnabled",
+	    "description": ""
+	}
     }
 }
