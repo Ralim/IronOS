@@ -28,7 +28,7 @@
             "message": "!ЗАБЛОК!"
         },
         "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
+            "message": "Неуправляемый\nРазогрев"
         },
         "SettingsCalibrationWarning": {
             "message": "Пожалуйста, убедитесь, что жало и корпус имеют комнатную температуру при следующей загрузке!"
@@ -234,12 +234,12 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
+            "displayText": "BLE\n Включено",
             "description": ""
         },
 	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
+            "displayText": "PD VPDO\nВключено",
+	    "description": "Включает режимы PPS/EPR."
 	}
     }
 }
