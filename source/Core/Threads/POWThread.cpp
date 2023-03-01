@@ -19,6 +19,10 @@
 // Small worker thread to handle power (PD + QC) related steps
 
 void startPOWTask(void const *argument __unused) {
+  for (;;) {
+    osDelay(TICKS_100MS / 5); // This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
+  }
+
   // Init any other misc sensors
   postRToSInit();
   while (preStartChecksDone() == 0) {
