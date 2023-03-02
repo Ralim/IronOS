@@ -142,19 +142,23 @@ These are built on every change and can be found on the Actions tab (see below).
 <h3 id="main-release">Main release</h3>
 <p>Main releases are made to the <a href="https://github.com/Ralim/IronOS/releases">releases page</a>.
 Download the zip file that matches your model of soldering iron and extract it.
-Select the appropriate file type for your unit, in general Miniware devices need <code>.hex</code> and Pinecil needs <code>.dfu</code>.
-Flash according to details below</p>
+Select the appropriate file type for your unit, in general Miniware devices need <code>.hex</code>, Pinecil V1 needs <code>.dfu</code>, and Pinecil V2 needs <code>.bin</code>.
+Flash according to details below.</p>
 <h3 id="bleeding-edge-latest">Bleeding edge / latest</h3>
-<p>For the <em>latest</em> code, you will need to download the zip file from the artifacts page on the build for what you want.
-Head to the <a href="https://github.com/Ralim/IronOS/actions">Actions</a> page and then select the run for the appropriate branch you would like.
+<p>For the <em>latest</em> code, you need to download the zip file from the artifacts page for the build that you want.
+Head to the <a href="https://github.com/Ralim/IronOS/actions">Actions</a> page and then select the run for the appropriate branch and beta you would like.
 In general you probably want <code>master</code>.</p>
-<p>Once you click on a run, scroll down to the "Artifacts" section and then click on your model to download a zip file.
+<p>Once you click on a run, scroll down to the "Artifacts" section and then click on your device model name to download a zip file.
 Then this works the same as a production release (use the correct file).</p>
 <h1 id="pinecil-v2">Pinecil V2</h1>
 <ul>
-<li>The MCU in V2 is Bouffalo BL706 and does <em>not</em> use usb-dfu for flashing as the previous MCU did.</li>
-<li>The current firmware (2.18) is very fresh and no upgrade is available/needed.</li>
-<li>When an update is released for V2, then IronOS will also include an update method to follow.</li>
+<li>The MCU in Pinecil V2 is Bouffalo BL706 and does <em>not</em> use usb-dfu for flashing as the previous Pinecil V1 MCU did.</li>
+<li>See the Pinecil Wiki page <a href="https://wiki.pine64.org/wiki/Pinecil#Firmware_&amp;_Updates">here</a> for instructions.</li>
+<li>The V2 uses the <a href="https://github.com/pine64/blisp">BLISP flasher</a> to upload the firmware to the MCU.</li>
+<li>The [Pinecil Wiki] (https://wiki.pine64.org/wiki/Pinecil) is a great resource for all things Pinecil.</li>
+<li>Community chat: if there are issues updating, then join the Pine64 &gt; Pinecil channel <a href="https://wiki.pine64.org/wiki/Pinecil#Live_Community_Chat">here</a>. There are knowledgeable members in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine64 volunteers/members can see advice for Pinecil and related items or just get tips on which power supply to purchase.</li>
+<li>One advantage of Pinecil is that you cannot permanently damage it doing a firmware update (because BIN is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. But no worries, simply re-flashing with a working firmware copy will fix everything.</li>
+<li>USB-C cable is required to do an update. Generally, all USB controllers work, but some hubs have issues, so it is preferred to avoid USB hubs for updates.</li>
 <li>Background on the <a href="https://lupyuen.github.io/articles/bl706">BL706 chipset</a></li>
 </ul>
               

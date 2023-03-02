@@ -142,8 +142,8 @@ These are built on every change and can be found on the Actions tab (see below).
 <h3 id="main-release">Main release</h3>
 <p>Main releases are made to the <a href="https://github.com/Ralim/IronOS/releases">releases page</a>.
 Download the zip file that matches your model of soldering iron and extract it.
-Select the appropriate file type for your unit, in general Miniware devices need <code>.hex</code> and Pinecil needs <code>.dfu</code>.
-Flash according to details below</p>
+Select the appropriate file type for your unit, in general Miniware devices need <code>.hex</code>, Pinecil V1 needs <code>.dfu</code>, and Pinecil V2 needs <code>.bin</code>.
+Flash according to details below.</p>
 <h3 id="bleeding-edge-latest">Bleeding edge / latest</h3>
 <p>For the <em>latest</em> code, you will need to download the zip file from the artifacts page on the build for what you want.
 Head to the <a href="https://github.com/Ralim/IronOS/actions">Actions</a> page and then select the run for the appropriate branch you would like.
@@ -152,13 +152,19 @@ In general you probably want <code>master</code>.</p>
 Then this works the same as a production release (use the correct file).</p>
 <h1 id="pinecil-v1">Pinecil V1</h1>
 <ul>
-<li>The MCU used in Pinecil supports usb-dfu. Reference <a href="https://wiki.pine64.org/wiki/Pinecil">Pinecil Wiki</a>.</li>
-<li>Recommended Updater: the <a href="https://github.com/pine64/pinecil-firmware-updater/releases">Pine64 Updater</a>, is an easy-to-use GUI app. It is fast and works in several types of OS, i.e. Windows/Mac. It will automatically fetch the newest stable version of IronOS from GitHub.</li>
-<li>Troubleshooting: if you have issues using the Pine64 Updater or your install fails, please go to troubleshooting tips below.</li>
-<li>Community chat: if troubleshooting doesn't work, then join the Pine64 &gt; Pinecil channel. There are knowledgeable members in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine volunteers/members can see advice for Pinecil and related items or just get tips on which Power supply to purchase.</li>
+<li>The MCU used in Pinecil supports usb-dfu. Reference <a href="https://wiki.pine64.org/wiki/Pinecil">Pinecil Wiki</a> for hardware and firmware instructions.</li>
+<li>Recommended Updater for Windows/MacOS: <a href="https://github.com/pine64/pine64_updater">Pine64 Updater</a> is an easy-to-use GUI app. It is fast and automatically fetches the newest stable version of IronOS from GitHub. It can also be used to load custom boot logo art.</li>
+<li>
+<p>Recommended Updater for Linux/MacOS: <a href="https://github.com/Spagett1/PineFlash">PineFlash</a> is an easy-to-use GUI app. It is fast and automatically fetches the newest stable version of IronOS from Github. It can also be used to load custom boot logo art.</p>
+</li>
+<li>
+<p>Troubleshooting: if you have issues using the Pine64 Updater or your install fails, please go to troubleshooting tips below.</p>
+</li>
+<li>The <a href="https://wiki.pine64.org/wiki/Pinecil">Pinecil Wiki</a> is a great resource for all things Pinecil.</li>
+<li>Community chat: if troubleshooting doesn't work, then join the Pine64 &gt; Pinecil channel <a href="https://wiki.pine64.org/wiki/Pinecil#Live_Community_Chat">here</a>. There are knowledgeable members in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine64 volunteers/members can see advice for Pinecil and related items or just get tips on which power supply to purchase.</li>
 <li>One advantage of Pinecil is that you cannot permanently damage it doing a firmware update (because DFU is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. But no worries, simply re-flashing with a working firmware copy will fix everything.</li>
 <li>USB-C cable is required to do an update. Generally, all USB controllers work, but some hubs have issues, so it is preferred to avoid USB hubs for updates.</li>
-<li>Alternate Update Methods: if your OS is not currently supported by the <a href="https://github.com/pine64/pinecil-firmware-updater/releases">Updater</a> or it does not meet your needs, i.e., you want to install a beta version, the below manual methods may be used.</li>
+<li>Alternate Update Methods: if your OS is not currently supported by the <a href="https://github.com/pine64/pine64_updater">Pine64 Updater</a> or it does not meet your needs, i.e., you want to install a beta version, the below manual methods may be used.</li>
 </ul>
 <h2 id="linux-and-mac">Linux and Mac</h2>
 <h3 id="steps">Steps</h3>
