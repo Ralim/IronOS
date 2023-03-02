@@ -159,6 +159,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   // }
 }
 void unstick_I2C() {
+#ifdef SCL_Pin
   GPIO_InitTypeDef GPIO_InitStruct;
   int              timeout     = 100;
   int              timeout_cnt = 0;
@@ -225,6 +226,7 @@ void unstick_I2C() {
 
   // Call initialization function.
   HAL_I2C_Init(&hi2c1);
+#endif
 }
 
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }

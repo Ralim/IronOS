@@ -34,14 +34,19 @@ static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC2_Init(void);
 void        Setup_HAL() {
+  __HAL_RCC_I2C1_CLK_DISABLE();
+  __HAL_RCC_GPIOD_CLK_DISABLE();
+  __HAL_RCC_GPIOA_CLK_DISABLE();
+  __HAL_RCC_GPIOB_CLK_DISABLE();
   SystemClock_Config();
 
   // These are not shared so no harm enabling
   __HAL_AFIO_REMAP_SWJ_NOJTAG();
-
+#ifdef SCL_Pin
+  MX_I2C1_Init();
+#endif
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_I2C1_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
 
@@ -248,7 +253,7 @@ static void MX_I2C1_Init(void) {
 static void MX_IWDG_Init(void) {
   hiwdg.Instance       = IWDG;
   hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
-  hiwdg.Init.Reload    = 100;
+  hiwdg.Init.Reload    = 2048;
 #ifndef SWD_ENABLE
   HAL_IWDG_Init(&hiwdg);
 #endif

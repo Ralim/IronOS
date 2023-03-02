@@ -73,7 +73,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
 }
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
-
+#ifdef SCL_Pin
   GPIO_InitTypeDef GPIO_InitStruct;
   /**I2C1 GPIO Configuration
    PB6     ------> I2C1_SCL
@@ -82,11 +82,9 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
   GPIO_InitStruct.Pin   = SCL_Pin | SDA_Pin;
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
   GPIO_InitStruct.Pull  = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /* Peripheral clock enable */
-  __HAL_RCC_I2C1_CLK_ENABLE();
   /* I2C1 DMA Init */
   /* I2C1_RX Init */
   hdma_i2c1_rx.Instance                 = DMA1_Channel7;
@@ -119,6 +117,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
   HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
   HAL_NVIC_SetPriority(I2C1_ER_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(I2C1_ER_IRQn);
+  #endif
 }
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base) {
