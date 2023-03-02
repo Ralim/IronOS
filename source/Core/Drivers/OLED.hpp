@@ -33,9 +33,33 @@ extern "C" {
 #endif
 
 #define DEVICEADDR_OLED   (0x3c << 1)
-#define OLED_WIDTH        96
-#define OLED_HEIGHT       16
+#ifdef MODEL_S60
+    // TODO; for now just cropping in on the screen from 128x32 to 96x16
+    #define OLED_WIDTH      96
+    #define OLED_HEIGHT     16
+    #define OLED_GRAM_START 0x10 // Should be 0x00 when we have full width
+    #define OLED_GRAM_END   0x6F // Should be 0x7F when we have full width
+          #define OLED_GRAM_START_FLIP 0 
+      #define OLED_GRAM_END_FLIP   95
+
+    #define OLED_VCOM_LAYOUT 0x12
+    #define OLED_SEGMENT_MAP_REVERSED
+    #warning "S60 Not fully supported"
+#else
+    #define OLED_WIDTH  96
+    #define OLED_HEIGHT 16
+    #define OLED_VCOM_LAYOUT 0x02
+
+      #define OLED_GRAM_START 0x20 
+      #define OLED_GRAM_END   0x7F
+      #define OLED_GRAM_START_FLIP 0 
+      #define OLED_GRAM_END_FLIP   95
+      
+      #define OLED_SEGMENT_MAP 0xA0
+
+#endif
 #define FRAMEBUFFER_START 17
+
 
 enum class FontStyle {
   SMALL,
