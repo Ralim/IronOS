@@ -45,11 +45,5 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   }
 }
 
-bool getFUS302IRQLow() {
-#if POW_PD
-  // Return true if the IRQ line is still held low
-  return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_RESET;
-#else
-  return false;
-#endif
-}
+// No FUSB302 support
+bool getFUS302IRQLow() { return false; }

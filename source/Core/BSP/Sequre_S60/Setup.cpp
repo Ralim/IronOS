@@ -18,8 +18,7 @@ DMA_HandleTypeDef hdma_i2c1_rx;
 DMA_HandleTypeDef hdma_i2c1_tx;
 
 IWDG_HandleTypeDef hiwdg;
-TIM_HandleTypeDef  htim2;
-TIM_HandleTypeDef  htim3;
+TIM_HandleTypeDef  htim4;
 #define ADC_FILTER_LEN 4
 #define ADC_SAMPLES    16
 uint16_t ADCReadings[ADC_SAMPLES]; // Used to store the adc readings for the handle cold junction temp
@@ -30,30 +29,27 @@ static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_IWDG_Init(void);
 static void MX_TIM3_Init(void);
-static void MX_TIM2_Init(void);
+static void MX_TIM4_Init(void);
 static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC2_Init(void);
 void        Setup_HAL() {
   SystemClock_Config();
 
-#ifndef SWD_ENABLE
-  __HAL_AFIO_REMAP_SWJ_DISABLE();
-#else
+  // These are not shared so no harm enabling
   __HAL_AFIO_REMAP_SWJ_NOJTAG();
-#endif
 
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_I2C1_Init();
-  // MX_ADC1_Init();
-  // MX_ADC2_Init();
-  // MX_TIM3_Init();
-  // MX_TIM2_Init();
-  // MX_IWDG_Init();
-  // HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADCReadings, (ADC_SAMPLES)); // start DMA of normal readings
-  // HAL_ADCEx_InjectedStart(&hadc1);                                   // enable injected readings
-  // HAL_ADCEx_InjectedStart(&hadc2);                                   // enable injected readings
+  MX_ADC1_Init();
+  MX_ADC2_Init();
+
+  MX_TIM4_Init();
+  MX_IWDG_Init();
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADCReadings, (ADC_SAMPLES)); // start DMA of normal readings
+  HAL_ADCEx_InjectedStart(&hadc1);                                   // enable injected readings
+  HAL_ADCEx_InjectedStart(&hadc2);                                   // enable injected readings
 }
 
 uint16_t getADCHandleTemp(uint8_t sample) {
@@ -178,7 +174,7 @@ static void MX_ADC1_Init(void) {
   sConfigInjected.InjectedRank                  = 1;
   sConfigInjected.InjectedNbrOfConversion       = 4;
   sConfigInjected.InjectedSamplingTime          = ADC_SAMPLETIME_28CYCLES_5;
-  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T2_TRGO;
+  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T4_TRGO;
   sConfigInjected.AutoInjectedConv              = DISABLE;
   sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
   sConfigInjected.InjectedOffset                = 0;
@@ -259,49 +255,7 @@ static void MX_IWDG_Init(void) {
 }
 
 /* TIM3 init function */
-static void MX_TIM3_Init(void) {
-  TIM_ClockConfigTypeDef  sClockSourceConfig;
-  TIM_MasterConfigTypeDef sMasterConfig;
-  TIM_OC_InitTypeDef      sConfigOC;
-
-  htim3.Instance               = TIM3;
-  htim3.Init.Prescaler         = 8;
-  htim3.Init.CounterMode       = TIM_COUNTERMODE_UP;
-  htim3.Init.Period            = 100;                           // 5 Khz PWM freq
-  htim3.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV4;        // 4mhz before div
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE; // Preload the ARR register (though we dont use this)
-  HAL_TIM_Base_Init(&htim3);
-
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig);
-
-  HAL_TIM_PWM_Init(&htim3);
-
-  HAL_TIM_OC_Init(&htim3);
-
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
-  HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig);
-
-  sConfigOC.OCMode     = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse      = 50; // 50% duty cycle, that is AC coupled through the cap
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
-  HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, PWM_Out_CHANNEL);
-
-  GPIO_InitTypeDef GPIO_InitStruct;
-
-  /**TIM3 GPIO Configuration
-   PWM_Out_Pin     ------> TIM3_CH1
-   */
-  GPIO_InitStruct.Pin   = PWM_Out_Pin;
-  GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
-  HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
-  HAL_TIM_PWM_Start(&htim3, PWM_Out_CHANNEL);
-}
-/* TIM3 init function */
-static void MX_TIM2_Init(void) {
+static void MX_TIM4_Init(void) {
   /*
    * We use the channel 1 to trigger the ADC at end of PWM period
    * And we use the channel 4 as the PWM modulation source using Interrupts
@@ -312,30 +266,30 @@ static void MX_TIM2_Init(void) {
 
   // Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC
   // in the PWM off time.
-  htim2.Instance = TIM2;
+  htim4.Instance = TIM4;
   // dummy value, will be reconfigured by BSPInit()
-  htim2.Init.Prescaler = 2000; // 2 MHz timer clock/2000 = 1 kHz tick rate
+  htim4.Init.Prescaler = 2000; // 2 MHz timer clock/2000 = 1 kHz tick rate
 
   // pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
   // These values give a rate of around 3.5 Hz for "fast" mode and 1.84 Hz for "slow"
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
   // dummy value, will be reconfigured by BSPInit()
-  htim2.Init.Period = powerPWM + 14 * 2;
+  htim4.Init.Period = powerPWM + 14 * 2;
 
-  htim2.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV4; // 8 MHz (x2 APB1) before divide
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  htim2.Init.RepetitionCounter = 0;
-  HAL_TIM_Base_Init(&htim2);
+  htim4.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV4; // 8 MHz (x2 APB1) before divide
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim4.Init.RepetitionCounter = 0;
+  HAL_TIM_Base_Init(&htim4);
 
   sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig);
+  HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig);
 
-  HAL_TIM_PWM_Init(&htim2);
-  HAL_TIM_OC_Init(&htim2);
+  HAL_TIM_PWM_Init(&htim4);
+  HAL_TIM_OC_Init(&htim4);
 
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_OC1;
   sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
-  HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig);
+  HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig);
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   // dummy value, will be reconfigured by BSPInit() in the BSP.cpp
@@ -348,15 +302,26 @@ static void MX_TIM2_Init(void) {
    * */
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
-  HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1);
+  HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_1);
   sConfigOC.Pulse = 0; // default to entirely off
-  HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4);
+  HAL_TIM_OC_ConfigChannel(&htim4, &sConfigOC, PWM_Out_CHANNEL);
 
-  HAL_TIM_Base_Start_IT(&htim2);
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start_IT(&htim2, TIM_CHANNEL_4);
-  HAL_NVIC_SetPriority(TIM2_IRQn, 15, 0);
-  HAL_NVIC_EnableIRQ(TIM2_IRQn);
+  HAL_TIM_Base_Start_IT(&htim4);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start_IT(&htim4, PWM_Out_CHANNEL);
+  HAL_NVIC_SetPriority(TIM4_IRQn, 15, 0);
+  HAL_NVIC_EnableIRQ(TIM4_IRQn);
+
+  /**TIM3 GPIO Configuration
+ PWM_Out_Pin     ------> TIM3_CH1
+ */
+  GPIO_InitTypeDef GPIO_InitStruct;
+
+  GPIO_InitStruct.Pin   = PWM_Out_Pin;
+  GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
+  HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
+  HAL_TIM_PWM_Start(&htim4, PWM_Out_CHANNEL);
 }
 
 /**
