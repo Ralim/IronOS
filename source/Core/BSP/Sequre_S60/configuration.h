@@ -147,6 +147,7 @@
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
 
+#define GPIO_VIBRATION
 #define POW_DC
 #define POW_PD 0
 #define TEMP_NTC
