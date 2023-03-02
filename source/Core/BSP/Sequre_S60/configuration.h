@@ -73,11 +73,7 @@
 #define POWER_PULSE_WAIT_MAX     9   // 9*2.5s = 22.5 seconds
 #define POWER_PULSE_DURATION_MAX 9   // 9*250ms = 2.25 seconds
 
-#ifdef MODEL_TS100
-#define POWER_PULSE_DEFAULT 0
-#else
-#define POWER_PULSE_DEFAULT 5
-#endif
+#define POWER_PULSE_DEFAULT          5
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -153,7 +149,7 @@
 
 #define POW_DC
 #define POW_PD 0
-#define TEMP_TMP36
+#define TEMP_NTC
 #endif
 
 #endif
