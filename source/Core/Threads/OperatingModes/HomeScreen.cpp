@@ -27,7 +27,6 @@ void drawHomeScreen(bool buttonLockout) {
   bool tipDisconnectedDisplay = false;
   bool tempOnDisplay          = false;
   bool showExitMenuTransition = false;
-  renderHomeScreenAssets();
 
   for (;;) {
     currentMode         = OperatingMode::idle;
