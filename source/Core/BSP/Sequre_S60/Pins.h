@@ -30,10 +30,10 @@
 #define PWM_Out_Pin           GPIO_PIN_8
 #define PWM_Out_GPIO_Port     GPIOB
 #define PWM_Out_CHANNEL       TIM_CHANNEL_3 // Timer 4; channel 3
-#define SCL_Pin               GPIO_PIN_6
-#define SCL_GPIO_Port         GPIOB
-#define SDA_Pin               GPIO_PIN_7
-#define SDA_GPIO_Port         GPIOB
+#define SCL2_Pin              GPIO_PIN_6
+#define SCL2_GPIO_Port        GPIOB
+#define SDA2_Pin              GPIO_PIN_7
+#define SDA2_GPIO_Port        GPIOB
 #endif
 
 #endif /* BSP_MINIWARE_PINS_H_ */

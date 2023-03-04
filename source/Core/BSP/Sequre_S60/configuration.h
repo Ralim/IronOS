@@ -151,6 +151,8 @@
 #define POW_DC
 #define POW_PD 0
 #define TEMP_NTC
+#define I2C_SOFT // For now we are doing software I2C to get around hardware chip issues
+#define OLED_I2CBB
 #endif
 
 #endif
