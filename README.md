@@ -1,7 +1,7 @@
-![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
-![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
-![GitHub contributors](https://img.shields.io/github/contributors-anon/ralim/ironos?color=blue&style=flat)
-![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
+[![CI Build](https://github.com/Ralim/IronOS/actions/workflows/push.yml/badge.svg)](https://github.com/Ralim/IronOS/actions/workflows/push.yml)
+[![Total Downloads](https://img.shields.io/github/downloads/ralim/IronOS/total)](https://github.com/Ralim/IronOS)
+[![Contributors](https://img.shields.io/github/contributors-anon/ralim/ironos?color=blue&style=flat)](https://github.com/Ralim/IronOS/graphs/contributors)
+[![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)](https://github.com/Ralim/IronOS/releases/latest)
 
 # IronOS - Flexible Soldering iron control Firmware
 
