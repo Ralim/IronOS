@@ -70,7 +70,7 @@ void showPDDebug(void) {
           } else {
             OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
             OLED::print(SmallSymbolDot, FontStyle::SMALL);
-            OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
+            OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, false); // print the current in 0.1A res
             OLED::print(SmallSymbolAmps, FontStyle::SMALL);
           }
         }
