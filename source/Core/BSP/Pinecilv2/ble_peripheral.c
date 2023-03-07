@@ -142,7 +142,7 @@ static void ble_tp_ind_ccc_changed(const struct bt_gatt_attr *attr, u16_t value)
 /*************************************************************************
  *  DEFINE : attrs
  */
-static struct bt_gatt_attr attrs[] = {
+static const struct bt_gatt_attr attrs[] = {
     BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_LIVE_DATA),
 
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_LIVE_TEMP, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_status_callback, NULL, NULL),
