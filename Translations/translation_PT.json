@@ -4,37 +4,37 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Calibração\nefetuada!"
         },
         "ResetOKMessage": {
             "message": "Reset OK"
         },
         "SettingsResetMessage": {
-            "message": "Certain settings\nwere changed!"
+            "message": "Algumas configurações\nforam alteradas!"
         },
         "NoAccelerometerMessage": {
-            "message": "No accelerometer\ndetected!"
+            "message": "Acelarometro não\ndetectado!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "No USB-PD IC\ndetected!"
+            "message": "USB-PD IC não\nndetectado!"
         },
         "LockingKeysString": {
-            "message": "LOCKED"
+            "message": "Bloqueado"
         },
         "UnlockingKeysString": {
-            "message": "UNLOCKED"
+            "message": "Desbloqueado"
         },
         "WarningKeysLockedString": {
-            "message": "!LOCKED!"
+            "message": "!Bloqueado!"
         },
         "WarningThermalRunaway": {
             "message": "Thermal\nRunaway"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Antes de reninciar tenha a certeza que pega e o ponteiro estão em temperatura ambiente!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "calibrar\n"
         },
         "SettingsResetWarning": {
             "message": "Definições de fábrica?"
@@ -61,7 +61,7 @@
             "message": "Off"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "Seu dispositivo provavelmente é falsificado!"
         }
     },
     "characters": {
@@ -82,7 +82,7 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Power\nsettings",
+            "displayText": "Configurações de \nenergia",
             "description": ""
         },
         "SolderingMenu": {
@@ -108,8 +108,8 @@
             "description": "Fonte de alimentação. Define a tensão de corte. (DC=10V) (S=3.3V/célula)"
         },
         "MinVolCell": {
-            "displayText": "Minimum\nvoltage",
-            "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Voltagem\nminima",
+            "description": "Voltagem minima permitida por ceula de bateria (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
             "displayText": "Potência\nFonte",
@@ -117,7 +117,7 @@
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+            "description": "Negoiciação de PD fez timeout em 100ms paraços para compatibilidade com alguns carregadores é (0: disabled)"
         },
         "BoostTemperature": {
             "displayText": "Modo turbo\ntemperat.",
@@ -128,16 +128,16 @@
             "description": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp change\nshort",
-            "description": "Temperature-change-increment on short button press"
+            "displayText": "Temp mudança\ncurta",
+            "description": "A temperatura será incrementada com um click curto"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp change\nlong",
-            "description": "Temperature-change-increment on long button press"
+            "displayText": "Temp mudança\nlonga",
+            "description": "A temperatura será incrementada com um click longo"
         },
         "LockingMode": {
-            "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "displayText": "Permitir bloquear\nbutões",
+            "description": "Quando estás a soldar primir os dois butões para alternar entre (D=disativas | B=boost mode | F=bloqueio total)"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilidade\nmovimento",
@@ -156,8 +156,8 @@
             "description": "Tempo para desligamento (Minutos)"
         },
         "HallEffSensitivity": {
-            "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=Desligado | 1=Menor | ... | 9=Maior)"
+            "displayText": "Sensibilidade de  \nmagentismo",
+            "description": "Sensibilidade de magnetismo (0=Desligado | 1=Menor | ... | 9=Maior)"
         },
         "TemperatureUnit": {
             "displayText": "Unidade\ntemperatura",
@@ -176,28 +176,28 @@
             "description": "Velocidade a que o texto é exibido"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Swap\n+ - keys",
-            "description": "Reverse assignment of buttons for temperature adjustment"
+            "displayText": "Mudar\n+ - teclas",
+            "description": "Inverter o alinhamento dos butões para ajudar a temperatura"
         },
         "AnimSpeed": {
-            "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+            "displayText": "Velocidade de \nanimação",
+            "description": "Sitio das animações no menu (O=off | S=lentas | M=medias | F=rapidas)"
         },
         "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop icon animations in main menu"
+            "displayText": "Repetir \nanimações",
+            "description": "Repetir icon de animações no ecrã principal"
         },
         "Brightness": {
             "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
+            "description": "Ajustar o brilho do ecrã OLED"
         },
         "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
+            "displayText": "Inverter\necrã",
+            "description": "Inverter as cores do ecrã OLED"
         },
         "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
+            "displayText": "Duração do\nlogo no arranque",
+            "description": "Definir a duração do logotipo no arranque em (s=segundos)"
         },
         "AdvancedIdle": {
             "displayText": "Tela repouso\navançada",
@@ -208,28 +208,28 @@
             "description": "Exibe informações avançadas durante o uso"
         },
         "PowerLimit": {
-            "displayText": "Power\nlimit",
-            "description": "Maximum power the iron can use (W=watt)"
+            "displayText": "Limite de \nenergia",
+            "description": "Maximo power que o ferro pode usar (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Calibrar CJC\nat no prozimo arranque",
+            "description": "No proximo arranque CJC será calibrada  (não será necessário caso o Delta T seja < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrar\ntensão",
             "description": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair"
         },
         "PowerPulsePower": {
-            "displayText": "Power\npulse",
-            "description": "Intensity of power of keep-awake-pulse (W=watt)"
+            "displayText": "Pulso \npower",
+            "description": "Intensidade de energia de arranque (W=watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
-            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+            "displayText": "Power pulse\nddelay",
+            "description": "Espera entre o acordar e o envio da rectivação(x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Power pulse\nduration",
-            "description": "Keep-awake-pulse duration (x 250ms)"
+            "displayText": "Power pulso\nduração",
+            "description": "Manter os inplosus de rectivação em  (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "Reset de\nfábrica?",
@@ -240,12 +240,12 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
+            "displayText": "BLE\n Activado",
             "description": ""
         },
 	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
+            "displayText": "PD VPDO\nActivado",
+	    "description": "Activa o modo PPS/EPR."
 	}
     }
 }
