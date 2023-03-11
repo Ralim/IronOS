@@ -1,6 +1,7 @@
-![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
-![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
-![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
+[![CI Build](https://github.com/Ralim/IronOS/actions/workflows/push.yml/badge.svg)](https://github.com/Ralim/IronOS/actions/workflows/push.yml)
+[![Total Downloads](https://img.shields.io/github/downloads/ralim/IronOS/total)](https://github.com/Ralim/IronOS)
+[![Contributors](https://img.shields.io/github/contributors-anon/ralim/ironos?color=blue&style=flat)](https://github.com/Ralim/IronOS/graphs/contributors)
+[![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)](https://github.com/Ralim/IronOS/releases/latest)
 
 # IronOS - Flexible Soldering iron control Firmware
 
@@ -31,8 +32,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 \*Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is **_no longer recommended_**.
 
-\**TS80 is replaced by TS80P. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior TS80P instead. This is the main reason why the \
-TS80 is **_no longer recommended_**.
+\**TS80 is replaced by TS80P. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior TS80P instead. This is the main reason why the TS80 is **_no longer recommended_**.
 
 ## Getting Started
 
