@@ -254,7 +254,6 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
         OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
         break;
       default:
-        BT_WARN("Unhandled uuid_value in %s. Got 0x%x", PRETTY_FUNCTION, uuid_value);
         break;
       }
       return len;
