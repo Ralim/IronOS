@@ -22,10 +22,8 @@ OutputJSONPath = os.path.join(HexFileFolder, sys.argv[1])
 TranslationsFilesPath = os.path.join(HERE.parent, "Translations")
 
 
-def load_json(filename: str, skip_first_line: bool):
+def load_json(filename: str):
     with open(filename) as f:
-        if skip_first_line:
-            f.readline()
         return json.loads(f.read())
 
 
@@ -49,7 +47,7 @@ output_files = [os.path.join(HexFileFolder, f) for f in os.listdir(HexFileFolder
 
 parsed_languages = {}
 for path in translation_files:
-    lang: dict = load_json(path, skip_first_line=False)
+    lang: dict = load_json(path)
     code = lang.get("languageCode", None)
     if code is not None:
         parsed_languages[code] = lang

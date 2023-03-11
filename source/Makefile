@@ -97,6 +97,29 @@ PINECILV2_COMPONENTS_DIR = $(PINECILV2_SDK_DIR)/components
 PINECILV2_COMPONENTS_FREERTOS_DIR = $(PINECILV2_COMPONENTS_DIR)/freertos
 PINECILV2_COMPONENTS_FREERTOS_BL602_DIR = $(PINECILV2_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl702
 
+PINECILV2_COMPONENTS_BLE_STACK_PORT_INCLUDE_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/port/include
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include/drivers
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_BLUETOOTH_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include/drivers/bluetooth
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_BLUETOOTH_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include/bluetooth
+PINECILV2_COMPONENTS_BLE_STACK_COMMON_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common
+PINECILV2_COMPONENTS_BLE_STACK_COMMON_INCLUDE_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_MISC_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/misc
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_ZEPHYR_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/zephyr
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_NET_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/net
+PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/toolchain
+PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/tinycrypt/include
+PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_INCLUDE_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/tinycrypt/include/tinycrypt
+PINECILV2_COMPONENTS_BLE_STACK_HOST_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/host
+PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/bl_hci_wrapper
+PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/ble_inc
+PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/sbc/dec
+
+
+#Binary blobs suck and they should be ashamed
+PINECILV2_BLE_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/lib
+PINECILV2_RF_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/bl702_rf/lib
+
 
 PINECILV2_COMPONENTS_NMSIS_DIR = $(PINECILV2_COMPONENTS_DIR)/nmsis
 PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR = $(PINECILV2_COMPONENTS_NMSIS_DIR)/core/inc
@@ -124,6 +147,8 @@ FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
 DRIVER_INC_DIR =./Core/Drivers
 BSP_INC_DIR = ./Core/BSP
 THREADS_INC_DIR = ./Core/Threads
+THREADS_OP_MODES_INC_DIR = ./Core/Threads/OperatingModes
+THREADS_OP_MODES_TOOLS_INC_DIR = ./Core/Threads/OperatingModes/utils
 
 SOURCE_THREADS_DIR = ./Core/Threads
 SOURCE_CORE_DIR = ./Core/Src
@@ -243,6 +268,24 @@ DEVICE_INCLUDES = -I$(PINECILV2_DIR) \
 	-I$(PINECILV2_COMPONENTS_DIR) \
 	-I$(PINECILV2_COMPONENTS_FREERTOS_DIR) \
 	-I$(PINECILV2_COMPONENTS_FREERTOS_BL602_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_BLUETOOTH_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_PORT_INCLUDE_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_BLUETOOTH_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_INCLUDE_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_MISC_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_ZEPHYR_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_NET_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_INCLUDE_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_HOST_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR) \
+	-I$(PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR) \
 	-I$(PINECILV2_COMPONENTS_NMSIS_DIR) \
 	-I$(PINECILV2_COMPONENTS_USB_STACK_DIR) \
 	-I$(PINECILV2_DRIVERS_DIR) \
@@ -269,11 +312,53 @@ LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 CPUFLAGS= -march=rv32imafc \
 			-mabi=ilp32f \
 			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
-			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DportUSING_MPU_WRAPPERS=0
-# -DBFLB_USE_ROM_DRIVER=1
-DEV_LDFLAGS=-nostartfiles
+			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DBL702 -DBFLB_USE_ROM_DRIVER=1
+DEV_LDFLAGS=-nostartfiles  -L $(PINECILV2_BLE_CRAPWARE_BLOB_DIR) -L $(PINECILV2_RF_CRAPWARE_BLOB_DIR) -l blecontroller_702_m0s1s -l bl702_rf
 DEV_AFLAGS=  
-DEV_GLOBAL_DEFS= 
+DEV_GLOBAL_DEFS= -DCFG_FREERTOS \
+-DARCH_RISCV \
+-DBL702 \
+-DCFG_BLE_ENABLE \
+-DBFLB_BLE \
+-DCFG_BLE \
+-DOPTIMIZE_DATA_EVT_FLOW_FROM_CONTROLLER \
+-DBL_MCU_SDK \
+-DCFG_CON=2 \
+-DCFG_BLE_TX_BUFF_DATA=2 \
+-DCONFIG_BT_PERIPHERAL \
+-DCONFIG_BT_L2CAP_DYNAMIC_CHANNEL \
+-DCONFIG_BT_GATT_CLIENT \
+-DCONFIG_BT_CONN \
+-DCONFIG_BT_GATT_DIS_PNP \
+-DCONFIG_BT_GATT_DIS_SERIAL_NUMBER \
+-DCONFIG_BT_GATT_DIS_FW_REV \
+-DCONFIG_BT_GATT_DIS_HW_REV \
+-DCONFIG_BT_GATT_DIS_SW_REV \
+-DCONFIG_BT_ECC \
+-DCONFIG_BT_GATT_DYNAMIC_DB \
+-DCONFIG_BT_GATT_SERVICE_CHANGED \
+-DCONFIG_BT_KEYS_OVERWRITE_OLDEST \
+-DCONFIG_BT_KEYS_SAVE_AGING_COUNTER_ON_PAIRING \
+-DCONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS \
+-DCONFIG_BT_BONDABLE \
+-DCONFIG_BT_HCI_VS_EVT_USER \
+-DCONFIG_BT_ASSERT \
+-DCONFIG_BT_SIGNING \
+-DCONFIG_BT_SETTINGS_CCC_LAZY_LOADING \
+-DCONFIG_BT_SETTINGS_USE_PRINTK \
+-DCFG_SLEEP \
+-DCONFIG_BT_ALLROLES \
+-DCONFIG_BT_CENTRAL \
+-DCONFIG_BT_OBSERVER \
+-DCONFIG_BT_BROADCASTER \
+-DCFG_BLE_STACK_DBG_PRINT \
+-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler  \
+-DCONFIG_BT_DEVICE_NAME=\"Pinecil\" \
+-DCONFIG_BT_DEVICE_APPEARANCE=0x06C1
+# -DBFLB_USE_HAL_DRIVER
+# -DCONFIG_BT_SMP \
+
+
 #Required to be turned off due to their drivers tripping warnings
 DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
 DEV_CXXFLAGS= $(DEV_CFLAGS)
@@ -289,6 +374,8 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
 	-I$(THREADS_INC_DIR) \
+	-I$(THREADS_OP_MODES_INC_DIR) \
+	-I$(THREADS_OP_MODES_TOOLS_INC_DIR) \
 	-I$(INC_PD_DRIVERS_DIR) \
 	$(DEVICE_INCLUDES) 
 
@@ -313,7 +400,7 @@ $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o 
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # code optimisation ------------------------------------------------------------
-OPTIM=-Os -foptimize-strlen -faggressive-loop-optimizations -fdevirtualize-at-ltrans -fmerge-all-constants -fshort-wchar -flto -finline-small-functions -finline-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common -fno-math-errno -ffast-math -ffinite-math-only -fno-signed-zeros -fsingle-precision-constant
+OPTIM=-Os -fno-jump-tables -foptimize-strlen -faggressive-loop-optimizations -fdevirtualize-at-ltrans -fmerge-all-constants -fshort-wchar -flto -finline-small-functions -finline-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common -fno-math-errno -ffast-math -ffinite-math-only -fno-signed-zeros -fsingle-precision-constant
 
 # global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
@@ -363,11 +450,7 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 # compiler flags ---------------------------------------------------------------
 
 
-CHECKOPTIONS=		-Wall 				\
-			-Wextra				\
-			-Wunused			\
-			-Wcomment 			\
-			-Wtrigraphs			\
+CHECKOPTIONS=-Wtrigraphs			\
 			-Wuninitialized		\
 			-Wmissing-braces	\
 			-Wfloat-equal		\
@@ -386,7 +469,6 @@ CHECKOPTIONS=		-Wall 				\
 			-Waddress			\
 			-Waggregate-return	\
 			-Wmissing-field-initializers	\
-			-Winline			\
 			-Wshadow			\
 			-Wno-unused-parameter \
 			-Wdouble-promotion 
@@ -524,7 +606,7 @@ $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
 
 Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ../Translations/translation_%.json \
 		../Translations/make_translation.py \
-		../Translations/translations_def.js \
+		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
 		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
 	@test -d Core/Gen || mkdir -p Core/Gen
@@ -605,7 +687,7 @@ $(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf : \
 
 Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.json,$(3)) \
 		../Translations/make_translation.py \
-		../Translations/translations_def.js \
+		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
 		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
 	@test -d Core/Gen || mkdir -p Core/Gen

@@ -26,6 +26,7 @@ static void displayQCInputV(void);
 #endif
 #if POW_PD
 static void displayPDNegTimeout(void);
+static void displayPDVpdoEnabled(void);
 #endif
 static void displaySensitivity(void);
 static void displayShutdownTime(void);
@@ -41,6 +42,9 @@ static void displayAdvancedSolderingScreens(void);
 static void displayAdvancedIDLEScreens(void);
 static void displayScrollSpeed(void);
 static void displayPowerLimit(void);
+#ifdef BLE_ENABLED
+static void displayBLEEnabled(void);
+#endif
 #ifndef NO_DISPLAY_ROTATE
 static bool setDisplayRotation(void);
 static void displayDisplayRotation(void);
@@ -161,12 +165,12 @@ const menuitem rootSettingsMenu[] {
 
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
 const menuitem powerMenu[] = {
-    /*
-     *  Power Source
-     *  -Minimum Voltage
-     *  QC Voltage
-     *  PD Timeout
-     */
+/*
+ *  Power Source
+ *  -Minimum Voltage
+ *  QC Voltage
+ *  PD Timeout
+ */
 #ifdef POW_DC
     {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},            /*Voltage input*/
     {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, displayInputMinVRange, showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell, 5}, /*Minimum voltage input*/
@@ -176,6 +180,7 @@ const menuitem powerMenu[] = {
 #endif
 #if POW_PD
     {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
+    {SETTINGS_DESC(SettingsItemIndex::PDVpdoEnabled), nullptr, displayPDVpdoEnabled, nullptr, SettingsOptions::PDVpdoEnabled, SettingsItemIndex::PDVpdoEnabled, 7 }, /*Toggle whether to use PPS/EPR*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
@@ -255,16 +260,20 @@ const menuitem UIMenu[] = {
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 const menuitem advancedMenu[] = {
-    /*
-     *  Power Limit
-     *  Calibrate CJC At Next Boot
-     *  Calibrate Input V
-     *  Power Pulse
-     *  -Power Pulse Delay
-     *  -Power Pulse Duration
-     *  Factory Reset
-     */
-    {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5},                              /*Power limit*/
+/*
+ *  BLE Enabled or not
+ *  Power Limit
+ *  Calibrate CJC At Next Boot
+ *  Calibrate Input V
+ *  Power Pulse
+ *  -Power Pulse Delay
+ *  -Power Pulse Duration
+ *  Factory Reset
+ */
+#ifdef BLE_ENABLED
+    {SETTINGS_DESC(SettingsItemIndex::BLEEnabled), nullptr, displayBLEEnabled, nullptr, SettingsOptions::BLEEnabled, SettingsItemIndex::BLEEnabled, 7}, /*Advanced idle screen*/
+#endif
+    {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 5}, /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
      7}, /*Calibrate Cold Junktion Compensation at next boot*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
@@ -273,7 +282,7 @@ const menuitem advancedMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), nullptr, displayPowerPulseWait, showPowerPulseOptions, SettingsOptions::KeepAwakePulseWait, SettingsItemIndex::PowerPulseWait,
      7}, /*Power Pulse Wait adjustment*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration,
-     7},                                                                                                    /*Power Pulse Duration adjustment*/
+     7}, /*Power Pulse Duration adjustment*/
     {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
@@ -330,9 +339,9 @@ static void displayInputVRange(void) {
 
   if (getSettingValue(SettingsOptions::MinDCVoltageCells)) {
     OLED::printNumber(2 + getSettingValue(SettingsOptions::MinDCVoltageCells), 1, FontStyle::LARGE);
-    OLED::print(SymbolCellCount, FontStyle::LARGE);
+    OLED::print(LargeSymbolCellCount, FontStyle::LARGE);
   } else {
-    OLED::print(SymbolDC, FontStyle::LARGE);
+    OLED::print(LargeSymbolDC, FontStyle::LARGE);
   }
 }
 
@@ -340,7 +349,7 @@ static bool showInputVOptions(void) { return getSettingValue(SettingsOptions::Mi
 static void displayInputMinVRange(void) {
 
   OLED::printNumber(getSettingValue(SettingsOptions::MinVoltageCells) / 10, 1, FontStyle::LARGE);
-  OLED::print(SymbolDot, FontStyle::LARGE);
+  OLED::print(LargeSymbolDot, FontStyle::LARGE);
   OLED::printNumber(getSettingValue(SettingsOptions::MinVoltageCells) % 10, 1, FontStyle::LARGE);
 }
 #endif
@@ -352,7 +361,7 @@ static void displayQCInputV(void) {
   // Allows setting the voltage negotiated for QC
   auto voltage = getSettingValue(SettingsOptions::QCIdealVoltage);
   OLED::printNumber(voltage / 10, 2, FontStyle::LARGE);
-  OLED::print(SymbolDot, FontStyle::LARGE);
+  OLED::print(LargeSymbolDot, FontStyle::LARGE);
   OLED::printNumber(voltage % 10, 1, FontStyle::LARGE);
 }
 
@@ -369,6 +378,7 @@ static void displayPDNegTimeout(void) {
     OLED::printNumber(value, 3, FontStyle::LARGE);
   }
 }
+static void displayPDVpdoEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::PDVpdoEnabled)); }
 #endif
 
 static bool setBoostTemp(void) {
@@ -481,10 +491,10 @@ static void displaySleepTime(void) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
   } else if (getSettingValue(SettingsOptions::SleepTime) < 6) {
     OLED::printNumber(getSettingValue(SettingsOptions::SleepTime) * 10, 2, FontStyle::LARGE);
-    OLED::print(SymbolSeconds, FontStyle::LARGE);
+    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
   } else {
     OLED::printNumber(getSettingValue(SettingsOptions::SleepTime) - 5, 2, FontStyle::LARGE);
-    OLED::print(SymbolMinutes, FontStyle::LARGE);
+    OLED::print(LargeSymbolMinutes, FontStyle::LARGE);
   }
 }
 #endif
@@ -495,7 +505,7 @@ static void displayShutdownTime(void) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
   } else {
     OLED::printNumber(getSettingValue(SettingsOptions::ShutdownTime), 2, FontStyle::LARGE);
-    OLED::print(SymbolMinutes, FontStyle::LARGE);
+    OLED::print(LargeSymbolMinutes, FontStyle::LARGE);
   }
 }
 
@@ -537,7 +547,7 @@ static bool setTempF(void) {
   return res;
 }
 
-static void displayTempF(void) { OLED::print((getSettingValue(SettingsOptions::TemperatureInF)) ? SymbolDegF : SymbolDegC, FontStyle::LARGE); }
+static void displayTempF(void) { OLED::print((getSettingValue(SettingsOptions::TemperatureInF)) ? LargeSymbolDegF : LargeSymbolDegC, FontStyle::LARGE); }
 
 #ifndef NO_DISPLAY_ROTATE
 static bool setDisplayRotation(void) {
@@ -626,21 +636,23 @@ static void displayLogoTime(void) {
     OLED::drawArea(OLED_WIDTH - 24 - 2, 0, 24, 16, infinityIcon);
   } else {
     OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 2, FontStyle::LARGE);
-    OLED::print(SymbolSeconds, FontStyle::LARGE);
+    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
   }
 }
 
 static void displayAdvancedIDLEScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedIDLE)); }
 
 static void displayAdvancedSolderingScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedSoldering)); }
-
+#ifdef BLE_ENABLED
+static void displayBLEEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::BLEEnabled)); }
+#endif
 static void displayPowerLimit(void) {
 
   if (getSettingValue(SettingsOptions::PowerLimit) == 0) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
   } else {
     OLED::printNumber(getSettingValue(SettingsOptions::PowerLimit), 2, FontStyle::LARGE);
-    OLED::print(SymbolWatts, FontStyle::LARGE);
+    OLED::print(LargeSymbolWatts, FontStyle::LARGE);
   }
 }
 
@@ -649,7 +661,7 @@ static bool setCalibrate(void) {
     if (userConfirmation(translatedString(Tr->SettingsCalibrationWarning))) {
       // User confirmed
       // So we now set the tick
-      setSettingValue(SettingsOptions::CalibrateCJC, 1);    
+      setSettingValue(SettingsOptions::CalibrateCJC, 1);
     }
   } else {
     setSettingValue(SettingsOptions::CalibrateCJC, 0);
@@ -667,9 +679,9 @@ static bool setCalibrateVIN(void) {
     OLED::setCursor(0, 0);
     uint16_t voltage = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
     OLED::printNumber(voltage / 10, 2, FontStyle::LARGE);
-    OLED::print(SymbolDot, FontStyle::LARGE);
+    OLED::print(LargeSymbolDot, FontStyle::LARGE);
     OLED::printNumber(voltage % 10, 1, FontStyle::LARGE, false);
-    OLED::print(SymbolVolts, FontStyle::LARGE);
+    OLED::print(LargeSymbolVolts, FontStyle::LARGE);
 
     switch (getButtonState()) {
     case BUTTON_F_SHORT:
@@ -682,6 +694,7 @@ static bool setCalibrateVIN(void) {
     case BUTTON_F_LONG:
     case BUTTON_B_LONG:
       saveSettings();
+      OLED::clearScreen();
       OLED::setCursor(0, 0);
       OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::LARGE);
       OLED::refresh();
@@ -704,7 +717,7 @@ static void displayPowerPulse(void) {
 
   if (getSettingValue(SettingsOptions::KeepAwakePulse)) {
     OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulse) / 10, 1, FontStyle::LARGE);
-    OLED::print(SymbolDot, FontStyle::LARGE);
+    OLED::print(LargeSymbolDot, FontStyle::LARGE);
     OLED::printNumber(getSettingValue(SettingsOptions::KeepAwakePulse) % 10, 1, FontStyle::LARGE);
   } else {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
@@ -719,7 +732,8 @@ static void displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(
 static bool setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {
     resetSettings();
-    warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
+    warnUser(translatedString(Tr->ResetOKMessage), 3 * TICKS_SECOND);
+    reboot();
   }
   return false;
 }

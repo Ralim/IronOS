@@ -51,13 +51,9 @@ public:
   static bool isInitDone();
   // Draw the buffer out to the LCD if any content has changed.
   static void refresh() {
-    uint32_t  hash = 0;
-    const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
-    for (int i = 0; i < len; i++) {
-      hash += (i * screenBuffer[i]);
-    }
-    if (hash != displayChecksum) {
-      displayChecksum = hash;
+   
+    if (checkDisplayBufferChecksum()) {
+      const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
       I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
       // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
       // or we need to goto double buffering
@@ -118,6 +114,17 @@ public:
   static void transitionScrollDown();
 
 private:
+static bool checkDisplayBufferChecksum(){
+   uint32_t  hash = 0;
+    const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+    for (int i = 0; i < len; i++) {
+      hash += (i * screenBuffer[i]);
+    }
+
+    bool result =  hash!=displayChecksum;
+    displayChecksum= hash;
+    return result;
+}
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
   static uint8_t     *firstStripPtr;    // Pointers to the strips to allow for buffer having extra content

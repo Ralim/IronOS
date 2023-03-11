@@ -1,344 +1,251 @@
 {
-	"languageCode": "ES",
-	"languageLocalName": "Castellano",
-	"fonts": [
-		"ascii_basic",
-		"latin_extended"
-	],
-	"tempUnitFahrenheit": false,
-	"messages": {
-		"SettingsCalibrationWarning": "¡Asegúrate que la punta esté a temperatura ambiente al inicio",
-
-		"SettingsResetWarning": "¿Quieres restablecer los ajustes?",
-		"UVLOWarningString": "CC BAJA",
-		"UndervoltageString": "Voltaje bajo",
-		"InputVoltageString": "Voltaje: ",
-		"SleepingSimpleString": "Zzzz",
-		"SleepingAdvancedString": "En reposo...",
-		"SleepingTipAdvancedString": "Punta:",
-		"OffString": " No",
-		"DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
-	},
-	"messagesWarn": {
-		"ResetOKMessage": "Hecho.",
-		"SettingsResetMessage": [
-			"Ajustes",
-			"¡Reiniciados!"
-		],
-		"NoAccelerometerMessage": [
-			"Sin acelerómetro",
-			"¡Detectado!"
-		],
-		"NoPowerDeliveryMessage": [
-			"Sin USB-PD IC",
-			"¡Detectado!"
-		],
-		"LockingKeysString": " BLOQUEADO",
-		"UnlockingKeysString": "DESBLOQUEADO",
-		"WarningKeysLockedString": "¡BLOQUEADO!",
-		"WarningThermalRunaway": [
-			"Thermal",
-			"Runaway"
-		]
-	},
-	"characters": {
-		"SettingRightChar": "D",
-		"SettingLeftChar": "I",
-		"SettingAutoChar": "A",
-		"SettingOffChar": "O",
-		"SettingSlowChar": "L",
-		"SettingMediumChar": "M",
-		"SettingFastChar": "R",
-		"SettingStartNoneChar": "N",
-		"SettingStartSolderingChar": "S",
-		"SettingStartSleepChar": "R",
-		"SettingStartSleepOffChar": "F",
-		"SettingSensitivityOff": "O",
-		"SettingSensitivityLow": "L",
-		"SettingSensitivityMedium": "M",
-		"SettingSensitivityHigh": "H",
-		"SettingLockDisableChar": "D",
-		"SettingLockBoostChar": "B",
-		"SettingLockFullChar": "F"
-	},
-	"menuGroups": {
-		"PowerMenu": {
-			"text2": [
-				"Potencia",
-				"ajustes"
-			],
-			"desc": ""
-		},
-		"SolderingMenu": {
-			"text2": [
-				"Soldadura",
-				"ajustes"
-			],
-			"desc": ""
-		},
-		"PowerSavingMenu": {
-			"text2": [
-				"Modos de",
-				"reposo"
-			],
-			"desc": ""
-		},
-		"UIMenu": {
-			"text2": [
-				"Interfaz",
-				"de usuario"
-			],
-			"desc": ""
-		},
-		"AdvancedMenu": {
-			"text2": [
-				"Ajustes",
-				"avanzados"
-			],
-			"desc": ""
-		}
-	},
-	"menuOptions": {
-		"DCInCutoff": {
-			"text2": [
-				"Fuente",
-				"de energía"
-			],
-			"desc": "Elige el tipo de fuente para limitar el voltaje (DC 10V) (S 3,3V por pila, ilimitado)"
-		},
-		"MinVolCell": {
-			"text2": [
-				"Mínimo",
-				"voltaje"
-			],
-			"desc": "voltaje mínimo permitido por célula (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
-		},
-		"QCMaxVoltage": {
-			"text2": [
-				"Potencia de",
-				"entrada"
-			],
-			"desc": "Potencia en vatios del adaptador de corriente utilizado."
-		},
-		"PDNegTimeout": {
-			"text2": [
-				"PD",
-				"timeout"
-			],
-			"desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
-		},
-		"BoostTemperature": {
-			"text2": [
-				"Ajustar la",
-				"temp. extra"
-			],
-			"desc": "Temperatura momentánea que se alcanza al apretar el botón del modo extra."
-		},
-		"AutoStart": {
-			"text2": [
-				"Calentar",
-				"al enchufar"
-			],
-			"desc": "Se calienta él solo al arrancar (N=no | S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
-		},
-		"TempChangeShortStep": {
-			"text2": [
-				"Cambio temp.",
-				"puls. cortas"
-			],
-			"desc": "Subir y bajar X grados de temperatura con cada pulsación corta de los botones +/-."
-		},
-		"TempChangeLongStep": {
-			"text2": [
-				"Cambio temp.",
-				"puls. largas"
-			],
-			"desc": "Subir y bajar X grados de temperatura con cada pulsación larga de los botones +/-."
-		},
-		"LockingMode": {
-			"text2": [
-				"Permitir botones",
-				"bloqueo"
-			],
-			"desc": "Al soldar, una pulsación larga en ambos botones los bloquea (D=desactivar | B=sólo potenciar | F=bloqueo total)."
-		},
-		"MotionSensitivity": {
-			"text2": [
-				"Detección de",
-				"movimiento"
-			],
-			"desc": "Tiempo de reacción al agarrar (0=no | 1=menos sensible | ... | 9=más sensible)"
-		},
-		"SleepTemperature": {
-			"text2": [
-				"Temperatura",
-				"en reposo"
-			],
-			"desc": "Temperatura de la punta en reposo."
-		},
-		"SleepTimeout": {
-			"text2": [
-				"Entrar",
-				"en reposo"
-			],
-			"desc": "Tiempo de inactividad para entrar en reposo (min | seg)"
-		},
-		"ShutdownTimeout": {
-			"text2": [
-				"Tiempo de",
-				"apagado"
-			],
-			"desc": "Tiempo de inactividad para apagarse (en minutos)"
-		},
-		"HallEffSensitivity": {
-			"text2": [
-				"Hall Eff",
-				"Sensibilidad"
-			],
-			"desc": "Sensibilidad del sensor de efecto Hall en la detección de reposo (0=no | 1=menos sensible | ... | 9=más sensible)"
-		},
-		"TemperatureUnit": {
-			"text2": [
-				"Unidad de",
-				"temperatura"
-			],
-			"desc": "Unidad de temperatura (C=centígrados | F=Fahrenheit)"
-		},
-		"DisplayRotation": {
-			"text2": [
-				"Orientación",
-				"de pantalla"
-			],
-			"desc": "Orientación de la pantalla (D=diestro | I=zurdo | A=automático)"
-		},
-		"CooldownBlink": {
-			"text2": [
-				"Parpadear",
-				"al enfriar"
-			],
-			"desc": "La temperatura en pantalla parpadea mientras la punta siga caliente."
-		},
-		"ScrollingSpeed": {
-			"text2": [
-				"Velocidad",
-				"del texto"
-			],
-			"desc": "Velocidad de desplazamiento del texto (R=rápida | L=lenta)"
-		},
-		"ReverseButtonTempChange": {
-			"text2": [
-				"Invertir",
-				"botones +/-"
-			],
-			"desc": "Intercambia las funciones de subir y bajar la temperatura de los botones +/- para que funcionen al revés."
-		},
-		"AnimSpeed": {
-			"text2": [
-				"Anim.",
-				"velocidad"
-			],
-			"desc": "Velocidad de las animaciones de los iconos en el menú (O=off | L=low | M=medium | R=high)"
-		},
-		"AnimLoop": {
-			"text2": [
-				"Anim.",
-				"bucle"
-			],
-			"desc": "Animaciones de iconos en bucle en el menú raíz"
-		},
-		"Brightness": {
-			"text2": [
-				"Pantalla",
-				"brillo"
-			],
-			"desc": "Ajusta el brillo de la pantalla OLED"
-		},
-		"ColourInversion": {
-			"text2": [
-				"Invertir",
-				"pantalla"
-			],
-			"desc": "Invertir la pantalla OLED"
-		},
-		"LOGOTime": {
-			"text2": [
-				"logo inicial",
-				"duración"
-			],
-			"desc": "Duración de la animación del logo inicial (s=segundos)"
-		},
-		"AdvancedIdle": {
-			"text2": [
-				"Info extra en",
-				"modo reposo"
-			],
-			"desc": "Muestra información detallada en letra pequeña al reposar."
-		},
-		"AdvancedSoldering": {
-			"text2": [
-				"Info extra",
-				"al soldar"
-			],
-			"desc": "Muestra más datos por pantalla cuando se está soldando."
-		},
-		"PowerLimit": {
-			"text2": [
-				"Ajustar la",
-				"potenc. máx."
-			],
-			"desc": "Elige el límite de potencia máxima del soldador (en vatios)"
-		},
-		"CalibrateCJC": {
-			"text2": [
-				"Calibrar CJC",
-
-				"en el próximo inicio"
-
-			],
-			"desc": "Calibrar compensación de punta fría en el próximo inicio (no necesario si Delta T es < 5°C)"
-
-		},
-		"VoltageCalibration": {
-			"text2": [
-				"Calibrar voltaje",
-				"de entrada"
-			],
-			"desc": "Calibra VIN. Ajusta con ambos botones y mantén pulsado para salir."
-		},
-		"PowerPulsePower": {
-			"text2": [
-				"Pulsos bat.",
-				"constantes"
-			],
-			"desc": "Aplica unos pulsos necesarios para mantener encendidas ciertas baterías portátiles. En vatios."
-		},
-		"PowerPulseWait": {
-			"text2": [
-				"Impulso de potencia",
-				"tiempo de espera"
-			],
-			"desc": "Tiempo de espera antes de disparar cada pulso de mantenimiento de la vigilia (x 2,5s)"
-		},
-		"PowerPulseDuration": {
-			"text2": [
-				"Impulso de potencia",
-				"duración"
-			],
-			"desc": "Duración del impulso de mantenimiento de la vigilia (x 250ms)"
-		},
-		"SettingsReset": {
-			"text2": [
-				"Volver a ajustes",
-				"de fábrica"
-			],
-			"desc": "Restablece todos los ajustes a los valores originales."
-		},
-		"LanguageSwitch": {
-			"text2": [
-				"Idioma:",
-				" ES  Castellano"
-			],
-			"desc": ""
-		}
+    "languageCode": "ES",
+    "languageLocalName": "Castellano",
+    "tempUnitFahrenheit": true,
+    "messagesWarn": {
+        "CJCCalibrationDone": {
+            "message": "Calibration\ndone!"
+        },
+        "ResetOKMessage": {
+            "message": "Hecho"
+        },
+        "SettingsResetMessage": {
+            "message": "Ajustes\n¡Reiniciados!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Sin acelerómetro\n¡Detectado!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "Sin USB-PD IC\n¡Detectado!"
+        },
+        "LockingKeysString": {
+            "message": "BLOQUEADO"
+        },
+        "UnlockingKeysString": {
+            "message": "DESBLOQUEADO"
+        },
+        "WarningKeysLockedString": {
+            "message": "¡BLOQUEADO!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Térmico\nFuera de control"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "¡Antes de reiniciar, asegúrese de que la punta y el mango estén a temperatura ambiente!"
+        },
+        "CJCCalibrating": {
+            "message": "calibrando\n"
+        },
+        "SettingsResetWarning": {
+            "message": "¿Quieres restablecer los ajustes?"
+        },
+        "UVLOWarningString": {
+            "message": "CC BAJA"
+        },
+        "UndervoltageString": {
+            "message": "Voltaje bajo\n"
+        },
+        "InputVoltageString": {
+            "message": "Voltaje: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Reposo"
+        },
+        "SleepingAdvancedString": {
+            "message": "En reposo...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Punta: \n"
+        },
+        "OffString": {
+            "message": "No"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "¡Lo más probable es que su dispositivo sea una falsificación!"
+        }
+    },
+    "characters": {
+        "SettingRightChar": "D",
+        "SettingLeftChar": "I",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "O",
+        "SettingSlowChar": "L",
+        "SettingMediumChar": "M",
+        "SettingFastChar": "R",
+        "SettingStartNoneChar": "N",
+        "SettingStartSolderingChar": "S",
+        "SettingStartSleepChar": "R",
+        "SettingStartSleepOffChar": "F",
+        "SettingLockDisableChar": "D",
+        "SettingLockBoostChar": "B",
+        "SettingLockFullChar": "F"
+    },
+    "menuGroups": {
+        "PowerMenu": {
+            "displayText": "Potencia\najustes",
+            "description": ""
+        },
+        "SolderingMenu": {
+            "displayText": "Soldadura\najustes",
+            "description": ""
+        },
+        "PowerSavingMenu": {
+            "displayText": "Modos de\nreposo",
+            "description": ""
+        },
+        "UIMenu": {
+            "displayText": "Interfaz\nde usuario",
+            "description": ""
+        },
+        "AdvancedMenu": {
+            "displayText": "Ajustes\navanzados",
+            "description": ""
+        }
+    },
+    "menuOptions": {
+        "DCInCutoff": {
+            "displayText": "Fuente\nde energía",
+            "description": "Elige el tipo de fuente para limitar el voltaje (DC 10V) (S 3,3V por pila, ilimitado)"
+        },
+        "MinVolCell": {
+            "displayText": "Mínimo\nvoltaje",
+            "description": "voltaje mínimo permitido por célula (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+        },
+        "QCMaxVoltage": {
+            "displayText": "Potencia de\nentrada",
+            "description": "Potencia en vatios del adaptador de corriente utilizado"
+        },
+        "PDNegTimeout": {
+            "displayText": "PD\ntiempo de espera",
+            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+        },
+        "BoostTemperature": {
+            "displayText": "Ajustar la\ntemp. extra",
+            "description": "Temperatura de la punta utilizada en el \"modo de impulso\""
+        },
+        "AutoStart": {
+            "displayText": "Calentar\nal enchufar",
+            "description": "Se calienta él solo al arrancar (N=no | S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
+        },
+        "TempChangeShortStep": {
+            "displayText": "Cambio temp.\npuls. cortas",
+            "description": "Aumento de la temperatura al pulsar brevemente un botón"
+        },
+        "TempChangeLongStep": {
+            "displayText": "Cambio temp.\npuls. largas",
+            "description": "Aumento de la temperatura al pulsar prolongadamente un botón"
+        },
+        "LockingMode": {
+            "displayText": "Permitir botones\nbloqueo",
+            "description": "Mientras suelda, mantenga pulsados ambos botones para alternar su bloqueo (D=desactivar | B=sólo modo boost | F=bloqueo total)"
+        },
+        "MotionSensitivity": {
+            "displayText": "Detección de\nmovimiento",
+            "description": "Tiempo de reacción al agarrar (0=no | 1=menos sensible | ... | 9=más sensible)"
+        },
+        "SleepTemperature": {
+            "displayText": "Temperatura\nen reposo",
+            "description": "Temperatura de la punta en \"reposo\""
+        },
+        "SleepTimeout": {
+            "displayText": "Entrar\nen reposo",
+            "description": "Tiempo de inactividad para entrar en reposo (min | seg)"
+        },
+        "ShutdownTimeout": {
+            "displayText": "Tiempo de\napagado",
+            "description": "Tiempo de inactividad para apagarse (en minutos)"
+        },
+        "HallEffSensitivity": {
+            "displayText": "Hall Eff\nSensibilidad",
+            "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (0=no | 1=menos sensible | ... | 9=más sensible)"
+        },
+        "TemperatureUnit": {
+            "displayText": "Unidad de\ntemperatura",
+            "description": "Unidad de temperatura (C=centígrados | F=Fahrenheit)"
+        },
+        "DisplayRotation": {
+            "displayText": "Orientación\nde pantalla",
+            "description": "Orientación de la pantalla (D=diestro | I=zurdo | A=automático)"
+        },
+        "CooldownBlink": {
+            "displayText": "Parpadear\nal enfriar",
+            "description": "Lectura de la temperatura al ralentí mientras la punta está caliente"
+        },
+        "ScrollingSpeed": {
+            "displayText": "Velocidad\ndel texto",
+            "description": "Velocidad de desplazamiento del texto (R=rápida | L=lenta)"
+        },
+        "ReverseButtonTempChange": {
+            "displayText": "Invertir\nbotones +/-",
+            "description": "Intercambio inversa de los botones para ajustar la temperatura"
+        },
+        "AnimSpeed": {
+            "displayText": "Anim.\nvelocidad",
+            "description": "Velocidad de las animaciones de los iconos en el menú (O=off | L=low | M=medium | R=high)"
+        },
+        "AnimLoop": {
+            "displayText": "Anim.\nbucle",
+            "description": "Animaciones de iconos en bucle en el menú raíz"
+        },
+        "Brightness": {
+            "displayText": "Pantalla\nbrillo",
+            "description": "Ajusta el brillo de la pantalla OLED"
+        },
+        "ColourInversion": {
+            "displayText": "Invertir\npantalla",
+            "description": "Invertir la pantalla OLED"
+        },
+        "LOGOTime": {
+            "displayText": "logo inicial\nduración",
+            "description": "Duración de la animación del logo inicial (s=segundos)"
+        },
+        "AdvancedIdle": {
+            "displayText": "Info extra en\nmodo reposo",
+            "description": "Mostrar información detallada en una fuente más pequeña en la pantalla inactiva"
+        },
+        "AdvancedSoldering": {
+            "displayText": "Info extra\nal soldar",
+            "description": "Mostrar información detallada en una fuente más pequeña en la pantalla de soldadura"
+        },
+        "PowerLimit": {
+            "displayText": "Potencia\nlímite",
+            "description": "Elige el límite de potencia máxima del soldador (en vatios)"
+        },
+        "CalibrateCJC": {
+            "displayText": "Calibrar CJC\nen el próximo inicio",
+            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+        },
+        "VoltageCalibration": {
+            "displayText": "Calibrar voltaje\nde entrada",
+            "description": "Iniciar calibración VIN (pulsación larga para salir)"
+        },
+        "PowerPulsePower": {
+            "displayText": "Pulsos bat.\nconstantes",
+            "description": "Intensidad de la potencia del pulso de mantenimiento del estado de vigilia (W=vatio)"
+        },
+        "PowerPulseWait": {
+            "displayText": "Impulso de potencia\ntiempo de espera",
+            "description": "Tiempo de espera antes de disparar cada pulso de mantenimiento de la vigilia (x 2,5s)"
+        },
+        "PowerPulseDuration": {
+            "displayText": "Impulso de potencia\nduración",
+            "description": "Duración del impulso de mantenimiento de la vigilia (x 250ms)"
+        },
+        "SettingsReset": {
+            "displayText": "Volver a ajustes\nde fábrica",
+            "description": "Restablecer todos los ajustes por defecto"
+        },
+        "LanguageSwitch": {
+            "displayText": "Idioma:\n ES  Castellano",
+            "description": ""
+        },
+        "BLEEnabled": {
+            "displayText": "BLE\n Activado",
+            "description": "Habilita BLE"
+        },
+	"PDVpdoEnabled": {
+            "displayText": "PD VPDO\nEnabled",
+	    "description": "Enables PPS/EPR modes."
 	}
+    }
 }

@@ -173,6 +173,21 @@ const pFunc __Vectors[] __attribute__((section(".init"), aligned(64))) = {
     WIFI_IPC_PUBLIC_IRQHandler_Wrapper,  /* 16 + 63 */
 };
 
+#include "riscv_encoding.h"
+void vAssertCalled(void) {
+  MSG((char *)"vAssertCalled\r\n");
+  unsigned long epc;
+  epc = get_pc();
+  MSG("mepc:0x%08x\r\n", (uint32_t)epc);
+
+//   PWM_Channel_Disable(PWM_Channel);
+//   gpio_set_mode(PWM_Out_Pin, GPIO_INPUT_PD_MODE);
+
+  while (1)
+    ;
+}
+
+
 void Trap_Handler(void)
 {
     unsigned long cause;
@@ -184,7 +199,7 @@ void Trap_Handler(void)
 
     cause = read_csr(mcause);
     MSG("mcause=%08x\r\n", (uint32_t)cause);
-    epc = read_csr(mepc);
+    epc = get_pc();
     MSG("mepc:%08x\r\n", (uint32_t)epc);
     tval = read_csr(mtval);
     MSG("mtval:%08x\r\n", (uint32_t)tval);

@@ -21,8 +21,8 @@
  *
  */
 #include "hal_i2c.h"
-#include "bl702_i2c.h"
 #include "bl702_glb.h"
+#include "bl702_i2c.h"
 
 static i2c_device_t i2cx_device[I2C_MAX_INDEX] = {
 #ifdef BSP_USING_I2C0
@@ -39,65 +39,16 @@ static i2c_device_t i2cx_device[I2C_MAX_INDEX] = {
  * @param oflag
  * @return int
  */
-int i2c_open(struct device *dev, uint16_t oflag)
-{
-    i2c_device_t *i2c_device = (i2c_device_t *)dev;
+int i2c_open(struct device *dev, uint16_t oflag) {
+  i2c_device_t *i2c_device = (i2c_device_t *)dev;
 
-    if (i2c_device->mode == I2C_HW_MODE) {
-        I2C_SetPrd(i2c_device->id, i2c_device->phase);
-    }
+  if (i2c_device->mode == I2C_HW_MODE) {
+    I2C_SetPrd(i2c_device->id, i2c_device->phase);
+  }
 
-    return 0;
+  return 0;
 }
 
-// int i2c_close(struct device *dev)
-// {
-
-//     return 0;
-// }
-
-// int i2c_control(struct device *dev, int cmd, void *args)
-// {
-//     //i2c_device_t *i2c_device = (i2c_device_t *)dev;
-
-//     switch (cmd)
-//     {
-//     case DEVICE_CTRL_SET_INT /* constant-expression */:
-
-//         break;
-//     case DEVICE_CTRL_CLR_INT /* constant-expression */:
-//         /* code */
-//         /* Enable UART interrupt*/
-
-//         break;
-//     case DEVICE_CTRL_GET_INT /* constant-expression */:
-//         /* code */
-//         break;
-//     case DEVICE_CTRL_CONFIG /* constant-expression */:
-//         /* code */
-//         break;
-//     case 4 /* constant-expression */:
-//         /* code */
-//         break;
-//     case 5 /* constant-expression */:
-//         /* code */
-//         break;
-//     default:
-//         break;
-//     }
-
-//     return 0;
-// }
-// int i2c_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t size)
-// {
-
-//     return 0;
-// }
-// int i2c_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size)
-// {
-
-//     return 0;
-// }
 /**
  * @brief
  *
@@ -106,26 +57,25 @@ int i2c_open(struct device *dev, uint16_t oflag)
  * @param flag
  * @return int
  */
-int i2c_register(enum i2c_index_type index, const char *name)
-{
-    struct device *dev;
+int i2c_register(enum i2c_index_type index, const char *name) {
+  struct device *dev;
 
-    if (I2C_MAX_INDEX == 0) {
-        return -DEVICE_EINVAL;
-    }
+  if (I2C_MAX_INDEX == 0) {
+    return -DEVICE_EINVAL;
+  }
 
-    dev = &(i2cx_device[index].parent);
+  dev = &(i2cx_device[index].parent);
 
-    dev->open = i2c_open;
-    dev->close = NULL;
-    dev->control = NULL;
-    dev->write = NULL;
-    dev->read = NULL;
+  dev->open    = i2c_open;
+  dev->close   = NULL;
+  dev->control = NULL;
+  dev->write   = NULL;
+  dev->read    = NULL;
 
-    dev->type = DEVICE_CLASS_I2C;
-    dev->handle = NULL;
+  dev->type   = DEVICE_CLASS_I2C;
+  dev->handle = NULL;
 
-    return device_register(dev, name);
+  return device_register(dev, name);
 }
 /**
  * @brief
@@ -135,38 +85,37 @@ int i2c_register(enum i2c_index_type index, const char *name)
  * @param num
  * @return uint32_t
  */
-int i2c_transfer(struct device *dev, i2c_msg_t msgs[], uint32_t num)
-{
-    i2c_msg_t *msg;
-    I2C_Transfer_Cfg i2cCfg = { 0 };
+int i2c_transfer(struct device *dev, i2c_msg_t msgs[], uint32_t num) {
+  i2c_msg_t       *msg;
+  I2C_Transfer_Cfg i2cCfg = {0};
 
-    i2c_device_t *i2c_device = (i2c_device_t *)dev;
+  i2c_device_t *i2c_device = (i2c_device_t *)dev;
 
-    if (i2c_device->mode == I2C_HW_MODE) {
-        for (uint32_t i = 0; i < num; i++) {
-            msg = &msgs[i];
-            i2cCfg.slaveAddr = msg->slaveaddr;
-            i2cCfg.stopEveryByte = DISABLE;
-            i2cCfg.subAddr = msg->subaddr;
-            i2cCfg.dataSize = msg->len;
-            i2cCfg.data = msg->buf;
+  if (i2c_device->mode == I2C_HW_MODE) {
+    for (uint32_t i = 0; i < num; i++) {
+      msg                  = &msgs[i];
+      i2cCfg.slaveAddr     = msg->slaveaddr;
+      i2cCfg.stopEveryByte = DISABLE;
+      i2cCfg.subAddr       = msg->subaddr;
+      i2cCfg.dataSize      = msg->len;
+      i2cCfg.data          = msg->buf;
 
-            if (msg->flags & SUB_ADDR_0BYTE) {
-                i2cCfg.subAddrSize = 0;
-            } else if (msg->flags & SUB_ADDR_1BYTE) {
-                i2cCfg.subAddrSize = 1;
-            } else if (msg->flags & SUB_ADDR_2BYTE) {
-                i2cCfg.subAddrSize = 2;
-            }
+      if (msg->flags & SUB_ADDR_0BYTE) {
+        i2cCfg.subAddrSize = 0;
+      } else if (msg->flags & SUB_ADDR_1BYTE) {
+        i2cCfg.subAddrSize = 1;
+      } else if (msg->flags & SUB_ADDR_2BYTE) {
+        i2cCfg.subAddrSize = 2;
+      }
 
-            if ((msg->flags & I2C_RW_MASK) == I2C_WR) {
-                return I2C_MasterSendBlocking(i2c_device->id, &i2cCfg);
-            } else if ((msg->flags & I2C_RW_MASK) == I2C_RD) {
-                return I2C_MasterReceiveBlocking(i2c_device->id, &i2cCfg);
-            }
-        }
-    } else {
+      if ((msg->flags & I2C_RW_MASK) == I2C_WR) {
+        return I2C_MasterSendBlocking(i2c_device->id, &i2cCfg);
+      } else if ((msg->flags & I2C_RW_MASK) == I2C_RD) {
+        return I2C_MasterReceiveBlocking(i2c_device->id, &i2cCfg);
+      }
     }
+  } else {
+  }
 
-    return 0;
+  return 0;
 }

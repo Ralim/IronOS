@@ -71,7 +71,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {1, POWER_PULSE_WAIT_MAX, 1, POWER_PULSE_WAIT_DEFAULT},         // KeepAwakePulseWait
     {1, POWER_PULSE_DURATION_MAX, 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
     {360, 900, 1, VOLTAGE_DIV},                                     // VoltageDiv
-    {MIN_TEMP_C, MAX_TEMP_F, 10, BOOST_TEMP},                       // BoostTemp
+    {0, MAX_TEMP_F, 10, BOOST_TEMP},                                // BoostTemp
     {MIN_CALIBRATION_OFFSET, 2500, 1, CALIBRATION_OFFSET},          // CalibrationOffset
     {0, MAX_POWER_LIMIT, POWER_LIMIT_STEPS, POWER_LIMIT},           // PowerLimit
     {0, 1, 1, REVERSE_BUTTON_TEMP_CHANGE},                          // ReverseButtonTempChangeEnabled
@@ -86,7 +86,8 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 99, 11, 33},                                                // OLEDBrightness
     {0, 5, 1, 1},                                                   // LOGOTime
     {0, 1, 1, 0},                                                   // CalibrateCJC
-
+    {0, 1, 1, 1},                                                   // BLEEnabled
+    {0, 1, 1, 1},                                                   // PDVpdoEnabled
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
@@ -139,15 +140,16 @@ void resetSettings() {
 
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue) {
   const auto constants                       = settingsConstants[(int)option];
-  systemSettings.settingsValues[(int)option] = newValue;
-  // If less than min, constrain
-  if (systemSettings.settingsValues[(int)option] < constants.min) {
-    systemSettings.settingsValues[(int)option] = constants.min;
+  uint16_t constrainedValue = newValue;
+  if (constrainedValue < constants.min) {
+    // If less than min, constrain
+    constrainedValue = constants.min;
   }
-  // If hit max, constrain
-  if (systemSettings.settingsValues[(int)option] > constants.max) {
-    systemSettings.settingsValues[(int)option] = constants.max;
+  else if (constrainedValue > constants.max) {
+    // If hit max, constrain
+    constrainedValue = constants.max;
   }
+  systemSettings.settingsValues[(int)option] = constrainedValue;
 }
 // Lookup wrapper for ease of use (with typing)
 uint16_t getSettingValue(const enum SettingsOptions option) { return systemSettings.settingsValues[(int)option]; }
