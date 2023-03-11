@@ -170,7 +170,7 @@
             "description": "Scrollgeschwindigkeit der Erläuterungen (L=langsam | S=schnell)"
         },
         "ReverseButtonTempChange": {
-            "displayText": "+- Tasten\numkehren?",
+            "displayText": "+- Tasten\numkehren",
             "description": "Tastenbelegung zur Temperaturänderung umkehren"
         },
         "AnimSpeed": {
@@ -206,11 +206,11 @@
             "description": "Maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Temperatur\nkalibrieren?",
+            "displayText": "Temperatur\nkalibrieren",
             "description": "Beim nächsten Start wird die Kaltstellenkompensation kalibriert (nicht nötig wenn Delta T < 5°C)"
         },
         "VoltageCalibration": {
-            "displayText": "Eingangsspannung\nkalibrieren?",
+            "displayText": "Eingangsspannung\nkalibrieren",
             "description": "Kalibrierung der Eingangsspannung (Langer Tastendruck zum Verlassen)"
         },
         "PowerPulsePower": {
@@ -226,7 +226,7 @@
             "description": "Dauer des Wachhalteimpulses (x 250ms)"
         },
         "SettingsReset": {
-            "displayText": "Einstellungen\nzurücksetzen?",
+            "displayText": "Einstellungen\nzurücksetzen",
             "description": "Werte auf Werkseinstellungen zurücksetzen"
         },
         "LanguageSwitch": {
@@ -234,12 +234,12 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
+            "displayText": "BLE\naktivieren",
             "description": "Aktiviert BLE"
         },
 	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
+            "displayText": "PD VPDO\naktivieren",
+	    "description": "Aktiviert PPS/EPR"
 	}
     }
 }
