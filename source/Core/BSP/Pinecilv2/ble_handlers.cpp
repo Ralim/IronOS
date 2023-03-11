@@ -253,8 +253,6 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
       case SettingsOptions::OrientationMode:
         OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
         break;
-      default:
-        break;
       }
       return len;
     }
