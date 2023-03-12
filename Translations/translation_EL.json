@@ -1,7 +1,7 @@
 {
     "languageCode": "EL",
     "languageLocalName": "Greek",
-    "tempUnitFahrenheit": true,
+    "tempUnitFahrenheit": false,
     "messages": {
         "SettingsCalibrationWarning": "Πριν την επανεκκίνηση, βεβαιωθείτε ότι η μύτη και η συσκ. είναι σε θερμ. δωματίου!",
         "CJCCalibrating": "calibrating",
@@ -296,7 +296,7 @@
                 "Βαθμονόμηση CJC",
                 "σε επόμενη έναρξη"
             ],
-            "desc": "Στην επόμενη εκκίνηση θα γίνει βαθμονόμηση για Cold Junction Compensation (δεν απαιτείται αν Δθερμ < 5 C)"
+            "desc": "Στην επόμενη εκκίνηση θα γίνει βαθμονόμηση θερμοκρασίας (δεν απαιτείται αν Δθερμ < 5 C)"
         },
         "VoltageCalibration": {
             "text2": [
@@ -336,7 +336,7 @@
         "LanguageSwitch": {
             "text2": [
                 "Γλώσσα:",
-                " GR    Ελληνικά"
+                " EL    Ελληνικά"
             ],
             "desc": ""
         }
