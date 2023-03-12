@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messages": {
         "SettingsCalibrationWarning": "Πριν την επανεκκίνηση, βεβαιωθείτε ότι η μύτη και η συσκ. είναι σε θερμ. δωματίου!",
-        "CJCCalibrating": "calibrating",
+        "CJCCalibrating": "βαθμονόμηση",
         "SettingsResetWarning": "Σίγουρα θέλετε επαναφορά αρχικών ρυθμίσεων;",
         "UVLOWarningString": "Χαμηλ DC",
         "UndervoltageString": "Υπόταση",
