@@ -3,7 +3,7 @@
     "languageLocalName": "Greek",
     "tempUnitFahrenheit": true,
     "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
+        "SettingsCalibrationWarning": "Πριν την επανεκκίνηση, βεβαιωθείτε ότι η μύτη και η συσκ. είναι σε θερμ. δωματίου!",
         "CJCCalibrating": "calibrating",
         "SettingsResetWarning": "Σίγουρα θέλετε επαναφορά αρχικών ρυθμίσεων;",
         "UVLOWarningString": "Χαμηλ DC",
@@ -13,12 +13,12 @@
         "SleepingAdvancedString": "Υπνος...",
         "SleepingTipAdvancedString": "Μύτη:",
         "OffString": "Απ.",
-        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
+        "DeviceFailedValidationWarning": "Η συσκευή σας ίσως να μην είναι αυθεντική!"
     },
     "messagesWarn": {
         "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
+            "Βαθμονόμηση",
+            "ολοκληρώθηκε!"
         ],
         "ResetOKMessage": "Επαν. OK",
         "SettingsResetMessage": [
@@ -40,8 +40,8 @@
             "ΠΛΗΚΤΡΑ!"
         ],
         "WarningThermalRunaway": [
-            "Θερμική",
-            "Φυγή"
+            "Υπερθέρμανση",
+            ""
         ]
     },
     "characters": {
@@ -114,14 +114,14 @@
                 "Ελάχιστη",
                 "τάση"
             ],
-            "desc": "Ελάχιστη επιτρεπτή τάση ανα κυψέλη (3 σε σειρά: 3 - 3.7V | 4-6 σε σειρά: 2.4 - 3.7V)"
+            "desc": "Ελάχιστη επιτρεπτή τάση ανα μπαταρία (3 σε σειρά: 3 - 3.7V | 4-6 σε σειρά: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
             "text2": [
                 "Τάση",
                 "QC"
             ],
-            "desc": "Μέγιστη τάση QC που να ζητά το κολλητήρι από το τροφοδοτικό"
+            "desc": "Μέγιστη τάση QC που να ζητείται από το τροφοδοτικό"
         },
         "PDNegTimeout": {
             "text2": [
@@ -265,10 +265,10 @@
         },
         "LOGOTime": {
             "text2": [
-                "Boot logo",
-                "duration"
+                "Διάρκεια",
+                "logo εκκίνησης"
             ],
-            "desc": "Sets the duration for the boot logo (s=seconds)"
+            "desc": "Διάρκεια εμφάνισης της εικόνας εκκίνησης (s=seconds)"
         },
         "AdvancedIdle": {
             "text2": [
@@ -293,10 +293,10 @@
         },
         "CalibrateCJC": {
             "text2": [
-                "Calibrate CJC",
-                "at next boot"
+                "Βαθμονόμηση CJC",
+                "σε επόμενη έναρξη"
             ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+            "desc": "Στην επόμενη εκκίνηση θα γίνει βαθμονόμηση για Cold Junction Compensation (δεν απαιτείται αν Δθερμ < 5 C)"
         },
         "VoltageCalibration": {
             "text2": [
