@@ -616,7 +616,7 @@ static void displayAnimationLoop(void) { OLED::drawCheckbox(getSettingValue(Sett
 
 static void displayBrightnessLevel(void) {
 
-  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / 11 + 1), 2, FontStyle::LARGE);
+  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / 20 + 1), 1, FontStyle::LARGE);
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
 }
