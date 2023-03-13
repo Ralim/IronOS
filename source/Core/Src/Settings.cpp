@@ -83,7 +83,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 0xFFFF, 0, 41431 /*EN*/},                                   // UILanguage
     {0, 50, 1, 20},                                                 // PDNegTimeout
     {0, 1, 1, 0},                                                   // OLEDInversion
-    {MIN_BRIGHTNESS, MAX_BRIGHTNESS, 11, 33},                       // OLEDBrightness
+    {MIN_BRIGHTNESS, MAX_BRIGHTNESS, 25, 25},                       // OLEDBrightness
     {0, 5, 1, 1},                                                   // LOGOTime
     {0, 1, 1, 0},                                                   // CalibrateCJC
     {0, 1, 1, 1},                                                   // BLEEnabled
