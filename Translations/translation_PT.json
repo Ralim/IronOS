@@ -16,7 +16,7 @@
             "message": "Acelarometro não\ndetectado!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "USB-PD IC não\nndetectado!"
+            "message": "USB-PD IC não\ndetectado!"
         },
         "LockingKeysString": {
             "message": "Bloqueado"
@@ -82,7 +82,7 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Configurações de \nenergia",
+            "displayText": "Configurações de\nenergia",
             "description": ""
         },
         "SolderingMenu": {
@@ -156,7 +156,7 @@
             "description": "Tempo para desligamento (Minutos)"
         },
         "HallEffSensitivity": {
-            "displayText": "Sensibilidade de  \nmagentismo",
+            "displayText": "Sensibilidade de\nmagentismo",
             "description": "Sensibilidade de magnetismo (0=Desligado | 1=Menor | ... | 9=Maior)"
         },
         "TemperatureUnit": {
@@ -180,11 +180,11 @@
             "description": "Inverter o alinhamento dos butões para ajudar a temperatura"
         },
         "AnimSpeed": {
-            "displayText": "Velocidade de \nanimação",
+            "displayText": "Velocidade de\nanimação",
             "description": "Sitio das animações no menu (O=off | S=lentas | M=medias | F=rapidas)"
         },
         "AnimLoop": {
-            "displayText": "Repetir \nanimações",
+            "displayText": "Repetir\nanimações",
             "description": "Repetir icon de animações no ecrã principal"
         },
         "Brightness": {
@@ -208,7 +208,7 @@
             "description": "Exibe informações avançadas durante o uso"
         },
         "PowerLimit": {
-            "displayText": "Limite de \nenergia",
+            "displayText": "Limite de\nenergia",
             "description": "Maximo power que o ferro pode usar (W=watt)"
         },
         "CalibrateCJC": {
@@ -220,11 +220,11 @@
             "description": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair"
         },
         "PowerPulsePower": {
-            "displayText": "Pulso \npower",
+            "displayText": "Pulso\npower",
             "description": "Intensidade de energia de arranque (W=watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\nddelay",
+            "displayText": "Power pulse\ndelay",
             "description": "Espera entre o acordar e o envio da rectivação(x 2.5s)"
         },
         "PowerPulseDuration": {
