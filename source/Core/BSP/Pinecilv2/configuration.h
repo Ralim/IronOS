@@ -132,7 +132,7 @@
 #define MAX_TEMP_C                 450                       // Max soldering temp selectable °C
 #define MAX_TEMP_F                 850                       // Max soldering temp selectable °F
 #define MIN_TEMP_C                 10                        // Min soldering temp selectable °C
-#define MIN_TEMP_F                 60                        // Min soldering temp selectable °F
+#define MIN_TEMP_F                 50                        // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C           250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F           480                       // The min settable temp for boost mode °F
 #define DEVICE_HAS_VALIDATION_CODE                           // We have 2 digit validations
