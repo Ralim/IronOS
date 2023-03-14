@@ -212,7 +212,7 @@
             "description": "Maximo power que o ferro pode usar (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrar CJC\nat no prozimo arranque",
+            "displayText": "Calibrar CJC\nno prozimo arranque",
             "description": "No proximo arranque CJC será calibrada  (não será necessário caso o Delta T seja < 5°C)"
         },
         "VoltageCalibration": {
@@ -225,11 +225,11 @@
         },
         "PowerPulseWait": {
             "displayText": "Power pulse\ndelay",
-            "description": "Espera entre o acordar e o envio da rectivação(x 2.5s)"
+            "description": "Espera entre o acordar e o envio da rectivação (x 2.5s)"
         },
         "PowerPulseDuration": {
             "displayText": "Power pulso\nduração",
-            "description": "Manter os inplosus de rectivação em  (x 250ms)"
+            "description": "Manter os inplosus de rectivação em (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "Reset de\nfábrica?",
@@ -240,12 +240,12 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Activado",
+            "displayText": "BLE\nactivado",
             "description": ""
         },
 	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nActivado",
-	    "description": "Activa o modo PPS/EPR."
+            "displayText": "PD VPDO\nactivado",
+	    "description": "Activa o modo PPS/EPR"
 	}
     }
 }
