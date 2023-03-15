@@ -213,7 +213,7 @@
         },
         "CalibrateCJC": {
             "displayText": "Calibrate CJC\nat next boot",
-            "description": "Calbrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
+            "description": "Calibrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrate\ninput voltage",
@@ -240,12 +240,12 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
+            "displayText": "Bluetooth\nLow Energy",
             "description": "Enables BLE"
         },
         "PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-            "description": "Enables PPS/EPR modes."
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS/EPR modes"
         }
     }
 }
