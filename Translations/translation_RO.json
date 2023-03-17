@@ -13,7 +13,7 @@
             "message": "Setările au fost\nresetate!"
         },
         "NoAccelerometerMessage": {
-            "message": "Nu accelerometru\ndetectat!"
+            "message": "Fără accelerometru\ndetectat!"
         },
         "NoPowerDeliveryMessage": {
             "message": "Fără USB-PD IC\ndetectat!"
@@ -28,22 +28,22 @@
             "message": "!BLOCAT!"
         },
         "WarningThermalRunaway": {
-            "message": "Incalzire\nEsuata"
+            "message": "Încălzire\nEsuată"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Înainte de repornire, asigurati-vă că vârful si mânerul sunt la temperatura camerei!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "calibrare\n"
         },
         "SettingsResetWarning": {
             "message": "Sigur doriti să restaurati la setările implicite?"
         },
         "UVLOWarningString": {
-            "message": "DC LOW"
+            "message": "DC SCĂZUT"
         },
         "UndervoltageString": {
-            "message": "Sub tensiune\n"
+            "message": "Voltaj scăzut\n"
         },
         "InputVoltageString": {
             "message": "Intrare V: \n"
@@ -61,7 +61,7 @@
             "message": "Nu"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "Dispozitivul dvs. este cel mai probabil un fals!"
         }
     },
     "characters": {
@@ -117,11 +117,11 @@
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
-            "description": "Timp limita de negociere pentru tranzactia PD, in pasi de 100ms, pentru compatibilitate cu alimentatoarele QC"
+            "description": "Timp limită de negociere pentru tranzactia PD, în pasi de 100ms, pentru compatibilitate cu alimentatoarele QC"
         },
         "BoostTemperature": {
-            "displayText": "Boost\ntemp",
-            "description": "Temperatura utilizată în \"modul boost\""
+            "displayText": "Modifică\ntemp. impuls",
+            "description": "Temperatura utilizată în \"modul de impuls\""
         },
         "AutoStart": {
             "displayText": "Auto\nstart",
@@ -169,7 +169,7 @@
         },
         "CooldownBlink": {
             "displayText": "Clipeste\nla răcire",
-            "description": "Clipeste temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
+            "description": "Clipette temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
         },
         "ScrollingSpeed": {
             "displayText": "Viteză\nderulare",
@@ -192,12 +192,12 @@
             "description": "Ajusteaza luminozitatea ecranului"
         },
         "ColourInversion": {
-            "displayText": "Inverseaza\nculoarea",
-            "description": "Inverseaza culoarea ecranului"
+            "displayText": "Inversează\nculoarea",
+            "description": "Inversează culoarea ecranului"
         },
         "LOGOTime": {
             "displayText": "Durată\nlogo încărcare",
-            "description": "Setati durata logo de pornire (s=secunde)"
+            "description": "Setati durată logo de pornire (s=secunde)"
         },
         "AdvancedIdle": {
             "displayText": "Detalii,\necran inactiv",
@@ -213,7 +213,7 @@
         },
         "CalibrateCJC": {
             "displayText": "Calibrare CJC\nla următoarea pornire",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "description": "La următorul vârf de pornire, compensarea jonctiunii reci va fi calibrată (nu este necesară dacă Delta T este < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrare tens.\nde intrare?",
@@ -221,7 +221,7 @@
         },
         "PowerPulsePower": {
             "displayText": "Putere\npuls",
-            "description": "Puterea pulsului de mentinere activa a blocului de alimentare (watt)"
+            "description": "Puterea pulsului de mentinere activă a blocului de alimentare (watt)"
         },
         "PowerPulseWait": {
             "displayText": "Întârziere\npuls putere",
@@ -240,11 +240,11 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
+            "displayText": "BLE\nactivat",
+            "description": "Activează BLE"
         },
 	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
+            "displayText": "PD VPDO\nactivat",
 	    "description": "Enables PPS/EPR modes."
 	}
     }
