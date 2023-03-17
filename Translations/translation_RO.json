@@ -28,16 +28,16 @@
             "message": "!BLOCAT!"
         },
         "WarningThermalRunaway": {
-            "message": "Încălzire\nEșuată"
+            "message": "Încălzire\nEsuată"
         },
         "SettingsCalibrationWarning": {
-            "message": "Înainte de repornire, asigurați-vă că vârful și mânerul sunt la temperatura camerei!"
+            "message": "Înainte de repornire, asigurati-vă că vârful si mânerul sunt la temperatura camerei!"
         },
         "CJCCalibrating": {
             "message": "calibrare\n"
         },
         "SettingsResetWarning": {
-            "message": "Sigur doriți să restaurați la setările implicite?"
+            "message": "Sigur doriti să restaurati la setările implicite?"
         },
         "UVLOWarningString": {
             "message": "DC SCĂZUT"
@@ -94,18 +94,18 @@
             "description": ""
         },
         "UIMenu": {
-            "displayText": "Interfață\nutilizator",
+            "displayText": "Interfată\nutilizator",
             "description": ""
         },
         "AdvancedMenu": {
-            "displayText": "Opțiuni\navansate",
+            "displayText": "Optiuni\navansate",
             "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
             "displayText": "Sursa de\nalimentare",
-            "description": "Sursa de alimentare. Setează tensiunea de întrerupere. (DC 10V) (S 3.3V per celulă, dezactivați limita de alimentare)"
+            "description": "Sursa de alimentare. Setează tensiunea de întrerupere. (DC 10V) (S 3.3V per celulă, dezactivati limita de alimentare)"
         },
         "MinVolCell": {
             "displayText": "Voltaj\nminim",
@@ -117,7 +117,7 @@
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
-            "description": "Timp limită de negociere pentru tranzacția PD, în pași de 100ms, pentru compatibilitate cu alimentatoarele QC"
+            "description": "Timp limită de negociere pentru tranzactia PD, în pasi de 100ms, pentru compatibilitate cu alimentatoarele QC"
         },
         "BoostTemperature": {
             "displayText": "Modifică\ntemp. impuls",
@@ -137,11 +137,11 @@
         },
         "LockingMode": {
             "displayText": "Blocare\nbutoane",
-            "description": "Când lipiți, apăsați lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
+            "description": "Când lipiti, apăsati lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilitate\nla miscare",
-            "description": "Sensibilitate senzor miscare (0=oprit | 1=puțin sensibil | ... | 9=cel mai sensibil)"
+            "description": "Sensibilitate senzor miscare (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
         },
         "SleepTemperature": {
             "displayText": "Temp\nrepaus",
@@ -168,8 +168,8 @@
             "description": "R=dreptaci | L=stângaci | A=auto"
         },
         "CooldownBlink": {
-            "displayText": "Clipește\nla răcire",
-            "description": "Clipețte temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
+            "displayText": "Clipeste\nla răcire",
+            "description": "Clipette temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
         },
         "ScrollingSpeed": {
             "displayText": "Viteză\nderulare",
@@ -180,12 +180,12 @@
             "description": "Inversarea butoanelor de reglare a temperaturii"
         },
         "AnimSpeed": {
-            "displayText": "Animații\nviteză",
-            "description": "Ritmul animațiilor pictogramei din meniu (O=oprit | Î=încet | M=mediu | R=rapid)"
+            "displayText": "Animatii\nviteză",
+            "description": "Ritmul animatiilor pictogramei din meniu (O=oprit | Î=încet | M=mediu | R=rapid)"
         },
         "AnimLoop": {
-            "displayText": "Animații\nbuclă",
-            "description": "Animații de pictograme în meniul principal"
+            "displayText": "Animatii\nbuclă",
+            "description": "Animatii de pictograme în meniul principal"
         },
         "Brightness": {
             "displayText": "Ecranului\nluminozitatea",
@@ -197,15 +197,15 @@
         },
         "LOGOTime": {
             "displayText": "Durată\nlogo încărcare",
-            "description": "Setați durată logo de pornire (s=secunde)"
+            "description": "Setati durată logo de pornire (s=secunde)"
         },
         "AdvancedIdle": {
             "displayText": "Detalii,\necran inactiv",
-            "description": "Afisați informații detaliate într-un font mai mic pe ecranul de repaus"
+            "description": "Afisati informatii detaliate într-un font mai mic pe ecranul de repaus"
         },
         "AdvancedSoldering": {
             "displayText": "Detalii\necran lipire",
-            "description": "Afisați informații detaliate într-un font mai mic pe ecranul de lipire"
+            "description": "Afisati informatii detaliate într-un font mai mic pe ecranul de lipire"
         },
         "PowerLimit": {
             "displayText": "Putere\nlimită",
@@ -213,15 +213,15 @@
         },
         "CalibrateCJC": {
             "displayText": "Calibrare CJC\nla următoarea pornire",
-            "description": "La următorul vârf de pornire, compensarea joncțiunii reci va fi calibrată (nu este necesară dacă Delta T este < 5°C)"
+            "description": "La următorul vârf de pornire, compensarea jonctiunii reci va fi calibrată (nu este necesară dacă Delta T este < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrare tens.\nde intrare?",
-            "description": "Porniți calibrarea VIN (apăsați lung pentru a ieși)"
+            "description": "Porniti calibrarea VIN (apăsati lung pentru a iesi)"
         },
         "PowerPulsePower": {
             "displayText": "Putere\npuls",
-            "description": "Puterea pulsului de menținere activă a blocului de alimentare (watt)"
+            "description": "Puterea pulsului de mentinere activă a blocului de alimentare (watt)"
         },
         "PowerPulseWait": {
             "displayText": "Întârziere\npuls putere",
@@ -229,22 +229,22 @@
         },
         "PowerPulseDuration": {
             "displayText": "Durată\npuls putere",
-            "description": "Durata pulsului de menținere (x 250ms)"
+            "description": "Durata pulsului de mentinere (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "Setări\ndin fabrică",
-            "description": "Reveniți la setările din fabrică"
+            "description": "Reveniti la setările din fabrică"
         },
         "LanguageSwitch": {
             "displayText": "Limbă:\n RO      Română",
-            "description": "Schimbă limba"
+            "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\n Activat",
+            "displayText": "BLE\nactivat",
             "description": "Activează BLE"
         },
 	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
+            "displayText": "PD VPDO\nactivat",
 	    "description": "Enables PPS/EPR modes."
 	}
     }
