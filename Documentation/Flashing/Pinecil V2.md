@@ -29,7 +29,7 @@ Then this works the same as a production release (use the correct file).
 - The MCU in Pinecil V2 is Bouffalo BL706 and does _not_ use usb-dfu for flashing as the previous Pinecil V1 MCU did.
 - See the Pinecil Wiki page [here](https://wiki.pine64.org/wiki/Pinecil#Firmware_&_Updates) for instructions.
 - The V2 uses the [BLISP flasher](https://github.com/pine64/blisp) to upload the firmware to the MCU.
-- The [Pinecil Wiki] (https://wiki.pine64.org/wiki/Pinecil) is a great resource for all things Pinecil.
+- The [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil) is a great resource for all things Pinecil.
 - Community chat: if there are issues updating, then join the Pine64 > Pinecil channel [here](https://wiki.pine64.org/wiki/Pinecil#Live_Community_Chat). There are knowledgeable members in Discord/Telegram/Matrix. Discord has a bridge bot connection to Telegram and Matrix so that all pine64 volunteers/members can see advice for Pinecil and related items or just get tips on which power supply to purchase.
 - One advantage of Pinecil is that you cannot permanently damage it doing a firmware update (because BIN is in ROM); an update could render Pinecil temporarily inoperable if you flash an invalid firmware. But no worries, simply re-flashing with a working firmware copy will fix everything.
 - USB-C cable is required to do an update. Generally, all USB controllers work, but some hubs have issues, so it is preferred to avoid USB hubs for updates.
