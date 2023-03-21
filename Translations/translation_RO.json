@@ -169,7 +169,7 @@
         },
         "CooldownBlink": {
             "displayText": "Clipeşte\nla răcire",
-            "description": "Clipeţte temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
+            "description": "Clipeşte temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
         },
         "ScrollingSpeed": {
             "displayText": "Viteză\nderulare",
