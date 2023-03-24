@@ -111,6 +111,12 @@
     <li class="toctree-l2"><a class="reference internal" href="#building-pinecil-v1">Building Pinecil V1</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#building-pinecil-v2">Building Pinecil V2</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#building-steps">Building Steps</a>
+    </li>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -211,6 +217,36 @@ It's a bit fussier on setup than the STM tooling, and this is by far the easiest
 If you <em>need</em> an IDE I have used <a href="https://nucleisys.com/download.php">Nuclei's IDE</a>.
 Follow the same idea as the STM Cube IDE notes above.</p>
 <h2 id="building-pinecil-v2">Building Pinecil V2</h2>
+<p>To build the Pinecil V2 firmware, you can use a Docker container that provides a consistent development environment across different operating systems, including Windows with WSL2. Here's how to do it:</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Docker Desktop: Install the latest version of Docker Desktop for your operating system from the official website.</p>
+<p>On Windows follow the instructions on the official documentation to install 'Windows Subsystem for Linux' (WSL2).</p>
+<h3 id="building-steps">Building Steps</h3>
+<ol>
+<li>
+<p>Clone the repository, initialize and update submodules:</p>
+<p><code>sh
+git clone --recurse-submodules https://github.com/Ralim/IronOS.git</code></p>
+</li>
+<li>
+<p>Start the Docker container with the development environment:</p>
+<p><code>sh
+cd IronOS
+./start_dev.sh</code></p>
+<p>This script will build a Docker image and run a container with the necessary tools to build the firmware.</p>
+</li>
+<li>
+<p>Build the firmware for Pinecil V2:</p>
+<p><code>sh
+cd source/source
+./build.sh -l EN -m Pinecilv2</code></p>
+<p>This command will compile the firmware with English language support for Pinecil V2 board.</p>
+</li>
+<li>
+<p>Find the firmware artifacts:
+    After the build completes successfully, you can find the firmware artifacts in the <code>source/Hexfile</code> directory.</p>
+</li>
+</ol>
               
             </div>
           </div><footer>
