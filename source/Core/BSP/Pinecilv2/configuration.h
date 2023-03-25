@@ -65,6 +65,7 @@
  */
 #define MIN_BRIGHTNESS             1   // Min OLED brightness selectable
 #define MAX_BRIGHTNESS             101 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP            25  // OLED brightness increment
 #define DEFAULT_BRIGHTNESS         26  // default OLED brightness
 
 /**
