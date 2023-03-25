@@ -27,6 +27,7 @@
 #include "ble_handlers.h"
 #include "pd.h"
 #include "power.hpp"
+#include "../../version.h"
 #if POW_PD
 #include "USBPD.h"
 #include "pd.h"
@@ -176,9 +177,9 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
     // TODO: Need to store non-encoded version
     break;
   case 3:
-    // Build
-    // TODO: Need to store non-encoded version
-    break;
+    // FW Version
+    memcpy(buf, &BUILD_VERSION, sizeof(BUILD_VERSION) - 1);
+    return sizeof(BUILD_VERSION) - 1;
   case 4:
     // Device unique id
     {
