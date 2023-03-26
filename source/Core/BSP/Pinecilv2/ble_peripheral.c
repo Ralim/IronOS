@@ -142,7 +142,7 @@ static void ble_tp_ind_ccc_changed(const struct bt_gatt_attr *attr, u16_t value)
 /*************************************************************************
  *  DEFINE : attrs
  */
-static const struct bt_gatt_attr attrs[] = {
+static struct bt_gatt_attr ble_attrs_declaration[] = {
     BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_LIVE_DATA),
 
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_LIVE_TEMP, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_status_callback, NULL, NULL),
@@ -257,9 +257,9 @@ static const struct bt_gatt_attr attrs[] = {
 NAME
     get_attr
 */
-struct bt_gatt_attr *get_attr(u8_t index) { return &attrs[index]; }
+struct bt_gatt_attr *get_attr(u8_t index) { return &ble_attrs_declaration[index]; }
 
-static struct bt_gatt_service ble_tp_server = BT_GATT_SERVICE(attrs);
+static struct bt_gatt_service ble_tp_server = BT_GATT_SERVICE(ble_attrs_declaration);
 
 // Start advertising with expected default values
 int ble_start_adv(void) {
