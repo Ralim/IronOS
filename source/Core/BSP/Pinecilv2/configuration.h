@@ -50,6 +50,15 @@
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
+ * OLED Brightness
+ *
+ */
+#define MIN_BRIGHTNESS             1   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS             101 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP            25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS         26  // default OLED brightness
+
+/**
  * Temp change settings
  */
 #define TEMP_CHANGE_SHORT_STEP     1  // Default temp change short step +1
