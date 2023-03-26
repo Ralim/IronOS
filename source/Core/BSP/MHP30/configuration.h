@@ -61,6 +61,15 @@
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
+ * OLED Brightness
+ *
+ */
+#define MIN_BRIGHTNESS             0   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS             100 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP            25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS         25  // default OLED brightness
+
+/**
  * Temp change settings
  */
 #define TEMP_CHANGE_SHORT_STEP     1  // Default temp change short step +1
@@ -137,7 +146,7 @@
 #define MAX_TEMP_C             350                     // Max soldering temp selectable °C
 #define MAX_TEMP_F             660                     // Max soldering temp selectable °F
 #define MIN_TEMP_C             10                      // Min soldering temp selectable °C
-#define MIN_TEMP_F             60                      // Min soldering temp selectable °F
+#define MIN_TEMP_F             50                      // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C       150                     // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       300                     // The min settable temp for boost mode °F
 #define NO_DISPLAY_ROTATE                              // Disable OLED rotation by accel

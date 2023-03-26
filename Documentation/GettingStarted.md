@@ -28,7 +28,7 @@ Note that this may be drawn mirrored depending on the orientation of your screen
 
 The soldering iron symbol on the screen will appear near the tip. This is here to indicate that pressing the button closest to the front of the iron will enter soldering mode.
 
-And naturally, the spanner like icon represents that pressing the button near the rear of the soldering iron will enter the settings menu.
+And naturally, the slider controls icon (or spanner icon in older versions) represents that pressing the button near the rear of the soldering iron will enter the settings menu.
 
 In the settings, you can turn on a detailed idle screen instead. The buttons still function the same, however, the image will be swapped for a text telling you the current status of the iron with extra details.
 
