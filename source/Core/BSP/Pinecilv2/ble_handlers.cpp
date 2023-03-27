@@ -20,14 +20,14 @@
 #include "log.h"
 #include "uuid.h"
 
-#include "OperatingModes.h"
+#include "../../version.h"
 #include "OLED.hpp"
+#include "OperatingModes.h"
 #include "USBPD.h"
 #include "ble_characteristics.h"
 #include "ble_handlers.h"
 #include "pd.h"
 #include "power.hpp"
-#include "../../version.h"
 #if POW_PD
 #include "USBPD.h"
 #include "pd.h"
@@ -40,7 +40,9 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  // Decode the uuid
+  // Byte 12 has the lowest part of the first UUID chunk
+  uint16_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   uint32_t temp       = 0;
   switch (uuid_value) {
   case 1: // Live temp
@@ -138,7 +140,8 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  // Byte 12 has the lowest part of the first UUID chunk
+  uint16_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   // Bulk is the non-const size service
   switch (uuid_value) {
   case 1:
@@ -195,7 +198,8 @@ int ble_char_read_setting_value_callback(struct bt_conn *conn, const struct bt_g
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  // Byte 12 has the lowest part of the first UUID chunk
+  uint16_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   uint16_t temp       = 0xFFFF;
   if (uuid_value <= SettingsOptions::SettingsOptionsLength) {
     temp = getSettingValue((SettingsOptions)(uuid_value));
@@ -248,10 +252,10 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
       if (uuid_value == SettingsOptions::OLEDInversion) {
         OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
       }
-      if (uuid_value == SettingsOptions::OLEDBrightness){
+      if (uuid_value == SettingsOptions::OLEDBrightness) {
         OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
       }
-      if (uuid_value == SettingsOptions::OrientationMode){
+      if (uuid_value == SettingsOptions::OrientationMode) {
         OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
       }
       return len;
