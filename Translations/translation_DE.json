@@ -188,7 +188,7 @@
             "description": "Icon-Animationen im Hauptmenü wiederholen"
         },
         "Brightness": {
-            "displayText": "Bildschirm-\nkontrast",
+            "displayText": "Bildschirm-\nhelligkeit",
             "description": "Verändert die Helligkeit des OLED-Displays"
         },
         "ColourInversion": {
@@ -240,8 +240,8 @@
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\naktivieren",
-            "description": "Aktiviert BLE"
+            "displayText": "Bluetooth\naktivieren",
+            "description": "Aktiviert Bluetooth LE"
         },
 	"PDVpdoEnabled": {
             "displayText": "PD VPDO\naktivieren",
