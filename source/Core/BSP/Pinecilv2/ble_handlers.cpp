@@ -232,16 +232,16 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
     // Use write request / execute write data.
     BT_WARN((char *)"recv write request / exce write\n");
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  uint8_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   if (len == 2) {
     uint16_t new_value = 0;
     memcpy(&new_value, buf, sizeof(new_value));
-    if (uuid_value == 0xFFFF) {
+    if (uuid_value == 0xFF) {
       if (new_value == 1) {
         saveSettings();
         return len;
       }
-    } else if (uuid_value == 0xFFFE) {
+    } else if (uuid_value == 0xFE) {
       if (new_value == 1) {
         resetSettings();
         return len;
