@@ -39,8 +39,8 @@ extern "C" {
     #define OLED_HEIGHT     16
     #define OLED_GRAM_START 0x10 // Should be 0x00 when we have full width
     #define OLED_GRAM_END   0x6F // Should be 0x7F when we have full width
-          #define OLED_GRAM_START_FLIP 0 
-      #define OLED_GRAM_END_FLIP   95
+    #define OLED_GRAM_START_FLIP 0 
+    #define OLED_GRAM_END_FLIP   95
 
     #define OLED_VCOM_LAYOUT 0x12
     #define OLED_SEGMENT_MAP_REVERSED
@@ -50,12 +50,12 @@ extern "C" {
     #define OLED_HEIGHT 16
     #define OLED_VCOM_LAYOUT 0x02
 
-      #define OLED_GRAM_START 0x20 
-      #define OLED_GRAM_END   0x7F
-      #define OLED_GRAM_START_FLIP 0 
-      #define OLED_GRAM_END_FLIP   95
-      
-      #define OLED_SEGMENT_MAP 0xA0
+    #define OLED_GRAM_START 0x20 
+    #define OLED_GRAM_END   0x7F
+    #define OLED_GRAM_START_FLIP 0 
+    #define OLED_GRAM_END_FLIP   95
+    
+    #define OLED_SEGMENT_MAP 0xA0
 
 #endif
 #define FRAMEBUFFER_START 17

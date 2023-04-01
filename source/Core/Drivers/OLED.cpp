@@ -41,7 +41,11 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     {0x80, 0xD3, 0},             /*Set vertical Display offset*/
     {0x80, 0x00, 0},             /*0 Offset*/
     {0x80, 0x40, 0},             /*Set Display start line to 0*/
+    #ifdef OLED_SEGMENT_MAP_REVERSED
+    {0x80, 0xA1, 0},             /*Set Segment remap to normal*/
+    #else
     {0x80, 0xA0, 0},             /*Set Segment remap to normal*/
+    #endif
     {0x80, 0x8D, 0},             /*Charge Pump*/
     {0x80, 0x14, 0},             /*Charge Pump settings*/
     {0x80, 0xDA, 0},             /*Set VCOM Pins hardware config*/
