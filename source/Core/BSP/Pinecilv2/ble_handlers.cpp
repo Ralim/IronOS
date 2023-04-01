@@ -248,15 +248,18 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
       }
     } else if (uuid_value < SettingsOptions::SettingsOptionsLength) {
       setSettingValue((SettingsOptions)(uuid_value), new_value);
-      // @TODO refactor to make this more usable
-      if (uuid_value == SettingsOptions::OLEDInversion) {
+      switch (uuid_value) {
+      case SettingsOptions::OLEDInversion:
         OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
-      }
-      if (uuid_value == SettingsOptions::OLEDBrightness) {
+        break;
+      case SettingsOptions::OLEDBrightness:
         OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
-      }
-      if (uuid_value == SettingsOptions::OrientationMode) {
+        break;
+      case SettingsOptions::OrientationMode:
         OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
+        break;
+      default:
+        break;
       }
       return len;
     }
