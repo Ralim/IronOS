@@ -138,8 +138,9 @@ void startMOVTask(void const *argument __unused) {
   lastMovementTime = 0;
   // Mask 2 seconds if we are in autostart so that if user is plugging in and
   // then putting in stand it doesnt wake instantly
-  if (getSettingValue(SettingsOptions::AutoStartMode))
+  if (getSettingValue(SettingsOptions::AutoStartMode)) {
     osDelay(2 * TICKS_SECOND);
+  }
 
   int16_t     datax[MOVFilter] = {0};
   int16_t     datay[MOVFilter] = {0};
