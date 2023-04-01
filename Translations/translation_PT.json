@@ -13,7 +13,7 @@
             "message": "Algumas configurações\nforam alteradas!"
         },
         "NoAccelerometerMessage": {
-            "message": "Acelarometro não\ndetectado!"
+            "message": "Acelerómetro não\ndetectado!"
         },
         "NoPowerDeliveryMessage": {
             "message": "USB-PD IC não\ndetectado!"
@@ -31,7 +31,7 @@
             "message": "Thermal\nRunaway"
         },
         "SettingsCalibrationWarning": {
-            "message": "Antes de reninciar tenha a certeza que pega e o ponteiro estão em temperatura ambiente!"
+            "message": "Antes de reninciar certifique-se que o ferro est à temperatura ambiente!"
         },
         "CJCCalibrating": {
             "message": "calibrar\n"
@@ -108,43 +108,43 @@
             "description": "Fonte de alimentação. Define a tensão de corte. (DC=10V) (S=3.3V/célula)"
         },
         "MinVolCell": {
-            "displayText": "Voltagem\nminima",
-            "description": "Voltagem minima permitida por ceula de bateria (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Tensão\nmínima",
+            "description": "Tensão mínima permitida por célula de bateria (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
             "displayText": "Potência\nFonte",
             "description": "Potência da fonte usada (Watt)"
         },
         "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "Negoiciação de PD fez timeout em 100ms paraços para compatibilidade com alguns carregadores é (0: disabled)"
+            "displayText": "PD tempo\nlimite",
+            "description": "Tempo limite de negoiciação de PD de 100ms para compatibilidade com alguns carregadores é (0: disabled)"
         },
         "BoostTemperature": {
             "displayText": "Modo turbo\ntemperat.",
             "description": "Ajuste de temperatura do \"modo turbo\""
         },
         "AutoStart": {
-            "displayText": "Partida\nautomática",
+            "displayText": "Aquecimento\nautomático",
             "description": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp mudança\ncurta",
-            "description": "A temperatura será incrementada com um click curto"
+            "description": "A temperatura será aumentada com um click curto"
         },
         "TempChangeLongStep": {
             "displayText": "Temp mudança\nlonga",
-            "description": "A temperatura será incrementada com um click longo"
+            "description": "A temperatura será aumentada com um click longo"
         },
         "LockingMode": {
             "displayText": "Permitir bloquear\nbutões",
-            "description": "Quando estás a soldar primir os dois butões para alternar entre (D=disativas | B=boost mode | F=bloqueio total)"
+            "description": "Durante a solda primir os dois butões para alternar entre (D=disativas | B=boost mode | F=bloqueio total)"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilidade\nmovimento",
             "description": "Sensibilidade ao movimento (0=Desligado | 1=Menor | ... | 9=Maior)"
         },
         "SleepTemperature": {
-            "displayText": "Temperat.\nrepouso",
+            "displayText": "Temperatura\nrepouso",
             "description": "Temperatura de repouso (C)"
         },
         "SleepTimeout": {
@@ -152,8 +152,8 @@
             "description": "Tempo para repouso (Minutos | Segundos)"
         },
         "ShutdownTimeout": {
-            "displayText": "Tempo\ndesligam.",
-            "description": "Tempo para desligamento (Minutos)"
+            "displayText": "Tempo\ndesligar",
+            "description": "Tempo para desligar (Minutos)"
         },
         "HallEffSensitivity": {
             "displayText": "Sensibilidade de\nmagentismo",
@@ -164,8 +164,8 @@
             "description": "Unidade de temperatura (C=Celsius | F=Fahrenheit)"
         },
         "DisplayRotation": {
-            "displayText": "Orientação\ntela",
-            "description": "Orientação da tela (D=estro | C=anhoto | A=utomática)"
+            "displayText": "Orientação\necrã",
+            "description": "Orientação do ecrã (D=estro | C=anhoto | A=utomática)"
         },
         "CooldownBlink": {
             "displayText": "Piscar ao\narrefecer",
@@ -173,7 +173,7 @@
         },
         "ScrollingSpeed": {
             "displayText": "Velocidade\ntexto ajuda",
-            "description": "Velocidade a que o texto é exibido"
+            "description": "Velocidade a que o texto é mostrado"
         },
         "ReverseButtonTempChange": {
             "displayText": "Mudar\n+ - teclas",
@@ -200,47 +200,47 @@
             "description": "Definir a duração do logotipo no arranque em (s=segundos)"
         },
         "AdvancedIdle": {
-            "displayText": "Tela repouso\navançada",
-            "description": "Exibe informações avançadas quando em espera"
+            "displayText": "Ecrã repouso\navançada",
+            "description": "Mostra informações avançadas quando em espera"
         },
         "AdvancedSoldering": {
-            "displayText": "Tela trabalho\navançada",
-            "description": "Exibe informações avançadas durante o uso"
+            "displayText": "Ecrã trabalho\navançado",
+            "description": "Mostra informações avançadas durante o uso"
         },
         "PowerLimit": {
-            "displayText": "Limite de\nenergia",
-            "description": "Maximo power que o ferro pode usar (W=watt)"
+            "displayText": "Limite de\npotência",
+            "description": "Potência máxima a usar (W=watt)"
         },
         "CalibrateCJC": {
             "displayText": "Calibrar CJC\nno prozimo arranque",
-            "description": "No proximo arranque CJC será calibrada  (não será necessário caso o Delta T seja < 5°C)"
+            "description": "No próximo arranque CJC será calibrada  (não será necessário caso o Delta T seja < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrar\ntensão",
             "description": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair"
         },
         "PowerPulsePower": {
-            "displayText": "Pulso\npower",
-            "description": "Intensidade de energia de arranque (W=watt)"
+            "displayText": "Potência\ndo pulso",
+            "description": "Intensidade de potência de arranque (W=watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
+            "displayText": "Espera do\npulso",
             "description": "Espera entre o acordar e o envio da rectivação (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Power pulso\nduração",
+            "displayText": "Duração\npulso",
             "description": "Manter os inplosus de rectivação em (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "Reset de\nfábrica?",
-            "description": "Reverte todos ajustes"
+            "description": "Repôe todos os ajustes"
         },
         "LanguageSwitch": {
             "displayText": "Idioma:\n PT   Português",
             "description": ""
         },
         "BLEEnabled": {
-            "displayText": "BLE\nactivado",
+            "displayText": "BLE\nativado",
             "description": ""
         },
 	"PDVpdoEnabled": {

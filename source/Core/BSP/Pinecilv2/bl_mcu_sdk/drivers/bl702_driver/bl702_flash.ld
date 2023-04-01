@@ -17,16 +17,16 @@ OUTPUT_ARCH( "riscv" )
 /* configure the entry point */
 ENTRY(_enter)
 
-StackSize = 0x1000; /*  4KB */
-HeapSize  = 0x1000; /*  4KB */
+StackSize = 0x800; /*  2KB */
+HeapSize  = 0x800; /*  2KB */
 __EM_SIZE = DEFINED(ble_controller_init) ? 8K : 0K;
 
 MEMORY
 {
     xip_memory  (rx)  : ORIGIN = 0x23000000, LENGTH = 1022K
     itcm_memory (rx)  : ORIGIN = 0x22014000, LENGTH = 16K
-    dtcm_memory (rx)  : ORIGIN = 0x42018000, LENGTH = 32K
-    ram_memory  (!rx) : ORIGIN = 0x42020000, LENGTH = 32K
+    dtcm_memory (rx)  : ORIGIN = 0x42017000, LENGTH = 4K
+    ram_memory  (!rx) : ORIGIN = 0x42018000, LENGTH = 64K
     rsvd_memory (!rx) : ORIGIN = 0x42028000, LENGTH = 1K
     ram2_memory (!rx) : ORIGIN = 0x42028400, LENGTH = (31K - __EM_SIZE)
     hbn_memory (rx) : ORIGIN = 0x40010000, LENGTH = 0xE00 /* hbn ram 4K used 3.5K*/
