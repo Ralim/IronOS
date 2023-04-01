@@ -323,7 +323,7 @@ static void MX_TIM4_Init(void) {
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_1);
   sConfigOC.Pulse = 0; // default to entirely off
-  HAL_TIM_OC_ConfigChannel(&htim4, &sConfigOC, PWM_Out_CHANNEL);
+  HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, PWM_Out_CHANNEL);
 
   HAL_TIM_Base_Start_IT(&htim4);
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
@@ -331,11 +331,7 @@ static void MX_TIM4_Init(void) {
   HAL_NVIC_SetPriority(TIM4_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(TIM4_IRQn);
 
-  /**TIM3 GPIO Configuration
- PWM_Out_Pin     ------> TIM3_CH1
- */
   GPIO_InitTypeDef GPIO_InitStruct;
-
   GPIO_InitStruct.Pin   = PWM_Out_Pin;
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges

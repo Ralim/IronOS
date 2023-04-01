@@ -23,7 +23,6 @@ static bool fastPWM;
 static bool infastPWM;
 
 void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
-#ifdef TEMP_NTC
 // Lookup table for the NTC
 // Stored as ADCReading,Temp in degC
 static const uint16_t NTCHandleLookup[] = {
@@ -53,13 +52,10 @@ static const uint16_t NTCHandleLookup[] = {
     16404, 44, //
     16061, 45, //
 };
-#endif
 
 uint16_t getHandleTemperature(uint8_t sample) {
   int32_t result = getADCHandleTemp(sample);
-#ifdef TEMP_NTC
-  // TS80P uses 100k NTC resistors instead
-  // NTCG104EF104FT1X from TDK
+  // S60 uses 10k NTC resistor
   // For now not doing interpolation
   for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t))); i++) {
     if (result > NTCHandleLookup[(i * 2) + 0]) {
@@ -67,9 +63,6 @@ uint16_t getHandleTemperature(uint8_t sample) {
     }
   }
   return 45 * 10;
-#endif
-
-  return 0;
 }
 
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
@@ -138,12 +131,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   }
 }
 
-void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
-  // This was a when the PWM for the output has timed out
-  // if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-  //   HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
-  // }
-}
 void unstick_I2C() {
 #ifdef SCL_Pin
   GPIO_InitTypeDef GPIO_InitStruct;
