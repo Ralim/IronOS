@@ -9,6 +9,7 @@
 #include "Pins.h"
 #include "history.hpp"
 #include <stdint.h>
+#include <string.h>
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
@@ -281,7 +282,7 @@ static void MX_TIM4_Init(void) {
   TIM_ClockConfigTypeDef  sClockSourceConfig;
   TIM_MasterConfigTypeDef sMasterConfig;
   TIM_OC_InitTypeDef      sConfigOC;
-
+  memset(&sConfigOC, 0, sizeof(sConfigOC));
   // Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC
   // in the PWM off time.
   htim4.Instance = TIM4;

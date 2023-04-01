@@ -145,11 +145,10 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-#define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
+#define TIP_RESISTANCE           60 // x10 ohms
 
 #define GPIO_VIBRATION
-#define POW_DC
-#define POW_PD 0
+#define POW_PD_EXT 1
 #define TEMP_NTC
 #define I2C_SOFT // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB

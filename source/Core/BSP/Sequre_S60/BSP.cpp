@@ -68,21 +68,7 @@ uint16_t getHandleTemperature(uint8_t sample) {
   }
   return 45 * 10;
 #endif
-#ifdef TEMP_TMP36
-  // We return the current handle temperature in X10 C
-  // TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for
-  // example) STM32 = 4096 count @ 3.3V input -> But We oversample by 32/(2^2) =
-  // 8 times oversampling Therefore 32768 is the 3.3V input, so 0.1007080078125
-  // mV per count So we need to subtract an offset of 0.5V to center on 0C
-  // (4964.8 counts)
-  //
-  result -= 4965; // remove 0.5V offset
-  // 10mV per C
-  // 99.29 counts per Deg C above 0C. Tends to read a tad over across all of my sample units
-  result *= 100;
-  result /= 994;
-  return result;
-#endif
+
   return 0;
 }
 

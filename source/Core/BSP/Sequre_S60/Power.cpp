@@ -21,12 +21,4 @@ void power_check() {
 #endif
 }
 
-bool getIsPoweredByDCIN() {
-#if defined(MODEL_TS80) + defined(MODEL_TS80P) > 0
-  return false;
-#endif
-
-#ifdef MODEL_TS100
-  return true;
-#endif
-}
+bool getIsPoweredByDCIN() { return false; }
