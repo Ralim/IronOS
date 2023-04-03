@@ -5,6 +5,14 @@ site_description: "IronOS Open Source Soldering Iron firmware for Miniware and P
 docs_dir: Documentation
 edit_uri: edit/dev/Documentation/
 
+theme: 
+    name: readthedocs
+    highlightsjs: true
+    hljs_languages:
+        - yaml
+
+favicon: Documentation/img/favicon.ico
+
 nav:
   - Home: index.md
   - Getting Started: GettingStarted.md
@@ -29,4 +37,3 @@ nav:
   - Translations: Translation.md
   - Development: Development.md
 
-theme: readthedocs
