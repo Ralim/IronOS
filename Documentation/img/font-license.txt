@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Quantico
+- Font Author: Copyright (c) 2011 Matthew Desmond (http://www.madtype.com | mattdesmond@gmail.com), with Reserved Font Name "Quantico"
+- Font Source: http://fonts.gstatic.com/s/quantico/v15/rax-HiSdp9cPL3KIF4xsLjxSmlLZ.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
