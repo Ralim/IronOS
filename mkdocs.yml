@@ -9,6 +9,7 @@ repo_url: https://github.com/ralim/IronOS/
 docs_dir: Documentation
 edit_uri: edit/dev/Documentation/
 
+# Theme and config
 theme: 
     name: readthedocs
     highlightsjs: true
@@ -40,4 +41,17 @@ nav:
       - Known Hardware Issues: HardwareIssues.md
   - Translations: Translation.md
   - Development: Development.md
-
+  
+# Plugins
+plugins:
+  - autolinks
+  - awesome-pages
+  - git-revision-date
+  - search
+  
+# Markdown Extensions
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
