@@ -1,7 +1,11 @@
+# Project info
 site_name: IronOS
 site_url: https://ralim.github.io/IronOS/
-repo_url: https://github.com/ralim/IronOS/
 site_description: "IronOS Open Source Soldering Iron firmware for Miniware and Pinecil"
+
+# repo config
+repo_url: https://github.com/ralim/IronOS/
+
 docs_dir: Documentation
 edit_uri: edit/dev/Documentation/
 
