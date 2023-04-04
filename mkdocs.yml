@@ -16,8 +16,6 @@ theme:
     hljs_languages:
         - yaml
 
-favicon: Documentation/img/favicon.ico
-
 nav:
   - Home: index.md
   - Getting Started: GettingStarted.md
