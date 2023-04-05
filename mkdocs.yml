@@ -42,10 +42,11 @@ nav:
   
 # Plugins
 plugins:
+  - search
   - autolinks
   - awesome-pages
-  - git-revision-date
-  - search
+  - git-revision-date-localized
+  
   
 # Markdown Extensions
 markdown_extensions:
