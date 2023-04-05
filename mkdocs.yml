@@ -45,7 +45,7 @@ plugins:
   - search
   - autolinks
   - awesome-pages
-  - git-revision-date-localized
+  - git-revision-date
   
   
 # Markdown Extensions
