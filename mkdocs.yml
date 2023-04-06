@@ -1,8 +1,21 @@
+# Project info
 site_name: IronOS
 site_url: https://ralim.github.io/IronOS/
-repo_url: https://github.com/ralim/IronOS/
 site_description: "IronOS Open Source Soldering Iron firmware for Miniware and Pinecil"
+
+# repo config
+repo_url: https://github.com/ralim/IronOS/
+
 docs_dir: Documentation
+edit_uri: edit/dev/Documentation/
+
+# Theme and config
+theme: 
+    name: readthedocs
+    highlightsjs: true
+    hljs_languages:
+        - yaml
+
 nav:
   - Home: index.md
   - Getting Started: GettingStarted.md
@@ -26,5 +39,18 @@ nav:
       - Known Hardware Issues: HardwareIssues.md
   - Translations: Translation.md
   - Development: Development.md
-
-theme: readthedocs
+  
+# Plugins
+plugins:
+  - search
+  - autolinks
+  - awesome-pages
+  - git-revision-date
+  
+  
+# Markdown Extensions
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
