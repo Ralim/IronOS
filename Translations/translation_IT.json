@@ -244,8 +244,8 @@
             "description": ""
         },
 	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
+            "displayText": "Abilita\nPD VPDO",
+	    "description": "Abilita le modalità Power Delivery PPS ed EPR"
 	}
     }
 }
