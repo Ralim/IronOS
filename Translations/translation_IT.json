@@ -121,7 +121,7 @@
         },
         "PDVpdo": {
             "displayText": "PD\nVPDO",
-	    "description": "Abilita le modalità Power Delivery PPS & EPR"
+	    "description": "Abilita le modalità Power Delivery PPS ed EPR"
         },
         "BoostTemperature": {
             "displayText": "Temp\nTurbo",
