@@ -277,7 +277,7 @@ const menuitem advancedMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
      7}, /*Calibrate Cold Junktion Compensation at next boot*/
     {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
-     7},                                                                                                                                                              /*Voltage input cal*/
+     4},                                                                                                                                                              /*Voltage input cal*/
     {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower, 5}, /*Power Pulse adjustment */
     {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), nullptr, displayPowerPulseWait, showPowerPulseOptions, SettingsOptions::KeepAwakePulseWait, SettingsItemIndex::PowerPulseWait,
      7}, /*Power Pulse Wait adjustment*/
@@ -676,7 +676,7 @@ static bool setCalibrateVIN(void) {
   OLED::clearScreen();
 
   for (;;) {
-    OLED::setCursor(0, 0);
+    OLED::setCursor(30, 0);
     uint16_t voltage = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
     OLED::printNumber(voltage / 10, 2, FontStyle::LARGE);
     OLED::print(LargeSymbolDot, FontStyle::LARGE);
@@ -695,7 +695,7 @@ static bool setCalibrateVIN(void) {
     case BUTTON_B_LONG:
       saveSettings();
       OLED::clearScreen();
-      OLED::setCursor(3, 0);
+      OLED::setCursor(30, 0);
       OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::LARGE);
       OLED::refresh();
       waitForButtonPressOrTimeout(1 * TICKS_SECOND);
