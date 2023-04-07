@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "Timp limită de negociere pentru tranzacţia PD, în paşi de 100ms, pentru compatibilitate cu alimentatoarele QC"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Modifică\ntemp. impuls",
             "description": "Temperatura utilizată în \"modul de impuls\""
@@ -207,6 +211,10 @@
             "displayText": "Detalii\necran lipire",
             "description": "Afisaţi informaţii detaliate într-un font mai mic pe ecranul de lipire"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Activează BLE"
+        },
         "PowerLimit": {
             "displayText": "Putere\nlimită",
             "description": "Puterea maximă pe care letconul o poate folosi (W=watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Limbă:\n RO      Română",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\nactivat",
-            "description": "Activează BLE"
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nactivat",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

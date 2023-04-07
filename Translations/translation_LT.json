@@ -119,6 +119,10 @@
             "displayText": "PD\nlaikas",
             "description": "PD suderinimo laikas žingsniais po 100ms suderinamumui su kai kuriais QC įkrovikliais"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Turbo\ntemperat.",
             "description": "Temperatūra turbo režimu"
@@ -207,6 +211,10 @@
             "displayText": "Detalus lita-\nvimo ekranas",
             "description": "Ar rodyti išsamią informaciją lituojant"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Galios\nriba",
             "description": "Didžiausia galia, kurią gali naudoti lituoklis (Vatai)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Kalba:\n LT    Lietuvių",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

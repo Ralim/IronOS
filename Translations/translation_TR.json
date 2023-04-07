@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "YKSC\n",
             "description": "Yüksek Performans Modu Sıcaklığı"
@@ -207,6 +211,10 @@
             "displayText": "GELLHM\n",
             "description": "\"Gelişmiş Lehimleme\" Lehimleme yaparken detaylı bilgi göster"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Power\nlimit",
             "description": "Havyanın kullanacağı en yüksek güç (W=Watts)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Dil:\n TR      Türkçe",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

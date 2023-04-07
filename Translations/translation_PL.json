@@ -119,6 +119,10 @@
             "displayText": "Limit czasu\nPD",
             "description": "Limit czasu negocjacji PD w krokach co 100 ms dla zgodności z niektórymi ładowarkami QC (0: wyłączone)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Włącza tryby PPS & EPR."
+        },
         "BoostTemperature": {
             "displayText": "Temp.\nboost",
             "description": "Temperatura w trybie \"boost\" "
@@ -207,6 +211,10 @@
             "displayText": "Sz. inf. w\ntr. lutowania",
             "description": "Wyświetl szczegółowe informacje w trybie lutowania"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Ogr.\nmocy",
             "description": "Maksymalna moc (W), jakiej może użyć lutownica"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Język:\n PL      Polski",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Włączony",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nWłączony",
-	    "description": "Włącza tryby PPS/EPR."
-	}
+        }
     }
 }

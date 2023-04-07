@@ -119,6 +119,10 @@
             "displayText": "Čas vypršania\nPower Delivery",
             "description": "Čas vyjednávania Power Delivery v 100ms krokoch pre kompatibilitu s niektorými QC nabíjačkami (0: vypnuté)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Boost\nteplota",
             "description": "Cieľová teplota pre prudký náhrev (v nastavených jednotkách)"
@@ -207,6 +211,10 @@
             "displayText": "Detaily počas\nspájkovania",
             "description": "Zobrazenie detailov počas spájkovania"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Obmedzenie\nvýkonu",
             "description": "Obmedzenie výkonu podľa použitého zdroja (watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Jazyk:\n SK  Slovenčina",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

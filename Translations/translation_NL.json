@@ -112,12 +112,16 @@
             "description": "Minimum toegestaan voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "QC\nVoltage",
+            "displayText": "QC\nvoltage",
             "description": "Maximaal QC voltage dat gevraagd mag worden"
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
             "description": "PD afstemmingsduur in stappen van 100ms (voor compatibiliteit met sommige QC laders)"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
         },
         "BoostTemperature": {
             "displayText": "Boost\ntemp",
@@ -207,6 +211,10 @@
             "displayText": "Gedetailleerd\nsoldeerscherm",
             "description": "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Vermogen\nlimiet",
             "description": "Maximaal vermogen (W=Watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Taal:\n NL  Nederlands",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

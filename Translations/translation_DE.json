@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD Abfragedauer in 100ms Schritten (Kompatibilität mit best. QC-Ladegeräten)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Aktiviert PPS & EPR"
+        },
         "BoostTemperature": {
             "displayText": "Boost-\ntemperatur",
             "description": "Temperatur der Lötspitze im Boostmodus"
@@ -207,6 +211,10 @@
             "displayText": "Detaillierte\nLötansicht",
             "description": "Detaillierte Anzeige im Lötmodus"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Aktiviert Bluetooth LE"
+        },
         "PowerLimit": {
             "displayText": "Leistungs-\nmaximum",
             "description": "Maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Sprache:\n DE     Deutsch",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "Bluetooth\naktivieren",
-            "description": "Aktiviert Bluetooth LE"
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\naktivieren",
-	    "description": "Aktiviert PPS/EPR"
-	}
+        }
     }
 }

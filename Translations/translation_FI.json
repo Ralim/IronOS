@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Tehostus-\nlämpötila",
             "description": "Tehostustilan lämpötila"
@@ -207,6 +211,10 @@
             "displayText": "Tarkempi\njuotosnäyttö",
             "description": "Näyttää yksityiskohtaisemmat tiedot pienellä fontilla juotostilassa"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Tehon-\nrajoitus",
             "description": "Suurin sallittu teho (Watti)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Kieli:\n FI       Suomi",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

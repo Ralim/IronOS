@@ -86,8 +86,8 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {MIN_BRIGHTNESS, MAX_BRIGHTNESS, BRIGHTNESS_STEP, DEFAULT_BRIGHTNESS}, // OLEDBrightness
     {0, 5, 1, 1},                                                          // LOGOTime
     {0, 1, 1, 0},                                                          // CalibrateCJC
-    {0, 1, 1, 1},                                                          // BLEEnabled
-    {0, 1, 1, 1},                                                          // PDVpdoEnabled
+    {0, 1, 1, 1},                                                          // BluetoothLE
+    {0, 1, 1, 1},                                                          // PDVpdo
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
