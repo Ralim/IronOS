@@ -4,7 +4,7 @@
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for TS80(P) or TS100
+ * Define here your default pre settings for TS80(P) or S60
  *
  */
 
@@ -111,15 +111,8 @@
 #define ANIMATION_LOOP           1  // 0: off 1: on
 #define ANIMATION_SPEED          settingOffSpeed_t::MEDIUM
 
-#define OP_AMP_Rf_TS100  750 * 1000 // 750  Kilo-ohms -> From schematic, R1
-#define OP_AMP_Rin_TS100 2370       // 2.37 Kilo-ohms -> From schematic, R2
-
-#define OP_AMP_GAIN_STAGE_TS100 (1 + (OP_AMP_Rf_TS100 / OP_AMP_Rin_TS100))
-
-#define OP_AMP_Rf_TS80  180 * 1000 //  180  Kilo-ohms -> From schematic, R6
-#define OP_AMP_Rin_TS80 2000       //  2.0  Kilo-ohms -> From schematic, R3
-
-#define OP_AMP_GAIN_STAGE_TS80 (1 + (OP_AMP_Rf_TS80 / OP_AMP_Rin_TS80))
+// Op-amp gain
+// First stage has a gain of 10.31, followed by gain of 52; so total gain is 536
 
 #define ADC_MAX_READING (4096 * 8) // Maximum reading of the adc
 #define ADC_VDD_MV      3300       // ADC max reading millivolts
@@ -131,6 +124,7 @@
 #if defined(MODEL_S60) == 0
 #error "No model defined!"
 #endif
+
 #define NEEDS_VBUS_PROBE 0
 
 #define MIN_CALIBRATION_OFFSET 100 // Min value for calibration
@@ -144,13 +138,13 @@
 #define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
 
 #ifdef MODEL_S60
-#define VOLTAGE_DIV        467 // 467 - Default divider from schematic
-#define CALIBRATION_OFFSET 700 // 900 - Default adc offset in uV
+#define VOLTAGE_DIV        360 // 467 - Default divider from schematic
+#define CALIBRATION_OFFSET 200 // Default adc offset in uV
 #define PID_POWER_LIMIT    70  // Sets the max pwm power limit
 #define POWER_LIMIT        0   // 0 watts default limit
 #define MAX_POWER_LIMIT    70
 #define POWER_LIMIT_STEPS  5
-#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
+#define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_HAKKO
 #define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
 
