@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
         },
+        "PDVpdo": {
+            "displayText": "PD VPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "ブースト温度",
             "description": "ブーストモードで使用される温度"
@@ -207,6 +211,10 @@
             "displayText": "詳細な作業画面",
             "description": "半田付け画面に詳細情報を表示する"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "電力制限",
             "description": "最大電力を制限する <W=ワット>"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "言語： 日本語",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE Enabled",
-            "description": "Enables BLE"
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

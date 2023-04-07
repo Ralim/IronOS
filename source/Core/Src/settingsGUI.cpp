@@ -26,7 +26,7 @@ static void displayQCInputV(void);
 #endif
 #if POW_PD
 static void displayPDNegTimeout(void);
-static void displayPDVpdoEnabled(void);
+static void displayPDVpdo(void);
 #endif
 static void displaySensitivity(void);
 static void displayShutdownTime(void);
@@ -43,7 +43,7 @@ static void displayAdvancedIDLEScreens(void);
 static void displayScrollSpeed(void);
 static void displayPowerLimit(void);
 #ifdef BLE_ENABLED
-static void displayBLEEnabled(void);
+static void displayBluetoothLE(void);
 #endif
 #ifndef NO_DISPLAY_ROTATE
 static bool setDisplayRotation(void);
@@ -101,6 +101,7 @@ static bool enterAdvancedMenu(void);
  *  -Minimum Voltage
  *  QC Voltage
  *  PD Timeout
+ *  PDVpdo
  *
  * Soldering
  *  Boost Mode Temp
@@ -131,6 +132,7 @@ static bool enterAdvancedMenu(void);
  *  Detailed Soldering
  *
  * Advanced
+ *  BluetoothLE
  *  Power Limit
  *  Calibrate CJC At Next Boot
  *  Calibrate Input V
@@ -170,6 +172,7 @@ const menuitem powerMenu[] = {
  *  -Minimum Voltage
  *  QC Voltage
  *  PD Timeout
+ *  PDVpdo
  */
 #ifdef POW_DC
     {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},            /*Voltage input*/
@@ -180,7 +183,7 @@ const menuitem powerMenu[] = {
 #endif
 #if POW_PD
     {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
-    {SETTINGS_DESC(SettingsItemIndex::PDVpdoEnabled), nullptr, displayPDVpdoEnabled, nullptr, SettingsOptions::PDVpdoEnabled, SettingsItemIndex::PDVpdoEnabled, 7 }, /*Toggle whether to use PPS/EPR*/
+    {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7 }, /*Toggle PPS & EPR*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
@@ -261,7 +264,7 @@ const menuitem UIMenu[] = {
 };
 const menuitem advancedMenu[] = {
 /*
- *  BLE Enabled or not
+ *  BluetoothLE
  *  Power Limit
  *  Calibrate CJC At Next Boot
  *  Calibrate Input V
@@ -271,7 +274,7 @@ const menuitem advancedMenu[] = {
  *  Factory Reset
  */
 #ifdef BLE_ENABLED
-    {SETTINGS_DESC(SettingsItemIndex::BLEEnabled), nullptr, displayBLEEnabled, nullptr, SettingsOptions::BLEEnabled, SettingsItemIndex::BLEEnabled, 7}, /*Advanced idle screen*/
+    {SETTINGS_DESC(SettingsItemIndex::BluetoothLE), nullptr, displayBluetoothLE, nullptr, SettingsOptions::BluetoothLE, SettingsItemIndex::BluetoothLE, 7}, /*Toggle BLE*/
 #endif
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 4}, /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
@@ -378,7 +381,7 @@ static void displayPDNegTimeout(void) {
     OLED::printNumber(value, 3, FontStyle::LARGE);
   }
 }
-static void displayPDVpdoEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::PDVpdoEnabled)); }
+static void displayPDVpdo(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::PDVpdo)); }
 #endif
 
 static bool setBoostTemp(void) {
@@ -644,7 +647,7 @@ static void displayAdvancedIDLEScreens(void) { OLED::drawCheckbox(getSettingValu
 
 static void displayAdvancedSolderingScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedSoldering)); }
 #ifdef BLE_ENABLED
-static void displayBLEEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::BLEEnabled)); }
+static void displayBluetoothLE(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::BluetoothLE)); }
 #endif
 static void displayPowerLimit(void) {
 

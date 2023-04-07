@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Турбо\nтемп.",
             "description": "Температура за \"турбо\" режим"
@@ -207,6 +211,10 @@
             "displayText": "Детайлен\nработен екран",
             "description": "Детайлна информация в работен режим при запояване"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Лимит на\nмощност",
             "description": "Максимална мощност на поялника (Watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Език:\n BG   Български",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }
