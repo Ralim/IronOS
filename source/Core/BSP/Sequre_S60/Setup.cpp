@@ -29,7 +29,6 @@ static void SystemClock_Config(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_IWDG_Init(void);
-static void MX_TIM3_Init(void);
 static void MX_TIM4_Init(void);
 static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
@@ -325,9 +324,6 @@ static void MX_TIM4_Init(void) {
   sConfigOC.Pulse = 0; // default to entirely off
   HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, PWM_Out_CHANNEL);
 
-  HAL_TIM_Base_Start_IT(&htim4);
-  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start_IT(&htim4, PWM_Out_CHANNEL);
   HAL_NVIC_SetPriority(TIM4_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(TIM4_IRQn);
 
@@ -336,7 +332,10 @@ static void MX_TIM4_Init(void) {
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
   HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
-  HAL_TIM_PWM_Start(&htim4, PWM_Out_CHANNEL);
+  HAL_TIM_Base_Start_IT(&htim4);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start_IT(&htim4, PWM_Out_CHANNEL);
+
 }
 
 /**
