@@ -67,7 +67,7 @@
  * OLED Orientation
  *
  */
-#define ORIENTATION_MODE           2 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define ORIENTATION_MODE           0 // 0: Right 1:Left 2:Automatic - Default Automatic
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -84,7 +84,7 @@
 #define POWER_PULSE_WAIT_MAX     9   // 9*2.5s = 22.5 seconds
 #define POWER_PULSE_DURATION_MAX 9   // 9*250ms = 2.25 seconds
 
-#define POWER_PULSE_DEFAULT          5
+#define POWER_PULSE_DEFAULT          0
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -138,18 +138,18 @@
 #define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
 
 #ifdef MODEL_S60
-#define VOLTAGE_DIV        360 // 467 - Default divider from schematic
+#define VOLTAGE_DIV        360 // Default divider scaler
 #define CALIBRATION_OFFSET 200 // Default adc offset in uV
 #define PID_POWER_LIMIT    70  // Sets the max pwm power limit
 #define POWER_LIMIT        0   // 0 watts default limit
 #define MAX_POWER_LIMIT    70
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
-#define TEMP_uV_LOOKUP_HAKKO
+#define TEMP_uV_LOOKUP_S60
 #define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
 
 #define HARDWARE_MAX_WATTAGE_X10 750
-#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_MASS         30 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           60 // x10 ohms
 
 #define GPIO_VIBRATION
