@@ -274,7 +274,7 @@ const menuitem advancedMenu[] = {
  *  Factory Reset
  */
 #ifdef BLE_ENABLED
-    {SETTINGS_DESC(SettingsItemIndex::BluetoothLE), nullptr, displayBluetoothLE, nullptr, SettingsOptions::BluetoothLE, SettingsItemIndex::BluetoothLE, 7}, /*Advanced idle screen*/
+    {SETTINGS_DESC(SettingsItemIndex::BluetoothLE), nullptr, displayBluetoothLE, nullptr, SettingsOptions::BluetoothLE, SettingsItemIndex::BluetoothLE, 7}, /*Toggle BLE*/
 #endif
     {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 4}, /*Power limit*/
     {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
