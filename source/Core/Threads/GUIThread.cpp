@@ -26,7 +26,7 @@ extern "C" {
 #include "settingsGUI.hpp"
 #include "stdlib.h"
 #include "string.h"
-#if POW_PD
+#ifdef POW_PD
 #include "USBPD.h"
 #include "pd.h"
 #endif
@@ -49,7 +49,7 @@ void startGUITask(void const *argument) {
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
   // If the front button is held down, on supported devices, show PD debugging metrics
-#if POW_PD
+#ifdef POW_PD
 #ifdef HAS_POWER_DEBUG_MENU
   if (getButtonA()) {
     showPDDebug();

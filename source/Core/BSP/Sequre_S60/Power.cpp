@@ -7,7 +7,7 @@
 #include "configuration.h"
 
 void power_check() {
-#if POW_PD
+#ifdef POW_PD
   // Cant start QC until either PD works or fails
   if (!USBPowerDelivery::negotiationComplete()) {
     return;

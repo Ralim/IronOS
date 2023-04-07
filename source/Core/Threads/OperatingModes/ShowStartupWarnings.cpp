@@ -26,7 +26,7 @@ void showWarnings(void) {
       warnUser(translatedString(Tr->NoAccelerometerMessage), 10 * TICKS_SECOND);
     }
   }
-#if POW_PD
+#ifdef POW_PD
   // We expect pd to be present
   if (!USBPowerDelivery::fusbPresent()) {
     if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
