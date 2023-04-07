@@ -28,6 +28,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v4
 
+
       - run: |
           pip install --upgrade pip &&
           pip install mkdocs mkdocs-gen-files pymdown-extensions \
