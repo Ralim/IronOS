@@ -218,7 +218,7 @@ static void MX_ADC2_Init(void) {
   sConfigInjected.InjectedRank                  = ADC_INJECTED_RANK_1;
   sConfigInjected.InjectedNbrOfConversion       = 4;
   sConfigInjected.InjectedSamplingTime          = ADC_SAMPLETIME_28CYCLES_5;
-  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T2_TRGO;
+  sConfigInjected.ExternalTrigInjecConv         = ADC_EXTERNALTRIGINJECCONV_T4_TRGO;
   sConfigInjected.AutoInjectedConv              = DISABLE;
   sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
   sConfigInjected.InjectedOffset                = 0;
