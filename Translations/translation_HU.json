@@ -119,6 +119,10 @@
             "displayText": "PD\nidőtúllépés",
             "description": "PD egyeztetés időkerete (kompatibilitás QC töltőkkel) (x 100ms)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Boost\nhőmérséklet",
             "description": "Hőmérséklet \"boost\" módban"
@@ -207,6 +211,10 @@
             "displayText": "Részletes\nforrasztás infó",
             "description": "Részletes információk megjelenítése forrasztás közben"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Teljesítmény\nmaximum",
             "description": "Maximális felvett teljesitmény beállitása"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Nyelv:\n HU      Magyar",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

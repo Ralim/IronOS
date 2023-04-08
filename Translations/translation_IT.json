@@ -119,6 +119,10 @@
             "displayText": "Abilitazione\nUSB PD",
             "description": "Regola il massimo tempo utile per la negoziazione del protocollo USB Power Delivery con alimentatori compatibili [0: disattiva; multipli di 100 ms]"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+	    "description": "Abilita le modalità Power Delivery PPS ed EPR"
+        },
         "BoostTemperature": {
             "displayText": "Temp\nTurbo",
             "description": "Imposta la temperatura della funzione Turbo [°C/°F]"
@@ -207,6 +211,10 @@
             "displayText": "Dettagli\nsaldatura",
             "description": "Mostra informazioni dettagliate durante la modalità Saldatura"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Abilita BLE"
+        },
         "PowerLimit": {
             "displayText": "Limite\npotenza",
             "description": "Imposta il valore di potenza massima erogabile al saldatore [watt]"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Lingua:\n IT    Italiano",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "Abilita\nBluetooth LE",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

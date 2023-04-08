@@ -119,6 +119,10 @@
             "displayText": "PD逾時",
             "description": "設定USB PD協定交涉的逾時時限；為兼容某些QC電源而設 <x100ms（亳秒）>"
         },
+        "PDVpdo": {
+            "displayText": "PD VPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "增熱溫度",
             "description": "於增熱模式時使用的溫度"
@@ -207,6 +211,10 @@
             "displayText": "詳細焊接畫面",
             "description": "於焊接模式畫面以英文小字型顯示詳細資料"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "功率限制",
             "description": "限制烙鐵可用的最大功率 <W=watt（瓦特）>"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "語言：正體中文",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

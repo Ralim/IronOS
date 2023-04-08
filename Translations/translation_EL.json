@@ -119,6 +119,10 @@
             "displayText": "χρονικό όριο\nPD",
             "description": "Χρονικό όριο διαπραγμάτευσης PD σε βήματα 100ms για συμβατότητα με κάποιους φορτιστές QC"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Ενεργοποιεί λειτουργίες PPS & EPR."
+        },
         "BoostTemperature": {
             "displayText": "Θερμοκ.\nboost",
             "description": "Θερμοκρασία στη \"λειτουργία boost\""
@@ -207,6 +211,10 @@
             "displayText": "Λεπτομερής\nοθ. κόλλησης",
             "description": "Προβολή λεπτομερών πληροφοριών σε μικρότερη γραμματοσειρά στην οθόνη κόλλησης"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Ενεργειακό\nόριο",
             "description": "Μέγιστη ενέργεια που μπορεί να χρησιμοποιεί το κολλητήρι (W=watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Γλώσσα:\n EL    Ελληνικά",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Ενεργό",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nΕνεργό",
-	    "description": "Ενεργοποιεί λειτουργίες PPS/EPR."
-	}
+        }
     }
 }

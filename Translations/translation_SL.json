@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Pospešena\ntemp.",
             "description": "Temperatura v pospešenem načinu"
@@ -207,6 +211,10 @@
             "displayText": "Več info na\nzaslonu spaj.",
             "description": "Prikaže več informacij z manjšo pisavo na zaslonu med spajkanjem."
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Meja\nmoči",
             "description": "Največja dovoljena moč v vatih [W]"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Jezik:\n SL Slovenščina",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

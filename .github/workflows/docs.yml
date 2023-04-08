@@ -28,7 +28,12 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v4
 
-      - run: pip install --upgrade pip && pip install mkdocs mkdocs-gen-files
+
+      - run: |
+          pip install --upgrade pip &&
+          pip install mkdocs mkdocs-gen-files pymdown-extensions \
+              mkdocs-git-revision-date-plugin mkdocs-autolinks-plugin \
+              mkdocs-awesome-pages-plugin 
       - run: git config user.name 'github-actions[bot]' && git config user.email 'github-actions[bot]@users.noreply.github.com'
       
       - name: Publish docs

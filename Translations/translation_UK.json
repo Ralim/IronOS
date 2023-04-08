@@ -119,6 +119,10 @@
             "displayText": "PD\nзатримка",
             "description": "Затримка у 100мс інкрементах для PD для сумісності з деякими QC зарядними пристроями (0: вимкнено)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Вмикає режими PPS & EPR."
+        },
         "BoostTemperature": {
             "displayText": "Темпер.\nТурбо",
             "description": "Температура в \"Турбо\" режимі"
@@ -207,6 +211,10 @@
             "displayText": "Детальний\nрежим пайки",
             "description": "Показувати детальну інформацію при пайці."
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Макс.\nпотуж.",
             "description": "Макс. потужність, яку може використовувати паяльник (Ват)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Мова:\n UK  Українська",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Увімкнено",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nУвімкнено",
-	    "description": "Вмикає режими PPS/EPR."
-	}
+        }
     }
 }

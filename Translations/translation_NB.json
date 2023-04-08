@@ -119,6 +119,10 @@
             "displayText": "PD-\ntidsavb.",
             "description": "PD-forhandlingstidsavbrudd i steg på 100 ms for kompatibilitet med noen QC-ladere"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "KTmp\n",
             "description": "Temperatur i \"kraft-modus\""
@@ -207,6 +211,10 @@
             "displayText": "AvLdSk\n",
             "description": "Vis detaljert informasjon ved lodding"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Effekt-\ngrense",
             "description": "Maks effekt jernet kan bruke (W=watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Språk:\n NB    Norsk bm",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

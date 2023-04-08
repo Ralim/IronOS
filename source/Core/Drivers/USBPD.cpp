@@ -152,7 +152,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
           }
         }
       }
-    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS)) && getSettingValue(SettingsOptions::PDVpdoEnabled)) {
+    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS)) && getSettingValue(SettingsOptions::PDVpdo)) {
       // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCapabilities[i]));
       // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCapabilities[i]));
@@ -179,7 +179,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
       }
     }
 #ifdef POW_EPR
-    else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS)) && getSettingValue(SettingsOptions::PDVpdoEnabled)) {
+    else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS)) && getSettingValue(SettingsOptions::PDVpdo)) {
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
       uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
 
