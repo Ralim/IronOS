@@ -4,6 +4,17 @@
 
 bool hub238_probe() { return I2CBB::probe(HUB238_ADDR); }
 
+uint16_t hub238_debug_state() {
+  uint8_t status0 = 0;
+  uint8_t status1 = 0;
+  if (!I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS0, &status0, 1)) {
+    return 0xFFFF;
+  }
+  if (!I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS1, &status1, 1)) {
+    return 0xFFFF;
+  }
+  return status1 | (((uint16_t)status0) << 8);
+}
 uint16_t pdo_slot_to_currentx100(uint8_t temp) {
   temp = temp & 0b1111;
   switch (temp) {
@@ -41,67 +52,75 @@ uint16_t pdo_slot_to_currentx100(uint8_t temp) {
     return 500;
   }
 }
-uint8_t findBestPDO() {
+uint16_t hub238_getVoltagePDOCurrent(uint8_t voltage) {
+  uint8_t reg = HUB238_REG_SRC_PDO_5V;
+  switch (voltage) {
+  case 5:
+    reg = HUB238_REG_SRC_PDO_5V;
+    break;
+  case 9:
+    reg = HUB238_REG_SRC_PDO_9V;
+    break;
+  case 12:
+    reg = HUB238_REG_SRC_PDO_12V;
+    break;
+  case 15:
+    reg = HUB238_REG_SRC_PDO_15V;
+    break;
+  case 18:
+    reg = HUB238_REG_SRC_PDO_18V;
+    break;
+  case 20:
+    reg = HUB238_REG_SRC_PDO_20V;
+    break;
+  default:
+    return 0;
+  }
   uint8_t temp = 0;
-
-#if USB_PD_VMAX >= 20
-  // Read out PDU 20V specs
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO_20V, &temp, 1) == true) {
+  if (I2CBB::Mem_Read(HUB238_ADDR, reg, &temp, 1) == true) {
     if (temp & HUB238_PDO_DETECTED) {
-      uint16_t ilim              = pdo_slot_to_currentx100(temp);
-      uint16_t minimumx10current = Utils::RequiredCurrentForTipAtVoltage(200);
-      if (ilim / 10 >= minimumx10current) {
-        return 0b1010;
-      }
+      return pdo_slot_to_currentx100(temp);
     }
+  }
+  return 0;
+}
+uint8_t findBestPDO() {
+  uint8_t  temp              = 0;
+  uint16_t ilim              = 0;
+  uint16_t minimumx10current = 0;
+#if USB_PD_VMAX >= 20
+  ilim              = hub238_getVoltagePDOCurrent(20);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(20);
+  if (ilim != 0 && ilim / 10 >= minimumx10current) {
+    return 0b1010;
   }
 #endif
 #if USB_PD_VMAX >= 18
-  // Read out PDU 18V specs
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO_18V, &temp, 1) == true) {
-    if (temp & HUB238_PDO_DETECTED) {
-      uint16_t ilim              = pdo_slot_to_currentx100(temp);
-      uint16_t minimumx10current = Utils::RequiredCurrentForTipAtVoltage(180);
-      if (ilim / 10 >= minimumx10current) {
-        return 0b1001;
-      }
-    }
+  ilim              = hub238_getVoltagePDOCurrent(18);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(18);
+  if (ilim != 0 && ilim / 10 >= minimumx10current) {
+    return 0b1010;
   }
 #endif
 #if USB_PD_VMAX >= 15
-  // Read out PDU 15V specs
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO_15V, &temp, 1) == true) {
-    if (temp & HUB238_PDO_DETECTED) {
-      uint16_t ilim              = pdo_slot_to_currentx100(temp);
-      uint16_t minimumx10current = Utils::RequiredCurrentForTipAtVoltage(150);
-      if (ilim / 10 >= minimumx10current) {
-        return 0b1000;
-      }
-    }
+  ilim              = hub238_getVoltagePDOCurrent(15);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(15);
+  if (ilim != 0 && ilim / 10 >= minimumx10current) {
+    return 0b1010;
   }
 #endif
 #if USB_PD_VMAX >= 12
-  // Read out PDU 12V specs
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO_12V, &temp, 1) == true) {
-    if (temp & HUB238_PDO_DETECTED) {
-      uint16_t ilim              = pdo_slot_to_currentx100(temp);
-      uint16_t minimumx10current = Utils::RequiredCurrentForTipAtVoltage(120);
-      if (ilim / 10 >= minimumx10current) {
-        return 0b0011;
-      }
-    }
+  ilim              = hub238_getVoltagePDOCurrent(12);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(12);
+  if (ilim != 0 && ilim / 10 >= minimumx10current) {
+    return 0b1010;
   }
 #endif
 #if USB_PD_VMAX >= 9
-  // Read out PDU 9V specs
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO_9V, &temp, 1) == true) {
-    if (temp & HUB238_PDO_DETECTED) {
-      uint16_t ilim              = pdo_slot_to_currentx100(temp);
-      uint16_t minimumx10current = Utils::RequiredCurrentForTipAtVoltage(90);
-      if (ilim / 10 >= minimumx10current) {
-        return 0b0010;
-      }
-    }
+  ilim              = hub238_getVoltagePDOCurrent(9);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(9);
+  if (ilim != 0 && ilim / 10 >= minimumx10current) {
+    return 0b1010;
   }
 #endif
   return 0b0001; // 5V PDO

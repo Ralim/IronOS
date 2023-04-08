@@ -20,16 +20,14 @@
 #define BOOST_TEMP         420 // Default boost temp.
 #define BOOST_MODE_ENABLED 1   // 0: Disable 1: Enable
 
-
 /**
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS             0   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS             100 // Max OLED brightness selectable
-#define BRIGHTNESS_STEP            25  // OLED brightness increment
-#define DEFAULT_BRIGHTNESS         25  // default OLED brightness
-
+#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP    25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS 25  // default OLED brightness
 
 /**
  * Blink the temperature on the cooling screen when its > 50C
@@ -154,6 +152,7 @@
 
 #define GPIO_VIBRATION
 #define POW_PD_EXT 1
+#define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
 #define I2C_SOFT // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB

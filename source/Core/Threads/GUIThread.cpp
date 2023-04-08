@@ -49,12 +49,15 @@ void startGUITask(void const *argument) {
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
   // If the front button is held down, on supported devices, show PD debugging metrics
-#ifdef POW_PD
 #ifdef HAS_POWER_DEBUG_MENU
+#ifdef POW_PD
   if (getButtonA()) {
-    showPDDebug();
-  }
 #endif
+#if POW_PD_EXT == 1
+    if (getButtonB()) {
+#endif
+      showPDDebug();
+    }
 #endif
 
   if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {

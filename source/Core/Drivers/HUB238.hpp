@@ -38,13 +38,13 @@ void hub238_check_negotiation();
 bool hub238_has_negotiated();
 
 // Return an encoded state for debugging
-uint8_t hub238_debug_state();
+uint16_t hub238_debug_state();
 // Return selected source voltage in V
 uint16_t hub238_source_voltage();
 // Return selected source current in Amps * 100
 uint8_t hub238_source_currentX100();
 
-// TODO Debug PDO info
+uint16_t hub238_getVoltagePDOCurrent(uint8_t voltage);
 
 #endif
 #endif
