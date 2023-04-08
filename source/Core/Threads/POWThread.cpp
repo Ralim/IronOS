@@ -7,6 +7,7 @@
 
 #include "BSP.h"
 #include "FreeRTOS.h"
+#include "HUB238.hpp"
 #include "QC3.h"
 #include "Settings.h"
 #include "USBPD.h"
@@ -16,12 +17,10 @@
 #include "stdlib.h"
 #include "task.h"
 
+
 // Small worker thread to handle power (PD + QC) related steps
 
 void startPOWTask(void const *argument __unused) {
-  for (;;) {
-    osDelay(TICKS_100MS / 5); // This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
-  }
 
   // Init any other misc sensors
   postRToSInit();
@@ -59,6 +58,9 @@ void startPOWTask(void const *argument __unused) {
 
 #else
     (void)res;
+#endif
+#if POW_PD_EXT == 1
+    hub238_check_negotiation();
 #endif
     power_check();
   }
