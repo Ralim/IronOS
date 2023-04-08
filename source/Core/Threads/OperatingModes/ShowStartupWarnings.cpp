@@ -1,5 +1,5 @@
+#include "HUB238.hpp"
 #include "OperatingModes.h"
-
 void showWarnings(void) {
   // Display alert if settings were reset
   if (settingsWereReset) {
@@ -11,6 +11,7 @@ void showWarnings(void) {
     warnUser(translatedString(Tr->DeviceFailedValidationWarning), 10 * TICKS_SECOND);
   }
 #endif
+
 #ifndef NO_WARN_MISSING
   // We also want to alert if accel or pd is not detected / not responding
   // In this case though, we dont want to nag the user _too_ much
@@ -29,6 +30,15 @@ void showWarnings(void) {
 #ifdef POW_PD
   // We expect pd to be present
   if (!USBPowerDelivery::fusbPresent()) {
+    if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
+      nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+      saveSettings();
+      warnUser(translatedString(Tr->NoPowerDeliveryMessage), 10 * TICKS_SECOND);
+    }
+  }
+#endif
+#if POW_PD_EXT == 1
+  if (!hub238_probe()) {
     if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
       nextSettingValue(SettingsOptions::PDMissingWarningCounter);
       saveSettings();
