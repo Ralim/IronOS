@@ -1,4 +1,5 @@
 version: "3"
+name: "ironos"
 services:
   builder:
     stdin_open: true

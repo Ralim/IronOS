@@ -34,10 +34,8 @@ def cjk_font() -> Font:
 
 
 # Loading a single JSON file
-def load_json(filename: str, skip_first_line: bool) -> dict:
+def load_json(filename: str) -> dict:
     with open(filename) as f:
-        if skip_first_line:
-            f.readline()
         return json.loads(f.read())
 
 
@@ -57,7 +55,7 @@ def read_translation(json_root: Union[str, Path], lang_code: str) -> dict:
     file_with_path = os.path.join(json_root, filename)
 
     try:
-        lang = load_json(file_with_path, skip_first_line=False)
+        lang = load_json(file_with_path)
     except json.decoder.JSONDecodeError as e:
         logging.error(f"Failed to decode {filename}")
         logging.exception(str(e))
@@ -92,27 +90,37 @@ def write_start(f: TextIO):
     f.write('#include "Translation.h"\n')
 
 
-def get_constants(build_version: str) -> List[Tuple[str, str]]:
+def get_constants() -> List[Tuple[str, str]]:
     # Extra constants that are used in the firmware that are shared across all languages
     return [
-        ("SymbolPlus", "+"),
-        ("SymbolMinus", "-"),
-        ("SymbolSpace", " "),
-        ("SymbolDot", "."),
-        ("SymbolDegC", "C"),
-        ("SymbolDegF", "F"),
-        ("SymbolMinutes", "m"),
-        ("SymbolSeconds", "s"),
-        ("SymbolWatts", "W"),
-        ("SymbolVolts", "V"),
-        ("SymbolAmps", "A"),
-        ("SymbolDC", "DC"),
-        ("SymbolCellCount", "S"),
-        ("SymbolVersionNumber", build_version),
-        ("SymbolPDDebug", "PD Debug"),
-        ("SymbolState", "State"),
-        ("SymbolNoVBus", "No VBus"),
-        ("SymbolVBus", "VBus"),
+        ("LargeSymbolPlus", "+"),
+        ("SmallSymbolPlus", "+"),
+        ("LargeSymbolMinus", "-"),
+        ("SmallSymbolMinus", "-"),
+        ("LargeSymbolSpace", " "),
+        ("SmallSymbolSpace", " "),
+        ("LargeSymbolDot", "."),
+        ("SmallSymbolDot", "."),
+        ("LargeSymbolDegC", "C"),
+        ("SmallSymbolDegC", "C"),
+        ("LargeSymbolDegF", "F"),
+        ("SmallSymbolDegF", "F"),
+        ("LargeSymbolMinutes", "m"),
+        ("SmallSymbolMinutes", "m"),
+        ("LargeSymbolSeconds", "s"),
+        ("SmallSymbolSeconds", "s"),
+        ("LargeSymbolWatts", "W"),
+        ("SmallSymbolWatts", "W"),
+        ("LargeSymbolVolts", "V"),
+        ("SmallSymbolVolts", "V"),
+        ("SmallSymbolAmps", "A"),
+        ("LargeSymbolDC", "DC"),
+        ("LargeSymbolCellCount", "S"),
+        ("SmallSymbolVersionNumber", read_version()),
+        ("SmallSymbolPDDebug", "PD Debug"),
+        ("SmallSymbolState", "State"),
+        ("SmallSymbolNoVBus", "No VBus"),
+        ("SmallSymbolVBus", "VBus"),
     ]
 
 
@@ -159,90 +167,167 @@ def get_power_source_list() -> List[str]:
     ]
 
 
-def get_letter_counts(
-    defs: dict, lang: dict, build_version: str
-) -> Tuple[List[str], Dict[str, int]]:
-    text_list = []
-    # iterate over all strings
-    obj = lang["menuOptions"]
-    for mod in defs["menuOptions"]:
-        eid = mod["id"]
-        text_list.append(obj[eid]["desc"])
+def test_is_small_font(msg: str) -> bool:
+    return "\n" in msg and msg[0] != "\n"
 
-    obj = lang["messages"]
-    for mod in defs["messages"]:
-        eid = mod["id"]
-        if eid not in obj:
-            text_list.append(mod["default"])
-        else:
-            text_list.append(obj[eid])
+
+def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
+    """From the source definitions, language file and build version; calculates the ranked symbol list
+
+    Args:
+        defs (dict): _description_
+        lang (dict): _description_
+        build_version (str): _description_
+
+    Returns:
+        Dict: _description_
+    """
+    big_font_messages = []
+    small_font_messages = []
+
+    # iterate over all strings
 
     obj = lang["messagesWarn"]
     for mod in defs["messagesWarn"]:
         eid = mod["id"]
-        if isinstance(obj[eid], list):
-            text_list.append(obj[eid][0])
-            text_list.append(obj[eid][1])
+        msg = obj[eid]["message"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
         else:
-            text_list.append(obj[eid])
+            big_font_messages.append(msg)
 
     obj = lang["characters"]
 
     for mod in defs["characters"]:
         eid = mod["id"]
-        text_list.append(obj[eid])
+        msg = obj[eid]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["menuOptions"]
     for mod in defs["menuOptions"]:
         eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            text_list.append(obj[eid]["text2"][0])
-            text_list.append(obj[eid]["text2"][1])
+        msg = obj[eid]["displayText"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
         else:
-            text_list.append(obj[eid]["text2"])
+            big_font_messages.append(msg)
+
+    obj = lang["menuOptions"]
+    for mod in defs["menuOptions"]:
+        eid = mod["id"]
+        msg = obj[eid]["description"]
+        big_font_messages.append(msg)
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
         eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            text_list.append(obj[eid]["text2"][0])
-            text_list.append(obj[eid]["text2"][1])
+        msg = obj[eid]["displayText"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
         else:
-            text_list.append(obj[eid]["text2"])
+            big_font_messages.append(msg)
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
         eid = mod["id"]
-        text_list.append(obj[eid]["desc"])
-    constants = get_constants(build_version)
+        msg = obj[eid]["description"]
+        big_font_messages.append(msg)
+
+    constants = get_constants()
     for x in constants:
-        text_list.append(x[1])
-    text_list.extend(get_debug_menu())
-    text_list.extend(get_accel_names_list())
-    text_list.extend(get_power_source_list())
+        if x[0].startswith("Small"):
+            small_font_messages.append(x[1])
+        else:
+            big_font_messages.append(x[1])
+
+    small_font_messages.extend(get_debug_menu())
+    small_font_messages.extend(get_accel_names_list())
+    small_font_messages.extend(get_power_source_list())
 
     # collapse all strings down into the composite letters and store totals for these
+    # Doing this seperately for small and big font
+    def sort_and_count(list_in: List[str]):
 
-    symbol_counts: dict[str, int] = {}
-    for line in text_list:
-        line = line.replace("\n", "").replace("\r", "")
-        line = line.replace("\\n", "").replace("\\r", "")
-        if line:
-            for letter in line:
-                symbol_counts[letter] = symbol_counts.get(letter, 0) + 1
-    # swap to Big -> little sort order
+        symbol_counts: dict[str, int] = {}
+        for line in list_in:
+            line = line.replace("\n", "").replace("\r", "")
+            line = line.replace("\\n", "").replace("\\r", "")
+            if line:
+                for letter in line:
+                    symbol_counts[letter] = symbol_counts.get(letter, 0) + 1
+        # swap to Big -> little sort order
+
+        return symbol_counts
+
+    small_symbol_counts = sort_and_count(small_font_messages)
+    big_symbol_counts = sort_and_count(big_font_messages)
+
+    return {
+        "smallFontCounts": small_symbol_counts,
+        "bigFontCounts": big_symbol_counts,
+    }
+
+
+def convert_letter_counts_to_ranked_symbols_with_forced(
+    symbol_dict: Dict[str, int]
+) -> List[str]:
+    # Add in forced symbols first
+    ranked_symbols = []
+    ranked_symbols.extend(get_forced_first_symbols())
+    # Now add in all the others based on letter count
     symbols_by_occurrence = [
         x[0]
         for x in sorted(
-            symbol_counts.items(), key=lambda kv: (kv[1], kv[0]), reverse=True
+            symbol_dict.items(), key=lambda kv: (kv[1], kv[0]), reverse=True
         )
     ]
-    return symbols_by_occurrence, symbol_counts
+    ranked_symbols.extend([x for x in symbols_by_occurrence if x not in ranked_symbols])
+    return ranked_symbols
 
 
-def get_cjk_glyph(sym: str) -> bytes:
-    glyph: Glyph = cjk_font()[ord(sym)]
+def merge_letter_count_info(a: Dict, b: Dict) -> Dict:
+    """Merge the results from get_letter_counts
+    Combining the ranked symbols lists
 
+    Args:
+        a (Dict): get_letter_counts
+        b (Dict): get_letter_counts
+
+    Returns:
+        Dict: get_letter_counts
+    """
+    smallFontCounts = {}
+    bigFontCounts = {}
+    for x in a.get("smallFontCounts", []):
+        old = smallFontCounts.get(x, 0)
+        old += a["smallFontCounts"][x]
+        smallFontCounts[x] = old
+    for x in a.get("bigFontCounts", []):
+        old = bigFontCounts.get(x, 0)
+        old += a["bigFontCounts"][x]
+        bigFontCounts[x] = old
+    for x in b.get("smallFontCounts", []):
+        old = smallFontCounts.get(x, 0)
+        old += b["smallFontCounts"][x]
+        smallFontCounts[x] = old
+    for x in b.get("bigFontCounts", []):
+        old = bigFontCounts.get(x, 0)
+        old += b["bigFontCounts"][x]
+        bigFontCounts[x] = old
+    return {
+        "smallFontCounts": smallFontCounts,
+        "bigFontCounts": bigFontCounts,
+    }
+
+
+def get_cjk_glyph(sym: str) -> Optional[bytes]:
+    try:
+        glyph: Glyph = cjk_font()[ord(sym)]
+    except KeyError:
+        return None
     data = glyph.data
     src_left, src_bottom, src_w, src_h = glyph.get_bounding_box()
     dst_w = 12
@@ -344,80 +429,106 @@ def bytes_to_c_hex(b: bytes) -> str:
 
 
 @dataclass
-class FontMap:
-    font12: Dict[str, bytes]
-    font06: Dict[str, Optional[bytes]]
-
-
-@dataclass
 class FontMapsPerFont:
+    font12_symbols_ordered: List[str]
     font12_maps: Dict[str, Dict[str, bytes]]
-    font06_maps: Dict[str, Dict[str, Optional[bytes]]]
-    sym_lists: Dict[str, List[str]]
+    font06_symbols_ordered: List[str]
+    font06_maps: Dict[str, Dict[str, bytes]]
 
 
-def get_font_map_per_font(text_list: List[str]) -> FontMapsPerFont:
-    pending_sym_set = set(text_list)
-    if len(pending_sym_set) != len(text_list):
-        raise ValueError("`text_list` contains duplicated symbols")
+def get_font_map_per_font(
+    text_list_small_font: List[str], text_list_large_font: List[str]
+) -> FontMapsPerFont:
 
-    total_symbol_count = len(text_list)
+    pending_small_symbols = set(text_list_small_font)
+    pending_large_symbols = set(text_list_large_font)
+
+    if len(pending_small_symbols) != len(text_list_small_font):
+        raise ValueError("`text_list_small_font` contains duplicated symbols")
+    if len(pending_large_symbols) != len(text_list_large_font):
+        raise ValueError("`text_list_large_font` contains duplicated symbols")
+
+    total_symbol_count_small = len(pending_small_symbols)
     # \x00 is for NULL termination and \x01 is for newline, so the maximum
     # number of symbols allowed is as follow (see also the comments in
     # `get_bytes_from_font_index`):
-    if total_symbol_count > (0x10 * 0xFF - 15) - 2:  # 4063
+    if total_symbol_count_small > (0x10 * 0xFF - 15) - 2:  # 4063
         raise ValueError(
-            f"Error, too many used symbols for this version (total {total_symbol_count})"
+            f"Error, too many used symbols for this version (total {total_symbol_count_small})"
+        )
+    logging.info(f"Generating fonts for {total_symbol_count_small} symbols")
+
+    total_symbol_count_large = len(pending_large_symbols)
+    # \x00 is for NULL termination and \x01 is for newline, so the maximum
+    # number of symbols allowed is as follow (see also the comments in
+    # `get_bytes_from_font_index`):
+    if total_symbol_count_large > (0x10 * 0xFF - 15) - 2:  # 4063
+        raise ValueError(
+            f"Error, too many used symbols for this version (total {total_symbol_count_large})"
+        )
+    logging.info(f"Generating fonts for {total_symbol_count_large} symbols")
+
+    # Build the full font maps
+
+    font12_map: Dict[str, bytes] = {}
+    font06_map: Dict[str, bytes] = {}
+
+    # First we go through and do all of the CJK characters that are in the large font to have them removed
+    for sym in text_list_large_font:
+        font12_line = get_cjk_glyph(sym)
+        if font12_line is None:
+            continue
+        font12_map[sym] = font12_line
+        pending_large_symbols.remove(sym)
+    # Now that all CJK characters are done, we next have to fill out all of the small and large fonts from the remainders
+
+    # This creates our superset of characters to reference off that are pre-rendered ones (non CJK)
+    # Collect font bitmaps by the defined font order:
+    for font in font_tables.ALL_PRE_RENDERED_FONTS:
+        font12, font06 = font_tables.get_font_maps_for_name(font)
+        font12_map.update(font12)
+        font06_map.update(font06)
+
+    # LARGE FONT
+    for sym in text_list_large_font:
+        if sym in pending_large_symbols:
+            font_data = font12_map.get(sym, None)
+            if font_data is None:
+                raise KeyError(f"Symbol |{sym}| is missing in large font set")
+            font12_map[sym] = font_data
+            pending_large_symbols.remove(sym)
+
+    if len(pending_large_symbols) > 0:
+        raise KeyError(
+            f"Missing large font symbols for {len(pending_large_symbols)} characters: {pending_large_symbols}"
         )
 
-    logging.info(f"Generating fonts for {total_symbol_count} symbols")
+    # SMALL FONT
+    for sym in text_list_small_font:
+        if sym in pending_small_symbols:
+            font_data = font06_map.get(sym, None)
+            if font_data is None:
+                raise KeyError(f"Symbol |{sym}| is missing in small font set")
+            font06_map[sym] = font_data
+            pending_small_symbols.remove(sym)
 
-    # Collect font bitmaps by the defined font order:
-    font12_maps: Dict[str, Dict[str, bytes]] = {}
-    font06_maps: Dict[str, Dict[str, Optional[bytes]]] = {}
-    sym_lists: Dict[str, List[str]] = {}
-    for font in font_tables.ALL_FONTS:
-        font12_maps[font] = {}
-        font12_map = font12_maps[font]
-        font06_maps[font] = {}
-        font06_map = font06_maps[font]
-        sym_lists[font] = []
-        sym_list = sym_lists[font]
+    if len(pending_small_symbols) > 0:
+        raise KeyError(
+            f"Missing small font symbols for {len(pending_small_symbols)} characters: {pending_small_symbols}"
+        )
 
-        if font == font_tables.NAME_CJK:
-            is_cjk = True
-        else:
-            is_cjk = False
-            font12: Dict[str, bytes]
-            font06: Dict[str, bytes]
-            font12, font06 = font_tables.get_font_maps_for_name(font)
-
-        for sym in text_list:
-            if sym not in pending_sym_set:
-                continue
-            if is_cjk:
-                font12_line = get_cjk_glyph(sym)
-                if font12_line is None:
-                    continue
-                font06_line = None
-            else:
-                try:
-                    font12_line = font12[sym]
-                    font06_line = font06[sym]
-                except KeyError:
-                    continue
-            font12_map[sym] = font12_line
-            font06_map[sym] = font06_line
-            sym_list.append(sym)
-            pending_sym_set.remove(sym)
-
-    if len(pending_sym_set) > 0:
-        raise KeyError(f"Symbols not found in our fonts: {pending_sym_set}")
-
-    return FontMapsPerFont(font12_maps, font06_maps, sym_lists)
+    return FontMapsPerFont(
+        text_list_large_font, font12_map, text_list_small_font, font06_map
+    )
 
 
 def get_forced_first_symbols() -> List[str]:
+    """Get the list of symbols that must always occur at start of small and large fonts
+    Used by firmware for displaying numbers and hex strings
+
+    Returns:
+        List[str]: List of single character strings that must be the first N entries in a font table
+    """
     forced_first_symbols = [
         "0",
         "1",
@@ -435,37 +546,11 @@ def get_forced_first_symbols() -> List[str]:
         "d",
         "e",
         "f",
+        " ",  # We lock these to ease printing functions; and they are always included due to constants
+        "-",
+        "+",
     ]
     return forced_first_symbols
-
-
-def get_sym_list_and_font_map(
-    text_list: List[str],
-) -> Tuple[List[str], Dict[str, List[str]], FontMap]:
-    font_maps = get_font_map_per_font(text_list)
-    font12_maps = font_maps.font12_maps
-    font06_maps = font_maps.font06_maps
-
-    # Build the full font maps
-    font12_map = {}
-    font06_map = {}
-    for font in font_tables.ALL_FONTS:
-        font12_map.update(font12_maps[font])
-        font06_map.update(font06_maps[font])
-
-    # Collect all symbols by the original symbol order, but also making sure
-    # all symbols with only large font must be placed after all symbols with
-    # both small and large fonts
-    sym_list_both_fonts = []
-    sym_list_large_only = []
-    for sym in text_list:
-        if font06_map[sym] is None:
-            sym_list_large_only.append(sym)
-        else:
-            sym_list_both_fonts.append(sym)
-    sym_list = sym_list_both_fonts + sym_list_large_only
-
-    return sym_list, font_maps.sym_lists, FontMap(font12_map, font06_map)
 
 
 def build_symbol_conversion_map(sym_list: List[str]) -> Dict[str, bytes]:
@@ -487,12 +572,16 @@ def build_symbol_conversion_map(sym_list: List[str]) -> Dict[str, bytes]:
 
 
 def make_font_table_cpp(
-    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
+    small_font_sym_list: List[str],
+    large_font_sym_list: List[str],
+    font_map: FontMapsPerFont,
+    small_symbol_map: Dict[str, bytes],
+    large_symbol_map: Dict[str, bytes],
 ) -> str:
     output_table = make_font_table_named_cpp(
-        "USER_FONT_12", sym_list, font_map.font12, symbol_map
+        "USER_FONT_12", large_font_sym_list, font_map.font12_maps
     )
-    output_table += make_font_table_06_cpp(sym_list, font_map, symbol_map)
+    output_table += make_font_table_06_cpp(small_font_sym_list, font_map)
     return output_table
 
 
@@ -500,29 +589,26 @@ def make_font_table_named_cpp(
     name: Optional[str],
     sym_list: List[str],
     font_map: Dict[str, bytes],
-    symbol_map: Dict[str, bytes],
 ) -> str:
     output_table = ""
     if name:
         output_table = f"const uint8_t {name}[] = {{\n"
-    for sym in sym_list:
-        output_table += f"{bytes_to_c_hex(font_map[sym])}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
+    for i, sym in enumerate(sym_list):
+        output_table += f"{bytes_to_c_hex(font_map[sym])}//0x{i+2:X} -> {sym}\n"
     if name:
         output_table += f"}}; // {name}\n"
     return output_table
 
 
-def make_font_table_06_cpp(
-    sym_list: List[str], font_map: FontMap, symbol_map: Dict[str, bytes]
-) -> str:
+def make_font_table_06_cpp(sym_list: List[str], font_map: FontMapsPerFont) -> str:
     output_table = "const uint8_t USER_FONT_6x8[] = {\n"
-    for sym in sym_list:
-        font_bytes = font_map.font06[sym]
+    for i, sym in enumerate(sym_list):
+        font_bytes = font_map.font06_maps[sym]
         if font_bytes:
             font_line = bytes_to_c_hex(font_bytes)
         else:
             font_line = "//                                 "  # placeholder
-        output_table += f"{font_line}//{bytes_to_escaped(symbol_map[sym])} -> {sym}\n"
+        output_table += f"{font_line}//0x{i+2:X} -> {sym}\n"
     output_table += "};\n"
     return output_table
 
@@ -532,8 +618,9 @@ def convert_string_bytes(symbol_conversion_table: Dict[str, bytes], text: str) -
     output_string = b""
     for c in text.replace("\\r", "").replace("\\n", "\n"):
         if c not in symbol_conversion_table:
+            print(symbol_conversion_table)
             logging.error(f"Missing font definition for {c}")
-            sys.exit(1)
+            raise KeyError(f"Missing font definition for {c}")
         else:
             output_string += symbol_conversion_table[c]
     return output_string
@@ -564,28 +651,34 @@ class LanguageData:
     langs: List[dict]
     defs: dict
     build_version: str
-    sym_list: List[str]
-    sym_lists_by_font: Dict[str, List[str]]
-    font_map: FontMap
+    small_text_symbols: List[str]
+    large_text_symbols: List[str]
+    font_map: FontMapsPerFont
 
 
 def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData:
     language_code: str = lang["languageCode"]
     logging.info(f"Preparing language data for {language_code}")
     # Iterate over all of the text to build up the symbols & counts
-    text_list, _ = get_letter_counts(defs, lang, build_version)
-    # From the letter counts, need to make a symbol translator & write out the font
+    letter_count_data = get_letter_counts(defs, lang, build_version)
+    small_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
+        letter_count_data["smallFontCounts"]
+    )
+    large_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
+        letter_count_data["bigFontCounts"]
+    )
 
-    forced_first_symbols = get_forced_first_symbols()
+    # From the letter counts, need to make a symbol index and matching font index
 
-    # We enforce that numbers come first.
-    text_list = forced_first_symbols + [
-        x for x in text_list if x not in forced_first_symbols
-    ]
+    font_data = get_font_map_per_font(small_font_symbols, large_font_symbols)
 
-    sym_list, sym_lists_by_font, font_map = get_sym_list_and_font_map(text_list)
     return LanguageData(
-        [lang], defs, build_version, sym_list, sym_lists_by_font, font_map
+        [lang],
+        defs,
+        build_version,
+        small_font_symbols,
+        large_font_symbols,
+        font_data,
     )
 
 
@@ -595,60 +688,93 @@ def prepare_languages(
     language_codes: List[str] = [lang["languageCode"] for lang in langs]
     logging.info(f"Preparing language data for {language_codes}")
 
-    forced_first_symbols = get_forced_first_symbols()
-
     # Build the full font maps
-    font12_map = {}
-    font06_map = {}
-    # Calculate total symbol counts per font:
-    total_sym_counts: Dict[str, Dict[str, int]] = {}
+    total_symbol_counts: Dict[str, Dict[str, int]] = {}
     for lang in langs:
-        text_list, sym_counts = get_letter_counts(defs, lang, build_version)
-        text_list = forced_first_symbols + [
-            x for x in text_list if x not in forced_first_symbols
-        ]
-        font_maps = get_font_map_per_font(text_list)
-        for font in font_tables.ALL_FONTS:
-            font12_map.update(font_maps.font12_maps[font])
-            font06_map.update(font_maps.font06_maps[font])
-        for font, font_sym_list in font_maps.sym_lists.items():
-            font_total_sym_counts = total_sym_counts.get(font, {})
-            for sym in font_sym_list:
-                font_total_sym_counts[sym] = font_total_sym_counts.get(
-                    sym, 0
-                ) + sym_counts.get(sym, 0)
-            total_sym_counts[font] = font_total_sym_counts
+        letter_count_data = get_letter_counts(defs, lang, build_version)
+        total_symbol_counts = merge_letter_count_info(
+            total_symbol_counts, letter_count_data
+        )
 
-    sym_lists_by_font: Dict[str, List[str]] = {}
-    combined_sym_list = []
-    for font in font_tables.ALL_FONTS:
-        if font not in total_sym_counts:
-            continue
-        # swap to Big -> little sort order
-        current_sym_list = [
-            x[0]
-            for x in sorted(
-                total_sym_counts[font].items(),
-                key=lambda kv: (kv[1], kv[0]),
-                reverse=True,
-            )
-        ]
-        if font == font_tables.NAME_ASCII_BASIC:
-            # We enforce that numbers come first.
-            current_sym_list = forced_first_symbols + [
-                x for x in current_sym_list if x not in forced_first_symbols
-            ]
-        sym_lists_by_font[font] = current_sym_list
-        combined_sym_list.extend(current_sym_list)
+    small_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
+        total_symbol_counts["smallFontCounts"]
+    )
+    large_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
+        total_symbol_counts["bigFontCounts"]
+    )
+    font_data = get_font_map_per_font(small_font_symbols, large_font_symbols)
 
     return LanguageData(
         langs,
         defs,
         build_version,
-        combined_sym_list,
-        sym_lists_by_font,
-        FontMap(font12_map, font06_map),
+        small_font_symbols,
+        large_font_symbols,
+        font_data,
     )
+
+
+def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False):
+    font_map = data.font_map
+
+    small_font_symbol_conversion_table = build_symbol_conversion_map(
+        data.small_text_symbols
+    )
+    large_font_symbol_conversion_table = build_symbol_conversion_map(
+        data.large_text_symbols
+    )
+
+    if not compress_font:
+        font_table_text = make_font_table_cpp(
+            data.small_text_symbols,
+            data.large_text_symbols,
+            font_map,
+            small_font_symbol_conversion_table,
+            large_font_symbol_conversion_table,
+        )
+        f.write(font_table_text)
+        f.write(
+            "const FontSection FontSectionInfo = {\n"
+            "    .font12_start_ptr = USER_FONT_12,\n"
+            "    .font06_start_ptr = USER_FONT_6x8,\n"
+            "    .font12_decompressed_size = 0,\n"
+            "    .font06_decompressed_size = 0,\n"
+            "    .font12_compressed_source = 0,\n"
+            "    .font06_compressed_source = 0,\n"
+            "};\n"
+        )
+    else:
+        font12_uncompressed = bytearray()
+        for sym in data.large_text_symbols:
+            font12_uncompressed.extend(font_map.font12_maps[sym])
+        font12_compressed = brieflz.compress(bytes(font12_uncompressed))
+        logging.info(
+            f"Font table 12x16 compressed from {len(font12_uncompressed)} to {len(font12_compressed)} bytes (ratio {len(font12_compressed) / len(font12_uncompressed):.3})"
+        )
+
+        write_bytes_as_c_array(f, "font_12x16_brieflz", font12_compressed)
+        font06_uncompressed = bytearray()
+        for sym in data.small_text_symbols:
+            font06_uncompressed.extend(font_map.font06_maps[sym])
+        font06_compressed = brieflz.compress(bytes(font06_uncompressed))
+        logging.info(
+            f"Font table 06x08 compressed from {len(font06_uncompressed)} to {len(font06_compressed)} bytes (ratio {len(font06_compressed) / len(font06_uncompressed):.3})"
+        )
+
+        write_bytes_as_c_array(f, "font_06x08_brieflz", font06_compressed)
+
+        f.write(
+            f"static uint8_t font12_out_buffer[{len(font12_uncompressed)}];\n"
+            f"static uint8_t font06_out_buffer[{len(font06_uncompressed)}];\n"
+            "const FontSection FontSectionInfo = {\n"
+            "    .font12_start_ptr = font12_out_buffer,\n"
+            "    .font06_start_ptr = font06_out_buffer,\n"
+            f"    .font12_decompressed_size = {len(font12_uncompressed)},\n"
+            f"    .font06_decompressed_size = {len(font06_uncompressed)},\n"
+            "    .font12_compressed_source = font_12x16_brieflz,\n"
+            "    .font06_compressed_source = font_06x08_brieflz,\n"
+            "};\n"
+        )
 
 
 def write_language(
@@ -661,11 +787,13 @@ def write_language(
         raise ValueError("More than 1 languages are provided")
     lang = data.langs[0]
     defs = data.defs
-    build_version = data.build_version
-    sym_list = data.sym_list
-    font_map = data.font_map
 
-    symbol_conversion_table = build_symbol_conversion_map(sym_list)
+    small_font_symbol_conversion_table = build_symbol_conversion_map(
+        data.small_text_symbols
+    )
+    large_font_symbol_conversion_table = build_symbol_conversion_map(
+        data.large_text_symbols
+    )
 
     language_code: str = lang["languageCode"]
     logging.info(f"Generating block for {language_code}")
@@ -680,54 +808,12 @@ def write_language(
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
-    if not compress_font:
-        font_table_text = make_font_table_cpp(
-            sym_list, font_map, symbol_conversion_table
-        )
-        f.write(font_table_text)
-        f.write(
-            "const FontSection FontSectionsData[] = {\n"
-            "  {\n"
-            "    .symbol_start = 2,\n"
-            f"    .symbol_end = {len(sym_list) + 2},\n"
-            "    .font12_start_ptr = USER_FONT_12,\n"
-            "    .font06_start_ptr = USER_FONT_6x8,\n"
-            "  },\n"
-            "};\n"
-            "const FontSection *const FontSections = FontSectionsData;\n"
-            "const uint8_t FontSectionsCount = sizeof(FontSectionsData) / sizeof(FontSectionsData[0]);\n"
-        )
-    else:
-        font12_uncompressed = bytearray()
-        for sym in sym_list:
-            font12_uncompressed.extend(font_map.font12[sym])
-        font12_compressed = brieflz.compress(bytes(font12_uncompressed))
-        logging.info(
-            f"Font table 12x16 compressed from {len(font12_uncompressed)} to {len(font12_compressed)} bytes (ratio {len(font12_compressed) / len(font12_uncompressed):.3})"
-        )
-        write_bytes_as_c_array(f, "font_12x16_brieflz", font12_compressed)
-        font_table_text = make_font_table_06_cpp(
-            sym_list, font_map, symbol_conversion_table
-        )
-        f.write(font_table_text)
-        f.write(
-            f"static uint8_t font_out_buffer[{len(font12_uncompressed)}];\n"
-            "const FontSection FontSectionsData[] = {\n"
-            "  {\n"
-            "    .symbol_start = 2,\n"
-            f"    .symbol_end = {len(sym_list) + 2},\n"
-            "    .font12_start_ptr = font_out_buffer,\n"
-            "    .font06_start_ptr = USER_FONT_6x8,\n"
-            "  },\n"
-            "};\n"
-            "const FontSection *const FontSections = FontSectionsData;\n"
-            "const uint8_t FontSectionsCount = sizeof(FontSectionsData) / sizeof(FontSectionsData[0]);\n"
-        )
+    render_font_block(data, f, compress_font)
 
     f.write(f"\n// ---- {lang_name} ----\n\n")
 
     translation_common_text = get_translation_common_text(
-        defs, symbol_conversion_table, build_version
+        small_font_symbol_conversion_table, large_font_symbol_conversion_table
     )
     f.write(translation_common_text)
     f.write(
@@ -736,7 +822,10 @@ def write_language(
 
     if not strings_bin:
         translation_strings_and_indices_text = get_translation_strings_and_indices_text(
-            lang, defs, symbol_conversion_table
+            lang,
+            defs,
+            small_font_symbol_conversion_table,
+            large_font_symbol_conversion_table,
         )
         f.write(translation_strings_and_indices_text)
         f.write(
@@ -780,12 +869,13 @@ def write_languages(
     compress_font: bool = False,
 ) -> None:
     defs = data.defs
-    build_version = data.build_version
-    combined_sym_list = data.sym_list
-    sym_lists_by_font = data.sym_lists_by_font
-    font_map = data.font_map
 
-    symbol_conversion_table = build_symbol_conversion_map(combined_sym_list)
+    small_font_symbol_conversion_table = build_symbol_conversion_map(
+        data.small_text_symbols
+    )
+    large_font_symbol_conversion_table = build_symbol_conversion_map(
+        data.large_text_symbols
+    )
 
     language_codes: List[str] = [lang["languageCode"] for lang in data.langs]
     logging.info(f"Generating block for {language_codes}")
@@ -798,102 +888,15 @@ def write_languages(
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
 
-    max_decompressed_font_size = 0
-    if not compress_font:
-        font_table_text = ""
-        font_section_info_text = (
-            "const FontSectionDataInfo FontSectionDataInfos[] = {\n"
-        )
-        for font, current_sym_list in sym_lists_by_font.items():
-            font_table_text += f"const uint8_t font_table_data_{font}[] = {{\n"
-            font_table_text += "// 12x16:\n"
-            font_table_text += make_font_table_named_cpp(
-                None,
-                current_sym_list,
-                font_map.font12,
-                symbol_conversion_table,
-            )
-            if font != font_tables.NAME_CJK:
-                font_table_text += "// 6x8:\n"
-                font_table_text += make_font_table_named_cpp(
-                    None,
-                    current_sym_list,
-                    font_map.font06,  # type: ignore[arg-type]
-                    symbol_conversion_table,
-                )
-            font_table_text += f"}}; // font_table_data_{font}\n"
-            if len(current_sym_list) == 0:
-                current_sym_start = 0
-            else:
-                current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
-            font_section_info_text += (
-                "  {\n"
-                f"    .symbol_start = {current_sym_start},\n"
-                f"    .symbol_count = {len(current_sym_list)},\n"
-                f"    .data_size = sizeof(font_table_data_{font}),\n"
-                "    .data_is_compressed = false,\n"
-                f"    .data_ptr = font_table_data_{font},\n"
-                "  },\n"
-            )
-
-        f.write(font_table_text)
-        font_section_info_text += (
-            "};\n"
-            "const uint8_t FontSectionDataCount = sizeof(FontSectionDataInfos) / sizeof(FontSectionDataInfos[0]);\n\n"
-        )
-        f.write(font_section_info_text)
-        f.write(
-            "FontSection DynamicFontSections[4] = {};\n"
-            "const FontSection *const FontSections = DynamicFontSections;\n"
-            "const uint8_t FontSectionsCount = sizeof(DynamicFontSections) / sizeof(DynamicFontSections[0]);\n"
-        )
-    else:
-        font_section_info_text = (
-            "const FontSectionDataInfo FontSectionDataInfos[] = {\n"
-        )
-        for font, current_sym_list in sym_lists_by_font.items():
-            print(font, current_sym_list)
-            if len(current_sym_list) == 0:
-                continue
-            current_sym_start = combined_sym_list.index(current_sym_list[0]) + 2
-            font_uncompressed = bytearray()
-            for sym in current_sym_list:
-                font_uncompressed.extend(font_map.font12[sym])
-            if font != font_tables.NAME_CJK:
-                for sym in current_sym_list:
-                    font_uncompressed.extend(font_map.font06[sym])  # type: ignore[arg-type]
-            font_compressed = brieflz.compress(bytes(font_uncompressed))
-            logging.info(
-                f"Font table for {font} compressed from {len(font_uncompressed)} to {len(font_compressed)} bytes (ratio {len(font_compressed) / len(font_uncompressed):.3})"
-            )
-            max_decompressed_font_size += len(font_uncompressed)
-            write_bytes_as_c_array(f, f"font_data_brieflz_{font}", font_compressed)
-            font_section_info_text += (
-                "  {\n"
-                f"    .symbol_start = {current_sym_start},\n"
-                f"    .symbol_count = {len(current_sym_list)},\n"
-                f"    .data_size = sizeof(font_data_brieflz_{font}),\n"
-                "    .data_is_compressed = true,\n"
-                f"    .data_ptr = font_data_brieflz_{font},\n"
-                "  },\n"
-            )
-        font_section_info_text += (
-            "};\n"
-            "const uint8_t FontSectionDataCount = sizeof(FontSectionDataInfos) / sizeof(FontSectionDataInfos[0]);\n\n"
-        )
-        f.write(font_section_info_text)
-        f.write(
-            "FontSection DynamicFontSections[4] = {};\n"
-            "const FontSection *const FontSections = DynamicFontSections;\n"
-            "const uint8_t FontSectionsCount = sizeof(DynamicFontSections) / sizeof(DynamicFontSections[0]);\n"
-        )
+    render_font_block(data, f, compress_font)
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
 
     translation_common_text = get_translation_common_text(
-        defs, symbol_conversion_table, build_version
+        small_font_symbol_conversion_table, large_font_symbol_conversion_table
     )
     f.write(translation_common_text)
+
     f.write(
         f"const bool HasFahrenheit = {('true' if any([lang.get('tempUnitFahrenheit', True) for lang in data.langs]) else 'false')};\n\n"
     )
@@ -904,7 +907,11 @@ def write_languages(
             lang_code = lang["languageCode"]
             translation_strings_and_indices_text = (
                 get_translation_strings_and_indices_text(
-                    lang, defs, symbol_conversion_table, suffix=f"_{lang_code}"
+                    lang,
+                    defs,
+                    small_font_symbol_conversion_table,
+                    large_font_symbol_conversion_table,
+                    suffix=f"_{lang_code}",
                 )
             )
             f.write(translation_strings_and_indices_text)
@@ -953,7 +960,7 @@ def write_languages(
         f.write("};\n")
     f.write(
         "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
-        f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_translation_size + max_decompressed_font_size}];\n"
+        f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_translation_size }];\n"
         "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
     )
 
@@ -962,14 +969,21 @@ def write_languages(
 
 
 def get_translation_common_text(
-    defs: dict, symbol_conversion_table: Dict[str, bytes], build_version
+    small_symbol_conversion_table: Dict[str, bytes],
+    large_symbol_conversion_table: Dict[str, bytes],
 ) -> str:
     translation_common_text = ""
 
     # Write out firmware constant options
-    constants = get_constants(build_version)
+    constants = get_constants()
     for x in constants:
-        translation_common_text += f'const char* {x[0]} = "{convert_string(symbol_conversion_table, x[1])}";//{x[1]} \n'
+        if x[0].startswith("Small"):
+            translation_common_text += f'const char* {x[0]} = "{convert_string(small_symbol_conversion_table, x[1])}";//{x[1]} \n'
+        elif x[0].startswith("Large"):
+            str = x[1]
+            translation_common_text += f'const char* {x[0]} = "{convert_string(large_symbol_conversion_table, str)}";//{x[1]} \n'
+        else:
+            raise ValueError(f"Constant {x} is not size encoded")
     translation_common_text += "\n"
 
     # Debug Menu
@@ -977,7 +991,7 @@ def get_translation_common_text(
 
     for c in get_debug_menu():
         translation_common_text += (
-            f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
+            f'\t "{convert_string(small_symbol_conversion_table, c)}",//"{c}" \n'
         )
     translation_common_text += "};\n\n"
 
@@ -986,7 +1000,7 @@ def get_translation_common_text(
 
     for c in get_accel_names_list():
         translation_common_text += (
-            f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
+            f'\t "{convert_string(small_symbol_conversion_table, c)}",//{c} \n'
         )
     translation_common_text += "};\n\n"
 
@@ -995,7 +1009,7 @@ def get_translation_common_text(
 
     for c in get_power_source_list():
         translation_common_text += (
-            f'\t "{convert_string(symbol_conversion_table, c)}",//{c} \n'
+            f'\t "{convert_string(small_symbol_conversion_table, c)}",//{c} \n'
         )
     translation_common_text += "};\n\n"
 
@@ -1009,216 +1023,198 @@ class TranslationItem:
 
 
 def get_translation_strings_and_indices_text(
-    lang: dict, defs: dict, symbol_conversion_table: Dict[str, bytes], suffix: str = ""
+    lang: dict,
+    defs: dict,
+    small_font_symbol_conversion_table: Dict[str, bytes],
+    large_font_symbol_conversion_table: Dict[str, bytes],
+    suffix: str = "",
 ) -> str:
-    str_table: List[str] = []
-    str_group_messages: List[TranslationItem] = []
-    str_group_messageswarn: List[TranslationItem] = []
-    str_group_characters: List[TranslationItem] = []
-    str_group_settingdesc: List[TranslationItem] = []
-    str_group_settingshortnames: List[TranslationItem] = []
-    str_group_settingmenuentries: List[TranslationItem] = []
-    str_group_settingmenuentriesdesc: List[TranslationItem] = []
 
-    eid: str
+    # For all strings; we want to convert them to their byte encoded form (using font index lookups)
+    # Then we want to sort by their reversed format to see if we can remove any duplicates by combining the tails (last n bytes;n>0)
+    # Finally we look for any that are contained inside one another, and if they are we update them to point to this
 
-    # ----- Reading SettingsDescriptions
-    obj = lang["menuOptions"]
+    # _OR_ we can be lazy and abuse cpu power and just make python search for our substring each time we append
 
-    for index, mod in enumerate(defs["menuOptions"]):
-        eid = mod["id"]
-        str_group_settingdesc.append(
-            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
-        )
-        str_table.append(obj[eid]["desc"])
-
-    # ----- Reading Message strings
-
-    obj = lang["messages"]
-
-    for mod in defs["messages"]:
-        eid = mod["id"]
-        source_text = ""
-        if "default" in mod:
-            source_text = mod["default"]
-        if eid in obj:
-            source_text = obj[eid]
-        str_group_messages.append(TranslationItem(eid, len(str_table)))
-        str_table.append(source_text)
-
-    obj = lang["messagesWarn"]
-
-    for mod in defs["messagesWarn"]:
-        eid = mod["id"]
-        if isinstance(obj[eid], list):
-            if not obj[eid][1]:
-                source_text = obj[eid][0]
-            else:
-                source_text = obj[eid][0] + "\n" + obj[eid][1]
-        else:
-            source_text = "\n" + obj[eid]
-        str_group_messageswarn.append(TranslationItem(eid, len(str_table)))
-        str_table.append(source_text)
-
-    # ----- Reading Characters
-
-    obj = lang["characters"]
-
-    for mod in defs["characters"]:
-        eid = mod["id"]
-        str_group_characters.append(TranslationItem(eid, len(str_table)))
-        str_table.append(obj[eid])
-
-    # ----- Reading SettingsDescriptions
-    obj = lang["menuOptions"]
-
-    for index, mod in enumerate(defs["menuOptions"]):
-        eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            if not obj[eid]["text2"][1]:
-                source_text = obj[eid]["text2"][0]
-            else:
-                source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
-        else:
-            source_text = "\n" + obj[eid]["text2"]
-        str_group_settingshortnames.append(
-            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
-        )
-        str_table.append(source_text)
-
-    # ----- Reading Menu Groups
-    obj = lang["menuGroups"]
-
-    for index, mod in enumerate(defs["menuGroups"]):
-        eid = mod["id"]
-        if isinstance(obj[eid]["text2"], list):
-            if not obj[eid]["text2"][1]:
-                source_text = obj[eid]["text2"][0]
-            else:
-                source_text = obj[eid]["text2"][0] + "\n" + obj[eid]["text2"][1]
-        else:
-            source_text = "\n" + obj[eid]["text2"]
-        str_group_settingmenuentries.append(
-            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
-        )
-        str_table.append(source_text)
-
-    # ----- Reading Menu Groups Descriptions
-    obj = lang["menuGroups"]
-
-    for index, mod in enumerate(defs["menuGroups"]):
-        eid = mod["id"]
-        str_group_settingmenuentriesdesc.append(
-            TranslationItem(f"[{index:02d}] {eid}", len(str_table))
-        )
-        str_table.append(obj[eid]["desc"])
+    byte_encoded_strings: List[bytes] = []  # List of byte arrays of encoded strings
+    byte_encoded_strings_unencoded_reference: List[str] = []
 
     @dataclass
-    class RemappedTranslationItem:
-        str_index: int
+    class TranslatedStringLocation:
+        byte_encoded_translation_index: int = 0
         str_start_offset: int = 0
 
-    # ----- Perform suffix merging optimization:
-    #
-    # We sort the backward strings so that strings with the same suffix will
-    # be next to each other, e.g.:
-    #   "ef\0",
-    #   "cdef\0",
-    #   "abcdef\0",
-    backward_sorted_table: List[Tuple[int, str, bytes]] = sorted(
-        (
-            (i, s, bytes(reversed(convert_string_bytes(symbol_conversion_table, s))))
-            for i, s in enumerate(str_table)
-        ),
-        key=lambda x: x[2],
-    )
-    str_remapping: List[Optional[RemappedTranslationItem]] = [None] * len(str_table)
-    for i, (str_index, source_str, converted) in enumerate(backward_sorted_table[:-1]):
-        j = i
-        while backward_sorted_table[j + 1][2].startswith(converted):
-            j += 1
-            if j + 1 == len(backward_sorted_table):
-                break
-        if j != i:
-            str_remapping[str_index] = RemappedTranslationItem(
-                str_index=backward_sorted_table[j][0],
-                str_start_offset=len(backward_sorted_table[j][2]) - len(converted),
+    translated_string_lookups: Dict[str, TranslatedStringLocation] = {}
+
+    # We do the collapse on the encoded strings; since we are doing different fonts, this avoids needing to track fonts
+    # Also means if things line up nicely for us; we can do it across fonts (rare)
+    def add_encoded_string(
+        unencoded_string: str, encoded_string: bytes, translation_id: str
+    ):
+        for i, byte_data in enumerate(byte_encoded_strings):
+            if byte_data.endswith(encoded_string):
+                logging.info(f"Collapsing {translation_id}")
+                record = TranslatedStringLocation(
+                    i, len(byte_data) - len(encoded_string)
+                )
+                translated_string_lookups[translation_id] = record
+                return
+        byte_encoded_strings.append(encoded_string)
+        byte_encoded_strings_unencoded_reference.append(unencoded_string)
+        record = TranslatedStringLocation(len(byte_encoded_strings) - 1, 0)
+        translated_string_lookups[translation_id] = record
+
+    def encode_string_and_add(
+        message: str, translation_id: str, force_large_text: bool = False
+    ):
+        encoded_data: bytes
+        if force_large_text is False and test_is_small_font(message):
+            encoded_data = convert_string_bytes(
+                small_font_symbol_conversion_table, message
             )
+        else:
+            if force_large_text is False:
+                message = "\n" + message
+            encoded_data = convert_string_bytes(
+                large_font_symbol_conversion_table, message
+            )
+        add_encoded_string(message, encoded_data, translation_id)
+
+    for index, record in enumerate(defs["menuOptions"]):
+        lang_data = lang["menuOptions"][record["id"]]
+        # Add to translations the menu text and the description
+        encode_string_and_add(
+            lang_data["description"], "menuOptions" + record["id"] + "description", True
+        )
+        encode_string_and_add(
+            lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
+        )
+
+    for index, record in enumerate(defs["menuGroups"]):
+        lang_data = lang["menuGroups"][record["id"]]
+        # Add to translations the menu text and the description
+        encode_string_and_add(
+            lang_data["description"], "menuGroups" + record["id"] + "description", True
+        )
+        encode_string_and_add(
+            lang_data["displayText"], "menuGroups" + record["id"] + "displayText"
+        )
+
+    for index, record in enumerate(defs["messagesWarn"]):
+        lang_data = lang["messagesWarn"][record["id"]]
+        # Add to translations the menu text and the description
+        encode_string_and_add(
+            lang_data["message"], "messagesWarn" + record["id"] + "Message"
+        )
+
+    for index, record in enumerate(defs["characters"]):
+        lang_data = lang["characters"][record["id"]]
+        # Add to translations the menu text and the description
+        encode_string_and_add(lang_data, "characters" + record["id"] + "Message", True)
 
     # ----- Write the string table:
-    str_offsets = [-1] * len(str_table)
     offset = 0
-    write_null = False
     # NOTE: Cannot specify C99 designator here due to GCC (g++) bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55227
     translation_strings_text = "  /* .strings = */ {\n"
-    for i, source_str in enumerate(str_table):
-        if str_remapping[i] is not None:
-            continue
-        if write_null:
+
+    for i, encoded_bytes in enumerate(byte_encoded_strings):
+
+        if i > 0:
             translation_strings_text += ' "\\0"\n'
-        write_null = True
-        # Find what items use this string
-        str_used_by = [i] + [
-            j for j, r in enumerate(str_remapping) if r and r.str_index == i
-        ]
-        for j in str_used_by:
-            for group, pre_info in [
-                (str_group_messages, "messages"),
-                (str_group_messageswarn, "messagesWarn"),
-                (str_group_characters, "characters"),
-                (str_group_settingdesc, "SettingsDescriptions"),
-                (str_group_settingshortnames, "SettingsShortNames"),
-                (str_group_settingmenuentries, "SettingsMenuEntries"),
-                (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
-            ]:
-                for item in group:
-                    if item.str_index == j:
-                        translation_strings_text += (
-                            f"    //     - {pre_info} {item.info}\n"
-                        )
-            if j == i:
-                translation_strings_text += (
-                    f"    // {offset: >4}: {escape(source_str)}\n"
-                )
-                str_offsets[j] = offset
-            else:
-                remapped = str_remapping[j]
-                assert remapped is not None
-                translation_strings_text += f"    // {offset + remapped.str_start_offset: >4}: {escape(str_table[j])}\n"
-                str_offsets[j] = offset + remapped.str_start_offset
-        converted_bytes = convert_string_bytes(symbol_conversion_table, source_str)
-        translation_strings_text += f'    "{bytes_to_escaped(converted_bytes)}"'
-        str_offsets[i] = offset
-        # Add the length and the null terminator
-        offset += len(converted_bytes) + 1
+
+        # Write a comment of what it is
+        translation_strings_text += f"    // {offset: >4}: {escape(byte_encoded_strings_unencoded_reference[i])}\n"
+        # Write the actual data
+        translation_strings_text += f'    "{bytes_to_escaped(encoded_bytes)}"'
+        offset += len(encoded_bytes) + 1
+
     translation_strings_text += "\n  }, // .strings\n\n"
 
     str_total_bytes = offset
+    ################# Part 2: Emit all the string offsets
 
-    def get_offset(idx: int) -> int:
-        assert str_offsets[idx] >= 0
-        return str_offsets[idx]
+    string_index_commulative_lengths = []
+    position = 0
+    for string in byte_encoded_strings:
+        string_index_commulative_lengths.append(position)
+        position += len(string) + 1
 
     translation_indices_text = "  .indices = {\n"
 
-    # ----- Write the messages string indices:
-    for group in [str_group_messages, str_group_messageswarn, str_group_characters]:
-        for item in group:
-            translation_indices_text += f"    .{item.info} = {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
-        translation_indices_text += "\n"
+    # Write out the constant strings (ones we reference directly)
 
-    # ----- Write the settings index tables:
-    for group, name in [
-        (str_group_settingdesc, "SettingsDescriptions"),
-        (str_group_settingshortnames, "SettingsShortNames"),
-        (str_group_settingmenuentries, "SettingsMenuEntries"),
-        (str_group_settingmenuentriesdesc, "SettingsMenuEntriesDescriptions"),
-    ]:
+    for _, record in enumerate(defs["messagesWarn"]):
+        # Add to translations the menu text and the description
+        lang_data = lang["messagesWarn"][record["id"]]
+        key = "messagesWarn" + record["id"] + "Message"
+        translated_index = translated_string_lookups[key]
+        string_index = translated_index.byte_encoded_translation_index
+        start_index = (
+            string_index_commulative_lengths[string_index]
+            + translated_index.str_start_offset
+        )
+
+        translation_indices_text += (
+            f"    .{record['id']} = {start_index}, // {escape(lang_data['message'])}\n"
+        )
+
+    translation_indices_text += "\n"
+
+    # Constant short values we use in settings menu
+
+    for _, record in enumerate(defs["characters"]):
+        # Add to translations the menu text and the description
+        lang_data = lang["characters"][record["id"]]
+        key = "characters" + record["id"] + "Message"
+        translated_index = translated_string_lookups[key]
+        string_index = translated_index.byte_encoded_translation_index
+        start_index = (
+            string_index_commulative_lengths[string_index]
+            + translated_index.str_start_offset
+        )
+
+        translation_indices_text += (
+            f"    .{record['id']} = {start_index}, // {escape(lang_data)}\n"
+        )
+
+    translation_indices_text += "\n"
+
+    # Now for the fun ones, where they are nested and ordered
+
+    def write_grouped_indexes(output_text: str, name: str, mainKey: str, subKey: str):
         max_len = 30
-        translation_indices_text += f"    .{name} = {{\n"
-        for item in group:
-            translation_indices_text += f"      /* {item.info.ljust(max_len)[:max_len]} */ {get_offset(item.str_index)}, // {escape(str_table[item.str_index])}\n"
-        translation_indices_text += f"    }}, // {name}\n\n"
+        output_text += f"    .{name} = {{\n"
+        for index, record in enumerate(defs[mainKey]):
+            lang_data = lang[mainKey][record["id"]]
+            key = mainKey + record["id"] + subKey
+            raw_string = lang_data[subKey]
+            translated_index = translated_string_lookups[key]
+            string_index = translated_index.byte_encoded_translation_index
+            start_index = (
+                string_index_commulative_lengths[string_index]
+                + translated_index.str_start_offset
+            )
+
+            output_text += f"      /* {record['id'].ljust(max_len)[:max_len]} */ {start_index}, // {escape(raw_string)}\n"
+
+        output_text += f"    }}, // {name}\n\n"
+        return output_text
+
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text, "SettingsDescriptions", "menuOptions", "description"
+    )
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text, "SettingsShortNames", "menuOptions", "displayText"
+    )
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text,
+        "SettingsMenuEntriesDescriptions",
+        "menuGroups",
+        "description",
+    )
+    translation_indices_text = write_grouped_indexes(
+        translation_indices_text, "SettingsMenuEntries", "menuGroups", "displayText"
+    )
 
     translation_indices_text += "  }, // .indices\n\n"
 
@@ -1331,7 +1327,7 @@ def main() -> None:
         logging.info(f"Build version: {build_version}")
         logging.info(f"Making {args.languageCodes} from {json_dir}")
 
-        defs_ = load_json(os.path.join(json_dir, "translations_def.js"), True)
+        defs_ = load_json(os.path.join(json_dir, "translations_definitions.json"))
         if len(args.languageCodes) == 1:
             lang_ = read_translation(json_dir, args.languageCodes[0])
             language_data = prepare_language(lang_, defs_, build_version)

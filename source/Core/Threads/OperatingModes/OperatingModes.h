@@ -24,6 +24,14 @@ extern "C" {
 #endif
 
 // Exposed modes
+enum OperatingMode {
+    idle      = 0,
+    soldering = 1,
+    boost     = 2,
+    sleeping  = 3,
+    settings  = 4,
+    debug     = 5
+};
 
 void performCJCC(void);                                            // Used to calibrate the Cold Junction offset
 void gui_solderingTempAdjust(void);                                // For adjusting the setpoint temperature of the iron

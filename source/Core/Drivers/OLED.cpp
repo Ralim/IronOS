@@ -178,14 +178,9 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
       fontWidth  = 12;
       break;
     }
-    for (uint32_t i = 0; i < FontSectionsCount; i++) {
-      const auto &section = FontSections[i];
-      if (charCode >= section.symbol_start && charCode < section.symbol_end) {
-        currentFont = fontStyle == FontStyle::SMALL ? section.font06_start_ptr : section.font12_start_ptr;
-        index       = charCode - section.symbol_start;
-        break;
-      }
-    }
+
+    currentFont = fontStyle == FontStyle::SMALL ? FontSectionInfo.font06_start_ptr : FontSectionInfo.font12_start_ptr;
+    index       = charCode - 2;
     break;
   }
   const uint8_t *charPointer = currentFont + ((fontWidth * (fontHeight / 8)) * index);
@@ -368,10 +363,11 @@ void OLED::setRotation(bool leftHanded) {
                                                   // mode as driver ram is 128 wide
   screenBuffer[7] = inLeftHandedMode ? 95 : 0x7F; // End address of the ram segment we are writing to (96 wide)
   screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
-  //Force a screen refresh
-  const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+  // Force a screen refresh
+  const int len = FRAMEBUFFER_START + (OLED_WIDTH * 2);
   I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
   osDelay(TICKS_10MS);
+  checkDisplayBufferChecksum();
 }
 
 void OLED::setBrightness(uint8_t contrast) {
@@ -388,6 +384,10 @@ void OLED::setInverseDisplay(bool inverse) {
 // print a string to the current cursor location
 void OLED::print(const char *const str, FontStyle fontStyle) {
   const uint8_t *next = reinterpret_cast<const uint8_t *>(str);
+  if (next[0] == 0x01) {
+    fontStyle = FontStyle::LARGE;
+    next++;
+  }
   while (next[0]) {
     uint16_t index;
     if (next[0] <= 0xF0) {
@@ -429,7 +429,7 @@ inline void stripLeaderZeros(char *buffer, uint8_t places) {
   // Stop 1 short so that we dont blank entire number if its zero
   for (int i = 0; i < (places - 1); i++) {
     if (buffer[i] == 2) {
-      buffer[i] = SymbolSpace[0];
+      buffer[i] = LargeSymbolSpace[0];
     } else {
       return;
     }
@@ -478,14 +478,14 @@ void OLED::printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, boo
 
 void OLED::debugNumber(int32_t val, FontStyle fontStyle) {
   if (abs(val) > 99999) {
-    OLED::print(SymbolSpace, fontStyle); // out of bounds
+    OLED::print(LargeSymbolSpace, fontStyle); // out of bounds
     return;
   }
   if (val >= 0) {
-    OLED::print(SymbolSpace, fontStyle);
+    OLED::print(LargeSymbolSpace, fontStyle);
     OLED::printNumber(val, 5, fontStyle);
   } else {
-    OLED::print(SymbolMinus, fontStyle);
+    OLED::print(LargeSymbolMinus, fontStyle);
     OLED::printNumber(-val, 5, fontStyle);
   }
 }

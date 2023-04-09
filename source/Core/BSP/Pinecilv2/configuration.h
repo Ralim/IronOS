@@ -60,6 +60,15 @@
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
+ * OLED Brightness
+ *
+ */
+#define MIN_BRIGHTNESS             1   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS             101 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP            25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS         26  // default OLED brightness
+
+/**
  * Temp change settings
  */
 #define TEMP_CHANGE_SHORT_STEP     1  // Default temp change short step +1
@@ -121,9 +130,9 @@
 #define VOLTAGE_DIV                600                       // 600 - Default divider from schematic
 #define CALIBRATION_OFFSET         900                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET     100                       // Min value for calibration
-#define PID_POWER_LIMIT            220                       // Sets the max pwm power limit
+#define PID_POWER_LIMIT            120                       // Sets the max pwm power limit
 #define POWER_LIMIT                0                         // 0 watts default limit
-#define MAX_POWER_LIMIT            220                       //
+#define MAX_POWER_LIMIT            120                       // Sets the max power limit
 #define POWER_LIMIT_STEPS          5                         //
 #define OP_AMP_GAIN_STAGE          OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                                 // Use Hakko lookup table
@@ -132,7 +141,7 @@
 #define MAX_TEMP_C                 450                       // Max soldering temp selectable °C
 #define MAX_TEMP_F                 850                       // Max soldering temp selectable °F
 #define MIN_TEMP_C                 10                        // Min soldering temp selectable °C
-#define MIN_TEMP_F                 60                        // Min soldering temp selectable °F
+#define MIN_TEMP_F                 50                        // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C           250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F           480                       // The min settable temp for boost mode °F
 #define DEVICE_HAS_VALIDATION_CODE                           // We have 2 digit validations
@@ -152,7 +161,7 @@
 #define HAS_POWER_DEBUG_MENU
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-
+#define BLE_ENABLED
 #define NEEDS_VBUS_PROBE 0
 
 #endif
