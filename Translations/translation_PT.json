@@ -119,6 +119,10 @@
             "displayText": "PD tempo\nlimite",
             "description": "Tempo limite de negoiciação de PD de 100ms para compatibilidade com alguns carregadores é (0: disabled)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Activa o modo PPS & EPR"
+        },
         "BoostTemperature": {
             "displayText": "Modo turbo\ntemperat.",
             "description": "Ajuste de temperatura do \"modo turbo\""
@@ -207,6 +211,10 @@
             "displayText": "Ecrã trabalho\navançado",
             "description": "Mostra informações avançadas durante o uso"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Limite de\npotência",
             "description": "Potência máxima a usar (W=watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Idioma:\n PT   Português",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\nativado",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nactivado",
-	    "description": "Activa o modo PPS/EPR"
-	}
+        }
     }
 }

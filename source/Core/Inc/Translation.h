@@ -55,6 +55,7 @@ enum class SettingsItemIndex : uint8_t {
   MinVolCell,
   QCMaxVoltage,
   PDNegTimeout,
+  PDVpdo,
   BoostTemperature,
   AutoStart,
   TempChangeShortStep,
@@ -77,6 +78,7 @@ enum class SettingsItemIndex : uint8_t {
   LOGOTime,
   AdvancedIdle,
   AdvancedSoldering,
+  BluetoothLE,
   PowerLimit,
   CalibrateCJC,
   VoltageCalibration,
@@ -85,8 +87,6 @@ enum class SettingsItemIndex : uint8_t {
   PowerPulseDuration,
   SettingsReset,
   LanguageSwitch,
-  BLEEnabled,
-  PDVpdoEnabled,
   NUM_ITEMS,
 };
 

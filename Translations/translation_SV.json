@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Turbo-\ntemp",
             "description": "Temperatur i \"turbo-läge\""
@@ -207,6 +211,10 @@
             "displayText": "Detaljerad\nlödng.skärm",
             "description": "Visa detaljerad information vid lödning"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Max-\neffekt",
             "description": "Maximal effekt som enheten kan använda (Watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Språk:\n SV     Svenska",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

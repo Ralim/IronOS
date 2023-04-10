@@ -119,6 +119,10 @@
             "displayText": "PD逾時",
             "description": "設定USB PD協定交涉嘅逾時時限；為兼容某啲QC電源而設 <x100ms（亳秒）>"
         },
+        "PDVpdo": {
+            "displayText": "PD VPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "增熱温度",
             "description": "喺增熱模式時使用嘅温度"
@@ -207,6 +211,10 @@
             "displayText": "詳細焊接畫面",
             "description": "喺焊接模式畫面以英文細字顯示詳細嘅資料"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "功率限制",
             "description": "限制焫雞可用嘅最大功率 <W=watt（火）>"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "語言： 廣東話",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

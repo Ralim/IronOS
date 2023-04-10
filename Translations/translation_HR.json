@@ -119,6 +119,10 @@
             "displayText": "USB-PD\ntimeout",
             "description": "Timeout za USB-Power Delivery u koracima od 100ms za kompatibilnost s nekim QC punjačima"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Boost\ntemp",
             "description": "Temperatura u pojačanom (Boost) načinu."
@@ -207,6 +211,10 @@
             "displayText": "Detalji\npri lemljenju",
             "description": "Prikazivanje detaljnih informacija tijekom lemljenja"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Ograničenje\nsnage",
             "description": "Najveća snaga koju lemilica smije vući iz napajanja (W=watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Jezik:\n HR    Hrvatski",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

@@ -119,6 +119,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Temp.\npojačanja",
             "description": "Temperatura vrha lemilice u toku pojačanja."
@@ -207,6 +211,10 @@
             "displayText": "Detalji tokom\nlemljenja",
             "description": "Prikazivanje detaljnih informacija na ekranu tokom lemljenja."
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Power\nlimit",
             "description": "Maximum power the iron can use (W=watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Jezik:\n SR      Srpski",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

@@ -119,6 +119,10 @@
             "displayText": "PD\nпрыпынак",
             "description": "Час чакання ўзгаднення PD з крокам 100 мс для сумяшчальнасці з некаторымі зараднымі зараднымі прыладамі QC (0: адключана)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Уключае рэжымы PPS & EPR."
+        },
         "BoostTemperature": {
             "displayText": "t° турба\nрэжыму",
             "description": "Тэмпература джала ў турба-рэжыме"
@@ -207,6 +211,10 @@
             "displayText": "Падрабязны\nэкран пайкі",
             "description": "Паказваць дэталёвую інформацыю на экране пайкі"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Межы\nмагутнасці",
             "description": "Максімальная магутнасць, якую можа выкарыстоўваць паяльнік (Ватт)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Мова:\n BY  Беларуская",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Уключаны",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nУключаны",
-	    "description": "Уключае рэжымы PPS/EPR."
-	}
+        }
     }
 }

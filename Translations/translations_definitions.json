@@ -218,6 +218,12 @@
             "description": "How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values."
         },
         {
+            "id": "PDVpdo",
+            "maxLen": 7,
+            "maxLen2": 15,
+            "description": "Enabled PPS & EPR modes."
+        },
+        {
             "id": "BoostTemperature",
             "maxLen": 4,
             "maxLen2": 9,
@@ -350,6 +356,12 @@
             "description": "Should the device show an 'advanced' soldering view. This is a text-based view that shows more information at the cost of no nice graphics."
         },
         {
+            "id": "BluetoothLE",
+            "maxLen": 7,
+            "maxLen2": 15,
+            "description": "Should BLE be enabled at boot time."
+        },
+        {
             "id": "PowerLimit",
             "maxLen": 5,
             "maxLen2": 11,
@@ -396,18 +408,6 @@
             "maxLen": 7,
             "maxLen2": 15,
             "description": "Changes the device language on multi-lingual builds."
-        },
-        {
-            "id": "BLEEnabled",
-            "maxLen": 7,
-            "maxLen2": 15,
-            "description": "Should BLE be enabled at boot time."
-        },
-        {
-            "id": "PDVpdoEnabled",
-	    "maxLen": 7,
-	    "maxLen2": 15,
-	    "description": "Enabled PPS/EPR modes."
-	}
+        }
     ]
 }

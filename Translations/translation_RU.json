@@ -119,6 +119,10 @@
             "displayText": "PD\nтайм-аут",
             "description": "Power Delivery тайм-аут согласования с шагом 100 мс для совместимости с некоторыми быстрыми зарядными QC (0: отключено)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Включает режимы PPS & EPR."
+        },
         "BoostTemperature": {
             "displayText": "t° турбо\nрежима",
             "description": "Температура жала в турбо-режиме"
@@ -207,6 +211,10 @@
             "displayText": "Подробный\nэкран пайки",
             "description": "Показывать детальную информацию на экране пайки"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Предел\nмощности",
             "description": "Максимальная мощность, которую может использовать паяльник (Ватт)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Язык:\n RU     Русский",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Включено",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nВключено",
-	    "description": "Включает режимы PPS/EPR."
-	}
+        }
     }
 }

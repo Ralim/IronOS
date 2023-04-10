@@ -119,6 +119,10 @@
             "displayText": "PD\nsau",
             "description": "Thoi gian cho đàm phán PD trong các buoc 100ms đe tuong thích voi mot so bo sac QC"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Tăng\nnhiet đo",
             "description": "Nhiet đo dùng trong che đo \"tăng cuong\""
@@ -207,6 +211,10 @@
             "displayText": "Chi tiet\nmàn hình hàn",
             "description": "-Hien thi thông tin bang phông chu nho hon trên màn hình hàn"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Công suat\ngioi han",
             "description": "-Công suat toi đa mà tay hàn có the su dung (W=watt)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Ngôn ngu:\n VI  Tieng Viet",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Kalibrace\ndokončena!"
         },
         "ResetOKMessage": {
             "message": "Reset OK"
@@ -31,10 +31,10 @@
             "message": "Teplotní\nOchrana"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Před restartem se ujistěte, že hrot a držák mají pokojovou teplotu!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "kalibrování\n"
         },
         "SettingsResetWarning": {
             "message": "Opravdu chcete resetovat zařízení do továrního nastavení?"
@@ -61,7 +61,7 @@
             "message": "Vyp"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "Vaše zařízení je s nejvyšší pravděpodobností padělek!"
         }
     },
     "characters": {
@@ -118,6 +118,10 @@
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
             "description": "Maximální prodleva při jednání PD ve 100ms krocích pro kompatibilitu s některými QC nabíječkami"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Povoluje režimy PPS & EPR"
         },
         "BoostTemperature": {
             "displayText": "Teplota\nboostu",
@@ -207,13 +211,17 @@
             "displayText": "Podrobná obr.\npájení",
             "description": "Zobrazit detailní informace malým fontem na obrazovce pájení"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Povoluje BLE"
+        },
         "PowerLimit": {
             "displayText": "Omezení\nVýkonu",
             "description": "Maximální příkon páječky (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Kalibrovat CJC\npři příštím startu",
+            "description": "Při příštím startu bude kalibrována kompenzace studeného spoje (není třeba pokud Delta T je < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Kalibrovat\nvstupní napětí?",
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Jazyk:\n CS       Český",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

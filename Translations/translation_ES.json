@@ -119,6 +119,10 @@
             "displayText": "PD\ntiempo de espera",
             "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Ajustar la\ntemp. extra",
             "description": "Temperatura de la punta utilizada en el \"modo de impulso\""
@@ -207,6 +211,10 @@
             "displayText": "Info extra\nal soldar",
             "description": "Mostrar información detallada en una fuente más pequeña en la pantalla de soldadura"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Habilita BLE"
+        },
         "PowerLimit": {
             "displayText": "Potencia\nlímite",
             "description": "Elige el límite de potencia máxima del soldador (en vatios)"
@@ -238,14 +246,6 @@
         "LanguageSwitch": {
             "displayText": "Idioma:\n ES  Castellano",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Activado",
-            "description": "Habilita BLE"
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }
