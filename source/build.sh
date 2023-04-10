@@ -1,8 +1,7 @@
 #!/bin/bash
 set -e
-
 TRANSLATION_DIR="../Translations"
-TRANSLATION_SCRIPT="make_translation.py"
+#TRANSLATION_SCRIPT="make_translation.py"
 
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
 AVAILABLE_LANGUAGES=()
@@ -10,30 +9,64 @@ BUILD_LANGUAGES=()
 AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2")
 BUILD_MODELS=()
 
+builder_info() {
+    echo -e "
+********************************************
+               IronOS Firmware
+        builder for Miniware + Pine64
+
+                                    by Ralim
+********************************************"
+}
+
+# Calculate available languages
+for f in "$TRANSLATION_DIR"/translation_*.json; do
+    AVAILABLE_LANGUAGES+=("$(echo "$f" | tr "[:lower:]" "[:upper:]" | sed "s/[^_]*_//" | sed "s/\.JSON//g")")
+done
+
 usage() {
-    echo "Usage : $(basename "$0") [-l <LANG_CODE>] [-m <TS100|TS80|TS80P|Pinecil|MHP30>] [-h]
+    builder_info
+    echo -e "
+Usage : 
+    $(basename "$0") [-l <LANG_CODES>] [-m <MODELS>] [-h]
 
 Parameters :
-    -l LANG_CODE : Force a specific language (E.g. : EN, FR, NL_BE, ...)
-    -m MODEL     : Force a specific model (E.g. : TS100 or TS80)
+    -l LANG_CODE : Force a specific language (${AVAILABLE_LANGUAGES[*]})
+    -m MODEL     : Force a specific model (${AVAILABLE_MODELS[*]})
     -h           : Show this help message
 
-INFO : By default, without parameters, the build is for all platforms and all languages" 1>&2
+Example : 
+    $(basename "$0") -l EN -m TS100                     (Build one language and model)
+    $(basename "$0") -l EN -m \"TS100 MHP30\"             (Build one language and multi models)
+    $(basename "$0") -l \"DE EN\" -m \"TS100 MHP30\"        (Build multi languages and models)
+
+INFO : 
+    By default, without parameters, the build is for all platforms and all languages
+
+" 1>&2
     exit 1
+}
+
+StartBuild(){ 
+    read -n 1 -r -s -p $'Press Enter to start the building process...\n' 
 }
 
 checkLastCommand() {
     if [ $? -eq 0 ]; then
         echo "    [Success]"
-        echo "*********************************************"
+        echo "********************************************"
     else
-        forceExit
+        forceExit "checkLastCommand"
     fi
 }
 
 forceExit() {
-    echo "    [Error]"
-    echo "*********************************************"
+    if [ -n "$*" ]; then
+        echo -e "\n\n    [Error]: $*"
+    else
+        echo "    [Error]"
+    fi
+    echo "********************************************"
     echo " -- Stop on error --"
     exit 1
 }
@@ -49,72 +82,86 @@ isInArray() {
     return 1
 }
 
-while getopts h:l:m: option; do
+declare -a margs=()
+declare -a largs=()
+
+while getopts "h:l:m:" option; do
     case "${option}" in
-    h)
-        usage
-        ;;
-    l)
-        LANGUAGEREQ=${OPTARG}
-        ;;
-    m)
-        MODEL=${OPTARG}
-        ;;
-    *)
-        usage
+        h)
+            usage
+            ;;
+        l)  
+            set -f 
+            IFS=' '
+            largs=($OPTARG)
+            ;;
+        m)  
+            set -f 
+            IFS=' '
+            margs=($OPTARG)
+            ;;
+        *)
+            usage
         ;;
     esac
 done
 shift $((OPTIND - 1))
-
-echo "*********************************************"
-echo "             Builder for the"
-echo "      Alternate Open Source Firmware"
-echo "        for Miniware + Pine64"
-echo "                                     by Ralim"
-echo "                                             "
-echo "*********************************************"
-
-# Calculate available languages
-for f in "$TRANSLATION_DIR"/translation_*.json; do
-    AVAILABLE_LANGUAGES+=("$(echo "$f" | tr "[:lower:]" "[:upper:]" | sed "s/[^_]*_//" | sed "s/\.JSON//g")")
-done
+builder_info
 
 # Checking requested language
-echo "Available languages :"
-echo "    ${AVAILABLE_LANGUAGES[*]}"
-echo "Requested languages :"
-if [ -n "$LANGUAGEREQ" ]; then
-    if isInArray "$LANGUAGEREQ" "${AVAILABLE_LANGUAGES[@]}"; then
-        echo "    $LANGUAGEREQ"
-        BUILD_LANGUAGES+=("$LANGUAGEREQ")
-    else
-        echo "    $LANGUAGEREQ doesn't exist"
-        forceExit
-    fi
-else
-    echo "    [ALL LANGUAGES]"
+echo -n "Available languages :"
+echo " ${AVAILABLE_LANGUAGES[*]}"
+echo -n "Requested languages : "
+if ((${#largs[@]})); then
+    for i in "${largs[@]}"; do
+        i=$(echo "${i}" | tr '[:lower:]' '[:upper:]')
+        if isInArray "$i" "${AVAILABLE_LANGUAGES[@]}"; then
+            echo -n "$i "
+            BUILD_LANGUAGES+=("$i")
+        else
+            forceExit "Language '$i' is unknown. Check and use only from the available languages."
+        fi
+    done
+    echo ""
+fi
+if [ -z "$BUILD_LANGUAGES" ]; then
+    echo "    No custom languages selected."
+    echo "    Building: [ALL LANGUAGES]"
     BUILD_LANGUAGES+=("${AVAILABLE_LANGUAGES[@]}")
 fi
-echo "*********************************************"
+echo "********************************************"
 
 # Checking requested model
-echo "Available models :"
-echo "    ${AVAILABLE_MODELS[*]}"
-echo "Requested models :"
-if [ -n "$MODEL" ]; then
-    if isInArray "$MODEL" "${AVAILABLE_MODELS[@]}"; then
-        echo "    $MODEL"
-        BUILD_MODELS+=("$MODEL")
-    else
-        echo "    $MODEL doesn't exist"
-        forceExit
-    fi
-else
-    echo "    [ALL MODELS]"
+echo -n "Available models :"
+echo " ${AVAILABLE_MODELS[*]}"
+echo -n "Requested models : "
+if ((${#margs[@]})); then
+    for i in "${margs[@]}"; do
+        
+        if [[ "$i" != "Pinecil" ]] && [[ "$i" != "Pinecilv2" ]]; then # Dirty. Need to adapt the Build process to use upper cases only
+            i=$(echo "${i}" | tr '[:lower:]' '[:upper:]')
+        fi
+        
+        if isInArray "$i" "${AVAILABLE_MODELS[@]}"; then
+            echo -n "$i "
+            BUILD_MODELS+=("$i")
+        else
+            forceExit "Model '$i' is unknown. Check and use only from the available models."
+        fi
+    done
+    echo ""
+fi
+
+if [ -z "$BUILD_MODELS" ]; then
+    echo "    No custom models selected."
+    echo "    Building: [ALL MODELS]"
     BUILD_MODELS+=("${AVAILABLE_MODELS[@]}")
 fi
-echo "*********************************************"
+
+echo "********************************************"
+
+##
+#StartBuild
 
 if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
     echo "Cleaning previous builds"
@@ -129,8 +176,7 @@ if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
         checkLastCommand
     done
 else
-    echo "Nothing to build. (no model or language specified)"
-    forceExit
+    forceExit "Nothing to build. (no model or language specified)"
 fi
 echo " -- Firmwares successfully generated --"
 echo "End..."

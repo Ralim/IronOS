@@ -20,7 +20,7 @@ void postRToSInit() {
   }
 #endif
 
-  if (getSettingValue(SettingsOptions::BLEEnabled)) {
+  if (getSettingValue(SettingsOptions::BluetoothLE)) {
     ble_stack_start();
   }
 }

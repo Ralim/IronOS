@@ -130,9 +130,9 @@
 #define VOLTAGE_DIV                600                       // 600 - Default divider from schematic
 #define CALIBRATION_OFFSET         900                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET     100                       // Min value for calibration
-#define PID_POWER_LIMIT            220                       // Sets the max pwm power limit
+#define PID_POWER_LIMIT            120                       // Sets the max pwm power limit
 #define POWER_LIMIT                0                         // 0 watts default limit
-#define MAX_POWER_LIMIT            220                       //
+#define MAX_POWER_LIMIT            120                       // Sets the max power limit
 #define POWER_LIMIT_STEPS          5                         //
 #define OP_AMP_GAIN_STAGE          OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                                 // Use Hakko lookup table

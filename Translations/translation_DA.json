@@ -113,6 +113,10 @@
             "displayText": "PD\ntimeout",
             "description": "PD-forhandlingstimeout i trin på 100 ms for kompatibilitet med nogle QC-opladere"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Boost\ntemp",
             "description": "Temperatur i \"boost mode\""
@@ -201,6 +205,10 @@
             "displayText": "Detaljeret\nloddeskærm",
             "description": "Vis detaljeret information mens der loddes"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Strøm\nbegrænsning",
             "description": "Maksimal effekt Loddekolben kan bruge (W=watt)"
@@ -232,14 +240,6 @@
         "LanguageSwitch": {
             "displayText": "Sprog:\n DA       Dansk",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

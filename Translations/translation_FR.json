@@ -113,6 +113,10 @@
             "displayText": "Délai\nexpir. PD",
             "description": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "Temp.\nboost",
             "description": "Température utilisée en \"mode boost\""
@@ -201,6 +205,10 @@
             "displayText": "Écran soudure\ndétaillé",
             "description": "Afficher les informations détaillées sur l'écran de soudure"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Limite de\npuissance",
             "description": "Puissance maximale utilisable (W=watts)"
@@ -232,14 +240,6 @@
         "LanguageSwitch": {
             "displayText": "Langue:\n FR    Français",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Activé",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }
