@@ -308,24 +308,26 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
  * method, as doing so will overwrite the previous screen data. The caller
  * does not need to call `OLED::refresh()` after this function returns.
  *
- * **This function blocks until the transition has completed.**
+ * **This function blocks until the transition has completed or user presses button**
  */
 void OLED::transitionScrollDown() {
   // We want to draw the updated framebuffer to the next page downward.
   uint8_t const pageStart = screenBuffer[13];
-  uint8_t const nextPage  = (pageStart + 2) % 8;
+  uint8_t const nextPage  = (pageStart + (OLED_HEIGHT / 8)) % 8;
   // Change page start address:
   screenBuffer[13] = nextPage;
   // Change page end address:
-  screenBuffer[15] = nextPage + 1;
+  screenBuffer[15] = (nextPage + 1) % 8;
 
-  refresh();
+  refresh(); // Now refresh to write out the contents to the new page
   osDelay(TICKS_100MS / 5);
 
-  uint8_t const startLine = pageStart * 8 + 1;
-  uint8_t const scrollTo  = (pageStart + 2) * 8;
+  uint8_t startLine = (pageStart * 8) + 1;
+
+  uint8_t scrollTo = (pageStart + (OLED_HEIGHT / 8)) * 8;
 
   // Scroll the screen by changing display start line.
+  // This effectively scrolls off the bottom of the current page and into the next one
   for (uint8_t current = startLine; current <= scrollTo; current++) {
     if (getButtonState() != BUTTON_NONE) {
       current = scrollTo;
@@ -341,6 +343,13 @@ void OLED::transitionScrollDown() {
     I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
     osDelay(TICKS_100MS / 7);
   }
+  // Now that scroll is done, revert to default page to avoid wrap issues
+  screenBuffer[13]          = pageStart;
+  screenBuffer[15]          = (pageStart + 1) % 8;
+  uint8_t scrollCommandByte = 0b01000000;
+  OLED_Setup_Array[8].val   = scrollCommandByte;
+  I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
+  refresh();
 }
 
 void OLED::setRotation(bool leftHanded) {

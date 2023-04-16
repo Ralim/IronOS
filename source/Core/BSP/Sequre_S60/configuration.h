@@ -150,6 +150,7 @@
 #define TIP_THERMAL_MASS         30 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           25 // x10 ohms
 
+#define OLED_128x32
 #define GPIO_VIBRATION
 #define POW_PD_EXT 1
 #define HAS_POWER_DEBUG_MENU

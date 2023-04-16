@@ -32,34 +32,33 @@ extern "C" {
 #include "I2C_Wrapper.hpp"
 #endif
 
-#define DEVICEADDR_OLED   (0x3c << 1)
-#ifdef MODEL_S60
-    // TODO; for now just cropping in on the screen from 128x32 to 96x16
-    #define OLED_WIDTH      96
-    #define OLED_HEIGHT     16
-    #define OLED_GRAM_START 0x10 // Should be 0x00 when we have full width
-    #define OLED_GRAM_END   0x6F // Should be 0x7F when we have full width
-    #define OLED_GRAM_START_FLIP 0 
-    #define OLED_GRAM_END_FLIP   95
+#define DEVICEADDR_OLED (0x3c << 1)
+#ifdef OLED_128x32
+// TODO; for now just cropping in on the screen from 128x32 to 96x16
+#define OLED_WIDTH           96
+#define OLED_HEIGHT          16
+#define OLED_GRAM_START      0x10 // Should be 0x00 when we have full width
+#define OLED_GRAM_END        0x6F // Should be 0x7F when we have full width
+#define OLED_GRAM_START_FLIP 0
+#define OLED_GRAM_END_FLIP   95
 
-    #define OLED_VCOM_LAYOUT 0x12
-    #define OLED_SEGMENT_MAP_REVERSED
-    #warning "S60 Not fully supported"
+#define OLED_VCOM_LAYOUT 0x12
+#define OLED_SEGMENT_MAP_REVERSED
+#warning "S60 Not fully supported"
 #else
-    #define OLED_WIDTH  96
-    #define OLED_HEIGHT 16
-    #define OLED_VCOM_LAYOUT 0x02
+#define OLED_WIDTH       96
+#define OLED_HEIGHT      16
+#define OLED_VCOM_LAYOUT 0x02
 
-    #define OLED_GRAM_START 0x20 
-    #define OLED_GRAM_END   0x7F
-    #define OLED_GRAM_START_FLIP 0 
-    #define OLED_GRAM_END_FLIP   95
-    
-    #define OLED_SEGMENT_MAP 0xA0
+#define OLED_GRAM_START      0x20
+#define OLED_GRAM_END        0x7F
+#define OLED_GRAM_START_FLIP 0
+#define OLED_GRAM_END_FLIP   95
+
+#define OLED_SEGMENT_MAP 0xA0
 
 #endif
 #define FRAMEBUFFER_START 17
-
 
 enum class FontStyle {
   SMALL,
@@ -75,9 +74,9 @@ public:
   static bool isInitDone();
   // Draw the buffer out to the LCD if any content has changed.
   static void refresh() {
-   
+
     if (checkDisplayBufferChecksum()) {
-      const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+      const int len = FRAMEBUFFER_START + (OLED_WIDTH * 2);
       I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
       // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
       // or we need to goto double buffering
@@ -138,17 +137,17 @@ public:
   static void transitionScrollDown();
 
 private:
-static bool checkDisplayBufferChecksum(){
-   uint32_t  hash = 0;
+  static bool checkDisplayBufferChecksum() {
+    uint32_t  hash = 0;
     const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
     for (int i = 0; i < len; i++) {
       hash += (i * screenBuffer[i]);
     }
 
-    bool result =  hash!=displayChecksum;
-    displayChecksum= hash;
+    bool result     = hash != displayChecksum;
+    displayChecksum = hash;
     return result;
-}
+  }
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
   static uint8_t     *firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
