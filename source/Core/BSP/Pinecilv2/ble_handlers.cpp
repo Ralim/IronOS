@@ -136,6 +136,7 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
   MSG((char *)"Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
 }
+
 int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
@@ -184,13 +185,23 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
     memcpy(buf, &BUILD_VERSION, sizeof(BUILD_VERSION) - 1);
     return sizeof(BUILD_VERSION) - 1;
   case 4:
-    // Device unique id
+    // Device serial number.
+    // Serial number is the ID burned by manufacturer.
+    // In case of Pinecil V2, device SN = device MAC.
     {
-      uint64_t id = getDeviceID();
+      uint64_t sn = getDeviceID();
+      memcpy(buf, &sn, sizeof(sn));
+      return sizeof(sn);
+    }
+    break;
+  case 5:
+    // Device ID [https://github.com/Ralim/IronOS/issues/1609].
+    // ID is a unique key Pine burns at the factory and records in their db.
+    {
+      uint32_t id = getDeviceValidation();
       memcpy(buf, &id, sizeof(id));
       return sizeof(id);
     }
-    break;
   }
   return 0;
 }
