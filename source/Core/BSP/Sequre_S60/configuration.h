@@ -148,7 +148,7 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         30 // X10 watts to raise 1 deg C in 1 second
-#define TIP_RESISTANCE           60 // x10 ohms
+#define TIP_RESISTANCE           25 // x10 ohms
 
 #define GPIO_VIBRATION
 #define POW_PD_EXT 1

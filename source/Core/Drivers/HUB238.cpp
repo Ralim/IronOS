@@ -4,6 +4,8 @@
 
 bool hub238_probe() { return I2CBB::probe(HUB238_ADDR); }
 
+extern int32_t powerSupplyWattageLimit;
+
 uint16_t hub238_debug_state() {
   uint8_t status0 = 0;
   uint8_t status1 = 0;
@@ -92,6 +94,7 @@ uint8_t findBestPDO() {
   ilim              = hub238_getVoltagePDOCurrent(20);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(20);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
+    powerSupplyWattageLimit = (20 * ilim) / 100;
     return 0b1010;
   }
 #endif
@@ -99,30 +102,36 @@ uint8_t findBestPDO() {
   ilim              = hub238_getVoltagePDOCurrent(18);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(18);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    return 0b1010;
+    powerSupplyWattageLimit = (18 * ilim) / 100;
+    return 0b1001;
   }
 #endif
 #if USB_PD_VMAX >= 15
   ilim              = hub238_getVoltagePDOCurrent(15);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(15);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    return 0b1010;
+    powerSupplyWattageLimit = (15 * ilim) / 100;
+    return 0b1000;
   }
 #endif
 #if USB_PD_VMAX >= 12
   ilim              = hub238_getVoltagePDOCurrent(12);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(12);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    return 0b1010;
+    powerSupplyWattageLimit = (12 * ilim) / 100;
+    return 0b0011;
   }
 #endif
 #if USB_PD_VMAX >= 9
   ilim              = hub238_getVoltagePDOCurrent(9);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(9);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    return 0b1010;
+    powerSupplyWattageLimit = (9 * ilim) / 100;
+    return 0b0010;
   }
 #endif
+
+  powerSupplyWattageLimit = 10;
   return 0b0001; // 5V PDO
 }
 volatile uint8_t haveSelected = 0xFF;
@@ -144,6 +153,7 @@ void hub238_check_negotiation() {
   vTaskDelay(5);
 
   uint8_t bestPDO = findBestPDO();
+
   if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO, &currentPDO, 1) == true) {
     currentPDO >>= 4; // grab upper bits
     if (currentPDO == bestPDO) {
