@@ -92,7 +92,7 @@ uint8_t findBestPDO() {
   uint16_t minimumx10current = 0;
 #if USB_PD_VMAX >= 20
   ilim              = hub238_getVoltagePDOCurrent(20);
-  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(20);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(200);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
     powerSupplyWattageLimit = (20 * ilim) / 100;
     return 0b1010;
@@ -100,7 +100,7 @@ uint8_t findBestPDO() {
 #endif
 #if USB_PD_VMAX >= 18
   ilim              = hub238_getVoltagePDOCurrent(18);
-  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(18);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(180);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
     powerSupplyWattageLimit = (18 * ilim) / 100;
     return 0b1001;
@@ -108,7 +108,7 @@ uint8_t findBestPDO() {
 #endif
 #if USB_PD_VMAX >= 15
   ilim              = hub238_getVoltagePDOCurrent(15);
-  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(15);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(150);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
     powerSupplyWattageLimit = (15 * ilim) / 100;
     return 0b1000;
@@ -116,15 +116,15 @@ uint8_t findBestPDO() {
 #endif
 #if USB_PD_VMAX >= 12
   ilim              = hub238_getVoltagePDOCurrent(12);
-  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(12);
-  if (ilim != 0 && ilim / 10 >= minimumx10current) {
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(120);
+  if (ilim != 0 && (ilim / 10) >= minimumx10current) {
     powerSupplyWattageLimit = (12 * ilim) / 100;
     return 0b0011;
   }
 #endif
 #if USB_PD_VMAX >= 9
   ilim              = hub238_getVoltagePDOCurrent(9);
-  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(9);
+  minimumx10current = Utils::RequiredCurrentForTipAtVoltage(90);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
     powerSupplyWattageLimit = (9 * ilim) / 100;
     return 0b0010;
