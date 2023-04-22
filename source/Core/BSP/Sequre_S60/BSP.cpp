@@ -24,32 +24,33 @@ static bool infastPWM;
 
 void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
 // Lookup table for the NTC
+// We dont know exact specs, but it loooks to be roughly a 10K B=4000 NTC
 // Stored as ADCReading,Temp in degC
 static const uint16_t NTCHandleLookup[] = {
     // ADC Reading , Temp in C
-    24894, 0,  //
-    24282, 2,  //
-    23649, 4,  //
-    22997, 6,  //
-    22330, 8,  //
-    21648, 10, //
-    20956, 12, //
-    20256, 14, //
-    19550, 16, //
-    18842, 18, //
-    18134, 20, //
-    17429, 22, //
-    16730, 24, //
-    16039, 26, //
-    15358, 28, //
-    14690, 30, //
-    14036, 32, //
-    13398, 34, //
-    12777, 36, //
-    12175, 38, //
-    11592, 40, //
-    11029, 42, //
-    10487, 44, //
+    25344, 0,  //
+    24715, 2,  //
+    24061, 4,  //
+    23384, 6,  //
+    22687, 8,  //
+    21972, 10, //
+    21243, 12, //
+    20503, 14, //
+    19755, 16, //
+    19003, 18, //
+    18250, 20, //
+    17499, 22, //
+    16753, 24, //
+    16016, 26, //
+    15290, 28, //
+    14578, 30, //
+    13882, 32, //
+    13204, 34, //
+    12546, 36, //
+    11908, 38, //
+    11293, 40, //
+    10701, 42, //
+    10132, 44, //
 };
 
 uint16_t getHandleTemperature(uint8_t sample) {
@@ -57,7 +58,7 @@ uint16_t getHandleTemperature(uint8_t sample) {
   // S60 uses 10k NTC resistor
   // For now not doing interpolation
   for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t))); i++) {
-    if (result < NTCHandleLookup[(i * 2) + 0]) {
+    if (result > NTCHandleLookup[(i * 2) + 0]) {
       return NTCHandleLookup[(i * 2) + 1] * 10;
     }
   }
