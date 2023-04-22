@@ -118,13 +118,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     } else {
       htim4.Instance->CCR3 = 0;
     }
-    if (fastPWM != infastPWM) {
-      if (fastPWM) {
-        switchToFastPWM();
-      } else {
-        switchToSlowPWM();
-      }
-    }
+    // if (fastPWM != infastPWM) {
+    //   if (fastPWM) {
+    //     switchToFastPWM();
+    //   } else {
+    switchToSlowPWM();
+    // }
+    // }
   } else if (htim->Instance == TIM1) {
     // STM uses this for internal functions as a counter for timeouts
     HAL_IncTick();
@@ -229,4 +229,4 @@ uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
 
 uint8_t preStartChecksDone() { return 1; }
 
-uint8_t getTipThermalMass() { return TIP_THERMAL_MASS; }
+uint8_t getTipThermalMass() { return TIP_THERMAL_INERTIA; }
