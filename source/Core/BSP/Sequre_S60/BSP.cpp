@@ -14,8 +14,8 @@ volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t  pendingPWM     = 0;
 
 const uint16_t       powerPWM         = 255;
-static const uint8_t holdoffTicks     = 14; // delay of 8 ms
-static const uint8_t tempMeasureTicks = 14;
+static const uint8_t holdoffTicks     = 30; // delay of 8 ish ms
+static const uint8_t tempMeasureTicks = 30;
 
 uint16_t totalPWM; // htim4.Init.Period, the full PWM cycle
 
@@ -27,30 +27,29 @@ void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
 // Stored as ADCReading,Temp in degC
 static const uint16_t NTCHandleLookup[] = {
     // ADC Reading , Temp in C
-    29189, 0,  //
-    28832, 2,  //
-    28450, 4,  //
-    28042, 6,  //
-    27607, 8,  //
-    27146, 10, //
-    26660, 12, //
-    26147, 14, //
-    25610, 16, //
-    25049, 18, //
-    24465, 20, //
-    23859, 22, //
-    23234, 24, //
-    22591, 26, //
-    21933, 28, //
-    21261, 30, //
-    20579, 32, //
-    19888, 34, //
-    19192, 36, //
-    18493, 38, //
-    17793, 40, //
-    17096, 42, //
-    16404, 44, //
-    16061, 45, //
+    24894, 0,  //
+    24282, 2,  //
+    23649, 4,  //
+    22997, 6,  //
+    22330, 8,  //
+    21648, 10, //
+    20956, 12, //
+    20256, 14, //
+    19550, 16, //
+    18842, 18, //
+    18134, 20, //
+    17429, 22, //
+    16730, 24, //
+    16039, 26, //
+    15358, 28, //
+    14690, 30, //
+    14036, 32, //
+    13398, 34, //
+    12777, 36, //
+    12175, 38, //
+    11592, 40, //
+    11029, 42, //
+    10487, 44, //
 };
 
 uint16_t getHandleTemperature(uint8_t sample) {
@@ -58,7 +57,7 @@ uint16_t getHandleTemperature(uint8_t sample) {
   // S60 uses 10k NTC resistor
   // For now not doing interpolation
   for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t))); i++) {
-    if (result > NTCHandleLookup[(i * 2) + 0]) {
+    if (result < NTCHandleLookup[(i * 2) + 0]) {
       return NTCHandleLookup[(i * 2) + 1] * 10;
     }
   }
@@ -77,21 +76,21 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 }
 
 static void switchToFastPWM(void) {
-  // 10Hz
+  // 20Hz
   infastPWM            = true;
   totalPWM             = powerPWM + tempMeasureTicks + holdoffTicks;
   htim4.Instance->ARR  = totalPWM;
   htim4.Instance->CCR1 = powerPWM + holdoffTicks;
-  htim4.Instance->PSC  = 2690;
+  htim4.Instance->PSC  = 1500;
 }
 
 static void switchToSlowPWM(void) {
-  // 5Hz
+  // 10Hz
   infastPWM            = false;
   totalPWM             = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
   htim4.Instance->ARR  = totalPWM;
   htim4.Instance->CCR1 = powerPWM + holdoffTicks / 2;
-  htim4.Instance->PSC  = 2690 * 2;
+  htim4.Instance->PSC  = 1500 * 2;
 }
 
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
