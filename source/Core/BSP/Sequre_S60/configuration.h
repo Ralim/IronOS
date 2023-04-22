@@ -136,7 +136,7 @@
 #define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
 
 #ifdef MODEL_S60
-#define VOLTAGE_DIV        360 // Default divider scaler
+#define VOLTAGE_DIV        460 // Default divider scaler
 #define CALIBRATION_OFFSET 200 // Default adc offset in uV
 #define PID_POWER_LIMIT    70  // Sets the max pwm power limit
 #define POWER_LIMIT        0   // 0 watts default limit
