@@ -148,7 +148,7 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 750
 
-#define TIP_THERMAL_MASS    5   // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
 
 #define TIP_RESISTANCE 25 // x10 ohms
