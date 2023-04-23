@@ -527,7 +527,7 @@ static void displayProfilePhases(void) {
 }
 
 static bool setProfileTemp(const enum SettingsOptions option) {
-    // If in C, 10 deg, if in F 20 deg
+    // If in C, 5 deg, if in F 10 deg
     uint16_t temp = getSettingValue(option);
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
         temp += 10;
@@ -625,36 +625,36 @@ static void displayHallEffect(void) { OLED::printNumber(getSettingValue(Settings
 static bool showHallEffect(void) { return getHallSensorFitted(); }
 #endif
 
+static void setTempF(const enum SettingsOptions option) {
+    uint16_t Temp = getSettingValue(option);
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+        // Change temp to the F equiv
+        // C to F == F= ( (C*9) +160)/5
+        Temp = ((Temp * 9) + 160) / 5;
+    } else {
+        // Change temp to the C equiv
+        // F->C == C = ((F-32)*5)/9
+        Temp = ((Temp - 32) * 5) / 9;
+    }
+    // Rescale to be multiples of 10
+    Temp = BoostTemp / 10;
+    Temp *= 10;
+    setSettingValue(option, Temp);
+}
+
 static bool setTempF(void) {
-  bool     res           = nextSettingValue(SettingsOptions::TemperatureInF);
-  uint16_t BoostTemp     = getSettingValue(SettingsOptions::BoostTemp);
-  uint16_t SolderingTemp = getSettingValue(SettingsOptions::SolderingTemp);
-  uint16_t SleepTemp     = getSettingValue(SettingsOptions::SleepTemp);
-
-  if (getSettingValue(SettingsOptions::TemperatureInF)) {
-    // Change sleep, boost and soldering temps to the F equiv
-    // C to F == F= ( (C*9) +160)/5
-    BoostTemp     = ((BoostTemp * 9) + 160) / 5;
-    SolderingTemp = ((SolderingTemp * 9) + 160) / 5;
-    SleepTemp     = ((SleepTemp * 9) + 160) / 5;
-  } else {
-    // Change sleep, boost and soldering temps to the C equiv
-    // F->C == C = ((F-32)*5)/9
-    BoostTemp     = ((BoostTemp - 32) * 5) / 9;
-    SolderingTemp = ((SolderingTemp - 32) * 5) / 9;
-    SleepTemp     = ((SleepTemp - 32) * 5) / 9;
-  }
-  // Rescale both to be multiples of 10
-  BoostTemp = BoostTemp / 10;
-  BoostTemp *= 10;
-  SolderingTemp = SolderingTemp / 10;
-  SolderingTemp *= 10;
-  SleepTemp = SleepTemp / 10;
-  SleepTemp *= 10;
-  setSettingValue(SettingsOptions::BoostTemp, BoostTemp);
-  setSettingValue(SettingsOptions::SolderingTemp, SolderingTemp);
-  setSettingValue(SettingsOptions::SleepTemp, SleepTemp);
-
+  bool res = nextSettingValue(SettingsOptions::TemperatureInF);
+  setTempF(SettingsOptions::BoostTemp);
+  setTempF(SettingsOptions::SolderingTemp);
+#ifndef NO_SLEEP_MODE
+  setTempF(SettingsOptions::SleepTemp);
+#endif
+  setTempF(SettingsOptions::ProfilePreheatTemp);
+  setTempF(SettingsOptions::ProfilePhase1Temp);
+  setTempF(SettingsOptions::ProfilePhase2Temp);
+  setTempF(SettingsOptions::ProfilePhase3Temp);
+  setTempF(SettingsOptions::ProfilePhase4Temp);
+  setTempF(SettingsOptions::ProfilePhase5Temp);
   return res;
 }
 
