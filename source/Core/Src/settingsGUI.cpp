@@ -575,10 +575,10 @@ static bool showProfilePhase3Options(void) { return getSettingValue(SettingsOpti
 static bool showProfilePhase4Options(void) { return getSettingValue(SettingsOptions::ProfilePhases) >= 4; }
 static bool showProfilePhase5Options(void) { return getSettingValue(SettingsOptions::ProfilePhases) >= 5; }
 
+#endif
+
 static void displaySensitivity(void) { OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false); }
 static bool showSleepOptions(void) { return getSettingValue(SettingsOptions::Sensitivity) > 0; }
-
-#endif
 
 #ifndef NO_SLEEP_MODE
 

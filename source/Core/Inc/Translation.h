@@ -147,7 +147,6 @@ struct TranslationIndexTable {
   uint16_t SettingLockDisableChar;
   uint16_t SettingLockBoostChar;
   uint16_t SettingLockFullChar;
-  uint16_t SolderingPhaseChar;
 
   uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
   uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
