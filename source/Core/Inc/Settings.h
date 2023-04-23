@@ -53,8 +53,22 @@ enum SettingsOptions {
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
   BluetoothLE                    = 37, // Toggle BLE if present
   PDVpdo                         = 38, // Toggle PPS & EPR
+  ProfilePhases                  = 39, // Number of Reflow Profile Phases
+  ProfilePreheatTemp             = 40,
+  ProfilePreheatSpeed            = 41,
+  ProfilePhase1Temp              = 42,
+  ProfilePhase1Duration          = 43,
+  ProfilePhase2Temp              = 44,
+  ProfilePhase2Duration          = 45,
+  ProfilePhase3Temp              = 46,
+  ProfilePhase3Duration          = 47,
+  ProfilePhase4Temp              = 48,
+  ProfilePhase4Duration          = 49,
+  ProfilePhase5Temp              = 50,
+  ProfilePhase5Duration          = 51,
+  ProfileCooldownSpeed           = 52,
   //
-  SettingsOptionsLength = 39, //
+  SettingsOptionsLength = 53, //
 };
 
 typedef enum {

@@ -254,6 +254,90 @@
             "description": "If locking the buttons against accidental presses is enabled."
         },
         {
+            "id": "ProfilePhases",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Enable / set the number of phases for the soldering profile."
+        },
+        {
+            "id": "ProfilePreheatTemp",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "For the soldering profile, preheat to this temperature before proceeding with phase 1."
+        },
+        {
+            "id": "ProfilePreheatSpeed",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "How fast the temperature is allowed to rise during the heatup phase of the soldering profile."
+        },
+        {
+            "id": "ProfilePhase1Temp",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Target temperature for the end of phase 1 of the soldering profile."
+        },
+        {
+            "id": "ProfilePhase1Duration",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Duration of phase 1 of the soldering profile. The phase might actually take longer if it takes longer to reach the target temperature."
+        },
+        {
+            "id": "ProfilePhase2Temp",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Target temperature for the end of phase 2 of the soldering profile."
+        },
+        {
+            "id": "ProfilePhase2Duration",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Duration of phase 2 of the soldering profile. The phase might actually take longer if it takes longer to reach the target temperature."
+        },
+        {
+            "id": "ProfilePhase3Temp",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Target temperature for the end of phase 3 of the soldering profile."
+        },
+        {
+            "id": "ProfilePhase3Duration",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Duration of phase 3 of the soldering profile. The phase might actually take longer if it takes longer to reach the target temperature."
+        },
+        {
+            "id": "ProfilePhase4Temp",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Target temperature for the end of phase 5 of the soldering profile."
+        },
+        {
+            "id": "ProfilePhase4Duration",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Duration of phase 5 of the soldering profile. The phase might actually take longer if it takes longer to reach the target temperature."
+        },
+        {
+            "id": "ProfilePhase5Temp",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Target temperature for the end of phase 5 of the soldering profile."
+        },
+        {
+            "id": "ProfilePhase5Duration",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "Duration of phase 5 of the soldering profile. The phase might actually take longer if it takes longer to reach the target temperature."
+        },
+        {
+            "id": "ProfileCooldownSpeed",
+            "maxLen": 6,
+            "maxLen2": 13,
+            "description": "How fast the temperature is allowed to drop after the last phase of the soldering profile."
+        },
+        {
             "id": "MotionSensitivity",
             "maxLen": 6,
             "maxLen2": 13,
