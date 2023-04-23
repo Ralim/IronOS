@@ -145,7 +145,7 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void setStatusLED(const enum StatusLED state) {
+void setStatusLED(const enum StatusLED state, bool buzzer) {
   // Dont have one
 }
 

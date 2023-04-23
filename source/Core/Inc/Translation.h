@@ -23,6 +23,8 @@ extern const char *SmallSymbolAmps;
 extern const char *LargeSymbolAmps;
 extern const char *SmallSymbolDot;
 extern const char *LargeSymbolDot;
+extern const char *SmallSymbolSlash;
+extern const char *SmallSymbolColon;
 extern const char *SmallSymbolDegC;
 extern const char *LargeSymbolDegC;
 extern const char *SmallSymbolDegF;
@@ -121,12 +123,15 @@ struct TranslationIndexTable {
   uint16_t UVLOWarningString;
   uint16_t UndervoltageString;
   uint16_t InputVoltageString;
+  uint16_t ProfilePreheatString;
+  uint16_t ProfileCooldownString;
 
   uint16_t SleepingSimpleString;
   uint16_t SleepingAdvancedString;
   uint16_t SleepingTipAdvancedString;
   uint16_t OffString;
   uint16_t DeviceFailedValidationWarning;
+  uint16_t TooHotToStartProfileWarning;
 
   uint16_t SettingRightChar;
   uint16_t SettingLeftChar;
@@ -142,6 +147,7 @@ struct TranslationIndexTable {
   uint16_t SettingLockDisableChar;
   uint16_t SettingLockBoostChar;
   uint16_t SettingLockFullChar;
+  uint16_t SolderingPhaseChar;
 
   uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
   uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];

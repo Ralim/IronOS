@@ -86,7 +86,7 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void setStatusLED(const enum StatusLED state) {}
+void setStatusLED(const enum StatusLED state, bool buzzer) {}
 
 uint8_t  preStartChecks() { return 1; }
 uint64_t getDeviceID() { return dbg_id_get(); }

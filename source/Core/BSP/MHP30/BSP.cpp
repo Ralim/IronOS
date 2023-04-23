@@ -436,7 +436,7 @@ void setBuzzer(bool on) {
     htim3.Instance->PSC  = 1; // revert back out of hearing range
   }
 }
-void setStatusLED(const enum StatusLED state) {
+void setStatusLED(const enum StatusLED state, bool buzzer) {
   static enum StatusLED lastState = LED_UNKNOWN;
   static TickType_t     buzzerEnd = 0;
 
@@ -455,17 +455,19 @@ void setStatusLED(const enum StatusLED state) {
     } break;
     case LED_HOT:
       ws2812.led_set_color(0, 0xFF, 0, 0); // red
-      // We have hit the right temp, run buzzer for a short period
-      buzzerEnd = xTaskGetTickCount() + TICKS_SECOND / 3;
       break;
     case LED_COOLING_STILL_HOT:
       ws2812.led_set_color(0, 0xFF, 0x8C, 0x00); // Orange
       break;
     }
+    if (buzzer) {
+      // Buzzer requested
+      buzzerEnd = xTaskGetTickCount() + TICKS_SECOND / 3;
+    }
     ws2812.led_update();
     lastState = state;
   }
-  if (state == LED_HOT && xTaskGetTickCount() < buzzerEnd) {
+  if (xTaskGetTickCount() < buzzerEnd) {
     setBuzzer(true);
   } else {
     setBuzzer(false);

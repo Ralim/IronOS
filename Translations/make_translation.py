@@ -101,6 +101,8 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SmallSymbolSpace", " "),
         ("LargeSymbolDot", "."),
         ("SmallSymbolDot", "."),
+        ("SmallSymbolSlash", "/"),
+        ("SmallSymbolColon", ":"),
         ("LargeSymbolDegC", "C"),
         ("SmallSymbolDegC", "C"),
         ("LargeSymbolDegF", "F"),

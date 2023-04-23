@@ -60,8 +60,17 @@
         "OffString": {
             "message": "Off"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
         "DeviceFailedValidationWarning": {
             "message": "Your device is most likely a counterfeit!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
         }
     },
     "characters": {
