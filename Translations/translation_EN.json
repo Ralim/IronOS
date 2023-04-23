@@ -170,7 +170,7 @@
         },
         "ProfilePhase1Duration": {
             "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (s=seconds)"
+            "description": "Target duration of this phase (seconds)"
         },
         "ProfilePhase2Temp": {
             "displayText": "Phase 2\nTemp",
