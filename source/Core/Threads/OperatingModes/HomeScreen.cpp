@@ -55,8 +55,12 @@ void drawHomeScreen(bool buttonLockout) {
       showDebugMenu();
       break;
     case BUTTON_F_LONG:
+#ifdef PROFILE_MODE
+      // todo: add profile mode
+#else
       gui_solderingTempAdjust();
       saveSettings();
+#endif
       break;
     case BUTTON_F_SHORT:
       if (!isTipDisconnected()) {

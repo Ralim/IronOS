@@ -52,6 +52,8 @@ static void displayDisplayRotation(void);
 
 static bool setBoostTemp(void);
 static void displayBoostTemp(void);
+
+#ifdef PROFILE_MODE
 static bool setProfilePreheatTemp();
 static bool setProfilePhase1Temp();
 static bool setProfilePhase2Temp();
@@ -77,6 +79,8 @@ static bool showProfilePhase2Options(void);
 static bool showProfilePhase3Options(void);
 static bool showProfilePhase4Options(void);
 static bool showProfilePhase5Options(void);
+#endif
+
 static void displayAutomaticStartMode(void);
 static void displayLockingMode(void);
 static void displayCoolingBlinkEnabled(void);
@@ -244,6 +248,7 @@ const menuitem solderingMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), nullptr, displayTempChangeLongStep, nullptr, SettingsOptions::TempChangeLongStep, SettingsItemIndex::TempChangeLongStep,
      6},                                                                                                                                                    /*Temp change long step*/
     {SETTINGS_DESC(SettingsItemIndex::LockingMode), nullptr, displayLockingMode, nullptr, SettingsOptions::LockingMode, SettingsItemIndex::LockingMode, 7}, /*Locking Mode*/
+#ifdef PROFILE_MODE
     {SETTINGS_DESC(SettingsItemIndex::ProfilePhases), nullptr, displayProfilePhases, nullptr, SettingsOptions::ProfilePhases, SettingsItemIndex::ProfilePhases,  5}, /*Boost Temp*/
     {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatTemp), setProfilePreheatTemp, displayProfilePreheatTemp, showProfileOptions, SettingsOptions::ProfilePreheatTemp, SettingsItemIndex::ProfilePreheatTemp,  5}, /*Boost Temp*/
     {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatSpeed), nullptr, displayProfilePreheatSpeed, showProfileOptions, SettingsOptions::ProfilePreheatSpeed, SettingsItemIndex::ProfilePreheatSpeed,  5}, /*Boost Temp*/
@@ -259,6 +264,7 @@ const menuitem solderingMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase5Duration, showProfilePhase5Options, SettingsOptions::ProfilePhase5Duration, SettingsItemIndex::ProfilePhase5Duration,  5}, /*Boost Temp*/
     {SETTINGS_DESC(SettingsItemIndex::ProfileCooldownSpeed), nullptr, displayProfileCooldownSpeed, showProfileOptions, SettingsOptions::ProfileCooldownSpeed, SettingsItemIndex::ProfileCooldownSpeed,  5}, /*Boost Temp*/
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}                                                 // end of menu marker. DO NOT REMOVE
+#endif
 };
 const menuitem PowerSavingMenu[] = {
     /*
@@ -518,6 +524,8 @@ static void displayLockingMode(void) {
   }
 }
 
+#ifdef PROFILE_MODE
+
 static void displayProfilePhases(void) {
     if (getSettingValue(SettingsOptions::ProfilePhases)) {
         OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE);
@@ -573,6 +581,8 @@ static bool showProfilePhase5Options(void) { return getSettingValue(SettingsOpti
 
 static void displaySensitivity(void) { OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false); }
 static bool showSleepOptions(void) { return getSettingValue(SettingsOptions::Sensitivity) > 0; }
+
+#endif
 
 #ifndef NO_SLEEP_MODE
 
@@ -649,12 +659,14 @@ static bool setTempF(void) {
 #ifndef NO_SLEEP_MODE
   setTempF(SettingsOptions::SleepTemp);
 #endif
+#ifdef PROFILE_MODE
   setTempF(SettingsOptions::ProfilePreheatTemp);
   setTempF(SettingsOptions::ProfilePhase1Temp);
   setTempF(SettingsOptions::ProfilePhase2Temp);
   setTempF(SettingsOptions::ProfilePhase3Temp);
   setTempF(SettingsOptions::ProfilePhase4Temp);
   setTempF(SettingsOptions::ProfilePhase5Temp);
+#endif
   return res;
 }
 
