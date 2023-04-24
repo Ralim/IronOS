@@ -53,7 +53,7 @@ enum SettingsOptions {
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
   BluetoothLE                    = 37, // Toggle BLE if present
   PDVpdo                         = 38, // Toggle PPS & EPR
-  ProfilePhases                  = 39, // Number of Soldering Profile Phases
+  ProfilePhases                  = 39, // Number of profile mode phases
   ProfilePreheatTemp             = 40, // Temperature to preheat to before the first phase
   ProfilePreheatSpeed            = 41, // Maximum allowed preheat speed in degrees per second
   ProfilePhase1Temp              = 42, // Temperature to target for the end of phase 1

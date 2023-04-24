@@ -154,11 +154,11 @@
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
-            "description": "Number of phases for the soldering profile"
+            "description": "Number of phases in profile mode"
         },
         "ProfilePreheatTemp": {
             "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature when starting the profile"
+            "description": "Preheat to this temperature at the start of profile mode"
         },
         "ProfilePreheatSpeed": {
             "displayText": "Preheat\nSpeed",
@@ -206,7 +206,7 @@
         },
         "ProfileCooldownSpeed": {
             "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate after the last phase (degrees per second)"
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "动作灵敏度",

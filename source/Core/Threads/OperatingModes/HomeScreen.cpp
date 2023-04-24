@@ -57,7 +57,7 @@ void drawHomeScreen(bool buttonLockout) {
     case BUTTON_F_LONG:
 #ifdef PROFILE_SUPPORT
       if (!isTipDisconnected()) {
-        gui_solderingProfileMode(); // enter soldering profile mode
+        gui_solderingProfileMode(); // enter profile mode
         buttonLockout = true;
       }
 #else

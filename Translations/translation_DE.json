@@ -154,11 +154,11 @@
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhasen",
-            "description": "Anzahl an Phasen für das Lötprofil"
+            "description": "Anzahl an Phasen im Profilmodus"
         },
         "ProfilePreheatTemp": {
             "displayText": "Vorheiz-\ntemperatur",
-            "description": "Auf diese Temperatur vorheizen zum Start des Profils"
+            "description": "Zu Beginn des Profilmodus auf diese Temperatur vorheizen"
         },
         "ProfilePreheatSpeed": {
             "displayText": "Vorheiz-\nrate",
@@ -206,7 +206,7 @@
         },
         "ProfileCooldownSpeed": {
             "displayText": "Abkühl-\nrate",
-            "description": "Abkühlenen nach der letzten Phase mit dieser Geschwindigkeit (Grad pro Sekunde)"
+            "description": "Am Ende des Profilmodus mit dieser Geschwindigkeit abkühlen (Grad pro Sekunde)"
         },
         "MotionSensitivity": {
             "displayText": "Bewegungs-\nempfindlichk.",
