@@ -194,7 +194,7 @@
             "description": "Inverser les couleurs de l'écran OLED"
         },
         "LOGOTime": {
-            "displayText": "Durée logo\nau démarrage",
+            "displayText": "Durée logo\ndémarrage",
             "description": "Définit la durée d'affichage du logo au démarrage (s=secondes)"
         },
         "AdvancedIdle": {
@@ -207,7 +207,7 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Activer BLE"
         },
         "PowerLimit": {
             "displayText": "Limite de\npuissance",
