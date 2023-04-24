@@ -57,7 +57,7 @@ void drawHomeScreen(bool buttonLockout) {
     case BUTTON_F_LONG:
 #ifdef PROFILE_SUPPORT
       if (!isTipDisconnected()) {
-        gui_solderingMode(0); // enter soldering mode
+        gui_solderingProfileMode(); // enter soldering profile mode
         buttonLockout = true;
       }
 #else
@@ -97,13 +97,13 @@ void drawHomeScreen(bool buttonLockout) {
     if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity)
         && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
       OLED::setDisplayState(OLED::DisplayState::OFF);
-      setStatusLED(LED_OFF, false);
+      setStatusLED(LED_OFF);
     } else {
       OLED::setDisplayState(OLED::DisplayState::ON);
       if (tipTemp > 55) {
-        setStatusLED(LED_COOLING_STILL_HOT, false);
+        setStatusLED(LED_COOLING_STILL_HOT);
       } else {
-        setStatusLED(LED_STANDBY, false);
+        setStatusLED(LED_STANDBY);
       }
     }
     // Clear the lcd buffer

@@ -92,7 +92,9 @@ enum StatusLED {
   LED_COOLING_STILL_HOT, // The unit is off and cooling but still hot
   LED_UNKNOWN,           //
 };
-void setStatusLED(const enum StatusLED state, bool buzzer);
+void setStatusLED(const enum StatusLED state);
+
+void setBuzzer(bool on);
 
 // preStartChecks are run until they return 0
 // By the PID, after each ADC sample comes in

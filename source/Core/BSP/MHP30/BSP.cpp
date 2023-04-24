@@ -436,7 +436,7 @@ void setBuzzer(bool on) {
     htim3.Instance->PSC  = 1; // revert back out of hearing range
   }
 }
-void setStatusLED(const enum StatusLED state, bool buzzer) {
+void setStatusLED(const enum StatusLED state) {
   static enum StatusLED lastState = LED_UNKNOWN;
   static TickType_t     buzzerEnd = 0;
 
@@ -460,17 +460,8 @@ void setStatusLED(const enum StatusLED state, bool buzzer) {
       ws2812.led_set_color(0, 0xFF, 0x8C, 0x00); // Orange
       break;
     }
-    if (buzzer) {
-      // Buzzer requested
-      buzzerEnd = xTaskGetTickCount() + TICKS_SECOND / 3;
-    }
     ws2812.led_update();
     lastState = state;
-  }
-  if (xTaskGetTickCount() < buzzerEnd) {
-    setBuzzer(true);
-  } else {
-    setBuzzer(false);
   }
 }
 uint64_t getDeviceID() {
