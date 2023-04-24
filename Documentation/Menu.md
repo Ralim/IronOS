@@ -9,6 +9,12 @@ In this mode the iron works as you would expect, pressing either button will tak
 - Pressing both buttons or holding the rear button (`-/B`) will exit Soldering Mode.
 - Holding the front button (`+/A`) will enter [Boost mode](https://ralim.github.io/IronOS/Menu/#boost-mode) (if enabled).
 
+## Soldering profile mode (MHP30 only)
+
+In this mode, accessible by long pressing the button that brings you into soldering mode, the iron will play out the configured soldering profile.
+- You cannot adjust the temperature or enter boost mode.
+- Pressing both buttons or holding the rear button (`-/B`) will exit Soldering Profile Mode as well.
+
 ## Settings mode
 
 This mode allows you to cycle through all the options and set custom values.

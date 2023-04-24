@@ -42,7 +42,7 @@ This OLED screen features burn-in protection; if no buttons or movement have bee
 
 Additionally to the two icons shown, there are two "hidden" actions that can be performed on this menu.
 
-If you press and hold the button near the tip (`+/A`), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
+On devices that do not support Soldering profile mode, if you press and hold the button near the tip (`+/A`), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
 
 If you press and hold the button near the rear of the iron (`-/B`), it will take you into the [debug menu](https://ralim.github.io/IronOS/DebugMenu/).
 
@@ -73,6 +73,23 @@ Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00
 ### Idle Shutdown
 
 If, after entering sleep mode, the iron still does not see movement for a much longer time (default=10 minutes); it will shut down and return to the home screen.
+
+## Soldering Profile Mode (MHP30 only)
+
+On devices that support it, wehn you long press the button to enter the soldering mode, the iron will play out the configured soldering profile. In this mode, you cannot adjust the temperature as it is configured according to the soldering profile you can configure through the settings menu.
+
+The soldering profile plays out as follows:
+
+1. Check if the temperature is below 55C. If not, you will get a warning and cannot enter soldering profile mode.
+2. Preheat by raising the target temperature to the configured preheat temperature with the configured preheat speed.
+3. Wait for the iron to reach the preheat temperature.
+4. Gradually move the target temperature to the configured end temperature of the first phase over the configured duration. 
+5. Wait for the iron to reach the end temperature. 
+6. Repeat steps 4 and 5 for the next phases until there are no more phases configured.
+7. Cool down by lowering the target temperature to 0 with the configured cooldown speed. 
+8. Once the temperature is below 55C, sound the buzzer (if avaialable) and exit soldering profile mode. 
+
+You can manually exit soldering profile mode manually in the same way as the soldering mode, by pressing and holding the rear button or pressing both buttons at once.
 
 ## Settings Menu
 
