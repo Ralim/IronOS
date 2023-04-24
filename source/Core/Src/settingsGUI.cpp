@@ -240,6 +240,22 @@ const menuitem solderingMenu[] = {
      *  Temp Change Short Step
      *  Temp Change Long Step
      *  Locking Mode
+     *  Profile Phases
+     *  Profile Preheat Temperature
+     *  Profile Preheat Max Temperature Change Per Second
+     *  Profile Phase 1 Temperature
+     *  Profile Phase 1 Duration (s)
+     *  Profile Phase 2 Temperature
+     *  Profile Phase 2 Duration (s)
+     *  Profile Phase 3 Temperature
+     *  Profile Phase 3 Duration (s)
+     *  Profile Phase 4 Temperature
+     *  Profile Phase 4 Duration (s)
+     *  Profile Phase 5 Temperature
+     *  Profile Phase 5 Duration (s)
+     *  Profile Phase 6 Temperature
+     *  Profile Phase 6 Duration (s)
+     *  Profile Cooldown Max Temperature Change Per Second
      */
     {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
     {SETTINGS_DESC(SettingsItemIndex::AutoStart), nullptr, displayAutomaticStartMode, nullptr, SettingsOptions::AutoStartMode, SettingsItemIndex::AutoStart, 7},                   /*Auto start*/
