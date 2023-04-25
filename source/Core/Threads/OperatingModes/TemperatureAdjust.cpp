@@ -4,23 +4,31 @@ void gui_solderingTempAdjust(void) {
   currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
   TickType_t  autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
+#ifndef PROFILE_SUPPORT
   bool        waitForRelease         = false;
   ButtonState buttons                = getButtonState();
+
   if (buttons != BUTTON_NONE) {
     // Temp adjust entered by long-pressing F button.
     waitForRelease = true;
   }
+#else
+  ButtonState buttons;
+#endif
+
   for (;;) {
     OLED::setCursor(0, 0);
     OLED::clearScreen();
     buttons = getButtonState();
     if (buttons) {
+      lastChange = xTaskGetTickCount();
+#ifndef PROFILE_SUPPORT
       if (waitForRelease) {
         buttons = BUTTON_NONE;
       }
-      lastChange = xTaskGetTickCount();
     } else {
       waitForRelease = false;
+#endif
     }
     int16_t delta = 0;
     switch (buttons) {

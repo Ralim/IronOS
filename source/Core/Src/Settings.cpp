@@ -87,6 +87,20 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, 0},                                                          // CalibrateCJC
     {0, 1, 1, 1},                                                          // BluetoothLE
     {0, 1, 1, 1},                                                          // PDVpdo
+    {1, 5, 1, 4},                                                          // ProfilePhases
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 90},                                       // ProfilePreheatTemp
+    {1, 10, 1, 1},                                                         // ProfilePreheatSpeed
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 130},                                      // ProfilePhase1Temp
+    {10, 180, 5, 90},                                                      // ProfilePhase1Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 140},                                      // ProfilePhase2Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase2Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 165},                                      // ProfilePhase3Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase3Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 140},                                      // ProfilePhase4Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase4Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 90},                                       // ProfilePhase5Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase5Duration
+    {1, 10, 1, 2},                                                         // ProfileCooldownSpeed
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 

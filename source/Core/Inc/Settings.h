@@ -52,8 +52,22 @@ enum SettingsOptions {
   CalibrateCJC                   = 35, // Toggle calibrate CJC at next boot
   BluetoothLE                    = 36, // Toggle BLE if present
   PDVpdo                         = 37, // Toggle PPS & EPR
+  ProfilePhases                  = 38, // Number of profile mode phases
+  ProfilePreheatTemp             = 39, // Temperature to preheat to before the first phase
+  ProfilePreheatSpeed            = 40, // Maximum allowed preheat speed in degrees per second
+  ProfilePhase1Temp              = 41, // Temperature to target for the end of phase 1
+  ProfilePhase1Duration          = 42, // Target duration for phase 1
+  ProfilePhase2Temp              = 43, // Temperature to target for the end of phase 2
+  ProfilePhase2Duration          = 44, // Target duration for phase 2
+  ProfilePhase3Temp              = 45, // Temperature to target for the end of phase 3
+  ProfilePhase3Duration          = 46, // Target duration for phase 3
+  ProfilePhase4Temp              = 47, // Temperature to target for the end of phase 4
+  ProfilePhase4Duration          = 48, // Target duration for phase 4
+  ProfilePhase5Temp              = 49, // Temperature to target for the end of phase 5
+  ProfilePhase5Duration          = 50, // Target duration for phase 5
+  ProfileCooldownSpeed           = 51, // Maximum allowed cooldown speed in degrees per second
   //
-  SettingsOptionsLength = 38, //
+  SettingsOptionsLength = 52, //
 };
 
 typedef enum {

@@ -52,6 +52,35 @@ static void displayDisplayRotation(void);
 
 static bool setBoostTemp(void);
 static void displayBoostTemp(void);
+
+#ifdef PROFILE_SUPPORT
+static bool setProfilePreheatTemp();
+static bool setProfilePhase1Temp();
+static bool setProfilePhase2Temp();
+static bool setProfilePhase3Temp();
+static bool setProfilePhase4Temp();
+static bool setProfilePhase5Temp();
+static void displayProfilePhases(void);
+static void displayProfilePreheatTemp(void);
+static void displayProfilePreheatSpeed(void);
+static void displayProfilePhase1Temp(void);
+static void displayProfilePhase1Duration(void);
+static void displayProfilePhase2Temp(void);
+static void displayProfilePhase2Duration(void);
+static void displayProfilePhase3Temp(void);
+static void displayProfilePhase3Duration(void);
+static void displayProfilePhase4Temp(void);
+static void displayProfilePhase4Duration(void);
+static void displayProfilePhase5Temp(void);
+static void displayProfilePhase5Duration(void);
+static void displayProfileCooldownSpeed(void);
+static bool showProfileOptions(void);
+static bool showProfilePhase2Options(void);
+static bool showProfilePhase3Options(void);
+static bool showProfilePhase4Options(void);
+static bool showProfilePhase5Options(void);
+#endif
+
 static void displayAutomaticStartMode(void);
 static void displayCoolingBlinkEnabled(void);
 static bool setResetSettings(void);
@@ -107,6 +136,22 @@ static bool enterAdvancedMenu(void);
  *  Auto Start
  *  Temp Change Short Step
  *  Temp Change Long Step
+ *  Profile Phases
+ *  Profile Preheat Temperature
+ *  Profile Preheat Max Temperature Change Per Second
+ *  Profile Phase 1 Temperature
+ *  Profile Phase 1 Duration (s)
+ *  Profile Phase 2 Temperature
+ *  Profile Phase 2 Duration (s)
+ *  Profile Phase 3 Temperature
+ *  Profile Phase 3 Duration (s)
+ *  Profile Phase 4 Temperature
+ *  Profile Phase 4 Duration (s)
+ *  Profile Phase 5 Temperature
+ *  Profile Phase 5 Duration (s)
+ *  Profile Phase 6 Temperature
+ *  Profile Phase 6 Duration (s)
+ *  Profile Cooldown Max Temperature Change Per Second
  *
  * Power Saving
  *  Motion Sensitivity
@@ -192,6 +237,22 @@ const menuitem solderingMenu[] = {
      *  Auto Start
      *  Temp Change Short Step
      *  Temp Change Long Step
+     *  Profile Phases
+     *  Profile Preheat Temperature
+     *  Profile Preheat Max Temperature Change Per Second
+     *  Profile Phase 1 Temperature
+     *  Profile Phase 1 Duration (s)
+     *  Profile Phase 2 Temperature
+     *  Profile Phase 2 Duration (s)
+     *  Profile Phase 3 Temperature
+     *  Profile Phase 3 Duration (s)
+     *  Profile Phase 4 Temperature
+     *  Profile Phase 4 Duration (s)
+     *  Profile Phase 5 Temperature
+     *  Profile Phase 5 Duration (s)
+     *  Profile Phase 6 Temperature
+     *  Profile Phase 6 Duration (s)
+     *  Profile Cooldown Max Temperature Change Per Second
      */
     {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
     {SETTINGS_DESC(SettingsItemIndex::AutoStart), nullptr, displayAutomaticStartMode, nullptr, SettingsOptions::AutoStartMode, SettingsItemIndex::AutoStart, 7},                   /*Auto start*/
@@ -199,6 +260,22 @@ const menuitem solderingMenu[] = {
      6}, /*Temp change short step*/
     {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), nullptr, displayTempChangeLongStep, nullptr, SettingsOptions::TempChangeLongStep, SettingsItemIndex::TempChangeLongStep,
      6},                                                                                                                                                    /*Temp change long step*/
+#ifdef PROFILE_SUPPORT
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhases), nullptr, displayProfilePhases, nullptr, SettingsOptions::ProfilePhases, SettingsItemIndex::ProfilePhases, 7}, /*Profile Phases*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatTemp), setProfilePreheatTemp, displayProfilePreheatTemp, showProfileOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePreheatTemp,  5}, /*Profile Preheat Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatSpeed), nullptr, displayProfilePreheatSpeed, showProfileOptions, SettingsOptions::ProfilePreheatSpeed, SettingsItemIndex::ProfilePreheatSpeed,  5}, /*Profile Preheat Speed*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase1Temp, displayProfilePhase1Temp, showProfileOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase1Temp,  5}, /*Phase 1 Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase1Duration, showProfileOptions, SettingsOptions::ProfilePhase1Duration, SettingsItemIndex::ProfilePhase1Duration,  5}, /*Phase 1 Duration*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase2Temp, displayProfilePhase2Temp, showProfilePhase2Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase2Temp,  5}, /*Phase 2 Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase2Duration, showProfilePhase2Options, SettingsOptions::ProfilePhase2Duration, SettingsItemIndex::ProfilePhase2Duration,  5}, /*Phase 2 Duration*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase3Temp, displayProfilePhase3Temp, showProfilePhase3Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase3Temp,  5}, /*Phase 3 Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase3Duration, showProfilePhase3Options, SettingsOptions::ProfilePhase3Duration, SettingsItemIndex::ProfilePhase3Duration,  5}, /*Phase 3 Duration*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase4Temp, displayProfilePhase4Temp, showProfilePhase4Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase4Temp,  5}, /*Phase 4 Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase4Duration, showProfilePhase4Options, SettingsOptions::ProfilePhase4Duration, SettingsItemIndex::ProfilePhase4Duration,  5}, /*Phase 4 Duration*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase5Temp, displayProfilePhase5Temp, showProfilePhase5Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase5Temp,  5}, /*Phase 5 Temp*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase5Duration, showProfilePhase5Options, SettingsOptions::ProfilePhase5Duration, SettingsItemIndex::ProfilePhase5Duration,  5}, /*Phase 5 Duration*/
+    {SETTINGS_DESC(SettingsItemIndex::ProfileCooldownSpeed), nullptr, displayProfileCooldownSpeed, showProfileOptions, SettingsOptions::ProfileCooldownSpeed, SettingsItemIndex::ProfileCooldownSpeed,  5}, /*Profile Cooldown Speed*/
+#endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}                                                 // end of menu marker. DO NOT REMOVE
 };
 const menuitem PowerSavingMenu[] = {
@@ -441,6 +518,59 @@ static void displayTempChangeShortStep(void) { OLED::printNumber(getSettingValue
 
 static void displayTempChangeLongStep(void) { OLED::printNumber(getSettingValue(SettingsOptions::TempChangeLongStep), 2, FontStyle::LARGE); }
 
+#ifdef PROFILE_SUPPORT
+
+static void displayProfilePhases(void) {
+    OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE);
+}
+
+static bool setProfileTemp(const enum SettingsOptions option) {
+    // If in C, 5 deg, if in F 10 deg
+    uint16_t temp = getSettingValue(option);
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+        temp += 10;
+        if (temp > MAX_TEMP_F)
+            temp = MIN_TEMP_F;
+        setSettingValue(option, temp);
+        return temp == MAX_TEMP_F;
+    } else {
+        temp += 5;
+        if (temp > MAX_TEMP_C)
+            temp = MIN_TEMP_C;
+        setSettingValue(option, temp);
+        return temp == MAX_TEMP_C;
+    }
+}
+
+static bool setProfilePreheatTemp(void) { return setProfileTemp(SettingsOptions::ProfilePreheatTemp); }
+static bool setProfilePhase1Temp(void) { return setProfileTemp(SettingsOptions::ProfilePhase1Temp); }
+static bool setProfilePhase2Temp(void) { return setProfileTemp(SettingsOptions::ProfilePhase2Temp); }
+static bool setProfilePhase3Temp(void) { return setProfileTemp(SettingsOptions::ProfilePhase3Temp); }
+static bool setProfilePhase4Temp(void) { return setProfileTemp(SettingsOptions::ProfilePhase4Temp); }
+static bool setProfilePhase5Temp(void) { return setProfileTemp(SettingsOptions::ProfilePhase5Temp); }
+
+static void displayProfilePreheatTemp(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePreheatTemp), 3, FontStyle::LARGE); }
+static void displayProfilePhase1Temp(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase1Temp), 3, FontStyle::LARGE); }
+static void displayProfilePhase2Temp(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase2Temp), 3, FontStyle::LARGE); }
+static void displayProfilePhase3Temp(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase3Temp), 3, FontStyle::LARGE); }
+static void displayProfilePhase4Temp(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase4Temp), 3, FontStyle::LARGE); }
+static void displayProfilePhase5Temp(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase5Temp), 3, FontStyle::LARGE); }
+static void displayProfilePreheatSpeed(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePreheatSpeed), 2, FontStyle::LARGE); }
+static void displayProfileCooldownSpeed(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfileCooldownSpeed), 2, FontStyle::LARGE); }
+static void displayProfilePhase1Duration(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase1Duration), 3, FontStyle::LARGE); }
+static void displayProfilePhase2Duration(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase2Duration), 3, FontStyle::LARGE); }
+static void displayProfilePhase3Duration(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase3Duration), 3, FontStyle::LARGE); }
+static void displayProfilePhase4Duration(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase4Duration), 3, FontStyle::LARGE); }
+static void displayProfilePhase5Duration(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhase5Duration), 3, FontStyle::LARGE); }
+
+static bool showProfileOptions(void) { return getSettingValue(SettingsOptions::ProfilePhases); }
+static bool showProfilePhase2Options(void) { return getSettingValue(SettingsOptions::ProfilePhases) >= 2; }
+static bool showProfilePhase3Options(void) { return getSettingValue(SettingsOptions::ProfilePhases) >= 3; }
+static bool showProfilePhase4Options(void) { return getSettingValue(SettingsOptions::ProfilePhases) >= 4; }
+static bool showProfilePhase5Options(void) { return getSettingValue(SettingsOptions::ProfilePhases) >= 5; }
+
+#endif
+
 static void displaySensitivity(void) { OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false); }
 static bool showSleepOptions(void) { return getSettingValue(SettingsOptions::Sensitivity) > 0; }
 
@@ -495,36 +625,38 @@ static void displayHallEffect(void) { OLED::printNumber(getSettingValue(Settings
 static bool showHallEffect(void) { return getHallSensorFitted(); }
 #endif
 
+static void setTempF(const enum SettingsOptions option) {
+    uint16_t Temp = getSettingValue(option);
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+        // Change temp to the F equiv
+        // C to F == F= ( (C*9) +160)/5
+        Temp = ((Temp * 9) + 160) / 5;
+    } else {
+        // Change temp to the C equiv
+        // F->C == C = ((F-32)*5)/9
+        Temp = ((Temp - 32) * 5) / 9;
+    }
+    // Rescale to be multiples of 10
+    Temp = BoostTemp / 10;
+    Temp *= 10;
+    setSettingValue(option, Temp);
+}
+
 static bool setTempF(void) {
-  bool     res           = nextSettingValue(SettingsOptions::TemperatureInF);
-  uint16_t BoostTemp     = getSettingValue(SettingsOptions::BoostTemp);
-  uint16_t SolderingTemp = getSettingValue(SettingsOptions::SolderingTemp);
-  uint16_t SleepTemp     = getSettingValue(SettingsOptions::SleepTemp);
-
-  if (getSettingValue(SettingsOptions::TemperatureInF)) {
-    // Change sleep, boost and soldering temps to the F equiv
-    // C to F == F= ( (C*9) +160)/5
-    BoostTemp     = ((BoostTemp * 9) + 160) / 5;
-    SolderingTemp = ((SolderingTemp * 9) + 160) / 5;
-    SleepTemp     = ((SleepTemp * 9) + 160) / 5;
-  } else {
-    // Change sleep, boost and soldering temps to the C equiv
-    // F->C == C = ((F-32)*5)/9
-    BoostTemp     = ((BoostTemp - 32) * 5) / 9;
-    SolderingTemp = ((SolderingTemp - 32) * 5) / 9;
-    SleepTemp     = ((SleepTemp - 32) * 5) / 9;
-  }
-  // Rescale both to be multiples of 10
-  BoostTemp = BoostTemp / 10;
-  BoostTemp *= 10;
-  SolderingTemp = SolderingTemp / 10;
-  SolderingTemp *= 10;
-  SleepTemp = SleepTemp / 10;
-  SleepTemp *= 10;
-  setSettingValue(SettingsOptions::BoostTemp, BoostTemp);
-  setSettingValue(SettingsOptions::SolderingTemp, SolderingTemp);
-  setSettingValue(SettingsOptions::SleepTemp, SleepTemp);
-
+  bool res = nextSettingValue(SettingsOptions::TemperatureInF);
+  setTempF(SettingsOptions::BoostTemp);
+  setTempF(SettingsOptions::SolderingTemp);
+#ifndef NO_SLEEP_MODE
+  setTempF(SettingsOptions::SleepTemp);
+#endif
+#ifdef PROFILE_SUPPORT
+  setTempF(SettingsOptions::ProfilePreheatTemp);
+  setTempF(SettingsOptions::ProfilePhase1Temp);
+  setTempF(SettingsOptions::ProfilePhase2Temp);
+  setTempF(SettingsOptions::ProfilePhase3Temp);
+  setTempF(SettingsOptions::ProfilePhase4Temp);
+  setTempF(SettingsOptions::ProfilePhase5Temp);
+#endif
   return res;
 }
 

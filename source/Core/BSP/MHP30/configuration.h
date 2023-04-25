@@ -145,6 +145,8 @@
 #define ACCEL_SC7
 #define ACCEL_MSA
 
+#define PROFILE_SUPPORT
+
 #define POW_PD 1
 #define TEMP_NTC
 #define I2C_SOFT

@@ -148,6 +148,7 @@ bool isTipDisconnected() {
 void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
+void setBuzzer(bool on) {}
 
 uint8_t       lastTipResistance        = 0; // default to unknown
 const uint8_t numTipResistanceReadings = 3;
