@@ -37,6 +37,7 @@ void performCJCC(void);                                            // Used to ca
 void gui_solderingTempAdjust(void);                                // For adjusting the setpoint temperature of the iron
 int  gui_SolderingSleepingMode(bool stayOff, bool autoStarted);    // Sleep mode
 void gui_solderingMode(uint8_t jumpToSleep);                       // Main mode for hot pointy tool
+void gui_solderingProfileMode();                                   // Profile mode for hot likely-not-so-pointy tool
 void showDebugMenu(void);                                          // Debugging values
 void showPDDebug(void);                                            // Debugging menu that hows PD adaptor info
 void showWarnings(void);                                           // Shows user warnings if required

@@ -66,6 +66,29 @@ def read_translation(json_root: Union[str, Path], lang_code: str) -> dict:
     return lang
 
 
+def filter_translation(lang: dict, defs: dict, macros: frozenset):
+    def check_excluded(record):
+        if "include" in record and not any(m in macros for m in record["include"]):
+            return True
+
+        if "exclude" in record and any(m in macros for m in record["exclude"]):
+            return True
+
+        return False
+
+    for category in ("menuOptions", "menuGroups"):
+        for index, record in enumerate(defs[category]):
+            if check_excluded(record):
+                lang[category][record["id"]]["displayText"] = ""
+                lang[category][record["id"]]["description"] = ""
+
+    for index, record in enumerate(defs["messagesWarn"]):
+        if check_excluded(record):
+            lang["messagesWarn"][record["id"]]["message"] = ""
+
+    return lang
+
+
 def validate_langcode_matches_content(filename: str, content: dict) -> None:
     # Extract lang code from file name
     lang_code = filename[12:-5].upper()
@@ -101,6 +124,8 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SmallSymbolSpace", " "),
         ("LargeSymbolDot", "."),
         ("SmallSymbolDot", "."),
+        ("SmallSymbolSlash", "/"),
+        ("SmallSymbolColon", ":"),
         ("LargeSymbolDegC", "C"),
         ("SmallSymbolDegC", "C"),
         ("LargeSymbolDegF", "F"),
@@ -250,7 +275,6 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     # collapse all strings down into the composite letters and store totals for these
     # Doing this seperately for small and big font
     def sort_and_count(list_in: List[str]):
-
         symbol_counts: dict[str, int] = {}
         for line in list_in:
             line = line.replace("\n", "").replace("\r", "")
@@ -439,7 +463,6 @@ class FontMapsPerFont:
 def get_font_map_per_font(
     text_list_small_font: List[str], text_list_large_font: List[str]
 ) -> FontMapsPerFont:
-
     pending_small_symbols = set(text_list_small_font)
     pending_large_symbols = set(text_list_large_font)
 
@@ -1029,7 +1052,6 @@ def get_translation_strings_and_indices_text(
     large_font_symbol_conversion_table: Dict[str, bytes],
     suffix: str = "",
 ) -> str:
-
     # For all strings; we want to convert them to their byte encoded form (using font index lookups)
     # Then we want to sort by their reversed format to see if we can remove any duplicates by combining the tails (last n bytes;n>0)
     # Finally we look for any that are contained inside one another, and if they are we update them to point to this
@@ -1118,7 +1140,6 @@ def get_translation_strings_and_indices_text(
     translation_strings_text = "  /* .strings = */ {\n"
 
     for i, encoded_bytes in enumerate(byte_encoded_strings):
-
         if i > 0:
             translation_strings_text += ' "\\0"\n'
 
@@ -1286,6 +1307,13 @@ def parse_args() -> argparse.Namespace:
         dest="compress_font",
     )
     parser.add_argument(
+        "--macros",
+        help="Extracted macros to filter translation strings by",
+        type=argparse.FileType("r"),
+        required=True,
+        dest="macros",
+    )
+    parser.add_argument(
         "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
     )
     parser.add_argument(
@@ -1304,6 +1332,12 @@ def main() -> None:
     if args.input_pickled and args.output_pickled:
         logging.error("error: Both --output-pickled and --input-pickled are specified")
         sys.exit(1)
+
+    macros = (
+        frozenset(re.findall(r"#define ([^ ]+)", args.macros.read()))
+        if args.macros
+        else frozenset()
+    )
 
     language_data: LanguageData
     if args.input_pickled:
@@ -1329,11 +1363,13 @@ def main() -> None:
 
         defs_ = load_json(os.path.join(json_dir, "translations_definitions.json"))
         if len(args.languageCodes) == 1:
-            lang_ = read_translation(json_dir, args.languageCodes[0])
+            lang_ = filter_translation(
+                read_translation(json_dir, args.languageCodes[0]), defs_, macros
+            )
             language_data = prepare_language(lang_, defs_, build_version)
         else:
             langs_ = [
-                read_translation(json_dir, lang_code)
+                filter_translation(read_translation(json_dir, lang_code), defs_, macros)
                 for lang_code in args.languageCodes
             ]
             language_data = prepare_languages(langs_, defs_, build_version)
