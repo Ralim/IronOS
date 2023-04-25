@@ -76,7 +76,7 @@ If, after entering sleep mode, the iron still does not see movement for a much l
 
 ## Profile Mode (MHP30 only)
 
-On devices that support it, when you long press the button to enter the soldering mode, you enter profile mode which will adjust the temperature according to the profile mode settings.
+On devices that support it, a long press on `(+/A)` takes you into profile mode, which initiates the profile selected in the relevant settings.
 
 Profile mode plays out as follows:
 
