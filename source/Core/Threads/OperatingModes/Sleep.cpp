@@ -3,6 +3,7 @@
 extern OperatingMode currentMode;
 
 int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
+#ifndef NO_SLEEP_MODE
   // Drop to sleep temperature and display until movement or button press
   currentMode = OperatingMode::sleeping;
 
@@ -66,5 +67,6 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       return 1; // we want to exit soldering mode
     }
   }
+#endif
   return 0;
 }

@@ -608,14 +608,20 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 		../Translations/make_translation.py \
 		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
-		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf \
+		Core/Gen/macros.txt
 	@test -d Core/Gen || mkdir -p Core/Gen
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for language $*'
 	@python3 ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation.$*.cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		$*
+
+Core/Gen/macros.txt: Makefile
+	@test -d Core/Gen || mkdir -p Core/Gen
+	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) - > $(PWD)/Core/Gen/macros.txt
 
 #
 # The recipes to produce compressed translation data:
@@ -636,19 +642,21 @@ $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/de
 	@echo Building host brieflz shared library $@
 	@$(HOST_CC) -fPIC -shared -DBLZ_DLL -DBLZ_DLL_EXPORTS -O $^ -o $@
 
-Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation for $*
 	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_brieflz.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/$*.o \
 		$*
 
-Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation for $*
 	@python3 ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_brieflz_font.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--compress-font \
@@ -689,21 +697,24 @@ Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.
 		../Translations/make_translation.py \
 		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
-		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf \
+		Core/Gen/macros.txt
 	@test -d Core/Gen || mkdir -p Core/Gen
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for multi-language $(2)'
 	@python3 ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_multi.$(1).cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		$(3)
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle: Core/Gen/Translation_multi.$(1).cpp
 
-Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $$(@D) || mkdir -p $$(@D)
 	@echo Generating BriefLZ compressed translation for multi-language $(2)
 	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o \

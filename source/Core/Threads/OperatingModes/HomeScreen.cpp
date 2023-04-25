@@ -55,8 +55,15 @@ void drawHomeScreen(bool buttonLockout) {
       showDebugMenu();
       break;
     case BUTTON_F_LONG:
+#ifdef PROFILE_SUPPORT
+      if (!isTipDisconnected()) {
+        gui_solderingProfileMode(); // enter profile mode
+        buttonLockout = true;
+      }
+#else
       gui_solderingTempAdjust();
       saveSettings();
+#endif
       break;
     case BUTTON_F_SHORT:
       if (!isTipDisconnected()) {
@@ -80,11 +87,6 @@ void drawHomeScreen(bool buttonLockout) {
     currentTempTargetDegC = 0; // ensure tip is off
     getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
     uint32_t tipTemp = TipThermoModel::getTipInC();
-    if (tipTemp > 55) {
-      setStatusLED(LED_COOLING_STILL_HOT);
-    } else {
-      setStatusLED(LED_STANDBY);
-    }
     // Preemptively turn the display on.  Turn it off if and only if
     // the tip temperature is below 50 degrees C *and* motion sleep
     // detection is enabled *and* there has been no activity (movement or
@@ -98,6 +100,11 @@ void drawHomeScreen(bool buttonLockout) {
       setStatusLED(LED_OFF);
     } else {
       OLED::setDisplayState(OLED::DisplayState::ON);
+      if (tipTemp > 55) {
+        setStatusLED(LED_COOLING_STILL_HOT);
+      } else {
+        setStatusLED(LED_STANDBY);
+      }
     }
     // Clear the lcd buffer
     OLED::clearScreen();
