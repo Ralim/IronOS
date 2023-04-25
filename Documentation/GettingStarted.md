@@ -82,9 +82,9 @@ Profile mode plays out as follows:
 
 1. Check if the temperature is below 55C. If not, you will get a warning and cannot enter profile mode.
 2. Preheat by raising the target temperature to the configured preheat temperature with the configured preheat speed.
-3. Wait for the iron to reach the preheat temperature.
+3. Wait for the device to reach the preheat temperature.
 4. Gradually move the target temperature to the configured end temperature of the first phase over the configured duration. 
-5. Wait for the iron to reach the end temperature. 
+5. Wait for the device to reach the end temperature. 
 6. Repeat steps 4 and 5 for the next phases until there are no more phases configured.
 7. Cool down by lowering the target temperature to 0 with the configured cooldown speed. 
 8. Once the temperature is below 55C, sound the buzzer (if available) and exit profile mode. 
