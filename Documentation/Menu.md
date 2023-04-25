@@ -11,7 +11,7 @@ In this mode the iron works as you would expect, pressing either button will tak
 
 ## Profile mode (MHP30 only)
 
-In this mode, accessible by long pressing the button that brings you into soldering mode, the iron will play out the configured profile.
+In this mode, accessible by long pressing `(+/A)`, the configured profile will be initiated.
 - You cannot adjust the temperature or enter boost mode.
 - Pressing both buttons or holding the rear button (`-/B`) will exit Profile Mode as well.
 
