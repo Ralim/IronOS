@@ -66,6 +66,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#profile-mode-mhp30-only">Profile Mode (MHP30 only)</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#settings-menu">Settings Menu</a>
     </li>
     </ul>
@@ -171,7 +173,7 @@ If your device did not come with IronOS already installed, or if you need to upd
 <p>This OLED screen features burn-in protection; if no buttons or movement have been detected for a while it will automatically blank the screen to reduce burn-in when the iron is left unattended. Any movement or button press will wake the screen.</p>
 <h3 id="hidden-extras">Hidden Extras</h3>
 <p>Additionally to the two icons shown, there are two "hidden" actions that can be performed on this menu.</p>
-<p>If you press and hold the button near the tip (<code>+/A</code>), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature <em>before</em> the tip starts to heat, this can be useful.</p>
+<p>On devices that do not support profile mode, if you press and hold the button near the tip (<code>+/A</code>), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature <em>before</em> the tip starts to heat, this can be useful.</p>
 <p>If you press and hold the button near the rear of the iron (<code>-/B</code>), it will take you into the <a href="https://ralim.github.io/IronOS/DebugMenu/">debug menu</a>.</p>
 <h2 id="soldering-mode">Soldering Mode</h2>
 <p>When you press the button to enter the soldering mode, the iron will instantly start to heat up the tip.</p>
@@ -187,6 +189,20 @@ If your device did not come with IronOS already installed, or if you need to upd
 <p>Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00-IV). Adding the sensor and placing a neodymium magnet on the holder stand will trigger Pinecil to sleep after it enters the stand, and Zzzz will appear on-screen. The magnet is positioned on the stand in proximity to the sensor/handle which then activates one of 10 user defined settings (0=off, 1=lowest sensitivity, 9=highest sensitivity). Read the Hall Sensor document for <a href="https://ralim.github.io/IronOS/HallSensor/">details on installation</a>.</p>
 <h3 id="idle-shutdown">Idle Shutdown</h3>
 <p>If, after entering sleep mode, the iron still does not see movement for a much longer time (default=10 minutes); it will shut down and return to the home screen.</p>
+<h2 id="profile-mode-mhp30-only">Profile Mode (MHP30 only)</h2>
+<p>On devices that support it, a long press on <code>(+/A)</code> takes you into profile mode, which initiates the profile selected in the relevant settings.</p>
+<p>Profile mode plays out as follows:</p>
+<ol>
+<li>Check if the temperature is below 55C. If not, you will get a warning and cannot enter profile mode.</li>
+<li>Preheat by raising the target temperature to the configured preheat temperature with the configured preheat speed.</li>
+<li>Wait for the device to reach the preheat temperature.</li>
+<li>Gradually move the target temperature to the configured end temperature of the first phase over the configured duration. </li>
+<li>Wait for the device to reach the end temperature. </li>
+<li>Repeat steps 4 and 5 for the next phases until there are no more phases configured.</li>
+<li>Cool down by lowering the target temperature to 0 with the configured cooldown speed. </li>
+<li>Once the temperature is below 55C, sound the buzzer (if available) and exit profile mode. </li>
+</ol>
+<p>You can manually exit profile mode manually in the same way as the soldering mode, by pressing and holding the rear button or pressing both buttons at once.</p>
 <h2 id="settings-menu">Settings Menu</h2>
 <p>The settings menu is the most evolving aspect of the firmware, so each option is not documented here. However, do not panic, as every menu option has an on-screen description so you don't <em>need</em> to come back here to figure them all out.</p>
 <p>To navigate the menu, the two buttons act separately.
