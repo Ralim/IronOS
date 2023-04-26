@@ -151,8 +151,6 @@ static bool enterAdvancedMenu(void);
  *  Profile Phase 4 Duration (s)
  *  Profile Phase 5 Temperature
  *  Profile Phase 5 Duration (s)
- *  Profile Phase 6 Temperature
- *  Profile Phase 6 Duration (s)
  *  Profile Cooldown Max Temperature Change Per Second
  *
  * Power Saving
@@ -253,8 +251,6 @@ const menuitem solderingMenu[] = {
      *  Profile Phase 4 Duration (s)
      *  Profile Phase 5 Temperature
      *  Profile Phase 5 Duration (s)
-     *  Profile Phase 6 Temperature
-     *  Profile Phase 6 Duration (s)
      *  Profile Cooldown Max Temperature Change Per Second
      */
     {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
@@ -331,7 +327,7 @@ const menuitem UIMenu[] = {
      SettingsItemIndex::ReverseButtonTempChange, 7},                                                                                                          /*Reverse Temp change buttons + - */
     {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7}, /*Animation Speed adjustment */
     {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, displayAnimationLoop, displayAnimationOptions, SettingsOptions::AnimationLoop, SettingsItemIndex::AnimLoop, 7}, /*Animation Loop switch */
-    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness, SettingsItemIndex::Brightness, 6},          /*Brightness Level*/
+    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness, SettingsItemIndex::Brightness, 7},          /*Brightness Level*/
     {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, displayInvertColor, nullptr, SettingsOptions::OLEDInversion, SettingsItemIndex::ColourInversion, 7},     /*Invert screen colour*/
     {SETTINGS_DESC(SettingsItemIndex::LOGOTime), nullptr, displayLogoTime, nullptr, SettingsOptions::LOGOTime, SettingsItemIndex::LOGOTime, 5},                           /*Set logo duration*/
     {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE, SettingsItemIndex::AdvancedIdle, 7},    /*Advanced idle screen*/
@@ -765,7 +761,7 @@ static void displayAnimationLoop(void) { OLED::drawCheckbox(getSettingValue(Sett
 
 static void displayBrightnessLevel(void) {
 
-  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / BRIGHTNESS_STEP + 1), 2, FontStyle::LARGE);
+  OLED::printNumber((getSettingValue(SettingsOptions::OLEDBrightness) / BRIGHTNESS_STEP + 1), 1, FontStyle::LARGE);
   // While not optimal to apply this here, it is _very_ convienient
   OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
 }

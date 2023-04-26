@@ -73,7 +73,7 @@
             "message": "Höchstwahrscheinlich ist das Gerät eine Fälschung!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Zu heiß um\nProfil zu starten!"
+            "message": "Zu heiß für\nProfil-start!"
         }
     },
     "characters": {
