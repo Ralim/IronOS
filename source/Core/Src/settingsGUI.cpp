@@ -151,8 +151,6 @@ static bool enterAdvancedMenu(void);
  *  Profile Phase 4 Duration (s)
  *  Profile Phase 5 Temperature
  *  Profile Phase 5 Duration (s)
- *  Profile Phase 6 Temperature
- *  Profile Phase 6 Duration (s)
  *  Profile Cooldown Max Temperature Change Per Second
  *
  * Power Saving
@@ -253,8 +251,6 @@ const menuitem solderingMenu[] = {
      *  Profile Phase 4 Duration (s)
      *  Profile Phase 5 Temperature
      *  Profile Phase 5 Duration (s)
-     *  Profile Phase 6 Temperature
-     *  Profile Phase 6 Duration (s)
      *  Profile Cooldown Max Temperature Change Per Second
      */
     {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
