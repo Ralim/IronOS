@@ -225,7 +225,7 @@ const menuitem powerMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4}, /*Voltage input*/
 #endif
 #if POW_PD
-    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
+    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 6}, /*PD timeout setup*/
     {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7 }, /*Toggle PPS & EPR*/
 #endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
@@ -329,7 +329,7 @@ const menuitem UIMenu[] = {
     {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, displayAnimationLoop, displayAnimationOptions, SettingsOptions::AnimationLoop, SettingsItemIndex::AnimLoop, 7}, /*Animation Loop switch */
     {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness, SettingsItemIndex::Brightness, 7},          /*Brightness Level*/
     {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, displayInvertColor, nullptr, SettingsOptions::OLEDInversion, SettingsItemIndex::ColourInversion, 7},     /*Invert screen colour*/
-    {SETTINGS_DESC(SettingsItemIndex::LOGOTime), nullptr, displayLogoTime, nullptr, SettingsOptions::LOGOTime, SettingsItemIndex::LOGOTime, 5},                           /*Set logo duration*/
+    {SETTINGS_DESC(SettingsItemIndex::LOGOTime), nullptr, displayLogoTime, nullptr, SettingsOptions::LOGOTime, SettingsItemIndex::LOGOTime, 6},                           /*Set logo duration*/
     {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE, SettingsItemIndex::AdvancedIdle, 7},    /*Advanced idle screen*/
     {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering, SettingsItemIndex::AdvancedSoldering,
      7},                                                                                                    /*Advanced soldering screen*/
@@ -451,7 +451,7 @@ static void displayPDNegTimeout(void) {
   if (value == 0) {
     OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, UnavailableIcon);
   } else {
-    OLED::printNumber(value, 3, FontStyle::LARGE);
+    OLED::printNumber(value, 2, FontStyle::LARGE);
   }
 }
 static void displayPDVpdo(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::PDVpdo)); }
@@ -780,7 +780,7 @@ static void displayLogoTime(void) {
   } else if (getSettingValue(SettingsOptions::LOGOTime) == 5) {
     OLED::drawArea(OLED_WIDTH - 24 - 2, 0, 24, 16, infinityIcon);
   } else {
-    OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 2, FontStyle::LARGE);
+    OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 1, FontStyle::LARGE);
     OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
   }
 }
