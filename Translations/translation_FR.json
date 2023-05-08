@@ -278,14 +278,14 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Activer BLE"
+            "description": "Activer le bluetooth basse consommation"
         },
         "PowerLimit": {
             "displayText": "Limite de\npuissance",
             "description": "Puissance maximale utilisable (W=watts)"
         },
         "CalibrateCJC": {
-            "displayText": "Étalonner CJC\nau prochain démarage",
+            "displayText": "Étalonner CJC\nau prochain démarrage",
             "description": "Au prochain démarrage, la compensation de soudure froide sera calibrée (non nécessaire si Delta T est < 5°C)."
         },
         "VoltageCalibration": {
