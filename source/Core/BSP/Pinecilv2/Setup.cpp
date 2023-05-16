@@ -19,10 +19,11 @@ uint16_t ADCReadings[ADC_NORM_SAMPLES]; // room for 32 lots of the pair of readi
 
 // Heap
 
-extern uint8_t      _heap_start;
-extern uint8_t      _heap_size; // @suppress("Type cannot be resolved")
+extern uint8_t      __HeapBase;
+extern uint8_t      __HeapLimit; // @suppress("Type cannot be resolved")
+const uint32_t      _heap_size     = ((&__HeapLimit) - (&__HeapBase));
 static HeapRegion_t xHeapRegions[] = {
-    {&_heap_start, (unsigned int)&_heap_size},
+    {&__HeapBase, (unsigned int)_heap_size},
     {NULL, 0}, /* Terminates the array. */
     {NULL, 0}  /* Terminates the array. */
 };

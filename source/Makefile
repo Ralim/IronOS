@@ -591,12 +591,10 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Compiling ${<}
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OUTPUT_DIR)/%.o : %.cpp Makefile
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Compiling ${<}
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
 
 $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
