@@ -64,16 +64,16 @@
             "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Preriscaldamento\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Raffreddamento\n"
         },
         "DeviceFailedValidationWarning": {
             "message": "È probabile che questo dispositivo sia contraffatto!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Troppo caldo\nper il profilo"
         }
     },
     "characters": {
@@ -134,7 +134,7 @@
         },
         "BoostTemperature": {
             "displayText": "Temp\nTurbo",
-            "description": "Imposta la temperatura della funzione Turbo [°C/°F]"
+            "description": "Imposta la temperatura della funzione turbo [°C/°F]"
         },
         "AutoStart": {
             "displayText": "Avvio\nautomatico",
@@ -150,131 +150,75 @@
         },
         "LockingMode": {
             "displayText": "Blocco\ntasti",
-            "description": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [T: consenti Turbo; C: blocco completo]"
+            "description": "Blocca i tasti durante la modalità saldatura; tieni premuto entrambi per bloccare o sbloccare [T: consenti Turbo; C: blocco completo]"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Fasi\nprofilo",
+            "description": "Numero di fasi del profilo"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Temperatura\npreriscaldamento",
+            "description": "Imposta la temperatura di preriscaldamento da raggiungere all'inizio del profilo"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Velocità\npreriscaldamento",
+            "description": "Imposta la velocità di preriscaldamento [gradi al secondo]"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Temperatura\nfase 1",
+            "description": "Imposta la temperatura da raggiungere per la fine di questa fase"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Durata\nfase 1",
+            "description": "Imposta la durata di questa fase [secondi]"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Temperatura\nfase 2",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Durata\nfase 2",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Temperatura\nfase 3",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Durata\nfase 3",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Temperatura\nfase 4",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Durata\nfase 4",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Temperatura\nfase 5",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Durata\nfase 5",
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Velocità\nraffreddamento",
+            "description": "Imposta la velocità di raffreddamento al termine del profilo [gradi al secondo]"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilità\nal movimento",
-            "description": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [1: minima; 9: massima]"
+            "description": "Imposta la sensibilità al movimento per uscire dalla modalità riposo [1: minima; 9: massima]"
         },
         "SleepTemperature": {
             "displayText": "Temp\nriposo",
-            "description": "Imposta la temperatura da mantenere in modalità Riposo [°C/°F]"
+            "description": "Imposta la temperatura da mantenere in modalità riposo [°C/°F]"
         },
         "SleepTimeout": {
             "displayText": "Timer\nriposo",
-            "description": "Imposta il timer per entrare in modalità Riposo [secondi/minuti]"
+            "description": "Imposta il timer per entrare in modalità riposo [secondi/minuti]"
         },
         "ShutdownTimeout": {
             "displayText": "Timer\nspegnimento",
@@ -282,7 +226,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensore\nHall",
-            "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità Riposo [1: minima; 9: massima]"
+            "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [1: minima; 9: massima]"
         },
         "TemperatureUnit": {
             "displayText": "Unità di\ntemperatura",
@@ -330,7 +274,7 @@
         },
         "AdvancedSoldering": {
             "displayText": "Dettagli\nsaldatura",
-            "description": "Mostra informazioni dettagliate durante la modalità Saldatura"
+            "description": "Mostra informazioni dettagliate durante la modalità saldatura"
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
