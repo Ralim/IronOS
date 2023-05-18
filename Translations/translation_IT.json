@@ -153,12 +153,12 @@
             "description": "Blocca i tasti durante la modalità saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
         },
         "ProfilePhases": {
-            "displayText": "Fasi\nprofilo",
-            "description": "Numero di fasi del profilo"
+            "displayText": "Fasi modalità\nprofilo",
+            "description": "Imposta il numero di fasi da attuare per un profilo di riscaldamento personalizzato"
         },
         "ProfilePreheatTemp": {
             "displayText": "Temperatura\npreriscaldamento",
-            "description": "Imposta la temperatura di preriscaldamento da raggiungere all'inizio del profilo"
+            "description": "Imposta la temperatura di preriscaldamento da raggiungere all'inizio del profilo di riscaldamento"
         },
         "ProfilePreheatSpeed": {
             "displayText": "Velocità\npreriscaldamento",
@@ -166,7 +166,7 @@
         },
         "ProfilePhase1Temp": {
             "displayText": "Temperatura\nfase 1",
-            "description": "Imposta la temperatura da raggiungere per la fine di questa fase"
+            "description": "Imposta la temperatura da raggiungere alla fine di questa fase"
         },
         "ProfilePhase1Duration": {
             "displayText": "Durata\nfase 1",
@@ -206,14 +206,14 @@
         },
         "ProfileCooldownSpeed": {
             "displayText": "Velocità\nraffreddamento",
-            "description": "Imposta la velocità di raffreddamento al termine del profilo [gradi al secondo]"
+            "description": "Imposta la velocità di raffreddamento al termine del profilo di riscaldamento [gradi al secondo]"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilità\nal movimento",
             "description": "Imposta la sensibilità al movimento per uscire dalla modalità riposo [0: nessuna; 1: minima; 9: massima]"
         },
         "SleepTemperature": {
-            "displayText": "Temp\nriposo",
+            "displayText": "Temperatura\nriposo",
             "description": "Imposta la temperatura da mantenere in modalità riposo [°C/°F]"
         },
         "SleepTimeout": {
@@ -286,7 +286,7 @@
         },
         "CalibrateCJC": {
             "displayText": "Calibra T\nall'avvio",
-            "description": "Calibra le rilevazioni di temperatura al prossimo riavvio (non necessario se il Delta T<5 °C)"
+            "description": "Calibra le rilevazioni di temperatura al prossimo riavvio (non necessario se lo scarto di temperatura è minore di 5 °C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrazione\ntensione",
