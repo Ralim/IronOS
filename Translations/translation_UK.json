@@ -60,17 +60,8 @@
         "OffString": {
             "message": "Вимк"
         },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Вірогідно ваш пристрій підробний!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
         }
     },
     "characters": {
@@ -79,7 +70,7 @@
         "SettingAutoChar": "A",
         "SettingOffChar": "B",
         "SettingSlowChar": "Н",
-        "SettingMediumChar": "M",
+        "SettingMediumChar": "С",
         "SettingFastChar": "М",
         "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
@@ -152,62 +143,6 @@
             "displayText": "Дозволити\nблок. кнопок",
             "description": "Під час пайки тривале натискання обох кнопок заблокує їх (В=Вимк | Т=Тільки турбо | П=Повне)"
         },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
         "MotionSensitivity": {
             "displayText": "Чутливість\nсенсору руху",
             "description": "Акселерометр (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
@@ -242,7 +177,7 @@
         },
         "ScrollingSpeed": {
             "displayText": "Швидкість\nтексту",
-            "description": "Швидкість прокрутки тексту (П=повільно | Ш=швидко)"
+            "description": "Швидкість прокрутки тексту (Н=Низькa | М=Максимальна)"
         },
         "ReverseButtonTempChange": {
             "displayText": "Інвертувати\nкнопки +-?",
@@ -250,7 +185,7 @@
         },
         "AnimSpeed": {
             "displayText": "Швидкість\nанімації",
-            "description": "Швидкість анімації іконок у головному меню (Мілісекунди) (В=Вимк | Н=Низькa | С=Середня | М=Макс)"
+            "description": "Швидкість анімації іконок у головному меню (В=Вимк | Н=Низькa | С=Середня | М=Максимальна)"
         },
         "AnimLoop": {
             "displayText": "Циклічна\nанімація",
