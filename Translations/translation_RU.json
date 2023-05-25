@@ -166,11 +166,11 @@
         },
         "ProfilePhase1Temp": {
             "displayText": "Этап 1\nТемпература",
-            "description": "Целевая температура в конце этой фазы"
+            "description": "Целевая температура в конце этого эатпа"
         },
         "ProfilePhase1Duration": {
             "displayText": "Этап 1\nДлительность",
-            "description": "Целевая длительность этой фазы (секунды)"
+            "description": "Целевая длительность этого этапа (секунды)"
         },
         "ProfilePhase2Temp": {
             "displayText": "Этап 2\nТемпература",
