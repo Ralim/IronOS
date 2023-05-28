@@ -10,17 +10,13 @@
 #include "main.hpp"
 #include <IRQ.h>
 
-volatile uint16_t PWMSafetyTimer = 0;
-volatile uint8_t  pendingPWM     = 0;
-
+volatile uint16_t    PWMSafetyTimer   = 0;
+volatile uint8_t     pendingPWM       = 0;
 const uint16_t       powerPWM         = 255;
 static const uint8_t holdoffTicks     = 30; // delay of 8 ish ms
 static const uint8_t tempMeasureTicks = 30;
 
-uint16_t totalPWM; // htim4.Init.Period, the full PWM cycle
-
-static bool fastPWM;
-static bool infastPWM;
+uint16_t totalPWM = powerPWM + tempMeasureTicks + holdoffTicks; // htim2.Init.Period, the full PWM cycle
 
 void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
 // Lookup table for the NTC
@@ -78,26 +74,16 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 
 static void switchToFastPWM(void) {
   // 20Hz
-  infastPWM            = true;
   totalPWM             = powerPWM + tempMeasureTicks + holdoffTicks;
-  htim4.Instance->ARR  = totalPWM;
-  htim4.Instance->CCR1 = powerPWM + holdoffTicks;
-  htim4.Instance->PSC  = 1500;
-}
-
-static void switchToSlowPWM(void) {
-  // 10Hz
-  infastPWM            = false;
-  totalPWM             = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
-  htim4.Instance->ARR  = totalPWM;
-  htim4.Instance->CCR1 = powerPWM + holdoffTicks / 2;
-  htim4.Instance->PSC  = 1500 * 2;
+  htim2.Instance->ARR  = totalPWM;
+  htim2.Instance->CCR1 = powerPWM + holdoffTicks;
+  htim2.Instance->CCR4 = powerPWM;
+  htim2.Instance->PSC  = 1500;
 }
 
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
   PWMSafetyTimer = 20; // This is decremented in the handler for PWM so that the tip pwm is
                        // disabled if the PID task is not scheduled often enough.
-  fastPWM    = shouldUseFastModePWM;
   pendingPWM = pulse;
 }
 // These are called by the HAL after the corresponding events from the system
@@ -105,7 +91,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   // Period has elapsed
-  if (htim->Instance == TIM4) {
+  if (htim->Instance == TIM2) {
     // we want to turn on the output again
     PWMSafetyTimer--;
     // We decrement this safety value so that lockups in the
@@ -113,21 +99,22 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     // active driving state.
     // While we could assume this could never happen, its a small price for
     // increased safety
-    if (PWMSafetyTimer) {
-      htim4.Instance->CCR3 = pendingPWM;
-    } else {
+    if (PWMSafetyTimer == 0) {
       htim4.Instance->CCR3 = 0;
+    } else {
+      htim4.Instance->CCR3 = pendingPWM;
     }
-    // if (fastPWM != infastPWM) {
-    //   if (fastPWM) {
-    //     switchToFastPWM();
-    //   } else {
-    switchToSlowPWM();
-    // }
-    // }
   } else if (htim->Instance == TIM1) {
     // STM uses this for internal functions as a counter for timeouts
     HAL_IncTick();
+  }
+}
+
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
+  // This was a when the PWM for the output has timed out
+  if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+    HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
+    // htim4.Instance->CCR3 = 0;
   }
 }
 
