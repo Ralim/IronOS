@@ -6,6 +6,7 @@
  */
 
 #include "BSP_Power.h"
+#include "configuration.h"
 #include <Utils.h>
 
 int32_t Utils::InterpolateLookupTable(const int32_t *lookupTable, const int noItems, const int32_t value) {
