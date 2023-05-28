@@ -151,7 +151,7 @@
 #define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
 
-#define TIP_RESISTANCE 25 // x10 ohms
+#define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
 
 #define OLED_128x32
 #define GPIO_VIBRATION

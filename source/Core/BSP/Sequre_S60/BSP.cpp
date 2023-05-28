@@ -13,8 +13,8 @@
 volatile uint16_t    PWMSafetyTimer   = 0;
 volatile uint8_t     pendingPWM       = 0;
 const uint16_t       powerPWM         = 255;
-static const uint8_t holdoffTicks     = 30; // delay of 8 ish ms
-static const uint8_t tempMeasureTicks = 30;
+static const uint8_t holdoffTicks     = 15; // delay of 8 ish ms
+static const uint8_t tempMeasureTicks = 15;
 
 uint16_t totalPWM = powerPWM + tempMeasureTicks + holdoffTicks; // htim2.Init.Period, the full PWM cycle
 
