@@ -79,7 +79,7 @@
         "SettingAutoChar": "A",
         "SettingOffChar": "B",
         "SettingSlowChar": "Н",
-        "SettingMediumChar": "M",
+        "SettingMediumChar": "С",
         "SettingFastChar": "М",
         "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
@@ -242,7 +242,7 @@
         },
         "ScrollingSpeed": {
             "displayText": "Швидкість\nтексту",
-            "description": "Швидкість прокрутки тексту (П=повільно | Ш=швидко)"
+            "description": "Швидкість прокрутки тексту (Н=Низькa | М=Максимальна)"
         },
         "ReverseButtonTempChange": {
             "displayText": "Інвертувати\nкнопки +-?",
@@ -250,7 +250,7 @@
         },
         "AnimSpeed": {
             "displayText": "Швидкість\nанімації",
-            "description": "Швидкість анімації іконок у головному меню (Мілісекунди) (В=Вимк | Н=Низькa | С=Середня | М=Макс)"
+            "description": "Швидкість анімації іконок у головному меню (В=Вимк | Н=Низькa | С=Середня | М=Максимальна)"
         },
         "AnimLoop": {
             "displayText": "Циклічна\nанімація",
