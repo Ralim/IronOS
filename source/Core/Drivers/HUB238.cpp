@@ -1,6 +1,8 @@
 #include "HUB238.hpp"
 #include "I2CBB.hpp"
 #include "Utils.h"
+#include "configuration.h"
+
 #if POW_PD_EXT == 1
 bool hub238_probe() { return I2CBB::probe(HUB238_ADDR); }
 
@@ -94,7 +96,7 @@ uint8_t findBestPDO() {
   ilim              = hub238_getVoltagePDOCurrent(20);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(200);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    powerSupplyWattageLimit = (20 * ilim) / 100;
+    powerSupplyWattageLimit = ((20 * ilim) / 100) - 2; // We take off 2W for safety of overhead
     return 0b1010;
   }
 #endif
@@ -102,7 +104,7 @@ uint8_t findBestPDO() {
   ilim              = hub238_getVoltagePDOCurrent(18);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(180);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    powerSupplyWattageLimit = (18 * ilim) / 100;
+    powerSupplyWattageLimit = ((18 * ilim) / 100) - 2; // We take off 2W for safety of overhead
     return 0b1001;
   }
 #endif
@@ -110,7 +112,7 @@ uint8_t findBestPDO() {
   ilim              = hub238_getVoltagePDOCurrent(15);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(150);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    powerSupplyWattageLimit = (15 * ilim) / 100;
+    powerSupplyWattageLimit = ((15 * ilim) / 100) - 2; // We take off 2W for safety of overhead
     return 0b1000;
   }
 #endif
@@ -118,7 +120,7 @@ uint8_t findBestPDO() {
   ilim              = hub238_getVoltagePDOCurrent(12);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(120);
   if (ilim != 0 && (ilim / 10) >= minimumx10current) {
-    powerSupplyWattageLimit = (12 * ilim) / 100;
+    powerSupplyWattageLimit = ((12 * ilim) / 100) - 2; // We take off 2W for safety of overhead
     return 0b0011;
   }
 #endif
@@ -126,7 +128,7 @@ uint8_t findBestPDO() {
   ilim              = hub238_getVoltagePDOCurrent(9);
   minimumx10current = Utils::RequiredCurrentForTipAtVoltage(90);
   if (ilim != 0 && ilim / 10 >= minimumx10current) {
-    powerSupplyWattageLimit = (9 * ilim) / 100;
+    powerSupplyWattageLimit = ((9 * ilim) / 100) - 2; // We take off 2W for safety of overhead
     return 0b0010;
   }
 #endif
