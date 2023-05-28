@@ -146,7 +146,7 @@
 #define TEMP_uV_LOOKUP_S60
 #define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
 
-#define HARDWARE_MAX_WATTAGE_X10 750
+#define HARDWARE_MAX_WATTAGE_X10 600
 
 #define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
