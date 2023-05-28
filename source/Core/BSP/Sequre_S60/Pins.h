@@ -34,6 +34,10 @@
 #define SCL2_GPIO_Port        GPIOB
 #define SDA2_Pin              GPIO_PIN_7
 #define SDA2_GPIO_Port        GPIOB
+// Pin gets pulled high on movement
+#define MOVEMENT_Pin       GPIO_PIN_3
+#define MOVEMENT_GPIO_Port GPIOA
+
 #endif
 
 #endif /* BSP_MINIWARE_PINS_H_ */

@@ -121,9 +121,14 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
 #ifdef GPIO_VIBRATION
       if (DetectedAccelerometerVersion == AccelType::GPIO) {
     // TODO
-    tx = ty = tz = 0;
-    rotation     = Orientation::ORIENTATION_RIGHT_HAND;
-
+    if (HAL_GPIO_ReadPin(MOVEMENT_GPIO_Port, MOVEMENT_Pin) == GPIO_PIN_SET) {
+      // Movement
+      tx = ty = tz = 5000;
+    } else {
+      // No Movement
+      tx = ty = tz = 0;
+    }
+    rotation = Orientation::ORIENTATION_FLAT;
   } else
 #endif
   {
