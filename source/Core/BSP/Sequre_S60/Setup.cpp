@@ -298,13 +298,12 @@ static void MX_TIM4_Init(void) {
   // in the PWM off time.
   htim4.Instance = TIM4;
   // dummy value, will be reconfigured by BSPInit()
-  htim4.Init.Prescaler = 500; // 2 MHz timer clock/1000 = 2 kHz tick rate
+  htim4.Init.Prescaler = 50; // 2 MHz timer clock/1000 = 2 kHz tick rate
 
   // pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
   // These values give a rate of around 3.5 Hz for "fast" mode and 1.84 Hz for "slow"
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  // dummy value, will be reconfigured by BSPInit()
-  htim4.Init.Period = 255;
+  htim4.Init.Period      = 255;
 
   htim4.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV2; // 8 MHz (x2 APB1) before divide
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
