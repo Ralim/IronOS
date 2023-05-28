@@ -36,7 +36,8 @@ void hub238_check_negotiation();
 
 // Returns true when negotiation has finished
 bool hub238_has_negotiated();
-
+// Returns true when we have run selection and negotiated higher current
+bool hub238_has_run_selection();
 // Return an encoded state for debugging
 uint16_t hub238_debug_state();
 // Return selected source voltage in V

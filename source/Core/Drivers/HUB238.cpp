@@ -175,6 +175,7 @@ void hub238_check_negotiation() {
     }
   }
 }
+bool hub238_has_run_selection() { return haveSelected != 0xFF; }
 
 bool hub238_has_negotiated() {
   uint8_t temp = 0;
