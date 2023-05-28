@@ -314,6 +314,7 @@ static void MX_TIM4_Init(void) {
   sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
   HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig);
   HAL_TIM_PWM_Init(&htim4);
+  HAL_TIM_OC_Init(&htim4);
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
 
@@ -384,7 +385,7 @@ static void MX_TIM2_Init(void) {
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1); // ADC Triggers
 
-  sConfigOC.Pulse = powerPWM; // Powre PWM cycle time
+  sConfigOC.Pulse = powerPWM; // Power PWM cycle time
 
   HAL_TIM_OC_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_4); // Output triggers
 

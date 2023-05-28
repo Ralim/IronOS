@@ -117,12 +117,16 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
   HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
   HAL_NVIC_SetPriority(I2C1_ER_IRQn, 15, 0);
   HAL_NVIC_EnableIRQ(I2C1_ER_IRQn);
-  #endif
+#endif
 }
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base) {
   if (htim_base->Instance == TIM4) {
     /* Peripheral clock enable */
     __HAL_RCC_TIM4_CLK_ENABLE();
+  }
+  if (htim_base->Instance == TIM2) {
+    /* Peripheral clock enable */
+    __HAL_RCC_TIM2_CLK_ENABLE();
   }
 }

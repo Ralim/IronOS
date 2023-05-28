@@ -113,8 +113,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   // This was a when the PWM for the output has timed out
   if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-    HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
-    // htim4.Instance->CCR3 = 0;
+    // HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
+    htim4.Instance->CCR3 = 0;
   }
 }
 
