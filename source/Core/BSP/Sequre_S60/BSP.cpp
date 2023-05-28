@@ -1,6 +1,7 @@
 // BSP mapping functions
 
 #include "BSP.h"
+#include "HUB238.hpp"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
 #include "Setup.h"
@@ -206,7 +207,7 @@ bool isTipDisconnected() {
 }
 
 void     setStatusLED(const enum StatusLED state) {}
-uint8_t  preStartChecks() { return 1; }
+uint8_t  preStartChecks() { return hub238_has_run_selection() ? 1 : 0; }
 uint64_t getDeviceID() {
   //
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
