@@ -64,16 +64,16 @@
             "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Преднагрев\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Остывание\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Скорее всего, это устройство подделка!"
+            "message": "Вероятно, это устройство подделка!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Слишком горячо для\nстарта профиля"
         }
     },
     "characters": {
@@ -209,60 +209,60 @@
             "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Профиль\nЭтапы",
+            "description": "Количество этапов в режиме профиля"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Преднагрев\nТемпература",
+            "description": "Разогреть до этой температуры в начале режима профиля"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Преднагрев\nСкорость",
+            "description": "Предварительный нагрев с этой скоростью (градусов в секунду)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Этап 1\nТемпература",
+            "description": "Целевая температура в конце этого эатпа"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Этап 1\nДлительность",
+            "description": "Целевая длительность этого этапа (секунды)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Этап 2\nТемпература",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Этап 2\nДлительность",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Этап 3\nТемпература",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Этап 3\nДлительность",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Этап 4\nТемпература",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Этап 4\nДлительность",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Этап 5\nТемпература",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Этап 5\nДлительность",
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Остывание\nСкорость",
+            "description": "Остывать с такой скоростью в конце режима профиля (градусов в секунду)"
         },
         "MotionSensitivity": {
             "displayText": "Чувствительн.\nакселерометра",
@@ -298,7 +298,7 @@
         },
         "ScrollingSpeed": {
             "displayText": "Скорость\nтекста",
-            "description": "Скорость прокрутки текста (М=медленно | Б=быстро)"
+            "description": "Скорость прокрутки текста (М=Медленная | Б=Быстрая)"
         },
         "ReverseButtonTempChange": {
             "displayText": "Поменять\nкнопки+-",
@@ -306,7 +306,7 @@
         },
         "AnimSpeed": {
             "displayText": "Скорость\nанимации",
-            "description": "Скорость анимации иконок в главном меню (Милисекунды) (Н=Низкий | С=Средний | В=Высокий)"
+            "description": "Скорость анимации иконок в главном меню (М=Медленная| С=Средняя | Б=Быстрая)"
         },
         "AnimLoop": {
             "displayText": "Зацикленная\nанимация",
@@ -334,7 +334,7 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Активирует BLE"
         },
         "PowerLimit": {
             "displayText": "Предел\nмощности",
