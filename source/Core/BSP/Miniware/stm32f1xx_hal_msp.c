@@ -58,14 +58,23 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
      */
     GPIO_InitStruct.Pin  = TIP_TEMP_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(TIP_TEMP_GPIO_Port, &GPIO_InitStruct);
+
     GPIO_InitStruct.Pin  = TMP36_INPUT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(TMP36_INPUT_GPIO_Port, &GPIO_InitStruct);
+
     GPIO_InitStruct.Pin  = VIN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(VIN_GPIO_Port, &GPIO_InitStruct);
 
+#ifdef PD_VIN_Pin
+
+    GPIO_InitStruct.Pin  = PD_VIN_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    HAL_GPIO_Init(PD_VIN_GPIO_Port, &GPIO_InitStruct);
+#endif
     /* ADC2 interrupt Init */
     HAL_NVIC_SetPriority(ADC1_2_IRQn, 15, 0);
     HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
@@ -83,7 +92,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
   GPIO_InitStruct.Pull  = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(SCL_GPIO_Port, &GPIO_InitStruct);
 
   /* Peripheral clock enable */
   __HAL_RCC_I2C1_CLK_ENABLE();
@@ -128,5 +137,8 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base) {
   } else if (htim_base->Instance == TIM2) {
     /* Peripheral clock enable */
     __HAL_RCC_TIM2_CLK_ENABLE();
+  } else if (htim_base->Instance == TIM4) {
+    /* Peripheral clock enable */
+    __HAL_RCC_TIM4_CLK_ENABLE();
   }
 }

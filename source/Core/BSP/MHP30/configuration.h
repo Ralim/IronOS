@@ -64,10 +64,10 @@
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS             0   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS             100 // Max OLED brightness selectable
-#define BRIGHTNESS_STEP            25  // OLED brightness increment
-#define DEFAULT_BRIGHTNESS         25  // default OLED brightness
+#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP    25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS 25  // default OLED brightness
 
 /**
  * Temp change settings
@@ -159,9 +159,9 @@
 
 #define POW_PD 1
 #define TEMP_NTC
-#define I2C_SOFT_PD
+#define I2C_SOFT_BUS_2
 #define BATTFILTERDEPTH 8
-#define OLED_I2CBB
+#define OLED_I2CBB2
 #define ACCEL_EXITS_ON_MOVEMENT
 #define NEEDS_VBUS_PROBE 0
 

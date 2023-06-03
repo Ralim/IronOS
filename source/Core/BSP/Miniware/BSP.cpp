@@ -5,6 +5,7 @@
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
+#include "USBPD.h"
 #include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
@@ -17,7 +18,7 @@ const uint16_t       powerPWM         = 255;
 static const uint8_t holdoffTicks     = 14; // delay of 8 ms
 static const uint8_t tempMeasureTicks = 14;
 
-uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
+uint16_t totalPWM; // htimADC.Init.Period, the full PWM cycle
 
 static bool fastPWM;
 static bool infastPWM;
@@ -99,20 +100,20 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 
 static void switchToFastPWM(void) {
   // 10Hz
-  infastPWM            = true;
-  totalPWM             = powerPWM + tempMeasureTicks + holdoffTicks;
-  htim2.Instance->ARR  = totalPWM;
-  htim2.Instance->CCR1 = powerPWM + holdoffTicks;
-  htim2.Instance->PSC  = 2690;
+  infastPWM              = true;
+  totalPWM               = powerPWM + tempMeasureTicks + holdoffTicks;
+  htimADC.Instance->ARR  = totalPWM;
+  htimADC.Instance->CCR1 = powerPWM + holdoffTicks;
+  htimADC.Instance->PSC  = 2690;
 }
 
 static void switchToSlowPWM(void) {
   // 5Hz
-  infastPWM            = false;
-  totalPWM             = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
-  htim2.Instance->ARR  = totalPWM;
-  htim2.Instance->CCR1 = powerPWM + holdoffTicks / 2;
-  htim2.Instance->PSC  = 2690 * 2;
+  infastPWM              = false;
+  totalPWM               = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
+  htimADC.Instance->ARR  = totalPWM;
+  htimADC.Instance->CCR1 = powerPWM + holdoffTicks / 2;
+  htimADC.Instance->PSC  = 2690 * 2;
 }
 
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
@@ -126,7 +127,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   // Period has elapsed
-  if (htim->Instance == TIM2) {
+  if (htim->Instance == ADC_CONTROL_TIMER) {
     // we want to turn on the output again
     PWMSafetyTimer--;
     // We decrement this safety value so that lockups in the
@@ -134,11 +135,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     // active driving state.
     // While we could assume this could never happen, its a small price for
     // increased safety
-    htim2.Instance->CCR4 = pendingPWM;
-    if (htim2.Instance->CCR4 && PWMSafetyTimer) {
-      HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+    htimADC.Instance->CCR4 = pendingPWM;
+    if (htimADC.Instance->CCR4 && PWMSafetyTimer) {
+      HAL_TIM_PWM_Start(&htimTip, TIM_CHANNEL_1);
     } else {
-      HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop(&htimTip, TIM_CHANNEL_1);
     }
     if (fastPWM != infastPWM) {
       if (fastPWM) {
@@ -157,10 +158,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   // This was a when the PWM for the output has timed out
   if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Stop(&htimTip, TIM_CHANNEL_1);
   }
 }
 void unstick_I2C() {
+#ifndef I2C_SOFT_BUS_1
   GPIO_InitTypeDef GPIO_InitStruct;
   int              timeout     = 100;
   int              timeout_cnt = 0;
@@ -227,6 +229,7 @@ void unstick_I2C() {
 
   // Call initialization function.
   HAL_I2C_Init(&hi2c1);
+#endif
 }
 
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }
@@ -245,9 +248,36 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void     setStatusLED(const enum StatusLED state) {}
-void     setBuzzer(bool on) {}
-uint8_t  preStartChecks() { return 1; }
+void    setStatusLED(const enum StatusLED state) {}
+void    setBuzzer(bool on) {}
+uint8_t preStartChecks() {
+#ifdef HAS_SPLIT_POWER_PATH
+
+  // We want to enable the power path that has the highest voltage
+  // Nominally one will be ~=0 and one will be high. Unless you jamb both in, then both _may_ be high, or device may be dead
+  {
+    uint16_t dc = getRawDCVin();
+    uint16_t pd = getRawPDVin();
+    if (dc > pd) {
+      HAL_GPIO_WritePin(DC_SELECT_GPIO_Port, DC_SELECT_Pin, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(PD_SELECT_GPIO_Port, PD_SELECT_Pin, GPIO_PIN_RESET);
+    } else {
+      HAL_GPIO_WritePin(PD_SELECT_GPIO_Port, PD_SELECT_Pin, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(DC_SELECT_GPIO_Port, DC_SELECT_Pin, GPIO_PIN_RESET);
+    }
+  }
+
+#endif
+#ifdef POW_PD
+  // If we are in the middle of negotiating PD, wait until timeout
+  // Before turning on the heater
+  if (!USBPowerDelivery::negotiationComplete()) {
+    return 0;
+  }
+
+#endif
+  return 1;
+}
 uint64_t getDeviceID() {
   //
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);

@@ -24,9 +24,12 @@ extern "C" {
 }
 #endif
 
-#ifdef OLED_I2CBB
-#include "I2CBB.hpp"
-#define I2C_CLASS I2CBB
+#if defined(OLED_I2CBB2)
+#include "I2CBB2.hpp"
+#define I2C_CLASS I2CBB2
+#elif defined(OLED_I2CBB1)
+#include "I2CBB1.hpp"
+#define I2C_CLASS I2CBB1
 #else
 #define I2C_CLASS FRToSI2C
 #include "I2C_Wrapper.hpp"
@@ -44,7 +47,8 @@ extern "C" {
 
 #define OLED_VCOM_LAYOUT 0x12
 #define OLED_SEGMENT_MAP_REVERSED
-#warning "S60 Not fully supported"
+
+#warning "128x32 OLED's Not fully supported"
 #else
 #define OLED_WIDTH       96
 #define OLED_HEIGHT      16
