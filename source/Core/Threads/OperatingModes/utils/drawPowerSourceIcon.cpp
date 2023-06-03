@@ -1,7 +1,7 @@
 #include "OperatingModeUtilities.h"
 
 void gui_drawBatteryIcon(void) {
-#if defined(POW_PD) || defined(POW_QC)
+#if defined(POW_PD) || defined(POW_QC) || defined(POW_PD_EXT)
   if (!getIsPoweredByDCIN()) {
     // On non-DC inputs we replace this symbol with the voltage we are operating on
     // If <9V then show single digit, if not show dual small ones vertically stacked

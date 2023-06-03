@@ -32,6 +32,7 @@ enum class AccelType {
   BMA      = 4,
   MSA      = 5,
   SC7      = 6,
+  GPIO = 7,
 };
 extern AccelType DetectedAccelerometerVersion;
 
