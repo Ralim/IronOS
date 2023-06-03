@@ -206,8 +206,24 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void     setStatusLED(const enum StatusLED state) {}
-uint8_t  preStartChecks() { return hub238_has_run_selection() ? 1 : 0; }
+void    setStatusLED(const enum StatusLED state) {}
+uint8_t preStartChecks() {
+  if (!hub238_has_run_selection()) {
+    return 0;
+  }
+  // We check if we are in a "Limited" mode; where we have to run the PWM really fast
+  // Where as if we are on 9V for example, the tip resistance is enough
+  uint16_t voltage                = hub238_source_voltage();
+  uint16_t currentx100            = hub238_source_currentX100();
+  uint16_t thresholdResistancex10 = ((voltage * 1000) / currentx100) + 5;
+
+  if (getTipResistanceX10() <= thresholdResistancex10) {
+    // We are limited by resistance, not our current limiting, we can slow down PWM to avoid audible noise
+    htim4.Instance->PSC = 50; // 10 -> 500 removes audible noise
+  }
+
+  return 1; // We are done now
+}
 uint64_t getDeviceID() {
   //
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
