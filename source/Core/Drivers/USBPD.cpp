@@ -1,6 +1,6 @@
 #include "USBPD.h"
 #include "configuration.h"
-#if POW_PD
+#ifdef POW_PD
 
 #include "BSP_PD.h"
 #include "FreeRTOS.h"

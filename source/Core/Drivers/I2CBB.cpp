@@ -26,6 +26,19 @@ void              I2CBB::init() {
   HAL_GPIO_Init(SCL2_GPIO_Port, &GPIO_InitStruct);
   SOFT_SDA_HIGH();
   SOFT_SCL_HIGH();
+  // To ensure bus is unlocked; we toggle the Clock a bunch of times to make things error out
+  for (int i = 0; i < 128; i++) {
+    SOFT_SCL_LOW();
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    SOFT_SCL_HIGH();
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+  }
   I2CSemaphore = xSemaphoreCreateMutexStatic(&xSemaphoreBuffer);
   unlock();
 }
@@ -83,14 +96,12 @@ bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, const uint8_t *p
   bool ack = send(DevAddress);
   if (!ack) {
     stop();
-    asm("bkpt");
     unlock();
     return false;
   }
   ack = send(MemAddress);
   if (!ack) {
     stop();
-    asm("bkpt");
     unlock();
     return false;
   }
@@ -99,7 +110,6 @@ bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, const uint8_t *p
     ack = send(pData[0]);
     if (!ack) {
       stop();
-      asm("bkpt");
       unlock();
       return false;
     }
@@ -267,9 +277,7 @@ uint8_t I2CBB::read_bit() {
 void I2CBB::unlock() { xSemaphoreGive(I2CSemaphore); }
 
 bool I2CBB::lock() {
-  if (I2CSemaphore == NULL) {
-    asm("bkpt");
-  }
+  if (I2CSemaphore == NULL) {}
   bool a = xSemaphoreTake(I2CSemaphore, (TickType_t)100) == pdTRUE;
   return a;
 }

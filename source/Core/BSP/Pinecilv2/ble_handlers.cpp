@@ -28,7 +28,7 @@
 #include "ble_handlers.h"
 #include "pd.h"
 #include "power.hpp"
-#if POW_PD
+#ifdef POW_PD
 #include "USBPD.h"
 #include "pd.h"
 #endif
@@ -287,7 +287,7 @@ uint32_t getPowerSrc() {
     // We are not powered via DC, so want to display the appropriate state for PD or QC
     bool poweredbyPD        = false;
     bool pdHasVBUSConnected = false;
-#if POW_PD
+#ifdef POW_PD
     if (USBPowerDelivery::fusbPresent()) {
       // We are PD capable
       if (USBPowerDelivery::negotiationComplete()) {

@@ -18,7 +18,7 @@ extern "C" {
 #include "settingsGUI.hpp"
 #include "stdlib.h"
 #include "string.h"
-#if POW_PD
+#ifdef POW_PD
 #include "USBPD.h"
 #include "pd.h"
 #endif

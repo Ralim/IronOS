@@ -1,6 +1,6 @@
 #include "OperatingModes.h"
 
-#if POW_PD
+#ifdef POW_PD
 #ifdef HAS_POWER_DEBUG_MENU
 void showPDDebug(void) {
   // Print out the USB-PD state
