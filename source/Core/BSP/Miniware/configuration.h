@@ -130,9 +130,9 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) > 1
+#if defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) + defined(MODEL_TS101) > 1
 #error "Multiple models defined!"
-#elif defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) == 0
+#elif defined(MODEL_TS100) + defined(MODEL_TS80) + defined(MODEL_TS80P) + defined(MODEL_TS101) == 0
 #error "No model defined!"
 #endif
 #define NEEDS_VBUS_PROBE 0
@@ -174,6 +174,39 @@
 #define TEMP_TMP36
 #endif
 
+#ifdef MODEL_TS101
+#define VOLTAGE_DIV        700 // 700 - Default divider from schematic
+#define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
+#define PID_POWER_LIMIT    130 // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    130
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
+#define TEMP_uV_LOOKUP_HAKKO
+#define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
+
+#define HARDWARE_MAX_WATTAGE_X10 1300
+#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
+#define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
+
+#define POW_DC               1
+#define POW_PD               1
+#define I2C_SOFT_BUS_2       1
+#define I2C_SOFT_BUS_1       1
+#define OLED_I2CBB1          1
+#define USB_PD_I2CBB2        1
+#define USB_PD_VMAX          20 // Device supposedly can do 28V; looks like vmax is 33 ish
+#define OLED_128x32          1
+#define OLED_FLIP            1
+#define HAS_SPLIT_POWER_PATH 1
+#define TEMP_NTC             1
+#define ACCEL_I2CBB1         1
+// #define POW_EPR        1
+#define HAS_POWER_DEBUG_MENU
+#define DEBUG_POWER_MENU_BUTTON_B
+
+#endif
+
 #if defined(MODEL_TS80) + defined(MODEL_TS80P) > 0
 #define MAX_POWER_LIMIT   40
 #define POWER_LIMIT_STEPS 2
@@ -212,9 +245,15 @@
 #define POW_PD 1
 #define POW_QC 1
 #define TEMP_NTC
-#define I2C_SOFT_PD
+#define I2C_SOFT_BUS_2 1
 #define SC7_ORI_FLIP
 #endif
 #endif
 
+#ifdef MODEL_TS101
+#define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
+
+#else
 #define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
+
+#endif

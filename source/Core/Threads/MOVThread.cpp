@@ -43,7 +43,11 @@ void detectAccelerometerVersion() {
   if (LIS2DH12::detect()) {
     // Setup the ST Accelerometer
     if (LIS2DH12::initalize()) {
-      DetectedAccelerometerVersion = AccelType::LIS;
+      if (LIS2DH12::isClone()) {
+        DetectedAccelerometerVersion = AccelType::LIS_CLONE;
+      } else {
+        DetectedAccelerometerVersion = AccelType::LIS;
+      }
       return;
     }
   }
@@ -95,7 +99,7 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
   } else
 #endif
 #ifdef ACCEL_LIS
-      if (DetectedAccelerometerVersion == AccelType::LIS) {
+      if (DetectedAccelerometerVersion == AccelType::LIS || DetectedAccelerometerVersion == AccelType::LIS_CLONE) {
     LIS2DH12::getAxisReadings(tx, ty, tz);
     rotation = LIS2DH12::getOrientation();
   } else

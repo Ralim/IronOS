@@ -10,8 +10,11 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 
+#ifdef MODEL_TS101
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
+#else
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
-
+#endif
 void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   FLASH_EraseInitTypeDef pEraseInit;
   pEraseInit.TypeErase    = FLASH_TYPEERASE_PAGES;
@@ -32,10 +35,9 @@ void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   HAL_FLASH_Unlock();
   for (uint16_t i = 0; i < (length / 2); i++) {
     resetWatchdog();
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, SETTINGS_START_PAGE+ (i*sizeof(uint16_t)), data[i]);
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, SETTINGS_START_PAGE + (i * sizeof(uint16_t)), data[i]);
   }
   HAL_FLASH_Lock();
-  
 }
 
-void flash_read_buffer(uint8_t *buffer, const uint16_t length) { memcpy(buffer, (uint8_t*)SETTINGS_START_PAGE, length); }
+void flash_read_buffer(uint8_t *buffer, const uint16_t length) { memcpy(buffer, (uint8_t *)SETTINGS_START_PAGE, length); }

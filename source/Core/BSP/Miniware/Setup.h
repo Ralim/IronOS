@@ -7,7 +7,7 @@
 
 #ifndef SETUP_H_
 #define SETUP_H_
-
+#include "configuration.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -24,12 +24,17 @@ extern I2C_HandleTypeDef hi2c1;
 
 extern IWDG_HandleTypeDef hiwdg;
 
-extern TIM_HandleTypeDef htim2;
-extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htimADC;
+extern TIM_HandleTypeDef htimTip;
 void                     Setup_HAL();
 uint16_t                 getADCHandleTemp(uint8_t sample);
 uint16_t                 getADCVin(uint8_t sample);
 void                     HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim); // Since the hal header file does not define this one
+
+#ifdef HAS_SPLIT_POWER_PATH
+uint16_t getRawDCVin();
+uint16_t getRawPDVin();
+#endif
 
 #ifdef __cplusplus
 }
