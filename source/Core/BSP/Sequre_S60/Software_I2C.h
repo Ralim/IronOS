@@ -10,7 +10,7 @@
 #include "BSP.h"
 #include "configuration.h"
 #include "stm32f1xx_hal.h"
-#ifdef I2C_SOFT
+#ifdef I2C_SOFT_PD
 
 #define SOFT_SCL_HIGH() HAL_GPIO_WritePin(SCL2_GPIO_Port, SCL2_Pin, GPIO_PIN_SET)
 #define SOFT_SCL_LOW()  HAL_GPIO_WritePin(SCL2_GPIO_Port, SCL2_Pin, GPIO_PIN_RESET)

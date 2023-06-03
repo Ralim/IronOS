@@ -8,7 +8,7 @@
 #ifndef BSP_MINIWARE_I2CBB_HPP_
 #define BSP_MINIWARE_I2CBB_HPP_
 #include "configuration.h"
-#ifdef I2C_SOFT
+#ifdef I2C_SOFT_PD
 #include "BSP.h"
 #include "FreeRTOS.h"
 #include "Pins.h"

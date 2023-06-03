@@ -212,7 +212,7 @@
 #define POW_PD 1
 #define POW_QC 1
 #define TEMP_NTC
-#define I2C_SOFT
+#define I2C_SOFT_PD
 #define SC7_ORI_FLIP
 #endif
 #endif

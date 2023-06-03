@@ -17,7 +17,7 @@ void preRToSInit() {
   HAL_Init();
   Setup_HAL(); // Setup all the HAL objects
   BSPInit();
-#ifdef I2C_SOFT
+#ifdef I2C_SOFT_PD
   I2CBB::init();
 #endif
   /* Init the IPC objects */
