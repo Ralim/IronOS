@@ -20,6 +20,8 @@ void power_check();
 uint8_t getTipResistanceX10();
 
 uint8_t getTipThermalMass();
+uint8_t getTipInertia();
+
 
 #ifdef __cplusplus
 }
