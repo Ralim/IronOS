@@ -6,7 +6,8 @@ ALL_MINIWARE_MODELS=TS100 TS80 TS80P
 ALL_PINECIL_MODELS=Pinecil
 ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS)
+ALL_SEQURE_MODELS=S60
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
@@ -56,6 +57,14 @@ MINIWARE_HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/In
 MINIWARE_STARTUP_DIR = ./Startup
 MINIWARE_INC_DIR = ./Core/BSP/Miniware
 MINIWARE_LD_FILE = ./Core/BSP/Miniware/stm32f103.ld
+
+S60_INC_CMSIS_DEVICE = ./Core/BSP/Sequre_S60/Vendor/CMSIS/Device/ST/STM32F1xx/Include
+S60_CMSIS_CORE_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/CMSIS/Include
+S60_HAL_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc
+S60_HAL_LEGACY_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
+S60_STARTUP_DIR = ./Startup
+S60_INC_DIR = ./Core/BSP/Sequre_S60
+S60_LD_FILE = ./Core/BSP/Sequre_S60/stm32f103.ld
 
 MHP30_INC_CMSIS_DEVICE = ./Core/BSP/MHP30/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 MHP30_CMSIS_CORE_INC_DIR = ./Core/BSP/MHP30/Vendor/CMSIS/Include
@@ -188,6 +197,31 @@ CPUFLAGS= -mcpu=cortex-m3     \
 flash_size=62k
 bootldr_size=0x4000
 DEVICE_DFU_ADDRESS=0x08004000
+DEVICE_DFU_VID_PID=0x1209:0xDB42
+endif
+ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
+$(info Building for Sequre )
+DEVICE_INCLUDES = -I$(S60_INC_DIR) \
+	-I$(S60_INC_CMSIS_DEVICE)\
+	-I$(S60_CMSIS_CORE_INC_DIR)	\
+	-I$(S60_HAL_INC_DIR)	\
+	-I$(S60_HAL_LEGACY_INC_DIR)
+DEVICE_BSP_DIR = ./Core/BSP/Sequre_S60
+S_SRCS := $(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
+LDSCRIPT=$(S60_LD_FILE)
+DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD -finline-limit=9999999
+DEV_LDFLAGS= -Wl,--wrap=printf  -Wl,--no-wchar-size-warning 
+DEV_AFLAGS=
+DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
+DEV_CXXFLAGS= 
+CPUFLAGS= -mcpu=cortex-m3     \
+		-mthumb 			\
+		-mfloat-abi=soft
+flash_size=62k
+bootldr_size=0x4400
+DEVICE_DFU_ADDRESS=0x08004400
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
@@ -422,9 +456,13 @@ COMPILER=gcc
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
+ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS) ))
+COMPILER_PREFIX=arm-none-eabi
+endif
 ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
 endif
+
 # programs ---------------------------------------------------------------------
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++

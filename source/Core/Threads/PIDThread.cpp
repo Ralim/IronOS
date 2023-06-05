@@ -116,7 +116,7 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   static TickType_t          lastCall   = 0;
   static Integrator<int32_t> powerStore = {0};
 
-  const TickType_t rate = 1000 / (xTaskGetTickCount() - lastCall);
+  const TickType_t rate = TICKS_SECOND / (xTaskGetTickCount() - lastCall);
   lastCall              = xTaskGetTickCount();
   // Sandman note:
   // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't
@@ -142,10 +142,10 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // power CMOS is controlled by TIM3->CTR1 (that is software modulated - on/off - by TIM2-CTR4 interrupts). However,
   // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
   // so we basically double the need (gain = 2) to get what we want.
-  return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
-                           getTipThermalMass(),              // Inertia, smaller numbers increase dominance of the previous value
-                           2,                                // gain
-                           rate,                             // PID cycle frequency
+  return powerStore.update(getTipThermalMass() * setpointDelta, // the required power
+                           getTipInertia(),                     // Inertia, smaller numbers increase dominance of the previous value
+                           2,                                   // gain
+                           rate,                                // PID cycle frequency
                            getX10WattageLimits());
 }
 

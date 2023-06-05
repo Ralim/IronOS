@@ -63,10 +63,10 @@
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS             0   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS             100 // Max OLED brightness selectable
-#define BRIGHTNESS_STEP            25  // OLED brightness increment
-#define DEFAULT_BRIGHTNESS         25  // default OLED brightness
+#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP    25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS 25  // default OLED brightness
 
 /**
  * Temp change settings
@@ -170,7 +170,7 @@
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
 
 #define POW_DC
-#define POW_PD 0
+
 #define TEMP_TMP36
 #endif
 
@@ -197,7 +197,7 @@
 #define HARDWARE_MAX_WATTAGE_X10 180
 
 #define POW_QC
-#define POW_PD 0
+
 #define TEMP_TMP36
 #endif
 

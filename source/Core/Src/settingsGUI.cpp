@@ -24,7 +24,7 @@ static void displayInputMinVRange(void);
 #ifdef POW_QC
 static void displayQCInputV(void);
 #endif
-#if POW_PD
+#ifdef POW_PD
 static void displayPDNegTimeout(void);
 static void displayPDVpdo(void);
 #endif
@@ -224,7 +224,7 @@ const menuitem powerMenu[] = {
 #ifdef POW_QC
     {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4}, /*Voltage input*/
 #endif
-#if POW_PD
+#ifdef POW_PD
     {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
     {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7 }, /*Toggle PPS & EPR*/
 #endif
@@ -443,7 +443,7 @@ static void displayQCInputV(void) {
 
 #endif
 
-#if POW_PD
+#ifdef POW_PD
 
 static void displayPDNegTimeout(void) {
 
