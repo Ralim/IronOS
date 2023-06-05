@@ -807,29 +807,32 @@ static bool setCalibrateVIN(void) {
   OLED::clearScreen();
 
   for (;;) {
-    OLED::setCursor(20, 0);
-    uint16_t voltage = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 1);
+    OLED::setCursor(25, 0);
+    uint16_t voltage = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
     OLED::printNumber(voltage / 10, 2, FontStyle::LARGE);
     OLED::print(LargeSymbolDot, FontStyle::LARGE);
     OLED::printNumber(voltage % 10, 1, FontStyle::LARGE, false);
     OLED::print(LargeSymbolVolts, FontStyle::LARGE);
+    
+    OLED::setCursor(0, 8);
+    OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::SMALL);
 
     switch (getButtonState()) {
     case BUTTON_F_SHORT:
-      nextSettingValue(SettingsOptions::VoltageDiv);
+      prevSettingValue(SettingsOptions::VoltageDiv);
       break;
     case BUTTON_B_SHORT:
-      prevSettingValue(SettingsOptions::VoltageDiv);
+      nextSettingValue(SettingsOptions::VoltageDiv);
       break;
     case BUTTON_BOTH:
     case BUTTON_F_LONG:
     case BUTTON_B_LONG:
       saveSettings();
       OLED::clearScreen();
-      OLED::setCursor(40, 0);
-      OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::LARGE);
+      OLED::setCursor(0, 0);
+      warnUser(translatedString(Tr->CJCCalibrationDone), 3 * TICKS_SECOND);
       OLED::refresh();
-      waitForButtonPressOrTimeout(1 * TICKS_SECOND);
+      waitForButtonPressOrTimeout(0.5 * TICKS_SECOND);
       return false;
     case BUTTON_NONE:
     default:
