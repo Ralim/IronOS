@@ -72,7 +72,7 @@
 #define KEY_A_GPIO_Port       GPIOA
 #define PWM_Out_Pin           GPIO_PIN_0
 #define PWM_Out_GPIO_Port     GPIOA
-#define PWM_Out_CHANNEL       TIM_CHANNEL_1 // TODO
+#define PWM_Out_CHANNEL       TIM_CHANNEL_1
 #define TIP_CONTROL_TIMER     TIM2
 #define ADC_CONTROL_TIMER     TIM4
 #define ADC_CONTROL_TIMER_IRQ TIM4_IRQn
