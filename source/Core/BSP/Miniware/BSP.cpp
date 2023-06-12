@@ -241,16 +241,93 @@ void reboot() { NVIC_SystemReset(); }
 
 void delay_ms(uint16_t count) { HAL_Delay(count); }
 
-bool isTipDisconnected() {
+uint8_t       lastTipResistance        = 0; // default to unknown
+const uint8_t numTipResistanceReadings = 3;
+uint32_t      tipResistanceReadings[3] = {0, 0, 0};
+uint8_t       tipResistanceReadingSlot = 0;
+bool          isTipDisconnected() {
 
   uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
   uint32_t tipTemp              = TipThermoModel::getTipInC();
   return tipTemp > tipDisconnectedThres;
 }
 
-void    setStatusLED(const enum StatusLED state) {}
-void    setBuzzer(bool on) {}
+void setStatusLED(const enum StatusLED state) {}
+void setBuzzer(bool on) {}
+
+// We want to calculate lastTipResistance
+// If tip is connected, and the tip is cold and the tip is not being heated
+// We can use the GPIO to inject a small current into the tip and measure this
+// The gpio is 100k -> diode -> tip -> gnd
+// Source is 3.3V-0.5V
+// Which is around 0.028mA this will induce:
+// 6 ohm tip -> 3.24mV (Real world ~= 3320)
+// 8 ohm tip -> 4.32mV (Real world ~= 4500)
+// Which is definitely measureable
+// Taking shortcuts here as we know we only really have to pick apart 6 and 8 ohm tips
+// These are reported as 60 and 75 respectively
+void performTipResistanceSampleReading() {
+  // 0 = read then turn on pullup, 1 = read then turn off pullup, 2 = read again
+  tipResistanceReadings[tipResistanceReadingSlot] = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(1));
+
+  HAL_GPIO_WritePin(TIP_RESISTANCE_SENSE_GPIO_Port, TIP_RESISTANCE_SENSE_Pin, (tipResistanceReadingSlot == 0) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+  tipResistanceReadingSlot++;
+}
+void FinishMeasureTipResistance() {
+
+  // Otherwise we now have the 4 samples;
+  //  _^_ order, 2 delta's, combine these
+
+  int32_t calculatedSkew = tipResistanceReadings[0] - tipResistanceReadings[2]; // If positive tip is cooling
+  calculatedSkew /= 2;                                                          // divide by two to get offset per time constant
+
+  int32_t reading = (((tipResistanceReadings[1] - tipResistanceReadings[0]) + calculatedSkew) // jump 1 - skew
+                     +                                                                        // +
+                     ((tipResistanceReadings[1] - tipResistanceReadings[2]) + calculatedSkew) // jump 2 - skew
+                     )                                                                        //
+                    / 2;                                                                      // Take average
+  // // As we are only detecting two resistances; we can split the difference for now
+  uint8_t newRes = 0;
+  if (reading > 1200) {
+    // return; // Change nothing as probably disconnected tip
+    tipResistanceReadingSlot = lastTipResistance = 0;
+    return;
+  } else if (reading < 800) {
+    newRes = 62;
+  } else {
+    newRes = 80;
+  }
+  lastTipResistance = newRes;
+}
+volatile bool       tipMeasurementOccuring = true;
+volatile TickType_t nextTipMeasurement     = 100;
+
+void performTipMeasurementStep() {
+
+  // Wait 200ms for settle time
+  if (xTaskGetTickCount() < (nextTipMeasurement)) {
+    return;
+  }
+  nextTipMeasurement = xTaskGetTickCount() + (TICKS_100MS * 5);
+  if (tipResistanceReadingSlot < numTipResistanceReadings) {
+    performTipResistanceSampleReading();
+    return;
+  }
+
+  // We are sensing the resistance
+  FinishMeasureTipResistance();
+
+  tipMeasurementOccuring = false;
+}
+
 uint8_t preStartChecks() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
+  performTipMeasurementStep();
+  if (preStartChecksDone() != 1) {
+    return 0;
+  }
+#endif
 #ifdef HAS_SPLIT_POWER_PATH
 
   // We want to enable the power path that has the highest voltage
@@ -283,10 +360,29 @@ uint64_t getDeviceID() {
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
 }
 
-uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
+uint8_t preStartChecksDone() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
+  return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring) ? 0 : 1;
+#else
+  return 1;
+#endif
+}
 
-uint8_t preStartChecksDone() { return 1; }
+uint8_t getTipResistanceX10() {
+  // Return tip resistance in x10 ohms
+  // We can measure this using the op-amp
+  return lastTipResistance;
+}
 
-uint8_t getTipThermalMass() { return TIP_THERMAL_MASS; }
-
-uint8_t getTipInertia() { return TIP_THERMAL_MASS; }
+uint8_t getTipThermalMass() {
+  if (lastTipResistance >= 80) {
+    return TIP_THERMAL_MASS;
+  }
+  return 45;
+}
+uint8_t getTipInertia() {
+  if (lastTipResistance >= 80) {
+    return TIP_THERMAL_MASS;
+  }
+  return 10;
+}
