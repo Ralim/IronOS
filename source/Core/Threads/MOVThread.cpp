@@ -12,6 +12,7 @@
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
 #include "MSA301.h"
+#include "Pins.h"
 #include "QC3.h"
 #include "SC7A20.hpp"
 #include "Settings.h"
