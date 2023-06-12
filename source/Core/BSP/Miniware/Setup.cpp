@@ -309,7 +309,7 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
   htimTip.Instance               = TIP_CONTROL_TIMER;
   htimTip.Init.Prescaler         = 8;
   htimTip.Init.CounterMode       = TIM_COUNTERMODE_UP;
-  htimTip.Init.Period            = 100;                           // 5 Khz PWM freq
+  htimTip.Init.Period            = 255;                           // 5 Khz PWM freq
   htimTip.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV4;        // 4mhz before div
   htimTip.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE; // Preload the ARR register (though we dont use this)
   HAL_TIM_Base_Init(&htimTip);
@@ -325,8 +325,12 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
   sMasterConfig.MasterSlaveMode     = TIM_MASTERSLAVEMODE_DISABLE;
   HAL_TIMEx_MasterConfigSynchronization(&htimTip, &sMasterConfig);
 
-  sConfigOC.OCMode     = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse      = 50; // 50% duty cycle, that is AC coupled through the cap to provide an on signal (This does not do tip at 50% duty cycle)
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+#ifdef TIP_HAS_DIRECT_PWM
+  sConfigOC.Pulse = 0; // PWM is direct to tip
+#else
+  sConfigOC.Pulse = 127; // 50% duty cycle, that is AC coupled through the cap to provide an on signal (This does not do tip at 50% duty cycle)
+#endif
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   HAL_TIM_PWM_ConfigChannel(&htimTip, &sConfigOC, PWM_Out_CHANNEL);
@@ -344,7 +348,7 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
   // Remap TIM3_CH1 to be on PB4
   __HAL_AFIO_REMAP_TIM3_PARTIAL();
 #else
-  // No re-map required
+                         // No re-map required
 #endif
   HAL_TIM_PWM_Start(&htimTip, PWM_Out_CHANNEL);
 }
@@ -488,8 +492,8 @@ static void MX_GPIO_Init(void) {
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 #endif
 #else
-  /* TS80 */
-  /* Leave USB lines open circuit*/
+                         /* TS80 */
+                         /* Leave USB lines open circuit*/
 
 #endif
 

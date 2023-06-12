@@ -130,17 +130,27 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == ADC_CONTROL_TIMER) {
     // we want to turn on the output again
     PWMSafetyTimer--;
-    // We decrement this safety value so that lockups in the
-    // scheduler will not cause the PWM to become locked in an
-    // active driving state.
-    // While we could assume this could never happen, its a small price for
-    // increased safety
+// We decrement this safety value so that lockups in the
+// scheduler will not cause the PWM to become locked in an
+// active driving state.
+// While we could assume this could never happen, its a small price for
+// increased safety
+#ifdef TIP_HAS_DIRECT_PWM
+    htimADC.Instance->CCR4 = powerPWM;
+    if (pendingPWM && PWMSafetyTimer) {
+      htimTip.Instance->CCR1 = pendingPWM;
+      HAL_TIM_PWM_Start(&htimTip, PWM_Out_CHANNEL);
+    } else {
+      HAL_TIM_PWM_Stop(&htimTip, PWM_Out_CHANNEL);
+    }
+#else
     htimADC.Instance->CCR4 = pendingPWM;
     if (htimADC.Instance->CCR4 && PWMSafetyTimer) {
-      HAL_TIM_PWM_Start(&htimTip, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Start(&htimTip, PWM_Out_CHANNEL);
     } else {
-      HAL_TIM_PWM_Stop(&htimTip, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop(&htimTip, PWM_Out_CHANNEL);
     }
+#endif
     if (fastPWM != infastPWM) {
       if (fastPWM) {
         switchToFastPWM();
@@ -158,7 +168,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   // This was a when the PWM for the output has timed out
   if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-    HAL_TIM_PWM_Stop(&htimTip, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Stop(&htimTip, PWM_Out_CHANNEL);
   }
 }
 void unstick_I2C() {
@@ -254,7 +264,7 @@ bool          isTipDisconnected() {
 
 void setStatusLED(const enum StatusLED state) {}
 void setBuzzer(bool on) {}
-
+#ifdef TIP_RESISTANCE_SENSE_Pin
 // We want to calculate lastTipResistance
 // If tip is connected, and the tip is cold and the tip is not being heated
 // We can use the GPIO to inject a small current into the tip and measure this
@@ -320,7 +330,7 @@ void performTipMeasurementStep() {
 
   tipMeasurementOccuring = false;
 }
-
+#endif
 uint8_t preStartChecks() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   performTipMeasurementStep();

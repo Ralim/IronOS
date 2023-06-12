@@ -177,18 +177,18 @@
 #ifdef MODEL_TS101
 #define VOLTAGE_DIV        700 // 700 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
-#define PID_POWER_LIMIT    130 // Sets the max pwm power limit
+#define PID_POWER_LIMIT    100 // Sets the max pwm power limit
 #define POWER_LIMIT        0   // 0 watts default limit
-#define MAX_POWER_LIMIT    130
+#define MAX_POWER_LIMIT    100
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
 #define TEMP_uV_LOOKUP_HAKKO
-#define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
 
-#define HARDWARE_MAX_WATTAGE_X10 1300
+#define HARDWARE_MAX_WATTAGE_X10 1000
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
 
+#define TIP_HAS_DIRECT_PWM 1
 #define POW_DC               1
 #define POW_PD               1
 #define I2C_SOFT_BUS_2       1
