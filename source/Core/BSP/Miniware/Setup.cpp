@@ -307,7 +307,7 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
   TIM_OC_InitTypeDef      sConfigOC;
 
   htimTip.Instance               = TIP_CONTROL_TIMER;
-  htimTip.Init.Prescaler         = 8;
+  htimTip.Init.Prescaler         = 3;
   htimTip.Init.CounterMode       = TIM_COUNTERMODE_UP;
   htimTip.Init.Period            = 255;                           // 5 Khz PWM freq
   htimTip.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV4;        // 4mhz before div
