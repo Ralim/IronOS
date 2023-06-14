@@ -773,8 +773,11 @@ $(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_co
 clean:
 	rm -Rf Core/Gen
 	rm -Rf $(OUTPUT_DIR_BASE)
-	rm -Rf $(HEXFILE_DIR)
+	rm -Rf $(HEXFILE_DIR)/*
 	rm -Rf ../Translations/__pycache__
+
+mrproper: clean
+	rm -Rf $(HEXFILE_DIR)
 
 style:
 	@for src in $(ALL_SOURCE) $(ALL_INCLUDES); do \
@@ -794,7 +797,7 @@ check-style:
 	done
 	@echo "Style check passed"
   
-.PHONY: style all clean default
+.PHONY: style all clean default mrproper
 .SECONDARY:
 
 # pull in dependency info for *existing* .o files
