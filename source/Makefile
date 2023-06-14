@@ -776,7 +776,7 @@ clean:
 	rm -Rf $(HEXFILE_DIR)/*
 	rm -Rf ../Translations/__pycache__
 
-mrproper: clean
+clean-all: clean
 	rm -Rf $(HEXFILE_DIR)
 
 style:
@@ -797,7 +797,7 @@ check-style:
 	done
 	@echo "Style check passed"
   
-.PHONY: style all clean default mrproper
+.PHONY: style all clean default clean-all
 .SECONDARY:
 
 # pull in dependency info for *existing* .o files
