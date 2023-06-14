@@ -8,6 +8,7 @@
 #include "BSP.h"
 #include "Settings.h"
 #include "cmsis_os.h"
+#include "configuration.h"
 #include "power.hpp"
 AccelType DetectedAccelerometerVersion = AccelType::Scanning;
 bool      settingsWereReset            = false;
@@ -28,8 +29,13 @@ static const size_t MOVTaskStackSize = 1024 / 2;
 uint32_t            MOVTaskBuffer[MOVTaskStackSize];
 osStaticThreadDef_t MOVTaskControlBlock;
 
-osThreadId          POWTaskHandle;
+osThreadId POWTaskHandle;
+#ifdef BLE_ENABLED
+// Larger stack is required when bringing up the BLE stack
+static const size_t POWTaskStackSize = 1024;
+#else
 static const size_t POWTaskStackSize = 512 / 2;
+#endif
 uint32_t            POWTaskBuffer[POWTaskStackSize];
 osStaticThreadDef_t POWTaskControlBlock;
 
