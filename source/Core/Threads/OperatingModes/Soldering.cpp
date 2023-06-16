@@ -129,6 +129,13 @@ void gui_solderingMode(uint8_t jumpToSleep) {
           OLED::setCursor(55, 8);
         }
         OLED::print(SmallSymbolPlus, FontStyle::SMALL);
+      } else {
+        if (OLED::getRotation()) {
+          OLED::setCursor(32, 8);
+        } else {
+          OLED::setCursor(47, 8);
+        }
+        OLED::print(PowerSourceNames[getPowerSourceNumber()], FontStyle::SMALL, 2);
       }
 
       detailedPowerStatus();

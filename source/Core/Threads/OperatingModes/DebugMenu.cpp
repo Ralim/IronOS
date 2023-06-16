@@ -4,6 +4,39 @@ extern osThreadId    MOVTaskHandle;
 extern osThreadId    PIDTaskHandle;
 extern OperatingMode currentMode;
 
+int8_t getPowerSourceNumber(void) {
+  int8_t sourceNumber = 0;
+  if (getIsPoweredByDCIN()) {
+    sourceNumber = 0;
+  } else {
+    // We are not powered via DC, so want to display the appropriate state for PD or QC
+    bool poweredbyPD        = false;
+    bool pdHasVBUSConnected = false;
+#ifdef POW_PD
+    if (USBPowerDelivery::fusbPresent()) {
+      // We are PD capable
+      if (USBPowerDelivery::negotiationComplete()) {
+        // We are powered via PD
+        poweredbyPD = true;
+#ifdef VBUS_MOD_TEST
+        pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
+#endif
+      }
+    }
+#endif
+    if (poweredbyPD) {
+      if (pdHasVBUSConnected) {
+        sourceNumber = 2;
+      } else {
+        sourceNumber = 3;
+      }
+    } else {
+      sourceNumber = 1;
+    }
+  }
+  return sourceNumber;
+}
+
 void showDebugMenu(void) {
   currentMode        = OperatingMode::debug;
   uint8_t     screen = 0;
@@ -35,39 +68,8 @@ void showDebugMenu(void) {
       OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
       break;
     case 3: // Power Negotiation Status
-    {
-      int sourceNumber = 0;
-      if (getIsPoweredByDCIN()) {
-        sourceNumber = 0;
-      } else {
-        // We are not powered via DC, so want to display the appropriate state for PD or QC
-        bool poweredbyPD        = false;
-        bool pdHasVBUSConnected = false;
-#ifdef POW_PD
-        if (USBPowerDelivery::fusbPresent()) {
-          // We are PD capable
-          if (USBPowerDelivery::negotiationComplete()) {
-            // We are powered via PD
-            poweredbyPD = true;
-#ifdef VBUS_MOD_TEST
-            pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
-#endif
-          }
-        }
-#endif
-        if (poweredbyPD) {
-
-          if (pdHasVBUSConnected) {
-            sourceNumber = 2;
-          } else {
-            sourceNumber = 3;
-          }
-        } else {
-          sourceNumber = 1;
-        }
-      }
-      OLED::print(PowerSourceNames[sourceNumber], FontStyle::SMALL);
-    } break;
+      OLED::print(PowerSourceNames[getPowerSourceNumber()], FontStyle::SMALL);
+      break;
     case 4: // Input Voltage
       printVoltage();
       break;

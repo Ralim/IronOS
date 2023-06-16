@@ -405,8 +405,9 @@ void OLED::setInverseDisplay(bool inverse) {
 }
 
 // print a string to the current cursor location
-void OLED::print(const char *const str, FontStyle fontStyle) {
+void OLED::print(const char *const str, FontStyle fontStyle, uint8_t n) {
   const uint8_t *next = reinterpret_cast<const uint8_t *>(str);
+  bool cut = n ? true : false;
   if (next[0] == 0x01) {
     fontStyle = FontStyle::LARGE;
     next++;
@@ -424,6 +425,9 @@ void OLED::print(const char *const str, FontStyle fontStyle) {
       next += 2;
     }
     drawChar(index, fontStyle);
+    if (cut && !--n) {
+      return;
+    }
   }
 }
 
