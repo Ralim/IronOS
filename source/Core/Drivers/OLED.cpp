@@ -404,15 +404,14 @@ void OLED::setInverseDisplay(bool inverse) {
   I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
 }
 
-// print a string to the current cursor location
-void OLED::print(const char *const str, FontStyle fontStyle, uint8_t n) {
+// print a string to the current cursor location, len chars MAX
+void OLED::print(const char *const str, FontStyle fontStyle, uint8_t len) {
   const uint8_t *next = reinterpret_cast<const uint8_t *>(str);
-  bool cut = n ? true : false;
   if (next[0] == 0x01) {
     fontStyle = FontStyle::LARGE;
     next++;
   }
-  while (next[0]) {
+  while (next[0] && len--) {
     uint16_t index;
     if (next[0] <= 0xF0) {
       index = next[0];
@@ -425,9 +424,6 @@ void OLED::print(const char *const str, FontStyle fontStyle, uint8_t n) {
       next += 2;
     }
     drawChar(index, fontStyle);
-    if (cut && !--n) {
-      return;
-    }
   }
 }
 
