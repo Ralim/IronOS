@@ -39,8 +39,8 @@ enum SettingsOptions {
   CalibrationOffset              = 22, // This stores the temperature offset for this tip in the iron.
   PowerLimit                     = 23, // Maximum power iron allowed to output
   ReverseButtonTempChangeEnabled = 24, // Change the plus and minus button assigment
-  TempChangeLongStep             = 25, // Change the plus and minus button assigment
-  TempChangeShortStep            = 26, // Change the plus and minus button assigment
+  TempChangeLongStep             = 25, // Temperature-change-increment on long button press
+  TempChangeShortStep            = 26, // Temperature-change-increment on short button press
   HallEffectSensitivity          = 27, // Operating mode of the hall effect sensor
   AccelMissingWarningCounter     = 28, // Counter of how many times we have warned we cannot detect the accelerometer
   PDMissingWarningCounter        = 29, // Counter of how many times we have warned we cannot detect the pd interface

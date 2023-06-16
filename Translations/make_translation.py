@@ -180,6 +180,7 @@ def get_accel_names_list() -> List[str]:
         "BMA223",
         "MSA301",
         "SC7A20",
+        "GPIO",
     ]
 
 
