@@ -167,4 +167,6 @@
 #endif
 #endif
 
+#define POW_PD_EXT 0
+
 #define FLASH_LOGOADDR (0x23000000 + (1022 * 1024))
