@@ -655,14 +655,14 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for language $*'
 	@$(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(PWD)/Core/Gen/macros.txt \
-		-o $(PWD)/Core/Gen/Translation.$*.cpp \
+		--macros $(CURDIR)/Core/Gen/macros.txt \
+		-o $(CURDIR)/Core/Gen/Translation.$*.cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		$*
 
 Core/Gen/macros.txt: Makefile
-	@test -d Core/Gen || mkdir -p Core/Gen
-	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF Core/Gen/macros.tmp - > $(PWD)/Core/Gen/macros.txt
+	@test -d $(CURDIR)/Core/Gen || mkdir -p $(CURDIR)/Core/Gen
+	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF $(CURDIR)/Core/Gen/macros.tmp - > $(CURDIR)/Core/Gen/macros.txt
 
 
 #
