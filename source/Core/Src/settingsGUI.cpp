@@ -492,16 +492,16 @@ static void displayBoostTemp(void) {
 static void displayAutomaticStartMode(void) {
 
   switch (getSettingValue(SettingsOptions::AutoStartMode)) {
-  case 0:
+  case autoStartMode_t::NO:
     OLED::print(translatedString(Tr->SettingStartNoneChar), FontStyle::LARGE);
     break;
-  case 1:
+  case autoStartMode_t::SOLDER:
     OLED::print(translatedString(Tr->SettingStartSolderingChar), FontStyle::LARGE);
     break;
-  case 2:
+  case autoStartMode_t::SLEEP:
     OLED::print(translatedString(Tr->SettingStartSleepChar), FontStyle::LARGE);
     break;
-  case 3:
+  case autoStartMode_t::ZERO:
     OLED::print(translatedString(Tr->SettingStartSleepOffChar), FontStyle::LARGE);
     break;
   default:

@@ -77,6 +77,14 @@ typedef enum {
   FAST      = 3, //
   MAX_VALUE = 4  //
 } settingOffSpeed_t;
+
+typedef enum {
+  NO     = 0, // Disabled
+  SOLDER = 1, // Gain default soldering temp (Soldering Mode)
+  SLEEP  = 2, // Gain default sleeping temp (Idle/Standby Mode)
+  ZERO   = 3, // Power on only (No heat Mode)
+} autoStartMode_t;
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();
