@@ -21,12 +21,7 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       currentTempTargetDegC = stayOff ? 0 : min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp));
     }
     // draw the lcd
-    uint16_t tipTemp;
-    if (getSettingValue(SettingsOptions::TemperatureInF))
-      tipTemp = TipThermoModel::getTipInF();
-    else {
-      tipTemp = TipThermoModel::getTipInC();
-    }
+    uint16_t tipTemp = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
 
     OLED::clearScreen();
     OLED::setCursor(0, 0);
