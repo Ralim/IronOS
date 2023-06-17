@@ -3,7 +3,7 @@
 #ifndef _DRIVERS_HUB238_HPP_
 #define _DRIVERS_HUB238_HPP_
 #include "configuration.h"
-#if POW_PD_EXT == 1
+#ifdef POW_PD_EXT
 #include <stdbool.h>
 #include <stdint.h>
 

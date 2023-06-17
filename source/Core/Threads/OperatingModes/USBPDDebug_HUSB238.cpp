@@ -1,6 +1,6 @@
 #include "HUB238.hpp"
 #include "OperatingModes.h"
-#if POW_PD_EXT == 1
+#ifdef POW_PD_EXT
 #ifdef HAS_POWER_DEBUG_MENU
 void showPDDebug(void) {
   // Print out the USB-PD state

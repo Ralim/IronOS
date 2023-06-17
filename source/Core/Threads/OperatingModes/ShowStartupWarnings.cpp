@@ -37,7 +37,7 @@ void showWarnings(void) {
     }
   }
 #endif
-#if POW_PD_EXT == 1
+#ifdef POW_PD_EXT
   if (!hub238_probe()) {
     if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
       nextSettingValue(SettingsOptions::PDMissingWarningCounter);

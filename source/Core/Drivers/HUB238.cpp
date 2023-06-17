@@ -3,7 +3,7 @@
 #include "Utils.h"
 #include "configuration.h"
 
-#if POW_PD_EXT == 1
+#ifdef POW_PD_EXT
 bool hub238_probe() { return I2CBB::probe(HUB238_ADDR); }
 
 extern int32_t powerSupplyWattageLimit;
