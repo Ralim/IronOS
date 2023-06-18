@@ -218,3 +218,4 @@
 #endif
 
 #define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))

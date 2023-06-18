@@ -105,7 +105,11 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
-void saveSettings() { flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType)); }
+void saveSettings() {
+  if (memcmp((void *)SETTINGS_START_PAGE, (void *)&systemSettings, sizeof(systemSettingsType))) {
+    flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
+  }
+}
 
 bool loadSettings() {
   // We read the flash
