@@ -121,3 +121,36 @@ bool checkExitSoldering(void) {
 
   return false;
 }
+
+int8_t getPowerSourceNumber(void) {
+  int8_t sourceNumber = 0;
+  if (getIsPoweredByDCIN()) {
+    sourceNumber = 0;
+  } else {
+    // We are not powered via DC, so want to display the appropriate state for PD or QC
+    bool poweredbyPD        = false;
+    bool pdHasVBUSConnected = false;
+#ifdef POW_PD
+    if (USBPowerDelivery::fusbPresent()) {
+      // We are PD capable
+      if (USBPowerDelivery::negotiationComplete()) {
+        // We are powered via PD
+        poweredbyPD = true;
+#ifdef VBUS_MOD_TEST
+        pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
+#endif
+      }
+    }
+#endif
+    if (poweredbyPD) {
+      if (pdHasVBUSConnected) {
+        sourceNumber = 2;
+      } else {
+        sourceNumber = 3;
+      }
+    } else {
+      sourceNumber = 1;
+    }
+  }
+  return sourceNumber;
+}
