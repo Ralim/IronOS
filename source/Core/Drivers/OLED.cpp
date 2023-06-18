@@ -336,7 +336,27 @@ void OLED::transitionScrollDown() {
     // For each line, we shuffle all bits up a row
     for (uint8_t xPos = 0; xPos < OLED_WIDTH; xPos++) {
       const uint16_t firstStripPos  = FRAMEBUFFER_START + xPos;
-      const uint16_t secondStripPos = FRAMEBUFFER_START + xPos + OLED_WIDTH;
+      const uint16_t secondStripPos = firstStripPos + OLED_WIDTH;
+#ifdef OLED_128x32
+      // For 32 pixel high OLED's we have four strips to tailchain
+      const uint16_t thirdStripPos  = secondStripPos + OLED_WIDTH;
+      const uint16_t fourthStripPos = thirdStripPos + OLED_WIDTH;
+      // Move the MSB off the first strip, and pop MSB from second strip onto the first strip
+      screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] >> 1) | ((screenBuffer[secondStripPos] & 0x01) << 7);
+      // Now shuffle off the second strip
+      screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] >> 1) | ((screenBuffer[thirdStripPos] & 0x01) << 7);
+      // Now shuffle off the third strip
+      screenBuffer[thirdStripPos] = (screenBuffer[thirdStripPos] >> 1) | ((screenBuffer[fourthStripPos] & 0x01) << 7);
+      // Now forth strip gets the start of the new buffer
+      screenBuffer[fourthStripPos] = (screenBuffer[fourthStripPos] >> 1) | ((secondFrameBuffer[firstStripPos] & 0x01) << 7);
+      // Now cycle all the secondary buffers
+
+      secondFrameBuffer[firstStripPos]  = (secondFrameBuffer[firstStripPos] >> 1) | ((secondFrameBuffer[secondStripPos] & 0x01) << 7);
+      secondFrameBuffer[secondStripPos] = (secondFrameBuffer[secondStripPos] >> 1) | ((secondFrameBuffer[thirdStripPos] & 0x01) << 7);
+      secondFrameBuffer[thirdStripPos]  = (secondFrameBuffer[thirdStripPos] >> 1) | ((secondFrameBuffer[fourthStripPos] & 0x01) << 7);
+      // Finally on the bottom row; we shuffle it up ready
+      secondFrameBuffer[fourthStripPos] >>= 1;
+#else
       // Move the MSB off the first strip, and pop MSB from second strip onto the first strip
       screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] >> 1) | ((screenBuffer[secondStripPos] & 0x01) << 7);
       // Now shuffle off the second strip MSB, and replace it with the MSB of the secondary buffer
@@ -345,6 +365,7 @@ void OLED::transitionScrollDown() {
       secondFrameBuffer[firstStripPos] = (secondFrameBuffer[firstStripPos] >> 1) | ((secondFrameBuffer[secondStripPos] & 0x01) << 7);
       // Finally on the bottom row; we shuffle it up ready
       secondFrameBuffer[secondStripPos] >>= 1;
+#endif
     }
 
     refresh(); // Now refresh to write out the contents to the new page

@@ -77,7 +77,7 @@ public:
   static void refresh() {
 
     if (checkDisplayBufferChecksum()) {
-      const int len = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+      const int len = FRAMEBUFFER_START + (OLED_WIDTH * (OLED_HEIGHT / 8));
       I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
       // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
       // or we need to goto double buffering
