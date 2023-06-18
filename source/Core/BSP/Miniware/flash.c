@@ -10,11 +10,7 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 
-#ifdef MODEL_TS101
-#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
-#else
-#define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
-#endif
+
 void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   FLASH_EraseInitTypeDef pEraseInit;
   pEraseInit.TypeErase    = FLASH_TYPEERASE_PAGES;

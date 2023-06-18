@@ -188,7 +188,7 @@
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
 
-#define TIP_HAS_DIRECT_PWM 1
+#define TIP_HAS_DIRECT_PWM   1
 #define POW_DC               1
 #define POW_PD               1
 #define I2C_SOFT_BUS_2       1
@@ -255,5 +255,10 @@
 
 #else
 #define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
+#endif
 
+#ifdef MODEL_TS101
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
+#else
+#define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
 #endif
