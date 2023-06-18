@@ -118,7 +118,7 @@ public:
   // Draws a number at the current cursor location
   static void printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros = true);
   // Clears the buffer
-  static void clearScreen() { memset(firstStripPtr, 0, OLED_WIDTH * 2); }
+  static void clearScreen() { memset(stripPointers[0], 0, OLED_WIDTH * (OLED_HEIGHT / 8)); }
   // Draws the battery level symbol
   static void drawBattery(uint8_t state) { drawSymbol(3 + (state > 10 ? 10 : state)); }
   // Draws a checkbox
@@ -140,7 +140,7 @@ public:
 private:
   static bool checkDisplayBufferChecksum() {
     uint32_t  hash = 0;
-    const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+    const int len  = sizeof(screenBuffer);
     for (int i = 0; i < len; i++) {
       hash += (i * screenBuffer[i]);
     }
@@ -151,16 +151,15 @@ private:
   }
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
-  static uint8_t     *firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
-  static uint8_t     *secondStripPtr;   // Pointers to the strips
+  static uint8_t     *stripPointers[4]; // Pointers to the strips to allow for buffer having extra content
   static bool         inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
   static bool         initDone;
   static DisplayState displayState;
   static int16_t      cursor_x, cursor_y;
   static uint8_t      displayOffset;
   static uint32_t     displayChecksum;
-  static uint8_t      screenBuffer[16 + (OLED_WIDTH * 2) + 10]; // The data buffer
-  static uint8_t      secondFrameBuffer[OLED_WIDTH * 2];
+  static uint8_t      screenBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10]; // The data buffer
+  static uint8_t      secondFrameBuffer[16 + OLED_WIDTH * (OLED_HEIGHT / 8) + 10];
 };
 
 #endif /* OLED_HPP_ */
