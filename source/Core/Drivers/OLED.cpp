@@ -110,7 +110,7 @@ static uint8_t easeInOutTiming(uint8_t t) { return t * t * (300 - 2 * t) / 10000
  * @param b The value associated with 100%
  * @param t The percentage [0..<100]
  */
-static uint8_t lerp(uint8_t a, uint8_t b, uint8_t t) { return a + t * (b - a) / 100; }
+static uint16_t lerp(uint16_t a, uint16_t b, uint16_t t) { return a + t * (b - a) / 100; }
 
 void OLED::initialize() {
   cursor_x = cursor_y = 0;
@@ -367,9 +367,14 @@ void OLED::transitionScrollDown() {
       secondFrameBuffer[secondStripPos] >>= 1;
 #endif
     }
-
+    if (getButtonState() != BUTTON_NONE) {
+      // Exit early, but have to transition whole buffer
+      memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
+      refresh(); // Now refresh to write out the contents to the new page
+      return;
+    }
     refresh(); // Now refresh to write out the contents to the new page
-    osDelay(TICKS_100MS / 5);
+    osDelay(TICKS_100MS / 7);
   }
 }
 
