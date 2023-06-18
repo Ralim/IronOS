@@ -105,7 +105,7 @@ public:
   static void    setBrightness(uint8_t contrast);
   static void    setInverseDisplay(bool inverted);
   static int16_t getCursorX() { return cursor_x; }
-  static void    print(const char *string, FontStyle fontStyle); // Draw a string to the current location, with selected font
+  static void    print(const char *string, FontStyle fontStyle, uint8_t length = 255); // Draw a string to the current location, with selected font; optionally - with MAX length only
   static void    printWholeScreen(const char *string);
   // Set the cursor location by pixels
   static void setCursor(int16_t x, int16_t y) {
