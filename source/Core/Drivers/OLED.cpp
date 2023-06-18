@@ -348,8 +348,8 @@ void OLED::transitionScrollDown() {
   screenBuffer[15]          = (pageStart + 1) % 8;
   uint8_t scrollCommandByte = 0b01000000;
   OLED_Setup_Array[8].val   = scrollCommandByte;
-  I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
   refresh();
+  I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
 }
 
 void OLED::setRotation(bool leftHanded) {
