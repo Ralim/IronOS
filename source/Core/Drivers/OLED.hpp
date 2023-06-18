@@ -37,18 +37,15 @@ extern "C" {
 
 #define DEVICEADDR_OLED (0x3c << 1)
 #ifdef OLED_128x32
-// TODO; for now just cropping in on the screen from 128x32 to 96x16
-#define OLED_WIDTH           96
-#define OLED_HEIGHT          16
-#define OLED_GRAM_START      0x10 // Should be 0x00 when we have full width
-#define OLED_GRAM_END        0x6F // Should be 0x7F when we have full width
+#define OLED_WIDTH           128
+#define OLED_HEIGHT          32
+#define OLED_GRAM_START      0x00 // Should be 0x00 when we have full width
+#define OLED_GRAM_END        0x7F // Should be 0x7F when we have full width
 #define OLED_GRAM_START_FLIP 0
-#define OLED_GRAM_END_FLIP   95
+#define OLED_GRAM_END_FLIP   0x7F
 
 #define OLED_VCOM_LAYOUT 0x12
 #define OLED_SEGMENT_MAP_REVERSED
-
-#warning "128x32 OLED's Not fully supported"
 #else
 #define OLED_WIDTH       96
 #define OLED_HEIGHT      16
@@ -80,7 +77,7 @@ public:
   static void refresh() {
 
     if (checkDisplayBufferChecksum()) {
-      const int len = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+      const int len = FRAMEBUFFER_START + (OLED_WIDTH * (OLED_HEIGHT / 8));
       I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
       // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
       // or we need to goto double buffering
@@ -121,7 +118,7 @@ public:
   // Draws a number at the current cursor location
   static void printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros = true);
   // Clears the buffer
-  static void clearScreen() { memset(firstStripPtr, 0, OLED_WIDTH * 2); }
+  static void clearScreen() { memset(stripPointers[0], 0, OLED_WIDTH * (OLED_HEIGHT / 8)); }
   // Draws the battery level symbol
   static void drawBattery(uint8_t state) { drawSymbol(3 + (state > 10 ? 10 : state)); }
   // Draws a checkbox
@@ -143,7 +140,7 @@ public:
 private:
   static bool checkDisplayBufferChecksum() {
     uint32_t  hash = 0;
-    const int len  = FRAMEBUFFER_START + (OLED_WIDTH * 2);
+    const int len  = sizeof(screenBuffer);
     for (int i = 0; i < len; i++) {
       hash += (i * screenBuffer[i]);
     }
@@ -154,16 +151,15 @@ private:
   }
   static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
-  static uint8_t     *firstStripPtr;    // Pointers to the strips to allow for buffer having extra content
-  static uint8_t     *secondStripPtr;   // Pointers to the strips
+  static uint8_t     *stripPointers[4]; // Pointers to the strips to allow for buffer having extra content
   static bool         inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)
   static bool         initDone;
   static DisplayState displayState;
   static int16_t      cursor_x, cursor_y;
   static uint8_t      displayOffset;
   static uint32_t     displayChecksum;
-  static uint8_t      screenBuffer[16 + (OLED_WIDTH * 2) + 10]; // The data buffer
-  static uint8_t      secondFrameBuffer[OLED_WIDTH * 2];
+  static uint8_t      screenBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10]; // The data buffer
+  static uint8_t      secondFrameBuffer[16 + OLED_WIDTH * (OLED_HEIGHT / 8) + 10];
 };
 
 #endif /* OLED_HPP_ */

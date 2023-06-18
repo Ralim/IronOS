@@ -379,20 +379,32 @@ uint8_t preStartChecksDone() {
 }
 
 uint8_t getTipResistanceX10() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
   // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
   return lastTipResistance;
+#else
+  return TIP_RESISTANCE;
+#endif
 }
 
 uint8_t getTipThermalMass() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
   if (lastTipResistance >= 80) {
     return TIP_THERMAL_MASS;
   }
   return 45;
+#else
+  return TIP_THERMAL_MASS;
+#endif
 }
 uint8_t getTipInertia() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
   if (lastTipResistance >= 80) {
     return TIP_THERMAL_MASS;
   }
   return 10;
+#else
+  return TIP_THERMAL_MASS;
+#endif
 }
