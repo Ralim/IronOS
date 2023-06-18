@@ -324,56 +324,32 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
   }
 }
 /**
- * Plays a transition animation of scrolling downward. Note this does *not*
- * use the secondary framebuffer.
- *
- * This transition relies on the previous screen data already in the OLED
- * RAM. The caller shall not call `OLED::refresh()` before calling this
- * method, as doing so will overwrite the previous screen data. The caller
- * does not need to call `OLED::refresh()` after this function returns.
+ * This assumes that the current display output buffer has the current on screen contents
+ * Then the secondary buffer has the "new" contents to be slid up onto the screen
+ * Sadly we cant use the hardware scroll as some devices with the 128x32 screens dont have the GRAM for holding both screens at once
  *
  * **This function blocks until the transition has completed or user presses button**
  */
 void OLED::transitionScrollDown() {
-  // We want to draw the updated framebuffer to the next page downward.
-  uint8_t const pageStart = screenBuffer[13];
-  uint8_t const nextPage  = (pageStart + (OLED_HEIGHT / 8)) % 8;
-  // Change page start address:
-  screenBuffer[13] = nextPage;
-  // Change page end address:
-  screenBuffer[15] = (nextPage + 1) % 8;
 
-  refresh(); // Now refresh to write out the contents to the new page
-  osDelay(TICKS_100MS / 5);
-
-  uint8_t startLine = (pageStart * 8) + 1;
-
-  uint8_t scrollTo = (pageStart + (OLED_HEIGHT / 8)) * 8;
-
-  // Scroll the screen by changing display start line.
-  // This effectively scrolls off the bottom of the current page and into the next one
-  for (uint8_t current = startLine; current <= scrollTo; current++) {
-    if (getButtonState() != BUTTON_NONE) {
-      current = scrollTo;
+  for (uint8_t heightPos = 0; heightPos < OLED_HEIGHT; heightPos++) {
+    // For each line, we shuffle all bits up a row
+    for (uint8_t xPos = 0; xPos < OLED_WIDTH; xPos++) {
+      const uint16_t firstStripPos  = FRAMEBUFFER_START + xPos;
+      const uint16_t secondStripPos = FRAMEBUFFER_START + xPos + OLED_WIDTH;
+      // Move the MSB off the first strip, and pop MSB from second strip onto the first strip
+      screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] >> 1) | ((screenBuffer[secondStripPos] & 0x01) << 7);
+      // Now shuffle off the second strip MSB, and replace it with the MSB of the secondary buffer
+      screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] >> 1) | ((secondFrameBuffer[firstStripPos] & 0x01) << 7);
+      // Finally, do the shuffle on the second frame buffer
+      secondFrameBuffer[firstStripPos] = (secondFrameBuffer[firstStripPos] >> 1) | ((secondFrameBuffer[secondStripPos] & 0x01) << 7);
+      // Finally on the bottom row; we shuffle it up ready
+      secondFrameBuffer[secondStripPos] >>= 1;
     }
 
-    // Set display start line (0x40~0x7F):
-    //  X[5:0] - display start line value
-    uint8_t scrollCommandByte = 0b01000000 | (current & 0b00111111);
-
-    // Also update setup command for "set display start line":
-    OLED_Setup_Array[8].val = scrollCommandByte;
-
-    I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
-    osDelay(TICKS_100MS / 7);
+    refresh(); // Now refresh to write out the contents to the new page
+    osDelay(TICKS_100MS / 5);
   }
-  // Now that scroll is done, revert to default page to avoid wrap issues
-  screenBuffer[13]          = 0;
-  screenBuffer[15]          = (OLED_HEIGHT / 8);
-  uint8_t scrollCommandByte = 0b01000000;
-  OLED_Setup_Array[8].val   = scrollCommandByte;
-  refresh();
-  I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, scrollCommandByte);
 }
 
 void OLED::setRotation(bool leftHanded) {
