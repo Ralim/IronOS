@@ -5,7 +5,7 @@
 #include "Settings.h"
 #include "USBPD.h"
 #include "configuration.h"
-
+#include "stm32f1xx_hal.h"
 void power_check() {
 #ifdef POW_PD
   // Cant start QC until either PD works or fails
@@ -27,7 +27,7 @@ bool getIsPoweredByDCIN() {
 #endif
 #ifdef MODEL_TS101
   // TODO have to check what we are using
-  return false;
+  return HAL_GPIO_ReadPin(DC_SELECT_GPIO_Port, DC_SELECT_Pin) == GPIO_PIN_SET;
 #endif
 #ifdef MODEL_TS100
   return true;

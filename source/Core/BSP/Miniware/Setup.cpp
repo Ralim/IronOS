@@ -113,7 +113,7 @@ uint16_t getADCVin(uint8_t sample) {
     latestADC += hadc2.Instance->JDR2;
     latestADC += hadc2.Instance->JDR3;
     latestADC += hadc2.Instance->JDR4;
-    latestADC <<= 3;
+    latestADC <<= 1;
     filter.update(latestADC);
   }
   return filter.average();
@@ -333,7 +333,7 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
 #ifdef TIP_HAS_DIRECT_PWM
   sConfigOC.Pulse = 0; // PWM is direct to tip
 #else
-  sConfigOC.Pulse = 127; // 50% duty cycle, that is AC coupled through the cap to provide an on signal (This does not do tip at 50% duty cycle)
+  sConfigOC.Pulse        = 127; // 50% duty cycle, that is AC coupled through the cap to provide an on signal (This does not do tip at 50% duty cycle)
 #endif
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
@@ -352,7 +352,7 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
   // Remap TIM3_CH1 to be on PB4
   __HAL_AFIO_REMAP_TIM3_PARTIAL();
 #else
-                         // No re-map required
+                                // No re-map required
 #endif
   HAL_TIM_PWM_Start(&htimTip, PWM_Out_CHANNEL);
 }
@@ -496,8 +496,8 @@ static void MX_GPIO_Init(void) {
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 #endif
 #else
-                         /* TS80 */
-                         /* Leave USB lines open circuit*/
+                                /* TS80 */
+                                /* Leave USB lines open circuit*/
 
 #endif
 
