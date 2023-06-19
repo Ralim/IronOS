@@ -1,20 +1,20 @@
 #include "HUB238.hpp"
-#include "I2CBB.hpp"
+#include "I2CBB2.hpp"
 #include "Utils.h"
 #include "configuration.h"
 
-#ifdef POW_PD_EXT
-bool hub238_probe() { return I2CBB::probe(HUB238_ADDR); }
+#if POW_PD_EXT == 1
+bool hub238_probe() { return I2CBB2::probe(HUB238_ADDR); }
 
 extern int32_t powerSupplyWattageLimit;
 
 uint16_t hub238_debug_state() {
   uint8_t status0 = 0;
   uint8_t status1 = 0;
-  if (!I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS0, &status0, 1)) {
+  if (!I2CBB2::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS0, &status0, 1)) {
     return 0xFFFF;
   }
-  if (!I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS1, &status1, 1)) {
+  if (!I2CBB2::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS1, &status1, 1)) {
     return 0xFFFF;
   }
   return status1 | (((uint16_t)status0) << 8);
@@ -81,7 +81,7 @@ uint16_t hub238_getVoltagePDOCurrent(uint8_t voltage) {
     return 0;
   }
   uint8_t temp = 0;
-  if (I2CBB::Mem_Read(HUB238_ADDR, reg, &temp, 1) == true) {
+  if (I2CBB2::Mem_Read(HUB238_ADDR, reg, &temp, 1) == true) {
     if (temp & HUB238_PDO_DETECTED) {
       return pdo_slot_to_currentx100(temp);
     }
@@ -156,17 +156,17 @@ void hub238_check_negotiation() {
 
   uint8_t bestPDO = findBestPDO();
 
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO, &currentPDO, 1) == true) {
+  if (I2CBB2::Mem_Read(HUB238_ADDR, HUB238_REG_SRC_PDO, &currentPDO, 1) == true) {
     currentPDO >>= 4; // grab upper bits
     if (currentPDO == bestPDO) {
       haveSelected = bestPDO;
       return;
     }
     currentPDO = bestPDO << 4;
-    if (I2CBB::Mem_Write(HUB238_ADDR, HUB238_REG_SRC_PDO, &currentPDO, 1) == true) {
+    if (I2CBB2::Mem_Write(HUB238_ADDR, HUB238_REG_SRC_PDO, &currentPDO, 1) == true) {
 
       currentPDO = 0x01; // request for new PDO
-      if (I2CBB::Mem_Write(HUB238_ADDR, HUB238_REG_GO_COMMAND, &currentPDO, 1) == true) {
+      if (I2CBB2::Mem_Write(HUB238_ADDR, HUB238_REG_GO_COMMAND, &currentPDO, 1) == true) {
         haveSelected = bestPDO;
         vTaskDelay(50);
 
@@ -179,7 +179,7 @@ bool hub238_has_run_selection() { return haveSelected != 0xFF; }
 
 bool hub238_has_negotiated() {
   uint8_t temp = 0;
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS1, &temp, 1) == true) {
+  if (I2CBB2::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS1, &temp, 1) == true) {
     temp >>= 3;
     return (temp & 0b111) == 0b001; // success
   }
@@ -189,7 +189,7 @@ bool hub238_has_negotiated() {
 // Return selected source voltage in V
 uint16_t hub238_source_voltage() {
   uint8_t temp = 0;
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS0, &temp, 1) == true) {
+  if (I2CBB2::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS0, &temp, 1) == true) {
     temp >>= 4;
     switch (temp) {
     case 0b0001:
@@ -211,7 +211,7 @@ uint16_t hub238_source_voltage() {
 // Return selected source current in Amps * 100
 uint8_t hub238_source_currentX100() {
   uint8_t temp = 0;
-  if (I2CBB::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS0, &temp, 1) == true) {
+  if (I2CBB2::Mem_Read(HUB238_ADDR, HUB238_REG_PD_STATUS0, &temp, 1) == true) {
     temp &= 0b1111;
     return pdo_slot_to_currentx100(temp);
   }

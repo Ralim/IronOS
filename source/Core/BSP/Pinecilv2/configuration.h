@@ -163,8 +163,10 @@
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define BLE_ENABLED
 #define NEEDS_VBUS_PROBE 0
-
+#define CANT_DIRECT_READ_SETTINGS
 #endif
 #endif
 
 #define FLASH_LOGOADDR (0x23000000 + (1022 * 1024))
+#define FLASH_PAGE_SIZE (1024)
+#define SETTINGS_START_PAGE (1023 * FLASH_PAGE_SIZE) // Hal auto offsets base addr

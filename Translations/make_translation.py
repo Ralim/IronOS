@@ -181,6 +181,7 @@ def get_accel_names_list() -> List[str]:
         "MSA301",
         "SC7A20",
         "GPIO",
+        "LIS2 CLONE",
     ]
 
 
@@ -188,8 +189,8 @@ def get_power_source_list() -> List[str]:
     return [
         "DC",
         "QC",
-        "PD W. VBus",
-        "PD No VBus",
+        "PV:PDwVBus",
+        "PD:No VBus",
     ]
 
 

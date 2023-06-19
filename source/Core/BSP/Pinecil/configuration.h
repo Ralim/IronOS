@@ -63,10 +63,10 @@
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS             0   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS             100 // Max OLED brightness selectable
-#define BRIGHTNESS_STEP            25  // OLED brightness increment
-#define DEFAULT_BRIGHTNESS         25  // default OLED brightness
+#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP    25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS 25  // default OLED brightness
 
 /**
  * Temp change settings
@@ -162,9 +162,11 @@
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
+#define CANT_DIRECT_READ_SETTINGS
 #endif
 #endif
 
-#define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 
 #define HAS_POWER_DEBUG_MENU

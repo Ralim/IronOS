@@ -59,7 +59,7 @@ void startPOWTask(void const *argument __unused) {
 #else
     (void)res;
 #endif
-#ifdef POW_PD_EXT
+#if POW_PD_EXT == 1
     hub238_check_negotiation();
 #endif
     power_check();

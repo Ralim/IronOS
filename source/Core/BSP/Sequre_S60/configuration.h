@@ -155,15 +155,17 @@
 
 #define OLED_128x32
 #define GPIO_VIBRATION
-#define POW_PD_EXT 1
+#define POW_PD_EXT                1
+#define DEBUG_POWER_MENU_BUTTON_B 1
 #define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
-#define I2C_SOFT // For now we are doing software I2C to get around hardware chip issues
-#define OLED_I2CBB
+#define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
+#define OLED_I2CBB2
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif
 
 #endif
 
-#define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
