@@ -86,7 +86,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif
+#endif /* TS100 */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -125,6 +125,8 @@
 
 #define ADC_MAX_READING (4096 * 8) // Maximum reading of the adc
 #define ADC_VDD_MV      3300       // ADC max reading millivolts
+
+#define POW_PD_EXT 0
 
 // Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
@@ -172,7 +174,7 @@
 #define POW_DC
 
 #define TEMP_TMP36
-#endif
+#endif /* TS100 */
 
 #ifdef MODEL_TS101
 #define VOLTAGE_DIV        700 // 700 - Default divider from schematic
@@ -205,7 +207,7 @@
 #define HAS_POWER_DEBUG_MENU
 #define DEBUG_POWER_MENU_BUTTON_B
 
-#endif
+#endif /* TS101 */
 
 #if defined(MODEL_TS80) + defined(MODEL_TS80P) > 0
 #define MAX_POWER_LIMIT   40
@@ -219,7 +221,7 @@
 
 #define LIS_ORI_FLIP
 #define OLED_FLIP
-#endif
+#endif /* TS80(P) */
 
 #ifdef MODEL_TS80
 #define VOLTAGE_DIV        780 // Default divider from schematic
@@ -232,7 +234,7 @@
 #define POW_QC
 
 #define TEMP_TMP36
-#endif
+#endif /* TS80 */
 
 #ifdef MODEL_TS80P
 #define VOLTAGE_DIV        650  // Default for TS80P with slightly different resistors
@@ -247,18 +249,14 @@
 #define TEMP_NTC
 #define I2C_SOFT_BUS_2 1
 #define SC7_ORI_FLIP
-#endif
-#endif
+#endif /* TS80P */
 
 #ifdef MODEL_TS101
-#define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
-
-#else
-#define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
-#endif
-
-#ifdef MODEL_TS101
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 #else
-#define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
-#endif
+#define FLASH_LOGOADDR      (0x08000000 +  (62 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 +  (63 * 1024))
+#endif /* TS101 */
+
+#endif /* CONFIGURATION_H_ */
