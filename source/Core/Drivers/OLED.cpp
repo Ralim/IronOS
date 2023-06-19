@@ -102,7 +102,7 @@ const uint8_t REFRESH_COMMANDS[17] = {
  * Returns a new percentage value with ease in and ease out.
  * Original floating point formula: t * t * (3.0f - 2.0f * t);
  */
-static uint8_t easeInOutTiming(uint8_t t) { return t * t * (300 - 2 * t) / 10000; }
+static uint16_t easeInOutTiming(uint16_t t) { return t * t * (300 - 2 * t) / 10000; }
 
 /*
  * Returns the value between a and b, using a percentage value t.
@@ -259,8 +259,8 @@ void OLED::maskScrollIndicatorOnOLED() {
  */
 void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
   uint8_t *stripBackPointers[4];
-  stripBackPointers[0] = &secondFrameBuffer[0];
-  stripBackPointers[1] = &secondFrameBuffer[OLED_WIDTH];
+  stripBackPointers[0] = &secondFrameBuffer[FRAMEBUFFER_START + 0];
+  stripBackPointers[1] = &secondFrameBuffer[FRAMEBUFFER_START + OLED_WIDTH];
 
 #ifdef OLED_128x32
   stripBackPointers[2] = &secondFrameBuffer[OLED_WIDTH * 2];
@@ -273,10 +273,10 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
   uint8_t    offset        = 0;
 
   while (duration <= totalDuration) {
-    duration         = xTaskGetTickCount() - start;
-    uint8_t progress = ((duration * 100) / totalDuration); // Percentage of the period we are through for animation
-    progress         = easeInOutTiming(progress);
-    progress         = lerp(0, OLED_WIDTH, progress);
+    duration          = xTaskGetTickCount() - start;
+    uint16_t progress = ((duration * 100) / totalDuration); // Percentage of the period we are through for animation
+    progress          = easeInOutTiming(progress);
+    progress          = lerp(0, OLED_WIDTH, progress);
     // Constrain
     if (progress > OLED_WIDTH) {
       progress = OLED_WIDTH;
@@ -308,8 +308,9 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
     memmove(&stripPointers[3][newStart], &stripBackPointers[3][newEnd], progress);
 #endif
 
-    refresh();
-    osDelay(TICKS_100MS / 7);
+    TickType_t start = xTaskGetTickCount();
+    refresh(); // Now refresh to write out the contents to the new page
+    vTaskDelayUntil(&start, TICKS_100MS / 7);
     if (getButtonState() != BUTTON_NONE) {
       return;
     }
@@ -373,8 +374,9 @@ void OLED::transitionScrollDown() {
       refresh(); // Now refresh to write out the contents to the new page
       return;
     }
+    TickType_t start = xTaskGetTickCount();
     refresh(); // Now refresh to write out the contents to the new page
-    osDelay(TICKS_100MS / 7);
+    vTaskDelayUntil(&start, TICKS_100MS / 7);
   }
 }
 
