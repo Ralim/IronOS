@@ -106,9 +106,20 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
 void saveSettings() {
+#ifdef CANT_DIRECT_READ_SETTINGS
+  // For these devices flash is not 1:1 mapped, so need to read into staging buffer
+  systemSettingsType temp;
+  flash_read_buffer((uint8_t *)&temp, sizeof(systemSettingsType));
+  if (memcmp((void *)&temp, (void *)&systemSettings, sizeof(systemSettingsType))) {
+    flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
+  }
+
+#else
   if (memcmp((void *)SETTINGS_START_PAGE, (void *)&systemSettings, sizeof(systemSettingsType))) {
     flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
   }
+
+#endif
 }
 
 bool loadSettings() {
@@ -157,13 +168,12 @@ void resetSettings() {
 }
 
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue) {
-  const auto constants                       = settingsConstants[(int)option];
-  uint16_t constrainedValue = newValue;
+  const auto constants        = settingsConstants[(int)option];
+  uint16_t   constrainedValue = newValue;
   if (constrainedValue < constants.min) {
     // If less than min, constrain
     constrainedValue = constants.min;
-  }
-  else if (constrainedValue > constants.max) {
+  } else if (constrainedValue > constants.max) {
     // If hit max, constrain
     constrainedValue = constants.max;
   }

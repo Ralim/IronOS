@@ -163,7 +163,7 @@
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define BLE_ENABLED
 #define NEEDS_VBUS_PROBE 0
-
+#define CANT_DIRECT_READ_SETTINGS
 #endif
 #endif
 
