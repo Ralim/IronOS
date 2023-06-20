@@ -86,7 +86,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif
+#endif /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -164,10 +164,11 @@
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
 #define CANT_DIRECT_READ_SETTINGS
-#endif
-#endif
+#endif /* Pinecil */
 
 #define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 
 #define HAS_POWER_DEBUG_MENU
+
+#endif /* CONFIGURATION_H_ */

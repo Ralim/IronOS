@@ -1,11 +1,10 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
 #include "Settings.h"
-#include "configuration.h"
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for TS80 or TS100
+ * Define here your default pre settings for MHP30
  *
  */
 
@@ -86,11 +85,6 @@
 #define ADC_MAX_READING (4096 * 8) // Maximum reading of the adc
 #define ADC_VDD_MV      3300       // ADC max reading millivolts
 
-#ifdef MODEL_TS100
-#define POWER_PULSE_DEFAULT 0
-#else
-#define POWER_PULSE_DEFAULT 5
-#endif
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -169,12 +163,13 @@
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // TODO, needs refinement
 #define TIP_RESISTANCE           60 // x10 ohms, ~6 typical
-#endif
+#endif /* MHP30 */
 
 #ifdef ACCEL_EXITS_ON_MOVEMENT
 #define NO_SLEEP_MODE
 #endif
-#endif
 
 #define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
+
+#endif /* CONFIGURATION_H_ */
