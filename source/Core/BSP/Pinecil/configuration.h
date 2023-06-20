@@ -146,6 +146,7 @@
 #define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
 
 #define POW_PD     1
+#define POW_PD_EXT 0
 #define POW_QC     1
 #define POW_DC     1
 #define POW_QC_20V 1

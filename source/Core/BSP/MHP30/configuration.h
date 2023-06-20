@@ -157,7 +157,8 @@
 
 #define PROFILE_SUPPORT
 
-#define POW_PD 1
+#define POW_PD     1
+#define POW_PD_EXT 0
 #define TEMP_NTC
 #define I2C_SOFT_BUS_2
 #define BATTFILTERDEPTH 8
