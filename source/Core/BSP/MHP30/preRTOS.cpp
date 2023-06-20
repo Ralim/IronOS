@@ -6,7 +6,7 @@
  */
 
 #include "BSP.h"
-#include "I2CBB.hpp"
+#include "I2CBB2.hpp"
 #include "Pins.h"
 #include "Setup.h"
 #include <I2C_Wrapper.hpp>
@@ -17,7 +17,7 @@ void preRToSInit() {
   HAL_Init();
   Setup_HAL(); // Setup all the HAL objects
   BSPInit();
-  I2CBB::init();
+  I2CBB2::init();
   /* Init the IPC objects */
   FRToSI2C::FRToSInit();
 }

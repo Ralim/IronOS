@@ -1,16 +1,16 @@
 /*
- * I2CBB.cpp
+ * I2CBB2.cpp
  *
  *  Created on: 12 Jun 2020
  *      Author: Ralim
  */
 #include "configuration.h"
-#ifdef I2C_SOFT
+#ifdef I2C_SOFT_BUS_2
 #include "FreeRTOS.h"
-#include <I2CBB.hpp>
-SemaphoreHandle_t I2CBB::I2CSemaphore = NULL;
-StaticSemaphore_t I2CBB::xSemaphoreBuffer;
-void              I2CBB::init() {
+#include <I2CBB2.hpp>
+SemaphoreHandle_t I2CBB2::I2CSemaphore = NULL;
+StaticSemaphore_t I2CBB2::xSemaphoreBuffer;
+void              I2CBB2::init() {
   // Set GPIO's to output open drain
   GPIO_InitTypeDef GPIO_InitStruct;
   __HAL_RCC_GPIOA_CLK_ENABLE();
@@ -24,16 +24,16 @@ void              I2CBB::init() {
   GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_OD;
   GPIO_InitStruct.Pull  = GPIO_PULLUP;
   HAL_GPIO_Init(SCL2_GPIO_Port, &GPIO_InitStruct);
-  SOFT_SDA_HIGH();
-  SOFT_SCL_HIGH();
+  SOFT_SDA2_HIGH();
+  SOFT_SCL2_HIGH();
   // To ensure bus is unlocked; we toggle the Clock a bunch of times to make things error out
   for (int i = 0; i < 128; i++) {
-    SOFT_SCL_LOW();
+    SOFT_SCL2_LOW();
     asm("nop");
     asm("nop");
     asm("nop");
     asm("nop");
-    SOFT_SCL_HIGH();
+    SOFT_SCL2_HIGH();
     asm("nop");
     asm("nop");
     asm("nop");
@@ -43,7 +43,7 @@ void              I2CBB::init() {
   unlock();
 }
 
-bool I2CBB::probe(uint8_t address) {
+bool I2CBB2::probe(uint8_t address) {
   if (!lock())
     return false;
   start();
@@ -53,7 +53,7 @@ bool I2CBB::probe(uint8_t address) {
   return ack;
 }
 
-bool I2CBB::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
+bool I2CBB2::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size) {
   if (!lock())
     return false;
   start();
@@ -69,7 +69,7 @@ bool I2CBB::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, u
     unlock();
     return false;
   }
-  SOFT_SCL_LOW();
+  SOFT_SCL2_LOW();
   SOFT_I2C_DELAY();
   //	stop();
   start();
@@ -89,7 +89,7 @@ bool I2CBB::Mem_Read(uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, u
   return true;
 }
 
-bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, const uint8_t *pData, uint16_t Size) {
+bool I2CBB2::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, const uint8_t *pData, uint16_t Size) {
   if (!lock())
     return false;
   start();
@@ -121,7 +121,7 @@ bool I2CBB::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, const uint8_t *p
   return true;
 }
 
-void I2CBB::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
+void I2CBB2::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
   if (!lock())
     return;
   start();
@@ -145,7 +145,7 @@ void I2CBB::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
   unlock();
 }
 
-void I2CBB::Receive(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
+void I2CBB2::Receive(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
   if (!lock())
     return;
   start();
@@ -164,7 +164,7 @@ void I2CBB::Receive(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
   unlock();
 }
 
-void I2CBB::TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx, uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx) {
+void I2CBB2::TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx, uint16_t Size_tx, uint8_t *pData_rx, uint16_t Size_rx) {
   if (Size_tx == 0 && Size_rx == 0)
     return;
   if (lock() == false)
@@ -206,41 +206,41 @@ void I2CBB::TransmitReceive(uint16_t DevAddress, uint8_t *pData_tx, uint16_t Siz
   unlock();
 }
 
-void I2CBB::start() {
+void I2CBB2::start() {
   /* I2C Start condition, data line goes low when clock is high */
-  SOFT_SCL_HIGH();
-  SOFT_SDA_HIGH();
+  SOFT_SCL2_HIGH();
+  SOFT_SDA2_HIGH();
   SOFT_I2C_DELAY();
-  SOFT_SDA_LOW();
+  SOFT_SDA2_LOW();
   SOFT_I2C_DELAY();
-  SOFT_SCL_LOW();
+  SOFT_SCL2_LOW();
   SOFT_I2C_DELAY();
-  SOFT_SDA_HIGH();
+  SOFT_SDA2_HIGH();
 }
 
-void I2CBB::stop() {
+void I2CBB2::stop() {
   /* I2C Stop condition, clock goes high when data is low */
-  SOFT_SDA_LOW();
+  SOFT_SDA2_LOW();
   SOFT_I2C_DELAY();
-  SOFT_SCL_HIGH();
+  SOFT_SCL2_HIGH();
   SOFT_I2C_DELAY();
-  SOFT_SDA_HIGH();
+  SOFT_SDA2_HIGH();
   SOFT_I2C_DELAY();
 }
 
-bool I2CBB::send(uint8_t value) {
+bool I2CBB2::send(uint8_t value) {
 
   for (uint8_t i = 0; i < 8; i++) {
     write_bit(value & 0x80); // write the most-significant bit
     value <<= 1;
   }
 
-  SOFT_SDA_HIGH();
+  SOFT_SDA2_HIGH();
   bool ack = (read_bit() == 0);
   return ack;
 }
 
-uint8_t I2CBB::read(bool ack) {
+uint8_t I2CBB2::read(bool ack) {
   uint8_t B = 0;
 
   uint8_t i;
@@ -249,7 +249,7 @@ uint8_t I2CBB::read(bool ack) {
     B |= read_bit();
   }
 
-  SOFT_SDA_HIGH();
+  SOFT_SDA2_HIGH();
   if (ack)
     write_bit(0);
   else
@@ -257,53 +257,53 @@ uint8_t I2CBB::read(bool ack) {
   return B;
 }
 
-uint8_t I2CBB::read_bit() {
+uint8_t I2CBB2::read_bit() {
   uint8_t b;
 
-  SOFT_SDA_HIGH();
+  SOFT_SDA2_HIGH();
   SOFT_I2C_DELAY();
-  SOFT_SCL_HIGH();
+  SOFT_SCL2_HIGH();
   SOFT_I2C_DELAY();
 
-  if (SOFT_SDA_READ())
+  if (SOFT_SDA2_READ())
     b = 1;
   else
     b = 0;
 
-  SOFT_SCL_LOW();
+  SOFT_SCL2_LOW();
   return b;
 }
 
-void I2CBB::unlock() { xSemaphoreGive(I2CSemaphore); }
+void I2CBB2::unlock() { xSemaphoreGive(I2CSemaphore); }
 
-bool I2CBB::lock() {
+bool I2CBB2::lock() {
   if (I2CSemaphore == NULL) {}
   bool a = xSemaphoreTake(I2CSemaphore, (TickType_t)100) == pdTRUE;
   return a;
 }
 
-bool I2CBB::I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data) { return Mem_Write(address, reg, &data, 1); }
+bool I2CBB2::I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data) { return Mem_Write(address, reg, &data, 1); }
 
-uint8_t I2CBB::I2C_RegisterRead(uint8_t address, uint8_t reg) {
+uint8_t I2CBB2::I2C_RegisterRead(uint8_t address, uint8_t reg) {
   uint8_t temp = 0;
   Mem_Read(address, reg, &temp, 1);
   return temp;
 }
 
-void I2CBB::write_bit(uint8_t val) {
+void I2CBB2::write_bit(uint8_t val) {
   if (val) {
-    SOFT_SDA_HIGH();
+    SOFT_SDA2_HIGH();
   } else {
-    SOFT_SDA_LOW();
+    SOFT_SDA2_LOW();
   }
 
   SOFT_I2C_DELAY();
-  SOFT_SCL_HIGH();
+  SOFT_SCL2_HIGH();
   SOFT_I2C_DELAY();
-  SOFT_SCL_LOW();
+  SOFT_SCL2_LOW();
 }
 
-bool I2CBB::writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength) {
+bool I2CBB2::writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength) {
   for (int index = 0; index < registersLength; index++) {
     if (!I2C_RegisterWrite(address, registers[index].reg, registers[index].val)) {
       return false;
