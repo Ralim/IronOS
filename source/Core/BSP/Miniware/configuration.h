@@ -4,7 +4,7 @@
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for TS80(P) or TS100
+ * Define here your default pre settings for TS80(P) or TS10(0/1)
  *
  */
 

@@ -4,7 +4,7 @@
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for Pinecil
+ * Define here your default pre settings for Pinecilv2
  *
  */
 
@@ -87,7 +87,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif
+#endif /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -165,9 +165,10 @@
 #define BLE_ENABLED
 #define NEEDS_VBUS_PROBE 0
 #define CANT_DIRECT_READ_SETTINGS
-#endif
-#endif
+#endif /* Pinecilv2 */
 
 #define FLASH_LOGOADDR (0x23000000 + (1022 * 1024))
 #define FLASH_PAGE_SIZE (1024)
 #define SETTINGS_START_PAGE (1023 * FLASH_PAGE_SIZE) // Hal auto offsets base addr
+
+#endif /* CONFIGURATION_H_ */

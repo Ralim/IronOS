@@ -4,7 +4,7 @@
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for TS80(P) or S60
+ * Define here your default pre settings for S60
  *
  */
 
@@ -163,9 +163,9 @@
 #define OLED_I2CBB2
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
-#endif
-
-#endif
+#endif /* S60 */
 
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
+
+#endif /* CONFIGURATION_H_ */
