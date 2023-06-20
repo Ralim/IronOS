@@ -10,7 +10,7 @@
 #include "gd32vf103_libopt.h"
 #include "string.h"
 #define FMC_PAGE_SIZE ((uint16_t)0x400U)
-#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
+
 void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
 
   /* unlock the flash program/erase controller */

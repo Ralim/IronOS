@@ -1,14 +1,14 @@
 /*
- * I2CBB.hpp
+ * I2CBB2.hpp
  *
  *  Created on: 12 Jun 2020
  *      Author: Ralim
  */
 
-#ifndef BSP_MINIWARE_I2CBB_HPP_
-#define BSP_MINIWARE_I2CBB_HPP_
+#ifndef BSP_MINIWARE_I2CBB2_HPP_
+#define BSP_MINIWARE_I2CBB2_HPP_
 #include "configuration.h"
-#ifdef I2C_SOFT
+#ifdef I2C_SOFT_BUS_2
 #include "BSP.h"
 #include "FreeRTOS.h"
 #include "Pins.h"
@@ -16,7 +16,7 @@
 #include "Software_I2C.h"
 #include "semphr.h"
 
-class I2CBB {
+class I2CBB2 {
 public:
   static void init();
   // Probe if device ACK's address or not
