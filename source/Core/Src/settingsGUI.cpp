@@ -1009,9 +1009,6 @@ void gui_Menu(const menuitem *menu) {
       animOpenState = true;
       // The menu entering/exiting transition uses the secondary framebuffer,
       // but the scroll down transition does not.
-      if (navState == NavState::ScrollingDown) {
-        OLED::useSecondaryFramebuffer(false);
-      }
       OLED::setCursor(0, 0);
       OLED::clearScreen();
       if (menu[currentScreen].shortDescriptionSize > 0) {
@@ -1022,6 +1019,7 @@ void gui_Menu(const menuitem *menu) {
         // Play the scroll down animation.
         OLED::maskScrollIndicatorOnOLED();
         OLED::transitionScrollDown();
+        OLED::useSecondaryFramebuffer(false);
       } else {
         // The menu was drawn in a secondary framebuffer.
         // Now we play a transition from the pre-drawn primary
