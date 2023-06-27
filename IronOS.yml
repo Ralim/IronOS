@@ -6,7 +6,8 @@ services:
     tty: true
     build:
       context: .
+      dockerfile: Scripts/IronOS.Dockerfile
     command: /bin/sh
     volumes:
-      - ./ci:/build/ci:Z
+      - ./Scripts/ci:/build/ci:Z
       - ./:/build/source:Z

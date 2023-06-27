@@ -70,6 +70,9 @@ For notes on installation for your device, please refer to the flashing guide fo
 - [Custom boot up logo support](https://ralim.github.io/IronOS/Logo/)
 - Automatic LCD rotation based on the orientation
 
+**Bootup Logo NOTICE**:
+IronOS supports both a bootup logo _AND_ bootup animations. However, _they are no longer included in this repo_. Please, [read the docs](https://ralim.github.io/IronOS/Logo/) for more information.
+
 ## Menu System
 
 This new firmware uses a new menu system to allow access to the settings on the device.
