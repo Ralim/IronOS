@@ -19,7 +19,7 @@ endif
 
 # docker-related files
 DOCKER_YML=$(CURDIR)/IronOS.yml
-DOCKER_FILE=$(CURDIR)/Scripts/IronOS.Dockerfile
+DOCKER_FILE=$(CURDIR)/scripts/IronOS.Dockerfile
 
 # docker dependencies
 DOCKER_DEPS=$(DOCKER_YML) $(DOCKER_FILE)
@@ -28,7 +28,7 @@ DOCKER_DEPS=$(DOCKER_YML) $(DOCKER_FILE)
 DOCKER_CMD=$(DOCKER_COMPOSE)  -f $(DOCKER_YML)  run  --rm  builder
 
 # MkDocs config
-MKDOCS_YML=$(CURDIR)/Scripts/IronOS-mkdocs.yml
+MKDOCS_YML=$(CURDIR)/scripts/IronOS-mkdocs.yml
 
 
 ### helper targets
@@ -57,6 +57,6 @@ docs: $(MKDOCS_YML)  Documentation/*  Documentation/Flashing/*  Documentation/im
 clean-full: docker-clean
 	make  -C source/  clean-all
 	rm  -Rf  site
-	rm  -Rf  Scripts/ci/artefacts
+	rm  -Rf  scripts/ci/artefacts
 
 .PHONY:  docker-shell  docker-build  docker-clean  docs  clean-full

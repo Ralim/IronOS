@@ -9,5 +9,5 @@ services:
       dockerfile: Scripts/IronOS.Dockerfile
     command: /bin/sh
     volumes:
-      - ./Scripts/ci:/build/ci:Z
+      - ./scripts/ci:/build/ci:Z
       - ./:/build/source:Z
