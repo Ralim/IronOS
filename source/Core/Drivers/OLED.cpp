@@ -90,7 +90,7 @@ const uint8_t REFRESH_COMMANDS[17] = {
     0x80,
     0x00, // A
     0x80,
-    (OLED_HEIGHT / 8), // B
+    (OLED_HEIGHT / 8) - 1, // B
 
     // Start of data
     0x40,
