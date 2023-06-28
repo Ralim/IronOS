@@ -169,6 +169,7 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
   case FontStyle::SMALL:
   case FontStyle::LARGE:
   default:
+    // TODO handle 4 lines
     if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
       setCursor(0, 8);
       return;
@@ -430,6 +431,46 @@ void OLED::setInverseDisplay(bool inverse) {
   uint8_t normalInverseCmd = inverse ? 0xA7 : 0xA6;
   OLED_Setup_Array[21].val = normalInverseCmd;
   I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
+}
+void OLED::printBounded(const char *str, const uint8_t x, const uint8_t y, const uint8_t w, const uint8_t h) {
+  setCursor(x, y);
+  const uint8_t *next      = reinterpret_cast<const uint8_t *>(str);
+  FontStyle      fontStyle = FontStyle::SMALL;
+  if (next[0] == 0x01) {
+    fontStyle = FontStyle::LARGE;
+    next++;
+  }
+  // Now we walk and print
+  while (next[0]) {
+    uint16_t index;
+    if (next[0] <= 0xF0) {
+      index = next[0];
+      next++;
+    } else {
+      if (!next[1]) {
+        return;
+      }
+      index = (next[0] - 0xF0) * 0xFF - 15 + next[1];
+      next += 2;
+    }
+    if (index > 0x01) {
+      // Not a newline or terminator
+      // Need to make sure we clip
+      if (cursor_x >= (x + w)) {
+        // About to write out of bounds, wrap
+        if (fontStyle == FontStyle::SMALL) {
+          cursor_y += 8;
+        } else {
+          cursor_y += 16;
+        }
+      }
+      if (cursor_y >= y + h) {
+        // Clipping off bottom, yeet
+        return;
+      }
+    }
+    drawChar(index, fontStyle);
+  }
 }
 
 // print a string to the current cursor location, len chars MAX

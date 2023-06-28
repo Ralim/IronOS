@@ -22,7 +22,6 @@ typedef struct {
     uint8_t h;
   } size;
 
-
 } ElementSettings_t;
 
-void ui_render_element(ElementTypes_t element, screen_arg_t *args);
+void ui_render_element(const ElementTypes_t element,const ElementSettings_t * settings, screen_arg_t *args);

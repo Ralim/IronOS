@@ -1,53 +1,73 @@
 #include "UI_Elements.h"
+#include "OLED.hpp"
+void render_Text(const ElementSettings_t *settings, screen_arg_t *args);
+void render_Number(const ElementSettings_t *settings, screen_arg_t *args);
+void render_Image(const ElementSettings_t *settings, screen_arg_t *args);
+void render_PowerSource(const ElementSettings_t *settings, screen_arg_t *args);
+void render_Temperature(const ElementSettings_t *settings, screen_arg_t *args);
+void render_InputVoltage(const ElementSettings_t *settings, screen_arg_t *args);
+void render_ScrollBar(const ElementSettings_t *settings, screen_arg_t *args);
+void render_CheckBox(const ElementSettings_t *settings, screen_arg_t *args);
+void render_TextScroller(const ElementSettings_t *settings, screen_arg_t *args);
 
-void render_Text(screen_arg_t *args);
-void render_Number(screen_arg_t *args);
-void render_Image(screen_arg_t *args);
-void render_PowerSource(screen_arg_t *args);
-void render_Temperature(screen_arg_t *args);
-void render_InputVoltage(screen_arg_t *args);
-void render_ScrollBar(screen_arg_t *args);
-void render_CheckBox(screen_arg_t *args);
-void render_TextScroller(screen_arg_t *args);
-
-void ui_render_element(ElementTypes_t element, screen_arg_t *args) {
+void ui_render_element(const ElementTypes_t element, const ElementSettings_t *settings, screen_arg_t *args) {
   switch (element) {
   case ElementTypes_t::Text:
-    render_Text(args);
+    render_Text(settings, args);
     break;
   case ElementTypes_t::Number:
-    render_Number(args);
+    render_Number(settings, args);
     break;
   case ElementTypes_t::Image:
-    render_Image(args);
+    render_Image(settings, args);
     break;
   case ElementTypes_t::PowerSource:
-    render_PowerSource(args);
+    render_PowerSource(settings, args);
     break;
   case ElementTypes_t::Temperature:
-    render_Temperature(args);
+    render_Temperature(settings, args);
     break;
   case ElementTypes_t::InputVoltage:
-    render_InputVoltage(args);
+    render_InputVoltage(settings, args);
     break;
   case ElementTypes_t::ScrollBar:
-    render_ScrollBar(args);
+    render_ScrollBar(settings, args);
     break;
   case ElementTypes_t::CheckBox:
-    render_CheckBox(args);
+    render_CheckBox(settings, args);
     break;
   case ElementTypes_t::TextScroller:
-    render_TextScroller(args);
+    render_TextScroller(settings, args);
     break;
   }
 }
 
-void render_Text(screen_arg_t *args) {}
-void render_Number(screen_arg_t *args) {}
-void render_Image(screen_arg_t *args) {}
-void render_PowerSource(screen_arg_t *args) {}
-void render_Temperature(screen_arg_t *args) {}
-void render_InputVoltage(screen_arg_t *args) {}
-void render_ScrollBar(screen_arg_t *args) {}
-void render_CheckBox(screen_arg_t *args) {}
-void render_TextScroller(screen_arg_t *args) {}
+void render_Text(const ElementSettings_t *settings, screen_arg_t *args) {
+  // Draw text clipped into bounds
+  // Args shall be a pointer to an encoded string
+  OLED::printBounded((const char *)args->ptr, settings->position.x, settings->position.y, settings->size.w, settings->size.h);
+}
+void render_Number(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
+void render_Image(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
+void render_PowerSource(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
+void render_Temperature(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
+void render_InputVoltage(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
+void render_ScrollBar(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
+void render_CheckBox(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
+void render_TextScroller(const ElementSettings_t *settings, screen_arg_t *args) {
+  //
+}
