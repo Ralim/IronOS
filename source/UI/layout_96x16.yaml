@@ -1,0 +1,246 @@
+layouts:
+  simplifiedHome:
+    mirrorOnRotate: true
+    elements:
+      - type: image
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 42
+          h: 16
+      - type: image
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 42
+          h: 16
+      - type: powerSource
+        position:
+          x: 84
+          y: 0
+        size:
+          w: 12
+          h: 16
+  
+  simplifiedHomeWarning:
+    mirrorOnRotate: true
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 42
+          h: 16
+      - type: image
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 42
+          h: 16
+      - type: powerSource
+        position:
+          x: 84
+          y: 0
+        size:
+          w: 12
+          h: 16
+  detailedHome:
+    elements:
+      - type: temperature
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 48
+          h: 16
+      - type: temperature
+        position:
+          x: 48
+          y: 0
+        size:
+          w: 32
+          h: 8
+      - type: inputVoltage
+        position:
+          x: 48
+          y: 0
+        size:
+          w: 32
+          h: 8
+  detailedHomeWarning:
+    elements:
+      - type: temperature
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 48
+          h: 16
+      - type: inputVoltage
+        position:
+          x: 48
+          y: 0
+        size:
+          w: 32
+          h: 8
+
+  SebugMenu:
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 96
+          h: 8
+      - type: text
+        position:
+          x: 0
+          y: 8
+        size:
+          w: 48
+          h: 8
+      - type: number
+        position:
+          x: 48
+          y: 8
+        size:
+          w: 48
+          h: 8
+  SettingsCategory:
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 78
+          h: 16
+      - type: image
+        position:
+          x: 79
+          y: 0
+        size:
+          w: 16
+          h: 16
+      - type: scrollBar
+        x: 95
+        h: 16
+  SettingsEntryBool:
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 78
+          h: 16
+      - type: checkbox
+        position:
+          x: 79
+          y: 0
+        size:
+          w: 16
+          h: 16
+      - type: scrollBar
+        x: 95
+        h: 16
+        
+  SettingsEntry3Number:
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 78
+          h: 16
+      - type: number
+        position:
+          x: 79
+          y: 0
+        size:
+          w: 36
+          h: 16
+      - type: scrollBar
+        x: 95
+        h: 16
+        
+  SettingsEntry2Number:
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 78
+          h: 16
+      - type: number
+        position:
+          x: 79
+          y: 0
+        size:
+          w: 36
+          h: 16
+      - type: scrollBar
+        x: 95
+        h: 16
+  SettingsEntry1Number:
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 78
+          h: 16
+      - type: number
+        position:
+          x: 79
+          y: 0
+        size:
+          w: 36
+          h: 16
+      - type: scrollBar
+        x: 95
+        h: 16
+  SettingsEntry1Text:
+    elements:
+      - type: text
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 78
+          h: 16
+      - type: number
+        position:
+          x: 79
+          y: 0
+        size:
+          w: 36
+          h: 16
+      - type: scrollBar
+        x: 95
+        h: 16
+  ScrollingText:
+    elements:
+      - type: textScroller
+        position:
+          x: 0
+          y: 0
+        size:
+          w: 96
+          h: 16
+  SolderingMode:
+    elements:
+  DetailedSolderingMode:
+    elements:
+  NumberAdjust:
+    elements:
+
+
