@@ -127,6 +127,7 @@ void OLED::initialize() {
 #endif
   displayOffset = 0;
   memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
+  memcpy(&secondFrameBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
   // Set the display to be ON once the settings block is sent and send the
   // initialisation data to the OLED.
