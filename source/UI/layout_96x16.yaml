@@ -2,21 +2,21 @@ layouts:
   SimplifiedHome:
     mirrorOnRotate: true
     elements:
-      - type: image
+      - type: Image
         position:
           x: 0
           y: 0
         size:
           w: 42
           h: 16
-      - type: image
+      - type: Image
         position:
           x: 0
           y: 0
         size:
           w: 42
           h: 16
-      - type: powerSource
+      - type: PowerSource
         position:
           x: 84
           y: 0
@@ -27,21 +27,21 @@ layouts:
   simplifiedHomeWarning:
     mirrorOnRotate: true
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 42
           h: 16
-      - type: image
+      - type: Image
         position:
           x: 0
           y: 0
         size:
           w: 42
           h: 16
-      - type: powerSource
+      - type: PowerSource
         position:
           x: 84
           y: 0
@@ -50,21 +50,21 @@ layouts:
           h: 16
   detailedHome:
     elements:
-      - type: temperature
+      - type: Temperature
         position:
           x: 0
           y: 0
         size:
           w: 48
           h: 16
-      - type: temperature
+      - type: Temperature
         position:
           x: 48
           y: 0
         size:
           w: 32
           h: 8
-      - type: inputVoltage
+      - type: InputVoltage
         position:
           x: 48
           y: 0
@@ -73,14 +73,14 @@ layouts:
           h: 8
   detailedHomeWarning:
     elements:
-      - type: temperature
+      - type: Temperature
         position:
           x: 0
           y: 0
         size:
           w: 48
           h: 16
-      - type: inputVoltage
+      - type: InputVoltage
         position:
           x: 48
           y: 0
@@ -90,21 +90,21 @@ layouts:
 
   SebugMenu:
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 96
           h: 8
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 8
         size:
           w: 48
           h: 8
-      - type: number
+      - type: Number
         position:
           x: 48
           y: 8
@@ -113,134 +113,158 @@ layouts:
           h: 8
   SettingsCategory:
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 78
           h: 16
-      - type: image
+      - type: Image
         position:
           x: 79
           y: 0
         size:
           w: 16
           h: 16
-      - type: scrollBar
-        x: 95
-        h: 16
+      - type: ScrollBar
+        position:
+          x: 95
+          y: 0
+        size:
+          w: 1
+          h: 16
   SettingsEntryBool:
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 78
           h: 16
-      - type: checkbox
+      - type: CheckBox
         position:
           x: 79
           y: 0
         size:
           w: 16
           h: 16
-      - type: scrollBar
-        x: 95
-        h: 16
+      - type: ScrollBar
+        position:
+          x: 95
+          y: 0
+        size:
+          w: 1
+          h: 16
         
   SettingsEntry3Number:
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 78
           h: 16
-      - type: number
+      - type: Number
         position:
           x: 79
           y: 0
         size:
           w: 36
           h: 16
-      - type: scrollBar
-        x: 95
-        h: 16
+      - type: ScrollBar
+        position:
+          x: 95
+          y: 0
+        size:
+          w: 1
+          h: 16
         
   SettingsEntry2Number:
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 78
           h: 16
-      - type: number
+      - type: Number
         position:
           x: 79
           y: 0
         size:
           w: 36
           h: 16
-      - type: scrollBar
-        x: 95
-        h: 16
+      - type: ScrollBar
+        position:
+          x: 95
+          y: 0
+        size:
+          w: 1
+          h: 16
   SettingsEntry1Number:
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 78
           h: 16
-      - type: number
+      - type: Number
         position:
           x: 79
           y: 0
         size:
           w: 36
           h: 16
-      - type: scrollBar
-        x: 95
-        h: 16
+      - type: ScrollBar
+        position:
+          x: 95
+          y: 0
+        size:
+          w: 1
+          h: 16
   SettingsEntry1Text:
     elements:
-      - type: text
+      - type: Text
         position:
           x: 0
           y: 0
         size:
           w: 78
           h: 16
-      - type: number
+      - type: Number
         position:
           x: 79
           y: 0
         size:
           w: 36
           h: 16
-      - type: scrollBar
-        x: 95
-        h: 16
+      - type: ScrollBar
+        position:
+          x: 95
+          y: 0
+        size:
+          w: 1
+          h: 16
   ScrollingText:
     elements:
-      - type: textScroller
+      - type: TextScroller
         position:
           x: 0
           y: 0
         size:
           w: 96
           h: 16
-  SolderingMode:
-    elements:
-  DetailedSolderingMode:
-    elements:
-  NumberAdjust:
-    elements:
+  # SolderingMode:
+  #   elements:
+  # DetailedSolderingMode:
+  #   elements:
+  # NumberAdjust:
+  #   elements:
 
 

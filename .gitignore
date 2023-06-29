@@ -178,3 +178,4 @@ CoreCompileInputs.cache
 .vscode/settings.json
 source/compile_commands.json
 .idea/
+source/UI/layout_96x16.cpp
