@@ -60,8 +60,17 @@
         "OffString": {
             "message": "Uit"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
         "DeviceFailedValidationWarning": {
             "message": "Jouw toestel is wellicht een namaak-versie!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
         }
     },
     "characters": {
@@ -112,12 +121,16 @@
             "description": "Minimum toegestaan voltage per cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "QC\nVoltage",
+            "displayText": "QC\nvoltage",
             "description": "Maximaal QC voltage dat gevraagd mag worden"
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
             "description": "PD afstemmingsduur in stappen van 100ms (voor compatibiliteit met sommige QC laders)"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
         },
         "BoostTemperature": {
             "displayText": "Boost\ntemp",
@@ -138,6 +151,62 @@
         "LockingMode": {
             "displayText": "Knopblokkering\ninschakelen",
             "description": "Tijdens solderen lang op beide knoppen drukken blokkeert de knoppen (U=Uit | B=Alleen boost mode | V=Volledig blokkeren)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "Bewegings-\ngevoeligheid",
@@ -207,6 +276,10 @@
             "displayText": "Gedetailleerd\nsoldeerscherm",
             "description": "Gedetailleerde informatie weergeven in een kleiner lettertype op het soldeerscherm"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "Vermogen\nlimiet",
             "description": "Maximaal vermogen (W=Watt)"
@@ -238,14 +311,6 @@
         "LanguageSwitch": {
             "displayText": "Taal:\n NL  Nederlands",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

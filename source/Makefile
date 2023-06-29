@@ -2,11 +2,12 @@ ifndef model
 model:=Pinecil
 endif
 
-ALL_MINIWARE_MODELS=TS100 TS80 TS80P
+ALL_MINIWARE_MODELS=TS100 TS80 TS80P TS101
 ALL_PINECIL_MODELS=Pinecil
 ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS)
+ALL_SEQURE_MODELS=S60
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
@@ -37,6 +38,11 @@ LANGUAGE_GROUP_EUR_NAME=European
 LANGUAGE_GROUPS=CUSTOM CJK CYRILLIC EUR
 
 
+# Define for host Python
+ifndef HOST_PYTHON
+HOST_PYTHON:=python3
+endif
+
 # Defines for host tools
 ifeq ($(HOST_CC),)
 HOST_CC := gcc
@@ -56,6 +62,14 @@ MINIWARE_HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/In
 MINIWARE_STARTUP_DIR = ./Startup
 MINIWARE_INC_DIR = ./Core/BSP/Miniware
 MINIWARE_LD_FILE = ./Core/BSP/Miniware/stm32f103.ld
+
+S60_INC_CMSIS_DEVICE = ./Core/BSP/Sequre_S60/Vendor/CMSIS/Device/ST/STM32F1xx/Include
+S60_CMSIS_CORE_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/CMSIS/Include
+S60_HAL_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc
+S60_HAL_LEGACY_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
+S60_STARTUP_DIR = ./Startup
+S60_INC_DIR = ./Core/BSP/Sequre_S60
+S60_LD_FILE = ./Core/BSP/Sequre_S60/stm32f103.ld
 
 MHP30_INC_CMSIS_DEVICE = ./Core/BSP/MHP30/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 MHP30_CMSIS_CORE_INC_DIR = ./Core/BSP/MHP30/Vendor/CMSIS/Include
@@ -175,6 +189,38 @@ DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
 DEVICE_BSP_DIR = ./Core/BSP/Miniware
 S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=$(MINIWARE_LD_FILE)
+ifeq ($(model),$(filter $(model),TS101))
+flash_size=126k
+bootldr_size=0x8000
+DEVICE_DFU_ADDRESS=0x08008000
+else
+flash_size=62k
+bootldr_size=0x4000
+DEVICE_DFU_ADDRESS=0x08004000
+endif
+
+DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
+		-D ARM_MATH_CM3 	\
+		-D STM32F10X_MD -finline-limit=9999999
+DEV_LDFLAGS= -Wl,--wrap=printf  -Wl,--no-wchar-size-warning 
+DEV_AFLAGS=
+DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
+DEV_CXXFLAGS= 
+CPUFLAGS= -mcpu=cortex-m3     \
+		-mthumb 			\
+		-mfloat-abi=soft
+DEVICE_DFU_VID_PID=0x1209:0xDB42
+endif
+ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
+$(info Building for Sequre )
+DEVICE_INCLUDES = -I$(S60_INC_DIR) \
+	-I$(S60_INC_CMSIS_DEVICE)\
+	-I$(S60_CMSIS_CORE_INC_DIR)	\
+	-I$(S60_HAL_INC_DIR)	\
+	-I$(S60_HAL_LEGACY_INC_DIR)
+DEVICE_BSP_DIR = ./Core/BSP/Sequre_S60
+S_SRCS := $(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
+LDSCRIPT=$(S60_LD_FILE)
 DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
 		-D ARM_MATH_CM3 	\
 		-D STM32F10X_MD -finline-limit=9999999
@@ -186,8 +232,8 @@ CPUFLAGS= -mcpu=cortex-m3     \
 		-mthumb 			\
 		-mfloat-abi=soft
 flash_size=62k
-bootldr_size=0x4000
-DEVICE_DFU_ADDRESS=0x08004000
+bootldr_size=0x4400
+DEVICE_DFU_ADDRESS=0x08004400
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
@@ -422,9 +468,13 @@ COMPILER=gcc
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
+ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS) ))
+COMPILER_PREFIX=arm-none-eabi
+endif
 ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
 endif
+
 # programs ---------------------------------------------------------------------
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
@@ -551,7 +601,7 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 	$(SIZE) $<
 
 %.dfu : %.bin Makefile
-	python3 dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
+	$(HOST_PYTHON) dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
 
 $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
@@ -591,12 +641,10 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 
 $(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Compiling ${<}
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 $(OUTPUT_DIR)/%.o : %.cpp Makefile
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Compiling ${<}
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
 
 $(OUT_OBJS_S): $(OUTPUT_DIR)/%.o: %.S Makefile
@@ -608,14 +656,21 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 		../Translations/make_translation.py \
 		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
-		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf \
+		Core/Gen/macros.txt
 	@test -d Core/Gen || mkdir -p Core/Gen
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for language $*'
-	@python3 ../Translations/make_translation.py \
-		-o $(PWD)/Core/Gen/Translation.$*.cpp \
+	@$(HOST_PYTHON) ../Translations/make_translation.py \
+		--macros $(CURDIR)/Core/Gen/macros.txt \
+		-o $(CURDIR)/Core/Gen/Translation.$*.cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		$*
+
+Core/Gen/macros.txt: Makefile
+	@test -d $(CURDIR)/Core/Gen || mkdir -p $(CURDIR)/Core/Gen
+	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF $(CURDIR)/Core/Gen/macros.tmp - > $(CURDIR)/Core/Gen/macros.txt
+
 
 #
 # The recipes to produce compressed translation data:
@@ -636,19 +691,21 @@ $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/de
 	@echo Building host brieflz shared library $@
 	@$(HOST_CC) -fPIC -shared -DBLZ_DLL -DBLZ_DLL_EXPORTS -O $^ -o $@
 
-Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation for $*
-	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_brieflz.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/$*.o \
 		$*
 
-Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation for $*
-	@python3 ../Translations/make_translation.py \
+	@$(HOST_PYTHON) ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_brieflz_font.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--compress-font \
@@ -689,21 +746,24 @@ Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.
 		../Translations/make_translation.py \
 		../Translations/translations_definitions.json \
 		../Translations/font_tables.py \
-		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf
+		Makefile ../Translations/wqy-bitmapsong/wenquanyi_9pt.bdf \
+		Core/Gen/macros.txt
 	@test -d Core/Gen || mkdir -p Core/Gen
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for multi-language $(2)'
-	@python3 ../Translations/make_translation.py \
+	@$(HOST_PYTHON) ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_multi.$(1).cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		$(3)
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle: Core/Gen/Translation_multi.$(1).cpp
 
-Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so
+Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $$(@D) || mkdir -p $$(@D)
 	@echo Generating BriefLZ compressed translation for multi-language $(2)
-	@OBJCOPY=$(OBJCOPY) python3 ../Translations/make_translation.py \
+	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
+		--macros $(PWD)/Core/Gen/macros.txt \
 		-o $(PWD)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o \
@@ -717,10 +777,14 @@ endef # multi_lang_rule
 $(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_code),$(LANGUAGE_GROUP_$(group_code)_NAME),$(LANGUAGE_GROUP_$(group_code)_LANGS))))
 
 
-clean :
+clean:
 	rm -Rf Core/Gen
 	rm -Rf $(OUTPUT_DIR_BASE)
 	rm -Rf $(HEXFILE_DIR)/*
+	rm -Rf ../Translations/__pycache__
+
+clean-all: clean
+	rm -Rf $(HEXFILE_DIR)
 
 style:
 	@for src in $(ALL_SOURCE) $(ALL_INCLUDES); do \
@@ -740,7 +804,7 @@ check-style:
 	done
 	@echo "Style check passed"
   
-.PHONY: style all clean default
+.PHONY: style all clean default clean-all
 .SECONDARY:
 
 # pull in dependency info for *existing* .o files

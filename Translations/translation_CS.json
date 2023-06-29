@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Kalibrace\ndokončena!"
         },
         "ResetOKMessage": {
             "message": "Reset OK"
@@ -31,10 +31,10 @@
             "message": "Teplotní\nOchrana"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Před restartem se ujistěte, že hrot a držák mají pokojovou teplotu!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "kalibrování\n"
         },
         "SettingsResetWarning": {
             "message": "Opravdu chcete resetovat zařízení do továrního nastavení?"
@@ -60,8 +60,17 @@
         "OffString": {
             "message": "Vyp"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "Vaše zařízení je s nejvyšší pravděpodobností padělek!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
         }
     },
     "characters": {
@@ -119,6 +128,10 @@
             "displayText": "PD\ntimeout",
             "description": "Maximální prodleva při jednání PD ve 100ms krocích pro kompatibilitu s některými QC nabíječkami"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Povoluje režimy PPS & EPR"
+        },
         "BoostTemperature": {
             "displayText": "Teplota\nboostu",
             "description": "Teplota hrotu v \"režimu boost\""
@@ -138,6 +151,62 @@
         "LockingMode": {
             "displayText": "Povolit zamč.\ntlačítek",
             "description": "Při pájení podržte obě tlačítka pro jejich zamčení (Z=zakázáno | B=pouze v režimu boost | U=úplné zamčení)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "Citlivost\nna pohyb",
@@ -207,13 +276,17 @@
             "displayText": "Podrobná obr.\npájení",
             "description": "Zobrazit detailní informace malým fontem na obrazovce pájení"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Povoluje BLE"
+        },
         "PowerLimit": {
             "displayText": "Omezení\nVýkonu",
             "description": "Maximální příkon páječky (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Kalibrovat CJC\npři příštím startu",
+            "description": "Při příštím startu bude kalibrována kompenzace studeného spoje (není třeba pokud Delta T je < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Kalibrovat\nvstupní napětí?",
@@ -238,14 +311,6 @@
         "LanguageSwitch": {
             "displayText": "Jazyk:\n CS       Český",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

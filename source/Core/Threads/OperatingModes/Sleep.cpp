@@ -3,6 +3,7 @@
 extern OperatingMode currentMode;
 
 int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
+#ifndef NO_SLEEP_MODE
   // Drop to sleep temperature and display until movement or button press
   currentMode = OperatingMode::sleeping;
 
@@ -20,12 +21,7 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       currentTempTargetDegC = stayOff ? 0 : min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp));
     }
     // draw the lcd
-    uint16_t tipTemp;
-    if (getSettingValue(SettingsOptions::TemperatureInF))
-      tipTemp = TipThermoModel::getTipInF();
-    else {
-      tipTemp = TipThermoModel::getTipInC();
-    }
+    uint16_t tipTemp = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
 
     OLED::clearScreen();
     OLED::setCursor(0, 0);
@@ -66,5 +62,6 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       return 1; // we want to exit soldering mode
     }
   }
+#endif
   return 0;
 }

@@ -1,22 +1,22 @@
 {
     "languageCode": "ES",
     "languageLocalName": "Castellano",
-    "tempUnitFahrenheit": true,
+    "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CJCCalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "¡Calibracion\nlista!"
         },
         "ResetOKMessage": {
-            "message": "Hecho"
+            "message": "Listo"
         },
         "SettingsResetMessage": {
-            "message": "Ajustes\n¡Reiniciados!"
+            "message": "¡Ajustes\nReiniciados!"
         },
         "NoAccelerometerMessage": {
-            "message": "Sin acelerómetro\n¡Detectado!"
+            "message": "¡Sin acelerómetro\nDetectado!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "Sin USB-PD IC\n¡Detectado!"
+            "message": "¡Sin USB-PD IC\nDetectado!"
         },
         "LockingKeysString": {
             "message": "BLOQUEADO"
@@ -34,7 +34,7 @@
             "message": "¡Antes de reiniciar, asegúrese de que la punta y el mango estén a temperatura ambiente!"
         },
         "CJCCalibrating": {
-            "message": "calibrando\n"
+            "message": "Calibrando\n"
         },
         "SettingsResetWarning": {
             "message": "¿Quieres restablecer los ajustes?"
@@ -58,10 +58,19 @@
             "message": "Punta: \n"
         },
         "OffString": {
-            "message": "No"
+            "message": "Apagado"
+        },
+        "ProfilePreheatString": {
+            "message": "Precalentado\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Enfriado\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "¡Lo más probable es que su dispositivo sea una falsificación!"
+            "message": "¡Es probable es que su dispositivo sea falso!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Muy caliente para \nempezar perfil"
         }
     },
     "characters": {
@@ -109,23 +118,28 @@
         },
         "MinVolCell": {
             "displayText": "Mínimo\nvoltaje",
-            "description": "voltaje mínimo permitido por célula (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+            "description": "Voltaje mínimo permitido por célula (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
         },
         "QCMaxVoltage": {
             "displayText": "Potencia de\nentrada",
-            "description": "Potencia en vatios del adaptador de corriente utilizado"
+            "description": "Potencia en Watts del adaptador de corriente utilizado"
         },
         "PDNegTimeout": {
             "displayText": "PD\ntiempo de espera",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers (0: disabled)"
+            "description": "Timeout de negociación de PD en pasos de 100ms para compatibilidad con algunos cargadores QC (0: apagado)"
+            
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Permite modos PPS & EPR"
         },
         "BoostTemperature": {
             "displayText": "Ajustar la\ntemp. extra",
-            "description": "Temperatura de la punta utilizada en el \"modo de impulso\""
+            "description": "Temperatura de la punta de \"modo boost\""
         },
         "AutoStart": {
             "displayText": "Calentar\nal enchufar",
-            "description": "Se calienta él solo al arrancar (N=no | S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
+            "description": "Calentado automático al iniciar (N=no | S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
         },
         "TempChangeShortStep": {
             "displayText": "Cambio temp.\npuls. cortas",
@@ -138,6 +152,62 @@
         "LockingMode": {
             "displayText": "Permitir botones\nbloqueo",
             "description": "Mientras suelda, mantenga pulsados ambos botones para alternar su bloqueo (D=desactivar | B=sólo modo boost | F=bloqueo total)"
+        },
+        "ProfilePhases": {
+            "displayText": "Fases de\nPerfil",
+            "description": "Numero de fases en modo perfil"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Temp de \n precalentado",
+            "description": "Precalentar a esta temperatura al inicio del modo perfil"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Velocidad de \nPrecalentado",
+            "description": "Precalentar a esta velocidad (grados por segundo)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Fase 1\nTemp",
+            "description": "Temperatura objetivo al final de esta fase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Fase 1\nDuración",
+            "description": "Duración objetivo de esta fase (segundos)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Fase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Fase 2\nDuración",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Fase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Fase 3\nDuración",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Fase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Fase 4\nDuración",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Fase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Fase 5\nDuración",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Velocidad de\nEnfriamineto",
+            "description": "Enfriar a esta velocidad al final del modo perfil (grados por segundo)"
         },
         "MotionSensitivity": {
             "displayText": "Detección de\nmovimiento",
@@ -161,7 +231,7 @@
         },
         "TemperatureUnit": {
             "displayText": "Unidad de\ntemperatura",
-            "description": "Unidad de temperatura (C=centígrados | F=Fahrenheit)"
+            "description": "Unidad de temperatura (C=entígrados | F=Fahrenheit)"
         },
         "DisplayRotation": {
             "displayText": "Orientación\nde pantalla",
@@ -169,7 +239,7 @@
         },
         "CooldownBlink": {
             "displayText": "Parpadear\nal enfriar",
-            "description": "Lectura de la temperatura al ralentí mientras la punta está caliente"
+            "description": "Parpadear texto en inactivo cuando la punta este caliente"  
         },
         "ScrollingSpeed": {
             "displayText": "Velocidad\ndel texto",
@@ -177,15 +247,15 @@
         },
         "ReverseButtonTempChange": {
             "displayText": "Invertir\nbotones +/-",
-            "description": "Intercambio inversa de los botones para ajustar la temperatura"
+            "description": "Invertir botones de ajuste de temperatura"
         },
         "AnimSpeed": {
             "displayText": "Anim.\nvelocidad",
-            "description": "Velocidad de las animaciones de los iconos en el menú (O=off | L=low | M=medium | R=high)"
+            "description": "Velocidad de animaciones de iconos en el menú (O=apagado | L=baja | M=media | R=alta)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nbucle",
-            "description": "Animaciones de iconos en bucle en el menú raíz"
+            "description": "Bucle de animaciones del menú principal"
         },
         "Brightness": {
             "displayText": "Pantalla\nbrillo",
@@ -196,24 +266,28 @@
             "description": "Invertir la pantalla OLED"
         },
         "LOGOTime": {
-            "displayText": "logo inicial\nduración",
+            "displayText": "Logo inicial\nduración",
             "description": "Duración de la animación del logo inicial (s=segundos)"
         },
         "AdvancedIdle": {
             "displayText": "Info extra en\nmodo reposo",
-            "description": "Mostrar información detallada en una fuente más pequeña en la pantalla inactiva"
+            "description": "Mostrar información detallada en tamaño pequeño en la pantalla de reposo"
         },
         "AdvancedSoldering": {
             "displayText": "Info extra\nal soldar",
-            "description": "Mostrar información detallada en una fuente más pequeña en la pantalla de soldadura"
+            "description": "Mostrar información detallada en tamaño pequeño en la pantalla de soldadura"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Habilitar BLE"
         },
         "PowerLimit": {
             "displayText": "Potencia\nlímite",
-            "description": "Elige el límite de potencia máxima del soldador (en vatios)"
+            "description": "Elige el límite de potencia máxima del soldador (en Watts)"
         },
         "CalibrateCJC": {
             "displayText": "Calibrar CJC\nen el próximo inicio",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "description": "Al siguinte inicio el Cold Junction Compensation sera calibrado (no requerido si el Delta T es < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrar voltaje\nde entrada",
@@ -221,15 +295,15 @@
         },
         "PowerPulsePower": {
             "displayText": "Pulsos bat.\nconstantes",
-            "description": "Intensidad de la potencia del pulso de mantenimiento del estado de vigilia (W=vatio)"
+            "description": "Intensidad de la potencia del pulso para mantener encendido (W=Watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Impulso de potencia\ntiempo de espera",
-            "description": "Tiempo de espera antes de disparar cada pulso de mantenimiento de la vigilia (x 2,5s)"
+            "displayText": "Tiempor entre\n pulso de energia",
+            "description": "Tiempo de espera del pulso para mantener encendido (x 2,5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Impulso de potencia\nduración",
-            "description": "Duración del impulso de mantenimiento de la vigilia (x 250ms)"
+            "displayText": "Duración de\n pulso de energia",
+            "description": "Duración del pulso para mantener encendido (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "Volver a ajustes\nde fábrica",
@@ -238,14 +312,6 @@
         "LanguageSwitch": {
             "displayText": "Idioma:\n ES  Castellano",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Activado",
-            "description": "Habilita BLE"
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

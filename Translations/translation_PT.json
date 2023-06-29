@@ -13,10 +13,10 @@
             "message": "Algumas configurações\nforam alteradas!"
         },
         "NoAccelerometerMessage": {
-            "message": "Acelarometro não\ndetectado!"
+            "message": "Acelerómetro não\ndetetado!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "USB-PD IC não\ndetectado!"
+            "message": "USB-PD IC não\ndetetado!"
         },
         "LockingKeysString": {
             "message": "Bloqueado"
@@ -31,7 +31,7 @@
             "message": "Thermal\nRunaway"
         },
         "SettingsCalibrationWarning": {
-            "message": "Antes de reninciar tenha a certeza que pega e o ponteiro estão em temperatura ambiente!"
+            "message": "Antes de reiniciar certifique-se que o ferro está à temperatura ambiente!"
         },
         "CJCCalibrating": {
             "message": "calibrar\n"
@@ -60,8 +60,17 @@
         "OffString": {
             "message": "Off"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
         "DeviceFailedValidationWarning": {
-            "message": "Seu dispositivo provavelmente é falsificado!"
+            "message": "O seu dispositivo provavelmente é falsificado!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
         }
     },
     "characters": {
@@ -108,43 +117,103 @@
             "description": "Fonte de alimentação. Define a tensão de corte. (DC=10V) (S=3.3V/célula)"
         },
         "MinVolCell": {
-            "displayText": "Voltagem\nminima",
-            "description": "Voltagem minima permitida por ceula de bateria (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Tensão\nmínima",
+            "description": "Tensão mínima permitida por célula de bateria (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
             "displayText": "Potência\nFonte",
             "description": "Potência da fonte usada (Watt)"
         },
         "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "Negoiciação de PD fez timeout em 100ms paraços para compatibilidade com alguns carregadores é (0: disabled)"
+            "displayText": "PD tempo\nlimite",
+            "description": "Tempo limite de negoiciação de PD de 100ms para compatibilidade com alguns carregadores é (0: disabled)"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Activa o modo PPS & EPR"
         },
         "BoostTemperature": {
-            "displayText": "Modo turbo\ntemperat.",
+            "displayText": "Temp.\nModo turbo",
             "description": "Ajuste de temperatura do \"modo turbo\""
         },
         "AutoStart": {
-            "displayText": "Partida\nautomática",
+            "displayText": "Aquecimento\nautomático",
             "description": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp mudança\ncurta",
-            "description": "A temperatura será incrementada com um click curto"
+            "displayText": "Mudança temp.\ncurta",
+            "description": "A temperatura será aumentada com um click curto"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp mudança\nlonga",
-            "description": "A temperatura será incrementada com um click longo"
+            "displayText": "Mudança temp.\nlonga",
+            "description": "A temperatura será aumentada com um click longo"
         },
         "LockingMode": {
-            "displayText": "Permitir bloquear\nbutões",
-            "description": "Quando estás a soldar primir os dois butões para alternar entre (D=disativas | B=boost mode | F=bloqueio total)"
+            "displayText": "Permitir bloquear\nbotões",
+            "description": "Durante a solda premir os dois botões para alternar entre (D=desativados | B=modo turbo | F=bloqueio total)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilidade\nmovimento",
             "description": "Sensibilidade ao movimento (0=Desligado | 1=Menor | ... | 9=Maior)"
         },
         "SleepTemperature": {
-            "displayText": "Temperat.\nrepouso",
+            "displayText": "Temperatura\nrepouso",
             "description": "Temperatura de repouso (C)"
         },
         "SleepTimeout": {
@@ -152,11 +221,11 @@
             "description": "Tempo para repouso (Minutos | Segundos)"
         },
         "ShutdownTimeout": {
-            "displayText": "Tempo\ndesligam.",
-            "description": "Tempo para desligamento (Minutos)"
+            "displayText": "Tempo\ndesligar",
+            "description": "Tempo para desligar (Minutos)"
         },
         "HallEffSensitivity": {
-            "displayText": "Sensibilidade de\nmagentismo",
+            "displayText": "Sensibilidade de\nmagnetismo",
             "description": "Sensibilidade de magnetismo (0=Desligado | 1=Menor | ... | 9=Maior)"
         },
         "TemperatureUnit": {
@@ -164,8 +233,8 @@
             "description": "Unidade de temperatura (C=Celsius | F=Fahrenheit)"
         },
         "DisplayRotation": {
-            "displayText": "Orientação\ntela",
-            "description": "Orientação da tela (D=estro | C=anhoto | A=utomática)"
+            "displayText": "Orientação\necrã",
+            "description": "Orientação do ecrã (D=estro | C=anhoto | A=utomática)"
         },
         "CooldownBlink": {
             "displayText": "Piscar ao\narrefecer",
@@ -173,79 +242,75 @@
         },
         "ScrollingSpeed": {
             "displayText": "Velocidade\ntexto ajuda",
-            "description": "Velocidade a que o texto é exibido"
+            "description": "Velocidade a que o texto de ajuda é apresentado"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Mudar\n+ - teclas",
-            "description": "Inverter o alinhamento dos butões para ajudar a temperatura"
+            "displayText": "Trocar\nbotões + -",
+            "description": "Inverte o funcionamento dos botões de ajuste da temperatura"
         },
         "AnimSpeed": {
             "displayText": "Velocidade de\nanimação",
-            "description": "Sitio das animações no menu (O=off | S=lentas | M=medias | F=rapidas)"
+            "description": "Velocidade das animações no menu (O=off | S=lenta | M=média | F=rápida)"
         },
         "AnimLoop": {
             "displayText": "Repetir\nanimações",
-            "description": "Repetir icon de animações no ecrã principal"
+            "description": "Repete animações de ícones no menu principal"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Ajustar o brilho do ecrã OLED"
+            "displayText": "Brilho\ndo ecrã",
+            "description": "Ajusta o brilho do ecrã OLED"
         },
         "ColourInversion": {
             "displayText": "Inverter\necrã",
-            "description": "Inverter as cores do ecrã OLED"
+            "description": "Inverte as cores do ecrã OLED"
         },
         "LOGOTime": {
             "displayText": "Duração do\nlogo no arranque",
-            "description": "Definir a duração do logotipo no arranque em (s=segundos)"
+            "description": "Define a duração do logotipo no arranque em (s=segundos)"
         },
         "AdvancedIdle": {
-            "displayText": "Tela repouso\navançada",
-            "description": "Exibe informações avançadas quando em espera"
+            "displayText": "Ecrã repouso\navançado",
+            "description": "Mostra informações avançadas quando em repouso"
         },
         "AdvancedSoldering": {
-            "displayText": "Tela trabalho\navançada",
-            "description": "Exibe informações avançadas durante o uso"
+            "displayText": "Ecrã solda\navançado",
+            "description": "Mostra informações avançadas durante a solda"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Ativa o Bluetooth Low Energy (BLE)"
         },
         "PowerLimit": {
-            "displayText": "Limite de\nenergia",
-            "description": "Maximo power que o ferro pode usar (W=watt)"
+            "displayText": "Limite de\npotência",
+            "description": "Potência máxima a usar (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrar CJC\nno prozimo arranque",
-            "description": "No proximo arranque CJC será calibrada  (não será necessário caso o Delta T seja < 5°C)"
+            "displayText": "Calibrar CJC\nno próximo arranque",
+            "description": "No próximo arranque CJC será calibrada  (não será necessário caso o Delta T seja < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrar\ntensão",
             "description": "Calibra a tensão de alimentação. Use os botões para ajustar o valor. Mantenha pressionado para sair"
         },
         "PowerPulsePower": {
-            "displayText": "Pulso\npower",
-            "description": "Intensidade de energia de arranque (W=watt)"
+            "displayText": "Potência\ndo pulso",
+            "description": "Intensidade de potência de arranque (W=watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
+            "displayText": "Espera do\npulso",
             "description": "Espera entre o acordar e o envio da rectivação (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Power pulso\nduração",
+            "displayText": "Duração\npulso",
             "description": "Manter os inplosus de rectivação em (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "Reset de\nfábrica?",
-            "description": "Reverte todos ajustes"
+            "description": "Repôe todos os ajustes"
         },
         "LanguageSwitch": {
             "displayText": "Idioma:\n PT   Português",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\nactivado",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nactivado",
-	    "description": "Activa o modo PPS/EPR"
-	}
+        }
     }
 }

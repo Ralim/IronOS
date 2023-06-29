@@ -12,6 +12,7 @@
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
 #include "MSA301.h"
+#include "Pins.h"
 #include "QC3.h"
 #include "SC7A20.hpp"
 #include "Settings.h"
@@ -43,7 +44,11 @@ void detectAccelerometerVersion() {
   if (LIS2DH12::detect()) {
     // Setup the ST Accelerometer
     if (LIS2DH12::initalize()) {
-      DetectedAccelerometerVersion = AccelType::LIS;
+      if (LIS2DH12::isClone()) {
+        DetectedAccelerometerVersion = AccelType::LIS_CLONE;
+      } else {
+        DetectedAccelerometerVersion = AccelType::LIS;
+      }
       return;
     }
   }
@@ -75,6 +80,12 @@ void detectAccelerometerVersion() {
     }
   }
 #endif
+#ifdef GPIO_VIBRATION
+  if (true) {
+    DetectedAccelerometerVersion = AccelType::GPIO;
+    return;
+  }
+#endif
   {
     // disable imu sensitivity
     setSettingValue(SettingsOptions::Sensitivity, 0);
@@ -89,7 +100,7 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
   } else
 #endif
 #ifdef ACCEL_LIS
-      if (DetectedAccelerometerVersion == AccelType::LIS) {
+      if (DetectedAccelerometerVersion == AccelType::LIS || DetectedAccelerometerVersion == AccelType::LIS_CLONE) {
     LIS2DH12::getAxisReadings(tx, ty, tz);
     rotation = LIS2DH12::getOrientation();
   } else
@@ -112,19 +123,34 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
     rotation = SC7A20::getOrientation();
   } else
 #endif
+#ifdef GPIO_VIBRATION
+      if (DetectedAccelerometerVersion == AccelType::GPIO) {
+    // TODO
+    if (HAL_GPIO_ReadPin(MOVEMENT_GPIO_Port, MOVEMENT_Pin) == GPIO_PIN_SET) {
+      // Movement
+      tx = ty = tz = 5000;
+    } else {
+      // No Movement
+      tx = ty = tz = 0;
+    }
+    rotation = Orientation::ORIENTATION_FLAT;
+  } else
+#endif
   {
     // do nothing :(
   }
 }
 void startMOVTask(void const *argument __unused) {
+
   osDelay(TICKS_100MS / 5); // This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
   detectAccelerometerVersion();
   osDelay(TICKS_100MS / 2); // wait ~50ms for setup of accel to finalise
   lastMovementTime = 0;
   // Mask 2 seconds if we are in autostart so that if user is plugging in and
   // then putting in stand it doesnt wake instantly
-  if (getSettingValue(SettingsOptions::AutoStartMode))
+  if (getSettingValue(SettingsOptions::AutoStartMode)) {
     osDelay(2 * TICKS_SECOND);
+  }
 
   int16_t     datax[MOVFilter] = {0};
   int16_t     datay[MOVFilter] = {0};

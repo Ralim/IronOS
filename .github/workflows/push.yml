@@ -9,7 +9,7 @@ jobs:
       image: alpine:3.16
     strategy:
       matrix:
-        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2"]
+        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2", "S60", "TS101"]
       fail-fast: true
 
     steps:

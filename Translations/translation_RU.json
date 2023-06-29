@@ -60,8 +60,17 @@
         "OffString": {
             "message": "Вык"
         },
+        "ProfilePreheatString": {
+            "message": "Преднагрев\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Остывание\n"
+        },
         "DeviceFailedValidationWarning": {
-            "message": "Скорее всего, это устройство подделка!"
+            "message": "Вероятно, это устройство подделка!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Слишком горячо для\nстарта профиля"
         }
     },
     "characters": {
@@ -119,6 +128,10 @@
             "displayText": "PD\nтайм-аут",
             "description": "Power Delivery тайм-аут согласования с шагом 100 мс для совместимости с некоторыми быстрыми зарядными QC (0: отключено)"
         },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Включает режимы PPS & EPR."
+        },
         "BoostTemperature": {
             "displayText": "t° турбо\nрежима",
             "description": "Температура жала в турбо-режиме"
@@ -138,6 +151,62 @@
         "LockingMode": {
             "displayText": "Разрешить\nблок. кнопок",
             "description": "При работе длинное нажатие обеих кнопок блокирует их (О=Отключено | Т=Только турбо | П=Полная блокировка)"
+        },
+        "ProfilePhases": {
+            "displayText": "Профиль\nЭтапы",
+            "description": "Количество этапов в режиме профиля"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Преднагрев\nТемпература",
+            "description": "Разогреть до этой температуры в начале режима профиля"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Преднагрев\nСкорость",
+            "description": "Предварительный нагрев с этой скоростью (градусов в секунду)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Этап 1\nТемпература",
+            "description": "Целевая температура в конце этого эатпа"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Этап 1\nДлительность",
+            "description": "Целевая длительность этого этапа (секунды)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Этап 2\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Этап 2\nДлительность",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Этап 3\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Этап 3\nДлительность",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Этап 4\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Этап 4\nДлительность",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Этап 5\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Этап 5\nДлительность",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Остывание\nСкорость",
+            "description": "Остывать с такой скоростью в конце режима профиля (градусов в секунду)"
         },
         "MotionSensitivity": {
             "displayText": "Чувствительн.\nакселерометра",
@@ -173,7 +242,7 @@
         },
         "ScrollingSpeed": {
             "displayText": "Скорость\nтекста",
-            "description": "Скорость прокрутки текста (М=медленно | Б=быстро)"
+            "description": "Скорость прокрутки текста (М=Медленная | Б=Быстрая)"
         },
         "ReverseButtonTempChange": {
             "displayText": "Поменять\nкнопки+-",
@@ -181,7 +250,7 @@
         },
         "AnimSpeed": {
             "displayText": "Скорость\nанимации",
-            "description": "Скорость анимации иконок в главном меню (Милисекунды) (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
+            "description": "Скорость анимации иконок в главном меню (О=Отключено | М=Медленная| С=Средняя | Б=Быстрая)"
         },
         "AnimLoop": {
             "displayText": "Зацикленная\nанимация",
@@ -206,6 +275,10 @@
         "AdvancedSoldering": {
             "displayText": "Подробный\nэкран пайки",
             "description": "Показывать детальную информацию на экране пайки"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Активирует BLE"
         },
         "PowerLimit": {
             "displayText": "Предел\nмощности",
@@ -238,14 +311,6 @@
         "LanguageSwitch": {
             "displayText": "Язык:\n RU     Русский",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE\n Включено",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nВключено",
-	    "description": "Включает режимы PPS/EPR."
-	}
+        }
     }
 }

@@ -20,14 +20,15 @@
 #include "log.h"
 #include "uuid.h"
 
-#include "OperatingModes.h"
+#include "../../version.h"
 #include "OLED.hpp"
+#include "OperatingModes.h"
 #include "USBPD.h"
 #include "ble_characteristics.h"
 #include "ble_handlers.h"
 #include "pd.h"
 #include "power.hpp"
-#if POW_PD
+#ifdef POW_PD
 #include "USBPD.h"
 #include "pd.h"
 #endif
@@ -39,7 +40,9 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  // Decode the uuid
+  // Byte 12 has the lowest part of the first UUID chunk
+  uint16_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   uint32_t temp       = 0;
   switch (uuid_value) {
   case 1: // Live temp
@@ -133,11 +136,13 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
   MSG((char *)"Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
 }
+
 int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  // Byte 12 has the lowest part of the first UUID chunk
+  uint16_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   // Bulk is the non-const size service
   switch (uuid_value) {
   case 1:
@@ -176,17 +181,27 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
     // TODO: Need to store non-encoded version
     break;
   case 3:
-    // Build
-    // TODO: Need to store non-encoded version
-    break;
+    // FW Version
+    memcpy(buf, &BUILD_VERSION, sizeof(BUILD_VERSION) - 1);
+    return sizeof(BUILD_VERSION) - 1;
   case 4:
-    // Device unique id
+    // Device serial number.
+    // Serial number is the ID burned by manufacturer.
+    // In case of Pinecil V2, device SN = device MAC.
     {
-      uint64_t id = getDeviceID();
+      uint64_t sn = getDeviceID();
+      memcpy(buf, &sn, sizeof(sn));
+      return sizeof(sn);
+    }
+    break;
+  case 5:
+    // Device ID [https://github.com/Ralim/IronOS/issues/1609].
+    // ID is a unique key Pine burns at the factory and records in their db.
+    {
+      uint32_t id = getDeviceValidation();
       memcpy(buf, &id, sizeof(id));
       return sizeof(id);
     }
-    break;
   }
   return 0;
 }
@@ -194,7 +209,8 @@ int ble_char_read_setting_value_callback(struct bt_conn *conn, const struct bt_g
   if (attr == NULL || attr->uuid == NULL) {
     return 0;
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  // Byte 12 has the lowest part of the first UUID chunk
+  uint16_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   uint16_t temp       = 0xFFFF;
   if (uuid_value <= SettingsOptions::SettingsOptionsLength) {
     temp = getSettingValue((SettingsOptions)(uuid_value));
@@ -227,31 +243,34 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
     // Use write request / execute write data.
     BT_WARN((char *)"recv write request / exce write\n");
   }
-  uint16_t uuid_value = ((struct bt_uuid_16 *)attr->uuid)->val;
+  uint8_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
   if (len == 2) {
     uint16_t new_value = 0;
     memcpy(&new_value, buf, sizeof(new_value));
-    if (uuid_value == 0xFFFF) {
+    if (uuid_value == 0xFF) {
       if (new_value == 1) {
         saveSettings();
         return len;
       }
-    } else if (uuid_value == 0xFFFE) {
+    } else if (uuid_value == 0xFE) {
       if (new_value == 1) {
         resetSettings();
         return len;
       }
     } else if (uuid_value < SettingsOptions::SettingsOptionsLength) {
       setSettingValue((SettingsOptions)(uuid_value), new_value);
-      // @TODO refactor to make this more usable
-      if (uuid_value == SettingsOptions::OLEDInversion) {
+      switch (uuid_value) {
+      case SettingsOptions::OLEDInversion:
         OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
-      }
-      if (uuid_value == SettingsOptions::OLEDBrightness){
+        break;
+      case SettingsOptions::OLEDBrightness:
         OLED::setBrightness(getSettingValue(SettingsOptions::OLEDBrightness));
-      }
-      if (uuid_value == SettingsOptions::OrientationMode){
+        break;
+      case SettingsOptions::OrientationMode:
         OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
+        break;
+      default:
+        break;
       }
       return len;
     }
@@ -268,7 +287,7 @@ uint32_t getPowerSrc() {
     // We are not powered via DC, so want to display the appropriate state for PD or QC
     bool poweredbyPD        = false;
     bool pdHasVBUSConnected = false;
-#if POW_PD
+#ifdef POW_PD
     if (USBPowerDelivery::fusbPresent()) {
       // We are PD capable
       if (USBPowerDelivery::negotiationComplete()) {

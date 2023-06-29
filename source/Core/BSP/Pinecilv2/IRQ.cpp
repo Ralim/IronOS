@@ -151,7 +151,7 @@ extern osThreadId POWTaskHandle;
 void GPIO_IRQHandler(void) {
   if (SET == GLB_Get_GPIO_IntStatus(FUSB302_IRQ_GLB_Pin)) {
     GLB_GPIO_IntClear(FUSB302_IRQ_GLB_Pin, SET);
-#if POW_PD
+#ifdef POW_PD
     if (POWTaskHandle != nullptr) {
       BaseType_t xHigherPriorityTaskWoken = pdFALSE;
       xTaskNotifyFromISR(POWTaskHandle, 1, eSetBits, &xHigherPriorityTaskWoken);

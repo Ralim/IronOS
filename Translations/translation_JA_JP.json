@@ -60,8 +60,17 @@
         "OffString": {
             "message": "オフ"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown"
+        },
         "DeviceFailedValidationWarning": {
             "message": "このデバイスはおそらく偽造品です"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to start profile"
         }
     },
     "characters": {
@@ -119,6 +128,10 @@
             "displayText": "PD\ntimeout",
             "description": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
         },
+        "PDVpdo": {
+            "displayText": "PD VPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "ブースト温度",
             "description": "ブーストモードで使用される温度"
@@ -138,6 +151,62 @@
         "LockingMode": {
             "displayText": "ボタンロック",
             "description": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <×=オフ | ブ=ブーストのみ許可 | 全=すべてをロック>"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile Phases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat Temp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat Speed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1 Temp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1 Duration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2 Temp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2 Duration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3 Temp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3 Duration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4 Temp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4 Duration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5 Temp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5 Duration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown Speed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "動きの感度",
@@ -207,6 +276,10 @@
             "displayText": "詳細な作業画面",
             "description": "半田付け画面に詳細情報を表示する"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "電力制限",
             "description": "最大電力を制限する <W=ワット>"
@@ -238,14 +311,6 @@
         "LanguageSwitch": {
             "displayText": "言語： 日本語",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE Enabled",
-            "description": "Enables BLE"
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }

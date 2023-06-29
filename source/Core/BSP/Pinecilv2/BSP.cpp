@@ -21,7 +21,7 @@ const uint8_t  tempMeasureTicks = 25;
 uint16_t totalPWM = 255; // Total length of the cycle's ticks
 
 void resetWatchdog() {
-  //#TODO
+  // #TODO
 }
 
 #ifdef TEMP_NTC
@@ -125,9 +125,7 @@ uint8_t getButtonB() {
   return val;
 }
 
-void reboot() {
-  hal_system_reset();
-}
+void reboot() { hal_system_reset(); }
 
 void delay_ms(uint16_t count) {
   // delay_1ms(count);
@@ -148,6 +146,7 @@ bool isTipDisconnected() {
 void setStatusLED(const enum StatusLED state) {
   // Dont have one
 }
+void setBuzzer(bool on) {}
 
 uint8_t       lastTipResistance        = 0; // default to unknown
 const uint8_t numTipResistanceReadings = 3;
@@ -163,7 +162,13 @@ uint8_t getTipThermalMass() {
   if (lastTipResistance >= 80) {
     return TIP_THERMAL_MASS;
   }
-  return (TIP_THERMAL_MASS * 25) / 10;
+  return 45;
+}
+uint8_t getTipInertia() {
+  if (lastTipResistance >= 80) {
+    return TIP_THERMAL_MASS;
+  }
+  return 10;
 }
 // We want to calculate lastTipResistance
 // If tip is connected, and the tip is cold and the tip is not being heated

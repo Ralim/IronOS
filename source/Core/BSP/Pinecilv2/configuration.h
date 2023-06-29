@@ -4,7 +4,7 @@
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for Pinecil
+ * Define here your default pre settings for Pinecilv2
  *
  */
 
@@ -60,6 +60,15 @@
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
+ * OLED Brightness
+ *
+ */
+#define MIN_BRIGHTNESS             1   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS             101 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP            25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS         26  // default OLED brightness
+
+/**
  * Temp change settings
  */
 #define TEMP_CHANGE_SHORT_STEP     1  // Default temp change short step +1
@@ -78,7 +87,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif
+#endif /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -121,9 +130,9 @@
 #define VOLTAGE_DIV                600                       // 600 - Default divider from schematic
 #define CALIBRATION_OFFSET         900                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET     100                       // Min value for calibration
-#define PID_POWER_LIMIT            220                       // Sets the max pwm power limit
+#define PID_POWER_LIMIT            120                       // Sets the max pwm power limit
 #define POWER_LIMIT                0                         // 0 watts default limit
-#define MAX_POWER_LIMIT            220                       //
+#define MAX_POWER_LIMIT            120                       // Sets the max power limit
 #define POWER_LIMIT_STEPS          5                         //
 #define OP_AMP_GAIN_STAGE          OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                                 // Use Hakko lookup table
@@ -137,6 +146,7 @@
 #define MIN_BOOST_TEMP_F           480                       // The min settable temp for boost mode °F
 #define DEVICE_HAS_VALIDATION_CODE                           // We have 2 digit validations
 #define POW_PD                     1                         // Supported features
+#define POW_PD_EXT                 0                         // Future-proof macro for other models with other PD modes
 #define POW_QC                     1                         // Supported features
 #define POW_DC                     1                         // Supported features
 #define POW_QC_20V                 1                         // Supported features
@@ -154,8 +164,11 @@
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define BLE_ENABLED
 #define NEEDS_VBUS_PROBE 0
-
-#endif
-#endif
+#define CANT_DIRECT_READ_SETTINGS
+#endif /* Pinecilv2 */
 
 #define FLASH_LOGOADDR (0x23000000 + (1022 * 1024))
+#define FLASH_PAGE_SIZE (1024)
+#define SETTINGS_START_PAGE (1023 * FLASH_PAGE_SIZE) // Hal auto offsets base addr
+
+#endif /* CONFIGURATION_H_ */

@@ -60,8 +60,17 @@
         "OffString": {
             "message": "關"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown"
+        },
         "DeviceFailedValidationWarning": {
             "message": "依支焫雞好有可能係冒牌貨！"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to start profile"
         }
     },
     "characters": {
@@ -119,6 +128,10 @@
             "displayText": "PD逾時",
             "description": "設定USB PD協定交涉嘅逾時時限；為兼容某啲QC電源而設 <x100ms（亳秒）>"
         },
+        "PDVpdo": {
+            "displayText": "PD VPDO",
+            "description": "Enables PPS & EPR modes"
+        },
         "BoostTemperature": {
             "displayText": "增熱温度",
             "description": "喺增熱模式時使用嘅温度"
@@ -138,6 +151,62 @@
         "LockingMode": {
             "displayText": "撳掣鎖定",
             "description": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <無=停用 | 增=淨係容許增熱模式 | 全=鎖定全部>"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile Phases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat Temp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat Speed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1 Temp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1 Duration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2 Temp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2 Duration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3 Temp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3 Duration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4 Temp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4 Duration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5 Temp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5 Duration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown Speed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "動作敏感度",
@@ -207,6 +276,10 @@
             "displayText": "詳細焊接畫面",
             "description": "喺焊接模式畫面以英文細字顯示詳細嘅資料"
         },
+        "BluetoothLE": {
+            "displayText": "Bluetooth",
+            "description": "Enables BLE"
+        },
         "PowerLimit": {
             "displayText": "功率限制",
             "description": "限制焫雞可用嘅最大功率 <W=watt（火）>"
@@ -238,14 +311,6 @@
         "LanguageSwitch": {
             "displayText": "語言： 廣東話",
             "description": ""
-        },
-        "BLEEnabled": {
-            "displayText": "BLE Enabled",
-            "description": ""
-        },
-	"PDVpdoEnabled": {
-            "displayText": "PD VPDO\nEnabled",
-	    "description": "Enables PPS/EPR modes."
-	}
+        }
     }
 }
