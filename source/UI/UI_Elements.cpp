@@ -54,6 +54,7 @@ void render_Number(const ElementSettings_t *settings, screen_arg_t *args) {
 }
 void render_Image(const ElementSettings_t *settings, screen_arg_t *args) {
   // arg is a pointer to the raw image data to display
+  OLED::drawArea(settings->position.x, settings->position.y, settings->size.w, settings->size.h, (uint8_t *)args->ptr)
 }
 void render_PowerSource(const ElementSettings_t *settings, screen_arg_t *args) {
   //
