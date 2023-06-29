@@ -1,4 +1,8 @@
 #include "UI.h"
-void ui_render_screen(Screen_t *screen, ScreenContext_t *context) {
-  // Basically switch out the handlers
+#include "OLED.hpp"
+void ui_render_screen(screenLayout_t *screen, ScreenContext_t *context) {
+  // Walk the struct associated to the screen, calling render for each element of the screen
+  // Then start OLED refresh
+
+  OLED::refresh();
 }

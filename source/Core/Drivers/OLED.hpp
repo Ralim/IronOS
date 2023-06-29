@@ -103,7 +103,7 @@ public:
   static int16_t getCursorX() { return cursor_x; }
 
   static void printBounded(const char *str, const uint8_t x, const uint8_t y, const uint8_t w, const uint8_t h, FontStyle fontStyle = FontStyle::FROM_TEXT);
-  void        printNumberBounded(const uint16_t num, bool noLeaderZeros, const uint8_t x, const uint8_t y, const uint8_t w, const uint8_t h);
+  static void printNumberBounded(const uint16_t num, bool noLeaderZeros, const uint8_t x, const uint8_t y, const uint8_t w, const uint8_t h);
 
   static void print(const char *string, FontStyle fontStyle,
                     uint8_t length = 255); // Draw a string to the current location, with selected font; optionally - with MAX length only

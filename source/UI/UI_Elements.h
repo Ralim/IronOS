@@ -1,5 +1,6 @@
 #pragma once
-#include "UI.h"
+#include <stdint.h>
+
 typedef enum {
   Text,         // Basic text splat, using re-encoded strings
   Number,       // Draws numbers using best size for the height (always one line)
@@ -23,5 +24,3 @@ typedef struct {
   } size;
 
 } ElementSettings_t;
-
-void ui_render_element(const ElementTypes_t element,const ElementSettings_t * settings, screen_arg_t *args);

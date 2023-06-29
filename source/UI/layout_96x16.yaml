@@ -1,5 +1,5 @@
 layouts:
-  simplifiedHome:
+  SimplifiedHome:
     mirrorOnRotate: true
     elements:
       - type: image

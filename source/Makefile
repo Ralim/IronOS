@@ -171,6 +171,7 @@ SOURCE_DRIVERS_DIR = ./Core/Drivers
 INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR = ./Core/Drivers/usb-pd/tests
 PD_DRIVER_DIR = ./Core/Drivers/usb-pd
+UI_DIR = ./UI
 
 
 # Find-all's used for formatting; have to exclude external modules
@@ -419,6 +420,7 @@ INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(FRTOS_INC_DIR)	\
 	-I$(DRIVER_INC_DIR) \
 	-I$(BSP_INC_DIR) \
+	-I$(UI_DIR) \
 	-I$(THREADS_INC_DIR) \
 	-I$(THREADS_OP_MODES_INC_DIR) \
 	-I$(THREADS_OP_MODES_TOOLS_INC_DIR) \
@@ -433,6 +435,7 @@ EXCLUDED_DIRS := -path  $(PINECILV2_VENDOR_BSP_ES8388_DIR) \
 -o -path $(PINECILV2_VENDOR_BSP_USB_DIR) \
 
 SOURCE := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.c') \
+$(shell find $(UI_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.c') \
 $(shell find $(SOURCE_DRIVERS_DIR) -type f -name '*.c') \
 $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS)  \) -prune -false -o -type f -name '*.c')\
@@ -441,6 +444,7 @@ $(SOURCE_BRIEFLZ_DIR)/depack.c
 # We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
 SOURCE_CPP := $(shell find $(SOURCE_THREADS_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_CORE_DIR) -type f -name '*.cpp') \
+$(shell find $(UI_DIR) -type f -name '*.cpp') \
 $(shell find $(SOURCE_DRIVERS_DIR) -path $(PD_DRIVER_TESTS_DIR) -prune -false -o -type f -name '*.cpp') \
 $(shell find $(DEVICE_BSP_DIR) -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o -type f -name '*.cpp')  \
 $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
