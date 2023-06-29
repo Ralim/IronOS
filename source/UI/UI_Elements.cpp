@@ -1,4 +1,5 @@
 #include "UI_Elements.h"
+#include "FontUtils.h"
 #include "OLED.hpp"
 void render_Text(const ElementSettings_t *settings, screen_arg_t *args);
 void render_Number(const ElementSettings_t *settings, screen_arg_t *args);
@@ -48,10 +49,11 @@ void render_Text(const ElementSettings_t *settings, screen_arg_t *args) {
   OLED::printBounded((const char *)args->ptr, settings->position.x, settings->position.y, settings->size.w, settings->size.h);
 }
 void render_Number(const ElementSettings_t *settings, screen_arg_t *args) {
-  //
+  // Arg is an int32 of the number to display
+  OLED::printNumberBounded(args->i32, true, settings->position.x, settings->position.y, settings->size.w, settings->size.h);
 }
 void render_Image(const ElementSettings_t *settings, screen_arg_t *args) {
-  //
+  // arg is a pointer to the raw image data to display
 }
 void render_PowerSource(const ElementSettings_t *settings, screen_arg_t *args) {
   //
