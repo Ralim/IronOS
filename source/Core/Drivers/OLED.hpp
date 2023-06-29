@@ -10,6 +10,7 @@
 #ifndef OLED_HPP_
 #define OLED_HPP_
 #include "Font.h"
+#include "FontUtils.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include <BSP.h>
@@ -60,12 +61,6 @@ extern "C" {
 
 #endif
 #define FRAMEBUFFER_START 17
-
-enum class FontStyle {
-  SMALL,
-  LARGE,
-  EXTRAS,
-};
 
 class OLED {
 public:
