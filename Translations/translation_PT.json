@@ -13,10 +13,10 @@
             "message": "Algumas configurações\nforam alteradas!"
         },
         "NoAccelerometerMessage": {
-            "message": "Acelerómetro não\ndetectado!"
+            "message": "Acelerómetro não\ndetetado!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "USB-PD IC não\ndetectado!"
+            "message": "USB-PD IC não\ndetetado!"
         },
         "LockingKeysString": {
             "message": "Bloqueado"
@@ -31,7 +31,7 @@
             "message": "Thermal\nRunaway"
         },
         "SettingsCalibrationWarning": {
-            "message": "Antes de reninciar certifique-se que o ferro est à temperatura ambiente!"
+            "message": "Antes de reiniciar certifique-se que o ferro está à temperatura ambiente!"
         },
         "CJCCalibrating": {
             "message": "calibrar\n"
@@ -67,7 +67,7 @@
             "message": "Cooldown\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Seu dispositivo provavelmente é falsificado!"
+            "message": "O seu dispositivo provavelmente é falsificado!"
         },
         "TooHotToStartProfileWarning": {
             "message": "Too hot to\nstart profile"
@@ -133,7 +133,7 @@
             "description": "Activa o modo PPS & EPR"
         },
         "BoostTemperature": {
-            "displayText": "Modo turbo\ntemperat.",
+            "displayText": "Temp.\nModo turbo",
             "description": "Ajuste de temperatura do \"modo turbo\""
         },
         "AutoStart": {
@@ -141,16 +141,16 @@
             "description": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp mudança\ncurta",
+            "displayText": "Mudança temp.\ncurta",
             "description": "A temperatura será aumentada com um click curto"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp mudança\nlonga",
+            "displayText": "Mudança temp.\nlonga",
             "description": "A temperatura será aumentada com um click longo"
         },
         "LockingMode": {
-            "displayText": "Permitir bloquear\nbutões",
-            "description": "Durante a solda primir os dois butões para alternar entre (D=disativas | B=boost mode | F=bloqueio total)"
+            "displayText": "Permitir bloquear\nbotões",
+            "description": "Durante a solda premir os dois botões para alternar entre (D=desativados | B=modo turbo | F=bloqueio total)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -225,7 +225,7 @@
             "description": "Tempo para desligar (Minutos)"
         },
         "HallEffSensitivity": {
-            "displayText": "Sensibilidade de\nmagentismo",
+            "displayText": "Sensibilidade de\nmagnetismo",
             "description": "Sensibilidade de magnetismo (0=Desligado | 1=Menor | ... | 9=Maior)"
         },
         "TemperatureUnit": {
@@ -242,50 +242,50 @@
         },
         "ScrollingSpeed": {
             "displayText": "Velocidade\ntexto ajuda",
-            "description": "Velocidade a que o texto é mostrado"
+            "description": "Velocidade a que o texto de ajuda é apresentado"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Mudar\n+ - teclas",
-            "description": "Inverter o alinhamento dos butões para ajudar a temperatura"
+            "displayText": "Trocar\nbotões + -",
+            "description": "Inverte o funcionamento dos botões de ajuste da temperatura"
         },
         "AnimSpeed": {
             "displayText": "Velocidade de\nanimação",
-            "description": "Sitio das animações no menu (O=off | S=lentas | M=medias | F=rapidas)"
+            "description": "Velocidade das animações no menu (O=off | S=lenta | M=média | F=rápida)"
         },
         "AnimLoop": {
             "displayText": "Repetir\nanimações",
-            "description": "Repetir icon de animações no ecrã principal"
+            "description": "Repete animações de ícones no menu principal"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Ajustar o brilho do ecrã OLED"
+            "displayText": "Brilho\ndo ecrã",
+            "description": "Ajusta o brilho do ecrã OLED"
         },
         "ColourInversion": {
             "displayText": "Inverter\necrã",
-            "description": "Inverter as cores do ecrã OLED"
+            "description": "Inverte as cores do ecrã OLED"
         },
         "LOGOTime": {
             "displayText": "Duração do\nlogo no arranque",
-            "description": "Definir a duração do logotipo no arranque em (s=segundos)"
+            "description": "Define a duração do logotipo no arranque em (s=segundos)"
         },
         "AdvancedIdle": {
-            "displayText": "Ecrã repouso\navançada",
-            "description": "Mostra informações avançadas quando em espera"
+            "displayText": "Ecrã repouso\navançado",
+            "description": "Mostra informações avançadas quando em repouso"
         },
         "AdvancedSoldering": {
-            "displayText": "Ecrã trabalho\navançado",
-            "description": "Mostra informações avançadas durante o uso"
+            "displayText": "Ecrã solda\navançado",
+            "description": "Mostra informações avançadas durante a solda"
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Ativa o Bluetooth Low Energy (BLE)"
         },
         "PowerLimit": {
             "displayText": "Limite de\npotência",
             "description": "Potência máxima a usar (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrar CJC\nno prozimo arranque",
+            "displayText": "Calibrar CJC\nno próximo arranque",
             "description": "No próximo arranque CJC será calibrada  (não será necessário caso o Delta T seja < 5°C)"
         },
         "VoltageCalibration": {

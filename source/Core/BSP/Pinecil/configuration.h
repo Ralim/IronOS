@@ -63,10 +63,10 @@
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS             0   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS             100 // Max OLED brightness selectable
-#define BRIGHTNESS_STEP            25  // OLED brightness increment
-#define DEFAULT_BRIGHTNESS         25  // default OLED brightness
+#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP    25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS 25  // default OLED brightness
 
 /**
  * Temp change settings
@@ -86,7 +86,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif
+#endif /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -146,6 +146,7 @@
 #define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
 
 #define POW_PD     1
+#define POW_PD_EXT 0
 #define POW_QC     1
 #define POW_DC     1
 #define POW_QC_20V 1
@@ -162,9 +163,12 @@
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
-#endif
-#endif
+#define CANT_DIRECT_READ_SETTINGS
+#endif /* Pinecil */
 
-#define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 
 #define HAS_POWER_DEBUG_MENU
+
+#endif /* CONFIGURATION_H_ */
