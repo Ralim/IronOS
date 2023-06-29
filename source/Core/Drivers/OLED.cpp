@@ -32,7 +32,7 @@ uint32_t           OLED::displayChecksum;
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     /**/
     {0x80, 0xAE, 0},            /*Display off*/
-    {0x80, 0xD3, 0},            /*Set display clock divide ratio / osc freq*/
+    {0x80, OLED_DIVIDER, 0},    /*Set display clock divide ratio / osc freq*/
     {0x80, 0x52, 0},            /*Divide ratios*/
     {0x80, 0xA8, 0},            /*Set Multiplex Ratio*/
     {0x80, OLED_HEIGHT - 1, 0}, /*Multiplex ratio adjusts how far down the matrix it scans*/
@@ -90,7 +90,7 @@ const uint8_t REFRESH_COMMANDS[17] = {
     0x80,
     0x00, // A
     0x80,
-    (OLED_HEIGHT / 8), // B
+    (OLED_HEIGHT / 8) - 1, // B
 
     // Start of data
     0x40,
@@ -127,6 +127,7 @@ void OLED::initialize() {
 #endif
   displayOffset = 0;
   memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
+  memcpy(&secondFrameBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
 
   // Set the display to be ON once the settings block is sent and send the
   // initialisation data to the OLED.
@@ -271,7 +272,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
   TickType_t duration      = 0;
   TickType_t start         = xTaskGetTickCount();
   uint8_t    offset        = 0;
-
+  TickType_t startDraw     = xTaskGetTickCount();
   while (duration <= totalDuration) {
     duration          = xTaskGetTickCount() - start;
     uint16_t progress = ((duration * 100) / totalDuration); // Percentage of the period we are through for animation
@@ -308,9 +309,8 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
     memmove(&stripPointers[3][newStart], &stripBackPointers[3][newEnd], progress);
 #endif
 
-    TickType_t start = xTaskGetTickCount();
     refresh(); // Now refresh to write out the contents to the new page
-    vTaskDelayUntil(&start, TICKS_100MS / 7);
+    vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
     if (getButtonState() != BUTTON_NONE) {
       return;
     }
@@ -332,6 +332,7 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
  * **This function blocks until the transition has completed or user presses button**
  */
 void OLED::transitionScrollDown() {
+  TickType_t startDraw = xTaskGetTickCount();
 
   for (uint8_t heightPos = 0; heightPos < OLED_HEIGHT; heightPos++) {
     // For each line, we shuffle all bits up a row
@@ -374,9 +375,8 @@ void OLED::transitionScrollDown() {
       refresh(); // Now refresh to write out the contents to the new page
       return;
     }
-    TickType_t start = xTaskGetTickCount();
     refresh(); // Now refresh to write out the contents to the new page
-    vTaskDelayUntil(&start, TICKS_100MS / 7);
+    vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
 }
 
