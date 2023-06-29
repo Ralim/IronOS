@@ -25,14 +25,15 @@ extern TickType_t   lastMovementTime;
 }
 // Accelerometer type
 enum class AccelType {
-  Scanning = 0,
-  None     = 1,
-  MMA      = 2,
-  LIS      = 3,
-  BMA      = 4,
-  MSA      = 5,
-  SC7      = 6,
-  GPIO = 7,
+  Scanning  = 0,
+  None      = 1,
+  MMA       = 2,
+  LIS       = 3,
+  BMA       = 4,
+  MSA       = 5,
+  SC7       = 6,
+  GPIO      = 7,
+  LIS_CLONE = 8,
 };
 extern AccelType DetectedAccelerometerVersion;
 

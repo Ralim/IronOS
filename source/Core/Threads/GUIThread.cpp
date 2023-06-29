@@ -9,7 +9,7 @@ extern "C" {
 }
 #include "BootLogo.h"
 #include "Buttons.hpp"
-#include "I2CBB.hpp"
+#include "I2CBB2.hpp"
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
 #include "OLED.hpp"
@@ -50,14 +50,13 @@ void startGUITask(void const *argument) {
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
   // If the front button is held down, on supported devices, show PD debugging metrics
 #ifdef HAS_POWER_DEBUG_MENU
-#ifdef POW_PD
+#ifdef DEBUG_POWER_MENU_BUTTON_B
+  if (getButtonB()) {
+#else
   if (getButtonA()) {
 #endif
-#if POW_PD_EXT == 1
-    if (getButtonB()) {
-#endif
-      showPDDebug();
-    }
+    showPDDebug();
+  }
 #endif
 
   if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
