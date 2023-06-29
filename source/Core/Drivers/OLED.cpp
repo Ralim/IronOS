@@ -272,7 +272,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
   TickType_t duration      = 0;
   TickType_t start         = xTaskGetTickCount();
   uint8_t    offset        = 0;
-
+  TickType_t startDraw     = xTaskGetTickCount();
   while (duration <= totalDuration) {
     duration          = xTaskGetTickCount() - start;
     uint16_t progress = ((duration * 100) / totalDuration); // Percentage of the period we are through for animation
@@ -309,9 +309,8 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
     memmove(&stripPointers[3][newStart], &stripBackPointers[3][newEnd], progress);
 #endif
 
-    TickType_t start = xTaskGetTickCount();
     refresh(); // Now refresh to write out the contents to the new page
-    vTaskDelayUntil(&start, TICKS_100MS / 7);
+    vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
     if (getButtonState() != BUTTON_NONE) {
       return;
     }
@@ -333,6 +332,7 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
  * **This function blocks until the transition has completed or user presses button**
  */
 void OLED::transitionScrollDown() {
+  TickType_t startDraw = xTaskGetTickCount();
 
   for (uint8_t heightPos = 0; heightPos < OLED_HEIGHT; heightPos++) {
     // For each line, we shuffle all bits up a row
@@ -375,9 +375,8 @@ void OLED::transitionScrollDown() {
       refresh(); // Now refresh to write out the contents to the new page
       return;
     }
-    TickType_t start = xTaskGetTickCount();
     refresh(); // Now refresh to write out the contents to the new page
-    vTaskDelayUntil(&start, TICKS_100MS / 7);
+    vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
 }
 
