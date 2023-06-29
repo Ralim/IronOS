@@ -432,14 +432,25 @@ void OLED::setInverseDisplay(bool inverse) {
   OLED_Setup_Array[21].val = normalInverseCmd;
   I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
 }
-void OLED::printBounded(const char *str, const uint8_t x, const uint8_t y, const uint8_t w, const uint8_t h) {
+void OLED::printBounded(const char *str, const uint8_t x, const uint8_t y, const uint8_t w, const uint8_t h, FontStyle fontStyle) {
   setCursor(x, y);
-  const uint8_t *next      = reinterpret_cast<const uint8_t *>(str);
-  FontStyle      fontStyle = FontStyle::SMALL;
-  if (next[0] == 0x01) {
-    fontStyle = FontStyle::LARGE;
-    next++;
+
+  const uint8_t *next = reinterpret_cast<const uint8_t *>(str);
+  // Determine font size by newline magic marker
+  if (fontStyle == FontStyle::FROM_TEXT) {
+    fontStyle = FontStyle::SMALL;
+    if (next[0] == 0x01) {
+      fontStyle = FontStyle::LARGE;
+      next++;
+    }
+  } else if (fontStyle == FontStyle::FROM_HEIGHT) {
+    if (h > get_fontstyle_height(FontStyle::SMALL)) {
+      fontStyle = FontStyle::LARGE;
+    } else {
+      fontStyle = FontStyle::SMALL;
+    }
   }
+
   // Now we walk and print
   while (next[0]) {
     uint16_t index;
@@ -533,6 +544,25 @@ void OLED::drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits) {
     uint16_t value = (x >> (4 * (7 - i))) & 0b1111;
     drawChar(value + 2, fontStyle);
   }
+}
+void OLED::printNumberBounded(const uint16_t num, bool noLeaderZeros, const uint8_t x, const uint8_t y, const uint8_t w, const uint8_t h) {
+  // Print the number to the screen, bounded by the given dimension
+  FontStyle fontStyle = get_fontstyle_fromHeight(h);
+  uint8_t   places    = w / get_fontstyle_width(fontStyle);
+  if (places > 5)
+    places = 5;
+  char buffer[7] = {0, 0, 0, 0, 0, 0, 0};
+
+  uint16_t number = num;
+
+  for (int i = places; i >= 0; i--) {
+    buffer[i] = 2 /*Skew past null and newline*/ + number % 10;
+    number /= 10;
+  }
+
+  if (noLeaderZeros)
+    stripLeaderZeros(buffer, places);
+  printBounded(buffer, x, y, w, h, FontStyle::FROM_HEIGHT);
 }
 // maximum places is 5
 void OLED::printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros) {
