@@ -26,4 +26,4 @@ RUN python3 -m pip install ${PIP_PKGS}
 RUN git config --global --add safe.directory /build/source
 
 COPY . /build/source
-COPY ./Scripts/ci /build/ci
+COPY ./scripts/ci /build/ci

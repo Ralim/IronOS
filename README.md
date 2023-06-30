@@ -67,11 +67,14 @@ For notes on installation for your device, please refer to the flashing guide fo
 - Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods)
 - (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
 - (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
-- [Custom boot up logo support](https://ralim.github.io/IronOS/Logo/)
+- [Custom boot up logo support](https://ralim.github.io/IronOS/Logo/)[^bootlogo]
 - Automatic LCD rotation based on the orientation
 
-**Bootup Logo NOTICE**:
-IronOS supports both a bootup logo _AND_ bootup animations. However, _they are no longer included in this repo_. Please, [read the docs](https://ralim.github.io/IronOS/Logo/) for more information.
+
+[^bootlogo]: **BOOTUP LOGO NOTICE**:
+  IronOS supports both a bootup logo _AND_ bootup animations.
+  However, _**they are no longer included in this repo**_.
+  **Please, [read the docs](https://ralim.github.io/IronOS/Logo/) for more information**.
 
 ## Menu System
 
