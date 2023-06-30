@@ -32,13 +32,13 @@ fi;
 
 # detect availability of docker
 
-docker_compose="`command -v docker-compose`"
-if [ "${?}" -eq 0 ] && [ -n "${docker_compose}" ] && [ -z "${docker_bin}" ]; then
+docker_compose="$(command -v docker-compose)"
+if [ -n "${docker_compose}" ] && [ -z "${docker_bin}" ]; then
 	docker_bin="${docker_compose}"
 fi;
 
-docker_tool="`command -v docker`"
-if [ "${?}" -eq 0 ] && [ -n "${docker_tool}" ] && [ -z "${docker_bin}" ]; then
+docker_tool="$(command -v docker)"
+if [ -n "${docker_tool}" ] && [ -z "${docker_bin}" ]; then
 	docker_bin="${docker_tool}  compose"
 fi;
 
@@ -78,13 +78,13 @@ docker_file="-f ${root_dir}/${docker_conf}"
 
 # change dir to project root dir & run constructed command
 
-cd "${root_dir}"
+cd "${root_dir}" || exit 1
 echo -e "\n====>>>> Firing up & starting container..."
 if [ "${cmd}" = "shell" ]; then
 echo -e "\t* type \"exit\" to end the session when done;"
 fi;
 echo -e "\t* type \"${0} clean\" to delete created container (but not cached data)"
 echo -e "\n====>>>> ${docker_bin}  ${docker_file}  ${docker_cmd}\n"
-${docker_bin}  ${docker_file}  ${docker_cmd}
+eval "${docker_bin}  ${docker_file}  ${docker_cmd}"
 exit "${?}"
 
