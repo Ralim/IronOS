@@ -206,6 +206,11 @@ void FinishMeasureTipResistance() {
   uint8_t newRes = 0;
   if (reading > 8000) {
     // return; // Change nothing as probably disconnected tip
+  } else if (reading < 500) {
+    for (;;) /* Tip shorted, wait until reset */
+    {
+      __NOP();
+    }
   } else if (reading < 4000) {
     newRes = 62;
   } else {
