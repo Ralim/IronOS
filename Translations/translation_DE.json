@@ -282,7 +282,7 @@
         },
         "PowerLimit": {
             "displayText": "Leistungs-\nmaximum",
-            "description": "Maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
+            "description": "Durchschnittliche maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
         },
         "CalibrateCJC": {
             "displayText": "Temperatur\nkalibrieren",

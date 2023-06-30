@@ -282,7 +282,7 @@
         },
         "PowerLimit": {
             "displayText": "Power\nlimit",
-            "description": "Maximum power the iron can use (W=watt)"
+            "description": "Average maximum power the iron can use (W=watt)"
         },
         "CalibrateCJC": {
             "displayText": "Calibrate CJC\nat next boot",
