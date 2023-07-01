@@ -46,8 +46,8 @@ plugins:
   - autolinks
   - awesome-pages
   - git-revision-date
-  
-  
+
+
 # Markdown Extensions
 markdown_extensions:
   - attr_list
