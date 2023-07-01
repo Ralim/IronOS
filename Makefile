@@ -33,7 +33,7 @@ endif
 ### global static variables
 
 # docker-related files
-DOCKER_YML=$(CURDIR)/IronOS.yml
+DOCKER_YML=$(CURDIR)/Env.yml
 DOCKER_FILE=$(CURDIR)/scripts/IronOS.Dockerfile
 
 # docker dependencies

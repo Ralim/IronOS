@@ -19,7 +19,7 @@ usage()
 
 ### main
 
-docker_conf="IronOS.yml"
+docker_conf="Env.yml"
 
 # allow providing custom path to docker tool using DOCKER_BIN external env. var.
 # (compose sub-command must be included, i.e. DOCKER_BIN="/usr/local/bin/docker compose" ./deploy.sh)
@@ -73,7 +73,7 @@ script_path="${PWD}"/"${0}"
 script_dir=${script_path%"${script_file}"}
 # IronOS/
 root_dir="${script_dir}/.."
-# IronOS/IronOS.yml
+# IronOS/Env.yml
 docker_file="-f ${root_dir}/${docker_conf}"
 
 # change dir to project root dir & run constructed command
