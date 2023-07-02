@@ -32,7 +32,7 @@ jobs:
       - name: copy license text
         run: |
           cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+          cp scripts/LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
 
       - name: Archive ${{ matrix.model }} artifacts
         uses: actions/upload-artifact@v3
@@ -83,7 +83,7 @@ jobs:
       - name: copy license text
         run: |
           cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+          cp scripts/LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
 
       - name: Archive ${{ matrix.model }} artifacts
         uses: actions/upload-artifact@v3
