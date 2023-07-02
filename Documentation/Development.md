@@ -125,7 +125,7 @@ On Windows follow the instructions on the official documentation to install 'Win
 
     ```sh
     cd IronOS
-    ./start_dev.sh
+    ./scripts/deploy.sh
     ```
 
     This script will build a Docker image and run a container with the necessary tools to build the firmware.
