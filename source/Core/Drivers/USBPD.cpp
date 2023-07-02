@@ -119,8 +119,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
   *bestIndex   = 0xFF; // Mark unselected
   *bestVoltage = 5000; // Default 5V
 
-  // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
-  uint8_t tipResistance = getTipResistanceX10() + 5;
+  uint8_t tipResistance = getTipResistanceX10();
 #ifdef MODEL_HAS_DCDC
   // If this device has step down DC/DC inductor to smooth out current spikes
   // We can instead ignore resistance and go for max voltage we can accept; and rely on the DC/DC regulation to keep under current limit
