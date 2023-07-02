@@ -6,7 +6,7 @@ site_description: "IronOS Open Source Soldering Iron firmware for Miniware and P
 # repo config
 repo_url: https://github.com/ralim/IronOS/
 
-docs_dir: Documentation
+docs_dir: ../Documentation
 edit_uri: edit/dev/Documentation/
 
 # Theme and config
@@ -46,8 +46,8 @@ plugins:
   - autolinks
   - awesome-pages
   - git-revision-date
-  
-  
+
+
 # Markdown Extensions
 markdown_extensions:
   - attr_list
