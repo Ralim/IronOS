@@ -35,6 +35,6 @@ jobs:
               mkdocs-git-revision-date-plugin mkdocs-autolinks-plugin \
               mkdocs-awesome-pages-plugin 
       - run: git config user.name 'github-actions[bot]' && git config user.email 'github-actions[bot]@users.noreply.github.com'
-      
+
       - name: Publish docs
-        run: mkdocs gh-deploy
+        run: mkdocs gh-deploy -f scripts/IronOS-mkdocs.yml -d ../site
