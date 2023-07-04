@@ -31,7 +31,7 @@ uint32_t           OLED::displayChecksum;
 /*Data packets are prefixed with 0x40*/
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     /**/
-    {0x80, 0xAE, 0},            /*Display off*/
+    {0x80, OLED_OFF, 0},            /*Display off*/
     {0x80, OLED_DIVIDER, 0},    /*Set display clock divide ratio / osc freq*/
     {0x80, 0x52, 0},            /*Divide ratios*/
     {0x80, 0xA8, 0},            /*Set Multiplex Ratio*/
@@ -56,10 +56,10 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     {0x80, 0xDB, 0},             /*Adjust VCOMH regulator ouput*/
     {0x80, 0x30, 0},             /*VCOM level*/
     {0x80, 0xA4, 0},             /*Enable the display GDDR*/
-    {0x80, 0XA6, 0},             /*Normal display*/
+    {0x80, 0xA6, 0},             /*Normal display*/
     {0x80, 0x20, 0},             /*Memory Mode*/
     {0x80, 0x00, 0},             /*Wrap memory*/
-    {0x80, 0xAF, 0},             /*Display on*/
+    {0x80, OLED_ON, 0},             /*Display on*/
 };
 // Setup based on the SSD1307 and modified for the SSD1306
 
@@ -115,6 +115,7 @@ static uint16_t lerp(uint16_t a, uint16_t b, uint16_t t) { return a + t * (b - a
 void OLED::initialize() {
   cursor_x = cursor_y = 0;
   inLeftHandedMode    = false;
+
 #ifdef OLED_128x32
   stripPointers[0] = &screenBuffer[FRAMEBUFFER_START];
   stripPointers[1] = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
@@ -124,7 +125,8 @@ void OLED::initialize() {
 #else
   stripPointers[0] = &screenBuffer[FRAMEBUFFER_START];
   stripPointers[1] = &screenBuffer[FRAMEBUFFER_START + OLED_WIDTH];
-#endif
+
+#endif /* OLED_128x32 */
   displayOffset = 0;
   memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
   memcpy(&secondFrameBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
@@ -140,6 +142,7 @@ void OLED::initialize() {
   setDisplayState(DisplayState::ON);
   initDone = true;
 }
+
 void OLED::setFramebuffer(uint8_t *buffer) {
   stripPointers[0] = &buffer[FRAMEBUFFER_START];
   stripPointers[1] = &buffer[FRAMEBUFFER_START + OLED_WIDTH];
@@ -147,7 +150,7 @@ void OLED::setFramebuffer(uint8_t *buffer) {
 #ifdef OLED_128x32
   stripPointers[2] = &buffer[FRAMEBUFFER_START + (2 * OLED_WIDTH)];
   stripPointers[3] = &buffer[FRAMEBUFFER_START + (3 * OLED_WIDTH)];
-#endif
+#endif /* OLED_128x32 */
 }
 
 /*
@@ -156,7 +159,6 @@ void OLED::setFramebuffer(uint8_t *buffer) {
  * Precursor is the command char that is used to select the table.
  */
 void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
-
   const uint8_t *currentFont;
   static uint8_t fontWidth, fontHeight;
   uint16_t       index;
@@ -243,7 +245,7 @@ void OLED::maskScrollIndicatorOnOLED() {
 #ifdef OLED_128x32
       0x00,
       0x00,
-#endif
+#endif /* OLED_128x32 */
       // Clears two 8px strips
       0x00,
       0x00,
@@ -266,7 +268,7 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 #ifdef OLED_128x32
   stripBackPointers[2] = &secondFrameBuffer[OLED_WIDTH * 2];
   stripBackPointers[3] = &secondFrameBuffer[OLED_WIDTH * 3];
-#endif
+#endif /* OLED_128x32 */
 
   TickType_t totalDuration = TICKS_100MS * 5; // 500ms
   TickType_t duration      = 0;
@@ -297,17 +299,19 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
     memmove(&stripPointers[0][oldStart], &stripPointers[0][oldPrevious], OLED_WIDTH - progress);
     memmove(&stripPointers[1][oldStart], &stripPointers[1][oldPrevious], OLED_WIDTH - progress);
+
 #ifdef OLED_128x32
     memmove(&stripPointers[2][oldStart], &stripPointers[2][oldPrevious], OLED_WIDTH - progress);
     memmove(&stripPointers[3][oldStart], &stripPointers[3][oldPrevious], OLED_WIDTH - progress);
-#endif
+#endif /* OLED_128x32 */
 
     memmove(&stripPointers[0][newStart], &stripBackPointers[0][newEnd], progress);
     memmove(&stripPointers[1][newStart], &stripBackPointers[1][newEnd], progress);
+
 #ifdef OLED_128x32
     memmove(&stripPointers[2][newStart], &stripBackPointers[2][newEnd], progress);
     memmove(&stripPointers[3][newStart], &stripBackPointers[3][newEnd], progress);
-#endif
+#endif /* OLED_128x32 */
 
     refresh(); // Now refresh to write out the contents to the new page
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
@@ -367,7 +371,7 @@ void OLED::transitionScrollDown() {
       secondFrameBuffer[firstStripPos] = (secondFrameBuffer[firstStripPos] >> 1) | ((secondFrameBuffer[secondStripPos] & 0x01) << 7);
       // Finally on the bottom row; we shuffle it up ready
       secondFrameBuffer[secondStripPos] >>= 1;
-#endif
+#endif /* OLED_128x32 */
     }
     if (getButtonState() != BUTTON_NONE) {
       // Exit early, but have to transition whole buffer
@@ -383,7 +387,7 @@ void OLED::transitionScrollDown() {
 void OLED::setRotation(bool leftHanded) {
 #ifdef OLED_FLIP
   leftHanded = !leftHanded;
-#endif
+#endif /* OLED_FLIP */
   if (inLeftHandedMode == leftHanded) {
     return;
   }
@@ -399,7 +403,7 @@ void OLED::setRotation(bool leftHanded) {
   } else {
     OLED_Setup_Array[9].val = 0xA0;
   }
-#endif
+#endif /* OLED_SEGMENT_MAP_REVERSED */
   // send command struct again with changes
   if (leftHanded) {
     OLED_Setup_Array[5].val = 0xC8; // c1?
@@ -486,6 +490,7 @@ inline void stripLeaderZeros(char *buffer, uint8_t places) {
     }
   }
 }
+
 void OLED::drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits) {
   // print number to hex
   for (uint_fast8_t i = 0; i < digits; i++) {
@@ -493,6 +498,7 @@ void OLED::drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits) {
     drawChar(value + 2, fontStyle);
   }
 }
+
 // maximum places is 5
 void OLED::printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, bool noLeaderZeros) {
   char buffer[7] = {0};
