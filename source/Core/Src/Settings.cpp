@@ -108,9 +108,9 @@ static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)Se
 void saveSettings() {
 #ifdef CANT_DIRECT_READ_SETTINGS
   // For these devices flash is not 1:1 mapped, so need to read into staging buffer
-  systemSettingsType temp;
-  flash_read_buffer((uint8_t *)&temp, sizeof(systemSettingsType));
-  if (memcmp((void *)&temp, (void *)&systemSettings, sizeof(systemSettingsType))) {
+  systemSettingsType settings;
+  flash_read_buffer((uint8_t *)&settings, sizeof(systemSettingsType));
+  if (memcmp((void *)&settings, (void *)&systemSettings, sizeof(systemSettingsType))) {
     flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
   }
 
@@ -119,7 +119,7 @@ void saveSettings() {
     flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
   }
 
-#endif
+#endif /* CANT_DIRECT_READ_SETTINGS */
 }
 
 bool loadSettings() {
