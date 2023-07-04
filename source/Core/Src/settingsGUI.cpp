@@ -1169,4 +1169,3 @@ void enterSettingsMenu() {
   gui_Menu(rootSettingsMenu); // Call the root menu
   saveSettings();
 }
-
