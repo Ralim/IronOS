@@ -699,10 +699,10 @@ static bool setDisplayRotation(void) {
   bool res = nextSettingValue(SettingsOptions::OrientationMode);
   switch (getSettingValue(SettingsOptions::OrientationMode)) {
   case orientationMode_t::RIGHT:
-    OLED::setRotation(orientationMode_t::RIGHT);
+    OLED::setRotation(false);
     break;
   case orientationMode_t::LEFT:
-    OLED::setRotation(orientationMode_t::LEFT);
+    OLED::setRotation(true);
     break;
   case orientationMode_t::AUTO:
     // do nothing on auto
