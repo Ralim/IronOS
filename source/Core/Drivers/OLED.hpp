@@ -36,7 +36,9 @@ extern "C" {
 #endif
 
 #define DEVICEADDR_OLED (0x3c << 1)
+
 #ifdef OLED_128x32
+
 #define OLED_WIDTH           128
 #define OLED_HEIGHT          32
 #define OLED_GRAM_START      0x00 // Should be 0x00 when we have full width
@@ -44,22 +46,28 @@ extern "C" {
 #define OLED_GRAM_START_FLIP 0
 #define OLED_GRAM_END_FLIP   0x7F
 
-#define OLED_VCOM_LAYOUT 0x12
+#define OLED_VCOM_LAYOUT     0x12
 #define OLED_SEGMENT_MAP_REVERSED
-#define OLED_DIVIDER 0xD3
-#else
-#define OLED_WIDTH       96
-#define OLED_HEIGHT      16
-#define OLED_VCOM_LAYOUT 0x02
+#define OLED_DIVIDER         0xD3
 
+#else
+
+#define OLED_WIDTH           96
+#define OLED_HEIGHT          16
 #define OLED_GRAM_START      0x20
 #define OLED_GRAM_END        0x7F
 #define OLED_GRAM_START_FLIP 0
 #define OLED_GRAM_END_FLIP   95
-#define OLED_DIVIDER         0xD5
-#define OLED_SEGMENT_MAP     0xA0
 
-#endif
+#define OLED_VCOM_LAYOUT     0x02
+#define OLED_SEGMENT_MAP     0xA0
+#define OLED_DIVIDER         0xD5
+
+#endif /* OLED_128x32 */
+
+#define OLED_ON   0xAF
+#define OLED_OFF  0xAE
+
 #define FRAMEBUFFER_START 17
 
 enum class FontStyle {
@@ -88,7 +96,7 @@ public:
   static void setDisplayState(DisplayState state) {
     if (state != displayState) {
       displayState    = state;
-      screenBuffer[1] = (state == ON) ? 0xAF : 0xAE;
+      screenBuffer[1] = (state == ON) ? OLED_ON : OLED_OFF;
       // Dump the screen state change out _now_
       I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START - 1);
       osDelay(TICKS_10MS);
@@ -102,7 +110,7 @@ public:
     return !inLeftHandedMode;
 #else
     return inLeftHandedMode;
-#endif
+#endif /* OLED_FLIP */
   }
   static void    setBrightness(uint8_t contrast);
   static void    setInverseDisplay(bool inverted);
