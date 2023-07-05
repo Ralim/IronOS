@@ -32,7 +32,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 | Miniware TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |   ❌      |      ❌**            |                                              |
 | Miniware TS80  | ❌  | ✔️  | ❌  | ❌  | ❌  |   N/A     |     ❌***            |                                              |
 
-_Tip Sense_ refers to the device being able to select the different between the "common" TS100 or Hakko T12 style tips and the custom shorter tips from Pine64 that are a lower resistance, allowing more power. This is N/A for TS80/TS80P as there is only one model of tip for them.
+_Tip Sense_ refers to the device being able to choose between the 'usual' TS100 or Hakko T12 style tips and Pine64's custom shorter tips which have lower resistance and allow for more power. This is N/A for TS80/TS80P as there is only one model of tip for them.
 
 _Recommended Purchase_ is only referring to if you are buying a **new** device. Of course all the devices listed are supported and will work excellently for years to come.
 
