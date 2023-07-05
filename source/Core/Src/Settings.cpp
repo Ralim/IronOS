@@ -19,7 +19,7 @@ bool sanitiseSettings();
 #define QC_VOLTAGE_MAX 220
 #else
 #define QC_VOLTAGE_MAX 140
-#endif
+#endif /* POW_QC_20V */
 
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from
@@ -36,6 +36,7 @@ typedef struct {
 
 //~1024 is common programming size, setting threshold to be lower so we have warning
 static_assert(sizeof(systemSettingsType) < 512);
+
 // char (*__kaboom)[sizeof(systemSettingsType)] = 1; // Uncomment to print size at compile time
 volatile systemSettingsType systemSettings;
 
@@ -108,9 +109,9 @@ static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)Se
 void saveSettings() {
 #ifdef CANT_DIRECT_READ_SETTINGS
   // For these devices flash is not 1:1 mapped, so need to read into staging buffer
-  systemSettingsType temp;
-  flash_read_buffer((uint8_t *)&temp, sizeof(systemSettingsType));
-  if (memcmp((void *)&temp, (void *)&systemSettings, sizeof(systemSettingsType))) {
+  systemSettingsType settings;
+  flash_read_buffer((uint8_t *)&settings, sizeof(systemSettingsType));
+  if (memcmp((void *)&settings, (void *)&systemSettings, sizeof(systemSettingsType))) {
     flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
   }
 
@@ -119,7 +120,7 @@ void saveSettings() {
     flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
   }
 
-#endif
+#endif /* CANT_DIRECT_READ_SETTINGS */
 }
 
 bool loadSettings() {
@@ -161,6 +162,7 @@ bool sanitiseSettings() {
   }
   return dirty;
 }
+
 void resetSettings() {
   memset((void *)&systemSettings, 0xFF, sizeof(systemSettingsType));
   sanitiseSettings();
@@ -179,6 +181,7 @@ void setSettingValue(const enum SettingsOptions option, const uint16_t newValue)
   }
   systemSettings.settingsValues[(int)option] = constrainedValue;
 }
+
 // Lookup wrapper for ease of use (with typing)
 uint16_t getSettingValue(const enum SettingsOptions option) { return systemSettings.settingsValues[(int)option]; }
 
@@ -217,6 +220,7 @@ bool prevSettingValue(const enum SettingsOptions option) {
   // Return if we are at the min
   return constants.min == systemSettings.settingsValues[(int)option];
 }
+
 uint16_t lookupHallEffectThreshold() {
   // Return the threshold above which the hall effect sensor is "activated"
   // We want this to be roughly exponentially mapped from 0-1000
@@ -245,6 +249,7 @@ uint16_t lookupHallEffectThreshold() {
     return 0; // Off
   }
 }
+
 // Lookup function for cutoff setting -> X10 voltage
 /*
  * 0=DC
