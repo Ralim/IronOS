@@ -85,6 +85,12 @@ typedef enum {
   ZERO   = 3, // Power on only (No heat Mode)
 } autoStartMode_t;
 
+typedef enum {
+  RIGHT = 0, // Right-hand screen orientation
+  LEFT  = 1, // Left-hand screen orientation
+  AUTO  = 2, // Automatic screen orientation based on accel.data if presented
+} orientationMode_t;
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();
