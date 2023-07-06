@@ -132,5 +132,5 @@ clean-build:
 # global clean-up target
 clean-full: clean-build  docker-clean
 
-.PHONY:  docker-shell  docker-build  docker-clean  docs  clean-full
+.PHONY:  help  list  docker-check  docker-shell  docker-build  docker-clean  docs  docs-deploy  clean-build  clean-full
 
