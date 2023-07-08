@@ -5,6 +5,7 @@
  * y: minor version
  * +: build type:
  * * R - git-related release tag vXX.YY
+ * * T - git-related release tag but version is not vXX.YY !
  * * D - git-related dev branch
  * * B - git-related custom branch
  * * G - neither above but git-related

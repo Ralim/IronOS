@@ -1263,7 +1263,7 @@ def get_translation_sanity_checks_text(defs: dict) -> str:
     return sanity_checks_text
 
 
-def get_version_suffix() -> str:
+def get_version_suffix(ver) -> str:
     suffix = str("")
     try:
         # Use commands _hoping_ they won't be too new for one environments nor deprecated for another ones:
@@ -1274,8 +1274,13 @@ def get_version_suffix() -> str:
         ## - get short "traditional" branch name (as in `git branch` for that one with asterisk):
         branch = f"{subprocess.check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('ascii')}"
         if tag and "" != tag:
-            # _Speculate_ on tag that it's Release
-            suffix = "R"
+            # _Speculate_ on tag that it's Release...
+            if ver == tag:
+                # ... but only if double-check for tag is matched
+                suffix = "R"
+            else:
+                # ... otherwise it's tagged but not a release version!
+                suffix = "T"
         elif branch:
                 # _Hardcoded_ current main development branch
                 if "dev" == branch:
@@ -1306,7 +1311,7 @@ def read_version() -> str:
                 matches = re.findall(r"\"(.+?)\"", line)
                 if matches:
                     version = matches[0]
-                    version += get_version_suffix()
+                    version += get_version_suffix(version)
     return version
 
 
