@@ -1263,6 +1263,42 @@ def get_translation_sanity_checks_text(defs: dict) -> str:
     return sanity_checks_text
 
 
+def get_version_suffix() -> str:
+    suffix = str("")
+    try:
+        # Use commands _hoping_ they won't be too new for one environments nor deprecated for another ones:
+        ## - get commit id; --short=7 - the shorted hash with 7 digits (increase/decrease if needed!)
+        sha_id = f"{subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD']).strip().decode('ascii').upper()}"
+        ## - if the exact commit relates to tag, then this command should return one-line tag name:
+        tag = f"{subprocess.check_output(['git', 'tag', '--points-at', '%s' % sha_id]).strip().decode('ascii')}"
+        ## - get short "traditional" branch name (as in `git branch` for that one with asterisk):
+        branch = f"{subprocess.check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('ascii')}"
+        if tag and "" != tag:
+            # _Speculate_ on tag that it's Release
+            suffix = "R"
+        elif branch:
+                # _Hardcoded_ current main development branch
+                if "dev" == branch:
+                    suffix = "D"
+                else:
+                    suffix = "B"
+        else:
+            # something else but from Git
+            suffix = "G"
+        # attach SHA commit anyway
+        suffix += "." + sha_id
+    except subprocess.CalledProcessError:
+        # no git tree so _probably_ Homebrew build from source
+        suffix = "H"
+    except OSError:
+        # something _special_?
+        suffix = "S"
+    if "" == suffix:
+        # something _very_ special!
+        suffix = "V"
+    return suffix
+
+
 def read_version() -> str:
     with open(HERE.parent / "source" / "version.h") as version_file:
         for line in version_file:
@@ -1270,11 +1306,7 @@ def read_version() -> str:
                 matches = re.findall(r"\"(.+?)\"", line)
                 if matches:
                     version = matches[0]
-                    try:
-                        version += f".{subprocess.check_output(['git', 'rev-parse', '--short=7', 'HEAD']).strip().decode('ascii').upper()}"
-                    # --short=7: the shorted hash with 7 digits. Increase/decrease if needed!
-                    except OSError:
-                        version += " git"
+                    version += get_version_suffix()
     return version
 
 
