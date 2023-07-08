@@ -1267,7 +1267,7 @@ def get_version_suffix(ver) -> str:
     suffix = str("")
     try:
         # Use commands _hoping_ they won't be too new for one environments nor deprecated for another ones:
-        ## - get commit id; --short=7 - the shorted hash with 7 digits (increase/decrease if needed!)
+        ## - get commit id; --short=8 - the shorted hash with 8 digits (increase/decrease if needed!)
         sha_id = f"{subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD']).strip().decode('ascii').upper()}"
         ## - if the exact commit relates to tag, then this command should return one-line tag name:
         tag = f"{subprocess.check_output(['git', 'tag', '--points-at', '%s' % sha_id]).strip().decode('ascii')}"

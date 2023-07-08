@@ -1,5 +1,5 @@
 /**
- * Firmware build version - format: xx.yy+[.zzzzzzz]
+ * Firmware build version - format: xx.yy+[.zzzzzzzz]
  *
  * x: major version
  * y: minor version
