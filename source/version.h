@@ -1,13 +1,23 @@
 /**
- * Firmware build version - format: xx.yy.zzzzzzzz
- * x: Major  -  y: Minor  -  z: git short hash generated automaticaly from git
- * i.e.: BUILD_VERSION = 'v2.08' --> Will generated to: 'v2.08.1a2b3c4d'
+ * Firmware build version - format: xx.yy+[.zzzzzzz]
  *
- * vX.MN      - means stable release version with a related git release tag
- * vX.M(N+1)d - means a version under development with next rel.ver. X.M(N+1)
+ * x: major version
+ * y: minor version
+ * +: build type:
+ * * R - git-related release tag vXX.YY
+ * * D - git-related dev branch
+ * * B - git-related custom branch
+ * * G - neither above but git-related
+ * * H - build outside of a git tree (i.e. release tarball)
+ * * S - something special (should not happen?)
+ * * V - something very special (should not happen!)
+ * z: short commit ID hash generated automaticaly from git
+ * * (for git-related build types only)
+ *
  * i.e.:
- *   BUILD_VERSION = 'v2.21'  --> Stable release
- *   BUILD_VERSION = 'v2.22d' --> Devel. for the next stable release of 2.22
+ * * BUILD_VERSION = 'v2.22' -> from tarball:            'v2.22H'
+ * * BUILD_VERSION = 'v2.22' -> from git dev branch:     'v2.22D.1A2B3C4D'
+ * * BUILD_VERSION = 'v2.22' -> from stable git release: 'v2.22R.5E6F7G8H'
  */
 
-#define BUILD_VERSION "v2.22d"
+#define BUILD_VERSION "v2.22"
