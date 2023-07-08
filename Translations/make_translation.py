@@ -1281,25 +1281,26 @@ def get_version_suffix(ver) -> str:
             else:
                 # ... otherwise it's tagged but not a release version!
                 suffix = "T"
-        elif branch:
-                # _Hardcoded_ current main development branch
-                if "dev" == branch:
-                    suffix = "D"
-                else:
-                    suffix = "B"
+        elif branch and "" != branch:
+            # _Hardcoded_ current main development branch...
+            if "dev" == branch:
+                suffix = "D"
+            # ... or some other branch
+            else:
+                suffix = "B"
         else:
-            # something else but from Git
+            # Something else but from Git
             suffix = "G"
-        # attach SHA commit anyway
+        # Attach SHA commit to ID a build since it's from git anyway
         suffix += "." + sha_id
     except subprocess.CalledProcessError:
-        # no git tree so _probably_ Homebrew build from source
+        # No git tree so _probably_ Homebrew build from source
         suffix = "H"
     except OSError:
-        # something _special_?
+        # Something _special_?
         suffix = "S"
     if "" == suffix:
-        # something _very_ special!
+        # Something _very_ special!
         suffix = "V"
     return suffix
 
