@@ -9,9 +9,35 @@ This menu is meant to be simple, so it has no fancy GUI animations.
 
 ## Menu items
 
-Items are shown in the menu on a single line, so they use short codes and appear in this order:
+Items are shown in the menu on a single line, so they use short codes. There is a static line on top which is presented on every sub-screen and reflects exact version of firmware. Version line on top has the following format - `vX.YYN.[ZZZZZZZZ]`:
+
+- X: major version
+- Y: minor version
+- N: build type:
+  - R - git-related **r**elease tag vXX.YY
+  - T - git-related release **t**ag but version is not vXX.YY !
+  - D - git-related **d**ev branch
+  - B - git-related custom **b**ranch
+  - G - neither above but **g**it-related
+  - H - build outside of a git tree (i.e. release tarball or **h**omebrew customization without git)
+  - S - something **s**pecial[^ERR]
+  - V - something **v**ery special[^ERR]
+[^ERR]: `S` and `V` are reserved letters for cases when source of firmware is having very unique origin & configuration
+- Z: short commit ID hash with 8 digits generated automaticaly from git (for git-related build types only)
+
+I.e.:
+- `v2.22H` means firmware built locally from tarball with release version of `2.22`
+- `v2.22D.1A2B3C4D` means firmware with devel version of `2.22` from git `dev` branch & with commit ID `1A2B3C4D` (so it can be traced for debug purposes)
+- `v2.22R.5E6F7G8H` means firmware with official release version of `2.22` and it's properly tagged with `v2.22` git tag & with commid ID `5E6F7G8H`'
+
+Additional dynamic items appear in this order:
+
+### Date
+
+- This is a date of firmware compilation and it has the following format: `DD-MM-YY` (i.e., `01-07-23` means it has been built in July, 1st, 2023)
 
 ### ID
+
 - This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.
 - The new Pinecil V2 released Aug. 2, 2022 now uses MCU BL706, which enables generating a unique ID/Serial number to every iron. This can be used to verify your [Pinecil authenticity here](https://pinecil.pine64.org/).
 
@@ -51,7 +77,6 @@ This can be used with RTip for assessing temperature processing performance.
 This is the handle temperature or more accurately the reading of the Cold Junction Compensation (CJC) temperature sensor. This is expressed in °C. Range of 20-40 °C is normal depending on how hot/cold the room is and how long power has been plugged in which warms the PCB further.
 This is used for CJC of the tip temperature.
  > If CHan is extremely high, this indicates the temperature sensor isn't reading correctly ([see Troubleshooting](https://ralim.github.io/IronOS/Troubleshooting/))
-
 
 ### Max C
 
@@ -106,6 +131,7 @@ Pressing (`+`) cycles through elements, and (`-`) or unplugging will exit the me
 The first page shows the PD negotiation stage number; which can be used for diagnosing if PD is not working. Once negotiation is complete; use (`+`) button to advance to other screens which show the different proposals advertised for voltage and current (State 12 means all is good with the PD charger).
 
 #### Below is a method for user modification to convert some early models of Pinecil V1 to safely support 24V on the DC5525 barrel.
+
 ⚠️ Warning: do this at your own risk, read everything in this document, and go to the [Pine64 community chat](https://wiki.pine64.org/wiki/Pinecil#Community_links) if you desire advice. An incorrect cut of the trace could render the Pinecil non-working.
 
 Background: a simple user modification to the PCB on _some models_ of original V1 allows it to safely use DC barrel 24V by cutting a trace line to the Vbus which held it back to 21V. You can check whether your Pinecil V1 needs the update or can benefit from it by using a hidden trick in the PD debug menu.
