@@ -72,6 +72,10 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#menu-items">Menu items</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#version">Version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#date">Date</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#id">ID</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#acc">ACC</a>
@@ -170,7 +174,34 @@ This menu is meant to be simple, so it has no fancy GUI animations.</p>
 <li>To exit, use the rear button (<code>-/B</code>) again.</li>
 </ul>
 <h2 id="menu-items">Menu items</h2>
-<p>Items are shown in the menu on a single line, so they use short codes and appear in this order:</p>
+<p>Items are shown in the menu on a single line, so they use short codes.</p>
+<h3 id="version">Version</h3>
+<p>There is a static line on top which is presented on every sub-screen and reflects exact version of firmware. Version line on top has the following format - <code>vX.YYN.[ZZZZZZZZ]</code>:</p>
+<ul>
+<li>X: major version</li>
+<li>Y: minor version</li>
+<li>N: build type:</li>
+<li>R - git-related <strong>r</strong>elease tag vXX.YY</li>
+<li>T - git-related release <strong>t</strong>ag but version is not vXX.YY !</li>
+<li>D - git-related <strong>d</strong>ev branch</li>
+<li>B - git-related custom <strong>b</strong>ranch</li>
+<li>G - neither above but <strong>g</strong>it-related</li>
+<li>H - build outside of a git tree (i.e. release tarball or <strong>h</strong>omebrew customization without git)</li>
+<li>S - something <strong>s</strong>pecial[^ERR]</li>
+<li>V - something <strong>v</strong>ery special[^ERR]
+[^ERR]: <code>S</code> and <code>V</code> are reserved letters for cases when source of firmware is having very unique origin &amp; configuration</li>
+<li>Z: short commit ID hash with 8 digits generated automatically from git (for git-related build types only)</li>
+</ul>
+<p>I.e.:
+- <code>v2.22H</code> means firmware built locally from tarball with release version of <code>2.22</code>
+- <code>v2.22D.1A2B3C4D</code> means firmware with development version of <code>2.22</code> from git <code>dev</code> branch &amp; with commit ID <code>1A2B3C4D</code> (so it can be traced for debug purposes)
+- <code>v2.22R.5E6F7G8H</code> means firmware with official release version of <code>2.22</code> and it's properly tagged with <code>v2.22</code> git tag &amp; with commit ID <code>5E6F7G8H</code>'</p>
+<hr />
+<p><strong>Additional scroll-able items appear in this order</strong>:</p>
+<h3 id="date">Date</h3>
+<ul>
+<li>This is a date of firmware compilation and it has the following format: <code>DD-MM-YY</code> (i.e., <code>01-07-23</code> means it has been built in July, 1st, 2023)</li>
+</ul>
 <h3 id="id">ID</h3>
 <ul>
 <li>This is used by Irons that have an ID and serial number to help check if the iron is authentic. All Pinecil V1 show the same ID number as this is the number programmed into the MCU.</li>
