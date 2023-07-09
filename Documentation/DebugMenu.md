@@ -9,7 +9,11 @@ This menu is meant to be simple, so it has no fancy GUI animations.
 
 ## Menu items
 
-Items are shown in the menu on a single line, so they use short codes. There is a static line on top which is presented on every sub-screen and reflects exact version of firmware. Version line on top has the following format - `vX.YYN.[ZZZZZZZZ]`:
+Items are shown in the menu on a single line, so they use short codes.
+
+### Version
+
+There is a static line on top which is presented on every sub-screen and reflects exact version of firmware. Version line on top has the following format - `vX.YYN.[ZZZZZZZZ]`:
 
 - X: major version
 - Y: minor version
@@ -23,14 +27,16 @@ Items are shown in the menu on a single line, so they use short codes. There is 
   - S - something **s**pecial[^ERR]
   - V - something **v**ery special[^ERR]
 [^ERR]: `S` and `V` are reserved letters for cases when source of firmware is having very unique origin & configuration
-- Z: short commit ID hash with 8 digits generated automaticaly from git (for git-related build types only)
+- Z: short commit ID hash with 8 digits generated automatically from git (for git-related build types only)
 
 I.e.:
 - `v2.22H` means firmware built locally from tarball with release version of `2.22`
-- `v2.22D.1A2B3C4D` means firmware with devel version of `2.22` from git `dev` branch & with commit ID `1A2B3C4D` (so it can be traced for debug purposes)
-- `v2.22R.5E6F7G8H` means firmware with official release version of `2.22` and it's properly tagged with `v2.22` git tag & with commid ID `5E6F7G8H`'
+- `v2.22D.1A2B3C4D` means firmware with development version of `2.22` from git `dev` branch & with commit ID `1A2B3C4D` (so it can be traced for debug purposes)
+- `v2.22R.5E6F7G8H` means firmware with official release version of `2.22` and it's properly tagged with `v2.22` git tag & with commit ID `5E6F7G8H`'
 
-Additional dynamic items appear in this order:
+---
+
+**Additional scroll-able items appear in this order**:
 
 ### Date
 
