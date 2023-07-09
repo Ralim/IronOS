@@ -18,7 +18,7 @@ usage()
 	echo -e "\tbuild - compile builds of IronOS inside docker container for supported hardware"
 	echo -e "\tclean - delete created docker container (but not pre-downloaded data for it)\n"
 	echo "CMD (helper routines):"
-	echo -e "\tdocs_readme - generate README.md inside Documentation/ based on nav section from mkdocs.yml\n"
+	echo -e "\tdocs_readme - generate & OVERWRITE(!) README.md inside Documentation/ based on nav section from mkdocs.yml\n"
 	echo -e "STORAGE NOTICE: for \"shell\" and \"build\" commands extra files will be downloaded so make sure that you have ~5GB of free space.\n"
 }
 
