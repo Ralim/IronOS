@@ -1,0 +1,22 @@
+  - [Home](../dev/index.md)
+  - [Getting Started](../dev/GettingStarted.md)
+  - [Flashing the firmware]
+      - [MHP30](../dev/Flashing/MHP30.md)
+      - [Pinecil V1](../dev/Flashing/Pinecil V1.md)
+      - [Pinecil V2](../dev/Flashing/Pinecil V2.md)
+      - [TS80(P)](../dev/Flashing/TS80(P).md)
+      - [TS100](../dev/Flashing/TS100.md)
+  - [Operation]
+      - [Main Menu](../dev/Menu.md)
+      - [Settings](../dev/Settings.md)
+      - [Debug Menu](../dev/DebugMenu.md)
+      - [Power](../dev/Power.md)
+      - [Temperature](../dev/Temperature.md)
+  - [Startup Logo](../dev/Logo.md)
+  - [Hardware]
+      - [Hall Sensor (Pinecil)](../dev/HallSensor.md)
+      - [Hardware Notes](../dev/Hardware.md)
+      - [Troubleshooting](../dev/Troubleshooting.md)
+      - [Known Hardware Issues](../dev/HardwareIssues.md)
+  - [Translations](../dev/Translation.md)
+  - [Development](../dev/Development.md)
