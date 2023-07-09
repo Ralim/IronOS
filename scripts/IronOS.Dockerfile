@@ -1,13 +1,18 @@
+# Default Reference Distro for development env & deploy:
+# * Alpine Linux, version 3.16 *
 FROM alpine:3.16
 LABEL maintainer="Ben V. Brown <ralim@ralimtek.com>"
 
-WORKDIR /build
-# Installing the two compilers, python3, python3 pip, clang format
-# Compilders ->gcc-* newlib-*
-# Python3 -> py*
-# Misc -> findutils make git
-# musl-dev is required for the multi lang firmwares
-# clang is required for clang-format (for dev)
+# Default current dir when container starts
+WORKDIR /build/source
+
+# Installing the two compilers (ARM & RISCV), python3 & pip, clang tools:
+## - compilers: gcc-*, newlib-*
+## - python3: py*, black (required to check Python code formatting)
+## - misc: findutils, make, git
+## - musl-dev (required for the multi lang firmwares)
+## - clang (required for clang-format to check C++ code formatting)
+
 ARG APK_COMPS="gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf \
                newlib-arm-none-eabi"
 ARG APK_PYTHON="python3 py3-pip black"
@@ -17,12 +22,13 @@ ARG APK_DEV="musl-dev clang bash clang-extra-tools"
 # PIP packages
 ARG PIP_PKGS='bdflib'
 
+# Install system packages using alpine package manager
 RUN apk add --no-cache ${APK_COMPS} ${APK_PYTHON} ${APK_MISC} ${APK_DEV}
 
-# Install Python3 packages
-
+# Install Python3 packages as modules using pip
 RUN python3 -m pip install ${PIP_PKGS}
-# Git trust
+
+# Git trust to avoid related warning
 RUN git config --global --add safe.directory /build/source
 
 COPY . /build/source

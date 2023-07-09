@@ -49,8 +49,15 @@ void handleButtons(bool *buttonLockout) {
     showDebugMenu();
     break;
   case BUTTON_F_LONG:
+#ifdef PROFILE_SUPPORT
+    if (!isTipDisconnected()) {
+      gui_solderingProfileMode(); // enter profile mode
+      *buttonLockout = true;
+    }
+#else
     gui_solderingTempAdjust();
     saveSettings();
+#endif
     break;
   case BUTTON_F_SHORT:
     if (!isTipDisconnected()) {
