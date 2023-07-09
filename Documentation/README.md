@@ -2,8 +2,8 @@
   - [Getting Started](../Documentation/GettingStarted.md)
   - [Flashing the firmware]
       - [MHP30](../Documentation/Flashing/MHP30.md)
-      - [Pinecil V1](../Documentation/Flashing/Pinecil V1.md)
-      - [Pinecil V2](../Documentation/Flashing/Pinecil V2.md)
+      - [Pinecil V1](../Documentation/Flashing/Pinecil%20V1.md)
+      - [Pinecil V2](../Documentation/Flashing/Pinecil%20V2.md)
       - [TS80(P)](../Documentation/Flashing/TS80(P).md)
       - [TS100](../Documentation/Flashing/TS100.md)
   - [Operation]
