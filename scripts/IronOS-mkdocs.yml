@@ -19,7 +19,7 @@ theme:
 
 # Navigation structure
 nav:
-  - Home: index.md
+  - Home: Iindex.md
   - Getting Started: GettingStarted.md
   - Flashing the firmware:
       - MHP30: Flashing/MHP30.md
