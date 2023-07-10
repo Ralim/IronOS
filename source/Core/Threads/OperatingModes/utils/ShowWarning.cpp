@@ -1,8 +1,9 @@
 #include "Buttons.hpp"
 #include "OperatingModeUtilities.h"
-void warnUser(const char *warning, const TickType_t timeout) {
+#include "OperatingModes.h"
+bool warnUser(const char *warning, const ButtonState buttons) {
   OLED::clearScreen();
   OLED::printWholeScreen(warning);
-  OLED::refresh();
-  waitForButtonPressOrTimeout(timeout);
+  // TODO also timeout
+  return buttons != BUTTON_NONE;
 }

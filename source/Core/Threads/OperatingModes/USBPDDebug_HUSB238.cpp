@@ -2,7 +2,7 @@
 #include "OperatingModes.h"
 #if POW_PD_EXT == 1
 #ifdef HAS_POWER_DEBUG_MENU
-void showPDDebug(void) {
+OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
   // Print out the USB-PD state
   // Basically this is like the Debug menu, but instead we want to print out the PD status
   uint8_t     screen = 0;

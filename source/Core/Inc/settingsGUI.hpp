@@ -9,6 +9,7 @@
 #define GUI_HPP_
 #include "BSP.h"
 #include "FreeRTOS.h"
+#include "Buttons.hpp"
 #include "Settings.h"
 #include "Translation.h"
 
@@ -37,7 +38,7 @@ typedef struct {
 } menuitem;
 
 void                  enterSettingsMenu();
-void                  warnUser(const char *warning, const TickType_t timeout);
+bool                  warnUser(const char *warning, const ButtonState buttons);
 extern const menuitem rootSettingsMenu[];
 
 #endif /* GUI_HPP_ */
