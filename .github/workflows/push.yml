@@ -169,7 +169,7 @@ jobs:
 
     steps:
       - name: deps
-        run: apk add --no-cache diffutils findutils clang-extra-tools
+        run: apk add --no-cache make git diffutils findutils clang-extra-tools
 
       - uses: actions/checkout@v3
         with:
