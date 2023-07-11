@@ -140,7 +140,7 @@ jobs:
 
     steps:
       - name: deps
-        run: apk add --no-cache python3 py3-pip make git black sed diffutils
+        run: apk add --no-cache python3 py3-pip make git black sed diffutils findutils clang-extra-tools
 
       - uses: actions/checkout@v3
         with:

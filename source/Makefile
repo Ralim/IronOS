@@ -794,16 +794,20 @@ style:
 	@echo "Done"
 
 check-style:
-	@for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
+	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
 		if [ $$var -ne 0 ] ; then \
 			echo "$$src does not respect the coding style (diff: $$var lines)" ; \
 			clang-format "$$src" | diff "$$src" -; \
-			exit 1 ; \
+			ret=1 ; \
 		fi ; \
-	done
-	@echo "Style check passed"
-  
+	done ; \
+	if [ $$ret -eq 0 ] ; then \
+		echo "Style check passed" && exit 0 ; \
+	else \
+		echo "Style check failed at least once! Please, check the log above for the details." && exit 1 ; \
+	fi ;
+
 .PHONY: style all clean default clean-all
 .SECONDARY:
 
