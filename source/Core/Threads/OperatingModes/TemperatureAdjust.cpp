@@ -1,17 +1,17 @@
 #include "OperatingModes.h"
 OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt) {
 
-  currentTempTargetDegC    = 0; // Turn off heater while adjusting temp
-  uint16_t *buttonLockout  = &(cxt->scratch_state.state1);
-  uint32_t *lastButtonTime = &(cxt->scratch_state.state3);
-  uint16_t *buttonAccel    = &(cxt->scratch_state.state2);
+  currentTempTargetDegC            = 0; // Turn off heater while adjusting temp
+  uint16_t *waitForRelease         = &(cxt->scratch_state.state1);
+  uint32_t *autoRepeatTimer        = &(cxt->scratch_state.state3);
+  uint16_t *autoRepeatAcceleration = &(cxt->scratch_state.state2);
 
-  if (*buttonLockout == 0) {
+  if (*waitForRelease == 0) {
     // When we first enter we wait for the user to release buttons before enabling changes
     if (buttons != BUTTON_NONE) {
       return OperatingMode::TemperatureAdjust;
     }
-    (*buttonLockout)++;
+    (*waitForRelease)++;
   }
 
   OLED::setCursor(0, 0);
@@ -20,26 +20,26 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt
   switch (buttons) {
   case BUTTON_NONE:
     // stay
-    (*buttonAccel) = 0;
+    (*autoRepeatAcceleration) = 0;
     break;
   case BUTTON_BOTH:
     // exit
     return cxt->previousMode;
   case BUTTON_B_LONG:
-    if (xTaskGetTickCount() - (*lastButtonTime) + (*buttonAccel) > PRESS_ACCEL_INTERVAL_MAX) {
-      delta             = -getSettingValue(SettingsOptions::TempChangeLongStep);
-      (*lastButtonTime) = xTaskGetTickCount();
-      (*buttonAccel) += PRESS_ACCEL_STEP;
+    if (xTaskGetTickCount() - (*autoRepeatTimer) + (*autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
+      delta              = -getSettingValue(SettingsOptions::TempChangeLongStep);
+      (*autoRepeatTimer) = xTaskGetTickCount();
+      (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
     }
     break;
   case BUTTON_B_SHORT:
     delta = -getSettingValue(SettingsOptions::TempChangeShortStep);
     break;
   case BUTTON_F_LONG:
-    if (xTaskGetTickCount() - (*lastButtonTime) + (*buttonAccel) > PRESS_ACCEL_INTERVAL_MAX) {
-      delta             = getSettingValue(SettingsOptions::TempChangeLongStep);
-      (*lastButtonTime) = xTaskGetTickCount();
-      (*buttonAccel) += PRESS_ACCEL_STEP;
+    if (xTaskGetTickCount() - (*autoRepeatTimer) + (*autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
+      delta              = getSettingValue(SettingsOptions::TempChangeLongStep);
+      (*autoRepeatTimer) = xTaskGetTickCount();
+      (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
     }
     break;
   case BUTTON_F_SHORT:
@@ -48,8 +48,8 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt
   default:
     break;
   }
-  if ((PRESS_ACCEL_INTERVAL_MAX - (*buttonAccel)) < PRESS_ACCEL_INTERVAL_MIN) {
-    (*buttonAccel) = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
+  if ((PRESS_ACCEL_INTERVAL_MAX - (*autoRepeatAcceleration)) < PRESS_ACCEL_INTERVAL_MIN) {
+    (*autoRepeatAcceleration) = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
   }
   // If buttons are flipped; flip the delta
   if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
