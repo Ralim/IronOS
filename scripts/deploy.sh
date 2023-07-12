@@ -76,6 +76,7 @@ check_style()
 	log="source/check-style.log"
 	make  -C source  check-style  2>&1  |  tee  "${log}"
 	chmod  0666  "${log}"
+	sed -i -e 's,\r,,g' "${log}"
 	return 0
 }
 
