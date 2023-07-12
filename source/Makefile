@@ -799,13 +799,6 @@ clean:
 clean-all: clean
 	rm -Rf $(HEXFILE_DIR)
 
-style:
-	@for src in $(ALL_SOURCE) $(ALL_INCLUDES); do \
-		echo "Formatting $$src..." ; \
-		clang-format -i "$$src" ; \
-	done
-	@echo "Done"
-
 check-style:
 	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
@@ -821,7 +814,7 @@ check-style:
 		echo "Style check failed at least once! Please, check the log above for the details." && exit 1 ; \
 	fi ;
 
-.PHONY: style  check-style  all  clean  default  clean-all
+.PHONY: check-style  all  clean  default  clean-all
 .SECONDARY:
 
 # pull in dependency info for *existing* .o files
