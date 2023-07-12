@@ -208,9 +208,7 @@ static void prvTaskExitError(void) {
   //    therefore not output an 'unreachable code' warning for code that appears
   //    after it. */
   // }
-  for(;;){
-    
-  }
+  for (;;) {}
 }
 /*-----------------------------------------------------------*/
 
