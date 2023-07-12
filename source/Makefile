@@ -839,6 +839,8 @@ endef # multi_lang_rule
 # Add multi-language firmware rules:
 $(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_code),$(LANGUAGE_GROUP_$(group_code)_NAME),$(LANGUAGE_GROUP_$(group_code)_LANGS))))
 
+# Clean up targets
+
 clean:
 	rm -Rf Core/Gen
 	rm -Rf $(OUTPUT_DIR_BASE)
@@ -848,6 +850,24 @@ clean:
 clean-all: clean
 	rm -Rf $(HEXFILE_DIR)
 
+# Code style checks using clang-format
+
+# Show only list of affected files for debug purposes
+check-style-list:
+	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
+		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
+		if [ $$var -ne 0 ] ; then \
+			echo "$$src" ; \
+			ret=1; \
+		fi ; \
+	done ; \
+	if [ $$ret -eq 0 ] ; then \
+		echo "Style check: PASS" && exit 0 ; \
+	else \
+		echo "Style check: FAIL!" && echo "Please, check the log above for the details." && exit 1 ; \
+	fi ;
+
+# Show output in gcc-like error compatible format for IDEs/editors
 check-style:
 	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
@@ -859,12 +879,12 @@ check-style:
 		fi ; \
 	done ; \
 	if [ $$ret -eq 0 ] ; then \
-		echo "Style check passed" && exit 0 ; \
+		echo "Style check: PASS" && exit 0 ; \
 	else \
-		echo "Style check failed at least once! Please, check the log above for the details." && exit 1 ; \
+		echo "Style check: FAIL!" && echo "Please, check the log above for the details." && exit 1 ; \
 	fi ;
 
-.PHONY: check-style  all  clean  default  clean-all
+.PHONY: check-style-list  check-style  all  clean  default  clean-all
 .SECONDARY:
 
 # Pull in dependency info for *existing* .o files
