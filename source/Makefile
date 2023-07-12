@@ -52,11 +52,12 @@ HOST_OUTPUT_DIR=Objects/host
 # DFU packing address to use
 DEVICE_DFU_ADDRESS=0x08000000
 DEVICE_DFU_VID_PID=0x28E9:0x0189
-# Enumerate all of the include directories
+# Enumerate all of the include directories (HAL source dirs are used for clang-format only)
 APP_INC_DIR = ./Core/Inc
 BRIEFLZ_INC_DIR = ./Core/brieflz
 MINIWARE_INC_CMSIS_DEVICE = ./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 MINIWARE_CMSIS_CORE_INC_DIR = ./Core/BSP/Miniware/Vendor/CMSIS/Include
+MINIWARE_HAL_SRC_DIR= ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver
 MINIWARE_HAL_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
 MINIWARE_HAL_LEGACY_INC_DIR = ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 MINIWARE_STARTUP_DIR = ./Startup
@@ -65,6 +66,7 @@ MINIWARE_LD_FILE = ./Core/BSP/Miniware/stm32f103.ld
 
 S60_INC_CMSIS_DEVICE = ./Core/BSP/Sequre_S60/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 S60_CMSIS_CORE_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/CMSIS/Include
+S60_HAL_SRC_DIR = ./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver
 S60_HAL_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc
 S60_HAL_LEGACY_INC_DIR = ./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 S60_STARTUP_DIR = ./Startup
@@ -73,6 +75,7 @@ S60_LD_FILE = ./Core/BSP/Sequre_S60/stm32f103.ld
 
 MHP30_INC_CMSIS_DEVICE = ./Core/BSP/MHP30/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 MHP30_CMSIS_CORE_INC_DIR = ./Core/BSP/MHP30/Vendor/CMSIS/Include
+MHP30_HAL_SRC_DIR = ./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver
 MHP30_HAL_INC_DIR = ./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc
 MHP30_HAL_LEGACY_INC_DIR = ./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 MHP30_STARTUP_DIR = ./Startup
@@ -80,6 +83,7 @@ MHP30_INC_DIR = ./Core/BSP/MHP30
 MHP30_LD_FILE = ./Core/BSP/MHP30/stm32f103.ld
 
 PINE_INC_DIR = ./Core/BSP/Pinecil
+PINE_VENDOR_SRC_DIR = ./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Source
 PINE_VENDOR_INC_DIR = ./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include
 PINE_VENDOR_USB_INC_DIR = ./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include/Usb
 PINE_NMSIS_INC_DIR = ./Core/BSP/Pinecil/Vendor/NMSIS/Core/Include
@@ -175,8 +179,8 @@ PD_DRIVER_DIR = ./Core/Drivers/usb-pd
 
 # Find-all's used for formatting; have to exclude external modules
 
-ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
-ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR)  \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) -o -path $(DRIVER_INC_DIR) -o -path $(MINIWARE_HAL_INC_DIR) -o -path $(S60_HAL_INC_DIR) -o -path $(MHP30_HAL_INC_DIR) -o -path $(PINE_VENDOR_INC_DIR) -o -path $(MINIWARE_CMSIS_CORE_INC_DIR) -o -path $(S60_CMSIS_CORE_INC_DIR) -o -path $(MINIWARE_INC_CMSIS_DEVICE) -o -path $(S60_INC_CMSIS_DEVICE) -o -path $(MHP30_INC_CMSIS_DEVICE) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
+ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) -o -path $(SOURCE_DRIVERS_DIR) -o -path $(MINIWARE_HAL_SRC_DIR) -o -path $(S60_HAL_SRC_DIR) -o -path $(MHP30_HAL_SRC_DIR) -o -path $(PINE_VENDOR_SRC_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
