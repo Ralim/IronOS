@@ -513,7 +513,28 @@ SOURCE_CPP:=$(shell find $(SOURCE_THREADS_DIR)     -type f -name '*.cpp') \
             $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
 # Code optimisation ------------------------------------------------------------
-OPTIM=-Os -fno-jump-tables -foptimize-strlen -faggressive-loop-optimizations -fdevirtualize-at-ltrans -fmerge-all-constants -fshort-wchar -flto -finline-small-functions -finline-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common -fno-math-errno -ffast-math -ffinite-math-only -fno-signed-zeros -fsingle-precision-constant
+OPTIM=-Os                             \
+      -fno-jump-tables                \
+      -foptimize-strlen               \
+      -faggressive-loop-optimizations \
+      -fdevirtualize-at-ltrans        \
+      -fmerge-all-constants           \
+      -fshort-wchar                   \
+      -flto                           \
+      -finline-small-functions        \
+      -finline-functions              \
+      -findirect-inlining             \
+      -fdiagnostics-color             \
+      -ffunction-sections             \
+      -fdata-sections                 \
+      -fshort-enums                   \
+      -fsingle-precision-constant     \
+      -fno-common                     \
+      -fno-math-errno                 \
+      -ffast-math                     \
+      -ffinite-math-only              \
+      -fno-signed-zeros               \
+      -fsingle-precision-constant
 
 # Global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
@@ -522,12 +543,13 @@ ifdef swd_enable
 GLOBAL_DEFINES += -DSWD_ENABLE
 endif
 
-# libs -------------------------------------------------------------------------
+# Libs -------------------------------------------------------------------------
 LIBS=
 
-# ------------------------------------------------------------------------------
+# Compilers --------------------------------------------------------------------
 COMPILER=gcc
-# arm-none-eabi is the general ARM compiler, 
+
+# arm-none-eabi is the general ARM compiler
 # riscv-none-embed is the riscv compiler
 # riscv-nuclei-elf is the nuclei tuned one for their cores
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
@@ -540,16 +562,17 @@ ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS))
 COMPILER_PREFIX=riscv-none-elf
 endif
 
-# programs ---------------------------------------------------------------------
+# Programs ---------------------------------------------------------------------
 CC=$(COMPILER_PREFIX)-gcc
 CPP=$(COMPILER_PREFIX)-g++
 OBJCOPY=$(COMPILER_PREFIX)-objcopy
 SIZE=$(COMPILER_PREFIX)-size
 OBJDUMP=$(COMPILER_PREFIX)-objdump
-# use gcc in assembler mode so we can use defines etc in assembly
+
+# Use gcc in assembler mode so we can use defines etc in assembly
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 
-# linker flags -----------------------------------------------------------------
+# Linker flags -----------------------------------------------------------------
 LINKER_FLAGS=-Wl,--gc-sections                             \
              -Wl,--wrap=malloc                             \
              -Wl,--wrap=free                               \
@@ -562,8 +585,7 @@ LINKER_FLAGS=-Wl,--gc-sections                             \
                  --specs=nano.specs                        \
              $(DEV_LDFLAGS)
 
-# compiler flags ---------------------------------------------------------------
-
+# Compiler flags ---------------------------------------------------------------
 CHECKOPTIONS=-Wtrigraphs                  \
              -Wuninitialized              \
              -Wmissing-braces             \
@@ -638,9 +660,8 @@ default: firmware-EN
 firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFILE_DIR)/$(model)_%.dfu
 	@true
 
-## The rule to create the target directory
+# Targets for binary files
 
-# Create hexfile
 %.hex: %.elf Makefile
 	$(OBJCOPY) $< -O ihex $@
 
@@ -719,7 +740,7 @@ Core/Gen/macros.txt: Makefile
 	@test -d $(CURDIR)/Core/Gen || mkdir -p $(CURDIR)/Core/Gen
 	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF $(CURDIR)/Core/Gen/macros.tmp - > $(CURDIR)/Core/Gen/macros.txt
 
-## The recipes to produce compressed translation data:
+# The recipes to produce compressed translation data
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
@@ -846,7 +867,7 @@ check-style:
 .PHONY: check-style  all  clean  default  clean-all
 .SECONDARY:
 
-# pull in dependency info for *existing* .o files
+# Pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
 -include $(OUT_OBJS_CPP:.o=.d)
 -include $(OUTPUT_DIR)/Core/Gen/Translation.*.d
