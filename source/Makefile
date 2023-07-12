@@ -24,7 +24,7 @@ LANGUAGE_GROUP_CJK_LANGS=EN JA_JP YUE_HK ZH_TW ZH_CN
 LANGUAGE_GROUP_CJK_NAME=Chinese+Japanese
 
 ifdef custom_multi_langs
-RUN_SHELL_CMD := $(shell rm -Rf {Core/Gen,$(OUTPUT_DIR)/Core/Gen,$(HEXFILE_DIR)/*_Custom.*})
+RUN_SHELL_CMD:=$(shell rm -Rf {Core/Gen,$(OUTPUT_DIR)/Core/Gen,$(HEXFILE_DIR)/*_Custom.*})
 LANGUAGE_GROUP_CUSTOM_LANGS=$(custom_multi_langs)
 LANGUAGE_GROUP_CUSTOM_NAME=Custom
 endif
@@ -44,7 +44,7 @@ endif
 
 # Defines for host tools
 ifeq ($(HOST_CC),)
-HOST_CC := gcc
+HOST_CC:=gcc
 endif
 HOST_OUTPUT_DIR=Objects/host
 
@@ -175,11 +175,12 @@ ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -pat
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 $(info Building for Miniware )
-DEVICE_INCLUDES = -I$(MINIWARE_INC_DIR) \
-	-I$(MINIWARE_INC_CMSIS_DEVICE)\
-	-I$(MINIWARE_CMSIS_CORE_INC_DIR)	\
-	-I$(MINIWARE_HAL_INC_DIR)	\
-	-I$(MINIWARE_HAL_LEGACY_INC_DIR)
+DEVICE_INCLUDES=-I$(MINIWARE_INC_DIR)            \
+                -I$(MINIWARE_INC_CMSIS_DEVICE)   \
+                -I$(MINIWARE_CMSIS_CORE_INC_DIR) \
+                -I$(MINIWARE_HAL_INC_DIR)        \
+                -I$(MINIWARE_HAL_LEGACY_INC_DIR)
+
 DEVICE_BSP_DIR = ./Core/BSP/Miniware
 S_SRCS := $(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=$(MINIWARE_LD_FILE)
@@ -193,38 +194,57 @@ bootldr_size=0x4000
 DEVICE_DFU_ADDRESS=0x08004000
 endif
 
-DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD -finline-limit=9999999
-DEV_LDFLAGS= -Wl,--wrap=printf  -Wl,--no-wchar-size-warning 
+DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
+                -D STM32F1             \
+                -D STM32               \
+                -D USE_HAL_DRIVER      \
+                -D STM32F103xB         \
+                -D USE_RTOS_SYSTICK    \
+                -D GCC_ARMCM3          \
+                -D ARM_MATH_CM3        \
+                -D STM32F10X_MD        \
+                -finline-limit=9999999
+
+DEV_LDFLAGS=-Wl,--wrap=printf  -Wl,--no-wchar-size-warning
 DEV_AFLAGS=
-DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
-DEV_CXXFLAGS= 
-CPUFLAGS= -mcpu=cortex-m3     \
-		-mthumb 			\
-		-mfloat-abi=soft
+DEV_CFLAGS=-D VECT_TAB_OFFSET=$(bootldr_size)U
+DEV_CXXFLAGS=
+CPUFLAGS=-mcpu=cortex-m3  \
+         -mthumb          \
+         -mfloat-abi=soft
+
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
-DEVICE_INCLUDES = -I$(S60_INC_DIR) \
-	-I$(S60_INC_CMSIS_DEVICE)\
-	-I$(S60_CMSIS_CORE_INC_DIR)	\
-	-I$(S60_HAL_INC_DIR)	\
-	-I$(S60_HAL_LEGACY_INC_DIR)
+DEVICE_INCLUDES=-I$(S60_INC_DIR)            \
+                -I$(S60_INC_CMSIS_DEVICE)   \
+                -I$(S60_CMSIS_CORE_INC_DIR) \
+                -I$(S60_HAL_INC_DIR)        \
+                -I$(S60_HAL_LEGACY_INC_DIR)
+
 DEVICE_BSP_DIR = ./Core/BSP/Sequre_S60
 S_SRCS := $(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=$(S60_LD_FILE)
-DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD -finline-limit=9999999
-DEV_LDFLAGS= -Wl,--wrap=printf  -Wl,--no-wchar-size-warning 
+DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
+                -D STM32F1             \
+                -D STM32               \
+                -D USE_HAL_DRIVER      \
+                -D STM32F103xB         \
+                -D USE_RTOS_SYSTICK    \
+                -D GCC_ARMCM3          \
+                -D ARM_MATH_CM3        \
+                -D STM32F10X_MD        \
+                -finline-limit=9999999
+
+DEV_LDFLAGS=-Wl,--wrap=printf  -Wl,--no-wchar-size-warning
 DEV_AFLAGS=
-DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
-DEV_CXXFLAGS= 
-CPUFLAGS= -mcpu=cortex-m3     \
-		-mthumb 			\
-		-mfloat-abi=soft
+DEV_CFLAGS=-D VECT_TAB_OFFSET=$(bootldr_size)U
+DEV_CXXFLAGS=
+CPUFLAGS=-mcpu=cortex-m3  \
+         -mthumb          \
+         -mfloat-abi=soft
+
 flash_size=62k
 bootldr_size=0x4400
 DEVICE_DFU_ADDRESS=0x08004400
@@ -233,24 +253,33 @@ endif
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
 $(info Building for MHP30 )
-DEVICE_INCLUDES = -I$(MHP30_INC_DIR) \
-	-I$(MHP30_INC_CMSIS_DEVICE)\
-	-I$(MHP30_CMSIS_CORE_INC_DIR)	\
-	-I$(MHP30_HAL_INC_DIR)	\
-	-I$(MHP30_HAL_LEGACY_INC_DIR)
+DEVICE_INCLUDES=-I$(MHP30_INC_DIR)            \
+                -I$(MHP30_INC_CMSIS_DEVICE)   \
+                -I$(MHP30_CMSIS_CORE_INC_DIR) \
+                -I$(MHP30_HAL_INC_DIR)        \
+                -I$(MHP30_HAL_LEGACY_INC_DIR)
+
 DEVICE_BSP_DIR = ./Core/BSP/MHP30
 S_SRCS := $(shell find $(MHP30_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=$(MHP30_LD_FILE)
-DEV_GLOBAL_DEFS= -D STM32F103T8Ux -D STM32F1 -D STM32 -D USE_HAL_DRIVER -D STM32F103xB -D USE_RTOS_SYSTICK -D GCC_ARMCM3		\
-		-D ARM_MATH_CM3 	\
-		-D STM32F10X_MD 
-DEV_LDFLAGS= 
+DEV_GLOBAL_DEFS=-D STM32F103T8Ux    \
+                -D STM32F1          \
+                -D STM32            \
+                -D USE_HAL_DRIVER   \
+                -D STM32F103xB      \
+                -D USE_RTOS_SYSTICK \
+                -D GCC_ARMCM3       \
+                -D ARM_MATH_CM3     \
+                -D STM32F10X_MD
+
+DEV_LDFLAGS=
 DEV_AFLAGS=
-DEV_CFLAGS=  -D VECT_TAB_OFFSET=$(bootldr_size)U
-DEV_CXXFLAGS= 
-CPUFLAGS= -mcpu=cortex-m3     \
-		-mthumb 			\
-		-mfloat-abi=soft
+DEV_CFLAGS=-D VECT_TAB_OFFSET=$(bootldr_size)U
+DEV_CXXFLAGS=
+CPUFLAGS=-mcpu=cortex-m3 \
+         -mthumb         \
+         -mfloat-abi=soft
+
 flash_size=126k
 bootldr_size=32k
 DEVICE_DFU_ADDRESS=0x08008000
@@ -259,11 +288,11 @@ endif
 
 ifeq ($(model),$(ALL_PINECIL_MODELS))
 $(info Building for Pine64 Pinecilv1)
-DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
--I$(PINE_VENDOR_INC_DIR) \
--I$(PINE_VENDOR_USB_INC_DIR) \
--I$(PINE_NMSIS_INC_DIR) \
--I$(PINE_FREERTOS_PORT_INC_DIR)
+DEVICE_INCLUDES=-I$(PINE_INC_DIR)               \
+                -I$(PINE_VENDOR_INC_DIR)        \
+                -I$(PINE_VENDOR_USB_INC_DIR)    \
+                -I$(PINE_NMSIS_INC_DIR)         \
+                -I$(PINE_FREERTOS_PORT_INC_DIR)
 
 DEVICE_BSP_DIR = ./Core/BSP/Pinecil
 S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
@@ -272,70 +301,74 @@ LDSCRIPT=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd
 flash_size=128k
 bootldr_size=0x0
 # Flags
-CPUFLAGS= -march=rv32imac \
-			-mabi=ilp32 \
-			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles
-DEV_LDFLAGS=-nostartfiles 
-DEV_AFLAGS=  
-DEV_GLOBAL_DEFS= -DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
-DEV_CFLAGS= -D VECT_TAB_OFFSET=$(bootldr_size)U
+CPUFLAGS=-march=rv32imac \
+         -mabi=ilp32     \
+         -mcmodel=medany \
+         -fsigned-char   \
+         -fno-builtin    \
+         -nostartfiles
+
+DEV_LDFLAGS=-nostartfiles
+DEV_AFLAGS=
+DEV_GLOBAL_DEFS=-DRTOS_FREERTOS -DDOWNLOAD_MODE=DOWNLOAD_MODE_FLASHXIP
+DEV_CFLAGS=-D VECT_TAB_OFFSET=$(bootldr_size)U
 DEV_CXXFLAGS=
-endif
+endif # ALL_PINECIL_MODELS
 
 ifeq ($(model),$(ALL_PINECIL_V2_MODELS))
 $(info Building for Pine64 Pinecilv2 )
 
-DEVICE_INCLUDES = -I$(PINECILV2_DIR) \
-	-I$(PINECILV2_SDK_DIR) \
-	-I$(PINECILV2_VENDOR_BSP_COMMON_DIR) \
-	-I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR) \
-	-I$(PINECILV2_COMMON_DIR) \
-	-I$(PINECILV2_COMMON_BL_MATH_DIR) \
-	-I$(PINECILV2_COMMON_DEVICE_DIR) \
-	-I$(PINECILV2_COMMON_LIST_DIR) \
-	-I$(PINECILV2_COMMON_MISC_DIR) \
-	-I$(PINECILV2_COMMON_PARTITION_DIR) \
-	-I$(PINECILV2_COMMON_PID_DIR) \
-	-I$(PINECILV2_COMMON_RING_BUFFERDIR) \
-	-I$(PINECILV2_COMMON_SOFT_CRC_DIR) \
-	-I$(PINECILV2_COMMON_TIMESTAMP_DIR) \
-	-I$(PINECILV2_COMPONENTS_DIR) \
-	-I$(PINECILV2_COMPONENTS_FREERTOS_DIR) \
-	-I$(PINECILV2_COMPONENTS_FREERTOS_BL602_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_BLUETOOTH_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_PORT_INCLUDE_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_BLUETOOTH_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_INCLUDE_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_MISC_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_ZEPHYR_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_NET_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_INCLUDE_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_HOST_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR) \
-	-I$(PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR) \
-	-I$(PINECILV2_COMPONENTS_NMSIS_DIR) \
-	-I$(PINECILV2_COMPONENTS_USB_STACK_DIR) \
-	-I$(PINECILV2_DRIVERS_DIR) \
-	-I$(PINECILV2_DRIVERS_HAL_DRV_INC_DIR) \
-	-I$(PINECILV2_DRIVERS_HAL_DRV_DEF_DIR) \
-	-I$(PINECILV2_DRIVERS_REGS_DIR) \
-	-I$(PINECILV2_DRIVERS_RISCV_DIR) \
-	-I$(PINECILV2_DRIVERS_STARTUP_DIR) \
-	-I$(PINECILV2_DRIVERS_STD_DRV_DIR) \
-	-I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR) \
-	-I$(PINECILV2_VENDOR_BSP_USB_DIR) \
-	-I$(PINECILV2_COMPONENTS_USB_STACK_COMMON_DIR) \
-	-I$(PINECILV2_COMPONENTS_USB_STACK_CORE_DIR) \
-	-I$(PINECILV2_COMPONENTS_USB_STACK_CDC_DIR) \
-	-I$(PINECILV2_COMPONENTS_USB_STACK_WINUSB_DIR) \
-	-I$(PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR) 
+DEVICE_INCLUDES=-I$(PINECILV2_DIR)                                                \
+                -I$(PINECILV2_SDK_DIR)                                            \
+                -I$(PINECILV2_VENDOR_BSP_COMMON_DIR)                              \
+                -I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR)                            \
+                -I$(PINECILV2_COMMON_DIR)                                         \
+                -I$(PINECILV2_COMMON_BL_MATH_DIR)                                 \
+                -I$(PINECILV2_COMMON_DEVICE_DIR)                                  \
+                -I$(PINECILV2_COMMON_LIST_DIR)                                    \
+                -I$(PINECILV2_COMMON_MISC_DIR)                                    \
+                -I$(PINECILV2_COMMON_PARTITION_DIR)                               \
+                -I$(PINECILV2_COMMON_PID_DIR)                                     \
+                -I$(PINECILV2_COMMON_RING_BUFFERDIR)                              \
+                -I$(PINECILV2_COMMON_SOFT_CRC_DIR)                                \
+                -I$(PINECILV2_COMMON_TIMESTAMP_DIR)                               \
+                -I$(PINECILV2_COMPONENTS_DIR)                                     \
+                -I$(PINECILV2_COMPONENTS_FREERTOS_DIR)                            \
+                -I$(PINECILV2_COMPONENTS_FREERTOS_BL602_DIR)                      \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DIR)                   \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_DIR)           \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_BLUETOOTH_DIR) \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_PORT_INCLUDE_DIR)              \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_BLUETOOTH_DIR)         \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_INCLUDE_DIR)            \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_DIR)                    \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_MISC_DIR)              \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_ZEPHYR_DIR)            \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_NET_DIR)               \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR)         \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR)         \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_DIR)                 \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_INCLUDE_DIR)         \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_HOST_DIR)                      \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR)            \
+                -I$(PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR)              \
+                -I$(PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR)                    \
+                -I$(PINECILV2_COMPONENTS_NMSIS_DIR)                               \
+                -I$(PINECILV2_COMPONENTS_USB_STACK_DIR)                           \
+                -I$(PINECILV2_DRIVERS_DIR)                                        \
+                -I$(PINECILV2_DRIVERS_HAL_DRV_INC_DIR)                            \
+                -I$(PINECILV2_DRIVERS_HAL_DRV_DEF_DIR)                            \
+                -I$(PINECILV2_DRIVERS_REGS_DIR)                                   \
+                -I$(PINECILV2_DRIVERS_RISCV_DIR)                                  \
+                -I$(PINECILV2_DRIVERS_STARTUP_DIR)                                \
+                -I$(PINECILV2_DRIVERS_STD_DRV_DIR)                                \
+                -I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR)                            \
+                -I$(PINECILV2_VENDOR_BSP_USB_DIR)                                 \
+                -I$(PINECILV2_COMPONENTS_USB_STACK_COMMON_DIR)                    \
+                -I$(PINECILV2_COMPONENTS_USB_STACK_CORE_DIR)                      \
+                -I$(PINECILV2_COMPONENTS_USB_STACK_CDC_DIR)                       \
+                -I$(PINECILV2_COMPONENTS_USB_STACK_WINUSB_DIR)                    \
+                -I$(PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR)
 
 DEVICE_BSP_DIR = ./Core/BSP/Pinecilv2
 S_SRCS := $(shell find $(PINECILV2_DIR) -type d  \(  -path $(PINECILV2_VENDOR_BSP_COMMON_DIR) \) -prune -false -o  -type f -name '*.S') $(info $(S_SRCS) )
@@ -343,54 +376,67 @@ ASM_INC = $(DEVICE_INCLUDES)
 LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 
 # Flags
-CPUFLAGS= -march=rv32imafc \
-			-mabi=ilp32f \
-			-mcmodel=medany -fsigned-char -fno-builtin -nostartfiles \
-			-DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler -DARCH_RISCV -D__RISCV_FEATURE_MVE=0 -DBL702 -DBFLB_USE_ROM_DRIVER=1
-DEV_LDFLAGS=-nostartfiles  -L $(PINECILV2_BLE_CRAPWARE_BLOB_DIR) -L $(PINECILV2_RF_CRAPWARE_BLOB_DIR) -l blecontroller_702_m0s1s -l bl702_rf
-DEV_AFLAGS=  
-DEV_GLOBAL_DEFS= -DCFG_FREERTOS \
--DARCH_RISCV \
--DBL702 \
--DCFG_BLE_ENABLE \
--DBFLB_BLE \
--DCFG_BLE \
--DOPTIMIZE_DATA_EVT_FLOW_FROM_CONTROLLER \
--DBL_MCU_SDK \
--DCFG_CON=2 \
--DCFG_BLE_TX_BUFF_DATA=2 \
--DCONFIG_BT_PERIPHERAL \
--DCONFIG_BT_L2CAP_DYNAMIC_CHANNEL \
--DCONFIG_BT_GATT_CLIENT \
--DCONFIG_BT_CONN \
--DCONFIG_BT_GATT_DIS_PNP \
--DCONFIG_BT_GATT_DIS_SERIAL_NUMBER \
--DCONFIG_BT_GATT_DIS_FW_REV \
--DCONFIG_BT_GATT_DIS_HW_REV \
--DCONFIG_BT_GATT_DIS_SW_REV \
--DCONFIG_BT_ECC \
--DCONFIG_BT_GATT_DYNAMIC_DB \
--DCONFIG_BT_GATT_SERVICE_CHANGED \
--DCONFIG_BT_KEYS_OVERWRITE_OLDEST \
--DCONFIG_BT_KEYS_SAVE_AGING_COUNTER_ON_PAIRING \
--DCONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS \
--DCONFIG_BT_BONDABLE \
--DCONFIG_BT_HCI_VS_EVT_USER \
--DCONFIG_BT_ASSERT \
--DCONFIG_BT_SIGNING \
--DCONFIG_BT_SETTINGS_CCC_LAZY_LOADING \
--DCONFIG_BT_SETTINGS_USE_PRINTK \
--DCFG_SLEEP \
--DCONFIG_BT_ALLROLES \
--DCONFIG_BT_CENTRAL \
--DCONFIG_BT_OBSERVER \
--DCONFIG_BT_BROADCASTER \
--DCFG_BLE_STACK_DBG_PRINT \
--DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler  \
--DCONFIG_BT_DEVICE_NAME=\"Pinecil\" \
--DCONFIG_BT_DEVICE_APPEARANCE=0x06C1
-# -DBFLB_USE_HAL_DRIVER
-# -DCONFIG_BT_SMP \
+CPUFLAGS=-march=rv32imafc                                     \
+         -mabi=ilp32f                                         \
+         -mcmodel=medany                                      \
+         -fsigned-char                                        \
+         -fno-builtin                                         \
+         -nostartfiles                                        \
+         -DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler \
+         -DARCH_RISCV                                         \
+         -D__RISCV_FEATURE_MVE=0                              \
+         -DBL702                                              \
+         -DBFLB_USE_ROM_DRIVER=1                              \
+
+DEV_LDFLAGS=-nostartfiles                         \
+            -L $(PINECILV2_BLE_CRAPWARE_BLOB_DIR) \
+            -L $(PINECILV2_RF_CRAPWARE_BLOB_DIR)  \
+            -l blecontroller_702_m0s1s            \
+            -l bl702_rf
+
+DEV_AFLAGS=
+DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
+                -DARCH_RISCV                                         \
+                -DBL702                                              \
+                -DCFG_BLE_ENABLE                                     \
+                -DBFLB_BLE                                           \
+                -DCFG_BLE                                            \
+                -DOPTIMIZE_DATA_EVT_FLOW_FROM_CONTROLLER             \
+                -DBL_MCU_SDK                                         \
+                -DCFG_CON=2                                          \
+                -DCFG_BLE_TX_BUFF_DATA=2                             \
+                -DCONFIG_BT_PERIPHERAL                               \
+                -DCONFIG_BT_L2CAP_DYNAMIC_CHANNEL                    \
+                -DCONFIG_BT_GATT_CLIENT                              \
+                -DCONFIG_BT_CONN                                     \
+                -DCONFIG_BT_GATT_DIS_PNP                             \
+                -DCONFIG_BT_GATT_DIS_SERIAL_NUMBER                   \
+                -DCONFIG_BT_GATT_DIS_FW_REV                          \
+                -DCONFIG_BT_GATT_DIS_HW_REV                          \
+                -DCONFIG_BT_GATT_DIS_SW_REV                          \
+                -DCONFIG_BT_ECC                                      \
+                -DCONFIG_BT_GATT_DYNAMIC_DB                          \
+                -DCONFIG_BT_GATT_SERVICE_CHANGED                     \
+                -DCONFIG_BT_KEYS_OVERWRITE_OLDEST                    \
+                -DCONFIG_BT_KEYS_SAVE_AGING_COUNTER_ON_PAIRING       \
+                -DCONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS               \
+                -DCONFIG_BT_BONDABLE                                 \
+                -DCONFIG_BT_HCI_VS_EVT_USER                          \
+                -DCONFIG_BT_ASSERT                                   \
+                -DCONFIG_BT_SIGNING                                  \
+                -DCONFIG_BT_SETTINGS_CCC_LAZY_LOADING                \
+                -DCONFIG_BT_SETTINGS_USE_PRINTK                      \
+                -DCFG_SLEEP                                          \
+                -DCONFIG_BT_ALLROLES                                 \
+                -DCONFIG_BT_CENTRAL                                  \
+                -DCONFIG_BT_OBSERVER                                 \
+                -DCONFIG_BT_BROADCASTER                              \
+                -DCFG_BLE_STACK_DBG_PRINT                            \
+                -DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler \
+                -DCONFIG_BT_DEVICE_NAME=\"Pinecil\"                  \
+                -DCONFIG_BT_DEVICE_APPEARANCE=0x06C1
+# -DBFLB_USE_HAL_DRIVER \
+# -DCONFIG_BT_SMP
 
 #Required to be turned off due to their drivers tripping warnings
 DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
@@ -439,7 +485,7 @@ OPTIM=-Os -fno-jump-tables -foptimize-strlen -faggressive-loop-optimizations -fd
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
 
 ifdef swd_enable
-	GLOBAL_DEFINES += -DSWD_ENABLE
+GLOBAL_DEFINES += -DSWD_ENABLE
 endif
 
 # libs -------------------------------------------------------------------------
@@ -470,73 +516,73 @@ OBJDUMP=$(COMPILER_PREFIX)-objdump
 AS=$(COMPILER_PREFIX)-gcc -x assembler-with-cpp
 
 # linker flags -----------------------------------------------------------------
-LINKER_FLAGS=   -Wl,--gc-sections 		                      \
-                -Wl,--wrap=malloc                             \
-			    -Wl,--wrap=free                               \
-			    -Wl,--undefined=vTaskSwitchContext            \
-			    -Wl,--undefined=pxCurrentTCB                  \
-			    -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
-			    -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
-				-Wl,--print-memory-usage 					  \
-				--specs=nosys.specs 						  \
-			    --specs=nano.specs						      \
-				$(DEV_LDFLAGS)
+LINKER_FLAGS=-Wl,--gc-sections                             \
+             -Wl,--wrap=malloc                             \
+             -Wl,--wrap=free                               \
+             -Wl,--undefined=vTaskSwitchContext            \
+             -Wl,--undefined=pxCurrentTCB                  \
+             -Wl,--defsym=__FLASH_SIZE__=$(flash_size)     \
+             -Wl,--defsym=__BOOTLDR_SIZE__=$(bootldr_size) \
+             -Wl,--print-memory-usage                      \
+                 --specs=nosys.specs                       \
+                 --specs=nano.specs                        \
+             $(DEV_LDFLAGS)
 
 # compiler flags ---------------------------------------------------------------
 
-CHECKOPTIONS=-Wtrigraphs			\
-			-Wuninitialized		\
-			-Wmissing-braces	\
-			-Wfloat-equal		\
-			-Wunreachable-code	\
-			-Wswitch-default	\
-			-Wreturn-type		\
-			-Wundef				\
-			-Wparentheses		\
-			-Wnonnull			\
-			-Winit-self			\
-			-Wmissing-include-dirs	\
-			-Wsequence-point	\
-			-Wswitch			\
-			-Wformat			\
-			-Wsign-compare		\
-			-Waddress			\
-			-Waggregate-return	\
-			-Wmissing-field-initializers	\
-			-Wshadow			\
-			-Wno-unused-parameter \
-			-Wdouble-promotion
+CHECKOPTIONS=-Wtrigraphs                  \
+             -Wuninitialized              \
+             -Wmissing-braces             \
+             -Wfloat-equal                \
+             -Wunreachable-code           \
+             -Wswitch-default             \
+             -Wreturn-type                \
+             -Wundef                      \
+             -Wparentheses                \
+             -Wnonnull                    \
+             -Winit-self                  \
+             -Wmissing-include-dirs       \
+             -Wsequence-point             \
+             -Wswitch                     \
+             -Wformat                     \
+             -Wsign-compare               \
+             -Waddress                    \
+             -Waggregate-return           \
+             -Wmissing-field-initializers \
+             -Wshadow                     \
+             -Wno-unused-parameter        \
+             -Wdouble-promotion
 
 CHECKOPTIONS_C=$(CHECKOPTIONS) -Wbad-function-cast
 
-CXXFLAGS=$(DEV_CXXFLAGS)         \
-        $(CPUFLAGS)              \
-		$(INCLUDES)              \
-		$(GLOBAL_DEFINES) 	     \
-		-D${COMPILER}  		     \
-		-MMD 				     \
-		$(CHECKOPTIONS)		     \
-		-std=c++17			     \
-		$(OPTIM) 			     \
-		-fno-rtti 			     \
-		-fno-exceptions 	     \
-		-fno-non-call-exceptions \
-		-fno-use-cxa-atexit		 \
-		-fno-strict-aliasing 	 \
-		-fno-threadsafe-statics  \
-		-T$(LDSCRIPT)
+CXXFLAGS=$(DEV_CXXFLAGS)        \
+         $(CPUFLAGS)            \
+         $(INCLUDES)            \
+         $(GLOBAL_DEFINES)      \
+       -D${COMPILER}            \
+       -MMD                     \
+         $(CHECKOPTIONS)        \
+       -std=c++17               \
+         $(OPTIM)               \
+       -fno-rtti                \
+       -fno-exceptions          \
+       -fno-non-call-exceptions \
+       -fno-use-cxa-atexit      \
+       -fno-strict-aliasing     \
+       -fno-threadsafe-statics  \
+       -T$(LDSCRIPT)
 
-CFLAGS=$(DEV_CFLAGS)\
-        $(CPUFLAGS)               \
-		$(INCLUDES)       \
-		$(CHECKOPTIONS_C) \
-		$(GLOBAL_DEFINES) \
-		-D${COMPILER}     \
-		-MMD              \
-		-std=gnu11        \
-		$(OPTIM)          \
-		-T$(LDSCRIPT)     \
-		-c
+CFLAGS=$(DEV_CFLAGS)     \
+       $(CPUFLAGS)       \
+       $(INCLUDES)       \
+       $(CHECKOPTIONS_C) \
+       $(GLOBAL_DEFINES) \
+     -D${COMPILER}       \
+     -MMD                \
+     -std=gnu11          \
+       $(OPTIM)          \
+     -T$(LDSCRIPT)       \
+     -c
 
 AFLAGS=$(CPUFLAGS)       \
        $(DEV_AFLAGS)     \
