@@ -37,7 +37,6 @@ LANGUAGE_GROUP_EUR_NAME=European
 
 LANGUAGE_GROUPS=CUSTOM CJK CYRILLIC EUR
 
-
 # Define for host Python
 ifndef HOST_PYTHON
 HOST_PYTHON:=python3
@@ -98,7 +97,6 @@ PINECILV2_VENDOR_BSP_BOARD_DIR = $(PINECILV2_VENDOR_BSP_DIR)/board
 PINECILV2_VENDOR_BSP_PLATFORM_DIR = $(PINECILV2_VENDOR_BSP_COMMON_DIR)/platform
 PINECILV2_VENDOR_BSP_USB_DIR = $(PINECILV2_VENDOR_BSP_COMMON_DIR)/usb
 
-
 PINECILV2_COMMON_DIR = $(PINECILV2_SDK_DIR)/common
 PINECILV2_COMMON_BL_MATH_DIR = $(PINECILV2_COMMON_DIR)/bl_math
 PINECILV2_COMMON_DEVICE_DIR = $(PINECILV2_COMMON_DIR)/device
@@ -110,7 +108,6 @@ PINECILV2_COMMON_RING_BUFFERDIR = $(PINECILV2_COMMON_DIR)/ring_buffer
 PINECILV2_COMMON_SOFT_CRC_DIR = $(PINECILV2_COMMON_DIR)/soft_crc
 PINECILV2_COMMON_TIMESTAMP_DIR = $(PINECILV2_COMMON_DIR)/timestamp
 PINECILV2_COMPONENTS_DIR = $(PINECILV2_SDK_DIR)/components
-
 
 PINECILV2_COMPONENTS_FREERTOS_DIR = $(PINECILV2_COMPONENTS_DIR)/freertos
 PINECILV2_COMPONENTS_FREERTOS_BL602_DIR = $(PINECILV2_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl702
@@ -133,11 +130,9 @@ PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR = $(PINECILV2_COMPONENTS_DIR)/
 PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/ble_inc
 PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR = $(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/sbc/dec
 
-
 #Binary blobs suck and they should be ashamed
 PINECILV2_BLE_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/lib
 PINECILV2_RF_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/bl702_rf/lib
-
 
 PINECILV2_COMPONENTS_NMSIS_DIR = $(PINECILV2_COMPONENTS_DIR)/nmsis
 PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR = $(PINECILV2_COMPONENTS_NMSIS_DIR)/core/inc
@@ -156,9 +151,6 @@ PINECILV2_DRIVERS_RISCV_DIR = $(PINECILV2_DRIVERS_DIR)/risc-v
 PINECILV2_DRIVERS_STARTUP_DIR = $(PINECILV2_DRIVERS_DIR)/startup
 PINECILV2_DRIVERS_STD_DRV_DIR = $(PINECILV2_DRIVERS_DIR)/std_drv/inc
 
-
-
-
 SOURCE_MIDDLEWARES_DIR = ./Middlewares
 FRTOS_CMIS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR = ./Middlewares/Third_Party/FreeRTOS/Source/include
@@ -176,9 +168,7 @@ INC_PD_DRIVERS_DIR = ./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR = ./Core/Drivers/usb-pd/tests
 PD_DRIVER_DIR = ./Core/Drivers/usb-pd
 
-
 # Find-all's used for formatting; have to exclude external modules
-
 ALL_INCLUDES = $(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) -o -path $(DRIVER_INC_DIR) -o -path $(MINIWARE_HAL_INC_DIR) -o -path $(S60_HAL_INC_DIR) -o -path $(MHP30_HAL_INC_DIR) -o -path $(PINE_VENDOR_INC_DIR) -o -path $(MINIWARE_CMSIS_CORE_INC_DIR) -o -path $(S60_CMSIS_CORE_INC_DIR) -o -path $(MINIWARE_INC_CMSIS_DEVICE) -o -path $(S60_INC_CMSIS_DEVICE) -o -path $(MHP30_INC_CMSIS_DEVICE) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 ALL_SOURCE = $(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) -o -path $(SOURCE_DRIVERS_DIR) -o -path $(MINIWARE_HAL_SRC_DIR) -o -path $(S60_HAL_SRC_DIR) -o -path $(MHP30_HAL_SRC_DIR) -o -path $(PINE_VENDOR_SRC_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
@@ -267,15 +257,14 @@ DEVICE_DFU_ADDRESS=0x08008000
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif
 
-
 ifeq ($(model),$(ALL_PINECIL_MODELS))
 $(info Building for Pine64 Pinecilv1)
 DEVICE_INCLUDES = -I$(PINE_INC_DIR) \
 -I$(PINE_VENDOR_INC_DIR) \
 -I$(PINE_VENDOR_USB_INC_DIR) \
 -I$(PINE_NMSIS_INC_DIR) \
--I$(PINE_FREERTOS_PORT_INC_DIR) 
-	
+-I$(PINE_FREERTOS_PORT_INC_DIR)
+
 DEVICE_BSP_DIR = ./Core/BSP/Pinecil
 S_SRCS := $(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC = -I$(PINE_RISCV_INC_DIR)
@@ -293,13 +282,8 @@ DEV_CFLAGS= -D VECT_TAB_OFFSET=$(bootldr_size)U
 DEV_CXXFLAGS=
 endif
 
-
-
-
 ifeq ($(model),$(ALL_PINECIL_V2_MODELS))
 $(info Building for Pine64 Pinecilv2 )
-
-
 
 DEVICE_INCLUDES = -I$(PINECILV2_DIR) \
 	-I$(PINECILV2_SDK_DIR) \
@@ -408,14 +392,13 @@ DEV_GLOBAL_DEFS= -DCFG_FREERTOS \
 # -DBFLB_USE_HAL_DRIVER
 # -DCONFIG_BT_SMP \
 
-
 #Required to be turned off due to their drivers tripping warnings
 DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
 DEV_CXXFLAGS= $(DEV_CFLAGS)
 flash_size=128k
 bootldr_size=0x0
 
-endif
+endif # ALL_PINECIL_V2_MODELS
 
 INCLUDES = -I$(APP_INC_DIR)	\
 	-I$(BRIEFLZ_INC_DIR) \
@@ -459,8 +442,6 @@ ifdef swd_enable
 	GLOBAL_DEFINES += -DSWD_ENABLE
 endif
 
-
-
 # libs -------------------------------------------------------------------------
 LIBS=
 
@@ -503,7 +484,6 @@ LINKER_FLAGS=   -Wl,--gc-sections 		                      \
 
 # compiler flags ---------------------------------------------------------------
 
-
 CHECKOPTIONS=-Wtrigraphs			\
 			-Wuninitialized		\
 			-Wmissing-braces	\
@@ -525,13 +505,9 @@ CHECKOPTIONS=-Wtrigraphs			\
 			-Wmissing-field-initializers	\
 			-Wshadow			\
 			-Wno-unused-parameter \
-			-Wdouble-promotion 
-			
-			
+			-Wdouble-promotion
 
-
-CHECKOPTIONS_C=	$(CHECKOPTIONS) -Wbad-function-cast
-
+CHECKOPTIONS_C=$(CHECKOPTIONS) -Wbad-function-cast
 
 CXXFLAGS=$(DEV_CXXFLAGS)         \
         $(CPUFLAGS)              \
@@ -550,64 +526,52 @@ CXXFLAGS=$(DEV_CXXFLAGS)         \
 		-fno-threadsafe-statics  \
 		-T$(LDSCRIPT)
 
+CFLAGS=$(DEV_CFLAGS)\
+        $(CPUFLAGS)               \
+		$(INCLUDES)       \
+		$(CHECKOPTIONS_C) \
+		$(GLOBAL_DEFINES) \
+		-D${COMPILER}     \
+		-MMD              \
+		-std=gnu11        \
+		$(OPTIM)          \
+		-T$(LDSCRIPT)     \
+		-c
 
-CFLAGS=$(DEV_CFLAGS) 			\
-        $(CPUFLAGS) 			\
-		$(INCLUDES) 			\
-		$(CHECKOPTIONS_C) 		\
-		$(GLOBAL_DEFINES) 		\
-		-D${COMPILER}  			\
-		-MMD 					\
-		-std=gnu11				\
-		$(OPTIM) 				\
-		-T$(LDSCRIPT)			\
-		-c                      
-
-		
-		
-AFLAGS= $(CPUFLAGS)    			\
-		$(DEV_AFLAGS)  			\
-		$(GLOBAL_DEFINES) 		\
-		$(OPTIM) 				\
-		$(ASM_INC)    			\
-		$(INCLUDES)
-
-
-
+AFLAGS=$(CPUFLAGS)       \
+       $(DEV_AFLAGS)     \
+       $(GLOBAL_DEFINES) \
+       $(OPTIM)          \
+       $(ASM_INC)        \
+       $(INCLUDES)
 
 OBJS = $(SOURCE:.c=.o)
 OBJS_CPP = $(SOURCE_CPP:.cpp=.o)
 OBJS_S = $(S_SRCS:.S=.o)
 
-
-
 OUT_OBJS=$(addprefix $(OUTPUT_DIR)/,$(OBJS))
 OUT_OBJS_CPP=$(addprefix $(OUTPUT_DIR)/,$(OBJS_CPP))
 OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 
-
-default : firmware-EN
+default: firmware-EN
 
 firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFILE_DIR)/$(model)_%.dfu
 	@true
 
-
-#
-# The rule to create the target directory
-#
+## The rule to create the target directory
 
 # Create hexfile
-%.hex : %.elf Makefile
+%.hex: %.elf Makefile
 	$(OBJCOPY) $< -O ihex $@
 
-%.bin : %.elf Makefile
+%.bin: %.elf Makefile
 	$(OBJCOPY) $< -O binary $@
 	$(SIZE) $<
 
-%.dfu : %.bin Makefile
+%.dfu: %.bin Makefile
 	$(HOST_PYTHON) dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
 
-$(HEXFILE_DIR)/$(model)_%.elf : \
+$(HEXFILE_DIR)/$(model)_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation.%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
@@ -619,7 +583,7 @@ $(HEXFILE_DIR)/$(model)_%.elf : \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
-$(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
+$(HEXFILE_DIR)/$(model)_string_compressed_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
@@ -631,7 +595,7 @@ $(HEXFILE_DIR)/$(model)_string_compressed_%.elf : \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
-$(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
+$(HEXFILE_DIR)/$(model)_font_compressed_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
@@ -643,11 +607,11 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf : \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
-$(OUT_OBJS): $(OUTPUT_DIR)/%.o : %.c Makefile
+$(OUT_OBJS): $(OUTPUT_DIR)/%.o: %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@$(CC) -c $(CFLAGS) $< -o $@
 
-$(OUTPUT_DIR)/%.o : %.cpp Makefile
+$(OUTPUT_DIR)/%.o: %.cpp Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
 
@@ -675,10 +639,7 @@ Core/Gen/macros.txt: Makefile
 	@test -d $(CURDIR)/Core/Gen || mkdir -p $(CURDIR)/Core/Gen
 	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF $(CURDIR)/Core/Gen/macros.tmp - > $(CURDIR)/Core/Gen/macros.txt
 
-
-#
-# The recipes to produce compressed translation data:
-#
+## The recipes to produce compressed translation data:
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
@@ -715,14 +676,12 @@ Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.file
 		--compress-font \
 		$*
 
-#
 # The recipes to produce multi-language firmwares:
-#
 
 # Usage: $(eval $(call multi_lang_rule,$(1)=group_code,$(2)=group_name,$(3)=lang_codes))
 define multi_lang_rule
 
-$(HEXFILE_DIR)/$(model)_multi_$(2).elf : \
+$(HEXFILE_DIR)/$(model)_multi_$(2).elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_multi.$(1).o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
@@ -734,7 +693,7 @@ $(HEXFILE_DIR)/$(model)_multi_$(2).elf : \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
 		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
 
-$(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf : \
+$(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_multi.$(1).o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o \
@@ -776,10 +735,8 @@ Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.
 
 endef # multi_lang_rule
 
-
 # Add multi-language firmware rules:
 $(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_code),$(LANGUAGE_GROUP_$(group_code)_NAME),$(LANGUAGE_GROUP_$(group_code)_LANGS))))
-
 
 clean:
 	rm -Rf Core/Gen
@@ -812,7 +769,7 @@ check-style:
 		echo "Style check failed at least once! Please, check the log above for the details." && exit 1 ; \
 	fi ;
 
-.PHONY: style all clean default clean-all
+.PHONY: style  check-style  all  clean  default  clean-all
 .SECONDARY:
 
 # pull in dependency info for *existing* .o files
