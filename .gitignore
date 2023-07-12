@@ -212,3 +212,6 @@ TS100/KiCad/TS100.bak
 Logo GUI/TS100 Logo Editor/TS100 Logo Editor/obj/
 Logo GUI/TS100 Logo Editor/TS100 Logo Editor/bin/
 
+# Tests/linters/sanitizers
+source/check-style.log
+
