@@ -537,10 +537,10 @@ OPTIM=-Os                             \
       -fsingle-precision-constant
 
 # Global defines ---------------------------------------------------------------
-GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
+GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
 
 ifdef swd_enable
-GLOBAL_DEFINES += -DSWD_ENABLE
+GLOBAL_DEFINES+=-DSWD_ENABLE
 endif
 
 # Libs -------------------------------------------------------------------------
