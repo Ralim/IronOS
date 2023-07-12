@@ -13,10 +13,10 @@ ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
 
-# output folder
+# Output folder
 HEXFILE_DIR=Hexfile
 
-# temporary objects folder
+# Temporary objects folder
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
 
@@ -54,6 +54,7 @@ HOST_OUTPUT_DIR=Objects/host
 # DFU packing address to use
 DEVICE_DFU_ADDRESS=0x08000000
 DEVICE_DFU_VID_PID=0x28E9:0x0189
+
 # Enumerate all of the include directories (HAL source dirs are used for clang-format only)
 APP_INC_DIR=./Core/Inc
 BRIEFLZ_INC_DIR=./Core/brieflz
@@ -133,7 +134,7 @@ PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR=$(PINECILV2_COMPONENTS_DIR)/bl
 PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/ble_inc
 PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/sbc/dec
 
-#Binary blobs suck and they should be ashamed
+# Binary blobs suck and they should be ashamed
 PINECILV2_BLE_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/lib
 PINECILV2_RF_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/bl702_rf/lib
 
@@ -171,7 +172,7 @@ INC_PD_DRIVERS_DIR=./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
 PD_DRIVER_DIR=./Core/Drivers/usb-pd
 
-## Excludes for clang-format
+# Excludes for clang-format
 
 ALL_INCLUDES_EXCEPT:=-path $(BRIEFLZ_INC_DIR)             \
                   -o -path $(PD_DRIVER_DIR)               \
@@ -331,6 +332,7 @@ ASM_INC=-I$(PINE_RISCV_INC_DIR)
 LDSCRIPT=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
 flash_size=128k
 bootldr_size=0x0
+
 # Flags
 CPUFLAGS=-march=rv32imac \
          -mabi=ilp32     \
@@ -469,7 +471,7 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
 # -DBFLB_USE_HAL_DRIVER \
 # -DCONFIG_BT_SMP
 
-#Required to be turned off due to their drivers tripping warnings
+# Required to be turned off due to their drivers tripping warnings
 DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
 DEV_CXXFLAGS= $(DEV_CFLAGS)
 flash_size=128k
@@ -510,10 +512,10 @@ SOURCE_CPP:=$(shell find $(SOURCE_THREADS_DIR)     -type f -name '*.cpp') \
             $(shell find $(DEVICE_BSP_DIR)         -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o -type f -name '*.cpp') \
             $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
 
-# code optimisation ------------------------------------------------------------
+# Code optimisation ------------------------------------------------------------
 OPTIM=-Os -fno-jump-tables -foptimize-strlen -faggressive-loop-optimizations -fdevirtualize-at-ltrans -fmerge-all-constants -fshort-wchar -flto -finline-small-functions -finline-functions -findirect-inlining -fdiagnostics-color -ffunction-sections -fdata-sections -fshort-enums -fsingle-precision-constant  -fno-common -fno-math-errno -ffast-math -ffinite-math-only -fno-signed-zeros -fsingle-precision-constant
 
-# global defines ---------------------------------------------------------------
+# Global defines ---------------------------------------------------------------
 GLOBAL_DEFINES += $(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
 
 ifdef swd_enable
@@ -829,9 +831,10 @@ check-style:
 	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
 		if [ $$var -ne 0 ] ; then \
-			echo "$$src does not respect the coding style (diff: $$var lines)" ; \
-			clang-format "$$src" | diff "$$src" -; \
-			ret=1 ; \
+			clang-format "$$src" | diff "$$src" - | sed -ne '/^[0-9].*/p;' | sed '/^$$/d; /^[0-9].*/ s/[acd,].*$$//; s,^,'"$$src"':,; s,$$,:1: error: code style mismatch,; ' ; \
+			echo "$$src: note: please, check the attached diff output below"; \
+			clang-format "$$src" | diff "$$src" - ; \
+			ret=1; \
 		fi ; \
 	done ; \
 	if [ $$ret -eq 0 ] ; then \
