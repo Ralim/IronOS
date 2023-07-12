@@ -171,9 +171,34 @@ INC_PD_DRIVERS_DIR=./Core/Drivers/usb-pd/include
 PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
 PD_DRIVER_DIR=./Core/Drivers/usb-pd
 
+## Excludes for clang-format
+
+ALL_INCLUDES_EXCEPT:=-path $(BRIEFLZ_INC_DIR)             \
+                  -o -path $(PD_DRIVER_DIR)               \
+                  -o -path $(PINECILV2_SDK_DIR)           \
+                  -o -path $(DRIVER_INC_DIR)              \
+                  -o -path $(MINIWARE_HAL_INC_DIR)        \
+                  -o -path $(S60_HAL_INC_DIR)             \
+                  -o -path $(MHP30_HAL_INC_DIR)           \
+                  -o -path $(PINE_VENDOR_INC_DIR)         \
+                  -o -path $(MINIWARE_CMSIS_CORE_INC_DIR) \
+                  -o -path $(S60_CMSIS_CORE_INC_DIR)      \
+                  -o -path $(MINIWARE_INC_CMSIS_DEVICE)   \
+                  -o -path $(S60_INC_CMSIS_DEVICE)        \
+                  -o -path $(MHP30_INC_CMSIS_DEVICE)
+
+ALL_SOURCE_EXCEPT:=-path $(SOURCE_BRIEFLZ_DIR)   \
+                -o -path $(PD_DRIVER_DIR)        \
+                -o -path $(PINECILV2_SDK_DIR)    \
+                -o -path $(SOURCE_DRIVERS_DIR)   \
+                -o -path $(MINIWARE_HAL_SRC_DIR) \
+                -o -path $(S60_HAL_SRC_DIR)      \
+                -o -path $(MHP30_HAL_SRC_DIR)    \
+                -o -path $(PINE_VENDOR_SRC_DIR)
+
 # Find-all's used for formatting; have to exclude external modules
-ALL_INCLUDES=$(shell find ./Core -type d \( -path $(BRIEFLZ_INC_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) -o -path $(DRIVER_INC_DIR) -o -path $(MINIWARE_HAL_INC_DIR) -o -path $(S60_HAL_INC_DIR) -o -path $(MHP30_HAL_INC_DIR) -o -path $(PINE_VENDOR_INC_DIR) -o -path $(MINIWARE_CMSIS_CORE_INC_DIR) -o -path $(S60_CMSIS_CORE_INC_DIR) -o -path $(MINIWARE_INC_CMSIS_DEVICE) -o -path $(S60_INC_CMSIS_DEVICE) -o -path $(MHP30_INC_CMSIS_DEVICE) \)  -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
-ALL_SOURCE=$(shell find ./Core -type d  \( -path $(SOURCE_BRIEFLZ_DIR) -o -path $(PD_DRIVER_DIR) -o -path $(PINECILV2_SDK_DIR) -o -path $(SOURCE_DRIVERS_DIR) -o -path $(MINIWARE_HAL_SRC_DIR) -o -path $(S60_HAL_SRC_DIR) -o -path $(MHP30_HAL_SRC_DIR) -o -path $(PINE_VENDOR_SRC_DIR) \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+ALL_INCLUDES=$(shell find  ./Core -type d \( $(ALL_INCLUDES_EXCEPT) \) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
+ALL_SOURCE=$(shell find    ./Core -type d \( $(ALL_SOURCE_EXCEPT)   \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
