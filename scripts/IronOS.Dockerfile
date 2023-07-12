@@ -9,14 +9,14 @@ WORKDIR /build/source
 # Installing the two compilers (ARM & RISCV), python3 & pip, clang tools:
 ## - compilers: gcc-*, newlib-*
 ## - python3: py*, black (required to check Python code formatting)
-## - misc: findutils, make, git
+## - misc: findutils, make, git, diffutils
 ## - musl-dev (required for the multi lang firmwares)
 ## - clang (required for clang-format to check C++ code formatting)
 
 ARG APK_COMPS="gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf \
                newlib-arm-none-eabi"
 ARG APK_PYTHON="python3 py3-pip black"
-ARG APK_MISC="findutils make git"
+ARG APK_MISC="findutils make git diffutils"
 ARG APK_DEV="musl-dev clang bash clang-extra-tools"
 
 # PIP packages
