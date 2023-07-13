@@ -1,21 +1,21 @@
-#include "ble.h"
-#include "BSP.h"
-#include "bflb_platform.h"
-#include "bl702_glb.h"
-#include "ble_characteristics.h"
-#include "ble_peripheral.h"
-#include "bluetooth.h"
-#include "conn.h"
-#include "gatt.h"
-#include "hal_clock.h"
-#include "hci_core.h"
-#include "log.h"
-#include "uuid.h"
-#include <FreeRTOS.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <FreeRTOS.h>
+#include "bflb_platform.h"
 #include <task.h>
+#include "BSP.h"
+#include "bluetooth.h"
+#include "conn.h"
+#include "gatt.h"
+#include "hci_core.h"
+#include "uuid.h"
+#include "ble_peripheral.h"
+#include "log.h"
+#include "bl702_glb.h"
+#include "ble_characteristics.h"
+#include "hal_clock.h"
+#include "ble.h"
 
 void ble_stack_start(void) {
   MSG("BLE Starting\n");
