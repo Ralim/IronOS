@@ -93,6 +93,7 @@ PINE_NMSIS_INC_DIR=./Core/BSP/Pinecil/Vendor/NMSIS/Core/Include
 PINE_FREERTOS_PORT_INC_DIR=./Core/BSP/Pinecil/Vendor/OS/FreeRTOS/Source/portable/GCC
 
 PINECILV2_DIR=./Core/BSP/Pinecilv2
+PINECILV2_MEM_DIR=$(PINECILV2_DIR)/MemMang
 PINECILV2_SDK_DIR=$(PINECILV2_DIR)/bl_mcu_sdk
 
 PINECILV2_VENDOR_BSP_DIR=$(PINECILV2_SDK_DIR)/bsp
@@ -111,8 +112,8 @@ PINECILV2_COMMON_PID_DIR=$(PINECILV2_COMMON_DIR)/pid
 PINECILV2_COMMON_RING_BUFFERDIR=$(PINECILV2_COMMON_DIR)/ring_buffer
 PINECILV2_COMMON_SOFT_CRC_DIR=$(PINECILV2_COMMON_DIR)/soft_crc
 PINECILV2_COMMON_TIMESTAMP_DIR=$(PINECILV2_COMMON_DIR)/timestamp
-PINECILV2_COMPONENTS_DIR=$(PINECILV2_SDK_DIR)/components
 
+PINECILV2_COMPONENTS_DIR=$(PINECILV2_SDK_DIR)/components
 PINECILV2_COMPONENTS_FREERTOS_DIR=$(PINECILV2_COMPONENTS_DIR)/freertos
 PINECILV2_COMPONENTS_FREERTOS_BL602_DIR=$(PINECILV2_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl702
 
@@ -196,7 +197,8 @@ ALL_SOURCE_EXCEPT:=-path $(SOURCE_BRIEFLZ_DIR)   \
                 -o -path $(MINIWARE_HAL_SRC_DIR) \
                 -o -path $(S60_HAL_SRC_DIR)      \
                 -o -path $(MHP30_HAL_SRC_DIR)    \
-                -o -path $(PINE_VENDOR_SRC_DIR)
+                -o -path $(PINE_VENDOR_SRC_DIR)  \
+                -o -path $(PINECILV2_MEM_DIR)
 
 # Find-all's used for formatting; have to exclude external modules
 ALL_INCLUDES=$(shell find  ./Core -type d \( $(ALL_INCLUDES_EXCEPT) \) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
