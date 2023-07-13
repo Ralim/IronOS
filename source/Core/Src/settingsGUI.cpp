@@ -175,7 +175,7 @@ static bool enterAdvancedMenu(void);
  *  Display Orientation
  *  Cooldown Blink
  *  Scrolling Speed
- *  Swap Temp Change Buttons + -
+ *  Swap Temp Change Buttons +/-
  *  Animation Speed
  *  -Animation Loop
  *  OLED Brightness
@@ -194,6 +194,12 @@ static bool enterAdvancedMenu(void);
  *  -Power Pulse Duration
  *  Factory Reset
  *
+ */
+
+/* !!!DISABLE CLANG-FORMAT for menuitems initialization!!! */
+
+/* A lot of suggestions by clang-format can be useful
+ * but not when you deal with such menuitems declarations.
  */
 
 const menuitem rootSettingsMenu[] {
@@ -356,7 +362,7 @@ const menuitem UIMenu[] = {
    *  Display Orientation
    *  Cooldown Blink
    *  Scrolling Speed
-   *  Swap Temp Change Buttons + -
+   *  Swap Temp Change Buttons +/-
    *  Animation Speed
    *  -Animation Loop
    *  OLED Brightness
@@ -368,14 +374,14 @@ const menuitem UIMenu[] = {
   /* Temperature units, this has to be the first element in the array to work with the logic in enterUIMenu() */
   {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), setTempF, displayTempF, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureUnit, 7},
 #ifndef NO_DISPLAY_ROTATE
-/*Display Rotation*/
+  /* Display Rotation */
   {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), setDisplayRotation, displayDisplayRotation, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::DisplayRotation, 7},
 #endif /* *not* NO_DISPLAY_ROTATE */
   /* Cooling blink warning */
   {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, displayCoolingBlinkEnabled, nullptr, SettingsOptions::CoolingTempBlink, SettingsItemIndex::CooldownBlink, 7},
   /* Scroll Speed for descriptions */
   {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed, 7},
-  /* Reverse Temp change buttons + - */
+  /* Reverse Temp change buttons +/- */
   {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled, SettingsItemIndex::ReverseButtonTempChange, 7},
   /* Animation Speed adjustment */
   {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7},
@@ -425,10 +431,12 @@ const menuitem advancedMenu[] = {
   {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration, 7},
   /* Resets settings */
   {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7},
-  /* vvvv end of menu marker. DO NOT REMOVE vvvv */  
+  /* vvvv end of menu marker. DO NOT REMOVE vvvv */
   {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
   /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
+
+/* !!!ENABLE CLANG-FORMAT back!!! */
 
 /**
  * Prints two small lines (or one line for CJK) of short description for
