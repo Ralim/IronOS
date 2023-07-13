@@ -2,8 +2,8 @@
 // Created by laura on 24.04.23.
 //
 
-#include "OperatingModes.h"
 #include "SolderingCommon.h"
+#include "OperatingModes.h"
 
 extern bool heaterThermalRunaway;
 
