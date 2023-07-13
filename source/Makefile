@@ -872,7 +872,7 @@ check-style:
 	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
 		if [ $$var -ne 0 ] ; then \
-			clang-format "$$src" | diff "$$src" - | sed '/^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch,; ' ; \
+			clang-format "$$src" | diff "$$src" - | sed '/^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch,; ' ; \
 			ret=1; \
 		fi ; \
 	done ; \
