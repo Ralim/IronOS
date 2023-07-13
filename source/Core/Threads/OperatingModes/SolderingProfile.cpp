@@ -16,8 +16,8 @@ void gui_solderingProfileMode() {
 
   TickType_t buzzerEnd = 0;
 
-  bool        waitForRelease = true;
-  TickType_t  phaseStartTime = xTaskGetTickCount();
+  bool       waitForRelease = true;
+  TickType_t phaseStartTime = xTaskGetTickCount();
 
   uint16_t tipTemp      = 0;
   uint8_t  profilePhase = 0;
@@ -87,7 +87,7 @@ void gui_solderingProfileMode() {
         phaseTicksPerDegree = TICKS_SECOND / getSettingValue(SettingsOptions::ProfileCooldownSpeed);
       } else {
         // set up next phase
-        switch(profilePhase) {
+        switch (profilePhase) {
         case 1:
           phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase1Duration);
           phaseEndTemp      = getSettingValue(SettingsOptions::ProfilePhase1Temp);

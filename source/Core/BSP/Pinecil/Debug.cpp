@@ -23,14 +23,12 @@ void                    log_system_state(int32_t PWMWattsx10) {
     // Tip_Temp_C,Handle_Temp_C,Output_Power_Wattx10,PWM,Tip_Raw\r\n
     // 3+1+3+1+3+1+3+1+5+2 = 23, so sizing at 32 for now
 
-    outputLength = snprintf(uartOutputBuffer,
-                            uartOutputBufferLength,
-                            "%lu,%u,%li,%u,%lu\r\n",
-                            TipThermoModel::getTipInC(false),                            // Tip temp in C
-                            getHandleTemperature(0),                                     // Handle temp in C X10
-                            PWMWattsx10,                                                 // Output Wattage
-                            pendingPWM,                                                  // PWM
-                            TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true) // Tip temp in uV
+    outputLength = snprintf(uartOutputBuffer, uartOutputBufferLength, "%lu,%u,%li,%u,%lu\r\n",
+                             TipThermoModel::getTipInC(false),                            // Tip temp in C
+                             getHandleTemperature(0),                                     // Handle temp in C X10
+                             PWMWattsx10,                                                 // Output Wattage
+                             pendingPWM,                                                  // PWM
+                             TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true) // Tip temp in uV
     );
 
     // Now print this out the uart via IRQ (DMA cant be used as oled has it)

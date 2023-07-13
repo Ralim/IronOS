@@ -207,13 +207,19 @@ const menuitem rootSettingsMenu[] {
    * Exit
    */
 #if defined(POW_DC) || defined(POW_QC)
-  {0, enterPowerMenu, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Power*/
-#endif /* POW_DC or POW_QC */
-      {0, enterSolderingMenu, displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                       /*Soldering*/
-      {0, enterPowerSavingMenu, displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                   /*Sleep Options Menu*/
-      {0, enterUIMenu, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                                     /*UI Menu*/
-      {0, enterAdvancedMenu, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                         /*Advanced Menu*/
-      {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, settings_showLanguageSwitch, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Language Switch*/
+  /* Power */
+  {0, enterPowerMenu, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+#endif
+      /* Soldering */
+      {0, enterSolderingMenu, displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+      /* Sleep Options Menu */
+      {0, enterPowerSavingMenu, displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+      /* UI Menu */
+      {0, enterUIMenu, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+      /* Advanced Menu */
+      {0, enterAdvancedMenu, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+      /* Language Switch */
+      {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, settings_showLanguageSwitch, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
   {
     0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0
   } // end of menu marker. DO NOT REMOVE
@@ -229,16 +235,21 @@ const menuitem powerMenu[] = {
  *  PDVpdo
  */
 #ifdef POW_DC
-    {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},            /*Voltage input*/
-    {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, displayInputMinVRange, showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell, 5}, /*Minimum voltage input*/
-#endif /* POW_DC */
+    /* Voltage input */
+    {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},
+    /* Minimum voltage input */
+    {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, displayInputMinVRange, showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell, 5},
+#endif
 #ifdef POW_QC
-    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4}, /*Voltage input*/
-#endif /* POW_QC */
+    /* Voltage input */
+    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4},
+#endif
 #ifdef POW_PD
-    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
-    {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7 }, /*Toggle PPS & EPR*/
-#endif /* POW_PD */
+    /* PD timeout setup */
+    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5},
+    /* Toggle PPS & EPR */
+    {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7 },
+#endif
     {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
 };
 #endif /* POW_DC or POW_QC or POW_PD */
@@ -552,9 +563,7 @@ static void displayLockingMode(void) {
 
 #ifdef PROFILE_SUPPORT
 
-static void displayProfilePhases(void) {
-  OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE);
-}
+static void displayProfilePhases(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE); }
 
 static bool setProfileTemp(const enum SettingsOptions option) {
   // If in C, 5 deg, if in F 10 deg
@@ -562,7 +571,7 @@ static bool setProfileTemp(const enum SettingsOptions option) {
   if (getSettingValue(SettingsOptions::TemperatureInF)) {
     temp += 10;
     if (temp > MAX_TEMP_F) {
-        temp = MIN_TEMP_F;
+      temp = MIN_TEMP_F;
     }
     setSettingValue(option, temp);
     return temp == MAX_TEMP_F;

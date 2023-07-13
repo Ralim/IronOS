@@ -42,7 +42,7 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 
   taskENTER_CRITICAL();
   /* --------------- */
-  err      = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
+  err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
   taskEXIT_CRITICAL();
   bool res = err == SUCCESS;
   if (!res) {
@@ -67,7 +67,7 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
 
   taskENTER_CRITICAL();
   /* --------------- */
-  err      = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
+  err = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
   taskEXIT_CRITICAL();
   bool res = err == SUCCESS;
   if (!res) {

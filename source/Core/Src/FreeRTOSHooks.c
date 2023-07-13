@@ -20,7 +20,7 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackTyp
   /* place for user code */
 }
 
-void vApplicationStackOverflowHook(TaskHandle_t xTask, char * pcTaskName) {
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
   (void)xTask;
   (void)pcTaskName;
 
