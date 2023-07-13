@@ -196,10 +196,12 @@ static bool enterAdvancedMenu(void);
  *
  */
 
-/* !!!DISABLE CLANG-FORMAT for menuitems initialization!!! */
+/* vvv !!!DISABLE CLANG-FORMAT for menuitems initialization!!! vvv */
+
+/* clang-format off */
 
 /* A lot of suggestions by clang-format can be useful
- * but not when you deal with such menuitems declarations.
+ * but not when dealing with such menuitems declarations.
  */
 
 const menuitem rootSettingsMenu[] {
@@ -436,7 +438,9 @@ const menuitem advancedMenu[] = {
   /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
 
-/* !!!ENABLE CLANG-FORMAT back!!! */
+/* clang-format on */
+
+/* ^^^ !!!ENABLE CLANG-FORMAT back!!! ^^^ */
 
 /**
  * Prints two small lines (or one line for CJK) of short description for
