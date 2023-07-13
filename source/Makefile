@@ -158,7 +158,7 @@ PINECILV2_DRIVERS_STD_DRV_DIR=$(PINECILV2_DRIVERS_DIR)/std_drv/inc
 SOURCE_MIDDLEWARES_DIR=./Middlewares
 FRTOS_CMIS_INC_DIR=./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 FRTOS_INC_DIR=./Middlewares/Third_Party/FreeRTOS/Source/include
-DRIVER_INC_DIR =./Core/Drivers
+DRIVER_INC_DIR=./Core/Drivers
 BSP_INC_DIR=./Core/BSP
 THREADS_INC_DIR=./Core/Threads
 THREADS_OP_MODES_INC_DIR=./Core/Threads/OperatingModes
@@ -867,13 +867,13 @@ check-style-list:
 		echo "Style check: FAIL!" && echo "Please, check the log above for the details." && exit 1 ; \
 	fi ;
 
-# Show output in gcc-like error compatible format for IDEs/editors
+# Show output in gcc-like error compatible format for IDEs/editors; call `make check-style STOP=1` to exit after first failed file
 check-style:
 	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
 		if [ $$var -ne 0 ] ; then \
-			clang-format "$$src" | diff "$$src" - | sed '/^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch,; ' ; \
-			ret=1; \
+		clang-format "$$src" | diff "$$src" - | sed '/^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch:,; ' ; \
+			ret=1; test -n "$(STOP)" && break; \
 		fi ; \
 	done ; \
 	if [ $$ret -eq 0 ] ; then \
