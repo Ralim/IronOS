@@ -553,25 +553,27 @@ static void displayLockingMode(void) {
 #ifdef PROFILE_SUPPORT
 
 static void displayProfilePhases(void) {
-    OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE);
+  OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE);
 }
 
 static bool setProfileTemp(const enum SettingsOptions option) {
-    // If in C, 5 deg, if in F 10 deg
-    uint16_t temp = getSettingValue(option);
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        temp += 10;
-        if (temp > MAX_TEMP_F)
-            temp = MIN_TEMP_F;
-        setSettingValue(option, temp);
-        return temp == MAX_TEMP_F;
-    } else {
-        temp += 5;
-        if (temp > MAX_TEMP_C)
-            temp = MIN_TEMP_C;
-        setSettingValue(option, temp);
-        return temp == MAX_TEMP_C;
+  // If in C, 5 deg, if in F 10 deg
+  uint16_t temp = getSettingValue(option);
+  if (getSettingValue(SettingsOptions::TemperatureInF)) {
+    temp += 10;
+    if (temp > MAX_TEMP_F) {
+        temp = MIN_TEMP_F;
     }
+    setSettingValue(option, temp);
+    return temp == MAX_TEMP_F;
+  } else {
+    temp += 5;
+    if (temp > MAX_TEMP_C) {
+      temp = MIN_TEMP_C;
+    }
+    setSettingValue(option, temp);
+    return temp == MAX_TEMP_C;
+  }
 }
 
 static bool setProfilePreheatTemp(void) { return setProfileTemp(SettingsOptions::ProfilePreheatTemp); }
@@ -657,20 +659,20 @@ static bool showHallEffect(void) { return getHallSensorFitted(); }
 #endif /* HALL_SENSOR */
 
 static void setTempF(const enum SettingsOptions option) {
-    uint16_t Temp = getSettingValue(option);
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        // Change temp to the F equiv
-        // C to F == F= ( (C*9) +160)/5
-        Temp = ((Temp * 9) + 160) / 5;
-    } else {
-        // Change temp to the C equiv
-        // F->C == C = ((F-32)*5)/9
-        Temp = ((Temp - 32) * 5) / 9;
-    }
-    // Rescale to be multiples of 10
-    Temp = BoostTemp / 10;
-    Temp *= 10;
-    setSettingValue(option, Temp);
+  uint16_t Temp = getSettingValue(option);
+  if (getSettingValue(SettingsOptions::TemperatureInF)) {
+    // Change temp to the F equiv
+    // C to F == F= ( (C*9) +160)/5
+    Temp = ((Temp * 9) + 160) / 5;
+  } else {
+    // Change temp to the C equiv
+    // F->C == C = ((F-32)*5)/9
+    Temp = ((Temp - 32) * 5) / 9;
+  }
+  // Rescale to be multiples of 10
+  Temp = BoostTemp / 10;
+  Temp *= 10;
+  setSettingValue(option, Temp);
 }
 
 static bool setTempF(void) {

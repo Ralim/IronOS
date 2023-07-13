@@ -1,12 +1,12 @@
 #include "OperatingModes.h"
 void gui_solderingTempAdjust(void) {
-  TickType_t lastChange              = xTaskGetTickCount();
+  TickType_t  lastChange             = xTaskGetTickCount();
   currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
   TickType_t  autoRepeatTimer        = 0;
   uint8_t     autoRepeatAcceleration = 0;
 #ifndef PROFILE_SUPPORT
-  bool        waitForRelease         = false;
-  ButtonState buttons                = getButtonState();
+  bool        waitForRelease = false;
+  ButtonState buttons        = getButtonState();
 
   if (buttons != BUTTON_NONE) {
     // Temp adjust entered by long-pressing F button.

@@ -187,4 +187,3 @@ void gui_solderingMode(uint8_t jumpToSleep) {
     GUIDelay();
   }
 }
-

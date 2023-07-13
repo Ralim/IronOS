@@ -46,10 +46,12 @@ void        Setup_HAL() {
   MX_TIM2_Init();
   MX_IWDG_Init();
   HAL_ADC_Start(&hadc2);
-  HAL_ADCEx_MultiModeStart_DMA(&hadc1, ADCReadings,
-                               (ADC_SAMPLES * ADC_CHANNELS)); // start DMA of normal readings
-                                                              //	HAL_ADCEx_InjectedStart(&hadc1);                 // enable injected readings
-                                                              //	HAL_ADCEx_InjectedStart(&hadc2);                 // enable injected readings
+  HAL_ADCEx_MultiModeStart_DMA(
+    &hadc1,
+     ADCReadings,
+    (ADC_SAMPLES * ADC_CHANNELS)); // start DMA of normal readings
+                                   // HAL_ADCEx_InjectedStart(&hadc1); // enable injected readings
+                                   // HAL_ADCEx_InjectedStart(&hadc2); // enable injected readings
 }
 
 // channel 0 -> temperature sensor, 1-> VIN, 2-> tip

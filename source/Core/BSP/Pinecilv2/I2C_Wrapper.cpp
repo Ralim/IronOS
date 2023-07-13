@@ -40,7 +40,8 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
   i2cCfg.data             = p_buffer;
   i2cCfg.subAddrSize      = 1; // one byte address
 
-taskENTER_CRITICAL();
+  taskENTER_CRITICAL();
+  /* --------------- */
   err      = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
   taskEXIT_CRITICAL();
   bool res = err == SUCCESS;
@@ -63,7 +64,9 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
   i2cCfg.dataSize         = number_of_byte;
   i2cCfg.data             = p_buffer;
   i2cCfg.subAddrSize      = 1; // one byte address
-taskENTER_CRITICAL();
+
+  taskENTER_CRITICAL();
+  /* --------------- */
   err      = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
   taskEXIT_CRITICAL();
   bool res = err == SUCCESS;
