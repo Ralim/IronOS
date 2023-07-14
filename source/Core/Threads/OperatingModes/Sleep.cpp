@@ -12,14 +12,18 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     // If in the first two seconds we disable this to let accelerometer warm up
 
 #ifdef POW_DC
-    if (checkForUnderVoltage())
-      return 1; // return non-zero on error
+    if (checkForUnderVoltage()) {
+      // return non-zero on error
+      return 1;
+    }
 #endif
+
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
       currentTempTargetDegC = stayOff ? 0 : TipThermoModel::convertFtoC(min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp)));
     } else {
       currentTempTargetDegC = stayOff ? 0 : min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp));
     }
+
     // draw the lcd
     uint16_t tipTemp = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
 
@@ -30,6 +34,7 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       OLED::setCursor(0, 8);
       OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
       OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
+
       if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::print(SmallSymbolDegF, FontStyle::SMALL);
       } else {
@@ -42,6 +47,7 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     } else {
       OLED::print(translatedString(Tr->SleepingSimpleString), FontStyle::LARGE);
       OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
+
       if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::drawSymbol(0);
       } else {
