@@ -862,7 +862,7 @@ check-style-list:
 			echo "$$src" ; \
 			ret=1; test -n "$(STOP)" && break; \
 		fi ; \
-		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for if/else block:\n>>>,;' | grep -q -e "^.*$$" ; \
+		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" -e "^.*:.*: .*if ((.*[^)])$$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -q -e "^.*$$" ; \
 		if [ "$$?" -ne 1 ]; then \
 			echo "$$src" ; \
 			ret=1; test -n "$(STOP)" && break; \
@@ -886,7 +886,7 @@ check-style:
 			clang-format "$$src" | diff "$$src" - | sed 's/^---/-------------------------------------------------------------------------------/; s/^< /--- /; s/^> /+++ /; /^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch:,; ' ; \
 			ret=1; test -n "$(STOP)" && break; \
 		fi ; \
-		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for if/else block:\n>>>,;' | grep -e "^.*$$" ; \
+		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" -e "^.*:.*: .*if ((.*[^)])$$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -e "^.*$$" ; \
 		if [ "$$?" -ne 1 ]; then \
 			ret=1; test -n "$(STOP)" && break; \
 		fi ; \
