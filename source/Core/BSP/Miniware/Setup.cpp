@@ -229,8 +229,9 @@ static void MX_ADC1_Init(void) {
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
   SET_BIT(hadc1.Instance->CR1, (ADC_CR1_JEOCIE)); // Enable end of injected conv irq
   // Run ADC internal calibration
-  while (HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK)
+  while (HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK) {
     ;
+  }
 }
 
 /* ADC2 init function */
@@ -272,8 +273,9 @@ static void MX_ADC2_Init(void) {
   HAL_ADCEx_InjectedConfigChannel(&hadc2, &sConfigInjected);
 
   // Run ADC internal calibration
-  while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK)
+  while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK) {
     ;
+  }
 }
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {

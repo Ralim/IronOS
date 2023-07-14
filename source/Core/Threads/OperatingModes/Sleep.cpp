@@ -30,9 +30,9 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       OLED::setCursor(0, 8);
       OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
       OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-      else {
+      } else {
         OLED::print(SmallSymbolDegC, FontStyle::SMALL);
       }
 
@@ -42,9 +42,9 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     } else {
       OLED::print(translatedString(Tr->SleepingSimpleString), FontStyle::LARGE);
       OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::drawSymbol(0);
-      else {
+      } else {
         OLED::drawSymbol(1);
       }
     }
@@ -59,9 +59,11 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     if (shouldShutdown()) {
       // shutdown
       currentTempTargetDegC = 0;
-      return 1; // we want to exit soldering mode
+      // we want to exit soldering mode
+      return 1;
     }
   }
 #endif
+
   return 0;
 }

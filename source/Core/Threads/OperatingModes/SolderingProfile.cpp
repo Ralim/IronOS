@@ -156,10 +156,11 @@ void gui_solderingProfileMode() {
       OLED::print(SmallSymbolSlash, FontStyle::SMALL);
       OLED::printNumber(profileCurrentTargetTemp, 3, FontStyle::SMALL);
 
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-      else
+      } else {
         OLED::print(SmallSymbolDegC, FontStyle::SMALL);
+      }
 
       // print phase
       if (profilePhase > 0 && profilePhase <= getSettingValue(SettingsOptions::ProfilePhases)) {

@@ -147,15 +147,15 @@ void gui_solderingMode(uint8_t jumpToSleep) {
     OLED::refresh();
     // Update the setpoints for the temperature
     if (boostModeOn) {
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         currentTempTargetDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::BoostTemp));
-      else {
+      } else {
         currentTempTargetDegC = (getSettingValue(SettingsOptions::BoostTemp));
       }
     } else {
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         currentTempTargetDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SolderingTemp));
-      else {
+      } else {
         currentTempTargetDegC = (getSettingValue(SettingsOptions::SolderingTemp));
       }
     }

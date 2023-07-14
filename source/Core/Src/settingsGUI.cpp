@@ -677,14 +677,16 @@ static bool setSleepTemp(void) {
   uint16_t temp = getSettingValue(SettingsOptions::SleepTemp);
   if (getSettingValue(SettingsOptions::TemperatureInF)) {
     temp += 20;
-    if (temp > 580)
+    if (temp > 580) {
       temp = 60;
+    }
     setSettingValue(SettingsOptions::SleepTemp, temp);
     return temp == 580;
   } else {
     temp += 10;
-    if (temp > 300)
+    if (temp > 300) {
       temp = 10;
+    }
     setSettingValue(SettingsOptions::SleepTemp, temp);
     return temp == 300;
   }
@@ -1121,10 +1123,12 @@ void gui_Menu(const menuitem *menu) {
       menu[currentScreen].draw();
       uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
       uint8_t position        = OLED_HEIGHT * (currentScreen - screensSkipped) / scrollContentSize;
-      if (lastValue)
+      if (lastValue) {
         scrollBlink = !scrollBlink;
-      if (!lastValue || !scrollBlink)
+      }
+      if (!lastValue || !scrollBlink) {
         OLED::drawScrollIndicator(position, indicatorHeight);
+      }
     } else {
       // Draw description
       const char *description = translatedString(Tr->SettingsDescriptions[menu[currentScreen].description - 1]);
@@ -1171,29 +1175,28 @@ void gui_Menu(const menuitem *menu) {
       // increment
       if (scrollMessage.isReset()) {
         lastValue = callIncrementHandler();
-      } else
+      } else {
         scrollMessage.reset();
+      }
       break;
     case BUTTON_B_SHORT:
       if (scrollMessage.isReset()) {
         currentScreen++;
         navState  = NavState::ScrollingDown;
         lastValue = false;
-      } else
+      } else {
         scrollMessage.reset();
+      }
       break;
     case BUTTON_F_LONG:
       if (xTaskGetTickCount() + autoRepeatAcceleration > autoRepeatTimer + PRESS_ACCEL_INTERVAL_MAX) {
-
-        if ((lastValue = callIncrementHandler()))
+        if ((lastValue = callIncrementHandler())) {
           autoRepeatTimer = 1000;
-        else
+        } else {
           autoRepeatTimer = 0;
-
+        }
         autoRepeatTimer += xTaskGetTickCount();
-
         scrollMessage.reset();
-
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;
@@ -1203,7 +1206,6 @@ void gui_Menu(const menuitem *menu) {
         navState        = NavState::ScrollingDown;
         autoRepeatTimer = xTaskGetTickCount();
         scrollMessage.reset();
-
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;

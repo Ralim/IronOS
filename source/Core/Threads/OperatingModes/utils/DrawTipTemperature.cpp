@@ -14,16 +14,18 @@ void gui_drawTipTemp(bool symbol, const FontStyle font) {
   if (symbol) {
     if (font == FontStyle::LARGE) {
       // Big font, can draw nice symbols
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::drawSymbol(0);
-      else
+      } else {
         OLED::drawSymbol(1);
+      }
     } else {
       // Otherwise fall back to chars
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-      else
+      } else {
         OLED::print(SmallSymbolDegC, FontStyle::SMALL);
+      }
     }
   }
 }

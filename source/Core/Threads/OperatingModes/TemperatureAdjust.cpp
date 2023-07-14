@@ -79,20 +79,25 @@ void gui_solderingTempAdjust(void) {
       newTemp = (newTemp / delta) * delta;
 
       if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        if (newTemp > MAX_TEMP_F)
+        if (newTemp > MAX_TEMP_F) {
           newTemp = MAX_TEMP_F;
-        if (newTemp < MIN_TEMP_F)
+        }
+        if (newTemp < MIN_TEMP_F) {
           newTemp = MIN_TEMP_F;
+        }
       } else {
-        if (newTemp > MAX_TEMP_C)
+        if (newTemp > MAX_TEMP_C) {
           newTemp = MAX_TEMP_C;
-        if (newTemp < MIN_TEMP_C)
+        }
+        if (newTemp < MIN_TEMP_C) {
           newTemp = MIN_TEMP_C;
+        }
       }
       setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
     }
-    if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
+    if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2)) {
       return; // exit if user just doesn't press anything for a bit
+    }
 
     if (OLED::getRotation()) {
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
@@ -102,9 +107,9 @@ void gui_solderingTempAdjust(void) {
 
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::LARGE);
-    if (getSettingValue(SettingsOptions::TemperatureInF))
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
       OLED::drawSymbol(0);
-    else {
+    } else {
       OLED::drawSymbol(1);
     }
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);

@@ -16,7 +16,8 @@ void detailedPowerStatus() {
   // Print wattage
   {
     uint32_t x10Watt = x10WattHistory.average();
-    if (x10Watt > 999) { // If we exceed 99.9W we drop the decimal place to keep it all fitting
+    if (x10Watt > 999) {
+      // If we exceed 99.9W we drop the decimal place to keep it all fitting
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
       OLED::printNumber(x10WattHistory.average() / 10, 3, FontStyle::SMALL);
     } else {
@@ -42,30 +43,35 @@ void basicSolderingStatus(bool boostModeOn) {
   if (OLED::getRotation()) {
     // battery
     gui_drawBatteryIcon();
-    OLED::print(LargeSymbolSpace, FontStyle::LARGE); // Space out gap between battery <-> temp
-    gui_drawTipTemp(true, FontStyle::LARGE);         // Draw current tip temp
+    // Space out gap between battery <-> temp
+    OLED::print(LargeSymbolSpace, FontStyle::LARGE);
+    // Draw current tip temp
+    gui_drawTipTemp(true, FontStyle::LARGE);
 
-    // We draw boost arrow if boosting, or else gap temp <-> heat
-    // indicator
-    if (boostModeOn)
+    // We draw boost arrow if boosting,
+    // or else gap temp <-> heat indicator
+    if (boostModeOn) {
       OLED::drawSymbol(2);
-    else
+    } else {
       OLED::print(LargeSymbolSpace, FontStyle::LARGE);
+    }
 
     // Draw heating/cooling symbols
     OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory.average()));
   } else {
     // Draw heating/cooling symbols
     OLED::drawHeatSymbol(X10WattsToPWM(x10WattHistory.average()));
-    // We draw boost arrow if boosting, or else gap temp <-> heat
-    // indicator
-    if (boostModeOn)
+    // We draw boost arrow if boosting,
+    // or else gap temp <-> heat indicator
+    if (boostModeOn) {
       OLED::drawSymbol(2);
-    else
+    } else {
       OLED::print(LargeSymbolSpace, FontStyle::LARGE);
-    gui_drawTipTemp(true, FontStyle::LARGE); // Draw current tip temp
-
-    OLED::print(LargeSymbolSpace, FontStyle::LARGE); // Space out gap between battery <-> temp
+    }
+    // Draw current tip temp
+    gui_drawTipTemp(true, FontStyle::LARGE);
+    // Space out gap between battery <-> temp
+    OLED::print(LargeSymbolSpace, FontStyle::LARGE);
 
     gui_drawBatteryIcon();
   }

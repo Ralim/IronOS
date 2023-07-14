@@ -55,6 +55,7 @@ void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackT
 void vApplicationMallocFailedHook(void) {
   MSG("vApplicationMallocFailedHook\r\n");
 
-  while (1)
+  while (1) {
     ;
+  }
 }
