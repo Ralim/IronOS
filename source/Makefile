@@ -897,10 +897,6 @@ check-style:
 		echo "Style check: FAIL!" && echo "Please, check the log above for the details." && exit 1 ; \
 	fi ;
 
-# Show output in gcc-like error compatible format for IDEs/editors; call `make check-style STOP=1` to exit after first failed file
-check-style-v2: $(CURDIR)/../scripts/deploy.sh
-	$(shell export ALL_SOURCE=\"$(ALL_SOURCE)\" && export ALL_INCLUDES=\"$(ALL_INCLUDES)\" && $(CURDIR)/../scripts/deploy.sh  check_style)
-
 .PHONY: check-style-list  check-style  all  clean  default  clean-all
 .SECONDARY:
 
