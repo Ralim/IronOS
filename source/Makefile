@@ -860,7 +860,12 @@ check-style-list:
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
 		if [ $$var -ne 0 ] ; then \
 			echo "$$src" ; \
-			ret=1; \
+			ret=1; test -n "$(STOP)" && break; \
+		fi ; \
+		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for if/else block:\n>>>,;' | grep -q -e "^.*$$" ; \
+		if [ "$$?" -ne 1 ]; then \
+			echo "$$src" ; \
+			ret=1; test -n "$(STOP)" && break; \
 		fi ; \
 	done ; \
 	if [ $$ret -eq 0 ] ; then \
@@ -870,11 +875,19 @@ check-style-list:
 	fi ;
 
 # Show output in gcc-like error compatible format for IDEs/editors; call `make check-style STOP=1` to exit after first failed file
+# NOTICE:
+# - clang-format has neat option for { } in condition blocks but it's available only since version 15:
+#   * https://clang.llvm.org/docs/ClangFormatStyleOptions.html#insertbraces
+# - grep block in the middle used to trace missing { and } for if/else BUT IT'S VERY SPECULATIVE, very-very hacky & dirty
 check-style:
 	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
 		if [ $$var -ne 0 ] ; then \
-		clang-format "$$src" | diff "$$src" - | sed 's/^---/-------------------------------------------------------------------------------/; s/^< /--- /; s/^> /+++ /; /^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch:,; ' ; \
+			clang-format "$$src" | diff "$$src" - | sed 's/^---/-------------------------------------------------------------------------------/; s/^< /--- /; s/^> /+++ /; /^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch:,; ' ; \
+			ret=1; test -n "$(STOP)" && break; \
+		fi ; \
+		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for if/else block:\n>>>,;' | grep -e "^.*$$" ; \
+		if [ "$$?" -ne 1 ]; then \
 			ret=1; test -n "$(STOP)" && break; \
 		fi ; \
 	done ; \
@@ -883,6 +896,10 @@ check-style:
 	else \
 		echo "Style check: FAIL!" && echo "Please, check the log above for the details." && exit 1 ; \
 	fi ;
+
+# Show output in gcc-like error compatible format for IDEs/editors; call `make check-style STOP=1` to exit after first failed file
+check-style-v2: $(CURDIR)/../scripts/deploy.sh
+	$(shell export ALL_SOURCE=\"$(ALL_SOURCE)\" && export ALL_INCLUDES=\"$(ALL_INCLUDES)\" && $(CURDIR)/../scripts/deploy.sh  check_style)
 
 .PHONY: check-style-list  check-style  all  clean  default  clean-all
 .SECONDARY:
