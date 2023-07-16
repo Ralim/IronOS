@@ -175,7 +175,7 @@ static bool enterAdvancedMenu(void);
  *  Display Orientation
  *  Cooldown Blink
  *  Scrolling Speed
- *  Swap Temp Change Buttons + -
+ *  Swap Temp Change Buttons +/-
  *  Animation Speed
  *  -Animation Loop
  *  OLED Brightness
@@ -196,6 +196,14 @@ static bool enterAdvancedMenu(void);
  *
  */
 
+/* vvv !!!DISABLE CLANG-FORMAT for menuitems initialization!!! vvv */
+
+/* clang-format off */
+
+/* A lot of suggestions by clang-format can be useful
+ * but not when dealing with such menuitems declarations.
+ */
+
 const menuitem rootSettingsMenu[] {
   /*
    * Power Menu
@@ -207,176 +215,232 @@ const menuitem rootSettingsMenu[] {
    * Exit
    */
 #if defined(POW_DC) || defined(POW_QC)
-  {0, enterPowerMenu, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Power*/
-#endif /* POW_DC or POW_QC */
-      {0, enterSolderingMenu, displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                       /*Soldering*/
-      {0, enterPowerSavingMenu, displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                   /*Sleep Options Menu*/
-      {0, enterUIMenu, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                                     /*UI Menu*/
-      {0, enterAdvancedMenu, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},                                         /*Advanced Menu*/
-      {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, settings_showLanguageSwitch, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}, /*Language Switch*/
-  {
-    0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0
-  } // end of menu marker. DO NOT REMOVE
+  /* Power */
+  {0, enterPowerMenu, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+#endif
+  /* Soldering */
+  {0, enterSolderingMenu, displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  /* Sleep Options Menu */
+  {0, enterPowerSavingMenu, displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  /* UI Menu */
+  {0, enterUIMenu, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  /* Advanced Menu */
+  {0, enterAdvancedMenu, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  /* Language Switch */
+  {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, settings_showLanguageSwitch, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  /* vvvv end of menu marker. DO NOT REMOVE vvvv */
+  {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
+  /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
 
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
 const menuitem powerMenu[] = {
-/*
- *  Power Source
- *  -Minimum Voltage
- *  QC Voltage
- *  PD Timeout
- *  PDVpdo
- */
+  /*
+   * Power Source
+   * -Minimum Voltage
+   * QC Voltage
+   * PD Timeout
+   * PDVpdo
+   */
 #ifdef POW_DC
-    {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},            /*Voltage input*/
-    {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, displayInputMinVRange, showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell, 5}, /*Minimum voltage input*/
-#endif /* POW_DC */
+  /* Voltage input */
+  {SETTINGS_DESC(SettingsItemIndex::DCInCutoff), nullptr, displayInputVRange, nullptr, SettingsOptions::MinDCVoltageCells, SettingsItemIndex::DCInCutoff, 6},
+  /* Minimum voltage input */
+  {SETTINGS_DESC(SettingsItemIndex::MinVolCell), nullptr, displayInputMinVRange, showInputVOptions, SettingsOptions::MinVoltageCells, SettingsItemIndex::MinVolCell, 5},
+#endif
 #ifdef POW_QC
-    {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4}, /*Voltage input*/
-#endif /* POW_QC */
+  /* Voltage input */
+  {SETTINGS_DESC(SettingsItemIndex::QCMaxVoltage), nullptr, displayQCInputV, nullptr, SettingsOptions::QCIdealVoltage, SettingsItemIndex::QCMaxVoltage, 4},
+#endif
 #ifdef POW_PD
-    {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5}, /*PD timeout setup*/
-    {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7 }, /*Toggle PPS & EPR*/
-#endif /* POW_PD */
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
+  /* PD timeout setup */
+  {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 5},
+  /* Toggle PPS & EPR */
+  {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7},
+#endif
+  /* vvvv end of menu marker. DO NOT REMOVE vvvv */
+  {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
+  /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
 #endif /* POW_DC or POW_QC or POW_PD */
 
 const menuitem solderingMenu[] = {
-    /*
-     *  Boost Mode Temp
-     *  Auto Start
-     *  Temp Change Short Step
-     *  Temp Change Long Step
-     *  Locking Mode
-     *  Profile Phases
-     *  Profile Preheat Temperature
-     *  Profile Preheat Max Temperature Change Per Second
-     *  Profile Phase 1 Temperature
-     *  Profile Phase 1 Duration (s)
-     *  Profile Phase 2 Temperature
-     *  Profile Phase 2 Duration (s)
-     *  Profile Phase 3 Temperature
-     *  Profile Phase 3 Duration (s)
-     *  Profile Phase 4 Temperature
-     *  Profile Phase 4 Duration (s)
-     *  Profile Phase 5 Temperature
-     *  Profile Phase 5 Duration (s)
-     *  Profile Cooldown Max Temperature Change Per Second
-     */
-    {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5}, /*Boost Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::AutoStart), nullptr, displayAutomaticStartMode, nullptr, SettingsOptions::AutoStartMode, SettingsItemIndex::AutoStart, 7},                   /*Auto start*/
-    {SETTINGS_DESC(SettingsItemIndex::TempChangeShortStep), nullptr, displayTempChangeShortStep, nullptr, SettingsOptions::TempChangeShortStep, SettingsItemIndex::TempChangeShortStep,
-     6}, /*Temp change short step*/
-    {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), nullptr, displayTempChangeLongStep, nullptr, SettingsOptions::TempChangeLongStep, SettingsItemIndex::TempChangeLongStep,
-     6},                                                                                                                                                    /*Temp change long step*/
-    {SETTINGS_DESC(SettingsItemIndex::LockingMode), nullptr, displayLockingMode, nullptr, SettingsOptions::LockingMode, SettingsItemIndex::LockingMode, 7}, /*Locking Mode*/
+  /*
+   *  Boost Mode Temp
+   *  Auto Start
+   *  Temp Change Short Step
+   *  Temp Change Long Step
+   *  Locking Mode
+   *  Profile Phases
+   *  Profile Preheat Temperature
+   *  Profile Preheat Max Temperature Change Per Second
+   *  Profile Phase 1 Temperature
+   *  Profile Phase 1 Duration (s)
+   *  Profile Phase 2 Temperature
+   *  Profile Phase 2 Duration (s)
+   *  Profile Phase 3 Temperature
+   *  Profile Phase 3 Duration (s)
+   *  Profile Phase 4 Temperature
+   *  Profile Phase 4 Duration (s)
+   *  Profile Phase 5 Temperature
+   *  Profile Phase 5 Duration (s)
+   *  Profile Cooldown Max Temperature Change Per Second
+   */
+  /* Boost Temp */
+  {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::BoostTemperature, 5},
+  /* Auto start */
+  {SETTINGS_DESC(SettingsItemIndex::AutoStart), nullptr, displayAutomaticStartMode, nullptr, SettingsOptions::AutoStartMode, SettingsItemIndex::AutoStart, 7},
+  /* Temp change short step */
+  {SETTINGS_DESC(SettingsItemIndex::TempChangeShortStep), nullptr, displayTempChangeShortStep, nullptr, SettingsOptions::TempChangeShortStep, SettingsItemIndex::TempChangeShortStep, 6},
+  /* Temp change long step */
+  {SETTINGS_DESC(SettingsItemIndex::TempChangeLongStep), nullptr, displayTempChangeLongStep, nullptr, SettingsOptions::TempChangeLongStep, SettingsItemIndex::TempChangeLongStep, 6},
+  /* Locking Mode */
+  {SETTINGS_DESC(SettingsItemIndex::LockingMode), nullptr, displayLockingMode, nullptr, SettingsOptions::LockingMode, SettingsItemIndex::LockingMode, 7},
 #ifdef PROFILE_SUPPORT
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhases), nullptr, displayProfilePhases, nullptr, SettingsOptions::ProfilePhases, SettingsItemIndex::ProfilePhases, 7}, /*Profile Phases*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatTemp), setProfilePreheatTemp, displayProfilePreheatTemp, showProfileOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePreheatTemp,  5}, /*Profile Preheat Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatSpeed), nullptr, displayProfilePreheatSpeed, showProfileOptions, SettingsOptions::ProfilePreheatSpeed, SettingsItemIndex::ProfilePreheatSpeed,  5}, /*Profile Preheat Speed*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase1Temp, displayProfilePhase1Temp, showProfileOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase1Temp,  5}, /*Phase 1 Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase1Duration, showProfileOptions, SettingsOptions::ProfilePhase1Duration, SettingsItemIndex::ProfilePhase1Duration,  5}, /*Phase 1 Duration*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase2Temp, displayProfilePhase2Temp, showProfilePhase2Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase2Temp,  5}, /*Phase 2 Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase2Duration, showProfilePhase2Options, SettingsOptions::ProfilePhase2Duration, SettingsItemIndex::ProfilePhase2Duration,  5}, /*Phase 2 Duration*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase3Temp, displayProfilePhase3Temp, showProfilePhase3Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase3Temp,  5}, /*Phase 3 Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase3Duration, showProfilePhase3Options, SettingsOptions::ProfilePhase3Duration, SettingsItemIndex::ProfilePhase3Duration,  5}, /*Phase 3 Duration*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase4Temp, displayProfilePhase4Temp, showProfilePhase4Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase4Temp,  5}, /*Phase 4 Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase4Duration, showProfilePhase4Options, SettingsOptions::ProfilePhase4Duration, SettingsItemIndex::ProfilePhase4Duration,  5}, /*Phase 4 Duration*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase5Temp, displayProfilePhase5Temp, showProfilePhase5Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase5Temp,  5}, /*Phase 5 Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase5Duration, showProfilePhase5Options, SettingsOptions::ProfilePhase5Duration, SettingsItemIndex::ProfilePhase5Duration,  5}, /*Phase 5 Duration*/
-    {SETTINGS_DESC(SettingsItemIndex::ProfileCooldownSpeed), nullptr, displayProfileCooldownSpeed, showProfileOptions, SettingsOptions::ProfileCooldownSpeed, SettingsItemIndex::ProfileCooldownSpeed,  5}, /*Profile Cooldown Speed*/
+  /* Profile Phases */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhases), nullptr, displayProfilePhases, nullptr, SettingsOptions::ProfilePhases, SettingsItemIndex::ProfilePhases, 7},
+  /* Profile Preheat Temp */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatTemp), setProfilePreheatTemp, displayProfilePreheatTemp, showProfileOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePreheatTemp, 5},
+  /* Profile Preheat Speed */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePreheatSpeed), nullptr, displayProfilePreheatSpeed, showProfileOptions, SettingsOptions::ProfilePreheatSpeed, SettingsItemIndex::ProfilePreheatSpeed, 5},
+  /* Phase 1 Temp */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase1Temp, displayProfilePhase1Temp, showProfileOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase1Temp, 5},
+  /* Phase 1 Duration */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase1Duration, showProfileOptions, SettingsOptions::ProfilePhase1Duration, SettingsItemIndex::ProfilePhase1Duration, 5},
+  /* Phase 2 Temp */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase2Temp, displayProfilePhase2Temp, showProfilePhase2Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase2Temp, 5},
+  /* Phase 2 Duration */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase2Duration, showProfilePhase2Options, SettingsOptions::ProfilePhase2Duration, SettingsItemIndex::ProfilePhase2Duration, 5},
+  /* Phase 3 Temp */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase3Temp, displayProfilePhase3Temp, showProfilePhase3Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase3Temp, 5},
+  /* Phase 3 Duration */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase3Duration, showProfilePhase3Options, SettingsOptions::ProfilePhase3Duration, SettingsItemIndex::ProfilePhase3Duration, 5},
+  /* Phase 4 Temp */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase4Temp, displayProfilePhase4Temp, showProfilePhase4Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase4Temp, 5},
+  /* Phase 4 Duration */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase4Duration, showProfilePhase4Options, SettingsOptions::ProfilePhase4Duration, SettingsItemIndex::ProfilePhase4Duration, 5},
+  /* Phase 5 Temp */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Temp), setProfilePhase5Temp, displayProfilePhase5Temp, showProfilePhase5Options, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::ProfilePhase5Temp, 5},
+  /* Phase 5 Duration */
+  {SETTINGS_DESC(SettingsItemIndex::ProfilePhase1Duration), nullptr, displayProfilePhase5Duration, showProfilePhase5Options, SettingsOptions::ProfilePhase5Duration, SettingsItemIndex::ProfilePhase5Duration, 5},
+  /* Profile Cooldown Speed */
+  {SETTINGS_DESC(SettingsItemIndex::ProfileCooldownSpeed), nullptr, displayProfileCooldownSpeed, showProfileOptions, SettingsOptions::ProfileCooldownSpeed, SettingsItemIndex::ProfileCooldownSpeed, 5},
 #endif /* PROFILE_SUPPORT */
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}                                                 // end of menu marker. DO NOT REMOVE
+  /* vvvv end of menu marker. DO NOT REMOVE vvvv */
+  {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
+  /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
 
 const menuitem PowerSavingMenu[] = {
-    /*
-     *  Motion Sensitivity
-     *  -Sleep Temp
-     *  -Sleep Time
-     *  -Shutdown Time
-     *  Hall Sensor Sensitivity
-     */
-    {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, displaySensitivity, nullptr, SettingsOptions::Sensitivity, SettingsItemIndex::MotionSensitivity, 7}, /* Motion Sensitivity*/
+  /*
+   *  Motion Sensitivity
+   *  -Sleep Temp
+   *  -Sleep Time
+   *  -Shutdown Time
+   *  Hall Sensor Sensitivity
+   */
+  /* Motion Sensitivity */
+  {SETTINGS_DESC(SettingsItemIndex::MotionSensitivity), nullptr, displaySensitivity, nullptr, SettingsOptions::Sensitivity, SettingsItemIndex::MotionSensitivity, 7},
 #ifndef NO_SLEEP_MODE
-    {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), setSleepTemp, displaySleepTemp, showSleepOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SleepTemperature,
-     5},                                                                                                                                                           /*Sleep Temp*/
-    {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, displaySleepTime, showSleepOptions, SettingsOptions::SleepTime, SettingsItemIndex::SleepTimeout, 5}, /*Sleep Time*/
+  /* Sleep Temp */
+  {SETTINGS_DESC(SettingsItemIndex::SleepTemperature), setSleepTemp, displaySleepTemp, showSleepOptions, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SleepTemperature, 5},
+  /* Sleep Time */
+  {SETTINGS_DESC(SettingsItemIndex::SleepTimeout), nullptr, displaySleepTime, showSleepOptions, SettingsOptions::SleepTime, SettingsItemIndex::SleepTimeout, 5},
 #endif /* *not* NO_SLEEP_MODE */
-    {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, displayShutdownTime, showSleepOptions, SettingsOptions::ShutdownTime, SettingsItemIndex::ShutdownTimeout, 5}, /*Shutdown Time*/
+  /* Shutdown Time */
+  {SETTINGS_DESC(SettingsItemIndex::ShutdownTimeout), nullptr, displayShutdownTime, showSleepOptions, SettingsOptions::ShutdownTime, SettingsItemIndex::ShutdownTimeout, 5},
 #ifdef HALL_SENSOR
-    {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, displayHallEffect, showHallEffect, SettingsOptions::HallEffectSensitivity, SettingsItemIndex::HallEffSensitivity,
-     7}, /* HallEffect Sensitivity*/
+  /* Hall Effect Sensitivity */
+  {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, displayHallEffect, showHallEffect, SettingsOptions::HallEffectSensitivity, SettingsItemIndex::HallEffSensitivity, 7},
 #endif /* HALL_SENSOR */
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
+  /* vvvv end of menu marker. DO NOT REMOVE vvvv */
+  {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
+  /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
 
 const menuitem UIMenu[] = {
-    /*
-     *  Temperature Unit
-     *  Display Orientation
-     *  Cooldown Blink
-     *  Scrolling Speed
-     *  Swap Temp Change Buttons + -
-     *  Animation Speed
-     *  -Animation Loop
-     *  OLED Brightness
-     *  Invert Screen
-     *  Logo Timeout
-     *  Detailed IDLE
-     *  Detailed Soldering
-     */
-    {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), setTempF, displayTempF, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureUnit,
-     7}, /* Temperature units, this has to be the first element in the array to work with the logic in enterUIMenu() */
+  /*
+   *  Temperature Unit
+   *  Display Orientation
+   *  Cooldown Blink
+   *  Scrolling Speed
+   *  Swap Temp Change Buttons +/-
+   *  Animation Speed
+   *  -Animation Loop
+   *  OLED Brightness
+   *  Invert Screen
+   *  Logo Timeout
+   *  Detailed IDLE
+   *  Detailed Soldering
+   */
+  /* Temperature units, this has to be the first element in the array to work with the logic in enterUIMenu() */
+  {SETTINGS_DESC(SettingsItemIndex::TemperatureUnit), setTempF, displayTempF, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::TemperatureUnit, 7},
 #ifndef NO_DISPLAY_ROTATE
-    {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), setDisplayRotation, displayDisplayRotation, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::DisplayRotation,
-     7}, /*Display Rotation*/
+  /* Display Rotation */
+  {SETTINGS_DESC(SettingsItemIndex::DisplayRotation), setDisplayRotation, displayDisplayRotation, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::DisplayRotation, 7},
 #endif /* *not* NO_DISPLAY_ROTATE */
-    {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, displayCoolingBlinkEnabled, nullptr, SettingsOptions::CoolingTempBlink, SettingsItemIndex::CooldownBlink, 7}, /*Cooling blink warning*/
-    {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed,
-     7}, /*Scroll Speed for descriptions*/
-    {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled,
-     SettingsItemIndex::ReverseButtonTempChange, 7},                                                                                                          /*Reverse Temp change buttons + - */
-    {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7}, /*Animation Speed adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, displayAnimationLoop, displayAnimationOptions, SettingsOptions::AnimationLoop, SettingsItemIndex::AnimLoop, 7}, /*Animation Loop switch */
-    {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness, SettingsItemIndex::Brightness, 7},          /*Brightness Level*/
-    {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, displayInvertColor, nullptr, SettingsOptions::OLEDInversion, SettingsItemIndex::ColourInversion, 7},     /*Invert screen colour*/
-    {SETTINGS_DESC(SettingsItemIndex::LOGOTime), nullptr, displayLogoTime, nullptr, SettingsOptions::LOGOTime, SettingsItemIndex::LOGOTime, 5},                           /*Set logo duration*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE, SettingsItemIndex::AdvancedIdle, 7},    /*Advanced idle screen*/
-    {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering, SettingsItemIndex::AdvancedSoldering,
-     7},                                                                                                    /*Advanced soldering screen*/
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
+  /* Cooling blink warning */
+  {SETTINGS_DESC(SettingsItemIndex::CooldownBlink), nullptr, displayCoolingBlinkEnabled, nullptr, SettingsOptions::CoolingTempBlink, SettingsItemIndex::CooldownBlink, 7},
+  /* Scroll Speed for descriptions */
+  {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed, 7},
+  /* Reverse Temp change buttons +/- */
+  {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled, SettingsItemIndex::ReverseButtonTempChange, 7},
+  /* Animation Speed adjustment */
+  {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7},
+  /* Animation Loop switch */
+  {SETTINGS_DESC(SettingsItemIndex::AnimLoop), nullptr, displayAnimationLoop, displayAnimationOptions, SettingsOptions::AnimationLoop, SettingsItemIndex::AnimLoop, 7},
+  /* Brightness Level */
+  {SETTINGS_DESC(SettingsItemIndex::Brightness), nullptr, displayBrightnessLevel, nullptr, SettingsOptions::OLEDBrightness, SettingsItemIndex::Brightness, 7},
+  /* Invert screen colour */
+  {SETTINGS_DESC(SettingsItemIndex::ColourInversion), nullptr, displayInvertColor, nullptr, SettingsOptions::OLEDInversion, SettingsItemIndex::ColourInversion, 7},
+  /* Set logo duration */
+  {SETTINGS_DESC(SettingsItemIndex::LOGOTime), nullptr, displayLogoTime, nullptr, SettingsOptions::LOGOTime, SettingsItemIndex::LOGOTime, 5},
+  /* Advanced idle screen */
+  {SETTINGS_DESC(SettingsItemIndex::AdvancedIdle), nullptr, displayAdvancedIDLEScreens, nullptr, SettingsOptions::DetailedIDLE, SettingsItemIndex::AdvancedIdle, 7},
+  /* Advanced soldering screen */
+  {SETTINGS_DESC(SettingsItemIndex::AdvancedSoldering), nullptr, displayAdvancedSolderingScreens, nullptr, SettingsOptions::DetailedSoldering, SettingsItemIndex::AdvancedSoldering, 7},
+  /* vvvv end of menu marker. DO NOT REMOVE vvvv */
+  {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
+  /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
 
 const menuitem advancedMenu[] = {
-/*
- *  BluetoothLE
- *  Power Limit
- *  Calibrate CJC At Next Boot
- *  Calibrate Input V
- *  Power Pulse
- *  -Power Pulse Delay
- *  -Power Pulse Duration
- *  Factory Reset
- */
+  /*
+   *  BluetoothLE
+   *  Power Limit
+   *  Calibrate CJC At Next Boot
+   *  Calibrate Input V
+   *  Power Pulse
+   *  -Power Pulse Delay
+   *  -Power Pulse Duration
+   *  Factory Reset
+   */
 #ifdef BLE_ENABLED
-    {SETTINGS_DESC(SettingsItemIndex::BluetoothLE), nullptr, displayBluetoothLE, nullptr, SettingsOptions::BluetoothLE, SettingsItemIndex::BluetoothLE, 7}, /*Toggle BLE*/
+  /* Toggle BLE */
+  {SETTINGS_DESC(SettingsItemIndex::BluetoothLE), nullptr, displayBluetoothLE, nullptr, SettingsOptions::BluetoothLE, SettingsItemIndex::BluetoothLE, 7},
 #endif /* BLE_ENABLED */
-    {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 4}, /*Power limit*/
-    {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC,
-     7}, /*Calibrate Cold Junktion Compensation at next boot*/
-    {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration,
-     5},                                                                                                                                                              /*Voltage input cal*/
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower, 5}, /*Power Pulse adjustment */
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), nullptr, displayPowerPulseWait, showPowerPulseOptions, SettingsOptions::KeepAwakePulseWait, SettingsItemIndex::PowerPulseWait,
-     7}, /*Power Pulse Wait adjustment*/
-    {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration,
-     7}, /*Power Pulse Duration adjustment*/
-    {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7}, /*Resets settings*/
-    {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0} // end of menu marker. DO NOT REMOVE
+  /* Power limit */
+  {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 4},
+  /* Calibrate Cold Junktion Compensation at next boot */
+  {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::CalibrateCJC, 7},
+  /* Voltage input cal */
+  {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, displayCalibrateVIN, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration, 5},
+  /* Power Pulse adjustment */
+  {SETTINGS_DESC(SettingsItemIndex::PowerPulsePower), nullptr, displayPowerPulse, nullptr, SettingsOptions::KeepAwakePulse, SettingsItemIndex::PowerPulsePower, 5},
+  /* Power Pulse Wait adjustment */
+  {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), nullptr, displayPowerPulseWait, showPowerPulseOptions, SettingsOptions::KeepAwakePulseWait, SettingsItemIndex::PowerPulseWait, 7},
+  /* Power Pulse Duration adjustment */
+  {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration, 7},
+  /* Resets settings */
+  {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, displayResetSettings, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7},
+  /* vvvv end of menu marker. DO NOT REMOVE vvvv */
+  {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
+  /* ^^^^ end of menu marker. DO NOT REMOVE ^^^^ */
 };
+
+/* clang-format on */
+
+/* ^^^ !!!ENABLE CLANG-FORMAT back!!! ^^^ */
 
 /**
  * Prints two small lines (or one line for CJK) of short description for
@@ -552,26 +616,26 @@ static void displayLockingMode(void) {
 
 #ifdef PROFILE_SUPPORT
 
-static void displayProfilePhases(void) {
-    OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE);
-}
+static void displayProfilePhases(void) { OLED::printNumber(getSettingValue(SettingsOptions::ProfilePhases), 1, FontStyle::LARGE); }
 
 static bool setProfileTemp(const enum SettingsOptions option) {
-    // If in C, 5 deg, if in F 10 deg
-    uint16_t temp = getSettingValue(option);
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        temp += 10;
-        if (temp > MAX_TEMP_F)
-            temp = MIN_TEMP_F;
-        setSettingValue(option, temp);
-        return temp == MAX_TEMP_F;
-    } else {
-        temp += 5;
-        if (temp > MAX_TEMP_C)
-            temp = MIN_TEMP_C;
-        setSettingValue(option, temp);
-        return temp == MAX_TEMP_C;
+  // If in C, 5 deg, if in F 10 deg
+  uint16_t temp = getSettingValue(option);
+  if (getSettingValue(SettingsOptions::TemperatureInF)) {
+    temp += 10;
+    if (temp > MAX_TEMP_F) {
+      temp = MIN_TEMP_F;
     }
+    setSettingValue(option, temp);
+    return temp == MAX_TEMP_F;
+  } else {
+    temp += 5;
+    if (temp > MAX_TEMP_C) {
+      temp = MIN_TEMP_C;
+    }
+    setSettingValue(option, temp);
+    return temp == MAX_TEMP_C;
+  }
 }
 
 static bool setProfilePreheatTemp(void) { return setProfileTemp(SettingsOptions::ProfilePreheatTemp); }
@@ -613,14 +677,16 @@ static bool setSleepTemp(void) {
   uint16_t temp = getSettingValue(SettingsOptions::SleepTemp);
   if (getSettingValue(SettingsOptions::TemperatureInF)) {
     temp += 20;
-    if (temp > 580)
+    if (temp > 580) {
       temp = 60;
+    }
     setSettingValue(SettingsOptions::SleepTemp, temp);
     return temp == 580;
   } else {
     temp += 10;
-    if (temp > 300)
+    if (temp > 300) {
       temp = 10;
+    }
     setSettingValue(SettingsOptions::SleepTemp, temp);
     return temp == 300;
   }
@@ -657,20 +723,20 @@ static bool showHallEffect(void) { return getHallSensorFitted(); }
 #endif /* HALL_SENSOR */
 
 static void setTempF(const enum SettingsOptions option) {
-    uint16_t Temp = getSettingValue(option);
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        // Change temp to the F equiv
-        // C to F == F= ( (C*9) +160)/5
-        Temp = ((Temp * 9) + 160) / 5;
-    } else {
-        // Change temp to the C equiv
-        // F->C == C = ((F-32)*5)/9
-        Temp = ((Temp - 32) * 5) / 9;
-    }
-    // Rescale to be multiples of 10
-    Temp = BoostTemp / 10;
-    Temp *= 10;
-    setSettingValue(option, Temp);
+  uint16_t Temp = getSettingValue(option);
+  if (getSettingValue(SettingsOptions::TemperatureInF)) {
+    // Change temp to the F equiv
+    // C to F == F= ( (C*9) +160)/5
+    Temp = ((Temp * 9) + 160) / 5;
+  } else {
+    // Change temp to the C equiv
+    // F->C == C = ((F-32)*5)/9
+    Temp = ((Temp - 32) * 5) / 9;
+  }
+  // Rescale to be multiples of 10
+  Temp = BoostTemp / 10;
+  Temp *= 10;
+  setSettingValue(option, Temp);
 }
 
 static bool setTempF(void) {
@@ -1057,10 +1123,12 @@ void gui_Menu(const menuitem *menu) {
       menu[currentScreen].draw();
       uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
       uint8_t position        = OLED_HEIGHT * (currentScreen - screensSkipped) / scrollContentSize;
-      if (lastValue)
+      if (lastValue) {
         scrollBlink = !scrollBlink;
-      if (!lastValue || !scrollBlink)
+      }
+      if (!lastValue || !scrollBlink) {
         OLED::drawScrollIndicator(position, indicatorHeight);
+      }
     } else {
       // Draw description
       const char *description = translatedString(Tr->SettingsDescriptions[menu[currentScreen].description - 1]);
@@ -1107,29 +1175,28 @@ void gui_Menu(const menuitem *menu) {
       // increment
       if (scrollMessage.isReset()) {
         lastValue = callIncrementHandler();
-      } else
+      } else {
         scrollMessage.reset();
+      }
       break;
     case BUTTON_B_SHORT:
       if (scrollMessage.isReset()) {
         currentScreen++;
         navState  = NavState::ScrollingDown;
         lastValue = false;
-      } else
+      } else {
         scrollMessage.reset();
+      }
       break;
     case BUTTON_F_LONG:
       if (xTaskGetTickCount() + autoRepeatAcceleration > autoRepeatTimer + PRESS_ACCEL_INTERVAL_MAX) {
-
-        if ((lastValue = callIncrementHandler()))
+        if ((lastValue = callIncrementHandler())) {
           autoRepeatTimer = 1000;
-        else
+        } else {
           autoRepeatTimer = 0;
-
+        }
         autoRepeatTimer += xTaskGetTickCount();
-
         scrollMessage.reset();
-
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;
@@ -1139,7 +1206,6 @@ void gui_Menu(const menuitem *menu) {
         navState        = NavState::ScrollingDown;
         autoRepeatTimer = xTaskGetTickCount();
         scrollMessage.reset();
-
         autoRepeatAcceleration += PRESS_ACCEL_STEP;
       }
       break;

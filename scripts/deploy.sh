@@ -10,6 +10,7 @@
 
 ### helper functions
 
+# brief help (some supported commands may be missing!)
 usage()
 {
 	echo -e "\nUsage: ${0} [CMD]\n"
@@ -19,9 +20,11 @@ usage()
 	echo -e "\tclean - delete created docker container (but not pre-downloaded data for it)\n"
 	echo "CMD (helper routines):"
 	echo -e "\tdocs_readme - generate & OVERWRITE(!) README.md inside Documentation/ based on nav section from mkdocs.yml if it changed\n"
+	echo -e "\tcheck_style - run clang-format using source/Makefile and generate gcc-compatible error log in source/check-style.log\n"
 	echo -e "STORAGE NOTICE: for \"shell\" and \"build\" commands extra files will be downloaded so make sure that you have ~5GB of free space.\n"
 }
 
+# Documentation/README.md automagical generation routine
 docs_readme()
 {
 	# WARNING: ON RUN Documentaion/README.md MAY BE OVERWRITTEN WITHOUT ANY WARNINGS / CONFIRMATIONS !!!
@@ -67,9 +70,33 @@ EOF
 	return "${ret}"
 }
 
+# check_style routine for those who too lazy to do it everytime manually
+check_style()
+{
+	log="source/check-style.log"
+	make  -C source  check-style  2>&1  |  tee  "${log}"
+	chmod  0666  "${log}"
+	sed -i -e 's,\r,,g' "${log}"
+	return 0
+}
+
 ### main
 
 docker_conf="Env.yml"
+
+# get absolute location of project root dir to make docker happy with config(s)
+# (successfully tested on relatively POSIX-compliant Dash shell)
+
+# this script
+script_file="/deploy.sh"
+# IronOS/scripts/deploy.sh
+script_path="${PWD}"/"${0}"
+# IronOS/scripts/
+script_dir=${script_path%"${script_file}"}
+# IronOS/
+root_dir="${script_dir}/.."
+# IronOS/Env.yml
+docker_file="-f ${root_dir}/${docker_conf}"
 
 # allow providing custom path to docker tool using DOCKER_BIN external env. var.
 # (compose sub-command must be included, i.e. DOCKER_BIN="/usr/local/bin/docker compose" ./deploy.sh)
@@ -103,6 +130,11 @@ if [ "docs_readme" = "${cmd}" ]; then
 	exit "${?}"
 fi;
 
+if [ "check_style" = "${cmd}" ]; then
+	check_style
+	exit "${?}"
+fi;
+
 # if docker is not presented in any way show warning & exit
 
 if [ -z "${docker_bin}" ]; then
@@ -123,20 +155,6 @@ else
 	usage
 	exit 1
 fi;
-
-# get absolute location of project root dir to make docker happy with config(s)
-# (successfully tested on relatively POSIX-compliant Dash shell)
-
-# this script
-script_file="/deploy.sh"
-# IronOS/scripts/deploy.sh
-script_path="${PWD}"/"${0}"
-# IronOS/scripts/
-script_dir=${script_path%"${script_file}"}
-# IronOS/
-root_dir="${script_dir}/.."
-# IronOS/Env.yml
-docker_file="-f ${root_dir}/${docker_conf}"
 
 # change dir to project root dir & run constructed command
 

@@ -11,29 +11,34 @@
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "stdint.h"
+
 enum QCState {
   NOT_STARTED = 0, // Have not checked
   QC_3        = 1,
   QC_2        = 2,
   NO_QC       = 3,
-
 };
+
 void QC_Seek9V() {
   QC_DNegZero_Six();
   QC_DPlusThree_Three();
 }
+
 void QC_Seek12V() {
   QC_DNegZero_Six();
   QC_DPlusZero_Six();
 }
+
 void QC_Seek20V() {
   QC_DNegThree_Three();
   QC_DPlusThree_Three();
 }
+
 void QC_SeekContMode() {
   QC_DNegThree_Three();
   QC_DPlusZero_Six();
 }
+
 void QC_SeekContPlus() {
   QC_SeekContMode();
   osDelay(30);
@@ -41,6 +46,7 @@ void QC_SeekContPlus() {
   osDelay(10);
   QC_SeekContMode();
 }
+
 void QC_SeekContNeg() {
   QC_SeekContMode();
   osDelay(30);
@@ -48,17 +54,21 @@ void QC_SeekContNeg() {
   osDelay(10);
   QC_SeekContMode();
 }
+
 QCState QCMode  = QCState::NOT_STARTED;
 uint8_t QCTries = 0;
 void    seekQC(int16_t Vx10, uint16_t divisor) {
-  if (QCMode == QCState::NOT_STARTED)
+  if (QCMode == QCState::NOT_STARTED) {
     startQC(divisor);
+  }
 
-  if (Vx10 < 40) // Bail out if less than 4V
+  if (Vx10 < 40) { // Bail out if less than 4V
     return;
+  }
 
-  if (xTaskGetTickCount() < TICKS_SECOND)
+  if (xTaskGetTickCount() < TICKS_SECOND) {
     return;
+  }
 
   // Seek the QC to the Voltage given if this adapter supports continuous mode
   // try and step towards the wanted value
@@ -87,8 +97,9 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
   // Re-measure
   /* Disabled due to nothing to test and code space of around 1k*/
   steps = vStart - getInputVoltageX10(divisor, 0);
-  if (steps < 0)
+  if (steps < 0) {
     steps = -steps;
+  }
   if (steps > 4) {
     // No continuous mode, so QC2
     QCMode = QCState::QC_2;
@@ -104,8 +115,9 @@ void    seekQC(int16_t Vx10, uint16_t divisor) {
       QC_Seek9V();
     }
   }
-#endif
+#endif /* ENABLE_QC2 */
 }
+
 // Must be called after FreeRToS Starts
 void startQC(uint16_t divisor) {
   // Pre check that the input could be >5V already, and if so, dont both
@@ -143,7 +155,9 @@ void startQC(uint16_t divisor) {
       }
     }
   }
+
   QC_DM_No_PullDown();
+
   if (enteredQC) {
     // We have a QC capable charger
     QC_Seek9V();
@@ -161,7 +175,6 @@ void startQC(uint16_t divisor) {
     }
     QCMode = QCState::NOT_STARTED;
     QCTries++;
-
   } else {
     // no QC
     QCTries++;

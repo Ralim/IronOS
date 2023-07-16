@@ -12,15 +12,15 @@ void gui_solderingProfileMode() {
    * --> Long hold back button to exit
    * --> Double button to exit
    */
-  currentMode        = OperatingMode::soldering;
+  currentMode = OperatingMode::soldering;
 
   TickType_t buzzerEnd = 0;
 
-  bool        waitForRelease   = true;
-  TickType_t  phaseStartTime   = xTaskGetTickCount();
+  bool       waitForRelease = true;
+  TickType_t phaseStartTime = xTaskGetTickCount();
 
-  uint16_t tipTemp     = 0;
-  uint8_t profilePhase = 0;
+  uint16_t tipTemp      = 0;
+  uint8_t  profilePhase = 0;
 
   uint16_t phaseElapsedSeconds      = 0;
   uint16_t phaseTotalSeconds        = 0;
@@ -32,24 +32,26 @@ void gui_solderingProfileMode() {
   for (;;) {
     ButtonState buttons = getButtonState();
     if (buttons) {
-      if (waitForRelease) buttons = BUTTON_NONE;
+      if (waitForRelease) {
+        buttons = BUTTON_NONE;
+      }
     } else {
       waitForRelease = false;
     }
 
     switch (buttons) {
-      case BUTTON_NONE:
-        break;
-      case BUTTON_BOTH:
-      case BUTTON_B_LONG:
-        return; // exit on back long hold
-      case BUTTON_F_LONG:
-      case BUTTON_F_SHORT:
-      case BUTTON_B_SHORT:
-        // Not used yet
-        break;
-      default:
-        break;
+    case BUTTON_NONE:
+      break;
+    case BUTTON_BOTH:
+    case BUTTON_B_LONG:
+      return; // exit on back long hold
+    case BUTTON_F_LONG:
+    case BUTTON_F_SHORT:
+    case BUTTON_B_SHORT:
+      // Not used yet
+      break;
+    default:
+      break;
     }
 
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
@@ -73,39 +75,41 @@ void gui_solderingProfileMode() {
     // have we finished this phase?
     if (phaseElapsedSeconds >= phaseTotalSeconds && tipTemp == phaseEndTemp) {
       profilePhase++;
-      phaseStartTemp = phaseEndTemp;
-      phaseStartTime = xTaskGetTickCount();
+
+      phaseStartTemp      = phaseEndTemp;
+      phaseStartTime      = xTaskGetTickCount();
       phaseElapsedSeconds = 0;
+
       if (profilePhase > getSettingValue(SettingsOptions::ProfilePhases)) {
         // done with all phases, lets go to cooldown
-        phaseTotalSeconds = 0;
-        phaseEndTemp = 0;
+        phaseTotalSeconds   = 0;
+        phaseEndTemp        = 0;
         phaseTicksPerDegree = TICKS_SECOND / getSettingValue(SettingsOptions::ProfileCooldownSpeed);
       } else {
         // set up next phase
-        switch(profilePhase) {
-          case 1:
-            phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase1Duration);
-            phaseEndTemp = getSettingValue(SettingsOptions::ProfilePhase1Temp);
-            break;
-          case 2:
-            phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase2Duration);
-            phaseEndTemp = getSettingValue(SettingsOptions::ProfilePhase2Temp);
-            break;
-          case 3:
-            phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase3Duration);
-            phaseEndTemp = getSettingValue(SettingsOptions::ProfilePhase3Temp);
-            break;
-          case 4:
-            phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase4Duration);
-            phaseEndTemp = getSettingValue(SettingsOptions::ProfilePhase4Temp);
-            break;
-          case 5:
-            phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase5Duration);
-            phaseEndTemp = getSettingValue(SettingsOptions::ProfilePhase5Temp);
-            break;
-          default:
-            break;
+        switch (profilePhase) {
+        case 1:
+          phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase1Duration);
+          phaseEndTemp      = getSettingValue(SettingsOptions::ProfilePhase1Temp);
+          break;
+        case 2:
+          phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase2Duration);
+          phaseEndTemp      = getSettingValue(SettingsOptions::ProfilePhase2Temp);
+          break;
+        case 3:
+          phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase3Duration);
+          phaseEndTemp      = getSettingValue(SettingsOptions::ProfilePhase3Temp);
+          break;
+        case 4:
+          phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase4Duration);
+          phaseEndTemp      = getSettingValue(SettingsOptions::ProfilePhase4Temp);
+          break;
+        case 5:
+          phaseTotalSeconds = getSettingValue(SettingsOptions::ProfilePhase5Duration);
+          phaseEndTemp      = getSettingValue(SettingsOptions::ProfilePhase5Temp);
+          break;
+        default:
+          break;
         }
         if (phaseStartTemp < phaseEndTemp) {
           phaseTicksPerDegree = (phaseTotalSeconds * TICKS_SECOND) / (phaseEndTemp - phaseStartTemp);
@@ -152,10 +156,11 @@ void gui_solderingProfileMode() {
       OLED::print(SmallSymbolSlash, FontStyle::SMALL);
       OLED::printNumber(profileCurrentTargetTemp, 3, FontStyle::SMALL);
 
-      if (getSettingValue(SettingsOptions::TemperatureInF))
+      if (getSettingValue(SettingsOptions::TemperatureInF)) {
         OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-      else
+      } else {
         OLED::print(SmallSymbolDegC, FontStyle::SMALL);
+      }
 
       // print phase
       if (profilePhase > 0 && profilePhase <= getSettingValue(SettingsOptions::ProfilePhases)) {
@@ -186,7 +191,7 @@ void gui_solderingProfileMode() {
         OLED::print(SmallSymbolSlash, FontStyle::SMALL);
 
         // blink if we can't keep up with the time goal
-        if (phaseElapsedSeconds < phaseTotalSeconds+2 || (xTaskGetTickCount() / TICKS_SECOND) % 2 == 0) {
+        if (phaseElapsedSeconds < phaseTotalSeconds + 2 || (xTaskGetTickCount() / TICKS_SECOND) % 2 == 0) {
           OLED::printNumber(phaseTotalSeconds / 60, 1, FontStyle::SMALL);
           OLED::print(SmallSymbolColon, FontStyle::SMALL);
           OLED::printNumber(phaseTotalSeconds % 60, 2, FontStyle::SMALL, false);
@@ -225,4 +230,3 @@ void gui_solderingProfileMode() {
     GUIDelay();
   }
 }
-
