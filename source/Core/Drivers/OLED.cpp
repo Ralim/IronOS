@@ -481,6 +481,14 @@ void OLED::printWholeScreen(const char *string) {
   }
 }
 
+void OLED::printSymbolDeg(const FontStyle fontStyle) {
+  if (getSettingValue(SettingsOptions::TemperatureInF)) {
+    OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegF : SmallSymbolDegF, fontStyle);
+  } else {
+    OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegC : SmallSymbolDegC, fontStyle);
+  }
+}
+
 inline void stripLeaderZeros(char *buffer, uint8_t places) {
   // Removing the leading zero's by swapping them to SymbolSpace
   // Stop 1 short so that we dont blank entire number if its zero
