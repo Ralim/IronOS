@@ -6,4 +6,3 @@ void printVoltage(void) {
   OLED::print(SmallSymbolDot, FontStyle::SMALL);
   OLED::printNumber(volt % 10, 1, FontStyle::SMALL);
 }
-
