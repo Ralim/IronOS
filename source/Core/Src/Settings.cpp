@@ -261,8 +261,9 @@ uint16_t lookupHallEffectThreshold() {
 uint8_t lookupVoltageLevel() {
   auto minVoltageOnCell    = getSettingValue(SettingsOptions::MinDCVoltageCells);
   auto minVoltageCellCount = getSettingValue(SettingsOptions::MinVoltageCells);
-  if (minVoltageOnCell == 0)
+  if (minVoltageOnCell == 0) {
     return 90; // 9V since iron does not function effectively below this
-  else
+  } else {
     return (minVoltageOnCell * minVoltageCellCount) + (minVoltageCellCount * 2);
+  }
 }

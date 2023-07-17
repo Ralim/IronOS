@@ -49,8 +49,15 @@ void handleButtons(bool *buttonLockout) {
     showDebugMenu();
     break;
   case BUTTON_F_LONG:
+#ifdef PROFILE_SUPPORT
+    if (!isTipDisconnected()) {
+      gui_solderingProfileMode(); // enter profile mode
+      *buttonLockout = true;
+    }
+#else
     gui_solderingTempAdjust();
     saveSettings();
+#endif
     break;
   case BUTTON_F_SHORT:
     if (!isTipDisconnected()) {
@@ -96,21 +103,24 @@ void drawDetailedHomeScreen(uint32_t tipTemp) {
     }
     OLED::print(SmallSymbolVolts, FontStyle::SMALL);
   } else {
-    if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300)))
+    if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300))) {
       // Blink temp if setting enable and temp < 55°
       // 1000 tick/sec
       // OFF 300ms ON 700ms
       gui_drawTipTemp(true, FontStyle::LARGE); // draw in the temp
+    }
     if (OLED::getRotation()) {
       OLED::setCursor(6, 0);
     } else {
       OLED::setCursor(73, 0); // top right
     }
-    OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::SMALL); // draw set temp
-    if (getSettingValue(SettingsOptions::TemperatureInF))
+    // draw set temp
+    OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::SMALL);
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
       OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-    else
+    } else {
       OLED::print(SmallSymbolDegC, FontStyle::SMALL);
+    }
     if (OLED::getRotation()) {
       OLED::setCursor(0, 8);
     } else {
@@ -135,10 +145,11 @@ void drawSimplifiedHomeScreen(uint32_t tipTemp) {
     gui_drawBatteryIcon();
   }
   tipDisconnectedDisplay = false;
-  if (tipTemp > 55)
+  if (tipTemp > 55) {
     tempOnDisplay = true;
-  else if (tipTemp < 45)
+  } else if (tipTemp < 45) {
     tempOnDisplay = false;
+  }
   if (isTipDisconnected()) {
     tempOnDisplay          = false;
     tipDisconnectedDisplay = true;
@@ -157,8 +168,9 @@ void drawSimplifiedHomeScreen(uint32_t tipTemp) {
     // If we have a tip connected draw the temp, if not we leave it blank
     if (!tipDisconnectedDisplay) {
       // draw in the temp
-      if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300)))
+      if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))) {
         gui_drawTipTemp(false, FontStyle::LARGE); // draw in the temp
+      }
     } else {
       // Draw in missing tip symbol
 

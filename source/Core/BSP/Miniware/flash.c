@@ -10,7 +10,6 @@
 #include "stm32f1xx_hal.h"
 #include "string.h"
 
-
 void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   FLASH_EraseInitTypeDef pEraseInit;
   pEraseInit.TypeErase    = FLASH_TYPEERASE_PAGES;
