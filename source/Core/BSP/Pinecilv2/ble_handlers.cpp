@@ -113,8 +113,9 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
     // hall sensor
     {
       int16_t hallEffectStrength = getRawHallEffect();
-      if (hallEffectStrength < 0)
+      if (hallEffectStrength < 0) {
         hallEffectStrength = -hallEffectStrength;
+      }
       temp = hallEffectStrength;
       memcpy(buf, &temp, sizeof(temp));
       return sizeof(temp);

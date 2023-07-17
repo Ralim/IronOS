@@ -47,9 +47,9 @@ void        Setup_HAL() {
   MX_IWDG_Init();
   HAL_ADC_Start(&hadc2);
   HAL_ADCEx_MultiModeStart_DMA(&hadc1, ADCReadings,
-                               (ADC_SAMPLES * ADC_CHANNELS)); // start DMA of normal readings
-                                                              //	HAL_ADCEx_InjectedStart(&hadc1);                 // enable injected readings
-                                                              //	HAL_ADCEx_InjectedStart(&hadc2);                 // enable injected readings
+                                      (ADC_SAMPLES * ADC_CHANNELS)); // start DMA of normal readings
+                                                              // HAL_ADCEx_InjectedStart(&hadc1); // enable injected readings
+                                                              // HAL_ADCEx_InjectedStart(&hadc2); // enable injected readings
 }
 
 // channel 0 -> temperature sensor, 1-> VIN, 2-> tip
@@ -154,8 +154,9 @@ static void MX_ADC1_Init(void) {
 
   SET_BIT(hadc1.Instance->CR1, (ADC_CR1_EOSIE)); // Enable end of Normal
   // Run ADC internal calibration
-  while (HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK)
+  while (HAL_ADCEx_Calibration_Start(&hadc1) != HAL_OK) {
     ;
+  }
 }
 
 /* ADC2 init function */
@@ -191,8 +192,9 @@ static void MX_ADC2_Init(void) {
   HAL_ADC_ConfigChannel(&hadc2, &sConfig);
 
   // Run ADC internal calibration
-  while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK)
+  while (HAL_ADCEx_Calibration_Start(&hadc2) != HAL_OK) {
     ;
+  }
 }
 /* I2C1 init function */
 static void MX_I2C1_Init(void) {

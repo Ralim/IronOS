@@ -43,11 +43,12 @@ void showPDDebug(void) {
 
     OLED::refresh();
     b = getButtonState();
-    if (b == BUTTON_B_SHORT)
+    if (b == BUTTON_B_SHORT) {
       return;
-    else if (b == BUTTON_F_SHORT) {
+    } else if (b == BUTTON_F_SHORT) {
       screen++;
     }
+
     GUIDelay();
   }
 }
