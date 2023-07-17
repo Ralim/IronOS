@@ -485,6 +485,7 @@ void OLED::printWholeScreen(const char *string) {
 void OLED::printSymbolDeg(const FontStyle fontStyle) {
   switch (fontStyle) {
   case FontStyle::EXTRAS:
+    // Picks *F or *C in ExtraFontChars[] from Font.h
     OLED::drawSymbol(getSettingValue(SettingsOptions::TemperatureInF) ? 0 : 1);
     break;
   case FontStyle::LARGE:
