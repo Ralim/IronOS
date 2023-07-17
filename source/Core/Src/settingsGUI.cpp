@@ -890,7 +890,6 @@ static bool setCalibrateVIN(void) {
     OLED::print(LargeSymbolDot, FontStyle::LARGE);
     OLED::printNumber(voltage % 10, 1, FontStyle::LARGE, false);
     OLED::print(LargeSymbolVolts, FontStyle::LARGE);
-    
     OLED::setCursor(0, 8);
     OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::SMALL);
 
