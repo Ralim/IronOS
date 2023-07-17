@@ -119,7 +119,7 @@ public:
   // Draw a string to the current location, with selected font; optionally - with MAX length only
   static void    print(const char *string, FontStyle fontStyle, uint8_t length = 255);
   static void    printWholeScreen(const char *string);
-  // Print *C or *F based on user settings, large or small based on input arg
+  // Print *F or *C - in font style of Small, Large (by default) or Extra based on input arg
   static void    printSymbolDeg(FontStyle fontStyle = FontStyle::LARGE);
   // Set the cursor location by pixels
   static void setCursor(int16_t x, int16_t y) {
