@@ -481,11 +481,16 @@ void OLED::printWholeScreen(const char *string) {
   }
 }
 
+// print *C or *F, large or small
 void OLED::printSymbolDeg(const FontStyle fontStyle) {
-  if (getSettingValue(SettingsOptions::TemperatureInF)) {
-    OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegF : SmallSymbolDegF, fontStyle);
+  if (FontStyle::EXTRAS == fontStyle) {
+    OLED::drawSymbol(getSettingValue(SettingsOptions::TemperatureInF) ? 0 : 1);
   } else {
-    OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegC : SmallSymbolDegC, fontStyle);
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegF : SmallSymbolDegF, fontStyle);
+    } else {
+      OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegC : SmallSymbolDegC, fontStyle);
+    }
   }
 }
 

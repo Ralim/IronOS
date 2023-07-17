@@ -34,21 +34,14 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       OLED::setCursor(0, 8);
       OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
       OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
-
       OLED::printSymbolDeg(FontStyle::SMALL);
-
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
       printVoltage();
       OLED::print(SmallSymbolVolts, FontStyle::SMALL);
     } else {
       OLED::print(translatedString(Tr->SleepingSimpleString), FontStyle::LARGE);
       OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
-
-      if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        OLED::drawSymbol(0);
-      } else {
-        OLED::drawSymbol(1);
-      }
+      OLED::printSymbolDeg(FontStyle::EXTRAS);
     }
 
     OLED::refresh();
