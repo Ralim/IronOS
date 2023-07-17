@@ -54,11 +54,7 @@ void gui_solderingProfileMode() {
       break;
     }
 
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      tipTemp = TipThermoModel::getTipInF();
-    } else {
-      tipTemp = TipThermoModel::getTipInC();
-    }
+    tipTemp = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
 
     // if start temp is unknown (preheat), we're setting it now
     if (phaseStartTemp == 0) {
