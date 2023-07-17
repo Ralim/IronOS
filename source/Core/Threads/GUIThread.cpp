@@ -44,7 +44,7 @@ void guiRenderLoop(void) {
   OLED::clearScreen(); // Clear ready for render pass
   // Read button state
   ButtonState buttons = getButtonState();
-  // Enforce screen on if buttons pressed
+  // Enforce screen on if buttons pressed, movement, hot tip etc
   if (buttons != BUTTON_NONE) {
     OLED::setDisplayState(OLED::DisplayState::ON);
   } else {
@@ -113,15 +113,34 @@ void guiRenderLoop(void) {
   case OperatingMode::ThermalRunaway:
     break;
   };
-  // Render done, draw it out
-  OLED::refresh();
   // Update state holders
   if (newMode != currentOperatingMode) {
     context.viewEnterTime = xTaskGetTickCount();
     context.previousMode  = currentOperatingMode;
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
+    // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
+    if (context.transitionMode != TransitionAnimation::None) {
+      OLED::refresh();
+      OLED::useSecondaryFramebuffer(true);
+      return; // Exit early to avoid refresh with new framebuffer
+    }
+  } else if (context.transitionMode != TransitionAnimation::None) {
+    // We haven't changed mode but transition is set, so we are at the other side of a transition
+    // We now want to transition from old contents (main buffer) to new contents (secondary buffer)
+    switch (context.transitionMode) {
+    case TransitionAnimation::Down:
+      break;
+    case TransitionAnimation::Left:
+      break;
+    case TransitionAnimation::Right:
+      break;
+    }
+    OLED::useSecondaryFramebuffer(false);
+    context.transitionMode = TransitionAnimation::None; // Clear transition flag
   }
+  // Render done, draw it out
+  OLED::refresh();
 }
 
 OperatingMode handle_post_init_state() {

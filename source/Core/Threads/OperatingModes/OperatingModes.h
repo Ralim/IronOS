@@ -41,10 +41,14 @@ enum class OperatingMode {
   ThermalRunaway,     // Thermal Runaway warning state.
 };
 
+enum class TransitionAnimation { None = 0, Right, Left, Down };
+
 // Generic context struct used for gui functions to be able to retain state
 struct guiContext {
-  TickType_t    viewEnterTime; // Set to ticks when this view state was first entered
-  OperatingMode previousMode;
+  TickType_t          viewEnterTime; // Set to ticks when this view state was first entered
+  OperatingMode       previousMode;
+  TransitionAnimation transitionMode;
+  // Below is scratch state, this is retained over re-draws but blown away on state change
   struct scratch {
     uint16_t state1; // 16 bit state scratch
     uint16_t state2; // 16 bit state scratch
@@ -61,6 +65,7 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
 OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt);         // Main mode for hot pointy tool
 OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
 OperatingMode drawHomeScreen(const ButtonState buttons, guiContext *cxt);            // IDLE / Home screen
+OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt);          //
 
 OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cxt); // Profile mode for hot likely-not-so-pointy tool
 OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt);              // Used to calibrate the Cold Junction offset
