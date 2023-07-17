@@ -2,7 +2,7 @@
 
 OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *cxt) {
 #ifdef NO_SLEEP_MODE
-  return OperatingMode::SolderingMode;
+  return OperatingMode::Soldering;
 #endif
   // Drop to sleep temperature and display until movement or button press
 

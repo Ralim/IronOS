@@ -60,6 +60,7 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
   default:
     break;
   }
+  return OperatingMode::HomeScreen;
 }
 
 void drawDetailedHomeScreen(uint32_t tipTemp) {

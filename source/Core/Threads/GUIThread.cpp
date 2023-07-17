@@ -35,10 +35,11 @@ extern "C" {
 #define MOVEMENT_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
 #define BUTTON_INACTIVITY_TIME   (60 * configTICK_RATE_HZ)
 
-ButtonState buttonsAtDeviceBoot; // We record button state at startup, incase of jumping to debug modes
+ButtonState   buttonsAtDeviceBoot;                                      // We record button state at startup, incase of jumping to debug modes
+OperatingMode currentOperatingMode = OperatingMode::InitialisationDone; // Current mode we are rendering
+guiContext    context;                                                  // Context passed to functions to aid in state during render passes
 
-OperatingMode currentOperatingMode; // Current mode we are rendering
-guiContext    context;              // Context passed to functions to aid in state during render passes
+OperatingMode handle_post_init_state();
 
 void guiRenderLoop(void) {
   OLED::clearScreen(); // Clear ready for render pass
@@ -107,6 +108,7 @@ void guiRenderLoop(void) {
   case OperatingMode::SettingsMenu:
     break;
   case OperatingMode::InitialisationDone:
+    newMode = handle_post_init_state();
     break;
   case OperatingMode::Hibernating:
     break;
@@ -135,6 +137,9 @@ void guiRenderLoop(void) {
       break;
     case TransitionAnimation::Right:
       break;
+    case TransitionAnimation::None:
+    default:
+      break; // Do nothing on unknown
     }
     OLED::useSecondaryFramebuffer(false);
     context.transitionMode = TransitionAnimation::None; // Clear transition flag
@@ -181,6 +186,7 @@ void startGUITask(void const *argument) {
   bool buttonLockout = false;
   renderHomeScreenAssets();
   getTipRawTemp(1); // reset filter
+  memset(&context, 0, sizeof(context));
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
   buttonsAtDeviceBoot = getButtonState();
@@ -198,6 +204,7 @@ void startGUITask(void const *argument) {
   //   currentTempTargetDegC = min(sleepTempDegC, 75);
   // }
   // TODO
+
   TickType_t startRender = xTaskGetTickCount();
   for (;;) {
     guiRenderLoop();
