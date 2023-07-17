@@ -483,14 +483,17 @@ void OLED::printWholeScreen(const char *string) {
 
 // Print *F or *C - in font style of Small, Large (by default) or Extra based on input arg
 void OLED::printSymbolDeg(const FontStyle fontStyle) {
-  if (FontStyle::EXTRAS == fontStyle) {
+  switch (fontStyle) {
+  case FontStyle::EXTRAS:
     OLED::drawSymbol(getSettingValue(SettingsOptions::TemperatureInF) ? 0 : 1);
-  } else {
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegF : SmallSymbolDegF, fontStyle);
-    } else {
-      OLED::print(fontStyle == FontStyle::LARGE ? LargeSymbolDegC : SmallSymbolDegC, fontStyle);
-    }
+    break;
+  case FontStyle::LARGE:
+    OLED::print(getSettingValue(SettingsOptions::TemperatureInF) ? LargeSymbolDegF : LargeSymbolDegC, fontStyle);
+    break;
+  case FontStyle::SMALL:
+  default:
+    OLED::print(getSettingValue(SettingsOptions::TemperatureInF) ? SmallSymbolDegF : SmallSymbolDegC, fontStyle);
+    break;
   }
 }
 
