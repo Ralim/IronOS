@@ -209,6 +209,6 @@ void startGUITask(void const *argument) {
   for (;;) {
     guiRenderLoop();
     resetWatchdog();
-    vTaskDelayUntil(&startRender, TICKS_100MS / 2);
+    vTaskDelayUntil(&startRender, TICKS_100MS / 2); // Try and maintain 20fps ish update rate, way to fast but if we can its nice
   }
 }

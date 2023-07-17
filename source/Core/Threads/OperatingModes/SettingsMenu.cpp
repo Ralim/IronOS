@@ -4,5 +4,5 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   // State 1 -> Root menu
   // State 2 -> Sub entry
 
-  return OperatingMode::SettingsMenu;
+  return OperatingMode::HomeScreen;
 }

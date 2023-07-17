@@ -18,6 +18,9 @@ The use of these gives a notion of "direction" when navigating the menu.
 
 ```
 
+The downside of supporting transitions is that for these to work, the code should render the screen _first_ then return the new state.
+This ensures there is a good working copy in the buffer before the transition changes the view.
+
 ## TODO notes
 
 On settings menu exit:

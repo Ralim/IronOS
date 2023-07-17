@@ -167,11 +167,6 @@ void drawSimplifiedHomeScreen(uint32_t tipTemp) {
 }
 OperatingMode drawHomeScreen(const ButtonState buttons, guiContext *cxt) {
 
-  OperatingMode newMode = handleHomeButtons(buttons, cxt);
-  if (newMode != OperatingMode::HomeScreen) {
-    return newMode;
-  }
-
   currentTempTargetDegC = 0; // ensure tip is off
   getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
   uint32_t tipTemp = TipThermoModel::getTipInC();
@@ -187,6 +182,5 @@ OperatingMode drawHomeScreen(const ButtonState buttons, guiContext *cxt) {
   } else {
     drawSimplifiedHomeScreen(tipTemp);
   }
-
-  return OperatingMode::HomeScreen;
+  return handleHomeButtons(buttons, cxt);
 }
