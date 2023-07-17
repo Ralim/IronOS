@@ -668,7 +668,6 @@ static bool showProfilePhase5Options(void) { return getSettingValue(SettingsOpti
 #endif /* PROFILE_SUPPORT */
 
 static void displaySensitivity(void) {
-  
   if (getSettingValue(SettingsOptions::Sensitivity)) {
     OLED::printNumber(getSettingValue(SettingsOptions::Sensitivity), 1, FontStyle::LARGE, false);
   } else {
@@ -726,7 +725,6 @@ static void displayShutdownTime(void) {
 
 #ifdef HALL_SENSOR
 static void displayHallEffect(void) {
-  
   if (getSettingValue(SettingsOptions::HallEffectSensitivity)) {
     OLED::printNumber(getSettingValue(SettingsOptions::HallEffectSensitivity), 1, FontStyle::LARGE, false);
   } else {
