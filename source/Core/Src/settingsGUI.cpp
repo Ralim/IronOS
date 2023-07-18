@@ -769,7 +769,7 @@ static bool setTempF(void) {
   return res;
 }
 
-static void displayTempF(void) { OLED::print((getSettingValue(SettingsOptions::TemperatureInF)) ? LargeSymbolDegF : LargeSymbolDegC, FontStyle::LARGE); }
+static void displayTempF(void) { OLED::printSymbolDeg(FontStyle::LARGE); }
 
 #ifndef NO_DISPLAY_ROTATE
 
