@@ -18,7 +18,7 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
     // If device has validation code; then we want to take over both lines of the screen
     OLED::clearScreen();   // Ensure the buffer starts clean
     OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
-    OLED::print(DebugMenu[screen], FontStyle::SMALL);
+    OLED::print(DebugMenu[cxt->scratch_state.state1], FontStyle::SMALL);
     OLED::drawHex(getDeviceValidation(), FontStyle::SMALL, 8);
     OLED::setCursor(0, 8); // second line
 #endif

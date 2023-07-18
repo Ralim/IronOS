@@ -21,13 +21,10 @@ void renderHomeScreenAssets(void) {
 }
 
 OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
-  if (buttons != BUTTON_NONE) {
-    OLED::setDisplayState(OLED::DisplayState::ON);
-  }
   if (buttons != BUTTON_NONE && cxt->scratch_state.state1 == 0) {
     return OperatingMode::HomeScreen; // Ignore button press
   } else {
-    cxt->scratch_state.state1 == 1;
+    cxt->scratch_state.state1 = 1;
   }
   switch (buttons) {
   case BUTTON_NONE:
@@ -46,7 +43,6 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
     }
 #else
     return OperatingMode::TemperatureAdjust;
-    saveSettings();
 #endif
     break;
   case BUTTON_F_SHORT:

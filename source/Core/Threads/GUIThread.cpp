@@ -106,6 +106,7 @@ void guiRenderLoop(void) {
     newMode = performCJCC(buttons, &context);
     break;
   case OperatingMode::SettingsMenu:
+    newMode = gui_SettingsMenu(buttons, &context);
     break;
   case OperatingMode::InitialisationDone:
     newMode = handle_post_init_state();
