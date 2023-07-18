@@ -60,7 +60,7 @@ APP_INC_DIR=./Core/Inc
 BRIEFLZ_INC_DIR=./Core/brieflz
 MINIWARE_INC_CMSIS_DEVICE=./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
 MINIWARE_CMSIS_CORE_INC_DIR=./Core/BSP/Miniware/Vendor/CMSIS/Include
-MINIWARE_HAL_SRC_DIR= ./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver
+MINIWARE_HAL_SRC_DIR=./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver
 MINIWARE_HAL_INC_DIR=./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
 MINIWARE_HAL_LEGACY_INC_DIR=./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
 MINIWARE_STARTUP_DIR=./Startup
@@ -474,8 +474,8 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
 # -DCONFIG_BT_SMP
 
 # Required to be turned off due to their drivers tripping warnings
-DEV_CFLAGS= -Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
-DEV_CXXFLAGS= $(DEV_CFLAGS)
+DEV_CFLAGS=-Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
+DEV_CXXFLAGS=$(DEV_CFLAGS)
 flash_size=128k
 bootldr_size=0x0
 
@@ -852,52 +852,24 @@ clean:
 clean-all: clean
 	rm -Rf $(HEXFILE_DIR)
 
-# Code style checks using clang-format
-
-# Show only list of affected files for debug purposes
-check-style-list:
-	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
-		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
-		if [ $$var -ne 0 ] ; then \
-			echo "$$src" ; \
-			ret=1; test -n "$(STOP)" && break; \
-		fi ; \
-		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" -e "^.*:.*: .*if ((.*[^)])$$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -q -e "^.*$$" ; \
-		if [ "$$?" -ne 1 ]; then \
-			echo "$$src" ; \
-			ret=1; test -n "$(STOP)" && break; \
-		fi ; \
-	done ; \
-	if [ $$ret -eq 0 ] ; then \
-		echo "Style check: PASS" && exit 0 ; \
-	else \
-		echo "Style check: FAIL!" && echo "Please, check the log above for the details." && exit 1 ; \
-	fi ;
-
-# Show output in gcc-like error compatible format for IDEs/editors; call `make check-style STOP=1` to exit after first failed file
-# NOTICE:
-# - clang-format has neat option for { } in condition blocks but it's available only since version 15:
-#   * https://clang.llvm.org/docs/ClangFormatStyleOptions.html#insertbraces
-# - grep block in the middle used to trace missing { and } for if/else BUT IT'S VERY SPECULATIVE, very-very hacky & dirty
+# Code style checks using clang-format:
+# - show output in gcc-like error compatible format for IDEs/editors;
+# - external variables for debug purposes (can be used at the same time, i.e. STOP=1 LIST=1 ...):
+#   * call `make check-style STOP=1` to exit after first failed file;
+#   * call `make check-style LIST=1` to show failed file names only;
+# - here we process only list of files;
+# - per-file check happens in scripts/deploy.sh : check_style_file - since shell commands involved, the check logic moved to shell script for better maintainance outside of makefile syntax crossing.
 check-style:
-	@ret=0; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
-		var=`clang-format "$$src" | diff "$$src" - | wc -l` ; \
-		if [ $$var -ne 0 ] ; then \
-			clang-format "$$src" | diff "$$src" - | sed 's/^---/-------------------------------------------------------------------------------/; s/^< /--- /; s/^> /+++ /; /^[0-9].*/ s/[acd,].*$$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"$$src"':,; /ERROR1$$/ s,ERROR1$$,:1: error: clang-format code style mismatch:,; ' ; \
-			ret=1; test -n "$(STOP)" && break; \
-		fi ; \
-		grep -H -n -e "^ .*if .*)$$"  -e "^ .*else$$"  -e "^ .* do$$"  -e "^ .*while .*)$$"  -e "^ .*for .*)$$"  "$$src" | grep -v -e "^.*//" -e "^.*:.*: .*if ((.*[^)])$$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -e "^.*$$" ; \
-		if [ "$$?" -ne 1 ]; then \
-			ret=1; test -n "$(STOP)" && break; \
-		fi ; \
-	done ; \
-	if [ $$ret -eq 0 ] ; then \
-		echo "Style check: PASS" && exit 0 ; \
-	else \
-		echo "Style check: FAIL!" && echo "Please, check the log above for the details." && exit 1 ; \
-	fi ;
+	@error=0; export LIST=$$LIST; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
+	      ../scripts/deploy.sh  check_style_file  "$$src" ; \
+	      test "$${?}" -eq 1 && export error=1 ; \
+	      test "$${error}" -eq 1 && test -n "$${STOP}" && break; \
+	done; \
+	if [ $$error -eq 0 ] ; then  echo "" && echo "" && echo "Style check: PASS" && echo "" && echo "" && exit 0 ; \
+	else  echo "" && echo "" && echo "Style check: FAIL! Please, check the log above for the details." && echo "If there is a false-negative trigger, please, report an issue attaching the log or link to the log!" && echo "" && echo "" && exit 1 ; \
+	fi; \
 
-.PHONY: check-style-list  check-style  all  clean  default  clean-all
+.PHONY: check-style  all  clean  default  clean-all
 .SECONDARY:
 
 # Pull in dependency info for *existing* .o files
