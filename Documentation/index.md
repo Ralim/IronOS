@@ -70,3 +70,21 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 - Holding down the button near the USB end will show the _[debug menu](https://ralim.github.io/IronOS/DebugMenu/)._ In _soldering mode_ this ends the heating.
 
 Operation details are over in the [Menu information.](https://ralim.github.io/IronOS/Menu/)
+
+## Feedback
+
+If you would like to:
+- report any issue related to IronOS
+- request a feature
+- provide some suggestion
+then you can [fill this form](https://github.com/Ralim/IronOS/issues/new/choose) using github account[^gh].
+
+And if you would like to:
+- ask more generic question about IronOS/supported hardware/something you're curious about/etc.
+- reach out community to chat with
+- share your soldering & DIY skills
+- share some interesting finding
+- share useful related hardware/software with others
+or _anything_ like that, then you can use forum-like [Discussions here](https://github.com/Ralim/IronOS/discussions).
+
+[^gh]: You may need to create it first if you don't have one - it's free of charge.

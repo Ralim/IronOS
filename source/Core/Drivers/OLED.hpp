@@ -103,7 +103,8 @@ public:
     }
   }
 
-  static void setRotation(bool leftHanded); // Set the rotation for the screen
+  // Set the rotation for the screen
+  static void setRotation(bool leftHanded);
   // Get the current rotation of the LCD
   static bool getRotation() {
 #ifdef OLED_FLIP
@@ -115,8 +116,11 @@ public:
   static void    setBrightness(uint8_t contrast);
   static void    setInverseDisplay(bool inverted);
   static int16_t getCursorX() { return cursor_x; }
-  static void    print(const char *string, FontStyle fontStyle, uint8_t length = 255); // Draw a string to the current location, with selected font; optionally - with MAX length only
+  // Draw a string to the current location, with selected font; optionally - with MAX length only
+  static void    print(const char *string, FontStyle fontStyle, uint8_t length = 255);
   static void    printWholeScreen(const char *string);
+  // Print *F or *C - in font style of Small, Large (by default) or Extra based on input arg
+  static void    printSymbolDeg(FontStyle fontStyle = FontStyle::LARGE);
   // Set the cursor location by pixels
   static void setCursor(int16_t x, int16_t y) {
     cursor_x = x;

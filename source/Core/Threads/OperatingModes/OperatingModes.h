@@ -46,5 +46,6 @@ void drawHomeScreen(bool buttonLockout) __attribute__((noreturn)); // IDLE / Hom
 void renderHomeScreenAssets(void);                                 // Called to act as start delay and used to render out flipped images for home screen graphics
 
 // Common helpers
-int8_t getPowerSourceNumber(void);                                 // Returns number ID of power source
+int8_t   getPowerSourceNumber(void);                               // Returns number ID of power source
+uint16_t getTipTemp(void);                                         // Returns temperature of the tip in *C/*F (based on user settings)
 #endif
