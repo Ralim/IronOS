@@ -116,11 +116,9 @@ void drawDetailedHomeScreen(uint32_t tipTemp) {
     }
     // draw set temp
     OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::SMALL);
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-    } else {
-      OLED::print(SmallSymbolDegC, FontStyle::SMALL);
-    }
+
+    OLED::printSymbolDeg(FontStyle::SMALL);
+
     if (OLED::getRotation()) {
       OLED::setCursor(0, 8);
     } else {

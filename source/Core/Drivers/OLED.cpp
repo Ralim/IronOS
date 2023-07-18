@@ -481,6 +481,23 @@ void OLED::printWholeScreen(const char *string) {
   }
 }
 
+// Print *F or *C - in font style of Small, Large (by default) or Extra based on input arg
+void OLED::printSymbolDeg(const FontStyle fontStyle) {
+  switch (fontStyle) {
+  case FontStyle::EXTRAS:
+    // Picks *F or *C in ExtraFontChars[] from Font.h
+    OLED::drawSymbol(getSettingValue(SettingsOptions::TemperatureInF) ? 0 : 1);
+    break;
+  case FontStyle::LARGE:
+    OLED::print(getSettingValue(SettingsOptions::TemperatureInF) ? LargeSymbolDegF : LargeSymbolDegC, fontStyle);
+    break;
+  case FontStyle::SMALL:
+  default:
+    OLED::print(getSettingValue(SettingsOptions::TemperatureInF) ? SmallSymbolDegF : SmallSymbolDegC, fontStyle);
+    break;
+  }
+}
+
 inline void stripLeaderZeros(char *buffer, uint8_t places) {
   // Removing the leading zero's by swapping them to SymbolSpace
   // Stop 1 short so that we dont blank entire number if its zero

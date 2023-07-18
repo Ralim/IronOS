@@ -54,11 +54,7 @@ void gui_solderingProfileMode() {
       break;
     }
 
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      tipTemp = TipThermoModel::getTipInF();
-    } else {
-      tipTemp = TipThermoModel::getTipInC();
-    }
+    tipTemp = getTipTemp();
 
     // if start temp is unknown (preheat), we're setting it now
     if (phaseStartTemp == 0) {
@@ -155,12 +151,7 @@ void gui_solderingProfileMode() {
       OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
       OLED::print(SmallSymbolSlash, FontStyle::SMALL);
       OLED::printNumber(profileCurrentTargetTemp, 3, FontStyle::SMALL);
-
-      if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-      } else {
-        OLED::print(SmallSymbolDegC, FontStyle::SMALL);
-      }
+      OLED::printSymbolDeg(FontStyle::SMALL);
 
       // print phase
       if (profilePhase > 0 && profilePhase <= getSettingValue(SettingsOptions::ProfilePhases)) {

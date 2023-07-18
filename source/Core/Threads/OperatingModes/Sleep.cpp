@@ -25,7 +25,7 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     }
 
     // draw the lcd
-    uint16_t tipTemp = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
+    uint16_t tipTemp = getTipTemp();
 
     OLED::clearScreen();
     OLED::setCursor(0, 0);
@@ -34,25 +34,14 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
       OLED::setCursor(0, 8);
       OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
       OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
-
-      if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-      } else {
-        OLED::print(SmallSymbolDegC, FontStyle::SMALL);
-      }
-
+      OLED::printSymbolDeg(FontStyle::SMALL);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
       printVoltage();
       OLED::print(SmallSymbolVolts, FontStyle::SMALL);
     } else {
       OLED::print(translatedString(Tr->SleepingSimpleString), FontStyle::LARGE);
       OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
-
-      if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        OLED::drawSymbol(0);
-      } else {
-        OLED::drawSymbol(1);
-      }
+      OLED::printSymbolDeg(FontStyle::EXTRAS);
     }
 
     OLED::refresh();

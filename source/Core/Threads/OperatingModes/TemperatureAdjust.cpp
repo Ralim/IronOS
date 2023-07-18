@@ -107,11 +107,7 @@ void gui_solderingTempAdjust(void) {
 
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::LARGE);
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      OLED::drawSymbol(0);
-    } else {
-      OLED::drawSymbol(1);
-    }
+    OLED::printSymbolDeg(FontStyle::EXTRAS);
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     if (OLED::getRotation()) {
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus, FontStyle::LARGE);
