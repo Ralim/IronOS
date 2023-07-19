@@ -15,11 +15,23 @@ TS100 is a neat soldering iron:
 ### TS80
 
 TS80 is a successor to TS100:
-- uses _Quick Charge 3.0_ / _QC3_ capable charger only;
+- uses _Quick Charge 3.0_ / _QC3_ capable charger only (18W max);
 - doesn't support PD as it is not designed on the hardware level;
 - the default firmware can be found [here](https://www.minidso.com/forum.php?mod=viewthread&tid=3208&extra=page%3D1).
 
 ![](https://core-electronics.com.au/media/catalog/product/4/2/4244-01.jpg)
+
+
+### TS80P
+
+TS80P is a successor to TS80:
+- supports _Quick Charge 3.0_ (_QC3_: 9V/3A, 18W max);
+- supports _Power Delivery_ (_PD_: 9V/3A & 12V/3A, 30W max)[^pd];
+- the default firmware can be found [here](https://www.minidso.com/forum.php?mod=viewthread&tid=4085&extra=page%3D1).
+
+[^pd]: use valid PD device that supports 12V/3A as power source to get full 30W potential, otherwise the iron will fall back to QC/18W power mode.
+
+![](https://static.eleshop.nl/mage/media/catalog/product/cache/10/image/800x/040ec09b1e35df139433887a97daa66f/s/-/s-l1600_5.jpg)
 
 
 ### MHP30
