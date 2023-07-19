@@ -25,5 +25,6 @@
       - [Hardware Notes](../Documentation/Hardware.md)
       - [Troubleshooting](../Documentation/Troubleshooting.md)
       - [Known Hardware Issues](../Documentation/HardwareIssues.md)
+      - [Power sources](../Documentation/PowerSources.md)
   - [Translations](../Documentation/Translation.md)
   - [Development](../Documentation/Development.md)
