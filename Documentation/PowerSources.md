@@ -75,5 +75,6 @@ The following additional table is the list of devices compatible with hardware w
 | Traver Charger QC09 (45W max)\* | OK |
 | Xiaomi AD65GEU Mi 65W Fast Charger with GaN Tech (AD65GEU, 65W max) | OK |
 
+\* Comes as an _option_ for extra price in the package with TS80P from [official store](https://aliexpress.com/item/4000764937427.html) or from [NovelLife store separately](https://aliexpress.com/item/4001316262433.html) on AliExpress.
 
 Please, DO NOT BUY cheap "fast chargers with QC/PD support" for a few dollars online (i.e., less than ~10$): if you check reviews, then you see that they are phonies - even if you get lucky, you probably get 5V/1A max from them.
