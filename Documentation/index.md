@@ -40,6 +40,7 @@ For notes on installation for your device, please refer to the flashing guide fo
 - [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
 
 But the _generic_ [TL;DR](https://www.merriam-webster.com/dictionary/TL%3BDR) is to:
+
 - [download firmware from here](https://github.com/Ralim/IronOS/releases) for the correct model with suitable language support;
 - put a device into DFU/bootloader mode (usually by keep holding A/+/front button while connecting a device to power source to power device on);
 - flash the firmware by drag-n-drop the firmware file using a file manager of your OS **or** using a separate flashing tool.
@@ -79,17 +80,21 @@ Operation details are over in the [Menu information.](https://ralim.github.io/Ir
 ## Feedback
 
 If you would like to:
+
 - report any issue related to IronOS
 - request a feature
 - provide some suggestion
-then you can [fill this form](https://github.com/Ralim/IronOS/issues/new/choose) using github account[^gh].
+
+then you can [fill this form](https://github.com/Ralim/IronOS/issues/new/choose) using github account\*.
 
 And if you would like to:
+
 - ask more generic question about IronOS/supported hardware/something you're curious about/etc.
 - reach out community to chat with
 - share your soldering & DIY skills
 - share some interesting finding
 - share useful related hardware/software with others
+
 or _anything_ like that, then you can use forum-like [Discussions here](https://github.com/Ralim/IronOS/discussions).
 
-[^gh]: You may need to create it first if you don't have one - it's free of charge.
+\*: You may need to create it first if you don't have one - it's free of charge.
