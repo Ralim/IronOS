@@ -852,6 +852,15 @@ clean:
 clean-all: clean
 	rm -Rf $(HEXFILE_DIR)
 
+# Style formatting helper targets
+
+# Overwrite source files in your local repo copy according to IronOS code style rules (source/.clang-format) WITHOUT A WARNING!
+# Use `git diff` or your favorite diff tool via `git difftool` before commit to make sure there are no false-negative changes.
+# If so, report an issue, please.
+style:
+	@for src in $(ALL_SOURCE) $(ALL_INCLUDES); do echo "Formatting $$src" ; clang-format -i "$$src" ; done;
+	@echo "Done! Please, check the changes before commit."
+
 # Code style checks using clang-format:
 # - show output in gcc-like error compatible format for IDEs/editors;
 # - external variables for debug purposes (can be used at the same time, i.e. STOP=1 LIST=1 ...):
@@ -859,6 +868,9 @@ clean-all: clean
 #   * call `make check-style LIST=1` to show failed file names only;
 # - here we process only list of files;
 # - per-file check happens in scripts/deploy.sh : check_style_file - since shell commands involved, the check logic moved to shell script for better maintainance outside of makefile syntax crossing.
+# - $? / error / STOP conditional logic needed to:
+#   * check errors in formatting from deploy.sh
+#   * process STOP env variable
 check-style:
 	@error=0; export LIST=$$LIST; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
 	      ../scripts/deploy.sh  check_style_file  "$$src" ; \
@@ -867,9 +879,9 @@ check-style:
 	done; \
 	if [ $$error -eq 0 ] ; then  echo "" && echo "" && echo "Style check: PASS" && echo "" && echo "" && exit 0 ; \
 	else  echo "" && echo "" && echo "Style check: FAIL! Please, check the log above for the details." && echo "If there is a false-negative trigger, please, report an issue attaching the log or link to the log!" && echo "" && echo "" && exit 1 ; \
-	fi; \
+	fi;
 
-.PHONY: check-style  all  clean  default  clean-all
+.PHONY: style  check-style  all  clean  default  clean-all
 .SECONDARY:
 
 # Pull in dependency info for *existing* .o files
