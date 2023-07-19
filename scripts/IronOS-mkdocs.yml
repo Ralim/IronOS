@@ -1,10 +1,14 @@
 # Project info
 site_name: IronOS
-site_url: https://ralim.github.io/IronOS/
+# !!! REVERT BEFORE PR !!!
+#site_url: https://ralim.github.io/IronOS/
+site_url: https://ia.github.io/IronOS-plus/
 site_description: "IronOS Open Source Soldering Iron firmware for Miniware and Pinecil"
 
 # Repo config
-repo_url: https://github.com/ralim/IronOS/
+# !!! REVERT BEFORE PR !!!
+#repo_url: https://github.com/ralim/IronOS/
+repo_url: https://github.com/ia/IronOS-plus/
 
 # Dir & location config
 docs_dir: ../Documentation
@@ -39,6 +43,7 @@ nav:
       - Hardware Notes: Hardware.md
       - Troubleshooting: Troubleshooting.md
       - Known Hardware Issues: HardwareIssues.md
+      - Power sources: PowerSources.md
   - Translations: Translation.md
   - Development: Development.md
 
