@@ -43,3 +43,12 @@ MHP30 is a **M**ini **H**ot **P**late:
 - the OLED is the same SSD1306 as everything else, but it’s on a bit-banged bus.
 
 
+### Pinecil
+
+Pincecil:
+- first model of soldering iron from PINE64;
+- the default firmware can be found [here](https://files.pine64.org/os/Pinecil/Pinecil_firmware_20201115.zip).
+
+![](https://pine64.com/wp-content/uploads/2020/11/pinecil-bb2-04.jpg?v=0446c16e2e66)
+
+
