@@ -10,7 +10,7 @@ This is not ads but first hands-on experience results from real users since some
 
 ### Compatible Devices (QuickCharge for TS80/P)
 
-The following table is the list of compatible device and remarks when powering up the TS80 through it for both stock firmware from minidso and custom from @ralim. The list of devices below are primarily taken from [#349](https://github.com/Ralim/ts100/issues/349#issuecomment-449559806)
+The following table is the list of compatible device and remarks when powering up the TS80 through it for both stock firmware from MiniDso and IronOS. The list of devices below are primarily taken from [#349](https://github.com/Ralim/ts100/issues/349#issuecomment-449559806)
 
 | Device Name | Stock FW | IronOS FW |
 |-------------|:--------:|:---------:|
@@ -55,11 +55,9 @@ The following table is the list of compatible device and remarks when powering u
 
 You may also build your own QC3.0 power source that requires this little [thing](https://www.tindie.com/products/soubitos/qualcomm-qc2-3-diy-8-32vin-36-12vout-3a-max/) and have at least 3S lithium packs or any input voltage from 8 to 32V.
 
-You can also go for an [alternate module](https://www.banggood.com/DC-Buck-Module-12V24V-to-QC3_0-Single-USB-Mobile-Charging-Board-p-1310585.html) Which has at least one good review of it 😄 
+You can also go for an [alternate module](https://www.banggood.com/DC-Buck-Module-12V24V-to-QC3_0-Single-USB-Mobile-Charging-Board-p-1310585.html) which has at least one good review of it.
 
-**Disclaimer**
-
-We do not hold any responsibility for accidents that happen when building your own QC3.0 power source.
+**DISCLAIMER:** _**We do not hold any responsibility for accidents that happen when building your own QC3.0 power source!!!**_
 
 
 ## PD
@@ -67,7 +65,7 @@ We do not hold any responsibility for accidents that happen when building your o
 The following additional table is the list of devices compatible with hardware which requires Power Delivery support (>= 30W). Devices from the list have been successfully tested & used with TS80P in PD mode. Please, keep in mind that:
 
 - PD can be provided only through usb-c <-> usb-c cable;
-- not only charger but cable itself should be capable to carry higher wattages.
+- not only a charger but a cable itself should be capable to carry higher wattages.
 
 
 ### Compatible Devices (PowerDelivery for TS80P)
@@ -77,6 +75,6 @@ The following additional table is the list of devices compatible with hardware w
 | Traver Charger QC09 (45W max)\* | OK |
 | Xiaomi AD65GEU Mi 65W Fast Charger with GaN Tech (AD65GEU, 65W max) | OK |
 
-\* Comes as an option in the package with TS80P from [official store](https://aliexpress.com/item/4000764937427.html) or from [NovelLife store](https://aliexpress.ru/item/4001316262433.html) separately on AliExpress.
+\* Comes as an option in the package with TS80P from [official store](https://aliexpress.com/item/4000764937427.html) or from [NovelLife store separately](https://aliexpress.ru/item/4001316262433.html) on AliExpress.
 
 Please, DO NOT BUY cheap "fast chargers with QC/PD support" for a few dollars online (i.e., less than ~10$): if you check reviews, then you see that they are phonies - even if you get lucky, you probably get 5V/1A max from them.
