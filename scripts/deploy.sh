@@ -97,7 +97,7 @@ check_style_file()
 	#   it used to trace missing { and } for if/else/do/while/for BUT IT'S VERY SPECULATIVE, very-very hacky & dirty.
 	test -z "${LIST}" || silent_opt="-q"
 	# if file is problematic but filename only requested make final grep in pipe silent ...
-	grep -H -n  -e "^ .*if .*)$"  -e "^ .*else$"  -e "^ .* do$"  -e "^ .*while .*)$"  -e "^ .*for .*)$"  "${src}" | grep -v  -e "^.*//"  -e "^.*:.*: .*if ((.*[^)])$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep  ${silent_opt} -e "^.*$"
+	grep -H -n  -e "^ .*if .*)$"  -e "^ .*else$"  -e "^ .* do$"  -e "^ .*while .*)$"  -e "^ .*for .*)$"  "${src}" | grep -v  -e "^.*//"  -e "^.*:.*: .*if ((.*[^)])$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep  "${silent_opt}" -e "^.*$"
 	if [ "${?}" -ne 1 ]; then
 		# ... and only print the filename
 		test -z "${LIST}" || echo "${src}"
