@@ -13,7 +13,6 @@
 #include "Settings.h"
 #include "Translation.h"
 
-
 #define PRESS_ACCEL_STEP         (TICKS_100MS / 3)
 #define PRESS_ACCEL_INTERVAL_MIN TICKS_100MS
 #define PRESS_ACCEL_INTERVAL_MAX (TICKS_100MS * 3)
@@ -37,8 +36,9 @@ typedef struct {
   uint8_t           shortDescriptionSize;
 } menuitem;
 
-void                  enterSettingsMenu();
-bool                  warnUser(const char *warning, const ButtonState buttons);
-extern const menuitem rootSettingsMenu[];
+void                   enterSettingsMenu();
+bool                   warnUser(const char *warning, const ButtonState buttons);
+extern const menuitem  rootSettingsMenu[];
+extern const menuitem *subSettingsMenus[];
 
 #endif /* GUI_HPP_ */

@@ -18,6 +18,7 @@ extern "C" {
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"
+#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "history.hpp"
@@ -64,7 +65,7 @@ void guiRenderLoop(void) {
       }
     }
   }
-
+  MSG("Run GUI %d - %d\r\n", (int)currentOperatingMode, (int)buttons);
   // Dispatch button state to gui mode
   OperatingMode newMode = currentOperatingMode;
   switch (currentOperatingMode) {
@@ -145,6 +146,7 @@ void guiRenderLoop(void) {
     OLED::useSecondaryFramebuffer(false);
     context.transitionMode = TransitionAnimation::None; // Clear transition flag
   }
+  MSG("Post GUI %d - %d\r\n", (int)currentOperatingMode, (int)buttons);
   // Render done, draw it out
   OLED::refresh();
 }

@@ -440,6 +440,12 @@ const menuitem advancedMenu[] = {
 
 /* clang-format on */
 
+extern const menuitem *subSettingsMenus[] {
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
+  powerMenu,
+#endif
+      solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
+};
 /* ^^^ !!!ENABLE CLANG-FORMAT back!!! ^^^ */
 
 /**
@@ -460,10 +466,9 @@ static void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t 
 }
 
 static int userConfirmation(const char *message) {
-  ScrollMessage scrollMessage;
-
+  TickType_t tickStart = xTaskGetTickCount();
   for (;;) {
-    bool lcdRefresh = scrollMessage.drawUpdate(message, xTaskGetTickCount());
+    drawScrollingText(message, xTaskGetTickCount() - tickStart);
 
     ButtonState buttons = getButtonState();
     switch (buttons) {
@@ -481,10 +486,8 @@ static int userConfirmation(const char *message) {
       return 0;
     }
 
-    if (lcdRefresh) {
-      OLED::refresh();
-      osDelay(40);
-    }
+    OLED::refresh();
+    osDelay(40);
   }
   return 0;
 }
