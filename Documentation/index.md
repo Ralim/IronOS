@@ -8,18 +8,18 @@ For soldering irons that are designed to be powered by batteries (TS100 & Pineci
 
 Currently **31** languages are supported. When downloading the firmware for your soldering iron, take note of the language code in the file name.
 
-This project is considered feature complete for use as a soldering iron, _so please suggest any feature improvements you would like!_
+This project is considered stable & feature complete for everyday use with a supported device, _so please suggest any feature improvements you would like!_
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware._
 
 |   Device   | DC  | QC  | PD  | EPR | BLE | Battery | Recommended |
 | :--------: | :-: | :-: | :-: | :-: | :-: | :-----: | :---------: |
-|   MHP30    | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌    |     ✔️      |
-| Pinecil V1 | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
-| Pinecil V2 | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️    |     ✔️      |
-|   TS80P    | ❌  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
-|   TS100    | ✔️  | ❌  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
-|    TS80    | ❌  | ✔️  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
+|   MHP30    | ❌  | ❌  | ✔️   | ❌  | ❌  |   ❌    |     ✔️       |
+| Pinecil V1 | ✔️   | ✔️   | ✔️   | ❌  | ❌  |   ✔️     |     ✔️       |
+| Pinecil V2 | ✔️   | ✔️   | ✔️   | ✔️   | ✔️   |   ✔️     |     ✔️       |
+|   TS80P    | ❌  | ✔️   | ✔️   | ❌  | ❌  |   ✔️     |     ✔️       |
+|   TS100    | ✔️   | ❌  | ❌  | ❌  | ❌  |   ✔️     |     ❌      |
+|    TS80    | ❌  | ✔️   | ❌  | ❌  | ❌  |   ✔️     |     ❌      |
 
 \*Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is **_no longer recommended_**.
 
@@ -38,6 +38,11 @@ For notes on installation for your device, please refer to the flashing guide fo
 - [Pinecil V2](https://ralim.github.io/IronOS/Flashing/Pinecil%20V2/)
 - [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
 - [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
+
+But the _generic_ [TL;DR](https://www.merriam-webster.com/dictionary/TL%3BDR) is to:
+- [download firmware from here](https://github.com/Ralim/IronOS/releases) for the correct model with suitable language support;
+- put a device into DFU/bootloader mode (usually by keep holding A/+/front button while connecting a device to power source to power device on);
+- flash the firmware by drag-n-drop the firmware file using a file manager of your OS **or** using a separate flashing tool.
 
 ## Key Features
 
