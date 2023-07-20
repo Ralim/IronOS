@@ -69,10 +69,12 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   // State 2 -> Sub entry
   // Draw main entry if sub-entry is 0, otherwise draw sub-entry
 
-  uint16_t *mainEntry         = &(cxt->scratch_state.state1);
-  uint16_t *subEntry          = &(cxt->scratch_state.state2);
-  uint16_t *currentMenuLength = &(cxt->scratch_state.state5);
-  uint16_t *wasRenderingHelp  = &(cxt->scratch_state.state6);
+  uint16_t *mainEntry              = &(cxt->scratch_state.state1);
+  uint16_t *subEntry               = &(cxt->scratch_state.state2);
+  uint16_t *currentMenuLength      = &(cxt->scratch_state.state5);
+  uint16_t *wasRenderingHelp       = &(cxt->scratch_state.state6);
+  uint32_t *autoRepeatAcceleration = &(cxt->scratch_state.state3);
+  uint32_t *autoRepeatTimer        = &(cxt->scratch_state.state4);
 
   const menuitem *currentMenu;
   // Draw the currently on screen item
@@ -105,26 +107,34 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
 
   auto callIncrementHandler = [&]() {
     if ((int)currentMenu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
-      nextSettingValue(currentMenu[currentScreen].autoSettingOption);
+      return nextSettingValue(currentMenu[currentScreen].autoSettingOption);
     } else if (currentMenu[currentScreen].incrementHandler != nullptr) {
-      currentMenu[currentScreen].incrementHandler();
+      return currentMenu[currentScreen].incrementHandler();
     }
+    return false;
   };
 
   //
 
   switch (buttons) {
   case BUTTON_NONE:
+    (*autoRepeatAcceleration) = 0; // reset acceleration
+    (*autoRepeatTimer)        = 0; // reset acceleration
     break;
   case BUTTON_BOTH:
     return OperatingMode::HomeScreen;
     break;
 
-  case BUTTON_B_LONG:
-
-    break;
   case BUTTON_F_LONG:
-
+    if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
+      if (callIncrementHandler()) {
+        (*autoRepeatTimer) = 1000;
+      } else {
+        (*autoRepeatTimer) = 0;
+      }
+      (*autoRepeatTimer) += xTaskGetTickCount();
+      (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
+    }
     break;
   case BUTTON_F_SHORT:
     // Increment setting
@@ -144,6 +154,14 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       }
     }
     break;
+  case BUTTON_B_LONG:
+    if (xTaskGetTickCount() - (*autoRepeatTimer) + (*autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
+      (*autoRepeatTimer) = xTaskGetTickCount();
+      (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
+    } else {
+      break;
+    }
+    /* Fall through*/
   case BUTTON_B_SHORT:
     // Increment menu item
     if (*wasRenderingHelp) {
@@ -173,6 +191,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       }
     }
     break;
+
   default:
     break;
   }
