@@ -39,6 +39,7 @@ nav:
       - Hardware Notes: Hardware.md
       - Troubleshooting: Troubleshooting.md
       - Known Hardware Issues: HardwareIssues.md
+      - Power sources: PowerSources.md
   - Translations: Translation.md
   - Development: Development.md
 
