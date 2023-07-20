@@ -1,5 +1,6 @@
 #include "OperatingModes.h"
 #include "ScrollMessage.hpp"
+#include "bflb_platform.h"
 
 #define HELP_TEXT_TIMEOUT_TICKS (TICKS_SECOND * 3)
 /*
@@ -40,6 +41,9 @@ void render_menu(const menuitem *item, guiContext *cxt) {
     }
     item->draw();
   } else {
+
+    uint16_t *wasRenderingHelp = &(cxt->scratch_state.state6);
+    *wasRenderingHelp          = 1;
     // Draw description
     const char *description = translatedString(Tr->SettingsDescriptions[item->description - 1]);
     drawScrollingText(description, xTaskGetTickCount() - lastButtonTime);
@@ -48,9 +52,13 @@ void render_menu(const menuitem *item, guiContext *cxt) {
 
 uint16_t getMenuLength(const menuitem *menu) {
   // walk this menu to find the length
+  uint16_t counter = 0;
   for (uint16_t pos = 0; pos < 64; pos++) {
-    if (menu[pos].draw == NULL) {
-      return pos + 1;
+    if (menu[pos].draw == nullptr) {
+      return counter;
+    }
+    if (menu[pos].isVisible == nullptr || menu[pos].isVisible()) {
+      counter++;
     }
   }
   return 0; // Cant find length, be safe
@@ -65,6 +73,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   uint16_t *mainEntry         = &(cxt->scratch_state.state1);
   uint16_t *subEntry          = &(cxt->scratch_state.state2);
   uint16_t *currentMenuLength = &(cxt->scratch_state.state5);
+  uint16_t *wasRenderingHelp  = &(cxt->scratch_state.state6);
 
   const menuitem *currentMenu;
   // Draw the currently on screen item
@@ -76,7 +85,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   } else {
     // Drawing sub menu
     currentMenu   = subSettingsMenus[*mainEntry];
-    currentScreen = *subEntry;
+    currentScreen = (*subEntry) - 1;
   }
   render_menu(&(currentMenu[currentScreen]), cxt);
 
@@ -95,6 +104,16 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
 
   // Now handle user button input
 
+  auto callIncrementHandler = [&]() {
+    if ((int)currentMenu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
+      nextSettingValue(currentMenu[currentScreen].autoSettingOption);
+    } else if (currentMenu[currentScreen].incrementHandler != nullptr) {
+      currentMenu[currentScreen].incrementHandler();
+    }
+  };
+
+  //
+
   switch (buttons) {
   case BUTTON_NONE:
     break;
@@ -103,17 +122,57 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     break;
 
   case BUTTON_B_LONG:
+
     break;
   case BUTTON_F_LONG:
 
     break;
   case BUTTON_F_SHORT:
+    // Increment setting
+    if (*wasRenderingHelp) {
+      *wasRenderingHelp = 0;
+    } else {
+      if (*subEntry == 0) {
+        // In a root menu, if its null handler we enter the menu
+        if (currentMenu[currentScreen].incrementHandler != nullptr) {
+          currentMenu[currentScreen].incrementHandler();
+        } else {
+          (*subEntry) += 1;
+        }
+      } else {
+        callIncrementHandler();
+      }
+    }
     break;
   case BUTTON_B_SHORT:
+    // Increment menu item
+    if (*wasRenderingHelp) {
+      *wasRenderingHelp = 0;
+    } else {
+      // Scroll down
+      if (currentScreen < (*currentMenuLength) - 1) {
+        // We can increment freely
+        if (*subEntry == 0) {
+          (*mainEntry) += 1;
+        } else {
+          (*subEntry) += 1;
+        }
+      } else {
+        // We are at an end somewhere, increment as appropriate
+        if (*subEntry == 0) {
+          // This is end of the list
+          return OperatingMode::HomeScreen;
+        } else {
+          (*subEntry) = 0;
+          (*mainEntry) += 1;
+        }
+      }
+    }
     break;
   default:
     break;
   }
+
   // Otherwise we stay put for next render iteration
   return OperatingMode::SettingsMenu;
 }

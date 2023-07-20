@@ -120,17 +120,12 @@ static bool showHallEffect(void);
 
 #if defined(POW_DC) || defined(POW_QC)
 static void displayPowerMenu(void);
-static bool enterPowerMenu(void);
 #endif /* POW_DC or POW_QC */
 
 static void displaySolderingMenu(void);
-static bool enterSolderingMenu(void);
 static void displayPowerSavingMenu(void);
-static bool enterPowerSavingMenu(void);
 static void displayUIMenu(void);
-static bool enterUIMenu(void);
 static void displayAdvancedMenu(void);
-static bool enterAdvancedMenu(void);
 
 /*
  * Root Settings Menu
@@ -216,16 +211,16 @@ const menuitem rootSettingsMenu[] {
    */
 #if defined(POW_DC) || defined(POW_QC)
   /* Power */
-  {0, enterPowerMenu, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  {0, nullptr, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
 #endif
   /* Soldering */
-  {0, enterSolderingMenu, displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  {0, nullptr, displaySolderingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
   /* Sleep Options Menu */
-  {0, enterPowerSavingMenu, displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  {0, nullptr, displayPowerSavingMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
   /* UI Menu */
-  {0, enterUIMenu, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  {0, nullptr, displayUIMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
   /* Advanced Menu */
-  {0, enterAdvancedMenu, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
+  {0, nullptr, displayAdvancedMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
   /* Language Switch */
   {0, settings_setLanguageSwitch, settings_displayLanguageSwitch, settings_showLanguageSwitch, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
   /* vvvv end of menu marker. DO NOT REMOVE vvvv */
@@ -440,7 +435,7 @@ const menuitem advancedMenu[] = {
 
 /* clang-format on */
 
-extern const menuitem *subSettingsMenus[] {
+const menuitem *subSettingsMenus[] {
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
   powerMenu,
 #endif
@@ -1035,215 +1030,4 @@ static void displayAdvancedMenu(void) { displayMenu(4); }
 static bool enterAdvancedMenu(void) {
   gui_Menu(advancedMenu);
   return false;
-}
-
-uint8_t gui_getMenuLength(const menuitem *menu) {
-  uint8_t scrollContentSize = 0;
-  for (uint8_t i = 0; menu[i].draw != nullptr; i++) {
-    if (menu[i].isVisible == nullptr) {
-      scrollContentSize += 1; // Always visible
-    } else if (menu[i].isVisible()) {
-      scrollContentSize += 1; // Selectively visible and chosen to show
-    }
-  }
-  return scrollContentSize;
-}
-
-void gui_Menu(const menuitem *menu) {
-  // Draw the settings menu and provide iteration support etc
-
-  // This is used to detect whether a menu-exit transition should be played.
-  static bool wasInGuiMenu;
-  wasInGuiMenu = true;
-
-  enum class NavState {
-    Idle,
-    Entering,
-    ScrollingDown,
-    Exiting,
-  };
-
-  uint8_t    currentScreen          = 0; // Current screen index in the menu struct
-  uint8_t    screensSkipped         = 0; // Number of screens skipped due to being disabled
-  TickType_t autoRepeatTimer        = 0;
-  TickType_t autoRepeatAcceleration = 0;
-  bool       earlyExit              = false;
-  bool       lcdRefresh             = true;
-
-  ButtonState lastButtonState   = BUTTON_NONE;
-  uint8_t     scrollContentSize = gui_getMenuLength(menu);
-
-  bool     scrollBlink = false;
-  bool     lastValue   = false;
-  NavState navState    = NavState::Entering;
-
-  ScrollMessage scrollMessage;
-
-  while ((menu[currentScreen].draw != nullptr) && earlyExit == false) {
-    bool valueChanged = false;
-    // Handle menu transition:
-    if (navState != NavState::Idle) {
-      // Check if this menu item shall be skipped. If it shall be skipped,
-      // `draw()` returns true. Draw on the secondary framebuffer as we want
-      // to keep the primary framebuffer intact for the upcoming transition
-      // animation.
-      OLED::useSecondaryFramebuffer(true);
-      if (menu[currentScreen].isVisible != nullptr) {
-        if (!menu[currentScreen].isVisible()) {
-          currentScreen++;
-          screensSkipped++;
-          OLED::useSecondaryFramebuffer(false);
-          continue;
-        }
-      }
-
-      animOpenState = true;
-      // The menu entering/exiting transition uses the secondary framebuffer,
-      // but the scroll down transition does not.
-      OLED::setCursor(0, 0);
-      OLED::clearScreen();
-      if (menu[currentScreen].shortDescriptionSize > 0) {
-        printShortDescription(menu[currentScreen].shortDescriptionIndex, menu[currentScreen].shortDescriptionSize);
-      }
-      menu[currentScreen].draw();
-      if (navState == NavState::ScrollingDown) {
-        // Play the scroll down animation.
-        OLED::maskScrollIndicatorOnOLED();
-        OLED::transitionScrollDown();
-        OLED::useSecondaryFramebuffer(false);
-      } else {
-        // The menu was drawn in a secondary framebuffer.
-        // Now we play a transition from the pre-drawn primary
-        // framebuffer to the new buffer.
-        // The extra buffer is discarded at the end of the transition.
-        OLED::useSecondaryFramebuffer(false);
-        OLED::transitionSecondaryFramebuffer(navState == NavState::Entering);
-      }
-      animOpenState = false;
-      navState      = NavState::Idle;
-    }
-
-    // If the user has hesitated for >=3 seconds, show the long text
-    // Otherwise "draw" the option
-    if ((xTaskGetTickCount() - lastButtonTime < (TICKS_SECOND * 3)) || menu[currentScreen].description == 0) {
-      lcdRefresh = true;
-      OLED::setCursor(0, 0);
-      OLED::clearScreen();
-      if (menu[currentScreen].shortDescriptionSize > 0) {
-        printShortDescription(menu[currentScreen].shortDescriptionIndex, menu[currentScreen].shortDescriptionSize);
-      }
-      menu[currentScreen].draw();
-      uint8_t indicatorHeight = OLED_HEIGHT / scrollContentSize;
-      uint8_t position        = OLED_HEIGHT * (currentScreen - screensSkipped) / scrollContentSize;
-      if (lastValue) {
-        scrollBlink = !scrollBlink;
-      }
-      if (!lastValue || !scrollBlink) {
-        OLED::drawScrollIndicator(position, indicatorHeight);
-      }
-    } else {
-      // Draw description
-      const char *description = translatedString(Tr->SettingsDescriptions[menu[currentScreen].description - 1]);
-      lcdRefresh |= scrollMessage.drawUpdate(description, xTaskGetTickCount());
-    }
-
-    if (lcdRefresh) {
-      OLED::refresh(); // update the LCD
-      osDelay(40);
-      lcdRefresh = false;
-    }
-
-    ButtonState buttons = getButtonState();
-
-    if (buttons != lastButtonState) {
-      autoRepeatAcceleration = 0;
-      lastButtonState        = buttons;
-    }
-
-    auto callIncrementHandler = [&]() {
-      wasInGuiMenu = false;
-      valueChanged = true;
-      bool res     = false;
-      if ((int)menu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
-        res = nextSettingValue(menu[currentScreen].autoSettingOption);
-      } else if (menu[currentScreen].incrementHandler != nullptr) {
-        res = menu[currentScreen].incrementHandler();
-      } else {
-        earlyExit = true;
-      }
-      if (wasInGuiMenu) {
-        navState = NavState::Exiting;
-      }
-      wasInGuiMenu = true;
-      return res;
-    };
-
-    switch (buttons) {
-    case BUTTON_BOTH:
-      earlyExit = true; // will make us exit next loop
-      scrollMessage.reset();
-      break;
-    case BUTTON_F_SHORT:
-      // increment
-      if (scrollMessage.isReset()) {
-        lastValue = callIncrementHandler();
-      } else {
-        scrollMessage.reset();
-      }
-      break;
-    case BUTTON_B_SHORT:
-      if (scrollMessage.isReset()) {
-        currentScreen++;
-        navState  = NavState::ScrollingDown;
-        lastValue = false;
-      } else {
-        scrollMessage.reset();
-      }
-      break;
-    case BUTTON_F_LONG:
-      if (xTaskGetTickCount() + autoRepeatAcceleration > autoRepeatTimer + PRESS_ACCEL_INTERVAL_MAX) {
-        if ((lastValue = callIncrementHandler())) {
-          autoRepeatTimer = 1000;
-        } else {
-          autoRepeatTimer = 0;
-        }
-        autoRepeatTimer += xTaskGetTickCount();
-        scrollMessage.reset();
-        autoRepeatAcceleration += PRESS_ACCEL_STEP;
-      }
-      break;
-    case BUTTON_B_LONG:
-      if (xTaskGetTickCount() - autoRepeatTimer + autoRepeatAcceleration > PRESS_ACCEL_INTERVAL_MAX) {
-        currentScreen++;
-        navState        = NavState::ScrollingDown;
-        autoRepeatTimer = xTaskGetTickCount();
-        scrollMessage.reset();
-        autoRepeatAcceleration += PRESS_ACCEL_STEP;
-      }
-      break;
-    case BUTTON_NONE:
-    default:
-      break;
-    }
-
-    if ((PRESS_ACCEL_INTERVAL_MAX - autoRepeatAcceleration) < PRESS_ACCEL_INTERVAL_MIN) {
-      autoRepeatAcceleration = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
-    }
-
-    if ((xTaskGetTickCount() - lastButtonTime) > (TICKS_SECOND * 2 * 60)) {
-      // If user has not pressed any buttons in 30 seconds, exit back a menu layer
-      // This will trickle the user back to the main screen eventually
-      earlyExit = true;
-      scrollMessage.reset();
-    }
-    if (valueChanged) {
-      // If user changed value, update the scroll content size
-      scrollContentSize = gui_getMenuLength(menu);
-    }
-  }
-}
-
-void enterSettingsMenu() {
-  gui_Menu(rootSettingsMenu); // Call the root menu
-  saveSettings();
 }
