@@ -1,17 +1,18 @@
 #include "OperatingModes.h"
-OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt) {
+OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cxt) {
 
-  currentTempTargetDegC            = 0; // Turn off heater while adjusting temp
-  uint16_t *waitForRelease         = &(cxt->scratch_state.state1);
-  uint32_t *autoRepeatTimer        = &(cxt->scratch_state.state3);
-  uint16_t *autoRepeatAcceleration = &(cxt->scratch_state.state2);
-
+  currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
+  uint16_t   *waitForRelease         = &(cxt->scratch_state.state1);
+  uint32_t   *autoRepeatTimer        = &(cxt->scratch_state.state3);
+  uint16_t   *autoRepeatAcceleration = &(cxt->scratch_state.state2);
+  ButtonState buttons                = buttonIn;
   if (*waitForRelease == 0) {
     // When we first enter we wait for the user to release buttons before enabling changes
     if (buttons != BUTTON_NONE) {
-      return OperatingMode::TemperatureAdjust;
+      buttons = BUTTON_NONE;
+    } else {
+      (*waitForRelease)++;
     }
-    (*waitForRelease)++;
   }
 
   OLED::setCursor(0, 0);
@@ -76,7 +77,7 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt
     }
     setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
   }
-  if (xTaskGetTickCount() - cxt->viewEnterTime > (TICKS_SECOND * 2)) {
+  if (xTaskGetTickCount() - lastButtonTime > (TICKS_SECOND * 3)) {
     cxt->transitionMode = TransitionAnimation::Right;
     return cxt->previousMode; // exit if user just doesn't press anything for a bit
   }
