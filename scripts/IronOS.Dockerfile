@@ -4,7 +4,7 @@ FROM alpine:3.16
 LABEL maintainer="Ben V. Brown <ralim@ralimtek.com>"
 
 # Default current dir when container starts
-WORKDIR /build/source
+WORKDIR /build/ironos
 
 # Installing the two compilers (ARM & RISCV), python3 & pip, clang tools:
 ## - compilers: gcc-*, newlib-*
@@ -29,7 +29,7 @@ RUN apk add --no-cache ${APK_COMPS} ${APK_PYTHON} ${APK_MISC} ${APK_DEV}
 RUN python3 -m pip install ${PIP_PKGS}
 
 # Git trust to avoid related warning
-RUN git config --global --add safe.directory /build/source
+RUN git config --global --add safe.directory /build/ironos
 
-COPY . /build/source
+COPY . /build/ironos
 COPY ./scripts/ci /build/ci
