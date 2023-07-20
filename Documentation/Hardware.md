@@ -32,7 +32,7 @@ TS80P\* is a successor to TS80:
 - supports _Power Delivery_ (_PD_: 9V/3A & 12V/3A, 30W max)\*\*;
 - the default firmware can be found [here](https://www.minidso.com/forum.php?mod=viewthread&tid=4085&extra=page%3D1).
 
-\*\*: use valid PD device that supports 12V/3A as power source to get full 30W potential, otherwise the iron will fall back to QC/18W power mode.
+\*\*: use valid PD device that supports 12V/3A as power source to get full 30W potential, otherwise the iron will fall back to 9V/18W power mode.
 
 ![](https://static.eleshop.nl/mage/media/catalog/product/cache/10/image/800x/040ec09b1e35df139433887a97daa66f/s/-/s-l1600_5.jpg)
 
