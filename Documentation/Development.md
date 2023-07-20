@@ -133,7 +133,7 @@ On Windows follow the instructions on the official documentation to install 'Win
 3. Build the firmware for Pinecil V2:
 
     ```sh
-    cd source/source
+    cd source/
     ./build.sh -l EN -m Pinecilv2
     ```
 
