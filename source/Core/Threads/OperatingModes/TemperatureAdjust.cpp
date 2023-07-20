@@ -77,6 +77,7 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt
     setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
   }
   if (xTaskGetTickCount() - cxt->viewEnterTime > (TICKS_SECOND * 2)) {
+    cxt->transitionMode = TransitionAnimation::Right;
     return cxt->previousMode; // exit if user just doesn't press anything for a bit
   }
   if (OLED::getRotation()) {

@@ -34,9 +34,11 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
     break;
 
   case BUTTON_B_LONG:
+    cxt->transitionMode = TransitionAnimation::Down;
     return OperatingMode::DebugMenuReadout;
     break;
   case BUTTON_F_LONG:
+    cxt->transitionMode = TransitionAnimation::Left;
 #ifdef PROFILE_SUPPORT
     if (!isTipDisconnected()) {
       return OperatingMode::SolderingProfile;
@@ -46,11 +48,13 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
 #endif
     break;
   case BUTTON_F_SHORT:
+    cxt->transitionMode = TransitionAnimation::Left;
     if (!isTipDisconnected()) {
       return OperatingMode::Soldering;
     }
     break;
   case BUTTON_B_SHORT:
+    cxt->transitionMode = TransitionAnimation::Right;
     return OperatingMode::SettingsMenu;
     break;
   default:

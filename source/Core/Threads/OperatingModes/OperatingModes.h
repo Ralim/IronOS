@@ -41,7 +41,13 @@ enum class OperatingMode {
   ThermalRunaway,     // Thermal Runaway warning state.
 };
 
-enum class TransitionAnimation { None = 0, Right, Left, Down };
+enum class TransitionAnimation {
+  None  = 0,
+  Right = 1,
+  Left  = 2,
+  Down  = 3,
+  Up    = 4,
+};
 
 // Generic context struct used for gui functions to be able to retain state
 struct guiContext {

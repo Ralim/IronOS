@@ -1,6 +1,5 @@
 #include "OperatingModes.h"
 #include "ScrollMessage.hpp"
-#include "bflb_platform.h"
 
 #define HELP_TEXT_TIMEOUT_TICKS (TICKS_SECOND * 3)
 /*
@@ -138,6 +137,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
           currentMenu[currentScreen].incrementHandler();
         } else {
           (*subEntry) += 1;
+          cxt->transitionMode = TransitionAnimation::Right;
         }
       } else {
         callIncrementHandler();
@@ -152,6 +152,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       // Scroll down
       if (currentScreen < (*currentMenuLength) - 1) {
         // We can increment freely
+        cxt->transitionMode = TransitionAnimation::Down;
         if (*subEntry == 0) {
           (*mainEntry) += 1;
         } else {
@@ -161,11 +162,14 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
         // We are at an end somewhere, increment as appropriate
         if (*subEntry == 0) {
           // This is end of the list
+          cxt->transitionMode = TransitionAnimation::Left;
           return OperatingMode::HomeScreen;
         } else {
           (*subEntry) = 0;
           (*mainEntry) += 1;
         }
+        // When we exit a list we want to animate to the left
+        cxt->transitionMode = TransitionAnimation::Left;
       }
     }
     break;

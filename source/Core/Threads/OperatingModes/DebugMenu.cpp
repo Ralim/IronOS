@@ -86,9 +86,10 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
     break;
   }
 
-  if (buttons == BUTTON_B_SHORT)
+  if (buttons == BUTTON_B_SHORT) {
+    cxt->transitionMode = TransitionAnimation::Up;
     return OperatingMode::InitialisationDone;
-  else if (buttons == BUTTON_F_SHORT) {
+  } else if (buttons == BUTTON_F_SHORT) {
     cxt->scratch_state.state1++;
 #ifdef HALL_SENSOR
     cxt->scratch_state.state1 = cxt->scratch_state.state1 % 17;

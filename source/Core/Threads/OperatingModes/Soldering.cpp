@@ -30,6 +30,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     break;
   case BUTTON_BOTH:
   case BUTTON_B_LONG:
+    cxt->transitionMode = TransitionAnimation::Right;
     return OperatingMode::HomeScreen;
   case BUTTON_F_LONG:
     // if boost mode is enabled turn it on
@@ -39,6 +40,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     break;
   case BUTTON_F_SHORT:
   case BUTTON_B_SHORT: {
+    cxt->transitionMode = TransitionAnimation::Left;
     return OperatingMode::TemperatureAdjust;
   case BUTTON_BOTH_LONG:
     if (getSettingValue(SettingsOptions::LockingMode) != 0) {
@@ -80,6 +82,7 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
   // Check if we should bail due to undervoltage for example
   if (checkExitSoldering()) {
     setBuzzer(false);
+    cxt->transitionMode = TransitionAnimation::Right;
     return OperatingMode::HomeScreen;
   }
 #ifdef NO_SLEEP_MODE
@@ -175,4 +178,5 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
   } else {
     basicSolderingStatus(cxt->scratch_state.state2);
   }
+  return OperatingMode::Soldering; // Stay put
 }

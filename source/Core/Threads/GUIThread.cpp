@@ -18,7 +18,6 @@ extern "C" {
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"
-#include "bflb_platform.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "history.hpp"
@@ -41,31 +40,29 @@ OperatingMode currentOperatingMode = OperatingMode::InitialisationDone; // Curre
 guiContext    context;                                                  // Context passed to functions to aid in state during render passes
 
 OperatingMode handle_post_init_state();
-
-void guiRenderLoop(void) {
+OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
   // Read button state
   ButtonState buttons = getButtonState();
   // Enforce screen on if buttons pressed, movement, hot tip etc
-  if (buttons != BUTTON_NONE) {
-    OLED::setDisplayState(OLED::DisplayState::ON);
-  } else {
-    // Buttons are none; check if we can sleep display
-    uint32_t tipTemp = TipThermoModel::getTipInC();
-    if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity)
-        && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
-      OLED::setDisplayState(OLED::DisplayState::OFF);
-      setStatusLED(LED_OFF);
-    } else {
-      OLED::setDisplayState(OLED::DisplayState::ON);
-      if (tipTemp > 55) {
-        setStatusLED(LED_COOLING_STILL_HOT);
-      } else {
-        setStatusLED(LED_STANDBY);
-      }
-    }
-  }
-  MSG("Run GUI %d - %d\r\n", (int)currentOperatingMode, (int)buttons);
+  // if (buttons != BUTTON_NONE) {
+  //   OLED::setDisplayState(OLED::DisplayState::ON);
+  // } else {
+  //   // Buttons are none; check if we can sleep display
+  //   uint32_t tipTemp = TipThermoModel::getTipInC();
+  //   if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity)
+  //       && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
+  //     OLED::setDisplayState(OLED::DisplayState::OFF);
+  //     setStatusLED(LED_OFF);
+  //   } else {
+  //     OLED::setDisplayState(OLED::DisplayState::ON);
+  //     if (tipTemp > 55) {
+  //       setStatusLED(LED_COOLING_STILL_HOT);
+  //     } else {
+  //       setStatusLED(LED_STANDBY);
+  //     }
+  //   }
+  // }
   // Dispatch button state to gui mode
   OperatingMode newMode = currentOperatingMode;
   switch (currentOperatingMode) {
@@ -117,36 +114,43 @@ void guiRenderLoop(void) {
   case OperatingMode::ThermalRunaway:
     break;
   };
-  // Update state holders
+  return newMode;
+}
+void guiRenderLoop(void) {
+  OperatingMode newMode = guiHandleDraw(); // This does the screen drawing
+
+  // Post draw we handle any state transitions
+
   if (newMode != currentOperatingMode) {
     context.viewEnterTime = xTaskGetTickCount();
     context.previousMode  = currentOperatingMode;
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
-    // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
-    if (context.transitionMode != TransitionAnimation::None) {
-      OLED::refresh();
-      OLED::useSecondaryFramebuffer(true);
-      return; // Exit early to avoid refresh with new framebuffer
-    }
-  } else if (context.transitionMode != TransitionAnimation::None) {
-    // We haven't changed mode but transition is set, so we are at the other side of a transition
-    // We now want to transition from old contents (main buffer) to new contents (secondary buffer)
+  }
+  // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
+  if (context.transitionMode != TransitionAnimation::None) {
+    OLED::useSecondaryFramebuffer(true);
+    // Now we need to fill the secondary buffer with the _next_ frame to transistion to
+    guiHandleDraw();
+    OLED::useSecondaryFramebuffer(false);
+    // Now dispatch the transition
     switch (context.transitionMode) {
     case TransitionAnimation::Down:
+      OLED::transitionScrollDown();
       break;
     case TransitionAnimation::Left:
+      OLED::transitionSecondaryFramebuffer(false);
       break;
     case TransitionAnimation::Right:
+      OLED::transitionSecondaryFramebuffer(true);
       break;
     case TransitionAnimation::None:
     default:
       break; // Do nothing on unknown
     }
-    OLED::useSecondaryFramebuffer(false);
+
     context.transitionMode = TransitionAnimation::None; // Clear transition flag
   }
-  MSG("Post GUI %d - %d\r\n", (int)currentOperatingMode, (int)buttons);
   // Render done, draw it out
   OLED::refresh();
 }
@@ -212,6 +216,6 @@ void startGUITask(void const *argument) {
   for (;;) {
     guiRenderLoop();
     resetWatchdog();
-    vTaskDelayUntil(&startRender, TICKS_100MS / 2); // Try and maintain 20fps ish update rate, way to fast but if we can its nice
+    vTaskDelayUntil(&startRender, TICKS_100MS * 4 / 10); // Try and maintain 20-25fps ish update rate, way to fast but if we can its nice
   }
 }

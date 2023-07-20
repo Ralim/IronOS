@@ -22,6 +22,7 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
   switch (buttons) {
   case BUTTON_BOTH:
   case BUTTON_B_LONG:
+    cxt->transitionMode = TransitionAnimation::Right;
     return OperatingMode::HomeScreen; // exit on back long hold
   case BUTTON_F_LONG:
   case BUTTON_F_SHORT:
@@ -207,4 +208,5 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
   } else {
     setStatusLED(LED_HOT);
   }
+  return OperatingMode::SolderingProfile;
 }
