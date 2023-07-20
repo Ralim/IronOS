@@ -162,7 +162,7 @@
         },
         "ProfilePreheatSpeed": {
             "displayText": "Velocità\npreriscaldamento",
-            "description": "Imposta la velocità di preriscaldamento [gradi al secondo]"
+            "description": "Imposta la velocità di preriscaldamento [°C/s]"
         },
         "ProfilePhase1Temp": {
             "displayText": "Temperatura\nfase 1",
@@ -206,7 +206,7 @@
         },
         "ProfileCooldownSpeed": {
             "displayText": "Velocità\nraffreddamento",
-            "description": "Imposta la velocità di raffreddamento al termine del profilo di riscaldamento [gradi al secondo]"
+            "description": "Imposta la velocità di raffreddamento al termine del profilo di riscaldamento [°C/s]"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilità\nal movimento",

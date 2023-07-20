@@ -20,6 +20,8 @@ The resistance of the tip is a fixed constant in ohms (Ω):
 This means the power delivered to the soldering tip is proportional to the voltage squared.
 Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies and may issue a `Thermal Runaway` message (weak power supply).
 
+
+
 #### Use an [Ohm calculator](https://www.rapidtables.com/calc/electric/power-calculator.html#dc) to quickly derive watts.
 
 | Type       | Volts| / | Tip Ω | = |  Amps | * | Volts | = | Watts |
@@ -44,3 +46,8 @@ To measure the tip temperature in the iron, the iron has a small op-amp connecte
 Once the output is turned off (via the FET), the system has a recovery time as the tip capacitance discharges and the op-amp exits saturation. After this delay period, the MCU's ADC (analog-to-digital converter) samples the output of the op-amp 8 times quickly and then sets a flag to turn the PWM output back on.
 This enforces a small dead time in the output signal while this occurs, so there is a balance between sampling the temperature often to maintain a stable tip temperature control and sampling less often to increase the maximum power deliverable to the tip ([see Complexity of measurement](https://ralim.github.io/IronOS/Temperature/#complexity-of-measurement)).
 
+
+
+## Power sources
+
+Supported by IronOS hardware may use different power sources (chargers/powerbanks/battery packs) with different standards & protocols (QC/PD/etc). For more information collected by the community on that, please, [see the related documentation section](https://ralim.github.io/IronOS/PowerSources/).

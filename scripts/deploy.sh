@@ -20,7 +20,8 @@ usage()
 	echo -e "\tclean - delete created docker container (but not pre-downloaded data for it)\n"
 	echo "CMD (helper routines):"
 	echo -e "\tdocs_readme - generate & OVERWRITE(!) README.md inside Documentation/ based on nav section from mkdocs.yml if it changed\n"
-	echo -e "\tcheck_style - run clang-format using source/Makefile and generate gcc-compatible error log in source/check-style.log\n"
+	echo -e "\tcheck_style_file SRC - run code style checks based on clang-format & custom parsers for source code file SRC\n"
+	echo -e "\tcheck_style_log - run clang-format using source/Makefile and generate gcc-compatible error log in source/check-style.log\n"
 	echo -e "STORAGE NOTICE: for \"shell\" and \"build\" commands extra files will be downloaded so make sure that you have ~5GB of free space.\n"
 }
 
@@ -70,8 +71,43 @@ EOF
 	return "${ret}"
 }
 
+# Helper function to check code style using clang-format & grep/sed custom parsers:
+# - basic logic moved from source/Makefile : `check-style` target for better maintainance since a lot of sh script involved;
+# - output goes in gcc-like error compatible format for IDEs/editors.
+check_style_file()
+{
+	ret=0
+	src="${1}"
+	test ! -f "${src}" && echo "ERROR!!! Provided file ${src} is not available to check/read!!!" && exit 1
+	# count lines using diff between beauty-fied file & original file to detect format issue
+	var="$(clang-format "$src" | diff "$src" - | wc -l)"
+	if [ "${var}" -ne 0 ]; then
+		# show full log error or, if LIST=anything provided, then show only filename of interest (implemented for debug purposes mainly)
+		if [ -z "${LIST}" ]; then
+			# sed is here only for pretty logging
+			clang-format "${src}" | diff "${src}" - | sed 's/^---/-------------------------------------------------------------------------------/; s/^< /--- /; s/^> /+++ /; /^[0-9].*/ s/[acd,].*$/ERROR1/; /^[0-9].*/ s,^,\n\n\n\n'"${src}"':,; /ERROR1$/ s,ERROR1$,:1: error: clang-format code style mismatch:,; '
+		else
+			echo "${src}"
+		fi;
+		ret=1
+	fi;
+	# - clang-format has neat option for { } in condition blocks but it's available only since version 15:
+	#   * https://clang.llvm.org/docs/ClangFormatStyleOptions.html#insertbraces
+	# - since reference env is alpine 3.16 with clang-format 13, implement custom parser to do the similar thing here with grep:
+	#   it used to trace missing { and } for if/else/do/while/for BUT IT'S VERY SPECULATIVE, very-very hacky & dirty.
+	test -z "${LIST}" || silent_opt="-q"
+	# if file is problematic but filename only requested make final grep in pipe silent ...
+	grep -H -n  -e "^ .*if .*)$"  -e "^ .*else$"  -e "^ .* do$"  -e "^ .*while .*)$"  -e "^ .*for .*)$"  "${src}" | grep -v  -e "^.*//"  -e "^.*:.*: .*if ((.*[^)])$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep  "${silent_opt}" -e "^.*$"
+	if [ "${?}" -ne 1 ]; then
+		# ... and only print the filename
+		test -z "${LIST}" || echo "${src}"
+		ret=1;
+	fi;
+	return "${ret}"
+}
+
 # check_style routine for those who too lazy to do it everytime manually
-check_style()
+check_style_log()
 {
 	log="source/check-style.log"
 	make  -C source  check-style  2>&1  |  tee  "${log}"
@@ -130,8 +166,13 @@ if [ "docs_readme" = "${cmd}" ]; then
 	exit "${?}"
 fi;
 
-if [ "check_style" = "${cmd}" ]; then
-	check_style
+if [ "check_style_file" = "${cmd}" ]; then
+	check_style_file "${2}"
+	exit "${?}"
+fi;
+
+if [ "check_style_log" = "${cmd}" ]; then
+	check_style_log
 	exit "${?}"
 fi;
 
