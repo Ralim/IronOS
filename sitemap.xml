@@ -56,6 +56,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://ralim.github.io/IronOS/PowerSources/</loc>
+         <lastmod>2023-07-20</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://ralim.github.io/IronOS/Settings/</loc>
          <lastmod>2023-07-20</lastmod>
          <changefreq>daily</changefreq>

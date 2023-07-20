@@ -85,13 +85,23 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Hardware Notes</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#ts100">TS100</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ts80">TS80</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ts80p">TS80P</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#mhp30">MHP30</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pinecil">Pinecil</a>
     </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../PowerSources/">Power sources</a>
                   </li>
               </ul>
               <ul>
@@ -128,13 +138,48 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="notes-on-the-various-supported-hardware">Notes on the various supported hardware</h2>
-<h3 id="mhp30">MHP30</h3>
+<h3 id="ts100">TS100</h3>
+<p>TS100* is a neat soldering iron:</p>
 <ul>
-<li>Accelerometer is the MSA301, this is mounted roughly in the middle of the unit</li>
-<li>USB-PD is using the FUSB302</li>
-<li>The hardware I2C bus on PB6/7 is used for the MSA301 and FUSB302</li>
-<li>The OLED is the same SSD1306 as everything else, but it’s on a bit-banged bus</li>
+<li>can run from 9-25V DC;</li>
+<li>provides a power range that is determined by the input voltage;</li>
+<li>voltages below 12V don't overly work well for any substantial mass;</li>
+<li>the default firmware can be found <a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=892&amp;extra=page%3D1">here</a>.</li>
 </ul>
+<p><img alt="" src="https://brushlesswhoop.com/images/ts100-og.jpg" /></p>
+<h3 id="ts80">TS80</h3>
+<p>TS80* is a successor to TS100:</p>
+<ul>
+<li>uses <em>Quick Charge 3.0</em> / <em>QC3</em> capable charger only (18W max);</li>
+<li>doesn't support PD as it is not designed on the hardware level;</li>
+<li>the default firmware can be found <a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=3208&amp;extra=page%3D1">here</a>.</li>
+</ul>
+<p><img alt="" src="https://core-electronics.com.au/media/catalog/product/4/2/4244-01.jpg" /></p>
+<h3 id="ts80p">TS80P</h3>
+<p>TS80P* is a successor to TS80:</p>
+<ul>
+<li>supports <em>Quick Charge 3.0</em> (<em>QC3</em>: 9V/3A, 18W max);</li>
+<li>supports <em>Power Delivery</em> (<em>PD</em>: 9V/3A &amp; 12V/3A, 30W max)**;</li>
+<li>the default firmware can be found <a href="https://www.minidso.com/forum.php?mod=viewthread&amp;tid=4085&amp;extra=page%3D1">here</a>.</li>
+</ul>
+<p>**: use valid PD device that supports 12V/3A as power source to get full 30W potential, otherwise the iron will fall back to 9V/18W power mode.</p>
+<p><img alt="" src="https://static.eleshop.nl/mage/media/catalog/product/cache/10/image/800x/040ec09b1e35df139433887a97daa66f/s/-/s-l1600_5.jpg" /></p>
+<h3 id="mhp30">MHP30</h3>
+<p>MHP30 is a <strong>M</strong>ini <strong>H</strong>ot <strong>P</strong>late:</p>
+<ul>
+<li>accelerometer is the MSA301, this is mounted roughly in the middle of the unit;</li>
+<li>USB-PD is using the FUSB302;</li>
+<li>the hardware I2C bus on PB6/7 is used for the MSA301 and FUSB302;</li>
+<li>the OLED is the same SSD1306 as everything else, but it’s on a bit-banged bus.</li>
+</ul>
+<h3 id="pinecil">Pinecil</h3>
+<p>Pincecil*:</p>
+<ul>
+<li>first model of soldering iron from PINE64;</li>
+<li>the default firmware can be found <a href="https://files.pine64.org/os/Pinecil/Pinecil_firmware_20201115.zip">here</a>.</li>
+</ul>
+<p><img alt="" src="https://pine64.com/wp-content/uploads/2020/11/pinecil-bb2-04.jpg?v=0446c16e2e66" /></p>
+<p>*: Please note: these soldering irons do <em>NOT</em> contain DC/DC converters. This means that your power at the tip is a function of the supplied voltage. Just because the iron "supports" running at a wide range of voltages, you should always use a voltage near the upper limit where possible. It is highly recommended to use a PD adapter where possible as this allows the iron to <em>know</em> the limitations of your supply. The marked irons can only turn the tip on and off in software, this means that they can't control the maximum power drawn from the supply. This is why when using PD the iron may select a lower voltage than your power supplies maximum. This is to prevent your power supply failing from over current. For more information about power management underhood, please, <a href="https://ralim.github.io/IronOS/Power/">see the related documentation section</a>.</p>
               
             </div>
           </div><footer>

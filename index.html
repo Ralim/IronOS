@@ -101,6 +101,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="HardwareIssues/">Known Hardware Issues</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PowerSources/">Power sources</a>
+                  </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="Translation/">Translations</a>
@@ -140,7 +142,7 @@ I highly recommend reading the installation guide fully when installing on your 
 <p>For soldering irons that are designed to be powered by 'smart' power sources (PD and QC), the firmware supports settings around the negotiated power and voltage.
 For soldering irons that are designed to be powered by batteries (TS100 &amp; Pinecil), settings for a cutoff voltage for battery protection are supported.</p>
 <p>Currently <strong>31</strong> languages are supported. When downloading the firmware for your soldering iron, take note of the language code in the file name.</p>
-<p>This project is considered feature complete for use as a soldering iron, <em>so please suggest any feature improvements you would like!</em></p>
+<p>This project is considered stable &amp; feature complete for everyday use with a supported device, <em>so please suggest any feature improvements you would like!</em></p>
 <p><em>This firmware does <strong>NOT</strong> support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware.</em></p>
 <table>
 <thead>
@@ -232,6 +234,12 @@ Long hold the rear button in soldering mode to exit back to the start screen.</p
 <li><a href="https://ralim.github.io/IronOS/Flashing/TS80%28P%29/">TS80 / TS80P</a></li>
 <li><a href="https://ralim.github.io/IronOS/Flashing/TS100">TS100</a></li>
 </ul>
+<p>But the <em>generic</em> <a href="https://www.merriam-webster.com/dictionary/TL%3BDR">TL;DR</a> is to:</p>
+<ul>
+<li><a href="https://github.com/Ralim/IronOS/releases">download firmware from here</a> for the correct model with suitable language support;</li>
+<li>put a device into DFU/bootloader mode (usually by keep holding A/+/front button while connecting a device to power source to power device on);</li>
+<li>flash the firmware by drag-n-drop the firmware file using a file manager of your OS <strong>or</strong> using a separate flashing tool.</li>
+</ul>
 <h2 id="key-features">Key Features</h2>
 <ul>
 <li>PID style iron temperature control</li>
@@ -263,19 +271,23 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 </ul>
 <p>Operation details are over in the <a href="https://ralim.github.io/IronOS/Menu/">Menu information.</a></p>
 <h2 id="feedback">Feedback</h2>
-<p>If you would like to:
-- report any issue related to IronOS
-- request a feature
-- provide some suggestion
-then you can <a href="https://github.com/Ralim/IronOS/issues/new/choose">fill this form</a> using github account[^gh].</p>
-<p>And if you would like to:
-- ask more generic question about IronOS/supported hardware/something you're curious about/etc.
-- reach out community to chat with
-- share your soldering &amp; DIY skills
-- share some interesting finding
-- share useful related hardware/software with others
-or <em>anything</em> like that, then you can use forum-like <a href="https://github.com/Ralim/IronOS/discussions">Discussions here</a>.</p>
-<p>[^gh]: You may need to create it first if you don't have one - it's free of charge.</p>
+<p>If you would like to:</p>
+<ul>
+<li>report any issue related to IronOS</li>
+<li>request a feature</li>
+<li>provide some suggestion</li>
+</ul>
+<p>then you can <a href="https://github.com/Ralim/IronOS/issues/new/choose">fill this form</a> using github account*.</p>
+<p>And if you would like to:</p>
+<ul>
+<li>ask more generic question about IronOS/supported hardware/something you're curious about/etc.</li>
+<li>reach out community to chat with</li>
+<li>share your soldering &amp; DIY skills</li>
+<li>share some interesting finding</li>
+<li>share useful related hardware/software with others</li>
+</ul>
+<p>or <em>anything</em> like that, then you can use forum-like <a href="https://github.com/Ralim/IronOS/discussions">Discussions here</a>.</p>
+<p>*: You may need to create it first if you don't have one - it's free of charge.</p>
               
             </div>
           </div><footer>
@@ -327,5 +339,5 @@ or <em>anything</em> like that, then you can use forum-like <a href="https://git
 
 <!--
 MkDocs version : 1.4.3
-Build Date UTC : 2023-07-20 01:52:51.346029+00:00
+Build Date UTC : 2023-07-20 01:55:39.940128+00:00
 -->

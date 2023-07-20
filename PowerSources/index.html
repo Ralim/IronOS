@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/PowerSources/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Power sources - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Power sources";
+        var mkdocs_page_input_path = "PowerSources.md";
+        var mkdocs_page_url = "/IronOS/PowerSources/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Flashing the firmware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/MHP30/">MHP30</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/Pinecil%20V1/">Pinecil V1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/Pinecil%20V2/">Pinecil V2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/TS80%28P%29/">TS80(P)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/TS100/">TS100</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Operation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Menu/">Main Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DebugMenu/">Debug Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Power/">Power</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Temperature/">Temperature</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Logo/">Startup Logo</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Hardware</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../HallSensor/">Hall Sensor (Pinecil)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Power sources</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#qc3">QC(3)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#compatible-devices-quickcharge-for-ts80p">Compatible Devices (QuickCharge for TS80/P)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#diy-qc30">DIY QC3.0</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pd">PD</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#compatible-devices-powerdelivery-for-ts80p">Compatible Devices (PowerDelivery for TS80P)</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Translation/">Translations</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Development/">Development</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Hardware &raquo;</li>
+      <li>Power sources</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/PowerSources.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="power-sources">Power sources</h1>
+<p>Supported by IronOS hardware may use different power sources (chargers/powerbanks/battery packs) with different standards &amp; protocols (QC/PD/etc). This document contains information collected by the community with tested power sources.</p>
+<p>This is not ads but first hands-on experience results from real users since some chargers/powerbanks regardless labels on the box may not fully support what's declared!</p>
+<h2 id="qc3">QC(3)</h2>
+<h3 id="compatible-devices-quickcharge-for-ts80p">Compatible Devices (QuickCharge for TS80/P)</h3>
+<p>The following table is the list of compatible device and remarks when powering up the TS80 through it for both stock firmware from MiniDso and IronOS. The list of devices below are primarily taken from <a href="https://github.com/Ralim/ts100/issues/349#issuecomment-449559806">#349</a></p>
+<table>
+<thead>
+<tr>
+<th>Device Name</th>
+<th align="center">Stock FW</th>
+<th align="center">IronOS FW</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anker PowerCore II Slim 10000 Powerbank</td>
+<td align="center">Not Working</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td><a href="https://www.aukey.com/products/30000mah-power-bank-with-quick-charge-3-0/">Aukey 26.5/30 Ah Powerbank (PB-Y3)</a></td>
+<td align="center">OK** (15sec t/o)</td>
+<td align="center">OK** (15sec t/o)</td>
+</tr>
+<tr>
+<td>Aukey QC3 Charger</td>
+<td align="center">Good</td>
+<td align="center">Only 5V</td>
+</tr>
+<tr>
+<td><a href="https://www.aukey.com/products/6-port-charging-station-with-quick-charge-3-0-pa-t11/">Aukey QC3 Charging Station (PA-T11)</a></td>
+<td align="center">Good</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td>Besiter 20000mah QC3</td>
+<td align="center">Not Working</td>
+<td align="center">Only 5V</td>
+</tr>
+<tr>
+<td>BlitzWolf BW-P5</td>
+<td align="center">Not Working*</td>
+<td align="center">Unknown</td>
+</tr>
+<tr>
+<td>BlitzWolf BW-PF2</td>
+<td align="center">OK** (10sec t/o)</td>
+<td align="center">OK** (10sec t/o)</td>
+</tr>
+<tr>
+<td>BlitzWolf BW-PL3</td>
+<td align="center">Low Voltage</td>
+<td align="center">OK</td>
+</tr>
+<tr>
+<td>BlitzWolf BW-PL4</td>
+<td align="center">Unknown</td>
+<td align="center">Not Working</td>
+</tr>
+<tr>
+<td>BlitzWolf BW-S6</td>
+<td align="center">Unknown</td>
+<td align="center">OK</td>
+</tr>
+<tr>
+<td>Charmast 20800 mAh QC 3.0</td>
+<td align="center">Low Voltage*</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td>Clas Ohlson Powerbank USB-C 10050 mAh, Clas Ohlson</td>
+<td align="center">Unknown</td>
+<td align="center">OK**</td>
+</tr>
+<tr>
+<td><a href="https://www.cygnett.com/products/20-000mah-usb-c-power-bank-in-black">Cygnett 20,000mAh USB-C</a></td>
+<td align="center">Not Working</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.com/dp/B07GWMFW82">HAME H13D</a> 10000mAh PD/QC3.0 Power Bank</td>
+<td align="center">OK** (30sec t/o)</td>
+<td align="center">OK** (30sec t/o?)</td>
+</tr>
+<tr>
+<td>HIPER 10000 mAh 18W PD+QC3.0 (MPX10000)</td>
+<td align="center">Low Voltage</td>
+<td align="center">OK** (30sec t/o)</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.com/gp/product/B01MXCMGB8/ref=ppx_yo_dt_b_asin_title_o05_s00">iMuto Portable Charger 30000mAh</a></td>
+<td align="center">Low Voltage</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td>ISDT BG-8S</td>
+<td align="center">Good</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.de/dp/B077P8ZZB8/">iVoler Quick Charge 3.0 USB C 30W 2-Port USB</a></td>
+<td align="center">Good</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.com/dp/B01MXCMGB8">imuto X6L Pro 30000 mah</a></td>
+<td align="center">Not Working</td>
+<td align="center">Bad</td>
+</tr>
+<tr>
+<td>Interstep 10000 mAh 18W PD+QC3.0+FCP+AFC (MPX10000)</td>
+<td align="center">Good</td>
+<td align="center">OK** (30sec t/o)</td>
+</tr>
+<tr>
+<td>Jackery Black 420</td>
+<td align="center">Low Voltage</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td>Kogan Premium 80W 5 Port USB Charger</td>
+<td align="center">Low Voltage</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td>Nokia AD-18WE</td>
+<td align="center">Unknown</td>
+<td align="center">OK</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.com/dp/B07CMLVR6C">Omars 2000mAh USB-C PD+QC3.0 (OMPB20KBUPLT / OMPB20KPLT)</a></td>
+<td align="center">OK** (20sec t/o)</td>
+<td align="center">Unknown</td>
+</tr>
+<tr>
+<td>Polaroid PS100 Powerbank (https://polaroid.com/products/ps100)</td>
+<td align="center">Good</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td>Xiaomi 10000mAh Mi Power Bank Pro (PLM03ZM)</td>
+<td align="center">Good</td>
+<td align="center">Unknown</td>
+</tr>
+<tr>
+<td>Xiaomi 10000mAh Mi Power Bank 2i (PLM09ZM)</td>
+<td align="center">Good</td>
+<td align="center">Good</td>
+</tr>
+<tr>
+<td>Xiaomi 20000mAh Mi Power Bank 3 (PLM07ZM)</td>
+<td align="center">Unknown</td>
+<td align="center">Good Type A, Bad Type C</td>
+</tr>
+<tr>
+<td><a href="https://www.amazon.com/dp/B01CZR3LT2/">ZeroLemon ToughJuice</a> 30000mAh PD/QC2.0 Power Bank</td>
+<td align="center">OK** (20sec t/o)</td>
+<td align="center">OK** (20sec t/o?)</td>
+</tr>
+<tr>
+<td><a href="https://www.banggood.com/URUAV-XT-60-to-USB-Charger-Converter-Support-3S-6S-LiPo-Battery-10_5V-32V-Input-3V-20V-Output-45W-Max-Fast-Charging-Adapter-For-RC-Racing-Drone-p-1475876.html">URUAV XT-60 to USB module</a></td>
+<td align="center">Unknown</td>
+<td align="center">Good</td>
+</tr>
+</tbody>
+</table>
+<p>* Need further tests on newer firmware</p>
+<p>** Most Power Banks shut down if current draw drops below 50mA, assuming that charging is complete and avoiding overcharging. Custom firmware is designed to avoid this until it enters Zzzz mode.</p>
+<h3 id="diy-qc30">DIY QC3.0</h3>
+<p>You may also build your own QC3.0 power source that requires this little <a href="https://www.tindie.com/products/soubitos/qualcomm-qc2-3-diy-8-32vin-36-12vout-3a-max/">thing</a> and have at least 3S lithium packs or any input voltage from 8 to 32V.</p>
+<p>You can also go for an <a href="https://www.banggood.com/DC-Buck-Module-12V24V-to-QC3_0-Single-USB-Mobile-Charging-Board-p-1310585.html">alternate module</a> which has at least one good review of it.</p>
+<p><strong>DISCLAIMER:</strong> <em><strong>We do not hold any responsibility for accidents that happen when building your own QC3.0 power source!!!</strong></em></p>
+<h2 id="pd">PD</h2>
+<p>The following additional table is the list of devices compatible with hardware which requires Power Delivery support (&gt;= 30W). Devices from the list have been successfully tested &amp; used with TS80P in PD mode. Please, keep in mind that:</p>
+<ul>
+<li>PD can be provided only through usb-c &lt;-&gt; usb-c cable;</li>
+<li>not only a charger but a cable itself should be capable to carry higher wattages.</li>
+</ul>
+<h3 id="compatible-devices-powerdelivery-for-ts80p">Compatible Devices (PowerDelivery for TS80P)</h3>
+<table>
+<thead>
+<tr>
+<th>Device Name</th>
+<th align="center">IronOS FW</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Traver Charger QC09 (45W max)*</td>
+<td align="center">OK</td>
+</tr>
+<tr>
+<td>Xiaomi AD65GEU Mi 65W Fast Charger with GaN Tech (AD65GEU, 65W max)</td>
+<td align="center">OK</td>
+</tr>
+</tbody>
+</table>
+<p>* Comes as an <em>option</em> for extra price in the package with TS80P from <a href="https://aliexpress.com/item/4000764937427.html">official store</a> or from <a href="https://aliexpress.com/item/4001316262433.html">NovelLife store separately</a> on AliExpress.</p>
+<p>Please, DO NOT BUY cheap "fast chargers with QC/PD support" for a few dollars online (i.e., less than ~10$): if you check reviews, then you see that they are phonies - even if you get lucky, you probably get 5V/1A max from them.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../HardwareIssues/" class="btn btn-neutral float-left" title="Known Hardware Issues"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Translation/" class="btn btn-neutral float-right" title="Translations">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../HardwareIssues/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Translation/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
