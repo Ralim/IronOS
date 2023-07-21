@@ -62,6 +62,39 @@ uint16_t getMenuLength(const menuitem *menu) {
   }
   return 0; // Cant find length, be safe
 }
+OperatingMode moveToNextEntry(guiContext *cxt) {
+  uint16_t *mainEntry        = &(cxt->scratch_state.state1);
+  uint16_t *subEntry         = &(cxt->scratch_state.state2);
+  uint16_t *wasRenderingHelp = &(cxt->scratch_state.state6);
+  if (*wasRenderingHelp) {
+    *wasRenderingHelp = 0;
+  } else {
+    // Scroll down
+    // We can increment freely _once_
+    cxt->transitionMode = TransitionAnimation::Down;
+    if (*subEntry == 0) {
+      (*mainEntry) += 1;
+      if (rootSettingsMenu[*mainEntry].draw == nullptr) {
+        // We are off the end of the menu now
+        cxt->transitionMode = TransitionAnimation::Left;
+        return OperatingMode::HomeScreen;
+      }
+    } else {
+      (*subEntry) += 1;
+      // If the new entry is null, we need to exit
+      if (subSettingsMenus[*mainEntry][*subEntry].draw == nullptr) {
+        (*subEntry)         = 0; // Reset back to the main menu
+        cxt->transitionMode = TransitionAnimation::Left;
+      }
+      // Check if visible
+      if (subSettingsMenus[*mainEntry][*subEntry].isVisible != nullptr && !subSettingsMenus[*mainEntry][*subEntry].isVisible()) {
+        // We need to move on as this one isnt visible
+        return moveToNextEntry(cxt);
+      }
+    }
+  }
+  return OperatingMode::SettingsMenu;
+}
 
 OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   // Render out the current settings menu
@@ -115,7 +148,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   };
 
   //
-
+  OperatingMode newMode = OperatingMode::SettingsMenu;
   switch (buttons) {
   case BUTTON_NONE:
     (*autoRepeatAcceleration) = 0; // reset acceleration
@@ -164,31 +197,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     /* Fall through*/
   case BUTTON_B_SHORT:
     // Increment menu item
-    if (*wasRenderingHelp) {
-      *wasRenderingHelp = 0;
-    } else {
-      // Scroll down
-      if (currentScreen < (*currentMenuLength) - 1) {
-        // We can increment freely
-        cxt->transitionMode = TransitionAnimation::Down;
-        if (*subEntry == 0) {
-          (*mainEntry) += 1;
-        } else {
-          (*subEntry) += 1;
-        }
-      } else {
-        // We are at an end somewhere, increment as appropriate
-        if (*subEntry == 0) {
-          // This is end of the list
-          cxt->transitionMode = TransitionAnimation::Left;
-          return OperatingMode::HomeScreen;
-        } else {
-          (*subEntry) = 0; // Reset back to the main menu
-        }
-        // When we exit a list we want to animate to the left
-        cxt->transitionMode = TransitionAnimation::Left;
-      }
-    }
+    newMode = moveToNextEntry(cxt);
     break;
 
   default:
@@ -196,5 +205,5 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   }
 
   // Otherwise we stay put for next render iteration
-  return OperatingMode::SettingsMenu;
+  return newMode;
 }
