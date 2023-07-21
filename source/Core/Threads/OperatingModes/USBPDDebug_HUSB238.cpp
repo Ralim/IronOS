@@ -44,13 +44,14 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
     OLED::refresh();
     b = getButtonState();
     if (b == BUTTON_B_SHORT) {
-      return;
+      return OperatingMode::InitialisationDone;
     } else if (b == BUTTON_F_SHORT) {
       screen++;
     }
 
     GUIDelay();
   }
+  return OperatingMode::UsbPDDebug;
 }
 #endif
 #endif
