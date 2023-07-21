@@ -183,8 +183,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
           cxt->transitionMode = TransitionAnimation::Left;
           return OperatingMode::HomeScreen;
         } else {
-          (*subEntry) = 0;
-          (*mainEntry) += 1;
+          (*subEntry) = 0; // Reset back to the main menu
         }
         // When we exit a list we want to animate to the left
         cxt->transitionMode = TransitionAnimation::Left;

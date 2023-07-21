@@ -318,9 +318,12 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
     refresh(); // Now refresh to write out the contents to the new page
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
     if (getButtonState() != BUTTON_NONE) {
+      memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
+      refresh(); // Now refresh to write out the contents to the new page
       return;
     }
   }
+  refresh(); //
 }
 
 void OLED::useSecondaryFramebuffer(bool useSecondary) {
