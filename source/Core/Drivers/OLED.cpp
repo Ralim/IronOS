@@ -431,14 +431,18 @@ void OLED::setRotation(bool leftHanded) {
 }
 
 void OLED::setBrightness(uint8_t contrast) {
-  OLED_Setup_Array[15].val = contrast;
-  I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, &OLED_Setup_Array[14], 2);
+  if (OLED_Setup_Array[15].val != contrast) {
+    OLED_Setup_Array[15].val = contrast;
+    I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, &OLED_Setup_Array[14], 2);
+  }
 }
 
 void OLED::setInverseDisplay(bool inverse) {
   uint8_t normalInverseCmd = inverse ? 0xA7 : 0xA6;
-  OLED_Setup_Array[21].val = normalInverseCmd;
-  I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
+  if (OLED_Setup_Array[21].val != normalInverseCmd) {
+    OLED_Setup_Array[21].val = normalInverseCmd;
+    I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
+  }
 }
 
 // print a string to the current cursor location, len chars MAX
