@@ -86,13 +86,16 @@ OperatingMode moveToNextEntry(guiContext *cxt) {
       }
     } else {
       (*subEntry) += 1;
+
       // If the new entry is null, we need to exit
-      if (subSettingsMenus[*mainEntry][*subEntry].draw == nullptr) {
+      if (subSettingsMenus[*mainEntry][(*subEntry) - 1].draw == nullptr) {
         (*subEntry)         = 0; // Reset back to the main menu
         cxt->transitionMode = TransitionAnimation::Left;
+        // Have to break early to avoid the below check underflowing
+        return OperatingMode::SettingsMenu;
       }
       // Check if visible
-      if (subSettingsMenus[*mainEntry][*subEntry].isVisible != nullptr && !subSettingsMenus[*mainEntry][*subEntry].isVisible()) {
+      if (subSettingsMenus[*mainEntry][(*subEntry) - 1].isVisible != nullptr && !subSettingsMenus[*mainEntry][(*subEntry) - 1].isVisible()) {
         // We need to move on as this one isn't visible
         return moveToNextEntry(cxt);
       }
