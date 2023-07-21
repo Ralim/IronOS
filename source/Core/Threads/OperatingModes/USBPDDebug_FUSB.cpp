@@ -49,7 +49,7 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
       }
       // Skip not used entries
       if (voltage_mv == 0) {
-        *screen++;
+        (*screen) += 1;
       } else {
         // print out this entry of the proposal
         OLED::printNumber(*screen, 2, FontStyle::SMALL, true); // print the entry number
@@ -72,17 +72,13 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
         }
       }
     } else {
-      *screen = 0;
+      (*screen) = 0;
     }
-
-    OLED::refresh();
-    if (buttons == BUTTON_B_SHORT)
-      return OperatingMode::InitialisationDone;
-    else if (buttons == BUTTON_F_SHORT) {
-      *screen++;
-    }
-
-    GUIDelay();
+  }
+  if (buttons == BUTTON_B_SHORT)
+    return OperatingMode::InitialisationDone;
+  else if (buttons == BUTTON_F_SHORT) {
+    (*screen) += 1;
   }
   return OperatingMode::UsbPDDebug;
 }

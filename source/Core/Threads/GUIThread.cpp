@@ -71,14 +71,21 @@ OperatingMode guiHandleDraw(void) {
     break;
   case OperatingMode::UsbPDDebug:
 #ifdef HAS_POWER_DEBUG_MENU
-    showPDDebug(buttons, &context);
+    newMode = showPDDebug(buttons, &context);
     break;
 #else
-    /*fallthrough*/
+    newMode = OperatingMode::InitialisationDone;
 #endif
   case OperatingMode::StartupLogo:
     BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); // TODO needs refactor
-    newMode = OperatingMode::StartupWarnings;
+    if (getSettingValue(SettingsOptions::AutoStartMode) == 1) {
+      // jump directly to the autostart mode
+      newMode = OperatingMode::Sleeping;
+    } else if (getSettingValue(SettingsOptions::AutoStartMode) == 2) {
+      newMode = OperatingMode::Hibernating;
+    } else {
+      newMode = OperatingMode::HomeScreen;
+    }
     break;
   default:
     /* Fallthrough */
@@ -162,6 +169,7 @@ OperatingMode handle_post_init_state() {
 #else
   if (buttonsAtDeviceBoot == BUTTON_F_LONG || buttonsAtDeviceBoot == BUTTON_F_SHORT) {
 #endif
+    buttonsAtDeviceBoot = BUTTON_NONE;
     return OperatingMode::UsbPDDebug;
   }
 #endif
@@ -170,15 +178,7 @@ OperatingMode handle_post_init_state() {
     return OperatingMode::CJCCalibration;
   }
 
-  if (getSettingValue(SettingsOptions::AutoStartMode) == 1) {
-    // jump directly to the autostart mode
-    return OperatingMode::Sleeping;
-  }
-  if (getSettingValue(SettingsOptions::AutoStartMode) == 2) {
-    return OperatingMode::Hibernating;
-  }
-
-  return OperatingMode::HomeScreen;
+  return OperatingMode::StartupLogo;
 }
 
 /* StartGUITask function */
@@ -196,7 +196,6 @@ void startGUITask(void const *argument) {
   memset(&context, 0, sizeof(context));
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
-  buttonsAtDeviceBoot = getButtonState();
 
   // // If the boot logo is enabled with timeout and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
   // if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
@@ -210,7 +209,13 @@ void startGUITask(void const *argument) {
   //   // Only heat to sleep temperature (but no higher than 75°C for safety)
   //   currentTempTargetDegC = min(sleepTempDegC, 75);
   // }
-  // TODO
+  // Read boot button state
+  if (getButtonA()) {
+    buttonsAtDeviceBoot = BUTTON_F_LONG;
+  }
+  if (getButtonB()) {
+    buttonsAtDeviceBoot = BUTTON_B_LONG;
+  }
 
   TickType_t startRender = xTaskGetTickCount();
   for (;;) {
