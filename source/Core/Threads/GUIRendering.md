@@ -14,19 +14,21 @@ The tooling provides for left, right and down animations at this point.
 The use of these gives a notion of "direction" when navigating the menu.
 
 ```
-<TODO>
-
+                          ┌───────────┐
+                          │ Debug Menu│
+                          └─────┬─────┘
+                                │
+                                │
+                                │
+┌──────────────┐           ┌────┴─────┐           ┌──────────────────┐           ┌─────────────────┐
+│Soldering Mode│           │          │           │                  │           │                 │
+│      OR      ├───────────┤Home Menu ├───────────┤Settings Main Menu├───────────┤Settings sub menu│
+│Reflow    Mode│           │          │           │                  │           │                 │
+└──────────────┘           └──────────┘           └──────────────────┘           └─────────────────┘
 ```
 
 The downside of supporting transitions is that for these to work, the code should render the screen _first_ then return the new state.
 This ensures there is a good working copy in the buffer before the transition changes the view.
 
-## TODO notes
-
-On settings menu exit:
-
-```
-      OLED::useSecondaryFramebuffer(true);
-      showExitMenuTransition = true;
-
-```
+The code that handles the dispatch will run a new render pass again to get the new buffer contents and then transition between the two for you.
+At the moment scrolling "Up" isn't implemented but the enumeration is there so that its implementation can follow.
