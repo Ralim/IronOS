@@ -10,8 +10,9 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
   // If in the first two seconds we disable this to let accelerometer warm up
 
 #ifdef POW_DC
-  if (checkForUnderVoltage())
+  if (checkForUnderVoltage()) {
     return OperatingMode::HomeScreen; // return non-zero on error
+  }
 #endif
   if (getSettingValue(SettingsOptions::TemperatureInF)) {
     currentTempTargetDegC = TipThermoModel::convertFtoC(min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp)));
@@ -28,9 +29,9 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
     OLED::setCursor(0, 8);
     OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
     OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
-    if (getSettingValue(SettingsOptions::TemperatureInF))
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
       OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-    else {
+    } else {
       OLED::print(SmallSymbolDegC, FontStyle::SMALL);
     }
 

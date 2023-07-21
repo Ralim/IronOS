@@ -65,15 +65,17 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     newTemp = (newTemp / delta) * delta;
 
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      if (newTemp > MAX_TEMP_F)
+      if (newTemp > MAX_TEMP_F) {
         newTemp = MAX_TEMP_F;
-      if (newTemp < MIN_TEMP_F)
+      } else if (newTemp < MIN_TEMP_F) {
         newTemp = MIN_TEMP_F;
+      }
     } else {
-      if (newTemp > MAX_TEMP_C)
+      if (newTemp > MAX_TEMP_C) {
         newTemp = MAX_TEMP_C;
-      if (newTemp < MIN_TEMP_C)
+      } else if (newTemp < MIN_TEMP_C) {
         newTemp = MIN_TEMP_C;
+      }
     }
     setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
   }

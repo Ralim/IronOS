@@ -136,10 +136,11 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
     OLED::print(SmallSymbolSlash, FontStyle::SMALL);
     OLED::printNumber(profileCurrentTargetTemp, 3, FontStyle::SMALL);
 
-    if (getSettingValue(SettingsOptions::TemperatureInF))
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
       OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-    else
+    } else {
       OLED::print(SmallSymbolDegC, FontStyle::SMALL);
+    }
 
     // print phase
     if (cxt->scratch_state.state1 > 0 && cxt->scratch_state.state1 <= getSettingValue(SettingsOptions::ProfilePhases)) {

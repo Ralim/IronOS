@@ -76,8 +76,9 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
   case 16: // Raw Hall Effect Value
   {
     int16_t hallEffectStrength = getRawHallEffect();
-    if (hallEffectStrength < 0)
+    if (hallEffectStrength < 0) {
       hallEffectStrength = -hallEffectStrength;
+    }
     OLED::printNumber(hallEffectStrength, 6, FontStyle::SMALL);
   } break;
 #endif
