@@ -75,7 +75,7 @@ void FRToSI2C::I2C_Unstick() { unstick_I2C(); }
 
 void FRToSI2C::unlock() { xSemaphoreGive(I2CSemaphore); }
 
-bool FRToSI2C::lock() { return xSemaphoreTake(I2CSemaphore, (TickType_t)50) == pdTRUE; }
+bool FRToSI2C::lock() { return xSemaphoreTake(I2CSemaphore, (TickType_t)(TICKS_100MS * 2)) == pdTRUE; }
 
 bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength) {
   for (int index = 0; index < registersLength; index++) {
