@@ -79,6 +79,11 @@ OperatingMode moveToNextEntry(guiContext *cxt) {
         cxt->transitionMode = TransitionAnimation::Left;
         return OperatingMode::HomeScreen;
       }
+      // Check if visible
+      if (rootSettingsMenu[*mainEntry].isVisible != nullptr && !rootSettingsMenu[*mainEntry].isVisible()) {
+        // We need to move on as this one isn't visible
+        return moveToNextEntry(cxt);
+      }
     } else {
       (*subEntry) += 1;
       // If the new entry is null, we need to exit
@@ -88,7 +93,7 @@ OperatingMode moveToNextEntry(guiContext *cxt) {
       }
       // Check if visible
       if (subSettingsMenus[*mainEntry][*subEntry].isVisible != nullptr && !subSettingsMenus[*mainEntry][*subEntry].isVisible()) {
-        // We need to move on as this one isnt visible
+        // We need to move on as this one isn't visible
         return moveToNextEntry(cxt);
       }
     }
@@ -188,7 +193,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     }
     break;
   case BUTTON_B_LONG:
-    if (xTaskGetTickCount() - (*autoRepeatTimer) + (*autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {
+    if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
       (*autoRepeatTimer) = xTaskGetTickCount();
       (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
     } else {
