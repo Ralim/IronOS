@@ -257,6 +257,9 @@
 #define USB_PD_EPR_WATTAGE 0 /*No EPR*/
 #define POW_QC             1
 #define TEMP_NTC
+#define I2C_SOFT_BUS_2 1
+#define I2C_SOFT_BUS_1 1
+#define OLED_I2CBB1    1
 #define SC7_ORI_FLIP
 #endif /* TS80P */
 
