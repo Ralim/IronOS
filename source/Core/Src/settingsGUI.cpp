@@ -746,7 +746,7 @@ static void setTempF(const enum SettingsOptions option) {
     Temp = ((Temp - 32) * 5) / 9;
   }
   // Rescale to be multiples of 10
-  Temp = BoostTemp / 10;
+  Temp = Temp / 10;
   Temp *= 10;
   setSettingValue(option, Temp);
 }
