@@ -170,7 +170,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   case BUTTON_F_LONG:
     if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
       if (callIncrementHandler()) {
-        (*autoRepeatTimer) = 1000;
+        (*autoRepeatTimer) = TICKS_SECOND * 2;
       } else {
         (*autoRepeatTimer) = 0;
       }
@@ -211,6 +211,9 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
 
   default:
     break;
+  }
+  if ((PRESS_ACCEL_INTERVAL_MAX - (*autoRepeatAcceleration)) < PRESS_ACCEL_INTERVAL_MIN) {
+    (*autoRepeatAcceleration) = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
   }
 
   // Otherwise we stay put for next render iteration

@@ -24,7 +24,13 @@ The use of these gives a notion of "direction" when navigating the menu.
 │Soldering Mode│           │          │           │                  │           │                 │
 │      OR      ├───────────┤Home Menu ├───────────┤Settings Main Menu├───────────┤Settings sub menu│
 │Reflow    Mode│           │          │           │                  │           │                 │
-└──────────────┘           └──────────┘           └──────────────────┘           └─────────────────┘
+└──────────────┘           └──────────┘           └──────────────────┘           └─────────┬───────┘
+                                                                                           │
+                                                                                 ┌─────────┴───────┐
+                                                                                 │                 │
+                                                                                 │Settings sub menu│
+                                                                                 │                 │
+                                                                                 └─────────────────┘
 ```
 
 The downside of supporting transitions is that for these to work, the code should render the screen _first_ then return the new state.
