@@ -97,7 +97,7 @@ static unsigned int sqrtI(unsigned long sqrtArg) {
     return 0; // undefined result
   }
   if (sqrtArg == 1) {
-    return 1;                           // identity
+    return 1; // identity
   }
   answer = 0;                           // integer square root
   for (x = 0x8000; x > 0; x = x >> 1) { // 16 bit shift
