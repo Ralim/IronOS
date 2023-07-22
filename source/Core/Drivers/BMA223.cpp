@@ -9,6 +9,7 @@
 #include <BMA223.hpp>
 #include <array>
 
+
 bool BMA223::detect() {
   if (ACCEL_I2C_CLASS::probe(BMA223_ADDRESS)) {
     // Read chip id to ensure its not an address collision
@@ -22,13 +23,13 @@ bool BMA223::detect() {
 }
 
 static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
-  //
-  //
-    {    BMA223_PMU_RANGE, 0b00000011, 0}, // 2G range
-    {       BMA223_PMU_BW, 0b00001101, 0}, // 250Hz filter
-    {      BMA223_PMU_LPW, 0b00000000, 0}, // Full power
-    {     BMA223_ACCD_HBW, 0b00000000, 0}, // filtered data out
-    { BMA223_INT_OUT_CTRL, 0b00001010, 0}, // interrupt active low and OD to get it hi-z
+    //
+    //
+    {BMA223_PMU_RANGE, 0b00000011, 0},     // 2G range
+    {BMA223_PMU_BW, 0b00001101, 0},        // 250Hz filter
+    {BMA223_PMU_LPW, 0b00000000, 0},       // Full power
+    {BMA223_ACCD_HBW, 0b00000000, 0},      // filtered data out
+    {BMA223_INT_OUT_CTRL, 0b00001010, 0},  // interrupt active low and OD to get it hi-z
     {BMA223_INT_RST_LATCH, 0b10000000, 0}, // interrupt active low and OD to get it hi-z
     {     BMA223_INT_EN_0, 0b01000000, 0}, // Enable orientation
     {        BMA223_INT_A, 0b00100111, 0}, // Setup orientation detection

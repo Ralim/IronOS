@@ -9,6 +9,7 @@
 #define CORE_DRIVERS_BMA223_HPP_
 #include "BMA223_defines.h"
 #include "BSP.h"
+#include "accelerometers_common.h"
 #include "I2C_Wrapper.hpp"
 #include "accelerometers_common.h"
 
