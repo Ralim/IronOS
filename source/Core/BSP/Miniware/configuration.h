@@ -177,6 +177,9 @@
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
 
 #define POW_DC
+#define I2C_SOFT_BUS_1 1
+#define OLED_I2CBB1    1
+#define ACCEL_I2CBB1   1
 
 #define TEMP_TMP36
 #endif /* TS100 */
@@ -241,6 +244,9 @@
 #define POW_QC
 
 #define TEMP_TMP36
+#define I2C_SOFT_BUS_1 1
+#define OLED_I2CBB1    1
+#define ACCEL_I2CBB1   1
 #endif /* TS80 */
 
 #ifdef MODEL_TS80P
@@ -260,6 +266,7 @@
 #define I2C_SOFT_BUS_2 1
 #define I2C_SOFT_BUS_1 1
 #define OLED_I2CBB1    1
+#define ACCEL_I2CBB1   1
 #define SC7_ORI_FLIP
 #endif /* TS80P */
 
