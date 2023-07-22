@@ -335,6 +335,7 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
     setFramebuffer(screenBuffer);
   }
 }
+
 /**
  * This assumes that the current display output buffer has the current on screen contents
  * Then the secondary buffer has the "new" contents to be slid up onto the screen
@@ -371,14 +372,68 @@ void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
       // Finally on the bottom row; we shuffle it up ready
       secondFrameBuffer[fourthStripPos] >>= 1;
 #else
-      // Move the MSB off the first strip, and pop MSB from second strip onto the first strip
+      // Move the LSB off the first strip, and pop MSB from second strip onto the first strip
       screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] >> 1) | ((screenBuffer[secondStripPos] & 0x01) << 7);
-      // Now shuffle off the second strip MSB, and replace it with the MSB of the secondary buffer
+      // Now shuffle off the second strip MSB, and replace it with the LSB of the secondary buffer
       screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] >> 1) | ((secondFrameBuffer[firstStripPos] & 0x01) << 7);
       // Finally, do the shuffle on the second frame buffer
       secondFrameBuffer[firstStripPos] = (secondFrameBuffer[firstStripPos] >> 1) | ((secondFrameBuffer[secondStripPos] & 0x01) << 7);
       // Finally on the bottom row; we shuffle it up ready
       secondFrameBuffer[secondStripPos] >>= 1;
+#endif /* OLED_128x32 */
+    }
+    buttonsReleased |= getButtonState() == BUTTON_NONE;
+    if (getButtonState() != BUTTON_NONE && buttonsReleased) {
+      // Exit early, but have to transition whole buffer
+      memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
+      refresh(); // Now refresh to write out the contents to the new page
+      return;
+    }
+    refresh(); // Now refresh to write out the contents to the new page
+    vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
+  }
+}
+/**
+ * This assumes that the current display output buffer has the current on screen contents
+ * Then the secondary buffer has the "new" contents to be slid down onto the screen
+ * Sadly we cant use the hardware scroll as some devices with the 128x32 screens dont have the GRAM for holding both screens at once
+ *
+ * **This function blocks until the transition has completed or user presses button**
+ */
+void OLED::transitionScrollUp(const TickType_t viewEnterTime) {
+  TickType_t startDraw       = xTaskGetTickCount();
+  bool       buttonsReleased = getButtonState() == BUTTON_NONE;
+
+  for (uint8_t heightPos = 0; heightPos < OLED_HEIGHT; heightPos++) {
+    // For each line, we shuffle all bits down a row
+    for (uint8_t xPos = 0; xPos < OLED_WIDTH; xPos++) {
+      const uint16_t firstStripPos  = FRAMEBUFFER_START + xPos;
+      const uint16_t secondStripPos = firstStripPos + OLED_WIDTH;
+#ifdef OLED_128x32
+      // For 32 pixel high OLED's we have four strips to tailchain
+      const uint16_t thirdStripPos  = secondStripPos + OLED_WIDTH;
+      const uint16_t fourthStripPos = thirdStripPos + OLED_WIDTH;
+      // We are shffling LSB's off the end and pushing bits down
+      screenBuffer[fourthStripPos] = (screenBuffer[fourthStripPos] << 1) | ((screenBuffer[thirdStripPos] & 0x80) >> 7);
+      screenBuffer[thirdStripPos]  = (screenBuffer[thirdStripPos] << 1) | ((screenBuffer[secondStripPos] & 0x80) >> 7);
+      screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] << 1) | ((screenBuffer[firstStripPos] & 0x80) >> 7);
+      screenBuffer[firstStripPos]  = (screenBuffer[firstStripPos] << 1) | ((secondFrameBuffer[fourthStripPos] & 0x80) >> 7);
+
+      secondFrameBuffer[fourthStripPos] = (secondFrameBuffer[fourthStripPos] << 1) | ((secondFrameBuffer[thirdStripPos] & 0x80) >> 7);
+      secondFrameBuffer[thirdStripPos]  = (secondFrameBuffer[thirdStripPos] << 1) | ((secondFrameBuffer[secondStripPos] & 0x80) >> 7);
+      secondFrameBuffer[secondStripPos] = (secondFrameBuffer[secondStripPos] << 1) | ((secondFrameBuffer[firstStripPos] & 0x80) >> 7);
+      // Finally on the bottom row; we shuffle it up ready
+      secondFrameBuffer[firstStripPos] <<= 1;
+#else
+      // We pop the LSB off the bottom row, and replace the MSB in that byte with the LSB of the row above
+      screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] << 1) | ((screenBuffer[firstStripPos] & 0x80) >> 7);
+      // Move the LSB off the first strip, and pop MSB from second strip onto the first strip
+      screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] << 1) | ((secondFrameBuffer[secondStripPos] & 0x80) >> 7);
+
+      // Finally, do the shuffle on the second frame buffer
+      secondFrameBuffer[secondStripPos] = (secondFrameBuffer[firstStripPos] << 1) | ((secondFrameBuffer[secondStripPos] & 0x80) >> 7);
+      // Finally on the bottom row; we shuffle it up ready
+      secondFrameBuffer[firstStripPos] <<= 1;
 #endif /* OLED_128x32 */
     }
     buttonsReleased |= getButtonState() == BUTTON_NONE;

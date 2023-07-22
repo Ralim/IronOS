@@ -152,6 +152,7 @@ public:
   static void transitionSecondaryFramebuffer(const bool forwardNavigation, const TickType_t viewEnterTime);
   static void useSecondaryFramebuffer(bool useSecondary);
   static void transitionScrollDown(const TickType_t viewEnterTime);
+  static void transitionScrollUp(const TickType_t viewEnterTime);
 
 private:
   static bool checkDisplayBufferChecksum() {
