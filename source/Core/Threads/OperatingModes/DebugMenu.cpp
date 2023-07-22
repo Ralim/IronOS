@@ -88,7 +88,7 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
   }
 
   if (buttons == BUTTON_B_SHORT) {
-    cxt->transitionMode = TransitionAnimation::Up;
+    cxt->transitionMode = TransitionAnimation::Down;
     return OperatingMode::InitialisationDone;
   } else if (buttons == BUTTON_F_SHORT) {
     cxt->scratch_state.state1++;

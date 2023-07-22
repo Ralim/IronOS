@@ -153,6 +153,9 @@ void guiRenderLoop(void) {
     case TransitionAnimation::Right:
       OLED::transitionSecondaryFramebuffer(true, context.viewEnterTime);
       break;
+    case TransitionAnimation::Up:
+      OLED::transitionScrollUp(context.viewEnterTime);
+
     case TransitionAnimation::None:
     default:
       break; // Do nothing on unknown
