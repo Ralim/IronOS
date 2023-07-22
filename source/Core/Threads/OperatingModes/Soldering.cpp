@@ -29,6 +29,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     cxt->scratch_state.state2 = 0;
     break;
   case BUTTON_BOTH:
+  /*Fall through*/
   case BUTTON_B_LONG:
     cxt->transitionMode = TransitionAnimation::Right;
     return OperatingMode::HomeScreen;
@@ -39,13 +40,12 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     }
     break;
   case BUTTON_F_SHORT:
-  case BUTTON_B_SHORT: {
+  case BUTTON_B_SHORT:
     cxt->transitionMode = TransitionAnimation::Left;
     return OperatingMode::TemperatureAdjust;
   case BUTTON_BOTH_LONG:
     if (getSettingValue(SettingsOptions::LockingMode) != 0) {
       // Lock buttons
-
       if (warnUser(translatedString(Tr->LockingKeysString), buttons)) {
         cxt->scratch_state.state1 = 1;
       }
@@ -53,7 +53,6 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     break;
   default:
     break;
-  }
   }
   return OperatingMode::Soldering;
 }
@@ -72,36 +71,6 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
    * --> Double button to exit
    * --> Long hold double button to toggle key lock
    */
-
-  // First check for button locking & dispatch buttons
-
-  OperatingMode newMode = handleSolderingButtons(buttons, cxt);
-  if (newMode != OperatingMode::Soldering) {
-    return newMode;
-  }
-  // Check if we should bail due to undervoltage for example
-  if (checkExitSoldering()) {
-    setBuzzer(false);
-    cxt->transitionMode = TransitionAnimation::Right;
-    return OperatingMode::HomeScreen;
-  }
-#ifdef NO_SLEEP_MODE
-
-  if (shouldShutdown()) {
-    // shutdown
-    currentTempTargetDegC = 0;
-    return OperatingMode::HomeScreen;
-  }
-#endif
-  if (shouldBeSleeping()) {
-    return OperatingMode::Sleeping;
-  }
-
-  if (heaterThermalRunaway) {
-    currentTempTargetDegC = 0; // heater control off
-    heaterThermalRunaway  = false;
-    return OperatingMode::ThermalRunaway;
-  }
 
   // Update the setpoints for the temperature
   if (cxt->scratch_state.state2) {
@@ -178,5 +147,30 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
   } else {
     basicSolderingStatus(cxt->scratch_state.state2);
   }
-  return OperatingMode::Soldering; // Stay put
+  // Check if we should bail due to undervoltage for example
+  if (checkExitSoldering()) {
+    setBuzzer(false);
+    cxt->transitionMode = TransitionAnimation::Right;
+    return OperatingMode::HomeScreen;
+  }
+#ifdef NO_SLEEP_MODE
+
+  if (shouldShutdown()) {
+    // shutdown
+    currentTempTargetDegC = 0;
+    cxt->transitionMode   = TransitionAnimation::Right;
+    return OperatingMode::HomeScreen;
+  }
+#endif
+  if (shouldBeSleeping()) {
+    return OperatingMode::Sleeping;
+  }
+
+  if (heaterThermalRunaway) {
+    currentTempTargetDegC = 0; // heater control off
+    heaterThermalRunaway  = false;
+    cxt->transitionMode   = TransitionAnimation::Right;
+    return OperatingMode::ThermalRunaway;
+  }
+  return handleSolderingButtons(buttons, cxt);
 }

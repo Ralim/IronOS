@@ -262,7 +262,8 @@ void OLED::maskScrollIndicatorOnOLED() {
  * If forward is true, this displays a forward navigation to the second framebuffer contents.
  * Otherwise a rewinding navigation animation is shown to the second framebuffer contents.
  */
-void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
+void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const TickType_t viewEnterTime) {
+  bool     buttonsReleased = getButtonState() == BUTTON_NONE;
   uint8_t *stripBackPointers[4];
   stripBackPointers[0] = &secondFrameBuffer[FRAMEBUFFER_START + 0];
   stripBackPointers[1] = &secondFrameBuffer[FRAMEBUFFER_START + OLED_WIDTH];
@@ -317,7 +318,8 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
     refresh(); // Now refresh to write out the contents to the new page
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
-    if (getButtonState() != BUTTON_NONE) {
+    buttonsReleased |= getButtonState() == BUTTON_NONE;
+    if (getButtonState() != BUTTON_NONE && buttonsReleased) {
       memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
       refresh(); // Now refresh to write out the contents to the new page
       return;
@@ -340,8 +342,9 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
  *
  * **This function blocks until the transition has completed or user presses button**
  */
-void OLED::transitionScrollDown() {
-  TickType_t startDraw = xTaskGetTickCount();
+void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
+  TickType_t startDraw       = xTaskGetTickCount();
+  bool       buttonsReleased = getButtonState() == BUTTON_NONE;
 
   for (uint8_t heightPos = 0; heightPos < OLED_HEIGHT; heightPos++) {
     // For each line, we shuffle all bits up a row
@@ -378,7 +381,8 @@ void OLED::transitionScrollDown() {
       secondFrameBuffer[secondStripPos] >>= 1;
 #endif /* OLED_128x32 */
     }
-    if (getButtonState() != BUTTON_NONE) {
+    buttonsReleased |= getButtonState() == BUTTON_NONE;
+    if (getButtonState() != BUTTON_NONE && buttonsReleased) {
       // Exit early, but have to transition whole buffer
       memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
       refresh(); // Now refresh to write out the contents to the new page
