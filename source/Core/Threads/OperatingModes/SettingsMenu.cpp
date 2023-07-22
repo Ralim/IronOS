@@ -76,6 +76,7 @@ OperatingMode moveToNextEntry(guiContext *cxt) {
       (*mainEntry) += 1;
       if (rootSettingsMenu[*mainEntry].draw == nullptr) {
         // We are off the end of the menu now
+        saveSettings();
         cxt->transitionMode = TransitionAnimation::Left;
         return OperatingMode::HomeScreen;
       }
