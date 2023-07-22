@@ -215,6 +215,6 @@ uint8_t hub238_source_currentX100() {
     temp &= 0b1111;
     return pdo_slot_to_currentx100(temp);
   }
-  return 10;//Failsafe to 0.1 amp
+  return 10; // Failsafe to 0.1 amp
 }
 #endif

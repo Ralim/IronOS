@@ -33,19 +33,19 @@ uint32_t           OLED::displayChecksum;
  */
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     /**/
-    {0x80, OLED_OFF, 0},         /* Display off */
-    {0x80, OLED_DIVIDER, 0},     /* Set display clock divide ratio / osc freq */
-    {0x80, 0x52, 0},             /* Divide ratios */
-    {0x80, 0xA8, 0},             /* Set Multiplex Ratio */
-    {0x80, OLED_HEIGHT - 1, 0},  /* Multiplex ratio adjusts how far down the matrix it scans */
-    {0x80, 0xC0, 0},             /* Set COM Scan direction */
-    {0x80, 0xD3, 0},             /* Set vertical Display offset */
-    {0x80, 0x00, 0},             /* 0 Offset */
-    {0x80, 0x40, 0},             /* Set Display start line to 0 */
+    {0x80, OLED_OFF, 0},        /* Display off */
+    {0x80, OLED_DIVIDER, 0},    /* Set display clock divide ratio / osc freq */
+    {0x80, 0x52, 0},            /* Divide ratios */
+    {0x80, 0xA8, 0},            /* Set Multiplex Ratio */
+    {0x80, OLED_HEIGHT - 1, 0}, /* Multiplex ratio adjusts how far down the matrix it scans */
+    {0x80, 0xC0, 0},            /* Set COM Scan direction */
+    {0x80, 0xD3, 0},            /* Set vertical Display offset */
+    {0x80, 0x00, 0},            /* 0 Offset */
+    {0x80, 0x40, 0},            /* Set Display start line to 0 */
 #ifdef OLED_SEGMENT_MAP_REVERSED
-    {0x80, 0xA1, 0},             /* Set Segment remap to normal */
+    {0x80, 0xA1, 0}, /* Set Segment remap to normal */
 #else
-    {0x80, 0xA0, 0},             /* Set Segment remap to normal */
+    {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #endif
     {0x80, 0x8D, 0},             /* Charge Pump */
     {0x80, 0x14, 0},             /* Charge Pump settings */
@@ -547,8 +547,9 @@ void OLED::printNumber(uint16_t number, uint8_t places, FontStyle fontStyle, boo
   }
 
   buffer[0] = 2 + number % 10;
-  if (noLeaderZeros)
+  if (noLeaderZeros) {
     stripLeaderZeros(buffer, places);
+  }
   print(buffer, fontStyle);
 }
 
@@ -574,10 +575,12 @@ void OLED::drawSymbol(uint8_t symbolID) {
 // Draw an area, but y must be aligned on 0/8 offset
 void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
   // Splat this from x->x+wide in two strides
-  if (x <= -wide)
+  if (x <= -wide) {
     return; // cutoffleft
-  if (x > 96)
+  }
+  if (x > 96) {
     return; // cutoff right
+  }
 
   uint8_t visibleStart = 0;
   uint8_t visibleEnd   = wide;
@@ -609,10 +612,12 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
 // For data which has octets swapped in a 16-bit word.
 void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
   // Splat this from x->x+wide in two strides
-  if (x <= -wide)
+  if (x <= -wide) {
     return; // cutoffleft
-  if (x > 96)
+  }
+  if (x > 96) {
     return; // cutoff right
+  }
 
   uint8_t visibleStart = 0;
   uint8_t visibleEnd   = wide;
@@ -643,10 +648,12 @@ void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, co
 
 void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t value) {
   // Splat this from x->x+wide in two strides
-  if (x <= -wide)
+  if (x <= -wide) {
     return; // cutoffleft
-  if (x > 96)
+  }
+  if (x > 96) {
     return; // cutoff right
+  }
 
   uint8_t visibleStart = 0;
   uint8_t visibleEnd   = wide;
@@ -682,30 +689,37 @@ void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool c
   uint8_t mask = 0xFF;
   if (y0) {
     mask = mask << (y0 % 8);
-    for (uint8_t col = x0; col < x1; col++)
-      if (clear)
+    for (uint8_t col = x0; col < x1; col++) {
+      if (clear) {
         stripPointers[0][(y0 / 8) * 96 + col] &= ~mask;
-      else
+      } else {
         stripPointers[0][(y0 / 8) * 96 + col] |= mask;
+      }
+    }
   }
   // Next loop down the line the total number of solids
-  if (y0 / 8 != y1 / 8)
-    for (uint8_t col = x0; col < x1; col++)
+  if (y0 / 8 != y1 / 8) {
+    for (uint8_t col = x0; col < x1; col++) {
       for (uint8_t r = (y0 / 8); r < (y1 / 8); r++) {
         // This gives us the row index r
-        if (clear)
+        if (clear) {
           stripPointers[0][(r * 96) + col] = 0;
-        else
+        } else {
           stripPointers[0][(r * 96) + col] = 0xFF;
+        }
       }
+    }
+  }
 
   // Finally draw the tail
   mask = ~(mask << (y1 % 8));
-  for (uint8_t col = x0; col < x1; col++)
-    if (clear)
+  for (uint8_t col = x0; col < x1; col++) {
+    if (clear) {
       stripPointers[0][(y1 / 8) * 96 + col] &= ~mask;
-    else
+    } else {
       stripPointers[0][(y1 / 8) * 96 + col] |= mask;
+    }
+  }
 }
 
 void OLED::drawHeatSymbol(uint8_t state) {

@@ -178,7 +178,6 @@ PD_DRIVER_DIR=./Core/Drivers/usb-pd
 ALL_INCLUDES_EXCEPT:=-path $(BRIEFLZ_INC_DIR)             \
                   -o -path $(PD_DRIVER_DIR)               \
                   -o -path $(PINECILV2_SDK_DIR)           \
-                  -o -path $(DRIVER_INC_DIR)              \
                   -o -path $(MINIWARE_HAL_INC_DIR)        \
                   -o -path $(S60_HAL_INC_DIR)             \
                   -o -path $(MHP30_HAL_INC_DIR)           \
@@ -193,7 +192,6 @@ ALL_INCLUDES_EXCEPT:=-path $(BRIEFLZ_INC_DIR)             \
 ALL_SOURCE_EXCEPT:=-path $(SOURCE_BRIEFLZ_DIR)   \
                 -o -path $(PD_DRIVER_DIR)        \
                 -o -path $(PINECILV2_SDK_DIR)    \
-                -o -path $(SOURCE_DRIVERS_DIR)   \
                 -o -path $(MINIWARE_HAL_SRC_DIR) \
                 -o -path $(S60_HAL_SRC_DIR)      \
                 -o -path $(MHP30_HAL_SRC_DIR)    \

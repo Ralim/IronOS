@@ -46,7 +46,7 @@ void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
 bool    USBPowerDelivery::negotiationHasWorked() { return pe.pdHasNegotiated(); }
 uint8_t USBPowerDelivery::getStateNumber() { return pe.currentStateCode(true); }
 void    USBPowerDelivery::step() {
-     while (pe.thread()) {}
+  while (pe.thread()) {}
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }
@@ -93,18 +93,22 @@ uint32_t *USBPowerDelivery::getLastSeenCapabilities() { return lastCapabilities;
 static unsigned int sqrtI(unsigned long sqrtArg) {
   unsigned int  answer, x;
   unsigned long temp;
-  if (sqrtArg == 0)
+  if (sqrtArg == 0) {
     return 0; // undefined result
-  if (sqrtArg == 1)
+  }
+  if (sqrtArg == 1) {
     return 1;                           // identity
+  }
   answer = 0;                           // integer square root
   for (x = 0x8000; x > 0; x = x >> 1) { // 16 bit shift
     answer |= x;                        // possible bit in root
     temp = answer * answer;             //
-    if (temp == sqrtArg)
+    if (temp == sqrtArg) {
       break; // exact, found it
-    if (temp > sqrtArg)
+    }
+    if (temp > sqrtArg) {
       answer ^= x; // too large, reverse bit
+    }
   }
   return answer; // approximate root
 }
@@ -224,7 +228,6 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
     /* We got what we wanted, so build a request for that */
     request->hdr    = PD_MSGTYPE_EPR_REQUEST | PD_NUMOBJ(2);
     request->obj[1] = lastCapabilities[bestIndex]; // Copy PDO into slot 2
-
 
     if (bestIsAVS) {
       request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2APS(bestIndexVoltage));
