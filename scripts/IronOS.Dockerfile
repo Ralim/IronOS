@@ -20,7 +20,7 @@ ARG APK_PYTHON="python3 py3-pip black"
 ARG APK_MISC="findutils make git diffutils"
 ARG APK_DEV="musl-dev clang bash clang-extra-tools shellcheck"
 
-# PIP packages
+# PIP packages to check & test Python code
 ARG PIP_PKGS='bdflib flake8'
 
 # Install system packages using alpine package manager
