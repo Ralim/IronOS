@@ -427,8 +427,8 @@ DEV_LDFLAGS=-nostartfiles                         \
             -L $(PINECILV2_BLE_CRAPWARE_BLOB_DIR) \
             -L $(PINECILV2_RF_CRAPWARE_BLOB_DIR)  \
             -l blecontroller_702_m0s1s            \
-            -l bl702_rf \
-            -Wl,--wrap=printf \
+            -l bl702_rf                           \
+            -Wl,--wrap=printf                     \
             -Wl,--defsym=__wrap_printf=bflb_platform_printf
 
 DEV_AFLAGS=
