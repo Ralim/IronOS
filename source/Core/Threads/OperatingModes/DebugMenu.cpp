@@ -89,7 +89,7 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
 
   if (buttons == BUTTON_B_SHORT) {
     cxt->transitionMode = TransitionAnimation::Down;
-    return OperatingMode::InitialisationDone;
+    return OperatingMode::HomeScreen;
   } else if (buttons == BUTTON_F_SHORT) {
     cxt->scratch_state.state1++;
 #ifdef HALL_SENSOR

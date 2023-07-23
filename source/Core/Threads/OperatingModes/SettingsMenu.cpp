@@ -41,18 +41,18 @@ void render_menu(const menuitem *item, guiContext *cxt) {
     item->draw();
   } else {
 
-    uint16_t *wasRenderingHelp = &(cxt->scratch_state.state6);
-    *wasRenderingHelp          = 1;
+    uint16_t *isRenderingHelp = &(cxt->scratch_state.state6);
+    *isRenderingHelp          = 1;
     // Draw description
     const char *description = translatedString(Tr->SettingsDescriptions[item->description - 1]);
     drawScrollingText(description, xTaskGetTickCount() - lastButtonTime);
   }
 }
 
-uint16_t getMenuLength(const menuitem *menu) {
+uint16_t getMenuLength(const menuitem *menu, const uint16_t stop) {
   // walk this menu to find the length
   uint16_t counter = 0;
-  for (uint16_t pos = 0; pos < 64; pos++) {
+  for (uint16_t pos = 0; pos < stop; pos++) {
     if (menu[pos].draw == nullptr) {
       return counter;
     }
@@ -60,14 +60,15 @@ uint16_t getMenuLength(const menuitem *menu) {
       counter++;
     }
   }
-  return 0; // Cant find length, be safe
+  return counter;
 }
+
 OperatingMode moveToNextEntry(guiContext *cxt) {
-  uint16_t *mainEntry        = &(cxt->scratch_state.state1);
-  uint16_t *subEntry         = &(cxt->scratch_state.state2);
-  uint16_t *wasRenderingHelp = &(cxt->scratch_state.state6);
-  if (*wasRenderingHelp) {
-    *wasRenderingHelp = 0;
+  uint16_t *mainEntry       = &(cxt->scratch_state.state1);
+  uint16_t *subEntry        = &(cxt->scratch_state.state2);
+  uint16_t *isRenderingHelp = &(cxt->scratch_state.state6);
+  if (*isRenderingHelp) {
+    *isRenderingHelp = 0;
   } else {
     // Scroll down
     // We can increment freely _once_
@@ -113,10 +114,10 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
 
   uint16_t *mainEntry              = &(cxt->scratch_state.state1);
   uint16_t *subEntry               = &(cxt->scratch_state.state2);
-  uint16_t *currentMenuLength      = &(cxt->scratch_state.state5);
-  uint16_t *wasRenderingHelp       = &(cxt->scratch_state.state6);
   uint32_t *autoRepeatAcceleration = &(cxt->scratch_state.state3);
   uint32_t *autoRepeatTimer        = &(cxt->scratch_state.state4);
+  uint16_t *currentMenuLength      = &(cxt->scratch_state.state5);
+  uint16_t *isRenderingHelp        = &(cxt->scratch_state.state6);
 
   const menuitem *currentMenu;
   // Draw the currently on screen item
@@ -135,16 +136,19 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   // Update the cached menu length if unknown
   if (*currentMenuLength == 0) {
     // We walk the current menu to find the length
-    *currentMenuLength = getMenuLength(currentMenu);
+    *currentMenuLength = getMenuLength(currentMenu, 64);
   }
-  //  Draw scroll
-  uint8_t indicatorHeight = OLED_HEIGHT / *currentMenuLength;
-  uint8_t position        = (OLED_HEIGHT * currentScreen) / *currentMenuLength;
-  // Draw if not last item
-  if ((*currentMenuLength != currentScreen) || xTaskGetTickCount() % 1000 < 500) {
-    OLED::drawScrollIndicator(position, indicatorHeight);
-  }
+  if (*isRenderingHelp == 0) {
+    //  Draw scroll
+    uint16_t currentVirtualPosition = getMenuLength(currentMenu, currentScreen + 1) - 1;
 
+    uint8_t indicatorHeight = OLED_HEIGHT / *currentMenuLength;
+    uint8_t position        = (OLED_HEIGHT * currentVirtualPosition) / *currentMenuLength;
+    // Draw if not last item
+    if ((*currentMenuLength != currentVirtualPosition) || xTaskGetTickCount() % 1000 < 500) {
+      OLED::drawScrollIndicator(position, indicatorHeight);
+    }
+  }
   // Now handle user button input
 
   auto callIncrementHandler = [&]() {
@@ -180,8 +184,8 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     break;
   case BUTTON_F_SHORT:
     // Increment setting
-    if (*wasRenderingHelp) {
-      *wasRenderingHelp = 0;
+    if (*isRenderingHelp) {
+      *isRenderingHelp = 0;
     } else {
       if (*subEntry == 0) {
         // In a root menu, if its null handler we enter the menu

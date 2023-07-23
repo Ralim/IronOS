@@ -25,6 +25,7 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     break;
   case BUTTON_BOTH:
     // exit
+    cxt->transitionMode = TransitionAnimation::Right;
     return cxt->previousMode;
   case BUTTON_B_LONG:
     if (xTaskGetTickCount() - (*autoRepeatTimer) + (*autoRepeatAcceleration) > PRESS_ACCEL_INTERVAL_MAX) {

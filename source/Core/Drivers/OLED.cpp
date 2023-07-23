@@ -431,7 +431,7 @@ void OLED::transitionScrollUp(const TickType_t viewEnterTime) {
       screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] << 1) | ((secondFrameBuffer[secondStripPos] & 0x80) >> 7);
 
       // Finally, do the shuffle on the second frame buffer
-      secondFrameBuffer[secondStripPos] = (secondFrameBuffer[firstStripPos] << 1) | ((secondFrameBuffer[secondStripPos] & 0x80) >> 7);
+      secondFrameBuffer[secondStripPos] = (secondFrameBuffer[secondStripPos] << 1) | ((secondFrameBuffer[firstStripPos] & 0x80) >> 7);
       // Finally on the bottom row; we shuffle it up ready
       secondFrameBuffer[firstStripPos] <<= 1;
 #endif /* OLED_128x32 */
