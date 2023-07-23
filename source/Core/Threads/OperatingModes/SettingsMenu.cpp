@@ -168,7 +168,15 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     (*autoRepeatTimer)        = 0; // reset acceleration
     break;
   case BUTTON_BOTH:
-    return OperatingMode::HomeScreen;
+    if (*subEntry == 0) {
+      saveSettings();
+      cxt->transitionMode = TransitionAnimation::Left;
+      return OperatingMode::HomeScreen;
+    } else {
+      cxt->transitionMode = TransitionAnimation::Left;
+      *subEntry           = 0;
+      return OperatingMode::SettingsMenu;
+    }
     break;
 
   case BUTTON_F_LONG:
