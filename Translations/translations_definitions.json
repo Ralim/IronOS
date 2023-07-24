@@ -1,7 +1,7 @@
 {
     "messagesWarn": [{
             "id": "CalibrationDone",
-            "description": "Confirmation message indicating CJC calibration is complete."
+            "description": "Confirmation message indicating calibration is complete."
         },
         {
             "id": "ResetOKMessage",
