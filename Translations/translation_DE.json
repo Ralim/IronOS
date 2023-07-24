@@ -3,7 +3,7 @@
     "languageLocalName": "Deutsch",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Erfolgreich\nkalibriert!"
         },
         "ResetOKMessage": {

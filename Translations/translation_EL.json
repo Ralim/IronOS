@@ -3,7 +3,7 @@
     "languageLocalName": "Greek",
     "tempUnitFahrenheit": true,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Βαθμονόμηση\nολοκληρώθηκε!"
         },
         "ResetOKMessage": {
