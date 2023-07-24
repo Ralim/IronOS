@@ -3,7 +3,7 @@
     "languageLocalName": "Français",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Étalonnage\nterminé!"
         },
         "ResetOKMessage": {
