@@ -906,7 +906,7 @@ static bool setCalibrateVIN(void) {
       saveSettings();
       OLED::clearScreen();
       OLED::setCursor(0, 0);
-      warnUser(translatedString(Tr->CJCCalibrationDone), 3 * TICKS_SECOND);
+      warnUser(translatedString(Tr->CalibrationDone), 3 * TICKS_SECOND);
       OLED::refresh();
       waitForButtonPressOrTimeout(0.5 * TICKS_SECOND);
       return false;
