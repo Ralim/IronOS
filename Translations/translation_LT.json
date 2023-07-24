@@ -3,7 +3,7 @@
     "languageLocalName": "Lietuvių",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Calibration\ndone!"
         },
         "ResetOKMessage": {
