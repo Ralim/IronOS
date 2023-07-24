@@ -3,7 +3,7 @@
     "languageLocalName": "Magyar",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Kalibráció\nkész!"
         },
         "ResetOKMessage": {
