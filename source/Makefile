@@ -765,15 +765,15 @@ Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation for $*
 	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(PWD)/Core/Gen/macros.txt           \
-		-o $(PWD)/Core/Gen/Translation_brieflz.$*.cpp \
+		--macros $(CURDIR)/Core/Gen/macros.txt           \
+		-o $(CURDIR)/Core/Gen/Translation_brieflz.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/$*.o        \
 		$*
 
 Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Generating BriefLZ compressed translation for $*
+	@echo Generating BriefLZ compressed translation font for $*
 	@$(HOST_PYTHON) ../Translations/make_translation.py        \
 		--macros $(PWD)/Core/Gen/macros.txt                \
 		-o $(PWD)/Core/Gen/Translation_brieflz_font.$*.cpp \
@@ -820,8 +820,8 @@ Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for multi-language $(2)'
 	@$(HOST_PYTHON) ../Translations/make_translation.py   \
-		--macros $(PWD)/Core/Gen/macros.txt           \
-		-o $(PWD)/Core/Gen/Translation_multi.$(1).cpp \
+		--macros $(CURDIR)/Core/Gen/macros.txt           \
+		-o $(CURDIR)/Core/Gen/Translation_multi.$(1).cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		$(3)
 
@@ -831,8 +831,8 @@ Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.
 	@test -d $$(@D) || mkdir -p $$(@D)
 	@echo Generating BriefLZ compressed translation for multi-language $(2)
 	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(PWD)/Core/Gen/macros.txt                   \
-		-o $(PWD)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
+		--macros $(CURDIR)/Core/Gen/macros.txt                   \
+		-o $(CURDIR)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o        \
 		--compress-font \
