@@ -875,9 +875,9 @@ style:
 #   * process STOP env variable
 check-style:
 	@error=0; export LIST=$$LIST; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
-	      ../scripts/deploy.sh  check_style_file  "$$src" ; \
-	      test "$${?}" -eq 1 && export error=1 ; \
-	      test "$${error}" -eq 1 && test -n "$${STOP}" && break; \
+		../scripts/deploy.sh  check_style_file  "$$src" ; \
+		test "$${?}" -eq 1 && export error=1 ; \
+		test "$${error}" -eq 1 && test -n "$${STOP}" && break; \
 	done; \
 	if [ $$error -eq 0 ] ; then  echo "" && echo "" && echo "Style check: PASS" && echo "" && echo "" && exit 0 ; \
 	else  echo "" && echo "" && echo "Style check: FAIL! Please, check the log above for the details." && echo "If there is a false-negative trigger, please, report an issue attaching the log or link to the log!" && echo "" && echo "" && exit 1 ; \
