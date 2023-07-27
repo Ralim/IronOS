@@ -191,7 +191,7 @@ fi;
 if [ -z "${cmd}" ] || [ "${cmd}" = "shell" ]; then
 	docker_cmd="run  --rm  builder"
 elif [ "${cmd}" = "build" ]; then
-	docker_cmd="run  --rm  builder  /bin/bash /build/ci/buildAll.sh"
+	docker_cmd="run  --rm  builder  make  build-all  OUT=${OUT}"
 elif [ "${cmd}" = "clean" ]; then
 	docker  rmi  ironos-builder:latest
 	exit "${?}"
@@ -211,4 +211,3 @@ echo -e "\t* type \"${0} clean\" to delete created container (but not cached dat
 echo -e "\n====>>>> ${docker_bin}  ${docker_file}  ${docker_cmd}\n"
 eval "${docker_bin}  ${docker_file}  ${docker_cmd}"
 exit "${?}"
-
