@@ -30,9 +30,7 @@ jobs:
         run: cd source && ./build.sh -m ${{ matrix.model }}
 
       - name: Copy license files
-        run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp scripts/LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+        run: cp  LICENSE  scripts/LICENSE_RELEASE.md  source/Hexfile/
 
       - name: Archive ${{ matrix.model }} artifacts
         uses: actions/upload-artifact@v3
@@ -47,7 +45,7 @@ jobs:
           if-no-files-found: error
 
       - name: Generate json index file
-        run: cd source && python3 metadata.py ${{ matrix.model }}.json
+        run: ./source/metadata.py ${{ matrix.model }}.json
 
       - name: Archive ${{ matrix.model }} index file
         uses: actions/upload-artifact@v3
@@ -79,12 +77,11 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Build ${{ matrix.model }}
-        run: cd source && make -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
+        run: make  -C source/  -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
 
       - name: Copy license files
         run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp scripts/LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+          cp  LICENSE  scripts/LICENSE_RELEASE.md  source/Hexfile/
 
       - name: Archive ${{ matrix.model }} artifacts
         uses: actions/upload-artifact@v3
@@ -99,7 +96,7 @@ jobs:
           if-no-files-found: error
 
       - name: Generate json index file
-        run: cd source && python3 metadata.py ${{ matrix.model }}_multi-lang.json
+        run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
 
       - name: Archive ${{ matrix.model }} index file
         uses: actions/upload-artifact@v3
@@ -125,15 +122,10 @@ jobs:
         run: python3 -m pip install bdflib
 
       - name: Run python tests
-        run: cd Translations && chmod +x make_translation_test.py && ./make_translation_test.py
+        run: ./Translations/make_translation_test.py
 
       - name: Run BriefLZ tests
-        run: |
-          cd source
-          make Objects/host/brieflz/libbrieflz.so
-          cd ../Translations
-          chmod +x brieflz_test.py
-          ./brieflz_test.py
+        run: make  -C source/  Objects/host/brieflz/libbrieflz.so && ./Translations/brieflz_test.py
 
 
   check_c-cpp:
@@ -150,7 +142,7 @@ jobs:
           submodules: true
 
       - name: Check format style with clang-format
-        run: cd source && make clean && make check-style
+        run: make  -C source/  clean  check-style
 
 
   check_python:
