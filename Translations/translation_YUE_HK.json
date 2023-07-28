@@ -3,7 +3,7 @@
     "languageLocalName": "廣東話 (香港)",
     "tempUnitFahrenheit": true,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Calibration done!"
         },
         "ResetOKMessage": {

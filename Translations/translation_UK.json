@@ -3,7 +3,7 @@
     "languageLocalName": "Українська",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "КХС\nвідкалібровано!"
         },
         "ResetOKMessage": {

@@ -3,7 +3,7 @@
     "languageLocalName": "Беларуская",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Каліброўка\nзроблена!"
         },
         "ResetOKMessage": {

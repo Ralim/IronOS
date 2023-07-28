@@ -30,7 +30,7 @@ void performCJCC(void) {
     }
     setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
     OLED::clearScreen();
-    warnUser(translatedString(Tr->CJCCalibrationDone), 3 * TICKS_SECOND);
+    warnUser(translatedString(Tr->CalibrationDone), 3 * TICKS_SECOND);
     OLED::refresh();
     // Preventing to repeat calibration at boot automatically (only one shot).
     setSettingValue(SettingsOptions::CalibrateCJC, 0);

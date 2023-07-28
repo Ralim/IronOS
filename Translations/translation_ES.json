@@ -3,7 +3,7 @@
     "languageLocalName": "Castellano",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "¡Calibracion\nlista!"
         },
         "ResetOKMessage": {
