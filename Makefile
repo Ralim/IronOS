@@ -148,7 +148,7 @@ test-py:
 	@echo ""
 	flake8  Translations
 	black  --check  Translations
-	@make  -C source/  Objects/host/brieflz/libbrieflz.so
+	@$(MAKE)  -C source/  Objects/host/brieflz/libbrieflz.so
 	./Translations/brieflz_test.py
 	./Translations/make_translation_test.py
 
@@ -157,7 +157,7 @@ test-ccpp:
 	@echo ""
 	@echo "---- Checking C/C++ code... ----"
 	@echo ""
-	make  -C source/  clean  check-style
+	$(MAKE)  -C source/  clean  check-style
 
 # meta target for tests & checks based on .github/workflows/push
 tests: test-md  test-sh  test-py  test-ccpp
@@ -178,11 +178,11 @@ build-all:
 
 # pass-through target for Makefile inside source/ dir
 %:
-	make  -C source/  $@
+	$(MAKE)  -C source/  $@
 
 # global clean-up target for produced/generated files inside tree
 clean-build:
-	make  -C source/  clean-all
+	$(MAKE)  -C source/  clean-all
 	rm  -Rf  site
 	rm  -Rf  scripts/ci/artefacts
 	rm  -Rf  $(OUT_DIR)
