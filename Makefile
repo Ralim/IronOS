@@ -31,7 +31,7 @@ endif
 ifdef OUT
 OUT_DIR=$(OUT)
 else
-OUT_DIR=$(CURDIR)/OUT
+OUT_DIR=$(CURDIR)/BUILDS
 endif
 OUT_HEX=$(CURDIR)/source/Hexfile
 
@@ -165,7 +165,7 @@ tests: test-md  test-sh  test-py  test-ccpp
 	@echo "All tests & checks have been completed successfully."
 	@echo ""
 
-# former scripts/ci/buildAll.sh
+# former scripts/ci/buildAll.sh - all in one to build all firmware & place the produced binaries into one output directory
 build-all:
 	@mkdir  -p  $(OUT_DIR)
 	@chmod  0777  $(OUT_DIR)
@@ -173,6 +173,7 @@ build-all:
 	@echo "All Firmware built"
 	@cp  -r  $(OUT_HEX)/*.bin  $(OUT_DIR)
 	@cp  -r  $(OUT_HEX)/*.hex  $(OUT_DIR)
+	@cp  -r  $(OUT_HEX)/*.dfu  $(OUT_DIR)
 	@echo "Resulting output directory: $(OUT_DIR)"
 
 # pass-through target for Makefile inside source/ dir
