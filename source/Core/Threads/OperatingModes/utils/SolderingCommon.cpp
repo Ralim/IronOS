@@ -110,6 +110,8 @@ bool checkExitSoldering(void) {
   if (shouldShutdown()) {
     // shutdown
     currentTempTargetDegC = 0;
+    lastMovementTime      = xTaskGetTickCount(); // We manually move the movement time to now such that shutdown timer is reset
+
     return true; // we want to exit soldering mode
   }
 #endif

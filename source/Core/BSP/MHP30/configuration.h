@@ -29,8 +29,8 @@
  * How many seconds/minutes we wait until going to sleep/shutdown.
  * Values -> SLEEP_TIME * 10; i.e. 5*10 = 50 Seconds!
  */
-#define SLEEP_TIME    5  // x10 Seconds
-#define SHUTDOWN_TIME 10 // Minutes
+#define SLEEP_TIME    5 // x10 Seconds
+#define SHUTDOWN_TIME 0 // Minutes -- Default shutdown to being off
 
 /**
  * Auto start off for safety.
@@ -164,13 +164,13 @@
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // TODO, needs refinement
 #define TIP_RESISTANCE           60 // x10 ohms, ~6 typical
-#endif /* MHP30 */
+#endif                              /* MHP30 */
 
 #ifdef ACCEL_EXITS_ON_MOVEMENT
 #define NO_SLEEP_MODE
 #endif
 
-#define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 
 #endif /* CONFIGURATION_H_ */
