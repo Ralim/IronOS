@@ -208,7 +208,7 @@ bool isTipDisconnected() {
 
 void    setStatusLED(const enum StatusLED state) {}
 uint8_t preStartChecks() {
-  if (!hub238_has_run_selection()) {
+  if (!hub238_has_run_selection() && (xTaskGetTickCount() < TICKS_SECOND * 5)) {
     return 0;
   }
   // We check if we are in a "Limited" mode; where we have to run the PWM really fast
