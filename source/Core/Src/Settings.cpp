@@ -11,6 +11,7 @@
 #include "Settings.h"
 #include "BSP.h"
 #include "Setup.h"
+#include "Translation.h"
 #include "configuration.h"
 #include <string.h> // for memset
 bool sanitiseSettings();
@@ -65,7 +66,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, COOLING_TEMP_BLINK},                                         // CoolingTempBlink
     {0, 1, 1, DETAILED_IDLE},                                              // DetailedIDLE
     {0, 1, 1, DETAILED_SOLDERING},                                         // DetailedSoldering
-    {0, 1, 1, TEMPERATURE_INF},                                            // TemperatureInF
+    {0, (uint16_t)(HasFahrenheit ? 1 : 0), 1, TEMPERATURE_INF},            // TemperatureInF
     {0, 1, 1, DESCRIPTION_SCROLL_SPEED},                                   // DescriptionScrollSpeed
     {0, 2, 1, LOCKING_MODE},                                               // LockingMode
     {0, 99, 1, POWER_PULSE_DEFAULT},                                       // KeepAwakePulse
