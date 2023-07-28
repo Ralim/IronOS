@@ -178,7 +178,6 @@ PD_DRIVER_DIR=./Core/Drivers/usb-pd
 ALL_INCLUDES_EXCEPT:=-path $(BRIEFLZ_INC_DIR)             \
                   -o -path $(PD_DRIVER_DIR)               \
                   -o -path $(PINECILV2_SDK_DIR)           \
-                  -o -path $(DRIVER_INC_DIR)              \
                   -o -path $(MINIWARE_HAL_INC_DIR)        \
                   -o -path $(S60_HAL_INC_DIR)             \
                   -o -path $(MHP30_HAL_INC_DIR)           \
@@ -193,7 +192,6 @@ ALL_INCLUDES_EXCEPT:=-path $(BRIEFLZ_INC_DIR)             \
 ALL_SOURCE_EXCEPT:=-path $(SOURCE_BRIEFLZ_DIR)   \
                 -o -path $(PD_DRIVER_DIR)        \
                 -o -path $(PINECILV2_SDK_DIR)    \
-                -o -path $(SOURCE_DRIVERS_DIR)   \
                 -o -path $(MINIWARE_HAL_SRC_DIR) \
                 -o -path $(S60_HAL_SRC_DIR)      \
                 -o -path $(MHP30_HAL_SRC_DIR)    \
@@ -765,15 +763,15 @@ Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation for $*
 	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(PWD)/Core/Gen/macros.txt           \
-		-o $(PWD)/Core/Gen/Translation_brieflz.$*.cpp \
+		--macros $(CURDIR)/Core/Gen/macros.txt           \
+		-o $(CURDIR)/Core/Gen/Translation_brieflz.$*.cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/$*.o        \
 		$*
 
 Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
 	@test -d $(@D) || mkdir -p $(@D)
-	@echo Generating BriefLZ compressed translation for $*
+	@echo Generating BriefLZ compressed translation font for $*
 	@$(HOST_PYTHON) ../Translations/make_translation.py        \
 		--macros $(PWD)/Core/Gen/macros.txt                \
 		-o $(PWD)/Core/Gen/Translation_brieflz_font.$*.cpp \
@@ -820,8 +818,8 @@ Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for multi-language $(2)'
 	@$(HOST_PYTHON) ../Translations/make_translation.py   \
-		--macros $(PWD)/Core/Gen/macros.txt           \
-		-o $(PWD)/Core/Gen/Translation_multi.$(1).cpp \
+		--macros $(CURDIR)/Core/Gen/macros.txt           \
+		-o $(CURDIR)/Core/Gen/Translation_multi.$(1).cpp \
 		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		$(3)
 
@@ -831,8 +829,8 @@ Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.
 	@test -d $$(@D) || mkdir -p $$(@D)
 	@echo Generating BriefLZ compressed translation for multi-language $(2)
 	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(PWD)/Core/Gen/macros.txt                   \
-		-o $(PWD)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
+		--macros $(CURDIR)/Core/Gen/macros.txt                   \
+		-o $(CURDIR)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
 		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o        \
 		--compress-font \
@@ -875,9 +873,9 @@ style:
 #   * process STOP env variable
 check-style:
 	@error=0; export LIST=$$LIST; for src in $(ALL_SOURCE) $(ALL_INCLUDES) ; do \
-	      ../scripts/deploy.sh  check_style_file  "$$src" ; \
-	      test "$${?}" -eq 1 && export error=1 ; \
-	      test "$${error}" -eq 1 && test -n "$${STOP}" && break; \
+		../scripts/deploy.sh  check_style_file  "$$src" ; \
+		test "$${?}" -eq 1 && export error=1 ; \
+		test "$${error}" -eq 1 && test -n "$${STOP}" && break; \
 	done; \
 	if [ $$error -eq 0 ] ; then  echo "" && echo "" && echo "Style check: PASS" && echo "" && echo "" && exit 0 ; \
 	else  echo "" && echo "" && echo "Style check: FAIL! Please, check the log above for the details." && echo "If there is a false-negative trigger, please, report an issue attaching the log or link to the log!" && echo "" && echo "" && exit 1 ; \

@@ -44,10 +44,11 @@ uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool ski
 
   if (getSettingValue(SettingsOptions::CalibrationOffset) && skipCalOffset == false) {
     // Remove uV tipOffset
-    if (valueuV > getSettingValue(SettingsOptions::CalibrationOffset))
+    if (valueuV > getSettingValue(SettingsOptions::CalibrationOffset)) {
       valueuV -= getSettingValue(SettingsOptions::CalibrationOffset);
-    else
+    } else {
       valueuV = 0;
+    }
   }
   lastuv = valueuV;
   return valueuV;
@@ -78,8 +79,9 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
   // I found a number that doesn't unbalance the existing PID, causing overshoot.
   // This could be tuned in concert with PID parameters...
 
-  if (currentTipTempInC < 0)
+  if (currentTipTempInC < 0) {
     return 0;
+  }
   return currentTipTempInC;
 }
 
