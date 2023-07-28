@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Некантралюемае\nразаграванне"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Пераканайцеся, што пры наступнай загрузцы наканечнік і ручка маюць пакаёвую тэмпературу!"
         },

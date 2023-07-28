@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Teplotní\nOchrana"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Před restartem se ujistěte, že hrot a držák mají pokojovou teplotu!"
         },

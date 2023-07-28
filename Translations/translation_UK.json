@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Некерований\nрозігрів"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!"
         },
