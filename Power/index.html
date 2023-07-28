@@ -8,7 +8,7 @@
     <title>Power - IronOS</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
@@ -17,13 +17,12 @@
         var mkdocs_page_url = "/IronOS/Power/";
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -123,7 +122,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
           <li>Operation &raquo;</li>
-      <li>Power</li>
+      <li class="breadcrumb-item active">Power</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/Power.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -154,114 +153,114 @@ Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies a
 <table>
 <thead>
 <tr>
-<th align="center">Type</th>
-<th align="center">Volts</th>
-<th align="center">/</th>
-<th align="center">Tip Ω</th>
-<th align="center">=</th>
-<th align="center">Amps</th>
-<th align="center">*</th>
-<th align="center">Volts</th>
-<th align="center">=</th>
-<th align="center">Watts</th>
+<th style="text-align: center;">Type</th>
+<th style="text-align: center;">Volts</th>
+<th style="text-align: center;">/</th>
+<th style="text-align: center;">Tip Ω</th>
+<th style="text-align: center;">=</th>
+<th style="text-align: center;">Amps</th>
+<th style="text-align: center;">*</th>
+<th style="text-align: center;">Volts</th>
+<th style="text-align: center;">=</th>
+<th style="text-align: center;">Watts</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">USB QC3.0</td>
-<td align="center">9V</td>
-<td align="center">/</td>
-<td align="center">4.5 Ω</td>
-<td align="center">=</td>
-<td align="center">2.0A</td>
-<td align="center">*</td>
-<td align="center">9V</td>
-<td align="center">=</td>
-<td align="center">18W</td>
+<td style="text-align: center;">USB QC3.0</td>
+<td style="text-align: center;">9V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">4.5 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">2.0A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">9V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">18W</td>
 </tr>
 <tr>
-<td align="center">USB-C PD</td>
-<td align="center">12V</td>
-<td align="center">/</td>
-<td align="center">4.5 Ω</td>
-<td align="center">=</td>
-<td align="center">3.0A</td>
-<td align="center">*</td>
-<td align="center">12V</td>
-<td align="center">=</td>
-<td align="center">32W</td>
+<td style="text-align: center;">USB-C PD</td>
+<td style="text-align: center;">12V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">4.5 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.0A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">12V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">32W</td>
 </tr>
 <tr>
-<td align="center">USB-C PD</td>
-<td align="center">20V</td>
-<td align="center">/</td>
-<td align="center">8.0 Ω</td>
-<td align="center">=</td>
-<td align="center">2.5A</td>
-<td align="center">*</td>
-<td align="center">20V</td>
-<td align="center">=</td>
-<td align="center">50W</td>
+<td style="text-align: center;">USB-C PD</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">8.0 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">2.5A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">50W</td>
 </tr>
 <tr>
-<td align="center">USB-C PD</td>
-<td align="center">20V</td>
-<td align="center">/</td>
-<td align="center">6.2 Ω</td>
-<td align="center">=</td>
-<td align="center">3.2A</td>
-<td align="center">*</td>
-<td align="center">20V</td>
-<td align="center">=</td>
-<td align="center">64W</td>
+<td style="text-align: center;">USB-C PD</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">6.2 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.2A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">20V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">64W</td>
 </tr>
 <tr>
-<td align="center">DC Barrel</td>
-<td align="center">24V</td>
-<td align="center">/</td>
-<td align="center">8.0 Ω</td>
-<td align="center">=</td>
-<td align="center">3.0A</td>
-<td align="center">*</td>
-<td align="center">24V</td>
-<td align="center">=</td>
-<td align="center">72W</td>
+<td style="text-align: center;">DC Barrel</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">8.0 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.0A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">72W</td>
 </tr>
 <tr>
-<td align="center">DC Barrel</td>
-<td align="center">24V</td>
-<td align="center">/</td>
-<td align="center">6.2 Ω</td>
-<td align="center">=</td>
-<td align="center">3.8A</td>
-<td align="center">*</td>
-<td align="center">24V</td>
-<td align="center">=</td>
-<td align="center">92W</td>
+<td style="text-align: center;">DC Barrel</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">6.2 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.8A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">24V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">92W</td>
 </tr>
 <tr>
-<td align="center">EPR PD3.1</td>
-<td align="center">28V</td>
-<td align="center">/</td>
-<td align="center">8.0 Ω</td>
-<td align="center">=</td>
-<td align="center">3.5A</td>
-<td align="center">*</td>
-<td align="center">28V</td>
-<td align="center">=</td>
-<td align="center">98W</td>
+<td style="text-align: center;">EPR PD3.1</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">8.0 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">3.5A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">98W</td>
 </tr>
 <tr>
-<td align="center">EPR PD3.1</td>
-<td align="center">28V</td>
-<td align="center">/</td>
-<td align="center">6.2 Ω</td>
-<td align="center">=</td>
-<td align="center">4.5A</td>
-<td align="center">*</td>
-<td align="center">28V</td>
-<td align="center">=</td>
-<td align="center">126W</td>
+<td style="text-align: center;">EPR PD3.1</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: center;">6.2 Ω</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">4.5A</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: center;">28V</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: center;">126W</td>
 </tr>
 </tbody>
 </table>
@@ -311,14 +310,15 @@ This enforces a small dead time in the output signal while this occurs, so there
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
