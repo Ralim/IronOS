@@ -94,8 +94,10 @@ bool checkExitSoldering(void) {
         // If we have moved recently; in the last second
         // Then exit soldering mode
 
-        if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND)) {
+        // Movement occurred in last update
+        if (((TickType_t)(xTaskGetTickCount() - lastMovementTime)) < (TickType_t)(TICKS_SECOND / 5)) {
           currentTempTargetDegC = 0;
+          lastMovementTime      = 0;
           return true;
         }
       }
