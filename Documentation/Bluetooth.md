@@ -6,9 +6,26 @@ The BLE interface advertises three services, these provide access to Live teleme
 These are outlined in more detail below.
 
 Pinecil devices advertise themselves on BLE as `Pinecil-XXXXXXX`.
-They also include the uuid `9eae1000-9d0d-48c5-AA55-33e27f9bc533` in the advertisement packet to allow for filtering.
+They also include the UUID `9eae1000-9d0d-48c5-AA55-33e27f9bc533` in the advertisement packet to allow for filtering.
 
 Unless otherwise noted, all data is sent and received as Little-Endian.
+
+As of the time of writing this, notifications are not fully implemented so data will need to be polled. Notification/Indication support will come when there is time to implement it.
+
+## Using the BLE Interface
+
+It is advised to follow the below points when first implementing a BLE integration. Of course once the integration is working feel free to deviate from these. These are just _suggested_ ideas to help kickstart.
+
+1. When filtering for devices, its preferable to filter on the UUID `9eae1000-9d0d-48c5-AA55-33e27f9bc533` than device name if possible.
+2. Upon first collection check the three expected services exist; if they don't the user may have selected an incorrect device
+3. It's best to read the live bulk endpoint over the live service when its easy to do so (one read vs ~15).
+   1. However if you are just updating one or two line items it may be more efficient to just read these on the live service.
+   2. Feel free to test both and decide
+4. When reading settings from the device; the association of number <-> setting is fixed, but you may see settings you dont yet know about, make sure you can handle these
+5. You probably don't want to show unknown setting's to the user though
+6. Read the device firmware revision and ensure you can decode it. If BLE is revised it may be essential for handling versions cleanly.
+7. Its advisable to keep an eye on the IronOS repository or at the least setup the Github watch for release notifications
+   1. Future releases may revise some BLE aspects or add new settings for example
 
 ## Services
 
