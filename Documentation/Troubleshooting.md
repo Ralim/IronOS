@@ -14,6 +14,18 @@ But it is helpful to do some basic diagnostics first just in case the issue is e
 The **VAST** majority of issues are poor soldering or cold solder joints.
 If you can open up your iron, give it a good look at all the connection points, and use another iron to reflow any suspicious ones, this can fix most issues.
 
+## Tip Shorted warning
+
+If you are powering up a device that supports tip resistance detection (TS101 and Pinecilv2 as of present), the firmware checks the readings of the raw tip resistance and sorts these into three "bins". `8 ohm tips`, `6.2 ohm tips` and `tip-shorted`. The tip resistance is used when negotiating USB-PD and in thermal calculations.
+The `tip-shorted` option is selected if your tip is measured to be abnormally small. This could indicate a failed driver mosfet or a failed tip.
+
+When this warning is shown; heating will be disabled to protect from damage. As trying to heat a shorted tip can damage the iron itself.
+
+It is best to take out your tip and manually measure and verify the tip's resistance. It should be 6-8 ohms (depending on tip type). When measuring resistances this small some multimeters can struggle. If you have access to a current limited bench power supply, you can try doing a 4 wire measurement by measuring the voltage drop on the tip while applying a known current. `(R=V/I)`.
+
+If the tip measures correctly you may have a damaged driver mosfet; it would be ideal to open your iron and test the mosfet is operating correctly.
+If after both of these checks everything looks as expected, feel free to open a discussion on IronOS to talk about the issue (Or for Pinecil the community chat can be a much faster response).
+
 ## High tip temp reading when the tip is cool
 
 If you are finding the tip is reading high; the first fields to check in the Debug menu are `RTip` and `CHan`.
