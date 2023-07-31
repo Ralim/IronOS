@@ -33,4 +33,3 @@ RUN python3 -m pip install ${PIP_PKGS}
 RUN git config --global --add safe.directory /build/ironos
 
 COPY  .  /build/ironos
-COPY  ./scripts/ci  /build/ci
