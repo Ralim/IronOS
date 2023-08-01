@@ -16,7 +16,7 @@ As of the time of writing this, notifications are not fully implemented so data 
 
 It is advised to follow the below points when first implementing a BLE integration. Of course once the integration is working feel free to deviate from these. These are just _suggested_ ideas to help kickstart.
 
-1. When filtering for devices, its preferable to filter on the UUID `9eae1000-9d0d-48c5-AA55-33e27f9bc533` than device name if possible.
+1. When filtering for devices, its preferable to filter by the UUID `9eae1000-9d0d-48c5-AA55-33e27f9bc533`, rather than by the device name if possible.
 2. Upon first collection check the three expected services exist; if they don't the user may have selected an incorrect device
 3. It's best to read the live bulk endpoint over the live service when its easy to do so (one read vs ~15).
    1. However if you are just updating one or two line items it may be more efficient to just read these on the live service.
