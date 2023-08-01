@@ -61,7 +61,7 @@
             "message": "Вимк"
         },
         "ProfilePreheatString": {
-            "message": "Попередній розігрів\n"
+            "message": "Попередній\nрозігрів"
         },
         "ProfileCooldownString": {
             "message": "Охолодження\n"
