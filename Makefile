@@ -27,6 +27,14 @@ ifndef MKDOCS
 MKDOCS:=mkdocs
 endif
 
+# build output related directories
+ifdef OUT
+OUT_DIR=$(OUT)
+else
+OUT_DIR=$(CURDIR)/BUILDS
+endif
+OUT_HEX=$(CURDIR)/source/Hexfile
+
 
 ### global static variables
 
@@ -105,7 +113,7 @@ docker-shell: docker-check  $(DOCKER_DEPS)
 
 # former build.sh
 docker-build: docker-check  $(DOCKER_DEPS)
-	$(DOCKER_CMD)  /bin/bash  /build/ci/buildAll.sh
+	$(DOCKER_CMD)  make  build-all
 
 # delete container
 docker-clean: docker-check
@@ -157,6 +165,17 @@ tests: test-md  test-sh  test-py  test-ccpp
 	@echo "All tests & checks have been completed successfully."
 	@echo ""
 
+# former scripts/ci/buildAll.sh - all in one to build all firmware & place the produced binaries into one output directory
+build-all:
+	@mkdir  -p  $(OUT_DIR)
+	@chmod  0777  $(OUT_DIR)
+	cd  source  &&  bash  ./build.sh
+	@echo "All Firmware built"
+	@cp  -r  $(OUT_HEX)/*.bin  $(OUT_DIR)
+	@cp  -r  $(OUT_HEX)/*.hex  $(OUT_DIR)
+	@cp  -r  $(OUT_HEX)/*.dfu  $(OUT_DIR)
+	@echo "Resulting output directory: $(OUT_DIR)"
+
 # pass-through target for Makefile inside source/ dir
 %:
 	$(MAKE)  -C source/  $@
@@ -166,6 +185,7 @@ clean-build:
 	$(MAKE)  -C source/  clean-all
 	rm  -Rf  site
 	rm  -Rf  scripts/ci/artefacts
+	rm  -Rf  $(OUT_DIR)
 
 # global clean-up target
 clean-full: clean-build  docker-clean
