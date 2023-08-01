@@ -64,16 +64,16 @@
             "message": "Вимк"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Попередній\nрозігрів"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Охолодження\n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Вірогідно ваш пристрій підробний!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Занадто гараче для\nзміни профілів"
         }
     },
     "characters": {
@@ -156,60 +156,60 @@
             "description": "Під час пайки тривале натискання обох кнопок заблокує їх (В=Вимк | Т=Тільки турбо | П=Повне)"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Етапи\nпрофілів",
+            "description": "Кількість етапів в режимі профілів"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Температура\nПоп.Розігріву",
+            "description": "Попередньо розігріти до цієї температури на початку режимку профілів"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Швидкість\nПоп.Розігріву",
+            "description": "Розігрівати з такою швидкістю (градусів в секунду)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Етап 1\nТемпература",
+            "description": "Температура в кінці цього етапу"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Етап 1\nТривалість",
+            "description": "Тривалість цього етапу (секунд)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Етап 2\nТемпература",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Етап 2\nТривалість",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Етап 3\nТемпература",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Етап 3\nТривалість",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Етап 4\nТемпература",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Етап 4\nТривалість",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Етап 5\nТемпература",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Етап 5\nТривалість",
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Швидкість\nОхолодження",
+            "description": "Швидкість охолодження в кінці режиму профілів (градусів в секунду)"
         },
         "MotionSensitivity": {
             "displayText": "Чутливість\nсенсору руху",
@@ -281,7 +281,7 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Увімкнути BLE"
         },
         "PowerLimit": {
             "displayText": "Макс.\nпотуж.",
