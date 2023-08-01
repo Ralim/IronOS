@@ -11,9 +11,17 @@ import sys
 # This is used by automation like the Pinecil updater
 
 
-if len(sys.argv) != 2:
+if len(sys.argv) < 2:
     print("Requires the output json name as an arg")
     exit(1)
+
+# Explicitly provide target file to scan for json output
+ModelName = None
+if len(sys.argv) == 3 and sys.argv[2] is not None and sys.argv[2] != "":
+    ModelName = sys.argv[2]
+    if ModelName == "Pinecil_multi-lang" or ModelName == "Pinecilv2_multi-lang":
+        # rename on-the-fly for direct compatibility with make target PINECILMODEL_multi-lang
+        ModelName = ModelName.rstrip("-lang")
 
 HERE = Path(__file__).resolve().parent
 
@@ -61,6 +69,12 @@ for file_path in output_files:
     if file_path.endswith(".hex") or file_path.endswith(".dfu"):
         # Find out what language this file is
         name: str = os.path.basename(file_path)
+        if ModelName is not None:
+            # If ModelName is provided as the second argument (compatible with make model=NAME fully) but current file name doesn't match the model name, then skip it
+            if not name.startswith(ModelName):
+                continue
+            if (ModelName == "Pinecil" or ModelName == "Pinecilv2") and not re.match(r"^" + ModelName + "_" + "([A-Z]+).*$", name):
+                continue
         matches = re.findall(r"^([a-zA-Z0-9]+)_(.+)\.(.+)$", name)
         if matches:
             matches = matches[0]
