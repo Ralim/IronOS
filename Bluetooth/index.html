@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/Bluetooth/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Bluetooth Low Energy - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Bluetooth Low Energy";
+        var mkdocs_page_input_path = "Bluetooth.md";
+        var mkdocs_page_url = "/IronOS/Bluetooth/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Flashing the firmware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/MHP30/">MHP30</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/Pinecil%20V1/">Pinecil V1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/Pinecil%20V2/">Pinecil V2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/TS80%28P%29/">TS80(P)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/TS100/">TS100</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Operation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Menu/">Main Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DebugMenu/">Debug Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Power/">Power</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Temperature/">Temperature</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Logo/">Startup Logo</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Hardware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../HallSensor/">Hall Sensor (Pinecil)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../PowerSources/">Power sources</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Translation/">Translations</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Development/">Development</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li class="breadcrumb-item active">Bluetooth Low Energy</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/Bluetooth.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="bluetooth-low-energy">Bluetooth Low Energy</h1>
+<p>The Pinecilv2 has hardware support for Bluetooth Low Energy (BLE). This protocol allows reading and writing of parameters to the Pinecil during runtime.</p>
+<p>The BLE interface advertises three services, these provide access to live telemetry as well as the ability to read/write settings.
+These are outlined in more detail below.</p>
+<p>Pinecil devices advertise themselves on BLE as <code>Pinecil-XXXXXXX</code>.
+They also include the UUID <code>9eae1000-9d0d-48c5-AA55-33e27f9bc533</code> in the advertisement packet to allow for filtering.</p>
+<p>Unless otherwise noted, all data is sent and received as Little-Endian.</p>
+<p>As of the time of writing this, notifications are not fully implemented so data will need to be polled. Notification/Indication support will come when there is time to implement it.</p>
+<h2 id="using-the-ble-interface">Using the BLE Interface</h2>
+<p>It is advised to follow the below points when first implementing a BLE integration. Of course once the integration is working feel free to deviate from these. These are just <em>suggested</em> ideas to help kickstart.</p>
+<ol>
+<li>When filtering for devices, its preferable to filter by the UUID <code>9eae1000-9d0d-48c5-AA55-33e27f9bc533</code>, rather than by the device name if possible.</li>
+<li>Upon first collection check if the three expected services exist; if they don't the user may have selected an incorrect device.</li>
+<li>It's best to read the live bulk endpoint over the live service when its easy to do so (one read vs ~15).</li>
+<li>However if you are just updating one or two line items it may be more efficient to just read these on the live service.</li>
+<li>Feel free to test both and decide.</li>
+<li>When reading settings from the device; the association of number &lt;-&gt; setting is fixed, but you may see settings you don't yet know about, make sure you can handle these.</li>
+<li>You probably don't want to show unknown setting's to the user though.</li>
+<li>Read the device firmware revision and ensure you can decode it. If BLE is revised it may be essential for handling versions cleanly.</li>
+<li>It's advisable to keep an eye on the IronOS repository or at least setup the Github watch for release notifications.</li>
+<li>Future releases may revise some BLE aspects or add new settings for example.</li>
+</ol>
+<h2 id="services">Services</h2>
+<p>Below is a description of each service. Note that the exact settings are not listed for brevity; it's best to refer to <a href="https://github.com/Ralim/IronOS/blob/dev/source/Core/BSP/Pinecilv2/ble_characteristics.h">the uuid lists</a> and the <a href="https://github.com/Ralim/IronOS/blob/dev/source/Core/BSP/Pinecilv2/ble_handlers.cpp">handlers</a> alongside this.</p>
+<h3 id="live">Live</h3>
+<p><code>UUID: d85ef000-168e-4a71-AA55-33e27f9bc533</code></p>
+<p>The live services has one characteristic per reading. The readings (in order) are:
+When implementing these; the ones that are not obvious are generally found in the debugging menu. Values are encoded as an unsigned 32 bit number for all results.</p>
+<ol>
+<li>Live temperature (In C)</li>
+<li>Live set point</li>
+<li>DC input voltage</li>
+<li>Handle temperature (In C)</li>
+<li>Power level</li>
+<li>Power source</li>
+<li>Tip resistance</li>
+<li>uptime</li>
+<li>Time of last movement</li>
+<li>Maximum temperature settable</li>
+<li>Raw tip reading</li>
+<li>Hall sensor</li>
+<li>Operating mode</li>
+<li>Estimated wattage</li>
+</ol>
+<h3 id="settings">Settings</h3>
+<p><code>UUID: f6d80000-5a10-4eba-AA55-33e27f9bc533</code></p>
+<p>The settings service has two special entries; for saving and resetting settings.
+Otherwise all settings are enumerated using UUID's of the format : <code>f6d7ZZZZ-5a10-4eba-AA55-33e27f9bc533))</code> where <code>ZZZZ</code> is the setting number as matched from <a href="https://github.com/Ralim/IronOS/blob/dev/source/Core/Inc/Settings.h#L16">Settings.h</a>.</p>
+<p>All data is read and written in fixed unsigned 16 bit numbers.</p>
+<h4 id="settings-save">Settings save</h4>
+<p>To save the settings write a <code>0x0001</code> to <code>f6d7FFFF-5a10-4eba-AA55-33e27f9bc533</code>.
+Its advised to not save settings on each change but instead to give the user a save button <em>or</em> save after a timeout. This is just to reduce write cycles on the internal flash.</p>
+<h4 id="settings-reset">Settings reset</h4>
+<p>To reset all settings to defaults; write a <code>0x0001</code> to  <code>f6d7FFFE-5a10-4eba-AA55-33e27f9bc533</code>.
+This will reset settings immediately.</p>
+<h3 id="bulk">Bulk</h3>
+<p><code>UUID: 9eae1000-9d0d-48c5-AA55-33e27f9bc533</code></p>
+<p>The bulk endpoint is where extra data is located with varying read sizes.</p>
+<h4 id="live-data">Live data</h4>
+<p>The bulk live data endpoint provides all of the data provided in the live endpoint, as one large single-read binary blob. This is designed for applications that are showing large amounts of data as this is more efficient for reading.</p>
+<h4 id="accelerometer-name">Accelerometer Name</h4>
+<p><em>Not yet implemented</em></p>
+<h4 id="build-id">Build ID</h4>
+<p>This encodes the current build ID to allow viewing and handling when the BLE format changes.</p>
+<h4 id="device-serial-number">Device Serial Number</h4>
+<p>This is generally the device CPU serial number. For most devices this can be used as an ID. On PinecilV2 its the MAC address.</p>
+<h4 id="device-unique-id">Device Unique ID</h4>
+<p>This is only relevant on the PinecilV2. This is a random ID that is burned in at the factory. This is used by the online authenticity checker tool.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

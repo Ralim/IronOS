@@ -6,6 +6,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://ralim.github.io/IronOS/Bluetooth/</loc>
+         <lastmod>2023-08-01</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://ralim.github.io/IronOS/DebugMenu/</loc>
          <lastmod>2023-08-01</lastmod>
          <changefreq>daily</changefreq>
