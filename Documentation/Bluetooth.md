@@ -21,7 +21,7 @@ It is advised to follow the below points when first implementing a BLE integrati
 3. It's best to read the live bulk endpoint over the live service when its easy to do so (one read vs ~15).
    1. However if you are just updating one or two line items it may be more efficient to just read these on the live service.
    2. Feel free to test both and decide.
-4. When reading settings from the device; the association of number <-> setting is fixed, but you may see settings you dont yet know about, make sure you can handle these
+4. When reading settings from the device; the association of number <-> setting is fixed, but you may see settings you don't yet know about, make sure you can handle these.
 5. You probably don't want to show unknown setting's to the user though
 6. Read the device firmware revision and ensure you can decode it. If BLE is revised it may be essential for handling versions cleanly.
 7. Its advisable to keep an eye on the IronOS repository or at the least setup the Github watch for release notifications
