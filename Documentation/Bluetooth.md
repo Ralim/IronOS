@@ -2,7 +2,7 @@
 
 The Pinecilv2 has hardware support for Bluetooth Low Energy (BLE). This protocol allows reading and writing of parameters to the Pinecil during runtime.
 
-The BLE interface advertises three services, these provide access to Live telemetry as well as the ability to read/write settings.
+The BLE interface advertises three services, these provide access to live telemetry as well as the ability to read/write settings.
 These are outlined in more detail below.
 
 Pinecil devices advertise themselves on BLE as `Pinecil-XXXXXXX`.
