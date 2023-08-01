@@ -29,7 +29,7 @@ It is advised to follow the below points when first implementing a BLE integrati
 
 ## Services
 
-Below is a description of each service. Note that the exact settings are not listed for brevity; its best to refer to [the uuid lists](https://github.com/Ralim/IronOS/blob/dev/source/Core/BSP/Pinecilv2/ble_characteristics.h) and the [handlers](https://github.com/Ralim/IronOS/blob/dev/source/Core/BSP/Pinecilv2/ble_handlers.cpp) alongside this.
+Below is a description of each service. Note that the exact settings are not listed for brevity; it's best to refer to [the uuid lists](https://github.com/Ralim/IronOS/blob/dev/source/Core/BSP/Pinecilv2/ble_characteristics.h) and the [handlers](https://github.com/Ralim/IronOS/blob/dev/source/Core/BSP/Pinecilv2/ble_handlers.cpp) alongside this.
 
 ### Live
 
@@ -58,7 +58,7 @@ When implementing these; the ones that are not obvious are generally found in th
 `UUID: f6d80000-5a10-4eba-AA55-33e27f9bc533`
 
 The settings service has two special entries; for saving and resetting settings.
-Otherwise all settings are enumerated using uuid's of the format : `f6d7ZZZZ-5a10-4eba-AA55-33e27f9bc533))` where `ZZZZ` is the setting number as matched from [Settings.h](https://github.com/Ralim/IronOS/blob/dev/source/Core/Inc/Settings.h#L16).
+Otherwise all settings are enumerated using UUID's of the format : `f6d7ZZZZ-5a10-4eba-AA55-33e27f9bc533))` where `ZZZZ` is the setting number as matched from [Settings.h](https://github.com/Ralim/IronOS/blob/dev/source/Core/Inc/Settings.h#L16).
 
 All data is read and written in fixed unsigned 16 bit numbers.
 
@@ -88,11 +88,11 @@ _Not yet implemented_
 
 #### Build ID
 
-This encodes the current build id to allow for display as well of handling incase the BLE format changes
+This encodes the current build ID to allow viewing and handling when the BLE format changes.
 
 #### Device Serial Number
 
-This is generally the device CPU serial number. For most devices this can be used as an id. On PinecilV2 its the MAC address.
+This is generally the device CPU serial number. For most devices this can be used as an ID. On PinecilV2 its the MAC address.
 
 #### Device Unique ID
 
