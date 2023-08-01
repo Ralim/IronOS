@@ -164,13 +164,13 @@
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // TODO, needs refinement
 #define TIP_RESISTANCE           60 // x10 ohms, ~6 typical
-#endif /* MHP30 */
+#endif                              /* MHP30 */
 
 #ifdef ACCEL_EXITS_ON_MOVEMENT
 #define NO_SLEEP_MODE
 #endif
 
-#define FLASH_LOGOADDR (0x08000000 + (62 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 
 #endif /* CONFIGURATION_H_ */

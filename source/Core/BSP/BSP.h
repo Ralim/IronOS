@@ -101,6 +101,9 @@ void setBuzzer(bool on);
 // For example, on the MHP30 this is used to figure out the resistance of the hotplate
 uint8_t preStartChecks();
 uint8_t preStartChecksDone();
+
+// Show the boot logo
+void showBootLogo(void);
 #ifdef __cplusplus
 }
 #endif

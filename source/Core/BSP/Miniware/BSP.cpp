@@ -1,6 +1,7 @@
 // BSP mapping functions
 
 #include "BSP.h"
+#include "BootLogo.h"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
 #include "Setup.h"
@@ -408,3 +409,5 @@ uint8_t getTipInertia() {
   return TIP_THERMAL_MASS;
 #endif
 }
+
+void showBootLogo(void) { BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); }
