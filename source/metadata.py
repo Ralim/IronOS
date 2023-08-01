@@ -71,7 +71,7 @@ for file_path in output_files:
         name: str = os.path.basename(file_path)
         if ModelName is not None:
             # If ModelName is provided as the second argument (compatible with make model=NAME fully) but current file name doesn't match the model name, then skip it
-            if not name.startswith(ModelName):
+            if not name.startswith(ModelName + "_"):
                 continue
             if (ModelName == "Pinecil" or ModelName == "Pinecilv2") and not re.match(r"^" + ModelName + "_" + "([A-Z]+).*$", name):
                 continue
