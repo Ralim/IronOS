@@ -19,7 +19,7 @@ if len(sys.argv) < 2 or len(sys.argv) > 3:
 
 # If model is provided explicitly to scan related files only for json output, then process the argument
 ModelName = None
-if len(sys.argv) == 3 and sys.argv[2] is not None and sys.argv[2] != "":
+if len(sys.argv) == 3:
     ModelName = sys.argv[2]
     if ModelName == "Pinecil_multi-lang" or ModelName == "Pinecilv2_multi-lang":
         # rename on-the-fly for direct compatibility with make target PINECILMODEL_multi-lang
