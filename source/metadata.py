@@ -21,8 +21,8 @@ if len(sys.argv) < 2 or len(sys.argv) > 3:
 ModelName = None
 if len(sys.argv) == 3:
     ModelName = sys.argv[2]
-    if ModelName == "Pinecil_multi-lang" or ModelName == "Pinecilv2_multi-lang":
-        # rename on-the-fly for direct compatibility with make target PINECILMODEL_multi-lang
+    if ModelName.endswith("_multi-lang"):
+        # rename on-the-fly for direct compatibility with make targets like PINECILMODEL_multi-lang
         ModelName = ModelName.rstrip("-lang")
 
 HERE = Path(__file__).resolve().parent
