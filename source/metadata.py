@@ -10,7 +10,6 @@ import sys
 # Creates an index metadata json file of the hexfiles folder
 # This is used by automation like the Pinecil updater
 
-
 if len(sys.argv) < 2 or len(sys.argv) > 3:
     print("Usage: metadata.py OUTPUT_FILE [model]")
     print("  OUTPUT_FILE      - the name of output file in json format with meta info about binary files")
@@ -31,15 +30,12 @@ HexFileFolder = os.path.join(HERE, "Hexfile")
 OutputJSONPath = os.path.join(HexFileFolder, sys.argv[1])
 TranslationsFilesPath = os.path.join(HERE.parent, "Translations")
 
-
 def load_json(filename: str):
     with open(filename) as f:
         return json.loads(f.read())
 
-
 def read_git_tag():
     return f"{subprocess.check_output(['git', 'rev-parse', '--short=7', 'HEAD']).strip().decode('ascii').upper()}"
-
 
 def read_version():
     with open(HERE / "version.h") as version_file:
@@ -49,7 +45,6 @@ def read_version():
                 if matches:
                     return matches[0]
     raise Exception("Could not parse version")
-
 
 # Fetch our file listings
 translation_files = [os.path.join(TranslationsFilesPath, f) for f in os.listdir(TranslationsFilesPath) if os.path.isfile(os.path.join(TranslationsFilesPath, f)) and f.endswith(".json")]
