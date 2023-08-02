@@ -48,7 +48,7 @@ def read_version():
 
 # Fetch our file listings
 translation_files = [os.path.join(TranslationsFilesPath, f) for f in os.listdir(TranslationsFilesPath) if os.path.isfile(os.path.join(TranslationsFilesPath, f)) and f.endswith(".json")]
-output_files = [os.path.join(HexFileFolder, f) for f in os.listdir(HexFileFolder) if os.path.isfile(os.path.join(HexFileFolder, f))]
+output_files = [os.path.join(HexFileFolder, f) for f in sorted(os.listdir(HexFileFolder)) if os.path.isfile(os.path.join(HexFileFolder, f))]
 
 parsed_languages = {}
 for path in translation_files:
