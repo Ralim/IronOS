@@ -11,11 +11,13 @@ import sys
 # This is used by automation like the Pinecil updater
 
 
-if len(sys.argv) < 2:
-    print("Requires the output json name as an arg")
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    print("Usage: metadata.py OUTPUT.json [model]")
+    print("  OUTPUT.json      - the output json name with meta info about binary files")
+    print("  model [optional] - name of the model (as for `make model=NAME`) to scan files for explicitly (all files in source/Hexfile by default otherwise)")
     exit(1)
 
-# Explicitly provide target file to scan for json output
+# If model is provided explicitly to scan related files only for json output, then process the argument
 ModelName = None
 if len(sys.argv) == 3 and sys.argv[2] is not None and sys.argv[2] != "":
     ModelName = sys.argv[2]
