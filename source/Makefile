@@ -407,7 +407,8 @@ DEVICE_BSP_DIR=./Core/BSP/Pinecilv2
 S_SRCS:=$(shell find $(PINECILV2_DIR) -type d  \(  -path $(PINECILV2_VENDOR_BSP_COMMON_DIR) \) -prune -false -o  -type f -name '*.S') $(info $(S_SRCS) )
 ASM_INC=$(DEVICE_INCLUDES)
 LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
-
+DEVICE_DFU_ADDRESS=0x23000000
+# DFU starts at the beginning of flash
 # Flags
 CPUFLAGS=-march=rv32imafc                                     \
          -mabi=ilp32f                                         \
