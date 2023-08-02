@@ -1,6 +1,7 @@
 // BSP mapping functions
 
 #include "BSP.h"
+#include "BootLogo.h"
 #include "I2C_Wrapper.hpp"
 #include "IRQ.h"
 #include "Pins.h"
@@ -10,6 +11,7 @@
 #include "Utils.h"
 #include "configuration.h"
 #include "crc32.h"
+#include "hal_flash.h"
 #include "history.hpp"
 #include "main.hpp"
 
@@ -281,4 +283,11 @@ uint8_t getDeviceValidationStatus() {
   uint32_t programmedHash = EF_Ctrl_Get_Key_Slot_w1();
   uint32_t computedHash   = gethash();
   return programmedHash == computedHash ? 0 : 1;
+}
+
+void showBootLogo(void) {
+  uint8_t scratch[1024];
+  flash_read(FLASH_LOGOADDR - 0x23000000, scratch, 1024);
+
+  BootLogo::handleShowingLogo(scratch);
 }

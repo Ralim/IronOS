@@ -22,7 +22,7 @@ __EM_SIZE =8K;
 
 MEMORY
 {
-    xip_memory  (rx)  : ORIGIN = 0x23000000, LENGTH = 1022K
+    xip_memory  (rx)  : ORIGIN = 0x23000000, LENGTH = 1008K /*1024 - 8K header - 4K*2 for settings and logo*/
     itcm_memory (rx)  : ORIGIN = 0x22014000, LENGTH = 12K
     dtcm_memory (rx)  : ORIGIN = 0x42014000, LENGTH = 8K
     ram_memory  (!rx) : ORIGIN = 0x42016000, LENGTH = 72K

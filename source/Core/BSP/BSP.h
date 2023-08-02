@@ -102,7 +102,10 @@ void setBuzzer(bool on);
 uint8_t preStartChecks();
 uint8_t preStartChecksDone();
 
+// Check if the tip or output mosfet is shorted (if possible)
 bool isTipShorted();
+// Show the boot logo
+void showBootLogo(void);
 #ifdef __cplusplus
 }
 #endif
