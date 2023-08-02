@@ -75,7 +75,8 @@ for file_path in output_files:
             # If ModelName is provided as the second argument (compatible with make model=NAME fully) but current file name doesn't match the model name, then skip it
             if not name.startswith(ModelName + "_"):
                 continue
-            if (ModelName == "Pinecil" or ModelName == "Pinecilv2") and not re.match(r"^" + ModelName + "_" + "([A-Z]+).*$", name):
+            # If build of interest is not multi-lang one but scanning one is not MODEL_LANG-ID here, then skip it to avoid mess in json between MODEL_LANG-ID & MODEL_multi'
+            if not ModelName.endswith("_multi") and not re.match(r"^" + ModelName + "_" + "([A-Z]+).*$", name):
                 continue
         matches = re.findall(r"^([a-zA-Z0-9]+)_(.+)\.(.+)$", name)
         if matches:
