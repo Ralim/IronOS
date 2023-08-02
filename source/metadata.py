@@ -12,8 +12,8 @@ import sys
 
 
 if len(sys.argv) < 2 or len(sys.argv) > 3:
-    print("Usage: metadata.py OUTPUT.json [model]")
-    print("  OUTPUT.json      - the output json name with meta info about binary files")
+    print("Usage: metadata.py OUTPUT_FILE [model]")
+    print("  OUTPUT_FILE      - the name of output file in json format with meta info about binary files")
     print("  model [optional] - name of the model (as for `make model=NAME`) to scan files for explicitly (all files in source/Hexfile by default otherwise)")
     exit(1)
 
