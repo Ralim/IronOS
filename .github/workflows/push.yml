@@ -29,10 +29,8 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Git meta info
-        env:
-          GITHUB_CI_EVENT: ${{ github.event_name }}
-          GITHUB_CI_SHA: ${{ github.event.pull_request.head.sha }}
-        run: echo "GITHUB_CI_EVENT=${GITHUB_CI_EVENT}" >> "${GITHUB_ENV}" && echo "GITHUB_CI_SHA=${GITHUB_CI_SHA}" >> "${GITHUB_ENV}"
+        env: GITHUB_CI_PR_SHA: ${{ github.event.pull_request.head.sha }}
+        run: echo "GITHUB_CI_PR_SHA=${GITHUB_CI_PR_SHA}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
         run: cd source && ./build.sh -m ${{ matrix.model }}
@@ -85,10 +83,8 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Git meta info
-        env:
-          GITHUB_CI_EVENT: ${{ github.event_name }}
-          GITHUB_CI_SHA: ${{ github.event.pull_request.head.sha }}
-        run: echo "GITHUB_CI_EVENT=${GITHUB_CI_EVENT}" >> "${GITHUB_ENV}" && echo "GITHUB_CI_SHA=${GITHUB_CI_SHA}" >> "${GITHUB_ENV}"
+        env: GITHUB_CI_PR_SHA: ${{ github.event.pull_request.head.sha }}
+        run: echo "GITHUB_CI_PR_SHA=${GITHUB_CI_PR_SHA}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
         run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
