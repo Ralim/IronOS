@@ -124,6 +124,8 @@ gh_ci_id()
 {
 	echo "GH_CTX: ${GITHUB_CONTEXT}"
 	echo "GH_ENV: ${GITHUB_ENV}"
+	echo "GITHUB_CI_EVENT: ${GITHUB_CI_EVENT}"
+	echo "GITHUB_CI_SHA: ${GITHUB_CI_SHA}"
 	return 0
 }
 
