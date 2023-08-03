@@ -1273,7 +1273,7 @@ def get_version_suffix(ver) -> str:
     except KeyError:
         print("====>>>> GITHUB_CI_PR_SHA:", "FALSE")
         True
-    # - no github PR SHA ID, hence "normal" build
+    # - no github PR SHA ID, hence keep checking
 
     suffix = str("")
 

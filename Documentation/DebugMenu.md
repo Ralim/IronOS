@@ -23,7 +23,7 @@ There is a static line on top which is presented on every sub-screen and reflect
   - D - git-related **d**ev branch
   - B - git-related custom **b**ranch
   - G - neither above but **g**it-related
-  - C - build from github **C**I during _pull request_ status
+  - C - build from github **C**I during _pull request_
   - H - build outside of a git tree (i.e. release tarball or **h**omebrew customization without git)
   - S - something **s**pecial[^ERR]
   - V - something **v**ery special[^ERR]
