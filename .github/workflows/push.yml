@@ -31,7 +31,6 @@ jobs:
         env:
           GITHUB_CI_EVENT: ${{ github.event_name }}
           GITHUB_CI_SHA: ${{ github.event.pull_request.head.sha }}
-        run: ./scripts/deploy.sh  gh_ci_id
 
       - name: Build ${{ matrix.model }}
         run: cd source && ./build.sh -m ${{ matrix.model }}
@@ -87,7 +86,6 @@ jobs:
         env:
           GITHUB_CI_EVENT: ${{ github.event_name }}
           GITHUB_CI_SHA: ${{ github.event.pull_request.head.sha }}
-        run: ./scripts/deploy.sh  gh_ci_id
 
       - name: Build ${{ matrix.model }}
         run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese

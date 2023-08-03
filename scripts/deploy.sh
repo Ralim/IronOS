@@ -119,14 +119,6 @@ check_style_log()
 	return 0
 }
 
-# DO NOT RUN THIS LOCALLY! github ci can't provide reliable git meta info in some cases so some work must be done manually
-gh_ci_id()
-{
-	echo "GITHUB_CI_EVENT: ${GITHUB_CI_EVENT}"
-	echo "GITHUB_CI_SHA: ${GITHUB_CI_SHA}"
-	return 0
-}
-
 ### main
 
 docker_conf="Env.yml"
@@ -184,11 +176,6 @@ fi;
 
 if [ "check_style_log" = "${cmd}" ]; then
 	check_style_log
-	exit "${?}"
-fi;
-
-if [ "gh_ci_id" = "${cmd}" ]; then
-	gh_ci_id
 	exit "${?}"
 fi;
 
