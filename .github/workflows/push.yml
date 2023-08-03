@@ -27,6 +27,7 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Git meta info
+        shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}"; echo ""; echo ""; echo "cmd echo gh_env: ${GITHUB_ENV}"; echo ""; echo ""; ./scripts/deploy.sh  gh_ci_id
@@ -82,6 +83,7 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Git meta info
+        shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}"; echo ""; echo ""; echo "cmd echo gh_env: ${GITHUB_ENV}"; echo ""; echo ""; ./scripts/deploy.sh  gh_ci_id
