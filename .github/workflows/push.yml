@@ -87,7 +87,8 @@ jobs:
         shell: bash
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}"; echo ""; echo ""; echo "cmd echo gh_env: ${GITHUB_ENV}"; echo ""; echo ""; ./scripts/deploy.sh  gh_ci_id
+        run: |
+          echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}" && echo "cmd echo gh_env: ${GITHUB_ENV}" && ./scripts/deploy.sh  gh_ci_id
 
       - name: Build ${{ matrix.model }}
         run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
