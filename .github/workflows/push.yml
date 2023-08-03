@@ -26,6 +26,10 @@ jobs:
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
+      - name: Git meta info
+        env: GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}"; echo ""; echo ""; echo "cmd echo gh_env: ${GITHUB_ENV}"; echo ""; echo ""; ./scripts/deploy.sh  gh_ci_id
+
       - name: Build ${{ matrix.model }}
         run: cd source && ./build.sh -m ${{ matrix.model }}
 
@@ -75,6 +79,10 @@ jobs:
 
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Git meta info
+        env: GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}"; echo ""; echo ""; echo "cmd echo gh_env: ${GITHUB_ENV}"; echo ""; echo ""; ./scripts/deploy.sh  gh_ci_id
 
       - name: Build ${{ matrix.model }}
         run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
