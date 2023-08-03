@@ -3,6 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+
   build:
     runs-on: ubuntu-20.04
     container:
@@ -27,13 +28,10 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Git meta info
-        shell: bash
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
           GITHUB_CI_EVENT: ${{ github.event_name }}
           GITHUB_CI_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}" && echo "cmd echo gh_env: ${GITHUB_ENV}" && ./scripts/deploy.sh  gh_ci_id
+        run: ./scripts/deploy.sh  gh_ci_id
 
       - name: Build ${{ matrix.model }}
         run: cd source && ./build.sh -m ${{ matrix.model }}
@@ -86,13 +84,10 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Git meta info
-        shell: bash
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
           GITHUB_CI_EVENT: ${{ github.event_name }}
           GITHUB_CI_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          echo "cmd echo gh_ctx: ${GITHUB_CONTEXT}" && echo "cmd echo gh_env: ${GITHUB_ENV}" && ./scripts/deploy.sh  gh_ci_id
+        run: ./scripts/deploy.sh  gh_ci_id
 
       - name: Build ${{ matrix.model }}
         run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese

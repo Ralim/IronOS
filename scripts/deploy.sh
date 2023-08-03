@@ -5,7 +5,7 @@
 # - generate full set of builds ("build" sub-command)
 # - probably doing some other routines (check source briefly before running undocumented commands!)
 
-set -x
+#set -x
 #set -e
 
 ### helper functions
@@ -122,8 +122,6 @@ check_style_log()
 # DO NOT RUN THIS LOCALLY! github ci can't provide reliable git meta info in some cases so some work must be done manually
 gh_ci_id()
 {
-	echo "GH_CTX: ${GITHUB_CONTEXT}"
-	echo "GH_ENV: ${GITHUB_ENV}"
 	echo "GITHUB_CI_EVENT: ${GITHUB_CI_EVENT}"
 	echo "GITHUB_CI_SHA: ${GITHUB_CI_SHA}"
 	return 0
