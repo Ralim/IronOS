@@ -1264,6 +1264,8 @@ def get_translation_sanity_checks_text(defs: dict) -> str:
 
 
 def get_version_suffix(ver) -> str:
+    print("====>>>>", os.environ['GITHUB_CI_EVENT'])
+    print("====>>>>", os.environ['GITHUB_CI_SHA'])
     # Check env vars from push.yml first (sha id may be set but being empty)
     if os.environ['GITHUB_CI_EVENT'] and os.environ['GITHUB_CI_EVENT'] == "pull_request" and os.environ['GITHUB_CI_SHA'] and os.environ['GITHUB_CI_SHA'] != "":
         # if it's pull request then use vX.YY + C.ID for version line as in *C*I with proper tag instead of merge tag for detached tree'
