@@ -76,8 +76,7 @@ void startGUITask(void const *argument) {
     currentTempTargetDegC = min(sleepTempDegC, 75);
   }
 
-  BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
-
+  showBootLogo();
   showWarnings();
   if (getSettingValue(SettingsOptions::AutoStartMode)) {
     // jump directly to the autostart mode
