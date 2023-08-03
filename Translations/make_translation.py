@@ -1266,11 +1266,8 @@ def get_translation_sanity_checks_text(defs: dict) -> str:
 def get_version_suffix(ver) -> str:
     # Check env var from push.yml first:
     # - if it's pull request then use vX.YY + C.ID for version line as in *C*I with proper tag instead of merge tag for detached tree
-    try:
-        if os.environ["GITHUB_CI_PR_SHA"] != "":
-            return "C" + "." + os.environ["GITHUB_CI_PR_SHA"][:8].upper()
-    except KeyError:
-        True
+    if os.environ.get("GITHUB_CI_PR_SHA", None) is not None:
+        return "C" + "." + os.environ["GITHUB_CI_PR_SHA"][:8].upper()
     # - no github PR SHA ID, hence keep checking
 
     suffix = str("")
