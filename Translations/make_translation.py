@@ -1311,9 +1311,11 @@ def get_version_suffix(ver) -> str:
     except OSError:
         # Something _special_?
         suffix = "S"
+
     if "" == suffix:
         # Something _very_ special!
         suffix = "V"
+
     return suffix
 
 
