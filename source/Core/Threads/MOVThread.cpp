@@ -159,6 +159,9 @@ void startMOVTask(void const *argument __unused) {
   int16_t     tx = 0, ty = 0, tz = 0;
   int32_t     avgx, avgy, avgz;
   Orientation rotation = ORIENTATION_FLAT;
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+  uint16_t tripCounter = 0;
+#endif
   for (;;) {
     int32_t threshold = 1500 + (9 * 200);
     threshold -= getSettingValue(SettingsOptions::Sensitivity) * 200; // 200 is the step size
@@ -197,9 +200,22 @@ void startMOVTask(void const *argument __unused) {
     // than the threshold
 
     // If movement has occurred then we update the tick timer
-    if (error > threshold) {
+    bool overThreshold = error > threshold;
+#ifdef ACCEL_EXITS_ON_MOVEMENT
+    if (overThreshold) {
+      tripCounter++;
+      if (tripCounter > 2) {
+        lastMovementTime = xTaskGetTickCount();
+      }
+    } else if (tripCounter > 0) {
+      tripCounter = 0;
+    }
+#else
+    if (overThreshold) {
       lastMovementTime = xTaskGetTickCount();
     }
+
+#endif
 
     vTaskDelay(TICKS_100MS); // Slow down update rate
   }

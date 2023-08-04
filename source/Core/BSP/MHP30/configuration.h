@@ -29,8 +29,8 @@
  * How many seconds/minutes we wait until going to sleep/shutdown.
  * Values -> SLEEP_TIME * 10; i.e. 5*10 = 50 Seconds!
  */
-#define SLEEP_TIME    5  // x10 Seconds
-#define SHUTDOWN_TIME 10 // Minutes
+#define SLEEP_TIME    5 // x10 Seconds
+#define SHUTDOWN_TIME 0 // Minutes -- Default shutdown to being off
 
 /**
  * Auto start off for safety.
