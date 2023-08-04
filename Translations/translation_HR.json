@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Neispravan\ngrijač"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Prije restarta provjerite da su vrh i ručka na sobnoj temperaturi!"
         },

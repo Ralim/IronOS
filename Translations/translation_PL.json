@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Ucieczka\ntermiczna"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!"
         },
