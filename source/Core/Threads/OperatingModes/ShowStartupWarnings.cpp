@@ -48,5 +48,9 @@ void showWarnings(void) {
     }
   }
 #endif /*POW_PD_EXT==1*/
+       // If tip looks to be shorted, yell at user and dont auto dismiss
+  if (isTipShorted()) {
+    warnUser(translatedString(Tr->WarningTipShorted), portMAX_DELAY);
+  }
 #endif /*NO_WARN_MISSING*/
 }
