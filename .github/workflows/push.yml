@@ -3,6 +3,8 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+
+
   build:
     runs-on: ubuntu-20.04
     container:
@@ -25,6 +27,9 @@ jobs:
 
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Git meta info
+        run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
         run: cd source && ./build.sh -m ${{ matrix.model }}
@@ -75,6 +80,9 @@ jobs:
 
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Git meta info
+        run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
         run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese

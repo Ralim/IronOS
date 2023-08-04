@@ -189,7 +189,7 @@ void performTipResistanceSampleReading() {
   gpio_write(TIP_RESISTANCE_SENSE, tipResistanceReadingSlot == 0);
   tipResistanceReadingSlot++;
 }
-
+bool tipShorted = false;
 void FinishMeasureTipResistance() {
 
   // Otherwise we now have the 4 samples;
@@ -208,6 +208,8 @@ void FinishMeasureTipResistance() {
   uint8_t newRes = 0;
   if (reading > 8000) {
     // return; // Change nothing as probably disconnected tip
+  } else if (reading < 500) {
+    tipShorted = true;
   } else if (reading < 4000) {
     newRes = 62;
   } else {
@@ -217,8 +219,8 @@ void FinishMeasureTipResistance() {
 }
 volatile bool       tipMeasurementOccuring = true;
 volatile TickType_t nextTipMeasurement     = 100;
-
-void performTipMeasurementStep() {
+bool                isTipShorted() { return tipShorted; }
+void                performTipMeasurementStep() {
 
   // Wait 100ms for settle time
   if (xTaskGetTickCount() < (nextTipMeasurement)) {
@@ -240,7 +242,8 @@ uint8_t preStartChecks() {
   performTipMeasurementStep();
   return preStartChecksDone();
 }
-uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring) ? 0 : 1; }
+// If we are still measuring the tip; or tip is shorted; prevent heating
+uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring || tipShorted) ? 0 : 1; }
 
 // Return hardware unique ID if possible
 uint64_t getDeviceID() {

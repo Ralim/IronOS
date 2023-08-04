@@ -8,8 +8,10 @@
 #ifndef GUI_HPP_
 #define GUI_HPP_
 #include "BSP.h"
+#include "FreeRTOS.h"
 #include "Settings.h"
 #include "Translation.h"
+
 
 #define PRESS_ACCEL_STEP         (TICKS_100MS / 3)
 #define PRESS_ACCEL_INTERVAL_MIN TICKS_100MS
@@ -35,7 +37,7 @@ typedef struct {
 } menuitem;
 
 void                  enterSettingsMenu();
-void                  warnUser(const char *warning, const int timeout);
+void                  warnUser(const char *warning, const TickType_t timeout);
 extern const menuitem rootSettingsMenu[];
 
 #endif /* GUI_HPP_ */

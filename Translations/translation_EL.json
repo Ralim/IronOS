@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Θερμική\nΦυγή"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Πριν την επανεκκίνηση, βεβαιωθείτε ότι η μύτη και η συσκ. είναι σε θερμ. δωματίου!"
         },

@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Únik\nTepla"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
         },

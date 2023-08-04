@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Неуправляемый\nРазогрев"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Пожалуйста, убедитесь, что жало и корпус имеют комнатную температуру при следующей загрузке!"
         },
