@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Emballement\nthermique"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Avant de redémarrer, assurez-vous que la panne et la poignée sont à température ambiante !"
         },

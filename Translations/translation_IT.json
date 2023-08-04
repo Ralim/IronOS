@@ -30,6 +30,9 @@
         "WarningThermalRunaway": {
             "message": "Temperatura\nfuori controllo"
         },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
         "SettingsCalibrationWarning": {
             "message": "Prima di riavviare assicurati che la punta e l'impugnatura siano a temperatura ambiente!"
         },

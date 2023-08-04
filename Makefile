@@ -51,6 +51,14 @@ DOCKER_CMD=$(DOCKER_BIN)  -f $(DOCKER_YML)  run  --rm  builder
 # MkDocs config
 MKDOCS_YML=$(CURDIR)/scripts/IronOS-mkdocs.yml
 
+# supported models
+MODELS=TS100 TS80 TS80P Pinecil MHP30 Pinecilv2 S60 TS101 # target names & dir names
+MODELS_ML=Pinecil  Pinecilv2 # target names
+MODELS_MULTILANG=Pinecil_multi-lang  Pinecilv2_multi-lang # dir names
+
+# zip command (to pack artifacts)
+ZIP=zip -q -j -r
+
 
 ### targets
 
@@ -91,7 +99,7 @@ list:
 	@echo
 	@echo "Full list of current supported IDs:"
 	@echo "  * LANG_ID: $(shell echo "`ls Translations/ | grep -e "^translation_.*.json$$" | sed -e 's,^translation_,,g; s,\.json$$,,g; ' | tr '\n' ' '`")"
-	@echo "  * MODEL_ID: TS100 TS101 TS80 TS80P MHP30 Pinecil Pinecilv2 S60"
+	@echo "  * MODEL_ID: $(MODELS)"
 	@echo
 	@echo "For example, to make a local build of IronOS firmware for TS100 with English language, just type:"
 	@echo
@@ -171,10 +179,40 @@ build-all:
 	@chmod  0777  $(OUT_DIR)
 	cd  source  &&  bash  ./build.sh
 	@echo "All Firmware built"
-	@cp  -r  $(OUT_HEX)/*.bin  $(OUT_DIR)
-	@cp  -r  $(OUT_HEX)/*.hex  $(OUT_DIR)
-	@cp  -r  $(OUT_HEX)/*.dfu  $(OUT_DIR)
+	@for model in $(MODELS); do \
+		mkdir  -p  $(OUT_DIR)/$${model} ; \
+		cp  -r  $(OUT_HEX)/$${model}_*.bin  $(OUT_DIR)/$${model}/ ; \
+		cp  -r  $(OUT_HEX)/$${model}_*.hex  $(OUT_DIR)/$${model}/ ; \
+		cp  -r  $(OUT_HEX)/$${model}_*.dfu  $(OUT_DIR)/$${model}/ ; \
+	done;
 	@echo "Resulting output directory: $(OUT_DIR)"
+
+# target to build multilang supported builds for Pinecil & PinecilV2
+build-multilang:
+	@for modelml in $(MODELS_ML); do \
+		$(MAKE)  -C source/  -j2  model=$${modelml}  firmware-multi_compressed_European  firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian  firmware-multi_Chinese+Japanese ; \
+		mkdir  -p  $(OUT_DIR)/$${modelml}_multi-lang ; \
+		cp  $(OUT_HEX)/$${modelml}_multi_*.bin   $(OUT_DIR)/$${modelml}_multi-lang ; \
+		cp  $(OUT_HEX)/$${modelml}_multi_*.hex   $(OUT_DIR)/$${modelml}_multi-lang ; \
+		cp  $(OUT_HEX)/$${modelml}_multi_*.dfu   $(OUT_DIR)/$${modelml}_multi-lang ; \
+	done;
+	@echo "Resulting output directory: $(OUT_DIR)"
+
+# target to reproduce zips according to github CI settings; artifacts will be in $(OUT_DIR)/CI/*.zip
+ci: tests  build-all  build-multilang
+	@mkdir  -p  $(OUT_DIR)/metadata;
+	@for m in $(MODELS) $(MODELS_MULTILANG); do \
+		cp LICENSE scripts/LICENSE_RELEASE.md  $(OUT_DIR)/$${m}/ ; \
+		$(ZIP)  $(OUT_DIR)/$${m}.zip  $(OUT_DIR)/$${m} ;           \
+		./source/metadata.py  $${m}.json  $${m};                   \
+		cp  $(OUT_HEX)/$${m}.json  $(OUT_DIR)/metadata;            \
+	done;
+	@$(ZIP)  $(OUT_DIR)/metadata.zip  $(OUT_DIR)/metadata
+	@mkdir -p  $(OUT_DIR)/CI
+	@mv        $(OUT_DIR)/*.zip       $(OUT_DIR)/CI
+	@chmod  0777  $(OUT_DIR)/CI
+	@chmod  0666  $(OUT_DIR)/CI/*.zip
+	@echo "Resulting artifacts directory: $(OUT_DIR)/CI"
 
 # pass-through target for Makefile inside source/ dir
 %:
@@ -191,4 +229,9 @@ clean-build:
 clean-full: clean-build  docker-clean
 
 # phony targets
-.PHONY:  help  list  docker-check  docker-shell  docker-build  docker-clean  docs  docs-deploy  test-md  test-sh  test-py  test-ccpp  tests  clean-build  clean-full
+.PHONY:  help  list
+.PHONY:  docker-check  docker-shell  docker-build  docker-clean
+.PHONY:  docs  docs-deploy
+.PHONY:  test-md  test-sh  test-py  test-ccpp  tests
+.PHONY:  build-all  build-multilang  ci
+.PHONY:  clean-build  clean-full
