@@ -4,10 +4,10 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Kalibrering\nfärdig!"
         },
         "ResetOKMessage": {
-            "message": "Reset OK"
+            "message": "Återställning OK"
         },
         "SettingsResetMessage": {
             "message": "Inställningar\nåterställda"
@@ -28,16 +28,16 @@
             "message": "!LÅST!"
         },
         "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
+            "message": "Termisk\nFlykt"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!Spets Kortsluten!"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Före omstart, säkerställ att spetsen och handtaget är i rumstemperatur!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "kalibrerar\n"
         },
         "SettingsResetWarning": {
             "message": "Är du säker på att du vill återställa inställningarna?"
@@ -64,16 +64,16 @@
             "message": "Av"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Förvärmning\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Nedkyldning\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "Din enhet är sannerligen oäkta!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "För varm för att\nstarta profilen!"
         }
     },
     "characters": {
@@ -128,12 +128,12 @@
             "description": "Maximal QC-spänning enheten skall efterfråga"
         },
         "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+            "displayText": "PD\npauser",
+            "description": "PD förhandlings pauser i 100ms steg för kompatibilitet med vissa PD laddare"
         },
         "PDVpdo": {
             "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
+            "description": "Slår på PPS & EPR lägen"
         },
         "BoostTemperature": {
             "displayText": "Turbo-\ntemp",
@@ -156,60 +156,60 @@
             "description": "Vid lödning, håll nere bägge knappar för att slå på lås (A=Av | T=Bara turbo | F=Fullt lås)"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Profil-\nfaser",
+            "description": "Antal faser i profil läge"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Förvärmnings-\ntemp",
+            "description": "Förvärm till denna temperatur i början av provil läget"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Förvärmnings-\nhastighet",
+            "description": "Förvärm enligt denna hastighet (grader per sekund)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Fas 1\nTemp",
+            "description": "Måltemperatur i slutet av denna fas"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Fas 1\nTidslängd",
+            "description": "Mållängd av denna fasen (sekunder)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Fas 2\nTemp",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Fas 2\nTidslängd",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Fas 3\nTemp",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Fas 3\nTidslängd",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Fas 4\nTemp",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Fas 4\nTidslängd",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Fas 5\nTemp",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Fas 5\nTidslängd",
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Nedkylnings-\nhastighet",
+            "description": "Kyl ned i denna hastighet i slutet av profilen (grader per sekund)"
         },
         "MotionSensitivity": {
             "displayText": "Rörelse-\nkänslighet",
@@ -260,16 +260,16 @@
             "description": "Loopa animationer i huvudmeny"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
+            "displayText": "Skärmens\nLjusstyrka",
+            "description": "Justera OLED skärmens ljusstyrka"
         },
         "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
+            "displayText": "Invertera\nskärm",
+            "description": "Invertera OLED skärmens färger"
         },
         "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
+            "displayText": "Start logo\nTidslängd",
+            "description": "Sätt uppstartslogotypens tidslängd (s=sekunder)"
         },
         "AdvancedIdle": {
             "displayText": "Detaljerad\nvid inaktiv",
@@ -281,31 +281,31 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Tillåter BLE" 
         },
         "PowerLimit": {
             "displayText": "Max-\neffekt",
             "description": "Maximal effekt som enheten kan använda (Watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Kalibrera CJC\nnästa uppstart",
+            "description": "Vid nästa uppstart kommer spets Cold Junction Compensation kalibreras (ej nödvändigt om Delta T är < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Kalibrera\ninspänning?",
             "description": "Inspänningskalibrering. Knapparna justerar, håll inne för avslut"
         },
         "PowerPulsePower": {
-            "displayText": "Power\npulse",
-            "description": "Intensity of power of keep-awake-pulse (W=watt)"
+            "displayText": "Effekt\npuls",
+            "description": "Intensiteten av effekt för håll-vaken-puls (W=watt)"
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
-            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+            "displayText": "Effekt puls\nfördröjning",
+            "description": "Fördröjning innan håll-vaken-pulsen skickas (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Power pulse\nduration",
-            "description": "Keep-awake-pulse duration (x 250ms)"
+            "displayText": "Effekt puls\ntidsmängd",
+            "description": "Håll-vaken-puls varaktighet (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "Fabriks-\ninställ?",
