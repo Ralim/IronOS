@@ -1278,8 +1278,14 @@ def get_version_suffix(ver) -> str:
         sha_id = f"{subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD']).strip().decode('ascii').upper()}"
         ## - if the exact commit relates to tag, then this command should return one-line tag name:
         tag = f"{subprocess.check_output(['git', 'tag', '--points-at', '%s' % sha_id]).strip().decode('ascii')}"
-        ## - get short "traditional" branch name (as in `git branch` for that one with asterisk):
-        branch = f"{subprocess.check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('ascii')}"
+        if (
+            f"{subprocess.check_output(['git', 'rev-parse', '--symbolic-full-name', '--short', 'HEAD']).strip().decode('ascii')}"
+            == "HEAD"
+        ):
+            return "E" + "." + sha_id
+        else:
+            ## - get short "traditional" branch name (as in `git branch` for that one with asterisk):
+            branch = f"{subprocess.check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('ascii')}"
         if tag and "" != tag:
             # _Speculate_ on tag that it's Release...
             if ver == tag:
