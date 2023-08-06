@@ -22,6 +22,7 @@ There is a static line on top which is presented on every sub-screen and reflect
   - T - git-related release **t**ag but version is not vXX.YY !
   - D - git-related **d**ev branch
   - B - git-related custom **b**ranch
+  - E - git-related from d**e**tached commit
   - G - neither above but **g**it-related
   - C - build from github **C**I during _pull request_
   - H - build outside of a git tree (i.e. release tarball or **h**omebrew customization without git)
