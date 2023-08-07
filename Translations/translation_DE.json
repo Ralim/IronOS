@@ -31,7 +31,7 @@
             "message": "Thermal\nRunaway"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!Lötspitze\nkurzgeschlossen!"
         },
         "SettingsCalibrationWarning": {
             "message": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!"
@@ -61,7 +61,7 @@
             "message": "Temp: \n"
         },
         "OffString": {
-            "message": "Aus"
+            "message": "aus"
         },
         "ProfilePreheatString": {
             "message": "Vorwärmen\n"
@@ -145,15 +145,15 @@
         },
         "TempChangeShortStep": {
             "displayText": "Temp-Schritt\nDruck kurz",
-            "description": "Schrittweite für Temperaturwechsel bei kurzem Tastendruck"
+            "description": "Schrittweite für Temperaturänderung bei kurzem Tastendruck"
         },
         "TempChangeLongStep": {
             "displayText": "Temp-Schritt\nDruck lang",
-            "description": "Schrittweite für Temperaturwechsel bei langem Tastendruck"
+            "description": "Schrittweite für Temperaturänderung bei langem Tastendruck"
         },
         "LockingMode": {
             "displayText": "Tasten-\nsperre",
-            "description": "Langes drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
+            "description": "Langes Drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhasen",
@@ -173,7 +173,7 @@
         },
         "ProfilePhase1Duration": {
             "displayText": "Phase 1\nDauer",
-            "description": "Zieldauer dieser Phase (Sekunden)"
+            "description": "Dauer dieser Phase (Sekunden)"
         },
         "ProfilePhase2Temp": {
             "displayText": "Phase 2\nTemperatur",
@@ -217,7 +217,7 @@
         },
         "SleepTemperature": {
             "displayText": "Ruhe-\ntemperatur",
-            "description": "Ruhetemperatur der Spitze"
+            "description": "Ruhetemperatur der Lötspitze"
         },
         "SleepTimeout": {
             "displayText": "Ruhever-\nzögerung",
