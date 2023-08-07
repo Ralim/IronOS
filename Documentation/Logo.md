@@ -9,7 +9,7 @@ Bootup logos are stored at the end of the flash storage in the Iron; next to the
 
 ## Generating the Logo files
 
-Because logo's are stored at a fixed location in the device's internal flash; we can use the same method to flash these as you would normal firmware.
+Because logos are stored at a fixed location in the device's internal flash; we can use the same method to flash these as you would normal firmware.
 This does also mean that we need to convert the image/animation file into the format that IronOS understands.
 
 IronOS uses a pre-processed file format to dramatically reduce the amount of space required to store the image; allowing for animations and saving space.
