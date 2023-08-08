@@ -1,56 +1,79 @@
-# Startup Logos
+# Startup Logo / Animation
 
-This firmware supports a user created bootup logo.
-By default, there is _not_ one included in the firmware. This means that once flashed they generally stay. If you want no logo again, you would have to flash a blank image to the bootup logo. 
+When the device starts, you can have it optionally show either a static image or an animation. You can also set if these should stay on the screen or dismiss after some amount of time.
+These can be an elegant way to personalise your device or just mark it as your one at a meetup where there may be multiple.
+
+All devices supported by IronOS support this logo, and follow a similar process for setting one up. Please read the below general information as well as any model specific notes.
+
+Bootup logos are stored at the end of the flash storage in the Iron; next to the user settings. By locating them at the end of storage they are not erased during the normal firmware upgrade process. Once a logo is set it should stay (unless we need to change things in the main firmware); so to erase your logo you will also find that we generate an erase file. Alternatively your method of flashing _may_ support doing a full erase flash which will also work for this.
 
 ## Generating the Logo files
 
-There are community logo's already converted and ready to use in [IronOS-Meta/releases](https://github.com/Ralim/IronOS-Meta/releases).
+Because logos are stored at a fixed location in the device's internal flash; we can use the same method to flash these as you would normal firmware.
+This does also mean that we need to convert the image/animation file into the format that IronOS understands.
+
+IronOS uses a pre-processed file format to dramatically reduce the amount of space required to store the image; allowing for animations and saving space.
+
+In the [IronOS-Meta](https://github.com/Ralim/IronOS-Meta) repository is a `python` script to convert images into this pre-processed file format.
+Additionally, memebers of the community have contributed back their logo images as well. We provide these pre-converted for all models and ready to use in [IronOS-Meta/releases](https://github.com/Ralim/IronOS-Meta/releases).
 Download the zip for Pinecil or Miniware and then install using the instructions in the Flashing section below.
 
-If you want to make custom art then it needs to be converted with a Python script. The script and other needed files are in [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/). Go to that folder, then it is easiest to select the green Code button (upper right), then Download Zip. This way you get all the files you need and some extras. You only need what is inside Boot Logos. Put your custom image inside the Boot Logos folder with all python script files already there.
+If you want to make custom art then it needs to be converted with the Python script.
+You can checkout the repository or use the download-as-zip button in the Github web interface to download the code.
 
-The Python script converts an image passed into it on the command line into both a `.hex` file and a `.dfu` to be uploaded to the iron in DFU mode. The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (Png or Bmp) in any image editor and color the pixels black & white manually.
+Inside the download code is a `Boot Logos` folder, inside here is the python script required for logo conversion.
+It is easiest if you copy your logo file to be converted into this folder too, in order to keep commands shorter.
 
-The converter requires at least Python3 and Pillow apps. Follow online instructions for installing Python and Pillow.
+The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (`png` or `bmp`) in any image editor and color the pixels black & white manually. The thresholding used for converting colour to B&W may not always work as well as one would hope.
 
-For Windows, it is recommended to use Windows PowerShell instead of Command.
-Open Powershell (run as administrator), type python to install it, it will open microsoft store where you can install it free.
-Go back to Powershell and install Pillow. What works can vary, but this command may work:
+The converter requires at least Python3 and Pillow apps. Follow online instructions for installing Python and Pillow on your machine. Any reasonably recent version should work well.
 
-    python -m pip install Pillow
-or 
-    python3 -m pip install pillow
+When running the script on the Windows operating system; it is recommended to use `Powershell` rather than the old `Command Prompt`.
 
-If the above does not work, see [this page](https://stackoverflow.com/a/20061019/6705343) on StackOverflow about installing Pillow.
-Now that Python and Pillow are successfuly installed, you can convert an image.
+For installing pillow; you can install it via your package manager (Debian and similar distros) or via pip. To install via pip the command should be `python -m pip install pillow`.
 
-Go back to Powershell and type this command (change infile.png to the name of your image):
+In your shell you can now execute `python img2logo.py input.png out -m ${model}` to convert the file `input.png` and create output files in the folder `out`.
+The model should be replaced by one of the following options:
 
-- `python img2logo.py infile.png out -m`  for Miniware
-- `python img2logo.py infile.png out -p`  for Pinecil
+- `miniware` for older Miniware Irons -> TS100, TS80, TS80P
+- `pinecilv1` for the Pinecil V1
+- `pinecilv2` for the Pinecil V2
+- `ts101` for the Miniware TS101 [^1]
+- `s60` for the Squire S60 [^1]
+- `mhp30` for the Miniware MHP30
 
-Run `python img2logo.py --help` to see available options. Replace the word python with python3 if you have multiple versions of python installed. 
+Different models are used for different flash locations for the image storage.
+This means that files are **not** interchangeable between devices. If you are flashing multiple devices you will need to create a different file for different models.
+
+After processing its expected to have a `.hex` and `.dfu` file created to be used. Which one to use will depend on your device.
 
 Note: make sure your image file is in the same folder as script files (img2logo.py, output_dfu.py, output_hex.py).
 
+[^1] Note that these devices have larger resolution screens that the logo system supports right now. Fixes are coming for this soon, roughly scheduled for 2.23.
+
 ## Flashing the Logo
 
-### Miniware (TS100/TS80/TS80P)
+### Upload via virtual disk (TS100,TS101,TS80,TS80P,S60,MHP30)
 
-Upload the HEX file to the iron in DFU mode and, if the file's extension changes to .RDY, your custom splash screen should show up on startup.
-You perform this the same way as if you were flashing a new firmware, and all the existing notes around this apply.
+If you normally update your firmware by having your device show up as a flash drive this is the method for you.
+This applies to all Miniware + S60 devices running the stock DFU bootloader.
 
-If you have flashed the `IronOS-dfu` alternative bootloader, you should use the `.dfu` files instead
+Place your device into update mode (usually by holding the B button when connecting your device to your pc via USB).
+Upload the `.hex` file you created earlier as if it was a firmware update. Do any normal tricks required for firmware flashing if any are required.
+Afterwards the firmware should indicate that it has worked (often by creating a `.rdy` file).
 
-### Pinecil V1
+At this point unplug your iron and re-connect it to power to start normally and the logo should welcome you.
 
-For Pinecil V1, we require using dfu-util to flash the logo art (Pinecil does not use hex).
-[Pine64 Updater](https://github.com/pine64/pine64_updater/releases) is the easiest way to load the Bootup logo onto Pinecil as it already includes the necessary DFU library. Connect Pinecil to a PC, and open the Updater the same as updating firmware.
-  Select Custom > Browse to the DFU image file you just made > Update to install.
+### Upload via GUI flash tool (PinecilV1/V2)
 
-The bootup logo is stored in a separate location than the IronOS firmware and you do not have to worry about it changing or breaking the IronOS.
+If you normally upload your firmware using a helper application, they should accept the files from the bootlogo the same as the normal firmware.
+Try the `.dfu` file first and then the `.hex`. If neither work then the application may not be updated to be able to handle boot logos. And you may need to use a different/newer tool.
 
-You could also use dfu-util and use Command line to install it.
+### Upload via dfu-util (PinecilV1/IronOS-DFU)
 
-- `dfu-util -D logo_file.dfu`
+For the PinecilV1 and for any devices that have been converted to use `IronOS-DFU` as the bootloader you can flash these via the `dfu-util` command line tool.
+For these flash as per usual using the `.dfu` file. Afterwards power cycle and the logo should show up.
+
+### Upload via blisp (PinecilV2)
+
+For the PinecilV2 we suggest `blisp` as the command line tool to use if you are not using a GUI tool. `blsip` has been updated to accept `.dfu` files as well as the `.bin` files it historically used. As such you use the `.dfu` file for the logo and flash as per normal otherwise and it will work and reboot at the end. It should show you your new logo after flashing.

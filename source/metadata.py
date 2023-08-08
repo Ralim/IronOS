@@ -35,7 +35,10 @@ def load_json(filename: str):
         return json.loads(f.read())
 
 def read_git_tag():
-    return f"{subprocess.check_output(['git', 'rev-parse', '--short=7', 'HEAD']).strip().decode('ascii').upper()}"
+    if os.environ.get("GITHUB_CI_PR_SHA", "") != "":
+        return os.environ["GITHUB_CI_PR_SHA"][:7].upper()
+    else:
+        return f"{subprocess.check_output(['git', 'rev-parse', '--short=7', 'HEAD']).strip().decode('ascii').upper()}"
 
 def read_version():
     with open(HERE / "version.h") as version_file:
