@@ -31,7 +31,7 @@
             "message": "Temperatura\nfuori controllo"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "Punta in cortocircuito!"
         },
         "SettingsCalibrationWarning": {
             "message": "Prima di riavviare assicurati che la punta e l'impugnatura siano a temperatura ambiente!"
