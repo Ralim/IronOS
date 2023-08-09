@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 TRANSLATION_DIR="../Translations"
 #TRANSLATION_SCRIPT="make_translation.py"
@@ -91,14 +91,10 @@ while getopts "h:l:m:" option; do
             usage
             ;;
         l)  
-            set -f 
-            IFS=' '
-            largs=($OPTARG)
+            IFS=' ' read -r -a largs <<< "${OPTARG}"
             ;;
         m)  
-            set -f 
-            IFS=' '
-            margs=($OPTARG)
+            IFS=' ' read -r -a margs <<< "${OPTARG}"
             ;;
         *)
             usage
@@ -124,7 +120,7 @@ if ((${#largs[@]})); then
     done
     echo ""
 fi
-if [ -z "$BUILD_LANGUAGES" ]; then
+if [ -z "${BUILD_LANGUAGES[*]}" ]; then
     echo "    No custom languages selected."
     echo "    Building: [ALL LANGUAGES]"
     BUILD_LANGUAGES+=("${AVAILABLE_LANGUAGES[@]}")
@@ -137,11 +133,11 @@ echo " ${AVAILABLE_MODELS[*]}"
 echo -n "Requested models : "
 if ((${#margs[@]})); then
     for i in "${margs[@]}"; do
-        
+
         if [[ "$i" != "Pinecil" ]] && [[ "$i" != "Pinecilv2" ]]; then # Dirty. Need to adapt the Build process to use upper cases only
             i=$(echo "${i}" | tr '[:lower:]' '[:upper:]')
         fi
-        
+
         if isInArray "$i" "${AVAILABLE_MODELS[@]}"; then
             echo -n "$i "
             BUILD_MODELS+=("$i")
@@ -152,7 +148,7 @@ if ((${#margs[@]})); then
     echo ""
 fi
 
-if [ -z "$BUILD_MODELS" ]; then
+if [ -z "${BUILD_MODELS[*]}" ]; then
     echo "    No custom models selected."
     echo "    Building: [ALL MODELS]"
     BUILD_MODELS+=("${AVAILABLE_MODELS[@]}")
