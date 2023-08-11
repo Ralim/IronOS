@@ -31,7 +31,7 @@
             "message": "Teplotní\nOchrana"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!Zkrat na hrotu!"
         },
         "SettingsCalibrationWarning": {
             "message": "Před restartem se ujistěte, že hrot a držák mají pokojovou teplotu!"
@@ -67,16 +67,16 @@
             "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Předehřívání\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Zchlazování\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Vaše zařízení je s nejvyšší pravděpodobností padělek!"
+            "message": "Vaše zařízení je pravěpodobně padělek!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Teplota příliš vysoká pro start profilu"
         }
     },
     "characters": {
@@ -212,60 +212,60 @@
             "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Profilové\nFáze",
+            "description": "Počet fází v profilovém režimu"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Teplota\nPředehřátí",
+            "description": "Teplota na kterou předehřát na začátku profilového režimu"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Rychlost\nPředehřívání",
+            "description": "Rychlost předehřívání (stupně za sekundu)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Teplota\nFáze 1",
+            "description": "Cílová teplota na konci této fáze"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Trvání\nFáze 1",
+            "description": "Doba trvání této fáze (sekundy)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Teplota\nFáze 2",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Trvání\nFáze 2",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Teplota\nFáze 3",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Trvání\nFáze 3",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Teplota\nFáze 4",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Trvání\nFáze 4",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Teplota\nFáze 5",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Trvání\nFáze 5",
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Rychlost\nochlazování",
+            "description": "Rychlost ochlazování na konci profilového režimu (stupně za sekundu)"
         },
         "MotionSensitivity": {
             "displayText": "Citlivost\nna pohyb",

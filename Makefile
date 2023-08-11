@@ -79,16 +79,18 @@ help:
 list:
 	@echo
 	@echo "Supported top-level targets:"
-	@echo "  * help         - shows short basic help"
-	@echo "  * list         - this output"
-	@echo "  * docker-shell - start docker container with shell inside to work on IronOS with all tools needed"
-	@echo "  * docker-build - compile builds of IronOS for supported models inside docker container and place them to \"scripts/ci/artefacts/\""
-	@echo "  * docker-clean - delete created docker container (but not pre-downloaded data for it)"
-	@echo "  * docs         - generate \"site\"/ directory with documentation in a form of static html files using ReadTheDocs framework and $(MKDOCS_YML) local config file"
-	@echo "  * docs-deploy  - generate & deploy docs online to gh-pages branch of current github repo"
-	@echo "  * tests        - run set of checks, linters & tests (equivalent of github CI IronOS project settings for push trigger)"
-	@echo "  * clean-build  - delete generated files & dirs produced during builds EXCEPT generated docker container image"
-	@echo "  * clean-full   - delete generated files & dirs produced during builds INCLUDING generated docker container image"
+	@echo "  * help               - shows short basic help"
+	@echo "  * list               - this output"
+	@echo "  * docker-shell       - start docker container with shell inside to work on IronOS with all tools needed"
+	@echo "  * docker-build       - compile builds of IronOS for supported models inside docker container and place them to $(OUT_DIR) (set OUT env var to override: OUT=/path/to/dir make ...)"
+	@echo "  * docker-clean       - delete created docker image for IronOS & its build cache objects (to free a lot of space)"
+	@echo "  * docker-clean-cache - delete build cache objects of IronOS docker image EXCEPT the image itself"
+	@echo "  * docker-clean-image - delete docker image for IronOS EXCEPT its build cache objects"
+	@echo "  * docs               - generate \"site\"/ directory with documentation in a form of static html files using ReadTheDocs framework and $(MKDOCS_YML) local config file"
+	@echo "  * docs-deploy        - generate & deploy docs online to gh-pages branch of current github repo"
+	@echo "  * tests              - run set of checks, linters & tests (equivalent of github CI IronOS project settings for push trigger)"
+	@echo "  * clean-build        - delete generated files & dirs produced during builds EXCEPT docker image & its build cache"
+	@echo "  * clean-full         - delete generated files & dirs produced during builds INCLUDING docker image & its build cache"
 	@echo ""
 	@echo "NOTES on supported pass-trough targets:"
 	@echo "  * main Makefile is located in source/ directory and used to build the firmware itself;"
@@ -123,9 +125,16 @@ docker-shell: docker-check  $(DOCKER_DEPS)
 docker-build: docker-check  $(DOCKER_DEPS)
 	$(DOCKER_CMD)  make  build-all
 
-# delete container
-docker-clean: docker-check
+# delete docker image
+docker-clean-image:
 	-docker  rmi  ironos-builder:latest
+
+# delete docker build cache objects
+docker-clean-cache:
+	-docker  system  prune  --filter label=ironos-builder:latest  --force
+
+# delete docker image & cache related to IronOS container
+docker-clean: docker-clean-image  docker-clean-cache
 
 # generate docs in site/ directory (DIR for -d is relative to mkdocs.yml file location, hence use default name/location site by setting up ../site)
 docs: $(MKDOCS_YML)  Documentation/*  Documentation/Flashing/*  Documentation/images/*
@@ -222,7 +231,6 @@ ci: tests  build-all  build-multilang
 clean-build:
 	$(MAKE)  -C source/  clean-all
 	rm  -Rf  site
-	rm  -Rf  scripts/ci/artefacts
 	rm  -Rf  $(OUT_DIR)
 
 # global clean-up target
@@ -230,7 +238,7 @@ clean-full: clean-build  docker-clean
 
 # phony targets
 .PHONY:  help  list
-.PHONY:  docker-check  docker-shell  docker-build  docker-clean
+.PHONY:  docker-check  docker-shell  docker-build  docker-clean-image  docker-clean-cache  docker-clean
 .PHONY:  docs  docs-deploy
 .PHONY:  test-md  test-sh  test-py  test-ccpp  tests
 .PHONY:  build-all  build-multilang  ci

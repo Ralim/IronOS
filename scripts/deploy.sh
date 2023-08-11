@@ -17,7 +17,7 @@ usage()
 	echo "CMD (docker related):"
 	echo -e "\tshell - start docker container with shell inside to work on IronOS with all tools needed"
 	echo -e "\tbuild - compile builds of IronOS inside docker container for supported hardware"
-	echo -e "\tclean - delete created docker container (but not pre-downloaded data for it)\n"
+	echo -e "\tclean - delete created docker image for IronOS & its build cache objects\n"
 	echo "CMD (helper routines):"
 	echo -e "\tdocs_readme - generate & OVERWRITE(!) README.md inside Documentation/ based on nav section from mkdocs.yml if it changed\n"
 	echo -e "\tcheck_style_file SRC - run code style checks based on clang-format & custom parsers for source code file SRC\n"
@@ -194,6 +194,7 @@ elif [ "${cmd}" = "build" ]; then
 	docker_cmd="run  --rm  builder  make  build-all  OUT=${OUT}"
 elif [ "${cmd}" = "clean" ]; then
 	docker  rmi  ironos-builder:latest
+	docker  system  prune  --filter label=ironos-builder:latest  --force
 	exit "${?}"
 else
 	usage
