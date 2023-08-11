@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Калибрирането\nе завършено!"
         },
         "ResetOKMessage": {
             "message": "Нулиране"
@@ -13,267 +13,267 @@
             "message": "Настройките бяха\nнулирани!"
         },
         "NoAccelerometerMessage": {
-            "message": "No accelerometer\ndetected!"
+            "message": "Не е открит\nакселерометър!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "No USB-PD IC\ndetected!"
+            "message": "Не е открито\nUSB-PD захранване!"
         },
         "LockingKeysString": {
-            "message": "LOCKED"
+            "message": "ЗАКЛЮЧ"
         },
         "UnlockingKeysString": {
-            "message": "UNLOCKED"
+            "message": "ОТКЛЮЧ"
         },
         "WarningKeysLockedString": {
-            "message": "!LOCKED!"
+            "message": "!ЗАКЛЮЧ!"
         },
         "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
+            "message": "Неконтролируемо\nпрегряване"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!КС на човка!"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Преди рестартиране се уверете, че човка и дръжката са на стайна температурата!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "калибриране\n"
         },
         "SettingsResetWarning": {
             "message": "Сигурни ли сте, че искате да върнете фабричните настройки?"
         },
         "UVLOWarningString": {
-            "message": "Ниско DC Напрежение"
+            "message": "НИС.НАПР."
         },
         "UndervoltageString": {
-            "message": "Ниско Напрежение\n"
+            "message": "Ниско напрежение\n"
         },
         "InputVoltageString": {
             "message": "Входно V: \n"
         },
         "SleepingSimpleString": {
-            "message": "Сън"
+            "message": "Хъррр"
         },
         "SleepingAdvancedString": {
-            "message": "Хър Хър Хър...\n"
+            "message": "Сън...\n"
         },
         "SleepingTipAdvancedString": {
-            "message": "Връх: \n"
+            "message": "Човка:\n"
         },
         "OffString": {
             "message": "Изкл."
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Загряване\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Охлаждане\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "Вероятно, устройство е фалшификат!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Твърде горещо за\nстартиране на профила"
         }
     },
     "characters": {
-        "SettingRightChar": "R",
-        "SettingLeftChar": "L",
-        "SettingAutoChar": "A",
-        "SettingOffChar": "O",
-        "SettingSlowChar": "S",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "F",
+        "SettingRightChar": "Д",
+        "SettingLeftChar": "Л",
+        "SettingAutoChar": "А",
+        "SettingOffChar": "И",
+        "SettingSlowChar": "Н",
+        "SettingMediumChar": "С",
+        "SettingFastChar": "В",
         "SettingStartNoneChar": "И",
-        "SettingStartSolderingChar": "Р",
+        "SettingStartSolderingChar": "З",
         "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "П",
-        "SettingLockDisableChar": "D",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "F"
+        "SettingLockDisableChar": "И",
+        "SettingLockBoostChar": "Т",
+        "SettingLockFullChar": "П"
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Power\nsettings",
+            "displayText": "Настройки на\nзахранването",
             "description": ""
         },
         "SolderingMenu": {
-            "displayText": "Поялник\nНастройки",
+            "displayText": "Настройки на\nзапояване",
             "description": ""
         },
         "PowerSavingMenu": {
-            "displayText": "Режими\nНастройки",
+            "displayText": "Авто\nизключване",
             "description": ""
         },
         "UIMenu": {
-            "displayText": "Интерфейс\nНастройки",
+            "displayText": "Интерфейс\n",
             "description": ""
         },
         "AdvancedMenu": {
-            "displayText": "Разширени\nНастройки",
+            "displayText": "Допълнителни\nнастройки",
             "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "displayText": "Източник\nзахранване",
-            "description": "Източник на захранване. Минимално напрежение. (DC 10V) (S 3,3V за клетка)"
+            "displayText": "Гранично\nнапрежение",
+            "description": "Минимално напрежение, за да не се изтощи батерията (DC 10V) (S 3,3V за клетка)"
         },
         "MinVolCell": {
-            "displayText": "Minimum\nvoltage",
-            "description": "Minimum allowed voltage per battery cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+            "displayText": "Мин.\nнапрежение",
+            "description": "Минимално допустимо напрежение на акумулаторна клетка (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "Мощност на\nзахранване",
-            "description": "Мощност на избраното захранване"
+            "displayText": "Напреж.\nна QC",
+            "description": "Максимална напрежение с QC захранвания"
         },
         "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+            "displayText": "PD\nинтервал",
+            "description": "PD интервал за договаряне на захранването на стъпки от 100 мс за съвместимост с някои QC захранвания (0=Изкл.)"
         },
         "PDVpdo": {
             "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
+            "description": "Включи PPS & EPR"
         },
         "BoostTemperature": {
             "displayText": "Турбо\nтемп.",
-            "description": "Температура за \"турбо\" режим"
+            "description": "Температурата за \"турбо\" режим"
         },
         "AutoStart": {
             "displayText": "Автоматичен\nработен режим",
-            "description": "Режим на поялника при включване на захранването. (И=Изключен | Р=Работен | С=Сън | П=Сън температура помещение)"
+            "description": "Режим на поялника при включване на захранването (И=Изкл. | З=Запояване | С=Сън | П=Покой на стайна температурата)"
         },
         "TempChangeShortStep": {
-            "displayText": "Промяна T\nбързо?",
-            "description": "Промяна на температура при бързо натискане на бутон!"
+            "displayText": "Промяна T\nбързо",
+            "description": "Промяна на температурата при бързо натискане на бутон"
         },
         "TempChangeLongStep": {
-            "displayText": "Промяна Т\nзадържане?",
-            "description": "Промяна на температура при задържане на бутон!"
+            "displayText": "Промяна Т\nзадържане",
+            "description": "Промяна на температурата при задържане на бутон"
         },
         "LockingMode": {
-            "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "displayText": "Бутони за\nзаключване",
+            "description": "Докато запоявате, задръжте двата бутона, за да превключите заключването им (И=Изкл. | Т=Турбо режим | П=Пълно)"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Брой\nетапи",
+            "description": "Броят на етапите в режим на термичен профил"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Температурата\nна загряване",
+            "description": "Температурата на загряване в началото на режим на термичен профил"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Скорост на\nзагряване",
+            "description": "Скорост на предварително загряване (градуси в секунда)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Етап 1\nТемпературата",
+            "description": "Температурата в края на този етап"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Етап 1\nПродължителност",
+            "description": "Продължителност на този етап (в секунди)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Етап 2\nТемпературата",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Етап 2\nПродължителност",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Етап 3\nТемпературата",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Етап 3\nПродължителност",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Етап 4\nТемпературата",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Етап 4\nПродължителност",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Етап 5\nТемпературата",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Етап 5\nПродължителност",
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Скорост на\nохлаждане",
+            "description": "Скорост на охлаждане в края на режим на термичен профил (градуси в секунда)"
         },
         "MotionSensitivity": {
-            "displayText": "Усещане\nза движение",
-            "description": "Усещане за движение (0=Изключено | 1=Слабо | ... | 9=Силно)"
+            "displayText": "Чувствител.\nна движение",
+            "description": "Чувствителност на движение на акселерометър (0=Изкл. | 1=Слабо | ... | 9=Силно)"
         },
         "SleepTemperature": {
             "displayText": "Темп.\nсън",
-            "description": "Температура при режим \"сън\" (C)"
+            "description": "Температурата при режим \"сън\""
         },
         "SleepTimeout": {
             "displayText": "Време\nсън",
-            "description": "Включване в режим \"сън\" след: (Минути | Секунди)"
+            "description": "Включване в режим \"сън\" (секунди | минути)"
         },
         "ShutdownTimeout": {
             "displayText": "Време\nизкл.",
-            "description": "Изключване след (Минути)"
+            "description": "Изключване след (минути)"
         },
         "HallEffSensitivity": {
-            "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=Изключено | 1=Слабо | ... | 9=Силно)"
+            "displayText": "Датчик\nна Хол",
+            "description": "Чувствителност на сензора към магнитно поле (0=Изкл. | 1=Слабо | ... | 9=Силно)"
         },
         "TemperatureUnit": {
-            "displayText": "Единици за\nтемпература",
-            "description": "Единици за температура (C=Целзии | F=Фаренхайт)"
+            "displayText": "Единици за\nтемпературата",
+            "description": "Единици за температурата (C=Целзии | F=Фаренхайт)"
         },
         "DisplayRotation": {
             "displayText": "Ориентация\nна дисплея",
-            "description": "Ориентация на дисплея (R=Дясна Ръка | L=Лява Ръка | A=Автоматично)"
+            "description": "Ориентация на дисплея (Д=Дясна ръка | Л=Лява ръка | А=Авто)"
         },
         "CooldownBlink": {
             "displayText": "Мигай при\nтопъл поялник",
-            "description": "След изключване от работен режим, индикатора за температура да мига докато човката на поялника все още е топла"
+            "description": "След изключване от работен режим, индикатора за температурата да мига докато човката на поялника все още е топла"
         },
         "ScrollingSpeed": {
             "displayText": "Скорост\nна текста",
-            "description": "Скорост на движение на този текст"
+            "description": "Скорост на движение на този текст (Н=Ниска | B=Висока)"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Размяна\nбутони +-?",
-            "description": "Обръщане на бутоните \"+\" и \"-\" за промяна на температурата на върха на поялника"
+            "displayText": "Размяна\nбутони +/-",
+            "description": "Обръщане на бутоните + и - за промяна на температурата на човка на поялника"
         },
         "AnimSpeed": {
-            "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+            "displayText": "Скорост на\nанимацията",
+            "description": "Скорост на анимация на иконата в главното меню (И=Изкл. | Н=Ниска | C=Средна | B=Висока)"
         },
         "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop icon animations in main menu"
+            "displayText": "Анимац.\nцикъл",
+            "description": "Зациклена анимация на иконите в главното меню"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
+            "displayText": "Яркост\nна екрана",
+            "description": "Регулирайте яркостта на екрана"
         },
         "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
+            "displayText": "Инвертиране\nна екрана",
+            "description": "Инверсия на пикселите на екрана"
         },
         "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
+            "displayText": "Продължит.\nлогото",
+            "description": "Продължителност на логото за стартиране (в секунди)"
         },
         "AdvancedIdle": {
             "displayText": "Детайлен\nекран в покой",
-            "description": "Покажи детайлна информация със ситен шрифт на екрана в режим на покой."
+            "description": "Покажи детайлна информация със ситен шрифт на екрана в режим на покой"
         },
         "AdvancedSoldering": {
             "displayText": "Детайлен\nработен екран",
@@ -281,34 +281,34 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Включи BLE"
         },
         "PowerLimit": {
             "displayText": "Лимит на\nмощност",
-            "description": "Максимална мощност на поялника (Watt)"
+            "description": "Максимална мощност на поялника (вати)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+            "displayText": "Калибриране\nна темп.",
+            "description": "Калибриране на температурата (CJC) при следващо включване (не се изисква, ако разликата е по-малка от 5 °С)"
         },
         "VoltageCalibration": {
-            "displayText": "Калибриране\nнапрежение?",
-            "description": "Калибриране на входното напрежение. Задръжте бутонa за изход"
+            "displayText": "Калибриране\nнапрежение",
+            "description": "Калибриране на входното напрежение (задръжте бутонa за изход)"
         },
         "PowerPulsePower": {
             "displayText": "Захранващ\nимпулс",
-            "description": "Поддържане на интензивност на захранващия импулс"
+            "description": "Поддържане на интензивност на захранващия импулс (вати)"
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
-            "description": "Delay before keep-awake-pulse is triggered (x 2,5с)"
+            "displayText": "Закъснение\nна импулса",
+            "description": "Пауза между импулсите, които предпазват захранването от автоматично изключване (x 2,5 с)"
         },
         "PowerPulseDuration": {
-            "displayText": "Power pulse\nduration",
-            "description": "Keep-awake-pulse duration (x 250мс)"
+            "displayText": "Продължит.\nна импулса",
+            "description": "Дължината на импулса, който предпазва захранването от автоматично изключване (x 250 мс)"
         },
         "SettingsReset": {
-            "displayText": "Фабрични\nнастройки?",
+            "displayText": "Фабрични\nнастройки",
             "description": "Връщане на фабрични настройки"
         },
         "LanguageSwitch": {
