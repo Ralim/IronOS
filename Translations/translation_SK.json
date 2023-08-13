@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Kalibrácia\ndokončená!"
         },
         "ResetOKMessage": {
             "message": "Reset OK"
@@ -31,13 +31,13 @@
             "message": "Únik\nTepla"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!Skrat hrotu!"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Pred reštartovaním sa uistite, že hrot a rúčka je v izbovej teplote!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "kalibrovanie\n"
         },
         "SettingsResetWarning": {
             "message": "Naozaj chcete obnoviť továrenské nastavenia?"
@@ -64,16 +64,16 @@
             "message": "Vyp"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Predhrievanie\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Schladzovanie\n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Vaše zariadenie je pravdepodobne falzifikát!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Teplota príliž vysoká pre štart profilu"
         }
     },
     "characters": {
@@ -133,7 +133,7 @@
         },
         "PDVpdo": {
             "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
+            "description": "Zapína PPS & EPR režimy"
         },
         "BoostTemperature": {
             "displayText": "Boost\nteplota",
@@ -156,60 +156,60 @@
             "description": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania (Z=Zakázať | B=Okrem boost | P=Plné zamknutie)"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Profilové\nFázy",
+            "description": "Počet fáz v profilovóm režime"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Teplota\nPredhriatia",
+            "description": "Teplota na ktorú sa má predohriať na začiatku profilového režimu"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Rýchlosť\nPredhriatia",
+            "description": "Rýchlosť predhrievania (stupňe za sekundu)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Teplota\nFáze 1",
+            "description": "Cieľová teplota na konci tejto fáze"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Trvanie\nFáze 1",
+            "description": "Doba trvania tejto fáze (sekundy)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Teplota\nFáze 2",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Trvanie\nFáze 2",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Teplota\nFáze 3",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Trvanie\nFáze 3",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Teplota\nFáze 4",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Trvanie\nFáze 4",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Teplota\nFáze 5",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Trvanie\nFáze 4",
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Rýchlosť\nochladzovania",
+            "description": "Rýchlosť ochladzovania na konci profilového režimu (stupne za sekundu)"
         },
         "MotionSensitivity": {
             "displayText": "Citlivosť\npohybu",
@@ -281,15 +281,15 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Zapne BLE"
         },
         "PowerLimit": {
             "displayText": "Obmedzenie\nvýkonu",
             "description": "Obmedzenie výkonu podľa použitého zdroja (watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Kalibrácia CJC\npri nasladujúcom štarte",
+            "description": "Pri nasledujúcom štarte bude kalibrovaná kompenzácia studeného spoja (nie je potrebné ak Delta T je < 5°C)"
         },
         "VoltageCalibration": {
             "displayText": "Kalibrácia\nnap. napätia",
