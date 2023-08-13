@@ -40,7 +40,7 @@ If you have a different device, follow the same logic and locate the temperature
 
 ## OLED screen is black / pixels are barely visible
 
-If there is a blank screen on the OLED of a soldering iron, or screen works but pixels are barely visible, although soldering iron itself is working (i.e., you can safely check that it's turning on, heating up & melting solder successfully), then it means that _most likely_ OLED is dead. But it can be relatively easily replaced. Models TS100 / TS80 / TS80P share the same OLED type which can be bought online and used for replacement. To do so:
+If there is a blank screen on the OLED of a soldering iron, or screen works but pixels are barely visible, although soldering iron itself is working (i.e., you can safely check that it's turning on, heating up & melting solder successfully), then it means that _most likely_ OLED is dead. But it can be relatively easily replaced. Models like `TS100`, `TS80`, and `TS80P` share the same OLED screen which can be bought online and used for replacement. To do so:
 
 - find & buy at electronics shop [of your choice] display with the following spec line:  
 ```OLED 0.69 inch / 14 pins / 96 x 16 pixels / **9616TSWC** / I2C IIC```
@@ -49,6 +49,6 @@ If there is a blank screen on the OLED of a soldering iron, or screen works but 
 - desolder old OLED and solder back new one;
 - assemble your soldering iron back.
 
-There are a few youtube videos how to do it like [this one for TS100](https://www.youtube.com/watch?v=HlWAY0oYPFI).
+There are a few youtube videos how to do it like [this one for `TS100`](https://www.youtube.com/watch?v=HlWAY0oYPFI).
 
-Unfortunately, this is a well-known issue of OLED screens: sooner or later the brightness is starting to "fade out" until complete off. Usually common recommendations to prolong its lifetime are: reduce brightness & disable animations. But your results may vary since there were reports when users couldn't see anything on turning on soldering irons which were just laying in a box for a couple of months after buying.
+Unfortunately, this is a well-known issue of screens with OLED technology: sooner or later the brightness is starting to _"fade out"_ until complete off. Usually common recommendations to prolong its lifetime are: reduce brightness & reduce too often updates (i.e., disable animations). But your results may vary since there were reports when users couldn't see anything after turning on soldering irons which were just laying in a box for a few months after buying. And there are users with first `TS100` models not having any issues with display at all.
