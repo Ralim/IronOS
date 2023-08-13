@@ -8,6 +8,7 @@
 #include "TipThermoModel.h"
 #include "BSP.h"
 #include "Settings.h"
+#include "Types.h"
 #include "Utils.h"
 #include "configuration.h"
 #include "main.hpp"
@@ -54,30 +55,26 @@ uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool ski
   return valueuV;
 }
 
-uint32_t TipThermoModel::convertTipRawADCToDegC(uint16_t rawADC) { return convertuVToDegC(convertTipRawADCTouV(rawADC)); }
-uint32_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) { return convertuVToDegF(convertTipRawADCTouV(rawADC)); }
+TemperatureType_t TipThermoModel::convertTipRawADCToDegC(uint16_t rawADC) { return convertuVToDegC(convertTipRawADCTouV(rawADC)); }
+TemperatureType_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) { return convertuVToDegF(convertTipRawADCTouV(rawADC)); }
 
-uint32_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) { return convertCtoF(convertuVToDegC(tipuVDelta)); }
+TemperatureType_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) { return convertCtoF(convertuVToDegC(tipuVDelta)); }
 
-uint32_t TipThermoModel::convertCtoF(uint32_t degC) {
+TemperatureType_t TipThermoModel::convertCtoF(TemperatureType_t degC) {
   //(Y °C × 9/5) + 32 =Y°F
   return (32 + ((degC * 9) / 5));
 }
 
-uint32_t TipThermoModel::convertFtoC(uint32_t degF) {
+TemperatureType_t TipThermoModel::convertFtoC(TemperatureType_t degF) {
   //(Y°F − 32) × 5/9 = Y°C
   if (degF < 32) {
     return 0;
   }
   return ((degF - 32) * 5) / 9;
 }
-uint32_t TipThermoModel::getTipInC(bool sampleNow) {
-  int32_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(sampleNow));
+TemperatureType_t TipThermoModel::getTipInC(bool sampleNow) {
+  TemperatureType_t currentTipTempInC = TipThermoModel::convertTipRawADCToDegC(getTipRawTemp(sampleNow));
   currentTipTempInC += getHandleTemperature(sampleNow) / 10; // Add handle offset
-
-  // Power usage indicates that our tip temp is lower than our thermocouple temp.
-  // I found a number that doesn't unbalance the existing PID, causing overshoot.
-  // This could be tuned in concert with PID parameters...
 
   if (currentTipTempInC < 0) {
     return 0;
@@ -85,14 +82,14 @@ uint32_t TipThermoModel::getTipInC(bool sampleNow) {
   return currentTipTempInC;
 }
 
-uint32_t TipThermoModel::getTipInF(bool sampleNow) {
-  uint32_t currentTipTempInF = getTipInC(sampleNow);
-  currentTipTempInF          = convertCtoF(currentTipTempInF);
+TemperatureType_t TipThermoModel::getTipInF(bool sampleNow) {
+  TemperatureType_t currentTipTempInF = getTipInC(sampleNow);
+  currentTipTempInF                   = convertCtoF(currentTipTempInF);
   return currentTipTempInF;
 }
 
-uint32_t TipThermoModel::getTipMaxInC() {
-  uint32_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(ADC_MAX_READING - 1);
+TemperatureType_t TipThermoModel::getTipMaxInC() {
+  TemperatureType_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(ADC_MAX_READING - 1);
   maximumTipTemp += getHandleTemperature(0) / 10; // Add handle offset
   return maximumTipTemp - 1;
 }

@@ -2,10 +2,11 @@
 #define __MAIN_H
 #include "OLED.hpp"
 #include "Setup.h"
+#include "Types.h"
 #include <stdint.h>
-extern volatile uint32_t currentTempTargetDegC;
-extern bool              settingsWereReset;
-extern bool              usb_pd_available;
+extern volatile TemperatureType_t currentTempTargetDegC;
+extern bool                       settingsWereReset;
+extern bool                       usb_pd_available;
 #ifdef __cplusplus
 extern "C" {
 #endif

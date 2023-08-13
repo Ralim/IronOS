@@ -6,10 +6,12 @@
  */
 #include "Setup.h"
 #include "TipThermoModel.h"
+#include "Types.h"
 #include "Utils.h"
 #include "configuration.h"
-extern uint16_t tipSenseResistancex10Ohms;
-uint32_t        TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
+
+extern uint16_t   tipSenseResistancex10Ohms;
+TemperatureType_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) {
   // For the MHP30, we are mimicing the original code and using the resistor fitted to the base of the heater head,
   // this is measured at boot in pid task and in the disconnected tip check if tip is removed
   if (tipSenseResistancex10Ohms > 900 && tipSenseResistancex10Ohms <= 1100) {
