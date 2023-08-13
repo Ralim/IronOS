@@ -37,3 +37,18 @@ If it worked on older firmware, but not on 2.16+, weak solder joints are suspect
 If the CHan is extremely high, and reflowing the temperature sensor does not resolve the issue; inspect the pins in the main MCU, possibly try giving them a light squeeze to the board while watching CHan.
 
 If you have a different device, follow the same logic and locate the temperature sensor on your device.
+
+## OLED screen is black / pixels are barely visible
+
+If there is a blank screen on the OLED of a soldering iron, or screen works but pixels are barely visible, although soldering iron itself is working (i.e., you can safely check that it's turning on, heating up & melting solder successfully), then it means that _most likely_ OLED is dead. But it can be relatively easily replaced. Models TS100 / TS80 / TS80P share the same OLED type which can be bought online and used for replacement. To do so:
+
+- find & buy at electronics shop [of your choice] display with the following spec line:  
+```OLED 0.69 inch / 14 pins / 96 x 16 pixels / **9616TSWC** / I2C IIC```
+
+- disassemble your soldering iron;
+- desolder old OLED and solder back new one;
+- assemble your soldering iron back.
+
+There are a few youtube videos how to do it like [this one for TS100](https://www.youtube.com/watch?v=HlWAY0oYPFI).
+
+Unfortunately, this is a well-known issue of OLED screens: sooner or later the brightness is starting to "fade out" until complete off. Usually common recommendations to prolong its lifetime are: reduce brightness & disable animations. But your results may vary since there were reports when users couldn't see anything on turning on soldering irons which were just laying in a box for a couple of months after buying.
