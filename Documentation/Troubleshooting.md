@@ -75,9 +75,22 @@ If the tip does not heat up, it is worth trying to reflash the firmware first in
 The main failure mode of the OLED display module is usually poor soldering on the OLED display cable to the main PCB.
 As this is soldered by hand generally, it's the most prone to failures.
 
-If you have a poor connection or a floating pin, you can end up with a state where the screen works _sometimes_ and then freezes or only works on some power cycles. It might work on very old versions of IronOS but not the newest ones. You could try to reflow the pins for the OLED. On 96x16 screens, carefully peel it back from the adhesive and reflow the solder on the pins. If needed, replacement Oled screens are common and low cost.
+If you have a poor connection or a floating pin, you can end up with a state where the screen works _sometimes_ and then freezes or only works on some power cycles. It might work on very old versions of IronOS but not the newest ones. You could try to reflow the pins for the OLED. On 96x16 screens, carefully peel it back from the adhesive and reflow the solder on the pins.
 
 As the OLED runs on an I2C bus, there are pull up resistors on the SDA and SCL pins. It is worth checking these as well, while they don't often fail, issues with these can cause _weird_ display issues.
+
+If after all of the checks OLED is still blank, or screen works but pixels are barely visible, although soldering iron itself is working (i.e., you can safely check that it's turning on, heating up & melting solder successfully), then it means that _most likely_ OLED is dead. But it can be relatively easily replaced. Models like `TS100`, `TS80`, and `TS80P` share the same OLED screen which can be bought online and used for replacement. To do so:
+
+- find & buy at electronics shop [of your choice] display with the following spec line:  
+```OLED 0.69 inch / 14 pins / 96 x 16 pixels / **9616TSWC** / I2C IIC```
+
+- disassemble your soldering iron;
+- desolder old OLED and solder back new one;
+- assemble your soldering iron back.
+
+There are a few youtube videos how to do it like [this one for `TS100`](https://www.youtube.com/watch?v=HlWAY0oYPFI).
+
+Unfortunately, this is a well-known issue of screens with OLED technology: sooner or later the brightness is starting to _"fade out"_ until complete off. Usually common recommendations to prolong its lifetime are: reduce brightness & reduce too often updates (i.e., disable animations). But your results may vary since there were reports when users couldn't see anything after turning on soldering irons which were just laying in a box for a few months after buying. And there are users with first `TS100` models not having any issues with display at all.
 
 ## Tip heats when not in heating mode
 
