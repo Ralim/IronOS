@@ -22,6 +22,7 @@
   - [Startup Logo](../Documentation/Logo.md)
   - Hardware
       - [Hall Sensor (Pinecil)](../Documentation/HallSensor.md)
+      - [Bluetooth (Pinecil V2)](../Documentation/Bluetooth.md)
       - [Hardware Notes](../Documentation/Hardware.md)
       - [Troubleshooting](../Documentation/Troubleshooting.md)
       - [Known Hardware Issues](../Documentation/HardwareIssues.md)
