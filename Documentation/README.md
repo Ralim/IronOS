@@ -29,3 +29,4 @@
       - [Power sources](../Documentation/PowerSources.md)
   - [Translations](../Documentation/Translation.md)
   - [Development](../Documentation/Development.md)
+  - [Changelog](../Documentation/History.md)

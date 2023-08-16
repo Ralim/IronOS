@@ -43,6 +43,7 @@ nav:
       - Power sources: PowerSources.md
   - Translations: Translation.md
   - Development: Development.md
+  - Changelog: History.md
 
 # Plugins
 plugins:
