@@ -1,6 +1,34 @@
 # Version Changes
 
 
+# V2.21
+
+### Features & changes
+
+- Bluetooth Low Energy support for PinecilV2
+- Large cleanup of translation files; and refactor of how we handle fonts for translations
+- Fixes for I2C corruption on PinecilV2
+- Option for using adjustable profiles on USB-PD or not
+- Cleanups and improvements to the generated [documents website](https://ralim.github.io/IronOS)
+
+### PinecilV2 notes
+
+For Pinecil V2 users blisp is currently my recommended CLI tool for updating the device. It is built for all main OS's automatically. This does not apply to V1 devices. If your iron came with a blue grip, its a V1 and update the same as always. If your device came with a green silicone grip its a V2 device.
+
+Alternatively you can use Spagett1's PineFlash tool that should provide a GUI interface for PinecilV1 & PinecilV2.
+
+For a small number of V2 Pinecil devices there appears to be an interference issue between the Bluetooth Low Energy and some devices; more information here. If this occurs to you, please let us know in the issue and rollback to 2.20 for now.
+
+
+# V2.20
+
+- First "full" release for PinecilV2
+- Loots of documentation updates
+- Documentation is [now nicely readable as a site](https://ralim.github.io/IronOS/GettingStarted)
+- A fair collection of bugfixes for PinecilV2
+- Cold Junction Calibration was reworked and now occurs _at next boot_ to make it easier to perform when the device is cold
+
+
 # V2.19
 
 - Bug-fix Infinite Boot Logo
@@ -24,7 +52,7 @@
 
 # V2.17
 
-### Big changes
+### Features & changes
 
 - Indicate status of VBus for modding Pinecil (debug menu)
 - Better hall effect sensor sensitivity adjustment (larger range with more steps)
@@ -70,7 +98,7 @@
 
 # V2.15
 
-### Feature upgrades:
+### Features & changes
 
 - MHP30 support
 - Multi-lingual firmware combinations now exist for Pinecil
