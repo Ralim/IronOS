@@ -31,7 +31,7 @@
             "message": "Thermal\nRunaway"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!Lötspitze\nkurzgeschlossen!"
         },
         "SettingsCalibrationWarning": {
             "message": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!"
@@ -59,12 +59,6 @@
         },
         "SleepingTipAdvancedString": {
             "message": "Temp: \n"
-        },
-        "ProfilePreheatString": {
-            "message": "Vorwärmen\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Abkühlen\n"
         },
         "ProfilePreheatString": {
             "message": "Vorwärmen\n"
@@ -145,15 +139,15 @@
         },
         "TempChangeShortStep": {
             "displayText": "Temp-Schritt\nDruck kurz",
-            "description": "Schrittweite für Temperaturwechsel bei kurzem Tastendruck"
+            "description": "Schrittweite für Temperaturänderung bei kurzem Tastendruck"
         },
         "TempChangeLongStep": {
             "displayText": "Temp-Schritt\nDruck lang",
-            "description": "Schrittweite für Temperaturwechsel bei langem Tastendruck"
+            "description": "Schrittweite für Temperaturänderung bei langem Tastendruck"
         },
         "LockingMode": {
             "displayText": "Tasten-\nsperre",
-            "description": "Langes drücken beider Tasten im Lötmodus sperrt diese (B=nur Boost | V=vollständig)"
+            "description": "Langes Drücken beider Tasten im Lötmodus sperrt diese (B=nur Boost | V=vollständig)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhasen",
@@ -173,63 +167,7 @@
         },
         "ProfilePhase1Duration": {
             "displayText": "Phase 1\nDauer",
-            "description": "Zieldauer dieser Phase (Sekunden)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemperatur",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDauer",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemperatur",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDauer",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemperatur",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDauer",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemperatur",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDauer",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Abkühl-\nrate",
-            "description": "Am Ende des Profilmodus mit dieser Geschwindigkeit abkühlen (Grad pro Sekunde)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhasen",
-            "description": "Anzahl an Phasen im Profilmodus"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Vorheiz-\ntemperatur",
-            "description": "Zu Beginn des Profilmodus auf diese Temperatur vorheizen"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Vorheiz-\nrate",
-            "description": "Mit dieser Geschwindigkeit vorheizen (Grad pro Sekunde)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemperatur",
-            "description": "Zieltemperatur zum Ende dieser Phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDauer",
-            "description": "Zieldauer dieser Phase (Sekunden)"
+            "description": "Dauer dieser Phase (Sekunden)"
         },
         "ProfilePhase2Temp": {
             "displayText": "Phase 2\nTemperatur",
@@ -273,7 +211,7 @@
         },
         "SleepTemperature": {
             "displayText": "Ruhe-\ntemperatur",
-            "description": "Ruhetemperatur der Spitze"
+            "description": "Ruhetemperatur der Lötspitze"
         },
         "SleepTimeout": {
             "displayText": "Ruhever-\nzögerung",
