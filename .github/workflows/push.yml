@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies (python)
         run: python3 -m pip install bdflib
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -74,7 +74,7 @@ jobs:
       - name: Install dependencies (python)
         run: python3 -m pip install bdflib
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -121,7 +121,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -144,7 +144,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache make git diffutils findutils clang-extra-tools bash
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -161,7 +161,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git black
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -179,7 +179,7 @@ jobs:
     name: check_shell
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: shellcheck
         uses: reviewdog/action-shellcheck@v1
         with:
@@ -198,7 +198,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache git
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
