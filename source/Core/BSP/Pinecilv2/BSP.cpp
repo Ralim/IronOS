@@ -17,8 +17,8 @@
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
-const uint8_t  holdoffTicks     = 25; // This is the tick delay before temp measure starts (i.e. time for op-amp recovery)
-const uint8_t  tempMeasureTicks = 25;
+uint8_t        holdoffTicks     = 25; // This is the tick delay before temp measure starts (i.e. time for op-amp recovery)
+uint8_t        tempMeasureTicks = 25;
 
 uint16_t totalPWM = 255; // Total length of the cycle's ticks
 
