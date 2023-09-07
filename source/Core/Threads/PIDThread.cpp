@@ -100,11 +100,12 @@ template <class T = TemperatureType_t> struct Integrator {
     // Add the new value x integration interval ( 1 / rate)
     sum += (gain * val) / rate;
 
-    // limit the output
-    if (sum > limit)
+    // constrain the output between +- our max power output, this limits windup when doing the inital heatup or when solding something large
+    if (sum > limit) {
       sum = limit;
-    else if (sum < -limit)
+    } else if (sum < -limit) {
       sum = -limit;
+    }
 
     return sum;
   }
