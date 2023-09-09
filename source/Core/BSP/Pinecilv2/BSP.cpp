@@ -162,13 +162,13 @@ uint8_t       getTipResistanceX10() {
 
 uint8_t getTipThermalMass() {
   if (lastTipResistance >= 80) {
-    return TIP_THERMAL_MASS;
+    return 65;
   }
   return 45;
 }
 uint8_t getTipInertia() {
   if (lastTipResistance >= 80) {
-    return TIP_THERMAL_MASS;
+    return 90;
   }
   return 10;
 }
