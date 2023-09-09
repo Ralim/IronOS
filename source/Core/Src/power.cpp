@@ -27,14 +27,6 @@ bool shouldBeUsingFastPWMMode(const uint8_t pwmTicks) {
   return lastPWMWasFast;
 }
 
-int32_t tempToX10Watts(int32_t rawTemp) {
-  // mass is in x10J/*C, rawC is raw per degree C
-  // returns x10Watts needed to raise/lower a mass by rawTemp
-  //  degrees in one cycle.
-  int32_t x10Watts = TIP_THERMAL_MASS * rawTemp;
-  return x10Watts;
-}
-
 void setTipX10Watts(int32_t mw) {
   int32_t    outputPWMLevel   = X10WattsToPWM(mw, 1);
   const bool shouldUseFastPWM = shouldBeUsingFastPWMMode(outputPWMLevel);
