@@ -19,7 +19,7 @@ extern "C" {
 }
 void start_PWM_output(void);
 
-#define ADC_Filter_Smooth 4
+#define ADC_Filter_Smooth 1
 history<uint16_t, ADC_Filter_Smooth> ADC_Vin;
 history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
