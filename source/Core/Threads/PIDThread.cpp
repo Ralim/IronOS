@@ -140,10 +140,7 @@ int32_t getPIDResultX10Watts(TemperatureType_t setpointDelta) {
   // delta temperature is in °C. The result is the power in X10 W needed to raise (or decrease!) the
   // tip temperature with (Delta Temperature ) °C in 1 second.
   // Note on powerStore. On update, if the value is provided in X10 (W) units then inertia shall be provided
-  // in X10 (J / °C) units as well. Also, powerStore is updated with a gain of 2. Where this comes from: The actual
-  // power CMOS is controlled by TIM3->CTR1 (that is software modulated - on/off - by TIM2-CTR4 interrupts). However,
-  // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
-  // so we basically double the need (gain = 2) to get what we want.
+  // in X10 (J / °C) units as well.
   return powerStore.update(((TemperatureType_t)getTipThermalMass()) * setpointDelta, // the required power
                            getTipInertia(),                                          // Inertia, smaller numbers increase dominance of the previous value
                            2,                                                        // gain
