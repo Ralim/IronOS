@@ -2263,6 +2263,7 @@ const uint8_t SettingsMenuIcons[][53 * 3] = {
           0x00,
           0x00,
       }
+}
 #endif
 #endif
 
