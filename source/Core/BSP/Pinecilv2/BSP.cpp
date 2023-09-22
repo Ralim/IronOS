@@ -17,8 +17,8 @@
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
-const uint8_t  holdoffTicks     = 25; // This is the tick delay before temp measure starts (i.e. time for op-amp recovery)
-const uint8_t  tempMeasureTicks = 25;
+uint8_t        holdoffTicks     = 25; // This is the tick delay before temp measure starts (i.e. time for op-amp recovery)
+uint8_t        tempMeasureTicks = 25;
 
 uint16_t totalPWM = 255; // Total length of the cycle's ticks
 
@@ -162,13 +162,13 @@ uint8_t       getTipResistanceX10() {
 
 uint8_t getTipThermalMass() {
   if (lastTipResistance >= 80) {
-    return TIP_THERMAL_MASS;
+    return 65;
   }
   return 45;
 }
 uint8_t getTipInertia() {
   if (lastTipResistance >= 80) {
-    return TIP_THERMAL_MASS;
+    return 90;
   }
   return 10;
 }

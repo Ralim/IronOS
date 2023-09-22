@@ -19,7 +19,7 @@ extern "C" {
 }
 void start_PWM_output(void);
 
-#define ADC_Filter_Smooth 4
+#define ADC_Filter_Smooth 1
 history<uint16_t, ADC_Filter_Smooth> ADC_Vin;
 history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
@@ -67,19 +67,21 @@ void                                 adc_fifo_irq(void) {
   ADC_IntClr(ADC_INT_ALL);
 }
 
-static bool fastPWM = false;
-static void switchToFastPWM(void);
+volatile bool inFastPWMMode = false;
 
-volatile uint16_t PWMSafetyTimer    = 0;
-volatile uint8_t  pendingPWM        = 0;
-volatile bool     lastPeriodWasFast = false;
+static void switchToFastPWM(void);
+static void switchToSlowPWM(void);
+
+volatile uint16_t PWMSafetyTimer          = 0;
+volatile uint8_t  pendingPWM              = 0;
+volatile bool     pendingNextPeriodIsFast = false;
 
 void start_PWM_output(void) {
 
   if (PWMSafetyTimer) {
     PWMSafetyTimer--;
-    if (lastPeriodWasFast != fastPWM) {
-      if (fastPWM) {
+    if (pendingNextPeriodIsFast != inFastPWMMode) {
+      if (pendingNextPeriodIsFast) {
         switchToFastPWM();
       } else {
         switchToSlowPWM();
@@ -96,6 +98,7 @@ void start_PWM_output(void) {
     }
   } else {
     PWM_Channel_Disable(PWM_Channel);
+    switchToFastPWM();
   }
   TIMER_Enable(TIMER_CH0);
 }
@@ -108,43 +111,47 @@ void timer0_comp0_callback(void) {
 void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); } // Trigged at end of output cycle; turn off the tip PWM
 
 void switchToFastPWM(void) {
-  fastPWM  = true;
-  totalPWM = powerPWM + tempMeasureTicks + holdoffTicks;
+  inFastPWMMode    = true;
+  holdoffTicks     = 10;
+  tempMeasureTicks = 10;
+  totalPWM         = powerPWM + tempMeasureTicks + holdoffTicks;
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
 
   // ~10Hz
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + holdoffTicks);
-  // Set divider to 11
+  // Set divider to 10 ~= 10.5Hz
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 11);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 10);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
 
 void switchToSlowPWM(void) {
   // 5Hz
-  fastPWM  = false;
-  totalPWM = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
+  inFastPWMMode    = false;
+  holdoffTicks     = 5;
+  tempMeasureTicks = 5;
+  totalPWM         = powerPWM + tempMeasureTicks + holdoffTicks;
 
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
   // Adjust ADC
-  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + (holdoffTicks / 2));
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + holdoffTicks);
 
   // Set divider to 22
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 22);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 20);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
   PWMSafetyTimer = 10; // This is decremented in the handler for PWM so that the tip pwm is
                        // disabled if the PID task is not scheduled often enough.
-  pendingPWM = pulse;
-  fastPWM    = shouldUseFastModePWM;
+  pendingPWM              = pulse;
+  pendingNextPeriodIsFast = shouldUseFastModePWM;
 }
 extern osThreadId POWTaskHandle;
 
