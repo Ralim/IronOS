@@ -112,8 +112,8 @@ void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); } // Trigge
 
 void switchToFastPWM(void) {
   inFastPWMMode    = true;
-  holdoffTicks     = 10;
-  tempMeasureTicks = 10;
+  holdoffTicks     = 20;
+  tempMeasureTicks = 20;
   totalPWM         = powerPWM + tempMeasureTicks + holdoffTicks;
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
 
@@ -123,7 +123,7 @@ void switchToFastPWM(void) {
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 10);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 6);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
@@ -131,8 +131,8 @@ void switchToFastPWM(void) {
 void switchToSlowPWM(void) {
   // 5Hz
   inFastPWMMode    = false;
-  holdoffTicks     = 5;
-  tempMeasureTicks = 5;
+  holdoffTicks     = 10;
+  tempMeasureTicks = 10;
   totalPWM         = powerPWM + tempMeasureTicks + holdoffTicks;
 
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
@@ -143,7 +143,7 @@ void switchToSlowPWM(void) {
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
-  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 20);
+  tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 12);
 
   BL_WR_REG(TIMER_BASE, TIMER_TCDR, tmpVal);
 }
