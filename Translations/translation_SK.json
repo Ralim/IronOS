@@ -173,7 +173,7 @@
         },
         "ProfilePhase1Duration": {
             "displayText": "Trvanie\nFáza 1",
-            "description": "Doba trvania tejto fáze (sekundy)"
+            "description": "Doba trvania tejto fázy (sekundy)"
         },
         "ProfilePhase2Temp": {
             "displayText": "Teplota\nFáza 2",
