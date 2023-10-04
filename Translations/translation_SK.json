@@ -34,7 +34,7 @@
             "message": "!Skrat hrotu!"
         },
         "SettingsCalibrationWarning": {
-            "message": "Pred reštartovaním sa uistite, že hrot a rúčka je v izbovej teplote!"
+            "message": "Pred reštartovaním sa uistite, že hrot a rúčka sú v izbovej teplote!"
         },
         "CJCCalibrating": {
             "message": "kalibrovanie\n"
@@ -76,7 +76,7 @@
             "message": "Vaše zariadenie je pravdepodobne falzifikát!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Teplota príliž vysoká pre štart profilu"
+            "message": "Teplota príliš vysoká pre štart profilu"
         }
     },
     "characters": {
@@ -224,43 +224,43 @@
             "description": "Rýchlosť predhrievania (stupňe za sekundu)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Teplota\nFáze 1",
-            "description": "Cieľová teplota na konci tejto fáze"
+            "displayText": "Teplota\nFáza 1",
+            "description": "Cieľová teplota na konci tejto fázy"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Trvanie\nFáze 1",
-            "description": "Doba trvania tejto fáze (sekundy)"
+            "displayText": "Trvanie\nFáza 1",
+            "description": "Doba trvania tejto fázy (sekundy)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Teplota\nFáze 2",
+            "displayText": "Teplota\nFáza 2",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Trvanie\nFáze 2",
+            "displayText": "Trvanie\nFáza 2",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Teplota\nFáze 3",
+            "displayText": "Teplota\nFáza 3",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Trvanie\nFáze 3",
+            "displayText": "Trvanie\nFáza 3",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Teplota\nFáze 4",
+            "displayText": "Teplota\nFáza 4",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Trvanie\nFáze 4",
+            "displayText": "Trvanie\nFáza 4",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Teplota\nFáze 5",
+            "displayText": "Teplota\nFáza 5",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Trvanie\nFáze 4",
+            "displayText": "Trvanie\nFáza 4",
             "description": ""
         },
         "ProfileCooldownSpeed": {
@@ -344,7 +344,7 @@
             "description": "Obmedzenie výkonu podľa použitého zdroja (watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Kalibrácia CJC\npri nasladujúcom štarte",
+            "displayText": "Kalibrácia CJC\npri nasledujúcom štarte",
             "description": "Pri nasledujúcom štarte bude kalibrovaná kompenzácia studeného spoja (nie je potrebné ak Delta T je < 5°C)"
         },
         "VoltageCalibration": {

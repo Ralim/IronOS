@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": true,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibration done!"
+            "message": "校正完成！"
         },
         "ResetOKMessage": {
             "message": "已重設！"
@@ -31,13 +31,13 @@
             "message": "加熱失控"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!烙鐵頭短路!"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "在重啟前請確認烙鐵頭及本體已完全冷卻！"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "校正中"
         },
         "SettingsResetWarning": {
             "message": "你是否確定要將全部設定重設到預設值？"
@@ -133,7 +133,7 @@
         },
         "PDVpdo": {
             "displayText": "PD VPDO",
-            "description": "Enables PPS & EPR modes"
+            "description": "開啟PPS及EPR支援"
         },
         "BoostTemperature": {
             "displayText": "增熱溫度",
@@ -336,8 +336,8 @@
             "description": "於焊接模式畫面以英文小字型顯示詳細資料"
         },
         "BluetoothLE": {
-            "displayText": "Bluetooth",
-            "description": "Enables BLE"
+            "displayText": "藍牙",
+            "description": "開啟藍牙支援"
         },
         "PowerLimit": {
             "displayText": "功率限制",
@@ -345,7 +345,7 @@
         },
         "CalibrateCJC": {
             "displayText": "校正CJC",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+            "description": "在下次重啟時校正烙鐵頭熱電偶冷接點補償值（CJC）（溫差小於5攝氏度時無需校正）"
         },
         "VoltageCalibration": {
             "displayText": "輸入電壓校正？",

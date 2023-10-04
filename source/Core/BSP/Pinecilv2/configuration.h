@@ -161,7 +161,6 @@
 #define DEBUG_UART_OUTPUT
 #define HAS_POWER_DEBUG_MENU
 #define HARDWARE_MAX_WATTAGE_X10 750
-#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define BLE_ENABLED
 #define NEEDS_VBUS_PROBE 0
 #define CANT_DIRECT_READ_SETTINGS
