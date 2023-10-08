@@ -23,13 +23,11 @@ void start_PWM_output(void);
 history<uint16_t, ADC_Filter_Smooth> ADC_Vin;
 history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
-volatile uint8_t                     ADCBurstCounter = 0;
 void                                 adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
     // Read out all entries in the fifo
     while (ADC_Get_FIFO_Count()) {
-      ADCBurstCounter++;
-      volatile uint32_t reading = ADC_Read_FIFO();
+      uint32_t reading = ADC_Read_FIFO();
       // As per manual, 26 bit reading; lowest 16 are the ADC
       uint16_t sample = reading & 0xFFFF;
       uint8_t  source = (reading >> 21) & 0b11111;
@@ -43,28 +41,23 @@ void                                 adc_fifo_irq(void) {
       case VIN_ADC_CHANNEL:
         ADC_Vin.update(sample);
         break;
-
       default:
         break;
       }
     }
-
-    if (ADCBurstCounter >= 8) {
-      ADCBurstCounter = 0;
-      start_PWM_output();
-
-      // unblock the PID controller thread
-      if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
-        BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-        if (pidTaskNotification) {
-          vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
-          portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-        }
+    // unblock the PID controller thread
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+      BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+      if (pidTaskNotification) {
+        vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
       }
     }
   }
   // Clear IRQ
   ADC_IntClr(ADC_INT_ALL);
+  // Start next cycle of PWM
+  start_PWM_output();
 }
 
 volatile bool inFastPWMMode = false;
