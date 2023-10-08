@@ -120,8 +120,8 @@ void switchToFastPWM(void) {
 
   // ~10Hz
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + holdoffTicks);
-  // Set divider to 10 ~= 10.5Hz
 
+  // Set divider to 10 ~= 10.5Hz
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
   tmpVal = BL_SET_REG_BITS_VAL(tmpVal, TIMER_TCDR2, 10);
@@ -140,7 +140,7 @@ void switchToSlowPWM(void) {
   // Adjust ADC
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + holdoffTicks);
 
-  // Set divider to 22
+  // Set divider for ~ 5Hz
 
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
 
