@@ -26,7 +26,9 @@ history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
 void                                 adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
     // Read out all entries in the fifo
+    uint8_t index = 0;
     while (ADC_Get_FIFO_Count()) {
+      index++;
       uint32_t reading = ADC_Read_FIFO();
       // As per manual, 26 bit reading; lowest 16 are the ADC
       uint16_t sample = reading & 0xFFFF;
@@ -56,8 +58,6 @@ void                                 adc_fifo_irq(void) {
   }
   // Clear IRQ
   ADC_IntClr(ADC_INT_ALL);
-  // Start next cycle of PWM
-  start_PWM_output();
 }
 
 volatile bool inFastPWMMode = false;
@@ -93,16 +93,24 @@ void start_PWM_output(void) {
     PWM_Channel_Disable(PWM_Channel);
     switchToFastPWM();
   }
-  TIMER_Enable(TIMER_CH0);
 }
 
 // Timer 0 is used to co-ordinate the ADC and the output PWM
 void timer0_comp0_callback(void) {
-  TIMER_Disable(TIMER_CH0);
   ADC_Start();
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_0);
 }
-void timer0_comp1_callback(void) { PWM_Channel_Disable(PWM_Channel); } // Trigged at end of output cycle; turn off the tip PWM
+void timer0_comp1_callback(void) {
+  // Trigged at end of output cycle; turn off the tip PWM
+  PWM_Channel_Disable(PWM_Channel);
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_1);
+}
 
+void timer0_comp2_callback(void) {
+  // Triggered at end of timer cycle; re-start the tip driver
+  start_PWM_output();
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_2);
+}
 void switchToFastPWM(void) {
   inFastPWMMode    = true;
   holdoffTicks     = 10;
