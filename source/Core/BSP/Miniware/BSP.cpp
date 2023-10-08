@@ -396,7 +396,7 @@ bool isTipShorted() { return tipShorted; }
 #else
 bool isTipShorted() { return false; }
 #endif
-uint8_t getTipThermalMass() {
+uint16_t getTipThermalMass() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   if (lastTipResistance >= 80) {
     return TIP_THERMAL_MASS;
@@ -406,7 +406,7 @@ uint8_t getTipThermalMass() {
   return TIP_THERMAL_MASS;
 #endif
 }
-uint8_t getTipInertia() {
+uint16_t getTipInertia() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   if (lastTipResistance >= 80) {
     return TIP_THERMAL_MASS;
