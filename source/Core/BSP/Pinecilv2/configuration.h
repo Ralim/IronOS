@@ -164,6 +164,11 @@
 #define BLE_ENABLED
 #define NEEDS_VBUS_PROBE 0
 #define CANT_DIRECT_READ_SETTINGS
+#define TIP_CONTROL_PID // We use PID rather than integrator
+#define TIP_PID_KP      4000
+#define TIP_PID_KI      20
+#define TIP_PID_KD      0
+
 #endif /* Pinecilv2 */
 
 #define FLASH_PAGE_SIZE (1024) // Read pages
