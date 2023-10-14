@@ -97,7 +97,18 @@ void start_PWM_output(void) {
 
 // Timer 0 is used to co-ordinate the ADC and the output PWM
 void timer0_comp0_callback(void) {
-  ADC_Start();
+  if (PWM_Channel_Is_Enabled(PWM_Channel)) {
+    // So there appears to be a bug _somewhere_ where sometimes the comparitor doesnt fire
+    // Its not re-occuring with speciifc values, so suspect its a weeird bug
+    // For now, we just skip the cycle and throw away the ADC readings. Its a waste but
+    // It stops stupid glitches in readings, i'd take slight instability from the time jump
+    // Over the readings we get that are borked as the header is left on
+    // Ralim 2023/10/14
+    PWM_Channel_Disable(PWM_Channel);
+    MSG("ALERT PWM Glitch\r\n");
+  } else {
+    ADC_Start();
+  }
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_0);
 }
 void timer0_comp1_callback(void) {
