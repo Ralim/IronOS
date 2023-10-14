@@ -90,7 +90,7 @@ void startPIDTask(void const *argument __unused) {
 }
 
 #ifdef TIP_CONTROL_PID
-template <class T, T Kp, T Ki, T Kd> struct PID {
+template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
   T previous_error_term;
   T integration_running_sum;
 
@@ -101,13 +101,13 @@ template <class T, T Kp, T Ki, T Kd> struct PID {
     const T kp_result = (Kp * target_delta) / 100;
 
     // Integral term
-    integration_running_sum += (target_delta * interval_ms) / 1000;
+    integration_running_sum += ((target_delta * interval_ms) / 3000);
 
     // We constrain integration_running_sum to limit windup
-    if (integration_running_sum > 2 * max_output) {
-      integration_running_sum = 2 * max_output;
-    } else if (integration_running_sum < -2 * max_output) {
-      integration_running_sum = -2 * max_output;
+    if (integration_running_sum > integral_limit_scale * max_output) {
+      integration_running_sum = integral_limit_scale * max_output;
+    } else if (integration_running_sum < -integral_limit_scale * max_output) {
+      integration_running_sum = -integral_limit_scale * max_output;
     }
     // Calculate the integral term, we use a shift 100 to get precision in integral as we often need small amounts
     T ki_result = (Ki * integration_running_sum) / 100;
@@ -162,7 +162,7 @@ int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t curr
   static TickType_t lastCall = 0;
 
 #ifdef TIP_CONTROL_PID
-  static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD> pid = {0, 0};
+  static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, 5> pid = {0, 0};
 
   const TickType_t interval = (xTaskGetTickCount() - lastCall);
 
