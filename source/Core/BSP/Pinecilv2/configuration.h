@@ -160,14 +160,14 @@
 #define HALL_SI7210
 #define DEBUG_UART_OUTPUT
 #define HAS_POWER_DEBUG_MENU
-#define HARDWARE_MAX_WATTAGE_X10 750
-#define BLE_ENABLED
-#define NEEDS_VBUS_PROBE 0
-#define CANT_DIRECT_READ_SETTINGS
-#define TIP_CONTROL_PID // We use PID rather than integrator
-#define TIP_PID_KP      2000
-#define TIP_PID_KI      3
-#define TIP_PID_KD      200
+#define HARDWARE_MAX_WATTAGE_X10  750
+#define BLE_ENABLED                 // We have a BLE stack
+#define NEEDS_VBUS_PROBE          0 // No vbus probe, its not connected in pcb
+#define CANT_DIRECT_READ_SETTINGS   // We cant memcpy settings due to flash cache
+#define TIP_CONTROL_PID             // We use PID rather than integrator
+#define TIP_PID_KP                3000
+#define TIP_PID_KI                5
+#define TIP_PID_KD                300
 
 #endif /* Pinecilv2 */
 
