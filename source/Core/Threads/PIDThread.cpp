@@ -98,19 +98,23 @@ template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
     const T target_delta = set_point - new_reading;
 
     // Proportional term
-    const T kp_result = (Kp * target_delta) / 100;
+    const T kp_result = Kp * target_delta;
 
-    // Integral term
-    integration_running_sum += ((target_delta * interval_ms) / 3000);
+    // Integral term as we use mixed sampling rates, we cant assume a constant sample interval
+    // Thus we multiply this out by the interval time to ~= dv/dt
+    // Then the shift by 1000 is ms -> Seconds
+
+    integration_running_sum += (target_delta * interval_ms * Ki) / 1000;
 
     // We constrain integration_running_sum to limit windup
+    // This is not overly required for most use cases but can prevent large overshoot in constrained implementations
     if (integration_running_sum > integral_limit_scale * max_output) {
       integration_running_sum = integral_limit_scale * max_output;
     } else if (integration_running_sum < -integral_limit_scale * max_output) {
       integration_running_sum = -integral_limit_scale * max_output;
     }
     // Calculate the integral term, we use a shift 100 to get precision in integral as we often need small amounts
-    T ki_result = (Ki * integration_running_sum) / 100;
+    T ki_result = integration_running_sum / 100;
 
     // Derivative term
     T derivative = (target_delta - previous_error_term);
