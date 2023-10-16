@@ -166,4 +166,6 @@ int8_t getPowerSourceNumber(void) {
 }
 
 // Returns temperature of the tip in *C/*F (based on user settings)
-uint16_t getTipTemp(void) { return getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC(); }
+TemperatureType_t getTipTemp(void) {
+  return getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
+}
