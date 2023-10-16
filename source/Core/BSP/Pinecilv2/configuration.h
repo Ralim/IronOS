@@ -168,6 +168,7 @@
 #define TIP_PID_KP                45  // Reasonable compromise for most tips so far
 #define TIP_PID_KI                9   // About as high for stability across tips
 #define TIP_PID_KD                200 // Helps dampen smaller tips; ~= nothing for larger tips
+#define FILTER_DISPLAYED_TIP_TEMP 8   // Filtering for GUI display
 
 #endif /* Pinecilv2 */
 

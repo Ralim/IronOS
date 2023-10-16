@@ -4,6 +4,8 @@
 
 #include "SolderingCommon.h"
 #include "OperatingModes.h"
+#include "configuration.h"
+#include "history.hpp"
 
 extern bool heaterThermalRunaway;
 
@@ -167,5 +169,13 @@ int8_t getPowerSourceNumber(void) {
 
 // Returns temperature of the tip in *C/*F (based on user settings)
 TemperatureType_t getTipTemp(void) {
+#ifdef FILTER_DISPLAYED_TIP_TEMP
+  static history<TemperatureType_t, FILTER_DISPLAYED_TIP_TEMP> Filter_Temp;
+  TemperatureType_t                                            reading = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
+  Filter_Temp.update(reading);
+  return Filter_Temp.average();
+
+#else
   return getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
+#endif
 }
