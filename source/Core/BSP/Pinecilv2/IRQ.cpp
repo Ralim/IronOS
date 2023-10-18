@@ -23,12 +23,12 @@ void start_PWM_output(void);
 history<uint16_t, ADC_Filter_Smooth> ADC_Vin;
 history<uint16_t, ADC_Filter_Smooth> ADC_Temp;
 history<uint16_t, ADC_Filter_Smooth> ADC_Tip;
-void                                 adc_fifo_irq(void) {
+
+// IRQ is called at the end of the 8 set readings, pop these from the FIFO and send to filters
+void adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
     // Read out all entries in the fifo
-    uint8_t index = 0;
     while (ADC_Get_FIFO_Count()) {
-      index++;
       uint32_t reading = ADC_Read_FIFO();
       // As per manual, 26 bit reading; lowest 16 are the ADC
       uint16_t sample = reading & 0xFFFF;
@@ -98,14 +98,22 @@ void start_PWM_output(void) {
 // Timer 0 is used to co-ordinate the ADC and the output PWM
 void timer0_comp0_callback(void) {
   if (PWM_Channel_Is_Enabled(PWM_Channel)) {
-    // So there appears to be a bug _somewhere_ where sometimes the comparitor doesnt fire
-    // Its not re-occuring with speciifc values, so suspect its a weeird bug
+    // So there appears to be a bug _somewhere_ where sometimes the comparator doesn't fire
+    // Its not re-occurring with specific values, so suspect its a weird bug
     // For now, we just skip the cycle and throw away the ADC readings. Its a waste but
     // It stops stupid glitches in readings, i'd take slight instability from the time jump
     // Over the readings we get that are borked as the header is left on
-    // Ralim 2023/10/14
+    // <Ralim 2023/10/14>
     PWM_Channel_Disable(PWM_Channel);
-    MSG("ALERT PWM Glitch\r\n");
+    // MSG("ALERT PWM Glitch\r\n");
+    // Triger the PID now instead
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+      BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+      if (pidTaskNotification) {
+        vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+      }
+    }
   } else {
     ADC_Start();
   }
@@ -205,5 +213,6 @@ uint16_t getADCHandleTemp(uint8_t sample) { return ADC_Temp.average(); }
 
 uint16_t getADCVin(uint8_t sample) { return ADC_Vin.average(); }
 
-// Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
+// Returns the current raw tip reading after any cleanup filtering
+// For Pinecil V2 we dont do any rolling filtering other than just averaging all 4 readings in the adc snapshot
 uint16_t getTipRawTemp(uint8_t sample) { return ADC_Tip.average() >> 1; }

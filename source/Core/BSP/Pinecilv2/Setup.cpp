@@ -111,7 +111,7 @@ void setup_adc(void) {
   adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
   adc_cfg.vcm            = ADC_PGA_VCM_1P6V;
-  adc_cfg.offsetCalibEn  = ENABLE;
+  adc_cfg.offsetCalibEn  = DISABLE;
   adc_cfg.offsetCalibVal = 0;
 
   ADC_Disable();
@@ -120,7 +120,7 @@ void setup_adc(void) {
 
   ADC_Init(&adc_cfg);
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8; // Triger FIFO when all 8 measurements are done
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
