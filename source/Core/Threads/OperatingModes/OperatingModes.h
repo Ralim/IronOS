@@ -10,6 +10,7 @@ extern "C" {
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "Translation.h"
+#include "Types.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "history.hpp"
@@ -25,12 +26,12 @@ extern "C" {
 
 // Exposed modes
 enum OperatingMode {
-    idle      = 0,
-    soldering = 1,
-    boost     = 2,
-    sleeping  = 3,
-    settings  = 4,
-    debug     = 5
+  idle      = 0,
+  soldering = 1,
+  boost     = 2,
+  sleeping  = 3,
+  settings  = 4,
+  debug     = 5
 };
 
 // Main functions
@@ -46,6 +47,6 @@ void drawHomeScreen(bool buttonLockout) __attribute__((noreturn)); // IDLE / Hom
 void renderHomeScreenAssets(void);                                 // Called to act as start delay and used to render out flipped images for home screen graphics
 
 // Common helpers
-int8_t   getPowerSourceNumber(void);                               // Returns number ID of power source
-uint16_t getTipTemp(void);                                         // Returns temperature of the tip in *C/*F (based on user settings)
+int8_t            getPowerSourceNumber(void); // Returns number ID of power source
+TemperatureType_t getTipTemp(void);           // Returns temperature of the tip in *C/*F (based on user settings)
 #endif

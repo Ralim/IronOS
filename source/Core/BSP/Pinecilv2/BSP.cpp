@@ -160,18 +160,8 @@ uint8_t       getTipResistanceX10() {
   return lastTipResistance;
 }
 
-uint8_t getTipThermalMass() {
-  if (lastTipResistance >= 80) {
-    return 65;
-  }
-  return 45;
-}
-uint8_t getTipInertia() {
-  if (lastTipResistance >= 80) {
-    return 90;
-  }
-  return 10;
-}
+uint16_t getTipThermalMass() { return 120; }
+uint16_t getTipInertia() { return 750; }
 // We want to calculate lastTipResistance
 // If tip is connected, and the tip is cold and the tip is not being heated
 // We can use the GPIO to inject a small current into the tip and measure this
@@ -180,7 +170,7 @@ uint8_t getTipInertia() {
 // Which is around 0.54mA this will induce:
 // 6 ohm tip -> 3.24mV (Real world ~= 3320)
 // 8 ohm tip -> 4.32mV (Real world ~= 4500)
-// Which is definitely measureable
+// Which is definitely measurable
 // Taking shortcuts here as we know we only really have to pick apart 6 and 8 ohm tips
 // These are reported as 60 and 75 respectively
 void performTipResistanceSampleReading() {

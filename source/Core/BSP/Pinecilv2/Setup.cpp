@@ -102,7 +102,7 @@ void setup_adc(void) {
 
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
-  adc_cfg.resWidth       = ADC_DATA_WIDTH_14_WITH_64_AVERAGE;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_14_WITH_16_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P72V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
@@ -111,7 +111,7 @@ void setup_adc(void) {
   adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
   adc_cfg.vcm            = ADC_PGA_VCM_1P6V;
-  adc_cfg.offsetCalibEn  = ENABLE;
+  adc_cfg.offsetCalibEn  = DISABLE;
   adc_cfg.offsetCalibVal = 0;
 
   ADC_Disable();
@@ -120,7 +120,7 @@ void setup_adc(void) {
 
   ADC_Init(&adc_cfg);
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8; // Triger FIFO when all 8 measurements are done
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
@@ -138,26 +138,29 @@ void setup_timer_scheduler() {
   TIMER_Disable(TIMER_CH0);
 
   TIMER_CFG_Type cfg = {
-      TIMER_CH0,                           // Channel
-      TIMER_CLKSRC_32K,                    // Clock source
-      TIMER_PRELOAD_TRIG_COMP0,            // Trigger; reset after trigger 0
-      TIMER_COUNT_PRELOAD,                 // Counter mode
-      22,                                  // Clock div
-      (uint16_t)(powerPWM + holdoffTicks), // CH0 compare (adc)
-      0,                                   // CH1 compare (pwm out)
-      0,                                   // CH2 compare not used
-      0,                                   // Preload
+      TIMER_CH0,                                              // Channel
+      TIMER_CLKSRC_32K,                                       // Clock source
+      TIMER_PRELOAD_TRIG_COMP2,                               // Trigger; reset after trigger 0
+      TIMER_COUNT_PRELOAD,                                    // Counter mode
+      22,                                                     // Clock div
+      (uint16_t)(powerPWM + holdoffTicks),                    // CH0 compare (adc)
+      (uint16_t)(powerPWM),                                   // CH1 compare (pwm out)
+      (uint16_t)(powerPWM + holdoffTicks + tempMeasureTicks), // CH2 compare end of cycle
+      0,                                                      // Preload
   };
   TIMER_Init(&cfg);
 
   Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_0, timer0_comp0_callback);
   Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_1, timer0_comp1_callback);
+  Timer_Int_Callback_Install(TIMER_CH0, TIMER_INT_COMP_2, timer0_comp2_callback);
 
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_0);
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_1);
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_2);
 
   TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_0, UNMASK);
   TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_1, UNMASK);
+  TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_2, UNMASK);
   CPU_Interrupt_Enable(TIMER_CH0_IRQn);
   TIMER_Enable(TIMER_CH0);
 }
