@@ -25,7 +25,7 @@ int gui_SolderingSleepingMode(bool stayOff, bool autoStarted) {
     }
 
     // draw the lcd
-    uint16_t tipTemp = getTipTemp();
+    TemperatureType_t tipTemp = getTipTemp();
 
     OLED::clearScreen();
     OLED::setCursor(0, 0);

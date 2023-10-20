@@ -97,7 +97,7 @@ uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
 bool    isTipShorted() { return false; }
 uint8_t preStartChecksDone() { return 1; }
 
-uint8_t getTipThermalMass() { return TIP_THERMAL_MASS; }
-uint8_t getTipInertia() { return TIP_THERMAL_MASS; }
+uint16_t getTipThermalMass() { return TIP_THERMAL_MASS; }
+uint16_t getTipInertia() { return TIP_THERMAL_MASS; }
 
 void showBootLogo(void) { BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); }
