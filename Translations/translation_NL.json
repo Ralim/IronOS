@@ -43,7 +43,7 @@
             "message": "Weet je zeker dat je de fabrieksinstellingen terug wilt zetten?"
         },
         "UVLOWarningString": {
-            "message": "Voedingsspanning LAAG"
+            "message": "Onderspanning"
         },
         "UndervoltageString": {
             "message": "Onderspanning\n"
@@ -94,7 +94,7 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Power\ninstellingen",
+            "displayText": "Vermogens-\ninstellingen",
             "description": ""
         },
         "SolderingMenu": {
@@ -102,7 +102,7 @@
             "description": ""
         },
         "PowerSavingMenu": {
-            "displayText": "Slaap\nstanden",
+            "displayText": "Slaap-\nstanden",
             "description": ""
         },
         "UIMenu": {
@@ -110,14 +110,14 @@
             "description": ""
         },
         "AdvancedMenu": {
-            "displayText": "Gevorderde\ninstellingen",
+            "displayText": "Geavanceerde\ninstellingen",
             "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
             "displayText": "Spannings-\nbron",
-            "description": "Spanningsbron. Stelt minimumspanning in. (DC 10V) (S 3.3V per cel)"
+            "description": "Minimale toegelate voltage"
         },
         "MinVolCell": {
             "displayText": "Minimum\nvoltage",
@@ -216,7 +216,7 @@
             "description": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "SleepTemperature": {
-            "displayText": "Slaap\ntemp",
+            "displayText": "Slaap\ntemperatuur",
             "description": "Temperatuur in slaapstand (°C)"
         },
         "SleepTimeout": {
@@ -268,7 +268,7 @@
             "description": "Omkeer de kleuren van het OLED scherm"
         },
         "LOGOTime": {
-            "displayText": "Opstart logo\nlengte",
+            "displayText": "Opstart\nlogo lengte",
             "description": "Zet het lengte van het opstart logo (s=seconden)"
         },
         "AdvancedIdle": {
@@ -288,15 +288,15 @@
             "description": "Gemiddelde maximale power dat de soldeerbout mag gebruiken (W=watt)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nbij volgende opstart",
-            "description": "Bij de volgende opstart tip Cold Junction Compensation wordt gecalibreerd (niet nodig if Delta T is < 5°C)"
+            "displayText": "Calibreer CJC\nbij opstart",
+            "description": "Bij de volgende opstart tip Cold Junction Compensation wordt gecalibreerd (niet nodig als Delta T < 5°C)"
         },
         "VoltageCalibration": {
-            "displayText": "Calibreer\nvoedingsspanning?",
+            "displayText": "Calibreervoe-\ndingsspanning?",
             "description": "VIN Calibreren. Bevestigen door knoppen lang in te drukken."
         },
         "PowerPulsePower": {
-            "displayText": "Power\npulse",
+            "displayText": "Power\npuls",
             "description": "Power van de wakker-houd-puls (W=watt)"
         },
         "PowerPulseWait": {
