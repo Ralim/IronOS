@@ -136,23 +136,23 @@
             "description": "Zet PPS & EPR modes aan"
         },
         "BoostTemperature": {
-            "displayText": "Verhogings\ntemp",
+            "displayText": "Verhog\nings temp",
             "description": "Verhogingstemperatuur"
         },
         "AutoStart": {
-            "displayText": "Automatisch\nstarttemperatuur",
+            "displayText": "start-\ntemperatuur",
             "description": "Breng de soldeerbout op temperatuur bij het opstarten. (F=Uit | T=Soldeertemperatuur | S=Slaapstand-temperatuur | K=Slaapstand kamertemperatuur)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temperatuur verandering\nkort",
+            "displayText": "temp veran\ndering kort",
             "description": "Temperatuurveranderingsstap bij korte druk op de knop"
         },
         "TempChangeLongStep": {
-            "displayText": "Temperatuur verandering\nlang",
+            "displayText": "temp veran\ndering lang",
             "description": "Temperatuurveranderingsstap bij lange druk op de knop"
         },
         "LockingMode": {
-            "displayText": "Sta vergrendeling toe\nknoppen",
+            "displayText": "Vergrendel-\ning knoppen",
             "description": "Houd tijdens het solderen beide knoppen ingedrukt om de vergrendeling in of uit te schakelen (D=uit | B=alleen boost-modus | F=volledige vergrendeling)"
         },
         "ProfilePhases": {
@@ -216,7 +216,7 @@
             "description": "Bewegingsgevoeligheid (0=uit | 1=minst gevoelig | ... | 9=meest gevoelig)"
         },
         "SleepTemperature": {
-            "displayText": "Slaap\ntemperatuur",
+            "displayText": "Slaap\ntemp",
             "description": "Temperatuur in slaapstand (°C)"
         },
         "SleepTimeout": {
@@ -292,7 +292,7 @@
             "description": "Bij de volgende opstart tip Cold Junction Compensation wordt gecalibreerd (niet nodig als Delta T < 5°C)"
         },
         "VoltageCalibration": {
-            "displayText": "Calibreervoe-\ndingsspanning?",
+            "displayText": "Calibreervo-\nedingsspanning?",
             "description": "VIN Calibreren. Bevestigen door knoppen lang in te drukken."
         },
         "PowerPulsePower": {
